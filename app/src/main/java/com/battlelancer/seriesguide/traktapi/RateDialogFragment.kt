@@ -1,176 +1,170 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2012-2018, 2020-2023 Uwe Trottmann
+// Copyright 2012-2024 Uwe Trottmann
 
-package com.battlelancer.seriesguide.traktapi;
+package com.battlelancer.seriesguide.traktapi
 
-import android.app.Dialog;
-import android.content.Context;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.widget.Button;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatDialogFragment;
-import androidx.fragment.app.FragmentManager;
-import com.battlelancer.seriesguide.databinding.DialogTraktRateBinding;
-import com.battlelancer.seriesguide.util.DialogTools;
-import com.battlelancer.seriesguide.util.tasks.BaseRateItemTask;
-import com.battlelancer.seriesguide.util.tasks.RateEpisodeTask;
-import com.battlelancer.seriesguide.util.tasks.RateMovieTask;
-import com.battlelancer.seriesguide.util.tasks.RateShowTask;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.uwetrottmann.trakt5.enums.Rating;
-import java.util.ArrayList;
-import java.util.List;
+import android.app.Dialog
+import android.content.Context
+import android.os.AsyncTask
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.widget.Button
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDialogFragment
+import androidx.fragment.app.FragmentManager
+import com.battlelancer.seriesguide.databinding.DialogTraktRateBinding
+import com.battlelancer.seriesguide.util.safeShow
+import com.battlelancer.seriesguide.util.tasks.BaseRateItemTask
+import com.battlelancer.seriesguide.util.tasks.RateEpisodeTask
+import com.battlelancer.seriesguide.util.tasks.RateMovieTask
+import com.battlelancer.seriesguide.util.tasks.RateShowTask
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.uwetrottmann.trakt5.enums.Rating
 
 /**
  * If connected to Trakt, allows rating a show, episode or movie on a 10 value rating scale.
  * If not connected, asks the user to connect Trakt.
- * <p>
- * Use via {@link #safeShow(Context, FragmentManager)}.
+ *
+ * Use via [safeShow].
  */
-public class RateDialogFragment extends AppCompatDialogFragment {
-
+class RateDialogFragment : AppCompatDialogFragment() {
     private interface InitBundle {
-        String ITEM_TYPE = "item-type";
-        String ITEM_ID = "item-id";
-    }
-
-    private static final String ITEM_SHOW = "show";
-    private static final String ITEM_EPISODE = "episode";
-    private static final String ITEM_MOVIE = "movie";
-
-    /**
-     * Create {@link RateDialogFragment} to rate a show.
-     */
-    public static RateDialogFragment newInstanceShow(long showId) {
-        RateDialogFragment f = new RateDialogFragment();
-
-        Bundle args = new Bundle();
-        args.putString(InitBundle.ITEM_TYPE, ITEM_SHOW);
-        args.putLong(InitBundle.ITEM_ID, showId);
-        f.setArguments(args);
-
-        return f;
-    }
-
-    /**
-     * Create {@link RateDialogFragment} to rate an episode.
-     */
-    public static RateDialogFragment newInstanceEpisode(long episodeId) {
-        RateDialogFragment f = new RateDialogFragment();
-
-        Bundle args = new Bundle();
-        args.putString(InitBundle.ITEM_TYPE, ITEM_EPISODE);
-        args.putLong(InitBundle.ITEM_ID, episodeId);
-        f.setArguments(args);
-
-        return f;
-    }
-
-    /**
-     * Create {@link RateDialogFragment} to rate a movie.
-     */
-    public static RateDialogFragment newInstanceMovie(int movieTmdbId) {
-        RateDialogFragment f = new RateDialogFragment();
-
-        Bundle args = new Bundle();
-        args.putString(InitBundle.ITEM_TYPE, ITEM_MOVIE);
-        args.putLong(InitBundle.ITEM_ID, movieTmdbId);
-        f.setArguments(args);
-
-        return f;
-    }
-
-    private DialogTraktRateBinding binding;
-
-    /**
-     * Checks and asks for missing trakt credentials. Otherwise if they are valid shows the dialog.
-     */
-    public boolean safeShow(Context context, FragmentManager fragmentManager) {
-        if (!TraktCredentials.ensureCredentials(context)) {
-            return false;
+        companion object {
+            const val ITEM_TYPE: String = "item-type"
+            const val ITEM_ID: String = "item-id"
         }
-        return DialogTools.safeShow(this, fragmentManager, "rateDialog");
     }
 
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder;
+    private var binding: DialogTraktRateBinding? = null
 
-        binding = DialogTraktRateBinding.inflate(LayoutInflater.from(getContext()));
+    /**
+     * Checks and asks for missing Trakt credentials. Otherwise if they are valid shows the dialog.
+     */
+    fun safeShow(context: Context, fragmentManager: FragmentManager): Boolean {
+        if (!TraktCredentials.ensureCredentials(context)) {
+            return false
+        }
+        return this.safeShow(fragmentManager, "rateDialog")
+    }
 
-        List<Button> ratingButtons = new ArrayList<>();
-        ratingButtons.add(binding.rating1);
-        ratingButtons.add(binding.rating2);
-        ratingButtons.add(binding.rating3);
-        ratingButtons.add(binding.rating4);
-        ratingButtons.add(binding.rating5);
-        ratingButtons.add(binding.rating6);
-        ratingButtons.add(binding.rating7);
-        ratingButtons.add(binding.rating8);
-        ratingButtons.add(binding.rating9);
-        ratingButtons.add(binding.rating10);
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val builder: AlertDialog.Builder
 
-        for (int i = 0; i < ratingButtons.size(); i++) {
-            Button ratingButton = ratingButtons.get(i);
-            ratingButton.setText(TraktTools.buildUserRatingString(getContext(), i + 1));
+        val binding = DialogTraktRateBinding.inflate(LayoutInflater.from(context))
+            .also { this.binding = it }
+
+        val ratingButtons: MutableList<Button> = ArrayList()
+        ratingButtons.add(binding.rating1)
+        ratingButtons.add(binding.rating2)
+        ratingButtons.add(binding.rating3)
+        ratingButtons.add(binding.rating4)
+        ratingButtons.add(binding.rating5)
+        ratingButtons.add(binding.rating6)
+        ratingButtons.add(binding.rating7)
+        ratingButtons.add(binding.rating8)
+        ratingButtons.add(binding.rating9)
+        ratingButtons.add(binding.rating10)
+
+        for (i in ratingButtons.indices) {
+            val ratingButton = ratingButtons[i]
+            ratingButton.text = TraktTools.buildUserRatingString(context, i + 1)
         }
 
         // rating buttons from 1 (worst) to 10 (best)
-        ratingButtons.get(0).setOnClickListener(v -> rate(Rating.WEAKSAUCE));
-        ratingButtons.get(1).setOnClickListener(v -> rate(Rating.TERRIBLE));
-        ratingButtons.get(2).setOnClickListener(v -> rate(Rating.BAD));
-        ratingButtons.get(3).setOnClickListener(v -> rate(Rating.POOR));
-        ratingButtons.get(4).setOnClickListener(v -> rate(Rating.MEH));
-        ratingButtons.get(5).setOnClickListener(v -> rate(Rating.FAIR));
-        ratingButtons.get(6).setOnClickListener(v -> rate(Rating.GOOD));
-        ratingButtons.get(7).setOnClickListener(v -> rate(Rating.GREAT));
-        ratingButtons.get(8).setOnClickListener(v -> rate(Rating.SUPERB));
-        ratingButtons.get(9).setOnClickListener(v -> rate(Rating.TOTALLYNINJA));
+        ratingButtons[0].setOnClickListener { rate(Rating.WEAKSAUCE) }
+        ratingButtons[1].setOnClickListener { rate(Rating.TERRIBLE) }
+        ratingButtons[2].setOnClickListener { rate(Rating.BAD) }
+        ratingButtons[3].setOnClickListener { rate(Rating.POOR) }
+        ratingButtons[4].setOnClickListener { rate(Rating.MEH) }
+        ratingButtons[5].setOnClickListener { rate(Rating.FAIR) }
+        ratingButtons[6].setOnClickListener { rate(Rating.GOOD) }
+        ratingButtons[7].setOnClickListener { rate(Rating.GREAT) }
+        ratingButtons[8].setOnClickListener { rate(Rating.SUPERB) }
+        ratingButtons[9].setOnClickListener { rate(Rating.TOTALLYNINJA) }
 
-        builder = new MaterialAlertDialogBuilder(requireContext());
-        builder.setView(binding.getRoot());
+        builder = MaterialAlertDialogBuilder(requireContext())
+        builder.setView(binding.root)
 
-        return builder.create();
+        return builder.create()
     }
 
-    private void rate(Rating rating) {
-        Bundle args = requireArguments();
+    private fun rate(rating: Rating) {
+        val args = requireArguments()
 
-        String itemType = args.getString(InitBundle.ITEM_TYPE);
-        if (itemType == null) {
-            return;
-        }
-        long itemId = args.getLong(InitBundle.ITEM_ID);
-        BaseRateItemTask task = null;
-        switch (itemType) {
-            case ITEM_MOVIE: {
-                task = new RateMovieTask(requireContext(), rating, (int) itemId);
-                break;
+        val itemType = args.getString(InitBundle.ITEM_TYPE)
+            ?: return
+        val itemId = args.getLong(InitBundle.ITEM_ID)
+        val task: BaseRateItemTask = when (itemType) {
+            ITEM_MOVIE -> {
+                RateMovieTask(requireContext(), rating, itemId.toInt())
             }
-            case ITEM_SHOW: {
-                task = new RateShowTask(requireContext(), rating, itemId);
-                break;
+
+            ITEM_SHOW -> {
+                RateShowTask(requireContext(), rating, itemId)
             }
-            case ITEM_EPISODE: {
-                task = new RateEpisodeTask(requireContext(), rating, itemId);
-                break;
+
+            ITEM_EPISODE -> {
+                RateEpisodeTask(requireContext(), rating, itemId)
             }
+
+            else -> throw IllegalArgumentException("Unknown item type $itemType")
         }
-        if (task != null) {
-            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        }
+        task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
         // guard against onClick being called after onSaveInstanceState by allowing state loss
-        dismissAllowingStateLoss();
+        dismissAllowingStateLoss()
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
+
+    companion object {
+        private const val ITEM_SHOW = "show"
+        private const val ITEM_EPISODE = "episode"
+        private const val ITEM_MOVIE = "movie"
+
+        /**
+         * Create [RateDialogFragment] to rate a show.
+         */
+        fun newInstanceShow(showId: Long): RateDialogFragment {
+            val f = RateDialogFragment()
+
+            val args = Bundle()
+            args.putString(InitBundle.ITEM_TYPE, ITEM_SHOW)
+            args.putLong(InitBundle.ITEM_ID, showId)
+            f.arguments = args
+
+            return f
+        }
+
+        /**
+         * Create [RateDialogFragment] to rate an episode.
+         */
+        fun newInstanceEpisode(episodeId: Long): RateDialogFragment {
+            val f = RateDialogFragment()
+
+            val args = Bundle()
+            args.putString(InitBundle.ITEM_TYPE, ITEM_EPISODE)
+            args.putLong(InitBundle.ITEM_ID, episodeId)
+            f.arguments = args
+
+            return f
+        }
+
+        /**
+         * Create [RateDialogFragment] to rate a movie.
+         */
+        fun newInstanceMovie(movieTmdbId: Int): RateDialogFragment {
+            val f = RateDialogFragment()
+
+            val args = Bundle()
+            args.putString(InitBundle.ITEM_TYPE, ITEM_MOVIE)
+            args.putLong(InitBundle.ITEM_ID, movieTmdbId.toLong())
+            f.arguments = args
+
+            return f
+        }
     }
 }

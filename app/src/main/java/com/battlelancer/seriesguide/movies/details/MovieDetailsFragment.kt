@@ -729,7 +729,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     }
 
     private fun rateMovie() {
-        RateDialogFragment.newInstanceMovie(tmdbId).safeShow(context, parentFragmentManager)
+        RateDialogFragment.newInstanceMovie(tmdbId).safeShow(requireContext(), parentFragmentManager)
     }
 
     private fun setCrewVisibility(visible: Boolean) {

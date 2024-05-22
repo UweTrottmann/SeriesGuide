@@ -643,7 +643,7 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
 
     private fun rateEpisode() {
         RateDialogFragment.newInstanceEpisode(episodeId)
-            .safeShow(context, parentFragmentManager)
+            .safeShow(requireContext(), parentFragmentManager)
     }
 
     private fun shareEpisode() {
