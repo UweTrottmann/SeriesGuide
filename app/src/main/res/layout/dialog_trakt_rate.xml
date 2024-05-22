@@ -14,11 +14,14 @@
             android:layout_height="wrap_content"
             android:background="#7F0707">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/rating10"
                 style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                tools:icon="@drawable/ic_arrow_forward_black_24dp"
+                tools:iconGravity="textStart"
+                tools:iconTint="@color/sg_white"
                 tools:text="@string/love" />
         </FrameLayout>
 
@@ -27,7 +30,7 @@
             android:layout_height="wrap_content"
             android:background="#7B0C0B">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/rating9"
                 style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
                 android:layout_width="match_parent"
@@ -40,7 +43,7 @@
             android:layout_height="wrap_content"
             android:background="#751212">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/rating8"
                 style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
                 android:layout_width="match_parent"
@@ -53,7 +56,7 @@
             android:layout_height="wrap_content"
             android:background="#6D191A">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/rating7"
                 style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
                 android:layout_width="match_parent"
@@ -66,7 +69,7 @@
             android:layout_height="wrap_content"
             android:background="#662221">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/rating6"
                 style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
                 android:layout_width="match_parent"
@@ -79,7 +82,7 @@
             android:layout_height="wrap_content"
             android:background="#5D292A">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/rating5"
                 style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
                 android:layout_width="match_parent"
@@ -92,7 +95,7 @@
             android:layout_height="wrap_content"
             android:background="#553232">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/rating4"
                 style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
                 android:layout_width="match_parent"
@@ -105,7 +108,7 @@
             android:layout_height="wrap_content"
             android:background="#4E393A">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/rating3"
                 style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
                 android:layout_width="match_parent"
@@ -118,7 +121,7 @@
             android:layout_height="wrap_content"
             android:background="#494040">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/rating2"
                 style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
                 android:layout_width="match_parent"
@@ -131,13 +134,20 @@
             android:layout_height="wrap_content"
             android:background="#444444">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/rating1"
                 style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:text="@string/hate" />
         </FrameLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/ratingDelete"
+            style="@style/Widget.SeriesGuide.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_remove_rating" />
 
     </LinearLayout>
 

@@ -642,8 +642,10 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
     }
 
     private fun rateEpisode() {
-        RateDialogFragment.newInstanceEpisode(episodeId)
-            .safeShow(requireContext(), parentFragmentManager)
+        episode?.let {
+            RateDialogFragment.newInstanceEpisode(episodeId, it.ratingUser)
+                .safeShow(requireContext(), parentFragmentManager)
+        }
     }
 
     private fun shareEpisode() {
