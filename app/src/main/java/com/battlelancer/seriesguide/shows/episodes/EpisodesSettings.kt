@@ -40,7 +40,8 @@ object EpisodesSettings {
         ),
         TOP_RATED(
             4, "toprated",
-            "${SgEpisode2Columns.RATING_TRAKT} DESC"
+            // Do not use Trakt rating as it is populated on-demand
+            "${SgEpisode2Columns.RATING_TMDB} DESC"
         ),
         DVDLATEST_FIRST(
             5, "dvdlatestfirst",
