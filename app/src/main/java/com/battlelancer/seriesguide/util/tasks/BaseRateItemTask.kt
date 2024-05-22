@@ -12,11 +12,13 @@ import com.uwetrottmann.trakt5.entities.SyncResponse
 import com.uwetrottmann.trakt5.enums.Rating
 
 /**
- * Stores the rating in the database and sends it to Trakt.
+ * Stores the [rating] in the database and sends it to Trakt.
+ *
+ * If it is `null`, removes the rating instead.
  */
 abstract class BaseRateItemTask(
     context: Context,
-    protected val rating: Rating
+    protected val rating: Rating?
 ) : BaseActionTask(context) {
 
     override val isSendingToHexagon: Boolean
@@ -32,9 +34,14 @@ abstract class BaseRateItemTask(
 
             val trakt = SgApp.getServicesComponent(context).trakt()
             val traktSync = trakt.sync()
+            val call = if (rating != null) {
+                traktSync.addRatings(ratedItems)
+            } else {
+                traktSync.deleteRatings(ratedItems)
+            }
             val result =
                 executeTraktCall<SyncResponse>(
-                    traktSync.addRatings(ratedItems),
+                    call,
                     trakt,
                     traktAction,
                     object : ResponseCallback<SyncResponse> {

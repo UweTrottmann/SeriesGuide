@@ -3,10 +3,9 @@
 
 package com.battlelancer.seriesguide.util.tasks
 
-import android.content.ContentValues
 import android.content.Context
-import com.battlelancer.seriesguide.movies.tools.MovieTools.MovieChangedEvent
-import com.battlelancer.seriesguide.provider.SeriesGuideContract
+import com.battlelancer.seriesguide.movies.tools.MovieTools
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.uwetrottmann.trakt5.entities.MovieIds
 import com.uwetrottmann.trakt5.entities.SyncItems
 import com.uwetrottmann.trakt5.entities.SyncMovie
@@ -14,12 +13,11 @@ import com.uwetrottmann.trakt5.enums.Rating
 import org.greenrobot.eventbus.EventBus
 
 /**
- * Stores the rating for the given movie in the database (if it is in the database) and sends it
- * to trakt.
+ * See [BaseRateItemTask]
  */
 class RateMovieTask(
     context: Context,
-    rating: Rating,
+    rating: Rating?,
     private val movieTmdbId: Int
 ) : BaseRateItemTask(context, rating) {
     override val traktAction: String
@@ -31,12 +29,8 @@ class RateMovieTask(
     }
 
     override fun doDatabaseUpdate(): Boolean {
-        val values = ContentValues()
-        values.put(SeriesGuideContract.Movies.RATING_USER, rating.value)
-
-        val rowsUpdated = context.contentResolver
-            .update(SeriesGuideContract.Movies.buildMovieUri(movieTmdbId), values, null, null)
-
+        val rowsUpdated = SgRoomDatabase.getInstance(context).movieHelper()
+            .updateUserRating(movieTmdbId, rating?.value ?: 0)
         return rowsUpdated > 0
     }
 
@@ -45,6 +39,7 @@ class RateMovieTask(
         super.onPostExecute(result)
 
         // post event so movie UI reloads (it is not listening to database changes)
-        EventBus.getDefault().post(MovieChangedEvent(movieTmdbId))
+        EventBus.getDefault().post(MovieTools.MovieChangedEvent(movieTmdbId))
     }
+
 }

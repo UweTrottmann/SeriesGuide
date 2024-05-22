@@ -10,9 +10,12 @@ import com.uwetrottmann.trakt5.entities.SyncItems
 import com.uwetrottmann.trakt5.entities.SyncShow
 import com.uwetrottmann.trakt5.enums.Rating
 
+/**
+ * See [BaseRateItemTask]
+ */
 class RateShowTask(
     context: Context,
-    rating: Rating,
+    rating: Rating?,
     private val showId: Long
 ) : BaseRateItemTask(context, rating) {
 
@@ -29,7 +32,7 @@ class RateShowTask(
 
     override fun doDatabaseUpdate(): Boolean {
         val rowsUpdated = SgRoomDatabase.getInstance(context).sgShow2Helper()
-            .updateUserRating(showId, rating.value)
+            .updateUserRating(showId, rating?.value ?: 0)
         return rowsUpdated > 0
     }
 }
