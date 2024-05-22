@@ -1,204 +1,180 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2015-2024 Uwe Trottmann
 
-package com.battlelancer.seriesguide.util.tasks;
+package com.battlelancer.seriesguide.util.tasks
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.os.AsyncTask;
-import androidx.annotation.CallSuper;
-import androidx.annotation.NonNull;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
-import com.battlelancer.seriesguide.traktapi.SgTrakt;
-import com.battlelancer.seriesguide.traktapi.TraktCredentials;
-import com.battlelancer.seriesguide.ui.BaseMessageActivity;
-import com.battlelancer.seriesguide.util.Errors;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.trakt5.TraktV2;
-import org.greenrobot.eventbus.EventBus;
-import retrofit2.Call;
-import retrofit2.Response;
+import android.annotation.SuppressLint
+import android.content.Context
+import android.os.AsyncTask
+import androidx.annotation.CallSuper
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings
+import com.battlelancer.seriesguide.traktapi.SgTrakt
+import com.battlelancer.seriesguide.traktapi.TraktCredentials
+import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceActiveEvent
+import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceCompletedEvent
+import com.battlelancer.seriesguide.util.Errors
+import com.uwetrottmann.androidutils.AndroidUtils
+import com.uwetrottmann.trakt5.TraktV2
+import org.greenrobot.eventbus.EventBus
+import retrofit2.Call
 
-public abstract class BaseActionTask extends AsyncTask<Void, Void, Integer> {
-
-    public static final int SUCCESS = 0;
-    private static final int ERROR_NETWORK = -1;
-    public static final int ERROR_DATABASE = -2;
-    public static final int ERROR_TRAKT_AUTH = -3;
-    private static final int ERROR_TRAKT_API_CLIENT = -4;
-    public static final int ERROR_TRAKT_API_NOT_FOUND = -5;
-    public static final int ERROR_HEXAGON_API = -6;
-    private static final int ERROR_TRAKT_API_SERVER = -7;
-    /**
-     * Account limit exceeded (list count, item count, ...).
-     */
-    private static final int ERROR_TRAKT_ACCOUNT_LIMIT_EXCEEDED = -8;
-    /**
-     * Locked User Account, have the user contact Trakt support.
-     */
-    private static final int ERROR_TRAKT_ACCOUNT_LOCKED = -9;
+abstract class BaseActionTask(context: Context) : AsyncTask<Void?, Void?, Int?>() {
 
     @SuppressLint("StaticFieldLeak") // using application context
-    private final Context context;
-    private boolean isSendingToHexagon;
-    private boolean isSendingToTrakt;
+    protected val context: Context = context.applicationContext
 
-    public BaseActionTask(Context context) {
-        this.context = context.getApplicationContext();
-    }
+    private var _isSendingToHexagon: Boolean = false
 
-    @Override
-    protected void onPreExecute() {
-        isSendingToHexagon = HexagonSettings.isEnabled(context);
-        isSendingToTrakt = TraktCredentials.get(context).hasCredentials();
+    /**
+     * Will be true if signed in with hexagon. Override and return `false` to not send to
+     * hexagon.
+     */
+    protected open val isSendingToHexagon: Boolean
+        get() = _isSendingToHexagon
 
-        // show message to which service we send
-        EventBus.getDefault().postSticky(new BaseMessageActivity.ServiceActiveEvent(
-                isSendingToHexagon(), isSendingToTrakt()));
-    }
+    private var _isSendingToTrakt: Boolean = false
 
-    @Override
-    protected final Integer doInBackground(Void... params) {
-        if (isCancelled()) {
-            return null;
-        }
-
-        // if sending to service, check for connection
-        if (isSendingToHexagon() || isSendingToTrakt()) {
-            if (!AndroidUtils.isNetworkConnected(getContext())) {
-                return ERROR_NETWORK;
-            }
-        }
-
-        return doBackgroundAction(params);
-    }
-
-    protected abstract Integer doBackgroundAction(Void... params);
-
-    public interface ResponseCallback<T> {
-        int handleSuccessfulResponse(@NonNull T body);
-    }
-
-    public <T> int executeTraktCall(
-            Call<T> call,
-            TraktV2 trakt,
-            String action,
-            ResponseCallback<T> callbackOnSuccess
-    ) {
-        try {
-            Response<T> response = call.execute();
-            if (response.isSuccessful()) {
-                T body = response.body();
-                if (body == null) {
-                    return ERROR_TRAKT_API_CLIENT;
-                }
-                return callbackOnSuccess.handleSuccessfulResponse(body);
-            } else {
-                if (SgTrakt.isUnauthorized(getContext(), response)) {
-                    return ERROR_TRAKT_AUTH;
-                }
-                Errors.logAndReport(
-                        action, response,
-                        SgTrakt.checkForTraktError(trakt, response)
-                );
-                int code = response.code();
-                if (code == 429 || code >= 500) {
-                    return ERROR_TRAKT_API_SERVER;
-                } else if (code == 420) {
-                    return ERROR_TRAKT_ACCOUNT_LIMIT_EXCEEDED;
-                } else if (code == 423) {
-                    return ERROR_TRAKT_ACCOUNT_LOCKED;
-                } else {
-                    return ERROR_TRAKT_API_CLIENT;
-                }
-            }
-        } catch (Exception e) {
-            Errors.logAndReport(action, e);
-            return ERROR_NETWORK;
-        }
-    }
-
-    @CallSuper
-    @Override
-    protected void onPostExecute(Integer result) {
-        EventBus.getDefault().removeStickyEvent(BaseMessageActivity.ServiceActiveEvent.class);
-
-        boolean displaySuccess;
-        String confirmationText;
-        if (result == SUCCESS) {
-            // success!
-            displaySuccess = true;
-            confirmationText = getSuccessTextResId() != 0
-                    ? context.getString(getSuccessTextResId())
-                    : null;
-        } else {
-            // handle errors
-            displaySuccess = false;
-            switch (result) {
-                case ERROR_NETWORK:
-                    confirmationText = context.getString(R.string.offline);
-                    break;
-                case ERROR_DATABASE:
-                    confirmationText = context.getString(R.string.database_error);
-                    break;
-                case ERROR_TRAKT_AUTH:
-                    confirmationText = context.getString(R.string.trakt_error_credentials);
-                    break;
-                // Currently not differentiating client and server errors
-                // as there is no retry mechanism. May need to change once
-                // migrated to jobs.
-                case ERROR_TRAKT_API_CLIENT:
-                case ERROR_TRAKT_API_SERVER:
-                    confirmationText = context.getString(R.string.api_error_generic,
-                            context.getString(R.string.trakt));
-                    break;
-                case ERROR_TRAKT_API_NOT_FOUND:
-                    confirmationText = context.getString(R.string.trakt_error_not_exists);
-                    break;
-                case ERROR_HEXAGON_API:
-                    confirmationText = context.getString(R.string.api_error_generic,
-                            context.getString(R.string.hexagon));
-                    break;
-                case ERROR_TRAKT_ACCOUNT_LIMIT_EXCEEDED:
-                    confirmationText = context.getString(R.string.trakt_error_limit_exceeded);
-                    break;
-                case ERROR_TRAKT_ACCOUNT_LOCKED:
-                    confirmationText = context.getString(R.string.trakt_error_account_locked);
-                    break;
-                default:
-                    confirmationText = null;
-                    break;
-            }
-        }
-        EventBus.getDefault()
-                .post(new BaseMessageActivity.ServiceCompletedEvent(confirmationText,
-                        displaySuccess, null));
-    }
-
-    protected Context getContext() {
-        return context;
-    }
+    /**
+     * Will be true if signed in with trakt.
+     */
+    protected open val isSendingToTrakt: Boolean
+        get() = _isSendingToTrakt
 
     /**
      * String resource for message to display to the user on success (recommended if a network
      * request is required), or 0 to display no message (if doing just a database update and there
      * is immediate UI feedback).
      */
-    protected abstract int getSuccessTextResId();
+    protected abstract val successTextResId: Int
 
-    /**
-     * Will be true if signed in with hexagon. Override and return {@code false} to not send to
-     * hexagon.
-     */
-    protected boolean isSendingToHexagon() {
-        return isSendingToHexagon;
+    @Deprecated("Deprecated in Java")
+    override fun onPreExecute() {
+        _isSendingToHexagon = HexagonSettings.isEnabled(context)
+        _isSendingToTrakt = TraktCredentials.get(context).hasCredentials()
+
+        // show message to which service we send
+        EventBus.getDefault().postSticky(
+            ServiceActiveEvent(isSendingToHexagon, isSendingToTrakt)
+        )
     }
 
-    /**
-     * Will be true if signed in with trakt.
-     */
-    protected boolean isSendingToTrakt() {
-        return isSendingToTrakt;
+    @Deprecated("Deprecated in Java")
+    override fun doInBackground(vararg params: Void?): Int? {
+        if (isCancelled) {
+            return null
+        }
+
+        // if sending to service, check for connection
+        if (isSendingToHexagon || isSendingToTrakt) {
+            if (!AndroidUtils.isNetworkConnected(context)) {
+                return ERROR_NETWORK
+            }
+        }
+
+        return doBackgroundAction(*params)
+    }
+
+    protected abstract fun doBackgroundAction(vararg params: Void?): Int?
+
+    interface ResponseCallback<T> {
+        fun handleSuccessfulResponse(body: T): Int
+    }
+
+    fun <T> executeTraktCall(
+        call: Call<T>,
+        trakt: TraktV2,
+        action: String,
+        callbackOnSuccess: ResponseCallback<T>
+    ): Int {
+        try {
+            val response = call.execute()
+            if (response.isSuccessful) {
+                val body = response.body() ?: return ERROR_TRAKT_API_CLIENT
+                return callbackOnSuccess.handleSuccessfulResponse(body)
+            } else {
+                if (SgTrakt.isUnauthorized(context, response)) {
+                    return ERROR_TRAKT_AUTH
+                }
+                Errors.logAndReport(
+                    action, response,
+                    SgTrakt.checkForTraktError(trakt, response)
+                )
+                val code = response.code()
+                return if (code == 429 || code >= 500) {
+                    ERROR_TRAKT_API_SERVER
+                } else if (code == 420) {
+                    ERROR_TRAKT_ACCOUNT_LIMIT_EXCEEDED
+                } else if (code == 423) {
+                    ERROR_TRAKT_ACCOUNT_LOCKED
+                } else {
+                    ERROR_TRAKT_API_CLIENT
+                }
+            }
+        } catch (e: Exception) {
+            Errors.logAndReport(action, e)
+            return ERROR_NETWORK
+        }
+    }
+
+    @Deprecated("Deprecated in Java")
+    @CallSuper
+    override fun onPostExecute(result: Int?) {
+        EventBus.getDefault().removeStickyEvent(ServiceActiveEvent::class.java)
+
+        val displaySuccess: Boolean
+        val confirmationText: String?
+        if (result == SUCCESS) {
+            // success!
+            displaySuccess = true
+            confirmationText =
+                if (successTextResId != 0) context.getString(successTextResId) else null
+        } else {
+            // handle errors
+            displaySuccess = false
+            confirmationText = when (result) {
+                ERROR_NETWORK -> context.getString(R.string.offline)
+                ERROR_DATABASE -> context.getString(R.string.database_error)
+                ERROR_TRAKT_AUTH -> context.getString(R.string.trakt_error_credentials)
+                ERROR_TRAKT_API_CLIENT, ERROR_TRAKT_API_SERVER -> context.getString(
+                    R.string.api_error_generic,
+                    context.getString(R.string.trakt)
+                )
+
+                ERROR_TRAKT_API_NOT_FOUND -> context.getString(R.string.trakt_error_not_exists)
+                ERROR_HEXAGON_API -> context.getString(
+                    R.string.api_error_generic,
+                    context.getString(R.string.hexagon)
+                )
+
+                ERROR_TRAKT_ACCOUNT_LIMIT_EXCEEDED -> context.getString(R.string.trakt_error_limit_exceeded)
+                ERROR_TRAKT_ACCOUNT_LOCKED -> context.getString(R.string.trakt_error_account_locked)
+                else -> null
+            }
+        }
+        EventBus.getDefault().post(
+            ServiceCompletedEvent(confirmationText, displaySuccess, null)
+        )
+    }
+
+    companion object {
+        const val SUCCESS: Int = 0
+        private const val ERROR_NETWORK = -1
+        const val ERROR_DATABASE: Int = -2
+        const val ERROR_TRAKT_AUTH: Int = -3
+        private const val ERROR_TRAKT_API_CLIENT = -4
+        const val ERROR_TRAKT_API_NOT_FOUND: Int = -5
+        const val ERROR_HEXAGON_API: Int = -6
+        private const val ERROR_TRAKT_API_SERVER = -7
+
+        /**
+         * Account limit exceeded (list count, item count, ...).
+         */
+        private const val ERROR_TRAKT_ACCOUNT_LIMIT_EXCEEDED = -8
+
+        /**
+         * Locked User Account, have the user contact Trakt support.
+         */
+        private const val ERROR_TRAKT_ACCOUNT_LOCKED = -9
     }
 }
