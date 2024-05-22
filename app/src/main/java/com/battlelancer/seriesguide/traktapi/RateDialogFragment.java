@@ -148,15 +148,15 @@ public class RateDialogFragment extends AppCompatDialogFragment {
         BaseRateItemTask task = null;
         switch (itemType) {
             case ITEM_MOVIE: {
-                task = new RateMovieTask(getContext(), rating, (int) itemId);
+                task = new RateMovieTask(requireContext(), rating, (int) itemId);
                 break;
             }
             case ITEM_SHOW: {
-                task = new RateShowTask(getContext(), rating, itemId);
+                task = new RateShowTask(requireContext(), rating, itemId);
                 break;
             }
             case ITEM_EPISODE: {
-                task = new RateEpisodeTask(getContext(), rating, itemId);
+                task = new RateEpisodeTask(requireContext(), rating, itemId);
                 break;
             }
         }

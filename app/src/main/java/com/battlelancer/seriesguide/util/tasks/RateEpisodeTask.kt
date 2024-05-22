@@ -1,57 +1,50 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2015-2024 Uwe Trottmann
 
-package com.battlelancer.seriesguide.util.tasks;
+package com.battlelancer.seriesguide.util.tasks
 
-import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.battlelancer.seriesguide.shows.database.SgEpisode2Numbers;
-import com.battlelancer.seriesguide.provider.SgRoomDatabase;
-import com.uwetrottmann.trakt5.entities.ShowIds;
-import com.uwetrottmann.trakt5.entities.SyncEpisode;
-import com.uwetrottmann.trakt5.entities.SyncItems;
-import com.uwetrottmann.trakt5.entities.SyncSeason;
-import com.uwetrottmann.trakt5.entities.SyncShow;
-import com.uwetrottmann.trakt5.enums.Rating;
+import android.content.Context
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.uwetrottmann.trakt5.entities.ShowIds
+import com.uwetrottmann.trakt5.entities.SyncEpisode
+import com.uwetrottmann.trakt5.entities.SyncItems
+import com.uwetrottmann.trakt5.entities.SyncSeason
+import com.uwetrottmann.trakt5.entities.SyncShow
+import com.uwetrottmann.trakt5.enums.Rating
 
-public class RateEpisodeTask extends BaseRateItemTask {
+class RateEpisodeTask(
+    context: Context,
+    rating: Rating,
+    private val episodeId: Long
+) : BaseRateItemTask(context, rating) {
 
-    private final long episodeId;
+    override val traktAction: String
+        get() = "rate episode"
 
-    public RateEpisodeTask(Context context, Rating rating, long episodeId) {
-        super(context, rating);
-        this.episodeId = episodeId;
+    override fun buildTraktSyncItems(): SyncItems? {
+        val database = SgRoomDatabase.getInstance(context)
+
+        val episode = database.sgEpisode2Helper().getEpisodeNumbers(episodeId) ?: return null
+
+        val showTmdbId = database.sgShow2Helper().getShowTmdbId(episode.showId)
+        if (showTmdbId == 0) return null
+
+        return SyncItems()
+            .shows(
+                SyncShow().id(ShowIds.tmdb(showTmdbId))
+                    .seasons(
+                        SyncSeason().number(episode.season)
+                            .episodes(
+                                SyncEpisode().number(episode.episodenumber)
+                                    .rating(rating)
+                            )
+                    )
+            )
     }
 
-    @NonNull
-    @Override
-    protected String getTraktAction() {
-        return "rate episode";
-    }
-
-    @Nullable
-    @Override
-    protected SyncItems buildTraktSyncItems() {
-        SgRoomDatabase database = SgRoomDatabase.getInstance(getContext());
-
-        SgEpisode2Numbers episode = database.sgEpisode2Helper().getEpisodeNumbers(episodeId);
-        if (episode == null) return null;
-
-        int showTmdbId = database.sgShow2Helper().getShowTmdbId(episode.getShowId());
-        if (showTmdbId == 0) return null;
-
-        return new SyncItems()
-                .shows(new SyncShow().id(ShowIds.tmdb(showTmdbId))
-                        .seasons(new SyncSeason().number(episode.getSeason())
-                                .episodes(new SyncEpisode().number(episode.getEpisodenumber())
-                                        .rating(getRating()))));
-    }
-
-    @Override
-    protected boolean doDatabaseUpdate() {
-        int rowsUpdated = SgRoomDatabase.getInstance(getContext()).sgEpisode2Helper()
-                .updateUserRating(episodeId, getRating().value);
-        return rowsUpdated > 0;
+    override fun doDatabaseUpdate(): Boolean {
+        val rowsUpdated = SgRoomDatabase.getInstance(context).sgEpisode2Helper()
+            .updateUserRating(episodeId, rating.value)
+        return rowsUpdated > 0
     }
 }
