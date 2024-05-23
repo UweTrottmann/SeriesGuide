@@ -19,8 +19,8 @@
                 style="@style/Widget.SeriesGuide.Button.Borderless.Rating"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:icon="@drawable/ic_arrow_forward_black_24dp"
-                tools:iconGravity="textStart"
+                tools:icon="@drawable/ic_radio_button_checked_control_24dp"
+                tools:iconGravity="end"
                 tools:iconTint="@color/sg_white"
                 tools:text="@string/love" />
         </FrameLayout>

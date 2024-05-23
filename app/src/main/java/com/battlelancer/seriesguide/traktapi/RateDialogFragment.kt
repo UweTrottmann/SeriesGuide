@@ -86,9 +86,9 @@ class RateDialogFragment : AppCompatDialogFragment() {
         if (currentRatingOrNull != null) {
             // display indicator on current rating
             ratingButtons[currentRatingOrNull - 1].apply {
-                setIconResource(R.drawable.ic_arrow_forward_black_24dp)
-                iconGravity = MaterialButton.ICON_GRAVITY_TEXT_START
+                setIconResource(R.drawable.ic_radio_button_checked_control_24dp)
                 setIconTintResource(R.color.sg_white)
+                iconGravity = MaterialButton.ICON_GRAVITY_END
             }
             binding.ratingDelete.apply {
                 isGone = false
