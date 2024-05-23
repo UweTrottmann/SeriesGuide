@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2012-2023 Uwe Trottmann
+// Copyright 2012-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.comments
 
-import android.os.AsyncTask
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
@@ -18,6 +17,7 @@ import android.widget.Toast
 import androidx.core.view.MenuProvider
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
@@ -26,7 +26,6 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentCommentsBinding
 import com.battlelancer.seriesguide.traktapi.TraktAction
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
-import com.battlelancer.seriesguide.traktapi.TraktTask
 import com.battlelancer.seriesguide.traktapi.TraktTask.TraktActionCompleteEvent
 import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
 import com.battlelancer.seriesguide.util.ThemeUtils
@@ -53,6 +52,7 @@ class TraktCommentsFragment : Fragment() {
 
     private var binding: FragmentCommentsBinding? = null
     private lateinit var adapter: TraktCommentsAdapter
+    private val model by viewModels<TraktCommentsViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -151,31 +151,24 @@ class TraktCommentsFragment : Fragment() {
         val args = requireArguments()
         val isSpoiler = binding.checkBoxShouts.isChecked
 
-        // as determined by "science", episode comments are most likely, so check for them first
         // comment for an episode?
         val episodeId = args.getLong(InitBundle.EPISODE_ID)
         if (episodeId != 0L) {
-            @Suppress("DEPRECATION") // AsyncTask
-            TraktTask(context).commentEpisode(episodeId, comment, isSpoiler)
-                .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+            model.postEpisodeComment(episodeId, comment, isSpoiler)
             return
         }
 
         // comment for a movie?
         val movieTmdbId = args.getInt(InitBundle.MOVIE_TMDB_ID)
         if (movieTmdbId != 0) {
-            @Suppress("DEPRECATION") // AsyncTask
-            TraktTask(context).commentMovie(movieTmdbId, comment, isSpoiler)
-                .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+            model.postMovieComment(movieTmdbId, comment, isSpoiler)
             return
         }
 
         // comment for a show?
         val showId = args.getLong(InitBundle.SHOW_ID)
         if (showId != 0L) {
-            @Suppress("DEPRECATION") // AsyncTask
-            TraktTask(context).commentShow(showId, comment, isSpoiler)
-                .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+            model.postShowComment(showId, comment, isSpoiler)
             return
         }
 
