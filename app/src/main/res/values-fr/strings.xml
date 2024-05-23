@@ -348,6 +348,7 @@
     <string name="action_rate">Noter</string>
     <string name="ack_rated">Note envoyée</string>
     <string name="your_rating">Votre note</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">Totalement ninja !</string>
     <string name="hate">Un peu fade :(</string>
     <string name="rating2">Nul</string>

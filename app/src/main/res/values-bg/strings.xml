@@ -348,6 +348,7 @@
     <string name="action_rate">Оцени</string>
     <string name="ack_rated">Рейтингът е изпратен</string>
     <string name="your_rating">Вашата оценка</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">Върховно!</string>
     <string name="hate">Слаба работа :(</string>
     <string name="rating2">Ужасен</string>

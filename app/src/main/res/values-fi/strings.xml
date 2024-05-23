@@ -348,6 +348,7 @@
     <string name="action_rate">Arvostele</string>
     <string name="ack_rated">Arvosana lähetettiin</string>
     <string name="your_rating">Arvosanasi</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">Maailman parasta!</string>
     <string name="hate">Ei sytyttänyt :(</string>
     <string name="rating2">Kauhea</string>

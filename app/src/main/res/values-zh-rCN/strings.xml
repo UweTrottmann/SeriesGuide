@@ -338,6 +338,7 @@
     <string name="action_rate">评分</string>
     <string name="ack_rated">评分已发送</string>
     <string name="your_rating">您的评分</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">神作！</string>
     <string name="hate">垃圾 :(</string>
     <string name="rating2">很差</string>

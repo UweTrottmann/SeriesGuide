@@ -348,6 +348,7 @@
     <string name="action_rate">Betygsätt</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Ditt betyg</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">Helt ninja!</string>
     <string name="hate">Svag sås :(</string>
     <string name="rating2">Usel</string>

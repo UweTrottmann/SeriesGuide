@@ -338,6 +338,7 @@
     <string name="action_rate">作品を評価</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">あなたの評価</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">完全に忍者!</string>
     <string name="hate">つまらない :(</string>
     <string name="rating2">ひどい</string>

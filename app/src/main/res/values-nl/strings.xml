@@ -348,6 +348,7 @@
     <string name="action_rate">Beoordelen</string>
     <string name="ack_rated">Beoordeling verstuurd</string>
     <string name="your_rating">Uw beoordeling</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">Zeer goed!</string>
     <string name="hate">Slappe hap :(</string>
     <string name="rating2">Verschrikkelijk</string>

@@ -338,6 +338,7 @@
     <string name="action_rate">ให้คะแนน</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">คะแนนของคุณ</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">สุดยอดไปเลย!</string>
     <string name="hate">แย่ที่สุด :(</string>
     <string name="rating2">แย่มาก</string>

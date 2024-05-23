@@ -388,6 +388,7 @@
     <string name="action_rate">Cyfradd</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Eich sgôr</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">Hollol ninja!</string>
     <string name="hate">Saws Gwan :(</string>
     <string name="rating2">Ofnadwy</string>

@@ -358,6 +358,7 @@
     <string name="action_rate">Evaluare</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Nota ta</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">Super tare!</string>
     <string name="hate">Slab :(</string>
     <string name="rating2">Teribil</string>

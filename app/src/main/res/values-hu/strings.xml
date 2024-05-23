@@ -348,6 +348,7 @@
     <string name="action_rate">Értékelj</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Saját értékelésed</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">Totally ninja!</string>
     <string name="hate">Gyenge eresztés :(</string>
     <string name="rating2">Szörnyű</string>
