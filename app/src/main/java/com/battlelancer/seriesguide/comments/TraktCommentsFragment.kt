@@ -258,11 +258,10 @@ class TraktCommentsFragment : Fragment() {
     }
 
     private fun refreshComments() {
+        // Signal no cached response should be used
+        val args = TraktCommentsLoader.argsWithRefresh(requireArguments())
         LoaderManager.getInstance(this)
-            .restartLoader(
-                TraktCommentsActivity.LOADER_ID_COMMENTS, arguments,
-                commentsLoaderCallbacks
-            )
+            .restartLoader(TraktCommentsActivity.LOADER_ID_COMMENTS, args, commentsLoaderCallbacks)
     }
 
     /**
