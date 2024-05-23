@@ -74,8 +74,8 @@
     <string name="no_shouts">Byddwch y cyntaf i wneud sylw!</string>
     <string name="refresh">Adnewyddu</string>
     <plurals name="replies_plural">
-        <item quantity="one">%d ateb</item>
         <item quantity="zero">%d ateb</item>
+        <item quantity="one">%d ateb</item>
         <item quantity="two">%d atebion</item>
         <item quantity="few">%d atebion</item>
         <item quantity="many">%d atebion</item>
@@ -316,8 +316,8 @@
     <string name="stats_in_collection_format">%d mewn casgliad</string>
     <string name="movies_watched_format">%s gwylio</string>
     <plurals name="days_plural">
-        <item quantity="one">%d diwrnod</item>
         <item quantity="zero">%d diwrnod</item>
+        <item quantity="one">%d diwrnod</item>
         <item quantity="two">%d diwrnod</item>
         <item quantity="few">%d diwrnod</item>
         <item quantity="many">%d diwrnod</item>

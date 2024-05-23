@@ -74,8 +74,8 @@
     <string name="no_shouts">كن أول من يعلّق!</string>
     <string name="refresh">تحديث</string>
     <plurals name="replies_plural">
-        <item quantity="one">رد %d</item>
         <item quantity="zero">رد %d</item>
+        <item quantity="one">رد %d</item>
         <item quantity="two">%d ردان</item>
         <item quantity="few">%d ردود</item>
         <item quantity="many">%d رد</item>
@@ -316,8 +316,8 @@
     <string name="stats_in_collection_format">إضافة إلى مجموعة (%d)</string>
     <string name="movies_watched_format">%s تمت مشاهدتها</string>
     <plurals name="days_plural">
-        <item quantity="one">يومان</item>
         <item quantity="zero">يوم</item>
+        <item quantity="one">يومان</item>
         <item quantity="two">%d أيام</item>
         <item quantity="few">%d أيام</item>
         <item quantity="many">%d أيام</item>
