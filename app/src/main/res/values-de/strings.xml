@@ -348,6 +348,7 @@
     <string name="action_rate">Bewerten</string>
     <string name="ack_rated">Bewertung übermittelt</string>
     <string name="your_rating">Ihre Bewertung</string>
+    <string name="action_remove_rating">Bewertung entfernen</string>
     <string name="love">Absolut top!</string>
     <string name="hate">Totaler Flop :(</string>
     <string name="rating2">Schrecklich</string>

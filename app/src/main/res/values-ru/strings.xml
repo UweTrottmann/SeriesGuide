@@ -368,6 +368,7 @@
     <string name="action_rate">Oценить</string>
     <string name="ack_rated">Оценка отправлена</string>
     <string name="your_rating">Ваша оценка</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">Супер!</string>
     <string name="hate">Фиг знает :(</string>
     <string name="rating2">Ужасно</string>

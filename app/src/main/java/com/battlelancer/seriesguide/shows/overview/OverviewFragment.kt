@@ -334,7 +334,7 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
 
     private fun onButtonRateClick() {
         runIfHasEpisode { episode ->
-            RateDialogFragment.newInstanceEpisode(episode.id)
+            RateDialogFragment.newInstanceEpisode(episode.id, episode.ratingUser)
                 .safeShow(requireContext(), parentFragmentManager)
         }
     }

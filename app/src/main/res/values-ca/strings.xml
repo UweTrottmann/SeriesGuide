@@ -348,6 +348,7 @@
     <string name="action_rate">Puntua</string>
     <string name="ack_rated">Valoració enviada</string>
     <string name="your_rating">La vostra valoració</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">Una passada!</string>
     <string name="hate">Horrible</string>
     <string name="rating2">Dolentíssim</string>

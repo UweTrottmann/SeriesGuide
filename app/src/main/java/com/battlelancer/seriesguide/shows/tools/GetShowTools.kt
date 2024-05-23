@@ -195,7 +195,7 @@ class GetShowTools @Inject constructor(
                     ratingTmdbVotes = ratingTmdbVotes,
                     ratingTrakt = traktDetails.rating,
                     ratingTraktVotes = traktDetails.votes,
-                    ratingUser = null,
+                    ratingUser = null, // If at all, added by TraktRatingsSync
                     genres = genres,
                     network = network,
                     imdbId = imdbId,

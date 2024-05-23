@@ -368,6 +368,7 @@
     <string name="action_rate">דרג</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">הדירוג שלך</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">לגמרי נינג\'ה!</string>
     <string name="hate">על הפנים ):</string>
     <string name="rating2">נוראי</string>

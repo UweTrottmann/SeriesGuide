@@ -338,6 +338,7 @@
     <string name="action_rate">평가</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">당신의 평가</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">킹왕짱!</string>
     <string name="hate">쓰레기 :(</string>
     <string name="rating2">끔찍해</string>

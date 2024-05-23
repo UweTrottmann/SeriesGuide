@@ -338,6 +338,7 @@
     <string name="action_rate">評分</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">您的評分</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">太讚啦!</string>
     <string name="hate">太弱了:(</string>
     <string name="rating2">浪費人生</string>

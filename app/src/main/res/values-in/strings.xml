@@ -338,6 +338,7 @@
     <string name="action_rate">Beri nilai</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Nilai anda</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">Benar-benar ninja!</string>
     <string name="hate">Payah :(</string>
     <string name="rating2">Buruk</string>

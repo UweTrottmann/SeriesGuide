@@ -8,32 +8,29 @@ import android.content.Context
 import android.os.AsyncTask
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialogFragment
+import androidx.core.os.bundleOf
+import androidx.core.view.isGone
 import androidx.fragment.app.FragmentManager
+import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.DialogTraktRateBinding
 import com.battlelancer.seriesguide.util.safeShow
 import com.battlelancer.seriesguide.util.tasks.BaseRateItemTask
 import com.battlelancer.seriesguide.util.tasks.RateEpisodeTask
 import com.battlelancer.seriesguide.util.tasks.RateMovieTask
 import com.battlelancer.seriesguide.util.tasks.RateShowTask
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.uwetrottmann.trakt5.enums.Rating
 
 /**
- * If connected to Trakt, allows rating a show, episode or movie on a 10 value rating scale.
- * If not connected, asks the user to connect Trakt.
+ * If connected to Trakt, allows rating a show, episode or movie on a 10 value rating scale or to
+ * remove the rating. If not connected, asks the user to connect Trakt.
  *
  * Use via [safeShow].
  */
 class RateDialogFragment : AppCompatDialogFragment() {
-    private interface InitBundle {
-        companion object {
-            const val ITEM_TYPE: String = "item-type"
-            const val ITEM_ID: String = "item-id"
-        }
-    }
 
     private var binding: DialogTraktRateBinding? = null
 
@@ -53,7 +50,7 @@ class RateDialogFragment : AppCompatDialogFragment() {
         val binding = DialogTraktRateBinding.inflate(LayoutInflater.from(context))
             .also { this.binding = it }
 
-        val ratingButtons: MutableList<Button> = ArrayList()
+        val ratingButtons: MutableList<MaterialButton> = ArrayList()
         ratingButtons.add(binding.rating1)
         ratingButtons.add(binding.rating2)
         ratingButtons.add(binding.rating3)
@@ -82,18 +79,38 @@ class RateDialogFragment : AppCompatDialogFragment() {
         ratingButtons[8].setOnClickListener { rate(Rating.SUPERB) }
         ratingButtons[9].setOnClickListener { rate(Rating.TOTALLYNINJA) }
 
+        // Rating may be null or 0 if not set
+        val currentRatingOrNull = requireArguments().getInt(ARG_CURRENT_RATING)
+            .let { if (it in 1..10) it else null }
+
+        if (currentRatingOrNull != null) {
+            // display indicator on current rating
+            ratingButtons[currentRatingOrNull - 1].apply {
+                setIconResource(R.drawable.ic_radio_button_checked_control_24dp)
+                setIconTintResource(R.color.sg_white)
+                iconGravity = MaterialButton.ICON_GRAVITY_END
+            }
+            binding.ratingDelete.apply {
+                isGone = false
+                setOnClickListener { rate(null) }
+            }
+        } else {
+            // Hide delete button if no rating is set
+            binding.ratingDelete.isGone = true
+        }
+
         builder = MaterialAlertDialogBuilder(requireContext())
         builder.setView(binding.root)
 
         return builder.create()
     }
 
-    private fun rate(rating: Rating) {
+    private fun rate(rating: Rating?) {
         val args = requireArguments()
 
-        val itemType = args.getString(InitBundle.ITEM_TYPE)
+        val itemType = args.getString(ITEM_TYPE)
             ?: return
-        val itemId = args.getLong(InitBundle.ITEM_ID)
+        val itemId = args.getLong(ITEM_ID)
         val task: BaseRateItemTask = when (itemType) {
             ITEM_MOVIE -> {
                 RateMovieTask(requireContext(), rating, itemId.toInt())
@@ -121,50 +138,44 @@ class RateDialogFragment : AppCompatDialogFragment() {
     }
 
     companion object {
+        private const val ITEM_TYPE: String = "item-type"
+        private const val ITEM_ID: String = "item-id"
+        private const val ARG_CURRENT_RATING = "current-rating"
         private const val ITEM_SHOW = "show"
         private const val ITEM_EPISODE = "episode"
         private const val ITEM_MOVIE = "movie"
 
+        private fun newInstance(
+            itemType: String,
+            itemId: Long,
+            currentRating: Int?
+        ): RateDialogFragment {
+            val args = bundleOf(
+                ITEM_TYPE to itemType,
+                ITEM_ID to itemId
+            )
+            if (currentRating != null) {
+                args.putInt(ARG_CURRENT_RATING, currentRating)
+            }
+            return RateDialogFragment().apply { arguments = args }
+        }
+
         /**
          * Create [RateDialogFragment] to rate a show.
          */
-        fun newInstanceShow(showId: Long): RateDialogFragment {
-            val f = RateDialogFragment()
-
-            val args = Bundle()
-            args.putString(InitBundle.ITEM_TYPE, ITEM_SHOW)
-            args.putLong(InitBundle.ITEM_ID, showId)
-            f.arguments = args
-
-            return f
-        }
+        fun newInstanceShow(showId: Long, currentRating: Int?) =
+            newInstance(ITEM_SHOW, showId, currentRating)
 
         /**
          * Create [RateDialogFragment] to rate an episode.
          */
-        fun newInstanceEpisode(episodeId: Long): RateDialogFragment {
-            val f = RateDialogFragment()
-
-            val args = Bundle()
-            args.putString(InitBundle.ITEM_TYPE, ITEM_EPISODE)
-            args.putLong(InitBundle.ITEM_ID, episodeId)
-            f.arguments = args
-
-            return f
-        }
+        fun newInstanceEpisode(episodeId: Long, currentRating: Int?) =
+            newInstance(ITEM_EPISODE, episodeId, currentRating)
 
         /**
          * Create [RateDialogFragment] to rate a movie.
          */
-        fun newInstanceMovie(movieTmdbId: Int): RateDialogFragment {
-            val f = RateDialogFragment()
-
-            val args = Bundle()
-            args.putString(InitBundle.ITEM_TYPE, ITEM_MOVIE)
-            args.putLong(InitBundle.ITEM_ID, movieTmdbId.toLong())
-            f.arguments = args
-
-            return f
-        }
+        fun newInstanceMovie(movieTmdbId: Int, currentRating: Int?) =
+            newInstance(ITEM_MOVIE, movieTmdbId.toLong(), currentRating)
     }
 }

@@ -15,7 +15,7 @@ Version 2024.3
 --------------
 *in development*
 
-
+* 🌟 Trakt ratings: support removing a rating.
 
 Version 2024.2
 --------------

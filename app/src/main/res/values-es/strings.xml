@@ -349,6 +349,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="action_rate">Calificar</string>
     <string name="ack_rated">Valoración enviada</string>
     <string name="your_rating">Tu calificación</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">¡Una pasada!</string>
     <string name="hate">¡Apesta!</string>
     <string name="rating2">Terrible</string>

@@ -348,6 +348,7 @@
     <string name="action_rate">Classificar</string>
     <string name="ack_rated">Classificação enviada</string>
     <string name="your_rating">A minha classificação</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">Fora de série!</string>
     <string name="hate">Mas que porcaria :(</string>
     <string name="rating2">Horrível</string>

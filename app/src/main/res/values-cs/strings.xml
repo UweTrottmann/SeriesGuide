@@ -368,6 +368,7 @@
     <string name="action_rate">Ohodnotit</string>
     <string name="ack_rated">Hodnocení odesláno</string>
     <string name="your_rating">Vaše hodnocení</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">Úplný ninja!</string>
     <string name="hate">Odpad</string>
     <string name="rating2">Hrozný</string>

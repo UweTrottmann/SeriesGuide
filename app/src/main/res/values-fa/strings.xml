@@ -348,6 +348,7 @@
     <string name="action_rate">نمره</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">نمرهٔ شما</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">محشر!</string>
     <string name="hate">افتضاح :(</string>
     <string name="rating2">مزخرف</string>

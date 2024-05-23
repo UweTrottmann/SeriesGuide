@@ -358,6 +358,7 @@
     <string name="action_rate">Ocijeni</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Tvoja ocjena</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">Zakon!</string>
     <string name="hate">Jadno :(</string>
     <string name="rating2">Grozno</string>

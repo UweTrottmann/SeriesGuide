@@ -348,6 +348,7 @@
     <string name="action_rate">விகிதம்</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">உங்கள் தரமதிப்பு</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">Ninja முற்றிலும்!</string>
     <string name="hate">நன்மைக்கான பாகு :(</string>
     <string name="rating2">உள்நாட்டு யுத்ததத்தின் பயங்கரமான</string>
