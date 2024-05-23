@@ -387,8 +387,8 @@
     <string name="rating8">Great</string>
     <string name="rating9">Superb</string>
     <plurals name="votes">
-        <item quantity="one">%s vote</item>
-        <item quantity="other">%s votes</item>
+        <item quantity="one">%d vote</item>
+        <item quantity="other">%d votes</item>
     </plurals>
 
     <!-- Check Ins -->
