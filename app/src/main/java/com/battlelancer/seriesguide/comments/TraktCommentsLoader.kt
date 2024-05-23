@@ -9,11 +9,11 @@ import androidx.annotation.StringRes
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.androidutils.GenericSimpleLoader
-import com.uwetrottmann.trakt5.TraktV2
 import com.uwetrottmann.trakt5.entities.Comment
 import com.uwetrottmann.trakt5.enums.Extended
 import timber.log.Timber
@@ -28,7 +28,7 @@ class TraktCommentsLoader(context: Context, private val args: Bundle) :
     data class Result(val results: List<Comment>?, val emptyText: String)
 
     @Inject
-    lateinit var trakt: TraktV2
+    lateinit var trakt: SgTrakt
 
     init {
         SgApp.getServicesComponent(context).inject(this)

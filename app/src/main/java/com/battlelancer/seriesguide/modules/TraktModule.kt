@@ -1,11 +1,10 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2016-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.modules
 
 import android.content.Context
 import com.battlelancer.seriesguide.traktapi.SgTrakt
-import com.uwetrottmann.trakt5.TraktV2
 import com.uwetrottmann.trakt5.services.Episodes
 import com.uwetrottmann.trakt5.services.Movies
 import com.uwetrottmann.trakt5.services.Search
@@ -21,43 +20,43 @@ import javax.inject.Singleton
 open class TraktModule {
     @Singleton
     @Provides
-    open fun provideEpisodes(trakt: TraktV2): Episodes? {
+    open fun provideEpisodes(trakt: SgTrakt): Episodes? {
         return trakt.episodes()
     }
 
     @Singleton
     @Provides
-    open fun provideMovies(trakt: TraktV2): Movies? {
+    open fun provideMovies(trakt: SgTrakt): Movies? {
         return trakt.movies()
     }
 
     @Singleton
     @Provides
-    open fun provideShows(trakt: TraktV2): Shows? {
+    open fun provideShows(trakt: SgTrakt): Shows? {
         return trakt.shows()
     }
 
     @Singleton
     @Provides
-    open fun provideSearch(trakt: TraktV2): Search? {
+    open fun provideSearch(trakt: SgTrakt): Search? {
         return trakt.search()
     }
 
     @Singleton
     @Provides
-    open fun provideSync(trakt: TraktV2): Sync? {
+    open fun provideSync(trakt: SgTrakt): Sync? {
         return trakt.sync()
     }
 
     @Singleton
     @Provides
-    open fun provideUsers(trakt: TraktV2): Users? {
+    open fun provideUsers(trakt: SgTrakt): Users? {
         return trakt.users()
     }
 
     @Singleton
     @Provides
-    fun provideTrakt(@ApplicationContext context: Context, okHttpClient: OkHttpClient): TraktV2 {
+    fun provideTrakt(@ApplicationContext context: Context, okHttpClient: OkHttpClient): SgTrakt {
         return SgTrakt(context, okHttpClient)
     }
 }
