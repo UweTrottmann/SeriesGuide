@@ -35,6 +35,8 @@ class TraktCommentsLoader(context: Context, private val args: Bundle) :
     }
 
     override fun loadInBackground(): Result {
+        val cacheControl = if (args.getBoolean(ARG_REFRESH)) "no-cache" else null
+
         // movie comments?
         val movieTmdbId = args.getInt(TraktCommentsFragment.InitBundle.MOVIE_TMDB_ID)
         if (movieTmdbId != 0) {
@@ -45,7 +47,13 @@ class TraktCommentsLoader(context: Context, private val args: Bundle) :
                 }
                 try {
                     val response = trakt.movies()
-                        .comments(movieTraktId.toString(), 1, PAGE_SIZE, Extended.FULL)
+                        .comments(
+                            movieTraktId.toString(),
+                            1,
+                            PAGE_SIZE,
+                            Extended.FULL,
+                            cacheControl
+                        )
                         .execute()
                     if (response.isSuccessful) {
                         return buildResultSuccess(response.body()!!)
@@ -83,7 +91,8 @@ class TraktCommentsLoader(context: Context, private val args: Bundle) :
                         showTraktId.toString(),
                         episode.season,
                         episode.episodenumber,
-                        1, PAGE_SIZE, Extended.FULL
+                        1, PAGE_SIZE, Extended.FULL,
+                        cacheControl
                     ).execute()
                 if (response.isSuccessful) {
                     return buildResultSuccess(response.body()!!)
@@ -103,7 +112,13 @@ class TraktCommentsLoader(context: Context, private val args: Bundle) :
             .getShowTraktId(showId) ?: return buildResultFailure(R.string.trakt_error_not_exists)
         try {
             val response = trakt.shows()
-                .comments(showTraktId.toString(), 1, PAGE_SIZE, Extended.FULL)
+                .comments(
+                    showTraktId.toString(),
+                    1,
+                    PAGE_SIZE,
+                    Extended.FULL,
+                    cacheControl
+                )
                 .execute()
             if (response.isSuccessful) {
                 return buildResultSuccess(response.body()!!)
@@ -137,6 +152,13 @@ class TraktCommentsLoader(context: Context, private val args: Bundle) :
     }
 
     companion object {
+        private const val ARG_REFRESH = "refresh"
         private const val PAGE_SIZE = 25
+
+        fun argsWithRefresh(bundle: Bundle): Bundle {
+            return Bundle(bundle).apply {
+                putBoolean(ARG_REFRESH, true)
+            }
+        }
     }
 }

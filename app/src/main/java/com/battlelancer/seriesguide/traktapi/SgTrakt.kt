@@ -36,6 +36,10 @@ class SgTrakt(
         return okHttpClient
     }
 
+    fun sgComments(): TraktComments {
+        return TraktComments(context, this)
+    }
+
     companion object {
         /**
          * Check if the request was unauthorized.
