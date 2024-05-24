@@ -16,6 +16,7 @@ Version 2024.3
 *in development*
 
 * 🌟 Trakt ratings: support removing a rating.
+* 🌟 Trakt comments: edit and delete comments.
 * 🔨 Trakt comments: refresh will actually show the latest comments, including after posting one.
 * 📝 Latest user interface translations from Crowdin.
 
