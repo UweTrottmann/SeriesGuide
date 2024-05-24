@@ -348,7 +348,7 @@
     <string name="action_rate">Puan ver</string>
     <string name="ack_rated">Puan gönderildi</string>
     <string name="your_rating">Sizin puanınız</string>
-    <string name="action_remove_rating">Remove rating</string>
+    <string name="action_remove_rating">Puanı kaldır</string>
     <string name="love">Şaheser!</string>
     <string name="hate">Rezalet :(</string>
     <string name="rating2">Berbat</string>

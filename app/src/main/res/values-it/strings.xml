@@ -348,7 +348,7 @@
     <string name="action_rate">Vota</string>
     <string name="ack_rated">Valutazione inviata</string>
     <string name="your_rating">Il tuo voto</string>
-    <string name="action_remove_rating">Remove rating</string>
+    <string name="action_remove_rating">Rimuovi valutazione</string>
     <string name="love">Indimenticabile!</string>
     <string name="hate">Deludente :(</string>
     <string name="rating2">Terribile</string>

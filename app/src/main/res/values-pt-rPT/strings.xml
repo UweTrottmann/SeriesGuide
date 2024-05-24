@@ -84,7 +84,7 @@
     <string name="episode_dvdnumber">Episódio de DVD</string>
     <string name="original_release">Exibição original</string>
     <string name="show_genres">Géneros</string>
-    <string name="show_contentrating">Classificação Etária</string>
+    <string name="show_contentrating">Classificação etária</string>
     <string name="show_release_times">Horários de exibição</string>
     <string name="episode_directors">Realização</string>
     <string name="episode_gueststars">Participações especiais</string>
@@ -348,7 +348,7 @@
     <string name="action_rate">Classificar</string>
     <string name="ack_rated">Classificação enviada</string>
     <string name="your_rating">A minha classificação</string>
-    <string name="action_remove_rating">Remove rating</string>
+    <string name="action_remove_rating">Remover classificação</string>
     <string name="love">Fora de série!</string>
     <string name="hate">Mas que porcaria :(</string>
     <string name="rating2">Horrível</string>

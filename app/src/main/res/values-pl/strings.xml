@@ -368,7 +368,7 @@
     <string name="action_rate">Oceń</string>
     <string name="ack_rated">Ocena wysłana</string>
     <string name="your_rating">Twoja ocena</string>
-    <string name="action_remove_rating">Remove rating</string>
+    <string name="action_remove_rating">Usuń ocenę</string>
     <string name="love">Uwielbiam to!</string>
     <string name="hate">Słaby :(</string>
     <string name="rating2">Potworny</string>
