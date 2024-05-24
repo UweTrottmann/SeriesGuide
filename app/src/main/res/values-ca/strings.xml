@@ -70,6 +70,10 @@
     <string name="shout_hint">Escriu un comentari (anglès, 5+ paraules)</string>
     <string name="shout_invalid">El teu comentari no compleix les normes!</string>
     <string name="action_post">Publica</string>
+    <string name="action_edit_comment">Edit</string>
+    <string name="action_delete_comment">Delete</string>
+    <string name="confirmation_delete_comment">Delete this comment?</string>
+    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">Revela parts de la trama!</string>
     <string name="no_shouts">Sigueu el primer a escriure!</string>
     <string name="refresh">Refresca</string>

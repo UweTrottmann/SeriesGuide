@@ -70,6 +70,10 @@
     <string name="shout_hint">코멘트를 입력 (영어, 5글자 이상)</string>
     <string name="shout_invalid">규칙에 어긋납니다!</string>
     <string name="action_post">게시</string>
+    <string name="action_edit_comment">Edit</string>
+    <string name="action_delete_comment">Delete</string>
+    <string name="confirmation_delete_comment">Delete this comment?</string>
+    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">스포일러 경고!</string>
     <string name="no_shouts">첫 댓글의 주인공이 되세요!</string>
     <string name="refresh">새로 고침</string>

@@ -70,6 +70,10 @@
     <string name="shout_hint">コメントを入力（英語で5語以上）</string>
     <string name="shout_invalid">ルールに従ってコメントしてください！</string>
     <string name="action_post">投稿</string>
+    <string name="action_edit_comment">Edit</string>
+    <string name="action_delete_comment">Delete</string>
+    <string name="confirmation_delete_comment">Delete this comment?</string>
+    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">ネタバレ注意！</string>
     <string name="no_shouts">最初にコメントしよう！</string>
     <string name="refresh">更新</string>

@@ -70,6 +70,10 @@
     <string name="shout_hint">พิมพ์ความคิดเห็น (ภาษาอังกฤษ, 5+ คำ)</string>
     <string name="shout_invalid">ความคิดเห็นของคุณไม่ได้ทำตามกฏ!</string>
     <string name="action_post">โพสต์</string>
+    <string name="action_edit_comment">Edit</string>
+    <string name="action_delete_comment">Delete</string>
+    <string name="confirmation_delete_comment">Delete this comment?</string>
+    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">ระวังสปอยล์!</string>
     <string name="no_shouts">แสดงความคิดเห็นเป็นคนแรก!</string>
     <string name="refresh">โหลดใหม่</string>

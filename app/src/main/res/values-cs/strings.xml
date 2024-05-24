@@ -70,6 +70,10 @@
     <string name="shout_hint">Napište komentář (anglicky, alespoň 5 slov)</string>
     <string name="shout_invalid">Váš komentář porušuje pravidla!</string>
     <string name="action_post">Odeslat</string>
+    <string name="action_edit_comment">Edit</string>
+    <string name="action_delete_comment">Delete</string>
+    <string name="confirmation_delete_comment">Delete this comment?</string>
+    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">Vyzrazení děje!</string>
     <string name="no_shouts">Buďte první, kdo zakřičí!</string>
     <string name="refresh">Obnovit</string>
