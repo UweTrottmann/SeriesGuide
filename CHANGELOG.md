@@ -15,6 +15,9 @@ Version 2024.3
 --------------
 *in development*
 
+#### 2024.3.0 🧪
+*2024-05-24*
+
 * 🌟 Trakt ratings: support removing a rating.
 * 🌟 Trakt comments: edit and delete comments.
 * 🔨 Trakt comments: refresh will actually show the latest comments, including after posting one.
