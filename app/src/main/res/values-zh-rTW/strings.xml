@@ -70,6 +70,10 @@
     <string name="shout_hint">輸入評論 (英文，至少五個單字)</string>
     <string name="shout_invalid">你的評論內容未符合規則！</string>
     <string name="action_post">發布</string>
+    <string name="action_edit_comment">Edit</string>
+    <string name="action_delete_comment">Delete</string>
+    <string name="confirmation_delete_comment">Delete this comment?</string>
+    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">劇透警告</string>
     <string name="no_shouts">成為第一個留言者</string>
     <string name="refresh">重新整理</string>

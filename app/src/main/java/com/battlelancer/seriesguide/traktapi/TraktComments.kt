@@ -17,6 +17,7 @@ import com.uwetrottmann.trakt5.entities.ShowIds
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
+import retrofit2.Call
 import retrofit2.awaitResponse
 import java.util.regex.Pattern
 
@@ -62,32 +63,53 @@ class TraktComments(
 
     private suspend fun postComment(comment: Comment) {
         withContext(Dispatchers.IO) {
-            postCommentAsync(comment)
+            executeCommentCall(trakt.comments().post(comment), "post comment")
         }
     }
 
-    private suspend fun postCommentAsync(comment: Comment) {
-        val action = "post comment"
+    /**
+     * Assumes the user connected to Trakt is the user of this comment.
+     * Otherwise, the user is signed out.
+     */
+    suspend fun editComment(commentId: Int, comment: String, isSpoiler: Boolean) {
+        val traktComment = buildComment(comment, isSpoiler).also {
+            it.id = commentId
+        }
+        withContext(Dispatchers.IO) {
+            executeCommentCall(trakt.comments().update(commentId, traktComment), "update comment")
+        }
+    }
+
+    /**
+     * Assumes the user connected to Trakt is the user of this comment.
+     * Otherwise, the user is signed out.
+     *
+     * This may fail if the comment is too old or has replies.
+     */
+    suspend fun deleteComment(commentId: Int) {
+        withContext(Dispatchers.IO) {
+            executeCommentCall(trakt.comments().delete(commentId), "delete comment")
+        }
+    }
+
+    private suspend fun <T> executeCommentCall(call: Call<T>, action: String) {
         var errorMessageOrNull: String? = null
         try {
-            val response = trakt.comments().post(comment).awaitResponse()
+            val response = call.awaitResponse()
             if (response.isSuccessful) {
-                if (response.body()?.id != null) {
-                    EventBus.getDefault().post(
-                        TraktTask.TraktActionCompleteEvent(TraktAction.COMMENT, true, null)
-                    )
-                    return
-                }
+                EventBus.getDefault()
+                    .post(TraktTask.TraktActionCompleteEvent(TraktAction.COMMENT, true, null))
+                return // Success
             } else {
                 // https://trakt.docs.apiary.io/#reference/comments
                 if (response.code() == 422) {
                     errorMessageOrNull = context.getString(R.string.shout_invalid)
+                } else if (response.code() == 409) {
+                    // Only when deleting is not allowed (too old or has replies)
+                    errorMessageOrNull = context.getString(R.string.error_delete_comment)
                 } else if (response.code() == 404) {
                     errorMessageOrNull = context.getString(R.string.trakt_error_not_exists)
                 } else if (SgTrakt.isUnauthorized(response)) {
-                    // for users banned from posting comments requests also return 401
-                    // so do not sign out if an error header does not indicate the token is invalid
-
                     // for users banned from posting comments requests also return 401
                     // so do not sign out if an error header does not indicate the token is invalid
                     val authHeader = response.headers()["Www-Authenticate"]

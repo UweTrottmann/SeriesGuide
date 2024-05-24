@@ -70,6 +70,10 @@
     <string name="shout_hint">Escribe un comentario (Inglés, +5 palabras)</string>
     <string name="shout_invalid">Su comentario no sigue las reglas!</string>
     <string name="action_post">Publicar</string>
+    <string name="action_edit_comment">Edit</string>
+    <string name="action_delete_comment">Delete</string>
+    <string name="confirmation_delete_comment">Delete this comment?</string>
+    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">¡Alerta de spoiler!</string>
     <string name="no_shouts">¡Sé el primero en gritar!</string>
     <string name="refresh">Actualizar</string>

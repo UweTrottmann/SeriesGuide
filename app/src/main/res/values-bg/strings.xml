@@ -70,6 +70,10 @@
     <string name="shout_hint">Въведете коментар (английски, 5 + думи)</string>
     <string name="shout_invalid">Вашият коментар не е по правилата!</string>
     <string name="action_post">Публикувай</string>
+    <string name="action_edit_comment">Edit</string>
+    <string name="action_delete_comment">Delete</string>
+    <string name="confirmation_delete_comment">Delete this comment?</string>
+    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">Предупреждение за издаване!</string>
     <string name="no_shouts">Напишете мнение пръв!</string>
     <string name="refresh">Опресни</string>

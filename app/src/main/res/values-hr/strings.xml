@@ -70,6 +70,10 @@
     <string name="shout_hint">Upišite komentar (engleski, 5 + riječi)</string>
     <string name="shout_invalid">Vaš komentar ne slijedi pravila!</string>
     <string name="action_post">Objava</string>
+    <string name="action_edit_comment">Edit</string>
+    <string name="action_delete_comment">Delete</string>
+    <string name="confirmation_delete_comment">Delete this comment?</string>
+    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">Pažnja! Spojler!</string>
     <string name="no_shouts">Budi prvi koji će povikati!</string>
     <string name="refresh">Osvježi</string>

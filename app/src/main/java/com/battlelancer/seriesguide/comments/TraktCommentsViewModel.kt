@@ -8,9 +8,13 @@ import androidx.lifecycle.AndroidViewModel
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class TraktCommentsViewModel(application: Application) : AndroidViewModel(application) {
+
+    val commentIdToEdit = MutableStateFlow<Int?>(null)
+    val commentIdToDelete = MutableStateFlow<Int?>(null)
 
     fun postShowComment(showId: Long, comment: String, isSpoiler: Boolean) {
         SgApp.coroutineScope.launch(Dispatchers.IO) {
@@ -36,9 +40,27 @@ class TraktCommentsViewModel(application: Application) : AndroidViewModel(applic
     }
 
     fun postMovieComment(movieTmdbId: Int, comment: String, isSpoiler: Boolean) {
-        SgApp.coroutineScope.launch(Dispatchers.IO) {
+        SgApp.coroutineScope.launch {
             SgApp.getServicesComponent(getApplication()).trakt().sgComments()
                 .postMovieComment(movieTmdbId, comment, isSpoiler)
+        }
+    }
+
+    fun editComment(commentId: Int, comment: String, isSpoiler: Boolean) {
+        SgApp.coroutineScope.launch {
+            SgApp.getServicesComponent(getApplication()).trakt().sgComments()
+                .editComment(commentId, comment, isSpoiler)
+        }
+    }
+
+    fun deleteComment() {
+        val commentId = commentIdToDelete.value
+        if (commentId != null) {
+            commentIdToDelete.value = null
+            SgApp.coroutineScope.launch {
+                SgApp.getServicesComponent(getApplication()).trakt().sgComments()
+                    .deleteComment(commentId)
+            }
         }
     }
 

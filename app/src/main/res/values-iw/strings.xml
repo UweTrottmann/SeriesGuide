@@ -70,6 +70,10 @@
     <string name="shout_hint">הקלד תגובה (באנגלית, 5+ מילות)</string>
     <string name="shout_invalid">התגובה שלך לא על פי הכללים!</string>
     <string name="action_post">פוסט</string>
+    <string name="action_edit_comment">Edit</string>
+    <string name="action_delete_comment">Delete</string>
+    <string name="confirmation_delete_comment">Delete this comment?</string>
+    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">אזהרת ספוילר!</string>
     <string name="no_shouts">תהיה הראשון להמליץ!</string>
     <string name="refresh">רענן</string>

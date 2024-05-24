@@ -70,6 +70,10 @@
     <string name="shout_hint">ஒரு கருத்து (ஆங்கிலம், 5 + சொற்கள்) தட்டச்சு செய்யவும்</string>
     <string name="shout_invalid">உங்கள் கருத்துரை விதிகளை பின்பற்றவில்லை!</string>
     <string name="action_post">பதிவு</string>
+    <string name="action_edit_comment">Edit</string>
+    <string name="action_delete_comment">Delete</string>
+    <string name="confirmation_delete_comment">Delete this comment?</string>
+    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">Spoiler எச்சரிக்கை!</string>
     <string name="no_shouts">கருத்து முதல் இருக்க!</string>
     <string name="refresh">புதுப்பி</string>
