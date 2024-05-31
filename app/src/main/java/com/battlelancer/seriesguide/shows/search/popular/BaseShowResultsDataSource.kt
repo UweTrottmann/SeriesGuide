@@ -16,16 +16,12 @@ import com.uwetrottmann.tmdb2.entities.TvShowResultsPage
 import java.io.IOException
 
 /**
- * Loads shows in pages from TMDB.
+ * Loads [TvShowResultsPage] in pages from TMDB.
  */
-abstract class BaseDiscoverShowDataSource(
+abstract class BaseShowResultsDataSource(
     private val context: Context,
     private val tmdb: Tmdb,
     private val languageCode: String,
-    private val firstReleaseYear: Int?,
-    private val originalLanguageCode: String?,
-    private val watchProviderIds: List<Int>?,
-    private val watchRegion: String?
 ) : PagingSource<Int, SearchResult>() {
 
     abstract val action: String
@@ -33,10 +29,6 @@ abstract class BaseDiscoverShowDataSource(
         tmdb: Tmdb,
         language: String,
         page: Int,
-        firstReleaseYear: Int?,
-        originalLanguageCode: String?,
-        watchProviderIds: List<Int>?,
-        watchRegion: String?
     ): TvShowResultsPage?
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, SearchResult> {
@@ -44,11 +36,7 @@ abstract class BaseDiscoverShowDataSource(
         val result = loadShows(
             tmdb,
             languageCode,
-            pageNumber,
-            firstReleaseYear,
-            originalLanguageCode,
-            watchProviderIds,
-            watchRegion
+            pageNumber
         )
             ?: return if (AndroidUtils.isNetworkConnected(context)) {
                 // Not checking for connection until here to allow hitting the response cache.

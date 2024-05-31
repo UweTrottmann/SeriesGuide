@@ -8,13 +8,13 @@ import com.uwetrottmann.tmdb2.Tmdb
 
 class ShowsPopularViewModel(application: Application) : BaseDiscoverShowsViewModel(application) {
 
-    override fun buildDataSource(
+    override fun buildDiscoverDataSource(
         tmdb: Tmdb, languageCode: String,
         firstReleaseYear: Int?,
         originalLanguageCode: String?,
         watchProviderIds: List<Int>?,
         watchRegion: String?
-    ): BaseDiscoverShowDataSource {
+    ): BaseShowResultsDataSource {
         return ShowsPopularDataSource(
             getApplication(),
             tmdb,

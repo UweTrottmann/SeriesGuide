@@ -53,7 +53,7 @@ abstract class BaseDiscoverShowsViewModel(application: Application) :
             ) {
                 val languageCode = ShowsSettings.getShowsSearchLanguage(application)
                 val watchRegion = StreamingSearch.getCurrentRegionOrNull(application)
-                buildDataSource(
+                buildDiscoverDataSource(
                     tmdb,
                     languageCode,
                     it.firstReleaseYear,
@@ -65,12 +65,12 @@ abstract class BaseDiscoverShowsViewModel(application: Application) :
         }
         .cachedIn(viewModelScope)
 
-    abstract fun buildDataSource(
+    abstract fun buildDiscoverDataSource(
         tmdb: Tmdb, languageCode: String,
         firstReleaseYear: Int?,
         originalLanguageCode: String?,
         watchProviderIds: List<Int>?,
         watchRegion: String?
-    ): BaseDiscoverShowDataSource
+    ): BaseShowResultsDataSource
 
 }

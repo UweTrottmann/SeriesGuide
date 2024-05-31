@@ -4,7 +4,7 @@
 package com.battlelancer.seriesguide.shows.search.newepisodes
 
 import android.content.Context
-import com.battlelancer.seriesguide.shows.search.popular.BaseDiscoverShowDataSource
+import com.battlelancer.seriesguide.shows.search.popular.BaseShowResultsDataSource
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.uwetrottmann.tmdb2.Tmdb
 import com.uwetrottmann.tmdb2.entities.TvShowResultsPage
@@ -16,18 +16,14 @@ class ShowsNewEpisodesDataSource(
     context: Context,
     tmdb: Tmdb,
     languageCode: String,
-    firstReleaseYear: Int?,
-    originalLanguageCode: String?,
-    watchProviderIds: List<Int>?,
-    watchRegion: String?
-) : BaseDiscoverShowDataSource(
+    private val firstReleaseYear: Int?,
+    private val originalLanguageCode: String?,
+    private val watchProviderIds: List<Int>?,
+    private val watchRegion: String?
+) : BaseShowResultsDataSource(
     context,
     tmdb,
-    languageCode,
-    firstReleaseYear,
-    originalLanguageCode,
-    watchProviderIds,
-    watchRegion
+    languageCode
 ) {
 
     override val action: String
@@ -37,10 +33,6 @@ class ShowsNewEpisodesDataSource(
         tmdb: Tmdb,
         language: String,
         page: Int,
-        firstReleaseYear: Int?,
-        originalLanguageCode: String?,
-        watchProviderIds: List<Int>?,
-        watchRegion: String?
     ): TvShowResultsPage? = TmdbTools2().getShowsWithNewEpisodes(
         tmdb,
         language,

@@ -15,18 +15,14 @@ class ShowsPopularDataSource(
     context: Context,
     tmdb: Tmdb,
     languageCode: String,
-    firstReleaseYear: Int?,
-    originalLanguageCode: String?,
-    watchProviderIds: List<Int>?,
-    watchRegion: String?
-) : BaseDiscoverShowDataSource(
+    private val firstReleaseYear: Int?,
+    private val originalLanguageCode: String?,
+    private val watchProviderIds: List<Int>?,
+    private val watchRegion: String?
+) : BaseShowResultsDataSource(
     context,
     tmdb,
-    languageCode,
-    firstReleaseYear,
-    originalLanguageCode,
-    watchProviderIds,
-    watchRegion
+    languageCode
 ) {
 
     override val action: String
@@ -36,10 +32,6 @@ class ShowsPopularDataSource(
         tmdb: Tmdb,
         language: String,
         page: Int,
-        firstReleaseYear: Int?,
-        originalLanguageCode: String?,
-        watchProviderIds: List<Int>?,
-        watchRegion: String?
     ): TvShowResultsPage? = TmdbTools2().getPopularShows(
         tmdb,
         language,
