@@ -24,10 +24,10 @@ import com.battlelancer.seriesguide.shows.history.ShowsNowFragment
 import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment
 import com.battlelancer.seriesguide.shows.search.discover.SearchResult
 import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverFragment
+import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverPagingActivity
 import com.battlelancer.seriesguide.sync.AccountUtils
 import com.battlelancer.seriesguide.ui.BaseTopActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
-import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.TabStripAdapter
 import com.battlelancer.seriesguide.util.AppUpgrade
 import com.battlelancer.seriesguide.util.TaskManager
@@ -190,9 +190,7 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
         // setup floating action button for adding shows
         val buttonAddShow = findViewById<FloatingActionButton>(R.id.buttonShowsAdd)
         buttonAddShow.setOnClickListener {
-            startActivity(
-                SearchActivity.newIntent(this@ShowsActivityImpl)
-            )
+            startActivity(ShowsDiscoverPagingActivity.intentSearch(this))
         }
 
         viewPager = findViewById(R.id.viewPagerTabs)

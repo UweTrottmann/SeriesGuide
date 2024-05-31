@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.search.similar
 
@@ -19,8 +19,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.shows.search.discover.BaseAddShowsFragment
 import com.battlelancer.seriesguide.shows.search.discover.SearchResult
+import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverPagingActivity
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
-import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.widgets.EmptyView
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
@@ -129,9 +129,7 @@ class SimilarShowsFragment : BaseAddShowsFragment() {
             return when (menuItem.itemId) {
                 MENU_ITEM_SEARCH_ID -> {
                     startActivity(
-                        SearchActivity.newIntent(
-                            requireContext()
-                        )
+                        ShowsDiscoverPagingActivity.intentSearch(requireContext())
                     )
                     true
                 }

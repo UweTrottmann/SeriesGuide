@@ -41,6 +41,7 @@ import com.battlelancer.seriesguide.shows.ShowsAdapter.ShowItem
 import com.battlelancer.seriesguide.shows.ShowsDistillationFragment.Companion.show
 import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowFilter
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
+import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverPagingActivity
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
@@ -258,7 +259,7 @@ class ShowsFragment : Fragment() {
 
     private fun startActivityAddShows() {
         startActivity(
-            SearchActivity.newIntent(requireContext())
+            ShowsDiscoverPagingActivity.intentSearch(requireContext())
         )
     }
 
