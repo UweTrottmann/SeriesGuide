@@ -158,6 +158,7 @@
         <activity
             android:name=".shows.search.discover.DiscoverShowsActivity"
             android:parentActivityName=".ui.SearchActivity" />
+        <activity android:name=".shows.search.discover.ShowsTraktActivity" />
 
         <!-- Movies -->
         <activity
