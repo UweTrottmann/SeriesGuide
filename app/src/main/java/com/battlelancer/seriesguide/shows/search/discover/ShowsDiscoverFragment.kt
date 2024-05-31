@@ -139,11 +139,21 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
 
     private val discoverItemClickListener = object : ShowsDiscoverAdapter.OnItemClickListener {
         override fun onLinkClick(anchor: View, link: DiscoverShowsLink) {
-            Utils.startActivityWithAnimation(
-                activity,
-                DiscoverShowsActivity.intent(requireContext(), link),
-                anchor
-            )
+            val intent =
+                when (link) {
+                    DiscoverShowsLink.POPULAR,
+                    DiscoverShowsLink.NEW_EPISODES -> {
+                        ShowsDiscoverPagingActivity.intentLink(requireContext(), link)
+                    }
+
+                    DiscoverShowsLink.WATCHLIST,
+                    DiscoverShowsLink.WATCHED,
+                    DiscoverShowsLink.COLLECTION -> {
+                        ShowsTraktActivity.intent(requireContext(), link)
+                    }
+
+                }
+            Utils.startActivityWithAnimation(activity, intent, anchor)
         }
 
         override fun onItemClick(item: SearchResult) {
@@ -223,14 +233,17 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
                     EventBus.getDefault().post(SearchActivityImpl.ClearSearchHistoryEvent())
                     true
                 }
+
                 R.id.menu_action_shows_search_filter -> {
                     WatchProviderFilterDialogFragment.showForShows(parentFragmentManager)
                     true
                 }
+
                 R.id.menu_action_shows_search_change_language -> {
                     displayLanguageSettings()
                     true
                 }
+
                 else -> false
             }
         }
