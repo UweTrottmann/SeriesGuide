@@ -30,21 +30,21 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 /**
- * Displays shows provided by a [BaseDiscoverShowsViewModel], expects to be hosted
+ * Displays shows provided by a [ShowsDiscoverPagingViewModel], expects to be hosted
  * in [DiscoverShowsActivity] which provides the filter UI.
  */
 class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
 
     private lateinit var link: DiscoverShowsLink
 
-    val model: BaseDiscoverShowsViewModel by viewModels(
+    val model: ShowsDiscoverPagingViewModel by viewModels(
         extrasProducer = {
-            BaseDiscoverShowsViewModel.creationExtras(
+            ShowsDiscoverPagingViewModel.creationExtras(
                 defaultViewModelCreationExtras,
                 link
             )
         },
-        factoryProducer = { BaseDiscoverShowsViewModel.Factory }
+        factoryProducer = { ShowsDiscoverPagingViewModel.Factory }
     )
 
     private lateinit var bindingActivity: ActivityDiscoverShowsBinding

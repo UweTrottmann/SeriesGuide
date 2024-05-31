@@ -32,7 +32,7 @@ import kotlinx.coroutines.flow.flatMapLatest
  * Provides a different list of shows ([items]) depending on [DiscoverShowsLink]
  * and some filter options.
  */
-class BaseDiscoverShowsViewModel(
+class ShowsDiscoverPagingViewModel(
     application: Application,
     private val link: DiscoverShowsLink
 ) : AndroidViewModel(application) {
@@ -122,7 +122,7 @@ class BaseDiscoverShowsViewModel(
             initializer {
                 val application = this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY]!!
                 val link = DiscoverShowsLink.fromId(this[KEY_DISCOVER_LINK]!!)
-                BaseDiscoverShowsViewModel(application, link)
+                ShowsDiscoverPagingViewModel(application, link)
             }
         }
 
