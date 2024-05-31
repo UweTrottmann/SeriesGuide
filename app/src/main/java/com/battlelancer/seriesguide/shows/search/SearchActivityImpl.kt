@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2011-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.search
 
@@ -27,7 +27,6 @@ import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsActivity
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsFragment
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.TabStripAdapter
-import com.battlelancer.seriesguide.util.HighlightTools
 import com.battlelancer.seriesguide.util.SearchHistory
 import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.TaskManager
@@ -142,17 +141,6 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
         } else if (mayShowKeyboard) {
             // also show keyboard when showing first tab (added tab)
             ViewTools.showSoftKeyboardOnSearchView(window, searchAutoCompleteView)
-        }
-
-        // Highlight new shows filter.
-        HighlightTools.highlightSgToolbarItem(
-            HighlightTools.Feature.SHOW_FILTER,
-            this,
-            lifecycle,
-            R.id.menu_action_shows_search_filter,
-            R.string.action_shows_filter
-        ) {
-            viewPager.currentItem == TAB_POSITION_SEARCH
         }
     }
 
