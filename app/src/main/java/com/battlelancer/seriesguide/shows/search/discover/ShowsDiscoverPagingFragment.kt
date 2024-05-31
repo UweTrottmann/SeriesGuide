@@ -14,7 +14,6 @@ import androidx.paging.LoadState
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ActivityDiscoverShowsBinding
 import com.battlelancer.seriesguide.databinding.FragmentShowsPopularBinding
-import com.battlelancer.seriesguide.shows.search.popular.ShowsPagingAdapter
 import com.battlelancer.seriesguide.streaming.WatchProviderFilterDialogFragment
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.dialogs.LanguagePickerDialogFragment
@@ -55,7 +54,7 @@ class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
     private var yearPicker: YearPickerDialogFragment? = null
     private var languagePicker: LanguagePickerDialogFragment? = null
 
-    private lateinit var adapter: ShowsPagingAdapter
+    private lateinit var adapter: SearchResultPagingAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,7 +97,7 @@ class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
                 )
         }
 
-        adapter = ShowsPagingAdapter(itemClickListener)
+        adapter = SearchResultPagingAdapter(itemClickListener)
         binding.recyclerViewShowsPopular.adapter = adapter
 
         viewLifecycleOwner.lifecycleScope.launch {
