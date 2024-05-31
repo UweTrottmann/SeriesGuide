@@ -21,7 +21,6 @@ import com.battlelancer.seriesguide.databinding.FragmentShowsDiscoverBinding
 import com.battlelancer.seriesguide.shows.ShowsActivityImpl
 import com.battlelancer.seriesguide.shows.ShowsActivityViewModel
 import com.battlelancer.seriesguide.shows.ShowsSettings
-import com.battlelancer.seriesguide.shows.search.SearchActivityImpl
 import com.battlelancer.seriesguide.shows.search.discover.AddFragment.OnAddingShowEvent
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsActivity
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsFragment
@@ -52,22 +51,6 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
     private val model: ShowsDiscoverViewModel by viewModels()
 
     private lateinit var languageCode: String
-    private var query: String = ""
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        query = if (savedInstanceState != null) {
-            // restore last query
-            savedInstanceState.getString(KEY_QUERY) ?: ""
-        } else {
-            // use initial query (if any)
-            val queryEvent = EventBus.getDefault().getStickyEvent(
-                SearchActivityImpl.SearchQuerySubmitEvent::class.java
-            )
-            queryEvent?.query ?: ""
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -206,15 +189,9 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventMainThread(event: SearchActivityImpl.SearchQuerySubmitEvent) {
-        query = event.query
-        loadResults()
-    }
-
     private fun loadResults(forceLoad: Boolean = false) {
         val watchProviderIds = model.watchProviderIds.value
-        val willLoad = model.data.load(query, languageCode, watchProviderIds, forceLoad)
+        val willLoad = model.data.load(languageCode, watchProviderIds, forceLoad)
         if (willLoad) binding?.swipeRefreshLayoutShowsDiscover?.isRefreshing = true
     }
 
@@ -232,7 +209,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
 
             binding.recyclerViewShowsDiscover.visibility =
                 if (hasResults) View.VISIBLE else View.GONE
-            adapter.updateSearchResults(result.searchResults, result.isResultsForQuery)
+            adapter.updateSearchResults(result.searchResults)
         }
     }
 
@@ -271,11 +248,6 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         )
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString(KEY_QUERY, query)
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
@@ -308,8 +280,6 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
 
     companion object {
         val liftOnScrollTargetViewId = R.id.recyclerViewShowsDiscover
-
-        private const val KEY_QUERY = "searchQuery"
     }
 
 }
