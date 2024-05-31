@@ -6,11 +6,8 @@ package com.battlelancer.seriesguide.shows.search.discover
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.core.view.isVisible
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ActivityDiscoverShowsBinding
-import com.battlelancer.seriesguide.shows.search.newepisodes.ShowsNewEpisodesFragment
-import com.battlelancer.seriesguide.shows.search.popular.ShowsPopularFragment
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsActivity
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsFragment
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
@@ -40,14 +37,12 @@ class DiscoverShowsActivity : BaseMessageActivity(), AddShowDialogFragment.OnAdd
         setupActionBar(link)
 
         if (savedInstanceState == null) {
-            val fragment = when (link) {
-                DiscoverShowsLink.POPULAR -> ShowsPopularFragment()
-                DiscoverShowsLink.NEW_EPISODES -> ShowsNewEpisodesFragment()
-                else -> throw IllegalArgumentException("$link not supported")
-            }
             supportFragmentManager
                 .beginTransaction()
-                .add(R.id.containerTraktShowsFragment, fragment)
+                .add(
+                    R.id.containerTraktShowsFragment,
+                    ShowsDiscoverPagingFragment.newInstance(link)
+                )
                 .commit()
         }
 

@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.battlelancer.seriesguide.R
@@ -32,9 +34,19 @@ import timber.log.Timber
  * Displays shows provided by a [BaseDiscoverShowsViewModel], expects to be hosted
  * in [DiscoverShowsActivity] which provides the filter UI.
  */
-abstract class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
+class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
 
-    abstract val model: BaseDiscoverShowsViewModel
+    private lateinit var link: DiscoverShowsLink
+
+    val model: BaseDiscoverShowsViewModel by viewModels(
+        extrasProducer = {
+            BaseDiscoverShowsViewModel.creationExtras(
+                defaultViewModelCreationExtras,
+                link
+            )
+        },
+        factoryProducer = { BaseDiscoverShowsViewModel.Factory }
+    )
 
     private lateinit var bindingActivity: ActivityDiscoverShowsBinding
     private var binding: FragmentShowsPopularBinding? = null
@@ -44,6 +56,11 @@ abstract class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
     private var languagePicker: LanguagePickerDialogFragment? = null
 
     private lateinit var adapter: ShowsPagingAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        link = DiscoverShowsLink.fromId(requireArguments().getInt(ARG_LINK))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -185,8 +202,14 @@ abstract class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
     companion object {
         val liftOnScrollTargetViewId = R.id.recyclerViewShowsPopular
 
+        private const val ARG_LINK = "link"
         private const val TAG_YEAR_PICKER = "yearPicker"
         private const val TAG_LANGUAGE_PICKER = "languagePicker"
+
+        fun newInstance(link: DiscoverShowsLink) =
+            ShowsDiscoverPagingFragment().apply {
+                arguments = bundleOf(ARG_LINK to link.id)
+            }
     }
 
 }

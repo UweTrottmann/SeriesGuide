@@ -5,7 +5,12 @@ package com.battlelancer.seriesguide.shows.search.discover
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.CreationExtras
+import androidx.lifecycle.viewmodel.MutableCreationExtras
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -13,6 +18,8 @@ import androidx.paging.cachedIn
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.ShowsSettings
+import com.battlelancer.seriesguide.shows.search.newepisodes.ShowsNewEpisodesDataSource
+import com.battlelancer.seriesguide.shows.search.popular.ShowsPopularDataSource
 import com.battlelancer.seriesguide.streaming.SgWatchProvider
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.uwetrottmann.tmdb2.Tmdb
@@ -21,8 +28,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 
-abstract class BaseDiscoverShowsViewModel(application: Application) :
-    AndroidViewModel(application) {
+/**
+ * Provides a different list of shows ([items]) depending on [DiscoverShowsLink]
+ * and some filter options.
+ */
+class BaseDiscoverShowsViewModel(
+    application: Application,
+    private val link: DiscoverShowsLink
+) : AndroidViewModel(application) {
 
     data class Filters(
         val firstReleaseYear: Int?,
@@ -64,12 +77,59 @@ abstract class BaseDiscoverShowsViewModel(application: Application) :
         }
         .cachedIn(viewModelScope)
 
-    abstract fun buildDiscoverDataSource(
+    private fun buildDiscoverDataSource(
         tmdb: Tmdb, languageCode: String,
         firstReleaseYear: Int?,
         originalLanguageCode: String?,
         watchProviderIds: List<Int>?,
         watchRegion: String?
-    ): BaseShowResultsDataSource
+    ): BaseShowResultsDataSource {
+        when (link) {
+            DiscoverShowsLink.POPULAR -> {
+                return ShowsPopularDataSource(
+                    getApplication(),
+                    tmdb,
+                    languageCode,
+                    firstReleaseYear,
+                    originalLanguageCode,
+                    watchProviderIds,
+                    watchRegion
+                )
+            }
+
+            DiscoverShowsLink.NEW_EPISODES -> {
+                return ShowsNewEpisodesDataSource(
+                    getApplication(),
+                    tmdb,
+                    languageCode,
+                    firstReleaseYear,
+                    originalLanguageCode,
+                    watchProviderIds,
+                    watchRegion
+                )
+            }
+
+            else -> {
+                throw IllegalArgumentException("$link not supported")
+            }
+        }
+    }
+
+    companion object {
+        private val KEY_DISCOVER_LINK = object : CreationExtras.Key<Int> {}
+
+        val Factory = viewModelFactory {
+            initializer {
+                val application = this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY]!!
+                val link = DiscoverShowsLink.fromId(this[KEY_DISCOVER_LINK]!!)
+                BaseDiscoverShowsViewModel(application, link)
+            }
+        }
+
+        fun creationExtras(defaultExtras: CreationExtras, link: DiscoverShowsLink): CreationExtras =
+            MutableCreationExtras(defaultExtras).apply {
+                set(KEY_DISCOVER_LINK, link.id)
+            }
+    }
 
 }
