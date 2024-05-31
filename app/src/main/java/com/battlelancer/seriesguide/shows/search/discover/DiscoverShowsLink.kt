@@ -16,6 +16,9 @@ enum class DiscoverShowsLink(
     WATCHLIST(4, R.string.watchlist);
 
     companion object {
-        fun fromId(id: Int): DiscoverShowsLink = entries.find { it.id == id } ?: POPULAR
+        /** Guaranteed to not be used as an ID so [fromId] will return `null`. */
+        const val NO_LINK_ID = -1
+
+        fun fromId(id: Int): DiscoverShowsLink? = entries.find { it.id == id }
     }
 }

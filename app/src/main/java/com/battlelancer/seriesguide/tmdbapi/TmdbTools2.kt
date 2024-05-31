@@ -164,6 +164,18 @@ class TmdbTools2 {
             ?.results
     }
 
+    suspend fun searchShows(
+        tmdb: Tmdb,
+        query: String,
+        language: String,
+        firstReleaseYear: Int?,
+        page: Int
+    ): TvShowResultsPage? {
+        return tmdb.searchService()
+            .tv(query, page, language, firstReleaseYear, false)
+            .awaitResponse("search shows")
+    }
+
     private fun discoverTvBuilder(
         tmdb: Tmdb,
         language: String,

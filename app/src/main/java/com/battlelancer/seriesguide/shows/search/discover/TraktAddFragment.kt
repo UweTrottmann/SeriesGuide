@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2011-2023 Uwe Trottmann
+// Copyright 2011-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.search.discover
 
@@ -45,7 +45,8 @@ class TraktAddFragment : AddFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val args = arguments
-        listType = DiscoverShowsLink.fromId(args?.getInt(ARG_TYPE) ?: -1)
+        listType =
+            DiscoverShowsLink.fromId(args?.getInt(ARG_TYPE) ?: DiscoverShowsLink.NO_LINK_ID)!!
     }
 
     override fun onCreateView(

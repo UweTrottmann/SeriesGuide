@@ -27,7 +27,8 @@ class ShowsTraktActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddSho
         setContentView(binding.root)
         ThemeUtils.configureForEdgeToEdge(binding.root)
 
-        val link = DiscoverShowsLink.fromId(intent.getIntExtra(EXTRA_LINK, -1))
+        val link =
+            DiscoverShowsLink.fromId(intent.getIntExtra(EXTRA_LINK, DiscoverShowsLink.NO_LINK_ID))!!
 
         // Change the scrolling view the AppBarLayout should use to determine if it should lift.
         // This is required so the AppBarLayout does not flicker its background when scrolling.

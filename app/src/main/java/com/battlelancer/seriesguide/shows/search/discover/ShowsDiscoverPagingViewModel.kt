@@ -30,30 +30,33 @@ import kotlinx.coroutines.flow.flatMapLatest
 
 /**
  * Provides a different list of shows ([items]) depending on [DiscoverShowsLink]
- * and some filter options.
+ * and some filter options. Or if there is a non-empty [queryString] matching shows.
  */
 class ShowsDiscoverPagingViewModel(
     application: Application,
-    private val link: DiscoverShowsLink
+    private val link: DiscoverShowsLink?
 ) : AndroidViewModel(application) {
 
     data class Filters(
+        val queryString: String,
         val firstReleaseYear: Int?,
         val originalLanguage: String?,
         val watchProviderIds: List<Int>?,
     )
 
+    val queryString = MutableStateFlow("")
     private val watchProviderIds =
         SgRoomDatabase.getInstance(application).sgWatchProviderHelper()
             .getEnabledWatchProviderIdsFlow(SgWatchProvider.Type.SHOWS.id)
     val firstReleaseYear = MutableStateFlow<Int?>(null)
     val originalLanguage = MutableStateFlow<String?>(null)
     val filters = combine(
+        queryString,
         watchProviderIds,
         firstReleaseYear,
         originalLanguage
-    ) { watchProviderIds: List<Int>, firstReleaseYear: Int?, originalLanguage: String? ->
-        Filters(firstReleaseYear, originalLanguage, watchProviderIds)
+    ) { queryString: String, watchProviderIds: List<Int>, firstReleaseYear: Int?, originalLanguage: String? ->
+        Filters(queryString, firstReleaseYear, originalLanguage, watchProviderIds)
     }
 
     private val tmdb = SgApp.getServicesComponent(application).tmdb()
@@ -65,14 +68,24 @@ class ShowsDiscoverPagingViewModel(
             ) {
                 val languageCode = ShowsSettings.getShowsSearchLanguage(application)
                 val watchRegion = StreamingSearch.getCurrentRegionOrNull(application)
-                buildDiscoverDataSource(
-                    tmdb,
-                    languageCode,
-                    it.firstReleaseYear,
-                    it.originalLanguage,
-                    it.watchProviderIds,
-                    watchRegion
-                )
+                if (link == null || it.queryString.isNotEmpty()) {
+                    ShowSearchDataSource(
+                        getApplication(),
+                        tmdb,
+                        languageCode = languageCode,
+                        query = it.queryString,
+                        firstReleaseYear = it.firstReleaseYear
+                    )
+                } else {
+                    buildDiscoverDataSource(
+                        tmdb,
+                        languageCode,
+                        it.firstReleaseYear,
+                        it.originalLanguage,
+                        it.watchProviderIds,
+                        watchRegion
+                    )
+                }
             }.flow
         }
         .cachedIn(viewModelScope)
@@ -115,6 +128,13 @@ class ShowsDiscoverPagingViewModel(
         }
     }
 
+    /**
+     * This will then load the original list.
+     */
+    fun removeQuery() {
+        queryString.value = ""
+    }
+
     companion object {
         private val KEY_DISCOVER_LINK = object : CreationExtras.Key<Int> {}
 
@@ -126,10 +146,12 @@ class ShowsDiscoverPagingViewModel(
             }
         }
 
-        fun creationExtras(defaultExtras: CreationExtras, link: DiscoverShowsLink): CreationExtras =
+        fun creationExtras(
+            defaultExtras: CreationExtras,
+            link: DiscoverShowsLink?
+        ): CreationExtras =
             MutableCreationExtras(defaultExtras).apply {
-                set(KEY_DISCOVER_LINK, link.id)
+                set(KEY_DISCOVER_LINK, link?.id ?: DiscoverShowsLink.NO_LINK_ID)
             }
     }
-
 }
