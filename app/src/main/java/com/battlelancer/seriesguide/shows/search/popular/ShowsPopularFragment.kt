@@ -4,6 +4,7 @@
 package com.battlelancer.seriesguide.shows.search.popular
 
 import androidx.fragment.app.viewModels
+import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverPagingFragment
 
 /**
  * Displays popular shows with filters provided by

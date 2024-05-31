@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright 2018-2024 Uwe Trottmann
 
-package com.battlelancer.seriesguide.shows.search.popular
+package com.battlelancer.seriesguide.shows.search.discover
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,9 +12,7 @@ import androidx.paging.LoadState
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ActivityDiscoverShowsBinding
 import com.battlelancer.seriesguide.databinding.FragmentShowsPopularBinding
-import com.battlelancer.seriesguide.shows.search.discover.BaseAddShowsFragment
-import com.battlelancer.seriesguide.shows.search.discover.BaseDiscoverShowsViewModel
-import com.battlelancer.seriesguide.shows.search.discover.DiscoverShowsActivity
+import com.battlelancer.seriesguide.shows.search.popular.ShowsPagingAdapter
 import com.battlelancer.seriesguide.streaming.WatchProviderFilterDialogFragment
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.dialogs.LanguagePickerDialogFragment

@@ -4,7 +4,7 @@
 package com.battlelancer.seriesguide.shows.search.newepisodes
 
 import androidx.fragment.app.viewModels
-import com.battlelancer.seriesguide.shows.search.popular.ShowsDiscoverPagingFragment
+import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverPagingFragment
 
 /**
  * Displays shows with new episodes with filters provided by

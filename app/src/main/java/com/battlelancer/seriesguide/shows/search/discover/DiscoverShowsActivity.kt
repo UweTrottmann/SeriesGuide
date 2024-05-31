@@ -10,7 +10,6 @@ import androidx.core.view.isVisible
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ActivityDiscoverShowsBinding
 import com.battlelancer.seriesguide.shows.search.newepisodes.ShowsNewEpisodesFragment
-import com.battlelancer.seriesguide.shows.search.popular.ShowsDiscoverPagingFragment
 import com.battlelancer.seriesguide.shows.search.popular.ShowsPopularFragment
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsActivity
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsFragment
