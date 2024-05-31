@@ -9,12 +9,9 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.battlelancer.seriesguide.R
@@ -23,21 +20,15 @@ import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment
 import com.battlelancer.seriesguide.shows.search.discover.SearchResult
 import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverFragment
-import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsActivity
-import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsFragment
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.TabStripAdapter
-import com.battlelancer.seriesguide.util.SearchHistory
 import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
-import com.battlelancer.seriesguide.util.ViewTools.hideSoftKeyboard
 import com.google.android.gms.actions.SearchIntents
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Handles search intents and displays a [EpisodeSearchFragment] when needed or redirects
@@ -53,10 +44,6 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
     private val searchAutoCompleteView
         get() = binding.sgToolbar.autoCompleteViewToolbar
 
-    private lateinit var searchHistory: SearchHistory
-    private lateinit var searchHistoryAdapter: ArrayAdapter<String>
-    private var remoteSearchVisible: Boolean = false
-
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchBinding.inflate(layoutInflater)
@@ -67,10 +54,6 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
         setupActionBar()
 
         bindViews(savedInstanceState == null)
-
-        SimilarShowsFragment.displaySimilarShowsEventLiveData.observe(this) {
-            startActivity(SimilarShowsActivity.intent(this, it.tmdbId, it.title))
-        }
 
         handleSearchIntent(intent)
     }
@@ -84,31 +67,12 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
     }
 
     private fun bindViews(mayShowKeyboard: Boolean) {
-        searchAutoCompleteView.setOnEditorActionListener { _, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH
-                || (event != null && event.action == KeyEvent.ACTION_DOWN
-                        && event.keyCode == KeyEvent.KEYCODE_ENTER)) {
-                triggerRemoteSearch()
-                true
-            } else {
-                false
-            }
-        }
+        binding.sgToolbar.textInputLayoutToolbar.hint = getString(R.string.search)
 
-        // setup search history (only used by TVDb search)
-        searchHistory = SearchHistory(this, "thetvdb")
-        searchHistoryAdapter = ArrayAdapter(
-            this, R.layout.item_dropdown, searchHistory.searchHistory
-        )
         searchAutoCompleteView.apply {
-            threshold = 1
-            setOnClickListener { v -> (v as AutoCompleteTextView).showDropDown() }
-            setOnItemClickListener { _, _, _, _ -> triggerRemoteSearch() }
             // set in code as XML is overridden
             imeOptions = EditorInfo.IME_ACTION_SEARCH
             inputType = EditorInfo.TYPE_CLASS_TEXT
-            // drop-down is auto-shown on config change, ensure it is hidden when recreating views
-            dismissDropDown()
         }
 
         val tabs = binding.tabsSearch
@@ -123,7 +87,6 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
         tabsAdapter.apply {
             addTab(R.string.shows, ShowSearchFragment::class.java, null)
             addTab(R.string.episodes, EpisodeSearchFragment::class.java, null)
-            addTab(R.string.title_discover, ShowsDiscoverFragment::class.java, null)
             notifyTabsChanged()
         }
 
@@ -145,17 +108,11 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
 
     private val pageChangeListener = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
-            remoteSearchVisible = position == TAB_POSITION_SEARCH
-            searchAutoCompleteView.setAdapter<ArrayAdapter<String>>(if (remoteSearchVisible) searchHistoryAdapter else null)
-            binding.sgToolbar.textInputLayoutToolbar.hint =
-                getString(if (remoteSearchVisible) R.string.checkin_searchhint else R.string.search)
-
             // Change the scrolling view the AppBarLayout should use to determine if it should lift.
             // This is required so the AppBarLayout does not flicker its background when scrolling.
             binding.sgAppBarLayout.liftOnScrollTargetViewId = when (position) {
                 TAB_POSITION_SHOWS -> ShowSearchFragment.liftOnScrollTargetViewId
                 TAB_POSITION_EPISODES -> EpisodeSearchFragment.liftOnScrollTargetViewId
-                TAB_POSITION_SEARCH -> ShowsDiscoverFragment.liftOnScrollTargetViewId
                 else -> throw IllegalArgumentException("Unknown page position")
             }
         }
@@ -210,9 +167,7 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
                 AddShowDialogFragment.show(supportFragmentManager, showTmdbId)
             } else {
                 // no id, populate the search field instead
-                viewPager.setCurrentItem(TAB_POSITION_SEARCH, false)
                 searchAutoCompleteView.setText(sharedText)
-                triggerRemoteSearch()
                 triggerLocalSearch(sharedText)
             }
         }
@@ -257,26 +212,6 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
         EventBus.getDefault().postSticky(SearchQueryEvent(args))
     }
 
-    private fun triggerRemoteSearch() {
-        // Also hide keyboard when doing local search (like via OnEditorActionListener)
-        // Must hide keyboard before clearing focus
-        hideSoftKeyboard()
-        searchAutoCompleteView.clearFocus() // also dismisses drop-down
-
-        if (remoteSearchVisible) {
-            // extract and post query
-            val query = searchAutoCompleteView.text.toString().trim()
-            EventBus.getDefault().postSticky(SearchQuerySubmitEvent(query))
-            // update history
-            if (query.isNotEmpty()) {
-                if (searchHistory.saveRecentSearch(query)) {
-                    searchHistoryAdapter.clear()
-                    searchHistoryAdapter.addAll(searchHistory.searchHistory)
-                }
-            }
-        }
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
@@ -291,19 +226,10 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
         super.onDestroy()
         // remove any stored initial queries so they are not used when re-creating
         EventBus.getDefault().removeStickyEvent(SearchQueryEvent::class.java)
-        EventBus.getDefault().removeStickyEvent(SearchQuerySubmitEvent::class.java)
     }
 
     override fun onAddShow(show: SearchResult) {
         TaskManager.getInstance().performAddTask(this, show)
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventMainThread(@Suppress("UNUSED_PARAMETER") event: ClearSearchHistoryEvent) {
-        searchHistory.clearHistory()
-        searchHistoryAdapter.clear()
-        // setting text to null seems to fix the dropdown from not clearing
-        searchAutoCompleteView.text = null
     }
 
 
@@ -319,12 +245,6 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
      */
     class SearchQueryEvent(val args: Bundle)
 
-    /**
-     * Used by [ShowsDiscoverFragment] to submit a query. Unlike local search it is not type
-     * and search.
-     */
-    class SearchQuerySubmitEvent(val query: String)
-
     companion object {
 
         /**
@@ -334,10 +254,7 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
 
         const val TAB_POSITION_SHOWS = 0
         const val TAB_POSITION_EPISODES = 1
-        const val TAB_POSITION_SEARCH = 2
 
-        const val SHOWS_LOADER_ID = 100
-        const val EPISODES_LOADER_ID = 101
         const val TRAKT_BASE_LOADER_ID = 200
     }
 
