@@ -12,11 +12,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentShowsDiscoverBinding
+import com.battlelancer.seriesguide.shows.ShowsActivityImpl
+import com.battlelancer.seriesguide.shows.ShowsActivityViewModel
 import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.shows.search.SearchActivityImpl
 import com.battlelancer.seriesguide.shows.search.discover.AddFragment.OnAddingShowEvent
@@ -27,7 +30,6 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
-import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
@@ -46,6 +48,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
 
     private var binding: FragmentShowsDiscoverBinding? = null
     private lateinit var adapter: ShowsDiscoverAdapter
+    private val activityModel by activityViewModels<ShowsActivityViewModel>()
     private val model: ShowsDiscoverViewModel by viewModels()
 
     private lateinit var languageCode: String
@@ -130,6 +133,12 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         // initial load after getting watch providers, reload on watch provider changes
         model.watchProviderIds.observe(viewLifecycleOwner) {
             loadResults()
+        }
+
+        activityModel.scrollTabToTopLiveData.observe(viewLifecycleOwner) { tabPosition: Int? ->
+            if (tabPosition != null && tabPosition == ShowsActivityImpl.Tab.DISCOVER.index) {
+                recyclerView.smoothScrollToPosition(0)
+            }
         }
 
         SimilarShowsFragment.displaySimilarShowsEventLiveData.observe(viewLifecycleOwner) {
@@ -287,13 +296,6 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         // save selected search language
         ShowsSettings.saveShowsSearchLanguage(requireContext(), languageCode)
         Timber.d("Set search language to %s", languageCode)
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onTabClickEvent(event: TabClickEvent) {
-        if (event.position == SearchActivityImpl.TAB_POSITION_SEARCH) {
-            binding?.recyclerViewShowsDiscover?.smoothScrollToPosition(0)
-        }
     }
 
     override fun setAllPendingNotAdded() {
