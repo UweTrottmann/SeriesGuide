@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright 2024 Uwe Trottmann
 
-package com.battlelancer.seriesguide.shows.search.popular
+package com.battlelancer.seriesguide.ui.dialogs
 
 import android.app.Dialog
 import android.os.Bundle

@@ -17,6 +17,8 @@ import com.battlelancer.seriesguide.shows.search.discover.BaseDiscoverShowsViewM
 import com.battlelancer.seriesguide.shows.search.discover.DiscoverShowsActivity
 import com.battlelancer.seriesguide.streaming.WatchProviderFilterDialogFragment
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
+import com.battlelancer.seriesguide.ui.dialogs.LanguagePickerDialogFragment
+import com.battlelancer.seriesguide.ui.dialogs.YearPickerDialogFragment
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
