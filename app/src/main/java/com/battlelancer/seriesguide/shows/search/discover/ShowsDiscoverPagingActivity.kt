@@ -21,7 +21,7 @@ import com.battlelancer.seriesguide.util.ThemeUtils
 /**
  * Hosts [ShowsDiscoverPagingFragment] determined by [DiscoverShowsLink].
  *
- * If launched with [intentSearch] the search bar is always shown and initially focused.
+ * If launched without extras or [intentSearch] the search bar is always shown and initially focused.
  * If launched with [intentLink] the search bar can be shown with a menu item and hidden by
  * going up or back.
  */
@@ -47,11 +47,12 @@ class ShowsDiscoverPagingActivity : BaseMessageActivity(), AddShowDialogFragment
             val link = DiscoverShowsLink.fromId(
                 intent.getIntExtra(EXTRA_LINK, DiscoverShowsLink.NO_LINK_ID)
             )
+            val query = getQueryFromIntent()
             supportFragmentManager
                 .beginTransaction()
                 .add(
                     R.id.containerMoviesSearchFragment,
-                    ShowsDiscoverPagingFragment.newInstance(link)
+                    ShowsDiscoverPagingFragment.newInstance(link, query)
                 )
                 .commit()
         }
@@ -61,15 +62,30 @@ class ShowsDiscoverPagingActivity : BaseMessageActivity(), AddShowDialogFragment
         }
     }
 
+    private fun getQueryFromIntent(): String? {
+        val intent = intent ?: return null
+        if (intent.action == Intent.ACTION_SEND) {
+            // text shared from other apps
+            if ("text/plain" == intent.type) {
+                return intent.getStringExtra(Intent.EXTRA_TEXT)
+            }
+        }
+        return intent.getStringExtra(EXTRA_QUERY)
+    }
+
     override fun onAddShow(show: SearchResult) {
         TaskManager.getInstance().performAddTask(this, show)
     }
 
     companion object {
-        const val EXTRA_LINK = "LINK"
+        private const val EXTRA_LINK = "link"
+        private const val EXTRA_QUERY = "query"
 
         fun intentSearch(context: Context): Intent =
             Intent(context, ShowsDiscoverPagingActivity::class.java)
+
+        fun intentSearch(context: Context, query: String): Intent =
+            intentSearch(context).putExtra(EXTRA_QUERY, query)
 
         fun intentLink(context: Context, link: DiscoverShowsLink): Intent =
             Intent(context, ShowsDiscoverPagingActivity::class.java)

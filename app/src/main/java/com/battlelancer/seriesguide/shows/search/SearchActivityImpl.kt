@@ -12,14 +12,11 @@ import android.text.TextWatcher
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ActivitySearchBinding
-import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment
 import com.battlelancer.seriesguide.shows.search.discover.SearchResult
-import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverFragment
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.TabStripAdapter
 import com.battlelancer.seriesguide.util.TabClickEvent
@@ -27,12 +24,15 @@ import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.google.android.gms.actions.SearchIntents
-import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 
 /**
- * Handles search intents and displays a [EpisodeSearchFragment] when needed or redirects
- * directly to an [EpisodesActivity].
+ * Provides tabs to search shows ([ShowSearchFragment]) or episodes ([EpisodeSearchFragment])
+ * added to the database, provides the search UI used by those fragments.
+ *
+ * Handles the [Intent.ACTION_SEARCH] and [SearchIntents.ACTION_SEARCH] intents.
+ * When [SearchManager.APP_DATA] contains a [EpisodeSearchFragment.ARG_SHOW_TITLE] switches to the
+ * episodes tab.
  */
 open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnAddShowListener {
 
@@ -146,30 +146,6 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
             val query = launchIntent.getStringExtra(SearchManager.QUERY)
             searchAutoCompleteView.setText(query)
             triggerLocalSearch(query)
-        } else if (Intent.ACTION_SEND == action) {
-            // text share intents from other apps
-            if ("text/plain" == intent.type) {
-                handleSharedText(intent.getStringExtra(Intent.EXTRA_TEXT))
-            }
-        }
-    }
-
-    private fun handleSharedText(sharedText: String?) {
-        if (sharedText.isNullOrEmpty()) {
-            return
-        }
-
-        // try to match TMDB URLs
-        lifecycleScope.launch {
-            val showTmdbId = TmdbIdExtractor(applicationContext, sharedText).tryToExtract()
-            if (showTmdbId > 0) {
-                // found an id, display the add dialog
-                AddShowDialogFragment.show(supportFragmentManager, showTmdbId)
-            } else {
-                // no id, populate the search field instead
-                searchAutoCompleteView.setText(sharedText)
-                triggerLocalSearch(sharedText)
-            }
         }
     }
 
@@ -235,9 +211,6 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
 
     override val snackbarParentView: View
         get() = findViewById(R.id.coordinatorLayoutSearch)
-
-    /** Used by [ShowsDiscoverFragment] to indicate the search history should be cleared.  */
-    class ClearSearchHistoryEvent
 
     /**
      * Used by [ShowSearchFragment] and [EpisodeSearchFragment] to search as the user

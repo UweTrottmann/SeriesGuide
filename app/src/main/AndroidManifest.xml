@@ -147,17 +147,20 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
-            <!-- Receive links to shows -->
+        </activity>
+        <activity android:name=".shows.search.similar.SimilarShowsActivity" />
+        <activity
+            android:name=".shows.search.discover.ShowsDiscoverPagingActivity"
+            android:exported="true">
+
+            <!-- Receive any shared text to suggest a show to add -->
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="text/plain" />
             </intent-filter>
+
         </activity>
-        <activity android:name=".shows.search.similar.SimilarShowsActivity" />
-        <activity
-            android:name=".shows.search.discover.ShowsDiscoverPagingActivity"
-            android:parentActivityName=".ui.SearchActivity" />
         <activity android:name=".shows.search.discover.ShowsTraktActivity" />
 
         <!-- Movies -->

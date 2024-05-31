@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2018-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.search
 
@@ -13,13 +13,15 @@ import androidx.fragment.app.viewModels
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentSearchBinding
 import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
+import com.battlelancer.seriesguide.shows.search.EpisodeSearchFragment.Companion.ARG_SHOW_TITLE
 import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.Utils
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 /**
- * Displays episode search results.
+ * Displays episode search results. Pre-filters results if a [ARG_SHOW_TITLE] is given with
+ * the [SearchManager.APP_DATA] bundle.
  */
 class EpisodeSearchFragment : BaseSearchFragment() {
 

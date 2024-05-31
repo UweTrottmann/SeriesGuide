@@ -17,6 +17,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.databinding.FragmentShowSearchBinding
 import com.battlelancer.seriesguide.shows.ShowMenuItemClickListener
+import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverPagingActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.widgets.EmptyView
 import com.battlelancer.seriesguide.util.TabClickEvent
@@ -51,7 +52,9 @@ class ShowSearchFragment : BaseSearchFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         (emptyView as EmptyView).setButtonClickListener {
-            searchTriggerListener.switchToDiscoverAndSearch()
+            // If empty view shown, must have query
+            val query = model.searchTerm.value!!
+            startActivity(ShowsDiscoverPagingActivity.intentSearch(requireContext(), query))
         }
         adapter = ShowSearchAdapter(requireContext(), onItemClickListener).also {
             gridView.adapter = it
