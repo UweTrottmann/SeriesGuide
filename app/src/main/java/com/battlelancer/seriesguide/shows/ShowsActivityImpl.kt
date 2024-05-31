@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2011-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows
 
@@ -25,6 +25,7 @@ import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.shows.history.ShowsNowFragment
 import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment
 import com.battlelancer.seriesguide.shows.search.discover.SearchResult
+import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverFragment
 import com.battlelancer.seriesguide.sync.AccountUtils
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.ui.BaseTopActivity
@@ -44,8 +45,8 @@ import com.uwetrottmann.seriesguide.billing.BillingViewModelFactory
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
 
 /**
- * Provides the apps main screen, displays tabs for shows, history, recent and upcoming episodes.
- * Runs upgrade code and checks billing state.
+ * Provides the apps main screen, displays tabs for shows, discover, history,
+ * recent and upcoming episodes. Runs upgrade code and checks billing state.
  */
 open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddShowListener {
 
@@ -210,6 +211,9 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
         // shows tab
         tabsAdapter.addTab(R.string.shows, ShowsFragment::class.java, null)
 
+        // discover tab
+        tabsAdapter.addTab(R.string.title_discover, ShowsDiscoverFragment::class.java, null)
+
         // history tab
         tabsAdapter.addTab(R.string.user_stream, ShowsNowFragment::class.java, null)
 
@@ -365,6 +369,7 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
             // This is required so the AppBarLayout does not flicker its background when scrolling.
             val liftOnScrollTarget = when (position) {
                 Tab.SHOWS.index -> ShowsFragment.liftOnScrollTargetViewId
+                Tab.DISCOVER.index -> ShowsDiscoverFragment.liftOnScrollTargetViewId
                 Tab.NOW.index -> ShowsNowFragment.liftOnScrollTargetViewId
                 Tab.UPCOMING.index -> UpcomingFragment.liftOnScrollTargetViewId
                 Tab.RECENT.index -> RecentFragment.liftOnScrollTargetViewId
@@ -391,8 +396,9 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
 
     enum class Tab(val index: Int) {
         SHOWS(0),
-        NOW(1),
-        UPCOMING(2),
-        RECENT(3)
+        DISCOVER(1),
+        NOW(2),
+        UPCOMING(3),
+        RECENT(4)
     }
 }
