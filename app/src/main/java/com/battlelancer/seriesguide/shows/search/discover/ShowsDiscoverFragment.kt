@@ -20,6 +20,8 @@ import com.battlelancer.seriesguide.databinding.FragmentShowsDiscoverBinding
 import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.shows.search.SearchActivityImpl
 import com.battlelancer.seriesguide.shows.search.discover.AddFragment.OnAddingShowEvent
+import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsActivity
+import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsFragment
 import com.battlelancer.seriesguide.streaming.WatchProviderFilterDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
@@ -128,6 +130,10 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         // initial load after getting watch providers, reload on watch provider changes
         model.watchProviderIds.observe(viewLifecycleOwner) {
             loadResults()
+        }
+
+        SimilarShowsFragment.displaySimilarShowsEventLiveData.observe(viewLifecycleOwner) {
+            startActivity(SimilarShowsActivity.intent(requireContext(), it.tmdbId, it.title))
         }
 
         requireActivity().addMenuProvider(
