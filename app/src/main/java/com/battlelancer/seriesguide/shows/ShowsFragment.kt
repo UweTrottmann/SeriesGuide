@@ -41,6 +41,7 @@ import com.battlelancer.seriesguide.shows.ShowsAdapter.ShowItem
 import com.battlelancer.seriesguide.shows.ShowsDistillationFragment.Companion.show
 import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowFilter
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
+import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity.Companion.intentShow
@@ -226,6 +227,11 @@ class ShowsFragment : Fragment() {
 
         override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
             return when (menuItem.itemId) {
+                R.id.menu_action_shows_search -> {
+                    startActivity(Intent(requireContext(), SearchActivity::class.java))
+                    true
+                }
+
                 R.id.menu_action_shows_add -> {
                     startActivityAddShows()
                     true
@@ -233,6 +239,15 @@ class ShowsFragment : Fragment() {
 
                 R.id.menu_action_shows_filter -> {
                     show(parentFragmentManager)
+                    true
+                }
+
+                R.id.menu_action_shows_update -> {
+                    SgSyncAdapter.requestSyncDeltaImmediate(requireContext(), true)
+                    true
+                }
+                R.id.menu_action_shows_redownload -> {
+                    SgSyncAdapter.requestSyncFullImmediate(requireContext(), true)
                     true
                 }
 

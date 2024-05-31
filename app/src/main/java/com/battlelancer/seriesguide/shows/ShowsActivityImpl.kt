@@ -6,8 +6,6 @@ package com.battlelancer.seriesguide.shows
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -27,7 +25,6 @@ import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment
 import com.battlelancer.seriesguide.shows.search.discover.SearchResult
 import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverFragment
 import com.battlelancer.seriesguide.sync.AccountUtils
-import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.ui.BaseTopActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.SearchActivity
@@ -309,31 +306,6 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
 
         // save selected tab index
         ShowsSettings.saveLastShowsTabPosition(this, viewPager.currentItem)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.seriesguide_menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.menu_search -> {
-                startActivity(Intent(this, SearchActivity::class.java))
-                true
-            }
-            R.id.menu_update -> {
-                SgSyncAdapter.requestSyncDeltaImmediate(this, true)
-                true
-            }
-            R.id.menu_fullupdate -> {
-                SgSyncAdapter.requestSyncFullImmediate(this, true)
-                true
-            }
-            else -> {
-                super.onOptionsItemSelected(item)
-            }
-        }
     }
 
     override fun onKeyLongPress(keyCode: Int, event: KeyEvent): Boolean {
