@@ -135,7 +135,7 @@ class MoviesSearchActivity : BaseMessageActivity() {
         searchView.inputType = EditorInfo.TYPE_CLASS_TEXT
 
         // search history
-        searchHistory = SearchHistory(this, "tmdb")
+        searchHistory = SearchHistory(this, "movies")
         searchHistoryAdapter = ArrayAdapter(
             this,
             R.layout.item_dropdown,
