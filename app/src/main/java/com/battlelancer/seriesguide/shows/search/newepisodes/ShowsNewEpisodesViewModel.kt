@@ -4,8 +4,8 @@
 package com.battlelancer.seriesguide.shows.search.newepisodes
 
 import android.app.Application
-import com.battlelancer.seriesguide.shows.search.popular.BaseShowResultsDataSource
-import com.battlelancer.seriesguide.shows.search.popular.BaseDiscoverShowsViewModel
+import com.battlelancer.seriesguide.shows.search.discover.BaseShowResultsDataSource
+import com.battlelancer.seriesguide.shows.search.discover.BaseDiscoverShowsViewModel
 import com.uwetrottmann.tmdb2.Tmdb
 
 class ShowsNewEpisodesViewModel(application: Application) : BaseDiscoverShowsViewModel(application) {

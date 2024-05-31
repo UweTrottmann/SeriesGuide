@@ -4,7 +4,7 @@
 package com.battlelancer.seriesguide.shows.search.newepisodes
 
 import android.content.Context
-import com.battlelancer.seriesguide.shows.search.popular.BaseShowResultsDataSource
+import com.battlelancer.seriesguide.shows.search.discover.BaseShowResultsDataSource
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.uwetrottmann.tmdb2.Tmdb
 import com.uwetrottmann.tmdb2.entities.TvShowResultsPage

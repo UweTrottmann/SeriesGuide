@@ -13,6 +13,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ActivityDiscoverShowsBinding
 import com.battlelancer.seriesguide.databinding.FragmentShowsPopularBinding
 import com.battlelancer.seriesguide.shows.search.discover.BaseAddShowsFragment
+import com.battlelancer.seriesguide.shows.search.discover.BaseDiscoverShowsViewModel
 import com.battlelancer.seriesguide.shows.search.discover.DiscoverShowsActivity
 import com.battlelancer.seriesguide.streaming.WatchProviderFilterDialogFragment
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager

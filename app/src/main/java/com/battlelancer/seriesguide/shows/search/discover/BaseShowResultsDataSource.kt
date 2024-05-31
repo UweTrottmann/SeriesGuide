@@ -1,14 +1,12 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright 2024 Uwe Trottmann
 
-package com.battlelancer.seriesguide.shows.search.popular
+package com.battlelancer.seriesguide.shows.search.discover
 
 import android.content.Context
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.shows.search.discover.SearchResult
-import com.battlelancer.seriesguide.shows.search.discover.SearchTools
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.Tmdb

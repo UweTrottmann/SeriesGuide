@@ -4,6 +4,8 @@
 package com.battlelancer.seriesguide.shows.search.popular
 
 import android.app.Application
+import com.battlelancer.seriesguide.shows.search.discover.BaseShowResultsDataSource
+import com.battlelancer.seriesguide.shows.search.discover.BaseDiscoverShowsViewModel
 import com.uwetrottmann.tmdb2.Tmdb
 
 class ShowsPopularViewModel(application: Application) : BaseDiscoverShowsViewModel(application) {

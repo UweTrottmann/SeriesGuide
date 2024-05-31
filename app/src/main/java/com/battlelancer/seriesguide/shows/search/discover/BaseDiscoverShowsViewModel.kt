@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright 2018-2024 Uwe Trottmann
 
-package com.battlelancer.seriesguide.shows.search.popular
+package com.battlelancer.seriesguide.shows.search.discover
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -13,7 +13,6 @@ import androidx.paging.cachedIn
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.ShowsSettings
-import com.battlelancer.seriesguide.shows.search.discover.SearchResult
 import com.battlelancer.seriesguide.streaming.SgWatchProvider
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.uwetrottmann.tmdb2.Tmdb
