@@ -228,18 +228,17 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
 
         override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
             return when (menuItem.itemId) {
-                R.id.menu_action_shows_search_clear_history -> {
-                    // tell the hosting activity to clear the search view history
-                    EventBus.getDefault().post(SearchActivityImpl.ClearSearchHistoryEvent())
+                R.id.menu_action_shows_discover_search -> {
+                    startActivity(ShowsDiscoverPagingActivity.intentSearch(requireContext()))
                     true
                 }
 
-                R.id.menu_action_shows_search_filter -> {
+                R.id.menu_action_shows_discover_filter -> {
                     WatchProviderFilterDialogFragment.showForShows(parentFragmentManager)
                     true
                 }
 
-                R.id.menu_action_shows_search_change_language -> {
+                R.id.menu_action_shows_discover_change_language -> {
                     displayLanguageSettings()
                     true
                 }
