@@ -143,7 +143,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
                 when (link) {
                     DiscoverShowsLink.POPULAR,
                     DiscoverShowsLink.NEW_EPISODES -> {
-                        DiscoverShowsActivity.intent(requireContext(), link)
+                        ShowsDiscoverPagingActivity.intent(requireContext(), link)
                     }
 
                     DiscoverShowsLink.WATCHLIST,

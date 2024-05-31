@@ -17,7 +17,7 @@ import com.battlelancer.seriesguide.util.ThemeUtils
 /**
  * Hosts [ShowsDiscoverPagingFragment] configured with [DiscoverShowsLink].
  */
-class DiscoverShowsActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowListener {
+class ShowsDiscoverPagingActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowListener {
 
     lateinit var binding: ActivityDiscoverShowsBinding
 
@@ -66,7 +66,7 @@ class DiscoverShowsActivity : BaseMessageActivity(), AddShowDialogFragment.OnAdd
 
         @JvmStatic
         fun intent(context: Context, link: DiscoverShowsLink): Intent {
-            return Intent(context, DiscoverShowsActivity::class.java).putExtra(EXTRA_LINK, link.id)
+            return Intent(context, ShowsDiscoverPagingActivity::class.java).putExtra(EXTRA_LINK, link.id)
         }
     }
 

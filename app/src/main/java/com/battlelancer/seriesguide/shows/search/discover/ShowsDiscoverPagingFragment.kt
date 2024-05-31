@@ -31,7 +31,7 @@ import timber.log.Timber
 
 /**
  * Displays shows provided by a [ShowsDiscoverPagingViewModel], expects to be hosted
- * in [DiscoverShowsActivity] which provides the filter UI.
+ * in [ShowsDiscoverPagingActivity] which provides the filter UI.
  */
 class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
 
@@ -65,7 +65,7 @@ class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        bindingActivity = (requireActivity() as DiscoverShowsActivity).binding
+        bindingActivity = (requireActivity() as ShowsDiscoverPagingActivity).binding
         return FragmentShowsPopularBinding.inflate(inflater, container, false)
             .also { binding = it }
             .root

@@ -156,7 +156,7 @@
         </activity>
         <activity android:name=".shows.search.similar.SimilarShowsActivity" />
         <activity
-            android:name=".shows.search.discover.DiscoverShowsActivity"
+            android:name=".shows.search.discover.ShowsDiscoverPagingActivity"
             android:parentActivityName=".ui.SearchActivity" />
         <activity android:name=".shows.search.discover.ShowsTraktActivity" />
 
