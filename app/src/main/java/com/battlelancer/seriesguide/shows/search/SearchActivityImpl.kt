@@ -43,8 +43,7 @@ import org.greenrobot.eventbus.ThreadMode
  * Handles search intents and displays a [EpisodeSearchFragment] when needed or redirects
  * directly to an [EpisodesActivity].
  */
-open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnAddShowListener,
-    SearchTriggerListener {
+open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnAddShowListener {
 
     private lateinit var binding: ActivitySearchBinding
 
@@ -310,11 +309,6 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
 
     override val snackbarParentView: View
         get() = findViewById(R.id.coordinatorLayoutSearch)
-
-    override fun switchToDiscoverAndSearch() {
-        viewPager.currentItem = TAB_POSITION_SEARCH
-        triggerRemoteSearch()
-    }
 
     /** Used by [ShowsDiscoverFragment] to indicate the search history should be cleared.  */
     class ClearSearchHistoryEvent

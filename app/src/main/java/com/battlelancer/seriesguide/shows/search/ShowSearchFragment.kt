@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2018, 2020-2024 Uwe Trottmann
+// Copyright 2018-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.search
 
@@ -31,7 +31,6 @@ class ShowSearchFragment : BaseSearchFragment() {
     private var binding: FragmentShowSearchBinding? = null
     private val model by viewModels<ShowSearchViewModel>()
     private lateinit var adapter: ShowSearchAdapter
-    private lateinit var searchTriggerListener: SearchTriggerListener
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,12 +55,6 @@ class ShowSearchFragment : BaseSearchFragment() {
         }
         adapter = ShowSearchAdapter(requireContext(), onItemClickListener).also {
             gridView.adapter = it
-        }
-
-        if (activity is SearchTriggerListener) {
-            searchTriggerListener = activity as SearchTriggerListener
-        } else {
-            throw IllegalArgumentException("Activity does not implement SearchTriggerListener")
         }
 
         model.shows.observe(viewLifecycleOwner) { shows ->
