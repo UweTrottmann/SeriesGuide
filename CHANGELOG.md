@@ -15,6 +15,8 @@ Version 2024.3
 --------------
 *in development*
 
+* 🔧 Crew: display directors and writers first, then in order of job title.
+
 #### 2024.3.0 🧪
 *2024-05-24*
 

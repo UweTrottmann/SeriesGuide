@@ -18,6 +18,7 @@ import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import com.uwetrottmann.tmdb2.entities.Credits
+import com.uwetrottmann.tmdb2.entities.CrewMember
 import timber.log.Timber
 
 /**
@@ -134,9 +135,16 @@ class PeopleListHelper {
         return added > 0
     }
 
+    private fun CrewMember.shouldInclude(mediaType: PeopleActivity.MediaType): Boolean {
+        return when (mediaType) {
+            PeopleActivity.MediaType.SHOW -> job == "Creator"
+            PeopleActivity.MediaType.MOVIE -> job == "Director" || department == "Writing"
+        }
+    }
+
     /**
-     * Add views for at most three crew members to the given [android.view.ViewGroup] and a
-     * "Show all" link if there are more.
+     * Add views for three (or few more if of interest) crew members to the given
+     * [android.view.ViewGroup] and a show all link if there are more.
      *
      * @return `false` if no views were added to the [peopleContainer].
      */
@@ -158,12 +166,14 @@ class PeopleListHelper {
 
         peopleContainer.removeAllViews()
 
-        // show at most 3 crew members
         val inflater = LayoutInflater.from(peopleContainer.context)
         var added = 0
         for (person in crew) {
-            if (added == 3) {
-                break // show at most 3
+            // Show at most 3, or more if of interest
+            if (added >= 3) {
+                if (!person.shouldInclude(mediaType)) {
+                    break
+                }
             }
             val personId = person.id
                 ?: continue // missing required values
@@ -191,7 +201,7 @@ class PeopleListHelper {
             added++
         }
 
-        if (crew.size > 3) {
+        if (crew.size > added) {
             addShowAllView(
                 inflater, peopleContainer,
                 OnPersonClickListener(context, mediaType, itemTmdbId, PeopleType.CREW)
