@@ -9,6 +9,10 @@
 title: SeriesGuide
 url: "https://www.seriesgui.de" # the base hostname & protocol for your site
 
+# Remove file extension from generated links
+# https://jekyllrb.com/docs/permalinks/
+permalink: /:categories/:year/:month/:day/:title
+
 # Compress the generated CSS file
 sass:
   style: compressed
