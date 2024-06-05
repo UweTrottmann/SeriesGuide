@@ -21,6 +21,7 @@ import com.uwetrottmann.tmdb2.Tmdb
 import com.uwetrottmann.tmdb2.entities.AppendToResponse
 import com.uwetrottmann.tmdb2.entities.BaseTvShow
 import com.uwetrottmann.tmdb2.entities.Credits
+import com.uwetrottmann.tmdb2.entities.CrewMember
 import com.uwetrottmann.tmdb2.entities.DiscoverFilter
 import com.uwetrottmann.tmdb2.entities.DiscoverFilter.Separator.OR
 import com.uwetrottmann.tmdb2.entities.Person
@@ -417,6 +418,20 @@ class TmdbTools2 {
             .tvService()
             .credits(tmdbId, null)
             .awaitResponse("get show credits")
+            ?.also {
+                val crew = it.crew ?: return@also
+                crew.sortWith(crewComparator)
+                // After sorting, move creators first
+                val creators = mutableListOf<CrewMember>()
+                val otherCrew = crew.filterIndexed { _, crewMember ->
+                    if (crewMember.job == "Creator") {
+                        creators.add(crewMember)
+                        return@filterIndexed false
+                    }
+                    return@filterIndexed true
+                }
+                it.crew = creators + otherCrew
+            }
     }
 
     suspend fun getCreditsForMovie(context: Context, tmdbId: Int): Credits? {
@@ -424,6 +439,24 @@ class TmdbTools2 {
             .moviesService()
             .credits(tmdbId)
             .awaitResponse("get movie credits")
+            ?.also {
+                val crew = it.crew ?: return@also
+                crew.sortWith(crewComparator)
+                // After sorting, move directors and writers first
+                val directors = mutableListOf<CrewMember>()
+                val writers = mutableListOf<CrewMember>()
+                val otherCrew = crew.filterIndexed { _, crewMember ->
+                    if (crewMember.job == "Director") {
+                        directors.add(crewMember)
+                        return@filterIndexed false
+                    } else if (crewMember.department == "Writing") {
+                        writers.add(crewMember)
+                        return@filterIndexed false
+                    }
+                    return@filterIndexed true
+                }
+                it.crew = directors + writers + otherCrew
+            }
     }
 
     suspend fun getPerson(
@@ -521,6 +554,10 @@ class TmdbTools2 {
             ?.imdb_id
     }
 
+    companion object {
+        // In UI currently not grouping by department, so for easier scanning only sort by job
+        private val crewComparator: Comparator<CrewMember> = compareBy({ it.job }, { it.name })
+    }
 }
 
 sealed class TmdbError
