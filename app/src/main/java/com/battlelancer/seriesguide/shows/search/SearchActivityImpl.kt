@@ -227,8 +227,6 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
 
         const val TAB_POSITION_SHOWS = 0
         const val TAB_POSITION_EPISODES = 1
-
-        const val TRAKT_BASE_LOADER_ID = 200
     }
 
 }

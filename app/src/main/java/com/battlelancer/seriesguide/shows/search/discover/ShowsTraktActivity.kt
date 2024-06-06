@@ -62,6 +62,7 @@ class ShowsTraktActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddSho
 
     companion object {
         const val EXTRA_LINK = "LINK"
+        const val TRAKT_BASE_LOADER_ID = 200
 
         @JvmStatic
         fun intent(context: Context, link: DiscoverShowsLink): Intent {
