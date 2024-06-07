@@ -18,6 +18,7 @@ Version 2024.3
 * 🔧 Shows: move Discover screen to top-level.
 * 🔧 Shows: display all search results, filter by release year.
 * 🔧 Crew: display directors and writers first, then in order of job title.
+* 📝 Latest user interface translations from Crowdin.
 
 #### 2024.3.0 🧪
 *2024-05-24*

@@ -70,10 +70,10 @@
     <string name="shout_hint">Scrivi un commento (in inglese, almeno 5 parole)</string>
     <string name="shout_invalid">Il tuo commento non rispetta le regole!</string>
     <string name="action_post">Posta</string>
-    <string name="action_edit_comment">Edit</string>
-    <string name="action_delete_comment">Delete</string>
-    <string name="confirmation_delete_comment">Delete this comment?</string>
-    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
+    <string name="action_edit_comment">Modifica</string>
+    <string name="action_delete_comment">Elimina</string>
+    <string name="confirmation_delete_comment">Eliminare questo commento?</string>
+    <string name="error_delete_comment">Commento non eliminato, è troppo vecchio o ha risposte</string>
     <string name="isspoiler">Attenzione Spoiler!</string>
     <string name="no_shouts">Sii il primo a segnalare!</string>
     <string name="refresh">Aggiorna</string>

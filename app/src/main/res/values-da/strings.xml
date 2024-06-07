@@ -70,10 +70,10 @@
     <string name="shout_hint">Skriv en kommentar (engelsk, 5+ ord)</string>
     <string name="shout_invalid">Din kommentar overholder ikke reglerne!</string>
     <string name="action_post">Opret indlæg</string>
-    <string name="action_edit_comment">Edit</string>
-    <string name="action_delete_comment">Delete</string>
-    <string name="confirmation_delete_comment">Delete this comment?</string>
-    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
+    <string name="action_edit_comment">Redigér</string>
+    <string name="action_delete_comment">Slet</string>
+    <string name="confirmation_delete_comment">Slet denne kommentar?</string>
+    <string name="error_delete_comment">Kommentar ikke slettet, den er for gammel eller har svar</string>
     <string name="isspoiler">Spoiler alert!</string>
     <string name="no_shouts">Vær den første til at kommentere!</string>
     <string name="refresh">Opdater</string>

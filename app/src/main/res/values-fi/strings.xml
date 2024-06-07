@@ -70,10 +70,10 @@
     <string name="shout_hint">Kirjoita kommentti (englanniksi, 5+ sanaa)</string>
     <string name="shout_invalid">Kommenttisi ei noudata sääntöjä!</string>
     <string name="action_post">Lähetä</string>
-    <string name="action_edit_comment">Edit</string>
-    <string name="action_delete_comment">Delete</string>
-    <string name="confirmation_delete_comment">Delete this comment?</string>
-    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
+    <string name="action_edit_comment">Muokkaa</string>
+    <string name="action_delete_comment">Poista</string>
+    <string name="confirmation_delete_comment">Poistetaanko tämä kommentti?</string>
+    <string name="error_delete_comment">Kommenttia ei poistettu, se on liian vanha tai sillä on vastauksia</string>
     <string name="isspoiler">Juonipaljastus!</string>
     <string name="no_shouts">Ole ensimmäinen kommentoija!</string>
     <string name="refresh">Päivitä</string>
@@ -352,7 +352,7 @@
     <string name="action_rate">Arvostele</string>
     <string name="ack_rated">Arvosana lähetettiin</string>
     <string name="your_rating">Arvosanasi</string>
-    <string name="action_remove_rating">Remove rating</string>
+    <string name="action_remove_rating">Poista arvostelu</string>
     <string name="love">Maailman parasta!</string>
     <string name="hate">Ei sytyttänyt :(</string>
     <string name="rating2">Kauhea</string>
