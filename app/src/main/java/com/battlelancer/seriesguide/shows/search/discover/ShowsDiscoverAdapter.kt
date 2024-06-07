@@ -8,6 +8,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.TooltipCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemAddshowBinding
@@ -113,6 +114,7 @@ class ShowsDiscoverAdapter(
 
     interface OnItemClickListener {
         fun onLinkClick(anchor: View, link: DiscoverShowsLink)
+        fun onHeaderButtonClick()
         fun onItemClick(item: SearchResult)
         fun onAddClick(item: SearchResult)
         fun onMenuWatchlistClick(view: View, showTmdbId: Int)
@@ -168,9 +170,17 @@ class ShowsDiscoverAdapter(
         private var link: DiscoverShowsLink? = null
 
         init {
-            itemView.setOnClickListener {
+            binding.textViewGridHeader.setOnClickListener {
                 link?.let {
                     onItemClickListener.onLinkClick(itemView, it)
+                }
+            }
+            binding.buttonDiscoverHeader.apply {
+                setIconResource(R.drawable.ic_filter_white_24dp)
+                contentDescription = context.getString(R.string.action_shows_filter)
+                TooltipCompat.setTooltipText(this, contentDescription)
+                setOnClickListener {
+                    onItemClickListener.onHeaderButtonClick()
                 }
             }
         }

@@ -152,6 +152,10 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
             Utils.startActivityWithAnimation(activity, intent, anchor)
         }
 
+        override fun onHeaderButtonClick() {
+            WatchProviderFilterDialogFragment.showForShows(parentFragmentManager)
+        }
+
         override fun onItemClick(item: SearchResult) {
             if (item.state != SearchResult.STATE_ADDING) {
                 if (item.state == SearchResult.STATE_ADDED) {
@@ -220,11 +224,6 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
             return when (menuItem.itemId) {
                 R.id.menu_action_shows_discover_search -> {
                     startActivity(ShowsDiscoverPagingActivity.intentSearch(requireContext()))
-                    true
-                }
-
-                R.id.menu_action_shows_discover_filter -> {
-                    WatchProviderFilterDialogFragment.showForShows(parentFragmentManager)
                     true
                 }
 

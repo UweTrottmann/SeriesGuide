@@ -15,10 +15,4 @@
         android:title="@string/pref_language"
         app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/menu_action_shows_discover_filter"
-        android:icon="@drawable/ic_filter_white_24dp"
-        android:title="@string/action_shows_filter"
-        app:showAsAction="ifRoom" />
-
 </menu>
