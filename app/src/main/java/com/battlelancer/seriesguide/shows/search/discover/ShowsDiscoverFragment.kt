@@ -38,9 +38,10 @@ import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
 
 /**
- * Displays a list of shows with new episodes with links to popular shows and if connected to trakt
- * also with links to recommendations, watched and collected shows. If a search event is received,
- * displays search results. If a link is clicked launches a new activity to display them.
+ * Displays links to popular shows, shows with new episodes and if connected to Trakt
+ * also links to Trakt lists ([TraktAddFragment]).
+ *
+ * Displays a limited list of shows with new episodes that can be filtered by watch provider.
  */
 class ShowsDiscoverFragment : BaseAddShowsFragment() {
 
