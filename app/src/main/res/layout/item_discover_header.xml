@@ -1,18 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/textViewGridHeader"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
-    android:paddingStart="8dp"
-    android:paddingTop="16dp"
-    android:paddingEnd="0dp"
-    android:paddingBottom="2dp"
-    android:textAppearance="@style/TextAppearance.SeriesGuide.TitleMedium.Bold"
-    android:textSize="18sp"
-    app:drawableEndCompat="@drawable/ic_chevron_right_black_24dp"
-    app:drawableTint="?android:attr/textColorPrimary"
-    tools:text="New episodes" />
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/textViewGridHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:paddingStart="8dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="0dp"
+        android:paddingBottom="2dp"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.TitleMedium.Bold"
+        android:textSize="18sp"
+        app:drawableEndCompat="@drawable/ic_chevron_right_black_24dp"
+        app:drawableTint="?android:attr/textColorPrimary"
+        app:layout_constraintEnd_toStartOf="@id/buttonDiscoverHeader"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_max="280dp"
+        tools:text="New episodes" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonDiscoverHeader"
+        style="?attr/materialIconButtonStyle"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:contentDescription="@null"
+        app:iconTint="?attr/colorControlNormal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/textViewGridHeader"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:icon="@drawable/ic_filter_white_24dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
