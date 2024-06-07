@@ -29,7 +29,6 @@ class ShowsDiscoverAdapter(
 
     private val searchResults = mutableListOf<SearchResult>()
     private val links: MutableList<DiscoverShowsLink> = mutableListOf()
-    private var showOnlyResults = false
 
     init {
         links.add(DiscoverShowsLink.POPULAR)
@@ -41,8 +40,7 @@ class ShowsDiscoverAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged") // No need for incremental updates/animations.
-    fun updateSearchResults(newSearchResults: List<SearchResult>?, showOnlyResults: Boolean) {
-        this.showOnlyResults = showOnlyResults
+    fun updateSearchResults(newSearchResults: List<SearchResult>?) {
         searchResults.clear()
         if (newSearchResults != null) {
             searchResults.addAll(newSearchResults)
@@ -75,32 +73,17 @@ class ShowsDiscoverAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (showOnlyResults) {
-            VIEW_TYPE_SHOW
-        } else {
-            when {
-                position < links.size -> VIEW_TYPE_LINK
-                position == links.size -> VIEW_TYPE_HEADER
-                else -> VIEW_TYPE_SHOW
-            }
+        return when {
+            position < links.size -> VIEW_TYPE_LINK
+            position == links.size -> VIEW_TYPE_HEADER
+            else -> VIEW_TYPE_SHOW
         }
     }
 
-    override fun getItemCount(): Int {
-        return if (showOnlyResults) {
-            searchResults.size
-        } else {
-            links.size + 1 /* header */ + searchResults.size
-        }
-    }
+    override fun getItemCount(): Int = links.size + 1 /* header */ + searchResults.size
 
-    private fun getSearchResultFor(position: Int): SearchResult {
-        return if (showOnlyResults) {
-            searchResults[position]
-        } else {
-            searchResults[position - links.size - 1 /* header */]
-        }
-    }
+    private fun getSearchResultFor(position: Int): SearchResult =
+        searchResults[position - links.size - 1 /* header */]
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {

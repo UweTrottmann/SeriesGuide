@@ -27,6 +27,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ActivityMoviesSearchBinding
 import com.battlelancer.seriesguide.databinding.FragmentShowsPopularBinding
 import com.battlelancer.seriesguide.shows.ShowsSettings
+import com.battlelancer.seriesguide.shows.search.TmdbIdExtractor
 import com.battlelancer.seriesguide.streaming.WatchProviderFilterDialogFragment
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
@@ -50,6 +51,9 @@ import timber.log.Timber
 /**
  * Displays shows provided by a [ShowsDiscoverPagingViewModel], expects to be hosted
  * in [ShowsDiscoverPagingActivity] which provides the filter UI.
+ *
+ * If a query is given, tries to extract the TMDB id and displays an [AddShowDialogFragment],
+ * otherwise triggers a search.
  */
 class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
 
@@ -66,6 +70,8 @@ class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
     )
 
     private lateinit var bindingActivity: ActivityMoviesSearchBinding
+    private val searchEditText
+        get() = bindingActivity.autoCompleteViewToolbar
     private var binding: FragmentShowsPopularBinding? = null
 
     private lateinit var snackbar: Snackbar
@@ -139,7 +145,7 @@ class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
         )
 
         // search box
-        bindingActivity.autoCompleteViewToolbar.apply {
+        searchEditText.apply {
             threshold = 1
             setOnClickListener(searchViewClickListener)
             onItemClickListener = searchViewItemClickListener
@@ -157,7 +163,7 @@ class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
             if (showSearchView) {
                 ViewTools.showSoftKeyboardOnSearchView(
                     requireActivity().window,
-                    bindingActivity.autoCompleteViewToolbar
+                    searchEditText
                 )
             }
         }
@@ -265,6 +271,29 @@ class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
             viewLifecycleOwner,
             Lifecycle.State.RESUMED
         )
+
+        if (savedInstanceState == null) {
+            if (isSearchOnly) {
+                handleSharedQuery()
+            }
+        }
+    }
+
+    private fun handleSharedQuery() {
+        val query = requireArguments().getString(ARG_QUERY)
+        if (query.isNullOrEmpty()) return
+        // try to match TMDB URLs
+        lifecycleScope.launch {
+            val showTmdbId = TmdbIdExtractor(requireContext(), query).tryToExtract()
+            if (showTmdbId > 0) {
+                // found an id, display the add dialog
+                AddShowDialogFragment.show(parentFragmentManager, showTmdbId)
+            } else {
+                // no id, do a search instead
+                searchEditText.setText(query)
+                search()
+            }
+        }
     }
 
     // Re-using movies discover menu as it is currently identical
@@ -292,7 +321,7 @@ class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
                     setSearchViewVisible(true)
                     ViewTools.showSoftKeyboardOnSearchView(
                         requireActivity().window,
-                        bindingActivity.autoCompleteViewToolbar
+                        searchEditText
                     )
                     requireActivity().invalidateOptionsMenu()
                     return true
@@ -302,7 +331,7 @@ class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
                     searchHistory.clearHistory()
                     searchHistoryAdapter.clear()
                     // setting text to null seems to fix the dropdown from not clearing
-                    bindingActivity.autoCompleteViewToolbar.setText(null)
+                    searchEditText.setText(null)
                     return true
                 }
 
@@ -364,13 +393,13 @@ class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
     }
 
     private fun search() {
-        bindingActivity.autoCompleteViewToolbar.text.toString()
+        searchEditText.text.toString()
             .trim()
             .let { query ->
                 if (query.isNotEmpty()) {
                     // Must hide keyboard before clearing focus
                     requireActivity().hideSoftKeyboard()
-                    bindingActivity.autoCompleteViewToolbar.clearFocus() // also dismisses drop-down
+                    searchEditText.clearFocus() // also dismisses drop-down
 
                     // perform search
                     model.queryString.value = query
@@ -384,7 +413,7 @@ class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
     }
 
     private val searchViewClickListener =
-        View.OnClickListener { bindingActivity.autoCompleteViewToolbar.showDropDown() }
+        View.OnClickListener { searchEditText.showDropDown() }
 
     private val searchViewItemClickListener =
         AdapterView.OnItemClickListener { _, _, _, _ -> search() }
@@ -415,14 +444,22 @@ class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
         val liftOnScrollTargetViewId = R.id.recyclerViewShowsPopular
 
         private const val ARG_LINK = "link"
+        private const val ARG_QUERY = "query"
         private const val STATE_SEARCH_VISIBLE = "searchVisible"
         private const val TAG_YEAR_PICKER = "yearPicker"
         private const val TAG_LANGUAGE_PICKER = "languagePicker"
 
-        fun newInstance(link: DiscoverShowsLink?) =
+        /**
+         * If in search only mode ([link] is `null`) will use given [query] to extract a TMDB ID
+         * and display an [AddShowDialogFragment] directly or otherwise trigger a search with it.
+         */
+        fun newInstance(link: DiscoverShowsLink?, query: String?) =
             ShowsDiscoverPagingFragment().apply {
                 val linkId = link?.id ?: DiscoverShowsLink.NO_LINK_ID
-                arguments = bundleOf(ARG_LINK to linkId)
+                arguments = bundleOf(
+                    ARG_LINK to linkId,
+                    ARG_QUERY to query
+                )
             }
     }
 

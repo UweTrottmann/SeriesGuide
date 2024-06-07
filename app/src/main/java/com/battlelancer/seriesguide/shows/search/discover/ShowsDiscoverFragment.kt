@@ -12,22 +12,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentShowsDiscoverBinding
+import com.battlelancer.seriesguide.shows.ShowsActivityImpl
+import com.battlelancer.seriesguide.shows.ShowsActivityViewModel
 import com.battlelancer.seriesguide.shows.ShowsSettings
-import com.battlelancer.seriesguide.shows.search.SearchActivityImpl
 import com.battlelancer.seriesguide.shows.search.discover.AddFragment.OnAddingShowEvent
+import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsActivity
+import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsFragment
 import com.battlelancer.seriesguide.streaming.WatchProviderFilterDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
-import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.TaskManager
-import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import org.greenrobot.eventbus.EventBus
@@ -36,33 +38,19 @@ import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
 
 /**
- * Displays a list of shows with new episodes with links to popular shows and if connected to trakt
- * also with links to recommendations, watched and collected shows. If a search event is received,
- * displays search results. If a link is clicked launches a new activity to display them.
+ * Displays links to popular shows, shows with new episodes and if connected to Trakt
+ * also links to Trakt lists ([TraktAddFragment]).
+ *
+ * Displays a limited list of shows with new episodes that can be filtered by watch provider.
  */
 class ShowsDiscoverFragment : BaseAddShowsFragment() {
 
     private var binding: FragmentShowsDiscoverBinding? = null
     private lateinit var adapter: ShowsDiscoverAdapter
+    private val activityModel by activityViewModels<ShowsActivityViewModel>()
     private val model: ShowsDiscoverViewModel by viewModels()
 
     private lateinit var languageCode: String
-    private var query: String = ""
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        query = if (savedInstanceState != null) {
-            // restore last query
-            savedInstanceState.getString(KEY_QUERY) ?: ""
-        } else {
-            // use initial query (if any)
-            val queryEvent = EventBus.getDefault().getStickyEvent(
-                SearchActivityImpl.SearchQuerySubmitEvent::class.java
-            )
-            queryEvent?.query ?: ""
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -107,8 +95,6 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         }
 
         val recyclerView = binding.recyclerViewShowsDiscover
-        ThemeUtils.applyBottomPaddingForNavigationBar(recyclerView)
-        ThemeUtils.applyBottomMarginForNavigationBar(binding.textViewPoweredByDiscover)
         recyclerView.apply {
             setHasFixedSize(true)
             this.layoutManager = layoutManager
@@ -128,6 +114,16 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         // initial load after getting watch providers, reload on watch provider changes
         model.watchProviderIds.observe(viewLifecycleOwner) {
             loadResults()
+        }
+
+        activityModel.scrollTabToTopLiveData.observe(viewLifecycleOwner) { tabPosition: Int? ->
+            if (tabPosition != null && tabPosition == ShowsActivityImpl.Tab.DISCOVER.index) {
+                recyclerView.smoothScrollToPosition(0)
+            }
+        }
+
+        SimilarShowsFragment.displaySimilarShowsEventLiveData.observe(viewLifecycleOwner) {
+            startActivity(SimilarShowsActivity.intent(requireContext(), it.tmdbId, it.title))
         }
 
         requireActivity().addMenuProvider(
@@ -191,15 +187,9 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventMainThread(event: SearchActivityImpl.SearchQuerySubmitEvent) {
-        query = event.query
-        loadResults()
-    }
-
     private fun loadResults(forceLoad: Boolean = false) {
         val watchProviderIds = model.watchProviderIds.value
-        val willLoad = model.data.load(query, languageCode, watchProviderIds, forceLoad)
+        val willLoad = model.data.load(languageCode, watchProviderIds, forceLoad)
         if (willLoad) binding?.swipeRefreshLayoutShowsDiscover?.isRefreshing = true
     }
 
@@ -217,7 +207,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
 
             binding.recyclerViewShowsDiscover.visibility =
                 if (hasResults) View.VISIBLE else View.GONE
-            adapter.updateSearchResults(result.searchResults, result.isResultsForQuery)
+            adapter.updateSearchResults(result.searchResults)
         }
     }
 
@@ -228,18 +218,17 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
 
         override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
             return when (menuItem.itemId) {
-                R.id.menu_action_shows_search_clear_history -> {
-                    // tell the hosting activity to clear the search view history
-                    EventBus.getDefault().post(SearchActivityImpl.ClearSearchHistoryEvent())
+                R.id.menu_action_shows_discover_search -> {
+                    startActivity(ShowsDiscoverPagingActivity.intentSearch(requireContext()))
                     true
                 }
 
-                R.id.menu_action_shows_search_filter -> {
+                R.id.menu_action_shows_discover_filter -> {
                     WatchProviderFilterDialogFragment.showForShows(parentFragmentManager)
                     true
                 }
 
-                R.id.menu_action_shows_search_change_language -> {
+                R.id.menu_action_shows_discover_change_language -> {
                     displayLanguageSettings()
                     true
                 }
@@ -255,11 +244,6 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
             languageCode,
             L10nDialogFragment.TAG_DISCOVER
         )
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString(KEY_QUERY, query)
     }
 
     override fun onDestroyView() {
@@ -284,13 +268,6 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         Timber.d("Set search language to %s", languageCode)
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onTabClickEvent(event: TabClickEvent) {
-        if (event.position == SearchActivityImpl.TAB_POSITION_SEARCH) {
-            binding?.recyclerViewShowsDiscover?.smoothScrollToPosition(0)
-        }
-    }
-
     override fun setAllPendingNotAdded() {
         adapter.setAllPendingNotAdded()
     }
@@ -301,8 +278,6 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
 
     companion object {
         val liftOnScrollTargetViewId = R.id.recyclerViewShowsDiscover
-
-        private const val KEY_QUERY = "searchQuery"
     }
 
 }

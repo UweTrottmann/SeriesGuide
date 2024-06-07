@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /**
- * Gets search results for the given query, or if the query is blank gets shows with new episodes.
+ * Gets shows with new episodes in the last 7 days.
  */
 class ShowsDiscoverLiveData(
     private val context: Context,
@@ -29,11 +29,9 @@ class ShowsDiscoverLiveData(
     data class Result(
         val searchResults: List<SearchResult>,
         val emptyText: String,
-        val isResultsForQuery: Boolean,
         val successful: Boolean
     )
 
-    private var query: String = ""
     private var language: String = context.getString(R.string.content_default_language)
     private var watchProviderIds: List<Int>? = null
     private var currentJob: Job? = null
@@ -44,24 +42,21 @@ class ShowsDiscoverLiveData(
      * Returns if it will load.
      */
     fun load(
-        query: String,
         language: String,
         watchProviderIds: List<Int>?,
         forceLoad: Boolean
     ): Boolean {
         return if (
             forceLoad
-            || this.query != query
             || this.language != language
             || this.watchProviderIds != watchProviderIds
             || currentJob == null
         ) {
-            this.query = query
             this.language = language
 
             currentJob?.cancel()
             currentJob = scope.launch(Dispatchers.IO) {
-                fetchDiscoverData(query, language, watchProviderIds)
+                fetchDiscoverData(language, watchProviderIds)
             }
             true
         } else {
@@ -70,17 +65,10 @@ class ShowsDiscoverLiveData(
     }
 
     private suspend fun fetchDiscoverData(
-        query: String,
         language: String,
         watchProviderIds: List<Int>?
     ) = withContext(Dispatchers.IO) {
-        val result = if (query.isBlank()) {
-            // No query: load a list of shows with new episodes in the last 7 days.
-            getShowsWithNewEpisodes(language, watchProviderIds)
-        } else {
-            // Have a query: search.
-            searchShows(query, language)
-        }
+        val result = getShowsWithNewEpisodes(language, watchProviderIds)
         // Note: Do not bother posting results if cancelled.
         if (isActive) {
             postValue(result)
@@ -106,47 +94,30 @@ class ShowsDiscoverLiveData(
         return@withContext if (results != null) {
             val searchResults = SearchTools.mapTvShowsToSearchResults(languageActual, results)
             SearchTools.markLocalShowsAsAddedAndPreferLocalPoster(context, searchResults)
-            buildResultSuccess(searchResults, R.string.add_empty, false)
+            buildResultSuccess(searchResults, R.string.add_empty)
         } else {
-            buildResultFailure(false)
-        }
-    }
-
-    private suspend fun searchShows(
-        query: String,
-        language: String
-    ): Result = withContext(Dispatchers.IO) {
-        val results = TmdbTools2().searchShows(query, language, context)
-        return@withContext if (results != null) {
-            val searchResults = SearchTools.mapTvShowsToSearchResults(language, results)
-            SearchTools.markLocalShowsAsAddedAndPreferLocalPoster(context, searchResults)
-            buildResultSuccess(searchResults, R.string.no_results, true)
-        } else {
-            buildResultFailure(true)
+            buildResultFailure()
         }
     }
 
     private fun buildResultSuccess(
-        results: List<SearchResult>?, @StringRes emptyTextResId: Int,
-        isResultsForQuery: Boolean
+        results: List<SearchResult>?, @StringRes emptyTextResId: Int
     ): Result {
         return Result(
-            results ?: emptyList(), context.getString(emptyTextResId),
-            isResultsForQuery,
+            results ?: emptyList(),
+            context.getString(emptyTextResId),
             true
         )
     }
 
-    private fun buildResultFailure(
-        isResultsForQuery: Boolean
-    ): Result {
+    private fun buildResultFailure(): Result {
         // only check for network here to allow hitting the response cache
         val emptyText = if (AndroidUtils.isNetworkConnected(context)) {
             context.getString(R.string.api_error_generic, context.getString(R.string.tmdb))
         } else {
             context.getString(R.string.offline)
         }
-        return Result(emptyList(), emptyText, isResultsForQuery, false)
+        return Result(emptyList(), emptyText, false)
     }
 
 }

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2018, 2020-2024 Uwe Trottmann
+// Copyright 2018-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.search
 
@@ -17,6 +17,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.databinding.FragmentShowSearchBinding
 import com.battlelancer.seriesguide.shows.ShowMenuItemClickListener
+import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverPagingActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.widgets.EmptyView
 import com.battlelancer.seriesguide.util.TabClickEvent
@@ -31,7 +32,6 @@ class ShowSearchFragment : BaseSearchFragment() {
     private var binding: FragmentShowSearchBinding? = null
     private val model by viewModels<ShowSearchViewModel>()
     private lateinit var adapter: ShowSearchAdapter
-    private lateinit var searchTriggerListener: SearchTriggerListener
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,16 +52,12 @@ class ShowSearchFragment : BaseSearchFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         (emptyView as EmptyView).setButtonClickListener {
-            searchTriggerListener.switchToDiscoverAndSearch()
+            // If empty view shown, must have query
+            val query = model.searchTerm.value!!
+            startActivity(ShowsDiscoverPagingActivity.intentSearch(requireContext(), query))
         }
         adapter = ShowSearchAdapter(requireContext(), onItemClickListener).also {
             gridView.adapter = it
-        }
-
-        if (activity is SearchTriggerListener) {
-            searchTriggerListener = activity as SearchTriggerListener
-        } else {
-            throw IllegalArgumentException("Activity does not implement SearchTriggerListener")
         }
 
         model.shows.observe(viewLifecycleOwner) { shows ->

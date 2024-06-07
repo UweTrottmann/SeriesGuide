@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2012-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.traktapi
 
@@ -13,8 +13,9 @@ import androidx.fragment.app.Fragment
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.databinding.FragmentConnectTraktCredentialsBinding
+import com.battlelancer.seriesguide.shows.ShowsActivityImpl
 import com.battlelancer.seriesguide.sync.SyncProgress.SyncEvent
-import com.battlelancer.seriesguide.ui.SearchActivity.Companion.newIntent
+import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
 import org.greenrobot.eventbus.EventBus
@@ -45,8 +46,10 @@ class ConnectTraktCredentialsFragment : Fragment() {
 
         // library button
         binding.buttonTraktLibrary.setOnClickListener {
-            // open search tab, will now have links to trakt lists
-            startActivity(newIntent(requireContext()))
+            // Show discover tab, will now have links to trakt lists
+            startActivity(
+                ShowsActivity.newIntent(requireContext(), ShowsActivityImpl.Tab.DISCOVER.index)
+            )
         }
         // Learn more button
         ViewTools.openUrlOnClickAndCopyOnLongPress(

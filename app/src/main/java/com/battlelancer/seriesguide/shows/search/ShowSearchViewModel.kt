@@ -1,6 +1,6 @@
-// Copyright 2021-2023 Uwe Trottmann
-// Copyright 2018 Thouseef Hameed
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
+// Copyright 2018 Thouseef Hameed
 
 package com.battlelancer.seriesguide.shows.search
 
@@ -17,7 +17,9 @@ import com.battlelancer.seriesguide.util.TimeTools
 
 class ShowSearchViewModel(application: Application) : AndroidViewModel(application) {
 
-    val searchTerm = MutableLiveData<String?>()
+    // Set initial value to show results before typing a query,
+    // might already display what the user looks for.
+    val searchTerm = MutableLiveData("")
     val shows = searchTerm.switchMap { searchTerm ->
         val database = SgRoomDatabase.getInstance(getApplication())
         val query = if (searchTerm.isNullOrBlank()) {

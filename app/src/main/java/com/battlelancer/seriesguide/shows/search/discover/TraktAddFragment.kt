@@ -20,7 +20,6 @@ import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentAddshowTraktBinding
-import com.battlelancer.seriesguide.shows.search.SearchActivityImpl
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.widgets.EmptyView
 import com.battlelancer.seriesguide.util.TaskManager
@@ -86,7 +85,7 @@ class TraktAddFragment : AddFragment() {
         // load data
         LoaderManager.getInstance(this)
             .initLoader(
-                SearchActivityImpl.TRAKT_BASE_LOADER_ID + listType.id, null,
+                ShowsTraktActivity.TRAKT_BASE_LOADER_ID + listType.id, null,
                 traktAddCallbacks
             )
 
@@ -197,7 +196,7 @@ class TraktAddFragment : AddFragment() {
             // reload watchlist if a show was removed
             LoaderManager.getInstance(this)
                 .restartLoader(
-                    SearchActivityImpl.TRAKT_BASE_LOADER_ID + listType.id, null,
+                    ShowsTraktActivity.TRAKT_BASE_LOADER_ID + listType.id, null,
                     traktAddCallbacks
                 )
         }
@@ -208,7 +207,7 @@ class TraktAddFragment : AddFragment() {
             setProgressVisible(visible = true, animate = false)
             LoaderManager.getInstance(this@TraktAddFragment)
                 .restartLoader(
-                    SearchActivityImpl.TRAKT_BASE_LOADER_ID + listType.id, null,
+                    ShowsTraktActivity.TRAKT_BASE_LOADER_ID + listType.id, null,
                     traktAddCallbacks
                 )
         }

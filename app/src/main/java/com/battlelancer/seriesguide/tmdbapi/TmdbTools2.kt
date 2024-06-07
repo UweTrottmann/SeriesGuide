@@ -19,7 +19,6 @@ import com.github.michaelbull.result.runCatching
 import com.uwetrottmann.tmdb2.DiscoverTvBuilder
 import com.uwetrottmann.tmdb2.Tmdb
 import com.uwetrottmann.tmdb2.entities.AppendToResponse
-import com.uwetrottmann.tmdb2.entities.BaseTvShow
 import com.uwetrottmann.tmdb2.entities.Credits
 import com.uwetrottmann.tmdb2.entities.CrewMember
 import com.uwetrottmann.tmdb2.entities.DiscoverFilter
@@ -152,17 +151,6 @@ class TmdbTools2 {
             Errors.logAndReport(action, e)
         }
         return null
-    }
-
-    /**
-     * Returns null if network call fails.
-     */
-    suspend fun searchShows(query: String, language: String, context: Context): List<BaseTvShow>? {
-        return SgApp.getServicesComponent(context.applicationContext).tmdb()
-            .searchService()
-            .tv(query, null, language, null, false)
-            .awaitResponse("search shows")
-            ?.results
     }
 
     suspend fun searchShows(

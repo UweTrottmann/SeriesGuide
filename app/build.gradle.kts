@@ -230,7 +230,6 @@ dependencies {
 
     implementation(libs.androidutils)
     implementation(libs.photoview)
-    implementation(libs.taptargetview)
 
     implementation(libs.tmdb.java)
     implementation(libs.trakt.java) {
