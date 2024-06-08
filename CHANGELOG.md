@@ -15,6 +15,8 @@ Version 2024.3
 --------------
 *in development*
 
+* 🔧 Shows: restore search option on history and calendar tabs.
+
 #### 2024.3.1 🧪
 *2024-06-07*
 

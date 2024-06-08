@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2014-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.history
 
@@ -34,6 +34,7 @@ import com.battlelancer.seriesguide.shows.history.NowAdapter.NowItem
 import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceCompletedEvent
+import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.util.ViewTools
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -200,11 +201,19 @@ class ShowsNowFragment : Fragment() {
 
         override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
             val itemId = menuItem.itemId
-            if (itemId == R.id.menu_action_shows_now_refresh) {
-                refreshStream()
-                return true
+            return when (itemId) {
+                R.id.menu_action_shows_now_search -> {
+                    startActivity(Intent(requireContext(), SearchActivity::class.java))
+                    true
+                }
+
+                R.id.menu_action_shows_now_refresh -> {
+                    refreshStream()
+                    true
+                }
+
+                else -> false
             }
-            return false
         }
     }
 
