@@ -48,9 +48,12 @@ abstract class BaseRateItemTask(
                         override fun handleSuccessfulResponse(body: SyncResponse): Int {
                             val notFound = body.not_found
                             if (notFound != null) {
-                                if ((notFound.movies != null && notFound.movies.size != 0)
-                                    || (notFound.shows != null && notFound.shows.size != 0)
-                                    || (notFound.episodes != null && notFound.episodes.size != 0)) {
+                                val movies = notFound.movies
+                                val shows = notFound.shows
+                                val episodes = notFound.episodes
+                                if ((movies != null && movies.size != 0)
+                                    || (shows != null && shows.size != 0)
+                                    || (episodes != null && episodes.size != 0)) {
                                     // movie, show or episode not found on trakt
                                     return ERROR_TRAKT_API_NOT_FOUND
                                 }
