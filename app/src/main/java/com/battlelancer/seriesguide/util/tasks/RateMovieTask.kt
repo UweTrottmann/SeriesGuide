@@ -36,6 +36,7 @@ class RateMovieTask(
 
     @Deprecated("Deprecated in Java")
     override fun onPostExecute(result: Int?) {
+        @Suppress("DEPRECATION")
         super.onPostExecute(result)
 
         // post event so movie UI reloads (it is not listening to database changes)

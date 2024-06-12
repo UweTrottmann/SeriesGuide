@@ -19,6 +19,7 @@ import com.uwetrottmann.trakt5.TraktV2
 import org.greenrobot.eventbus.EventBus
 import retrofit2.Call
 
+@Suppress("DEPRECATION") // Just a warning that AsyncTask should not be used for new code
 abstract class BaseActionTask(context: Context) : AsyncTask<Void?, Void?, Int?>() {
 
     @SuppressLint("StaticFieldLeak") // using application context

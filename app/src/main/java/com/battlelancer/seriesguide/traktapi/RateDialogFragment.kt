@@ -126,6 +126,7 @@ class RateDialogFragment : AppCompatDialogFragment() {
 
             else -> throw IllegalArgumentException("Unknown item type $itemType")
         }
+        @Suppress("DEPRECATION") // Just a warning that AsyncTask should not be used for new code
         task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
         // guard against onClick being called after onSaveInstanceState by allowing state loss
