@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2022-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.ui
 
@@ -48,19 +48,24 @@ abstract class BaseThemeActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                val upIntent = NavUtils.getParentActivityIntent(this)!!
-                if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
-                    // This activity is NOT part of this app's task, so create a new task
-                    // when navigating up, with a synthesized back stack.
-                    TaskStackBuilder.create(this)
-                        // Add all of this activity's parents to the back stack
-                        .addNextIntentWithParentStack(upIntent)
-                        // Navigate up to the closest parent
-                        .startActivities()
+                val upIntent = NavUtils.getParentActivityIntent(this)
+                if (upIntent != null) {
+                    if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
+                        // This activity is NOT part of this app's task, so create a new task
+                        // when navigating up, with a synthesized back stack.
+                        TaskStackBuilder.create(this)
+                            // Add all of this activity's parents to the back stack
+                            .addNextIntentWithParentStack(upIntent)
+                            // Navigate up to the closest parent
+                            .startActivities()
+                    } else {
+                        // This activity is part of this app's task, so simply
+                        // navigate up to the logical parent activity.
+                        NavUtils.navigateUpTo(this, upIntent)
+                    }
                 } else {
-                    // This activity is part of this app's task, so simply
-                    // navigate up to the logical parent activity.
-                    NavUtils.navigateUpTo(this, upIntent)
+                    // No parent activity defined in AndroidManifest, let back press handle up
+                    onBackPressedDispatcher.onBackPressed()
                 }
                 return true
             }
