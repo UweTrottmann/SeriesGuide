@@ -14,7 +14,8 @@ import com.battlelancer.seriesguide.util.ThemeUtils
 
 /**
  * Sets the user defined theme, supports setting up a toolbar as the action bar,
- * enables up navigation.
+ * enables up navigation (up goes to `android:parentActivityName` as defined in manifest,
+ * otherwise just back).
  */
 abstract class BaseThemeActivity : AppCompatActivity() {
 

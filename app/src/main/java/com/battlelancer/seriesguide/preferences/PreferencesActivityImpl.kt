@@ -1,10 +1,9 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2022-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.preferences
 
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.activity.addCallback
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.BaseThemeActivity
@@ -49,16 +48,6 @@ open class PreferencesActivityImpl : BaseThemeActivity() {
     override fun setupActionBar() {
         super.setupActionBar()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressedDispatcher.onBackPressed()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     fun switchToSettings(settingsId: String) {
