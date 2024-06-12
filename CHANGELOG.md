@@ -16,6 +16,7 @@ Version 2024.3
 *in development*
 
 * 🔧 Shows: restore search option on history and calendar tabs.
+* 🔨 Lists: hide set watched action when there is no next episode.
 
 #### 2024.3.1 🧪
 *2024-06-07*
