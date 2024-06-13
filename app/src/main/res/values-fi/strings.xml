@@ -132,6 +132,7 @@
     <string name="state_on_watchlist">Seurantalistalla</string>
     <string name="state_favorite">Suosikki</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">Poistetaanko %s?</string>
     <string name="delete_error">Ohjelman poistaminen ei onnistunut. Yritä myöhemmin uudelleen.</string>
     <string name="delete_show">Poista</string>

@@ -132,6 +132,7 @@
     <string name="state_on_watchlist">Da vedere</string>
     <string name="state_favorite">Preferito</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">Vuoi davvero rimuovere %s?</string>
     <string name="delete_error">Impossibile rimuovere la serie. Riprova più tardi.</string>
     <string name="delete_show">Rimuovi</string>

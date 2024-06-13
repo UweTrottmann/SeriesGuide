@@ -21,8 +21,8 @@ import com.battlelancer.seriesguide.util.ThemeUtils
 import com.google.android.material.appbar.AppBarLayout
 
 /**
- * Movie section of the app, displays tabs to discover movies, history (if connected to Trakt),
- * watchlist, collection and watched movies.
+ * Movie section of the app, displays tabs to discover movies, watchlist,
+ * history (if connected to Trakt), collection and watched movies.
  */
 open class MoviesActivityImpl : BaseTopActivity() {
 
@@ -67,13 +67,12 @@ open class MoviesActivityImpl : BaseTopActivity() {
             .apply {
                 // discover
                 addTab(R.string.title_discover, MoviesDiscoverFragment::class.java, null)
-                // Trakt-only tabs should only be visible if connected
+                // watchlist
+                addTab(R.string.movies_watchlist, MoviesWatchListFragment::class.java, null)
                 if (showHistoryTab) {
                     // history tab
                     addTab(R.string.user_stream, MoviesHistoryFragment::class.java, null)
                 }
-                // watchlist
-                addTab(R.string.movies_watchlist, MoviesWatchListFragment::class.java, null)
                 // collection
                 addTab(R.string.movies_collection, MoviesCollectionFragment::class.java, null)
                 // watched
@@ -179,8 +178,8 @@ open class MoviesActivityImpl : BaseTopActivity() {
         const val TAB_POSITION_WATCHLIST_DEFAULT = 1
         const val TAB_POSITION_COLLECTION_DEFAULT = 2
         const val TAB_POSITION_WATCHED_DEFAULT = 3
-        const val TAB_POSITION_TRAKT_HISTORY = 1
-        const val TAB_POSITION_WATCHLIST_WITH_HISTORY = 2
+        const val TAB_POSITION_WATCHLIST_WITH_HISTORY = 1
+        const val TAB_POSITION_TRAKT_HISTORY = 2
         const val TAB_POSITION_COLLECTION_WITH_HISTORY = 3
         const val TAB_POSITION_WATCHED_WITH_HISTORY = 4
 

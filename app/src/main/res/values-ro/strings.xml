@@ -133,6 +133,7 @@
     <string name="state_on_watchlist">On watchlist</string>
     <string name="state_favorite">Favorite</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">Doriți să eliminați %s?</string>
     <string name="delete_error">Nu se poate șterge emisiunea. Încearcă mai tîrziu.</string>
     <string name="delete_show">Ștergeți</string>

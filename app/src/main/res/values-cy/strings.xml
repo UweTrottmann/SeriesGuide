@@ -136,6 +136,7 @@
     <string name="state_on_watchlist">Ar y rhestr wylio</string>
     <string name="state_favorite">Hoff</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">Tynnu %s?</string>
     <string name="delete_error">Methu cael gwared ar sioe. Rhowch gynnig arall arni yn nes ymlaen.</string>
     <string name="delete_show">Tynnu</string>

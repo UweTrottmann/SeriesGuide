@@ -132,6 +132,7 @@
     <string name="state_on_watchlist">Σε λίστα παρακολούθησης</string>
     <string name="state_favorite">Αγαπημένο</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">Θέλετε πράγματι να αφαιρέσετε %s?</string>
     <string name="delete_error">Δεν ήταν δυνατή η αφαίρεση της σειράς. Προσπαθήστε ξανά αργότερα.</string>
     <string name="delete_show">Αφαίρεση</string>

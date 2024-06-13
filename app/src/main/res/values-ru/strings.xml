@@ -134,6 +134,7 @@
     <string name="state_on_watchlist">В списке просмотра</string>
     <string name="state_favorite">Избранное</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">Вы действительно хотите удалить %s?</string>
     <string name="delete_error">Невозможно удалить сериал. Повторите попытку позже.</string>
     <string name="delete_show">Удалить</string>

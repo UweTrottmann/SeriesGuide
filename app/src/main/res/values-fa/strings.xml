@@ -132,6 +132,7 @@
     <string name="state_on_watchlist">در فهرست تماشا</string>
     <string name="state_favorite">مورد علاقه</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">واقعاً می‌خواهید %s را حذف کنید؟</string>
     <string name="delete_error">اثر نمایشی حذف نشد. بعداً دوباره سعی کنید.</string>
     <string name="delete_show">حذف</string>

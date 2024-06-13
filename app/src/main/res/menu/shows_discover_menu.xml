@@ -4,15 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_action_shows_discover_search"
-        android:icon="@drawable/ic_search_white_24dp"
-        android:title="@string/search"
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/menu_action_shows_discover_change_language"
         android:icon="@drawable/ic_language_white_24dp"
         android:title="@string/pref_language"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_action_shows_discover_search"
+        android:title="@string/search"
+        app:showAsAction="never" />
 
 </menu>

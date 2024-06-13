@@ -131,6 +131,7 @@
     <string name="state_on_watchlist">ในรายการที่อยากดู</string>
     <string name="state_favorite">รายการโปรด</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">คุณแน่ใจหรือว่าต้องลบ %s?</string>
     <string name="delete_error">ไม่สามารถลบซีรีส์ ลองอีกครั้งในภายหลัง</string>
     <string name="delete_show">ลบ</string>

@@ -131,6 +131,7 @@
     <string name="state_on_watchlist">已加入待看清单</string>
     <string name="state_favorite">已标记为喜爱的节目</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">要移除《%s》吗？</string>
     <string name="delete_error">无法移除此节目。请稍后重试。</string>
     <string name="delete_show">移除</string>

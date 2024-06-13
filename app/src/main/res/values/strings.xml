@@ -144,6 +144,7 @@
     <string name="state_favorite">Favorite</string>
 
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">Remove %s?</string>
     <string name="delete_error">Could not remove show. Try again later.</string>
     <string name="delete_show">Remove</string>

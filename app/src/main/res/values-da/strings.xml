@@ -132,6 +132,7 @@
     <string name="state_on_watchlist">På overvågningsliste</string>
     <string name="state_favorite">Favorit</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">Sikker på, at du vil fjerne %s?</string>
     <string name="delete_error">Kunne ikke fjerne serie. Prøv igen senere.</string>
     <string name="delete_show">Fjern</string>

@@ -132,6 +132,7 @@
     <string name="state_on_watchlist">Op volglijst</string>
     <string name="state_favorite">Favoriet</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">Wilt u %s echt verwijderen?</string>
     <string name="delete_error">Kan show niet verwijderen. Probeer later opnieuw.</string>
     <string name="delete_show">Verwijderen</string>

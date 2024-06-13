@@ -132,6 +132,7 @@
     <string name="state_on_watchlist">Sur spektolisto</string>
     <string name="state_favorite">Plej ŝatata</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">Ĉu forigi %s?</string>
     <string name="delete_error">Could not remove show. Try again later.</string>
     <string name="delete_show">Forigi</string>
