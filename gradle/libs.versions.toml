@@ -67,7 +67,8 @@ debugdrawer-timber = { module = "com.github.lenguyenthanh.debugdrawer:debugdrawe
 debugdrawer-view = { module = "com.github.lenguyenthanh.debugdrawer:debugdrawer-view", version.ref = "debugdrawer" }
 findbugs-jsr305 = "com.google.code.findbugs:jsr305:3.0.2"
 # https://firebase.google.com/support/release-notes/android
-firebase = "com.google.firebase:firebase-bom:32.7.3"
+# 33.0.0 uses firebase-auth 23.0.0 which requires min SDK 23
+firebase = "com.google.firebase:firebase-bom:32.8.1"
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 firebase-ui-auth = "com.firebaseui:firebase-ui-auth:8.0.2" # https://github.com/firebase/FirebaseUI-Android/releases
 flatbuffers = "com.google.flatbuffers:flatbuffers-java:1.12.0"
@@ -127,7 +128,7 @@ versions = { id = "com.github.ben-manes.versions", version = "0.51.0" }
 # https://github.com/gradle-nexus/publish-plugin/releases
 publish = { id = "io.github.gradle-nexus.publish-plugin", version = "1.3.0" }
 # https://firebase.google.com/support/release-notes/android
-google-services = { id = "com.google.gms.google-services", version = "4.4.1" }
-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version = "2.9.9" }
+google-services = { id = "com.google.gms.google-services", version = "4.4.2" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version = "3.0.1" }
 # For endpoints plugin, version is actually set in settings.gradle.kts!
 endpoints = { id = "com.google.cloud.tools.endpoints-framework-gradle-plugin", version = "2.1.0" }
