@@ -84,8 +84,13 @@ class ShowsDiscoverPagingActivity : BaseMessageActivity(), AddShowDialogFragment
         fun intentSearch(context: Context): Intent =
             Intent(context, ShowsDiscoverPagingActivity::class.java)
 
-        fun intentSearch(context: Context, query: String): Intent =
-            intentSearch(context).putExtra(EXTRA_QUERY, query)
+        fun intentSearch(context: Context, query: String?): Intent {
+            val intent = intentSearch(context)
+            if (query != null) {
+                intent.putExtra(EXTRA_QUERY, query)
+            }
+            return intent
+        }
 
         fun intentLink(context: Context, link: DiscoverShowsLink): Intent =
             Intent(context, ShowsDiscoverPagingActivity::class.java)

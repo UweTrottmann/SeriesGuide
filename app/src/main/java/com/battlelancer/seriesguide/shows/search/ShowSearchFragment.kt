@@ -6,13 +6,18 @@ package com.battlelancer.seriesguide.shows.search
 import android.app.SearchManager
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.GridView
 import android.widget.PopupMenu
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.databinding.FragmentShowSearchBinding
@@ -52,9 +57,7 @@ class ShowSearchFragment : BaseSearchFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         (emptyView as EmptyView).setButtonClickListener {
-            // If empty view shown, must have query
-            val query = model.searchTerm.value!!
-            startActivity(ShowsDiscoverPagingActivity.intentSearch(requireContext(), query))
+            navigateToAddShow()
         }
         adapter = ShowSearchAdapter(requireContext(), onItemClickListener).also {
             gridView.adapter = it
@@ -65,10 +68,40 @@ class ShowSearchFragment : BaseSearchFragment() {
             updateEmptyState(shows.isNullOrEmpty(), !model.searchTerm.value.isNullOrEmpty())
         }
 
+        requireActivity().addMenuProvider(
+            optionsMenuProvider,
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
+
         // load for given query (if just created)
         val args = initialSearchArgs
         if (args != null) {
             updateQuery(args)
+        }
+    }
+
+    private fun navigateToAddShow() {
+        model.searchTerm.value
+            .let { ShowsDiscoverPagingActivity.intentSearch(requireContext(), it) }
+            .also { startActivity(it) }
+    }
+
+    private val optionsMenuProvider = object : MenuProvider {
+
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            menuInflater.inflate(R.menu.shows_search_menu, menu)
+        }
+
+        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+            return when (menuItem.itemId) {
+                R.id.menu_action_shows_search_add -> {
+                    navigateToAddShow()
+                    true
+                }
+
+                else -> false
+            }
         }
     }
 
