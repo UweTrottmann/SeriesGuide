@@ -61,6 +61,7 @@ class MoviesSearchFragment : Fragment() {
 
         // setup empty view button
         binding.emptyViewMoviesSearch.apply {
+            setButtonText(R.string.action_try_again)
             setButtonClickListener { refreshList() }
             // do not show error message when initially loading
             isGone = true
