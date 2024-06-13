@@ -8,7 +8,7 @@ google-api-client = "2.6.0" # https://github.com/googleapis/google-api-java-clie
 retrofit2 = "2.11.0" # https://github.com/square/retrofit/blob/master/CHANGELOG.md
 
 [libraries]
-amazon-appstore-sdk = "com.amazon.device:amazon-appstore-sdk:3.0.4" # https://developer.amazon.com/docs/in-app-purchasing/iap-whats-new.html
+amazon-appstore-sdk = "com.amazon.device:amazon-appstore-sdk:3.0.5" # https://developer.amazon.com/docs/in-app-purchasing/iap-whats-new.html
 androidutils = "com.uwetrottmann.androidutils:androidutils:4.0.0" # https://github.com/UweTrottmann/AndroidUtils/releases
 # https://developer.android.com/jetpack/androidx/releases/activity
 androidx-activity = "androidx.activity:activity:1.9.0"
