@@ -132,6 +132,7 @@
     <string name="state_on_watchlist">På bevakningslistan</string>
     <string name="state_favorite">Favorit</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">Vill du verkligen ta bort %s?</string>
     <string name="delete_error">Det gick inte att ta bort program. Försök igen senare.</string>
     <string name="delete_show">Ta bort</string>

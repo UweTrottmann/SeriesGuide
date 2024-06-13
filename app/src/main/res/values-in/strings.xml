@@ -131,6 +131,7 @@
     <string name="state_on_watchlist">Dalam daftar tonton</string>
     <string name="state_favorite">Favorit</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">Apakah kau benar-benar ingin menghapus %s?</string>
     <string name="delete_error">Tidak dapat menghapus acara. Coba lagi nanti.</string>
     <string name="delete_show">Hapus</string>

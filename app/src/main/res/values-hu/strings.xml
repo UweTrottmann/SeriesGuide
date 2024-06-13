@@ -132,6 +132,7 @@
     <string name="state_on_watchlist">Figyelőlistán</string>
     <string name="state_favorite">Kedvencek</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">Biztosan törlöd a következőt: %s?</string>
     <string name="delete_error">Nem lehet eltávolítani. Próbáld később.</string>
     <string name="delete_show">Törlés</string>

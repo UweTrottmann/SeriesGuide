@@ -132,6 +132,7 @@
     <string name="state_on_watchlist">On watchlist</string>
     <string name="state_favorite">Favorite</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">உண்மையிலேயே நீக்க விரும்புகிறீர்களா %s?</string>
     <string name="delete_error">காட்சி நீக்க இயலாது. பின்னர் மீண்டும் முயற்சிக்கவும்.</string>
     <string name="delete_show">நீக்கு</string>

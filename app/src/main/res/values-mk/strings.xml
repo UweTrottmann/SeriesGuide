@@ -132,6 +132,7 @@
     <string name="state_on_watchlist">On watchlist</string>
     <string name="state_favorite">Favorite</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">Навистина ли сакате да ја избришете %s?</string>
     <string name="delete_error">Неможе да се избрише серијата. Пробајте повторно подоцна.</string>
     <string name="delete_show">Избриши</string>

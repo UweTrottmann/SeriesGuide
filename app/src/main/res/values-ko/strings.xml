@@ -131,6 +131,7 @@
     <string name="state_on_watchlist">On watchlist</string>
     <string name="state_favorite">즐겨찾기</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">%s을(를) 제거 하시겠습니까?</string>
     <string name="delete_error">프로그램을 제거하지 못했습니다. 나중에 다시 시도해주세요.</string>
     <string name="delete_show">삭제</string>

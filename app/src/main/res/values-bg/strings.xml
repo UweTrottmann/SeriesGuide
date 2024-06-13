@@ -132,6 +132,7 @@
     <string name="state_on_watchlist">За гледане</string>
     <string name="state_favorite">Любими</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">Наистина ли искате премахнете %s?</string>
     <string name="delete_error">Премахването неуспешно. Опитайте по-късно.</string>
     <string name="delete_show">Премахване</string>

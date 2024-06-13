@@ -136,6 +136,7 @@
     <string name="state_on_watchlist">في قائمة المراقبة</string>
     <string name="state_favorite">مفضل</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">هل تريد فعلاً إزالة %s؟</string>
     <string name="delete_error">لم تتم إزالة المسلسل، حاول مرة أخرى.</string>
     <string name="delete_show">إزالة</string>

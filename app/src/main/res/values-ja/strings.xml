@@ -131,6 +131,7 @@
     <string name="state_on_watchlist">ウォッチリスト内</string>
     <string name="state_favorite">お気に入り</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">%s を削除してもよろしいですか？</string>
     <string name="delete_error">番組を削除できませんでした。後でもう一度やり直してください。</string>
     <string name="delete_show">削除</string>

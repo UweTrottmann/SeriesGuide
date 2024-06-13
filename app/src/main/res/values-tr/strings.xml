@@ -132,6 +132,7 @@
     <string name="state_on_watchlist">İzlenecekler listesinde</string>
     <string name="state_favorite">Favori</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">%s öğesini silmek istediğinize emin misiniz?</string>
     <string name="delete_error">Dizi kaldırılamadı. Sonra tekrar deneyin.</string>
     <string name="delete_show">Kaldır</string>
