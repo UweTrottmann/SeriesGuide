@@ -108,12 +108,12 @@ truth = "com.google.truth:truth:1.4.2" # https://github.com/google/truth/release
 # https://developer.android.com/jetpack/compose/setup
 # https://developer.android.com/jetpack/compose/bom/bom-mapping
 # https://developer.android.com/jetpack/androidx/releases/compose
-compose = "androidx.compose:compose-bom:2024.02.01"
+compose = "androidx.compose:compose-bom:2024.06.00"
 # https://developer.android.com/jetpack/androidx/releases/compose-material3
 compose-material3 = { module = "androidx.compose.material3:material3" }
 compose-tooling = { module = "androidx.compose.ui:ui-tooling" }
 compose-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
-androidx-activity-compose = "androidx.activity:activity-compose:1.8.2"
+androidx-activity-compose = "androidx.activity:activity-compose:1.9.0"
 androidx-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }
 
 [plugins]
