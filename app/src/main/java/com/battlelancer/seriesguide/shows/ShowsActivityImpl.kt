@@ -203,11 +203,13 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
         tabsAdapter = TabStripAdapter(this, viewPager, tabs)
         tabs.setOnPageChangeListener(ShowsPageChangeListener(findViewById(R.id.sgAppBarLayout), buttonAddShow))
 
-        // shows tab
-        tabsAdapter.addTab(R.string.shows, ShowsFragment::class.java, null)
+        // Note: should match order as in Tab enum
 
         // discover tab
         tabsAdapter.addTab(R.string.title_discover, ShowsDiscoverFragment::class.java, null)
+
+        // shows tab
+        tabsAdapter.addTab(R.string.shows, ShowsFragment::class.java, null)
 
         // history tab
         tabsAdapter.addTab(R.string.user_stream, ShowsHistoryFragment::class.java, null)
@@ -232,20 +234,22 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
 
     /**
      * Tries to restore the current tab from given intent extras. If that fails, uses the last known
-     * selected tab. If that fails also, defaults to the first tab.
+     * selected tab. If that fails also, defaults to the shows tab.
      */
     private fun setInitialTab(intentExtras: Bundle?) {
-        var selection = intentExtras?.getInt(
-            EXTRA_SELECTED_TAB,
-            ShowsSettings.getLastShowsTabPosition(this)
-        ) ?: ShowsSettings.getLastShowsTabPosition(this) // use last saved selection
+        var tabIndex = intentExtras?.getInt(EXTRA_SELECTED_TAB, -1) ?: -1
 
-        // never select a non-existent tab
-        if (selection > tabsAdapter.itemCount - 1) {
-            selection = 0
+        if (tabIndex == -1) {
+            // use last saved selection
+            tabIndex = ShowsSettings.getLastShowsTabPosition(this)
         }
 
-        viewPager.setCurrentItem(selection, false)
+        // never select a non-existent tab
+        if (tabIndex > tabsAdapter.itemCount - 1) {
+            tabIndex = Tab.SHOWS.index
+        }
+
+        viewPager.setCurrentItem(tabIndex, false)
     }
 
     private fun checkGooglePlayPurchase() {
@@ -365,8 +369,8 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
     }
 
     enum class Tab(val index: Int) {
-        SHOWS(0),
-        DISCOVER(1),
+        DISCOVER(0),
+        SHOWS(1),
         HISTORY(2),
         UPCOMING(3),
         RECENT(4)
