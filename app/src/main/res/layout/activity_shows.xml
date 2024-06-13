@@ -30,7 +30,7 @@
             android:layout_marginEnd="@dimen/fab_margin"
             android:layout_marginBottom="@dimen/fab_margin"
             android:contentDescription="@string/action_shows_add"
-            app:srcCompat="@drawable/ic_add_white_24dp" />
+            app:srcCompat="@drawable/ic_search_white_24dp" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

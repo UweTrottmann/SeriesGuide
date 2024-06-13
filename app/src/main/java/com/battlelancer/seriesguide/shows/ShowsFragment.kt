@@ -49,7 +49,6 @@ import com.battlelancer.seriesguide.ui.OverviewActivity.Companion.intentShow
 import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
 import com.battlelancer.seriesguide.util.ViewTools
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.uwetrottmann.androidutils.AndroidUtils
 import kotlinx.coroutines.Job
@@ -161,11 +160,6 @@ class ShowsFragment : Fragment() {
                 updateShowsQuery()
             }
         }
-
-        // hide floating action button when scrolling shows
-        val buttonAddShow: FloatingActionButton =
-            requireActivity().findViewById(R.id.buttonShowsAdd)
-        recyclerView.addOnScrollListener(FabRecyclerViewScrollDetector(buttonAddShow))
 
         // listen for some settings changes
         PreferenceManager

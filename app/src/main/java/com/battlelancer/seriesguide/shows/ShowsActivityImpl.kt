@@ -329,7 +329,7 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
      * Page change listener which
      * - sets the scroll view of the current visible tab as the lift on scroll target view of the
      *   app bar and
-     * - hides the floating action button for all but the shows tab.
+     * - hides the floating action button for all but the discover tab.
      */
     class ShowsPageChangeListener(
         private val appBarLayout: AppBarLayout,
@@ -352,7 +352,7 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
             appBarLayout.liftOnScrollTargetViewId = liftOnScrollTarget
 
             // only display add show button on Shows tab
-            if (position == Tab.SHOWS.index) {
+            if (position == Tab.DISCOVER.index) {
                 floatingActionButton.show()
             } else {
                 floatingActionButton.hide()
