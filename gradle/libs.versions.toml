@@ -1,7 +1,7 @@
 # https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format
 
 [versions]
-androidx-lifecycle = "2.7.0" # https://developer.android.com/jetpack/androidx/releases/lifecycle
+androidx-lifecycle = "2.8.2" # https://developer.android.com/jetpack/androidx/releases/lifecycle
 debugdrawer = "0.9.0" # https://github.com/lenguyenthanh/DebugDrawer
 eventbus = "3.3.1"
 google-api-client = "2.6.0" # https://github.com/googleapis/google-api-java-client/releases
@@ -11,27 +11,27 @@ retrofit2 = "2.11.0" # https://github.com/square/retrofit/blob/master/CHANGELOG.
 amazon-appstore-sdk = "com.amazon.device:amazon-appstore-sdk:3.0.4" # https://developer.amazon.com/docs/in-app-purchasing/iap-whats-new.html
 androidutils = "com.uwetrottmann.androidutils:androidutils:4.0.0" # https://github.com/UweTrottmann/AndroidUtils/releases
 # https://developer.android.com/jetpack/androidx/releases/activity
-androidx-activity = "androidx.activity:activity:1.8.2"
+androidx-activity = "androidx.activity:activity:1.9.0"
 # https://developer.android.com/jetpack/androidx/releases/annotation
-androidx-annotation = "androidx.annotation:annotation:1.7.1"
+androidx-annotation = "androidx.annotation:annotation:1.8.0"
 # https://developer.android.com/jetpack/androidx/releases/appcompat
-androidx-appcompat = "androidx.appcompat:appcompat:1.6.1"
+androidx-appcompat = "androidx.appcompat:appcompat:1.7.0"
 # https://developer.android.com/jetpack/androidx/releases/browser
-androidx-browser = "androidx.browser:browser:1.7.0"
+androidx-browser = "androidx.browser:browser:1.8.0"
 # https://developer.android.com/jetpack/androidx/releases/collection#1.4.0
 androidx-collection = "androidx.collection:collection:1.4.0"
 androidx-constraintlayout = "androidx.constraintlayout:constraintlayout:2.1.4" # https://developer.android.com/jetpack/androidx/releases/constraintlayout
 androidx-coordinatorlayout = "androidx.coordinatorlayout:coordinatorlayout:1.2.0" # https://developer.android.com/jetpack/androidx/releases/coordinatorlayout
 # https://developer.android.com/jetpack/androidx/releases/core
-androidx-core = "androidx.core:core:1.12.0"
-androidx-core-ktx = "androidx.core:core-ktx:1.12.0"
+androidx-core = "androidx.core:core:1.13.1"
+androidx-core-ktx = "androidx.core:core-ktx:1.13.1"
 # https://developer.android.com/jetpack/androidx/releases/fragment
-androidx-fragment = "androidx.fragment:fragment-ktx:1.6.2"
+androidx-fragment = "androidx.fragment:fragment-ktx:1.8.0"
 androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle" }
 # https://developer.android.com/jetpack/androidx/releases/paging
-androidx-paging = "androidx.paging:paging-runtime-ktx:3.2.1"
+androidx-paging = "androidx.paging:paging-runtime:3.3.0"
 androidx-palette = "androidx.palette:palette-ktx:1.0.0"
 # https://developer.android.com/jetpack/androidx/releases/preference
 androidx-preference = "androidx.preference:preference-ktx:1.2.1"
@@ -55,7 +55,7 @@ androidx-test-rules = "androidx.test:rules:1.5.0"
 androidx-test-runner = "androidx.test:runner:1.5.2"
 androidx-viewpager = "androidx.viewpager:viewpager:1.0.0"
 # https://developer.android.com/jetpack/androidx/releases/viewpager2
-androidx-viewpager2 = "androidx.viewpager2:viewpager2:1.1.0-beta02"
+androidx-viewpager2 = "androidx.viewpager2:viewpager2:1.1.0"
 billing = "com.android.billingclient:billing-ktx:6.0.1" # https://developer.android.com/google/play/billing/billing_library_releases_notes
 # https://github.com/google/dagger/releases
 dagger = "com.google.dagger:dagger:2.49"
