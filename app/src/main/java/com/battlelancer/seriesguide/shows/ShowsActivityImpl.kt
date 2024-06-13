@@ -209,7 +209,7 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
         tabsAdapter.addTab(R.string.title_discover, ShowsDiscoverFragment::class.java, null)
 
         // shows tab
-        tabsAdapter.addTab(R.string.shows, ShowsFragment::class.java, null)
+        tabsAdapter.addTab(R.string.title_shows_added, ShowsFragment::class.java, null)
 
         // history tab
         tabsAdapter.addTab(R.string.user_stream, ShowsHistoryFragment::class.java, null)
