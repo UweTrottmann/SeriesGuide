@@ -19,6 +19,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.core.view.MenuProvider
 import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -40,8 +41,8 @@ import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.ViewTools.hideSoftKeyboard
 import com.battlelancer.seriesguide.util.findDialog
 import com.battlelancer.seriesguide.util.safeShow
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.Subscribe
@@ -74,7 +75,6 @@ class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
         get() = bindingActivity.autoCompleteViewToolbar
     private var binding: FragmentShowsPopularBinding? = null
 
-    private lateinit var snackbar: Snackbar
     private var yearPicker: YearPickerDialogFragment? = null
     private var languagePicker: LanguagePickerDialogFragment? = null
 
@@ -173,9 +173,12 @@ class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
             setOnRefreshListener { adapter.refresh() }
         }
 
-        snackbar =
-            Snackbar.make(binding.swipeRefreshLayoutShowsPopular, "", Snackbar.LENGTH_INDEFINITE)
-        snackbar.setAction(R.string.action_try_again) { adapter.refresh() }
+        binding.emptyViewShowsPopular.apply {
+            setButtonText(R.string.action_try_again)
+            setButtonClickListener { adapter.refresh() }
+            // do not show error message when initially loading
+            isGone = true
+        }
 
         binding.recyclerViewShowsPopular.apply {
             setHasFixedSize(true)
@@ -196,6 +199,17 @@ class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
                 adapter.submitData(it)
             }
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            adapter.onPagesUpdatedFlow.conflate().collectLatest {
+                val hasNoResults = adapter.itemCount == 0
+                // only show empty view if not searching, or if searching with a query
+                binding.emptyViewShowsPopular.isVisible =
+                    hasNoResults && (!isSearchOnly || model.queryString.value.isNotEmpty())
+                binding.recyclerViewShowsPopular.isGone = hasNoResults
+            }
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
             adapter.loadStateFlow
                 .distinctUntilChangedBy { it.refresh }
@@ -205,10 +219,16 @@ class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
                     binding.swipeRefreshLayoutShowsPopular.isRefreshing =
                         refresh is LoadState.Loading
                     if (refresh is LoadState.Error) {
-                        snackbar.setText(refresh.error.message!!)
-                        if (!snackbar.isShownOrQueued) snackbar.show()
+                        binding.emptyViewShowsPopular.apply {
+                            setMessage(refresh.error.message)
+                            setButtonGone(false)
+                        }
                     } else {
-                        if (snackbar.isShownOrQueued) snackbar.dismiss()
+                        binding.emptyViewShowsPopular.apply {
+                            setMessage(R.string.no_results)
+                            // No point in refreshing if there are no results
+                            setButtonGone(true)
+                        }
                     }
                 }
         }
