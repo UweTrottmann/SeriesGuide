@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2015-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.history;
 
@@ -40,14 +40,14 @@ public class TraktRecentEpisodeHistoryLoader
     protected static final int MAX_HISTORY_SIZE = 10;
 
     public static class Result {
-        public List<NowAdapter.NowItem> items;
+        public List<ShowsHistoryAdapter.Item> items;
         @Nullable public String errorText;
 
-        public Result(List<NowAdapter.NowItem> items) {
+        public Result(List<ShowsHistoryAdapter.Item> items) {
             this(items, null);
         }
 
-        public Result(List<NowAdapter.NowItem> items, @Nullable String errorText) {
+        public Result(List<ShowsHistoryAdapter.Item> items, @Nullable String errorText) {
             this.items = items;
             this.errorText = errorText;
         }
@@ -88,18 +88,18 @@ public class TraktRecentEpisodeHistoryLoader
         }
 
         // add header
-        List<NowAdapter.NowItem> items = new ArrayList<>();
-        items.add(new NowAdapter.NowItem().header(
+        List<ShowsHistoryAdapter.Item> items = new ArrayList<>();
+        items.add(new ShowsHistoryAdapter.Item().header(
                 getContext().getString(R.string.recently_watched), true));
         // add items
         addItems(items, history);
         // add link to more history
-        items.add(new NowAdapter.NowItem().moreLink(getContext().getString(R.string.user_stream)));
+        items.add(new ShowsHistoryAdapter.Item().moreLink(getContext().getString(R.string.user_stream)));
 
         return new Result(items);
     }
 
-    protected void addItems(List<NowAdapter.NowItem> items, List<HistoryEntry> history) {
+    protected void addItems(List<ShowsHistoryAdapter.Item> items, List<HistoryEntry> history) {
         SparseArrayCompat<String> tmdbIdsToPoster = SgApp.getServicesComponent(getContext())
                 .showTools().getTmdbIdsToPoster();
         SgEpisode2Helper episodeHelper = SgRoomDatabase.getInstance(getContext())
@@ -140,7 +140,7 @@ public class TraktRecentEpisodeHistoryLoader
             long localEpisodeIdOrZero = episodeTmdbIdOrNull != null
                     ? episodeHelper.getEpisodeIdByTmdbId(episodeTmdbIdOrNull) : 0;
 
-            NowAdapter.NowItem item = new NowAdapter.NowItem()
+            ShowsHistoryAdapter.Item item = new ShowsHistoryAdapter.Item()
                     .displayData(
                             entry.watched_at.toInstant().toEpochMilli(),
                             entry.show.title,

@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/background_infobar"
     android:orientation="horizontal"
-    tools:showIn="@layout/fragment_now">
+    tools:showIn="@layout/fragment_history">
 
     <TextView
         android:id="@+id/textViewSnackbar"

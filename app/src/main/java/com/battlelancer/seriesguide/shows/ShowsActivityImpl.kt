@@ -20,7 +20,7 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.calendar.RecentFragment
 import com.battlelancer.seriesguide.shows.calendar.UpcomingFragment
 import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
-import com.battlelancer.seriesguide.shows.history.ShowsNowFragment
+import com.battlelancer.seriesguide.shows.history.ShowsHistoryFragment
 import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment
 import com.battlelancer.seriesguide.shows.search.discover.SearchResult
 import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverFragment
@@ -210,7 +210,7 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
         tabsAdapter.addTab(R.string.title_discover, ShowsDiscoverFragment::class.java, null)
 
         // history tab
-        tabsAdapter.addTab(R.string.user_stream, ShowsNowFragment::class.java, null)
+        tabsAdapter.addTab(R.string.user_stream, ShowsHistoryFragment::class.java, null)
 
         // upcoming tab
         tabsAdapter.addTab(R.string.upcoming, UpcomingFragment::class.java, null)
@@ -340,7 +340,7 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
             val liftOnScrollTarget = when (position) {
                 Tab.SHOWS.index -> ShowsFragment.liftOnScrollTargetViewId
                 Tab.DISCOVER.index -> ShowsDiscoverFragment.liftOnScrollTargetViewId
-                Tab.NOW.index -> ShowsNowFragment.liftOnScrollTargetViewId
+                Tab.HISTORY.index -> ShowsHistoryFragment.liftOnScrollTargetViewId
                 Tab.UPCOMING.index -> UpcomingFragment.liftOnScrollTargetViewId
                 Tab.RECENT.index -> RecentFragment.liftOnScrollTargetViewId
                 else -> throw IllegalArgumentException("Unexpected page position")
@@ -367,7 +367,7 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
     enum class Tab(val index: Int) {
         SHOWS(0),
         DISCOVER(1),
-        NOW(2),
+        HISTORY(2),
         UPCOMING(3),
         RECENT(4)
     }
