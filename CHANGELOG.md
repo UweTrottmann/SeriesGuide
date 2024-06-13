@@ -15,6 +15,8 @@ Version 2024.3
 --------------
 *in development*
 
+* 🔧 Shows: move Discover tab first, drop add show action, add search action, rename Shows to Added.
+* 🔧 Movies: move Watchlist next to Discover so order is similar to Shows screen.
 * 🔧 Shows: restore search option on history and calendar tabs.
 * 🔨 Lists: hide set watched action when there is no next episode.
 
