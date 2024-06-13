@@ -30,7 +30,7 @@ import kotlinx.coroutines.flow.flatMapLatest
  */
 class MoviesSearchViewModel(
     application: Application,
-    link: MoviesDiscoverLink?
+    val link: MoviesDiscoverLink?
 ) : AndroidViewModel(application) {
 
     data class Filters(

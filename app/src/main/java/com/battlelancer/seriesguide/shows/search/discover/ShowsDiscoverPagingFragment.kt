@@ -42,7 +42,6 @@ import com.battlelancer.seriesguide.util.ViewTools.hideSoftKeyboard
 import com.battlelancer.seriesguide.util.findDialog
 import com.battlelancer.seriesguide.util.safeShow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.Subscribe
@@ -201,16 +200,6 @@ class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            adapter.onPagesUpdatedFlow.conflate().collectLatest {
-                val hasNoResults = adapter.itemCount == 0
-                // only show empty view if not searching, or if searching with a query
-                binding.emptyViewShowsPopular.isVisible =
-                    hasNoResults && (!isSearchOnly || model.queryString.value.isNotEmpty())
-                binding.recyclerViewShowsPopular.isGone = hasNoResults
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
             adapter.loadStateFlow
                 .distinctUntilChangedBy { it.refresh }
                 .collectLatest { loadStates ->
@@ -222,13 +211,23 @@ class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
                         binding.emptyViewShowsPopular.apply {
                             setMessage(refresh.error.message)
                             setButtonGone(false)
+                            isVisible = true
                         }
-                    } else {
+                        binding.recyclerViewShowsPopular.isGone = true
+                    } else if (refresh is LoadState.NotLoading
+                        && adapter.itemCount == 0
+                        // Only no results if not searching, or if searching with a query
+                        && (!isSearchOnly || model.queryString.value.isNotEmpty())) {
                         binding.emptyViewShowsPopular.apply {
                             setMessage(R.string.no_results)
                             // No point in refreshing if there are no results
                             setButtonGone(true)
+                            isVisible = true
                         }
+                        binding.recyclerViewShowsPopular.isGone = true
+                    } else {
+                        binding.emptyViewShowsPopular.isGone = true
+                        binding.recyclerViewShowsPopular.isVisible = true
                     }
                 }
         }

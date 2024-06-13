@@ -19,6 +19,7 @@ Version 2024.3
 * 🔧 Movies: move Watchlist next to Discover so order is similar to Shows screen.
 * 🔧 Shows: restore search option on history and calendar tabs.
 * 🔧 Show search: add Add show action, passes search query if there is one.
+* 🔨 Discover: properly display no results or no connection messages.
 * 🔨 Lists: hide set watched action when there is no next episode.
 
 #### 2024.3.1 🧪

@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -20,7 +21,6 @@ import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
@@ -82,14 +82,6 @@ class MoviesSearchFragment : Fragment() {
         binding.recyclerViewMoviesSearch.adapter = adapter
 
         viewLifecycleOwner.lifecycleScope.launch {
-            adapter.onPagesUpdatedFlow.conflate().collectLatest {
-                val hasNoResults = adapter.itemCount == 0
-                binding.emptyViewMoviesSearch.isGone = !hasNoResults
-                binding.recyclerViewMoviesSearch.isGone = hasNoResults
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
             adapter.loadStateFlow
                 .distinctUntilChangedBy { it.refresh }
                 .collectLatest { loadStates ->
@@ -101,13 +93,23 @@ class MoviesSearchFragment : Fragment() {
                         binding.emptyViewMoviesSearch.apply {
                             setMessage(refresh.error.message)
                             setButtonGone(false)
+                            isVisible = true
                         }
-                    } else {
+                        binding.recyclerViewMoviesSearch.isGone = true
+                    } else if (refresh is LoadState.NotLoading
+                        && adapter.itemCount == 0
+                        // Only no results if displaying link or has a search query
+                        && (activityModel.link != null || activityModel.queryString.value.isNotEmpty())) {
                         binding.emptyViewMoviesSearch.apply {
                             setMessage(R.string.no_results)
                             // No point in refreshing if there are no results
                             setButtonGone(true)
+                            isVisible = true
                         }
+                        binding.recyclerViewMoviesSearch.isGone = true
+                    } else {
+                        binding.emptyViewMoviesSearch.isGone = true
+                        binding.recyclerViewMoviesSearch.isVisible = true
                     }
                 }
         }
