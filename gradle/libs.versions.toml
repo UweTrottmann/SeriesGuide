@@ -98,7 +98,7 @@ retrofit2-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref
 retrofit2 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit2" }
 # https://github.com/robolectric/robolectric/releases/
 robolectric = "org.robolectric:robolectric:4.11.1"
-threetenabp = "com.jakewharton.threetenabp:threetenabp:1.4.6" # https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
+threetenabp = "com.jakewharton.threetenabp:threetenabp:1.4.7" # https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
 timber = "com.jakewharton.timber:timber:5.0.1" # https://github.com/JakeWharton/timber/blob/master/CHANGELOG.md
 tmdb-java = "com.uwetrottmann.tmdb2:tmdb-java:2.10.0" # https://github.com/UweTrottmann/tmdb-java/blob/main/CHANGELOG.md
 trakt-java = "com.uwetrottmann.trakt5:trakt-java:6.13.0" # https://github.com/UweTrottmann/trakt-java/blob/main/CHANGELOG.md
