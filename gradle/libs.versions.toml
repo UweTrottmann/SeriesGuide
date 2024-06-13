@@ -77,7 +77,7 @@ google-http-client = "com.google.http-client:google-http-client-gson:1.44.2" # h
 greenrobot-eventbus = { module = "org.greenrobot:eventbus", version.ref = "eventbus" }
 greenrobot-eventbus-processor = { module = "org.greenrobot:eventbus-annotation-processor", version.ref = "eventbus" }
 # https://github.com/google/gson/blob/master/CHANGELOG.md
-gson = "com.google.code.gson:gson:2.10.1"
+gson = "com.google.code.gson:gson:2.11.0"
 junit = "junit:junit:4.13.2"
 # https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
 kotlinx-coroutines-android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0"
