@@ -93,7 +93,7 @@ okhttp = "com.squareup.okhttp3:okhttp:4.12.0" # https://github.com/square/okhttp
 photoview = "com.github.chrisbanes:PhotoView:2.3.0"
 picasso = "com.squareup.picasso:picasso:2.8" # https://github.com/square/picasso/releases
 # https://developers.google.com/android/guides/releases
-play-services-auth = "com.google.android.gms:play-services-auth:20.7.0"
+play-services-auth = "com.google.android.gms:play-services-auth:21.2.0"
 retrofit2-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit2" }
 retrofit2 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit2" }
 # https://github.com/robolectric/robolectric/releases/
