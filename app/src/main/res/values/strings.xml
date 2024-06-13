@@ -238,7 +238,7 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Type a show name</string>
     <string name="add_empty">There are no shows here</string>
-    <string name="no_results">No results, try complete words</string>
+    <string name="no_results">No results</string>
     <string name="empty_show_search">Not found in your show list</string>
     <string name="action_try_again">Try again</string>
     <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
