@@ -41,7 +41,6 @@ import com.battlelancer.seriesguide.shows.ShowsAdapter.ShowItem
 import com.battlelancer.seriesguide.shows.ShowsDistillationFragment.Companion.show
 import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowFilter
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
-import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverPagingActivity
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
@@ -82,7 +81,7 @@ class ShowsFragment : Fragment() {
         SgFastScroller(requireContext(), recyclerView)
         emptyView = v.findViewById(R.id.emptyViewShows)
         ViewTools.setVectorDrawableTop(emptyView, R.drawable.ic_add_white_24dp)
-        emptyView.setOnClickListener { startActivityAddShows() }
+        emptyView.setOnClickListener { navigateToAddShows() }
         emptyViewFilter = v.findViewById(R.id.emptyViewShowsFilter)
         ViewTools.setVectorDrawableTop(emptyViewFilter, R.drawable.ic_filter_white_24dp)
         emptyViewFilter.setOnClickListener {
@@ -228,7 +227,7 @@ class ShowsFragment : Fragment() {
                 }
 
                 R.id.menu_action_shows_add -> {
-                    startActivityAddShows()
+                    navigateToAddShows()
                     true
                 }
 
@@ -251,10 +250,8 @@ class ShowsFragment : Fragment() {
         }
     }
 
-    private fun startActivityAddShows() {
-        startActivity(
-            ShowsDiscoverPagingActivity.intentSearch(requireContext())
-        )
+    private fun navigateToAddShows() {
+        activityModel.selectDiscoverTab()
     }
 
     private val onItemClickListener: ShowsAdapter.OnItemClickListener =
@@ -317,7 +314,7 @@ class ShowsFragment : Fragment() {
 
     private val firstRunClickListener = object : FirstRunView.FirstRunClickListener {
         override fun onAddShowClicked() {
-            startActivityAddShows()
+            navigateToAddShows()
         }
 
         override fun onSignInClicked() {
