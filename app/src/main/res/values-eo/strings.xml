@@ -43,6 +43,7 @@
     <!-- Search -->
     <string name="clear_search_history">Viŝi serĉhistorion</string>
     <string name="search_hint">Serĉi epizodojn</string>
+    <string name="empty_no_results">Ne estas rezultoj</string>
     <!-- Status messages -->
     <string name="updated">Ĝisdatigita al plej lasta versio</string>
     <string name="updated_details">Detaloj</string>
@@ -221,7 +222,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Tajpu televidaĵan nomon</string>
     <string name="add_empty">Estas neniu televidaĵo ĉi tie</string>
-    <string name="no_results">Neniu rezulto, provu tutajn vortojn</string>
     <string name="empty_show_search">Neniu trovita en via televidaĵa listo</string>
     <string name="action_try_again">Reprovi</string>
     <string name="tvdb_error_does_not_exist">La televidaĵo ne ekzistas (ankoraŭ) je TMDB. Reprovu poste.</string>
@@ -235,7 +235,6 @@
     <string name="shows_collection">Kolekto</string>
     <string name="watchlist">Spektolisto</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Ne estas rezultoj</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Similaj televidaĵoj</string>
     <!-- Popular -->

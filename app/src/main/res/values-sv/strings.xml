@@ -43,6 +43,7 @@
     <!-- Search -->
     <string name="clear_search_history">Rensa sökhistorik</string>
     <string name="search_hint">Sök avsnitt</string>
+    <string name="empty_no_results">Inga resultat</string>
     <!-- Status messages -->
     <string name="updated">Uppdaterad till senaste versionen</string>
     <string name="updated_details">Detaljer</string>
@@ -221,7 +222,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Skriv ett serienamn</string>
     <string name="add_empty">Det finns inga serier här.</string>
-    <string name="no_results">Inga resultat, försök med hela ord.</string>
     <string name="empty_show_search">Hittades inte i din serielista</string>
     <string name="action_try_again">Försök igen</string>
     <string name="tvdb_error_does_not_exist">Serien finns inte (ännu) på TMDB. Försök igen senare.</string>
@@ -235,7 +235,6 @@
     <string name="shows_collection">Samling</string>
     <string name="watchlist">Bevakningslista</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Inga resultat</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Liknande program</string>
     <!-- Popular -->

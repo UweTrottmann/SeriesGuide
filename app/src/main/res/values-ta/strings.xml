@@ -43,6 +43,7 @@
     <!-- Search -->
     <string name="clear_search_history">தேடல் வரலாற்றை நீக்கு</string>
     <string name="search_hint">தேடல் episodes</string>
+    <string name="empty_no_results">முடிவுகள் இல்லை</string>
     <!-- Status messages -->
     <string name="updated">சமீபத்திய பதிப்பை புதுப்பிக்கப்பட்டது.</string>
     <string name="updated_details">Details</string>
@@ -221,7 +222,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">ஒரு காட்சி பெயர் தட்டச்சு செய்யவும்</string>
     <string name="add_empty">எந்த காட்சிகள் இங்கே உள்ளன.</string>
-    <string name="no_results">முழு சொற்களை முடிவுகள், முயற்சிக்கவும்.</string>
     <string name="empty_show_search">Not found in your show list</string>
     <string name="action_try_again">மீண்டும் முயற்சி</string>
     <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
@@ -235,7 +235,6 @@
     <string name="shows_collection">தொகுப்பு</string>
     <string name="watchlist">Watchlist</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">No results</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Similar shows</string>
     <!-- Popular -->

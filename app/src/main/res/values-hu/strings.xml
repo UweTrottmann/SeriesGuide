@@ -43,6 +43,7 @@
     <!-- Search -->
     <string name="clear_search_history">Keresési előzmények törlése</string>
     <string name="search_hint">Epizódok keresése</string>
+    <string name="empty_no_results">Nincs találat</string>
     <!-- Status messages -->
     <string name="updated">Frissítve a legújabb verzióra.</string>
     <string name="updated_details">Részletek</string>
@@ -221,7 +222,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Írj be egy sorozat címet</string>
     <string name="add_empty">Nincsenek sorozatok.</string>
-    <string name="no_results">Nincs találat, próbálkozz teljes szavakkal.</string>
     <string name="empty_show_search">Nem található a sorozat listádban</string>
     <string name="action_try_again">Próbáld újra</string>
     <string name="tvdb_error_does_not_exist">A sorozat (még) nem létezik a TMDB adatbázisban. Próbálkozzon később.</string>
@@ -235,7 +235,6 @@
     <string name="shows_collection">Gyűjtemény</string>
     <string name="watchlist">Figyelőlista</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Nincs találat</string>
     <string name="action_similar">Hasonló</string>
     <string name="title_similar_shows">Hasonló sorozatok</string>
     <!-- Popular -->

@@ -43,6 +43,7 @@
     <!-- Search -->
     <string name="clear_search_history">Tyhjennä hakuhistoria</string>
     <string name="search_hint">Hae jaksoja</string>
+    <string name="empty_no_results">Ei tuloksia</string>
     <!-- Status messages -->
     <string name="updated">Päivitetty viimeisimpään versioon.</string>
     <string name="updated_details">Tiedot</string>
@@ -221,7 +222,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Kirjoita ohjelman nimi</string>
     <string name="add_empty">Täällä ei ole yhtään ohjelmaa</string>
-    <string name="no_results">Ei tuloksia, yritä kokonaisia sanoja.</string>
     <string name="empty_show_search">Ei löytynyt ohjelmalistastasi</string>
     <string name="action_try_again">Yritä uudelleen</string>
     <string name="tvdb_error_does_not_exist">Ohjelma ei ole (vielä) TMDB:ssä. Yritä myöhemmin uudelleen.</string>
@@ -235,7 +235,6 @@
     <string name="shows_collection">Kokoelma</string>
     <string name="watchlist">Seurantalista</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Ei tuloksia</string>
     <string name="action_similar">Samankaltaiset</string>
     <string name="title_similar_shows">Samankaltaisia sarjoja</string>
     <!-- Popular -->

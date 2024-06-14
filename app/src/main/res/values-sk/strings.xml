@@ -43,6 +43,7 @@
     <!-- Search -->
     <string name="clear_search_history">Vymazať históriu vyhľadávania</string>
     <string name="search_hint">Hľadať epizódy</string>
+    <string name="empty_no_results">Žiadne výsledky</string>
     <!-- Status messages -->
     <string name="updated">Aktualizované na najnovšiu verziu.</string>
     <string name="updated_details">Podrobnosti</string>
@@ -235,7 +236,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Napíšte názov seriálu</string>
     <string name="add_empty">Nie sú tu žiadne seriály.</string>
-    <string name="no_results">Žiadne výsledky, skúste celé slová.</string>
     <string name="empty_show_search">Nebolo nájdené vo vašich seriáloch</string>
     <string name="action_try_again">Skúsiť znova</string>
     <string name="tvdb_error_does_not_exist">Seriál (momentálne) nie je dostupný na TMDB. Skúste to znova neskôr.</string>
@@ -249,7 +249,6 @@
     <string name="shows_collection">Zbierka</string>
     <string name="watchlist">Chcem vidieť</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Žiadne výsledky</string>
     <string name="action_similar">Podobné</string>
     <string name="title_similar_shows">Podobné relácie</string>
     <!-- Popular -->

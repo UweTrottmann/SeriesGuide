@@ -43,6 +43,7 @@
     <!-- Search -->
     <string name="clear_search_history">Εκκαθάριση ιστορικού αναζήτησης</string>
     <string name="search_hint">Αναζήτηση επεισοδίων</string>
+    <string name="empty_no_results">Κανένα αποτέλεσμα</string>
     <!-- Status messages -->
     <string name="updated">Ενημέρωση για την πιο πρόσφατη έκδοση.</string>
     <string name="updated_details">Λεπτομέρειες</string>
@@ -221,7 +222,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Πληκτρολογήστε το όνομα μιας σειράς</string>
     <string name="add_empty">Δεν υπάρχουν σειρές εδώ.</string>
-    <string name="no_results">Κανένα αποτέλεσμα, δοκιμάστε ολόκληρες λέξεις.</string>
     <string name="empty_show_search">Δεν βρέθηκε στη λίστα σειρών σας</string>
     <string name="action_try_again">Δοκιμάσετε πάλι</string>
     <string name="tvdb_error_does_not_exist">Η σειρά δεν υπάρχει (ακόμη) στο TMDb. Δοκιμάστε πάλι αργότερα</string>
@@ -235,7 +235,6 @@
     <string name="shows_collection">Συλλογή</string>
     <string name="watchlist">Λίστα προς παρακολούθηση</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Κανένα αποτέλεσμα</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Παρόμοιες σειρές</string>
     <!-- Popular -->

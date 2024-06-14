@@ -43,6 +43,7 @@
     <!-- Search -->
     <string name="clear_search_history">Ryd søgehistorik</string>
     <string name="search_hint">Søg episoder</string>
+    <string name="empty_no_results">Ingen resultater</string>
     <!-- Status messages -->
     <string name="updated">Opdateret til nyeste version.</string>
     <string name="updated_details">Detaljer</string>
@@ -132,7 +133,7 @@
     <string name="state_on_watchlist">På overvågningsliste</string>
     <string name="state_favorite">Favorit</string>
     <!-- Shows -->
-    <string name="title_shows_added">Added</string>
+    <string name="title_shows_added">Tilføjet</string>
     <string name="confirm_delete">Sikker på, at du vil fjerne %s?</string>
     <string name="delete_error">Kunne ikke fjerne serie. Prøv igen senere.</string>
     <string name="delete_show">Fjern</string>
@@ -221,7 +222,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Angiv et serienavn</string>
     <string name="add_empty">Der er ingen serier her.</string>
-    <string name="no_results">Ingen resultater. Angiv fuldstændige ord.</string>
     <string name="empty_show_search">Ikke fundet i din serieliste</string>
     <string name="action_try_again">Prøv igen</string>
     <string name="tvdb_error_does_not_exist">Denne serie findes ikke på TMDB (endnu). Prøv igen senere.</string>
@@ -235,7 +235,6 @@
     <string name="shows_collection">Samling</string>
     <string name="watchlist">Overvågningsliste</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Ingen resultater</string>
     <string name="action_similar">Lignende</string>
     <string name="title_similar_shows">Lignende serier</string>
     <!-- Popular -->

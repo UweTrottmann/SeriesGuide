@@ -43,6 +43,7 @@
     <!-- Search -->
     <string name="clear_search_history">إزالة تاريخ البحث</string>
     <string name="search_hint">البحث عن الحلقات</string>
+    <string name="empty_no_results">لا توجد نتائج</string>
     <!-- Status messages -->
     <string name="updated">تم التحديث إلى الإصدار الأخير</string>
     <string name="updated_details">التفاصيل</string>
@@ -249,7 +250,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">ابحث عن اسم المسلسل</string>
     <string name="add_empty">لا توجد مسلسلات هنا.</string>
-    <string name="no_results">لا نتائج، جرّب كلمات كاملة</string>
     <string name="empty_show_search">غير متوفر في قائمة العرض الخاصة بك</string>
     <string name="action_try_again">حاول مرة أخرى</string>
     <string name="tvdb_error_does_not_exist">هذا المسلسل غير موجود (حتى الآن) على TMDB. حاول مرة أخرى.</string>
@@ -263,7 +263,6 @@
     <string name="shows_collection">مجموعة</string>
     <string name="watchlist">قائمة المشاهدة</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">لا توجد نتائج</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">مسلسلات مشابهة</string>
     <!-- Popular -->

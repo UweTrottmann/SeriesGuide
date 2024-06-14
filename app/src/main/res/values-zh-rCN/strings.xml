@@ -43,6 +43,7 @@
     <!-- Search -->
     <string name="clear_search_history">清除搜索记录</string>
     <string name="search_hint">搜索剧集</string>
+    <string name="empty_no_results">无结果</string>
     <!-- Status messages -->
     <string name="updated">已更新至最新版本。</string>
     <string name="updated_details">详细信息</string>
@@ -214,7 +215,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">输入节目名称</string>
     <string name="add_empty">什么都没有</string>
-    <string name="no_results">没有与此相关的结果。请尝试输入完整名称</string>
     <string name="empty_show_search">在您的节目单中找不到相关节目</string>
     <string name="action_try_again">重试</string>
     <string name="tvdb_error_does_not_exist">TMDB 上（尚）无此节目。请稍后重试。</string>
@@ -228,7 +228,6 @@
     <string name="shows_collection">收藏</string>
     <string name="watchlist">待看清单</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">无结果</string>
     <string name="action_similar">相似</string>
     <string name="title_similar_shows">相似节目</string>
     <!-- Popular -->

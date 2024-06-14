@@ -43,6 +43,7 @@
     <!-- Search -->
     <string name="clear_search_history">Обриши историју претраге</string>
     <string name="search_hint">Тражи епизоде</string>
+    <string name="empty_no_results">Нема резултата</string>
     <!-- Status messages -->
     <string name="updated">Ажурирано на последњу верзију.</string>
     <string name="updated_details">Детаљи</string>
@@ -228,7 +229,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Унеси име серије</string>
     <string name="add_empty">Овде нема серија.</string>
-    <string name="no_results">Нема резултата, покушајте са целим речима.</string>
     <string name="empty_show_search">Nije prenađeno u vašoj show listi</string>
     <string name="action_try_again">Поушајте поново</string>
     <string name="tvdb_error_does_not_exist">Серија не постоји (још) на TMDB. Покушајте поново касније.</string>
@@ -242,7 +242,6 @@
     <string name="shows_collection">Колекција</string>
     <string name="watchlist">Листа за гледање</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Нема резултата</string>
     <string name="action_similar">Слично</string>
     <string name="title_similar_shows">Сличне емисије</string>
     <!-- Popular -->

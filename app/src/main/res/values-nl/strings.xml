@@ -43,6 +43,7 @@
     <!-- Search -->
     <string name="clear_search_history">Verwijder zoekgeschiedenis</string>
     <string name="search_hint">Afleveringen zoeken</string>
+    <string name="empty_no_results">Geen resultaten</string>
     <!-- Status messages -->
     <string name="updated">Bijgewerkt naar de nieuwste versie</string>
     <string name="updated_details">Details</string>
@@ -132,7 +133,7 @@
     <string name="state_on_watchlist">Op volglijst</string>
     <string name="state_favorite">Favoriet</string>
     <!-- Shows -->
-    <string name="title_shows_added">Added</string>
+    <string name="title_shows_added">Toegevoegd</string>
     <string name="confirm_delete">Wilt u %s echt verwijderen?</string>
     <string name="delete_error">Kan show niet verwijderen. Probeer later opnieuw.</string>
     <string name="delete_show">Verwijderen</string>
@@ -221,7 +222,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Voer de naam van een serie in</string>
     <string name="add_empty">Er zijn hier geen series</string>
-    <string name="no_results">Geen resultaten, probeer complete woorden.</string>
     <string name="empty_show_search">Niet gevonden in uw serielijst</string>
     <string name="action_try_again">Nogmaals proberen</string>
     <string name="tvdb_error_does_not_exist">Serie bestaat (nog) niet op TMDB. Probeer later opnieuw.</string>
@@ -235,7 +235,6 @@
     <string name="shows_collection">Collectie</string>
     <string name="watchlist">Watchlist</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Geen resultaten</string>
     <string name="action_similar">Soortgelijk</string>
     <string name="title_similar_shows">Soortgelijke shows</string>
     <!-- Popular -->

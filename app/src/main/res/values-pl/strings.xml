@@ -43,6 +43,7 @@
     <!-- Search -->
     <string name="clear_search_history">Wyczyść historię wyszukiwania</string>
     <string name="search_hint">Szukaj odcinków</string>
+    <string name="empty_no_results">Brak wyników</string>
     <!-- Status messages -->
     <string name="updated">Zaktualizowano do najnowszej wersji.</string>
     <string name="updated_details">Szczegóły</string>
@@ -134,7 +135,7 @@
     <string name="state_on_watchlist">Na liście do obejrzenia</string>
     <string name="state_favorite">Ulubione</string>
     <!-- Shows -->
-    <string name="title_shows_added">Added</string>
+    <string name="title_shows_added">Dodano</string>
     <string name="confirm_delete">Czy na pewno chcesz usunąć %s?</string>
     <string name="delete_error">Nie można usunąć serialu. Spróbuj ponownie później.</string>
     <string name="delete_show">Usuń</string>
@@ -235,7 +236,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Wpisz nazwę serialu</string>
     <string name="add_empty">Brak seriali.</string>
-    <string name="no_results">Brak wyników. Uzupełnij zapytanie.</string>
     <string name="empty_show_search">Nie znaleziono na liście seriali</string>
     <string name="action_try_again">Spróbuj ponownie</string>
     <string name="tvdb_error_does_not_exist">Brak serialu na TMDB. Spróbuj ponownie później.</string>
@@ -249,7 +249,6 @@
     <string name="shows_collection">Kolekcja</string>
     <string name="watchlist">Do obejrzenia</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Brak wyników</string>
     <string name="action_similar">Podobne</string>
     <string name="title_similar_shows">Podobne seriale</string>
     <!-- Popular -->

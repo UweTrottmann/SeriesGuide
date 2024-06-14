@@ -43,6 +43,7 @@
     <!-- Search -->
     <string name="clear_search_history">Bersihkan riwayat pencarian</string>
     <string name="search_hint">Cari episode</string>
+    <string name="empty_no_results">Tidak ada hasil</string>
     <!-- Status messages -->
     <string name="updated">Diperbarui ke versi terbaru.</string>
     <string name="updated_details">Rincian</string>
@@ -214,7 +215,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Ketik nama acara</string>
     <string name="add_empty">Tidak ada acara disini.</string>
-    <string name="no_results">Tidak ada hasil, coba kata-kata lengkap.</string>
     <string name="empty_show_search">Tidak ditemukan di daftar acara anda</string>
     <string name="action_try_again">Coba lagi</string>
     <string name="tvdb_error_does_not_exist">Acara belum ada di TMDB. Coba lagi nanti.</string>
@@ -228,7 +228,6 @@
     <string name="shows_collection">Koleksi</string>
     <string name="watchlist">Daftar tontonan</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Tidak ada hasil</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Acara Serupa</string>
     <!-- Popular -->

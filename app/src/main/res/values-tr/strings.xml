@@ -43,6 +43,7 @@
     <!-- Search -->
     <string name="clear_search_history">Arama geçmişini temizle</string>
     <string name="search_hint">Bölüm ara</string>
+    <string name="empty_no_results">Sonuç bulunamadı</string>
     <!-- Status messages -->
     <string name="updated">En son sürüme güncellendi.</string>
     <string name="updated_details">Ayrıntılar</string>
@@ -132,7 +133,7 @@
     <string name="state_on_watchlist">İzlenecekler listesinde</string>
     <string name="state_favorite">Favori</string>
     <!-- Shows -->
-    <string name="title_shows_added">Added</string>
+    <string name="title_shows_added">Eklendi</string>
     <string name="confirm_delete">%s öğesini silmek istediğinize emin misiniz?</string>
     <string name="delete_error">Dizi kaldırılamadı. Sonra tekrar deneyin.</string>
     <string name="delete_show">Kaldır</string>
@@ -221,7 +222,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Bir dizi adı yazın</string>
     <string name="add_empty">Burada dizi yok.</string>
-    <string name="no_results">Sonuç bulunamadı, tam sözcüklerle deneyin.</string>
     <string name="empty_show_search">Listenizde bulunamadı</string>
     <string name="action_try_again">Yeniden deneyin</string>
     <string name="tvdb_error_does_not_exist">Bu dizi, TMDB\'de (henüz) mevcut değil. Daha sonra tekrar deneyin.</string>
@@ -235,7 +235,6 @@
     <string name="shows_collection">Koleksiyon</string>
     <string name="watchlist">İzlenecekler listesi</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Sonuç bulunamadı</string>
     <string name="action_similar">Benzerleri</string>
     <string name="title_similar_shows">Benzer diziler</string>
     <!-- Popular -->

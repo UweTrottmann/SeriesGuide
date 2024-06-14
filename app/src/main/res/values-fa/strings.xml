@@ -43,6 +43,7 @@
     <!-- Search -->
     <string name="clear_search_history">پاک‌سازی تاریخچهٔ جست‌وجو</string>
     <string name="search_hint">جست‌وجوی قسمت‌ها</string>
+    <string name="empty_no_results">بدون نتیجه</string>
     <!-- Status messages -->
     <string name="updated">به‌روز شده به جدیدترین نگارش.</string>
     <string name="updated_details">جزییات</string>
@@ -221,7 +222,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">نام یک اثر نمایشی را بنویسید</string>
     <string name="add_empty">این‌جا هیچ سریالی نیست.</string>
-    <string name="no_results">هیچ نتیجه ای پیدا نشد، کلمات را بصورت کامل امتحان کنید.</string>
     <string name="empty_show_search">در لیست برنامه‌ها پیدا نشد</string>
     <string name="action_try_again">دوباره امتحان کنید</string>
     <string name="tvdb_error_does_not_exist">اثر نمایشی (هنوز) در TMDB وجود ندارد. بعداً دوباره سعی کنید.</string>
@@ -235,7 +235,6 @@
     <string name="shows_collection">مجموعه</string>
     <string name="watchlist">فهرست تماشا</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">بدون نتیجه</string>
     <string name="action_similar">مشابه</string>
     <string name="title_similar_shows">سریال‌های مشابه</string>
     <!-- Popular -->

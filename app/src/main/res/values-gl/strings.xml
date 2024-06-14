@@ -43,6 +43,7 @@
     <!-- Search -->
     <string name="clear_search_history">Limpar histórico de pesquisa</string>
     <string name="search_hint">Procurar episodios</string>
+    <string name="empty_no_results">Sen resultados</string>
     <!-- Status messages -->
     <string name="updated">Atualizado para a última versión</string>
     <string name="updated_details">Detalles</string>
@@ -221,7 +222,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Escribe o nome da serie</string>
     <string name="add_empty">Non hai series</string>
-    <string name="no_results">Sen resultados, proba con palabras completas</string>
     <string name="empty_show_search">Non atopado na súa lista de series</string>
     <string name="action_try_again">Tentar de novo</string>
     <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
@@ -235,7 +235,6 @@
     <string name="shows_collection">Coleción</string>
     <string name="watchlist">Por ver</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Sen resultados</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Similar shows</string>
     <!-- Popular -->

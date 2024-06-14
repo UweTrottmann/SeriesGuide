@@ -43,6 +43,7 @@
     <!-- Search -->
     <string name="clear_search_history">Очистити історію пошуку</string>
     <string name="search_hint">Пошук серій</string>
+    <string name="empty_no_results">Немає результатів</string>
     <!-- Status messages -->
     <string name="updated">Оновлено до останньої версії.</string>
     <string name="updated_details">Подробиці</string>
@@ -134,7 +135,7 @@
     <string name="state_on_watchlist">В списку перегляду</string>
     <string name="state_favorite">Улюблене</string>
     <!-- Shows -->
-    <string name="title_shows_added">Added</string>
+    <string name="title_shows_added">Додано</string>
     <string name="confirm_delete">Ви дійсно бажаєте видалити %s?</string>
     <string name="delete_error">He можливо видалити серіал. Спробуйте ще раз пізніше.</string>
     <string name="delete_show">Видалити</string>
@@ -235,7 +236,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Напишіть назву серіалу</string>
     <string name="add_empty">Тут немає жодного серіалу.</string>
-    <string name="no_results">Немає результатів, спробуйте завершити слова.</string>
     <string name="empty_show_search">Не знайдено у вашому списку серіалів</string>
     <string name="action_try_again">Спробувати ще раз</string>
     <string name="tvdb_error_does_not_exist">Цей серіал відсутній (поки що) на TMDB. Спробуйте пізніше.</string>
@@ -249,7 +249,6 @@
     <string name="shows_collection">Колекція</string>
     <string name="watchlist">Список перегляду</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Немає результатів</string>
     <string name="action_similar">Схожі</string>
     <string name="title_similar_shows">Подібні серіали</string>
     <!-- Popular -->

@@ -43,6 +43,7 @@
     <!-- Search -->
     <string name="clear_search_history">Hanes chwilio clir</string>
     <string name="search_hint">Chwilio penodau</string>
+    <string name="empty_no_results">Dim canlyniadau</string>
     <!-- Status messages -->
     <string name="updated">Wedi\'i ddiweddaru i\'r fersiwn ddiweddaraf</string>
     <string name="updated_details">Manylion</string>
@@ -249,7 +250,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Teipiwch enw sioe</string>
     <string name="add_empty">Nid oes unrhyw sioeau yma</string>
-    <string name="no_results">Dim canlyniadau, rhowch gynnig ar eiriau cyflawn</string>
     <string name="empty_show_search">Heb ei ddarganfod yn eich rhestr sioeau</string>
     <string name="action_try_again">Ceisio eto</string>
     <string name="tvdb_error_does_not_exist">Nid yw\'r sioe yn bodoli (eto) ar TMDB. Rhowch gynnig arall arni yn nes ymlaen.</string>
@@ -263,7 +263,6 @@
     <string name="shows_collection">Casgliad</string>
     <string name="watchlist">Rhestr wylio</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Dim canlyniadau</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Sioeau tebyg</string>
     <!-- Popular -->

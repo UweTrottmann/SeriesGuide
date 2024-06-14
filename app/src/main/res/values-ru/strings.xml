@@ -43,6 +43,7 @@
     <!-- Search -->
     <string name="clear_search_history">Очистить историю поиска</string>
     <string name="search_hint">Поиск эпизодов</string>
+    <string name="empty_no_results">Нет результатов</string>
     <!-- Status messages -->
     <string name="updated">Обновлено до последней версии.</string>
     <string name="updated_details">Детали</string>
@@ -134,7 +135,7 @@
     <string name="state_on_watchlist">В списке просмотра</string>
     <string name="state_favorite">Избранное</string>
     <!-- Shows -->
-    <string name="title_shows_added">Added</string>
+    <string name="title_shows_added">Добавлено</string>
     <string name="confirm_delete">Вы действительно хотите удалить %s?</string>
     <string name="delete_error">Невозможно удалить сериал. Повторите попытку позже.</string>
     <string name="delete_show">Удалить</string>
@@ -235,7 +236,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Введите название сериала</string>
     <string name="add_empty">Здесь нет сериалов.</string>
-    <string name="no_results">Результатов нет, попробуйте полное название.</string>
     <string name="empty_show_search">Не найдено в вашем списке</string>
     <string name="action_try_again">Повторить попытку</string>
     <string name="tvdb_error_does_not_exist">Сериал не существует (пока) на TMDB. Повторите попытку позже.</string>
@@ -249,7 +249,6 @@
     <string name="shows_collection">Коллекция</string>
     <string name="watchlist">Список просмотра</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Нет результатов</string>
     <string name="action_similar">Похожие</string>
     <string name="title_similar_shows">Похожие сериалы</string>
     <!-- Popular -->

@@ -43,6 +43,7 @@
     <!-- Search -->
     <string name="clear_search_history">Tøm søkelogg</string>
     <string name="search_hint">Søk episoder</string>
+    <string name="empty_no_results">Ingen resultater</string>
     <!-- Status messages -->
     <string name="updated">Oppdatert til nyeste versjon.</string>
     <string name="updated_details">Detaljer</string>
@@ -221,7 +222,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Skriv inn et serienavn</string>
     <string name="add_empty">Det er ingen serier her.</string>
-    <string name="no_results">Ingen treff, prøv hele ord.</string>
     <string name="empty_show_search">Ikke funnet i listen over tv-serier</string>
     <string name="action_try_again">Prøv igjen</string>
     <string name="tvdb_error_does_not_exist">Serien finnes ikke (enda) på TMDB. Prøv igjen senere.</string>
@@ -235,7 +235,6 @@
     <string name="shows_collection">Samling</string>
     <string name="watchlist">Overvåkningsliste</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Ingen resultater</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Lignende serier</string>
     <!-- Popular -->

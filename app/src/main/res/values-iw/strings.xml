@@ -43,6 +43,7 @@
     <!-- Search -->
     <string name="clear_search_history">נקה את היסטוריית החיפוש</string>
     <string name="search_hint">חפש פרקים</string>
+    <string name="empty_no_results">אין תוצאות</string>
     <!-- Status messages -->
     <string name="updated">עדכן לגרסה האחרונה.</string>
     <string name="updated_details">פרטים נוספים</string>
@@ -235,7 +236,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">הקלד שם סדרה</string>
     <string name="add_empty">אין סדרות כאן.</string>
-    <string name="no_results">אין תוצאות, נסה ביטויים שלמים.</string>
     <string name="empty_show_search">לא נמצא ברשימת הסדרות</string>
     <string name="action_try_again">נסה שוב</string>
     <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
@@ -249,7 +249,6 @@
     <string name="shows_collection">אוסף</string>
     <string name="watchlist">רשימת מעקב</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">אין תוצאות</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">סדרות דומות</string>
     <!-- Popular -->
