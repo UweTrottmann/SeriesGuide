@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2012-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.ui
 
@@ -7,15 +7,11 @@ import android.content.ContentResolver
 import android.content.Intent
 import android.content.SyncStatusObserver
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.annotation.IdRes
-import androidx.appcompat.app.AppCompatDelegate
-import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.SgApp.Companion.getServicesComponent
@@ -195,29 +191,6 @@ abstract class BaseTopActivity : BaseMessageActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        if (BuildConfig.DEBUG) {
-            menu.add(0, 0, 0, "[Debug] Switch theme")
-        }
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == OPTIONS_SWITCH_THEME_ID) {
-            val isNightMode =
-                AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
-            AppCompatDelegate.setDefaultNightMode(
-                if (isNightMode) {
-                    AppCompatDelegate.MODE_NIGHT_NO
-                } else {
-                    AppCompatDelegate.MODE_NIGHT_YES
-                }
-            )
-            return true
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
     override fun onLastAutoBackupFailed() {
         val snackbar = snackbar
         if (snackbar != null && snackbar.isShown) {
@@ -367,9 +340,5 @@ abstract class BaseTopActivity : BaseMessageActivity() {
                 setSyncProgressVisibility(syncActive)
             })
         }
-    }
-
-    companion object {
-        private const val OPTIONS_SWITCH_THEME_ID = 0
     }
 }
