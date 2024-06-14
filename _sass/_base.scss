@@ -56,6 +56,11 @@ a:focus {
 font-weight:$font-weight-normal;
 }
 
+.navbar-toggler {
+  /* Remove toggler outline if not focused. */
+  border: none;
+}
+
 .dropdown-menu .nav-link {
   font-weight:$font-weight-normal;
 }
