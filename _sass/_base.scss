@@ -53,7 +53,12 @@ a:focus {
 }
 
 .navbar-nav > li > a {
-font-weight:$font-weight-normal;
+  font-weight:$font-weight-normal;
+}
+
+/* Use bold in addition to color for better visibility of active item. */
+.navbar-nav > li.active > a {
+  font-weight:500;
 }
 
 .navbar-toggler {
