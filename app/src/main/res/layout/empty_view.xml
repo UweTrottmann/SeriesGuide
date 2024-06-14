@@ -16,11 +16,13 @@
         android:textAppearance="@style/TextAppearance.SeriesGuide.EmptyState"
         tools:text="The empty view message." />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonEmptyView"
+        style="@style/Widget.Material3.Button.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_padding"
+        tools:icon="@drawable/ic_refresh_white_24dp"
         tools:text="Empty Action" />
 
 </LinearLayout>

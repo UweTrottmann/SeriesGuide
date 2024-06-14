@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2016-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.util;
 
@@ -7,6 +7,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
+import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.uwetrottmann.trakt5.TraktV2;
 import dagger.Lazy;
@@ -24,10 +25,10 @@ import timber.log.Timber;
 public class AllApisAuthenticator implements Authenticator {
 
     private final Context context;
-    private final Lazy<TraktV2> trakt;
+    private final Lazy<SgTrakt> trakt;
 
     @Inject
-    public AllApisAuthenticator(@ApplicationContext Context context, Lazy<TraktV2> trakt) {
+    public AllApisAuthenticator(@ApplicationContext Context context, Lazy<SgTrakt> trakt) {
         this.context = context;
         this.trakt = trakt;
     }

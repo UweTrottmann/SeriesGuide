@@ -1,18 +1,18 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2016-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies
 
 import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.shows.history.HistoryViewHolder
-import com.battlelancer.seriesguide.shows.history.NowAdapter
+import com.battlelancer.seriesguide.shows.history.ShowsHistoryAdapter
 
 /**
- * An adapted version of [NowAdapter] with a special layout for movies.
+ * An adapted version of [ShowsHistoryAdapter] with a special layout for movies.
  */
-internal class MoviesNowAdapter(context: Context, listener: ItemClickListener) :
-    NowAdapter(context, listener) {
+internal class MoviesHistoryAdapter(context: Context, listener: ItemClickListener) :
+    ShowsHistoryAdapter(context, listener) {
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         if (viewHolder is HistoryViewHolder) {

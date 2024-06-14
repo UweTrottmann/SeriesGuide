@@ -1,10 +1,9 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2015-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.history
 
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
@@ -58,16 +57,6 @@ class HistoryActivity : BaseActivity(), OnAddShowListener {
     override fun setupActionBar() {
         super.setupActionBar()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressedDispatcher.onBackPressed()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     /**

@@ -53,13 +53,15 @@ abstract class BaseActivity : BaseThemeActivity() {
         EventBus.getDefault().unregister(this)
     }
 
-    @Subscribe
+    // Post on main thread so Toast works
+    @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(event: OnShowAddedEvent) {
         // display status toast about adding shows
         event.handle(this)
     }
 
-    @Subscribe
+    // Post on main thread so Toast works
+    @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(event: TraktActionCompleteEvent) {
         // display status toast about trakt action
         event.handle(this)

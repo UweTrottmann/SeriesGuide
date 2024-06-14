@@ -1,12 +1,11 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2013-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.dataliberation
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.BaseActivity
@@ -43,16 +42,6 @@ class DataLiberationActivity : BaseActivity() {
         supportActionBar?.apply {
             setHomeAsUpIndicator(R.drawable.ic_clear_24dp)
             setDisplayHomeAsUpEnabled(true)
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressedDispatcher.onBackPressed()
-                true
-            }
-            else -> false
         }
     }
 

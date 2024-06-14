@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2016-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies;
 
@@ -7,7 +7,7 @@ import android.app.Activity;
 import android.text.format.DateUtils;
 import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.shows.history.NowAdapter;
+import com.battlelancer.seriesguide.shows.history.ShowsHistoryAdapter;
 import com.battlelancer.seriesguide.shows.history.TraktRecentEpisodeHistoryLoader;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
@@ -27,7 +27,7 @@ public class TraktRecentMovieHistoryLoader extends TraktRecentEpisodeHistoryLoad
     }
 
     @Override
-    protected void addItems(List<NowAdapter.NowItem> items, List<HistoryEntry> history) {
+    protected void addItems(List<ShowsHistoryAdapter.Item> items, List<HistoryEntry> history) {
         // add movies
         long threeDaysAgo = System.currentTimeMillis() - 3 * DateUtils.DAY_IN_MILLIS;
         for (int i = 0, size = history.size(); i < size; i++) {
@@ -46,7 +46,7 @@ public class TraktRecentMovieHistoryLoader extends TraktRecentEpisodeHistoryLoad
             }
 
             // Poster resolved on demand, see view holder binding.
-            items.add(new NowAdapter.NowItem()
+            items.add(new ShowsHistoryAdapter.Item()
                     .displayData(
                             entry.watched_at.toInstant().toEpochMilli(),
                             entry.movie.title,

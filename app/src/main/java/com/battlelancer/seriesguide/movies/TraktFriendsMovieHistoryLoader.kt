@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2015-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies
 
@@ -7,7 +7,7 @@ import android.content.Context
 import android.text.TextUtils
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.shows.history.NowAdapter.NowItem
+import com.battlelancer.seriesguide.shows.history.ShowsHistoryAdapter.Item
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.uwetrottmann.androidutils.GenericSimpleLoader
@@ -19,9 +19,9 @@ import com.uwetrottmann.trakt5.enums.HistoryType
  * Loads Trakt friends, then returns the most recently watched movie for each friend.
  */
 internal class TraktFriendsMovieHistoryLoader(context: Context) :
-    GenericSimpleLoader<List<NowItem>?>(context) {
+    GenericSimpleLoader<List<Item>?>(context) {
 
-    override fun loadInBackground(): List<NowItem>? {
+    override fun loadInBackground(): List<Item>? {
         if (!TraktCredentials.get(context).hasCredentials()) {
             return null
         }
@@ -39,7 +39,7 @@ internal class TraktFriendsMovieHistoryLoader(context: Context) :
         }
 
         // add last watched movie for each friend
-        val movies = mutableListOf<NowItem>()
+        val movies = mutableListOf<Item>()
         for (i in 0 until size) {
             val friend = friends[i]
 
@@ -71,7 +71,7 @@ internal class TraktFriendsMovieHistoryLoader(context: Context) :
 
             val avatar = user.images?.avatar?.full
             // Poster resolved on demand, see view holder binding.
-            val nowItem = NowItem().displayData(
+            val item = Item().displayData(
                 watchedAt.toInstant().toEpochMilli(),
                 movie.title,
                 null,
@@ -79,17 +79,17 @@ internal class TraktFriendsMovieHistoryLoader(context: Context) :
             )
                 .tmdbId(movie.ids?.tmdb)
                 .friend(user.username, avatar, entry.action)
-            movies.add(nowItem)
+            movies.add(item)
         }
 
         return if (movies.isEmpty()) {
             emptyList()
         } else {
             // estimate list size
-            val items: MutableList<NowItem> = ArrayList(movies.size + 1)
+            val items: MutableList<Item> = ArrayList(movies.size + 1)
             // add header
             items.add(
-                NowItem().header(context.getString(R.string.friends_recently), true)
+                Item().header(context.getString(R.string.friends_recently), true)
             )
             // add latest first
             movies.sortByDescending { it.timestamp }

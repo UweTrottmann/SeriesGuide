@@ -12,7 +12,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/larger_padding"
         android:gravity="center"
-        android:text="@string/no_results"
+        android:text="@string/empty_no_results"
         android:textAppearance="@style/TextAppearance.SeriesGuide.EmptyState" />
 
     <GridView

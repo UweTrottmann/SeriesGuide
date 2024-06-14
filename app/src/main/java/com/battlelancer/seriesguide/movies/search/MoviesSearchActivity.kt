@@ -26,10 +26,10 @@ import com.battlelancer.seriesguide.movies.MoviesDiscoverLink
 import com.battlelancer.seriesguide.movies.TmdbMoviesDataSource
 import com.battlelancer.seriesguide.movies.search.MoviesSearchActivity.Companion.intentLink
 import com.battlelancer.seriesguide.movies.search.MoviesSearchActivity.Companion.intentSearch
-import com.battlelancer.seriesguide.shows.search.popular.LanguagePickerDialogFragment
-import com.battlelancer.seriesguide.shows.search.popular.YearPickerDialogFragment
 import com.battlelancer.seriesguide.streaming.WatchProviderFilterDialogFragment
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
+import com.battlelancer.seriesguide.ui.dialogs.LanguagePickerDialogFragment
+import com.battlelancer.seriesguide.ui.dialogs.YearPickerDialogFragment
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.SearchHistory
 import com.battlelancer.seriesguide.util.ThemeUtils
@@ -135,7 +135,7 @@ class MoviesSearchActivity : BaseMessageActivity() {
         searchView.inputType = EditorInfo.TYPE_CLASS_TEXT
 
         // search history
-        searchHistory = SearchHistory(this, "tmdb")
+        searchHistory = SearchHistory(this, "movies")
         searchHistoryAdapter = ArrayAdapter(
             this,
             R.layout.item_dropdown,

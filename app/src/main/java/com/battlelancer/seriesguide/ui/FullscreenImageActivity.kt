@@ -1,6 +1,6 @@
-// Copyright 2013 Andrew Neal
-// Copyright 2013-2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2013-2024 Uwe Trottmann
+// Copyright 2013 Andrew Neal
 
 package com.battlelancer.seriesguide.ui
 
@@ -9,7 +9,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.MenuItem
 import android.widget.ImageView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.util.ImageTools
@@ -144,16 +143,6 @@ class FullscreenImageActivity : BaseActivity() {
             // being garbage collected. It also prevents our callback from getting invoked even after the
             // activity has finished.
             Picasso.get().cancelRequest(photoView)
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressedDispatcher.onBackPressed()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
         }
     }
 

@@ -114,9 +114,6 @@ Copyright 2011, 2012 Chris Banes
 retrofit (https://github.com/square/retrofit)
 Copyright 2013 Square, Inc.
 
-TapTargetView (https://github.com/KeepSafe/TapTargetView)
-Copyright 2016 Keepsafe Software Inc.
-
 threetenabp (https://github.com/JakeWharton/ThreeTenABP)
 Copyright (C) 2015 Jake Wharton
 

@@ -13,6 +13,7 @@ import com.battlelancer.seriesguide.traktapi.TraktTask.TraktActionCompleteEvent
 import com.battlelancer.seriesguide.ui.BaseThemeActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Blank activity, just used to quickly check into a show/episode.
@@ -59,7 +60,8 @@ class QuickCheckInActivity : BaseThemeActivity() {
         finish()
     }
 
-    @Subscribe
+    // Post on main thread so Toast works
+    @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(event: TraktActionCompleteEvent) {
         if (event.traktAction != TraktAction.CHECKIN_EPISODE) {
             return

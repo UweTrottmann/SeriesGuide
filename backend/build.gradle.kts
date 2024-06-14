@@ -27,6 +27,15 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    packaging {
+        resources {
+            // google-auth-library-oauth2-http and google-auth-library-credentials include INDEX.LIST:
+            // Based on https://docs.oracle.com/en/java/javase/17/docs/specs/jar/jar.html#jar-index
+            // only used by network applications like applets, so safe to exclude.
+            excludes += "/META-INF/INDEX.LIST"
+        }
+    }
 }
 
 dependencies {

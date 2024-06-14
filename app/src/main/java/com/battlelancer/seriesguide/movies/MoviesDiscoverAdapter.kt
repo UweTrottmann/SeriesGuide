@@ -7,6 +7,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.databinding.ItemDiscoverHeaderBinding
 import com.battlelancer.seriesguide.databinding.ItemDiscoverLinkBinding
@@ -107,11 +108,13 @@ class MoviesDiscoverAdapter(
         private var link: MoviesDiscoverLink? = null
 
         init {
-            itemView.setOnClickListener {
+            binding.textViewGridHeader.setOnClickListener {
                 link?.let {
                     itemClickListener.onLinkClick(it, itemView)
                 }
             }
+            // isGone would break spread_inside of the chain
+            binding.buttonDiscoverHeader.isInvisible = true
         }
 
         fun bindTo(link: MoviesDiscoverLink) {

@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2014-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.history
 
@@ -20,7 +20,7 @@ import com.battlelancer.seriesguide.util.ViewTools
  * Sectioned adapter displaying recently watched episodes and episodes recently watched by
  * friends.
  */
-open class NowAdapter(
+open class ShowsHistoryAdapter(
     protected val context: Context,
     private val listener: ItemClickListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -85,7 +85,7 @@ open class NowAdapter(
         }
     }
 
-    class NowItem {
+    class Item {
         var episodeRowId: Long? = null
         var showTmdbId: Int? = null
         var movieTmdbId: Int? = null
@@ -102,18 +102,18 @@ open class NowAdapter(
         @ItemType
         var type = 0
 
-        fun recentlyWatchedLocal(): NowItem {
+        fun recentlyWatchedLocal(): Item {
             this.type = ItemType.HISTORY
             return this
         }
 
-        fun recentlyWatchedTrakt(action: String?): NowItem {
+        fun recentlyWatchedTrakt(action: String?): Item {
             this.action = action
             this.type = ItemType.HISTORY
             return this
         }
 
-        fun friend(username: String?, avatar: String?, action: String?): NowItem {
+        fun friend(username: String?, avatar: String?, action: String?): Item {
             this.username = username
             this.avatar = avatar
             this.action = action
@@ -124,13 +124,13 @@ open class NowAdapter(
         /**
          * Pass 0 if no value.
          */
-        fun episodeIds(episodeRowId: Long, showTmdbId: Int): NowItem {
+        fun episodeIds(episodeRowId: Long, showTmdbId: Int): Item {
             this.episodeRowId = episodeRowId
             this.showTmdbId = showTmdbId
             return this
         }
 
-        fun tmdbId(movieTmdbId: Int?): NowItem {
+        fun tmdbId(movieTmdbId: Int?): Item {
             this.movieTmdbId = movieTmdbId
             return this
         }
@@ -138,7 +138,7 @@ open class NowAdapter(
         fun displayData(
             timestamp: Long, title: String?, description: String?,
             posterUrl: String?
-        ): NowItem {
+        ): Item {
             this.timestamp = timestamp
             this.title = title
             this.description = description
@@ -146,13 +146,13 @@ open class NowAdapter(
             return this
         }
 
-        fun moreLink(title: String): NowItem {
+        fun moreLink(title: String): Item {
             this.type = ItemType.MORE_LINK
             this.title = title
             return this
         }
 
-        fun header(title: String, showTraktLogo: Boolean): NowItem {
+        fun header(title: String, showTraktLogo: Boolean): Item {
             this.type = ItemType.HEADER
             this.title = title
             this.showTraktLogo = showTraktLogo
@@ -163,9 +163,9 @@ open class NowAdapter(
     protected val drawableWatched: Drawable
     protected val drawableCheckin: Drawable
 
-    private val dataset: MutableList<NowItem>
-    private var recentlyWatched: List<NowItem>? = null
-    private var friendsRecently: List<NowItem>? = null
+    private val dataset: MutableList<Item>
+    private var recentlyWatched: List<Item>? = null
+    private var friendsRecently: List<Item>? = null
 
     init {
         dataset = ArrayList()
@@ -231,9 +231,9 @@ open class NowAdapter(
         }
     }
 
-    fun getItem(position: Int): NowItem = dataset[position]
+    fun getItem(position: Int): Item = dataset[position]
 
-    fun setRecentlyWatched(items: List<NowItem>?) {
+    fun setRecentlyWatched(items: List<Item>?) {
         val oldCount = recentlyWatched?.size ?: 0
         val newCount = items?.size ?: 0
         recentlyWatched = items
@@ -241,7 +241,7 @@ open class NowAdapter(
         notifyAboutChanges(0, oldCount, newCount)
     }
 
-    fun setFriendsRecentlyWatched(items: List<NowItem>?) {
+    fun setFriendsRecentlyWatched(items: List<Item>?) {
         val oldCount = friendsRecently?.size ?: 0
         val newCount = items?.size ?: 0
         // items start after recently watched (if any)

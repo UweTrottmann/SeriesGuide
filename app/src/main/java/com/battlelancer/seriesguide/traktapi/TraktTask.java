@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2023-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.traktapi;
 
@@ -9,33 +9,28 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Toast;
-import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.shows.database.SgEpisode2Numbers;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
+import com.battlelancer.seriesguide.shows.database.SgEpisode2Numbers;
 import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.CheckinError;
-import com.uwetrottmann.trakt5.entities.Comment;
-import com.uwetrottmann.trakt5.entities.Episode;
 import com.uwetrottmann.trakt5.entities.EpisodeCheckin;
-import com.uwetrottmann.trakt5.entities.EpisodeIds;
-import com.uwetrottmann.trakt5.entities.Movie;
 import com.uwetrottmann.trakt5.entities.MovieCheckin;
 import com.uwetrottmann.trakt5.entities.MovieIds;
 import com.uwetrottmann.trakt5.entities.Show;
 import com.uwetrottmann.trakt5.entities.ShowIds;
 import com.uwetrottmann.trakt5.entities.SyncEpisode;
 import com.uwetrottmann.trakt5.entities.SyncMovie;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import org.greenrobot.eventbus.EventBus;
 import org.threeten.bp.OffsetDateTime;
 import timber.log.Timber;
 
+/** @noinspection deprecation*/
+// AsyncTask is still fine to use, only new code should better alternatives.
 public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
 
     private static final String APP_VERSION = "SeriesGuide " + BuildConfig.VERSION_NAME;
@@ -48,13 +43,9 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
 
         String MOVIE_TMDB_ID = "movie-tmdbid";
 
-        String SHOW_ID = "show-id";
-
         String EPISODE_ID = "episode-id";
 
         String MESSAGE = "message";
-
-        String ISSPOILER = "isspoiler";
     }
 
     /**
@@ -137,14 +128,14 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
     }
 
     @SuppressLint("StaticFieldLeak") private final Context context;
-    private Bundle args;
+    private final Bundle args;
     private TraktAction action;
 
     /**
-     * Initial constructor. Call <b>one</b> of the setup-methods like {@link #commentEpisode}
-     * afterwards.<br> <br> Make sure the user has valid trakt credentials (check
-     * with {@link TraktCredentials#hasCredentials()} and then
-     * possibly launch {@link ConnectTraktActivity}) or execution will fail.
+     * Initial constructor. Call <b>one</b> of the setup-methods like {@link #checkInEpisode}
+     * afterwards.<br> <br> Make sure the user has valid trakt credentials (check with
+     * {@link TraktCredentials#hasCredentials()} and then possibly launch
+     * {@link ConnectTraktActivity}) or execution will fail.
      */
     public TraktTask(Context context) {
         this(context, new Bundle());
@@ -153,8 +144,8 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
     /**
      * Fast constructor, allows passing of an already pre-built {@code args} {@link Bundle}.<br>
      * <br> Make sure the user has valid trakt credentials (check with {@link
-     * TraktCredentials#hasCredentials()} and then possibly
-     * launch {@link ConnectTraktActivity}) or execution will fail.
+     * TraktCredentials#hasCredentials()} and then possibly launch {@link ConnectTraktActivity}) or
+     * execution will fail.
      */
     public TraktTask(Context context, Bundle args) {
         this.context = context.getApplicationContext();
@@ -183,39 +174,6 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
         return this;
     }
 
-    /**
-     * Post a comment for a show.
-     */
-    public TraktTask commentShow(long showId, String comment, boolean isSpoiler) {
-        args.putString(InitBundle.TRAKTACTION, TraktAction.COMMENT.name());
-        args.putLong(InitBundle.SHOW_ID, showId);
-        args.putString(InitBundle.MESSAGE, comment);
-        args.putBoolean(InitBundle.ISSPOILER, isSpoiler);
-        return this;
-    }
-
-    /**
-     * Post a comment for an episode.
-     */
-    public TraktTask commentEpisode(long episodeId, String comment, boolean isSpoiler) {
-        args.putString(InitBundle.TRAKTACTION, TraktAction.COMMENT.name());
-        args.putLong(InitBundle.EPISODE_ID, episodeId);
-        args.putString(InitBundle.MESSAGE, comment);
-        args.putBoolean(InitBundle.ISSPOILER, isSpoiler);
-        return this;
-    }
-
-    /**
-     * Post a comment for a movie.
-     */
-    public TraktTask commentMovie(int movieTmdbId, String comment, boolean isSpoiler) {
-        args.putString(InitBundle.TRAKTACTION, TraktAction.COMMENT.name());
-        args.putInt(InitBundle.MOVIE_TMDB_ID, movieTmdbId);
-        args.putString(InitBundle.MESSAGE, comment);
-        args.putBoolean(InitBundle.ISSPOILER, isSpoiler);
-        return this;
-    }
-
     @Override
     protected TraktResponse doInBackground(Void... params) {
         // we need this value in onPostExecute, so preserve it here
@@ -241,9 +199,6 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
             case CHECKIN_MOVIE: {
                 return doCheckInAction();
             }
-            case COMMENT: {
-                return doCommentAction();
-            }
             default:
                 return null;
         }
@@ -252,7 +207,7 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
     private TraktResponse doCheckInAction() {
         TraktV2 trakt = SgApp.getServicesComponent(context).trakt();
         try {
-            retrofit2.Response response;
+            retrofit2.Response<?> response;
             String message = args.getString(InitBundle.MESSAGE);
             switch (action) {
                 case CHECKIN_EPISODE: {
@@ -331,101 +286,6 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
 
         // return generic failure message
         return buildErrorResponse();
-    }
-
-    private TraktResponse doCommentAction() {
-        Comment commentOrNull = buildComment();
-        if (commentOrNull == null) return buildErrorResponse();
-
-        TraktV2 trakt = SgApp.getServicesComponent(context).trakt();
-        try {
-            // post comment
-            retrofit2.Response<Comment> response = trakt.comments().post(commentOrNull)
-                    .execute();
-            if (response.isSuccessful()) {
-                Comment postedComment = response.body();
-                if (postedComment.id != null) {
-                    return new TraktResponse(true, null);
-                }
-            } else {
-                // check if comment failed validation or item does not exist on trakt
-                if (response.code() == 422) {
-                    return new TraktResponse(false, context.getString(R.string.shout_invalid));
-                } else if (response.code() == 404) {
-                    return new TraktResponse(false, context.getString(R.string.shout_invalid));
-                } else if (SgTrakt.isUnauthorized(response)) {
-                    // for users banned from posting comments requests also return 401
-                    // so do not sign out if an error header does not indicate the token is invalid
-                    String authHeader = response.headers().get("Www-Authenticate");
-                    if (authHeader != null && !authHeader.contains("invalid_token")) {
-                        Pattern pattern = Pattern.compile("error_description=\"(.*)\"");
-                        Matcher matcher = pattern.matcher(authHeader);
-                        String message;
-                        if (matcher.find()) {
-                            message = matcher.group(1);
-                        } else {
-                            message = context.getString(R.string.trakt_error_credentials);
-                        }
-                        return new TraktResponse(false, message);
-                    } else {
-                        TraktCredentials.get(context).setCredentialsInvalid();
-                        return new TraktResponse(false,
-                                context.getString(R.string.trakt_error_credentials));
-                    }
-                } else {
-                    Errors.logAndReport("post comment", response);
-                }
-            }
-        } catch (Exception e) {
-            Errors.logAndReport("post comment", e);
-        }
-
-        // return generic failure message
-        return buildErrorResponse();
-    }
-
-    @Nullable
-    private Comment buildComment() {
-        Comment comment = new Comment();
-        comment.comment = args.getString(InitBundle.MESSAGE);
-        comment.spoiler = args.getBoolean(InitBundle.ISSPOILER);
-
-        // episode?
-        long episodeId = args.getLong(InitBundle.EPISODE_ID);
-        if (episodeId != 0) {
-            // Check in using episode TMDB ID
-            // Note: using show Trakt ID and episode numbers does not work (comments on show).
-            int episodeTmdbIdOrZero = SgRoomDatabase.getInstance(context)
-                    .sgEpisode2Helper().getEpisodeTmdbId(episodeId);
-            if (episodeTmdbIdOrZero == 0) {
-                Timber.e("Failed to get episode %d", episodeId);
-                return null;
-            }
-            comment.episode = new Episode();
-            comment.episode.ids = EpisodeIds.tmdb(episodeTmdbIdOrZero);
-            return comment;
-        }
-
-        // show?
-        long showId = args.getLong(InitBundle.SHOW_ID);
-        if (showId != 0) {
-            Integer showTraktId = SgApp.getServicesComponent(context)
-                    .showTools()
-                    .getShowTraktId(showId);
-            if (showTraktId == null) {
-                Timber.e("Failed to get show %d", showId);
-                return null;
-            }
-            comment.show = new Show();
-            comment.show.ids = ShowIds.trakt(showTraktId);
-            return comment;
-        }
-
-        // movie!
-        int movieTmdbId = args.getInt(InitBundle.MOVIE_TMDB_ID);
-        comment.movie = new Movie();
-        comment.movie.ids = MovieIds.tmdb(movieTmdbId);
-        return comment;
     }
 
     private TraktResponse buildErrorResponse() {

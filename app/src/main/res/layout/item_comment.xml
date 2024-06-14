@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Copyright 2012-2024 Uwe Trottmann -->
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,8 +14,8 @@
         android:id="@+id/imageViewCommentAvatar"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginStart="@dimen/large_padding"
-        android:layout_marginTop="@dimen/default_padding"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:contentDescription="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,14 +24,14 @@
         tools:src="@color/protection_dark" />
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardComment"
         style="?attr/materialCardViewFilledStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_padding"
-        android:layout_marginTop="@dimen/default_padding"
-        android:layout_marginEnd="@dimen/large_padding"
-        android:layout_marginBottom="@dimen/default_padding"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toTopOf="@id/buttonEditComment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/imageViewCommentAvatar"
         app:layout_constraintTop_toTopOf="parent">
@@ -89,5 +93,27 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonEditComment"
+        style="@style/Widget.SeriesGuide.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/action_edit_comment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageViewCommentAvatar"
+        app:layout_constraintTop_toBottomOf="@id/cardComment" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonDeleteComment"
+        style="@style/Widget.SeriesGuide.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/action_delete_comment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/buttonEditComment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

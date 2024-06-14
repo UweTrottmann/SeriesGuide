@@ -1,18 +1,14 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright 2018-2024 Uwe Trottmann
 
-package com.battlelancer.seriesguide.shows.search.popular
+package com.battlelancer.seriesguide.shows.search.discover
 
 import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.battlelancer.seriesguide.shows.search.discover.AddFragment
-import com.battlelancer.seriesguide.shows.search.discover.SearchResult
-import com.battlelancer.seriesguide.shows.search.discover.SearchResultDiffCallback
-import com.battlelancer.seriesguide.shows.search.discover.SearchResultViewHolder
 
-class ShowsPagingAdapter(
+class SearchResultPagingAdapter(
     val onItemClickListener: AddFragment.AddAdapter.OnItemClickListener
 ) : PagingDataAdapter<SearchResult, RecyclerView.ViewHolder>(
     SearchResultDiffCallback()

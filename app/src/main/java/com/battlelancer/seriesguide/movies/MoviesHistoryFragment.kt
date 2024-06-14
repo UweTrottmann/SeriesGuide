@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2014-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies
 
@@ -21,26 +21,25 @@ import androidx.loader.content.Loader
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.databinding.FragmentNowBinding
+import com.battlelancer.seriesguide.databinding.FragmentHistoryBinding
 import com.battlelancer.seriesguide.history.HistoryActivity
 import com.battlelancer.seriesguide.movies.MoviesActivityViewModel.ScrollTabToTopEvent
 import com.battlelancer.seriesguide.movies.details.MovieDetailsActivity
-import com.battlelancer.seriesguide.shows.history.NowAdapter
-import com.battlelancer.seriesguide.shows.history.NowAdapter.NowItem
+import com.battlelancer.seriesguide.shows.history.ShowsHistoryAdapter
+import com.battlelancer.seriesguide.shows.history.ShowsHistoryAdapter.Item
 import com.battlelancer.seriesguide.shows.history.TraktRecentEpisodeHistoryLoader
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 
 /**
- * Displays recently watched movies, today's releases and recent watches from trakt friends (if
- * connected to trakt).
+ * From Trakt, displays recently watched movies of the user and Trakt friends.
  */
-class MoviesNowFragment : Fragment() {
+class MoviesHistoryFragment : Fragment() {
 
-    private var binding: FragmentNowBinding? = null
+    private var binding: FragmentHistoryBinding? = null
 
-    private lateinit var adapter: MoviesNowAdapter
+    private lateinit var adapter: MoviesHistoryAdapter
     private var isLoadingRecentlyWatched = false
     private var isLoadingFriends = false
 
@@ -48,7 +47,7 @@ class MoviesNowFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return FragmentNowBinding.inflate(inflater, container, false)
+        return FragmentHistoryBinding.inflate(inflater, container, false)
             .also { binding = it }
             .root
     }
@@ -75,7 +74,7 @@ class MoviesNowFragment : Fragment() {
         binding.includeSnackbar.buttonSnackbar.setText(R.string.refresh)
         binding.includeSnackbar.buttonSnackbar.setOnClickListener { refreshStream() }
 
-        adapter = MoviesNowAdapter(requireContext(), itemClickListener)
+        adapter = MoviesHistoryAdapter(requireContext(), itemClickListener)
         adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onChanged() {
                 updateEmptyState()
@@ -100,7 +99,7 @@ class MoviesNowFragment : Fragment() {
                 }
                 // make headers and more links span all columns
                 val type = adapter.getItem(position).type
-                return if (type == NowAdapter.ItemType.HEADER || type == NowAdapter.ItemType.MORE_LINK) spanCount else 1
+                return if (type == ShowsHistoryAdapter.ItemType.HEADER || type == ShowsHistoryAdapter.ItemType.MORE_LINK) spanCount else 1
             }
         }
         binding.recyclerViewNow.layoutManager = layoutManager
@@ -109,7 +108,7 @@ class MoviesNowFragment : Fragment() {
             .scrollTabToTopLiveData
             .observe(viewLifecycleOwner) { event: ScrollTabToTopEvent? ->
                 if (event != null
-                    && event.tabPosition == MoviesActivityImpl.TAB_POSITION_NOW) {
+                    && event.tabPosition == MoviesActivityImpl.TAB_POSITION_TRAKT_HISTORY) {
                     binding.recyclerViewNow.smoothScrollToPosition(0)
                 }
             }
@@ -235,13 +234,13 @@ class MoviesNowFragment : Fragment() {
         binding.emptyViewNow.visibility = if (isEmpty) View.VISIBLE else View.GONE
     }
 
-    private val itemClickListener: NowAdapter.ItemClickListener =
-        object : NowAdapter.ItemClickListener {
+    private val itemClickListener: ShowsHistoryAdapter.ItemClickListener =
+        object : ShowsHistoryAdapter.ItemClickListener {
             override fun onItemClick(view: View, position: Int) {
                 val item = adapter.getItem(position)
 
                 // More history link clicked?
-                if (item.type == NowAdapter.ItemType.MORE_LINK) {
+                if (item.type == ShowsHistoryAdapter.ItemType.MORE_LINK) {
                     startActivity(
                         Intent(activity, HistoryActivity::class.java).putExtra(
                             HistoryActivity.InitBundle.HISTORY_TYPE,
@@ -286,22 +285,22 @@ class MoviesNowFragment : Fragment() {
             }
         }
 
-    private val traktFriendsHistoryCallbacks: LoaderManager.LoaderCallbacks<List<NowItem>?> =
-        object : LoaderManager.LoaderCallbacks<List<NowItem>?> {
-            override fun onCreateLoader(id: Int, args: Bundle?): Loader<List<NowItem>?> {
+    private val traktFriendsHistoryCallbacks: LoaderManager.LoaderCallbacks<List<Item>?> =
+        object : LoaderManager.LoaderCallbacks<List<Item>?> {
+            override fun onCreateLoader(id: Int, args: Bundle?): Loader<List<Item>?> {
                 return TraktFriendsMovieHistoryLoader(requireContext())
             }
 
             override fun onLoadFinished(
-                loader: Loader<List<NowItem>?>,
-                data: List<NowItem>?
+                loader: Loader<List<Item>?>,
+                data: List<Item>?
             ) {
                 adapter.setFriendsRecentlyWatched(data)
                 isLoadingFriends = false
                 showProgressBar(false)
             }
 
-            override fun onLoaderReset(loader: Loader<List<NowItem>?>) {
+            override fun onLoaderReset(loader: Loader<List<Item>?>) {
                 // clear existing data
                 adapter.setFriendsRecentlyWatched(null)
             }

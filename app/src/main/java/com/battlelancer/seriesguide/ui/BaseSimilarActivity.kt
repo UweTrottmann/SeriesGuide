@@ -1,11 +1,10 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2023-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.battlelancer.seriesguide.R
 
@@ -39,18 +38,6 @@ abstract class BaseSimilarActivity : BaseActivity() {
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_clear_24dp)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setTitle(titleStringRes)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                // Go to the previous activity.
-                finish()
-                true
-            }
-
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
 

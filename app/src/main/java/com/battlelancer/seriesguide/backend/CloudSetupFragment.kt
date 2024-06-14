@@ -215,6 +215,14 @@ class CloudSetupFragment : Fragment() {
                                     // Google Sign-In because Play Services is not available.
                                     errorMessage = getString(R.string.hexagon_signin_google_only)
                                 } else {
+                                    // Note: error code in message can be from Firebase Auth UI
+                                    // https://github.com/firebase/FirebaseUI-Android/blob/master/auth/src/main/java/com/firebase/ui/auth/ErrorCodes.java
+                                    // or from Play Services API
+                                    // https://developers.google.com/android/reference/com/google/android/gms/common/api/CommonStatusCodes
+                                    // despite being wrapped in FirebaseUiException.
+                                    // The message format is a good hint, e.g.
+                                    // "Code: 10, message: 10: " is from CommonStatusCodes
+                                    // See also HexagonAuthError.build()
                                     errorMessage = ex.message
                                     Errors.logAndReportHexagonAuthError(
                                         HexagonAuthError.build(ACTION_SIGN_IN, ex)

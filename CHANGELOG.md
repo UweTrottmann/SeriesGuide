@@ -11,6 +11,37 @@ Release notes
 
 Releases marked with 🧪 were released on [the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
 
+Version 2024.3
+--------------
+*in development*
+
+#### 2024.3.2 🧪
+*2024-06-14*
+
+* 🔧 Shows: move Discover tab first, drop add show action, add search action, rename Shows to Added.
+* 🔧 Movies: move Watchlist next to Discover so order is similar to Shows screen.
+* 🔧 Shows: restore search option on history and calendar tabs.
+* 🔧 Show search: add Add show action, passes search query if there is one.
+* 🔨 Discover: properly display no results or no connection messages.
+* 🔨 Lists: hide set watched action when there is no next episode.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 2024.3.1 🧪
+*2024-06-07*
+
+* 🔧 Shows: move Discover screen to top-level.
+* 🔧 Shows: display all search results, filter by release year.
+* 🔧 Crew: display directors and writers first, then in order of job title.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 2024.3.0 🧪
+*2024-05-24*
+
+* 🌟 Trakt ratings: support removing a rating.
+* 🌟 Trakt comments: edit and delete comments.
+* 🔨 Trakt comments: refresh will actually show the latest comments, including after posting one.
+* 📝 Latest user interface translations from Crowdin.
+
 Version 2024.2
 --------------
 *2024-05-10*

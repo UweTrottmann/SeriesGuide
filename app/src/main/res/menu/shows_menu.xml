@@ -5,7 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="AlwaysShowAction">
 
-    <!-- Search action of activity is left-most. -->
+    <item
+        android:id="@+id/menu_action_shows_search"
+        android:icon="@drawable/ic_search_white_24dp"
+        android:orderInCategory="0"
+        android:title="@string/search"
+        app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/menu_action_shows_filter"
         android:icon="@drawable/ic_filter_white_24dp"
@@ -18,5 +24,20 @@
         android:orderInCategory="2"
         android:title="@string/action_shows_add"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_action_shows_advanced"
+        android:orderInCategory="6"
+        android:title="@string/sync_manually"
+        app:showAsAction="never">
+        <menu>
+            <item
+                android:id="@+id/menu_action_shows_update"
+                android:title="@string/sync_and_update" />
+            <item
+                android:id="@+id/menu_action_shows_redownload"
+                android:title="@string/sync_and_download_all" />
+        </menu>
+    </item>
 
 </menu>

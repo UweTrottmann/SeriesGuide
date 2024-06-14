@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2013-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.comments
 
@@ -8,6 +8,7 @@ import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -19,15 +20,23 @@ import com.battlelancer.seriesguide.util.ImageTools
 import com.uwetrottmann.trakt5.entities.Comment
 
 /**
- * Binds a list of [Comment]s.
+ * Binds a list of [Comment]s. Use [update] to submit new data and user name of current Trakt user
+ * to show edit and delete buttons for that user's comments.
  */
 class TraktCommentsAdapter(
     val context: Context,
     val onItemClickListener: OnItemClickListener
 ) : ListAdapter<Comment, CommentViewHolder>(CommentDiffCallback()) {
 
+    /**
+     * If not null, show edit and delete button for comments with this user name.
+     */
+    private var traktUserName: String? = null
+
     interface OnItemClickListener {
         fun onOpenWebsite(commentId: Int)
+        fun onEdit(commentId: Int, comment: String, isSpoiler: Boolean)
+        fun onDelete(commentId: Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentViewHolder {
@@ -35,7 +44,12 @@ class TraktCommentsAdapter(
     }
 
     override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
-        holder.bindTo(getItem(position), context)
+        holder.bindTo(context, traktUserName, getItem(position))
+    }
+
+    fun update(userName: String?, results: List<Comment>?) {
+        traktUserName = userName
+        submitList(results)
     }
 }
 
@@ -47,7 +61,7 @@ class CommentViewHolder(
     private var comment: Comment? = null
 
     init {
-        binding.root.setOnClickListener {
+        binding.cardComment.setOnClickListener {
             val comment = comment ?: return@setOnClickListener
             if (comment.spoiler == true) {
                 // If comment is a spoiler it is hidden, first click should reveal it.
@@ -58,9 +72,20 @@ class CommentViewHolder(
                 comment.id?.let { onItemClickListener.onOpenWebsite(it) }
             }
         }
+        binding.buttonEditComment.setOnClickListener {
+            val commentId = comment?.id
+            val message = comment?.comment
+            val isSpoiler = comment?.spoiler
+            if (commentId != null && message != null && isSpoiler != null) {
+                onItemClickListener.onEdit(commentId, message, isSpoiler)
+            }
+        }
+        binding.buttonDeleteComment.setOnClickListener {
+            comment?.id?.let { onItemClickListener.onDelete(it) }
+        }
     }
 
-    fun bindTo(comment: Comment?, context: Context) {
+    fun bindTo(context: Context, traktUsername: String?, comment: Comment?) {
         this.comment = comment
         if (comment == null) {
             binding.textViewCommentUsername.text = null
@@ -72,7 +97,13 @@ class CommentViewHolder(
         }
 
         val user = comment.user
-        binding.textViewCommentUsername.text = user?.username
+        val username = user?.username
+        binding.textViewCommentUsername.text = username
+
+        val isCommentOfCurrentUser = traktUsername != null && traktUsername == username
+        binding.buttonEditComment.isGone = !isCommentOfCurrentUser
+        // Do not enforce deletion rules, let only Trakt check, as they may change without notice
+        binding.buttonDeleteComment.isGone = !isCommentOfCurrentUser
 
         ImageTools.loadWithPicasso(context, user?.images?.avatar?.full)
             .transform(avatarTransform)

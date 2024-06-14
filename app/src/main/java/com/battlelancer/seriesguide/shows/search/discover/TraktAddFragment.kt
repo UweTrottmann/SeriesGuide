@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2011-2023 Uwe Trottmann
+// Copyright 2011-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.search.discover
 
@@ -20,7 +20,6 @@ import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentAddshowTraktBinding
-import com.battlelancer.seriesguide.shows.search.SearchActivityImpl
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.widgets.EmptyView
 import com.battlelancer.seriesguide.util.TaskManager
@@ -45,7 +44,8 @@ class TraktAddFragment : AddFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val args = arguments
-        listType = DiscoverShowsLink.fromId(args?.getInt(ARG_TYPE) ?: -1)
+        listType =
+            DiscoverShowsLink.fromId(args?.getInt(ARG_TYPE) ?: DiscoverShowsLink.NO_LINK_ID)!!
     }
 
     override fun onCreateView(
@@ -85,7 +85,7 @@ class TraktAddFragment : AddFragment() {
         // load data
         LoaderManager.getInstance(this)
             .initLoader(
-                SearchActivityImpl.TRAKT_BASE_LOADER_ID + listType.id, null,
+                ShowsTraktActivity.TRAKT_BASE_LOADER_ID + listType.id, null,
                 traktAddCallbacks
             )
 
@@ -196,7 +196,7 @@ class TraktAddFragment : AddFragment() {
             // reload watchlist if a show was removed
             LoaderManager.getInstance(this)
                 .restartLoader(
-                    SearchActivityImpl.TRAKT_BASE_LOADER_ID + listType.id, null,
+                    ShowsTraktActivity.TRAKT_BASE_LOADER_ID + listType.id, null,
                     traktAddCallbacks
                 )
         }
@@ -207,7 +207,7 @@ class TraktAddFragment : AddFragment() {
             setProgressVisible(visible = true, animate = false)
             LoaderManager.getInstance(this@TraktAddFragment)
                 .restartLoader(
-                    SearchActivityImpl.TRAKT_BASE_LOADER_ID + listType.id, null,
+                    ShowsTraktActivity.TRAKT_BASE_LOADER_ID + listType.id, null,
                     traktAddCallbacks
                 )
         }

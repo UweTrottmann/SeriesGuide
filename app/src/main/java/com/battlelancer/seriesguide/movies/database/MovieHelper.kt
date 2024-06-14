@@ -85,6 +85,9 @@ interface MovieHelper {
     @Query("UPDATE movies SET movies_inwatchlist = :inWatchlist WHERE movies_tmdbid=:tmdbId")
     fun updateInWatchlist(tmdbId: Int, inWatchlist: Boolean): Int
 
+    @Query("UPDATE movies SET movies_rating_user = :userRating WHERE movies_tmdbid=:tmdbId")
+    fun updateUserRating(tmdbId: Int, userRating: Int): Int
+
     @Query("DELETE FROM movies WHERE movies_tmdbid=:tmdbId")
     fun deleteMovie(tmdbId: Int): Int
 

@@ -160,11 +160,11 @@
                     app:layout_constraintTop_toBottomOf="@+id/buttonSettings" />
 
                 <Button
-                    android:id="@+id/buttonDiscord"
+                    android:id="@+id/buttonCommunity"
                     style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
                     android:layout_width="0dp"
                     android:layout_height="48dp"
-                    android:text="@string/pref_discord"
+                    android:text="@string/pref_community"
                     app:icon="@drawable/ic_forum_black_24dp"
                     app:iconGravity="start"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -181,14 +181,14 @@
                     app:iconGravity="start"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/buttonDiscord" />
+                    app:layout_constraintTop_toBottomOf="@+id/buttonCommunity" />
 
                 <Button
-                    android:id="@+id/buttonCommunity"
+                    android:id="@+id/buttonDiscord"
                     style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
                     android:layout_width="0dp"
                     android:layout_height="48dp"
-                    android:text="@string/pref_community"
+                    android:text="@string/pref_discord"
                     app:icon="@drawable/ic_forum_black_24dp"
                     app:iconGravity="start"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -205,7 +205,7 @@
                     app:iconGravity="start"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/buttonCommunity" />
+                    app:layout_constraintTop_toBottomOf="@+id/buttonDiscord" />
 
                 <Button
                     android:id="@+id/buttonDebugView"

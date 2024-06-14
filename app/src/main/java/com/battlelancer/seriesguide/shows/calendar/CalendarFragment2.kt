@@ -3,6 +3,7 @@
 
 package com.battlelancer.seriesguide.shows.calendar
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.format.DateUtils
@@ -34,6 +35,7 @@ import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
+import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
 import com.battlelancer.seriesguide.util.Utils
 import kotlinx.coroutines.delay
@@ -158,30 +160,41 @@ abstract class CalendarFragment2 : Fragment() {
 
         override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
             return when (menuItem.itemId) {
+                R.id.menu_action_calendar_search -> {
+                    startActivity(Intent(requireContext(), SearchActivity::class.java))
+                    true
+                }
+
                 R.id.menu_action_calendar_onlyfavorites -> {
                     toggleFilterSetting(menuItem, CalendarSettings.KEY_ONLY_FAVORITE_SHOWS)
                     true
                 }
+
                 R.id.menu_action_calendar_onlypremieres -> {
                     toggleFilterSetting(menuItem, CalendarSettings.KEY_ONLY_PREMIERES)
                     true
                 }
+
                 R.id.menu_action_calendar_onlycollected -> {
                     toggleFilterSetting(menuItem, CalendarSettings.KEY_ONLY_COLLECTED)
                     true
                 }
+
                 R.id.menu_action_calendar_nospecials -> {
                     toggleFilterSetting(menuItem, DisplaySettings.KEY_HIDE_SPECIALS)
                     true
                 }
+
                 R.id.menu_action_calendar_nowatched -> {
                     toggleFilterSetting(menuItem, CalendarSettings.KEY_HIDE_WATCHED_EPISODES)
                     true
                 }
+
                 R.id.menu_action_calendar_infinite -> {
                     toggleFilterSetting(menuItem, CalendarSettings.KEY_INFINITE_SCROLLING_2)
                     true
                 }
+
                 else -> false
             }
         }
@@ -250,18 +263,22 @@ abstract class CalendarFragment2 : Fragment() {
                         )
                         return@setOnMenuItemClickListener true
                     }
+
                     CONTEXT_FLAG_WATCHED_ID -> {
                         updateEpisodeWatchedState(episode.id, true)
                         return@setOnMenuItemClickListener true
                     }
+
                     CONTEXT_FLAG_UNWATCHED_ID -> {
                         updateEpisodeWatchedState(episode.id, false)
                         return@setOnMenuItemClickListener true
                     }
+
                     CONTEXT_COLLECTION_ADD_ID -> {
                         updateEpisodeCollectionState(episode.id, true)
                         return@setOnMenuItemClickListener true
                     }
+
                     CONTEXT_COLLECTION_REMOVE_ID -> {
                         updateEpisodeCollectionState(episode.id, false)
                         return@setOnMenuItemClickListener true
