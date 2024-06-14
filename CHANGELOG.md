@@ -15,12 +15,16 @@ Version 2024.3
 --------------
 *in development*
 
+#### 2024.3.2 🧪
+*2024-06-14*
+
 * 🔧 Shows: move Discover tab first, drop add show action, add search action, rename Shows to Added.
 * 🔧 Movies: move Watchlist next to Discover so order is similar to Shows screen.
 * 🔧 Shows: restore search option on history and calendar tabs.
 * 🔧 Show search: add Add show action, passes search query if there is one.
 * 🔨 Discover: properly display no results or no connection messages.
 * 🔨 Lists: hide set watched action when there is no next episode.
+* 📝 Latest user interface translations from Crowdin.
 
 #### 2024.3.1 🧪
 *2024-06-07*
