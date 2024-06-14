@@ -13,6 +13,12 @@ $primary-light: #D1C4E9;
 
 $link-color:                        $primary;
 
+// Darker navbar link text
+$black:    #000 !default;
+$navbar-light-color:                rgba($black, .6) !default;
+$navbar-light-hover-color:          rgba($black, .8) !default;
+$navbar-light-active-color:         $black !default;
+
 // text
 // Changed to use system fonts.
 $font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
