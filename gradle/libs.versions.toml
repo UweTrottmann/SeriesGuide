@@ -67,10 +67,11 @@ debugdrawer-timber = { module = "com.github.lenguyenthanh.debugdrawer:debugdrawe
 debugdrawer-view = { module = "com.github.lenguyenthanh.debugdrawer:debugdrawer-view", version.ref = "debugdrawer" }
 findbugs-jsr305 = "com.google.code.findbugs:jsr305:3.0.2"
 # https://firebase.google.com/support/release-notes/android
-# 33.0.0 uses firebase-auth 23.0.0 which requires min SDK 23
-firebase = "com.google.firebase:firebase-bom:32.8.1"
-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
-firebase-ui-auth = "com.firebaseui:firebase-ui-auth:8.0.2" # https://github.com/firebase/FirebaseUI-Android/releases
+firebase-crashlytics = "com.google.firebase:firebase-crashlytics:19.0.1"
+# 23.0.0 requires min SDK 23
+firebase-auth = "com.google.firebase:firebase-auth:22.3.1"
+# https://github.com/firebase/FirebaseUI-Android/releases
+firebase-ui-auth = "com.firebaseui:firebase-ui-auth:8.0.2"
 flatbuffers = "com.google.flatbuffers:flatbuffers-java:1.12.0"
 google-api-client = { module = "com.google.api-client:google-api-client", version.ref = "google-api-client" }
 google-api-client-android = { module = "com.google.api-client:google-api-client-android", version.ref = "google-api-client" }
@@ -94,7 +95,8 @@ okhttp = "com.squareup.okhttp3:okhttp:4.12.0" # https://github.com/square/okhttp
 photoview = "com.github.chrisbanes:PhotoView:2.3.0"
 picasso = "com.squareup.picasso:picasso:2.8" # https://github.com/square/picasso/releases
 # https://developers.google.com/android/guides/releases
-play-services-auth = "com.google.android.gms:play-services-auth:21.2.0"
+# 21.0.0 removes Credentials API used by firebase-ui-auth
+play-services-auth = "com.google.android.gms:play-services-auth:20.7.0"
 retrofit2-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit2" }
 retrofit2 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit2" }
 # https://github.com/robolectric/robolectric/releases/

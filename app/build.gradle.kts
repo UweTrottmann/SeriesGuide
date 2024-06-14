@@ -251,13 +251,13 @@ dependencies {
     implementation(libs.debugdrawer.actions)
     implementation(libs.debugdrawer.timber)
 
-    // Import the Firebase BoM
-    implementation(platform(libs.firebase))
+    // Note: can not use Firebase BOM as firebase-ui-auth has not updated in a while
     // Crashlytics
     implementation(libs.firebase.crashlytics)
     // Firebase Sign-In
     implementation(libs.firebase.ui.auth)
-    // Use later play-services-auth than firebase-ui-auth to get latest fixes.
+    // Use compatible later versions of firebase-ui-auth dependencies to get latest fixes.
+    implementation(libs.firebase.auth)
     implementation(libs.play.services.auth)
 
     // Amazon flavor specific
