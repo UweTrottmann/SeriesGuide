@@ -78,7 +78,7 @@ class MoviesDiscoverLoader(context: Context) :
             // Filter null items (a few users affected).
             Result(
                 response.body()?.results?.filterNotNull(),
-                context.getString(R.string.no_results)
+                context.getString(R.string.empty_no_results)
             )
         } else {
             Errors.logAndReport(action, response)

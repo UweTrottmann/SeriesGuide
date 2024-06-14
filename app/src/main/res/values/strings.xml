@@ -48,6 +48,7 @@
     <!-- Search -->
     <string name="clear_search_history">Clear search history</string>
     <string name="search_hint">Search episodes</string>
+    <string name="empty_no_results">No results</string>
 
     <!-- Status messages -->
     <string name="updated">Updated to latest version</string>
@@ -238,7 +239,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Type a show name</string>
     <string name="add_empty">There are no shows here</string>
-    <string name="no_results">No results</string>
     <string name="empty_show_search">Not found in your show list</string>
     <string name="action_try_again">Try again</string>
     <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
@@ -253,7 +253,6 @@
     <string name="watchlist">Watchlist</string>
 
     <!-- Similar shows -->
-    <string name="empty_no_results">No results</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Similar shows</string>
 

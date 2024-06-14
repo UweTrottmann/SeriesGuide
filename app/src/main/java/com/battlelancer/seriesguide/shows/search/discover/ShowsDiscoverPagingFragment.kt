@@ -219,7 +219,7 @@ class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
                         // Only no results if not searching, or if searching with a query
                         && (!isSearchOnly || model.queryString.value.isNotEmpty())) {
                         binding.emptyViewShowsPopular.apply {
-                            setMessage(R.string.no_results)
+                            setMessage(R.string.empty_no_results)
                             // No point in refreshing if there are no results
                             setButtonGone(true)
                             isVisible = true

@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/larger_padding"
                 app:emptyViewButtonText="@string/action_try_again"
-                app:emptyViewMessage="@string/no_results" />
+                app:emptyViewMessage="@string/empty_no_results" />
 
         </ScrollView>
 

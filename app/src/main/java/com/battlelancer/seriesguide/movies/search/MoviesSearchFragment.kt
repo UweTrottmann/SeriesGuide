@@ -102,7 +102,7 @@ class MoviesSearchFragment : Fragment() {
                         // Only no results if displaying link or has a search query
                         && (activityModel.link != null || activityModel.queryString.value.isNotEmpty())) {
                         binding.emptyViewMoviesSearch.apply {
-                            setMessage(R.string.no_results)
+                            setMessage(R.string.empty_no_results)
                             // No point in refreshing if there are no results
                             setButtonGone(true)
                             isVisible = true
