@@ -220,6 +220,8 @@ dependencies {
 
     // Use latest OkHttp.
     implementation(libs.okhttp)
+    // TLS APIs to enable Let's Encrypt support on Android 7.0 and older
+    implementation(libs.okhttp.tls)
     // Use latest retrofit.
     implementation(libs.retrofit2)
     implementation(libs.retrofit2.gson)

@@ -22,6 +22,8 @@ Version 2024.2
 #### 2024.2.7
 *2024-07-05*
 
+* 🔨 Images: on Android 7.0 or older, images load correctly again.
+
 #### 2024.2.6
 *2024-05-17*
 
