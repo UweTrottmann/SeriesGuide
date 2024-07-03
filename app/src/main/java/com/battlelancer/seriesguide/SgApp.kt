@@ -16,6 +16,7 @@ import androidx.annotation.RequiresApi
 import com.battlelancer.seriesguide.modules.AppModule
 import com.battlelancer.seriesguide.modules.DaggerServicesComponent
 import com.battlelancer.seriesguide.modules.HttpClientModule
+import com.battlelancer.seriesguide.modules.HttpClientModule.Companion.trustLetsEncryptAndroidNOrLower
 import com.battlelancer.seriesguide.modules.ServicesComponent
 import com.battlelancer.seriesguide.modules.TmdbModule
 import com.battlelancer.seriesguide.modules.TraktModule
@@ -38,6 +39,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.EventBusException
 import timber.log.Timber
@@ -231,7 +233,10 @@ class SgApp : Application() {
     }
 
     private fun initializePicasso() {
-        val downloader = OkHttp3Downloader(this)
+        val builder = OkHttpClient.Builder()
+            .cache(HttpClientModule.getImageDiskCache(this))
+            .trustLetsEncryptAndroidNOrLower()
+        val downloader = OkHttp3Downloader(builder.build())
         val picasso = Picasso.Builder(this)
             .downloader(downloader)
             .addRequestHandler(SgPicassoRequestHandler(downloader, this))
