@@ -228,6 +228,7 @@ class PeopleListHelper {
             .resizeDimen(R.dimen.person_headshot_size, R.dimen.person_headshot_size)
             .centerCrop()
             .transform(personImageTransform)
+            .placeholder(R.drawable.ic_account_circle_black_24dp)
             .error(R.drawable.ic_account_circle_black_24dp)
             .into(personView.findViewById<View>(R.id.imageViewPerson) as ImageView)
 

@@ -50,8 +50,12 @@ object TmdbTools {
      * Build URL to a profile image using the given size spec and current TMDB image url
      * (see [com.battlelancer.seriesguide.settings.TmdbSettings.getImageBaseUrl]).
      */
-    fun buildProfileImageUrl(context: Context, path: String?, size: ProfileImageSize): String {
-        return getImageBaseUrl(context) + size + path
+    fun buildProfileImageUrl(context: Context, path: String?, size: ProfileImageSize): String? {
+        return if (path == null) {
+            null
+        } else {
+            getImageBaseUrl(context) + size + path
+        }
     }
 
     /**
