@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2011-2022 Uwe Trottmann
+// Copyright 2011-2024 Uwe Trottmann
 // Copyright 2013 Andrew Neal
 
 package com.battlelancer.seriesguide
@@ -43,6 +43,7 @@ import org.greenrobot.eventbus.EventBusException
 import timber.log.Timber
 import java.util.concurrent.Executors
 
+
 /**
  * Initializes logging and services.
  */
@@ -72,34 +73,42 @@ class SgApp : Application() {
          * Time calculation has changed, all episodes need re-calculation.
          */
         const val RELEASE_VERSION_12_BETA5 = 218
+
         /**
          * Requires legacy cache clearing due to switch to Picasso for posters.
          */
         const val RELEASE_VERSION_16_BETA1 = 15010
+
         /**
          * Requires trakt watched movie (re-)download.
          */
         const val RELEASE_VERSION_23_BETA4 = 15113
+
         /**
          * Requires full show update due to switch to locally stored trakt ids.
          */
         const val RELEASE_VERSION_26_BETA3 = 15142
+
         /**
          * Populate shows last watched field from activity table.
          */
         const val RELEASE_VERSION_34_BETA4 = 15223
+
         /**
          * Switched to Google Sign-In: notify existing Cloud users to sign in again.
          */
         const val RELEASE_VERSION_36_BETA2 = 15241
+
         /**
          * Extensions API v2, old extensions no longer work.
          */
         const val RELEASE_VERSION_40_BETA4 = 1502803
+
         /**
          * ListWidgetProvider alarm intent is now explicit.
          */
         const val RELEASE_VERSION_40_BETA6 = 1502805
+
         /**
          * For trakt and hexagon sync movies were not added in all cases, reset sync times.
          */
@@ -135,11 +144,11 @@ class SgApp : Application() {
         fun getServicesComponent(context: Context): ServicesComponent {
             if (servicesComponent == null) {
                 servicesComponent = DaggerServicesComponent.builder()
-                        .appModule(AppModule(context))
-                        .httpClientModule(HttpClientModule())
-                        .tmdbModule(TmdbModule())
-                        .traktModule(TraktModule())
-                        .build()
+                    .appModule(AppModule(context))
+                    .httpClientModule(HttpClientModule())
+                    .tmdbModule(TmdbModule())
+                    .traktModule(TraktModule())
+                    .build()
             }
             return servicesComponent!!
         }
@@ -212,9 +221,9 @@ class SgApp : Application() {
     private fun initializeEventBus() {
         try {
             EventBus.builder()
-                    .logNoSubscriberMessages(BuildConfig.DEBUG)
-                    .addIndex(SgEventBusIndex())
-                    .installDefaultEventBus()
+                .logNoSubscriberMessages(BuildConfig.DEBUG)
+                .addIndex(SgEventBusIndex())
+                .installDefaultEventBus()
         } catch (ignored: EventBusException) {
             // instance was already set
         }
@@ -224,15 +233,14 @@ class SgApp : Application() {
     private fun initializePicasso() {
         val downloader = OkHttp3Downloader(this)
         val picasso = Picasso.Builder(this)
-                .downloader(downloader)
-                .addRequestHandler(SgPicassoRequestHandler(downloader, this))
-                .build()
+            .downloader(downloader)
+            .addRequestHandler(SgPicassoRequestHandler(downloader, this))
+            .build()
         try {
             Picasso.setSingletonInstance(picasso)
         } catch (ignored: IllegalStateException) {
             // instance was already set
         }
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -241,18 +249,22 @@ class SgApp : Application() {
         val channels = ArrayList<NotificationChannel>()
         val colorAccent = getColor(R.color.sg_color_primary)
 
-        val channelEpisodes = NotificationChannel(NOTIFICATION_CHANNEL_EPISODES,
-                getString(R.string.episodes),
-                NotificationManager.IMPORTANCE_DEFAULT)
+        val channelEpisodes = NotificationChannel(
+            NOTIFICATION_CHANNEL_EPISODES,
+            getString(R.string.episodes),
+            NotificationManager.IMPORTANCE_DEFAULT
+        )
         channelEpisodes.description = getString(R.string.pref_notificationssummary)
         channelEpisodes.enableLights(true)
         channelEpisodes.lightColor = colorAccent
         channelEpisodes.vibrationPattern = NotificationService.VIBRATION_PATTERN
         channels.add(channelEpisodes)
 
-        val channelJobs = NotificationChannel(NOTIFICATION_CHANNEL_ERRORS,
-                getString(R.string.pref_notification_channel_errors),
-                NotificationManager.IMPORTANCE_HIGH)
+        val channelJobs = NotificationChannel(
+            NOTIFICATION_CHANNEL_ERRORS,
+            getString(R.string.pref_notification_channel_errors),
+            NotificationManager.IMPORTANCE_HIGH
+        )
         channelJobs.enableLights(true)
         channelEpisodes.lightColor = colorAccent
         channels.add(channelJobs)
