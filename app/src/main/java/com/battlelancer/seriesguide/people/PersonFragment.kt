@@ -264,7 +264,7 @@ class PersonFragment : Fragment() {
                 ImageTools.loadWithPicasso(
                     requireContext(),
                     TmdbTools.buildProfileImageUrl(
-                        activity, person.profile_path, TmdbTools.ProfileImageSize.H632
+                        requireContext(), person.profile_path, TmdbTools.ProfileImageSize.H632
                     )
                 ).placeholder(
                     ColorDrawable(

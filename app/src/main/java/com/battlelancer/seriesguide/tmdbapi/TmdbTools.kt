@@ -1,78 +1,74 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2014-2024 Uwe Trottmann
 
-package com.battlelancer.seriesguide.tmdbapi;
+package com.battlelancer.seriesguide.tmdbapi
 
-import android.content.Context;
-import com.battlelancer.seriesguide.settings.TmdbSettings;
-import com.uwetrottmann.tmdb2.entities.Genre;
-import java.util.List;
+import android.content.Context
+import com.battlelancer.seriesguide.settings.TmdbSettings.getImageBaseUrl
+import com.uwetrottmann.tmdb2.entities.Genre
 
-public class TmdbTools {
+object TmdbTools {
 
-    public enum ProfileImageSize {
-
+    enum class ProfileImageSize(
+        private val value: String
+    ) {
         W45("w45"),
         W185("w185"),
         H632("h632"),
         ORIGINAL("original");
 
-        private final String value;
-
-        ProfileImageSize(String value) {
-            this.value = value;
-        }
-
-        @Override
-        public String toString() {
-            return value;
+        override fun toString(): String {
+            return value
         }
     }
 
-    private static final String BASE_URL = "https://www.themoviedb.org/";
-    private static final String PATH_TV = "tv/";
-    private static final String PATH_MOVIES = "movie/";
-    private static final String PATH_PERSON = "person/";
+    private const val BASE_URL = "https://www.themoviedb.org/"
+    private const val PATH_TV = "tv/"
+    private const val PATH_MOVIES = "movie/"
+    private const val PATH_PERSON = "person/"
 
-    public static String buildEpisodeUrl(int showTmdbId, int season, int episode) {
-        return BASE_URL + PATH_TV + showTmdbId + "/season/" + season + "/episode/" + episode;
+    @JvmStatic
+    fun buildEpisodeUrl(showTmdbId: Int, season: Int, episode: Int): String {
+        return "$BASE_URL$PATH_TV$showTmdbId/season/$season/episode/$episode"
     }
 
-    public static String buildShowUrl(int showTmdbId) {
-        return BASE_URL + PATH_TV + showTmdbId;
+    @JvmStatic
+    fun buildShowUrl(showTmdbId: Int): String {
+        return BASE_URL + PATH_TV + showTmdbId
     }
 
-    public static String buildMovieUrl(int movieTmdbId) {
-        return BASE_URL + PATH_MOVIES + movieTmdbId;
+    @JvmStatic
+    fun buildMovieUrl(movieTmdbId: Int): String {
+        return BASE_URL + PATH_MOVIES + movieTmdbId
     }
 
-    public static String buildPersonUrl(int personTmdbId) {
-        return BASE_URL + PATH_PERSON + personTmdbId;
+    fun buildPersonUrl(personTmdbId: Int): String {
+        return BASE_URL + PATH_PERSON + personTmdbId
     }
 
     /**
-     * Build url to a profile image using the given size spec and current TMDb image url (see {@link
-     * com.battlelancer.seriesguide.settings.TmdbSettings#getImageBaseUrl(android.content.Context)}.
+     * Build URL to a profile image using the given size spec and current TMDB image url
+     * (see [com.battlelancer.seriesguide.settings.TmdbSettings.getImageBaseUrl]).
      */
-    public static String buildProfileImageUrl(Context context, String path, ProfileImageSize size) {
-        return TmdbSettings.getImageBaseUrl(context) + size + path;
+    fun buildProfileImageUrl(context: Context, path: String?, size: ProfileImageSize): String {
+        return getImageBaseUrl(context) + size + path
     }
 
     /**
      * Builds a string listing all given genres by name, separated by comma.
      */
-    public static String buildGenresString(List<Genre> genres) {
-        if (genres == null || genres.isEmpty()) {
-            return null;
+    fun buildGenresString(genres: List<Genre>?): String? {
+        if (genres.isNullOrEmpty()) {
+            return null
         }
-        StringBuilder genresString = new StringBuilder();
-        for (int i = 0; i < genres.size(); i++) {
-            Genre genre = genres.get(i);
-            genresString.append(genre.name);
-            if (i + 1 < genres.size()) {
-                genresString.append(", ");
+        val genresString = StringBuilder()
+        for (i in genres.indices) {
+            val genre = genres[i]
+            genresString.append(genre.name)
+            if (i + 1 < genres.size) {
+                genresString.append(", ")
             }
         }
-        return genresString.toString();
+        return genresString.toString()
     }
 }
