@@ -107,6 +107,8 @@ class CommentViewHolder(
 
         ImageTools.loadWithPicasso(context, user?.images?.avatar?.full)
             .transform(avatarTransform)
+            .placeholder(R.drawable.ic_account_circle_black_24dp)
+            .error(R.drawable.ic_account_circle_black_24dp)
             .into(binding.imageViewCommentAvatar)
 
         if (comment.spoiler == true) {
