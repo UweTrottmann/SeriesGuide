@@ -959,12 +959,6 @@ public class SeriesGuideContract {
 
     }
 
-    interface EpisodeSearchColumns {
-
-        String _DOCID = "docid";
-
-    }
-
     interface ListsColumns {
 
         /**

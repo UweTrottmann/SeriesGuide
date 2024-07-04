@@ -12,15 +12,9 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.provider.BaseColumns;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
-import androidx.lifecycle.LiveData;
-import androidx.sqlite.db.SimpleSQLiteQuery;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.battlelancer.seriesguide.lists.database.SgListItemWithDetails;
-import com.battlelancer.seriesguide.shows.database.SgEpisode2SearchResult;
-import com.battlelancer.seriesguide.shows.database.SgShow2;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearchColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodesColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.JobsColumns;
@@ -34,8 +28,8 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgSeason2Column
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ShowsColumns;
+import com.battlelancer.seriesguide.shows.database.SgShow2;
 import com.battlelancer.seriesguide.util.DBUtils;
-import java.util.List;
 import timber.log.Timber;
 
 public class SeriesGuideDatabase {
@@ -1102,100 +1096,6 @@ public class SeriesGuideDatabase {
             DBUtils.postDatabaseError(e);
             return false;
         }
-    }
-
-    // This should match QUERY_SEARCH_EPISODES//
-    public interface EpisodeSearchQuery {
-        String[] PROJECTION = new String[]{
-                Episodes._ID,
-                Episodes.TITLE,
-                Episodes.NUMBER,
-                Episodes.SEASON,
-                Episodes.WATCHED,
-                Episodes.OVERVIEW,
-                Shows.TITLE,
-                Shows.POSTER_SMALL
-        };
-
-        int _ID = 0;
-        int TITLE = 1;
-        int NUMBER = 2;
-        int SEASON = 3;
-        int WATCHED = 4;
-        int OVERVIEW = 5;
-        int SHOW_TITLE = 6;
-        int SHOW_POSTER_SMALL = 7;
-    }
-
-    private final static String EPISODE_COLUMNS = SgEpisode2Columns._ID + ","
-            + SgEpisode2Columns.TITLE + ","
-            + SgEpisode2Columns.NUMBER + ","
-            + SgEpisode2Columns.SEASON + ","
-            + SgEpisode2Columns.WATCHED;
-
-    private final static String SELECT_SHOWS = "SELECT "
-            + SgShow2Columns._ID + " as sid,"
-            + SgShow2Columns.TITLE + ","
-            + SgShow2Columns.POSTER_SMALL
-            + " FROM " + Tables.SG_SHOW;
-
-    private final static String SELECT_MATCH = "SELECT "
-            + EpisodeSearchColumns._DOCID + ","
-            + "snippet(" + Tables.EPISODES_SEARCH + ",'<b>','</b>','...') AS " + SgEpisode2Columns.OVERVIEW
-            + " FROM " + Tables.EPISODES_SEARCH
-            + " WHERE " + Tables.EPISODES_SEARCH + " MATCH ?";
-
-    private final static String SELECT_EPISODES = "SELECT "
-            + EPISODE_COLUMNS + "," + SgShow2Columns.REF_SHOW_ID
-            + " FROM " + Tables.SG_EPISODE;
-
-    private final static String JOIN_MATCHES_EPISODES = "SELECT "
-            + EPISODE_COLUMNS + "," + SgEpisode2Columns.OVERVIEW + "," + SgShow2Columns.REF_SHOW_ID
-            + " FROM (" + SELECT_MATCH + ")"
-            + " JOIN (" + SELECT_EPISODES + ")"
-            + " ON " + EpisodeSearchColumns._DOCID + "=" + SgEpisode2Columns._ID;
-
-    private final static String QUERY_SEARCH_EPISODES = "SELECT "
-            + EPISODE_COLUMNS + "," + SgEpisode2Columns.OVERVIEW + ","
-            + SgShow2Columns.TITLE + "," + SgShow2Columns.POSTER_SMALL
-            + " FROM "
-            + "("
-            + "(" + SELECT_SHOWS + ") JOIN (" + JOIN_MATCHES_EPISODES + ") ON sid="
-            + SgShow2Columns.REF_SHOW_ID
-            + ")";
-
-    private final static String ORDER_SEARCH_EPISODES = " ORDER BY "
-            + SgShow2Columns.SORT_TITLE + ","
-            + SgEpisode2Columns.SEASON + " ASC,"
-            + SgEpisode2Columns.NUMBER + " ASC";
-
-    @NonNull
-    public static LiveData<List<SgEpisode2SearchResult>> searchForEpisodes(Context context,
-            @Nullable String searchTermOrNull, @Nullable String showTitleOrNull) {
-        StringBuilder query = new StringBuilder(QUERY_SEARCH_EPISODES);
-        if (showTitleOrNull != null) {
-            query.append(" WHERE (").append(SgShow2Columns.TITLE).append(" = ?)");
-        }
-        query.append(ORDER_SEARCH_EPISODES);
-        // Limit result set to avoid memory issues.
-        query.append(" LIMIT 500");
-
-        String searchTerm = searchTermOrNull == null || searchTermOrNull.isEmpty()
-                ? "" : searchTermOrNull;
-        // ensure to strip double quotation marks (would break the MATCH query)
-        searchTerm = searchTerm.replace("\"", "");
-        // search for anything starting with the given search term
-        searchTerm = "\"" + searchTerm + "*\"";
-
-        Object[] selectionArgs;
-        if (showTitleOrNull != null) {
-            selectionArgs = new Object[] {searchTerm, showTitleOrNull};
-        } else {
-            selectionArgs = new Object[] {searchTerm};
-        }
-
-        return SgRoomDatabase.getInstance(context).sgEpisode2Helper()
-                .getEpisodeSearchResults(new SimpleSQLiteQuery(query.toString(), selectionArgs));
     }
 
     //    /**

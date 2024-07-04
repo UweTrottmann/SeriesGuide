@@ -46,6 +46,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Colum
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgSeason2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.shows.episodes.EpisodesSettings
@@ -599,6 +600,65 @@ interface SgEpisode2Helper {
 
     @Query("DELETE FROM sg_episode WHERE series_id = :showId")
     suspend fun deleteEpisodesOfShow(showId: Long): Int
+
+    /**
+     * Returns at most 500 episodes matching the [searchTermOrNull].
+     *
+     * If [showTitleOrNull] is given, filters the results by show title.
+     */
+    fun searchForEpisodes(
+        context: Context,
+        searchTermOrNull: String?,
+        showTitleOrNull: String?
+    ): LiveData<List<SgEpisode2SearchResult>> {
+        val query = StringBuilder(QUERY_SEARCH_EPISODES)
+        if (showTitleOrNull != null) {
+            query.append(" WHERE (").append(SgShow2Columns.TITLE).append(" = ?)")
+        }
+        query.append(" ORDER BY ${SgShow2Columns.SORT_TITLE},$SEASON ASC,$NUMBER ASC")
+        // Limit result set to avoid memory issues.
+        query.append(" LIMIT 500")
+
+        var searchTerm = if (searchTermOrNull.isNullOrEmpty()) "" else searchTermOrNull
+        // ensure to strip double quotation marks (would break the MATCH query)
+        searchTerm = searchTerm.replace("\"", "")
+        // search for anything starting with the given search term
+        searchTerm = "\"$searchTerm*\""
+
+        val selectionArgs: Array<Any> = if (showTitleOrNull != null) {
+            arrayOf(searchTerm, showTitleOrNull)
+        } else {
+            arrayOf(searchTerm)
+        }
+
+        return getEpisodeSearchResults(SimpleSQLiteQuery(query.toString(), selectionArgs))
+    }
+
+    companion object {
+        private const val DOCID = "DOCID"
+
+        private const val EPISODE_COLUMNS: String =
+            "$_ID,$TITLE,$NUMBER,$SEASON,$WATCHED"
+
+        private const val SELECT_SHOWS: String =
+            "SELECT ${SgShow2Columns._ID} as sid,${SgShow2Columns.TITLE},${SgShow2Columns.POSTER_SMALL}" +
+                    " FROM ${Tables.SG_SHOW}"
+
+        private const val SELECT_MATCH: String =
+            "SELECT $DOCID,snippet(${Tables.EPISODES_SEARCH},'<b>','</b>','...') AS $OVERVIEW" +
+                    " FROM ${Tables.EPISODES_SEARCH} WHERE ${Tables.EPISODES_SEARCH} MATCH ?"
+
+        private const val SELECT_EPISODES: String =
+            "SELECT $EPISODE_COLUMNS,${SgShow2Columns.REF_SHOW_ID} FROM ${Tables.SG_EPISODE}"
+
+        private const val JOIN_MATCHES_EPISODES: String =
+            "SELECT $EPISODE_COLUMNS,$OVERVIEW,${SgShow2Columns.REF_SHOW_ID}" +
+                    " FROM ($SELECT_MATCH) JOIN ($SELECT_EPISODES) ON $DOCID=$_ID"
+
+        const val QUERY_SEARCH_EPISODES: String =
+            "SELECT $EPISODE_COLUMNS,$OVERVIEW,${SgShow2Columns.TITLE},${SgShow2Columns.POSTER_SMALL}" +
+                    " FROM (($SELECT_SHOWS) JOIN ($JOIN_MATCHES_EPISODES) ON sid=${SgShow2Columns.REF_SHOW_ID})"
+    }
 }
 
 data class SgEpisode2WithShow(
