@@ -162,10 +162,12 @@ interface SgEpisode2Helper {
     )
     fun getHighestEpisodeOfSeason(seasonId: Long): Long
 
-    @Query("""SELECT _id FROM sg_episode WHERE series_id = :showId 
+    @Query(
+        """SELECT _id FROM sg_episode WHERE series_id = :showId 
         AND episode_season_number > 0 AND episode_watched != ${EpisodeFlags.UNWATCHED} 
         AND (episode_season_number < :seasonNumber OR (episode_season_number = :seasonNumber AND episode_number < :episodeNumber))
-        ORDER BY episode_season_number DESC, episode_number DESC, episode_firstairedms DESC""")
+        ORDER BY episode_season_number DESC, episode_number DESC, episode_firstairedms DESC"""
+    )
     fun getPreviousWatchedEpisodeOfShow(showId: Long, seasonNumber: Int, episodeNumber: Int): Long
 
     /**
@@ -290,10 +292,16 @@ interface SgEpisode2Helper {
     suspend fun countEpisodesOfSeason(seasonId: Long): Int
 
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE season_id = :seasonId AND episode_watched = ${EpisodeFlags.UNWATCHED} AND episode_firstairedms != ${SgEpisode2.EPISODE_UNKNOWN_RELEASE} AND episode_firstairedms <= :currentTimeToolsTime")
-    suspend fun countNotWatchedReleasedEpisodesOfSeason(seasonId: Long, currentTimeToolsTime: Long): Int
+    suspend fun countNotWatchedReleasedEpisodesOfSeason(
+        seasonId: Long,
+        currentTimeToolsTime: Long
+    ): Int
 
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE season_id = :seasonId AND episode_watched = ${EpisodeFlags.UNWATCHED} AND episode_firstairedms > :currentTimeToolsTime")
-    suspend fun countNotWatchedToBeReleasedEpisodesOfSeason(seasonId: Long, currentTimeToolsTime: Long): Int
+    suspend fun countNotWatchedToBeReleasedEpisodesOfSeason(
+        seasonId: Long,
+        currentTimeToolsTime: Long
+    ): Int
 
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE season_id = :seasonId AND episode_watched = ${EpisodeFlags.UNWATCHED} AND episode_firstairedms = ${SgEpisode2.EPISODE_UNKNOWN_RELEASE}")
     suspend fun countNotWatchedNoReleaseEpisodesOfSeason(seasonId: Long): Int
@@ -337,15 +345,21 @@ interface SgEpisode2Helper {
     /**
      * See [setWatchedUpToAndAddPlay] for which episodes are returned.
      */
-    @Query("""SELECT _id, episode_tmdb_id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE series_id = :showId 
+    @Query(
+        """SELECT _id, episode_tmdb_id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE series_id = :showId 
             AND (
             episode_firstairedms < :episodeFirstAired
             OR (episode_firstairedms = :episodeFirstAired AND episode_number <= :episodeNumber)
             )
             AND episode_firstairedms != -1
             AND episode_watched != ${EpisodeFlags.WATCHED}
-            ORDER BY episode_season_number ASC, episode_number ASC""")
-    fun getEpisodeNumbersForWatchedUpTo(showId: Long, episodeFirstAired: Long, episodeNumber: Int): List<SgEpisode2Numbers>
+            ORDER BY episode_season_number ASC, episode_number ASC"""
+    )
+    fun getEpisodeNumbersForWatchedUpTo(
+        showId: Long,
+        episodeFirstAired: Long,
+        episodeNumber: Int
+    ): List<SgEpisode2Numbers>
 
     /**
      * Note: keep in sync with [setSeasonNotWatchedAndRemovePlays].
@@ -466,7 +480,10 @@ interface SgEpisode2Helper {
         AND episode_season_number != 0
         ORDER BY episode_season_number ASC, episode_number ASC"""
     )
-    fun getNotWatchedOrSkippedEpisodeNumbersOfShow(showId: Long, currentTimePlusOneHour: Long): List<SgEpisode2Numbers>
+    fun getNotWatchedOrSkippedEpisodeNumbersOfShow(
+        showId: Long,
+        currentTimePlusOneHour: Long
+    ): List<SgEpisode2Numbers>
 
     /**
      * Sets not watched or skipped episodes, released until within the hour, excluding specials,
@@ -517,10 +534,21 @@ interface SgEpisode2Helper {
     fun updateCollectedOfShowExcludeSpecials(showId: Long, isCollected: Boolean): Int
 
     @Query("UPDATE sg_episode SET episode_watched = :watched, episode_plays = :plays WHERE series_id = :showId AND episode_season_number = :seasonNumber AND episode_number = :episodeNumber")
-    fun updateWatchedByNumber(showId: Long, seasonNumber: Int, episodeNumber: Int, watched: Int, plays: Int)
+    fun updateWatchedByNumber(
+        showId: Long,
+        seasonNumber: Int,
+        episodeNumber: Int,
+        watched: Int,
+        plays: Int
+    )
 
     @Query("UPDATE sg_episode SET episode_collected = :isCollected WHERE series_id = :showId AND episode_season_number = :seasonNumber AND episode_number = :episodeNumber")
-    fun updateCollectedByNumber(showId: Long, seasonNumber: Int, episodeNumber: Int, isCollected: Boolean)
+    fun updateCollectedByNumber(
+        showId: Long,
+        seasonNumber: Int,
+        episodeNumber: Int,
+        isCollected: Boolean
+    )
 
     @Transaction
     fun updateWatchedAndCollectedByNumber(episodes: List<SgEpisode2UpdateByNumber>) {
@@ -620,9 +648,11 @@ data class SgEpisode2WithShow(
                     // Only episodes from the next few days.
                     System.currentTimeMillis() + CALENDAR_DAY_LIMIT_MS
                 }
-                query = StringBuilder("$FIRSTAIREDMS>=$recentThreshold " +
-                        "AND $FIRSTAIREDMS<$timeThreshold " +
-                        "AND ${SgShow2Columns.SELECTION_NO_HIDDEN}")
+                query = StringBuilder(
+                    "$FIRSTAIREDMS>=$recentThreshold " +
+                            "AND $FIRSTAIREDMS<$timeThreshold " +
+                            "AND ${SgShow2Columns.SELECTION_NO_HIDDEN}"
+                )
                 sortOrder = SORT_UPCOMING
             } else {
                 // RECENT
@@ -634,10 +664,12 @@ data class SgEpisode2WithShow(
                     System.currentTimeMillis() - CALENDAR_DAY_LIMIT_MS
                 }
                 query =
-                    StringBuilder("$SELECTION_HAS_RELEASE_DATE " +
-                            "AND $FIRSTAIREDMS<$recentThreshold " +
-                            "AND $FIRSTAIREDMS>$timeThreshold " +
-                            "AND ${SgShow2Columns.SELECTION_NO_HIDDEN}")
+                    StringBuilder(
+                        "$SELECTION_HAS_RELEASE_DATE " +
+                                "AND $FIRSTAIREDMS<$recentThreshold " +
+                                "AND $FIRSTAIREDMS>$timeThreshold " +
+                                "AND ${SgShow2Columns.SELECTION_NO_HIDDEN}"
+                    )
                 sortOrder = SORT_RECENT
             }
 
