@@ -15,6 +15,10 @@ Version 2024.3
 --------------
 *in development*
 
+#### 2024.3.3 🧪
+*2024-07-04*
+
+* 🔨 Calendar: do not crash when scrolling and data changes.
 * 🔨 Images: on Android 7.0 or older, images load correctly again.
 * 📝 Latest user interface translations from Crowdin.
 
