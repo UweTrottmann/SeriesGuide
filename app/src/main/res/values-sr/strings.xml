@@ -134,7 +134,7 @@
     <string name="state_on_watchlist">У листи за гледање</string>
     <string name="state_favorite">Омиљено</string>
     <!-- Shows -->
-    <string name="title_shows_added">Added</string>
+    <string name="title_shows_added">Додато</string>
     <string name="confirm_delete">Желите ли да уклоните %s?</string>
     <string name="delete_error">Серија није уклоњена. Покушајте поново касније.</string>
     <string name="delete_show">Уклони</string>
