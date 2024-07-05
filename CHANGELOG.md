@@ -19,6 +19,11 @@ Version 2024.2
 * 🌟 Ratings: display TMDB rating for shows. Tap rating to open TMDB or Trakt page.
 * 🔧 Display run time in hours and minutes.
 
+#### 2024.2.7
+*2024-07-05*
+
+* 🔨 Images: on Android 7.0 or older, images load correctly again.
+
 #### 2024.2.6
 *2024-05-17*
 

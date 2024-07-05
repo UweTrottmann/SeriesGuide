@@ -77,6 +77,7 @@ internal class PeopleAdapter(context: Context) : ArrayAdapter<Person>(context, L
                     .resizeDimen(R.dimen.person_headshot_size, R.dimen.person_headshot_size)
                     .centerCrop()
                     .transform(personImageTransform)
+                    .placeholder(R.drawable.ic_account_circle_black_24dp)
                     .error(R.drawable.ic_account_circle_black_24dp)
                     .into(picture)
             }
