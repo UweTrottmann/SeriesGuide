@@ -16,7 +16,7 @@ plugins {
 buildscript {
     val sgCompileSdk by extra(34) // Android 14 (U)
     val sgMinSdk by extra(21) // Android 5 (L)
-    val sgTargetSdk by extra(33) // Android 13 (T)
+    val sgTargetSdk by extra(34) // Android 13 (T)
 
     // YYYY.<release-of-year>.<build> - like 2024.1.0
     // - allows to more easily judge how old a release is
