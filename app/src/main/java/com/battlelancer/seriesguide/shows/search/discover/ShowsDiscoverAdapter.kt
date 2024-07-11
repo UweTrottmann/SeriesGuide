@@ -114,7 +114,7 @@ class ShowsDiscoverAdapter(
 
     interface OnItemClickListener {
         fun onLinkClick(anchor: View, link: DiscoverShowsLink)
-        fun onHeaderButtonClick()
+        fun onHeaderButtonClick(anchor: View)
         fun onItemClick(item: SearchResult)
         fun onAddClick(item: SearchResult)
         fun onMenuWatchlistClick(view: View, showTmdbId: Int)
@@ -179,8 +179,8 @@ class ShowsDiscoverAdapter(
                 setIconResource(R.drawable.ic_filter_white_24dp)
                 contentDescription = context.getString(R.string.action_shows_filter)
                 TooltipCompat.setTooltipText(this, contentDescription)
-                setOnClickListener {
-                    onItemClickListener.onHeaderButtonClick()
+                setOnClickListener { view ->
+                    onItemClickListener.onHeaderButtonClick(view)
                 }
             }
         }

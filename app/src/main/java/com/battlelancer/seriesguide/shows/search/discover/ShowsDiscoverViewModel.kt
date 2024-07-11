@@ -43,6 +43,8 @@ class ShowsDiscoverViewModel(application: Application) : AndroidViewModel(applic
         }.flatMapLatest {
             val languageCode = ShowsSettings.getShowsSearchLanguage(getApplication())
             val watchRegion = StreamingSearch.getCurrentRegionOrNull(getApplication())
+            val firstReleaseYear = ShowsDiscoverSettings.getFirstReleaseYear(getApplication())
+            val originalLanguage = ShowsDiscoverSettings.getOriginalLanguage(getApplication())
             ShowsDiscoverLiveData(
                 application,
                 viewModelScope,
@@ -50,8 +52,8 @@ class ShowsDiscoverViewModel(application: Application) : AndroidViewModel(applic
                 languageCode,
                 it,
                 watchRegion,
-                null,
-                null
+                firstReleaseYear,
+                originalLanguage
             ).asFlow()
         }.shareIn(
             scope = viewModelScope,
@@ -75,6 +77,16 @@ class ShowsDiscoverViewModel(application: Application) : AndroidViewModel(applic
     fun changeResultsLanguage(languageCode: String) {
         ShowsSettings.saveShowsSearchLanguage(getApplication(), languageCode)
         Timber.d("Set search language to %s", languageCode)
+        refreshData()
+    }
+
+    fun changeFirstReleaseYear(year: Int?) {
+        ShowsDiscoverSettings.setFirstReleaseYear(getApplication(), year)
+        refreshData()
+    }
+
+    fun changeOriginalLanguage(languageCode: String?) {
+        ShowsDiscoverSettings.setOriginalLanguage(getApplication(), languageCode)
         refreshData()
     }
 }

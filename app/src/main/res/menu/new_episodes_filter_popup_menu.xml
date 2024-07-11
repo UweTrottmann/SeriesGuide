@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_action_new_episodes_filter_year"
+        android:title="@string/filter_year" />
+    <item
+        android:id="@+id/menu_action_new_episodes_filter_language"
+        android:title="@string/filter_language" />
+    <item
+        android:id="@+id/menu_action_new_episodes_filter_providers"
+        android:title="@string/action_stream" />
+
+</menu>

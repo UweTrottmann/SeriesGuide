@@ -30,9 +30,13 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
+import com.battlelancer.seriesguide.ui.dialogs.LanguagePickerDialogFragment
+import com.battlelancer.seriesguide.ui.dialogs.YearPickerDialogFragment
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.util.findDialog
+import com.battlelancer.seriesguide.util.safeShow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
@@ -43,7 +47,8 @@ import org.greenrobot.eventbus.ThreadMode
  * Displays links to popular shows, shows with new episodes and if connected to Trakt
  * also links to Trakt lists ([TraktAddFragment]).
  *
- * Displays a limited list of shows with new episodes that can be filtered by watch provider.
+ * Displays a limited list of shows with new episodes that can be filtered by year, language
+ * and watch provider.
  */
 class ShowsDiscoverFragment : BaseAddShowsFragment() {
 
@@ -51,6 +56,9 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
     private lateinit var adapter: ShowsDiscoverAdapter
     private val activityModel by activityViewModels<ShowsActivityViewModel>()
     private val model: ShowsDiscoverViewModel by viewModels()
+
+    private var yearPicker: YearPickerDialogFragment? = null
+    private var languagePicker: LanguagePickerDialogFragment? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -115,6 +123,13 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
             }
         }
 
+        // Re-attach listeners to any showing dialogs
+        yearPicker = findDialog<YearPickerDialogFragment>(parentFragmentManager, TAG_YEAR_PICKER)
+            ?.also { it.onPickedListener = firstReleaseYearPickedListener }
+        languagePicker =
+            findDialog<LanguagePickerDialogFragment>(parentFragmentManager, TAG_LANGUAGE_PICKER)
+                ?.also { it.onPickedListener = originalLanguagePickedListener }
+
         activityModel.scrollTabToTopLiveData.observe(viewLifecycleOwner) { tabPosition: Int? ->
             if (tabPosition != null && tabPosition == ShowsActivityImpl.Tab.DISCOVER.index) {
                 recyclerView.smoothScrollToPosition(0)
@@ -151,8 +166,38 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
             Utils.startActivityWithAnimation(activity, intent, anchor)
         }
 
-        override fun onHeaderButtonClick() {
-            WatchProviderFilterDialogFragment.showForShows(parentFragmentManager)
+        override fun onHeaderButtonClick(anchor: View) {
+            val popupMenu = PopupMenu(context, anchor)
+            popupMenu.inflate(R.menu.new_episodes_filter_popup_menu)
+            popupMenu.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.menu_action_new_episodes_filter_year -> {
+                        YearPickerDialogFragment
+                            .create(ShowsDiscoverSettings.getFirstReleaseYear(requireContext()))
+                            .also { yearPicker = it }
+                            .apply { onPickedListener = firstReleaseYearPickedListener }
+                            .safeShow(parentFragmentManager, TAG_YEAR_PICKER)
+                        return@setOnMenuItemClickListener true
+                    }
+
+                    R.id.menu_action_new_episodes_filter_language -> {
+                        LanguagePickerDialogFragment
+                            .createForShows(ShowsDiscoverSettings.getOriginalLanguage(requireContext()))
+                            .also { languagePicker = it }
+                            .apply { onPickedListener = originalLanguagePickedListener }
+                            .safeShow(parentFragmentManager, TAG_LANGUAGE_PICKER)
+                        return@setOnMenuItemClickListener true
+                    }
+
+                    R.id.menu_action_new_episodes_filter_providers -> {
+                        WatchProviderFilterDialogFragment.showForShows(parentFragmentManager)
+                        return@setOnMenuItemClickListener true
+                    }
+
+                    else -> return@setOnMenuItemClickListener false
+                }
+            }
+            popupMenu.show()
         }
 
         override fun onItemClick(item: SearchResult) {
@@ -252,6 +297,20 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         model.changeResultsLanguage(event.selectedLanguageCode)
     }
 
+    private val firstReleaseYearPickedListener =
+        object : YearPickerDialogFragment.OnPickedListener {
+            override fun onPicked(year: Int?) {
+                model.changeFirstReleaseYear(year)
+            }
+        }
+
+    private val originalLanguagePickedListener =
+        object : LanguagePickerDialogFragment.OnPickedListener {
+            override fun onPicked(languageCode: String?) {
+                model.changeOriginalLanguage(languageCode)
+            }
+        }
+
     override fun setAllPendingNotAdded() {
         adapter.setAllPendingNotAdded()
     }
@@ -262,6 +321,8 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
 
     companion object {
         val liftOnScrollTargetViewId = R.id.recyclerViewShowsDiscover
+        private const val TAG_YEAR_PICKER = "yearPicker"
+        private const val TAG_LANGUAGE_PICKER = "languagePicker"
     }
 
 }
