@@ -6,6 +6,7 @@ package com.battlelancer.seriesguide.ui
 import android.content.ContentResolver
 import android.content.Intent
 import android.content.SyncStatusObserver
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -48,16 +49,29 @@ abstract class BaseTopActivity : BaseMessageActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        onBackPressedDispatcher.addCallback {
-            finish()
-            // Use a custom animation when navigating away from a top activity
-            // but not when exiting the app (use the default system animations).
-            if (!isTaskRoot) {
-                @Suppress("DEPRECATION") // just deprecated for predictive back
-                overridePendingTransition(
-                    R.anim.activity_fade_enter_sg,
-                    R.anim.activity_fade_exit_sg
-                )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            overrideActivityTransition(
+                OVERRIDE_TRANSITION_OPEN,
+                R.anim.activity_fade_enter_sg,
+                R.anim.activity_fade_exit_sg
+            )
+            overrideActivityTransition(
+                OVERRIDE_TRANSITION_CLOSE,
+                R.anim.activity_fade_enter_sg,
+                R.anim.activity_fade_exit_sg
+            )
+        } else {
+            onBackPressedDispatcher.addCallback {
+                finish()
+                // Use a custom animation when navigating away from a top activity
+                // but not when exiting the app (use the default system animations).
+                if (!isTaskRoot) {
+                    @Suppress("DEPRECATION")
+                    overridePendingTransition(
+                        R.anim.activity_fade_enter_sg,
+                        R.anim.activity_fade_exit_sg
+                    )
+                }
             }
         }
     }
@@ -72,7 +86,7 @@ abstract class BaseTopActivity : BaseMessageActivity() {
         bottomNav.selectedItemId = selectedItemId
         // Disable hideous bold font for active item.
         bottomNav.setItemTextAppearanceActiveBoldEnabled(false)
-        bottomNav.setOnItemSelectedListener {  item ->
+        bottomNav.setOnItemSelectedListener { item ->
             onNavItemClick(item.itemId)
             false // Do not change selected item.
         }
@@ -93,6 +107,7 @@ abstract class BaseTopActivity : BaseMessageActivity() {
                                 or Intent.FLAG_ACTIVITY_SINGLE_TOP
                     )
             }
+
             R.id.navigation_item_lists -> {
                 if (this is ListsActivity) {
                     onSelectedCurrentNavItem()
@@ -101,6 +116,7 @@ abstract class BaseTopActivity : BaseMessageActivity() {
                 launchIntent = Intent(this, ListsActivity::class.java)
                     .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
             }
+
             R.id.navigation_item_movies -> {
                 if (this is MoviesActivity) {
                     onSelectedCurrentNavItem()
@@ -109,6 +125,7 @@ abstract class BaseTopActivity : BaseMessageActivity() {
                 launchIntent = Intent(this, MoviesActivity::class.java)
                     .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
             }
+
             R.id.navigation_item_stats -> {
                 if (this is StatsActivity) {
                     onSelectedCurrentNavItem()
@@ -117,6 +134,7 @@ abstract class BaseTopActivity : BaseMessageActivity() {
                 launchIntent = Intent(this, StatsActivity::class.java)
                     .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
             }
+
             R.id.navigation_item_more -> {
                 if (this is MoreOptionsActivity) {
                     onSelectedCurrentNavItem()
@@ -128,8 +146,14 @@ abstract class BaseTopActivity : BaseMessageActivity() {
         }
         if (launchIntent != null) {
             startActivity(launchIntent)
-            @Suppress("DEPRECATION") // just deprecated for predictive back
-            overridePendingTransition(R.anim.activity_fade_enter_sg, R.anim.activity_fade_exit_sg)
+            // For UPSIDE_DOWN_CAKE+ using overrideActivityTransition() in BaseTopActivity
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                @Suppress("DEPRECATION")
+                overridePendingTransition(
+                    R.anim.activity_fade_enter_sg,
+                    R.anim.activity_fade_exit_sg
+                )
+            }
         }
     }
 

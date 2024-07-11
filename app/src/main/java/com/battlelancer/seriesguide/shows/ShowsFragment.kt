@@ -8,6 +8,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
+import android.os.Build
 import android.os.Bundle
 import android.text.format.DateUtils
 import android.view.LayoutInflater
@@ -319,11 +320,14 @@ class ShowsFragment : Fragment() {
 
         override fun onSignInClicked() {
             startActivity(Intent(requireActivity(), MoreOptionsActivity::class.java))
-            // Launching a top activity, adjust animation to match.
-            @Suppress("DEPRECATION") // just deprecated for predictive back
-            requireActivity().overridePendingTransition(
-                R.anim.activity_fade_enter_sg, R.anim.activity_fade_exit_sg
-            )
+            // For UPSIDE_DOWN_CAKE+ using overrideActivityTransition() in BaseTopActivity
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                // Launching a top activity, adjust animation to match.
+                @Suppress("DEPRECATION")
+                requireActivity().overridePendingTransition(
+                    R.anim.activity_fade_enter_sg, R.anim.activity_fade_exit_sg
+                )
+            }
         }
 
         override fun onRestoreBackupClicked() {
