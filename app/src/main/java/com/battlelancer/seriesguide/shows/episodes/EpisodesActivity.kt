@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2019-2023 Uwe Trottmann
+// Copyright 2019-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.episodes
 
@@ -11,7 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.addCallback
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
@@ -102,16 +102,8 @@ class EpisodesActivity : BaseMessageActivity() {
 
         setupViews()
 
-        onBackPressedDispatcher.addCallback {
-            // If single pane view and previously switched to pager by tapping on list item,
-            // go back to list first instead of finishing activity.
-            if (isSinglePaneView && isListGone && hasTappedItemInSinglePaneView) {
-                hasTappedItemInSinglePaneView = false
-                switchView(makeListVisible = true, updateOptionsMenu = true)
-            } else {
-                finish()
-            }
-        }
+        onBackPressedDispatcher.addCallback(onBackPressedSwitchView)
+        updateOnBackPressedShouldSwitchView()
 
         val episodeRowId = intent.getLongExtra(EXTRA_LONG_EPISODE_ID, 0)
 
@@ -179,6 +171,20 @@ class EpisodesActivity : BaseMessageActivity() {
         if (updateOptionsMenu) {
             invalidateOptionsMenu()
         }
+        updateOnBackPressedShouldSwitchView()
+    }
+
+    private val onBackPressedSwitchView = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            switchView(makeListVisible = true, updateOptionsMenu = true)
+        }
+    }
+
+    private fun updateOnBackPressedShouldSwitchView() {
+        // If single pane view and previously switched to pager by tapping on list item,
+        // go back to list first instead of finishing activity.
+        onBackPressedSwitchView.isEnabled =
+            isSinglePaneView && isListGone && hasTappedItemInSinglePaneView
     }
 
     private fun setupViews() {
