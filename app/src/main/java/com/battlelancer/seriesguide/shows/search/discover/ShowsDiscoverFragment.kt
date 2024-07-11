@@ -15,6 +15,7 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentShowsDiscoverBinding
@@ -32,10 +33,11 @@ import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import timber.log.Timber
 
 /**
  * Displays links to popular shows, shows with new episodes and if connected to Trakt
@@ -49,8 +51,6 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
     private lateinit var adapter: ShowsDiscoverAdapter
     private val activityModel by activityViewModels<ShowsActivityViewModel>()
     private val model: ShowsDiscoverViewModel by viewModels()
-
-    private lateinit var languageCode: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,15 +68,12 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
             R.id.scrollViewShowsDiscover,
             R.id.recyclerViewShowsDiscover
         )
-        swipeRefreshLayout.setOnRefreshListener { loadResults(true) }
+        swipeRefreshLayout.setOnRefreshListener { refreshData() }
         ViewTools.setSwipeRefreshLayoutColors(requireActivity().theme, swipeRefreshLayout)
 
         val emptyView = binding.emptyViewShowsDiscover
         emptyView.visibility = View.GONE
-        emptyView.setButtonClickListener {
-            // Retrying, force load results again.
-            loadResults(true)
-        }
+        emptyView.setButtonClickListener { refreshData() }
 
         val layoutManager = AutoGridLayoutManager(
             context, R.dimen.showgrid_columnWidth,
@@ -106,14 +103,16 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         )
         recyclerView.adapter = adapter
 
-        languageCode = ShowsSettings.getShowsSearchLanguage(requireContext())
-
-        // observe and load results
-        model.data.observe(viewLifecycleOwner) { handleResultsUpdate(it) }
-
-        // initial load after getting watch providers, reload on watch provider changes
-        model.watchProviderIds.observe(viewLifecycleOwner) {
-            loadResults()
+        // observe results and loading state
+        viewLifecycleOwner.lifecycleScope.launch {
+            model.data.collectLatest {
+                handleResultsUpdate(it)
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            model.isRefreshing.collectLatest {
+                binding.swipeRefreshLayoutShowsDiscover.isRefreshing = it
+            }
         }
 
         activityModel.scrollTabToTopLiveData.observe(viewLifecycleOwner) { tabPosition: Int? ->
@@ -191,28 +190,23 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         }
     }
 
-    private fun loadResults(forceLoad: Boolean = false) {
-        val watchProviderIds = model.watchProviderIds.value
-        val willLoad = model.data.load(languageCode, watchProviderIds, forceLoad)
-        if (willLoad) binding?.swipeRefreshLayoutShowsDiscover?.isRefreshing = true
+    private fun refreshData() {
+        model.refreshData()
     }
 
-    private fun handleResultsUpdate(result: ShowsDiscoverLiveData.Result?) {
-        result?.let {
-            val binding = binding!!
-            binding.swipeRefreshLayoutShowsDiscover.isRefreshing = false
+    private fun handleResultsUpdate(result: ShowsDiscoverLiveData.Result) {
+        val binding = binding!!
 
-            val hasResults = result.searchResults.isNotEmpty()
+        val hasResults = result.searchResults.isNotEmpty()
 
-            val emptyView = binding.emptyViewShowsDiscover
-            emptyView.setButtonText(R.string.action_try_again)
-            emptyView.setMessage(result.emptyText)
-            emptyView.visibility = if (hasResults) View.GONE else View.VISIBLE
+        val emptyView = binding.emptyViewShowsDiscover
+        emptyView.setButtonText(R.string.action_try_again)
+        emptyView.setMessage(result.emptyText)
+        emptyView.visibility = if (hasResults) View.GONE else View.VISIBLE
 
-            binding.recyclerViewShowsDiscover.visibility =
-                if (hasResults) View.VISIBLE else View.GONE
-            adapter.updateSearchResults(result.searchResults)
-        }
+        binding.recyclerViewShowsDiscover.visibility =
+            if (hasResults) View.VISIBLE else View.GONE
+        adapter.updateSearchResults(result.searchResults)
     }
 
     private val optionsMenuProvider = object : MenuProvider {
@@ -240,7 +234,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
     private fun displayLanguageSettings() {
         L10nDialogFragment.show(
             parentFragmentManager,
-            languageCode,
+            ShowsSettings.getShowsSearchLanguage(requireContext()),
             L10nDialogFragment.TAG_DISCOVER
         )
     }
@@ -255,16 +249,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         if (L10nDialogFragment.TAG_DISCOVER != event.tag) {
             return
         }
-        changeLanguage(event.selectedLanguageCode)
-        loadResults()
-    }
-
-    private fun changeLanguage(languageCode: String) {
-        this.languageCode = languageCode
-
-        // save selected search language
-        ShowsSettings.saveShowsSearchLanguage(requireContext(), languageCode)
-        Timber.d("Set search language to %s", languageCode)
+        model.changeResultsLanguage(event.selectedLanguageCode)
     }
 
     override fun setAllPendingNotAdded() {
