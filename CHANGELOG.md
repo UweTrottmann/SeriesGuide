@@ -15,6 +15,8 @@ Version 2024.3
 --------------
 *in development*
 
+* 🔧 Android 15: turn on predictive back animation.
+
 #### 2024.3.3 🧪
 *2024-07-04*
 
