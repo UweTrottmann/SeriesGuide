@@ -133,7 +133,7 @@
     <string name="state_on_watchlist">A la llista de seguiment</string>
     <string name="state_favorite">Preferida</string>
     <!-- Shows -->
-    <string name="title_shows_added">Added</string>
+    <string name="title_shows_added">Afegit/da</string>
     <string name="confirm_delete">Realment voleu eliminar %s?</string>
     <string name="delete_error">No s\'ha pogut esborrar la sèrie. Intenteu-ho més tard.</string>
     <string name="delete_show">Elimina</string>

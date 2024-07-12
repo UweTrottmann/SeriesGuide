@@ -16,6 +16,7 @@ Version 2024.3
 *in development*
 
 * 🔧 Android 15: turn on predictive back animation.
+* 📝 Latest user interface translations from Crowdin.
 
 #### 2024.3.3 🧪
 *2024-07-04*
