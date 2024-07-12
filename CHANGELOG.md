@@ -15,6 +15,9 @@ Version 2024.3
 --------------
 *in development*
 
+#### 2024.3.4 🧪
+*2024-07-12*
+
 * 🔧 Android 15: turn on predictive back animation.
 * 🌟 Shows: add permanent year and language filters to Discover tab.
 * 🌟 Discover: add current year option to year filter.
