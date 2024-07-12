@@ -1,9 +1,8 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.streaming
 
-import androidx.lifecycle.LiveData
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Delete
@@ -60,9 +59,6 @@ interface SgWatchProviderHelper {
      it is not longer shown in the filter UI, so it can not be disabled. */
     @Query("SELECT sg_watch_provider.* FROM sg_watch_provider JOIN sg_watch_provider_show_mappings ON sg_watch_provider.provider_id=sg_watch_provider_show_mappings.provider_id WHERE type=:type AND filter_local=1 GROUP BY _id")
     fun filterLocalWatchProviders(type: Int): Flow<List<SgWatchProvider>>
-
-    @Query("SELECT provider_id FROM sg_watch_provider WHERE type=:type AND enabled=1")
-    fun getEnabledWatchProviderIds(type: Int): LiveData<List<Int>>
 
     @Query("SELECT provider_id FROM sg_watch_provider WHERE type=:type AND enabled=1")
     fun getEnabledWatchProviderIdsFlow(type: Int): Flow<List<Int>>

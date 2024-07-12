@@ -8,12 +8,12 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.uwetrottmann.androidutils.AndroidUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -23,7 +23,13 @@ import kotlinx.coroutines.withContext
  */
 class ShowsDiscoverLiveData(
     private val context: Context,
-    private val scope: CoroutineScope
+    private val scope: CoroutineScope,
+    private val isRefreshing: MutableStateFlow<Boolean>,
+    private val language: String,
+    private val watchProviderIds: List<Int>?,
+    private val watchRegion: String?,
+    private val firstReleaseYear: Int?,
+    private val originalLanguage: String?
 ) : LiveData<ShowsDiscoverLiveData.Result>() {
 
     data class Result(
@@ -32,71 +38,63 @@ class ShowsDiscoverLiveData(
         val successful: Boolean
     )
 
-    private var language: String = context.getString(R.string.content_default_language)
-    private var watchProviderIds: List<Int>? = null
     private var currentJob: Job? = null
 
-    /**
-     * Schedules loading, give two letter ISO 639-1 [language] code.
-     * Set [forceLoad] to load new set of results even if language has not changed.
-     * Returns if it will load.
-     */
-    fun load(
-        language: String,
-        watchProviderIds: List<Int>?,
-        forceLoad: Boolean
-    ): Boolean {
-        return if (
-            forceLoad
-            || this.language != language
-            || this.watchProviderIds != watchProviderIds
-            || currentJob == null
-        ) {
-            this.language = language
-
-            currentJob?.cancel()
-            currentJob = scope.launch(Dispatchers.IO) {
-                fetchDiscoverData(language, watchProviderIds)
-            }
-            true
-        } else {
-            false
-        }
+    init {
+        refresh()
     }
 
-    private suspend fun fetchDiscoverData(
-        language: String,
-        watchProviderIds: List<Int>?
-    ) = withContext(Dispatchers.IO) {
-        val result = getShowsWithNewEpisodes(language, watchProviderIds)
-        // Note: Do not bother posting results if cancelled.
-        if (isActive) {
-            postValue(result)
+    /**
+     * Loads data. Cancels any ongoing load.
+     */
+    fun refresh() {
+        currentJob?.cancel()
+        currentJob = scope.launch {
+            try {
+                isRefreshing.value = true
+                getShowsWithNewEpisodes(
+                    language,
+                    watchProviderIds,
+                    watchRegion,
+                    firstReleaseYear,
+                    originalLanguage
+                )
+            } finally {
+                // ensure progress update even if cancelled
+                isRefreshing.value = false
+            }
         }
     }
 
     private suspend fun getShowsWithNewEpisodes(
         language: String,
-        watchProviderIds: List<Int>?
-    ): Result = withContext(Dispatchers.IO) {
+        watchProviderIds: List<Int>?,
+        watchRegion: String?,
+        firstReleaseYear: Int?,
+        originalLanguage: String?
+    ) = withContext(Dispatchers.IO) {
         val tmdb = SgApp.getServicesComponent(context.applicationContext).tmdb()
-        val languageActual = language
-        val watchRegion = StreamingSearch.getCurrentRegionOrNull(context)
         val results = TmdbTools2().getShowsWithNewEpisodes(
             tmdb = tmdb,
             language = language,
             page = 1,
-            firstReleaseYear = null,
-            originalLanguage = null,
+            firstReleaseYear = firstReleaseYear,
+            originalLanguage = originalLanguage,
             watchProviderIds = watchProviderIds,
             watchRegion = watchRegion
         )?.results
-        return@withContext if (results != null) {
-            val searchResults = SearchTools.mapTvShowsToSearchResults(languageActual, results)
+
+        val result = if (results != null) {
+            val searchResults = SearchTools.mapTvShowsToSearchResults(language, results)
             SearchTools.markLocalShowsAsAddedAndPreferLocalPoster(context, searchResults)
             buildResultSuccess(searchResults, R.string.add_empty)
         } else {
             buildResultFailure()
+        }
+
+        // Note: Do not bother posting results if cancelled.
+        if (isActive) {
+            postValue(result)
         }
     }
 

@@ -254,6 +254,7 @@
     <!-- Popular -->
     <string name="title_popular">Populární</string>
     <string name="filter_year">Rok</string>
+    <string name="filter_year_current">Current year</string>
     <string name="filter_language">Jazyk</string>
     <!-- Lists -->
     <string name="first_list">První seznam</string>

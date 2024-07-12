@@ -9,17 +9,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.TooltipCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemAddshowBinding
+import com.battlelancer.seriesguide.databinding.ItemDiscoverEmptyBinding
 import com.battlelancer.seriesguide.databinding.ItemDiscoverHeaderBinding
 import com.battlelancer.seriesguide.databinding.ItemDiscoverLinkBinding
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
+import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ViewTools
 
 /**
- * Displays a set of links and a list of results, each separated by a header.
+ * Displays a set of links and if loaded a list of results, separated by a header.
  */
 class ShowsDiscoverAdapter(
     private val context: Context,
@@ -28,8 +31,27 @@ class ShowsDiscoverAdapter(
     private val hideMenuWatchlistIfAdded: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    private var emptyText: String = ""
+    private var hasError: Boolean = false
     private val searchResults = mutableListOf<SearchResult>()
     private val links: MutableList<DiscoverShowsLink> = mutableListOf()
+
+    val layoutManager = AutoGridLayoutManager(
+        context, R.dimen.showgrid_columnWidth,
+        2, 2
+    ).apply {
+        spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return when (getItemViewType(position)) {
+                    VIEW_TYPE_LINK -> 1
+                    VIEW_TYPE_HEADER -> spanCount
+                    VIEW_TYPE_SHOW -> 2
+                    VIEW_TYPE_EMPTY -> spanCount
+                    else -> 0
+                }
+            }
+        }
+    }
 
     init {
         links.add(DiscoverShowsLink.POPULAR)
@@ -41,11 +63,17 @@ class ShowsDiscoverAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged") // No need for incremental updates/animations.
-    fun updateSearchResults(newSearchResults: List<SearchResult>?) {
+    fun updateSearchResults(
+        newSearchResults: List<SearchResult>?,
+        emptyText: String,
+        hasError: Boolean
+    ) {
         searchResults.clear()
         if (newSearchResults != null) {
             searchResults.addAll(newSearchResults)
         }
+        this.emptyText = emptyText
+        this.hasError = hasError
         notifyDataSetChanged()
     }
 
@@ -73,15 +101,21 @@ class ShowsDiscoverAdapter(
         }
     }
 
+    private fun hasResults() = searchResults.isNotEmpty()
+
     override fun getItemViewType(position: Int): Int {
         return when {
             position < links.size -> VIEW_TYPE_LINK
             position == links.size -> VIEW_TYPE_HEADER
-            else -> VIEW_TYPE_SHOW
+            else -> if (hasResults()) VIEW_TYPE_SHOW else VIEW_TYPE_EMPTY
         }
     }
 
-    override fun getItemCount(): Int = links.size + 1 /* header */ + searchResults.size
+    override fun getItemCount(): Int {
+        return links.size +
+                1 /* header */ +
+                if (hasResults()) searchResults.size else 1 /* empty view */
+    }
 
     private fun getSearchResultFor(position: Int): SearchResult =
         searchResults[position - links.size - 1 /* header */]
@@ -91,6 +125,7 @@ class ShowsDiscoverAdapter(
             VIEW_TYPE_LINK -> LinkViewHolder.inflate(parent, itemClickListener)
             VIEW_TYPE_HEADER -> HeaderViewHolder.inflate(parent, itemClickListener)
             VIEW_TYPE_SHOW -> ShowViewHolder.inflate(parent, itemClickListener)
+            VIEW_TYPE_EMPTY -> EmptyViewHolder.inflate(parent, itemClickListener)
             else -> throw IllegalArgumentException("View type $viewType is unknown")
         }
     }
@@ -109,15 +144,20 @@ class ShowsDiscoverAdapter(
                 val item = getSearchResultFor(position)
                 holder.bindTo(context, item, showMenuWatchlist, hideMenuWatchlistIfAdded)
             }
+
+            is EmptyViewHolder -> {
+                holder.bindTo(emptyText, hasError)
+            }
         }
     }
 
     interface OnItemClickListener {
         fun onLinkClick(anchor: View, link: DiscoverShowsLink)
-        fun onHeaderButtonClick()
+        fun onHeaderButtonClick(anchor: View)
         fun onItemClick(item: SearchResult)
         fun onAddClick(item: SearchResult)
         fun onMenuWatchlistClick(view: View, showTmdbId: Int)
+        fun onEmptyViewButtonClick()
     }
 
     class LinkViewHolder(
@@ -179,8 +219,8 @@ class ShowsDiscoverAdapter(
                 setIconResource(R.drawable.ic_filter_white_24dp)
                 contentDescription = context.getString(R.string.action_shows_filter)
                 TooltipCompat.setTooltipText(this, contentDescription)
-                setOnClickListener {
-                    onItemClickListener.onHeaderButtonClick()
+                setOnClickListener { view ->
+                    onItemClickListener.onHeaderButtonClick(view)
                 }
             }
         }
@@ -265,9 +305,39 @@ class ShowsDiscoverAdapter(
         }
     }
 
+    class EmptyViewHolder(
+        private val binding: ItemDiscoverEmptyBinding,
+        onItemClickListener: OnItemClickListener
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.emptyViewShowsDiscover.setButtonClickListener {
+                onItemClickListener.onEmptyViewButtonClick()
+            }
+        }
+
+        fun bindTo(emptyMessage: String, hasError: Boolean) {
+            binding.emptyViewShowsDiscover.setMessage(emptyMessage)
+            binding.emptyViewShowsDiscover.setButtonGone(!hasError)
+        }
+
+        companion object {
+            fun inflate(parent: ViewGroup, onItemClickListener: OnItemClickListener) =
+                EmptyViewHolder(
+                    ItemDiscoverEmptyBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    ),
+                    onItemClickListener
+                )
+        }
+    }
+
     companion object {
         const val VIEW_TYPE_LINK = 1
         const val VIEW_TYPE_HEADER = 2
         const val VIEW_TYPE_SHOW = 3
+        const val VIEW_TYPE_EMPTY = 4
     }
 }

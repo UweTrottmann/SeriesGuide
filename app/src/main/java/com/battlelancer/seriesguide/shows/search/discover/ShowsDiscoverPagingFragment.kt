@@ -240,7 +240,7 @@ class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
                 ?.also { it.onPickedListener = onLanguagePickedListener }
 
         bindingActivity.chipMoviesSearchReleaseYear.setOnClickListener {
-            YearPickerDialogFragment.create(model.firstReleaseYear.value)
+            YearPickerDialogFragment.create(model.firstReleaseYearRaw.value)
                 .also { yearPicker = it }
                 .apply { onPickedListener = onYearPickedListener }
                 .safeShow(parentFragmentManager, TAG_YEAR_PICKER)
@@ -449,7 +449,7 @@ class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
 
     private val onYearPickedListener = object : YearPickerDialogFragment.OnPickedListener {
         override fun onPicked(year: Int?) {
-            model.firstReleaseYear.value = year
+            model.firstReleaseYearRaw.value = year
         }
     }
 

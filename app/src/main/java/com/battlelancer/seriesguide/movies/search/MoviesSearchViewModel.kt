@@ -19,6 +19,8 @@ import com.battlelancer.seriesguide.movies.TmdbMoviesDataSource
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.streaming.SgWatchProvider
 import com.battlelancer.seriesguide.streaming.StreamingSearch
+import com.battlelancer.seriesguide.ui.dialogs.YearPickerDialogFragment
+import com.battlelancer.seriesguide.ui.dialogs.toActualYear
 import com.uwetrottmann.tmdb2.entities.BaseMovie
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,28 +37,36 @@ class MoviesSearchViewModel(
 
     data class Filters(
         val queryString: String,
+        /**
+         * An actual year or `null` (so never [YearPickerDialogFragment.YEAR_CURRENT]).
+         */
         val releaseYear: Int?,
         val originalLanguage: String?,
         val watchProviderIds: List<Int>?,
     )
 
     val queryString = MutableStateFlow("")
-    val releaseYear = MutableStateFlow<Int?>(null)
+
+    /**
+     * May be [YearPickerDialogFragment.YEAR_CURRENT] or `null`.
+     */
+    val releaseYearRaw = MutableStateFlow<Int?>(null)
     val originalLanguage = MutableStateFlow<String?>(null)
-    val watchProviderIds =
+    private val watchProviderIds =
         SgRoomDatabase.getInstance(getApplication()).sgWatchProviderHelper()
             .getEnabledWatchProviderIdsFlow(SgWatchProvider.Type.MOVIES.id)
+    val filters = combine(
+        watchProviderIds,
+        queryString,
+        releaseYearRaw,
+        originalLanguage
+    ) { watchProviderIds: List<Int>, queryString: String, releaseYearRaw: Int?, originalLanguage: String? ->
+        Filters(queryString, releaseYearRaw.toActualYear(), originalLanguage, watchProviderIds)
+    }
 
     private val tmdb = SgApp.getServicesComponent(application).tmdb()
 
-    val items: Flow<PagingData<BaseMovie>> = combine(
-        watchProviderIds,
-        queryString,
-        releaseYear,
-        originalLanguage
-    ) { watchProviderIds: List<Int>, queryString: String, releaseYear: Int?, originalLanguage: String? ->
-        Filters(queryString, releaseYear, originalLanguage, watchProviderIds)
-    }
+    val items: Flow<PagingData<BaseMovie>> = filters
         .flatMapLatest {
             Pager(
                 // Note: currently TMDB page is 20 items, on phones around 9 are displayed at once.

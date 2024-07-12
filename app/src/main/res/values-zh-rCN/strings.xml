@@ -233,6 +233,7 @@
     <!-- Popular -->
     <string name="title_popular">热门</string>
     <string name="filter_year">年份</string>
+    <string name="filter_year_current">Current year</string>
     <string name="filter_language">语言</string>
     <!-- Lists -->
     <string name="first_list">默认列表</string>

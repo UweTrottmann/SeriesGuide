@@ -16,6 +16,8 @@ Version 2024.3
 *in development*
 
 * 🔧 Android 15: turn on predictive back animation.
+* 🌟 Shows: add permanent year and language filters to Discover tab.
+* 🌟 Discover: add current year option to year filter.
 * 📝 Latest user interface translations from Crowdin.
 
 #### 2024.3.3 🧪

@@ -147,7 +147,7 @@ class MoviesSearchActivity : BaseMessageActivity() {
 
         // filters
         binding.chipMoviesSearchReleaseYear.setOnClickListener {
-            YearPickerDialogFragment.create(model.releaseYear.value)
+            YearPickerDialogFragment.create(model.releaseYearRaw.value)
                 .also { yearPicker = it }
                 .apply { onPickedListener = onYearPickedListener }
                 .safeShow(supportFragmentManager, TAG_YEAR_PICKER)
@@ -162,46 +162,37 @@ class MoviesSearchActivity : BaseMessageActivity() {
             WatchProviderFilterDialogFragment.showForMovies(supportFragmentManager)
         }
         lifecycleScope.launch {
-            model.queryString.collectLatest {
+            model.filters.collectLatest {
                 // Hide unsupported filters
-                val isSearching = it.isNotEmpty() || isSearchOnly
+                val isSearching = it.queryString.isNotEmpty() || isSearchOnly
                 binding.chipMoviesSearchReleaseYear.isGone =
                     !isSearching && !TmdbMoviesDataSource.supportsYearFilter(link)
                 binding.chipMoviesSearchOriginalLanguage.isGone = isSearching
                 binding.chipMoviesSearchWatchProviders.isGone =
                     isSearching || !TmdbMoviesDataSource.supportsWatchProviderFilter(link)
-            }
-        }
-        lifecycleScope.launch {
-            model.releaseYear.collectLatest { year ->
+
                 binding.chipMoviesSearchReleaseYear.apply {
-                    val hasYear = year != null
+                    val hasYear = it.releaseYear != null
                     isChipIconVisible = hasYear
                     text = if (hasYear) {
-                        year.toString()
+                        it.releaseYear.toString()
                     } else {
                         getString(R.string.filter_year)
                     }
                 }
-            }
-        }
-        lifecycleScope.launch {
-            model.originalLanguage.collectLatest { language ->
+
                 binding.chipMoviesSearchOriginalLanguage.apply {
-                    val hasLanguage = language != null
+                    val hasLanguage = it.originalLanguage != null
                     isChipIconVisible = hasLanguage
                     text = if (hasLanguage) {
-                        LanguageTools.buildLanguageDisplayName(language!!)
+                        LanguageTools.buildLanguageDisplayName(it.originalLanguage!!)
                     } else {
                         getString(R.string.filter_language)
                     }
                 }
-            }
-        }
-        lifecycleScope.launch {
-            model.watchProviderIds.collectLatest {
+
                 binding.chipMoviesSearchWatchProviders.apply {
-                    isChipIconVisible = it.isNotEmpty()
+                    isChipIconVisible = !it.watchProviderIds.isNullOrEmpty()
                 }
             }
         }
@@ -319,7 +310,7 @@ class MoviesSearchActivity : BaseMessageActivity() {
 
     private val onYearPickedListener = object : YearPickerDialogFragment.OnPickedListener {
         override fun onPicked(year: Int?) {
-            model.releaseYear.value = year
+            model.releaseYearRaw.value = year
         }
     }
 
