@@ -72,16 +72,8 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = binding!!
         val swipeRefreshLayout = binding.swipeRefreshLayoutShowsDiscover
-        swipeRefreshLayout.setSwipeableChildren(
-            R.id.scrollViewShowsDiscover,
-            R.id.recyclerViewShowsDiscover
-        )
         swipeRefreshLayout.setOnRefreshListener { refreshData() }
         ViewTools.setSwipeRefreshLayoutColors(requireActivity().theme, swipeRefreshLayout)
-
-        val emptyView = binding.emptyViewShowsDiscover
-        emptyView.visibility = View.GONE
-        emptyView.setButtonClickListener { refreshData() }
 
         val layoutManager = AutoGridLayoutManager(
             context, R.dimen.showgrid_columnWidth,
@@ -114,7 +106,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         // observe results and loading state
         viewLifecycleOwner.lifecycleScope.launch {
             model.data.collectLatest {
-                handleResultsUpdate(it)
+                adapter.updateSearchResults(it.searchResults)
             }
         }
         viewLifecycleOwner.lifecycleScope.launch {
@@ -237,21 +229,6 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
 
     private fun refreshData() {
         model.refreshData()
-    }
-
-    private fun handleResultsUpdate(result: ShowsDiscoverLiveData.Result) {
-        val binding = binding!!
-
-        val hasResults = result.searchResults.isNotEmpty()
-
-        val emptyView = binding.emptyViewShowsDiscover
-        emptyView.setButtonText(R.string.action_try_again)
-        emptyView.setMessage(result.emptyText)
-        emptyView.visibility = if (hasResults) View.GONE else View.VISIBLE
-
-        binding.recyclerViewShowsDiscover.visibility =
-            if (hasResults) View.VISIBLE else View.GONE
-        adapter.updateSearchResults(result.searchResults)
     }
 
     private val optionsMenuProvider = object : MenuProvider {

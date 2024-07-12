@@ -19,7 +19,7 @@ import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ViewTools
 
 /**
- * Displays a set of links and a list of results, each separated by a header.
+ * Displays a set of links and if loaded a list of results, separated by a header.
  */
 class ShowsDiscoverAdapter(
     private val context: Context,
