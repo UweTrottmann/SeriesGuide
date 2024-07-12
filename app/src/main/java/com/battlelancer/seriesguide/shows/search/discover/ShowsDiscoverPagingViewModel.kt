@@ -22,6 +22,8 @@ import com.battlelancer.seriesguide.shows.search.newepisodes.ShowsNewEpisodesDat
 import com.battlelancer.seriesguide.shows.search.popular.ShowsPopularDataSource
 import com.battlelancer.seriesguide.streaming.SgWatchProvider
 import com.battlelancer.seriesguide.streaming.StreamingSearch
+import com.battlelancer.seriesguide.ui.dialogs.YearPickerDialogFragment
+import com.battlelancer.seriesguide.ui.dialogs.toActualYear
 import com.uwetrottmann.tmdb2.Tmdb
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -39,6 +41,9 @@ class ShowsDiscoverPagingViewModel(
 
     data class Filters(
         val queryString: String,
+        /**
+         * An actual year or `null` (so never [YearPickerDialogFragment.YEAR_CURRENT]).
+         */
         val firstReleaseYear: Int?,
         val originalLanguage: String?,
         val watchProviderIds: List<Int>?,
@@ -48,15 +53,19 @@ class ShowsDiscoverPagingViewModel(
     private val watchProviderIds =
         SgRoomDatabase.getInstance(application).sgWatchProviderHelper()
             .getEnabledWatchProviderIdsFlow(SgWatchProvider.Type.SHOWS.id)
-    val firstReleaseYear = MutableStateFlow<Int?>(null)
+
+    /**
+     * May be [YearPickerDialogFragment.YEAR_CURRENT] or `null`.
+     */
+    val firstReleaseYearRaw = MutableStateFlow<Int?>(null)
     val originalLanguage = MutableStateFlow<String?>(null)
     val filters = combine(
         queryString,
         watchProviderIds,
-        firstReleaseYear,
+        firstReleaseYearRaw,
         originalLanguage
-    ) { queryString: String, watchProviderIds: List<Int>, firstReleaseYear: Int?, originalLanguage: String? ->
-        Filters(queryString, firstReleaseYear, originalLanguage, watchProviderIds)
+    ) { queryString: String, watchProviderIds: List<Int>, firstReleaseYearRaw: Int?, originalLanguage: String? ->
+        Filters(queryString, firstReleaseYearRaw.toActualYear(), originalLanguage, watchProviderIds)
     }
 
     private val tmdb = SgApp.getServicesComponent(application).tmdb()

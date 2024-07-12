@@ -165,7 +165,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
                 when (menuItem.itemId) {
                     R.id.menu_action_new_episodes_filter_year -> {
                         YearPickerDialogFragment
-                            .create(ShowsDiscoverSettings.getFirstReleaseYear(requireContext()))
+                            .create(ShowsDiscoverSettings.getFirstReleaseYearRaw(requireContext()))
                             .also { yearPicker = it }
                             .apply { onPickedListener = firstReleaseYearPickedListener }
                             .safeShow(parentFragmentManager, TAG_YEAR_PICKER)
