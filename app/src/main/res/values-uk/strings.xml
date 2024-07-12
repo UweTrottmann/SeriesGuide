@@ -254,7 +254,7 @@
     <!-- Popular -->
     <string name="title_popular">Популярне</string>
     <string name="filter_year">Рік</string>
-    <string name="filter_year_current">Current year</string>
+    <string name="filter_year_current">Поточний рік</string>
     <string name="filter_language">Мова</string>
     <!-- Lists -->
     <string name="first_list">Перший список</string>
