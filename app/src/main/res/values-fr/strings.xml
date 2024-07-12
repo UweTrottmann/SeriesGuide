@@ -240,6 +240,7 @@
     <!-- Popular -->
     <string name="title_popular">Populaire</string>
     <string name="filter_year">Année</string>
+    <string name="filter_year_current">Current year</string>
     <string name="filter_language">Langue</string>
     <!-- Lists -->
     <string name="first_list">Première liste</string>

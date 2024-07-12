@@ -233,6 +233,7 @@
     <!-- Popular -->
     <string name="title_popular">인기 항목</string>
     <string name="filter_year">Year</string>
+    <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">첫번째 목록</string>
