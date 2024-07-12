@@ -34,8 +34,7 @@ object ShowsDiscoverSettings {
      * returns the current year.
      */
     fun getFirstReleaseYear(context: Context): Int? {
-        return getFirstReleaseYearRaw(context)
-            .let { it.toActualYear() }
+        return getFirstReleaseYearRaw(context).toActualYear()
     }
 
     /**
