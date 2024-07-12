@@ -16,7 +16,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.GridLayoutManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentShowsDiscoverBinding
 import com.battlelancer.seriesguide.shows.ShowsActivityImpl
@@ -27,7 +26,6 @@ import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsActivity
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsFragment
 import com.battlelancer.seriesguide.streaming.WatchProviderFilterDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
-import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.LanguagePickerDialogFragment
@@ -75,38 +73,21 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         swipeRefreshLayout.setOnRefreshListener { refreshData() }
         ViewTools.setSwipeRefreshLayoutColors(requireActivity().theme, swipeRefreshLayout)
 
-        val layoutManager = AutoGridLayoutManager(
-            context, R.dimen.showgrid_columnWidth,
-            2, 2
-        ).apply {
-            spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                override fun getSpanSize(position: Int): Int {
-                    return when (adapter.getItemViewType(position)) {
-                        ShowsDiscoverAdapter.VIEW_TYPE_LINK -> 1
-                        ShowsDiscoverAdapter.VIEW_TYPE_HEADER -> spanCount
-                        ShowsDiscoverAdapter.VIEW_TYPE_SHOW -> 2
-                        else -> 0
-                    }
-                }
-            }
-        }
-
-        val recyclerView = binding.recyclerViewShowsDiscover
-        recyclerView.apply {
-            setHasFixedSize(true)
-            this.layoutManager = layoutManager
-        }
-
         adapter = ShowsDiscoverAdapter(
             requireContext(), discoverItemClickListener,
             TraktCredentials.get(requireContext()).hasCredentials(), true
         )
-        recyclerView.adapter = adapter
+        val recyclerView = binding.recyclerViewShowsDiscover
+        recyclerView.also {
+            it.setHasFixedSize(true)
+            it.layoutManager = adapter.layoutManager
+            it.adapter = adapter
+        }
 
         // observe results and loading state
         viewLifecycleOwner.lifecycleScope.launch {
             model.data.collectLatest {
-                adapter.updateSearchResults(it.searchResults)
+                adapter.updateSearchResults(it.searchResults, it.emptyText, !it.successful)
             }
         }
         viewLifecycleOwner.lifecycleScope.launch {
@@ -224,6 +205,10 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
                     TraktAddFragment.AddItemMenuItemClickListener(requireContext(), showTmdbId)
                 )
             }.show()
+        }
+
+        override fun onEmptyViewButtonClick() {
+            refreshData()
         }
     }
 
