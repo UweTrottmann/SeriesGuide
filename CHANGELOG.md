@@ -15,6 +15,8 @@ Version 2024.3
 --------------
 *in development*
 
+* 🔨 Widgets: also clip posters if larger background radius is used.
+
 #### 2024.3.4 🧪
 *2024-07-12*
 

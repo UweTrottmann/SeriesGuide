@@ -6,13 +6,16 @@
     android:layout_height="match_parent">
 
     <!-- Note: for light and dark theme background is set by code to support custom transparency. -->
+    <!-- clipToOutline as background radius might be bigger than the default 16dp the system clips to. -->
     <LinearLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/appwidget_background"
+        android:clipToOutline="true"
         android:orientation="vertical"
-        tools:ignore="UselessParent">
+        tools:ignore="UselessParent"
+        tools:targetApi="s">
 
         <LinearLayout
             android:id="@+id/containerWidgetHeader"
