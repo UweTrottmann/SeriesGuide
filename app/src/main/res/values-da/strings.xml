@@ -46,7 +46,7 @@
     <string name="empty_no_results">Ingen resultater</string>
     <!-- Status messages -->
     <string name="updated">Opdateret til nyeste version.</string>
-    <string name="updated_what_is_new">What\'s new</string>
+    <string name="updated_what_is_new">Nyheder</string>
     <string name="norating">ikke tilgængelig</string>
     <string name="unknown">ukendt</string>
     <string name="offline">Forbind til et netværk, og prøv igen.</string>

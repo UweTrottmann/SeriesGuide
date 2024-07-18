@@ -46,7 +46,7 @@
     <string name="empty_no_results">Ei tuloksia</string>
     <!-- Status messages -->
     <string name="updated">Päivitetty viimeisimpään versioon.</string>
-    <string name="updated_what_is_new">What\'s new</string>
+    <string name="updated_what_is_new">Mitä uutta</string>
     <string name="norating">puuttuu</string>
     <string name="unknown">tuntematon</string>
     <string name="offline">Muodosta yhteys verkkoon ja yritä uudelleen.</string>

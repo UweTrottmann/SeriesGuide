@@ -46,7 +46,7 @@
     <string name="empty_no_results">Cap resultat</string>
     <!-- Status messages -->
     <string name="updated">S\'ha actualitzat a la darrera versió.</string>
-    <string name="updated_what_is_new">What\'s new</string>
+    <string name="updated_what_is_new">Novetats</string>
     <string name="norating">cap</string>
     <string name="unknown">deconegut</string>
     <string name="offline">Conecteu-vos a la xarxa i torneu-ho a intentar.</string>
