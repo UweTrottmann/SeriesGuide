@@ -46,7 +46,7 @@
     <string name="empty_no_results">Inga resultat</string>
     <!-- Status messages -->
     <string name="updated">Uppdaterad till senaste versionen</string>
-    <string name="updated_details">Detaljer</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">saknas</string>
     <string name="unknown">okänd</string>
     <string name="offline">Ansluta till ett nätverk och försök igen.</string>

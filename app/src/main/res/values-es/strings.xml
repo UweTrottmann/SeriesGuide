@@ -46,7 +46,7 @@
     <string name="empty_no_results">Sin resultados</string>
     <!-- Status messages -->
     <string name="updated">Actualizado a la última versión.</string>
-    <string name="updated_details">Detalles</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">n/d</string>
     <string name="unknown">desconocido</string>
     <string name="offline">Conéctate a una red y vuelve a intentarlo.</string>

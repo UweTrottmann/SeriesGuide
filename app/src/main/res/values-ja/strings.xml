@@ -46,7 +46,7 @@
     <string name="empty_no_results">検索結果はありません</string>
     <!-- Status messages -->
     <string name="updated">最新バージョンに更新しました</string>
-    <string name="updated_details">詳細</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">なし</string>
     <string name="unknown">不明</string>
     <string name="offline">ネットワークに接続して、もう一度やり直してください</string>

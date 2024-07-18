@@ -52,7 +52,7 @@
 
     <!-- Status messages -->
     <string name="updated">Updated to latest version</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">n/a</string>
     <string name="unknown">unknown</string>
     <string name="offline">Connect to the internet, then try again</string>

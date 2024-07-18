@@ -46,7 +46,7 @@
     <string name="empty_no_results">Ne estas rezultoj</string>
     <!-- Status messages -->
     <string name="updated">Ĝisdatigita al plej lasta versio</string>
-    <string name="updated_details">Detaloj</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">sen takso</string>
     <string name="unknown">nekonata</string>
     <string name="offline">Konekti al interreto kaj provu denove</string>

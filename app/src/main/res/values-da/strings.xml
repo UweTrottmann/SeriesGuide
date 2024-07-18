@@ -46,7 +46,7 @@
     <string name="empty_no_results">Ingen resultater</string>
     <!-- Status messages -->
     <string name="updated">Opdateret til nyeste version.</string>
-    <string name="updated_details">Detaljer</string>
+    <string name="updated_what_is_new">Nyheder</string>
     <string name="norating">ikke tilgængelig</string>
     <string name="unknown">ukendt</string>
     <string name="offline">Forbind til et netværk, og prøv igen.</string>
@@ -240,7 +240,7 @@
     <!-- Popular -->
     <string name="title_popular">Populær</string>
     <string name="filter_year">Årstal</string>
-    <string name="filter_year_current">Current year</string>
+    <string name="filter_year_current">Indeværende år</string>
     <string name="filter_language">Sprog</string>
     <!-- Lists -->
     <string name="first_list">Første liste</string>

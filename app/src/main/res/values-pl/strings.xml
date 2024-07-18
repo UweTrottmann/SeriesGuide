@@ -46,7 +46,7 @@
     <string name="empty_no_results">Brak wyników</string>
     <!-- Status messages -->
     <string name="updated">Zaktualizowano do najnowszej wersji.</string>
-    <string name="updated_details">Szczegóły</string>
+    <string name="updated_what_is_new">Co nowego?</string>
     <string name="norating">brak danych</string>
     <string name="unknown">nieznana</string>
     <string name="offline">Spróbuj ponownie po podłączeniu do sieci.</string>
@@ -254,7 +254,7 @@
     <!-- Popular -->
     <string name="title_popular">Popularne</string>
     <string name="filter_year">Rok</string>
-    <string name="filter_year_current">Current year</string>
+    <string name="filter_year_current">Bieżący rok</string>
     <string name="filter_language">Język</string>
     <!-- Lists -->
     <string name="first_list">Pierwsza lista</string>

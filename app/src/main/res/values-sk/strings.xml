@@ -46,7 +46,7 @@
     <string name="empty_no_results">Žiadne výsledky</string>
     <!-- Status messages -->
     <string name="updated">Aktualizované na najnovšiu verziu.</string>
-    <string name="updated_details">Podrobnosti</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">Nedostupné</string>
     <string name="unknown">neznámy</string>
     <string name="offline">Pripojte sa k sieti a skúste to znova.</string>

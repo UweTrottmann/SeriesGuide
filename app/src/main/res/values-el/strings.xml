@@ -46,7 +46,7 @@
     <string name="empty_no_results">Κανένα αποτέλεσμα</string>
     <!-- Status messages -->
     <string name="updated">Ενημέρωση για την πιο πρόσφατη έκδοση.</string>
-    <string name="updated_details">Λεπτομέρειες</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">μη διαθέσιμο</string>
     <string name="unknown">άγνωστο</string>
     <string name="offline">Συνδεθείτε σε ένα δίκτυο και, ξανά προσπαθήστε.</string>

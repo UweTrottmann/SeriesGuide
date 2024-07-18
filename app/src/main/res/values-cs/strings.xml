@@ -46,7 +46,7 @@
     <string name="empty_no_results">Nenalezeno</string>
     <!-- Status messages -->
     <string name="updated">Aktualizováno na nejnovější verzi.</string>
-    <string name="updated_details">Detaily</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">n/a</string>
     <string name="unknown">neznámé</string>
     <string name="offline">Připojte se k síti a zkuste to znovu.</string>
@@ -71,10 +71,10 @@
     <string name="shout_hint">Napište komentář (anglicky, alespoň 5 slov)</string>
     <string name="shout_invalid">Váš komentář porušuje pravidla!</string>
     <string name="action_post">Odeslat</string>
-    <string name="action_edit_comment">Edit</string>
-    <string name="action_delete_comment">Delete</string>
-    <string name="confirmation_delete_comment">Delete this comment?</string>
-    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
+    <string name="action_edit_comment">Upravit</string>
+    <string name="action_delete_comment">Smazat</string>
+    <string name="confirmation_delete_comment">Smazat tento komentář?</string>
+    <string name="error_delete_comment">Komentář nebyl smazán, je příliš starý nebo má odpovědi</string>
     <string name="isspoiler">Vyzrazení děje!</string>
     <string name="no_shouts">Buďte první, kdo zakřičí!</string>
     <string name="refresh">Obnovit</string>
@@ -135,7 +135,7 @@
     <string name="state_on_watchlist">Chci vidět</string>
     <string name="state_favorite">Oblíbené</string>
     <!-- Shows -->
-    <string name="title_shows_added">Added</string>
+    <string name="title_shows_added">Přidáno</string>
     <string name="confirm_delete">Odstranit %s?</string>
     <string name="delete_error">Seriál nelze odstranit. Opakujte akci později.</string>
     <string name="delete_show">Odstranit</string>
@@ -216,22 +216,22 @@
         <item quantity="other">%d zbývajících</item>
     </plurals>
     <plurals name="remaining_of_total_episodes_plural">
-        <item quantity="one">%1$d of %2$d remaining</item>
-        <item quantity="few">%1$d of %2$d remaining</item>
-        <item quantity="many">%1$d of %2$d remaining</item>
+        <item quantity="one">%1$d z %2$d zbývá</item>
+        <item quantity="few">%1$d z %2$d zbývají</item>
+        <item quantity="many">%1$d z %2$d zbývá</item>
         <item quantity="other">%1$d of %2$d remaining</item>
     </plurals>
     <plurals name="skipped_episodes_plural">
-        <item quantity="one">%d skipped</item>
-        <item quantity="few">%d skipped</item>
-        <item quantity="many">%d skipped</item>
-        <item quantity="other">%d skipped</item>
+        <item quantity="one">%d přeskočeno</item>
+        <item quantity="few">%d přeskočeno</item>
+        <item quantity="many">%d přeskočeno</item>
+        <item quantity="other">%d přeskočeno</item>
     </plurals>
     <plurals name="collected_episodes_plural">
-        <item quantity="one">%d in collection</item>
-        <item quantity="few">%d in collection</item>
-        <item quantity="many">%d in collection</item>
-        <item quantity="other">%d in collection</item>
+        <item quantity="one">%d ve sbírce</item>
+        <item quantity="few">%d ve sbírce</item>
+        <item quantity="many">%d ve sbírce</item>
+        <item quantity="other">%d ve sbírce</item>
     </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Napište název seriálu</string>
@@ -254,7 +254,7 @@
     <!-- Popular -->
     <string name="title_popular">Populární</string>
     <string name="filter_year">Rok</string>
-    <string name="filter_year_current">Current year</string>
+    <string name="filter_year_current">Tento rok</string>
     <string name="filter_language">Jazyk</string>
     <!-- Lists -->
     <string name="first_list">První seznam</string>
@@ -348,7 +348,7 @@
     <string name="hexagon_signin_choose">Pokud používáte SeriesGuide na jiných zařízeních, která nepodporují přihlášení Google, zvolte e-mail pro přihlášení.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Odesílání na Trakt.</string>
-    <string name="checkin_success_trakt">Ohlášen u %s na traktu.</string>
+    <string name="checkin_success_trakt">Přihlášrno k %s na Trakt.</string>
     <string name="checkin_canceled_success_trakt">Zrušeno přihlášení na Trakt</string>
     <string name="traktcheckin_cancel">Přepsat</string>
     <string name="traktcheckin_inprogress">Již jste se ohlásil u jiné epizody nebo filmu. Buď přepište předchozí ohlášení, nebo počkejte %s a zkuste to znovu.</string>
@@ -359,7 +359,7 @@
     <string name="trakt_notice_not_exists">Nelze (zatím) synchronizovat s traktem.</string>
     <string name="trakt_error_limit_exceeded">Seznam Chci vidět je plný, nejdříve něco odeberte.</string>
     <!-- Connect trakt -->
-    <string name="trakt_required">To use this, connect to Trakt</string>
+    <string name="trakt_required">Chcete-li toto použít, připojte se k Trakt</string>
     <string name="connect_trakt">Připojit trakt.tv</string>
     <string name="trakt_reconnect">Připojit SeriesGuide k trakt.tv</string>
     <string name="trakt_reconnect_details">Zkontrolujte své nastavení trakt.tv</string>
@@ -373,7 +373,7 @@
     <string name="action_rate">Ohodnotit</string>
     <string name="ack_rated">Hodnocení odesláno</string>
     <string name="your_rating">Vaše hodnocení</string>
-    <string name="action_remove_rating">Remove rating</string>
+    <string name="action_remove_rating">Odstranit hodnocení</string>
     <string name="love">Úplný ninja!</string>
     <string name="hate">Odpad</string>
     <string name="rating2">Hrozný</string>
@@ -497,7 +497,7 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatická záloha</string>
     <string name="pref_autobackupsummary">Týdenní zálohování seriálů, seznamů a filmů do úložiště zařízení.</string>
-    <string name="autobackup_details">Tyto zálohy nebudou dostupné v případě, že bude aplikace znovu nainstalována, pokud nebude zapnuto zálohování dat na tomto zařízení (Android 6+). Vytvořte kopie, abyste je uchovali jiným způsobem.</string>
+    <string name="autobackup_details">Tyto zálohy nebudou dostupné v případě, že bude aplikace znovu nainstalována. Vytvořte kopie, abyste je uchovali jiným způsobem.</string>
     <string name="last_auto_backup">Poslední automatická záloha: %s</string>
     <string name="restore_auto_backup">Obnovení automatické zálohy</string>
     <string name="autobackup_failed">Poslední automatická záloha selhala</string>
@@ -509,7 +509,7 @@
     <string name="dismiss">Zrušit</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">%s nových epizod</string>
-    <string name="upcoming_display">Vyberte pro zobrazení nadcházejících seriálů</string>
+    <string name="upcoming_display">Vyberte pro zobrazení nadcházejících pořadů</string>
     <string name="pref_notifications">Upozornění</string>
     <string name="pref_notificationssummary">Upozorňovat na nové epizody</string>
     <string name="pref_notifications_settings">Nastavení oznámení</string>
