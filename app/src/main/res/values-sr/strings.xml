@@ -247,7 +247,7 @@
     <!-- Popular -->
     <string name="title_popular">Popularno</string>
     <string name="filter_year">Година</string>
-    <string name="filter_year_current">Current year</string>
+    <string name="filter_year_current">Актуелна година</string>
     <string name="filter_language">Језик</string>
     <!-- Lists -->
     <string name="first_list">Прва листа</string>

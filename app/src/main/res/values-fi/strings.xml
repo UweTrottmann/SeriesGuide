@@ -240,7 +240,7 @@
     <!-- Popular -->
     <string name="title_popular">Suositut</string>
     <string name="filter_year">Vuosi</string>
-    <string name="filter_year_current">Current year</string>
+    <string name="filter_year_current">Kuluva vuosi</string>
     <string name="filter_language">Kieli</string>
     <!-- Lists -->
     <string name="first_list">Ensimmäinen lista</string>
