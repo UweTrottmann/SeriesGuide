@@ -43,9 +43,10 @@
     <!-- Search -->
     <string name="clear_search_history">Keresési előzmények törlése</string>
     <string name="search_hint">Epizódok keresése</string>
+    <string name="empty_no_results">Nincs találat</string>
     <!-- Status messages -->
     <string name="updated">Frissítve a legújabb verzióra.</string>
-    <string name="updated_details">Részletek</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">n/a</string>
     <string name="unknown">ismeretlen</string>
     <string name="offline">Csatlakozz a hálózathoz és próbáld újra.</string>
@@ -70,6 +71,10 @@
     <string name="shout_hint">Írj megjegyzést (angolul, 5+ szóval)</string>
     <string name="shout_invalid">A megjegyzésed nem szabályszerű!</string>
     <string name="action_post">Hozzászólás</string>
+    <string name="action_edit_comment">Edit</string>
+    <string name="action_delete_comment">Delete</string>
+    <string name="confirmation_delete_comment">Delete this comment?</string>
+    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">Spoiler veszély!</string>
     <string name="no_shouts">Szólj hozzá elsőként!</string>
     <string name="refresh">Frissítés</string>
@@ -128,6 +133,7 @@
     <string name="state_on_watchlist">Figyelőlistán</string>
     <string name="state_favorite">Kedvencek</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">Biztosan törlöd a következőt: %s?</string>
     <string name="delete_error">Nem lehet eltávolítani. Próbáld később.</string>
     <string name="delete_show">Törlés</string>
@@ -216,7 +222,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Írj be egy sorozat címet</string>
     <string name="add_empty">Nincsenek sorozatok.</string>
-    <string name="no_results">Nincs találat, próbálkozz teljes szavakkal.</string>
     <string name="empty_show_search">Nem található a sorozat listádban</string>
     <string name="action_try_again">Próbáld újra</string>
     <string name="tvdb_error_does_not_exist">A sorozat (még) nem létezik a TMDB adatbázisban. Próbálkozzon később.</string>
@@ -230,12 +235,12 @@
     <string name="shows_collection">Gyűjtemény</string>
     <string name="watchlist">Figyelőlista</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Nincs találat</string>
     <string name="action_similar">Hasonló</string>
     <string name="title_similar_shows">Hasonló sorozatok</string>
     <!-- Popular -->
     <string name="title_popular">Népszerű</string>
     <string name="filter_year">Year</string>
+    <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">Első lista</string>
@@ -348,6 +353,7 @@
     <string name="action_rate">Értékelj</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Saját értékelésed</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">Totally ninja!</string>
     <string name="hate">Gyenge eresztés :(</string>
     <string name="rating2">Szörnyű</string>

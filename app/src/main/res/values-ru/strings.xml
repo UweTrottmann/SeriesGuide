@@ -43,9 +43,10 @@
     <!-- Search -->
     <string name="clear_search_history">Очистить историю поиска</string>
     <string name="search_hint">Поиск эпизодов</string>
+    <string name="empty_no_results">Нет результатов</string>
     <!-- Status messages -->
     <string name="updated">Обновлено до последней версии.</string>
-    <string name="updated_details">Детали</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">нет данных</string>
     <string name="unknown">Неизвестно</string>
     <string name="offline">Подключитесь к сети и повторите попытку</string>
@@ -70,6 +71,10 @@
     <string name="shout_hint">Введите комментарий (На английском, более 5 слов)</string>
     <string name="shout_invalid">Ваш комментарий не соответствует правилам! </string>
     <string name="action_post">Опубликовать</string>
+    <string name="action_edit_comment">Редактировать</string>
+    <string name="action_delete_comment">Удалить</string>
+    <string name="confirmation_delete_comment">Удалить этот комментарий?</string>
+    <string name="error_delete_comment">Комментарий не удалён, он слишком старый или имеет ответы</string>
     <string name="isspoiler">Спойлеры</string>
     <string name="no_shouts">Оставьте отзыв первым!</string>
     <string name="refresh">Обновить</string>
@@ -130,6 +135,7 @@
     <string name="state_on_watchlist">В списке просмотра</string>
     <string name="state_favorite">Избранное</string>
     <!-- Shows -->
+    <string name="title_shows_added">Добавлено</string>
     <string name="confirm_delete">Вы действительно хотите удалить %s?</string>
     <string name="delete_error">Невозможно удалить сериал. Повторите попытку позже.</string>
     <string name="delete_show">Удалить</string>
@@ -230,7 +236,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Введите название сериала</string>
     <string name="add_empty">Здесь нет сериалов.</string>
-    <string name="no_results">Результатов нет, попробуйте полное название.</string>
     <string name="empty_show_search">Не найдено в вашем списке</string>
     <string name="action_try_again">Повторить попытку</string>
     <string name="tvdb_error_does_not_exist">Сериал не существует (пока) на TMDB. Повторите попытку позже.</string>
@@ -244,12 +249,12 @@
     <string name="shows_collection">Коллекция</string>
     <string name="watchlist">Список просмотра</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Нет результатов</string>
     <string name="action_similar">Похожие</string>
     <string name="title_similar_shows">Похожие сериалы</string>
     <!-- Popular -->
     <string name="title_popular">Популярные</string>
     <string name="filter_year">Год</string>
+    <string name="filter_year_current">Текущий год</string>
     <string name="filter_language">Язык</string>
     <!-- Lists -->
     <string name="first_list">Первый список</string>
@@ -368,6 +373,7 @@
     <string name="action_rate">Oценить</string>
     <string name="ack_rated">Оценка отправлена</string>
     <string name="your_rating">Ваша оценка</string>
+    <string name="action_remove_rating">Удалить оценку</string>
     <string name="love">Супер!</string>
     <string name="hate">Фиг знает :(</string>
     <string name="rating2">Ужасно</string>

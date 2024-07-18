@@ -43,9 +43,10 @@
     <!-- Search -->
     <string name="clear_search_history">Wyczyść historię wyszukiwania</string>
     <string name="search_hint">Szukaj odcinków</string>
+    <string name="empty_no_results">Brak wyników</string>
     <!-- Status messages -->
     <string name="updated">Zaktualizowano do najnowszej wersji.</string>
-    <string name="updated_details">Szczegóły</string>
+    <string name="updated_what_is_new">Co nowego?</string>
     <string name="norating">brak danych</string>
     <string name="unknown">nieznana</string>
     <string name="offline">Spróbuj ponownie po podłączeniu do sieci.</string>
@@ -70,6 +71,10 @@
     <string name="shout_hint">Wpisz komentarz (j. angielski, >5 słów)</string>
     <string name="shout_invalid">Twój komentarz nie jest zgodny z zasadami!</string>
     <string name="action_post">Wyślij</string>
+    <string name="action_edit_comment">Edytuj</string>
+    <string name="action_delete_comment">Usuń</string>
+    <string name="confirmation_delete_comment">Usunąć ten komentarz?</string>
+    <string name="error_delete_comment">Komentarz nie został usunięty, jest zbyt stary lub zawiera odpowiedzi</string>
     <string name="isspoiler">Ostrzeżenie o spoilerach!</string>
     <string name="no_shouts">Krzycz jako pierwszy!</string>
     <string name="refresh">Odśwież</string>
@@ -130,6 +135,7 @@
     <string name="state_on_watchlist">Na liście do obejrzenia</string>
     <string name="state_favorite">Ulubione</string>
     <!-- Shows -->
+    <string name="title_shows_added">Dodano</string>
     <string name="confirm_delete">Czy na pewno chcesz usunąć %s?</string>
     <string name="delete_error">Nie można usunąć serialu. Spróbuj ponownie później.</string>
     <string name="delete_show">Usuń</string>
@@ -230,7 +236,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Wpisz nazwę serialu</string>
     <string name="add_empty">Brak seriali.</string>
-    <string name="no_results">Brak wyników. Uzupełnij zapytanie.</string>
     <string name="empty_show_search">Nie znaleziono na liście seriali</string>
     <string name="action_try_again">Spróbuj ponownie</string>
     <string name="tvdb_error_does_not_exist">Brak serialu na TMDB. Spróbuj ponownie później.</string>
@@ -244,12 +249,12 @@
     <string name="shows_collection">Kolekcja</string>
     <string name="watchlist">Do obejrzenia</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Brak wyników</string>
     <string name="action_similar">Podobne</string>
     <string name="title_similar_shows">Podobne seriale</string>
     <!-- Popular -->
     <string name="title_popular">Popularne</string>
     <string name="filter_year">Rok</string>
+    <string name="filter_year_current">Bieżący rok</string>
     <string name="filter_language">Język</string>
     <!-- Lists -->
     <string name="first_list">Pierwsza lista</string>
@@ -368,6 +373,7 @@
     <string name="action_rate">Oceń</string>
     <string name="ack_rated">Ocena wysłana</string>
     <string name="your_rating">Twoja ocena</string>
+    <string name="action_remove_rating">Usuń ocenę</string>
     <string name="love">Uwielbiam to!</string>
     <string name="hate">Słaby :(</string>
     <string name="rating2">Potworny</string>

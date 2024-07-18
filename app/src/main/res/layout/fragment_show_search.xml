@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/larger_padding"
+        app:emptyViewButtonIcon="@drawable/ic_add_white_24dp"
         app:emptyViewButtonText="@string/action_shows_add"
         app:emptyViewMessage="@string/empty_show_search" />
 

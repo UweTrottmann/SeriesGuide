@@ -1,10 +1,9 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2014-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.extensions
 
 import android.os.Bundle
-import android.view.MenuItem
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.api.SeriesGuideExtension
 import com.battlelancer.seriesguide.ui.BaseActivity
@@ -44,16 +43,6 @@ class ExtensionsConfigurationActivity : BaseActivity() {
         supportActionBar?.apply {
             setHomeAsUpIndicator(R.drawable.ic_clear_24dp)
             setDisplayHomeAsUpEnabled(true)
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressedDispatcher.onBackPressed()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
         }
     }
 

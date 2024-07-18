@@ -43,9 +43,10 @@
     <!-- Search -->
     <string name="clear_search_history">検索履歴を削除</string>
     <string name="search_hint">エピソードを検索</string>
+    <string name="empty_no_results">検索結果はありません</string>
     <!-- Status messages -->
     <string name="updated">最新バージョンに更新しました</string>
-    <string name="updated_details">詳細</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">なし</string>
     <string name="unknown">不明</string>
     <string name="offline">ネットワークに接続して、もう一度やり直してください</string>
@@ -70,6 +71,10 @@
     <string name="shout_hint">コメントを入力（英語で5語以上）</string>
     <string name="shout_invalid">ルールに従ってコメントしてください！</string>
     <string name="action_post">投稿</string>
+    <string name="action_edit_comment">Edit</string>
+    <string name="action_delete_comment">Delete</string>
+    <string name="confirmation_delete_comment">Delete this comment?</string>
+    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">ネタバレ注意！</string>
     <string name="no_shouts">最初にコメントしよう！</string>
     <string name="refresh">更新</string>
@@ -127,6 +132,7 @@
     <string name="state_on_watchlist">ウォッチリスト内</string>
     <string name="state_favorite">お気に入り</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">%s を削除してもよろしいですか？</string>
     <string name="delete_error">番組を削除できませんでした。後でもう一度やり直してください。</string>
     <string name="delete_show">削除</string>
@@ -209,7 +215,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">番組名を入力</string>
     <string name="add_empty">番組がありません</string>
-    <string name="no_results">検索結果はありません。完全な単語で試してください。</string>
     <string name="empty_show_search">番組リストにありません</string>
     <string name="action_try_again">もう一度やり直してください</string>
     <string name="tvdb_error_does_not_exist">番組は TMDB に存在しません。後でもう一度試してください。</string>
@@ -223,12 +228,12 @@
     <string name="shows_collection">コレクション</string>
     <string name="watchlist">ウォッチリスト</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">検索結果はありません</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">類似の番組</string>
     <!-- Popular -->
     <string name="title_popular">人気</string>
     <string name="filter_year">Year</string>
+    <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">最初のリスト</string>
@@ -338,6 +343,7 @@
     <string name="action_rate">作品を評価</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">あなたの評価</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">完全に忍者!</string>
     <string name="hate">つまらない :(</string>
     <string name="rating2">ひどい</string>

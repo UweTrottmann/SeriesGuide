@@ -95,6 +95,8 @@ android {
 
     productFlavors {
         create("pure") {
+            isDefault = true // Make Studio select this by default, it often resets (after updates, randomly)
+
             applicationId = "com.battlelancer.seriesguide"
             versionCode = sgVersionCode
             versionName = sgVersionName
@@ -142,6 +144,15 @@ android {
             // en_XA (LTR) and ar_XB (RTL) to test UI adjusting to unusual glyphs and long strings
             // keep disabled unless needed, slows down build
             isPseudoLocalesEnabled = false
+        }
+    }
+
+    packaging {
+        resources {
+            // google-auth-library-oauth2-http and google-auth-library-credentials include INDEX.LIST:
+            // Based on https://docs.oracle.com/en/java/javase/17/docs/specs/jar/jar.html#jar-index
+            // only used by network applications like applets, so safe to exclude.
+            excludes += "/META-INF/INDEX.LIST"
         }
     }
 }
@@ -230,7 +241,6 @@ dependencies {
 
     implementation(libs.androidutils)
     implementation(libs.photoview)
-    implementation(libs.taptargetview)
 
     implementation(libs.tmdb.java)
     implementation(libs.trakt.java) {
@@ -243,13 +253,13 @@ dependencies {
     implementation(libs.debugdrawer.actions)
     implementation(libs.debugdrawer.timber)
 
-    // Import the Firebase BoM
-    implementation(platform(libs.firebase))
+    // Note: can not use Firebase BOM as firebase-ui-auth has not updated in a while
     // Crashlytics
     implementation(libs.firebase.crashlytics)
     // Firebase Sign-In
     implementation(libs.firebase.ui.auth)
-    // Use later play-services-auth than firebase-ui-auth to get latest fixes.
+    // Use compatible later versions of firebase-ui-auth dependencies to get latest fixes.
+    implementation(libs.firebase.auth)
     implementation(libs.play.services.auth)
 
     // Amazon flavor specific

@@ -20,6 +20,7 @@
     <declare-styleable name="EmptyView">
         <attr name="emptyViewMessage" format="string" />
         <attr name="emptyViewButtonText" format="string" />
+        <attr name="emptyViewButtonIcon" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="FeatureStatusView">

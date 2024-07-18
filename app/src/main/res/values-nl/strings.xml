@@ -43,9 +43,10 @@
     <!-- Search -->
     <string name="clear_search_history">Verwijder zoekgeschiedenis</string>
     <string name="search_hint">Afleveringen zoeken</string>
+    <string name="empty_no_results">Geen resultaten</string>
     <!-- Status messages -->
     <string name="updated">Bijgewerkt naar de nieuwste versie</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_what_is_new">Wat is er nieuw</string>
     <string name="norating">n.v.t.</string>
     <string name="unknown">onbekend</string>
     <string name="offline">Maak verbinding met een netwerk en probeer het opnieuw.</string>
@@ -70,6 +71,10 @@
     <string name="shout_hint">Voer een opmerking in (in het Engels, meer dan 5 woorden)</string>
     <string name="shout_invalid">Uw reactie volgt de regels niet!</string>
     <string name="action_post">Verzenden</string>
+    <string name="action_edit_comment">Bewerken</string>
+    <string name="action_delete_comment">Verwijderen</string>
+    <string name="confirmation_delete_comment">Deze reactie verwijderen?</string>
+    <string name="error_delete_comment">Reactie niet verwijderd, het is te oud of heeft antwoorden</string>
     <string name="isspoiler">Spoiler waarschuwing!</string>
     <string name="no_shouts">Wees de eerste die shout!</string>
     <string name="refresh">Vernieuwen</string>
@@ -128,6 +133,7 @@
     <string name="state_on_watchlist">Op volglijst</string>
     <string name="state_favorite">Favoriet</string>
     <!-- Shows -->
+    <string name="title_shows_added">Toegevoegd</string>
     <string name="confirm_delete">Wilt u %s echt verwijderen?</string>
     <string name="delete_error">Kan show niet verwijderen. Probeer later opnieuw.</string>
     <string name="delete_show">Verwijderen</string>
@@ -216,7 +222,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Voer de naam van een serie in</string>
     <string name="add_empty">Er zijn hier geen series</string>
-    <string name="no_results">Geen resultaten, probeer complete woorden.</string>
     <string name="empty_show_search">Niet gevonden in uw serielijst</string>
     <string name="action_try_again">Nogmaals proberen</string>
     <string name="tvdb_error_does_not_exist">Serie bestaat (nog) niet op TMDB. Probeer later opnieuw.</string>
@@ -230,12 +235,12 @@
     <string name="shows_collection">Collectie</string>
     <string name="watchlist">Watchlist</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Geen resultaten</string>
     <string name="action_similar">Soortgelijk</string>
     <string name="title_similar_shows">Soortgelijke shows</string>
     <!-- Popular -->
     <string name="title_popular">Populair</string>
     <string name="filter_year">Jaar</string>
+    <string name="filter_year_current">Huidig jaar</string>
     <string name="filter_language">Taal</string>
     <!-- Lists -->
     <string name="first_list">Eerste lijst</string>
@@ -348,6 +353,7 @@
     <string name="action_rate">Beoordelen</string>
     <string name="ack_rated">Beoordeling verstuurd</string>
     <string name="your_rating">Uw beoordeling</string>
+    <string name="action_remove_rating">Beoordeling verwijderen</string>
     <string name="love">Zeer goed!</string>
     <string name="hate">Slappe hap :(</string>
     <string name="rating2">Verschrikkelijk</string>

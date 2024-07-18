@@ -1,11 +1,11 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2022-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.preferences
 
 import android.os.Bundle
-import android.view.MenuItem
-import androidx.activity.addCallback
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.FragmentTransaction
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.BaseThemeActivity
 import com.battlelancer.seriesguide.util.ThemeUtils
@@ -37,28 +37,25 @@ open class PreferencesActivityImpl : BaseThemeActivity() {
             }
         }
 
-        onBackPressedDispatcher.addCallback {
-            // Because the multi-screen support built into preferences library is not used,
-            // need to pop fragments manually
-            if (!supportFragmentManager.popBackStackImmediate()) {
-                finish()
-            }
+        // Because the multi-screen support built into preferences library is not used,
+        // need to pop fragments manually
+        onBackPressedDispatcher.addCallback(onBackPressedPopBackStack)
+        updateOnBackPressedPopBackStack()
+    }
+
+    private val onBackPressedPopBackStack = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            supportFragmentManager.popBackStackImmediate()
         }
+    }
+
+    private fun updateOnBackPressedPopBackStack() {
+        onBackPressedPopBackStack.isEnabled = supportFragmentManager.backStackEntryCount > 0
     }
 
     override fun setupActionBar() {
         super.setupActionBar()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressedDispatcher.onBackPressed()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     fun switchToSettings(settingsId: String) {
@@ -69,8 +66,11 @@ open class PreferencesActivityImpl : BaseThemeActivity() {
         }
         val ft = supportFragmentManager.beginTransaction()
         ft.replace(R.id.containerSettings, f)
+        // Keep transition for predictive back animation
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
         ft.addToBackStack(null)
         ft.commit()
+        updateOnBackPressedPopBackStack()
     }
 
     companion object {

@@ -43,9 +43,10 @@
     <!-- Search -->
     <string name="clear_search_history">清除搜尋記錄</string>
     <string name="search_hint">搜尋集數</string>
+    <string name="empty_no_results">無結果</string>
     <!-- Status messages -->
     <string name="updated">已更新到最新版本。</string>
-    <string name="updated_details">詳細資料</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">無</string>
     <string name="unknown">不明</string>
     <string name="offline">請連線到網路後再試一次</string>
@@ -70,6 +71,10 @@
     <string name="shout_hint">輸入評論 (英文，至少五個單字)</string>
     <string name="shout_invalid">你的評論內容未符合規則！</string>
     <string name="action_post">發布</string>
+    <string name="action_edit_comment">Edit</string>
+    <string name="action_delete_comment">Delete</string>
+    <string name="confirmation_delete_comment">Delete this comment?</string>
+    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">劇透警告</string>
     <string name="no_shouts">成為第一個留言者</string>
     <string name="refresh">重新整理</string>
@@ -127,6 +132,7 @@
     <string name="state_on_watchlist">已加入待看清單</string>
     <string name="state_favorite">最喜愛的</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">確定移除《%s》嗎？</string>
     <string name="delete_error">無法移除節目，請稍後再試。</string>
     <string name="delete_show">移除</string>
@@ -209,7 +215,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">輸入節目名稱</string>
     <string name="add_empty">無此節目</string>
-    <string name="no_results">查無結果，請嘗試完整單字。</string>
     <string name="empty_show_search">節目單中未找到</string>
     <string name="action_try_again">重試</string>
     <string name="tvdb_error_does_not_exist">TMDB 上沒有或尚未提供。請稍後再試。</string>
@@ -223,12 +228,12 @@
     <string name="shows_collection">收藏</string>
     <string name="watchlist">待看清單</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">無結果</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">類似節目</string>
     <!-- Popular -->
     <string name="title_popular">熱門</string>
     <string name="filter_year">Year</string>
+    <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">第一個清單</string>
@@ -338,6 +343,7 @@
     <string name="action_rate">評分</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">您的評分</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">太讚啦!</string>
     <string name="hate">太弱了:(</string>
     <string name="rating2">浪費人生</string>

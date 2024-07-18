@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2022-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.lists
 
@@ -8,7 +8,7 @@ import androidx.preference.PreferenceManager
 
 object ListsSettings {
 
-    const val KEY_LAST_ACTIVE_LISTS_TAB = "com.battlelancer.seriesguide.listsActiveTab"
+    const val KEY_LAST_ACTIVE_LISTS_TAB = "seriesguide.lists.selectedtab"
 
     /**
      * Return the position of the last selected lists tab.

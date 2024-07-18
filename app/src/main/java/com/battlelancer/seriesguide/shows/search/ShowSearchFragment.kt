@@ -1,22 +1,28 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2018, 2020-2024 Uwe Trottmann
+// Copyright 2018-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.search
 
 import android.app.SearchManager
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.GridView
 import android.widget.PopupMenu
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.databinding.FragmentShowSearchBinding
 import com.battlelancer.seriesguide.shows.ShowMenuItemClickListener
+import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverPagingActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.widgets.EmptyView
 import com.battlelancer.seriesguide.util.TabClickEvent
@@ -31,7 +37,6 @@ class ShowSearchFragment : BaseSearchFragment() {
     private var binding: FragmentShowSearchBinding? = null
     private val model by viewModels<ShowSearchViewModel>()
     private lateinit var adapter: ShowSearchAdapter
-    private lateinit var searchTriggerListener: SearchTriggerListener
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,16 +57,10 @@ class ShowSearchFragment : BaseSearchFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         (emptyView as EmptyView).setButtonClickListener {
-            searchTriggerListener.switchToDiscoverAndSearch()
+            navigateToAddShow()
         }
         adapter = ShowSearchAdapter(requireContext(), onItemClickListener).also {
             gridView.adapter = it
-        }
-
-        if (activity is SearchTriggerListener) {
-            searchTriggerListener = activity as SearchTriggerListener
-        } else {
-            throw IllegalArgumentException("Activity does not implement SearchTriggerListener")
         }
 
         model.shows.observe(viewLifecycleOwner) { shows ->
@@ -69,10 +68,40 @@ class ShowSearchFragment : BaseSearchFragment() {
             updateEmptyState(shows.isNullOrEmpty(), !model.searchTerm.value.isNullOrEmpty())
         }
 
+        requireActivity().addMenuProvider(
+            optionsMenuProvider,
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
+
         // load for given query (if just created)
         val args = initialSearchArgs
         if (args != null) {
             updateQuery(args)
+        }
+    }
+
+    private fun navigateToAddShow() {
+        model.searchTerm.value
+            .let { ShowsDiscoverPagingActivity.intentSearch(requireContext(), it) }
+            .also { startActivity(it) }
+    }
+
+    private val optionsMenuProvider = object : MenuProvider {
+
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            menuInflater.inflate(R.menu.shows_search_menu, menu)
+        }
+
+        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+            return when (menuItem.itemId) {
+                R.id.menu_action_shows_search_add -> {
+                    navigateToAddShow()
+                    true
+                }
+
+                else -> false
+            }
         }
     }
 

@@ -41,6 +41,7 @@ $RECYCLE.BIN/
 !.idea/codeStyleSettings.xml
 !.idea/codeStyles
 !.idea/copyright
+!.idea/scopes
 
 ### Gradle
 .gradle/

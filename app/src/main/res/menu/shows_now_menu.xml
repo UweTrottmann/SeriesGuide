@@ -3,7 +3,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- Search action of activity is left-most. -->
+    <item
+        android:id="@+id/menu_action_shows_now_search"
+        android:icon="@drawable/ic_search_white_24dp"
+        android:orderInCategory="0"
+        android:title="@string/search"
+        app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/menu_action_shows_now_refresh"
         android:icon="@drawable/ic_refresh_white_24dp"

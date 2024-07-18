@@ -43,9 +43,10 @@
     <!-- Search -->
     <string name="clear_search_history">Очистити історію пошуку</string>
     <string name="search_hint">Пошук серій</string>
+    <string name="empty_no_results">Немає результатів</string>
     <!-- Status messages -->
     <string name="updated">Оновлено до останньої версії.</string>
-    <string name="updated_details">Подробиці</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">Немає даних</string>
     <string name="unknown">Невідомо</string>
     <string name="offline">Перевірте підключення до мережі та повторіть спробу.</string>
@@ -70,6 +71,10 @@
     <string name="shout_hint">Введіть свій коментар (англійською, більше 5 слів)</string>
     <string name="shout_invalid">Ваш коментар не відповідає вимогам!</string>
     <string name="action_post">Опублікувати</string>
+    <string name="action_edit_comment">Змінити</string>
+    <string name="action_delete_comment">Видалити</string>
+    <string name="confirmation_delete_comment">Видалити цей коментар?</string>
+    <string name="error_delete_comment">Коментар не видалено, адже він занадто старий або має відповіді</string>
     <string name="isspoiler">Увага спойлер!</string>
     <string name="no_shouts">Залиште відгук першим!</string>
     <string name="refresh">Оновити</string>
@@ -130,6 +135,7 @@
     <string name="state_on_watchlist">В списку перегляду</string>
     <string name="state_favorite">Улюблене</string>
     <!-- Shows -->
+    <string name="title_shows_added">Додано</string>
     <string name="confirm_delete">Ви дійсно бажаєте видалити %s?</string>
     <string name="delete_error">He можливо видалити серіал. Спробуйте ще раз пізніше.</string>
     <string name="delete_show">Видалити</string>
@@ -230,7 +236,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Напишіть назву серіалу</string>
     <string name="add_empty">Тут немає жодного серіалу.</string>
-    <string name="no_results">Немає результатів, спробуйте завершити слова.</string>
     <string name="empty_show_search">Не знайдено у вашому списку серіалів</string>
     <string name="action_try_again">Спробувати ще раз</string>
     <string name="tvdb_error_does_not_exist">Цей серіал відсутній (поки що) на TMDB. Спробуйте пізніше.</string>
@@ -244,12 +249,12 @@
     <string name="shows_collection">Колекція</string>
     <string name="watchlist">Список перегляду</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Немає результатів</string>
     <string name="action_similar">Схожі</string>
     <string name="title_similar_shows">Подібні серіали</string>
     <!-- Popular -->
     <string name="title_popular">Популярне</string>
     <string name="filter_year">Рік</string>
+    <string name="filter_year_current">Поточний рік</string>
     <string name="filter_language">Мова</string>
     <!-- Lists -->
     <string name="first_list">Перший список</string>
@@ -368,6 +373,7 @@
     <string name="action_rate">Рейтинг</string>
     <string name="ack_rated">Рейтинг відправлено</string>
     <string name="your_rating">Ваш рейтинг</string>
+    <string name="action_remove_rating">Вилучити рейтинг</string>
     <string name="love">Супер!</string>
     <string name="hate">Слабо :(</string>
     <string name="rating2">Жахливо</string>

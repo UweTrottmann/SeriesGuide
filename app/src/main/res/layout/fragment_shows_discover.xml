@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipeRefreshLayoutShowsDiscover"
@@ -11,26 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
-            android:id="@+id/scrollViewShowsDiscover"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.battlelancer.seriesguide.ui.widgets.EmptyView
-                android:id="@+id/emptyViewShowsDiscover"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/larger_padding"
-                app:emptyViewButtonText="@string/action_try_again"
-                app:emptyViewMessage="@string/no_results" />
-
-        </ScrollView>
-
-        <!-- Add enough bottom padding so last item is above powered by text. -->
+        <!-- Add enough bottom padding so last item is above floating action button. -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewShowsDiscover"
             style="@style/Widget.SeriesGuide.RecyclerView"
@@ -40,29 +21,13 @@
             android:paddingLeft="@dimen/grid_item_margin_horizontal"
             android:paddingTop="8dp"
             android:paddingRight="@dimen/grid_item_margin_horizontal"
-            android:paddingBottom="40dp"
+            android:paddingBottom="88dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/item_addshow" />
 
-        <TextView
-            android:id="@+id/textViewPoweredByDiscover"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="4dp"
-            android:background="@drawable/background_protection_round"
-            android:padding="@dimen/default_padding"
-            android:text="@string/powered_by_tmdb"
-            android:textAppearance="@style/TextAppearance.SeriesGuide.Caption.Narrow"
-            android:textColor="@color/black_11"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

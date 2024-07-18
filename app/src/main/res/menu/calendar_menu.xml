@@ -3,7 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Search action of activity is left-most. -->
+    <item
+        android:id="@+id/menu_action_calendar_search"
+        android:icon="@drawable/ic_search_white_24dp"
+        android:orderInCategory="0"
+        android:title="@string/search"
+        app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/menu_calendar_visibility"
         android:icon="@drawable/ic_filter_white_24dp"

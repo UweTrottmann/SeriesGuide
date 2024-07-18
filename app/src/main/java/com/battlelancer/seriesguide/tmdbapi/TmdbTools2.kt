@@ -19,8 +19,8 @@ import com.github.michaelbull.result.runCatching
 import com.uwetrottmann.tmdb2.DiscoverTvBuilder
 import com.uwetrottmann.tmdb2.Tmdb
 import com.uwetrottmann.tmdb2.entities.AppendToResponse
-import com.uwetrottmann.tmdb2.entities.BaseTvShow
 import com.uwetrottmann.tmdb2.entities.Credits
+import com.uwetrottmann.tmdb2.entities.CrewMember
 import com.uwetrottmann.tmdb2.entities.DiscoverFilter
 import com.uwetrottmann.tmdb2.entities.DiscoverFilter.Separator.OR
 import com.uwetrottmann.tmdb2.entities.Person
@@ -38,6 +38,7 @@ import com.uwetrottmann.tmdb2.services.PeopleService
 import com.uwetrottmann.tmdb2.services.TvEpisodesService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import retrofit2.Call
 import retrofit2.awaitResponse
 import retrofit2.create
 import timber.log.Timber
@@ -138,22 +139,30 @@ class TmdbTools2 {
     /**
      * Returns null if network call fails.
      */
-    suspend fun searchShows(query: String, language: String, context: Context): List<BaseTvShow>? {
-        val tmdb = SgApp.getServicesComponent(context.applicationContext).tmdb()
+    private suspend fun <T> Call<T>.awaitResponse(action: String): T? {
         try {
-            val response = tmdb.searchService()
-                .tv(query, null, language, null, false)
-                .awaitResponse()
+            val response = awaitResponse()
             if (response.isSuccessful) {
-                val results = response.body()?.results
-                if (results != null) return results
+                return response.body()
             } else {
-                Errors.logAndReport("search shows", response)
+                Errors.logAndReport(action, response)
             }
         } catch (e: Exception) {
-            Errors.logAndReport("search shows", e)
+            Errors.logAndReport(action, e)
         }
         return null
+    }
+
+    suspend fun searchShows(
+        tmdb: Tmdb,
+        query: String,
+        language: String,
+        firstReleaseYear: Int?,
+        page: Int
+    ): TvShowResultsPage? {
+        return tmdb.searchService()
+            .tv(query, page, language, firstReleaseYear, false)
+            .awaitResponse("search shows")
     }
 
     private fun discoverTvBuilder(
@@ -215,17 +224,8 @@ class TmdbTools2 {
         )
             .air_date_lte(dateNow)
             .air_date_gte(dateOneWeekAgo)
-        try {
-            val response = builder.build().awaitResponse()
-            if (response.isSuccessful) {
-                return response.body()
-            } else {
-                Errors.logAndReport("get shows w new episodes", response)
-            }
-        } catch (e: Exception) {
-            Errors.logAndReport("get shows w new episodes", e)
-        }
-        return null
+        return builder.build()
+            .awaitResponse("get shows w new episodes")
     }
 
     suspend fun getPopularShows(
@@ -258,17 +258,8 @@ class TmdbTools2 {
                 .with_watch_providers(DiscoverFilter(OR, *watchProviderIds.toTypedArray()))
                 .watch_region(watchRegion)
         }
-        try {
-            val response = builder.build().awaitResponse()
-            if (response.isSuccessful) {
-                return response.body()
-            } else {
-                Errors.logAndReport("load popular shows", response)
-            }
-        } catch (e: Exception) {
-            Errors.logAndReport("load popular shows", e)
-        }
-        return null
+        return builder.build()
+            .awaitResponse("load popular shows")
     }
 
     fun getShowTrailerYoutubeId(
@@ -310,7 +301,10 @@ class TmdbTools2 {
     ): String? {
         // try to get a local trailer
         val trailer = getMovieTrailerYoutubeId(
-            context, movieTmdbId, MoviesSettings.getMoviesLanguage(context), "get local movie trailer"
+            context,
+            movieTmdbId,
+            MoviesSettings.getMoviesLanguage(context),
+            "get local movie trailer"
         )
         if (trailer != null) {
             return trailer
@@ -408,35 +402,49 @@ class TmdbTools2 {
         }
 
     suspend fun getCreditsForShow(context: Context, tmdbId: Int): Credits? {
-        try {
-            val response = SgApp.getServicesComponent(context).tmdb().tvService()
-                .credits(tmdbId, null)
-                .awaitResponse()
-            if (response.isSuccessful) {
-                return response.body()
-            } else {
-                Errors.logAndReport("get show credits", response)
+        return SgApp.getServicesComponent(context).tmdb()
+            .tvService()
+            .credits(tmdbId, null)
+            .awaitResponse("get show credits")
+            ?.also {
+                val crew = it.crew ?: return@also
+                crew.sortWith(crewComparator)
+                // After sorting, move creators first
+                val creators = mutableListOf<CrewMember>()
+                val otherCrew = crew.filterIndexed { _, crewMember ->
+                    if (crewMember.job == "Creator") {
+                        creators.add(crewMember)
+                        return@filterIndexed false
+                    }
+                    return@filterIndexed true
+                }
+                it.crew = creators + otherCrew
             }
-        } catch (e: Exception) {
-            Errors.logAndReport("get show credits", e)
-        }
-        return null
     }
 
     suspend fun getCreditsForMovie(context: Context, tmdbId: Int): Credits? {
-        try {
-            val response = SgApp.getServicesComponent(context).moviesService()
-                .credits(tmdbId)
-                .awaitResponse()
-            if (response.isSuccessful) {
-                return response.body()
-            } else {
-                Errors.logAndReport("get movie credits", response)
+        return SgApp.getServicesComponent(context)
+            .moviesService()
+            .credits(tmdbId)
+            .awaitResponse("get movie credits")
+            ?.also {
+                val crew = it.crew ?: return@also
+                crew.sortWith(crewComparator)
+                // After sorting, move directors and writers first
+                val directors = mutableListOf<CrewMember>()
+                val writers = mutableListOf<CrewMember>()
+                val otherCrew = crew.filterIndexed { _, crewMember ->
+                    if (crewMember.job == "Director") {
+                        directors.add(crewMember)
+                        return@filterIndexed false
+                    } else if (crewMember.department == "Writing") {
+                        writers.add(crewMember)
+                        return@filterIndexed false
+                    }
+                    return@filterIndexed true
+                }
+                it.crew = directors + writers + otherCrew
             }
-        } catch (e: Exception) {
-            Errors.logAndReport("get movie credits", e)
-        }
-        return null
     }
 
     suspend fun getPerson(
@@ -444,17 +452,9 @@ class TmdbTools2 {
         tmdbId: Int,
         language: String
     ): Person? {
-        try {
-            val response = peopleService.summary(tmdbId, language).awaitResponse()
-            if (response.isSuccessful) {
-                return response.body()
-            } else {
-                Errors.logAndReport("get person summary", response)
-            }
-        } catch (e: Exception) {
-            Errors.logAndReport("get person summary", e)
-        }
-        return null
+        return peopleService
+            .summary(tmdbId, language)
+            .awaitResponse("get person summary")
     }
 
     fun getSeason(
@@ -511,19 +511,11 @@ class TmdbTools2 {
         region: String,
         context: Context
     ): WatchProviders.CountryInfo? {
-        try {
-            val response = SgApp.getServicesComponent(context).tmdb().tvService()
-                .watchProviders(showTmdbId)
-                .awaitResponse()
-            if (response.isSuccessful) {
-                return response.body()?.results?.get(region)
-            } else {
-                Errors.logAndReport("providers show", response)
-            }
-        } catch (e: Exception) {
-            Errors.logAndReport("providers show", e)
-        }
-        return null
+        return SgApp.getServicesComponent(context).tmdb()
+            .tvService()
+            .watchProviders(showTmdbId)
+            .awaitResponse("providers show")
+            ?.results?.get(region)
     }
 
     suspend fun getWatchProvidersForMovie(
@@ -531,19 +523,11 @@ class TmdbTools2 {
         region: String,
         context: Context
     ): WatchProviders.CountryInfo? {
-        try {
-            val response = SgApp.getServicesComponent(context).tmdb().moviesService()
-                .watchProviders(movieTmdbId)
-                .awaitResponse()
-            if (response.isSuccessful) {
-                return response.body()?.results?.get(region)
-            } else {
-                Errors.logAndReport("providers movie", response)
-            }
-        } catch (e: Exception) {
-            Errors.logAndReport("providers show", e)
-        }
-        return null
+        return SgApp.getServicesComponent(context).tmdb()
+            .moviesService()
+            .watchProviders(movieTmdbId)
+            .awaitResponse("providers movie")
+            ?.results?.get(region)
     }
 
     suspend fun getImdbIdForEpisode(
@@ -552,21 +536,16 @@ class TmdbTools2 {
         seasonNumber: Int,
         episodeNumber: Int
     ): String? {
-        try {
-            val response = tvEpisodesService
-                .externalIds(showTmdbId, seasonNumber, episodeNumber)
-                .awaitResponse()
-            if (response.isSuccessful) {
-                return response.body()?.imdb_id
-            } else {
-                Errors.logAndReport("providers movie", response)
-            }
-        } catch (e: Exception) {
-            Errors.logAndReport("providers show", e)
-        }
-        return null
+        return tvEpisodesService
+            .externalIds(showTmdbId, seasonNumber, episodeNumber)
+            .awaitResponse("episode imdb id")
+            ?.imdb_id
     }
 
+    companion object {
+        // In UI currently not grouping by department, so for easier scanning only sort by job
+        private val crewComparator: Comparator<CrewMember> = compareBy({ it.job }, { it.name })
+    }
 }
 
 sealed class TmdbError

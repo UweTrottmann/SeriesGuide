@@ -43,9 +43,10 @@
     <!-- Search -->
     <string name="clear_search_history">Rensa sökhistorik</string>
     <string name="search_hint">Sök avsnitt</string>
+    <string name="empty_no_results">Inga resultat</string>
     <!-- Status messages -->
     <string name="updated">Uppdaterad till senaste versionen</string>
-    <string name="updated_details">Detaljer</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">saknas</string>
     <string name="unknown">okänd</string>
     <string name="offline">Ansluta till ett nätverk och försök igen.</string>
@@ -70,6 +71,10 @@
     <string name="shout_hint">Skriv en kommentar (engelska, 5+ ord)</string>
     <string name="shout_invalid">Din kommentar följer inte reglerna!</string>
     <string name="action_post">Skicka</string>
+    <string name="action_edit_comment">Edit</string>
+    <string name="action_delete_comment">Delete</string>
+    <string name="confirmation_delete_comment">Delete this comment?</string>
+    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">Varning för spoiler!</string>
     <string name="no_shouts">Bli först att ropa!</string>
     <string name="refresh">Ladda om</string>
@@ -128,6 +133,7 @@
     <string name="state_on_watchlist">På bevakningslistan</string>
     <string name="state_favorite">Favorit</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">Vill du verkligen ta bort %s?</string>
     <string name="delete_error">Det gick inte att ta bort program. Försök igen senare.</string>
     <string name="delete_show">Ta bort</string>
@@ -216,7 +222,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Skriv ett serienamn</string>
     <string name="add_empty">Det finns inga serier här.</string>
-    <string name="no_results">Inga resultat, försök med hela ord.</string>
     <string name="empty_show_search">Hittades inte i din serielista</string>
     <string name="action_try_again">Försök igen</string>
     <string name="tvdb_error_does_not_exist">Serien finns inte (ännu) på TMDB. Försök igen senare.</string>
@@ -230,12 +235,12 @@
     <string name="shows_collection">Samling</string>
     <string name="watchlist">Bevakningslista</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Inga resultat</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Liknande program</string>
     <!-- Popular -->
     <string name="title_popular">Populärt</string>
     <string name="filter_year">Year</string>
+    <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">Första listan</string>
@@ -348,6 +353,7 @@
     <string name="action_rate">Betygsätt</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Ditt betyg</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">Helt ninja!</string>
     <string name="hate">Svag sås :(</string>
     <string name="rating2">Usel</string>

@@ -1,11 +1,10 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2014-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.people
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.ViewGroup
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ActivityPeopleBinding
@@ -102,16 +101,6 @@ class PeopleActivity : BaseActivity(), OnShowPersonListener {
             actionBar.setTitle(
                 if (peopleType == PeopleType.CAST) R.string.movie_cast else R.string.movie_crew
             )
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressedDispatcher.onBackPressed()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
         }
     }
 

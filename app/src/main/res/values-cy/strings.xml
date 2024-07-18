@@ -43,9 +43,10 @@
     <!-- Search -->
     <string name="clear_search_history">Hanes chwilio clir</string>
     <string name="search_hint">Chwilio penodau</string>
+    <string name="empty_no_results">Dim canlyniadau</string>
     <!-- Status messages -->
     <string name="updated">Wedi\'i ddiweddaru i\'r fersiwn ddiweddaraf</string>
-    <string name="updated_details">Manylion</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">Ddim yn berthnasol</string>
     <string name="unknown">anhysbys</string>
     <string name="offline">Cysylltu â rhwydwaith, yna ceisiwch eto</string>
@@ -70,12 +71,16 @@
     <string name="shout_hint">Teipiwch sylw (Saesneg, 5+ gair)</string>
     <string name="shout_invalid">Nid yw eich sylw yn dilyn y rheolau!</string>
     <string name="action_post">Post</string>
+    <string name="action_edit_comment">Edit</string>
+    <string name="action_delete_comment">Delete</string>
+    <string name="confirmation_delete_comment">Delete this comment?</string>
+    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">Rhybuddiwr difetha!</string>
     <string name="no_shouts">Byddwch y cyntaf i wneud sylw!</string>
     <string name="refresh">Adnewyddu</string>
     <plurals name="replies_plural">
-        <item quantity="one">%d ateb</item>
         <item quantity="zero">%d ateb</item>
+        <item quantity="one">%d ateb</item>
         <item quantity="two">%d atebion</item>
         <item quantity="few">%d atebion</item>
         <item quantity="many">%d atebion</item>
@@ -132,6 +137,7 @@
     <string name="state_on_watchlist">Ar y rhestr wylio</string>
     <string name="state_favorite">Hoff</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">Tynnu %s?</string>
     <string name="delete_error">Methu cael gwared ar sioe. Rhowch gynnig arall arni yn nes ymlaen.</string>
     <string name="delete_show">Tynnu</string>
@@ -244,7 +250,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Teipiwch enw sioe</string>
     <string name="add_empty">Nid oes unrhyw sioeau yma</string>
-    <string name="no_results">Dim canlyniadau, rhowch gynnig ar eiriau cyflawn</string>
     <string name="empty_show_search">Heb ei ddarganfod yn eich rhestr sioeau</string>
     <string name="action_try_again">Ceisio eto</string>
     <string name="tvdb_error_does_not_exist">Nid yw\'r sioe yn bodoli (eto) ar TMDB. Rhowch gynnig arall arni yn nes ymlaen.</string>
@@ -258,12 +263,12 @@
     <string name="shows_collection">Casgliad</string>
     <string name="watchlist">Rhestr wylio</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Dim canlyniadau</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Sioeau tebyg</string>
     <!-- Popular -->
     <string name="title_popular">Poblogaidd</string>
     <string name="filter_year">Year</string>
+    <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">Rhestr gyntaf</string>
@@ -316,8 +321,8 @@
     <string name="stats_in_collection_format">%d mewn casgliad</string>
     <string name="movies_watched_format">%s gwylio</string>
     <plurals name="days_plural">
-        <item quantity="one">%d diwrnod</item>
         <item quantity="zero">%d diwrnod</item>
+        <item quantity="one">%d diwrnod</item>
         <item quantity="two">%d diwrnod</item>
         <item quantity="few">%d diwrnod</item>
         <item quantity="many">%d diwrnod</item>
@@ -388,6 +393,7 @@
     <string name="action_rate">Cyfradd</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Eich sgôr</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">Hollol ninja!</string>
     <string name="hate">Saws Gwan :(</string>
     <string name="rating2">Ofnadwy</string>

@@ -11,6 +11,68 @@ Release notes
 
 Releases marked with 🧪 were released on [the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
 
+Version 2024.3
+--------------
+*2024-07-18*
+
+* 🔧 Shows: move Discover screen to top-level.
+* 🌟 Shows: add permanent year and language filters to Discover tab.
+* 🌟 Discover: add current year option to year filter.
+* 🔧 Shows: display all search results, support to filter by release year.
+* 🔧 Movies: move Watchlist next to Discover so order is similar to Shows screen.
+* 🌟 Trakt: support to edit and delete (new) comments.
+* 🌟 Trakt: support to remove a rating.
+
+#### 2024.3.5
+*2024-07-18*
+
+* 🔨 Widgets: content does not longer protrude from the widget.
+* 🔧 More: add link to what's new.
+* 🔧 Re-set remembered selected tab for shows, lists and movies.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 2024.3.4 🧪
+*2024-07-12*
+
+* 🔧 Android 15: turn on predictive back animation.
+* 🌟 Shows: add permanent year and language filters to Discover tab.
+* 🌟 Discover: add current year option to year filter.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 2024.3.3 🧪
+*2024-07-04*
+
+* 🔨 Calendar: do not crash when scrolling and data changes.
+* 🔨 Images: on Android 7.0 or older, images load correctly again.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 2024.3.2 🧪
+*2024-06-14*
+
+* 🔧 Shows: move Discover tab first, drop add show action, add search action, rename Shows to Added.
+* 🔧 Movies: move Watchlist next to Discover so order is similar to Shows screen.
+* 🔧 Shows: restore search option on history and calendar tabs.
+* 🔧 Show search: add Add show action, passes search query if there is one.
+* 🔨 Discover: properly display no results or no connection messages.
+* 🔨 Lists: hide set watched action when there is no next episode.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 2024.3.1 🧪
+*2024-06-07*
+
+* 🔧 Shows: move Discover screen to top-level.
+* 🔧 Shows: display all search results, filter by release year.
+* 🔧 Crew: display directors and writers first, then in order of job title.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 2024.3.0 🧪
+*2024-05-24*
+
+* 🌟 Trakt ratings: support removing a rating.
+* 🌟 Trakt comments: edit and delete comments.
+* 🔨 Trakt comments: refresh will actually show the latest comments, including after posting one.
+* 📝 Latest user interface translations from Crowdin.
+
 Version 2024.2
 --------------
 *2024-05-10*

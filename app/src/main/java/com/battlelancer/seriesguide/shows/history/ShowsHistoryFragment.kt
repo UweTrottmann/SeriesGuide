@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2014-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.history
 
@@ -24,16 +24,17 @@ import androidx.loader.content.Loader
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.databinding.FragmentNowBinding
+import com.battlelancer.seriesguide.databinding.FragmentHistoryBinding
 import com.battlelancer.seriesguide.history.HistoryActivity
 import com.battlelancer.seriesguide.jobs.episodes.EpisodeWatchedJob
 import com.battlelancer.seriesguide.shows.ShowsActivityImpl
 import com.battlelancer.seriesguide.shows.ShowsActivityViewModel
 import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
-import com.battlelancer.seriesguide.shows.history.NowAdapter.NowItem
+import com.battlelancer.seriesguide.shows.history.ShowsHistoryAdapter.Item
 import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceCompletedEvent
+import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.util.ViewTools
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -42,20 +43,21 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 /**
- * Displays recently watched episodes and recent episodes from friends (if connected to trakt).
+ * Displays recently watched episodes. If connected to Trakt, replaced with recently watched
+ * episodes from Trakt profile and latest watched episode of Trakt friends.
  */
-class ShowsNowFragment : Fragment() {
+class ShowsHistoryFragment : Fragment() {
 
-    private var binding: FragmentNowBinding? = null
+    private var binding: FragmentHistoryBinding? = null
 
-    private lateinit var adapter: NowAdapter
+    private lateinit var adapter: ShowsHistoryAdapter
     private var isLoadingRecentlyWatched = false
     private var isLoadingFriends = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = FragmentNowBinding.inflate(inflater, container, false)
+    ): View = FragmentHistoryBinding.inflate(inflater, container, false)
         .also { binding = it }
         .root
 
@@ -81,7 +83,7 @@ class ShowsNowFragment : Fragment() {
         binding.includeSnackbar.buttonSnackbar.setOnClickListener { refreshStream() }
 
         // define dataset
-        adapter = NowAdapter(requireContext(), itemClickListener)
+        adapter = ShowsHistoryAdapter(requireContext(), itemClickListener)
         adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onChanged() {
                 updateEmptyState()
@@ -106,7 +108,7 @@ class ShowsNowFragment : Fragment() {
                 }
                 // make headers and more links span all columns
                 val type = adapter.getItem(position).type
-                return if (type == NowAdapter.ItemType.HEADER || type == NowAdapter.ItemType.MORE_LINK) {
+                return if (type == ShowsHistoryAdapter.ItemType.HEADER || type == ShowsHistoryAdapter.ItemType.MORE_LINK) {
                     spanCount
                 } else {
                     1
@@ -121,7 +123,7 @@ class ShowsNowFragment : Fragment() {
             .scrollTabToTopLiveData
             .observe(viewLifecycleOwner) { tabPosition: Int? ->
                 if (tabPosition != null
-                    && tabPosition == ShowsActivityImpl.Tab.NOW.index) {
+                    && tabPosition == ShowsActivityImpl.Tab.HISTORY.index) {
                     binding.recyclerViewNow.smoothScrollToPosition(0)
                 }
             }
@@ -200,11 +202,19 @@ class ShowsNowFragment : Fragment() {
 
         override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
             val itemId = menuItem.itemId
-            if (itemId == R.id.menu_action_shows_now_refresh) {
-                refreshStream()
-                return true
+            return when (itemId) {
+                R.id.menu_action_shows_now_search -> {
+                    startActivity(Intent(requireContext(), SearchActivity::class.java))
+                    true
+                }
+
+                R.id.menu_action_shows_now_refresh -> {
+                    refreshStream()
+                    true
+                }
+
+                else -> false
             }
-            return false
         }
     }
 
@@ -329,13 +339,13 @@ class ShowsNowFragment : Fragment() {
         }
     }
 
-    private val itemClickListener: NowAdapter.ItemClickListener =
-        object : NowAdapter.ItemClickListener {
+    private val itemClickListener: ShowsHistoryAdapter.ItemClickListener =
+        object : ShowsHistoryAdapter.ItemClickListener {
             override fun onItemClick(view: View, position: Int) {
                 val item = adapter.getItem(position)
 
                 // more history link?
-                if (item.type == NowAdapter.ItemType.MORE_LINK) {
+                if (item.type == ShowsHistoryAdapter.ItemType.MORE_LINK) {
                     startActivity(
                         Intent(activity, HistoryActivity::class.java).putExtra(
                             HistoryActivity.InitBundle.HISTORY_TYPE,
@@ -356,22 +366,22 @@ class ShowsNowFragment : Fragment() {
             }
         }
 
-    private val recentlyLocalCallbacks: LoaderManager.LoaderCallbacks<MutableList<NowItem>> =
-        object : LoaderManager.LoaderCallbacks<MutableList<NowItem>> {
-            override fun onCreateLoader(id: Int, args: Bundle?): Loader<MutableList<NowItem>> {
+    private val recentlyLocalCallbacks: LoaderManager.LoaderCallbacks<MutableList<Item>> =
+        object : LoaderManager.LoaderCallbacks<MutableList<Item>> {
+            override fun onCreateLoader(id: Int, args: Bundle?): Loader<MutableList<Item>> {
                 return RecentlyWatchedLoader(requireContext())
             }
 
             override fun onLoadFinished(
-                loader: Loader<MutableList<NowItem>>,
-                data: MutableList<NowItem>
+                loader: Loader<MutableList<Item>>,
+                data: MutableList<Item>
             ) {
                 adapter.setRecentlyWatched(data)
                 isLoadingRecentlyWatched = false
                 showProgressBar(false)
             }
 
-            override fun onLoaderReset(loader: Loader<MutableList<NowItem>>) {
+            override fun onLoaderReset(loader: Loader<MutableList<Item>>) {
                 // clear existing data
                 adapter.setRecentlyWatched(null)
             }
@@ -402,22 +412,22 @@ class ShowsNowFragment : Fragment() {
             }
         }
 
-    private val traktFriendsHistoryCallbacks: LoaderManager.LoaderCallbacks<List<NowItem>?> =
-        object : LoaderManager.LoaderCallbacks<List<NowItem>?> {
-            override fun onCreateLoader(id: Int, args: Bundle?): Loader<List<NowItem>?> {
+    private val traktFriendsHistoryCallbacks: LoaderManager.LoaderCallbacks<List<Item>?> =
+        object : LoaderManager.LoaderCallbacks<List<Item>?> {
+            override fun onCreateLoader(id: Int, args: Bundle?): Loader<List<Item>?> {
                 return TraktFriendsEpisodeHistoryLoader(requireContext())
             }
 
             override fun onLoadFinished(
-                loader: Loader<List<NowItem>?>,
-                data: List<NowItem>?
+                loader: Loader<List<Item>?>,
+                data: List<Item>?
             ) {
                 adapter.setFriendsRecentlyWatched(data)
                 isLoadingFriends = false
                 showProgressBar(false)
             }
 
-            override fun onLoaderReset(loader: Loader<List<NowItem>?>) {
+            override fun onLoaderReset(loader: Loader<List<Item>?>) {
                 // clear existing data
                 adapter.setFriendsRecentlyWatched(null)
             }

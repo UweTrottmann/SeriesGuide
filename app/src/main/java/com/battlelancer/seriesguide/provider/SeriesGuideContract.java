@@ -755,7 +755,7 @@ public class SeriesGuideContract {
         String SORT_TITLE_NOARTICLE = TITLE_NOARTICLE + " COLLATE UNICODE ASC";
         String SORT_STATUS = STATUS + " DESC";
         String SORT_LATEST_EPISODE_THEN_STATUS = NEXTAIRDATEMS + " DESC," + SORT_STATUS;
-
+        String SORT_LAST_WATCHED = LASTWATCHED_MS + " DESC";
     }
 
     public interface SgSeason2Columns extends BaseColumns {
@@ -956,12 +956,6 @@ public class SeriesGuideContract {
 
         String SORT_UPCOMING = FIRSTAIREDMS + " ASC," + SgShow2Columns.SORT_TITLE + "," + NUMBER + " ASC";
         String SORT_RECENT = FIRSTAIREDMS + " DESC," + SgShow2Columns.SORT_TITLE + "," + NUMBER + " DESC";
-
-    }
-
-    interface EpisodeSearchColumns {
-
-        String _DOCID = "docid";
 
     }
 

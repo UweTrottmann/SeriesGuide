@@ -125,6 +125,12 @@ class SgApp : Application() {
         const val RELEASE_VERSION_72_0_1 = 2107201
 
         /**
+         * Reset selected shows and movies tab as there is
+         * a new discover tab for shows and the order has changed for movies.
+         */
+        const val RELEASE_VERSION_2024_3_5 = 21240305
+
+        /**
          * The content authority used to identify the SeriesGuide [android.content.ContentProvider].
          */
         const val CONTENT_AUTHORITY = BuildConfig.APPLICATION_ID + ".provider"

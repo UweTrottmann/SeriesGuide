@@ -137,7 +137,7 @@ data class SgShow2(
     /**
      * User rating. Encoded as integer.
      * ```
-     * Range:   1-10
+     * Range:   0-10
      * Default: null
      * ```
      */

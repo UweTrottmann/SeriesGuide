@@ -1,10 +1,9 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2016-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.traktapi;
 
 import androidx.annotation.NonNull;
-import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.TraktV2Interceptor;
 import dagger.Lazy;
 import java.io.IOException;
@@ -18,13 +17,14 @@ import okhttp3.Response;
  */
 public class SgTraktInterceptor implements Interceptor {
 
-    private final Lazy<TraktV2> trakt;
+    private final Lazy<SgTrakt> trakt;
 
     @Inject
-    public SgTraktInterceptor(Lazy<TraktV2> trakt) {
+    public SgTraktInterceptor(Lazy<SgTrakt> trakt) {
         this.trakt = trakt;
     }
 
+    @NonNull
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
         return TraktV2Interceptor.handleIntercept(chain, trakt.get().apiKey(),

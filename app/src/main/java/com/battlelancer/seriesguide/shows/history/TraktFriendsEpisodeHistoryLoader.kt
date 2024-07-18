@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2015-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.history
 
@@ -9,7 +9,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp.Companion.getServicesComponent
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.DisplaySettings
-import com.battlelancer.seriesguide.shows.history.NowAdapter.NowItem
+import com.battlelancer.seriesguide.shows.history.ShowsHistoryAdapter.Item
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.util.ImageTools
@@ -24,9 +24,9 @@ import com.uwetrottmann.trakt5.enums.HistoryType
  * Loads Trakt friends, then returns the most recently watched episode for each friend.
  */
 internal class TraktFriendsEpisodeHistoryLoader(context: Context) :
-    GenericSimpleLoader<List<NowItem>?>(context) {
+    GenericSimpleLoader<List<Item>?>(context) {
 
-    override fun loadInBackground(): List<NowItem>? {
+    override fun loadInBackground(): List<Item>? {
         if (!TraktCredentials.get(context).hasCredentials()) {
             return null
         }
@@ -46,7 +46,7 @@ internal class TraktFriendsEpisodeHistoryLoader(context: Context) :
         }
 
         // add last watched episode for each friend
-        val episodes = mutableListOf<NowItem>()
+        val episodes = mutableListOf<Item>()
         val tmdbIdsToPoster = services.showTools().getTmdbIdsToPoster()
         val episodeHelper = SgRoomDatabase.getInstance(context).sgEpisode2Helper()
         val hideTitle = DisplaySettings.preventSpoilers(context)
@@ -108,7 +108,7 @@ internal class TraktFriendsEpisodeHistoryLoader(context: Context) :
                 episodeHelper.getEpisodeIdByTmdbId(episodeTmdbIdOrNull)
             } else 0
 
-            val nowItem = NowItem()
+            val item = Item()
                 .displayData(
                     watchedAt.toInstant().toEpochMilli(),
                     show.title,
@@ -117,17 +117,17 @@ internal class TraktFriendsEpisodeHistoryLoader(context: Context) :
                 )
                 .episodeIds(localEpisodeIdOrZero, showTmdbId ?: 0)
                 .friend(user.username, avatar, entry.action)
-            episodes.add(nowItem)
+            episodes.add(item)
         }
 
         return if (episodes.isEmpty()) {
             emptyList()
         } else {
             // estimate list size
-            val items: MutableList<NowItem> = ArrayList(episodes.size + 1)
+            val items: MutableList<Item> = ArrayList(episodes.size + 1)
             // add header
             items.add(
-                NowItem().header(context.getString(R.string.friends_recently), true)
+                Item().header(context.getString(R.string.friends_recently), true)
             )
             // add latest first
             episodes.sortByDescending { it.timestamp }

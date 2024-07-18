@@ -43,9 +43,10 @@
     <!-- Search -->
     <string name="clear_search_history">Viŝi serĉhistorion</string>
     <string name="search_hint">Serĉi epizodojn</string>
+    <string name="empty_no_results">Ne estas rezultoj</string>
     <!-- Status messages -->
     <string name="updated">Ĝisdatigita al plej lasta versio</string>
-    <string name="updated_details">Detaloj</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">sen takso</string>
     <string name="unknown">nekonata</string>
     <string name="offline">Konekti al interreto kaj provu denove</string>
@@ -70,6 +71,10 @@
     <string name="shout_hint">Tajpu komenton (la Angla, 5+ vortoj)</string>
     <string name="shout_invalid">Via komento ne sekvas la regulojn!</string>
     <string name="action_post">Sendi</string>
+    <string name="action_edit_comment">Edit</string>
+    <string name="action_delete_comment">Delete</string>
+    <string name="confirmation_delete_comment">Delete this comment?</string>
+    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">Averto pri malkaŝo de intrigo!</string>
     <string name="no_shouts">Estu la unuan kiu komentos!</string>
     <string name="refresh">Aktualigi</string>
@@ -128,6 +133,7 @@
     <string name="state_on_watchlist">Sur spektolisto</string>
     <string name="state_favorite">Plej ŝatata</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">Ĉu forigi %s?</string>
     <string name="delete_error">Could not remove show. Try again later.</string>
     <string name="delete_show">Forigi</string>
@@ -216,7 +222,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Tajpu televidaĵan nomon</string>
     <string name="add_empty">Estas neniu televidaĵo ĉi tie</string>
-    <string name="no_results">Neniu rezulto, provu tutajn vortojn</string>
     <string name="empty_show_search">Neniu trovita en via televidaĵa listo</string>
     <string name="action_try_again">Reprovi</string>
     <string name="tvdb_error_does_not_exist">La televidaĵo ne ekzistas (ankoraŭ) je TMDB. Reprovu poste.</string>
@@ -230,12 +235,12 @@
     <string name="shows_collection">Kolekto</string>
     <string name="watchlist">Spektolisto</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Ne estas rezultoj</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Similaj televidaĵoj</string>
     <!-- Popular -->
     <string name="title_popular">Popularaj</string>
     <string name="filter_year">Year</string>
+    <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">Unua listo</string>
@@ -348,6 +353,7 @@
     <string name="action_rate">Taksi</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Via takso</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">Imponega</string>
     <string name="hate">Perdis tempon :(</string>
     <string name="rating2">Terura</string>

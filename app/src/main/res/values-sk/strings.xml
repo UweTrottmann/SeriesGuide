@@ -43,9 +43,10 @@
     <!-- Search -->
     <string name="clear_search_history">Vymazať históriu vyhľadávania</string>
     <string name="search_hint">Hľadať epizódy</string>
+    <string name="empty_no_results">Žiadne výsledky</string>
     <!-- Status messages -->
     <string name="updated">Aktualizované na najnovšiu verziu.</string>
-    <string name="updated_details">Podrobnosti</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">Nedostupné</string>
     <string name="unknown">neznámy</string>
     <string name="offline">Pripojte sa k sieti a skúste to znova.</string>
@@ -70,6 +71,10 @@
     <string name="shout_hint">Napíšte komentár (po anglicky, aspoň 5 slov)</string>
     <string name="shout_invalid">Váš komentár nezodpovedá pravidlám!</string>
     <string name="action_post">Odoslať</string>
+    <string name="action_edit_comment">Upraviť</string>
+    <string name="action_delete_comment">Vymazať</string>
+    <string name="confirmation_delete_comment">Vymazať tento komentár?</string>
+    <string name="error_delete_comment">Komentár nebol odstránený, je príliš starý alebo obsahuje odpovede</string>
     <string name="isspoiler">Prezradenie deja!</string>
     <string name="no_shouts">Pridajte prvý komentár!</string>
     <string name="refresh">Obnoviť</string>
@@ -130,6 +135,7 @@
     <string name="state_on_watchlist">V Chcem vidieť</string>
     <string name="state_favorite">Obľúbené</string>
     <!-- Shows -->
+    <string name="title_shows_added">Pridané</string>
     <string name="confirm_delete">Naozaj chcete odstrániť %s?</string>
     <string name="delete_error">Seriál nemožno odstrániť. Skúste to znova neskôr.</string>
     <string name="delete_show">Odstrániť</string>
@@ -230,7 +236,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Napíšte názov seriálu</string>
     <string name="add_empty">Nie sú tu žiadne seriály.</string>
-    <string name="no_results">Žiadne výsledky, skúste celé slová.</string>
     <string name="empty_show_search">Nebolo nájdené vo vašich seriáloch</string>
     <string name="action_try_again">Skúsiť znova</string>
     <string name="tvdb_error_does_not_exist">Seriál (momentálne) nie je dostupný na TMDB. Skúste to znova neskôr.</string>
@@ -244,12 +249,12 @@
     <string name="shows_collection">Zbierka</string>
     <string name="watchlist">Chcem vidieť</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Žiadne výsledky</string>
     <string name="action_similar">Podobné</string>
     <string name="title_similar_shows">Podobné relácie</string>
     <!-- Popular -->
     <string name="title_popular">Populárne</string>
     <string name="filter_year">Rok</string>
+    <string name="filter_year_current">Current year</string>
     <string name="filter_language">Jazyk</string>
     <!-- Lists -->
     <string name="first_list">Prvý zoznam</string>
@@ -354,7 +359,7 @@
     <string name="trakt_notice_not_exists">Nie je (zatiaľ) možné sledovať na trakt.</string>
     <string name="trakt_error_limit_exceeded">Zoznam je plný, najskôr niečo odstráňte.</string>
     <!-- Connect trakt -->
-    <string name="trakt_required">To use this, connect to Trakt</string>
+    <string name="trakt_required">Aby ste to mohli použiť, pripojte sa k Trakt</string>
     <string name="connect_trakt">Pripojiť na trakt</string>
     <string name="trakt_reconnect">Pripojiť SeriesGuide k trakt</string>
     <string name="trakt_reconnect_details">Skontrolujte užívateľské meno/heslo trakt</string>
@@ -368,6 +373,7 @@
     <string name="action_rate">Hodnotiť</string>
     <string name="ack_rated">Hodnotenie odoslané</string>
     <string name="your_rating">Vaše hodnotenie</string>
+    <string name="action_remove_rating">Odstrániť hodnotenie</string>
     <string name="love">Totálna pecka!</string>
     <string name="hate">Odpad :(</string>
     <string name="rating2">Hrozné</string>

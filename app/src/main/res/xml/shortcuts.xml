@@ -52,7 +52,7 @@
             android:targetPackage="com.battlelancer.seriesguide" />
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetClass="com.battlelancer.seriesguide.ui.SearchActivity"
+            android:targetClass="com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverPagingActivity"
             android:targetPackage="com.battlelancer.seriesguide" />
     </shortcut>
 </shortcuts>

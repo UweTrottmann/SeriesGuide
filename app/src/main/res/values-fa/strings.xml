@@ -43,9 +43,10 @@
     <!-- Search -->
     <string name="clear_search_history">پاک‌سازی تاریخچهٔ جست‌وجو</string>
     <string name="search_hint">جست‌وجوی قسمت‌ها</string>
+    <string name="empty_no_results">بدون نتیجه</string>
     <!-- Status messages -->
     <string name="updated">به‌روز شده به جدیدترین نگارش.</string>
-    <string name="updated_details">جزییات</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">ناموجود</string>
     <string name="unknown">نامعلوم</string>
     <string name="offline">به شبکه‌ای وصل شده، سپس دوباره تلاش کنید.</string>
@@ -70,6 +71,10 @@
     <string name="shout_hint">نظری بنویسید (انگلیسی، بالای ۵ واژه)</string>
     <string name="shout_invalid">نظرتان تابع قوانین نیست!</string>
     <string name="action_post">ارسال</string>
+    <string name="action_edit_comment">Edit</string>
+    <string name="action_delete_comment">Delete</string>
+    <string name="confirmation_delete_comment">Delete this comment?</string>
+    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">هشدار لو رفتن!</string>
     <string name="no_shouts">نخستین کسی باشید که نظر می‌دهد!</string>
     <string name="refresh">تازه سازی</string>
@@ -128,6 +133,7 @@
     <string name="state_on_watchlist">در فهرست تماشا</string>
     <string name="state_favorite">مورد علاقه</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">واقعاً می‌خواهید %s را حذف کنید؟</string>
     <string name="delete_error">اثر نمایشی حذف نشد. بعداً دوباره سعی کنید.</string>
     <string name="delete_show">حذف</string>
@@ -216,7 +222,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">نام یک اثر نمایشی را بنویسید</string>
     <string name="add_empty">این‌جا هیچ سریالی نیست.</string>
-    <string name="no_results">هیچ نتیجه ای پیدا نشد، کلمات را بصورت کامل امتحان کنید.</string>
     <string name="empty_show_search">در لیست برنامه‌ها پیدا نشد</string>
     <string name="action_try_again">دوباره امتحان کنید</string>
     <string name="tvdb_error_does_not_exist">اثر نمایشی (هنوز) در TMDB وجود ندارد. بعداً دوباره سعی کنید.</string>
@@ -230,12 +235,12 @@
     <string name="shows_collection">مجموعه</string>
     <string name="watchlist">فهرست تماشا</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">بدون نتیجه</string>
     <string name="action_similar">مشابه</string>
     <string name="title_similar_shows">سریال‌های مشابه</string>
     <!-- Popular -->
     <string name="title_popular">محبوب</string>
     <string name="filter_year">Year</string>
+    <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">فهرست نخست</string>
@@ -348,6 +353,7 @@
     <string name="action_rate">نمره</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">نمرهٔ شما</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">محشر!</string>
     <string name="hate">افتضاح :(</string>
     <string name="rating2">مزخرف</string>

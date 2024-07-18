@@ -14,16 +14,16 @@ plugins {
 }
 
 buildscript {
-    val sgCompileSdk by extra(34) // Android 14 (U)
+    val sgCompileSdk by extra(34) // Android 14 (UPSIDE_DOWN_CAKE)
     val sgMinSdk by extra(21) // Android 5 (L)
-    val sgTargetSdk by extra(33) // Android 13 (T)
+    val sgTargetSdk by extra(34) // Android 14 (UPSIDE_DOWN_CAKE)
 
     // YYYY.<release-of-year>.<build> - like 2024.1.0
     // - allows to more easily judge how old a release is
     // - allows multiple releases per month (though currently unlikely)
-    val sgVersionName by extra("2024.2.7")
+    val sgVersionName by extra("2024.3.5")
     // version 21yyrrbb -> min SDK 21, year yy, release rr, build bb
-    val sgVersionCode by extra(21240207)
+    val sgVersionCode by extra(21240305)
 
     val isCiBuild by extra { System.getenv("CI") == "true" }
 

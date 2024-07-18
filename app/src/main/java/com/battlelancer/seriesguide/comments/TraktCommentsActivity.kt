@@ -1,12 +1,11 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2012-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.comments
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.BaseActivity
 import com.battlelancer.seriesguide.ui.SinglePaneActivity
@@ -49,16 +48,6 @@ class TraktCommentsActivity : BaseActivity() {
             setDisplayHomeAsUpEnabled(true)
             setTitle(R.string.comments)
             subtitle = commentsTitle
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressedDispatcher.onBackPressed()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
         }
     }
 

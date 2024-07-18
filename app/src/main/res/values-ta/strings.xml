@@ -43,9 +43,10 @@
     <!-- Search -->
     <string name="clear_search_history">தேடல் வரலாற்றை நீக்கு</string>
     <string name="search_hint">தேடல் episodes</string>
+    <string name="empty_no_results">முடிவுகள் இல்லை</string>
     <!-- Status messages -->
     <string name="updated">சமீபத்திய பதிப்பை புதுப்பிக்கப்பட்டது.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">n/a</string>
     <string name="unknown">அறியாத</string>
     <string name="offline">பிணையத்துடன் இணைக்கவும், பிறகு மீண்டும் முயற்சிக்கவும்.</string>
@@ -70,6 +71,10 @@
     <string name="shout_hint">ஒரு கருத்து (ஆங்கிலம், 5 + சொற்கள்) தட்டச்சு செய்யவும்</string>
     <string name="shout_invalid">உங்கள் கருத்துரை விதிகளை பின்பற்றவில்லை!</string>
     <string name="action_post">பதிவு</string>
+    <string name="action_edit_comment">Edit</string>
+    <string name="action_delete_comment">Delete</string>
+    <string name="confirmation_delete_comment">Delete this comment?</string>
+    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">Spoiler எச்சரிக்கை!</string>
     <string name="no_shouts">கருத்து முதல் இருக்க!</string>
     <string name="refresh">புதுப்பி</string>
@@ -128,6 +133,7 @@
     <string name="state_on_watchlist">On watchlist</string>
     <string name="state_favorite">Favorite</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">உண்மையிலேயே நீக்க விரும்புகிறீர்களா %s?</string>
     <string name="delete_error">காட்சி நீக்க இயலாது. பின்னர் மீண்டும் முயற்சிக்கவும்.</string>
     <string name="delete_show">நீக்கு</string>
@@ -216,7 +222,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">ஒரு காட்சி பெயர் தட்டச்சு செய்யவும்</string>
     <string name="add_empty">எந்த காட்சிகள் இங்கே உள்ளன.</string>
-    <string name="no_results">முழு சொற்களை முடிவுகள், முயற்சிக்கவும்.</string>
     <string name="empty_show_search">Not found in your show list</string>
     <string name="action_try_again">மீண்டும் முயற்சி</string>
     <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
@@ -230,12 +235,12 @@
     <string name="shows_collection">தொகுப்பு</string>
     <string name="watchlist">Watchlist</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">No results</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Similar shows</string>
     <!-- Popular -->
     <string name="title_popular">பிரபலமானவை</string>
     <string name="filter_year">Year</string>
+    <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">முதல் பட்டியல்</string>
@@ -348,6 +353,7 @@
     <string name="action_rate">விகிதம்</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">உங்கள் தரமதிப்பு</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">Ninja முற்றிலும்!</string>
     <string name="hate">நன்மைக்கான பாகு :(</string>
     <string name="rating2">உள்நாட்டு யுத்ததத்தின் பயங்கரமான</string>

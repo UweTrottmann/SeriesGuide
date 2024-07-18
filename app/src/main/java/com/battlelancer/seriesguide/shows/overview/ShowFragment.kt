@@ -513,7 +513,10 @@ class ShowFragment() : Fragment() {
     }
 
     private fun rateShow() {
-        RateDialogFragment.newInstanceShow(showId).safeShow(context, parentFragmentManager)
+        show?.also {
+            RateDialogFragment.newInstanceShow(showId, it.ratingUser)
+                .safeShow(requireContext(), parentFragmentManager)
+        }
     }
 
     private fun displayLanguageSettings() {

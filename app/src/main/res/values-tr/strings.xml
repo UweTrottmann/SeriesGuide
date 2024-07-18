@@ -43,9 +43,10 @@
     <!-- Search -->
     <string name="clear_search_history">Arama geçmişini temizle</string>
     <string name="search_hint">Bölüm ara</string>
+    <string name="empty_no_results">Sonuç bulunamadı</string>
     <!-- Status messages -->
     <string name="updated">En son sürüme güncellendi.</string>
-    <string name="updated_details">Ayrıntılar</string>
+    <string name="updated_what_is_new">Neler yeni?</string>
     <string name="norating">Geçersiz</string>
     <string name="unknown">bilinmiyor</string>
     <string name="offline">Ağa bağlanın ve yeniden deneyin.</string>
@@ -70,6 +71,10 @@
     <string name="shout_hint">Bir yorum yaz (Ingilizce, 5+ kelime)</string>
     <string name="shout_invalid">Yorumun kurallara uygun değil!</string>
     <string name="action_post">Gönder</string>
+    <string name="action_edit_comment">Düzenle</string>
+    <string name="action_delete_comment">Sil</string>
+    <string name="confirmation_delete_comment">Bu yorumu sil?</string>
+    <string name="error_delete_comment">Yorum silinmedi, çok eski veya yanıtları var</string>
     <string name="isspoiler">Spoiler Uyarısı!</string>
     <string name="no_shouts">İlk yorumu sen yap!</string>
     <string name="refresh">Yenile</string>
@@ -128,6 +133,7 @@
     <string name="state_on_watchlist">İzlenecekler listesinde</string>
     <string name="state_favorite">Favori</string>
     <!-- Shows -->
+    <string name="title_shows_added">Eklendi</string>
     <string name="confirm_delete">%s öğesini silmek istediğinize emin misiniz?</string>
     <string name="delete_error">Dizi kaldırılamadı. Sonra tekrar deneyin.</string>
     <string name="delete_show">Kaldır</string>
@@ -216,7 +222,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Bir dizi adı yazın</string>
     <string name="add_empty">Burada dizi yok.</string>
-    <string name="no_results">Sonuç bulunamadı, tam sözcüklerle deneyin.</string>
     <string name="empty_show_search">Listenizde bulunamadı</string>
     <string name="action_try_again">Yeniden deneyin</string>
     <string name="tvdb_error_does_not_exist">Bu dizi, TMDB\'de (henüz) mevcut değil. Daha sonra tekrar deneyin.</string>
@@ -230,12 +235,12 @@
     <string name="shows_collection">Koleksiyon</string>
     <string name="watchlist">İzlenecekler listesi</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Sonuç bulunamadı</string>
     <string name="action_similar">Benzerleri</string>
     <string name="title_similar_shows">Benzer diziler</string>
     <!-- Popular -->
     <string name="title_popular">Popüler</string>
     <string name="filter_year">Yıl</string>
+    <string name="filter_year_current">Current year</string>
     <string name="filter_language">Dil</string>
     <!-- Lists -->
     <string name="first_list">İlk liste</string>
@@ -348,6 +353,7 @@
     <string name="action_rate">Puan ver</string>
     <string name="ack_rated">Puan gönderildi</string>
     <string name="your_rating">Sizin puanınız</string>
+    <string name="action_remove_rating">Puanı kaldır</string>
     <string name="love">Şaheser!</string>
     <string name="hate">Rezalet :(</string>
     <string name="rating2">Berbat</string>

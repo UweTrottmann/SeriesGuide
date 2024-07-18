@@ -43,9 +43,10 @@
     <!-- Search -->
     <string name="clear_search_history">Избриши историја на пребарување</string>
     <string name="search_hint">Пребарај епизоди</string>
+    <string name="empty_no_results">Нема резултати</string>
     <!-- Status messages -->
     <string name="updated">Обнови во најнова верзија.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">Непознато</string>
     <string name="unknown">Непознато</string>
     <string name="offline">Поврзи се на интернет, после пробај повторно.</string>
@@ -70,6 +71,10 @@
     <string name="shout_hint">Напиши коментар (Англиски, 5+ зборови)</string>
     <string name="shout_invalid">Вашиот коментар не е по правилата!</string>
     <string name="action_post">Објава</string>
+    <string name="action_edit_comment">Edit</string>
+    <string name="action_delete_comment">Delete</string>
+    <string name="confirmation_delete_comment">Delete this comment?</string>
+    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">Предупредување спојлер!</string>
     <string name="no_shouts">Биди прв кој ќе коментира!</string>
     <string name="refresh">Освежи</string>
@@ -128,6 +133,7 @@
     <string name="state_on_watchlist">On watchlist</string>
     <string name="state_favorite">Favorite</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">Навистина ли сакате да ја избришете %s?</string>
     <string name="delete_error">Неможе да се избрише серијата. Пробајте повторно подоцна.</string>
     <string name="delete_show">Избриши</string>
@@ -216,7 +222,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Внеси име серија</string>
     <string name="add_empty">Овде нема серија.</string>
-    <string name="no_results">Нема резултати, обидете се со целосни зборови.</string>
     <string name="empty_show_search">Не е пронајдено во твојата прикажи листа</string>
     <string name="action_try_again">Прoбaј пoвтoрнo</string>
     <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
@@ -230,12 +235,12 @@
     <string name="shows_collection">Колекција</string>
     <string name="watchlist">Листа за гледање</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">No results</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Similar shows</string>
     <!-- Popular -->
     <string name="title_popular">Популарни</string>
     <string name="filter_year">Year</string>
+    <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">Прва листа</string>
@@ -348,6 +353,7 @@
     <string name="action_rate">Оцени</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Твоја оцена</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">Супер!</string>
     <string name="hate">Слаба работа :(</string>
     <string name="rating2">Ужасно</string>

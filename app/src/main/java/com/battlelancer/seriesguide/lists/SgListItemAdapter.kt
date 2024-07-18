@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.TooltipCompat
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -120,7 +121,9 @@ class SgListItemViewHolder(
 
             // next episode info
             val fieldValue: String? = item.nextText
-            if (fieldValue.isNullOrEmpty()) {
+            val hasNoNextEpisode = fieldValue.isNullOrEmpty()
+            binding.imageViewShowsSetWatched.isGone = hasNoNextEpisode
+            if (hasNoNextEpisode) {
                 // display show status if there is no next episode
                 binding.episodetime.text = ShowStatus.getStatus(context, item.statusOrUnknown)
                 binding.TextViewShowListNextEpisode.text = null

@@ -43,9 +43,10 @@
     <!-- Search -->
     <string name="clear_search_history">Ștergere istoric căutare</string>
     <string name="search_hint">Căutaţi episoade</string>
+    <string name="empty_no_results">Nici un rezultat</string>
     <!-- Status messages -->
     <string name="updated">Actualizat la ultima versiune.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">n/a</string>
     <string name="unknown">necunoscut</string>
     <string name="offline">Conectați-vă la o rețea, apoi încercați din nou.</string>
@@ -70,6 +71,10 @@
     <string name="shout_hint">Scrieți un comentariu (engleză, 5+ cuvinte)</string>
     <string name="shout_invalid">Comentariul tău nu respectă regulile!</string>
     <string name="action_post">Publică</string>
+    <string name="action_edit_comment">Edit</string>
+    <string name="action_delete_comment">Delete</string>
+    <string name="confirmation_delete_comment">Delete this comment?</string>
+    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">Spoiler alert!</string>
     <string name="no_shouts">Fi primul care-și spune părerea!</string>
     <string name="refresh">Reîmprospătare</string>
@@ -129,6 +134,7 @@
     <string name="state_on_watchlist">On watchlist</string>
     <string name="state_favorite">Favorite</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">Doriți să eliminați %s?</string>
     <string name="delete_error">Nu se poate șterge emisiunea. Încearcă mai tîrziu.</string>
     <string name="delete_show">Ștergeți</string>
@@ -223,7 +229,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Scrieți un nume de emisiune</string>
     <string name="add_empty">Nu există emisiuni aici.</string>
-    <string name="no_results">Nici un rezultat, încercaţi folosind cuvinte întregi.</string>
     <string name="empty_show_search">Nu a fost găsit in lista de dumneavoastră de showuri</string>
     <string name="action_try_again">Încearcă din nou</string>
     <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
@@ -237,12 +242,12 @@
     <string name="shows_collection">Colecție</string>
     <string name="watchlist">Listă vizionate</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">No results</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Similar shows</string>
     <!-- Popular -->
     <string name="title_popular">Popular</string>
     <string name="filter_year">Year</string>
+    <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">Prima listă</string>
@@ -358,6 +363,7 @@
     <string name="action_rate">Evaluare</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Nota ta</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">Super tare!</string>
     <string name="hate">Slab :(</string>
     <string name="rating2">Teribil</string>

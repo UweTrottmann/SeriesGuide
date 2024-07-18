@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2013-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.comments
 
@@ -9,11 +9,11 @@ import androidx.annotation.StringRes
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.androidutils.GenericSimpleLoader
-import com.uwetrottmann.trakt5.TraktV2
 import com.uwetrottmann.trakt5.entities.Comment
 import com.uwetrottmann.trakt5.enums.Extended
 import timber.log.Timber
@@ -28,13 +28,15 @@ class TraktCommentsLoader(context: Context, private val args: Bundle) :
     data class Result(val results: List<Comment>?, val emptyText: String)
 
     @Inject
-    lateinit var trakt: TraktV2
+    lateinit var trakt: SgTrakt
 
     init {
         SgApp.getServicesComponent(context).inject(this)
     }
 
     override fun loadInBackground(): Result {
+        val cacheControl = if (args.getBoolean(ARG_REFRESH)) "no-cache" else null
+
         // movie comments?
         val movieTmdbId = args.getInt(TraktCommentsFragment.InitBundle.MOVIE_TMDB_ID)
         if (movieTmdbId != 0) {
@@ -45,7 +47,13 @@ class TraktCommentsLoader(context: Context, private val args: Bundle) :
                 }
                 try {
                     val response = trakt.movies()
-                        .comments(movieTraktId.toString(), 1, PAGE_SIZE, Extended.FULL)
+                        .comments(
+                            movieTraktId.toString(),
+                            1,
+                            PAGE_SIZE,
+                            Extended.FULL,
+                            cacheControl
+                        )
                         .execute()
                     if (response.isSuccessful) {
                         return buildResultSuccess(response.body()!!)
@@ -83,7 +91,8 @@ class TraktCommentsLoader(context: Context, private val args: Bundle) :
                         showTraktId.toString(),
                         episode.season,
                         episode.episodenumber,
-                        1, PAGE_SIZE, Extended.FULL
+                        1, PAGE_SIZE, Extended.FULL,
+                        cacheControl
                     ).execute()
                 if (response.isSuccessful) {
                     return buildResultSuccess(response.body()!!)
@@ -103,7 +112,13 @@ class TraktCommentsLoader(context: Context, private val args: Bundle) :
             .getShowTraktId(showId) ?: return buildResultFailure(R.string.trakt_error_not_exists)
         try {
             val response = trakt.shows()
-                .comments(showTraktId.toString(), 1, PAGE_SIZE, Extended.FULL)
+                .comments(
+                    showTraktId.toString(),
+                    1,
+                    PAGE_SIZE,
+                    Extended.FULL,
+                    cacheControl
+                )
                 .execute()
             if (response.isSuccessful) {
                 return buildResultSuccess(response.body()!!)
@@ -137,6 +152,13 @@ class TraktCommentsLoader(context: Context, private val args: Bundle) :
     }
 
     companion object {
+        private const val ARG_REFRESH = "refresh"
         private const val PAGE_SIZE = 25
+
+        fun argsWithRefresh(bundle: Bundle): Bundle {
+            return Bundle(bundle).apply {
+                putBoolean(ARG_REFRESH, true)
+            }
+        }
     }
 }

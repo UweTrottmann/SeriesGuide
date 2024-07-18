@@ -43,9 +43,10 @@
     <!-- Search -->
     <string name="clear_search_history">Limpar histórico de pesquisa</string>
     <string name="search_hint">Procurar episódios</string>
+    <string name="empty_no_results">Sem resultados</string>
     <!-- Status messages -->
     <string name="updated">Atualizado para a última versão.</string>
-    <string name="updated_details">Detalhes</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">n/a</string>
     <string name="unknown">Desconhecido(a)</string>
     <string name="offline">Liga-te a uma rede e tenta novamente.</string>
@@ -70,6 +71,10 @@
     <string name="shout_hint">Comente (em inglês, + de 5 palavras)</string>
     <string name="shout_invalid">O teu comentário não está de acordo com as regras!</string>
     <string name="action_post">Publicar</string>
+    <string name="action_edit_comment">Editar</string>
+    <string name="action_delete_comment">Eliminar</string>
+    <string name="confirmation_delete_comment">Eliminar este comentário?</string>
+    <string name="error_delete_comment">Comentário não eliminado, é demasiado antigo ou tem respostas</string>
     <string name="isspoiler">Alerta de spoilers!</string>
     <string name="no_shouts">Sê o primeiro a comentar!</string>
     <string name="refresh">Atualizar</string>
@@ -84,7 +89,7 @@
     <string name="episode_dvdnumber">Episódio de DVD</string>
     <string name="original_release">Exibição original</string>
     <string name="show_genres">Géneros</string>
-    <string name="show_contentrating">Classificação Etária</string>
+    <string name="show_contentrating">Classificação etária</string>
     <string name="show_release_times">Horários de exibição</string>
     <string name="episode_directors">Realização</string>
     <string name="episode_gueststars">Participações especiais</string>
@@ -128,6 +133,7 @@
     <string name="state_on_watchlist">Na lista dos que desejo ver</string>
     <string name="state_favorite">Favorito</string>
     <!-- Shows -->
+    <string name="title_shows_added">Adicionado</string>
     <string name="confirm_delete">Tens a certeza que desejas remover %s?</string>
     <string name="delete_error">Não foi possível remover a série. Tenta mais tarde.</string>
     <string name="delete_show">Remover</string>
@@ -216,7 +222,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Título da série</string>
     <string name="add_empty">Não existe nenhuma série.</string>
-    <string name="no_results">Nenhum resultado, tenta palavras completas.</string>
     <string name="empty_show_search">Não foi encontrado na tua lista de séries</string>
     <string name="action_try_again">Tentar novamente</string>
     <string name="tvdb_error_does_not_exist">A série (ainda) não existe no TMDB. Por favor, tenta novamente mais tarde.</string>
@@ -230,12 +235,12 @@
     <string name="shows_collection">Coleção</string>
     <string name="watchlist">Desejo Ver</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Sem resultados</string>
     <string name="action_similar">Semelhantes</string>
     <string name="title_similar_shows">Séries semelhantes</string>
     <!-- Popular -->
     <string name="title_popular">Populares</string>
     <string name="filter_year">Ano</string>
+    <string name="filter_year_current">Ano atual</string>
     <string name="filter_language">Idioma</string>
     <!-- Lists -->
     <string name="first_list">Lista Pessoal</string>
@@ -348,6 +353,7 @@
     <string name="action_rate">Classificar</string>
     <string name="ack_rated">Classificação enviada</string>
     <string name="your_rating">A minha classificação</string>
+    <string name="action_remove_rating">Remover classificação</string>
     <string name="love">Fora de série!</string>
     <string name="hate">Mas que porcaria :(</string>
     <string name="rating2">Horrível</string>

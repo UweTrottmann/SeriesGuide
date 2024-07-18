@@ -43,9 +43,10 @@
     <!-- Search -->
     <string name="clear_search_history">Tøm søkelogg</string>
     <string name="search_hint">Søk episoder</string>
+    <string name="empty_no_results">Ingen resultater</string>
     <!-- Status messages -->
     <string name="updated">Oppdatert til nyeste versjon.</string>
-    <string name="updated_details">Detaljer</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">n/a</string>
     <string name="unknown">ukjent</string>
     <string name="offline">Koble til et nettverk, og prøv på nytt.</string>
@@ -70,6 +71,10 @@
     <string name="shout_hint">Skriv en kommentar på engelsk. (Minst 5 ord)</string>
     <string name="shout_invalid">Kommentaren din ble avslått, grunnet regelbrudd.</string>
     <string name="action_post">Innlegg</string>
+    <string name="action_edit_comment">Edit</string>
+    <string name="action_delete_comment">Delete</string>
+    <string name="confirmation_delete_comment">Delete this comment?</string>
+    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">Spoileradvarsel!</string>
     <string name="no_shouts">Vær den første til å rope!</string>
     <string name="refresh">Oppdater</string>
@@ -128,6 +133,7 @@
     <string name="state_on_watchlist">I overvåkningslisten</string>
     <string name="state_favorite">Favoritt</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">Vil du virkelig fjerne %s?</string>
     <string name="delete_error">Kunne ikke fjerne serie. Prøv igjen senere.</string>
     <string name="delete_show">Fjern</string>
@@ -216,7 +222,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Skriv inn et serienavn</string>
     <string name="add_empty">Det er ingen serier her.</string>
-    <string name="no_results">Ingen treff, prøv hele ord.</string>
     <string name="empty_show_search">Ikke funnet i listen over tv-serier</string>
     <string name="action_try_again">Prøv igjen</string>
     <string name="tvdb_error_does_not_exist">Serien finnes ikke (enda) på TMDB. Prøv igjen senere.</string>
@@ -230,12 +235,12 @@
     <string name="shows_collection">Samling</string>
     <string name="watchlist">Overvåkningsliste</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Ingen resultater</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Lignende serier</string>
     <!-- Popular -->
     <string name="title_popular">Populær</string>
     <string name="filter_year">Year</string>
+    <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">Første liste</string>
@@ -348,6 +353,7 @@
     <string name="action_rate">Bedøm</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Din vurdering</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">Helt ninja!</string>
     <string name="hate">Svak saus :(</string>
     <string name="rating2">Forferdelig</string>

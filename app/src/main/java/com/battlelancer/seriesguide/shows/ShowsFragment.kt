@@ -8,6 +8,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
+import android.os.Build
 import android.os.Bundle
 import android.text.format.DateUtils
 import android.view.LayoutInflater
@@ -41,13 +42,13 @@ import com.battlelancer.seriesguide.shows.ShowsAdapter.ShowItem
 import com.battlelancer.seriesguide.shows.ShowsDistillationFragment.Companion.show
 import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowFilter
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
+import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity.Companion.intentShow
 import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
 import com.battlelancer.seriesguide.util.ViewTools
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.uwetrottmann.androidutils.AndroidUtils
 import kotlinx.coroutines.Job
@@ -81,7 +82,7 @@ class ShowsFragment : Fragment() {
         SgFastScroller(requireContext(), recyclerView)
         emptyView = v.findViewById(R.id.emptyViewShows)
         ViewTools.setVectorDrawableTop(emptyView, R.drawable.ic_add_white_24dp)
-        emptyView.setOnClickListener { startActivityAddShows() }
+        emptyView.setOnClickListener { navigateToAddShows() }
         emptyViewFilter = v.findViewById(R.id.emptyViewShowsFilter)
         ViewTools.setVectorDrawableTop(emptyViewFilter, R.drawable.ic_filter_white_24dp)
         emptyViewFilter.setOnClickListener {
@@ -160,11 +161,6 @@ class ShowsFragment : Fragment() {
             }
         }
 
-        // hide floating action button when scrolling shows
-        val buttonAddShow: FloatingActionButton =
-            requireActivity().findViewById(R.id.buttonShowsAdd)
-        recyclerView.addOnScrollListener(FabRecyclerViewScrollDetector(buttonAddShow))
-
         // listen for some settings changes
         PreferenceManager
             .getDefaultSharedPreferences(requireActivity())
@@ -226,8 +222,13 @@ class ShowsFragment : Fragment() {
 
         override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
             return when (menuItem.itemId) {
+                R.id.menu_action_shows_search -> {
+                    startActivity(Intent(requireContext(), SearchActivity::class.java))
+                    true
+                }
+
                 R.id.menu_action_shows_add -> {
-                    startActivityAddShows()
+                    navigateToAddShows()
                     true
                 }
 
@@ -236,15 +237,22 @@ class ShowsFragment : Fragment() {
                     true
                 }
 
+                R.id.menu_action_shows_update -> {
+                    SgSyncAdapter.requestSyncDeltaImmediate(requireContext(), true)
+                    true
+                }
+                R.id.menu_action_shows_redownload -> {
+                    SgSyncAdapter.requestSyncFullImmediate(requireContext(), true)
+                    true
+                }
+
                 else -> false
             }
         }
     }
 
-    private fun startActivityAddShows() {
-        startActivity(
-            SearchActivity.newIntent(requireContext())
-        )
+    private fun navigateToAddShows() {
+        activityModel.selectDiscoverTab()
     }
 
     private val onItemClickListener: ShowsAdapter.OnItemClickListener =
@@ -307,16 +315,19 @@ class ShowsFragment : Fragment() {
 
     private val firstRunClickListener = object : FirstRunView.FirstRunClickListener {
         override fun onAddShowClicked() {
-            startActivityAddShows()
+            navigateToAddShows()
         }
 
         override fun onSignInClicked() {
             startActivity(Intent(requireActivity(), MoreOptionsActivity::class.java))
-            // Launching a top activity, adjust animation to match.
-            @Suppress("DEPRECATION") // just deprecated for predictive back
-            requireActivity().overridePendingTransition(
-                R.anim.activity_fade_enter_sg, R.anim.activity_fade_exit_sg
-            )
+            // For UPSIDE_DOWN_CAKE+ using overrideActivityTransition() in BaseTopActivity
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                // Launching a top activity, adjust animation to match.
+                @Suppress("DEPRECATION")
+                requireActivity().overridePendingTransition(
+                    R.anim.activity_fade_enter_sg, R.anim.activity_fade_exit_sg
+                )
+            }
         }
 
         override fun onRestoreBackupClicked() {

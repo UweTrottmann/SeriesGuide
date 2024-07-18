@@ -1,14 +1,12 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright 2024 Uwe Trottmann
 
-package com.battlelancer.seriesguide.shows.search.popular
+package com.battlelancer.seriesguide.shows.search.discover
 
 import android.content.Context
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.shows.search.discover.SearchResult
-import com.battlelancer.seriesguide.shows.search.discover.SearchTools
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.Tmdb
@@ -16,16 +14,12 @@ import com.uwetrottmann.tmdb2.entities.TvShowResultsPage
 import java.io.IOException
 
 /**
- * Loads shows in pages from TMDB.
+ * Loads [TvShowResultsPage] in pages from TMDB.
  */
-abstract class BaseDiscoverShowDataSource(
+abstract class BaseShowResultsDataSource(
     private val context: Context,
     private val tmdb: Tmdb,
     private val languageCode: String,
-    private val firstReleaseYear: Int?,
-    private val originalLanguageCode: String?,
-    private val watchProviderIds: List<Int>?,
-    private val watchRegion: String?
 ) : PagingSource<Int, SearchResult>() {
 
     abstract val action: String
@@ -33,10 +27,6 @@ abstract class BaseDiscoverShowDataSource(
         tmdb: Tmdb,
         language: String,
         page: Int,
-        firstReleaseYear: Int?,
-        originalLanguageCode: String?,
-        watchProviderIds: List<Int>?,
-        watchRegion: String?
     ): TvShowResultsPage?
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, SearchResult> {
@@ -44,11 +34,7 @@ abstract class BaseDiscoverShowDataSource(
         val result = loadShows(
             tmdb,
             languageCode,
-            pageNumber,
-            firstReleaseYear,
-            originalLanguageCode,
-            watchProviderIds,
-            watchRegion
+            pageNumber
         )
             ?: return if (AndroidUtils.isNetworkConnected(context)) {
                 // Not checking for connection until here to allow hitting the response cache.

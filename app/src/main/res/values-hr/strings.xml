@@ -43,9 +43,10 @@
     <!-- Search -->
     <string name="clear_search_history">Očisti povijest pretraživanja</string>
     <string name="search_hint">Pretraži epizode</string>
+    <string name="empty_no_results">Nema rezultata</string>
     <!-- Status messages -->
     <string name="updated">Ažurirano u najnoviju verziju.</string>
-    <string name="updated_details">Detalji</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">nedostupno</string>
     <string name="unknown">nepoznato</string>
     <string name="offline">Spojite se na mrežu i probajte ponovno.</string>
@@ -70,6 +71,10 @@
     <string name="shout_hint">Upišite komentar (engleski, 5 + riječi)</string>
     <string name="shout_invalid">Vaš komentar ne slijedi pravila!</string>
     <string name="action_post">Objava</string>
+    <string name="action_edit_comment">Edit</string>
+    <string name="action_delete_comment">Delete</string>
+    <string name="confirmation_delete_comment">Delete this comment?</string>
+    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">Pažnja! Spojler!</string>
     <string name="no_shouts">Budi prvi koji će povikati!</string>
     <string name="refresh">Osvježi</string>
@@ -129,6 +134,7 @@
     <string name="state_on_watchlist">On watchlist</string>
     <string name="state_favorite">Favorite</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">Zaista želite ukloniti %s?</string>
     <string name="delete_error">Nemoguće ukloniti seriju. Pokušajte kasnije.</string>
     <string name="delete_show">Izbriši</string>
@@ -223,7 +229,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Upiši naziv serije</string>
     <string name="add_empty">Ovdje ne postoje serije.</string>
-    <string name="no_results">Nema rezultata, pokušajte cijele riječi.</string>
     <string name="empty_show_search">Nije pronađeno u vašem popisu serija</string>
     <string name="action_try_again">Pokušaj ponovno</string>
     <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
@@ -237,12 +242,12 @@
     <string name="shows_collection">Zbirka</string>
     <string name="watchlist">Popis gledanja</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Nema rezultata</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Slične serije</string>
     <!-- Popular -->
     <string name="title_popular">Popularno</string>
     <string name="filter_year">Year</string>
+    <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">Prvi popis</string>
@@ -358,6 +363,7 @@
     <string name="action_rate">Ocijeni</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Tvoja ocjena</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">Zakon!</string>
     <string name="hate">Jadno :(</string>
     <string name="rating2">Grozno</string>

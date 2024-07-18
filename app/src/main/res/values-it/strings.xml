@@ -43,9 +43,10 @@
     <!-- Search -->
     <string name="clear_search_history">Cancella la cronologia di ricerca</string>
     <string name="search_hint">Cerca episodi</string>
+    <string name="empty_no_results">Nessun risultato</string>
     <!-- Status messages -->
     <string name="updated">Aggiornato all\'ultima versione.</string>
-    <string name="updated_details">Dettagli</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">non disponibile</string>
     <string name="unknown">sconosciuto</string>
     <string name="offline">Connettersi a una rete, quindi riprovare.</string>
@@ -70,6 +71,10 @@
     <string name="shout_hint">Scrivi un commento (in inglese, almeno 5 parole)</string>
     <string name="shout_invalid">Il tuo commento non rispetta le regole!</string>
     <string name="action_post">Posta</string>
+    <string name="action_edit_comment">Modifica</string>
+    <string name="action_delete_comment">Elimina</string>
+    <string name="confirmation_delete_comment">Eliminare questo commento?</string>
+    <string name="error_delete_comment">Commento non eliminato, è troppo vecchio o ha risposte</string>
     <string name="isspoiler">Attenzione Spoiler!</string>
     <string name="no_shouts">Sii il primo a segnalare!</string>
     <string name="refresh">Aggiorna</string>
@@ -128,6 +133,7 @@
     <string name="state_on_watchlist">Da vedere</string>
     <string name="state_favorite">Preferito</string>
     <!-- Shows -->
+    <string name="title_shows_added">Aggiunto</string>
     <string name="confirm_delete">Vuoi davvero rimuovere %s?</string>
     <string name="delete_error">Impossibile rimuovere la serie. Riprova più tardi.</string>
     <string name="delete_show">Rimuovi</string>
@@ -216,7 +222,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Digitare il nome della serie</string>
     <string name="add_empty">Non ci sono serie qui.</string>
-    <string name="no_results">Nessun risultato, prova parole complete.</string>
     <string name="empty_show_search">Non presente nella lista delle tue serie</string>
     <string name="action_try_again">Riprova</string>
     <string name="tvdb_error_does_not_exist">La serie non esiste (ancora) su TMDB. Riprova più tardi.</string>
@@ -230,12 +235,12 @@
     <string name="shows_collection">Collezione</string>
     <string name="watchlist">Da vedere</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Nessun risultato</string>
     <string name="action_similar">Simili</string>
     <string name="title_similar_shows">Serie simili</string>
     <!-- Popular -->
     <string name="title_popular">Popolari</string>
     <string name="filter_year">Anno</string>
+    <string name="filter_year_current">Quest\'anno</string>
     <string name="filter_language">Lingua</string>
     <!-- Lists -->
     <string name="first_list">Prima lista</string>
@@ -348,6 +353,7 @@
     <string name="action_rate">Vota</string>
     <string name="ack_rated">Valutazione inviata</string>
     <string name="your_rating">Il tuo voto</string>
+    <string name="action_remove_rating">Rimuovi valutazione</string>
     <string name="love">Indimenticabile!</string>
     <string name="hate">Deludente :(</string>
     <string name="rating2">Terribile</string>

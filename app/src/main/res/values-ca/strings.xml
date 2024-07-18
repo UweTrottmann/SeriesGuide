@@ -36,16 +36,17 @@
     <string name="sync_manually">Sincronitza manualment</string>
     <string name="sync_and_update">Sincronització i actualització</string>
     <string name="sync_and_download_all">Sincronitza i descarrega tot</string>
-    <string name="action_stream">Veure on-line o comprar</string>
+    <string name="action_stream">Veure en línia o comprar</string>
     <string name="action_stream_info">Veure en línia o informació de la compra</string>
     <string name="action_select_region">Selecciona la regió</string>
     <string name="action_reset">Restablir</string>
     <!-- Search -->
     <string name="clear_search_history">Esborra l\'historial</string>
     <string name="search_hint">Cerca episodis</string>
+    <string name="empty_no_results">Cap resultat</string>
     <!-- Status messages -->
     <string name="updated">S\'ha actualitzat a la darrera versió.</string>
-    <string name="updated_details">Detalls</string>
+    <string name="updated_what_is_new">Novetats</string>
     <string name="norating">cap</string>
     <string name="unknown">deconegut</string>
     <string name="offline">Conecteu-vos a la xarxa i torneu-ho a intentar.</string>
@@ -55,7 +56,7 @@
     <string name="reinstall_info">Intenta fer un backup en el panell de Configuraciò, torneu a instal·lar i restaurar.</string>
     <string name="api_error_generic">No és possible contactar amb %s. Proveu-ho més tard.</string>
     <string name="api_failed">Ha fallat: %s</string>
-    <string name="copy_to_clipboard">Copiat al portapapers</string>
+    <string name="copy_to_clipboard">copiat al porta-retalls</string>
     <string name="not_migrated">La sèrie no s\'ha migrat a TMDB. Algunes accions, incloses Trakt i Cloud sync podrien no funcionar. Busca un reemplaçament i esborra aquesta sèrie. Prem per veure detalls.</string>
     <!-- Sharing -->
     <string name="share">Comparteix</string>
@@ -70,6 +71,10 @@
     <string name="shout_hint">Escriu un comentari (anglès, 5+ paraules)</string>
     <string name="shout_invalid">El teu comentari no compleix les normes!</string>
     <string name="action_post">Publica</string>
+    <string name="action_edit_comment">Editar</string>
+    <string name="action_delete_comment">Esborrar</string>
+    <string name="confirmation_delete_comment">Esborrar aquest comentari?</string>
+    <string name="error_delete_comment">Comentari no esborrat, és massa antic o té respostes</string>
     <string name="isspoiler">Revela parts de la trama!</string>
     <string name="no_shouts">Sigueu el primer a escriure!</string>
     <string name="refresh">Refresca</string>
@@ -126,8 +131,9 @@
     <string name="state_skipped">Omès</string>
     <string name="state_in_collection">En aquesta col·lecció</string>
     <string name="state_on_watchlist">A la llista de seguiment</string>
-    <string name="state_favorite">Preferida</string>
+    <string name="state_favorite">Preferit/da</string>
     <!-- Shows -->
+    <string name="title_shows_added">Afegit/da</string>
     <string name="confirm_delete">Realment voleu eliminar %s?</string>
     <string name="delete_error">No s\'ha pogut esborrar la sèrie. Intenteu-ho més tard.</string>
     <string name="delete_show">Elimina</string>
@@ -153,7 +159,7 @@
     <string name="state_shows_filter_included">Inclosos</string>
     <string name="state_shows_filter_excluded">exclosos</string>
     <string name="action_shows_make_all_visible">Fes tot els ocults visibles</string>
-    <string name="description_make_all_visible_format">Fer de tots les sèries amagades (%s) visibles un altre cop?</string>
+    <string name="description_make_all_visible_format">Fer totes les sèries amagades (%s) visibles un altre cop?</string>
     <string name="action_shows_sort">Ordena sèries</string>
     <string name="action_shows_sort_title">Títol</string>
     <string name="action_shows_sort_latest_episode">Últim episodi</string>
@@ -216,7 +222,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">Escriviu el nom d\'una sèrie</string>
     <string name="add_empty">Aquí no hi ha series.</string>
-    <string name="no_results">Cap resultat, proveu paraules senceres.</string>
     <string name="empty_show_search">No es troba a la llista</string>
     <string name="action_try_again">Torneu-ho a intentar</string>
     <string name="tvdb_error_does_not_exist">La sèrie no existeix (encara) a TMDB. Torna-ho a intentar més tard.</string>
@@ -230,12 +235,12 @@
     <string name="shows_collection">Coŀlecció</string>
     <string name="watchlist">Llista de seguiment</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Cap resultat</string>
     <string name="action_similar">Semblants</string>
     <string name="title_similar_shows">Sèries similars</string>
     <!-- Popular -->
     <string name="title_popular">Popular</string>
     <string name="filter_year">Any</string>
+    <string name="filter_year_current">Any Actual</string>
     <string name="filter_language">Idioma</string>
     <!-- Lists -->
     <string name="first_list">Primera llista</string>
@@ -269,7 +274,7 @@
     <string name="watchlist_removed">S\'ha eliminat de la llista de seguiment</string>
     <string name="movies_search_hint">Escriviu el títol d\'una peŀlícula</string>
     <string name="movies_collection_empty">No heu afegit cap peŀlícula a la vostra coŀlecció.</string>
-    <string name="movies_watchlist_empty">No heu afegit cap peŀlícula a la vostra llista de seguiment.</string>
+    <string name="movies_watchlist_empty">No heu afegit cap pel·lícula a la vostra llista de seguiment.</string>
     <string name="trailer">Tràiler</string>
     <string name="movie_cast">Repartiment</string>
     <string name="movie_crew">Equip</string>
@@ -342,12 +347,13 @@
     <string name="connect">Connecta</string>
     <string name="disconnect">Desconnecta</string>
     <string name="show_library">Afegir sèries de Trakt</string>
-    <string name="about_trakt">La plataforma Trakt us ajuda a controlar les sèries i peŀlícules que esteu veient.</string>
+    <string name="about_trakt">La plataforma Trakt us ajuda a controlar les sèries i pel·lícules que esteu veient.</string>
     <string name="support_trakt">Ajuda a Trakt amb VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Puntua</string>
     <string name="ack_rated">Valoració enviada</string>
     <string name="your_rating">La vostra valoració</string>
+    <string name="action_remove_rating">Elimina la puntuació</string>
     <string name="love">Una passada!</string>
     <string name="hate">Horrible</string>
     <string name="rating2">Dolentíssim</string>
@@ -455,7 +461,7 @@
     <string name="import_failed_nofile">No hi ha cap còpia de seguretat que es pugui llegir.</string>
     <string name="import_success">La còpia de seguretat s\'ha restaurat correctament.</string>
     <string name="import_failed">La còpia de seguretat no s\'ha pogut restaurar.</string>
-    <string name="backup_button">Crea còpia de seg.</string>
+    <string name="backup_button">Crea còpia de seguretat</string>
     <string name="import_button">Restaura</string>
     <string name="import_warning">Entenc que les meves sèries, llistes i pel·lícules actuals seran reemplaçades</string>
     <string name="no_file_selected">Cap arxiu seleccionat</string>
@@ -463,7 +469,7 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Còpies de seguretat automàtiques</string>
     <string name="pref_autobackupsummary">Còpia de seguretat setmanal de les teves sèries, llistes i pel·lícules</string>
-    <string name="autobackup_details">Aquestes còpies de seguretat seran innaccesibles si l\'app s\'instal·la de nou. Creeu còpies per preservar-les d\'una altra manera.</string>
+    <string name="autobackup_details">Aquestes còpies de seguretat seran inaccessibles si l\'app s\'instal·la de nou. Creeu còpies per preservar-les d\'una altra manera.</string>
     <string name="last_auto_backup">Darrera còpia de seguretat automàtica: %s</string>
     <string name="restore_auto_backup">Restaura la còpia de seguretat automàtica</string>
     <string name="autobackup_failed">Ha fallat l\'última còpia de seguretat automàtica</string>

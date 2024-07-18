@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2022-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.history
 
@@ -8,7 +8,7 @@ import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.databinding.ItemHistoryBinding
-import com.battlelancer.seriesguide.shows.history.NowAdapter.NowItem
+import com.battlelancer.seriesguide.shows.history.ShowsHistoryAdapter.Item
 import com.battlelancer.seriesguide.util.CircleTransformation
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.SgPicassoRequestHandler
@@ -21,7 +21,7 @@ import java.util.Date
  */
 class HistoryViewHolder(
     private val binding: ItemHistoryBinding,
-    listener: NowAdapter.ItemClickListener
+    listener: ShowsHistoryAdapter.ItemClickListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
@@ -36,12 +36,12 @@ class HistoryViewHolder(
     }
 
     private fun bindCommonInfo(
-        context: Context, item: NowItem,
+        context: Context, item: Item,
         drawableWatched: Drawable,
         drawableCheckin: Drawable
     ) {
         val time = TimeTools.formatToLocalRelativeTime(context, Date(item.timestamp))
-        if (item.type == NowAdapter.ItemType.HISTORY) {
+        if (item.type == ShowsHistoryAdapter.ItemType.HISTORY) {
             // user history entry
             binding.imageViewHistoryAvatar.visibility = View.GONE
             binding.textViewHistoryInfo.text = time
@@ -58,7 +58,7 @@ class HistoryViewHolder(
 
         // action type indicator (only if showing Trakt history)
         val typeView = binding.imageViewHistoryType
-        if (NowAdapter.TRAKT_ACTION_WATCH == item.action) {
+        if (ShowsHistoryAdapter.TRAKT_ACTION_WATCH == item.action) {
             typeView.setImageDrawable(drawableWatched)
             typeView.visibility = View.VISIBLE
         } else if (item.action != null) {
@@ -73,7 +73,7 @@ class HistoryViewHolder(
     }
 
     fun bindToShow(
-        context: Context, item: NowItem,
+        context: Context, item: Item,
         drawableWatched: Drawable,
         drawableCheckin: Drawable
     ) {
@@ -89,7 +89,7 @@ class HistoryViewHolder(
     }
 
     fun bindToMovie(
-        context: Context, item: NowItem, drawableWatched: Drawable,
+        context: Context, item: Item, drawableWatched: Drawable,
         drawableCheckin: Drawable
     ) {
         bindCommonInfo(context, item, drawableWatched, drawableCheckin)

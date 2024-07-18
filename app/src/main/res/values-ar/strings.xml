@@ -43,9 +43,10 @@
     <!-- Search -->
     <string name="clear_search_history">إزالة تاريخ البحث</string>
     <string name="search_hint">البحث عن الحلقات</string>
+    <string name="empty_no_results">لا توجد نتائج</string>
     <!-- Status messages -->
     <string name="updated">تم التحديث إلى الإصدار الأخير</string>
-    <string name="updated_details">التفاصيل</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">لا يوجد</string>
     <string name="unknown">غير معروف</string>
     <string name="offline">اتصل بالشبكة، ثم حاول مرة أخرى</string>
@@ -70,12 +71,16 @@
     <string name="shout_hint">اكتب تعليق (الإنجليزية، 5 كلمات أو أكثر)</string>
     <string name="shout_invalid">إن تعليقك مخالف للقواعد!</string>
     <string name="action_post">انشر</string>
+    <string name="action_edit_comment">Edit</string>
+    <string name="action_delete_comment">Delete</string>
+    <string name="confirmation_delete_comment">Delete this comment?</string>
+    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">تنبيه حرق!</string>
     <string name="no_shouts">كن أول من يعلّق!</string>
     <string name="refresh">تحديث</string>
     <plurals name="replies_plural">
-        <item quantity="one">رد %d</item>
         <item quantity="zero">رد %d</item>
+        <item quantity="one">رد %d</item>
         <item quantity="two">%d ردان</item>
         <item quantity="few">%d ردود</item>
         <item quantity="many">%d رد</item>
@@ -132,6 +137,7 @@
     <string name="state_on_watchlist">في قائمة المراقبة</string>
     <string name="state_favorite">مفضل</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">هل تريد فعلاً إزالة %s؟</string>
     <string name="delete_error">لم تتم إزالة المسلسل، حاول مرة أخرى.</string>
     <string name="delete_show">إزالة</string>
@@ -244,7 +250,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">ابحث عن اسم المسلسل</string>
     <string name="add_empty">لا توجد مسلسلات هنا.</string>
-    <string name="no_results">لا نتائج، جرّب كلمات كاملة</string>
     <string name="empty_show_search">غير متوفر في قائمة العرض الخاصة بك</string>
     <string name="action_try_again">حاول مرة أخرى</string>
     <string name="tvdb_error_does_not_exist">هذا المسلسل غير موجود (حتى الآن) على TMDB. حاول مرة أخرى.</string>
@@ -258,12 +263,12 @@
     <string name="shows_collection">مجموعة</string>
     <string name="watchlist">قائمة المشاهدة</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">لا توجد نتائج</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">مسلسلات مشابهة</string>
     <!-- Popular -->
     <string name="title_popular">الأكثر شعبية</string>
     <string name="filter_year">Year</string>
+    <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">القائمة الأولى</string>
@@ -316,8 +321,8 @@
     <string name="stats_in_collection_format">إضافة إلى مجموعة (%d)</string>
     <string name="movies_watched_format">%s تمت مشاهدتها</string>
     <plurals name="days_plural">
-        <item quantity="one">يومان</item>
         <item quantity="zero">يوم</item>
+        <item quantity="one">يومان</item>
         <item quantity="two">%d أيام</item>
         <item quantity="few">%d أيام</item>
         <item quantity="many">%d أيام</item>
@@ -388,6 +393,7 @@
     <string name="action_rate">قيم</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">تقييمك</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">عظيم!</string>
     <string name="hate">لم يعجبني :(</string>
     <string name="rating2">سيء</string>

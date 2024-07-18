@@ -43,9 +43,10 @@
     <!-- Search -->
     <string name="clear_search_history">Limpiar historial de búsqueda</string>
     <string name="search_hint">Buscar episodios</string>
+    <string name="empty_no_results">Sin resultados</string>
     <!-- Status messages -->
     <string name="updated">Actualizado a la última versión.</string>
-    <string name="updated_details">Detalles</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">n/d</string>
     <string name="unknown">desconocido</string>
     <string name="offline">Conéctate a una red y vuelve a intentarlo.</string>
@@ -70,6 +71,10 @@
     <string name="shout_hint">Escribe un comentario (Inglés, +5 palabras)</string>
     <string name="shout_invalid">Su comentario no sigue las reglas!</string>
     <string name="action_post">Publicar</string>
+    <string name="action_edit_comment">Editar</string>
+    <string name="action_delete_comment">Eliminar</string>
+    <string name="confirmation_delete_comment">¿Eliminar este comentario?</string>
+    <string name="error_delete_comment">Comentario no eliminado, es demasiado antiguo o tiene respuestas</string>
     <string name="isspoiler">¡Alerta de spoiler!</string>
     <string name="no_shouts">¡Sé el primero en gritar!</string>
     <string name="refresh">Actualizar</string>
@@ -128,6 +133,7 @@
     <string name="state_on_watchlist">En la lista de visualización</string>
     <string name="state_favorite">Favorito</string>
     <!-- Shows -->
+    <string name="title_shows_added">Añadidas</string>
     <string name="confirm_delete">¿Realmente desea eliminar %s?</string>
     <string name="delete_error">No se pudo borrar la serie. Inténtalo más tarde.</string>
     <string name="delete_show">Eliminar</string>
@@ -202,21 +208,20 @@
         <item quantity="other">%d restantes</item>
     </plurals>
     <plurals name="remaining_of_total_episodes_plural">
-        <item quantity="one">%1$d of %2$d remaining</item>
-        <item quantity="other">%1$d of %2$d remaining</item>
+        <item quantity="one">%1$d de %2$d restantes</item>
+        <item quantity="other">%1$d de %2$d restantes</item>
     </plurals>
     <plurals name="skipped_episodes_plural">
         <item quantity="one">%d skipped</item>
         <item quantity="other">%d skipped</item>
     </plurals>
     <plurals name="collected_episodes_plural">
-        <item quantity="one">%d in collection</item>
+        <item quantity="one">%d en colección</item>
         <item quantity="other">%d in collection</item>
     </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Escriba el nombre de la serie</string>
     <string name="add_empty">No hay series.</string>
-    <string name="no_results">No hay resultados, pruebe con palabras completas.</string>
     <string name="empty_show_search">No encontrado en tu lista de visualización</string>
     <string name="action_try_again">Intentar de nuevo</string>
     <string name="tvdb_error_does_not_exist">La serie no existe (todavía) en TMDB. Inténtalo de nuevo más tarde.</string>
@@ -230,13 +235,13 @@
     <string name="shows_collection">Colección</string>
     <string name="watchlist">Lista de visualización</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">Sin resultados</string>
     <string name="action_similar">Similares</string>
     <string name="title_similar_shows">Series parecidas</string>
     <!-- Popular -->
     <string name="title_popular">Populares</string>
-    <string name="filter_year">Year</string>
-    <string name="filter_language">Language</string>
+    <string name="filter_year">Año</string>
+    <string name="filter_year_current">Current year</string>
+    <string name="filter_language">Idioma</string>
     <!-- Lists -->
     <string name="first_list">Primera lista</string>
     <string name="list_add">Añadir lista</string>
@@ -321,7 +326,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="hexagon_signed_out">Desconectado de SeriesGuide Cloud.</string>
     <string name="hexagon_signin_fail_format">Error al iniciar sesión (%s)</string>
     <string name="hexagon_signin_google_only">La dirección de correo electrónico requiere inicio de sesión de Google</string>
-    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
+    <string name="hexagon_signin_choose">Elija el correo electrónico para iniciar sesión si está utilizando SeriesGuide en otros dispositivos que no soporten el inicio de sesión de Google.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Enviando a trakt.</string>
     <string name="checkin_success_trakt">Registrado en %s en trakt.</string>
@@ -333,9 +338,9 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="trakt_error_credentials">Algo salió mal. Por favor comprueba tus credenciales y vuelve a intentarlo.</string>
     <string name="trakt_error_not_exists">No disponible (todavía) en trakt. Prueba más tarde.</string>
     <string name="trakt_notice_not_exists">No puede ser seguido (todavía) con trakt.</string>
-    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded">La lista de seguimiento está llena, elimine algo primero.</string>
     <!-- Connect trakt -->
-    <string name="trakt_required">To use this, connect to Trakt</string>
+    <string name="trakt_required">Para usar esto, conéctate a Trakt</string>
     <string name="connect_trakt">Conectar a trakt</string>
     <string name="trakt_reconnect">Conectar SeriesGuide a trakt</string>
     <string name="trakt_reconnect_details">Compruebe sus credenciales trakt</string>
@@ -349,6 +354,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="action_rate">Calificar</string>
     <string name="ack_rated">Valoración enviada</string>
     <string name="your_rating">Tu calificación</string>
+    <string name="action_remove_rating">Eliminar puntuación</string>
     <string name="love">¡Una pasada!</string>
     <string name="hate">¡Apesta!</string>
     <string name="rating2">Terrible</string>
@@ -494,9 +500,9 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="pref_notifications_battery_settings">Ajustes de batería</string>
     <string name="pref_notifications_battery_settings_summary">Ir a la configuración de la batería para desactivar las optimizaciones de la batería para obtener notificaciones fiables</string>
     <string name="notifications_allow">Permitir notificaciones</string>
-    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
-    <string name="precise_notifications_allow">Allow precise notifications</string>
-    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
+    <string name="notifications_allow_reason">Para recibir notificaciones de error y sobre episodios, vaya a Ajustes y permítalas.</string>
+    <string name="precise_notifications_allow">Permitir notificaciones programadas</string>
+    <string name="precise_notifications_allow_reason">Para recibir notificaciones programadas de episodios, vaya a Ajustes y permítalas.</string>
     <!-- List Widget -->
     <string name="hide_watched">Ocultar episodios vistos</string>
     <string name="pref_widget_opacity">Fondo de widget</string>
@@ -516,7 +522,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="billing_action_manage_subscriptions">Gestionar suscripciones</string>
     <string name="billing_action_pass">Obtener X Pass App</string>
     <string name="billing_duration_format">%1$s/año</string>
-    <string name="billing_free_trial">Free trial</string>
+    <string name="billing_free_trial">Prueba gratuita</string>
     <string name="billing_sub_description">Pruebe 30 días gratis. Cancela cuando quieras.</string>
     <string name="billing_price_pass">Compra por única vez</string>
     <string name="upgrade_description">Cada suscripción desbloquea todas las funciones y soporta actualizaciones futuras. No se requiere una suscripción para usar esta aplicación.</string>
@@ -533,7 +539,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="action_extensions_configure">Personalizar extensiones</string>
     <string name="action_extensions_add">Agregar extensión</string>
     <string name="action_extensions_search">Obtén más extensiones</string>
-    <string name="action_extensions_develop">Develop an extension</string>
+    <string name="action_extensions_develop">Desarrollar una extensión</string>
     <string name="action_extension_remove">Eliminar</string>
     <string name="extension_amazon">Búsqueda en Amazon</string>
     <string name="description_extension_amazon">Buscar en la pagina local de Amazon</string>

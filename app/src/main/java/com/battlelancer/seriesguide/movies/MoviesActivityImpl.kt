@@ -21,14 +21,15 @@ import com.battlelancer.seriesguide.util.ThemeUtils
 import com.google.android.material.appbar.AppBarLayout
 
 /**
- * Movie section of the app, displays various movie tabs.
+ * Movie section of the app, displays tabs to discover movies, watchlist,
+ * history (if connected to Trakt), collection and watched movies.
  */
 open class MoviesActivityImpl : BaseTopActivity() {
 
     private lateinit var binding: ActivityMoviesBinding
     private lateinit var tabsAdapter: TabStripAdapter
     private lateinit var pageChangeListener: MoviesPageChangeListener
-    private var showNowTab = false
+    private var showHistoryTab = false
 
     private val viewModel by viewModels<MoviesActivityViewModel>()
 
@@ -58,21 +59,20 @@ open class MoviesActivityImpl : BaseTopActivity() {
                 scrollSelectedTabToTop()
             }
         }
-        showNowTab = TraktCredentials.get(this@MoviesActivityImpl).hasCredentials()
+        showHistoryTab = TraktCredentials.get(this@MoviesActivityImpl).hasCredentials()
         pageChangeListener =
-            MoviesPageChangeListener(binding.sgAppBarLayout.sgAppBarLayout, showNowTab)
+            MoviesPageChangeListener(binding.sgAppBarLayout.sgAppBarLayout, showHistoryTab)
         tabLayout.setOnPageChangeListener(pageChangeListener)
         tabsAdapter = TabStripAdapter(this, binding.viewPagerMovies, tabLayout)
             .apply {
                 // discover
                 addTab(R.string.title_discover, MoviesDiscoverFragment::class.java, null)
-                // Trakt-only tabs should only be visible if connected
-                if (showNowTab) {
-                    // history tab
-                    addTab(R.string.user_stream, MoviesNowFragment::class.java, null)
-                }
                 // watchlist
                 addTab(R.string.movies_watchlist, MoviesWatchListFragment::class.java, null)
+                if (showHistoryTab) {
+                    // history tab
+                    addTab(R.string.user_stream, MoviesHistoryFragment::class.java, null)
+                }
                 // collection
                 addTab(R.string.movies_collection, MoviesCollectionFragment::class.java, null)
                 // watched
@@ -85,7 +85,7 @@ open class MoviesActivityImpl : BaseTopActivity() {
     }
 
     private fun scrollSelectedTabToTop() {
-        viewModel.scrollTabToTop(binding.viewPagerMovies.currentItem, showNowTab)
+        viewModel.scrollTabToTop(binding.viewPagerMovies.currentItem, showHistoryTab)
     }
 
     override fun onSelectedCurrentNavItem() {
@@ -99,11 +99,11 @@ open class MoviesActivityImpl : BaseTopActivity() {
 
     private fun maybeAddNowTab() {
         val currentTabCount = tabsAdapter.itemCount
-        showNowTab = TraktCredentials.get(this).hasCredentials()
-        pageChangeListener.isShowingNowTab = showNowTab
-        if (showNowTab && currentTabCount != TAB_COUNT_WITH_TRAKT) {
+        showHistoryTab = TraktCredentials.get(this).hasCredentials()
+        pageChangeListener.isShowingNowTab = showHistoryTab
+        if (showHistoryTab && currentTabCount != TAB_COUNT_WITH_TRAKT) {
             tabsAdapter.addTab(
-                R.string.user_stream, MoviesNowFragment::class.java, null, TAB_POSITION_NOW
+                R.string.user_stream, MoviesHistoryFragment::class.java, null, TAB_POSITION_TRAKT_HISTORY
             )
             // update tabs
             tabsAdapter.notifyTabsChanged()
@@ -151,10 +151,10 @@ open class MoviesActivityImpl : BaseTopActivity() {
             val liftOnScrollTarget = if (isShowingNowTab) {
                 when (position) {
                     TAB_POSITION_DISCOVER -> MoviesDiscoverFragment.liftOnScrollTargetViewId
-                    TAB_POSITION_NOW -> MoviesNowFragment.liftOnScrollTargetViewId
-                    TAB_POSITION_WATCHLIST_WITH_NOW -> MoviesWatchListFragment.liftOnScrollTargetViewId
-                    TAB_POSITION_COLLECTION_WITH_NOW -> MoviesCollectionFragment.liftOnScrollTargetViewId
-                    TAB_POSITION_WATCHED_WITH_NOW -> MoviesWatchedFragment.liftOnScrollTargetViewId
+                    TAB_POSITION_TRAKT_HISTORY -> MoviesHistoryFragment.liftOnScrollTargetViewId
+                    TAB_POSITION_WATCHLIST_WITH_HISTORY -> MoviesWatchListFragment.liftOnScrollTargetViewId
+                    TAB_POSITION_COLLECTION_WITH_HISTORY -> MoviesCollectionFragment.liftOnScrollTargetViewId
+                    TAB_POSITION_WATCHED_WITH_HISTORY -> MoviesWatchedFragment.liftOnScrollTargetViewId
                     else -> return
                 }
             } else {
@@ -178,10 +178,10 @@ open class MoviesActivityImpl : BaseTopActivity() {
         const val TAB_POSITION_WATCHLIST_DEFAULT = 1
         const val TAB_POSITION_COLLECTION_DEFAULT = 2
         const val TAB_POSITION_WATCHED_DEFAULT = 3
-        const val TAB_POSITION_NOW = 1
-        const val TAB_POSITION_WATCHLIST_WITH_NOW = 2
-        const val TAB_POSITION_COLLECTION_WITH_NOW = 3
-        const val TAB_POSITION_WATCHED_WITH_NOW = 4
+        const val TAB_POSITION_WATCHLIST_WITH_HISTORY = 1
+        const val TAB_POSITION_TRAKT_HISTORY = 2
+        const val TAB_POSITION_COLLECTION_WITH_HISTORY = 3
+        const val TAB_POSITION_WATCHED_WITH_HISTORY = 4
 
         private const val TAB_COUNT_WITH_TRAKT = 5
     }

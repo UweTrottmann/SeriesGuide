@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2012-2023 Uwe Trottmann
+// Copyright 2012-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.comments
 
-import android.os.AsyncTask
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
@@ -18,7 +17,9 @@ import android.widget.Toast
 import androidx.core.view.MenuProvider
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,14 +27,15 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentCommentsBinding
 import com.battlelancer.seriesguide.traktapi.TraktAction
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
-import com.battlelancer.seriesguide.traktapi.TraktTask
 import com.battlelancer.seriesguide.traktapi.TraktTask.TraktActionCompleteEvent
 import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.WebTools
+import com.battlelancer.seriesguide.util.safeShow
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.trakt5.TraktLink
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -53,6 +55,7 @@ class TraktCommentsFragment : Fragment() {
 
     private var binding: FragmentCommentsBinding? = null
     private lateinit var adapter: TraktCommentsAdapter
+    private val model: TraktCommentsViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -92,7 +95,7 @@ class TraktCommentsFragment : Fragment() {
         )
 
         binding.buttonShouts.setOnClickListener {
-            comment()
+            postOrEdit()
         }
 
         // disable comment button by default, enable if comment entered
@@ -118,6 +121,13 @@ class TraktCommentsFragment : Fragment() {
         binding.recyclerViewComments.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewComments.adapter = adapter
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            model.commentIdToEdit.collect {
+                binding.buttonShouts
+                    .setText(if (it != null) R.string.action_edit_comment else R.string.action_post)
+            }
+        }
+
         // load data
         LoaderManager.getInstance(this)
             .initLoader(
@@ -133,7 +143,7 @@ class TraktCommentsFragment : Fragment() {
         )
     }
 
-    private fun comment() {
+    private fun postOrEdit() {
         val binding = binding ?: return
 
         // prevent empty comments
@@ -148,39 +158,39 @@ class TraktCommentsFragment : Fragment() {
 
         // disable the comment button
         binding.buttonShouts.isEnabled = false
-        val args = requireArguments()
         val isSpoiler = binding.checkBoxShouts.isChecked
 
-        // as determined by "science", episode comments are most likely, so check for them first
-        // comment for an episode?
-        val episodeId = args.getLong(InitBundle.EPISODE_ID)
-        if (episodeId != 0L) {
-            @Suppress("DEPRECATION") // AsyncTask
-            TraktTask(context).commentEpisode(episodeId, comment, isSpoiler)
-                .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-            return
-        }
+        val commentIdToEdit = model.commentIdToEdit.value
+        if (commentIdToEdit != null) {
+            // Editing existing comment
+            model.editComment(commentIdToEdit, comment, isSpoiler)
+        } else {
+            // Posting new comment
+            val args = requireArguments()
+            // comment for an episode?
+            val episodeId = args.getLong(InitBundle.EPISODE_ID)
+            if (episodeId != 0L) {
+                model.postEpisodeComment(episodeId, comment, isSpoiler)
+                return
+            }
 
-        // comment for a movie?
-        val movieTmdbId = args.getInt(InitBundle.MOVIE_TMDB_ID)
-        if (movieTmdbId != 0) {
-            @Suppress("DEPRECATION") // AsyncTask
-            TraktTask(context).commentMovie(movieTmdbId, comment, isSpoiler)
-                .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-            return
-        }
+            // comment for a movie?
+            val movieTmdbId = args.getInt(InitBundle.MOVIE_TMDB_ID)
+            if (movieTmdbId != 0) {
+                model.postMovieComment(movieTmdbId, comment, isSpoiler)
+                return
+            }
 
-        // comment for a show?
-        val showId = args.getLong(InitBundle.SHOW_ID)
-        if (showId != 0L) {
-            @Suppress("DEPRECATION") // AsyncTask
-            TraktTask(context).commentShow(showId, comment, isSpoiler)
-                .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-            return
-        }
+            // comment for a show?
+            val showId = args.getLong(InitBundle.SHOW_ID)
+            if (showId != 0L) {
+                model.postShowComment(showId, comment, isSpoiler)
+                return
+            }
 
-        // Should never have launched without a valid ID
-        throw IllegalArgumentException("comment: failed, all IDs 0 ($args)")
+            // Should never have launched without a valid ID
+            throw IllegalArgumentException("comment: failed, all IDs 0 ($args)")
+        }
     }
 
     override fun onResume() {
@@ -212,10 +222,22 @@ class TraktCommentsFragment : Fragment() {
             return false
         }
     }
+
     private val onItemClickListener =
         object : TraktCommentsAdapter.OnItemClickListener {
             override fun onOpenWebsite(commentId: Int) {
                 WebTools.openInApp(requireContext(), TraktLink.comment(commentId))
+            }
+
+            override fun onEdit(commentId: Int, comment: String, isSpoiler: Boolean) {
+                model.commentIdToEdit.value = commentId
+                binding?.textFieldComments?.editText?.setText(comment)
+                binding?.checkBoxShouts?.isChecked = isSpoiler
+            }
+
+            override fun onDelete(commentId: Int) {
+                model.commentIdToDelete.value = commentId
+                DeleteCommentDialogFragment().safeShow(parentFragmentManager, "delete-comment")
             }
         }
 
@@ -233,7 +255,7 @@ class TraktCommentsFragment : Fragment() {
                 loader: Loader<TraktCommentsLoader.Result>,
                 data: TraktCommentsLoader.Result
             ) {
-                adapter.submitList(data.results)
+                adapter.update(TraktCredentials.get(requireContext()).username, data.results)
                 setEmptyMessage(data.emptyText)
                 val hasNoData = data.results.isNullOrEmpty()
                 binding?.recyclerViewComments?.isGone = hasNoData
@@ -258,11 +280,10 @@ class TraktCommentsFragment : Fragment() {
     }
 
     private fun refreshComments() {
+        // Signal no cached response should be used
+        val args = TraktCommentsLoader.argsWithRefresh(requireArguments())
         LoaderManager.getInstance(this)
-            .restartLoader(
-                TraktCommentsActivity.LOADER_ID_COMMENTS, arguments,
-                commentsLoaderCallbacks
-            )
+            .restartLoader(TraktCommentsActivity.LOADER_ID_COMMENTS, args, commentsLoaderCallbacks)
     }
 
     /**
@@ -290,7 +311,9 @@ class TraktCommentsFragment : Fragment() {
         val binding = binding ?: return
         binding.buttonShouts.isEnabled = true
         if (event.wasSuccessful) {
-            // clear the text field and show recent shout
+            // Reset state
+            model.commentIdToEdit.value = null
+            // clear the text field and refresh comments
             binding.textFieldComments.editText!!.setText("")
             refreshCommentsWithNetworkCheck()
         }

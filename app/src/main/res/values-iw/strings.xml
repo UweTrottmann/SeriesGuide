@@ -43,9 +43,10 @@
     <!-- Search -->
     <string name="clear_search_history">נקה את היסטוריית החיפוש</string>
     <string name="search_hint">חפש פרקים</string>
+    <string name="empty_no_results">אין תוצאות</string>
     <!-- Status messages -->
     <string name="updated">עדכן לגרסה האחרונה.</string>
-    <string name="updated_details">פרטים נוספים</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">לא ידוע</string>
     <string name="unknown">לא ידוע</string>
     <string name="offline">התחבר לרשת, ואז נסה שוב.</string>
@@ -70,6 +71,10 @@
     <string name="shout_hint">הקלד תגובה (באנגלית, 5+ מילות)</string>
     <string name="shout_invalid">התגובה שלך לא על פי הכללים!</string>
     <string name="action_post">פוסט</string>
+    <string name="action_edit_comment">Edit</string>
+    <string name="action_delete_comment">Delete</string>
+    <string name="confirmation_delete_comment">Delete this comment?</string>
+    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">אזהרת ספוילר!</string>
     <string name="no_shouts">תהיה הראשון להמליץ!</string>
     <string name="refresh">רענן</string>
@@ -130,6 +135,7 @@
     <string name="state_on_watchlist">ברשימת הצפייה</string>
     <string name="state_favorite">מועדפים</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">בטוח שאתה רוצה להסיר את %s?</string>
     <string name="delete_error">הסרת הסדרה נכשלה. נסה שוב מאוחר יותר.</string>
     <string name="delete_show">הסר</string>
@@ -230,7 +236,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">הקלד שם סדרה</string>
     <string name="add_empty">אין סדרות כאן.</string>
-    <string name="no_results">אין תוצאות, נסה ביטויים שלמים.</string>
     <string name="empty_show_search">לא נמצא ברשימת הסדרות</string>
     <string name="action_try_again">נסה שוב</string>
     <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
@@ -244,12 +249,12 @@
     <string name="shows_collection">אוסף</string>
     <string name="watchlist">רשימת מעקב</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">אין תוצאות</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">סדרות דומות</string>
     <!-- Popular -->
     <string name="title_popular">פופולרי</string>
     <string name="filter_year">Year</string>
+    <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">הרשימה הראשונה</string>
@@ -368,6 +373,7 @@
     <string name="action_rate">דרג</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">הדירוג שלך</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">לגמרי נינג\'ה!</string>
     <string name="hate">על הפנים ):</string>
     <string name="rating2">נוראי</string>

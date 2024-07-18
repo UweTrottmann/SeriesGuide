@@ -43,9 +43,10 @@
     <!-- Search -->
     <string name="clear_search_history">검색 기록 삭제</string>
     <string name="search_hint">에피소드 검색</string>
+    <string name="empty_no_results">결과가 없습니다.</string>
     <!-- Status messages -->
     <string name="updated">최신 버전으로 업데이트되었습니다.</string>
-    <string name="updated_details">상세내용</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">없음</string>
     <string name="unknown">알 수 없음</string>
     <string name="offline">네트워크에 연결한 후 다시 시도해주세요.</string>
@@ -70,6 +71,10 @@
     <string name="shout_hint">코멘트를 입력 (영어, 5글자 이상)</string>
     <string name="shout_invalid">규칙에 어긋납니다!</string>
     <string name="action_post">게시</string>
+    <string name="action_edit_comment">Edit</string>
+    <string name="action_delete_comment">Delete</string>
+    <string name="confirmation_delete_comment">Delete this comment?</string>
+    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">스포일러 경고!</string>
     <string name="no_shouts">첫 댓글의 주인공이 되세요!</string>
     <string name="refresh">새로 고침</string>
@@ -127,6 +132,7 @@
     <string name="state_on_watchlist">On watchlist</string>
     <string name="state_favorite">즐겨찾기</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">%s을(를) 제거 하시겠습니까?</string>
     <string name="delete_error">프로그램을 제거하지 못했습니다. 나중에 다시 시도해주세요.</string>
     <string name="delete_show">삭제</string>
@@ -209,7 +215,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">검색할 프로그램을 입력하세요</string>
     <string name="add_empty">검색 결과가 없습니다.</string>
-    <string name="no_results">결과가 없습니다. 완전한 단어를 입력하세요.</string>
     <string name="empty_show_search">프로그램 목록에서 찾을 수 없습니다</string>
     <string name="action_try_again">재시도</string>
     <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
@@ -223,12 +228,12 @@
     <string name="shows_collection">컬렉션</string>
     <string name="watchlist">관심목록</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">No results</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Similar shows</string>
     <!-- Popular -->
     <string name="title_popular">인기 항목</string>
     <string name="filter_year">Year</string>
+    <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">첫번째 목록</string>
@@ -338,6 +343,7 @@
     <string name="action_rate">평가</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">당신의 평가</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">킹왕짱!</string>
     <string name="hate">쓰레기 :(</string>
     <string name="rating2">끔찍해</string>

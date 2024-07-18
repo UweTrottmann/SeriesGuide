@@ -44,7 +44,7 @@ class MoviesCollectionFragment : MoviesBaseFragment() {
 
     override fun getTabPosition(showingNowTab: Boolean): Int {
         return if (showingNowTab) {
-            MoviesActivityImpl.TAB_POSITION_COLLECTION_WITH_NOW
+            MoviesActivityImpl.TAB_POSITION_COLLECTION_WITH_HISTORY
         } else {
             MoviesActivityImpl.TAB_POSITION_COLLECTION_DEFAULT
         }

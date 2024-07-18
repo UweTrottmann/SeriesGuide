@@ -45,18 +45,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ratingViewTrakt" />
 
+    <ImageView
+        android:id="@+id/imageViewRatingUser"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/trakt"
+        android:src="@drawable/ic_trakt_icon_control"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ratingViewTrakt" />
+
     <TextView
         android:id="@+id/textViewRatingsUser"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:ellipsize="end"
         android:text="@string/action_rate"
         android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageViewRatingUser"
         app:layout_constraintTop_toBottomOf="@+id/ratingViewTrakt"
         tools:text="10 - Totally ninja" />
 
@@ -78,6 +91,6 @@
         android:id="@+id/groupRatingsUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="textViewRatingsUser,textViewRatingsUserLabel,viewClickTargetRatingUser" />
+        app:constraint_referenced_ids="imageViewRatingUser,textViewRatingsUser,textViewRatingsUserLabel,viewClickTargetRatingUser" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

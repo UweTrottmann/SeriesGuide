@@ -43,9 +43,10 @@
     <!-- Search -->
     <string name="clear_search_history">ล้างประวัติการค้นหา</string>
     <string name="search_hint">ค้นหาตอน</string>
+    <string name="empty_no_results">ไม่มีผลลัพธ์</string>
     <!-- Status messages -->
     <string name="updated">อัปเดตเป็นเวอร์ชันล่าสุดแล้ว</string>
-    <string name="updated_details">รายละเอียด</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">n/a</string>
     <string name="unknown">ไม่ทราบ</string>
     <string name="offline">เชื่อมต่อไปยังเครือข่าย, จากนั้นลองอีกครั้ง</string>
@@ -70,6 +71,10 @@
     <string name="shout_hint">พิมพ์ความคิดเห็น (ภาษาอังกฤษ, 5+ คำ)</string>
     <string name="shout_invalid">ความคิดเห็นของคุณไม่ได้ทำตามกฏ!</string>
     <string name="action_post">โพสต์</string>
+    <string name="action_edit_comment">Edit</string>
+    <string name="action_delete_comment">Delete</string>
+    <string name="confirmation_delete_comment">Delete this comment?</string>
+    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">ระวังสปอยล์!</string>
     <string name="no_shouts">แสดงความคิดเห็นเป็นคนแรก!</string>
     <string name="refresh">โหลดใหม่</string>
@@ -127,6 +132,7 @@
     <string name="state_on_watchlist">ในรายการที่อยากดู</string>
     <string name="state_favorite">รายการโปรด</string>
     <!-- Shows -->
+    <string name="title_shows_added">Added</string>
     <string name="confirm_delete">คุณแน่ใจหรือว่าต้องลบ %s?</string>
     <string name="delete_error">ไม่สามารถลบซีรีส์ ลองอีกครั้งในภายหลัง</string>
     <string name="delete_show">ลบ</string>
@@ -209,7 +215,6 @@
     <!-- Add show -->
     <string name="checkin_searchhint">พิมพ์ชื่อซีรีส์</string>
     <string name="add_empty">ไม่มีซีรีส์ที่นี่</string>
-    <string name="no_results">ไม่พบผลลัพธ์ ลองคำที่สมบูรณ์</string>
     <string name="empty_show_search">ไม่พบอยู่ในรายการซีรีส์ของคุณ</string>
     <string name="action_try_again">ลองอีกครั้ง</string>
     <string name="tvdb_error_does_not_exist">(ยัง)ไม่มีซีรีส์นี้บน TMDB ลองอีกครั้งในภายหลัง</string>
@@ -223,12 +228,12 @@
     <string name="shows_collection">คลังเก็บ</string>
     <string name="watchlist">อยากดู</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">ไม่มีผลลัพธ์</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">ซีรีส์ที่คล้ายกัน</string>
     <!-- Popular -->
     <string name="title_popular">ยอดนิยม</string>
     <string name="filter_year">Year</string>
+    <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">รายการแรก</string>
@@ -338,6 +343,7 @@
     <string name="action_rate">ให้คะแนน</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">คะแนนของคุณ</string>
+    <string name="action_remove_rating">Remove rating</string>
     <string name="love">สุดยอดไปเลย!</string>
     <string name="hate">แย่ที่สุด :(</string>
     <string name="rating2">แย่มาก</string>

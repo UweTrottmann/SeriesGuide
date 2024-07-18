@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2022-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies
 
@@ -12,12 +12,11 @@ import java.util.Locale
 
 object MoviesSettings {
 
-    private const val KEY_LAST_ACTIVE_MOVIES_TAB = "com.battlelancer.seriesguide.moviesActiveTab"
+    private const val KEY_LAST_ACTIVE_MOVIES_TAB = "seriesguide.movies.selectedtab"
 
     private const val KEY_MOVIES_LANGUAGE = "com.battlelancer.seriesguide.languagemovies"
     private const val KEY_MOVIES_REGION = "com.battlelancer.seriesguide.regionmovies"
 
-    @JvmStatic
     fun saveLastMoviesTabPosition(context: Context, position: Int) {
         PreferenceManager.getDefaultSharedPreferences(context).edit()
             .putInt(KEY_LAST_ACTIVE_MOVIES_TAB, position)
@@ -27,7 +26,6 @@ object MoviesSettings {
     /**
      * Return the position of the last selected movies tab.
      */
-    @JvmStatic
     fun getLastMoviesTabPosition(context: Context): Int {
         return PreferenceManager.getDefaultSharedPreferences(context)
             .getInt(KEY_LAST_ACTIVE_MOVIES_TAB, 0)

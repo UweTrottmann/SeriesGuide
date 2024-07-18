@@ -1,37 +1,39 @@
 # https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format
 
 [versions]
-androidx-lifecycle = "2.7.0" # https://developer.android.com/jetpack/androidx/releases/lifecycle
+androidx-lifecycle = "2.8.2" # https://developer.android.com/jetpack/androidx/releases/lifecycle
 debugdrawer = "0.9.0" # https://github.com/lenguyenthanh/DebugDrawer
 eventbus = "3.3.1"
-google-api-client = "2.2.0" # https://github.com/googleapis/google-api-java-client/releases
-retrofit2 = "2.9.0" # https://github.com/square/retrofit/blob/master/CHANGELOG.md
+google-api-client = "2.6.0" # https://github.com/googleapis/google-api-java-client/releases
+retrofit2 = "2.11.0" # https://github.com/square/retrofit/blob/master/CHANGELOG.md
 
 [libraries]
-amazon-appstore-sdk = "com.amazon.device:amazon-appstore-sdk:3.0.4" # https://developer.amazon.com/docs/in-app-purchasing/iap-whats-new.html
+amazon-appstore-sdk = "com.amazon.device:amazon-appstore-sdk:3.0.5" # https://developer.amazon.com/docs/in-app-purchasing/iap-whats-new.html
 androidutils = "com.uwetrottmann.androidutils:androidutils:4.0.0" # https://github.com/UweTrottmann/AndroidUtils/releases
 # https://developer.android.com/jetpack/androidx/releases/activity
-androidx-activity = "androidx.activity:activity:1.8.2"
+androidx-activity = "androidx.activity:activity:1.9.0"
 # https://developer.android.com/jetpack/androidx/releases/annotation
-androidx-annotation = "androidx.annotation:annotation:1.7.1"
+androidx-annotation = "androidx.annotation:annotation:1.8.0"
 # https://developer.android.com/jetpack/androidx/releases/appcompat
-androidx-appcompat = "androidx.appcompat:appcompat:1.6.1"
+androidx-appcompat = "androidx.appcompat:appcompat:1.7.0"
 # https://developer.android.com/jetpack/androidx/releases/browser
-androidx-browser = "androidx.browser:browser:1.7.0"
+androidx-browser = "androidx.browser:browser:1.8.0"
 # https://developer.android.com/jetpack/androidx/releases/collection#1.4.0
 androidx-collection = "androidx.collection:collection:1.4.0"
 androidx-constraintlayout = "androidx.constraintlayout:constraintlayout:2.1.4" # https://developer.android.com/jetpack/androidx/releases/constraintlayout
 androidx-coordinatorlayout = "androidx.coordinatorlayout:coordinatorlayout:1.2.0" # https://developer.android.com/jetpack/androidx/releases/coordinatorlayout
 # https://developer.android.com/jetpack/androidx/releases/core
-androidx-core = "androidx.core:core:1.12.0"
-androidx-core-ktx = "androidx.core:core-ktx:1.12.0"
+androidx-core = "androidx.core:core:1.13.1"
+androidx-core-ktx = "androidx.core:core-ktx:1.13.1"
 # https://developer.android.com/jetpack/androidx/releases/fragment
-androidx-fragment = "androidx.fragment:fragment-ktx:1.6.2"
+androidx-fragment = "androidx.fragment:fragment-ktx:1.8.0"
 androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle" }
 # https://developer.android.com/jetpack/androidx/releases/paging
-androidx-paging = "androidx.paging:paging-runtime-ktx:3.2.1"
+# 3.3.0 has a crash when the data is refreshed while scrolling ("Inconsistency detected.")
+# https://issuetracker.google.com/issues/343124454
+androidx-paging = "androidx.paging:paging-runtime:3.2.1"
 androidx-palette = "androidx.palette:palette-ktx:1.0.0"
 # https://developer.android.com/jetpack/androidx/releases/preference
 androidx-preference = "androidx.preference:preference-ktx:1.2.1"
@@ -55,7 +57,7 @@ androidx-test-rules = "androidx.test:rules:1.5.0"
 androidx-test-runner = "androidx.test:runner:1.5.2"
 androidx-viewpager = "androidx.viewpager:viewpager:1.0.0"
 # https://developer.android.com/jetpack/androidx/releases/viewpager2
-androidx-viewpager2 = "androidx.viewpager2:viewpager2:1.1.0-beta02"
+androidx-viewpager2 = "androidx.viewpager2:viewpager2:1.1.0"
 billing = "com.android.billingclient:billing-ktx:6.0.1" # https://developer.android.com/google/play/billing/billing_library_releases_notes
 # https://github.com/google/dagger/releases
 dagger = "com.google.dagger:dagger:2.49"
@@ -67,25 +69,27 @@ debugdrawer-timber = { module = "com.github.lenguyenthanh.debugdrawer:debugdrawe
 debugdrawer-view = { module = "com.github.lenguyenthanh.debugdrawer:debugdrawer-view", version.ref = "debugdrawer" }
 findbugs-jsr305 = "com.google.code.findbugs:jsr305:3.0.2"
 # https://firebase.google.com/support/release-notes/android
-firebase = "com.google.firebase:firebase-bom:32.7.3"
-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
-firebase-ui-auth = "com.firebaseui:firebase-ui-auth:8.0.2" # https://github.com/firebase/FirebaseUI-Android/releases
+firebase-crashlytics = "com.google.firebase:firebase-crashlytics:19.0.1"
+# 23.0.0 requires min SDK 23
+firebase-auth = "com.google.firebase:firebase-auth:22.3.1"
+# https://github.com/firebase/FirebaseUI-Android/releases
+firebase-ui-auth = "com.firebaseui:firebase-ui-auth:8.0.2"
 flatbuffers = "com.google.flatbuffers:flatbuffers-java:1.12.0"
 google-api-client = { module = "com.google.api-client:google-api-client", version.ref = "google-api-client" }
 google-api-client-android = { module = "com.google.api-client:google-api-client-android", version.ref = "google-api-client" }
-google-http-client = "com.google.http-client:google-http-client-gson:1.43.3" # https://github.com/googleapis/google-http-java-client/releases
+google-http-client = "com.google.http-client:google-http-client-gson:1.44.2" # https://github.com/googleapis/google-http-java-client/releases
 greenrobot-eventbus = { module = "org.greenrobot:eventbus", version.ref = "eventbus" }
 greenrobot-eventbus-processor = { module = "org.greenrobot:eventbus-annotation-processor", version.ref = "eventbus" }
 # https://github.com/google/gson/blob/master/CHANGELOG.md
-gson = "com.google.code.gson:gson:2.10.1"
+gson = "com.google.code.gson:gson:2.11.0"
 junit = "junit:junit:4.13.2"
 # https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
-kotlinx-coroutines-android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0"
-kotlinx-coroutines-core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0"
-kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0"
+kotlinx-coroutines-android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1"
+kotlinx-coroutines-core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1"
+kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1"
 # https://github.com/michaelbull/kotlin-result/releases
 kotlinx-result = "com.michael-bull.kotlin-result:kotlin-result:1.1.18"
-material = "com.google.android.material:material:1.11.0" # https://github.com/material-components/material-components-android/releases
+material = "com.google.android.material:material:1.12.0" # https://github.com/material-components/material-components-android/releases
 # https://github.com/mockito/mockito/releases
 # mockito 5 requires JDK 11
 mockito = "org.mockito:mockito-core:4.11.0"
@@ -95,33 +99,33 @@ okhttp-tls = "com.squareup.okhttp3:okhttp-tls:4.12.0"
 photoview = "com.github.chrisbanes:PhotoView:2.3.0"
 picasso = "com.squareup.picasso:picasso:2.8" # https://github.com/square/picasso/releases
 # https://developers.google.com/android/guides/releases
+# 21.0.0 removes Credentials API used by firebase-ui-auth
 play-services-auth = "com.google.android.gms:play-services-auth:20.7.0"
 retrofit2-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit2" }
 retrofit2 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit2" }
 # https://github.com/robolectric/robolectric/releases/
-robolectric = "org.robolectric:robolectric:4.11.1"
-taptargetview = "com.getkeepsafe.taptargetview:taptargetview:1.13.3"
-threetenabp = "com.jakewharton.threetenabp:threetenabp:1.4.6" # https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
+robolectric = "org.robolectric:robolectric:4.12.2"
+threetenabp = "com.jakewharton.threetenabp:threetenabp:1.4.7" # https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
 timber = "com.jakewharton.timber:timber:5.0.1" # https://github.com/JakeWharton/timber/blob/master/CHANGELOG.md
 tmdb-java = "com.uwetrottmann.tmdb2:tmdb-java:2.10.0" # https://github.com/UweTrottmann/tmdb-java/blob/main/CHANGELOG.md
-trakt-java = "com.uwetrottmann.trakt5:trakt-java:6.11.2" # https://github.com/UweTrottmann/trakt-java/blob/main/CHANGELOG.md
-truth = "com.google.truth:truth:1.4.0" # https://github.com/google/truth/releases
+trakt-java = "com.uwetrottmann.trakt5:trakt-java:6.13.0" # https://github.com/UweTrottmann/trakt-java/blob/main/CHANGELOG.md
+truth = "com.google.truth:truth:1.4.2" # https://github.com/google/truth/releases
 
 # Jetpack Compose
 # https://developer.android.com/jetpack/compose/setup
 # https://developer.android.com/jetpack/compose/bom/bom-mapping
 # https://developer.android.com/jetpack/androidx/releases/compose
-compose = "androidx.compose:compose-bom:2024.02.01"
+compose = "androidx.compose:compose-bom:2024.06.00"
 # https://developer.android.com/jetpack/androidx/releases/compose-material3
 compose-material3 = { module = "androidx.compose.material3:material3" }
 compose-tooling = { module = "androidx.compose.ui:ui-tooling" }
 compose-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
-androidx-activity-compose = "androidx.activity:activity-compose:1.8.2"
+androidx-activity-compose = "androidx.activity:activity-compose:1.9.0"
 androidx-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }
 
 [plugins]
 # https://developer.android.com/build/releases/gradle-plugin
-android = { id = "com.android.application", version = "8.2.0" }
+android = { id = "com.android.application", version = "8.5.0" }
 # https://kotlinlang.org/docs/releases.html#release-details
 # When updating, must also update kotlinCompilerExtensionVersion in app/build.gradle
 kotlin = { id = "org.jetbrains.kotlin.android", version = "1.9.22" }
@@ -130,7 +134,7 @@ versions = { id = "com.github.ben-manes.versions", version = "0.51.0" }
 # https://github.com/gradle-nexus/publish-plugin/releases
 publish = { id = "io.github.gradle-nexus.publish-plugin", version = "1.3.0" }
 # https://firebase.google.com/support/release-notes/android
-google-services = { id = "com.google.gms.google-services", version = "4.4.1" }
-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version = "2.9.9" }
+google-services = { id = "com.google.gms.google-services", version = "4.4.2" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version = "3.0.1" }
 # For endpoints plugin, version is actually set in settings.gradle.kts!
 endpoints = { id = "com.google.cloud.tools.endpoints-framework-gradle-plugin", version = "2.1.0" }

@@ -1,16 +1,15 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2011-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
@@ -22,14 +21,14 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.calendar.RecentFragment
 import com.battlelancer.seriesguide.shows.calendar.UpcomingFragment
 import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
-import com.battlelancer.seriesguide.shows.history.ShowsNowFragment
+import com.battlelancer.seriesguide.shows.history.ShowsHistoryFragment
 import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment
 import com.battlelancer.seriesguide.shows.search.discover.SearchResult
+import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverFragment
+import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverPagingActivity
 import com.battlelancer.seriesguide.sync.AccountUtils
-import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.ui.BaseTopActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
-import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.TabStripAdapter
 import com.battlelancer.seriesguide.util.AppUpgrade
 import com.battlelancer.seriesguide.util.TaskManager
@@ -42,10 +41,11 @@ import com.google.android.material.snackbar.Snackbar
 import com.uwetrottmann.seriesguide.billing.BillingViewModel
 import com.uwetrottmann.seriesguide.billing.BillingViewModelFactory
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
+import kotlinx.coroutines.launch
 
 /**
- * Provides the apps main screen, displays tabs for shows, history, recent and upcoming episodes.
- * Runs upgrade code and checks billing state.
+ * Provides the apps main screen, displays tabs for shows, discover, history,
+ * recent and upcoming episodes. Runs upgrade code and checks billing state.
  */
 open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddShowListener {
 
@@ -81,7 +81,7 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
         if (AppUpgrade(applicationContext).upgradeIfNewVersion()) {
             // Let the user know the app has updated.
             Snackbar.make(snackbarParentView, R.string.updated, Snackbar.LENGTH_LONG)
-                .setAction(R.string.updated_details) {
+                .setAction(R.string.updated_what_is_new) {
                     WebTools.openInApp(
                         this@ShowsActivityImpl,
                         getString(R.string.url_release_notes)
@@ -192,9 +192,7 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
         // setup floating action button for adding shows
         val buttonAddShow = findViewById<FloatingActionButton>(R.id.buttonShowsAdd)
         buttonAddShow.setOnClickListener {
-            startActivity(
-                SearchActivity.newIntent(this@ShowsActivityImpl)
-            )
+            startActivity(ShowsDiscoverPagingActivity.intentSearch(this))
         }
 
         viewPager = findViewById(R.id.viewPagerTabs)
@@ -205,13 +203,24 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
             }
         }
         tabsAdapter = TabStripAdapter(this, viewPager, tabs)
-        tabs.setOnPageChangeListener(ShowsPageChangeListener(findViewById(R.id.sgAppBarLayout), buttonAddShow))
+        tabs.setOnPageChangeListener(
+            ShowsPageChangeListener(
+                findViewById(R.id.sgAppBarLayout),
+                buttonAddShow,
+                viewModel
+            )
+        )
+
+        // Note: should match order as in Tab enum
+
+        // discover tab
+        tabsAdapter.addTab(R.string.title_discover, ShowsDiscoverFragment::class.java, null)
 
         // shows tab
-        tabsAdapter.addTab(R.string.shows, ShowsFragment::class.java, null)
+        tabsAdapter.addTab(R.string.title_shows_added, ShowsFragment::class.java, null)
 
         // history tab
-        tabsAdapter.addTab(R.string.user_stream, ShowsNowFragment::class.java, null)
+        tabsAdapter.addTab(R.string.user_stream, ShowsHistoryFragment::class.java, null)
 
         // upcoming tab
         tabsAdapter.addTab(R.string.upcoming, UpcomingFragment::class.java, null)
@@ -233,20 +242,31 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
 
     /**
      * Tries to restore the current tab from given intent extras. If that fails, uses the last known
-     * selected tab. If that fails also, defaults to the first tab.
+     * selected tab. If that fails also, defaults to the shows tab.
      */
     private fun setInitialTab(intentExtras: Bundle?) {
-        var selection = intentExtras?.getInt(
-            EXTRA_SELECTED_TAB,
-            ShowsSettings.getLastShowsTabPosition(this)
-        ) ?: ShowsSettings.getLastShowsTabPosition(this) // use last saved selection
-
-        // never select a non-existent tab
-        if (selection > tabsAdapter.itemCount - 1) {
-            selection = 0
+        lifecycleScope.launch {
+            viewModel.selectedTab.collect {
+                // Do not scroll if on same tab (e.g. due to page change listener calls)
+                if (viewPager.currentItem != it.index) {
+                    viewPager.setCurrentItem(it.index, it.smoothScroll)
+                }
+            }
         }
 
-        viewPager.setCurrentItem(selection, false)
+        var tabIndex = intentExtras?.getInt(EXTRA_SELECTED_TAB, -1) ?: -1
+
+        if (tabIndex == -1) {
+            // use last saved selection
+            tabIndex = ShowsSettings.getLastShowsTabPosition(this)
+        }
+
+        // never select a non-existent tab
+        if (tabIndex > tabsAdapter.itemCount - 1) {
+            tabIndex = Tab.SHOWS.index
+        }
+
+        viewModel.setInitialTab(tabIndex)
     }
 
     private fun checkGooglePlayPurchase() {
@@ -307,31 +327,6 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
         ShowsSettings.saveLastShowsTabPosition(this, viewPager.currentItem)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.seriesguide_menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.menu_search -> {
-                startActivity(Intent(this, SearchActivity::class.java))
-                true
-            }
-            R.id.menu_update -> {
-                SgSyncAdapter.requestSyncDeltaImmediate(this, true)
-                true
-            }
-            R.id.menu_fullupdate -> {
-                SgSyncAdapter.requestSyncFullImmediate(this, true)
-                true
-            }
-            else -> {
-                super.onOptionsItemSelected(item)
-            }
-        }
-    }
-
     override fun onKeyLongPress(keyCode: Int, event: KeyEvent): Boolean {
         // prevent navigating to top activity as this is the top activity
         return keyCode == KeyEvent.KEYCODE_BACK
@@ -351,21 +346,25 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
      * Page change listener which
      * - sets the scroll view of the current visible tab as the lift on scroll target view of the
      *   app bar and
-     * - hides the floating action button for all but the shows tab.
+     * - hides the floating action button for all but the discover tab.
      */
     class ShowsPageChangeListener(
         private val appBarLayout: AppBarLayout,
-        private val floatingActionButton: FloatingActionButton
+        private val floatingActionButton: FloatingActionButton,
+        private val viewModel: ShowsActivityViewModel
     ) : ViewPager2.OnPageChangeCallback() {
         override fun onPageScrollStateChanged(arg0: Int) {}
         override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {}
 
         override fun onPageSelected(position: Int) {
+            viewModel.setInitialTab(position)
+
             // Change the scrolling view the AppBarLayout should use to determine if it should lift.
             // This is required so the AppBarLayout does not flicker its background when scrolling.
             val liftOnScrollTarget = when (position) {
                 Tab.SHOWS.index -> ShowsFragment.liftOnScrollTargetViewId
-                Tab.NOW.index -> ShowsNowFragment.liftOnScrollTargetViewId
+                Tab.DISCOVER.index -> ShowsDiscoverFragment.liftOnScrollTargetViewId
+                Tab.HISTORY.index -> ShowsHistoryFragment.liftOnScrollTargetViewId
                 Tab.UPCOMING.index -> UpcomingFragment.liftOnScrollTargetViewId
                 Tab.RECENT.index -> RecentFragment.liftOnScrollTargetViewId
                 else -> throw IllegalArgumentException("Unexpected page position")
@@ -373,7 +372,7 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
             appBarLayout.liftOnScrollTargetViewId = liftOnScrollTarget
 
             // only display add show button on Shows tab
-            if (position == Tab.SHOWS.index) {
+            if (position == Tab.DISCOVER.index) {
                 floatingActionButton.show()
             } else {
                 floatingActionButton.hide()
@@ -390,9 +389,10 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
     }
 
     enum class Tab(val index: Int) {
-        SHOWS(0),
-        NOW(1),
-        UPCOMING(2),
-        RECENT(3)
+        DISCOVER(0),
+        SHOWS(1),
+        HISTORY(2),
+        UPCOMING(3),
+        RECENT(4)
     }
 }

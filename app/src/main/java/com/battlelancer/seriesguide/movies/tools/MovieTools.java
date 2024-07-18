@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2014-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies.tools;
 
@@ -20,6 +20,7 @@ import com.battlelancer.seriesguide.movies.database.SgMovieFlags;
 import com.battlelancer.seriesguide.movies.details.MovieDetails;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
+import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
 import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.battlelancer.seriesguide.util.Errors;
@@ -29,7 +30,6 @@ import com.uwetrottmann.tmdb2.entities.AppendToResponse;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import com.uwetrottmann.tmdb2.enumerations.AppendToResponseItem;
 import com.uwetrottmann.tmdb2.services.MoviesService;
-import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.Ratings;
 import dagger.Lazy;
 import java.text.DateFormat;
@@ -68,14 +68,14 @@ public class MovieTools {
 
     private final Context context;
     private final Lazy<MoviesService> tmdbMovies;
-    private final Lazy<TraktV2> trakt;
+    private final Lazy<SgTrakt> trakt;
     private final MovieTools2 movieTools2;
 
     @Inject
     public MovieTools(
             @ApplicationContext Context context,
             Lazy<MoviesService> tmdbMovies,
-            Lazy<TraktV2> trakt
+            Lazy<SgTrakt> trakt
     ) {
         this.context = context;
         this.tmdbMovies = tmdbMovies;

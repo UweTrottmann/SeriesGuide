@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2019-2023 Uwe Trottmann
+// Copyright 2019-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.episodes
 
@@ -11,7 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.addCallback
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
@@ -62,6 +62,7 @@ class EpisodesActivity : BaseMessageActivity() {
 
     /** Keeps list visibility even in multi-pane view. */
     private var isListVisibleInSinglePaneView: Boolean = false
+
     /** Remembers if pager was shown due to tap on list item. */
     private var hasTappedItemInSinglePaneView: Boolean = false
 
@@ -96,23 +97,16 @@ class EpisodesActivity : BaseMessageActivity() {
             } else {
                 false
             }
-        hasTappedItemInSinglePaneView = savedInstanceState?.
-            getBoolean(STATE_HAS_TAPPED_ITEM_SINGLE_PANE) ?: false
+        hasTappedItemInSinglePaneView =
+            savedInstanceState?.getBoolean(STATE_HAS_TAPPED_ITEM_SINGLE_PANE) ?: false
 
         setupViews()
 
-        onBackPressedDispatcher.addCallback {
-            // If single pane view and previously switched to pager by tapping on list item,
-            // go back to list first instead of finishing activity.
-            if (isSinglePaneView && isListGone && hasTappedItemInSinglePaneView) {
-                hasTappedItemInSinglePaneView = false
-                switchView(makeListVisible = true, updateOptionsMenu = true)
-            } else {
-                finish()
-            }
-        }
+        onBackPressedDispatcher.addCallback(onBackPressedSwitchView)
+        updateOnBackPressedShouldSwitchView()
 
         val episodeRowId = intent.getLongExtra(EXTRA_LONG_EPISODE_ID, 0)
+
         @Suppress("DEPRECATION") // For backwards-compat
         val episodeTvdbId = intent.getIntExtra(EXTRA_EPISODE_TVDBID, 0)
         val seasonId = intent.getLongExtra(EXTRA_LONG_SEASON_ID, 0)
@@ -177,6 +171,20 @@ class EpisodesActivity : BaseMessageActivity() {
         if (updateOptionsMenu) {
             invalidateOptionsMenu()
         }
+        updateOnBackPressedShouldSwitchView()
+    }
+
+    private val onBackPressedSwitchView = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            switchView(makeListVisible = true, updateOptionsMenu = true)
+        }
+    }
+
+    private fun updateOnBackPressedShouldSwitchView() {
+        // If single pane view and previously switched to pager by tapping on list item,
+        // go back to list first instead of finishing activity.
+        onBackPressedSwitchView.isEnabled =
+            isSinglePaneView && isListGone && hasTappedItemInSinglePaneView
     }
 
     private fun setupViews() {
@@ -320,11 +328,13 @@ class EpisodesActivity : BaseMessageActivity() {
                 startActivity(upIntent)
                 true
             }
+
             R.id.menu_action_episodes_switch_view -> {
                 hasTappedItemInSinglePaneView = false
                 switchView(isListGone, true)
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -370,14 +380,17 @@ class EpisodesActivity : BaseMessageActivity() {
     companion object {
         private const val EXTRA_LONG_SEASON_ID = "season_id"
         const val EXTRA_LONG_EPISODE_ID = "episode_id"
+
         /** Either this or [EXTRA_EPISODE_TVDBID] is required. */
         @Deprecated("Use intentSeason and season row ID instead.")
         const val EXTRA_SEASON_TVDBID = "season_tvdbid"
+
         /** Either this or [EXTRA_SEASON_TVDBID] is required. */
         @Deprecated("Use intentEpisode and episode row ID instead.")
         const val EXTRA_EPISODE_TVDBID = "episode_tvdbid"
 
-        private const val PREF_PREFER_LIST_TO_VIEW_SEASON = "com.uwetrottmann.seriesguide.episodes.preferlist"
+        private const val PREF_PREFER_LIST_TO_VIEW_SEASON =
+            "com.uwetrottmann.seriesguide.episodes.preferlist"
 
         private const val STATE_IS_LIST_VISIBLE = "STATE_IS_LIST_VISIBLE"
         private const val STATE_HAS_TAPPED_ITEM_SINGLE_PANE = "STATE_HAS_TAPPED_ITEM_SINGLE_PANE"

@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.util
 
@@ -7,6 +7,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import androidx.core.content.edit
 import androidx.core.content.getSystemService
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.BuildConfig
@@ -109,6 +110,16 @@ class AppUpgrade(
                 SgApp.coroutineScope.launch(Dispatchers.IO) {
                     SgRoomDatabase.getInstance(context).sgShow2Helper().resetLastUpdated()
                 }
+            }
+        }
+
+        if (lastVersion < SgApp.RELEASE_VERSION_2024_3_5) {
+            PreferenceManager.getDefaultSharedPreferences(context).edit {
+                // Remove old settings keys for selected tab
+                remove("com.battlelancer.seriesguide.activitytab")
+                remove("com.battlelancer.seriesguide.moviesActiveTab")
+                // For consistency also re-set lists pref key
+                remove("com.battlelancer.seriesguide.listsActiveTab")
             }
         }
     }
