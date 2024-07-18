@@ -46,7 +46,7 @@
     <string name="empty_no_results">Немає результатів</string>
     <!-- Status messages -->
     <string name="updated">Оновлено до останньої версії.</string>
-    <string name="updated_details">Подробиці</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">Немає даних</string>
     <string name="unknown">Невідомо</string>
     <string name="offline">Перевірте підключення до мережі та повторіть спробу.</string>

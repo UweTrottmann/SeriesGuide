@@ -46,7 +46,7 @@
     <string name="empty_no_results">Nenalezeno</string>
     <!-- Status messages -->
     <string name="updated">Aktualizováno na nejnovější verzi.</string>
-    <string name="updated_details">Detaily</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">n/a</string>
     <string name="unknown">neznámé</string>
     <string name="offline">Připojte se k síti a zkuste to znovu.</string>

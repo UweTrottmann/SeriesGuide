@@ -46,7 +46,7 @@
     <string name="empty_no_results">결과가 없습니다.</string>
     <!-- Status messages -->
     <string name="updated">최신 버전으로 업데이트되었습니다.</string>
-    <string name="updated_details">상세내용</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">없음</string>
     <string name="unknown">알 수 없음</string>
     <string name="offline">네트워크에 연결한 후 다시 시도해주세요.</string>

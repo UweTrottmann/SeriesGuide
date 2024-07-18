@@ -46,7 +46,7 @@
     <string name="empty_no_results">بدون نتیجه</string>
     <!-- Status messages -->
     <string name="updated">به‌روز شده به جدیدترین نگارش.</string>
-    <string name="updated_details">جزییات</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">ناموجود</string>
     <string name="unknown">نامعلوم</string>
     <string name="offline">به شبکه‌ای وصل شده، سپس دوباره تلاش کنید.</string>

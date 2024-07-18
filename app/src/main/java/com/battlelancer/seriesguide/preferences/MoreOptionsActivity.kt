@@ -87,6 +87,9 @@ class MoreOptionsActivity : BaseTopActivity() {
                 DebugViewFragment().safeShow(supportFragmentManager, "debugViewDialog")
             }
         }
+        binding.buttonMoreWhatsNew.setOnClickListener {
+            WebTools.openInApp(this, getString(R.string.url_release_notes))
+        }
         binding.buttonMoreAbout.setOnClickListener {
             startActivity(Intent(this, AboutActivity::class.java))
         }

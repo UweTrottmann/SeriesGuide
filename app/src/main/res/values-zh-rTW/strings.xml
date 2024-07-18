@@ -46,7 +46,7 @@
     <string name="empty_no_results">無結果</string>
     <!-- Status messages -->
     <string name="updated">已更新到最新版本。</string>
-    <string name="updated_details">詳細資料</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">無</string>
     <string name="unknown">不明</string>
     <string name="offline">請連線到網路後再試一次</string>

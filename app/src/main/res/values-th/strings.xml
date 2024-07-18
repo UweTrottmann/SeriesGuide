@@ -46,7 +46,7 @@
     <string name="empty_no_results">ไม่มีผลลัพธ์</string>
     <!-- Status messages -->
     <string name="updated">อัปเดตเป็นเวอร์ชันล่าสุดแล้ว</string>
-    <string name="updated_details">รายละเอียด</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">n/a</string>
     <string name="unknown">ไม่ทราบ</string>
     <string name="offline">เชื่อมต่อไปยังเครือข่าย, จากนั้นลองอีกครั้ง</string>

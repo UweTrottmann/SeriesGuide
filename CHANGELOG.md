@@ -16,6 +16,7 @@ Version 2024.3
 *in development*
 
 * 🔨 Widgets: also clip posters if larger background radius is used.
+* 🔧 More: add link to what's new.
 * 📝 Latest user interface translations from Crowdin.
 
 #### 2024.3.4 🧪

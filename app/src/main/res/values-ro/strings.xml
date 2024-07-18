@@ -46,7 +46,7 @@
     <string name="empty_no_results">Nici un rezultat</string>
     <!-- Status messages -->
     <string name="updated">Actualizat la ultima versiune.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">n/a</string>
     <string name="unknown">necunoscut</string>
     <string name="offline">Conectați-vă la o rețea, apoi încercați din nou.</string>

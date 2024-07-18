@@ -46,7 +46,7 @@
     <string name="empty_no_results">אין תוצאות</string>
     <!-- Status messages -->
     <string name="updated">עדכן לגרסה האחרונה.</string>
-    <string name="updated_details">פרטים נוספים</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">לא ידוע</string>
     <string name="unknown">לא ידוע</string>
     <string name="offline">התחבר לרשת, ואז נסה שוב.</string>

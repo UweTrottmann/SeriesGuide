@@ -46,7 +46,7 @@
     <string name="empty_no_results">لا توجد نتائج</string>
     <!-- Status messages -->
     <string name="updated">تم التحديث إلى الإصدار الأخير</string>
-    <string name="updated_details">التفاصيل</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">لا يوجد</string>
     <string name="unknown">غير معروف</string>
     <string name="offline">اتصل بالشبكة، ثم حاول مرة أخرى</string>

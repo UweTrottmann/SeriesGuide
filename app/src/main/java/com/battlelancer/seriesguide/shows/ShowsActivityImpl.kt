@@ -42,7 +42,6 @@ import com.uwetrottmann.seriesguide.billing.BillingViewModel
 import com.uwetrottmann.seriesguide.billing.BillingViewModelFactory
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 /**
  * Provides the apps main screen, displays tabs for shows, discover, history,
@@ -82,7 +81,7 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
         if (AppUpgrade(applicationContext).upgradeIfNewVersion()) {
             // Let the user know the app has updated.
             Snackbar.make(snackbarParentView, R.string.updated, Snackbar.LENGTH_LONG)
-                .setAction(R.string.updated_details) {
+                .setAction(R.string.updated_what_is_new) {
                     WebTools.openInApp(
                         this@ShowsActivityImpl,
                         getString(R.string.url_release_notes)

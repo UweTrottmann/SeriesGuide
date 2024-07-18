@@ -46,7 +46,7 @@
     <string name="empty_no_results">Няма резултати</string>
     <!-- Status messages -->
     <string name="updated">Актуализиран до последна версия.</string>
-    <string name="updated_details">Детайлна</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">няма</string>
     <string name="unknown">неизвестен</string>
     <string name="offline">Свържете се към мрежа и пробвайте отново.</string>

@@ -46,7 +46,7 @@
     <string name="empty_no_results">Geen resultaten</string>
     <!-- Status messages -->
     <string name="updated">Bijgewerkt naar de nieuwste versie</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_what_is_new">What\'s new</string>
     <string name="norating">n.v.t.</string>
     <string name="unknown">onbekend</string>
     <string name="offline">Maak verbinding met een netwerk en probeer het opnieuw.</string>
