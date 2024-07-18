@@ -13,9 +13,20 @@ Releases marked with 🧪 were released on [the beta program](https://github.com
 
 Version 2024.3
 --------------
-*in development*
+*2024-07-18*
 
-* 🔨 Widgets: also clip posters if larger background radius is used.
+* 🔧 Shows: move Discover screen to top-level.
+* 🌟 Shows: add permanent year and language filters to Discover tab.
+* 🌟 Discover: add current year option to year filter.
+* 🔧 Shows: display all search results, support to filter by release year.
+* 🔧 Movies: move Watchlist next to Discover so order is similar to Shows screen.
+* 🌟 Trakt: support to edit and delete (new) comments.
+* 🌟 Trakt: support to remove a rating.
+
+#### 2024.3.5
+*2024-07-18*
+
+* 🔨 Widgets: content does not longer protrude from the widget.
 * 🔧 More: add link to what's new.
 * 📝 Latest user interface translations from Crowdin.
 
