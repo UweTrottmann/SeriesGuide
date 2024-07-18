@@ -28,6 +28,7 @@ Version 2024.3
 
 * 🔨 Widgets: content does not longer protrude from the widget.
 * 🔧 More: add link to what's new.
+* 🔧 Re-set remembered selected tab for shows, lists and movies.
 * 📝 Latest user interface translations from Crowdin.
 
 #### 2024.3.4 🧪

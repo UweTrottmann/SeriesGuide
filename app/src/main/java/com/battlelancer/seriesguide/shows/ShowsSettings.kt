@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2022-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows
 
@@ -11,7 +11,7 @@ import com.battlelancer.seriesguide.util.LanguageTools
 
 object ShowsSettings {
 
-    private const val KEY_LAST_ACTIVE_SHOWS_TAB = "com.battlelancer.seriesguide.activitytab"
+    private const val KEY_LAST_ACTIVE_SHOWS_TAB = "seriesguide.shows.selectedtab"
 
 //    @Deprecated("language is stored per show or defined by place of usage")
 //    private const val KEY_LANGUAGE_PREFERRED = "language"
@@ -20,7 +20,7 @@ object ShowsSettings {
 
     fun saveLastShowsTabPosition(context: Context, position: Int) {
         PreferenceManager.getDefaultSharedPreferences(context).edit()
-            .putInt(ShowsSettings.KEY_LAST_ACTIVE_SHOWS_TAB, position)
+            .putInt(KEY_LAST_ACTIVE_SHOWS_TAB, position)
             .apply()
     }
 
