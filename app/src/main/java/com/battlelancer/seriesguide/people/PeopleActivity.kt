@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.databinding.ActivityPeopleBinding
 import com.battlelancer.seriesguide.people.PeopleFragment.OnShowPersonListener
 import com.battlelancer.seriesguide.ui.BaseActivity
 import com.battlelancer.seriesguide.util.ThemeUtils
+import com.battlelancer.seriesguide.util.commitReorderingAllowed
 
 /**
  * Displays a list of people, and on wide enough screens person details.
@@ -71,9 +72,9 @@ class PeopleActivity : BaseActivity(), OnShowPersonListener {
 
             peopleFragment = PeopleFragment()
             peopleFragment.arguments = intent.extras
-            supportFragmentManager.beginTransaction()
-                .add(R.id.containerPeople, peopleFragment, "people-list")
-                .commit()
+            supportFragmentManager.commitReorderingAllowed {
+                add(R.id.containerPeople, peopleFragment, "people-list")
+            }
         } else {
             peopleFragment =
                 supportFragmentManager.findFragmentById(R.id.containerPeople) as PeopleFragment
@@ -108,9 +109,9 @@ class PeopleActivity : BaseActivity(), OnShowPersonListener {
         if (isTwoPane) {
             // show inline
             val f = PersonFragment.newInstance(tmdbId)
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.containerPeoplePerson, f)
-                .commit()
+            supportFragmentManager.commitReorderingAllowed {
+                replace(R.id.containerPeoplePerson, f)
+            }
         } else {
             // start new activity
             val i = Intent(this, PersonActivity::class.java)

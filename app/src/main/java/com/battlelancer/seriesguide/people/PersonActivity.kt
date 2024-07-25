@@ -11,6 +11,7 @@ import androidx.core.view.updatePaddingRelative
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.BaseActivity
 import com.battlelancer.seriesguide.util.ThemeUtils
+import com.battlelancer.seriesguide.util.commitReorderingAllowed
 
 /**
  * Hosts a [PersonFragment], only used on handset devices. On
@@ -45,9 +46,9 @@ class PersonActivity : BaseActivity() {
             val f = PersonFragment.newInstance(
                 intent.getIntExtra(PersonFragment.ARG_PERSON_TMDB_ID, 0)
             )
-            supportFragmentManager.beginTransaction()
-                .add(R.id.containerPerson, f)
-                .commit()
+            supportFragmentManager.commitReorderingAllowed {
+                add(R.id.containerPerson, f)
+            }
         }
     }
 

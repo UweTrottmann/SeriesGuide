@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.util.commitReorderingAllowed
 
 abstract class BaseSimilarActivity : BaseActivity() {
 
@@ -47,14 +48,14 @@ abstract class BaseSimilarActivity : BaseActivity() {
         addToBackStack: Boolean = false
     ) {
         val fragment = createFragment(tmdbId, title)
-        supportFragmentManager.beginTransaction().apply {
+        supportFragmentManager.commitReorderingAllowed {
             if (addToBackStack) {
                 replace(R.id.content_frame, fragment)
                 addToBackStack(null)
             } else {
                 add(R.id.content_frame, fragment)
             }
-        }.commit()
+        }
     }
 
     companion object {

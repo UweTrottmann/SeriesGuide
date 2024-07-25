@@ -17,6 +17,7 @@ import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsFragment
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ThemeUtils
+import com.battlelancer.seriesguide.util.commitReorderingAllowed
 
 /**
  * Hosts [ShowsDiscoverPagingFragment] determined by [DiscoverShowsLink].
@@ -48,13 +49,12 @@ class ShowsDiscoverPagingActivity : BaseMessageActivity(), AddShowDialogFragment
                 intent.getIntExtra(EXTRA_LINK, DiscoverShowsLink.NO_LINK_ID)
             )
             val query = getQueryFromIntent()
-            supportFragmentManager
-                .beginTransaction()
-                .add(
+            supportFragmentManager.commitReorderingAllowed {
+                add(
                     R.id.containerMoviesSearchFragment,
                     ShowsDiscoverPagingFragment.newInstance(link, query)
                 )
-                .commit()
+            }
         }
 
         SimilarShowsFragment.displaySimilarShowsEventLiveData.observe(this) {

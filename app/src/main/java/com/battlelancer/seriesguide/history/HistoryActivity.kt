@@ -12,6 +12,7 @@ import com.battlelancer.seriesguide.shows.search.discover.SearchResult
 import com.battlelancer.seriesguide.ui.BaseActivity
 import com.battlelancer.seriesguide.ui.SinglePaneActivity
 import com.battlelancer.seriesguide.util.TaskManager
+import com.battlelancer.seriesguide.util.commitReorderingAllowed
 import timber.log.Timber
 
 /**
@@ -48,9 +49,9 @@ class HistoryActivity : BaseActivity(), OnAddShowListener {
                 }
             }
             f.arguments = intent.extras
-            supportFragmentManager.beginTransaction()
-                .add(R.id.content_frame, f)
-                .commit()
+            supportFragmentManager.commitReorderingAllowed {
+                add(R.id.content_frame, f)
+            }
         }
     }
 
