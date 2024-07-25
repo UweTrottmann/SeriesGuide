@@ -31,9 +31,7 @@ androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata-
 androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle" }
 # https://developer.android.com/jetpack/androidx/releases/paging
-# 3.3.0 has a crash when the data is refreshed while scrolling ("Inconsistency detected.")
-# https://issuetracker.google.com/issues/343124454
-androidx-paging = "androidx.paging:paging-runtime:3.2.1"
+androidx-paging = "androidx.paging:paging-runtime:3.3.1"
 androidx-palette = "androidx.palette:palette-ktx:1.0.0"
 # https://developer.android.com/jetpack/androidx/releases/preference
 androidx-preference = "androidx.preference:preference-ktx:1.2.1"
