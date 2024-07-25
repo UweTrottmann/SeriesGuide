@@ -11,7 +11,7 @@ retrofit2 = "2.11.0" # https://github.com/square/retrofit/blob/master/CHANGELOG.
 amazon-appstore-sdk = "com.amazon.device:amazon-appstore-sdk:3.0.5" # https://developer.amazon.com/docs/in-app-purchasing/iap-whats-new.html
 androidutils = "com.uwetrottmann.androidutils:androidutils:4.0.0" # https://github.com/UweTrottmann/AndroidUtils/releases
 # https://developer.android.com/jetpack/androidx/releases/activity
-androidx-activity = "androidx.activity:activity:1.9.0"
+androidx-activity = "androidx.activity:activity:1.9.1"
 # https://developer.android.com/jetpack/androidx/releases/annotation
 androidx-annotation = "androidx.annotation:annotation:1.8.0"
 # https://developer.android.com/jetpack/androidx/releases/appcompat
@@ -120,7 +120,7 @@ compose = "androidx.compose:compose-bom:2024.06.00"
 compose-material3 = { module = "androidx.compose.material3:material3" }
 compose-tooling = { module = "androidx.compose.ui:ui-tooling" }
 compose-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
-androidx-activity-compose = "androidx.activity:activity-compose:1.9.0"
+androidx-activity-compose = "androidx.activity:activity-compose:1.9.1"
 androidx-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }
 
 [plugins]
