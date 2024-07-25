@@ -11,3 +11,9 @@
 -dontobfuscate
 # Output unused code so it can be optimized
 -printusage unused.txt
+
+# Amazon Appstore SDK (3.0.5 release no longer includes ProGuard rules)
+# https://developer.amazon.com/docs/in-app-purchasing/iap-obfuscate-the-code.html
+-dontwarn com.amazon.**
+-keep class com.amazon.** {*;}
+-keepattributes *Annotation*
