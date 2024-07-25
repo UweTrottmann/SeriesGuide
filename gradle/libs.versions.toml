@@ -26,7 +26,7 @@ androidx-coordinatorlayout = "androidx.coordinatorlayout:coordinatorlayout:1.2.0
 androidx-core = "androidx.core:core:1.13.1"
 androidx-core-ktx = "androidx.core:core-ktx:1.13.1"
 # https://developer.android.com/jetpack/androidx/releases/fragment
-androidx-fragment = "androidx.fragment:fragment-ktx:1.8.0"
+androidx-fragment = "androidx.fragment:fragment-ktx:1.8.2"
 androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle" }
