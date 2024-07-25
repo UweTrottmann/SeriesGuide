@@ -2,6 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <queries>
+        <!-- On Android 11 (SDK 30), allow SeriesGuide to see Amazon apps. -->
+        <!-- https://developer.android.com/training/package-visibility -->
+        <!-- Amazon App Tester -->
+        <package android:name="com.amazon.sdktestclient" />
+        <!-- Amazon Appstore -->
+        <package android:name="com.amazon.venezia" />
+    </queries>
+
     <application tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
         <!-- Amazon In-App Purchasing -->

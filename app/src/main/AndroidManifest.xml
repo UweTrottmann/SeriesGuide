@@ -32,7 +32,7 @@
         android:required="false" />
 
     <!-- On Android 11 (SDK 30), allow SeriesGuide to see apps providing extensions and the X Pass app. -->
-    <!-- https://developer.android.com/preview/privacy/package-visibility -->
+    <!-- https://developer.android.com/training/package-visibility -->
     <queries>
         <intent>
             <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />

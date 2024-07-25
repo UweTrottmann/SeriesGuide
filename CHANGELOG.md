@@ -23,6 +23,12 @@ Version 2024.3
 * 🌟 Trakt: support to edit and delete (new) comments.
 * 🌟 Trakt: support to remove a rating.
 
+#### 2024.3.6
+*2024-07-25*
+
+* 📝 This version was released only on the Amazon Appstore.
+* 🔨 Amazon account and active purchases are correctly recognized again.
+
 #### 2024.3.5
 *2024-07-18*
 
