@@ -485,6 +485,7 @@
     <string name="pref_notifications">Ειδοποιήσεις</string>
     <string name="pref_notificationssummary">Ειδοποίηση για νέα επεισόδια</string>
     <string name="pref_notifications_settings">Notification settings</string>
+    <string name="pref_notifications_settings_summary">Configure if and how notifications appear</string>
     <string name="pref_ringtone">Ήχος κλήσης</string>
     <string name="pref_vibrate">Δόνηση</string>
     <string name="pref_vibratesummary">Δόνηση και κατά την εμφάνιση ειδοποίησης</string>
@@ -499,9 +500,9 @@
     <string name="pref_notifications_battery_settings">Ρυθμίσεις μπαταρίας</string>
     <string name="pref_notifications_battery_settings_summary">Πηγαίνετε στις Ρυθμίσεις μπαταρίας για να απενεργοποιήσετε τις βελτιστοποιήσεις μπαταρίας για αξιόπιστες ειδοποιήσεις</string>
     <string name="notifications_allow">Allow notifications</string>
-    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
-    <string name="precise_notifications_allow">Allow precise notifications</string>
-    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
+    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them</string>
+    <string name="precise_notifications_allow">Allow on-time notifications</string>
+    <string name="precise_notifications_allow_reason">To receive notifications on time, go to Settings and allow setting reminders</string>
     <!-- List Widget -->
     <string name="hide_watched">Απόκρυψη παρακολουθημένων επεισοδίων</string>
     <string name="pref_widget_opacity">Φόντο widget</string>

@@ -471,6 +471,7 @@
     <string name="pref_notifications">การแจ้งเตือน</string>
     <string name="pref_notificationssummary">แจ้งเตือนเกี่ยวกับตอนใหม่</string>
     <string name="pref_notifications_settings">ตั้งค่าการแจ้งเตือน</string>
+    <string name="pref_notifications_settings_summary">Configure if and how notifications appear</string>
     <string name="pref_ringtone">เสียง</string>
     <string name="pref_vibrate">สั่น</string>
     <string name="pref_vibratesummary">สั่นเมื่อแสดงการแจ้งเตือนด้วย</string>
@@ -486,8 +487,8 @@
     <string name="pref_notifications_battery_settings_summary">ไปยังการตั้งค่าแบตเตอรี่ จากนั้นปิดใช้งานการเพิ่มประสิทธิภาพแบตเตอรี่ เพื่อการแจ้งเตือนที่เสถียรขึ้น</string>
     <string name="notifications_allow">เปิดการแจ้งเตือน</string>
     <string name="notifications_allow_reason">เพื่อรับการแจ้งเตือนตอนใหม่และข้อผิดพลาด ไปที่การตั้งค่าเพื่ออนุญาตการแจ้งเตือน</string>
-    <string name="precise_notifications_allow">Allow precise notifications</string>
-    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
+    <string name="precise_notifications_allow">Allow on-time notifications</string>
+    <string name="precise_notifications_allow_reason">To receive notifications on time, go to Settings and allow setting reminders</string>
     <!-- List Widget -->
     <string name="hide_watched">ซ่อนตอนที่ดูแล้ว</string>
     <string name="pref_widget_opacity">พื้นหลังวิตเจ็ต</string>

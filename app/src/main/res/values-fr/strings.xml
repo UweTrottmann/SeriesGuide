@@ -485,6 +485,7 @@
     <string name="pref_notifications">Notifications</string>
     <string name="pref_notificationssummary">M\'informer des nouveaux épisodes</string>
     <string name="pref_notifications_settings">Paramètres de notification</string>
+    <string name="pref_notifications_settings_summary">Configure if and how notifications appear</string>
     <string name="pref_ringtone">Sonnerie</string>
     <string name="pref_vibrate">Vibrer</string>
     <string name="pref_vibratesummary">Vibrer aussi lors d\'un notification</string>

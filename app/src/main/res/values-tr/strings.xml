@@ -485,6 +485,7 @@
     <string name="pref_notifications">Bildirimler</string>
     <string name="pref_notificationssummary">Yeni bölümler için bildirim gönder</string>
     <string name="pref_notifications_settings">Bildirim ayarları</string>
+    <string name="pref_notifications_settings_summary">Configure if and how notifications appear</string>
     <string name="pref_ringtone">Zil sesi</string>
     <string name="pref_vibrate">Titreşim</string>
     <string name="pref_vibratesummary">Uyarırken aynı zamanda titret</string>
