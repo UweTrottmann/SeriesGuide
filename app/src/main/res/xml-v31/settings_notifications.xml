@@ -3,6 +3,7 @@
 
     <!-- Android 12+: precise notification setting. -->
 
+    <!-- Summary set in code -->
     <Preference
         app:iconSpaceReserved="false"
         app:key="com.battlelancer.seriesguide.notifications.channels"
