@@ -471,6 +471,7 @@
     <string name="pref_notifications">提示信息</string>
     <string name="pref_notificationssummary">當有新的集數時進行通知</string>
     <string name="pref_notifications_settings">通知設定</string>
+    <string name="pref_notifications_settings_summary">Configure if and how notifications appear</string>
     <string name="pref_ringtone">提示音</string>
     <string name="pref_vibrate">震動</string>
     <string name="pref_vibratesummary">顯示通知的同時震動</string>
@@ -486,8 +487,8 @@
     <string name="pref_notifications_battery_settings_summary">前往系統設定停用電池效能最佳化以提升通知可靠性</string>
     <string name="notifications_allow">允許通知</string>
     <string name="notifications_allow_reason">如要接收劇集和錯誤通知，請前往設定並允許它們。</string>
-    <string name="precise_notifications_allow">Allow precise notifications</string>
-    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
+    <string name="precise_notifications_allow">Allow on-time notifications</string>
+    <string name="precise_notifications_allow_reason">To receive notifications on time, go to Settings and allow setting reminders</string>
     <!-- List Widget -->
     <string name="hide_watched">隱藏已看過集數</string>
     <string name="pref_widget_opacity">小工具背景</string>

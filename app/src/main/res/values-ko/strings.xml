@@ -471,6 +471,7 @@
     <string name="pref_notifications">알림</string>
     <string name="pref_notificationssummary">새로운 에피소드를 알려줍니다.</string>
     <string name="pref_notifications_settings">Notification settings</string>
+    <string name="pref_notifications_settings_summary">Configure if and how notifications appear</string>
     <string name="pref_ringtone">벨소리</string>
     <string name="pref_vibrate">진동</string>
     <string name="pref_vibratesummary">알림 시 진동</string>
@@ -485,9 +486,9 @@
     <string name="pref_notifications_battery_settings">배터리 설정</string>
     <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
     <string name="notifications_allow">Allow notifications</string>
-    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
-    <string name="precise_notifications_allow">Allow precise notifications</string>
-    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
+    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them</string>
+    <string name="precise_notifications_allow">Allow on-time notifications</string>
+    <string name="precise_notifications_allow_reason">To receive notifications on time, go to Settings and allow setting reminders</string>
     <!-- List Widget -->
     <string name="hide_watched">시청한 에피소드 숨기기</string>
     <string name="pref_widget_opacity">위젯 배경</string>

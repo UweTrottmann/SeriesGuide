@@ -513,6 +513,7 @@
     <string name="pref_notifications">Upozornenia</string>
     <string name="pref_notificationssummary">Upozorňovať na nové epizódy</string>
     <string name="pref_notifications_settings">Nastavenia oznámení</string>
+    <string name="pref_notifications_settings_summary">Configure if and how notifications appear</string>
     <string name="pref_ringtone">Tón upozornenia</string>
     <string name="pref_vibrate">Vibrovať</string>
     <string name="pref_vibratesummary">Pri upozornení vibrovať</string>

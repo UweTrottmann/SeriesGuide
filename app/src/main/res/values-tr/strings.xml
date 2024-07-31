@@ -240,7 +240,7 @@
     <!-- Popular -->
     <string name="title_popular">Popüler</string>
     <string name="filter_year">Yıl</string>
-    <string name="filter_year_current">Current year</string>
+    <string name="filter_year_current">Mevcut yıl</string>
     <string name="filter_language">Dil</string>
     <!-- Lists -->
     <string name="first_list">İlk liste</string>
@@ -339,7 +339,7 @@
     <string name="trakt_notice_not_exists">Trakt\'ta (henüz) mevcut değil.</string>
     <string name="trakt_error_limit_exceeded">Liste dolu, önce bir şeyi kaldırın.</string>
     <!-- Connect trakt -->
-    <string name="trakt_required">To use this, connect to Trakt</string>
+    <string name="trakt_required">Bunu kullanmak için Trakt\'a bağlanın</string>
     <string name="connect_trakt">Trakt\'a bağlan</string>
     <string name="trakt_reconnect">SeriesGuide ile Trakt\'a bağlan</string>
     <string name="trakt_reconnect_details">Trakt giriş bilgilerinizi kontrol edin</string>
@@ -485,6 +485,7 @@
     <string name="pref_notifications">Bildirimler</string>
     <string name="pref_notificationssummary">Yeni bölümler için bildirim gönder</string>
     <string name="pref_notifications_settings">Bildirim ayarları</string>
+    <string name="pref_notifications_settings_summary">Configure if and how notifications appear</string>
     <string name="pref_ringtone">Zil sesi</string>
     <string name="pref_vibrate">Titreşim</string>
     <string name="pref_vibratesummary">Uyarırken aynı zamanda titret</string>
