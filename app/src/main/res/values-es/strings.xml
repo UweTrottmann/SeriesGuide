@@ -46,7 +46,7 @@
     <string name="empty_no_results">Sin resultados</string>
     <!-- Status messages -->
     <string name="updated">Actualizado a la última versión.</string>
-    <string name="updated_what_is_new">What\'s new</string>
+    <string name="updated_what_is_new">Novedades</string>
     <string name="norating">n/d</string>
     <string name="unknown">desconocido</string>
     <string name="offline">Conéctate a una red y vuelve a intentarlo.</string>
@@ -212,7 +212,7 @@
         <item quantity="other">%1$d de %2$d restantes</item>
     </plurals>
     <plurals name="skipped_episodes_plural">
-        <item quantity="one">%d skipped</item>
+        <item quantity="one">%d omitidos</item>
         <item quantity="other">%d skipped</item>
     </plurals>
     <plurals name="collected_episodes_plural">
@@ -240,7 +240,7 @@
     <!-- Popular -->
     <string name="title_popular">Populares</string>
     <string name="filter_year">Año</string>
-    <string name="filter_year_current">Current year</string>
+    <string name="filter_year_current">Año actual</string>
     <string name="filter_language">Idioma</string>
     <!-- Lists -->
     <string name="first_list">Primera lista</string>

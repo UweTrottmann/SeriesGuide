@@ -46,7 +46,7 @@
     <string name="empty_no_results">Нема резултата</string>
     <!-- Status messages -->
     <string name="updated">Ажурирано на последњу верзију.</string>
-    <string name="updated_what_is_new">What\'s new</string>
+    <string name="updated_what_is_new">Шта је ново</string>
     <string name="norating">непознато</string>
     <string name="unknown">непознато</string>
     <string name="offline">Спојите се на мрежу и покушајте поново.</string>

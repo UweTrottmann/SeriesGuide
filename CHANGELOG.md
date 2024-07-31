@@ -11,6 +11,12 @@ Release notes
 
 Releases marked with 🧪 were released on [the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
 
+Version 2024.4
+--------------
+*in development*
+
+* 📝 Latest user interface translations from Crowdin.
+
 Version 2024.3
 --------------
 *2024-07-18*

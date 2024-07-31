@@ -46,7 +46,7 @@
     <string name="empty_no_results">Нет результатов</string>
     <!-- Status messages -->
     <string name="updated">Обновлено до последней версии.</string>
-    <string name="updated_what_is_new">What\'s new</string>
+    <string name="updated_what_is_new">Что нового?</string>
     <string name="norating">нет данных</string>
     <string name="unknown">Неизвестно</string>
     <string name="offline">Подключитесь к сети и повторите попытку</string>
