@@ -16,7 +16,6 @@ import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.viewmodel.MutableCreationExtras
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.movies.search.MoviesSearchActivity
@@ -33,12 +32,10 @@ class SimilarMoviesFragment : Fragment() {
 
     private val viewModel: SimilarMoviesViewModel by viewModels(
         extrasProducer = {
-            MutableCreationExtras(defaultViewModelCreationExtras).apply {
-                set(
-                    SimilarMoviesViewModel.KEY_TMDB_ID_MOVIE,
-                    requireArguments().getInt(ARG_TMDB_ID)
-                )
-            }
+            SimilarMoviesViewModel.creationExtras(
+                defaultViewModelCreationExtras,
+                requireArguments().getInt(ARG_TMDB_ID)
+            )
         },
         factoryProducer = { SimilarMoviesViewModel.Factory }
     )
