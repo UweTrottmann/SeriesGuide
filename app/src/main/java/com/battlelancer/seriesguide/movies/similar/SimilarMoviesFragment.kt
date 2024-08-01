@@ -15,7 +15,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.movies.base.BaseMovieListAdapter
-import com.battlelancer.seriesguide.movies.search.MoviesSearchActivity
+import com.battlelancer.seriesguide.movies.base.SearchMenuProvider
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.widgets.EmptyView
 import com.battlelancer.seriesguide.util.ThemeUtils
@@ -103,7 +103,7 @@ class SimilarMoviesFragment : Fragment() {
         }
 
         requireActivity().addMenuProvider(
-            optionsMenuProvider,
+            SearchMenuProvider(requireContext()),
             viewLifecycleOwner,
             Lifecycle.State.RESUMED
         )
@@ -113,32 +113,11 @@ class SimilarMoviesFragment : Fragment() {
         viewModel.loadSimilarMovies(tmdbId)
     }
 
-    private val optionsMenuProvider = object : MenuProvider {
-        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-            menu.add(0, MENU_ITEM_SEARCH_ID, 0, R.string.search).apply {
-                setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
-                setIcon(R.drawable.ic_search_white_24dp)
-            }
-        }
-
-        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-            return when (menuItem.itemId) {
-                MENU_ITEM_SEARCH_ID -> {
-                    startActivity(MoviesSearchActivity.intentSearch(requireContext()))
-                    true
-                }
-
-                else -> false
-            }
-        }
-    }
-
     companion object {
         val liftOnScrollTargetViewId = R.id.recyclerViewShowsSimilar
 
         private const val ARG_TMDB_ID = "ARG_TMDB_ID"
         private const val ARG_TITLE = "ARG_TITLE"
-        private const val MENU_ITEM_SEARCH_ID = 1
 
         fun newInstance(tmdbId: Int, title: String?): SimilarMoviesFragment {
             return SimilarMoviesFragment().apply {
