@@ -9,6 +9,9 @@ import androidx.fragment.app.Fragment
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.util.commitReorderingAllowed
 
+/**
+ * Is a [SinglePaneActivity].
+ */
 abstract class BaseSimilarActivity : BaseActivity() {
 
     abstract val liftOnScrollTargetViewId: Int
