@@ -8,8 +8,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.replace
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.ActivityMovieCollectionBinding
 import com.battlelancer.seriesguide.ui.BaseActivity
-import com.battlelancer.seriesguide.ui.SinglePaneActivity
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.commitReorderingAllowed
 
 /**
@@ -20,7 +21,9 @@ class MovieCollectionActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = SinglePaneActivity.onCreateFor(this)
+        val binding = ActivityMovieCollectionBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        ThemeUtils.configureForEdgeToEdge(binding.root)
         binding.sgAppBarLayout.sgAppBarLayout.liftOnScrollTargetViewId =
             MovieCollectionFragment.liftOnScrollTargetViewId
         setupActionBar()
