@@ -5,19 +5,16 @@ package com.battlelancer.seriesguide.movies.similar
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.MenuProvider
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.movies.base.BaseMovieListAdapter
 import com.battlelancer.seriesguide.movies.search.MoviesSearchActivity
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.widgets.EmptyView
@@ -44,7 +41,7 @@ class SimilarMoviesFragment : Fragment() {
     private lateinit var emptyView: EmptyView
     private lateinit var recyclerView: RecyclerView
 
-    private lateinit var adapter: SimilarMoviesAdapter
+    private lateinit var adapter: BaseMovieListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,7 +91,7 @@ class SimilarMoviesFragment : Fragment() {
                 )
         }
 
-        adapter = SimilarMoviesAdapter(requireContext())
+        adapter = BaseMovieListAdapter(requireContext())
         recyclerView.adapter = adapter
 
         viewModel.resultLiveData.observe(viewLifecycleOwner) {
