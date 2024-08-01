@@ -19,6 +19,7 @@ import com.github.michaelbull.result.runCatching
 import com.uwetrottmann.tmdb2.DiscoverTvBuilder
 import com.uwetrottmann.tmdb2.Tmdb
 import com.uwetrottmann.tmdb2.entities.AppendToResponse
+import com.uwetrottmann.tmdb2.entities.Collection
 import com.uwetrottmann.tmdb2.entities.Credits
 import com.uwetrottmann.tmdb2.entities.CrewMember
 import com.uwetrottmann.tmdb2.entities.DiscoverFilter
@@ -540,6 +541,16 @@ class TmdbTools2 {
             .externalIds(showTmdbId, seasonNumber, episodeNumber)
             .awaitResponse("episode imdb id")
             ?.imdb_id
+    }
+
+    suspend fun getMovieCollection(
+        tmdb: Tmdb,
+        collectionId: Int,
+        languageCode: String?
+    ): Collection? {
+        return tmdb.collectionService()
+            .summary(collectionId, languageCode)
+            .awaitResponse("movie collection")
     }
 
     companion object {

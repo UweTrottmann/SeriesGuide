@@ -41,6 +41,7 @@ import com.battlelancer.seriesguide.extensions.MovieActionsContract
 import com.battlelancer.seriesguide.movies.MovieLoader
 import com.battlelancer.seriesguide.movies.MovieLocalizationDialogFragment
 import com.battlelancer.seriesguide.movies.MoviesSettings
+import com.battlelancer.seriesguide.movies.collection.MovieCollectionActivity
 import com.battlelancer.seriesguide.movies.similar.SimilarMoviesActivity
 import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.people.PeopleListHelper
@@ -476,8 +477,19 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         // Show collection button if movies is part of one
         binding.containerMovieButtons.buttonMovieCollection.apply {
             val collection = tmdbMovie.belongs_to_collection
-            if (collection != null) {
-                text = collection.name
+            val collectionId = collection?.id
+            val collectionName = collection?.name
+            if (collectionId != null && collectionName != null) {
+                setOnClickListener {
+                    startActivity(
+                        MovieCollectionActivity.intent(
+                            requireContext(),
+                            collectionId,
+                            collectionName
+                        )
+                    )
+                }
+                text = collectionName
                 isVisible = true
             } else {
                 isGone = true

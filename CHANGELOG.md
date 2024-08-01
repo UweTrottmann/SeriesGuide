@@ -15,6 +15,7 @@ Version 2024.4
 --------------
 *in development*
 
+* 🌟 Movies: display the collection (like a movie series) a movie is in, view the collection.
 * 📝 Latest user interface translations from Crowdin.
 
 Version 2024.3
