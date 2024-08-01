@@ -22,6 +22,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.MenuProvider
 import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -469,6 +470,17 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                     val i = TraktCommentsActivity.intentMovie(requireContext(), movieTitle, tmdbId)
                     Utils.startActivityWithAnimation(activity, i, v)
                 }
+            }
+        }
+
+        // Show collection button if movies is part of one
+        binding.containerMovieButtons.buttonMovieCollection.apply {
+            val collection = tmdbMovie.belongs_to_collection
+            if (collection != null) {
+                text = collection.name
+                isVisible = true
+            } else {
+                isGone = true
             }
         }
 
