@@ -67,7 +67,7 @@ android {
 
     composeOptions {
         // https://developer.android.com/jetpack/androidx/releases/compose-kotlin
-        kotlinCompilerExtensionVersion = "1.5.8" // For Kotlin 1.9.22
+        kotlinCompilerExtensionVersion = "1.5.14" // For Kotlin 1.9.24
     }
 
     kotlinOptions {
