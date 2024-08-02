@@ -46,7 +46,7 @@
     <string name="empty_no_results">无结果</string>
     <!-- Status messages -->
     <string name="updated">已更新至最新版本。</string>
-    <string name="updated_what_is_new">What\'s new</string>
+    <string name="updated_what_is_new">更新内容</string>
     <string name="norating">无评分</string>
     <string name="unknown">未知</string>
     <string name="offline">请连接到互联网后重试</string>
@@ -233,7 +233,7 @@
     <!-- Popular -->
     <string name="title_popular">热门</string>
     <string name="filter_year">年份</string>
-    <string name="filter_year_current">Current year</string>
+    <string name="filter_year_current">本年</string>
     <string name="filter_language">语言</string>
     <!-- Lists -->
     <string name="first_list">默认列表</string>
@@ -471,7 +471,7 @@
     <string name="pref_notifications">通知</string>
     <string name="pref_notificationssummary">剧集更新通知</string>
     <string name="pref_notifications_settings">通知设置</string>
-    <string name="pref_notifications_settings_summary">Configure if and how notifications appear</string>
+    <string name="pref_notifications_settings_summary">配置通知是否和如何显示</string>
     <string name="pref_ringtone">铃声</string>
     <string name="pref_vibrate">振动</string>
     <string name="pref_vibratesummary">显示通知时振动</string>

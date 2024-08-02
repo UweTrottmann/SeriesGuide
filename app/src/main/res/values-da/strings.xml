@@ -485,7 +485,7 @@
     <string name="pref_notifications">Meddelelser</string>
     <string name="pref_notificationssummary">Underret om nye episoder</string>
     <string name="pref_notifications_settings">Meddelelsesindstillinger</string>
-    <string name="pref_notifications_settings_summary">Configure if and how notifications appear</string>
+    <string name="pref_notifications_settings_summary">Konfigurer om og hvordan notifikationer vises</string>
     <string name="pref_ringtone">Lyd</string>
     <string name="pref_vibrate">Vibrér</string>
     <string name="pref_vibratesummary">Vibrér også ved visning af meddelelse</string>

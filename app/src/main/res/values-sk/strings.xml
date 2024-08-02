@@ -46,7 +46,7 @@
     <string name="empty_no_results">Žiadne výsledky</string>
     <!-- Status messages -->
     <string name="updated">Aktualizované na najnovšiu verziu.</string>
-    <string name="updated_what_is_new">What\'s new</string>
+    <string name="updated_what_is_new">Čo je nové</string>
     <string name="norating">Nedostupné</string>
     <string name="unknown">neznámy</string>
     <string name="offline">Pripojte sa k sieti a skúste to znova.</string>
@@ -254,7 +254,7 @@
     <!-- Popular -->
     <string name="title_popular">Populárne</string>
     <string name="filter_year">Rok</string>
-    <string name="filter_year_current">Current year</string>
+    <string name="filter_year_current">Aktuálny rok</string>
     <string name="filter_language">Jazyk</string>
     <!-- Lists -->
     <string name="first_list">Prvý zoznam</string>
