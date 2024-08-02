@@ -1,7 +1,7 @@
 # https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format
 
 [versions]
-androidx-lifecycle = "2.8.2" # https://developer.android.com/jetpack/androidx/releases/lifecycle
+androidx-lifecycle = "2.8.4" # https://developer.android.com/jetpack/androidx/releases/lifecycle
 debugdrawer = "0.9.0" # https://github.com/lenguyenthanh/DebugDrawer
 eventbus = "3.3.1"
 google-api-client = "2.6.0" # https://github.com/googleapis/google-api-java-client/releases
@@ -18,8 +18,8 @@ androidx-annotation = "androidx.annotation:annotation:1.8.0"
 androidx-appcompat = "androidx.appcompat:appcompat:1.7.0"
 # https://developer.android.com/jetpack/androidx/releases/browser
 androidx-browser = "androidx.browser:browser:1.8.0"
-# https://developer.android.com/jetpack/androidx/releases/collection#1.4.0
-androidx-collection = "androidx.collection:collection:1.4.0"
+# https://developer.android.com/jetpack/androidx/releases/collection
+androidx-collection = "androidx.collection:collection:1.4.2"
 androidx-constraintlayout = "androidx.constraintlayout:constraintlayout:2.1.4" # https://developer.android.com/jetpack/androidx/releases/constraintlayout
 androidx-coordinatorlayout = "androidx.coordinatorlayout:coordinatorlayout:1.2.0" # https://developer.android.com/jetpack/androidx/releases/coordinatorlayout
 # https://developer.android.com/jetpack/androidx/releases/core
