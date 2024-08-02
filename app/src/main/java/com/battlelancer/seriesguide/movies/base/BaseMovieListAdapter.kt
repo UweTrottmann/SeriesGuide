@@ -1,7 +1,7 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2023-2024 Uwe Trottmann
 
-package com.battlelancer.seriesguide.movies.similar
+package com.battlelancer.seriesguide.movies.base
 
 import android.content.Context
 import android.view.ViewGroup
@@ -12,7 +12,10 @@ import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.settings.TmdbSettings
 import com.uwetrottmann.tmdb2.entities.BaseMovie
 
-class SimilarMoviesAdapter(
+/**
+ * Binds a list of [BaseMovie] to [MovieViewHolder].
+ */
+class BaseMovieListAdapter(
     private val context: Context,
 ) : ListAdapter<BaseMovie, MovieViewHolder>(
     MovieViewHolder.DIFF_CALLBACK_BASE_MOVIE

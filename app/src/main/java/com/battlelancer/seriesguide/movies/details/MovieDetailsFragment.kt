@@ -22,6 +22,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.MenuProvider
 import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -40,6 +41,7 @@ import com.battlelancer.seriesguide.extensions.MovieActionsContract
 import com.battlelancer.seriesguide.movies.MovieLoader
 import com.battlelancer.seriesguide.movies.MovieLocalizationDialogFragment
 import com.battlelancer.seriesguide.movies.MoviesSettings
+import com.battlelancer.seriesguide.movies.collection.MovieCollectionActivity
 import com.battlelancer.seriesguide.movies.similar.SimilarMoviesActivity
 import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.people.PeopleListHelper
@@ -469,6 +471,28 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                     val i = TraktCommentsActivity.intentMovie(requireContext(), movieTitle, tmdbId)
                     Utils.startActivityWithAnimation(activity, i, v)
                 }
+            }
+        }
+
+        // Show collection button if movies is part of one
+        binding.containerMovieButtons.buttonMovieCollection.apply {
+            val collection = tmdbMovie.belongs_to_collection
+            val collectionId = collection?.id
+            val collectionName = collection?.name
+            if (collectionId != null && collectionName != null) {
+                setOnClickListener {
+                    startActivity(
+                        MovieCollectionActivity.intent(
+                            requireContext(),
+                            collectionId,
+                            collectionName
+                        )
+                    )
+                }
+                text = collectionName
+                isVisible = true
+            } else {
+                isGone = true
             }
         }
 
