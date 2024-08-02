@@ -106,7 +106,7 @@ robolectric = "org.robolectric:robolectric:4.13"
 threetenabp = "com.jakewharton.threetenabp:threetenabp:1.4.7" # https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
 timber = "com.jakewharton.timber:timber:5.0.1" # https://github.com/JakeWharton/timber/blob/master/CHANGELOG.md
 tmdb-java = "com.uwetrottmann.tmdb2:tmdb-java:2.11.0" # https://github.com/UweTrottmann/tmdb-java/blob/main/CHANGELOG.md
-trakt-java = "com.uwetrottmann.trakt5:trakt-java:6.13.0" # https://github.com/UweTrottmann/trakt-java/blob/main/CHANGELOG.md
+trakt-java = "com.uwetrottmann.trakt5:trakt-java:6.14.0" # https://github.com/UweTrottmann/trakt-java/blob/main/CHANGELOG.md
 truth = "com.google.truth:truth:1.4.4" # https://github.com/google/truth/releases
 
 # Jetpack Compose
