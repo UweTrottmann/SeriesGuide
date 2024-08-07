@@ -20,7 +20,7 @@
     <string name="specialseason">Specialavsnitt</string>
     <string name="ratings">Betyg</string>
     <!-- Descriptions -->
-    <string name="navigate_up">Navigate up</string>
+    <string name="navigate_up">Navigera uppåt</string>
     <string name="description_overview">Översikt</string>
     <string name="description_poster">Visa affisch</string>
     <string name="description_image">Bild från avsnittet</string>
@@ -46,7 +46,7 @@
     <string name="empty_no_results">Inga resultat</string>
     <!-- Status messages -->
     <string name="updated">Uppdaterad till senaste versionen</string>
-    <string name="updated_what_is_new">What\'s new</string>
+    <string name="updated_what_is_new">Vad är nytt</string>
     <string name="norating">saknas</string>
     <string name="unknown">okänd</string>
     <string name="offline">Ansluta till ett nätverk och försök igen.</string>
@@ -71,10 +71,10 @@
     <string name="shout_hint">Skriv en kommentar (engelska, 5+ ord)</string>
     <string name="shout_invalid">Din kommentar följer inte reglerna!</string>
     <string name="action_post">Skicka</string>
-    <string name="action_edit_comment">Edit</string>
-    <string name="action_delete_comment">Delete</string>
-    <string name="confirmation_delete_comment">Delete this comment?</string>
-    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
+    <string name="action_edit_comment">Redigera</string>
+    <string name="action_delete_comment">Radera</string>
+    <string name="confirmation_delete_comment">Radera denna kommentar?</string>
+    <string name="error_delete_comment">Kommentaren raderades ej, är för gammal eller har svar</string>
     <string name="isspoiler">Varning för spoiler!</string>
     <string name="no_shouts">Bli först att ropa!</string>
     <string name="refresh">Ladda om</string>
@@ -111,7 +111,7 @@
     <!-- Date and Time -->
     <string name="today">idag</string>
     <string name="now">nu</string>
-    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_hours_minutes_format">%1$d tim %2$d min</string>
     <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">Sett alla</string>
@@ -133,7 +133,7 @@
     <string name="state_on_watchlist">På bevakningslistan</string>
     <string name="state_favorite">Favorit</string>
     <!-- Shows -->
-    <string name="title_shows_added">Added</string>
+    <string name="title_shows_added">Tillagd</string>
     <string name="confirm_delete">Vill du verkligen ta bort %s?</string>
     <string name="delete_error">Det gick inte att ta bort program. Försök igen senare.</string>
     <string name="delete_show">Ta bort</string>
@@ -208,16 +208,16 @@
         <item quantity="other">%d återstående</item>
     </plurals>
     <plurals name="remaining_of_total_episodes_plural">
-        <item quantity="one">%1$d of %2$d remaining</item>
-        <item quantity="other">%1$d of %2$d remaining</item>
+        <item quantity="one">%1$d av %2$d kvar</item>
+        <item quantity="other">%1$d av %2$d kvar</item>
     </plurals>
     <plurals name="skipped_episodes_plural">
-        <item quantity="one">%d skipped</item>
-        <item quantity="other">%d skipped</item>
+        <item quantity="one">%d överhoppad</item>
+        <item quantity="other">%d överhoppade</item>
     </plurals>
     <plurals name="collected_episodes_plural">
-        <item quantity="one">%d in collection</item>
-        <item quantity="other">%d in collection</item>
+        <item quantity="one">%d i samling</item>
+        <item quantity="other">%d i samling</item>
     </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Skriv ett serienamn</string>
@@ -235,30 +235,30 @@
     <string name="shows_collection">Samling</string>
     <string name="watchlist">Bevakningslista</string>
     <!-- Similar shows -->
-    <string name="action_similar">Similar</string>
+    <string name="action_similar">Liknande</string>
     <string name="title_similar_shows">Liknande program</string>
     <!-- Popular -->
     <string name="title_popular">Populärt</string>
-    <string name="filter_year">Year</string>
-    <string name="filter_year_current">Current year</string>
-    <string name="filter_language">Language</string>
+    <string name="filter_year">År</string>
+    <string name="filter_year_current">Nuvarande år</string>
+    <string name="filter_language">Språk</string>
     <!-- Lists -->
     <string name="first_list">Första listan</string>
     <string name="list_add">Lägg till lista</string>
-    <string name="ack_list_added">List added</string>
+    <string name="ack_list_added">Lista tillagd</string>
     <string name="list_title_hint">Namnge din lista</string>
     <string name="list_remove">Ta bort lista</string>
     <string name="list_manage">Hantera lista</string>
-    <string name="ack_list_renamed">List renamed</string>
-    <string name="ack_list_removed">List removed</string>
+    <string name="ack_list_renamed">Lista omdöpt</string>
+    <string name="ack_list_removed">Lista borttagen</string>
     <string name="list_item_manage">Hantera listor</string>
-    <string name="ack_list_item_manage">Lists updated</string>
+    <string name="ack_list_item_manage">Listor uppdaterade</string>
     <string name="list_item_remove">Ta bort från lista</string>
-    <string name="ack_list_item_removed">Removed from list</string>
+    <string name="ack_list_item_removed">Borttagen från lista</string>
     <string name="list_empty">Du kan lägga till serier i denna lista</string>
     <string name="action_lists_sort">Sortera listor</string>
     <string name="action_lists_reorder">Sortera om listor</string>
-    <string name="ack_lists_reordered">Lists reordered</string>
+    <string name="ack_lists_reordered">Listor omordnade</string>
     <string name="error_name_already_exists">En lista med detta namn finns redan</string>
     <!-- Movies -->
     <string name="title_discover">Upptäck</string>
@@ -339,7 +339,7 @@
     <string name="trakt_notice_not_exists">Kan inte (ännu) följas med trakt.</string>
     <string name="trakt_error_limit_exceeded">Bevakningslistan är full, ta bort något först.</string>
     <!-- Connect trakt -->
-    <string name="trakt_required">To use this, connect to Trakt</string>
+    <string name="trakt_required">För att använda detta, anslut till Trakt</string>
     <string name="connect_trakt">Anslut till trakt</string>
     <string name="trakt_reconnect">Anslut SeriesGuide till trakt</string>
     <string name="trakt_reconnect_details">Kontrollera dina inloggningsuppgifter för trakt</string>
@@ -351,9 +351,9 @@
     <string name="support_trakt">Stöd Trakt med VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Betygsätt</string>
-    <string name="ack_rated">Rating sent</string>
+    <string name="ack_rated">Betyg har skickats</string>
     <string name="your_rating">Ditt betyg</string>
-    <string name="action_remove_rating">Remove rating</string>
+    <string name="action_remove_rating">Ta bort betyg</string>
     <string name="love">Helt ninja!</string>
     <string name="hate">Svag sås :(</string>
     <string name="rating2">Usel</string>
@@ -375,7 +375,7 @@
     <string name="pref_quick_checkin">Snabb incheckning</string>
     <string name="pref_quick_checkin_summary">Fråga inte efter meddelande vid incheckning</string>
     <!-- Help -->
-    <string name="feedback">Send email</string>
+    <string name="feedback">Skicka e-post</string>
     <!-- Settings -->
     <string name="action_translate">Översätt appen</string>
     <string name="prefs_category_advanced">Avancerat</string>
@@ -485,7 +485,7 @@
     <string name="pref_notifications">Aviseringar</string>
     <string name="pref_notificationssummary">Meddela om nya avsnitt</string>
     <string name="pref_notifications_settings">Aviseringsinställningar</string>
-    <string name="pref_notifications_settings_summary">Configure if and how notifications appear</string>
+    <string name="pref_notifications_settings_summary">Konfigurera om och hur meddelanden visas</string>
     <string name="pref_ringtone">Ringsignal</string>
     <string name="pref_vibrate">Vibrera</string>
     <string name="pref_vibratesummary">Vibrerar även när aviseringar visas</string>
@@ -539,7 +539,7 @@
     <string name="action_extensions_configure">Anpassa tillägg</string>
     <string name="action_extensions_add">Lägg till tillägg</string>
     <string name="action_extensions_search">Skaffa fler tillägg</string>
-    <string name="action_extensions_develop">Develop an extension</string>
+    <string name="action_extensions_develop">Utveckla ett tillägg</string>
     <string name="action_extension_remove">Ta bort</string>
     <string name="extension_amazon">Amazon sökning</string>
     <string name="description_extension_amazon">Sök på din lokala Amazon\'s webbplats</string>

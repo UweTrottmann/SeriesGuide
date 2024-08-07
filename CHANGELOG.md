@@ -16,6 +16,7 @@ Version 2024.4
 *in development*
 
 * 🔨 Calendar: do not crash when scrolling and data changes.
+* 📝 Latest user interface translations from Crowdin.
 
 ### 2024.4.0 🧪
 *2024-08-02*
