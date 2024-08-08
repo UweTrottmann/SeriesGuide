@@ -137,7 +137,7 @@ class PeopleListHelper {
 
     private fun CrewMember.shouldInclude(mediaType: PeopleActivity.MediaType): Boolean {
         return when (mediaType) {
-            PeopleActivity.MediaType.SHOW -> job == "Creator"
+            PeopleActivity.MediaType.SHOW -> false
             PeopleActivity.MediaType.MOVIE -> job == "Director" || department == "Writing"
         }
     }

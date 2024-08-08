@@ -19,6 +19,7 @@ import com.github.michaelbull.result.runCatching
 import com.uwetrottmann.tmdb2.DiscoverTvBuilder
 import com.uwetrottmann.tmdb2.Tmdb
 import com.uwetrottmann.tmdb2.entities.AppendToResponse
+import com.uwetrottmann.tmdb2.entities.CastMember
 import com.uwetrottmann.tmdb2.entities.Collection
 import com.uwetrottmann.tmdb2.entities.Credits
 import com.uwetrottmann.tmdb2.entities.CrewMember
@@ -26,6 +27,7 @@ import com.uwetrottmann.tmdb2.entities.DiscoverFilter
 import com.uwetrottmann.tmdb2.entities.DiscoverFilter.Separator.OR
 import com.uwetrottmann.tmdb2.entities.Person
 import com.uwetrottmann.tmdb2.entities.TmdbDate
+import com.uwetrottmann.tmdb2.entities.TvCrewCredit
 import com.uwetrottmann.tmdb2.entities.TvEpisode
 import com.uwetrottmann.tmdb2.entities.TvShow
 import com.uwetrottmann.tmdb2.entities.TvShowResultsPage
@@ -403,23 +405,52 @@ class TmdbTools2 {
         }
 
     suspend fun getCreditsForShow(context: Context, tmdbId: Int): Credits? {
+        // Note: sending a language does not seem to make a difference (e.g. roles are still in English)
         return SgApp.getServicesComponent(context).tmdb()
             .tvService()
-            .credits(tmdbId, null)
+            .aggregateCredits(tmdbId, null)
             .awaitResponse("get show credits")
-            ?.also {
+            ?.let {
+                // Map to Credits, combining all characters/jobs
+                // Only mapping values required by ShowFragment and PeopleFragment and code below
+                Credits().apply {
+                    id = it.id
+                    cast = it.cast?.map { tvCastCredit ->
+                        CastMember().apply {
+                            id = tvCastCredit.id
+                            name = tvCastCredit.name
+                            profile_path = tvCastCredit.profile_path
+                            order = tvCastCredit.order
+                            character = tvCastCredit?.roles
+                                ?.mapNotNull { it.character }
+                                ?.joinToString { it }
+                        }
+                    } ?: emptyList()
+                    crew = it.crew?.map { tvCrewCredit ->
+                        CrewMember().apply {
+                            id = tvCrewCredit.id
+                            name = tvCrewCredit.name
+                            profile_path = tvCrewCredit.profile_path
+                            department = tvCrewCredit.department
+                            job = tvCrewCredit?.jobs
+                                ?.mapNotNull { it.job }
+                                ?.joinToString { it }
+                        }
+                    } ?: emptyList()
+                }
+            }?.also {
                 val crew = it.crew ?: return@also
                 crew.sortWith(crewComparator)
-                // After sorting, move creators first
-                val creators = mutableListOf<CrewMember>()
+                // After sorting, move writers first
+                val writers = mutableListOf<CrewMember>()
                 val otherCrew = crew.filterIndexed { _, crewMember ->
-                    if (crewMember.job == "Creator") {
-                        creators.add(crewMember)
+                    if (crewMember.department == "Writing") {
+                        writers.add(crewMember)
                         return@filterIndexed false
                     }
                     return@filterIndexed true
                 }
-                it.crew = creators + otherCrew
+                it.crew = writers + otherCrew
             }
     }
 
@@ -556,6 +587,8 @@ class TmdbTools2 {
     companion object {
         // In UI currently not grouping by department, so for easier scanning only sort by job
         private val crewComparator: Comparator<CrewMember> = compareBy({ it.job }, { it.name })
+        // TV credits are aggregated by department, so sort by that
+        private val tvCrewComparator: Comparator<TvCrewCredit> = compareBy({ it.department }, { it.name })
     }
 }
 
