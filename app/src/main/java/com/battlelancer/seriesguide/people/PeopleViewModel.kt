@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.people
 
@@ -10,17 +10,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
-import com.uwetrottmann.tmdb2.entities.Credits
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class PeopleViewModel(
     application: Application,
     private val tmdbId: Int,
-    private val mediaType: PeopleActivity.MediaType
+    private val mediaType: PeopleActivity.MediaType,
+    private val peopleType: PeopleActivity.PeopleType
 ) : AndroidViewModel(application) {
 
-    val credits = MutableLiveData<Credits?>()
+    val credits = MutableLiveData<List<Person>>()
 
     init {
         loadCredits()
@@ -33,7 +33,14 @@ class PeopleViewModel(
             } else {
                 TmdbTools2().getCreditsForShow(getApplication(), tmdbId)
             }
-            credits.postValue(newCredits)
+
+            val castOrCrewOrNull = if (peopleType == PeopleActivity.PeopleType.CAST) {
+                newCredits?.cast
+            } else {
+                newCredits?.crew
+            }
+
+            credits.postValue(castOrCrewOrNull ?: emptyList())
         }
     }
 
@@ -42,12 +49,13 @@ class PeopleViewModel(
 class PeopleViewModelFactory(
     private val application: Application,
     private val tmdbId: Int,
-    private val mediaType: PeopleActivity.MediaType
+    private val mediaType: PeopleActivity.MediaType,
+    private val peopleType: PeopleActivity.PeopleType
 ) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return PeopleViewModel(application, tmdbId, mediaType) as T
+        return PeopleViewModel(application, tmdbId, mediaType, peopleType) as T
     }
 
 }

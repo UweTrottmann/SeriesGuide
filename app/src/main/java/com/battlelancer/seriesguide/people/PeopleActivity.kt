@@ -36,7 +36,7 @@ class PeopleActivity : BaseActivity(), OnShowPersonListener {
         override fun toString(): String = value
     }
 
-    internal enum class PeopleType(private val value: String) {
+    enum class PeopleType(private val value: String) {
         CAST("CAST"),
         CREW("CREW");
 

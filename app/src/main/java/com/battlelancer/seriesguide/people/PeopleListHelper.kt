@@ -17,8 +17,6 @@ import com.battlelancer.seriesguide.util.CircleTransformation
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
-import com.uwetrottmann.tmdb2.entities.Credits
-import com.uwetrottmann.tmdb2.entities.CrewMember
 import timber.log.Timber
 
 /**
@@ -29,182 +27,143 @@ class PeopleListHelper {
     private val personImageTransform = CircleTransformation()
 
     /**
-     * @see populateCast
+     * @see populateCredits
      */
     fun populateShowCast(
         context: Context,
         peopleContainer: ViewGroup?,
         credits: Credits?
     ): Boolean {
-        return populateCast(context, peopleContainer, credits, PeopleActivity.MediaType.SHOW)
+        return populateCredits(
+            context,
+            peopleContainer,
+            credits?.cast,
+            credits?.tmdbId,
+            PeopleActivity.MediaType.SHOW,
+            PeopleType.CAST
+        )
     }
 
     /**
-     * @see populateCrew
+     * @see populateCredits
      */
     fun populateShowCrew(
         context: Context,
         peopleContainer: ViewGroup?,
         credits: Credits?
     ): Boolean {
-        return populateCrew(context, peopleContainer, credits, PeopleActivity.MediaType.SHOW)
+        return populateCredits(
+            context,
+            peopleContainer,
+            credits?.crew,
+            credits?.tmdbId,
+            PeopleActivity.MediaType.SHOW,
+            PeopleType.CREW
+        )
     }
 
     /**
-     * @see populateCast
+     * @see populateCredits
      */
     fun populateMovieCast(
         context: Context,
         peopleContainer: ViewGroup?,
         credits: Credits?
     ): Boolean {
-        return populateCast(context, peopleContainer, credits, PeopleActivity.MediaType.MOVIE)
+        return populateCredits(
+            context,
+            peopleContainer,
+            credits?.cast,
+            credits?.tmdbId,
+            PeopleActivity.MediaType.MOVIE,
+            PeopleType.CAST
+        )
     }
 
     /**
-     * @see populateCrew
+     * @see populateCredits
      */
     fun populateMovieCrew(
         context: Context,
         peopleContainer: ViewGroup?,
         credits: Credits?
     ): Boolean {
-        return populateCrew(context, peopleContainer, credits, PeopleActivity.MediaType.MOVIE)
+        return populateCredits(
+            context,
+            peopleContainer,
+            credits?.crew,
+            credits?.tmdbId,
+            PeopleActivity.MediaType.MOVIE,
+            PeopleType.CREW
+        )
     }
 
-    /**
-     * Add views for at most three cast members to the given [android.view.ViewGroup] and a
-     * "Show all" link if there are more.
-     *
-     * @return `false` if no views were added to the [peopleContainer].
-     */
-    private fun populateCast(
-        context: Context,
-        peopleContainer: ViewGroup?,
-        credits: Credits?,
-        mediaType: PeopleActivity.MediaType
-    ): Boolean {
-        if (peopleContainer == null) {
-            // nothing we can do, view is already gone
-            Timber.d("populateCast: container reference gone, aborting")
-            return false
-        }
-        if (credits == null) return false
-        val itemTmdbId = credits.id ?: return false
-        val cast = credits.cast
-        if (cast.isNullOrEmpty()) return false
-
-        peopleContainer.removeAllViews()
-        val inflater = LayoutInflater.from(peopleContainer.context)
-        var added = 0
-        for (person in cast) {
-            if (added == 3) {
-                break // show at most 3
-            }
-            val personId = person.id
-                ?: continue // missing required values
-            val name = person.name
-                ?: continue // missing required values
-
-            val personView = createPersonView(
-                context,
-                inflater,
-                peopleContainer,
-                name,
-                person.character,
-                person.profile_path
-            )
-            personView.setOnClickListener(
-                OnPersonClickListener(
-                    context,
-                    mediaType,
-                    itemTmdbId,
-                    PeopleType.CAST,
-                    personId
-                )
-            )
-            peopleContainer.addView(personView)
-            added++
-        }
-        if (cast.size > 3) {
-            addShowAllView(
-                inflater, peopleContainer,
-                OnPersonClickListener(context, mediaType, itemTmdbId, PeopleType.CAST)
-            )
-        }
-        return added > 0
-    }
-
-    private fun CrewMember.shouldInclude(mediaType: PeopleActivity.MediaType): Boolean {
+    private fun Person.shouldInclude(mediaType: PeopleActivity.MediaType): Boolean {
         return when (mediaType) {
             PeopleActivity.MediaType.SHOW -> false
-            PeopleActivity.MediaType.MOVIE -> job == "Director" || department == "Writing"
+            PeopleActivity.MediaType.MOVIE -> description == "Director" || department == "Writing"
         }
     }
 
     /**
-     * Add views for three (or few more if of interest) crew members to the given
+     * Add views for three (or few more if of interest) people to the given
      * [android.view.ViewGroup] and a show all link if there are more.
      *
      * @return `false` if no views were added to the [peopleContainer].
      */
-    private fun populateCrew(
+    private fun populateCredits(
         context: Context,
         peopleContainer: ViewGroup?,
-        credits: Credits?,
-        mediaType: PeopleActivity.MediaType
+        personList: List<Person>?,
+        itemTmdbId: Int?,
+        mediaType: PeopleActivity.MediaType,
+        peopleType: PeopleType
     ): Boolean {
         if (peopleContainer == null) {
             // nothing we can do, view is already gone
-            Timber.d("populateCrew: container reference gone, aborting")
+            Timber.d("populateCredits: container reference gone, aborting")
             return false
         }
-        if (credits == null) return false
-        val itemTmdbId = credits.id ?: return false
-        val crew = credits.crew
-        if (crew.isNullOrEmpty()) return false
+        if (itemTmdbId == null) return false
+        if (personList.isNullOrEmpty()) return false
 
         peopleContainer.removeAllViews()
 
         val inflater = LayoutInflater.from(peopleContainer.context)
         var added = 0
-        for (person in crew) {
+        for (person in personList) {
             // Show at most 3, or more if of interest
             if (added >= 3) {
                 if (!person.shouldInclude(mediaType)) {
                     break
                 }
             }
-            val personId = person.id
-                ?: continue // missing required values
-            val name = person.name
-                ?: continue // missing required values
 
             val personView = createPersonView(
                 context,
                 inflater,
                 peopleContainer,
-                name,
-                person.job,
-                person.profile_path
+                person.name,
+                person.description,
+                person.profilePath
             )
             personView.setOnClickListener(
                 OnPersonClickListener(
                     context,
                     mediaType,
                     itemTmdbId,
-                    PeopleType.CREW,
-                    personId
+                    peopleType,
+                    person.tmdbId
                 )
             )
             peopleContainer.addView(personView)
             added++
         }
 
-        if (crew.size > added) {
+        if (personList.size > added) {
             addShowAllView(
                 inflater, peopleContainer,
-                OnPersonClickListener(context, mediaType, itemTmdbId, PeopleType.CREW)
+                OnPersonClickListener(context, mediaType, itemTmdbId, peopleType)
             )
         }
         return added > 0

@@ -45,6 +45,7 @@ import com.battlelancer.seriesguide.movies.collection.MovieCollectionActivity
 import com.battlelancer.seriesguide.movies.similar.SimilarMoviesActivity
 import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.people.PeopleListHelper
+import com.battlelancer.seriesguide.people.Credits
 import com.battlelancer.seriesguide.settings.TmdbSettings
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools
@@ -72,7 +73,6 @@ import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.uwetrottmann.androidutils.AndroidUtils
-import com.uwetrottmann.tmdb2.entities.Credits
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay

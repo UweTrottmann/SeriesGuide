@@ -6,6 +6,7 @@ package com.battlelancer.seriesguide.tmdbapi
 import android.content.Context
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.movies.MoviesSettings
+import com.battlelancer.seriesguide.people.Credits
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.isRetryError
@@ -19,15 +20,11 @@ import com.github.michaelbull.result.runCatching
 import com.uwetrottmann.tmdb2.DiscoverTvBuilder
 import com.uwetrottmann.tmdb2.Tmdb
 import com.uwetrottmann.tmdb2.entities.AppendToResponse
-import com.uwetrottmann.tmdb2.entities.CastMember
 import com.uwetrottmann.tmdb2.entities.Collection
-import com.uwetrottmann.tmdb2.entities.Credits
-import com.uwetrottmann.tmdb2.entities.CrewMember
 import com.uwetrottmann.tmdb2.entities.DiscoverFilter
 import com.uwetrottmann.tmdb2.entities.DiscoverFilter.Separator.OR
 import com.uwetrottmann.tmdb2.entities.Person
 import com.uwetrottmann.tmdb2.entities.TmdbDate
-import com.uwetrottmann.tmdb2.entities.TvCrewCredit
 import com.uwetrottmann.tmdb2.entities.TvEpisode
 import com.uwetrottmann.tmdb2.entities.TvShow
 import com.uwetrottmann.tmdb2.entities.TvShowResultsPage
@@ -47,6 +44,7 @@ import retrofit2.create
 import timber.log.Timber
 import java.util.Calendar
 import java.util.Date
+import com.battlelancer.seriesguide.people.Person as SgPerson
 
 class TmdbTools2 {
 
@@ -410,47 +408,41 @@ class TmdbTools2 {
             .tvService()
             .aggregateCredits(tmdbId, null)
             .awaitResponse("get show credits")
-            ?.let {
-                // Map to Credits, combining all characters/jobs
-                // Only mapping values required by ShowFragment and PeopleFragment and code below
-                Credits().apply {
-                    id = it.id
-                    cast = it.cast?.map { tvCastCredit ->
-                        CastMember().apply {
-                            id = tvCastCredit.id
-                            name = tvCastCredit.name
-                            profile_path = tvCastCredit.profile_path
-                            order = tvCastCredit.order
-                            character = tvCastCredit?.roles
+            ?.let { credits ->
+                val crew = credits.crew?.mapNotNull { credit ->
+                    val id = credit.id ?: return@mapNotNull null
+                    val name = credit.name ?: return@mapNotNull null
+                    SgPerson(
+                        tmdbId = id,
+                        name = name,
+                        profilePath = credit.profile_path,
+                        description = credit.jobs
+                            ?.mapNotNull { it.job }
+                            ?.joinToString { it },
+                        department = credit.department
+                    )
+                }?.sortedWith(byDepartmentJobAndName) ?: emptyList()
+
+                // After sorting, move writers first
+                val (writers, otherCrew) = crew.partition { it.department == "Writing" }
+
+                // Combining all characters/jobs for the description
+                Credits(
+                    tmdbId = tmdbId,
+                    cast = credits.cast?.mapNotNull { credit ->
+                        val id = credit.id ?: return@mapNotNull null
+                        val name = credit.name ?: return@mapNotNull null
+                        SgPerson(
+                            tmdbId = id,
+                            name = name,
+                            profilePath = credit.profile_path,
+                            description = credit.roles
                                 ?.mapNotNull { it.character }
                                 ?.joinToString { it }
-                        }
-                    } ?: emptyList()
-                    crew = it.crew?.map { tvCrewCredit ->
-                        CrewMember().apply {
-                            id = tvCrewCredit.id
-                            name = tvCrewCredit.name
-                            profile_path = tvCrewCredit.profile_path
-                            department = tvCrewCredit.department
-                            job = tvCrewCredit?.jobs
-                                ?.mapNotNull { it.job }
-                                ?.joinToString { it }
-                        }
-                    } ?: emptyList()
-                }
-            }?.also {
-                val crew = it.crew ?: return@also
-                crew.sortWith(crewComparator)
-                // After sorting, move writers first
-                val writers = mutableListOf<CrewMember>()
-                val otherCrew = crew.filterIndexed { _, crewMember ->
-                    if (crewMember.department == "Writing") {
-                        writers.add(crewMember)
-                        return@filterIndexed false
-                    }
-                    return@filterIndexed true
-                }
-                it.crew = writers + otherCrew
+                        )
+                    } ?: emptyList(),
+                    crew = writers + otherCrew
+                )
             }
     }
 
@@ -459,23 +451,40 @@ class TmdbTools2 {
             .moviesService()
             .credits(tmdbId)
             .awaitResponse("get movie credits")
-            ?.also {
-                val crew = it.crew ?: return@also
-                crew.sortWith(crewComparator)
-                // After sorting, move directors and writers first
-                val directors = mutableListOf<CrewMember>()
-                val writers = mutableListOf<CrewMember>()
-                val otherCrew = crew.filterIndexed { _, crewMember ->
-                    if (crewMember.job == "Director") {
-                        directors.add(crewMember)
-                        return@filterIndexed false
-                    } else if (crewMember.department == "Writing") {
-                        writers.add(crewMember)
-                        return@filterIndexed false
-                    }
-                    return@filterIndexed true
+            ?.let { credits ->
+                val crew = credits.crew?.mapNotNull { credit ->
+                    val id = credit.id ?: return@mapNotNull null
+                    val name = credit.name ?: return@mapNotNull null
+                    SgPerson(
+                        tmdbId = id,
+                        name = name,
+                        profilePath = credit.profile_path,
+                        description = credit.job,
+                        department = credit.department
+                    )
+                }?.sortedWith(byDepartmentJobAndName) ?: emptyList()
+
+                // After sorting, move directors and writers first.
+                // As the list is already ordered by department then job, just pick in order
+                // if either job as director or department of writing.
+                val (directorsAndWriters, otherCrew) = crew.partition {
+                    it.description == "Director" || it.department == "Writing"
                 }
-                it.crew = directors + writers + otherCrew
+
+                Credits(
+                    tmdbId = tmdbId,
+                    cast = credits.cast?.mapNotNull { credit ->
+                        val id = credit.id ?: return@mapNotNull null
+                        val name = credit.name ?: return@mapNotNull null
+                        SgPerson(
+                            tmdbId = id,
+                            name = name,
+                            profilePath = credit.profile_path,
+                            description = credit.character
+                        )
+                    } ?: emptyList(),
+                    crew = directorsAndWriters + otherCrew
+                )
             }
     }
 
@@ -585,10 +594,10 @@ class TmdbTools2 {
     }
 
     companion object {
-        // In UI currently not grouping by department, so for easier scanning only sort by job
-        private val crewComparator: Comparator<CrewMember> = compareBy({ it.job }, { it.name })
-        // TV credits are aggregated by department, so sort by that
-        private val tvCrewComparator: Comparator<TvCrewCredit> = compareBy({ it.department }, { it.name })
+        // In UI, crew is currently not grouped by department, but for easier scanning sort by it,
+        // then job (description).
+        private val byDepartmentJobAndName: Comparator<SgPerson> =
+            compareBy({ it.department }, { it.description }, { it.name })
     }
 }
 
