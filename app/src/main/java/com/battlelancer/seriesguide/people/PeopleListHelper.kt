@@ -98,13 +98,6 @@ class PeopleListHelper {
         )
     }
 
-    private fun Person.shouldInclude(mediaType: PeopleActivity.MediaType): Boolean {
-        return when (mediaType) {
-            PeopleActivity.MediaType.SHOW -> false
-            PeopleActivity.MediaType.MOVIE -> description == "Director" || department == "Writing"
-        }
-    }
-
     /**
      * Add views for three (or few more if of interest) people to the given
      * [android.view.ViewGroup] and a show all link if there are more.
@@ -132,11 +125,8 @@ class PeopleListHelper {
         val inflater = LayoutInflater.from(peopleContainer.context)
         var added = 0
         for (person in personList) {
-            // Show at most 3, or more if of interest
-            if (added >= 3) {
-                if (!person.shouldInclude(mediaType)) {
-                    break
-                }
+            if (added == 3) {
+                break // Show at most 3
             }
 
             val personView = createPersonView(
