@@ -15,6 +15,9 @@ Version 2024.4
 --------------
 *in development*
 
+### 2024.4.2 🧪
+*2024-08-09*
+
 * 🔧 Shows: display cast and crew of all seasons instead of just the latest one.
 * 📝 Latest user interface translations from Crowdin.
 
