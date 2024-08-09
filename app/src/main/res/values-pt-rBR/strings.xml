@@ -46,7 +46,7 @@
     <string name="empty_no_results">Sem resultados</string>
     <!-- Status messages -->
     <string name="updated">Atualizado para a versão mais recente.</string>
-    <string name="updated_what_is_new">What\'s new</string>
+    <string name="updated_what_is_new">Novidades</string>
     <string name="norating">n/a</string>
     <string name="unknown">desconhecido</string>
     <string name="offline">Conecte-se a uma rede e tente novamente.</string>
@@ -240,7 +240,7 @@
     <!-- Popular -->
     <string name="title_popular">Popular</string>
     <string name="filter_year">Ano</string>
-    <string name="filter_year_current">Current year</string>
+    <string name="filter_year_current">Ano atual</string>
     <string name="filter_language">Idioma</string>
     <!-- Lists -->
     <string name="first_list">Primeira lista</string>
@@ -485,7 +485,7 @@
     <string name="pref_notifications">Notificações</string>
     <string name="pref_notificationssummary">Notificar sobre novos episódios</string>
     <string name="pref_notifications_settings">Configurações de notificação</string>
-    <string name="pref_notifications_settings_summary">Configure if and how notifications appear</string>
+    <string name="pref_notifications_settings_summary">Configurar como as notificações aparecem</string>
     <string name="pref_ringtone">Toque</string>
     <string name="pref_vibrate">Vibrar</string>
     <string name="pref_vibratesummary">Também vibrar ao exibir uma notificação</string>
