@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2023-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies.similar
 
@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
+import androidx.lifecycle.viewmodel.MutableCreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.battlelancer.seriesguide.R
@@ -92,7 +93,7 @@ class SimilarMoviesViewModel(
     )
 
     companion object {
-        val KEY_TMDB_ID_MOVIE = object : CreationExtras.Key<Int> {}
+        private val KEY_TMDB_ID_MOVIE = object : CreationExtras.Key<Int> {}
 
         val Factory = viewModelFactory {
             initializer {
@@ -101,6 +102,11 @@ class SimilarMoviesViewModel(
                 SimilarMoviesViewModel(application, movieTmdbId)
             }
         }
+
+        fun creationExtras(defaultExtras: CreationExtras, movieTmdbId: Int) =
+            MutableCreationExtras(defaultExtras).apply {
+                set(KEY_TMDB_ID_MOVIE, movieTmdbId)
+            }
     }
 
 }

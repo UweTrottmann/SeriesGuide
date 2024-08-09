@@ -26,6 +26,7 @@ import com.battlelancer.seriesguide.comments.TraktCommentsActivity
 import com.battlelancer.seriesguide.databinding.LayoutRatingsBinding
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.people.PeopleListHelper
+import com.battlelancer.seriesguide.people.Credits
 import com.battlelancer.seriesguide.settings.NotificationSettings
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.overview.OverviewActivityImpl.OverviewLayoutType.MULTI_PANE_VERTICAL
@@ -53,7 +54,6 @@ import com.battlelancer.seriesguide.util.safeShow
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.uwetrottmann.androidutils.AndroidUtils
-import com.uwetrottmann.tmdb2.entities.Credits
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode

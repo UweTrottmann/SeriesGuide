@@ -485,6 +485,7 @@
     <string name="pref_notifications">Benachrichtigungen</string>
     <string name="pref_notificationssummary">Benachrichtigung bei neuen Folgen</string>
     <string name="pref_notifications_settings">Benachrichtigungseinstellungen</string>
+    <string name="pref_notifications_settings_summary">Einstellen ob und wie Benachrichtigungen angezeigt werden</string>
     <string name="pref_ringtone">Ton</string>
     <string name="pref_vibrate">Vibrieren</string>
     <string name="pref_vibratesummary">Bei Anzeige einer Benachrichtigung vibrieren</string>
@@ -499,9 +500,9 @@
     <string name="pref_notifications_battery_settings">Akku-Einstellungen</string>
     <string name="pref_notifications_battery_settings_summary">Zu Akku-Einstellungen gehen um Akkuverbrauch optimieren für zuverlässige Benachrichtigungen auszuschalten</string>
     <string name="notifications_allow">Benachrichtigungen erlauben</string>
-    <string name="notifications_allow_reason">Um Benachrichtigungen für Folgen oder Fehler zu erhalten, erlauben Sie diese in den Einstellungen.</string>
-    <string name="precise_notifications_allow">Präzise Benachrichtigungen erlauben</string>
-    <string name="precise_notifications_allow_reason">Um präzise Benachrichtigungen für Folgen zu erhalten, erlauben Sie diese in den Einstellungen.</string>
+    <string name="notifications_allow_reason">Um Benachrichtigungen für Folgen oder Fehler zu erhalten, erlauben Sie diese in den Einstellungen</string>
+    <string name="precise_notifications_allow">Pünktliche Benachrichtigungen erlauben</string>
+    <string name="precise_notifications_allow_reason">Um pünktliche Benachrichtigungen zu erhalten, erlauben Sie in den Einstellungen das Einrichten von Erinnerungen</string>
     <!-- List Widget -->
     <string name="hide_watched">Angesehene Folgen verstecken</string>
     <string name="pref_widget_opacity">Widget-Hintergrund</string>

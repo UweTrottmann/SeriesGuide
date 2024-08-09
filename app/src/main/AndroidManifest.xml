@@ -177,6 +177,7 @@
             android:name=".movies.details.MovieDetailsActivity"
             android:parentActivityName="com.battlelancer.seriesguide.ui.MoviesActivity" />
         <activity android:name=".movies.similar.SimilarMoviesActivity" />
+        <activity android:name=".movies.collection.MovieCollectionActivity" />
 
         <!-- Settings -->
         <activity android:name=".preferences.MoreOptionsActivity" />

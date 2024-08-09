@@ -57,7 +57,7 @@
         <androidx.constraintlayout.helper.widget.Flow
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="buttonMovieCheckIn,buttonMovieTrailer,buttonMovieSimilar,buttonMovieShare,buttonMovieCalendar,buttonMovieComments,buttonMovieStreamingSearch,buttonMovieStreamingSearchInfo"
+            app:constraint_referenced_ids="buttonMovieCheckIn,buttonMovieTrailer,buttonMovieCollection,buttonMovieSimilar,buttonMovieShare,buttonMovieCalendar,buttonMovieComments,buttonMovieStreamingSearch,buttonMovieStreamingSearchInfo"
             app:flow_horizontalBias="0"
             app:flow_horizontalGap="4dp"
             app:flow_horizontalStyle="packed"
@@ -85,6 +85,16 @@
             android:text="@string/trailer"
             app:icon="@drawable/ic_movie_white_24dp"
             app:iconGravity="start" />
+
+        <Button
+            android:id="@+id/buttonMovieCollection"
+            style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/default_padding"
+            app:icon="@drawable/ic_search_white_24dp"
+            app:iconGravity="start"
+            tools:text="Some Very Long Collection Name" />
 
         <Button
             android:id="@+id/buttonMovieSimilar"

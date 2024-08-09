@@ -1,13 +1,15 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2013-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.stats
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.add
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.BaseTopActivity
 import com.battlelancer.seriesguide.util.ThemeUtils
+import com.battlelancer.seriesguide.util.commitReorderingAllowed
 
 /**
  * Hosts fragments displaying statistics.
@@ -22,10 +24,9 @@ class StatsActivity : BaseTopActivity() {
         setupBottomNavigation(R.id.navigation_item_stats)
 
         if (savedInstanceState == null) {
-            val f = StatsFragment()
-            val ft = supportFragmentManager.beginTransaction()
-            ft.add(R.id.content_frame, f)
-            ft.commit()
+            supportFragmentManager.commitReorderingAllowed {
+                add<StatsFragment>(R.id.content_frame)
+            }
         }
     }
 
