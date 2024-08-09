@@ -15,6 +15,8 @@ Version 2024.4
 --------------
 *in development*
 
+* 🔧 Shows: display cast and crew of all seasons instead of just the latest one.
+
 ### 2024.4.1 🧪
 *2024-08-07*
 

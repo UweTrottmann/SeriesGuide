@@ -14,7 +14,6 @@ import android.widget.ListView
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.widgets.EmptyView
 import com.battlelancer.seriesguide.util.ThemeUtils
@@ -39,7 +38,7 @@ class PeopleFragment : Fragment() {
     private var activatedPosition = ListView.INVALID_POSITION
 
     private val model by viewModels<PeopleViewModel> {
-        PeopleViewModelFactory(requireActivity().application, tmdbId, mediaType)
+        PeopleViewModelFactory(requireActivity().application, tmdbId, mediaType, peopleType)
     }
 
     internal interface OnShowPersonListener {
@@ -107,16 +106,11 @@ class PeopleFragment : Fragment() {
         adapter = PeopleAdapter(requireContext())
         listView.adapter = adapter
 
-        model.credits.observe(viewLifecycleOwner, Observer {
+        model.credits.observe(viewLifecycleOwner) {
             setProgressVisibility(false)
             setEmptyMessage()
-
-            if (peopleType == PeopleActivity.PeopleType.CAST) {
-                adapter.setData(Person.transformCastToPersonList(it))
-            } else {
-                adapter.setData(Person.transformCrewToPersonList(it))
-            }
-        })
+            adapter.setData(it)
+        }
     }
 
     override fun onAttach(context: Context) {
