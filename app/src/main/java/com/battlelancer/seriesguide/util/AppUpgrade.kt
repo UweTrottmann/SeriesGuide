@@ -32,6 +32,7 @@ class AppUpgrade(
      */
     fun upgradeIfNewVersion(): Boolean {
         return if (lastVersion < currentVersion) {
+            Timber.i("Upgrading from %d to %d", lastVersion, currentVersion)
             doUpgrades()
             // Update last version to current version
             PreferenceManager.getDefaultSharedPreferences(context).edit()
