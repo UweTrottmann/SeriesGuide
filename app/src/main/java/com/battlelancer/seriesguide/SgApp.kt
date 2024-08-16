@@ -107,11 +107,6 @@ class SgApp : Application() {
         const val RELEASE_VERSION_40_BETA4 = 1502803
 
         /**
-         * ListWidgetProvider alarm intent is now explicit.
-         */
-        const val RELEASE_VERSION_40_BETA6 = 1502805
-
-        /**
          * For trakt and hexagon sync movies were not added in all cases, reset sync times.
          */
         const val RELEASE_VERSION_50_1 = 2105008

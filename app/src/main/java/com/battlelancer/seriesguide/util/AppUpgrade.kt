@@ -3,16 +3,11 @@
 
 package com.battlelancer.seriesguide.util
 
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import androidx.core.content.edit
-import androidx.core.content.getSystemService
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.extensions.ExtensionManager
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
@@ -72,22 +67,6 @@ class AppUpgrade(
 
         if (lastVersion < SgApp.RELEASE_VERSION_40_BETA4) {
             ExtensionManager.get(context).setDefaultEnabledExtensions(context)
-        }
-
-        if (lastVersion < SgApp.RELEASE_VERSION_40_BETA6) {
-            // cancel old widget alarm using implicit intent
-            val am = context.getSystemService<AlarmManager>()
-            if (am != null) {
-                val pi = PendingIntent.getBroadcast(
-                    context,
-                    ListWidgetProvider.REQUEST_CODE,
-                    Intent(ListWidgetProvider.ACTION_DATA_CHANGED),
-                    // Mutable because it was created without flags which defaulted to mutable.
-                    PendingIntentCompat.flagMutable
-                )
-                am.cancel(pi)
-            }
-            // new alarm is set automatically as upgrading causes app widgets to update
         }
 
         if (lastVersion != SgApp.RELEASE_VERSION_50_1
