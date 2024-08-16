@@ -23,6 +23,11 @@ Version 2024.3
 * 🌟 Trakt: support to edit and delete (new) comments.
 * 🌟 Trakt: support to remove a rating.
 
+#### 2024.3.7
+*2024-08-16*
+
+* 🔨 Android 14: do not crash when updating from version 40 or older.
+
 #### 2024.3.6
 *2024-07-25*
 
