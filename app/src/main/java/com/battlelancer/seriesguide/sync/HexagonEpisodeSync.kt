@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgEpisode2UpdateByNumber
+import com.battlelancer.seriesguide.shows.database.ShowLastWatchedInfo
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.util.Errors.Companion.logAndReportHexagon
@@ -177,6 +178,19 @@ class HexagonEpisodeSync(
         }
 
         return result.success
+    }
+
+    data class DownloadFlagsResult(
+        val success: Boolean,
+        val noData: Boolean,
+        val lastWatchedMs: Long?
+    ) {
+        companion object {
+            @JvmField
+            val FAILED = DownloadFlagsResult(success = false, noData = false, lastWatchedMs = null)
+            @JvmField
+            val NO_DATA = DownloadFlagsResult(success = true, noData = true, lastWatchedMs = null)
+        }
     }
 
     private fun downloadFlagsByTmdbId(showId: Long, showTmdbId: Int): DownloadFlagsResult {
