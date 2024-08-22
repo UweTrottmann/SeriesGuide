@@ -59,5 +59,7 @@ public class Show {
 
     public long last_watched_ms;
 
+    @Nullable public String user_note;
+
     public List<Season> seasons;
 }
