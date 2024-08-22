@@ -54,6 +54,7 @@ object ImportTools {
             notify = notify ?: true,
             hidden = hidden,
             lastWatchedMs = last_watched_ms,
+            userNote = user_note?.take(SgShow2.MAX_USER_NOTE_LENGTH)
         )
     }
 

@@ -41,7 +41,8 @@ object ShowTestHelper {
             posterSmall = "poster.jpg",
             // set desired language, might not be the content language if fallback used above.
             language = LanguageTools.LANGUAGE_EN,
-            lastUpdatedMs = System.currentTimeMillis() // now
+            lastUpdatedMs = System.currentTimeMillis(), // now
+            userNote = null
         )
     }
 

@@ -205,7 +205,8 @@ class GetShowTools @Inject constructor(
                     posterSmall = poster,
                     // set desired language, might not be the content language if fallback used above.
                     language = desiredLanguage,
-                    lastUpdatedMs = System.currentTimeMillis() // now
+                    lastUpdatedMs = System.currentTimeMillis(), // now
+                    userNote = null // If at all, added later via Hexagon or Trakt (VIP only)
                 ),
                 seasons = tmdbSeasons
             )

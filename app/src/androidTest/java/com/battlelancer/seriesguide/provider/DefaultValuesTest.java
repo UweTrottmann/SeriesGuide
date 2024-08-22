@@ -128,6 +128,7 @@ public class DefaultValuesTest {
         assertThat(show.getCustomReleaseTime()).isNull();
         assertThat(show.getCustomReleaseDayOffset()).isNull();
         assertThat(show.getCustomReleaseTimeZone()).isNull();
+        assertThat(show.getUserNote()).isNull();
     }
 
     @Test
