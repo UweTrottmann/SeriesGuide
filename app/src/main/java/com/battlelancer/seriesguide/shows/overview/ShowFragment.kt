@@ -189,6 +189,11 @@ class ShowFragment() : Fragment() {
             }
         }
 
+        // Edit note button
+        binding.buttonEditNote.setOnClickListener {
+            EditNoteDialog(showId).safeShow(parentFragmentManager, "edit-note")
+        }
+
         // language button
         val buttonLanguage = binding.buttonLanguage
         buttonLanguage.setOnClickListener { displayLanguageSettings() }
