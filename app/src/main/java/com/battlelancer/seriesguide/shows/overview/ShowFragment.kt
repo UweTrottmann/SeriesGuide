@@ -17,6 +17,7 @@ import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isGone
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -25,8 +26,8 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.comments.TraktCommentsActivity
 import com.battlelancer.seriesguide.databinding.LayoutRatingsBinding
 import com.battlelancer.seriesguide.notifications.NotificationService
-import com.battlelancer.seriesguide.people.PeopleListHelper
 import com.battlelancer.seriesguide.people.Credits
+import com.battlelancer.seriesguide.people.PeopleListHelper
 import com.battlelancer.seriesguide.settings.NotificationSettings
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.overview.OverviewActivityImpl.OverviewLayoutType.MULTI_PANE_VERTICAL
@@ -110,6 +111,8 @@ class ShowFragment() : Fragment() {
         val buttonWebSearch: Button
         val buttonComments: Button
         val buttonShare: Button
+        val buttonEditNote: Button
+        val textViewNote: TextView
         val castLabel: TextView
         val castContainer: LinearLayout
         val crewLabel: TextView
@@ -145,6 +148,8 @@ class ShowFragment() : Fragment() {
             buttonWebSearch = view.findViewById(R.id.buttonShowWebSearch)
             buttonComments = view.findViewById(R.id.buttonShowComments)
             buttonShare = view.findViewById(R.id.buttonShowShare)
+            buttonEditNote = view.findViewById(R.id.buttonShowNote)
+            textViewNote = view.findViewById(R.id.textViewShowNote)
             castLabel = view.findViewById(R.id.labelCast)
             castContainer = view.findViewById(R.id.containerCast)
             crewLabel = view.findViewById(R.id.labelCrew)
@@ -376,6 +381,12 @@ class ShowFragment() : Fragment() {
                 SgApp.getServicesComponent(requireContext()).showTools()
                     .storeIsHidden(showId, !isHidden)
             }
+        }
+
+        // note
+        binding.textViewNote.apply {
+            text = show.userNote
+            isGone = show.userNote.isNullOrEmpty()
         }
 
         // overview
