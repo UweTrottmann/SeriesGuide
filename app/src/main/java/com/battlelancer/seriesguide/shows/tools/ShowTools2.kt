@@ -451,6 +451,45 @@ class ShowTools2 @Inject constructor(
         notifyAboutSyncing()
     }
 
+    /**
+     * Uploads to Cloud and on success saves to local database.
+     * Does not sanitize the given values.
+     */
+    fun storeUserNote(showId: Long, userNote: String?) = SgApp.coroutineScope.launch {
+        // Send to Cloud.
+        val isCloudFailed = withContext(Dispatchers.Default) {
+            if (!HexagonSettings.isEnabled(context)) {
+                return@withContext false
+            }
+            if (isNotConnected(context)) {
+                return@withContext true
+            }
+            val showTmdbId =
+                SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTmdbId(showId)
+            if (showTmdbId == 0) {
+                return@withContext true
+            }
+
+            val show = SgCloudShow()
+            show.tmdbId = showTmdbId
+            show.note = userNote
+
+            val success = uploadShowToCloud(show)
+            return@withContext !success
+        }
+        // Do not save to local database if sending to cloud has failed.
+        if (isCloudFailed) return@launch
+
+        // Save to local database
+        withContext(Dispatchers.IO) {
+            // Change custom release time values
+            SgRoomDatabase.getInstance(context).sgShow2Helper().updateUserNote(
+                showId,
+                userNote
+            )
+        }
+    }
+
     private suspend fun notifyAboutSyncing() {
         withContext(Dispatchers.Main) {
             // show immediate feedback, also if offline and sync won't go through
