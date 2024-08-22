@@ -163,10 +163,10 @@ interface SgShow2Helper {
     @Query("UPDATE sg_show SET series_syncenabled = 1 WHERE _id = :id")
     fun setHexagonMergeCompleted(id: Long)
 
-    @Query("SELECT _id, series_tmdb_id, series_language, series_favorite, series_hidden, series_notify, series_custom_release_time, series_custom_day_offset, series_custom_timezone, series_lastupdate FROM sg_show WHERE _id = :id")
+    @Query("SELECT _id, series_tmdb_id, series_language, series_favorite, series_hidden, series_notify, series_custom_release_time, series_custom_day_offset, series_custom_timezone, series_lastupdate, series_user_note FROM sg_show WHERE _id = :id")
     fun getForCloudUpdate(id: Long): SgShow2CloudUpdate?
 
-    @Query("SELECT _id, series_tmdb_id, series_language, series_favorite, series_hidden, series_notify, series_custom_release_time, series_custom_day_offset, series_custom_timezone, series_lastupdate FROM sg_show")
+    @Query("SELECT _id, series_tmdb_id, series_language, series_favorite, series_hidden, series_notify, series_custom_release_time, series_custom_day_offset, series_custom_timezone, series_lastupdate, series_user_note FROM sg_show")
     fun getForCloudUpdate(): List<SgShow2CloudUpdate>
 
     @Update(entity = SgShow2::class)
@@ -365,7 +365,8 @@ data class SgShow2CloudUpdate(
     @ColumnInfo(name = SgShow2Columns.CUSTOM_RELEASE_TIME) var customReleaseTime: Int?,
     @ColumnInfo(name = SgShow2Columns.CUSTOM_RELEASE_DAY_OFFSET) var customReleaseDayOffset: Int?,
     @ColumnInfo(name = SgShow2Columns.CUSTOM_RELEASE_TIME_ZONE) var customReleaseTimeZone: String?,
-    @ColumnInfo(name = SgShow2Columns.LASTUPDATED) var lastUpdatedMs: Long
+    @ColumnInfo(name = SgShow2Columns.LASTUPDATED) var lastUpdatedMs: Long,
+    @ColumnInfo(name = SgShow2Columns.USER_NOTE) var userNote: String?,
 )
 
 data class ShowLastWatchedInfo(
