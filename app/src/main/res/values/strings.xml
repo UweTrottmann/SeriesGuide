@@ -184,6 +184,7 @@
     <string name="context_marknext">Watched next episode</string>
     <string name="action_episodes_switch_view">Switch view</string>
     <string name="next_to_watch">Next to watch</string>
+    <string name="title_note">Note</string>
 
     <!-- History -->
     <string name="user_stream">History</string>

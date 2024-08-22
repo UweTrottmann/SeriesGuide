@@ -256,6 +256,26 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <Button
+            android:id="@+id/buttonShowNote"
+            style="@style/Widget.SeriesGuide.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/title_note"
+            app:icon="@drawable/ic_edit_note_control_24dp"
+            app:iconGravity="start" />
+
+        <TextView
+            android:id="@+id/textViewShowNote"
+            style="@style/Block.FlowText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBody2"
+            tools:text="This is an example note." />
+
         <include
             android:id="@+id/containerRatings"
             layout="@layout/layout_ratings" />
