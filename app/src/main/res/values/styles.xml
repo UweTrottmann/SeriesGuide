@@ -223,6 +223,11 @@
         <item name="android:lineSpacingMultiplier">1.25</item>
     </style>
 
+    <style name="Widget.SeriesGuide.TextView.Body.MaxEms">
+        <item name="android:lineSpacingMultiplier">1.25</item>
+        <item name="android:maxEms">20</item>
+    </style>
+
     <style name="Widget.SeriesGuide.TextView.SingleLine">
         <item name="android:singleLine">true</item>
     </style>
