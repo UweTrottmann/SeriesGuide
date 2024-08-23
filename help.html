@@ -18,7 +18,7 @@ title: Help
     </div>
     
     <h2 class="mt-3">How to</h2>
-    <h3>Unlock all features</h3>
+    <h3>Unlock all features <a id="unlock" href="#unlock"><span class="material-symbols-outlined" aria-hidden="true">link</span></a></h3>
     <div class="list-group">
     {% for page_path in site.data.help.how-to.sub.order %}
       {% assign help_page = site.help | where: "path", page_path | first %}      
@@ -26,7 +26,7 @@ title: Help
     {% endfor %}
     </div>
 
-    <h3 class="mt-3">Basics</h3>
+    <h3 class="mt-3">Basics <a id="basics" href="#basics"><span class="material-symbols-outlined" aria-hidden="true">link</span></a></h3>
     <div class="list-group">
     {% for page_path in site.data.help.how-to.basics.order %}
       {% assign help_page = site.help | where: "path", page_path | first %}      
@@ -34,7 +34,7 @@ title: Help
     {% endfor %}
     </div>
 
-    <h3 class="mt-3">Backup and Cloud</h3>
+    <h3 class="mt-3">Backup and Cloud <a id="backup-and-cloud" href="#backup-and-cloud"><span class="material-symbols-outlined" aria-hidden="true">link</span></a></h3>
     <div class="list-group">
     {% for page_path in site.data.help.how-to.backup.order %}
       {% assign help_page = site.help | where: "path", page_path | first %}      
@@ -42,7 +42,7 @@ title: Help
     {% endfor %}
     </div>
     
-    <h3 class="mt-3">Trakt integration</h3>
+    <h3 class="mt-3">Trakt integration <a id="trakt-integration" href="#trakt-integration"><span class="material-symbols-outlined" aria-hidden="true">link</span></a></h3>
     <div class="list-group">
     {% for page_path in site.data.help.how-to.trakt.order %}
       {% assign help_page = site.help | where: "path", page_path | first %}      
