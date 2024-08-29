@@ -217,6 +217,11 @@ class JsonImportTask(
                     Timber.e(e, "Backup file not found.")
                     errorCause = e.message
                     return ERROR_FILE_ACCESS
+                } catch (e: Exception) {
+                    // Only report unexpected errors.
+                    Errors.logAndReport("Backup file not found.", e)
+                    errorCause = e.message
+                    return ERROR_FILE_ACCESS
                 }
                 if (pfd == null) {
                     Timber.e("File descriptor is null.")
