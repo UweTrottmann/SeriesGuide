@@ -32,7 +32,7 @@ import com.battlelancer.seriesguide.shows.database.SgSeason2Helper
 import com.battlelancer.seriesguide.shows.database.SgShow2Helper
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.util.DBUtils
-import com.battlelancer.seriesguide.util.Errors.Companion.logAndReport
+import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.TaskManager
 import com.google.gson.Gson
@@ -204,7 +204,7 @@ class JsonImportTask(
             val testBackupFile = testBackupFile
             var pfd: ParcelFileDescriptor? = null
             if (testBackupFile == null) {
-                // make sure we have a file uri...
+                // Make sure a file is configured...
                 val backupFileUri = getDataBackupFile(type) ?: return ERROR_FILE_ACCESS
                 // ...and the file actually exists
                 try {
@@ -215,6 +215,11 @@ class JsonImportTask(
                     return ERROR_FILE_ACCESS
                 } catch (e: SecurityException) {
                     Timber.e(e, "Backup file not found.")
+                    errorCause = e.message
+                    return ERROR_FILE_ACCESS
+                } catch (e: Exception) {
+                    // Only report unexpected errors.
+                    Errors.logAndReport("Backup file not found.", e)
                     errorCause = e.message
                     return ERROR_FILE_ACCESS
                 }
@@ -234,11 +239,10 @@ class JsonImportTask(
             } else FileInputStream(testBackupFile)
             try {
                 importFromJson(type, inputStream)
-
-                // let the document provider know we're done.
+                // Let the document provider know this is done.
                 pfd?.close()
             } catch (e: JsonParseException) {
-                // the given Json might not be valid or unreadable
+                // The given Json might not be valid or unreadable
                 Timber.e(e, "Import failed")
                 errorCause = e.message
                 return ERROR
@@ -252,7 +256,7 @@ class JsonImportTask(
                 return ERROR
             } catch (e: Exception) {
                 // Only report unexpected errors.
-                logAndReport("Import failed", e)
+                Errors.logAndReport("Import failed", e)
                 errorCause = e.message
                 return ERROR
             }
@@ -282,7 +286,7 @@ class JsonImportTask(
             try {
                 importFromJson(type, inputStream)
             } catch (e: JsonParseException) {
-                // the given Json might not be valid or unreadable
+                // The given Json might not be valid or unreadable
                 Timber.e(e, "Import failed")
                 errorCause = e.message
                 return ERROR
@@ -296,7 +300,7 @@ class JsonImportTask(
                 return ERROR
             } catch (e: Exception) {
                 // Only report unexpected errors.
-                logAndReport("Import failed", e)
+                Errors.logAndReport("Import failed", e)
                 errorCause = e.message
                 return ERROR
             }
