@@ -41,12 +41,13 @@
     </queries>
 
     <!-- enableOnBackInvokedCallback: opt-in to predictive back gesture https://developer.android.com/guide/navigation/custom-back/predictive-back-gesture -->
+    <!-- Note: temporarily do not enable predictive back gesture due to crashes https://issuetracker.google.com/issues/342316801 -->
     <application
         android:name="com.battlelancer.seriesguide.SgApp"
         android:allowBackup="true"
         android:backupAgent="com.battlelancer.seriesguide.SgBackupAgent"
         android:dataExtractionRules="@xml/sg_backup_rules_android_12"
-        android:enableOnBackInvokedCallback="true"
+        android:enableOnBackInvokedCallback="false"
         android:fullBackupContent="@xml/sg_backup_rules"
         android:fullBackupOnly="true"
         android:hardwareAccelerated="true"

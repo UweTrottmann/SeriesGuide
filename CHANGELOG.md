@@ -23,6 +23,12 @@ Version 2024.3
 * 🌟 Trakt: support to edit and delete (new) comments.
 * 🌟 Trakt: support to remove a rating.
 
+#### 2024.3.8
+*2024-08-29*
+
+* 🔨 Android 14: turn off predictive back animation due to unresolved issues.
+* 🔨 Backups: do not crash due to obscure errors when restoring.
+
 #### 2024.3.7
 *2024-08-16*
 
