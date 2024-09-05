@@ -4,6 +4,7 @@
 package com.battlelancer.seriesguide.traktapi
 
 import android.content.Context
+import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.util.TimeTools
 import org.threeten.bp.OffsetDateTime
@@ -59,9 +60,10 @@ object TraktSettings {
     private const val KEY_AUTO_ADD_TRAKT_SHOWS
             : String = "com.battlelancer.seriesguide.autoaddtraktshows"
 
-    const val KEY_HAS_MERGED_EPISODES: String = "com.battlelancer.seriesguide.trakt.mergedepisodes"
+    private const val KEY_HAS_MERGED_EPISODES
+            : String = "com.battlelancer.seriesguide.trakt.mergedepisodes"
 
-    const val KEY_HAS_MERGED_MOVIES
+    private const val KEY_HAS_MERGED_MOVIES
             : String = "com.battlelancer.seriesguide.trakt.mergedmovies"
 
     /**
@@ -198,21 +200,47 @@ object TraktSettings {
     }
 
     /**
-     * Whether watched and collected episodes were merged with the users Trakt profile since she
-     * connected to Trakt.
+     * Returns if episodes have not been synced with the current Trakt account.
      */
-    fun hasMergedEpisodes(context: Context): Boolean {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-            .getBoolean(KEY_HAS_MERGED_EPISODES, true)
+    fun isInitialSyncEpisodes(context: Context): Boolean {
+        return !PreferenceManager.getDefaultSharedPreferences(context)
+            .getBoolean(KEY_HAS_MERGED_EPISODES, false)
+    }
+
+    fun setInitialSyncEpisodesCompleted(context: Context) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit {
+            putBoolean(KEY_HAS_MERGED_EPISODES, true)
+        }
     }
 
     /**
-     * Whether the list of movies was merged with the users Trakt profile since she connected to
-     * Trakt.
+     * Returns if movies have not been synced with the current Trakt account.
      */
-    fun hasMergedMovies(context: Context): Boolean {
-        return PreferenceManager.getDefaultSharedPreferences(context)
+    fun isInitialSyncMovies(context: Context): Boolean {
+        return !PreferenceManager.getDefaultSharedPreferences(context)
             .getBoolean(KEY_HAS_MERGED_MOVIES, false)
+    }
+
+    fun setInitialSyncMoviesCompleted(context: Context) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit {
+            putBoolean(KEY_HAS_MERGED_MOVIES, true)
+        }
+    }
+
+    fun resetToInitialSync(context: Context) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit {
+            putBoolean(KEY_HAS_MERGED_EPISODES, false)
+            putBoolean(KEY_HAS_MERGED_MOVIES, false)
+            // Not actually necessary, but also reset timestamps for episodes and movies
+            putLong(KEY_LAST_EPISODES_WATCHED_AT, 0)
+            putLong(KEY_LAST_EPISODES_COLLECTED_AT, 0)
+            putLong(KEY_LAST_MOVIES_WATCHED_AT, 0)
+
+            // Reset timestamps for ratings so they are downloaded immediately
+            putLong(KEY_LAST_SHOWS_RATED_AT, 0)
+            putLong(KEY_LAST_EPISODES_RATED_AT, 0)
+            putLong(KEY_LAST_MOVIES_RATED_AT, 0)
+        }
     }
 
     /**
