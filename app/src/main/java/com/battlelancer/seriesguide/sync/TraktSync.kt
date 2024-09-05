@@ -8,7 +8,6 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.traktapi.SgTrakt
-import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktSettings
 import com.battlelancer.seriesguide.traktapi.TraktTools2
 import com.battlelancer.seriesguide.util.Errors
@@ -124,10 +123,6 @@ class TraktSync(
         tmdbIdsToShowIds: Map<Int, Long>,
         lastActivity: LastActivityMore
     ): Boolean {
-        if (!TraktCredentials.get(context).hasCredentials()) {
-            return false // Auth was removed.
-        }
-
         // Download flags.
         // If initial sync, upload any flags missing on Trakt
         // otherwise clear all local flags not on Trakt.
