@@ -13,7 +13,6 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktSettings
 import com.battlelancer.seriesguide.util.DBUtils
 import com.battlelancer.seriesguide.util.Errors
-import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.trakt5.entities.BaseMovie
 import com.uwetrottmann.trakt5.entities.LastActivityMore
 import com.uwetrottmann.trakt5.entities.MovieIds
@@ -317,10 +316,6 @@ class TraktMovieSync(
         if (toCollectOnTrakt.isEmpty() && toWatchlistOnTrakt.isEmpty() && toSetWatchedOnTrakt.isEmpty()) {
             Timber.d("uploadLists: nothing to upload")
             return true
-        }
-
-        if (!AndroidUtils.isNetworkConnected(context)) {
-            return false // Fail, no connection is available.
         }
 
         // Upload.
