@@ -30,16 +30,26 @@ class TraktSync(
     val sync: Sync,
     val progress: SyncProgress
 ) {
+     private fun noConnection(): Boolean {
+        return if (AndroidUtils.isNetworkConnected(context)) {
+            false
+        } else {
+            progress.recordError()
+            true
+        }
+    }
+
     /**
      * To not conflict with Hexagon sync, can turn on [onlyRatings] so only
      * ratings are synced.
      */
     fun sync(onlyRatings: Boolean): SgSyncAdapter.UpdateResult {
         progress.publish(SyncProgress.Step.TRAKT)
-        if (!AndroidUtils.isNetworkConnected(context)) {
-            progress.recordError()
-            return SgSyncAdapter.UpdateResult.INCOMPLETE
-        }
+        // While responses might get returned from the disk cache,
+        // this is not desirable when syncing, so frequently check for a network connection.
+        // Note: looked into creating a separate HTTP client without cache, but it makes sense
+        // to keep one as some of the responses are re-used in other parts of the app.
+        if (noConnection()) return SgSyncAdapter.UpdateResult.INCOMPLETE
 
         // Get last activity timestamps.
         val lastActivity = TraktTools2.getLastActivity(context)
@@ -59,10 +69,7 @@ class TraktSync(
             if (!onlyRatings) {
                 // Download and upload episode watched and collected flags.
                 progress.publish(SyncProgress.Step.TRAKT_EPISODES)
-                if (!AndroidUtils.isNetworkConnected(context)) {
-                    progress.recordError()
-                    return SgSyncAdapter.UpdateResult.INCOMPLETE
-                }
+                if (noConnection()) return SgSyncAdapter.UpdateResult.INCOMPLETE
                 if (!syncEpisodes(tmdbIdsToShowIds, lastActivity.episodes)) {
                     progress.recordError()
                     return SgSyncAdapter.UpdateResult.INCOMPLETE
@@ -70,10 +77,7 @@ class TraktSync(
             }
             // Download episode ratings.
             progress.publish(SyncProgress.Step.TRAKT_RATINGS)
-            if (!AndroidUtils.isNetworkConnected(context)) {
-                progress.recordError()
-                return SgSyncAdapter.UpdateResult.INCOMPLETE
-            }
+            if (noConnection()) return SgSyncAdapter.UpdateResult.INCOMPLETE
             if (!ratingsSync.downloadForEpisodes(lastActivity.episodes.rated_at)) {
                 progress.recordError()
                 return SgSyncAdapter.UpdateResult.INCOMPLETE
@@ -81,10 +85,7 @@ class TraktSync(
 
             // SHOWS
             // Download show ratings.
-            if (!AndroidUtils.isNetworkConnected(context)) {
-                progress.recordError()
-                return SgSyncAdapter.UpdateResult.INCOMPLETE
-            }
+            if (noConnection()) return SgSyncAdapter.UpdateResult.INCOMPLETE
             if (!ratingsSync.downloadForShows(lastActivity.shows.rated_at)) {
                 progress.recordError()
                 return SgSyncAdapter.UpdateResult.INCOMPLETE
@@ -95,10 +96,7 @@ class TraktSync(
         progress.publish(SyncProgress.Step.TRAKT_MOVIES)
         // Sync watchlist, collection and watched movies.
         if (!onlyRatings) {
-            if (!AndroidUtils.isNetworkConnected(context)) {
-                progress.recordError()
-                return SgSyncAdapter.UpdateResult.INCOMPLETE
-            }
+            if (noConnection()) return SgSyncAdapter.UpdateResult.INCOMPLETE
             if (!TraktMovieSync(this).syncLists(lastActivity.movies)) {
                 progress.recordError()
                 return SgSyncAdapter.UpdateResult.INCOMPLETE
@@ -108,10 +106,7 @@ class TraktSync(
         }
         // Download movie ratings.
         progress.publish(SyncProgress.Step.TRAKT_RATINGS)
-        if (!AndroidUtils.isNetworkConnected(context)) {
-            progress.recordError()
-            return SgSyncAdapter.UpdateResult.INCOMPLETE
-        }
+        if (noConnection()) return SgSyncAdapter.UpdateResult.INCOMPLETE
         if (!ratingsSync.downloadForMovies(lastActivity.movies.rated_at)) {
             progress.recordError()
             return SgSyncAdapter.UpdateResult.INCOMPLETE
