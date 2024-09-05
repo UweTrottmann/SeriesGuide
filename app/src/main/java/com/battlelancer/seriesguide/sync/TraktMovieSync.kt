@@ -47,23 +47,25 @@ class TraktMovieSync(
      * thread.
      */
     fun syncLists(activity: LastActivityMore): Boolean {
-        if (activity.collected_at == null) {
+        val collectedAt = activity.collected_at
+        if (collectedAt == null) {
             Timber.e("syncLists: null collected_at")
             return false
         }
-        if (activity.watchlisted_at == null) {
+        val watchlistedAt = activity.watchlisted_at
+        if (watchlistedAt == null) {
             Timber.e("syncLists: null watchlisted_at")
             return false
         }
-        if (activity.watched_at == null) {
+        val watchedAt = activity.watched_at
+        if (watchedAt == null) {
             Timber.e("syncLists: null watched_at")
             return false
         }
 
         val merging = !TraktSettings.hasMergedMovies(context)
-        if (!merging && !TraktSettings.isMovieListsChanged(
-                context, activity.collected_at, activity.watchlisted_at, activity.watched_at
-            )) {
+        if (!merging
+            && !TraktSettings.isMovieListsChanged(context, collectedAt, watchlistedAt, watchedAt)) {
             Timber.d("syncLists: no changes")
             return true
         }
@@ -202,9 +204,9 @@ class TraktMovieSync(
             // store last activity timestamps
             TraktSettings.storeLastMoviesChangedAt(
                 context,
-                activity.collected_at,
-                activity.watchlisted_at,
-                activity.watched_at
+                collectedAt,
+                watchlistedAt,
+                watchedAt
             )
             // if movies were added, ensure ratings for them are downloaded next
             if (collection.isNotEmpty() || watchlist.isNotEmpty() || watchedWithPlays.isNotEmpty()) {
