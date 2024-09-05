@@ -145,8 +145,21 @@ interface SgShow2Helper {
     @Query("UPDATE sg_show SET series_tmdb_id = :tmdbId WHERE _id = :id")
     fun updateTmdbId(id: Long, tmdbId: Int): Int
 
+    @Query("SELECT _id FROM sg_show WHERE series_user_note IS NOT NULL AND series_user_note != ''")
+    fun getShowIdsWithNotes(): MutableList<Long>
+
+    @Query("SELECT _id, series_tmdb_id, series_user_note FROM sg_show WHERE _id = :id")
+    fun getShowWithNote(id: Long): SgShow2WithNote?
+
     @Query("UPDATE sg_show SET series_user_note = :note WHERE _id = :id")
     fun updateUserNote(id: Long, note: String?)
+
+    @Transaction
+    fun updateUserNotes(notesById: Map<Long, String?>) {
+        for (entry in notesById) {
+            updateUserNote(entry.key, entry.value)
+        }
+    }
 
     @Query("DELETE FROM sg_show")
     fun deleteAllShows()
@@ -376,4 +389,10 @@ data class ShowLastWatchedInfo(
     val lastWatchedMs: Long,
     val episodeSeason: Int,
     val episodeNumber: Int
+)
+
+data class SgShow2WithNote(
+    @ColumnInfo(name = SgShow2Columns._ID) val id: Long,
+    @ColumnInfo(name = SgShow2Columns.TMDB_ID) val tmdbId: Int?,
+    @ColumnInfo(name = SgShow2Columns.USER_NOTE) var userNote: String?
 )
