@@ -7,6 +7,7 @@ import android.content.Context
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.movies.tools.MovieTools
+import com.battlelancer.seriesguide.shows.tools.ShowTools2
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktSettings
 import com.battlelancer.seriesguide.traktapi.TraktTools2
@@ -14,7 +15,6 @@ import com.battlelancer.seriesguide.util.Errors
 import com.github.michaelbull.result.getOrElse
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.trakt5.entities.LastActivityMore
-import com.uwetrottmann.trakt5.services.Sync
 import retrofit2.Response
 import timber.log.Timber
 
@@ -25,11 +25,17 @@ import timber.log.Timber
  */
 class TraktSync(
     val context: Context,
+    val showTools2: ShowTools2,
     val movieTools: MovieTools,
-    val sync: Sync,
+    val trakt: SgTrakt,
     val progress: SyncProgress
 ) {
-     private fun noConnection(): Boolean {
+
+    // Cache services
+    val sync = trakt.sync()
+    val users = trakt.users()
+
+    private fun noConnection(): Boolean {
         return if (AndroidUtils.isNetworkConnected(context)) {
             false
         } else {
@@ -88,6 +94,15 @@ class TraktSync(
             if (!ratingsSync.downloadForShows(lastActivity.shows.rated_at)) {
                 progress.recordError()
                 return SgSyncAdapter.UpdateResult.INCOMPLETE
+            }
+            // Download notes
+            if (!onlyRatings) {
+                progress.publish(SyncProgress.Step.TRAKT_NOTES)
+                if (noConnection()) return SgSyncAdapter.UpdateResult.INCOMPLETE
+                if (!TraktNotesSync(this).syncForShows(lastActivity.notes.updated_at)) {
+                    progress.recordError()
+                    return SgSyncAdapter.UpdateResult.INCOMPLETE
+                }
             }
         }
 

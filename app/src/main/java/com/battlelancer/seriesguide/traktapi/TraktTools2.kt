@@ -15,9 +15,9 @@ import com.github.michaelbull.result.andThen
 import com.github.michaelbull.result.mapError
 import com.github.michaelbull.result.runCatching
 import com.uwetrottmann.trakt5.entities.BaseShow
-import com.uwetrottmann.trakt5.entities.LastActivities
 import com.uwetrottmann.trakt5.entities.LastActivity
 import com.uwetrottmann.trakt5.entities.LastActivityMore
+import com.uwetrottmann.trakt5.entities.LastActivityUpdated
 import com.uwetrottmann.trakt5.entities.Ratings
 import com.uwetrottmann.trakt5.entities.Show
 import com.uwetrottmann.trakt5.enums.Extended
@@ -140,6 +140,7 @@ object TraktTools2 {
         val episodes: LastActivityMore,
         val shows: LastActivity,
         val movies: LastActivityMore,
+        val notes: LastActivityUpdated,
     )
 
     fun getLastActivity(context: Context): Result<LastActivities, TraktError> {
@@ -157,12 +158,14 @@ object TraktTools2 {
                 val episodes = lastActivities?.episodes
                 val shows = lastActivities?.shows
                 val movies = lastActivities?.movies
-                if (episodes != null && shows != null && movies != null) {
+                val notes = lastActivities?.notes
+                if (episodes != null && shows != null && movies != null && notes != null) {
                     return@andThen Ok(
                         LastActivities(
                             episodes = episodes,
                             shows = shows,
-                            movies = movies
+                            movies = movies,
+                            notes = notes
                         )
                     )
                 } else {
