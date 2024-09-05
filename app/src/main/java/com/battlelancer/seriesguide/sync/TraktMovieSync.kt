@@ -9,7 +9,6 @@ import com.battlelancer.seriesguide.movies.database.SgMovieFlags
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.traktapi.SgTrakt
-import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktSettings
 import com.battlelancer.seriesguide.util.DBUtils
 import com.battlelancer.seriesguide.util.Errors
@@ -66,10 +65,6 @@ class TraktMovieSync(
             && !TraktSettings.isMovieListsChanged(context, collectedAt, watchlistedAt, watchedAt)) {
             Timber.d("syncLists: no changes")
             return true
-        }
-
-        if (!TraktCredentials.get(context).hasCredentials()) {
-            return false
         }
 
         // Download Trakt state.
