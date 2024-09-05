@@ -191,7 +191,7 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
                     val resultTraktSync = TraktSync(
                         context, movieTools.get(),
                         traktSync.get(), progress
-                    ).sync(currentTime, isHexagonEnabled)
+                    ).sync(isHexagonEnabled)
                     // don't overwrite failure
                     if (resultCode == UpdateResult.SUCCESS) {
                         resultCode = resultTraktSync

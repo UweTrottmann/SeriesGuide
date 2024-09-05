@@ -1,11 +1,10 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2017-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.sync
 
 import android.content.ContentProviderOperation
 import android.content.OperationApplicationException
-import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.movies.database.SgMovieFlags
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
@@ -63,8 +62,8 @@ class TraktMovieSync(
             return false
         }
 
-        val merging = !TraktSettings.hasMergedMovies(context)
-        if (!merging
+        val isInitialSync = TraktSettings.isInitialSyncMovies(context)
+        if (!isInitialSync
             && !TraktSettings.isMovieListsChanged(context, collectedAt, watchlistedAt, watchedAt)) {
             Timber.d("syncLists: no changes")
             return true
@@ -99,7 +98,7 @@ class TraktMovieSync(
             val playsOnTrakt = watchedWithPlays.remove(tmdbId)
             val isWatchedOnTrakt = playsOnTrakt != null
 
-            if (merging) {
+            if (isInitialSync) {
                 // Mark movie for upload if missing from Trakt collection or watchlist
                 // or if not watched on Trakt.
                 // Note: If watches were removed on Trakt in the meanwhile, this would re-add them.
@@ -179,7 +178,7 @@ class TraktMovieSync(
         batch.clear() // release for gc
 
         // merge on first run
-        if (merging) {
+        if (isInitialSync) {
             // Upload movies not in Trakt collection, watchlist or watched history.
             if (uploadFlagsNotOnTrakt(
                     toCollectOnTrakt,
@@ -187,10 +186,7 @@ class TraktMovieSync(
                     toSetWatchedOnTrakt
                 )) {
                 // set merge successful
-                PreferenceManager.getDefaultSharedPreferences(context)
-                    .edit()
-                    .putBoolean(TraktSettings.KEY_HAS_MERGED_MOVIES, true)
-                    .apply()
+                TraktSettings.setInitialSyncMoviesCompleted(context)
             } else {
                 return false
             }

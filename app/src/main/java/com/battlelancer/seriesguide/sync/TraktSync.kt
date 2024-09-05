@@ -1,10 +1,9 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2017-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.sync
 
 import android.content.Context
-import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.movies.tools.MovieTools
@@ -35,7 +34,7 @@ class TraktSync(
      * To not conflict with Hexagon sync, can turn on [onlyRatings] so only
      * ratings are synced.
      */
-    fun sync(currentTime: Long, onlyRatings: Boolean): SgSyncAdapter.UpdateResult {
+    fun sync(onlyRatings: Boolean): SgSyncAdapter.UpdateResult {
         progress.publish(SyncProgress.Step.TRAKT)
         if (!AndroidUtils.isNetworkConnected(context)) {
             progress.recordError()
@@ -64,7 +63,7 @@ class TraktSync(
                     progress.recordError()
                     return SgSyncAdapter.UpdateResult.INCOMPLETE
                 }
-                if (!syncEpisodes(tmdbIdsToShowIds, lastActivity.episodes, currentTime)) {
+                if (!syncEpisodes(tmdbIdsToShowIds, lastActivity.episodes)) {
                     progress.recordError()
                     return SgSyncAdapter.UpdateResult.INCOMPLETE
                 }
@@ -128,8 +127,7 @@ class TraktSync(
      */
     private fun syncEpisodes(
         tmdbIdsToShowIds: Map<Int, Long>,
-        lastActivity: LastActivityMore,
-        currentTime: Long
+        lastActivity: LastActivityMore
     ): Boolean {
         if (!TraktCredentials.get(context).hasCredentials()) {
             return false // Auth was removed.
@@ -138,7 +136,7 @@ class TraktSync(
         // Download flags.
         // If initial sync, upload any flags missing on Trakt
         // otherwise clear all local flags not on Trakt.
-        val isInitialSync = !TraktSettings.hasMergedEpisodes(context)
+        val isInitialSync = TraktSettings.isInitialSyncEpisodes(context)
 
         // Watched episodes.
         val episodeSync = TraktEpisodeSync(this)
@@ -153,14 +151,10 @@ class TraktSync(
             return false
         }
 
-        val editor = PreferenceManager.getDefaultSharedPreferences(context).edit()
         if (isInitialSync) {
             // Success, set initial sync as complete.
-            editor.putBoolean(TraktSettings.KEY_HAS_MERGED_EPISODES, true)
+            TraktSettings.setInitialSyncEpisodesCompleted(context)
         }
-        // Success, set last sync time to now.
-        editor.putLong(TraktSettings.KEY_LAST_FULL_EPISODE_SYNC, currentTime)
-        editor.apply()
         return true
     }
 
