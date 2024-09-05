@@ -1,5 +1,6 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2013-2024 Uwe Trottmann
+
 package com.battlelancer.seriesguide.traktapi
 
 import android.content.Context
@@ -9,7 +10,7 @@ import com.battlelancer.seriesguide.util.TimeTools
 import org.threeten.bp.OffsetDateTime
 
 /**
- * Settings related to trakt.tv integration.
+ * Settings related to Trakt integration.
  */
 object TraktSettings {
 
@@ -57,7 +58,7 @@ object TraktSettings {
     private const val FULL_SYNC_INTERVAL_MILLIS = 24 * DateUtils.HOUR_IN_MILLIS
 
     /**
-     * The last time trakt episode activity was successfully downloaded.
+     * The last time Trakt episode activity was successfully downloaded.
      */
     fun getLastActivityDownloadTime(context: Context): Long {
         return PreferenceManager.getDefaultSharedPreferences(context)
@@ -197,8 +198,8 @@ object TraktSettings {
     }
 
     /**
-     * Whether watched and collected episodes were merged with the users trakt profile since she
-     * connected to trakt.
+     * Whether watched and collected episodes were merged with the users Trakt profile since she
+     * connected to Trakt.
      */
     fun hasMergedEpisodes(context: Context): Boolean {
         return PreferenceManager.getDefaultSharedPreferences(context)
@@ -206,8 +207,8 @@ object TraktSettings {
     }
 
     /**
-     * Whether the list of movies was merged with the users trakt profile since she connected to
-     * trakt.
+     * Whether the list of movies was merged with the users Trakt profile since she connected to
+     * Trakt.
      */
     fun hasMergedMovies(context: Context): Boolean {
         return PreferenceManager.getDefaultSharedPreferences(context)
@@ -215,7 +216,7 @@ object TraktSettings {
     }
 
     /**
-     * Determines if enough time has passed since the last full trakt episode sync.
+     * Determines if enough time has passed since the last full Trakt episode sync.
      */
     fun isTimeForFullEpisodeSync(context: Context, currentTime: Long): Boolean {
         val previousUpdateTime = PreferenceManager.getDefaultSharedPreferences(context)
