@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.jobs.NetworkJobProcessor
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
+import com.uwetrottmann.trakt5.TraktV2
 import com.uwetrottmann.trakt5.entities.AccessToken
 import com.uwetrottmann.trakt5.entities.Settings
 import kotlinx.coroutines.Dispatchers
@@ -130,12 +131,12 @@ class TraktAuthActivityModel(application: Application) : AndroidViewModel(applic
                         SgTrakt.checkForTraktError(trakt, response)
                     )
                     return@withContext when {
-                        SgTrakt.isUnauthorized(response) -> {
+                        TraktV2.isUnauthorized(response) -> {
                             // access token already is invalid, remove it :(
                             TraktCredentials.get(getApplication()).removeCredentials()
                             ConnectResult(TraktResult.AUTH_ERROR)
                         }
-                        SgTrakt.isAccountLocked(response) -> {
+                        TraktV2.isAccountLocked(response) -> {
                             ConnectResult(TraktResult.ACCOUNT_LOCKED)
                         }
                         else -> {
