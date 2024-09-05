@@ -4,7 +4,6 @@
 package com.battlelancer.seriesguide.traktapi
 
 import android.content.Context
-import android.text.format.DateUtils
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.util.TimeTools
 import org.threeten.bp.OffsetDateTime
@@ -14,7 +13,12 @@ import org.threeten.bp.OffsetDateTime
  */
 object TraktSettings {
 
-    const val KEY_LAST_ACTIVITY_DOWNLOAD
+    /**
+     * Unused, but kept for reference.
+     *
+     * Replaced by type specific last activity timestamps.
+     */
+    private const val KEY_LAST_ACTIVITY_DOWNLOAD
             : String = "com.battlelancer.seriesguide.lasttraktupdate"
 
     const val KEY_LAST_SHOWS_RATED_AT
@@ -29,22 +33,30 @@ object TraktSettings {
     const val KEY_LAST_EPISODES_RATED_AT
             : String = "trakt.last_activity.episodes.rated"
 
-    const val KEY_LAST_MOVIES_WATCHLISTED_AT
+    private const val KEY_LAST_MOVIES_WATCHLISTED_AT
             : String = "trakt.last_activity.movies.watchlisted"
 
-    const val KEY_LAST_MOVIES_COLLECTED_AT
+    private const val KEY_LAST_MOVIES_COLLECTED_AT
             : String = "trakt.last_activity.movies.collected"
 
     const val KEY_LAST_MOVIES_RATED_AT
             : String = "trakt.last_activity.movies.rated"
 
-    const val KEY_LAST_MOVIES_WATCHED_AT
+    private const val KEY_LAST_MOVIES_WATCHED_AT
             : String = "trakt.last_activity.movies.watched"
 
-    const val KEY_LAST_FULL_EPISODE_SYNC
+    /**
+     * Unused, but kept for reference.
+     *
+     * Replaced by [KEY_LAST_EPISODES_WATCHED_AT] and [KEY_LAST_EPISODES_COLLECTED_AT].
+     */
+    private const val KEY_LAST_FULL_EPISODE_SYNC
             : String = "com.battlelancer.seriesguide.trakt.lastfullsync"
 
-    const val KEY_AUTO_ADD_TRAKT_SHOWS
+    /**
+     * Unused, but kept for reference.
+     */
+    private const val KEY_AUTO_ADD_TRAKT_SHOWS
             : String = "com.battlelancer.seriesguide.autoaddtraktshows"
 
     const val KEY_HAS_MERGED_EPISODES: String = "com.battlelancer.seriesguide.trakt.mergedepisodes"
@@ -52,18 +64,11 @@ object TraktSettings {
     const val KEY_HAS_MERGED_MOVIES
             : String = "com.battlelancer.seriesguide.trakt.mergedmovies"
 
-    const val KEY_QUICK_CHECKIN
-            : String = "com.battlelancer.seriesguide.trakt.quickcheckin"
-
-    private const val FULL_SYNC_INTERVAL_MILLIS = 24 * DateUtils.HOUR_IN_MILLIS
-
     /**
-     * The last time Trakt episode activity was successfully downloaded.
+     * Used in settings_basic.xml.
      */
-    fun getLastActivityDownloadTime(context: Context): Long {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-            .getLong(KEY_LAST_ACTIVITY_DOWNLOAD, System.currentTimeMillis())
-    }
+    private const val KEY_QUICK_CHECKIN
+            : String = "com.battlelancer.seriesguide.trakt.quickcheckin"
 
     /**
      * The last time show ratings have changed or 0 if no value exists.
@@ -192,11 +197,6 @@ object TraktSettings {
             .commit()
     }
 
-    fun isAutoAddingShows(context: Context): Boolean {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-            .getBoolean(KEY_AUTO_ADD_TRAKT_SHOWS, true)
-    }
-
     /**
      * Whether watched and collected episodes were merged with the users Trakt profile since she
      * connected to Trakt.
@@ -213,15 +213,6 @@ object TraktSettings {
     fun hasMergedMovies(context: Context): Boolean {
         return PreferenceManager.getDefaultSharedPreferences(context)
             .getBoolean(KEY_HAS_MERGED_MOVIES, false)
-    }
-
-    /**
-     * Determines if enough time has passed since the last full Trakt episode sync.
-     */
-    fun isTimeForFullEpisodeSync(context: Context, currentTime: Long): Boolean {
-        val previousUpdateTime = PreferenceManager.getDefaultSharedPreferences(context)
-            .getLong(KEY_LAST_FULL_EPISODE_SYNC, currentTime)
-        return (currentTime - previousUpdateTime) > FULL_SYNC_INTERVAL_MILLIS
     }
 
     /**
