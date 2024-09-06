@@ -227,8 +227,7 @@ class TraktEpisodeJob(
                 }
                 WatchedEpisode(number, season)
             }
-            val pageCount = response.headers()["x-pagination-page-count"]?.toIntOrNull()
-                ?: 1
+            val pageCount = TraktV2.getPageCount(response) ?: 1
             Ok(HistoryPage(episodes, pageCount))
         }
     }

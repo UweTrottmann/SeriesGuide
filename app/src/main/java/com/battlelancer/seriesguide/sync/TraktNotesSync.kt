@@ -87,7 +87,7 @@ class TraktNotesSync(
                     showIdsWithNotesToUploadOrRemove
                 )
 
-                pageCount = response.headers()["x-pagination-page-count"]?.toIntOrNull() ?: 1
+                pageCount = TraktV2.getPageCount(response) ?: 1
                 page++
             } catch (e: Exception) {
                 Errors.logAndReport(action, e)
