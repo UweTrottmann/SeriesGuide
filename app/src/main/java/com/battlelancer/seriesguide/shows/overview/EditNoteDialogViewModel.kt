@@ -15,14 +15,20 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class EditNoteDialogViewModel(application: Application, private val showId: Long) :
     AndroidViewModel(application) {
 
-    // Only load the current note text once on init
-    val note = MutableSharedFlow<String?>(replay = 1)
+    data class EditNoteDialogUiState(
+        val noteText: String? = null,
+        val isEditingEnabled: Boolean = false,
+        val isNoteSaved: Boolean = false
+    )
+
+    val uiState = MutableStateFlow(EditNoteDialogUiState())
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -30,17 +36,43 @@ class EditNoteDialogViewModel(application: Application, private val showId: Long
                 .sgShow2Helper()
                 .getShow(showId)
             if (show != null) {
-                note.emit(show.userNote)
+                uiState.update {
+                    it.copy(
+                        noteText = show.userNote,
+                        isEditingEnabled = true
+                    )
+                }
             }
+        }
+    }
+
+    fun updateNote(text: String?) {
+        uiState.update {
+            it.copy(noteText = text)
         }
     }
 
     /**
      * Saves the note, but only up to the number of allowed characters.
+     *
+     * Updates UI state depending on success.
      */
-    fun saveToDatabase(note: String?) {
-        SgApp.getServicesComponent(getApplication()).showTools()
-            .storeUserNote(showId, note?.take(SgShow2.MAX_USER_NOTE_LENGTH))
+    fun saveNote() {
+        uiState.update {
+            it.copy(isEditingEnabled = false)
+        }
+        val savedText = uiState.value.noteText?.take(SgShow2.MAX_USER_NOTE_LENGTH)
+        viewModelScope.launch {
+            val success = SgApp.getServicesComponent(getApplication()).showTools()
+                .storeUserNote(showId, savedText)
+            uiState.update {
+                it.copy(
+                    noteText = savedText,
+                    isEditingEnabled = true,
+                    isNoteSaved = success
+                )
+            }
+        }
     }
 
     companion object {
