@@ -11,6 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
@@ -226,16 +227,16 @@ open class OverviewActivityImpl : BaseMessageActivity() {
     @Deprecated("Deprecated in Java")
     override fun onAttachFragment(fragment: Fragment) {
         /*
-         * View pager fragments have tags set by the pager, we can use this to
-         * only add refs to those then, making them available to get removed if
-         * we switch to a non-pager layout.
+         * View pager fragments have tags set by the pager. Note that DialogFragments have, too.
+         * Use this to only add refs to View pager fragments then, making them available to get
+         * removed if switching to a non-pager layout.
          */
-        if (fragment.tag != null) {
+        if (fragment.tag != null && fragment !is DialogFragment) {
             fragments.add(WeakReference(fragment))
         }
     }
 
-    val activeFragments: ArrayList<Fragment>
+    private val activeFragments: ArrayList<Fragment>
         get() {
             val ret = ArrayList<Fragment>()
             for (ref in fragments) {
