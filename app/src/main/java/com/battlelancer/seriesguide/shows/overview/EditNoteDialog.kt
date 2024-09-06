@@ -8,12 +8,15 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.DialogEditNoteBinding
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 /**
  * Edits a note of a show, enforcing a maximum length, allows to save or discard changes.
@@ -41,36 +44,56 @@ class EditNoteDialog() : AppCompatDialogFragment() {
         val binding = DialogEditNoteBinding.inflate(layoutInflater)
             .also { this.binding = it }
 
+        // Text field
         binding.textFieldEditNote.counterMaxLength = SgShow2.MAX_USER_NOTE_LENGTH
         val editText = binding.textFieldEditNote.editText!!
 
-        // Prevent editing until current note is loaded
-        binding.textFieldEditNote.isEnabled = false
+        // Buttons
+        // Can not use dialog buttons as they dismiss the dialog right away,
+        // but need to keep it visible if saving fails.
+        binding.buttonPositive.apply {
+            setText(R.string.action_save)
+            setOnClickListener {
+                model.updateNote(editText.text?.toString())
+                model.saveNote()
+            }
+        }
+        binding.buttonNegative.apply {
+            setText(android.R.string.cancel)
+            setOnClickListener { dismiss() }
+        }
 
+        // UI state
         lifecycleScope.launch {
-            model.note.collect {
-                editText.setText(it)
-                // Enable editing once note is loaded
-                binding.textFieldEditNote.isEnabled = true
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                model.uiState.collect { state ->
+                    Timber.d("Display note")
+                    editText.setText(state.noteText)
+                    setViewsEnabled(state.isEditingEnabled)
+                    if (state.isNoteSaved) {
+                        dismiss()
+                    }
+                }
             }
         }
 
         return MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.title_note)
             .setView(binding.root)
-            .setPositiveButton(android.R.string.ok) { _, _ ->
-                val note = editText.text.toString()
-                model.saveToDatabase(note)
-            }
-            .setNegativeButton(android.R.string.cancel, null /* just dismiss */)
             .create()
+    }
+
+    private fun setViewsEnabled(enabled: Boolean) {
+        binding?.apply {
+            textFieldEditNote.isEnabled = enabled
+            buttonPositive.isEnabled = enabled
+        }
     }
 
     override fun onPause() {
         super.onPause()
-        // The EditText would keep the current text on config changes if an ID is set,
-        // but keep it with the model instead.
-        model.note.tryEmit(binding!!.textFieldEditNote.editText!!.text.toString())
+        // Note: can not update using TextWatcher due to infinite loop
+        model.updateNote(binding?.textFieldEditNote?.editText?.text?.toString())
     }
 
     override fun onDestroyView() {

@@ -32,11 +32,40 @@
                 android:layout_height="wrap_content"
                 android:gravity="top"
                 android:inputType="textMultiLine"
-                android:maxLines="6"
-                android:minLines="3"
+                android:lines="6"
                 tools:text="This is an example note.\nIt contains a line break. " />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.constraintlayout.helper.widget.Flow
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/default_padding"
+            android:paddingTop="@dimen/inline_padding"
+            android:paddingEnd="@dimen/default_padding"
+            android:paddingBottom="@dimen/inline_padding"
+            app:constraint_referenced_ids="buttonNegative,buttonPositive"
+            app:flow_horizontalBias="1"
+            app:flow_horizontalStyle="packed"
+            app:flow_wrapMode="chain"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textFieldEditNote" />
+
+        <Button
+            android:id="@+id/buttonNegative"
+            style="?attr/buttonBarNegativeButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Button Negative With Long Text" />
+
+        <Button
+            android:id="@+id/buttonPositive"
+            style="?attr/buttonBarPositiveButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Button Positive" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

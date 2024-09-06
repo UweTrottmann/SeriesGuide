@@ -455,7 +455,7 @@ class ShowTools2 @Inject constructor(
      * Uploads to Cloud and on success saves to local database.
      * Does not sanitize the given values.
      */
-    fun storeUserNote(showId: Long, userNote: String?) = SgApp.coroutineScope.launch {
+    suspend fun storeUserNote(showId: Long, userNote: String?): Boolean {
         // Send to Cloud.
         val isCloudFailed = withContext(Dispatchers.Default) {
             if (!HexagonSettings.isEnabled(context)) {
@@ -478,16 +478,13 @@ class ShowTools2 @Inject constructor(
             return@withContext !success
         }
         // Do not save to local database if sending to cloud has failed.
-        if (isCloudFailed) return@launch
+        if (isCloudFailed) return false
 
         // Save to local database
         withContext(Dispatchers.IO) {
-            // Change custom release time values
-            SgRoomDatabase.getInstance(context).sgShow2Helper().updateUserNote(
-                showId,
-                userNote
-            )
+            SgRoomDatabase.getInstance(context).sgShow2Helper().updateUserNote(showId, userNote)
         }
+        return true
     }
 
     private suspend fun notifyAboutSyncing() {
