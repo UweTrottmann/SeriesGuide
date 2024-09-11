@@ -4,6 +4,7 @@
 package com.battlelancer.seriesguide.sync
 
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.shows.database.SgShow2Helper
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktSettings
 import com.battlelancer.seriesguide.util.Errors
@@ -99,7 +100,8 @@ class TraktNotesSync(
             if (!uploadNotesForShows(showIdsWithNotesToUploadOrRemove)) return false
         } else {
             // Remove notes from shows that are not on Trakt, meaning their note got removed
-            showHelper.updateUserNotes(showIdsWithNotesToUploadOrRemove.associateWith { null })
+            showHelper.updateUserNotes(showIdsWithNotesToUploadOrRemove
+                .associateWith { SgShow2Helper.NoteUpdate(null, null) })
         }
 
         if (isInitialSync) {
@@ -119,13 +121,15 @@ class TraktNotesSync(
             return
         }
 
-        val noteUpdates = mutableMapOf<Long, String>()
+        val noteUpdates = mutableMapOf<Long, SgShow2Helper.NoteUpdate>()
 
         for (note in response) {
             val showTmdbId = note.show?.ids?.tmdb
                 ?: continue // Need a TMDB ID
             val noteText = note.note?.notes
                 ?: continue // Need a note
+            val noteTraktId = note.note?.id
+                ?: continue // Need its Trakt ID
 
             val localShowId = tmdbIdsToLocalShowIds[showTmdbId]
                 ?: continue // Show not in database
@@ -134,7 +138,7 @@ class TraktNotesSync(
                 ?: continue // Show was removed in the meantime
 
             if (localShow.userNote != noteText) {
-                noteUpdates[localShowId] = noteText
+                noteUpdates[localShowId] = SgShow2Helper.NoteUpdate(noteText, noteTraktId)
             }
         }
 

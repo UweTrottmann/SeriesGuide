@@ -15,7 +15,10 @@ import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.sync.HexagonShowSync
+import com.battlelancer.seriesguide.traktapi.TraktCredentials
+import com.battlelancer.seriesguide.traktapi.TraktTools2
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow
 import dagger.Lazy
@@ -451,40 +454,110 @@ class ShowTools2 @Inject constructor(
         notifyAboutSyncing()
     }
 
+    data class StoreUserNoteResult(val text: String?, val traktId: Long?)
+
     /**
-     * Uploads to Cloud and on success saves to local database.
-     * Does not sanitize the given values.
+     * Uploads to Hexagon and Trakt and on success saves to local database.
+     *
+     * Returns the stored text (as Trakt may modify it) and optional assigned Trakt ID.
      */
-    suspend fun storeUserNote(showId: Long, userNote: String?): Boolean {
-        // Send to Cloud.
-        val isCloudFailed = withContext(Dispatchers.Default) {
-            if (!HexagonSettings.isEnabled(context)) {
-                return@withContext false
-            }
-            if (isNotConnected(context)) {
-                return@withContext true
-            }
-            val showTmdbId =
-                SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTmdbId(showId)
-            if (showTmdbId == 0) {
-                return@withContext true
-            }
+    suspend fun storeUserNote(
+        showId: Long,
+        noteDraft: String?,
+        noteTraktId: Long?
+    ): StoreUserNoteResult? {
+        val noteText = noteDraft
+            ?.take(SgShow2.MAX_USER_NOTE_LENGTH)
+            ?.ifEmpty { null } // Map empty string to null so note is removed at Trakt
 
-            val show = SgCloudShow()
-            show.tmdbId = showTmdbId
-            show.note = userNote
+        // Send to Cloud first, Trakt may fail if user is not VIP
+        val isSendToCloudSuccess: Boolean = if (HexagonSettings.isEnabled(context)) {
+            withContext(Dispatchers.Default) {
+                if (isNotConnected(context)) {
+                    return@withContext false
+                }
 
-            val success = uploadShowToCloud(show)
-            return@withContext !success
+                val showTmdbId = withContext(Dispatchers.IO) {
+                    SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTmdbId(showId)
+                }
+                if (showTmdbId == 0) return@withContext false
+
+                val show = SgCloudShow()
+                show.tmdbId = showTmdbId
+                show.note = noteText
+                return@withContext uploadShowToCloud(show)
+            }
+        } else {
+            true // Not sending to Cloud
         }
-        // Do not save to local database if sending to cloud has failed.
-        if (isCloudFailed) return false
+
+        // If sending to Cloud failed, do not even try Trakt or save to database
+        if (!isSendToCloudSuccess) return null
+
+        var result: StoreUserNoteResult? = StoreUserNoteResult(text = noteText, traktId = null)
+
+        val sendToTrakt = TraktCredentials.get(context).hasCredentials()
+        if (sendToTrakt) {
+            result = withContext(Dispatchers.Default) {
+                if (isNotConnected(context)) {
+                    return@withContext null
+                }
+
+                val showTmdbId = withContext(Dispatchers.IO) {
+                    SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTmdbId(showId)
+                }
+                if (showTmdbId == 0) return@withContext null
+
+                val trakt = SgApp.getServicesComponent(context).trakt()
+                if (noteText == null) {
+                    // Delete note
+                    if (noteTraktId == null) return@withContext null
+                    val response = TraktTools2.deleteNote(trakt, noteTraktId)
+                    return@withContext when (response) {
+                        is TraktTools2.TraktResponse.Success -> {
+                            StoreUserNoteResult(null, null) // Remove text and Trakt ID
+                        }
+
+                        is TraktTools2.TraktResponse.IsUnauthorized -> {
+                            TraktCredentials.get(context).setCredentialsInvalid()
+                            null // Abort
+                        }
+
+                        is TraktTools2.TraktResponse.IsNotVip -> result // Store as is
+                        is TraktTools2.TraktResponse.Error -> null // Abort
+                    }
+                } else {
+                    // Add or update note
+                    val response = TraktTools2.saveNoteForShow(trakt, showTmdbId, noteText)
+                    return@withContext when (response) {
+                        is TraktTools2.TraktResponse.Success -> {
+                            // Store ID and note text from Trakt
+                            // (which may shorten or otherwise modify it).
+                            StoreUserNoteResult(response.data.notes, response.data.id)
+                        }
+
+                        is TraktTools2.TraktResponse.IsUnauthorized -> {
+                            TraktCredentials.get(context).setCredentialsInvalid()
+                            null
+                        }
+
+                        is TraktTools2.TraktResponse.IsNotVip -> result // Store as is
+                        is TraktTools2.TraktResponse.Error -> null // Abort
+                    }
+                }
+            }
+        }
+
+        // Do not save to local database if sending to Trakt has failed,
+        // but not if user is just not VIP.
+        if (result == null) return null
 
         // Save to local database
         withContext(Dispatchers.IO) {
-            SgRoomDatabase.getInstance(context).sgShow2Helper().updateUserNote(showId, userNote)
+            SgRoomDatabase.getInstance(context).sgShow2Helper()
+                .updateUserNote(showId, result.text, result.traktId)
         }
-        return true
+        return result
     }
 
     private suspend fun notifyAboutSyncing() {

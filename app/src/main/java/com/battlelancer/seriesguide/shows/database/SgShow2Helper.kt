@@ -151,13 +151,15 @@ interface SgShow2Helper {
     @Query("SELECT _id, series_tmdb_id, series_user_note FROM sg_show WHERE _id = :id")
     fun getShowWithNote(id: Long): SgShow2WithNote?
 
-    @Query("UPDATE sg_show SET series_user_note = :note WHERE _id = :id")
-    fun updateUserNote(id: Long, note: String?)
+    @Query("UPDATE sg_show SET series_user_note = :note, series_user_note_trakt_id = :traktId WHERE _id = :id")
+    fun updateUserNote(id: Long, note: String?, traktId: Long?)
+
+    data class NoteUpdate(val text: String?, val traktId: Long?)
 
     @Transaction
-    fun updateUserNotes(notesById: Map<Long, String?>) {
+    fun updateUserNotes(notesById: Map<Long, NoteUpdate>) {
         for (entry in notesById) {
-            updateUserNote(entry.key, entry.value)
+            updateUserNote(entry.key, entry.value.text, entry.value.traktId)
         }
     }
 

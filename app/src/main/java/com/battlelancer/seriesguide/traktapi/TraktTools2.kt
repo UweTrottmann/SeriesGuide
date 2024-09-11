@@ -1,5 +1,5 @@
-// Copyright 2021-2024 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.traktapi
 
@@ -13,18 +13,80 @@ import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.andThen
 import com.github.michaelbull.result.mapError
 import com.github.michaelbull.result.runCatching
+import com.uwetrottmann.trakt5.TraktV2
+import com.uwetrottmann.trakt5.entities.AddNoteRequest
 import com.uwetrottmann.trakt5.entities.BaseShow
 import com.uwetrottmann.trakt5.entities.LastActivity
 import com.uwetrottmann.trakt5.entities.LastActivityMore
 import com.uwetrottmann.trakt5.entities.LastActivityUpdated
+import com.uwetrottmann.trakt5.entities.Note
 import com.uwetrottmann.trakt5.entities.Ratings
 import com.uwetrottmann.trakt5.entities.Show
+import com.uwetrottmann.trakt5.entities.ShowIds
 import com.uwetrottmann.trakt5.enums.Extended
 import com.uwetrottmann.trakt5.enums.IdType
 import com.uwetrottmann.trakt5.enums.Type
+import retrofit2.Call
 import retrofit2.Response
+import retrofit2.awaitResponse
 
 object TraktTools2 {
+
+    sealed class TraktResponse<T> {
+        data class Success<T>(val data: T) : TraktResponse<T>()
+        class IsNotVip<T> : TraktResponse<T>()
+        class IsUnauthorized<T> : TraktResponse<T>()
+        class Error<T> : TraktResponse<T>()
+    }
+
+    /**
+     * Adds or updates the note for the given show.
+     */
+    suspend fun saveNoteForShow(
+        trakt: SgTrakt,
+        showTmdbId: Int,
+        noteText: String
+    ): TraktResponse<Note> {
+        // Note: calling the add endpoint for an existing note will update it
+        return awaitTraktCall(
+            trakt.notes().addNote(
+                AddNoteRequest(
+                    Show().apply {
+                        ids = ShowIds.tmdb(showTmdbId)
+                    },
+                    noteText
+                )
+            ), "update note"
+        )
+    }
+
+    suspend fun deleteNote(
+        trakt: SgTrakt,
+        noteId: Long
+    ): TraktResponse<Void> {
+        return awaitTraktCall(trakt.notes().deleteNote(noteId), "delete note")
+    }
+
+    private suspend fun <T> awaitTraktCall(call: Call<T>, action: String): TraktResponse<T> {
+        try {
+            val response = call.awaitResponse()
+            if (response.isSuccessful) {
+                val body = response.body()
+                if (body != null) {
+                    return TraktResponse.Success(body)
+                } else {
+                    Errors.logAndReport(action, response, "body is null")
+                }
+            } else {
+                if (TraktV2.isNotVip(response)) return TraktResponse.IsNotVip()
+                if (TraktV2.isUnauthorized(response)) return TraktResponse.IsUnauthorized()
+                Errors.logAndReport(action, response)
+            }
+        } catch (e: Exception) {
+            Errors.logAndReport(action, e)
+        }
+        return TraktResponse.Error()
+    }
 
     /**
      * Look up a show by its TMDB ID, may return `null` if not found.

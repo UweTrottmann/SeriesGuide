@@ -13,7 +13,6 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.shows.database.SgShow2
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -24,6 +23,7 @@ class EditNoteDialogViewModel(application: Application, private val showId: Long
 
     data class EditNoteDialogUiState(
         val noteText: String? = null,
+        val noteTraktId: Long? = null,
         val isEditingEnabled: Boolean = false,
         val isNoteSaved: Boolean = false
     )
@@ -39,6 +39,7 @@ class EditNoteDialogViewModel(application: Application, private val showId: Long
                 uiState.update {
                     it.copy(
                         noteText = show.userNote,
+                        noteTraktId = show.userNoteTraktId,
                         isEditingEnabled = true
                     )
                 }
@@ -61,16 +62,25 @@ class EditNoteDialogViewModel(application: Application, private val showId: Long
         uiState.update {
             it.copy(isEditingEnabled = false)
         }
-        val savedText = uiState.value.noteText?.take(SgShow2.MAX_USER_NOTE_LENGTH)
+        val noteDraft = uiState.value.noteText
+        val noteTraktId = uiState.value.noteTraktId
         viewModelScope.launch {
-            val success = SgApp.getServicesComponent(getApplication()).showTools()
-                .storeUserNote(showId, savedText)
+            val result = SgApp.getServicesComponent(getApplication()).showTools()
+                .storeUserNote(showId, noteDraft, noteTraktId)
             uiState.update {
-                it.copy(
-                    noteText = savedText,
-                    isEditingEnabled = true,
-                    isNoteSaved = success
-                )
+                if (result != null) {
+                    it.copy(
+                        noteText = result.text,
+                        noteTraktId = result.traktId,
+                        isEditingEnabled = true,
+                        isNoteSaved = true
+                    )
+                } else {
+                    // Failed, re-enable buttons
+                    it.copy(
+                        isEditingEnabled = true
+                    )
+                }
             }
         }
     }
