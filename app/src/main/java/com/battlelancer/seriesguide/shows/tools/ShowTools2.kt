@@ -16,6 +16,8 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.sync.HexagonShowSync
+import com.battlelancer.seriesguide.traktapi.TraktCredentials
+import com.battlelancer.seriesguide.traktapi.TraktTools2
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow
 import dagger.Lazy
@@ -452,30 +454,50 @@ class ShowTools2 @Inject constructor(
     }
 
     /**
-     * Uploads to Cloud and on success saves to local database.
+     * Uploads to Hexagon and Trakt and on success saves to local database.
      * Does not sanitize the given values.
      */
     suspend fun storeUserNote(showId: Long, userNote: String?): Boolean {
-        // Send to Cloud.
+        // Send to cloud
         val isCloudFailed = withContext(Dispatchers.Default) {
-            if (!HexagonSettings.isEnabled(context)) {
-                return@withContext false
-            }
-            if (isNotConnected(context)) {
-                return@withContext true
-            }
+            val sendToHexagon = HexagonSettings.isEnabled(context)
+            val sendToTrakt = TraktCredentials.get(context).hasCredentials()
+            if (!sendToHexagon && !sendToTrakt) return@withContext false
+
+            if (isNotConnected(context)) return@withContext true
+
             val showTmdbId =
                 SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTmdbId(showId)
-            if (showTmdbId == 0) {
-                return@withContext true
+            if (showTmdbId == 0) return@withContext true
+
+            // Send to Hexagon first, Trakt may fail if user is not VIP
+            if (sendToHexagon) {
+                val show = SgCloudShow()
+                show.tmdbId = showTmdbId
+                show.note = userNote
+                if (!uploadShowToCloud(show)) return@withContext true
             }
-
-            val show = SgCloudShow()
-            show.tmdbId = showTmdbId
-            show.note = userNote
-
-            val success = uploadShowToCloud(show)
-            return@withContext !success
+            if (sendToTrakt) {
+                val trakt = SgApp.getServicesComponent(context).trakt()
+                val response = if (userNote == null) {
+                    TODO("Need Trakt note ID")
+                    // TraktTools2.deleteNote(trakt, traktNoteId)
+                } else {
+                    // TODO Need to save Trakt note ID
+                    TraktTools2.saveNoteForShow(trakt, showTmdbId, userNote)
+                }
+                val success = when (response) {
+                    is TraktTools2.TraktResponse.Success -> true
+                    is TraktTools2.TraktResponse.Error -> false
+                    is TraktTools2.TraktResponse.IsNotVip -> true
+                    is TraktTools2.TraktResponse.IsUnauthorized -> {
+                        TraktCredentials.get(context).setCredentialsInvalid()
+                        false
+                    }
+                }
+                if (!success) return@withContext true
+            }
+            return@withContext false
         }
         // Do not save to local database if sending to cloud has failed.
         if (isCloudFailed) return false
