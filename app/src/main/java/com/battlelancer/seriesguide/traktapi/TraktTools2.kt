@@ -5,7 +5,6 @@ package com.battlelancer.seriesguide.traktapi
 
 import android.content.Context
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowResult
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.isRetryError
 import com.github.michaelbull.result.Err
@@ -26,8 +25,6 @@ import com.uwetrottmann.trakt5.enums.Type
 import retrofit2.Response
 
 object TraktTools2 {
-
-    data class SearchResult(val result: ShowResult, val show: Show?)
 
     /**
      * Look up a show by its TMDB ID, may return `null` if not found.
