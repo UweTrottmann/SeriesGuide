@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 54,
-    "identityHash": "091db4bf54e7b7b60be190098262bc61",
+    "identityHash": "37e698b27a2494936bc264752cbf9943",
     "entities": [
       {
         "tableName": "series",
@@ -508,7 +508,7 @@
       },
       {
         "tableName": "sg_show",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `series_tmdb_id` INTEGER, `series_tvdb_id` INTEGER, `series_slug` TEXT, `series_trakt_id` INTEGER, `series_title` TEXT NOT NULL, `series_title_noarticle` TEXT, `series_overview` TEXT, `series_airstime` INTEGER, `series_airsdayofweek` INTEGER, `series_country` TEXT, `series_timezone` TEXT, `series_firstaired` TEXT, `series_genres` TEXT, `series_network` TEXT, `series_imdbid` TEXT, `series_rating_tmdb` REAL, `series_rating_tmdb_votes` INTEGER, `series_rating` REAL, `series_rating_votes` INTEGER, `series_rating_user` INTEGER, `series_runtime` INTEGER, `series_status` INTEGER, `series_contentrating` TEXT, `series_next` TEXT, `series_poster` TEXT, `series_poster_small` TEXT, `series_nextairdate` INTEGER, `series_nexttext` TEXT, `series_lastupdate` INTEGER NOT NULL, `series_lastedit` INTEGER NOT NULL, `series_lastwatchedid` INTEGER NOT NULL, `series_lastwatched_ms` INTEGER NOT NULL, `series_language` TEXT, `series_unwatched_count` INTEGER NOT NULL, `series_favorite` INTEGER NOT NULL, `series_hidden` INTEGER NOT NULL, `series_notify` INTEGER NOT NULL, `series_syncenabled` INTEGER NOT NULL, `series_custom_release_time` INTEGER, `series_custom_day_offset` INTEGER, `series_custom_timezone` TEXT, `series_user_note` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `series_tmdb_id` INTEGER, `series_tvdb_id` INTEGER, `series_slug` TEXT, `series_trakt_id` INTEGER, `series_title` TEXT NOT NULL, `series_title_noarticle` TEXT, `series_overview` TEXT, `series_airstime` INTEGER, `series_airsdayofweek` INTEGER, `series_country` TEXT, `series_timezone` TEXT, `series_firstaired` TEXT, `series_genres` TEXT, `series_network` TEXT, `series_imdbid` TEXT, `series_rating_tmdb` REAL, `series_rating_tmdb_votes` INTEGER, `series_rating` REAL, `series_rating_votes` INTEGER, `series_rating_user` INTEGER, `series_runtime` INTEGER, `series_status` INTEGER, `series_contentrating` TEXT, `series_next` TEXT, `series_poster` TEXT, `series_poster_small` TEXT, `series_nextairdate` INTEGER, `series_nexttext` TEXT, `series_lastupdate` INTEGER NOT NULL, `series_lastedit` INTEGER NOT NULL, `series_lastwatchedid` INTEGER NOT NULL, `series_lastwatched_ms` INTEGER NOT NULL, `series_language` TEXT, `series_unwatched_count` INTEGER NOT NULL, `series_favorite` INTEGER NOT NULL, `series_hidden` INTEGER NOT NULL, `series_notify` INTEGER NOT NULL, `series_syncenabled` INTEGER NOT NULL, `series_custom_release_time` INTEGER, `series_custom_day_offset` INTEGER, `series_custom_timezone` TEXT, `series_user_note` TEXT, `series_user_note_trakt_id` INTEGER)",
         "fields": [
           {
             "fieldPath": "id",
@@ -766,6 +766,12 @@
             "fieldPath": "userNote",
             "columnName": "series_user_note",
             "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "userNoteTraktId",
+            "columnName": "series_user_note_trakt_id",
+            "affinity": "INTEGER",
             "notNull": false
           }
         ],
@@ -1641,7 +1647,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '091db4bf54e7b7b60be190098262bc61')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '37e698b27a2494936bc264752cbf9943')"
     ]
   }
 }

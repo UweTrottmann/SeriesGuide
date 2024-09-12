@@ -50,6 +50,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns.
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns.TVDB_ID
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns.UNWATCHED_COUNT
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns.USER_NOTE
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns.USER_NOTE_TRAKT_ID
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns._ID
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgShow2.Companion.MAX_USER_NOTE_LENGTH
@@ -172,7 +173,15 @@ data class SgShow2(
      *
      * Added with [SgRoomDatabase.VERSION_54_SHOW_NOTES].
      */
-    @ColumnInfo(name = USER_NOTE) var userNote: String?
+    @ColumnInfo(name = USER_NOTE) var userNote: String?,
+    /**
+     * Trakt ID for [userNote].
+     *
+     * Default `null`.
+     *
+     * Added with [SgRoomDatabase.VERSION_54_SHOW_NOTES].
+     */
+    @ColumnInfo(name = USER_NOTE_TRAKT_ID) val userNoteTraktId: Long?
 ) {
     val releaseTimeOrDefault: Int
         get() = releaseTime ?: -1

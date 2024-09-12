@@ -145,7 +145,7 @@ abstract class SgRoomDatabase : RoomDatabase() {
         const val VERSION_53_SHOW_TMDB_RATINGS = 53
 
         /**
-         * - Add [SgShow2.userNote].
+         * - Add [SgShow2.userNote] and [SgShow2.userNoteTraktId].
          */
         const val VERSION_54_SHOW_NOTES = 54
 

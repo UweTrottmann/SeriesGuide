@@ -325,6 +325,7 @@ class JsonExportTask(
             show.first_aired = sgShow.firstRelease
             show.rating_user = sgShow.ratingUser
             show.user_note = sgShow.userNote
+            show.user_note_trakt_id = sgShow.userNoteTraktId
             if (isFullDump) {
                 show.overview = sgShow.overview
                 show.rating_tmdb = sgShow.ratingTmdb

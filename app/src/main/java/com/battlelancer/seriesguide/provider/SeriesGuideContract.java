@@ -726,6 +726,11 @@ public class SeriesGuideContract {
          */
         String USER_NOTE = "series_user_note";
 
+        /**
+         * See {@link SgShow2#getUserNoteTraktId()}.
+         */
+        String USER_NOTE_TRAKT_ID = "series_user_note_trakt_id";
+
         String SELECTION_FAVORITES = FAVORITE + "=1";
         String SELECTION_NOT_FAVORITES = FAVORITE + "=0";
         String SELECTION_HIDDEN = HIDDEN + "=1";

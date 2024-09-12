@@ -42,7 +42,8 @@ object ShowTestHelper {
             // set desired language, might not be the content language if fallback used above.
             language = LanguageTools.LANGUAGE_EN,
             lastUpdatedMs = System.currentTimeMillis(), // now
-            userNote = null
+            userNote = null,
+            userNoteTraktId = null
         )
     }
 

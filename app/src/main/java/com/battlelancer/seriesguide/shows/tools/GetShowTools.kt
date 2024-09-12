@@ -206,7 +206,8 @@ class GetShowTools @Inject constructor(
                     // set desired language, might not be the content language if fallback used above.
                     language = desiredLanguage,
                     lastUpdatedMs = System.currentTimeMillis(), // now
-                    userNote = null // If at all, added later via Hexagon or Trakt (VIP only)
+                    userNote = null, // If at all, added later via Hexagon or Trakt (VIP only)
+                    userNoteTraktId = null // If at all, added later via Trakt
                 ),
                 seasons = tmdbSeasons
             )
