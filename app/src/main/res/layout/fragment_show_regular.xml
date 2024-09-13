@@ -181,7 +181,7 @@
             <androidx.constraintlayout.helper.widget.Flow
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="buttonShowTrailer,buttonShowSimilar,buttonShowShare,buttonShowComments"
+                app:constraint_referenced_ids="buttonShowTrailer,buttonShowSimilar,buttonShowShare,buttonShowComments,buttonShowShortcut,buttonShowWebSearch,buttonShowMetacritic"
                 app:flow_horizontalBias="0"
                 app:flow_horizontalGap="4dp"
                 app:flow_horizontalStyle="packed"
@@ -225,6 +225,33 @@
                 android:layout_height="wrap_content"
                 android:text="@string/comments"
                 app:icon="@drawable/ic_forum_black_24dp"
+                app:iconGravity="start" />
+
+            <Button
+                android:id="@+id/buttonShowShortcut"
+                style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_to_homescreen"
+                app:icon="@drawable/ic_add_to_home_screen_black_24dp"
+                app:iconGravity="start" />
+
+            <Button
+                android:id="@+id/buttonShowWebSearch"
+                style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/web_search"
+                app:icon="@drawable/ic_search_white_24dp"
+                app:iconGravity="start" />
+
+            <Button
+                android:id="@+id/buttonShowMetacritic"
+                style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/metacritic"
+                app:icon="@drawable/ic_search_white_24dp"
                 app:iconGravity="start" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
