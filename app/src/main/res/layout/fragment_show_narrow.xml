@@ -67,16 +67,33 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
+                <!-- Reduce font size to match Body2 style of items below. -->
+                <TextView
+                    android:id="@+id/textViewShowTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:focusable="true"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Headline6"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/containerShowPoster"
+                    app:layout_constraintTop_toTopOf="@+id/containerShowPoster"
+                    tools:text="Demon Slayer: Kimetsu no Yaiba" />
+
                 <TextView
                     android:id="@+id/textViewShowStatus"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
+                    android:layout_marginTop="4dp"
                     android:layout_marginEnd="12dp"
                     android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/containerShowPoster"
-                    app:layout_constraintTop_toTopOf="@+id/containerShowPoster"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewShowTitle"
                     tools:text="2023 / Continuing" />
 
                 <TextView
@@ -94,15 +111,18 @@
 
                 <Button
                     android:id="@+id/buttonEditReleaseTime"
-                    style="@style/Widget.SeriesGuide.Button.Borderless"
-                    android:layout_width="wrap_content"
+                    style="@style/Widget.SeriesGuide.Button.MediaItem"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:contentDescription="@null"
+                    android:gravity="start|center_vertical"
+                    android:textColor="?attr/colorPrimary"
                     app:icon="@drawable/ic_schedule_black_24dp"
+                    app:iconTint="?attr/colorPrimary"
+                    app:layout_constraintBottom_toTopOf="@+id/buttonShowFavorite"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintStart_toEndOf="@+id/containerShowPoster"
-                    app:layout_constraintTop_toBottomOf="@id/textViewShowBaseInfo"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/barrierPosterAndInfoBottom"
                     tools:text="Sat 08:00 PM" />
 
                 <Button
@@ -118,9 +138,8 @@
                     app:layout_constraintBottom_toTopOf="@+id/buttonShowNotify"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/barrierPosterAndInfoBottom" />
+                    app:layout_constraintTop_toBottomOf="@+id/buttonEditReleaseTime" />
 
-                <!-- Slightly larger weight as this button contains single long word in many languages. -->
                 <Button
                     android:id="@+id/buttonShowNotify"
                     style="@style/Widget.SeriesGuide.Button.MediaItem"
@@ -156,7 +175,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:barrierDirection="bottom"
-                    app:constraint_referenced_ids="containerShowPoster,buttonEditReleaseTime" />
+                    app:constraint_referenced_ids="containerShowPoster,textViewShowBaseInfo" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

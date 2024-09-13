@@ -15,6 +15,8 @@ Version 2024.4
 --------------
 *in development*
 
+* 🔧 Show details: display full show title, touch and hold to copy it to clipboard (like for episode 
+  and movie titles).
 * 🔨 Android 15: turn off predictive back animation due to unresolved issues.
 * 📝 Latest user interface translations from Crowdin.
 

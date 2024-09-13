@@ -59,6 +59,21 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <TextView
+                    android:id="@+id/textViewShowTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:focusable="true"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Headline6"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/containerShowPoster"
+                    app:layout_constraintTop_toTopOf="@+id/containerShowPoster"
+                    tools:text="Demon Slayer: Kimetsu no Yaiba" />
+
+                <TextView
                     android:id="@+id/textViewShowStatus"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -68,7 +83,7 @@
                     android:textAppearance="@style/TextAppearance.SeriesGuide.Body1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/containerShowPoster"
-                    app:layout_constraintTop_toTopOf="@+id/containerShowPoster"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewShowTitle"
                     tools:text="2023 / Continuing" />
 
                 <TextView

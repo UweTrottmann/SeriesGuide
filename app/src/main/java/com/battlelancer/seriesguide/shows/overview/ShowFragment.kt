@@ -25,8 +25,8 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.comments.TraktCommentsActivity
 import com.battlelancer.seriesguide.databinding.LayoutRatingsBinding
 import com.battlelancer.seriesguide.notifications.NotificationService
-import com.battlelancer.seriesguide.people.PeopleListHelper
 import com.battlelancer.seriesguide.people.Credits
+import com.battlelancer.seriesguide.people.PeopleListHelper
 import com.battlelancer.seriesguide.settings.NotificationSettings
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.overview.OverviewActivityImpl.OverviewLayoutType.MULTI_PANE_VERTICAL
@@ -87,6 +87,7 @@ class ShowFragment() : Fragment() {
         val scrollViewShow: NestedScrollView
         val containerPoster: View
         val imageViewPoster: ImageView
+        val textViewTitle: TextView
         val textViewStatus: TextView
         val textViewBaseInfo: TextView
         val textViewOverview: TextView
@@ -122,6 +123,7 @@ class ShowFragment() : Fragment() {
             scrollViewShow = view.findViewById(R.id.scrollViewShow)
             containerPoster = view.findViewById(R.id.containerShowPoster)
             imageViewPoster = view.findViewById(R.id.imageViewShowPoster)
+            textViewTitle = view.findViewById(R.id.textViewShowTitle)
             textViewStatus = view.findViewById(R.id.textViewShowStatus)
             textViewBaseInfo = view.findViewById(R.id.textViewShowBaseInfo)
             textViewOverview = view.findViewById(R.id.textViewShowOverview)
@@ -200,6 +202,7 @@ class ShowFragment() : Fragment() {
         setCrewVisibility(binding, false)
 
         // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
+        binding.textViewTitle.copyTextToClipboardOnLongClick()
         binding.textViewOverview.copyTextToClipboardOnLongClick()
         binding.textViewGenres.copyTextToClipboardOnLongClick()
         binding.textViewContentRating.copyTextToClipboardOnLongClick()
@@ -275,6 +278,7 @@ class ShowFragment() : Fragment() {
 
         // Release time, base info and status
         binding.buttonEditReleaseTime.text = showForUi.releaseTime
+        binding.textViewTitle.text = showForUi.show.title
         binding.textViewBaseInfo.text = showForUi.baseInfo
         binding.textViewStatus.text = ShowStatus.buildYearAndStatus(requireContext(), show)
 
