@@ -13,6 +13,7 @@ import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsFragment
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ThemeUtils
+import com.battlelancer.seriesguide.util.commitReorderingAllowed
 
 /**
  * Hosts [TraktAddFragment] configured by [DiscoverShowsLink].
@@ -38,11 +39,9 @@ class ShowsTraktActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddSho
         setupActionBar(link)
 
         if (savedInstanceState == null) {
-            val fragment = TraktAddFragment.newInstance(link)
-            supportFragmentManager
-                .beginTransaction()
-                .add(R.id.containerTraktShowsFragment, fragment)
-                .commit()
+            supportFragmentManager.commitReorderingAllowed {
+                add(R.id.containerTraktShowsFragment, TraktAddFragment.newInstance(link))
+            }
         }
 
         SimilarShowsFragment.displaySimilarShowsEventLiveData.observe(this) {

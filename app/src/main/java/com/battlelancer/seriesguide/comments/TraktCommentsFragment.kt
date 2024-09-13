@@ -3,6 +3,7 @@
 
 package com.battlelancer.seriesguide.comments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
@@ -301,6 +302,7 @@ class TraktCommentsFragment : Fragment() {
         binding?.swipeRefreshLayoutShouts?.isRefreshing = isShowing
     }
 
+    @SuppressLint("SetTextI18n")
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventMainThread(event: TraktActionCompleteEvent) {
         if (event.traktAction != TraktAction.COMMENT || view == null) {

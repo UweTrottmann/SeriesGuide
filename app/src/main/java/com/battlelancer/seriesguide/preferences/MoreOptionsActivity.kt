@@ -77,7 +77,6 @@ class MoreOptionsActivity : BaseTopActivity() {
             WebTools.openInCustomTab(this, getString(R.string.help_url))
         }
         ViewTools.openUriOnClick(binding.buttonCommunity, getString(R.string.url_community))
-        ViewTools.openUriOnClick(binding.buttonDiscord, getString(R.string.url_discord))
         binding.buttonFeedback.setOnClickListener {
             startActivity(getFeedbackEmailIntent(this))
         }

@@ -16,7 +16,9 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isGone
 import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -35,8 +37,8 @@ import com.battlelancer.seriesguide.extensions.ExtensionManager.EpisodeActionRec
 import com.battlelancer.seriesguide.preferences.MoreOptionsActivity
 import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.settings.AppSettings.setAskedForFeedback
+import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.DisplaySettings.isDisplayExactDate
-import com.battlelancer.seriesguide.settings.DisplaySettings.preventSpoilers
 import com.battlelancer.seriesguide.shows.RemoveShowDialogFragment
 import com.battlelancer.seriesguide.shows.database.SgEpisode2
 import com.battlelancer.seriesguide.shows.database.SgShow2
@@ -404,7 +406,11 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
 
             // load full info and ratings, image, actions
             loadEpisodeDetails()
-            loadEpisodeImage(binding.imageViewOverviewEpisode, episode.image)
+            loadEpisodeImage(
+                binding.imageViewOverviewEpisode,
+                binding.textViewOverviewEpisodeDetailsHidden,
+                episode.image
+            )
             loadEpisodeActionsDelayed()
 
             binding.containerOverviewEmpty.visibility = View.GONE
@@ -448,7 +454,7 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
         val number = episode.number
         val title = TextTools.getEpisodeTitle(
             requireContext(),
-            if (preventSpoilers(requireContext())) null else episode.title, number
+            if (DisplaySettings.preventSpoilers(requireContext())) null else episode.title, number
         )
         binding.episodeTitle.text = title
 
@@ -559,7 +565,7 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
         if (TextUtils.isEmpty(overview)) {
             // no description available, show no translation available message
             overview = TextTools.textNoTranslation(requireContext(), languageCode)
-        } else if (preventSpoilers(requireContext())) {
+        } else if (DisplaySettings.preventSpoilers(requireContext())) {
             overview = getString(R.string.no_spoilers)
         }
         binding.textViewEpisodeDescription.text = TextTools.textWithTmdbSource(
@@ -618,18 +624,22 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
         )
     }
 
-    private fun loadEpisodeImage(imageView: ImageView, imagePath: String?) {
+    private fun loadEpisodeImage(imageView: ImageView, detailsHiddenView: View, imagePath: String?) {
         if (imagePath.isNullOrEmpty()) {
             imageView.setImageDrawable(null)
             return
         }
 
-        if (preventSpoilers(requireContext())) {
-            // show image placeholder
-            imageView.scaleType = ImageView.ScaleType.CENTER_INSIDE
-            imageView.setImageResource(R.drawable.ic_photo_gray_24dp)
+        if (DisplaySettings.preventSpoilers(requireContext())) {
+            // Display no spoilers info
+            imageView.apply {
+                scaleType = ImageView.ScaleType.CENTER_INSIDE
+                setImageDrawable(null)
+            }
+            detailsHiddenView.isVisible = true
         } else {
-            // try loading image
+            detailsHiddenView.isGone = true
+            // Try loading image
             ImageTools.loadWithPicasso(
                 requireContext(),
                 tmdbOrTvdbStillUrl(imagePath, requireContext(), false)

@@ -3,6 +3,7 @@
 
 package com.battlelancer.seriesguide.movies
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -37,6 +38,7 @@ class MovieViewHolder(
         }
     }
 
+    @SuppressLint("SetTextI18n")
     fun bindTo(sgMovie: SgMovie?, dateFormatMovieReleaseDate: DateFormat, posterBaseUrl: String) {
         if (sgMovie == null) {
             movieTmdbId = -1
@@ -63,6 +65,7 @@ class MovieViewHolder(
         }
     }
 
+    @SuppressLint("SetTextI18n")
     fun bindTo(
         tmdbMovie: BaseMovie?,
         context: Context,
