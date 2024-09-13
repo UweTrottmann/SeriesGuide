@@ -59,7 +59,7 @@
     <string name="app_not_available">No app available to handle this</string>
     <string name="people_empty">Nobody here?! Touch to try again.</string>
     <string name="database_error">Could not modify data</string>
-    <string name="reinstall_info">Try to backup in Settings, re-install and restore</string>
+    <string name="reinstall_info">Try to create a backup in Settings, re-install and restore</string>
     <string name="api_error_generic">Could not talk to %s. Try again later.</string>
     <string name="api_failed">Failed: %s</string>
     <string name="copy_to_clipboard">Copied to clipboard</string>
@@ -336,7 +336,7 @@
     <string name="feature_sync">Sync</string>
 
     <!-- Hexagon -->
-    <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
+    <string name="hexagon_description">SeriesGuide Cloud helps to back up and sync your shows, lists and movies</string>
     <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some Trakt features are not available</string>
     <string name="hexagon_signin">Sign In</string>
     <string name="hexagon_signout">Sign Out</string>
@@ -484,7 +484,7 @@
     <string name="pref_other">Other</string>
     <string name="pref_autoupdatesummary">Automatically sync and update content</string>
     <string name="backup">Backup/Restore</string>
-    <string name="backup_summary">Backup or restore your shows, lists and movies</string>
+    <string name="backup_summary">Back up or restore your shows, lists and movies</string>
     <string name="pref_number">Number format</string>
     <string name="pref_offset">Manual time offset</string>
     <string name="pref_offsetsummary">Offset air times by %d hours</string>
@@ -493,7 +493,7 @@
 
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Include descriptions, details, ratings</string>
-    <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
+    <string name="backup_failed_file_access">Can\'t create backup. A backup file can not be found or accessed.</string>
     <string name="backup_success">Backup successful</string>
     <string name="backup_failed">Backup failed</string>
     <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
