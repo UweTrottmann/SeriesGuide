@@ -53,7 +53,7 @@
     <string name="app_not_available">Нема апликација што може да го поддржи ова</string>
     <string name="people_empty">Никој не е тука? Пробајте повторно.</string>
     <string name="database_error">Не е возможно да ги променити податоците.</string>
-    <string name="reinstall_info">Try to backup in Settings, re-install and restore</string>
+    <string name="reinstall_info">Try to create a backup in Settings, re-install and restore</string>
     <string name="api_error_generic">Неможе да се конектира со %s. Пробајте подоцна.</string>
     <string name="api_failed">Грешни: %s</string>
     <string name="copy_to_clipboard">Копирај во кликборд</string>
@@ -311,7 +311,7 @@
     <string name="feature_comments">Коментирај</string>
     <string name="feature_sync">Синхронизирај</string>
     <!-- Hexagon -->
-    <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
+    <string name="hexagon_description">SeriesGuide Cloud helps to back up and sync your shows, lists and movies</string>
     <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some Trakt features are not available</string>
     <string name="hexagon_signin">Пријави се</string>
     <string name="hexagon_signout">Одјави се</string>
@@ -454,7 +454,7 @@
     <string name="clear_cache_summary">Избриши ги сите кеширани слики од вашиот уред</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Include descriptions, details, ratings</string>
-    <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
+    <string name="backup_failed_file_access">Can\'t create backup. A backup file can not be found or accessed.</string>
     <string name="backup_success">Backup заврши успешно.</string>
     <string name="backup_failed">Архивирањето не беше успешно.</string>
     <string name="import_failed_nosd">Backup неможе да биде обновен. Backup фолдерот не е достапен.</string>

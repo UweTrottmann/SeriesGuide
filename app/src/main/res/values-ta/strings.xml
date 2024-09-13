@@ -53,7 +53,7 @@
     <string name="app_not_available">No app available to handle this</string>
     <string name="people_empty">யாரும் இங்கே?! மீண்டும் முயற்சிக்க தொடர்பு.</string>
     <string name="database_error">தரவு மாற்ற முடியவில்லை.</string>
-    <string name="reinstall_info">Try to backup in Settings, re-install and restore</string>
+    <string name="reinstall_info">Try to create a backup in Settings, re-install and restore</string>
     <string name="api_error_generic">Could not talk to %s. Try again later.</string>
     <string name="api_failed">Failed: %s</string>
     <string name="copy_to_clipboard">Copied to clipboard</string>
@@ -311,7 +311,7 @@
     <string name="feature_comments">Post comments</string>
     <string name="feature_sync">Sync</string>
     <!-- Hexagon -->
-    <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
+    <string name="hexagon_description">SeriesGuide Cloud helps to back up and sync your shows, lists and movies</string>
     <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some Trakt features are not available</string>
     <string name="hexagon_signin">உள்நுழைக</string>
     <string name="hexagon_signout">வெளியில் செல்லவும்</string>

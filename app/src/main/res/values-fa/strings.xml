@@ -20,7 +20,7 @@
     <string name="specialseason">قسمت‌های ویژه</string>
     <string name="ratings">Ratings</string>
     <!-- Descriptions -->
-    <string name="navigate_up">Navigate up</string>
+    <string name="navigate_up">بالا روی</string>
     <string name="description_overview">بررسی اجمالی</string>
     <string name="description_poster">پوستر نمایش</string>
     <string name="description_image">تصویر قسمت</string>
@@ -46,7 +46,7 @@
     <string name="empty_no_results">بدون نتیجه</string>
     <!-- Status messages -->
     <string name="updated">به‌روز شده به جدیدترین نگارش.</string>
-    <string name="updated_what_is_new">What\'s new</string>
+    <string name="updated_what_is_new">موارد جدید</string>
     <string name="norating">ناموجود</string>
     <string name="unknown">نامعلوم</string>
     <string name="offline">به شبکه‌ای وصل شده، سپس دوباره تلاش کنید.</string>
@@ -71,10 +71,10 @@
     <string name="shout_hint">نظری بنویسید (انگلیسی، بالای ۵ واژه)</string>
     <string name="shout_invalid">نظرتان تابع قوانین نیست!</string>
     <string name="action_post">ارسال</string>
-    <string name="action_edit_comment">Edit</string>
-    <string name="action_delete_comment">Delete</string>
-    <string name="confirmation_delete_comment">Delete this comment?</string>
-    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
+    <string name="action_edit_comment">ویرایش</string>
+    <string name="action_delete_comment">حذف</string>
+    <string name="confirmation_delete_comment">حذف این دیدگاه؟</string>
+    <string name="error_delete_comment">دیدگاه حذف نشد. خیلی قدیمی بوده یا پاسخ‌دارد</string>
     <string name="isspoiler">هشدار لو رفتن!</string>
     <string name="no_shouts">نخستین کسی باشید که نظر می‌دهد!</string>
     <string name="refresh">تازه سازی</string>
@@ -111,8 +111,8 @@
     <!-- Date and Time -->
     <string name="today">امروز</string>
     <string name="now">اکنون</string>
-    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
-    <string name="runtime_minutes_format">%d min</string>
+    <string name="runtime_hours_minutes_format">%1$d ساعت و %2$d دقیقه</string>
+    <string name="runtime_minutes_format">%d دقیقه</string>
     <!-- Flagging -->
     <string name="mark_all">همه تماشا شدن</string>
     <string name="unmark_all">هیچکدام تماشا نشدن</string>
@@ -133,7 +133,7 @@
     <string name="state_on_watchlist">در فهرست تماشا</string>
     <string name="state_favorite">مورد علاقه</string>
     <!-- Shows -->
-    <string name="title_shows_added">Added</string>
+    <string name="title_shows_added">افزوده</string>
     <string name="confirm_delete">واقعاً می‌خواهید %s را حذف کنید؟</string>
     <string name="delete_error">اثر نمایشی حذف نشد. بعداً دوباره سعی کنید.</string>
     <string name="delete_show">حذف</string>
@@ -208,15 +208,15 @@
         <item quantity="other">%d قسمت مانده</item>
     </plurals>
     <plurals name="remaining_of_total_episodes_plural">
-        <item quantity="one">%1$d of %2$d remaining</item>
+        <item quantity="one">%1$d از %2$d مانده</item>
         <item quantity="other">%1$d of %2$d remaining</item>
     </plurals>
     <plurals name="skipped_episodes_plural">
-        <item quantity="one">%d skipped</item>
+        <item quantity="one">%d تا رد شد</item>
         <item quantity="other">%d skipped</item>
     </plurals>
     <plurals name="collected_episodes_plural">
-        <item quantity="one">%d in collection</item>
+        <item quantity="one">%d تا در مجموعه</item>
         <item quantity="other">%d in collection</item>
     </plurals>
     <!-- Add show -->
@@ -239,26 +239,26 @@
     <string name="title_similar_shows">سریال‌های مشابه</string>
     <!-- Popular -->
     <string name="title_popular">محبوب</string>
-    <string name="filter_year">Year</string>
-    <string name="filter_year_current">Current year</string>
-    <string name="filter_language">Language</string>
+    <string name="filter_year">سال</string>
+    <string name="filter_year_current">امسال</string>
+    <string name="filter_language">زبان</string>
     <!-- Lists -->
     <string name="first_list">فهرست نخست</string>
     <string name="list_add">افزودن فهرست</string>
-    <string name="ack_list_added">List added</string>
+    <string name="ack_list_added">سیاهه افزوده شد</string>
     <string name="list_title_hint">نام گذاری فهرستتان</string>
     <string name="list_remove">برداشتن فهرست</string>
     <string name="list_manage">مدیریت فهرست</string>
-    <string name="ack_list_renamed">List renamed</string>
-    <string name="ack_list_removed">List removed</string>
+    <string name="ack_list_renamed">نام سیاهه تفییر یافت</string>
+    <string name="ack_list_removed">سیاهه برداشته شد</string>
     <string name="list_item_manage">مدیریت فهرست‌ها</string>
-    <string name="ack_list_item_manage">Lists updated</string>
+    <string name="ack_list_item_manage">سیاهه به‌روز شد</string>
     <string name="list_item_remove">برداشتن از فهرست</string>
-    <string name="ack_list_item_removed">Removed from list</string>
+    <string name="ack_list_item_removed">از سیاهه برداشته شد</string>
     <string name="list_empty">می‌توانید نمایش‌ها را به این فهرست بیفزایید</string>
     <string name="action_lists_sort">چینش فهرست‌ها</string>
     <string name="action_lists_reorder">بازچینی فهرست‌ها</string>
-    <string name="ack_lists_reordered">Lists reordered</string>
+    <string name="ack_lists_reordered">ترتیب سیاهه عوض شد</string>
     <string name="error_name_already_exists">فهرستی با این اسم موجود است</string>
     <!-- Movies -->
     <string name="title_discover">کشف</string>
@@ -339,7 +339,7 @@
     <string name="trakt_notice_not_exists">(هنوز) نمی‌توان با trakt ردیابی کرد.</string>
     <string name="trakt_error_limit_exceeded">سیاههٔ نمایش پر است. نخست چیزی را بردارید.</string>
     <!-- Connect trakt -->
-    <string name="trakt_required">To use this, connect to Trakt</string>
+    <string name="trakt_required">وصل شدن به ترکت برای استفاده</string>
     <string name="connect_trakt">اتصال به ترکت</string>
     <string name="trakt_reconnect">اتصال SeriesGuide به trakt</string>
     <string name="trakt_reconnect_details">اعتبارنامهٔ trakt را بررسی کنید</string>
@@ -351,9 +351,9 @@
     <string name="support_trakt">پشتیبانی از ترکت با وی‌آی‌پی</string>
     <!-- trakt ratings -->
     <string name="action_rate">نمره</string>
-    <string name="ack_rated">Rating sent</string>
+    <string name="ack_rated">رتبه فرستاده شد</string>
     <string name="your_rating">نمرهٔ شما</string>
-    <string name="action_remove_rating">Remove rating</string>
+    <string name="action_remove_rating">برداشتن رتبه</string>
     <string name="love">محشر!</string>
     <string name="hate">افتضاح :(</string>
     <string name="rating2">مزخرف</string>
@@ -375,7 +375,7 @@
     <string name="pref_quick_checkin">ثبت سریع</string>
     <string name="pref_quick_checkin_summary">برای ثبت پیامی خواسته نشود</string>
     <!-- Help -->
-    <string name="feedback">Send email</string>
+    <string name="feedback">فرستادن رایانامه</string>
     <!-- Settings -->
     <string name="action_translate">ترجمهٔ این کاره</string>
     <string name="prefs_category_advanced">پیش‌رفته</string>
@@ -485,7 +485,7 @@
     <string name="pref_notifications">آگاهی‌ها</string>
     <string name="pref_notificationssummary">آگاهی دربارهٔ قسمت‌های جدید</string>
     <string name="pref_notifications_settings">تنظیمات آگاهی</string>
-    <string name="pref_notifications_settings_summary">Configure if and how notifications appear</string>
+    <string name="pref_notifications_settings_summary">پیکربندی وجود و چگونگی ظاهر شدن آگاهی‌ها</string>
     <string name="pref_ringtone">صدا</string>
     <string name="pref_vibrate">لرزش</string>
     <string name="pref_vibratesummary">ارزش هنگام نمایش آگهی</string>
@@ -539,7 +539,7 @@
     <string name="action_extensions_configure">سفارشی سازی افزونه‌ها</string>
     <string name="action_extensions_add">افزودن افزونه‌ها</string>
     <string name="action_extensions_search">گرفتن افزونه‌های بیش‌تر</string>
-    <string name="action_extensions_develop">Develop an extension</string>
+    <string name="action_extensions_develop">توسعهٔ افزونه</string>
     <string name="action_extension_remove">حدف</string>
     <string name="extension_amazon">جست‌وجوی آمازون</string>
     <string name="description_extension_amazon">جست‌وجو در پایگاه آمازون محلّی‌تان</string>

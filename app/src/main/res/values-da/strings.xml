@@ -239,7 +239,7 @@
     <string name="title_similar_shows">Lignende serier</string>
     <!-- Popular -->
     <string name="title_popular">Populær</string>
-    <string name="filter_year">Årstal</string>
+    <string name="filter_year">År</string>
     <string name="filter_year_current">Indeværende år</string>
     <string name="filter_language">Sprog</string>
     <!-- Lists -->

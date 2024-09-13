@@ -27,7 +27,7 @@
     <string name="description_menu_overflow">Lisäasetukset</string>
     <!-- Actions -->
     <string name="clear">Tyhjennä</string>
-    <string name="discard">Hylkää</string>
+    <string name="discard">Peruuta</string>
     <string name="save_selection">Tallenna valinta</string>
     <string name="action_display_all">Näytä kaikki</string>
     <string name="web_search">Verkkohaku</string>

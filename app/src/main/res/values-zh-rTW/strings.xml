@@ -301,7 +301,7 @@
     <string name="feature_comments">發布評論</string>
     <string name="feature_sync">同步</string>
     <!-- Hexagon -->
-    <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
+    <string name="hexagon_description">SeriesGuide Cloud helps to back up and sync your shows, lists and movies</string>
     <string name="hexagon_warning_trakt">若登入 SeriesGuide Cloud，部分 Trakt 的功能將無法使用</string>
     <string name="hexagon_signin">登入</string>
     <string name="hexagon_signout">登出</string>

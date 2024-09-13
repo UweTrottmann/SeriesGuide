@@ -46,7 +46,7 @@
     <string name="empty_no_results">Няма резултати</string>
     <!-- Status messages -->
     <string name="updated">Актуализиран до последна версия.</string>
-    <string name="updated_what_is_new">What\'s new</string>
+    <string name="updated_what_is_new">Новите неща</string>
     <string name="norating">няма</string>
     <string name="unknown">неизвестен</string>
     <string name="offline">Свържете се към мрежа и пробвайте отново.</string>
@@ -133,7 +133,7 @@
     <string name="state_on_watchlist">За гледане</string>
     <string name="state_favorite">Любими</string>
     <!-- Shows -->
-    <string name="title_shows_added">Added</string>
+    <string name="title_shows_added">Добавени</string>
     <string name="confirm_delete">Наистина ли искате премахнете %s?</string>
     <string name="delete_error">Премахването неуспешно. Опитайте по-късно.</string>
     <string name="delete_show">Премахване</string>
@@ -240,7 +240,7 @@
     <!-- Popular -->
     <string name="title_popular">Популярни</string>
     <string name="filter_year">Година</string>
-    <string name="filter_year_current">Current year</string>
+    <string name="filter_year_current">Текуща година</string>
     <string name="filter_language">Език</string>
     <!-- Lists -->
     <string name="first_list">Първи списък</string>
@@ -485,7 +485,7 @@
     <string name="pref_notifications">Известия</string>
     <string name="pref_notificationssummary">Известяване за нови епизоди</string>
     <string name="pref_notifications_settings">Настройки на известията</string>
-    <string name="pref_notifications_settings_summary">Configure if and how notifications appear</string>
+    <string name="pref_notifications_settings_summary">Настройка на изгледа на известията</string>
     <string name="pref_ringtone">Мелодия</string>
     <string name="pref_vibrate">Вибрация</string>
     <string name="pref_vibratesummary">Също вибриране за показване на известие</string>

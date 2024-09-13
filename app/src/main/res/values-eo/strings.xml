@@ -53,7 +53,7 @@
     <string name="app_not_available">Neniu aplikaĵo por pritrakti ĉi tiun</string>
     <string name="people_empty">Ĉu neniu estas ĉi tie?! Tuŝi por reprovi.</string>
     <string name="database_error">Ne povis modifi datumon</string>
-    <string name="reinstall_info">Try to backup in Settings, re-install and restore</string>
+    <string name="reinstall_info">Try to create a backup in Settings, re-install and restore</string>
     <string name="api_error_generic">Could not talk to %s. Try again later.</string>
     <string name="api_failed">Malsukcesis: %s</string>
     <string name="copy_to_clipboard">Kopita al tondejo</string>
@@ -311,7 +311,7 @@
     <string name="feature_comments">Sendi komentoj</string>
     <string name="feature_sync">Sinkronigi</string>
     <!-- Hexagon -->
-    <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
+    <string name="hexagon_description">SeriesGuide Cloud helps to back up and sync your shows, lists and movies</string>
     <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some Trakt features are not available</string>
     <string name="hexagon_signin">Ensaluti</string>
     <string name="hexagon_signout">Elsaluti</string>
@@ -446,7 +446,7 @@
     <string name="pref_other">Aliaj</string>
     <string name="pref_autoupdatesummary">Automatically sync and update content</string>
     <string name="backup">Savkopii/Restaŭri</string>
-    <string name="backup_summary">Backup or restore your shows, lists and movies</string>
+    <string name="backup_summary">Back up or restore your shows, lists and movies</string>
     <string name="pref_number">Numera formato</string>
     <string name="pref_offset">Manual time offset</string>
     <string name="pref_offsetsummary">Offset air times by %d hours</string>

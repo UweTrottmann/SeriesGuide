@@ -53,7 +53,7 @@
     <string name="app_not_available">Nenhuma aplicação disponível para lidar com isto.</string>
     <string name="people_empty">Ninguém aqui?! Toca no ecrã para atualizar.</string>
     <string name="database_error">Não foi possível modificar os dados.</string>
-    <string name="reinstall_info">Tenta fazer uma cópia de segurança nas Definições, reinstalar e restaurar.</string>
+    <string name="reinstall_info">Tenta fazer uma cópia de segurança nas Definições, reinstalar e restaurar</string>
     <string name="api_error_generic">Houve uma falha ao comunicar com o %s. Tenta mais tarde.</string>
     <string name="api_failed">Falhou: %s</string>
     <string name="copy_to_clipboard">Copiado para a área de transferência</string>
@@ -102,7 +102,7 @@
     <string name="show_status_canceled">Cancelada</string>
     <string name="no_translation">Não existe nenhuma descrição traduzida para %1$s disponível em %2$s.</string>
     <string name="no_translation_title">Por traduzir</string>
-    <string name="no_spoilers">Alguns detalhes estão ocultados para prevenir spoilers. Aceda às Definições para desactivar esta prevenção.</string>
+    <string name="no_spoilers">Alguns detalhes estão ocultos para evitar spoilers. Para desativar esta opção, vá às definições.</string>
     <string name="format_source">Fonte: %s</string>
     <string name="last_updated">Última atualização</string>
     <string name="custom_release_time_edit">Editar horário de exibição</string>
@@ -439,7 +439,7 @@
     <string name="pref_dynamic_colors">Usar cores do sistema</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Usar predefinição do sistema</string>
-    <string name="theme_app_auto_battery">Definido pela Poupança de Bateria</string>
+    <string name="theme_app_auto_battery">Definido pela poupança de bateria</string>
     <string name="theme_app_dark">Escuro</string>
     <string name="theme_app_light">Claro</string>
     <!-- Other advanced settings -->
@@ -485,7 +485,7 @@
     <string name="pref_notifications">Notificações</string>
     <string name="pref_notificationssummary">Notificar sobre novos episódios</string>
     <string name="pref_notifications_settings">Definições de notificação</string>
-    <string name="pref_notifications_settings_summary">Configure if and how notifications appear</string>
+    <string name="pref_notifications_settings_summary">Configurar como as notificações são apresentadas</string>
     <string name="pref_ringtone">Toque de Notificação</string>
     <string name="pref_vibrate">Vibrar</string>
     <string name="pref_vibratesummary">Também vibrará quando surgir uma notificação</string>
@@ -498,11 +498,11 @@
     <string name="pref_notifications_next_episodes_only">Apenas para os próximos episódios a serem vistos</string>
     <string name="pref_notifications_next_episodes_only_summary">Notificar apenas se o novo episódio for o próximo a ser visto</string>
     <string name="pref_notifications_battery_settings">Definições da Bateria</string>
-    <string name="pref_notifications_battery_settings_summary">Vai às Definições da Bateria para desativar a otimização e receber notificações corretamente</string>
+    <string name="pref_notifications_battery_settings_summary">Vai às definições da Bateria para desativar a otimização e receber notificações corretamente</string>
     <string name="notifications_allow">Permitir notificações</string>
-    <string name="notifications_allow_reason">Para receberes notificações de episódios e de erros, vai às Definições para ativar a permissão.</string>
+    <string name="notifications_allow_reason">Para receberes notificações de episódios e de erros, vai às Definições para ativar a permissão</string>
     <string name="precise_notifications_allow">Permitir notificações detalhadas</string>
-    <string name="precise_notifications_allow_reason">Para receberes notificações detalhadas de episódios, vai às Definições para ativar a permissão.</string>
+    <string name="precise_notifications_allow_reason">Para receberes notificações detalhadas de episódios, vai às Definições para ativar a permissão</string>
     <!-- List Widget -->
     <string name="hide_watched">Ocultar episódios vistos</string>
     <string name="pref_widget_opacity">Plano de fundo do widget</string>
