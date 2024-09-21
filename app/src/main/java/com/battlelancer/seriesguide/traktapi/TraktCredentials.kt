@@ -201,7 +201,7 @@ class TraktCredentials private constructor(context: Context) {
                 refreshToken = token.refresh_token
                 expiresIn = token.expires_in?.toLong() ?: 0
             } else {
-                if (!SgTrakt.isUnauthorized(response)) {
+                if (!TraktV2.isUnauthorized(response)) {
                     Errors.logAndReport("refresh access token", response)
                 }
             }
