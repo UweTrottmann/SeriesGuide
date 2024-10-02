@@ -241,13 +241,11 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
     }
 
     /**
-     * If episode was watched, flags as unwatched. Otherwise, flags as watched.
+     * If episode is watched, asks whether to watch again or set not watched.
+     * Otherwise, flags as watched.
      */
     private fun onToggleWatched() {
-        val watched =
-            EpisodeTools.isWatched(
-                episodeFlag
-            )
+        val watched = EpisodeTools.isWatched(episodeFlag)
         if (watched) {
             val anchor: View = bindingButtons!!.buttonEpisodeWatched
             val popupMenu = PopupMenu(anchor.context, anchor)

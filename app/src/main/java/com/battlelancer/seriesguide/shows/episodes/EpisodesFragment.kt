@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2018-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.episodes
 
@@ -23,6 +23,7 @@ import com.battlelancer.seriesguide.databinding.FragmentEpisodesBinding
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
 import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
 import com.battlelancer.seriesguide.util.ThemeUtils
+import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.safeShow
 
 /**
@@ -172,6 +173,7 @@ class EpisodesFragment : Fragment() {
                     showSortDialog()
                     true
                 }
+
                 else -> false
             }
         }
@@ -183,31 +185,57 @@ class EpisodesFragment : Fragment() {
             showDetails(position)
         }
 
-        override fun onPopupMenuClick(
-            v: View,
+        /**
+         * If episode is watched, asks whether to watch again or set not watched.
+         * Otherwise, flags as watched.
+         */
+        override fun onWatchedBoxClick(anchor: View, episodeId: Long, watchedFlag: Int) {
+            val watched = EpisodeTools.isWatched(watchedFlag)
+            if (watched) {
+                PopupMenu(anchor.context, anchor).apply {
+                    inflate(R.menu.watched_popup_menu)
+                    setOnMenuItemClickListener { item: MenuItem ->
+                        val itemId = item.itemId
+                        if (itemId == R.id.watched_popup_menu_watch_again) {
+                            // Multiple plays are for supporters only.
+                            if (!Utils.hasAccessToX(requireContext())) {
+                                Utils.advertiseSubscription(requireContext())
+                            } else {
+                                onFlagEpisodeWatched(episodeId, true)
+                            }
+                        } else if (itemId == R.id.watched_popup_menu_set_not_watched) {
+                            onFlagEpisodeWatched(episodeId, false)
+                        }
+                        true
+                    }
+                }.show()
+            } else {
+                onFlagEpisodeWatched(episodeId, true)
+            }
+        }
+
+
+        override fun onContextMenuClick(
+            anchor: View,
             episodeId: Long,
             episodeNumber: Int,
             releaseTimeMs: Long,
             watchedFlag: Int,
             isCollected: Boolean
         ) {
-            PopupMenu(v.context, v).apply {
+            PopupMenu(anchor.context, anchor).apply {
                 inflate(R.menu.episodes_popup_menu)
                 menu.apply {
                     findItem(R.id.menu_action_episodes_collection_add).isVisible = !isCollected
-                    findItem(R.id.menu_action_episodes_collection_remove).isVisible = isCollected
-                    val isWatched =
-                        EpisodeTools.isWatched(
-                            watchedFlag
-                        )
-                    // To allow re-watching set watched is always visible
+                    findItem(R.id.menu_action_episodes_collection_remove).isVisible =
+                        isCollected
+                    val isWatched = EpisodeTools.isWatched(watchedFlag)
+                    findItem(R.id.menu_action_episodes_watched).isVisible = !isWatched
                     findItem(R.id.menu_action_episodes_not_watched).isVisible = isWatched
                     findItem(R.id.menu_action_episodes_watched_up_to).isVisible = !isWatched
-                    val isSkipped =
-                        EpisodeTools.isSkipped(
-                            watchedFlag
-                        )
-                    findItem(R.id.menu_action_episodes_skip).isVisible = !isWatched && !isSkipped
+                    val isSkipped = EpisodeTools.isSkipped(watchedFlag)
+                    findItem(R.id.menu_action_episodes_skip).isVisible =
+                        !isWatched && !isSkipped
                     findItem(R.id.menu_action_episodes_dont_skip).isVisible = isSkipped
                 }
                 setOnMenuItemClickListener { item ->
@@ -216,26 +244,32 @@ class EpisodesFragment : Fragment() {
                             onFlagEpisodeWatched(episodeId, true)
                             true
                         }
+
                         R.id.menu_action_episodes_not_watched -> {
                             onFlagEpisodeWatched(episodeId, false)
                             true
                         }
+
                         R.id.menu_action_episodes_collection_add -> {
                             onFlagEpisodeCollected(episodeId, true)
                             true
                         }
+
                         R.id.menu_action_episodes_collection_remove -> {
                             onFlagEpisodeCollected(episodeId, false)
                             true
                         }
+
                         R.id.menu_action_episodes_skip -> {
                             onFlagEpisodeSkipped(episodeId, true)
                             true
                         }
+
                         R.id.menu_action_episodes_dont_skip -> {
                             onFlagEpisodeSkipped(episodeId, false)
                             true
                         }
+
                         R.id.menu_action_episodes_watched_up_to -> {
                             EpisodeWatchedUpToDialog.newInstance(
                                 model.showId,
@@ -244,12 +278,11 @@ class EpisodesFragment : Fragment() {
                             ).safeShow(parentFragmentManager, "EpisodeWatchedUpToDialog")
                             true
                         }
+
                         else -> false
                     }
                 }
-                show()
-            }
-
+            }.show()
         }
     }
 
@@ -281,8 +314,10 @@ class EpisodesFragment : Fragment() {
         SingleChoiceDialogFragment.show(
             parentFragmentManager,
             R.array.epsorting,
-            R.array.epsortingData, EpisodesSettings.getEpisodeSortOrder(requireActivity()).index(),
-            EpisodesSettings.KEY_EPISODE_SORT_ORDER, R.string.pref_episodesorting,
+            R.array.epsortingData,
+            EpisodesSettings.getEpisodeSortOrder(requireActivity()).index(),
+            EpisodesSettings.KEY_EPISODE_SORT_ORDER,
+            R.string.pref_episodesorting,
             "episodeSortOrderDialog"
         )
     }
@@ -336,6 +371,7 @@ class EpisodesFragment : Fragment() {
                         )
                         true
                     }
+
                     CONTEXT_WATCHED_NONE -> {
                         EpisodeTools.seasonWatched(
                             context,
@@ -344,6 +380,7 @@ class EpisodesFragment : Fragment() {
                         )
                         true
                     }
+
                     else -> false
                 }
             }
@@ -382,6 +419,7 @@ class EpisodesFragment : Fragment() {
                         )
                         true
                     }
+
                     CONTEXT_COLLECTED_NONE -> {
                         EpisodeTools.seasonCollected(
                             context,
@@ -390,6 +428,7 @@ class EpisodesFragment : Fragment() {
                         )
                         true
                     }
+
                     else -> false
                 }
             }

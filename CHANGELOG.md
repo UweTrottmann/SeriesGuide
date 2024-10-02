@@ -15,6 +15,10 @@ Version 2024.4
 --------------
 *in development*
 
+### next
+
+* 🔧 Episodes: in list view, can again set watched with one tap.
+
 ### 2024.4.3 🧪
 *2024-09-13*
 

@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.episodes
 
@@ -66,8 +66,9 @@ class EpisodesAdapter(
 
     interface ClickListener {
         fun onItemClick(position: Int)
-        fun onPopupMenuClick(
-            v: View, episodeId: Long, episodeNumber: Int,
+        fun onWatchedBoxClick(anchor: View, episodeId: Long, watchedFlag: Int)
+        fun onContextMenuClick(
+            anchor: View, episodeId: Long, episodeNumber: Int,
             releaseTimeMs: Long, watchedFlag: Int, isCollected: Boolean
         )
     }
@@ -84,7 +85,7 @@ object SgEpisode2InfoDiffCallback : DiffUtil.ItemCallback<SgEpisode2Info>() {
 
 class EpisodeViewHolder(
     private val binding: ItemEpisodeBinding,
-    clickListener: EpisodesAdapter.ClickListener
+    private val clickListener: EpisodesAdapter.ClickListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private val integerFormat = NumberFormat.getIntegerInstance()
@@ -96,15 +97,31 @@ class EpisodeViewHolder(
         }
         binding.watchedBoxEpisode.setOnClickListener { view ->
             episode?.let {
-                clickListener.onPopupMenuClick(
-                    view,
-                    it.id,
-                    it.episodenumber,
-                    it.firstReleasedMs,
-                    it.watched,
-                    it.collected
-                )
+                val box = view as WatchedBox
+                // disable button, will be re-enabled on data reload once action completes
+                box.isEnabled = false
+                clickListener.onWatchedBoxClick(view, it.id, box.episodeFlag)
             }
+        }
+        binding.root.setOnLongClickListener {
+            openContextMenu()
+            true
+        }
+        binding.imageViewContextMenu.setOnClickListener { view ->
+            openContextMenu()
+        }
+    }
+
+    private fun openContextMenu() {
+        episode?.let {
+            clickListener.onContextMenuClick(
+                binding.imageViewContextMenu,
+                it.id,
+                it.episodenumber,
+                it.firstReleasedMs,
+                it.watched,
+                it.collected
+            )
         }
     }
 
@@ -171,8 +188,10 @@ class EpisodeViewHolder(
             TextTools.getWatchedButtonText(context, true, episode.plays)
         } else null
         binding.textViewEpisodeAlternativeNumbers.text =
-            TextTools.dotSeparate(watchedCounter,
-                TextTools.dotSeparate(absoluteNumberText, dvdNumberText))
+            TextTools.dotSeparate(
+                watchedCounter,
+                TextTools.dotSeparate(absoluteNumberText, dvdNumberText)
+            )
 
         // release time
         val isReleased: Boolean
