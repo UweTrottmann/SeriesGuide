@@ -7,7 +7,7 @@
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground">
 
-    <!-- Add FrameLayout parent so we can set a selectable foreground that works on pre-M. -->
+    <!-- Add FrameLayout parent to set a selectable foreground that works on pre-M. -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,11 +18,11 @@
             style="?attr/materialCardViewElevatedStyle"
             android:layout_width="@dimen/show_poster_width_small"
             android:layout_height="@dimen/show_poster_height_small"
-            android:layout_marginBottom="@dimen/grid_topbottom_padding"
-            android:layout_marginLeft="@dimen/grid_item_margin_horizontal"
+            android:layout_marginStart="@dimen/grid_item_margin_horizontal"
             android:layout_marginTop="@dimen/grid_topbottom_padding"
+            android:layout_marginBottom="@dimen/grid_topbottom_padding"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
@@ -43,7 +43,7 @@
             android:contentDescription="@string/description_menu_overflow"
             android:scaleType="centerInside"
             app:layout_constraintBottom_toBottomOf="@+id/cardViewAddPoster"
-            app:layout_constraintRight_toLeftOf="@+id/addIndicatorAddShow"
+            app:layout_constraintEnd_toStartOf="@+id/addIndicatorAddShow"
             app:layout_constraintTop_toTopOf="@+id/cardViewAddPoster"
             app:srcCompat="@drawable/ic_more_vert_black_20dp"
             tools:ignore="MissingPrefix" />
@@ -52,10 +52,10 @@
             android:id="@+id/addIndicatorAddShow"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginBottom="0dp"
             android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
             app:layout_constraintBottom_toBottomOf="@+id/cardViewAddPoster"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/cardViewAddPoster" />
 
         <TextView
@@ -63,12 +63,12 @@
             style="@style/Widget.SeriesGuide.TextView.SingleLine"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="14dp"
             android:ellipsize="end"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold"
-            app:layout_constraintLeft_toRightOf="@+id/cardViewAddPoster"
-            app:layout_constraintRight_toLeftOf="@+id/buttonItemAddMore"
+            app:layout_constraintEnd_toStartOf="@+id/buttonItemAddMore"
+            app:layout_constraintStart_toEndOf="@+id/cardViewAddPoster"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Cosmos: A Spacetime Odyssey" />
 
@@ -76,16 +76,16 @@
             android:id="@+id/textViewAddDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
             android:ellipsize="end"
             android:lines="3"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/buttonItemAddMore"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toRightOf="@+id/cardViewAddPoster"
-            app:layout_constraintRight_toLeftOf="@+id/buttonItemAddMore"
+            app:layout_constraintStart_toEndOf="@+id/cardViewAddPoster"
             app:layout_constraintTop_toBottomOf="@+id/textViewAddTitle"
             app:layout_constraintVertical_bias="0.0"
             tools:text="Some awesome\nthree-line\ndescription" />
