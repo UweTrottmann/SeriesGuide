@@ -102,8 +102,8 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardViewActivity"
             style="?attr/materialCardViewElevatedStyle"
-            android:layout_width="69dp"
-            android:layout_height="104dp"
+            android:layout_width="@dimen/show_poster_width_default"
+            android:layout_height="@dimen/show_poster_height_default"
             android:layout_marginStart="@dimen/grid_leftright_padding"
             android:layout_marginLeft="@dimen/grid_leftright_padding"
             android:layout_marginTop="@dimen/grid_topbottom_padding"
