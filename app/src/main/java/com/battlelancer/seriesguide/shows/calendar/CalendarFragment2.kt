@@ -230,7 +230,7 @@ abstract class CalendarFragment2 : Fragment() {
             Utils.startActivityWithAnimation(activity, intent, view)
         }
 
-        override fun onItemLongClick(anchor: View, episode: SgEpisode2WithShow) {
+        override fun onItemContextMenuClick(anchor: View, episode: SgEpisode2WithShow) {
             val context = anchor.context
 
             val popupMenu = PopupMenu(context, anchor)

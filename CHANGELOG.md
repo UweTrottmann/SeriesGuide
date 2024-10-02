@@ -18,6 +18,7 @@ Version 2024.4
 ### next
 
 * 🔧 Episodes: in list view, can again set watched with one tap.
+* 🔧 Calendar: add discoverable more options button on items, does the same thing as touch and hold.
 
 ### 2024.4.3 🧪
 *2024-09-13*

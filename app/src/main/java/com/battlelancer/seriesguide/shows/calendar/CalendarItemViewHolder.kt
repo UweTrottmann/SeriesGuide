@@ -25,7 +25,7 @@ import java.util.Date
 
 class CalendarItemViewHolder(
     parent: ViewGroup,
-    itemClickListener: CalendarAdapter2.ItemClickListener
+    private val itemClickListener: CalendarAdapter2.ItemClickListener
 ) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(
         R.layout.item_calendar,
@@ -40,6 +40,7 @@ class CalendarItemViewHolder(
     private val episodeTextView: TextView = itemView.findViewById(R.id.textViewActivityEpisode)
     private val collected: View = itemView.findViewById(R.id.imageViewActivityCollected)
     private val watchedBox: WatchedBox = itemView.findViewById(R.id.watchedBoxActivity)
+    private val contextMenu: ImageView = itemView.findViewById(R.id.imageViewActivityMoreOptions)
     private val info: TextView = itemView.findViewById(R.id.textViewActivityInfo)
     private val timestamp: TextView = itemView.findViewById(R.id.textViewActivityTimestamp)
     private val poster: ImageView = itemView.findViewById(R.id.imageViewActivityPoster)
@@ -53,10 +54,11 @@ class CalendarItemViewHolder(
             }
         }
         itemContainer.setOnLongClickListener {
-            item?.episode?.let {
-                itemClickListener.onItemLongClick(itemView, it)
-            }
+            openContextMenu()
             true
+        }
+        contextMenu.setOnClickListener {
+            openContextMenu()
         }
         watchedBox.setOnClickListener {
             item?.episode?.let {
@@ -68,6 +70,12 @@ class CalendarItemViewHolder(
         }
 
         TooltipCompat.setTooltipText(watchedBox, watchedBox.contentDescription)
+    }
+
+    private fun openContextMenu() {
+        item?.episode?.let {
+            itemClickListener.onItemContextMenuClick(contextMenu, it)
+        }
     }
 
     fun bind(

@@ -21,7 +21,7 @@ class CalendarAdapter2(
 
     interface ItemClickListener {
         fun onItemClick(episodeId: Long)
-        fun onItemLongClick(anchor: View, episode: SgEpisode2WithShow)
+        fun onItemContextMenuClick(anchor: View, episode: SgEpisode2WithShow)
         fun onItemWatchBoxClick(episode: SgEpisode2WithShow, isWatched: Boolean)
     }
 
