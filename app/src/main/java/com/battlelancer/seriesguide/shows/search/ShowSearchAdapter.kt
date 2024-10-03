@@ -84,10 +84,18 @@ class ShowSearchAdapter(
                 }
             }
             // more options button
+            binding.root.setOnLongClickListener {
+                onMoreOptionsClick()
+                true
+            }
             binding.imageViewShowMoreOptions.setOnClickListener {
-                show?.let {
-                    itemClickListener.onMoreOptionsClick(binding.imageViewShowMoreOptions, it)
-                }
+                onMoreOptionsClick()
+            }
+        }
+
+        private fun onMoreOptionsClick() {
+            show?.let {
+                itemClickListener.onMoreOptionsClick(binding.imageViewShowMoreOptions, it)
             }
         }
 
