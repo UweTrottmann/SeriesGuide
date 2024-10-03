@@ -1,9 +1,8 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.search.discover
 
-import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -66,7 +65,12 @@ abstract class BaseAddShowsFragment : Fragment() {
         }
     }
 
-    protected val itemClickListener = object : AddFragment.AddAdapter.OnItemClickListener {
+    interface OnItemClickListener {
+        fun onItemClick(item: SearchResult)
+        fun onAddClick(item: SearchResult)
+    }
+
+    protected val itemClickListener = object : OnItemClickListener {
         override fun onItemClick(item: SearchResult) {
             if (item.state != SearchResult.STATE_ADDING) {
                 if (item.state == SearchResult.STATE_ADDED) {
@@ -92,8 +96,5 @@ abstract class BaseAddShowsFragment : Fragment() {
             TaskManager.getInstance().performAddTask(context, item)
         }
 
-        override fun onMenuWatchlistClick(view: View, showTmdbId: Int) {
-            // Not used for this type of add fragment.
-        }
     }
 }

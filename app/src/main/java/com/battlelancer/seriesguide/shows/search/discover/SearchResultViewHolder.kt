@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2018-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.search.discover
 
@@ -10,12 +10,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.shows.search.discover.AddFragment.AddAdapter.OnItemClickListener
 import com.battlelancer.seriesguide.util.ImageTools
 
 class SearchResultViewHolder(
     itemView: View,
-    onItemClickListener: OnItemClickListener
+    onItemClickListener: BaseAddShowsFragment.OnItemClickListener
 ) : RecyclerView.ViewHolder(itemView) {
 
     private val title = itemView.findViewById<TextView>(R.id.textViewAddTitle)
@@ -49,7 +48,8 @@ class SearchResultViewHolder(
         if (searchResult != null) {
             addIndicator.setState(searchResult.state)
             addIndicator.setContentDescriptionAdded(
-                    itemView.context.getString(R.string.add_already_exists, showTitle))
+                itemView.context.getString(R.string.add_already_exists, showTitle)
+            )
             addIndicator.visibility = View.VISIBLE
         } else {
             addIndicator.visibility = View.GONE
@@ -72,10 +72,12 @@ class SearchResultViewHolder(
     }
 
     companion object {
-        fun create(parent: ViewGroup,
-                onItemClickListener: OnItemClickListener): SearchResultViewHolder {
+        fun create(
+            parent: ViewGroup,
+            onItemClickListener: BaseAddShowsFragment.OnItemClickListener
+        ): SearchResultViewHolder {
             val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_addshow, parent, false)
+                .inflate(R.layout.item_addshow, parent, false)
             return SearchResultViewHolder(view, onItemClickListener)
         }
     }

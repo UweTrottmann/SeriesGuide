@@ -1,17 +1,17 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.search.similar
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.battlelancer.seriesguide.shows.search.discover.AddFragment
+import com.battlelancer.seriesguide.shows.search.discover.BaseAddShowsFragment
 import com.battlelancer.seriesguide.shows.search.discover.SearchResult
 import com.battlelancer.seriesguide.shows.search.discover.SearchResultDiffCallback
 import com.battlelancer.seriesguide.shows.search.discover.SearchResultViewHolder
 
 class SimilarShowsAdapter(
-    val onItemClickListener: AddFragment.AddAdapter.OnItemClickListener
+    private val onItemClickListener: BaseAddShowsFragment.OnItemClickListener
 ) : ListAdapter<SearchResult, SearchResultViewHolder>(
     SearchResultDiffCallback()
 ) {

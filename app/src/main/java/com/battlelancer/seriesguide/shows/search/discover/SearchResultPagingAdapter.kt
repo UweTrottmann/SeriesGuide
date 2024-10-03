@@ -9,7 +9,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 
 class SearchResultPagingAdapter(
-    val onItemClickListener: AddFragment.AddAdapter.OnItemClickListener
+    private val onItemClickListener: BaseAddShowsFragment.OnItemClickListener
 ) : PagingDataAdapter<SearchResult, RecyclerView.ViewHolder>(
     SearchResultDiffCallback()
 ) {
