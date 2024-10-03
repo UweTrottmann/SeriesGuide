@@ -9,7 +9,7 @@
     android:focusable="true">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardView"
+        android:id="@+id/cardViewItemShowPoster"
         style="?attr/materialCardViewElevatedStyle"
         android:layout_width="@dimen/show_poster_width_large"
         android:layout_height="@dimen/show_poster_height_large"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/showposter"
+            android:id="@+id/imageViewItemShowPoster"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@null"
@@ -32,7 +32,7 @@
 
     <!-- 24dp regular icon, 48dp touch target -->
     <ImageView
-        android:id="@+id/favoritedLabel"
+        android:id="@+id/imageViewItemShowFavorited"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:background="?attr/selectableItemBackgroundBorderless"
@@ -56,24 +56,7 @@
         tools:ignore="ContentDescription" />
 
     <TextView
-        android:id="@+id/textViewShowsRemaining"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="8dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Dim"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/cardView"
-        app:layout_constraintRight_toLeftOf="@+id/favoritedLabel"
-        app:layout_constraintTop_toBottomOf="@+id/episodetime"
-        app:layout_constraintVertical_bias="0.0"
-        tools:text="42 remaining" />
-
-    <TextView
-        android:id="@+id/textViewShowsTimeAndNetwork"
+        android:id="@+id/textViewItemShowTimeAndNetwork"
         style="@style/Widget.SeriesGuide.TextView.SingleLine"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -83,7 +66,7 @@
         android:ellipsize="start"
         android:text="@string/norating"
         android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Dim"
-        app:layout_constraintLeft_toRightOf="@+id/cardView"
+        app:layout_constraintLeft_toRightOf="@id/cardViewItemShowPoster"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="Deprecated"
@@ -91,7 +74,7 @@
 
     <!-- remaining count may be hidden, so to bottom of network -->
     <TextView
-        android:id="@+id/seriesname"
+        android:id="@+id/textViewItemShowTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/grid_leftright_padding"
@@ -100,13 +83,13 @@
         android:maxLines="1"
         android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintLeft_toRightOf="@+id/cardView"
-        app:layout_constraintRight_toLeftOf="@+id/favoritedLabel"
-        app:layout_constraintTop_toBottomOf="@+id/textViewShowsTimeAndNetwork"
+        app:layout_constraintLeft_toRightOf="@id/cardViewItemShowPoster"
+        app:layout_constraintRight_toLeftOf="@id/imageViewItemShowFavorited"
+        app:layout_constraintTop_toBottomOf="@id/textViewItemShowTimeAndNetwork"
         tools:text="Some Show Title" />
 
     <TextView
-        android:id="@+id/TextViewShowListNextEpisode"
+        android:id="@+id/textViewItemShowNextEpisode"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/grid_leftright_padding"
@@ -115,13 +98,13 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
-        app:layout_constraintLeft_toRightOf="@+id/cardView"
+        app:layout_constraintLeft_toRightOf="@id/cardViewItemShowPoster"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/seriesname"
+        app:layout_constraintTop_toBottomOf="@id/textViewItemShowTitle"
         tools:text="10x456 Some Very Cool Episode Title Therefore" />
 
     <TextView
-        android:id="@+id/episodetime"
+        android:id="@+id/textViewItemShowNextEpisodeTime"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/grid_leftright_padding"
@@ -130,9 +113,26 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Dim"
-        app:layout_constraintLeft_toRightOf="@+id/cardView"
+        app:layout_constraintLeft_toRightOf="@id/cardViewItemShowPoster"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextViewShowListNextEpisode"
+        app:layout_constraintTop_toBottomOf="@id/textViewItemShowNextEpisode"
         tools:text="Jan 8, 2009 (Thur)" />
+
+    <TextView
+        android:id="@+id/textViewItemShowRemaining"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Dim"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/cardViewItemShowPoster"
+        app:layout_constraintRight_toLeftOf="@id/imageViewItemShowFavorited"
+        app:layout_constraintTop_toBottomOf="@id/textViewItemShowNextEpisodeTime"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="42 remaining" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
