@@ -1,159 +1,168 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2015-2024 Uwe Trottmann
 
-package com.battlelancer.seriesguide.shows.search.discover;
+package com.battlelancer.seriesguide.shows.search.discover
 
-import android.content.Context;
-import android.text.TextUtils;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.collection.SparseArrayCompat;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.shows.ShowsSettings;
-import com.battlelancer.seriesguide.traktapi.SgTrakt;
-import com.battlelancer.seriesguide.util.Errors;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import com.uwetrottmann.trakt5.TraktV2;
-import com.uwetrottmann.trakt5.entities.BaseShow;
-import com.uwetrottmann.trakt5.entities.Show;
-import com.uwetrottmann.trakt5.enums.Extended;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import retrofit2.Response;
+import android.content.Context
+import androidx.annotation.StringRes
+import androidx.collection.SparseArrayCompat
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.shows.ShowsSettings
+import com.battlelancer.seriesguide.traktapi.SgTrakt
+import com.battlelancer.seriesguide.util.Errors
+import com.uwetrottmann.androidutils.AndroidUtils
+import com.uwetrottmann.androidutils.GenericSimpleLoader
+import com.uwetrottmann.trakt5.TraktV2
+import com.uwetrottmann.trakt5.entities.BaseShow
+import com.uwetrottmann.trakt5.enums.Extended
+import retrofit2.Response
+import java.util.LinkedList
 
 /**
- * Loads either the connected trakt user's watched, collected or watchlist-ed shows.
+ * Loads either the connected Trakt user's watched, collected or watchlist-ed shows.
  */
-public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
+class TraktAddLoader(
+    context: Context,
+    private val type: DiscoverShowsLink
+) : GenericSimpleLoader<TraktAddLoader.Result>(context) {
 
-    public static class Result {
-        public List<SearchResult> results;
-        public String emptyText;
+    class Result {
+        var results: List<SearchResult>
+        var emptyText: String
 
-        public Result(List<SearchResult> results, String emptyText) {
-            this.results = results;
-            this.emptyText = emptyText;
+        constructor(results: List<SearchResult>, emptyText: String) {
+            this.results = results
+            this.emptyText = emptyText
         }
 
-        public Result(List<SearchResult> results, Context context, @StringRes int emptyTextResId) {
-            this.results = results;
-            this.emptyText = context.getString(emptyTextResId);
+        constructor(results: List<SearchResult>, context: Context, @StringRes emptyTextResId: Int) {
+            this.results = results
+            this.emptyText = context.getString(emptyTextResId)
         }
     }
 
-    private final TraktV2 trakt;
-    private final DiscoverShowsLink type;
+    private val trakt: TraktV2 = SgApp.getServicesComponent(context).trakt()
 
-    TraktAddLoader(Context context, DiscoverShowsLink type) {
-        super(context);
-        this.type = type;
-        this.trakt = SgApp.getServicesComponent(context).trakt();
-    }
-
-    @Override
-    public Result loadInBackground() {
-        List<BaseShow> shows = new LinkedList<>();
-        String action = null;
+    override fun loadInBackground(): Result {
+        var shows: List<BaseShow> = emptyList()
+        var action: String? = null
         try {
-            Response<List<BaseShow>> response;
-            if (type == DiscoverShowsLink.WATCHED) {
-                action = "load watched shows";
-                response = trakt.sync().watchedShows(Extended.NOSEASONS).execute();
-            } else if (type == DiscoverShowsLink.COLLECTION) {
-                action = "load show collection";
-                response = trakt.sync().collectionShows(null).execute();
-            } else if (type == DiscoverShowsLink.WATCHLIST) {
-                action = "load show watchlist";
-                response = trakt.sync().watchlistShows(Extended.FULL).execute();
-            } else {
-                action = "load unknown type";
-                throw new IllegalArgumentException("Unknown type " + type);
+            val response: Response<List<BaseShow>>
+            when (type) {
+                DiscoverShowsLink.WATCHED -> {
+                    action = "load watched shows"
+                    response = trakt.sync().watchedShows(Extended.NOSEASONS).execute()
+                }
+
+                DiscoverShowsLink.COLLECTION -> {
+                    action = "load show collection"
+                    response = trakt.sync().collectionShows(null).execute()
+                }
+
+                DiscoverShowsLink.WATCHLIST -> {
+                    action = "load show watchlist"
+                    response = trakt.sync().watchlistShows(Extended.FULL).execute()
+                }
+
+                else -> {
+                    throw IllegalArgumentException("Unknown type $type")
+                }
             }
 
-            if (response.isSuccessful()) {
-                List<BaseShow> body = response.body();
+            if (response.isSuccessful) {
+                val body = response.body()
                 if (body != null) {
-                    shows = body;
+                    shows = body
                 }
             } else {
-                if (SgTrakt.isUnauthorized(getContext(), response)) {
-                    return buildResultFailure(R.string.trakt_error_credentials);
+                if (SgTrakt.isUnauthorized(context, response)) {
+                    return buildResultFailure(R.string.trakt_error_credentials)
                 }
-                Errors.logAndReport(action, response);
-                return buildResultGenericFailure();
+                Errors.logAndReport(action, response)
+                return buildResultGenericFailure()
             }
-        } catch (Exception e) {
-            Errors.logAndReport(action, e);
+        } catch (e: Exception) {
+            Errors.logAndReport(action!!, e)
             // only check for network here to allow hitting the response cache
-            return AndroidUtils.isNetworkConnected(getContext())
-                    ? buildResultGenericFailure() : buildResultFailure(R.string.offline);
+            return if (AndroidUtils.isNetworkConnected(context)) {
+                buildResultGenericFailure()
+            } else {
+                buildResultFailure(R.string.offline)
+            }
         }
 
         // return empty list right away if there are no results
-        if (shows.size() == 0) {
-            return buildResultSuccess(new LinkedList<>());
+        if (shows.isEmpty()) {
+            return buildResultSuccess(emptyList())
         }
 
-        return buildResultSuccess(parseTraktShowsToSearchResults(getContext(), shows,
-                ShowsSettings.getShowsSearchLanguage(getContext())));
+        return buildResultSuccess(
+            parseTraktShowsToSearchResults(
+                shows,
+                SgApp.getServicesComponent(context).showTools().getTmdbIdsToPoster(),
+                ShowsSettings.getShowsSearchLanguage(context)
+            )
+        )
     }
 
-    private Result buildResultSuccess(List<SearchResult> results) {
-        return new Result(results, getContext(), R.string.add_empty);
+    private fun buildResultSuccess(results: List<SearchResult>): Result {
+        return Result(results, context, R.string.add_empty)
     }
 
-    private Result buildResultGenericFailure() {
-        return new Result(new LinkedList<>(),
-                getContext().getString(R.string.api_error_generic,
-                        getContext().getString(R.string.trakt)));
+    private fun buildResultGenericFailure(): Result {
+        return Result(
+            LinkedList(),
+            context.getString(
+                R.string.api_error_generic,
+                context.getString(R.string.trakt)
+            )
+        )
     }
 
-    private Result buildResultFailure(@StringRes int errorResId) {
-        return new Result(new LinkedList<>(), getContext(), errorResId);
+    private fun buildResultFailure(@StringRes errorResId: Int): Result {
+        return Result(LinkedList(), context, errorResId)
     }
+
 
     /**
-     * Transforms a list of trakt shows to a list of {@link SearchResult}, marks shows already in
+     * Transforms a list of Trakt shows to a list of [SearchResult], marks shows already in
      * the local database as added.
      */
-    static List<SearchResult> parseTraktShowsToSearchResults(Context context,
-            @NonNull List<BaseShow> traktShows, @Nullable String overrideLanguage) {
-        List<SearchResult> results = new ArrayList<>();
+    private fun parseTraktShowsToSearchResults(
+        traktShows: List<BaseShow>,
+        existingPosterPaths: SparseArrayCompat<String>,
+        overrideLanguage: String
+    ): List<SearchResult> {
+        val results: MutableList<SearchResult> = ArrayList()
 
         // build list
-        SparseArrayCompat<String> existingPosterPaths = SgApp.getServicesComponent(context)
-                .showTools().getTmdbIdsToPoster();
-        for (BaseShow baseShow : traktShows) {
-            if (baseShow == null) {
-                continue;
-            }
-            Show show = baseShow.show;
-            if (show == null || show.ids == null || show.ids.tmdb == null) {
-                // has no TMDB id
-                continue;
-            }
-            SearchResult result = new SearchResult();
-            result.setTmdbId(show.ids.tmdb);
-            result.setTitle(show.title);
-            // search results return an overview, while trending and other lists do not
-            result.setOverview(!TextUtils.isEmpty(show.overview) ? show.overview
-                    : show.year != null ? String.valueOf(show.year) : "");
-            if (existingPosterPaths.indexOfKey(show.ids.tmdb) >= 0) {
-                // is already in local database
-                result.setState(SearchResult.STATE_ADDED);
-                // use the poster fetched for it (or null if there is none)
-                result.setPosterPath(existingPosterPaths.get(show.ids.tmdb));
-            }
-            if (overrideLanguage != null) {
-                result.setLanguage(overrideLanguage);
-            }
-            results.add(result);
-        }
+        for (baseShow in traktShows) {
+            val show = baseShow.show
+            val tmdbId = show?.ids?.tmdb
+                ?: continue // has no TMDB id
 
-        return results;
+            val result = SearchResult().also {
+                it.tmdbId = tmdbId
+                it.title = show.title
+                // Trakt might not return an overview, so use the year if available
+                it.overview = if (!show.overview.isNullOrEmpty()) {
+                    show.overview
+                } else if (show.year != null) {
+                    show.year!!.toString()
+                } else {
+                    ""
+                }
+                if (existingPosterPaths.indexOfKey(tmdbId) >= 0) {
+                    // is already in local database
+                    it.state = SearchResult.STATE_ADDED
+                    // use the poster fetched for it (or null if there is none)
+                    it.posterPath = existingPosterPaths[tmdbId]
+                }
+                it.language = overrideLanguage
+            }
+            results.add(result)
+        }
+        return results
     }
 }
