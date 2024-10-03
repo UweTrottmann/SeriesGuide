@@ -18,8 +18,6 @@ import androidx.paging.cachedIn
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.ShowsSettings
-import com.battlelancer.seriesguide.shows.search.newepisodes.ShowsNewEpisodesDataSource
-import com.battlelancer.seriesguide.shows.search.popular.ShowsPopularDataSource
 import com.battlelancer.seriesguide.streaming.SgWatchProvider
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.ui.dialogs.YearPickerDialogFragment

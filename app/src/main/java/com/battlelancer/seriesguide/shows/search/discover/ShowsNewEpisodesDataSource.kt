@@ -1,18 +1,17 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2018-2024 Uwe Trottmann
+// Copyright 2024 Uwe Trottmann
 
-package com.battlelancer.seriesguide.shows.search.popular
+package com.battlelancer.seriesguide.shows.search.discover
 
 import android.content.Context
-import com.battlelancer.seriesguide.shows.search.discover.BaseShowResultsDataSource
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.uwetrottmann.tmdb2.Tmdb
 import com.uwetrottmann.tmdb2.entities.TvShowResultsPage
 
 /**
- * Loads popular shows in pages from TMDB.
+ * Loads shows with new episodes in pages from TMDB.
  */
-class ShowsPopularDataSource(
+class ShowsNewEpisodesDataSource(
     context: Context,
     tmdb: Tmdb,
     languageCode: String,
@@ -27,13 +26,13 @@ class ShowsPopularDataSource(
 ) {
 
     override val action: String
-        get() = "load popular shows"
+        get() = "get shows w new episodes"
 
     override suspend fun loadShows(
         tmdb: Tmdb,
         language: String,
         page: Int,
-    ): TvShowResultsPage? = TmdbTools2().getPopularShows(
+    ): TvShowResultsPage? = TmdbTools2().getShowsWithNewEpisodes(
         tmdb,
         language,
         page,
