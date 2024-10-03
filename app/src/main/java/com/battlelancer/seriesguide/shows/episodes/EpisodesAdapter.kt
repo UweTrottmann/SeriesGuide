@@ -19,6 +19,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings.preventSpoilers
 import com.battlelancer.seriesguide.shows.database.SgEpisode2Info
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
+import com.battlelancer.seriesguide.util.ViewTools.setContextAndLongClickListener
 import java.text.NumberFormat
 
 
@@ -103,9 +104,8 @@ class EpisodeViewHolder(
                 itemClickListener.onWatchedBoxClick(view, it.id, box.episodeFlag)
             }
         }
-        binding.root.setOnLongClickListener {
+        binding.root.setContextAndLongClickListener {
             onMoreOptionsClick()
-            true
         }
         binding.imageViewItemEpisodeMoreOptions.setOnClickListener {
             onMoreOptionsClick()

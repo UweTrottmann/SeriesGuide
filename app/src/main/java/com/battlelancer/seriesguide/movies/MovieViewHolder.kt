@@ -13,6 +13,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemMovieBinding
 import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.util.ImageTools
+import com.battlelancer.seriesguide.util.ViewTools.setContextAndLongClickListener
 import com.squareup.picasso.Picasso
 import com.uwetrottmann.tmdb2.entities.BaseMovie
 import java.text.DateFormat
@@ -33,9 +34,8 @@ class MovieViewHolder(
         itemView.setOnClickListener {
             itemClickListener?.onMovieClick(movieTmdbId, poster)
         }
-        itemView.setOnLongClickListener {
+        itemView.setContextAndLongClickListener {
             onMoreOptionsClick()
-            true
         }
         moreOptions.setOnClickListener {
             onMoreOptionsClick()

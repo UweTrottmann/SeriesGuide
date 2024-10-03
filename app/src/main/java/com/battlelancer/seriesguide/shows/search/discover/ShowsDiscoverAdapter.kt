@@ -22,6 +22,7 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.util.ViewTools.setContextAndLongClickListener
 
 /**
  * Displays a set of links and if loaded a list of results, separated by a header.
@@ -279,9 +280,8 @@ class ShowsDiscoverAdapter(
             val showMenuWatchlistActual = showMenuWatchlist
                     && (!hideMenuWatchlistIfAdded || item.state != SearchResult.STATE_ADDED)
             if (showMenuWatchlistActual) {
-                itemView.setOnLongClickListener {
+                itemView.setContextAndLongClickListener {
                     onMoreOptionsClick()
-                    true
                 }
                 binding.buttonItemAddMoreOptions.setOnClickListener {
                     onMoreOptionsClick()
@@ -289,7 +289,7 @@ class ShowsDiscoverAdapter(
                 binding.buttonItemAddMoreOptions.isVisible = true
             } else {
                 // remove listener to prevent long press feedback
-                itemView.setOnLongClickListener(null)
+                itemView.setContextAndLongClickListener(null)
                 binding.buttonItemAddMoreOptions.setOnClickListener(null)
                 binding.buttonItemAddMoreOptions.isGone = true
             }

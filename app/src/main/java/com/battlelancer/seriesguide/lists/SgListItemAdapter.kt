@@ -25,6 +25,7 @@ import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.TimeTools.formatWithDeviceZoneToDayAndTime
+import com.battlelancer.seriesguide.util.ViewTools.setContextAndLongClickListener
 import org.threeten.bp.Instant
 
 class SgListItemAdapter(
@@ -82,9 +83,8 @@ class SgListItemViewHolder(
             }
         }
         // more options button
-        binding.root.setOnLongClickListener {
+        binding.root.setContextAndLongClickListener {
             onMoreOptionsClick()
-            true
         }
         binding.imageViewItemShowListMoreOptions.apply {
             TooltipCompat.setTooltipText(this, this.contentDescription)

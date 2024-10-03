@@ -21,6 +21,7 @@ import com.battlelancer.seriesguide.shows.episodes.WatchedBox
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
+import com.battlelancer.seriesguide.util.ViewTools.setContextAndLongClickListener
 import java.util.Date
 
 class CalendarItemViewHolder(
@@ -53,9 +54,8 @@ class CalendarItemViewHolder(
                 itemClickListener.onItemClick(it.id)
             }
         }
-        itemContainer.setOnLongClickListener {
+        itemContainer.setContextAndLongClickListener {
             onMoreOptionsClick()
-            true
         }
         contextMenu.setOnClickListener {
             onMoreOptionsClick()

@@ -18,6 +18,7 @@ import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.TimeTools.formatWithDeviceZoneToDayAndTime
+import com.battlelancer.seriesguide.util.ViewTools.setContextAndLongClickListener
 
 /**
  * Display show search results.
@@ -84,9 +85,8 @@ class ShowSearchAdapter(
                 }
             }
             // more options button
-            binding.root.setOnLongClickListener {
+            binding.root.setContextAndLongClickListener {
                 onMoreOptionsClick()
-                true
             }
             binding.imageViewShowMoreOptions.setOnClickListener {
                 onMoreOptionsClick()

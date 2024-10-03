@@ -17,6 +17,7 @@ import com.battlelancer.seriesguide.databinding.ItemSeasonBinding
 import com.battlelancer.seriesguide.shows.database.SgSeason2
 import com.battlelancer.seriesguide.shows.overview.SeasonsViewModel.SgSeasonWithStats
 import com.battlelancer.seriesguide.util.TextTools
+import com.battlelancer.seriesguide.util.ViewTools.setContextAndLongClickListener
 import com.uwetrottmann.androidutils.AndroidUtils
 
 /**
@@ -46,9 +47,8 @@ class SeasonsAdapter(
                     itemClickListener.onItemClick(view, it.id)
                 }
             }
-            itemView.setOnLongClickListener {
+            itemView.setContextAndLongClickListener {
                 onMoreOptionsClick()
-                true
             }
             binding.imageViewSeasonMoreOptions.setOnClickListener {
                 onMoreOptionsClick()

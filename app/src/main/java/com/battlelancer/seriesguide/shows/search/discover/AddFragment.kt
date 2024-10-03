@@ -21,6 +21,7 @@ import com.battlelancer.seriesguide.shows.tools.AddShowTask.OnShowAddedEvent
 import com.battlelancer.seriesguide.shows.tools.ShowTools2.OnShowRemovedEvent
 import com.battlelancer.seriesguide.ui.widgets.EmptyView
 import com.battlelancer.seriesguide.util.ImageTools
+import com.battlelancer.seriesguide.util.ViewTools.setContextAndLongClickListener
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -238,16 +239,15 @@ abstract class AddFragment : Fragment() {
                 this.item = item
 
                 if (enableMoreOptions) {
-                    binding.root.setOnLongClickListener {
+                    binding.root.setContextAndLongClickListener {
                         onMoreOptionsClick()
-                        true
                     }
                     binding.buttonItemAddMoreOptions.setOnClickListener {
                         onMoreOptionsClick()
                     }
                 } else {
                     // Remove listener so there is no long press feedback
-                    binding.root.setOnLongClickListener(null)
+                    binding.root.setContextAndLongClickListener(null)
                     binding.buttonItemAddMoreOptions.setOnClickListener(null)
                 }
                 binding.buttonItemAddMoreOptions.visibility =

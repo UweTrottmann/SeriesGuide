@@ -19,7 +19,8 @@ Version 2024.4
 
 * 🔧 Episodes: in list view, can again set watched with one tap.
 * 🔧 Calendar: add discoverable more options button on items, does the same thing as touch and hold.
-* 🔧 Display more options of list items on touch and hold as well.
+* 🔧 Display more options of list items on touch and hold and right click (for example in Samsung
+  Dex) as well.
 
 ### 2024.4.3 🧪
 *2024-09-13*

@@ -11,6 +11,7 @@ import androidx.appcompat.widget.TooltipCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.databinding.ItemShowListBinding
 import com.battlelancer.seriesguide.util.ImageTools
+import com.battlelancer.seriesguide.util.ViewTools.setContextAndLongClickListener
 
 class ShowsViewHolder(
     private val binding: ItemShowListBinding,
@@ -43,9 +44,8 @@ class ShowsViewHolder(
             }
         }
         // more options button
-        itemView.setOnLongClickListener {
+        itemView.setContextAndLongClickListener {
             onMoreOptionsClick()
-            true
         }
         binding.imageViewItemShowListMoreOptions.also {
             TooltipCompat.setTooltipText(it, it.contentDescription)
