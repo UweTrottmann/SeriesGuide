@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.search
 
@@ -24,12 +24,12 @@ import com.battlelancer.seriesguide.util.TimeTools.formatWithDeviceZoneToDayAndT
  */
 class ShowSearchAdapter(
     context: Context,
-    private val listener: OnItemClickListener
+    private val itemClickListener: ItemClickListener
 ) : ArrayAdapter<SgShow2ForLists>(context, 0) {
 
-    interface OnItemClickListener {
+    interface ItemClickListener {
         fun onItemClick(anchor: View, viewHolder: ShowViewHolder)
-        fun onMenuClick(anchor: View, viewHolder: ShowViewHolder)
+        fun onMoreOptionsClick(anchor: View, viewHolder: ShowViewHolder)
         fun onFavoriteClick(showId: Long, isFavorite: Boolean)
     }
 
@@ -49,7 +49,7 @@ class ShowSearchAdapter(
         val view =
             convertView ?: LayoutInflater.from(context).inflate(R.layout.item_show, parent, false)
         val viewHolder = if (convertView == null) {
-            ShowViewHolder(view, listener, drawableStar, drawableStarZero).also {
+            ShowViewHolder(view, itemClickListener, drawableStar, drawableStarZero).also {
                 view.tag = it
             }
         } else {
@@ -66,7 +66,7 @@ class ShowSearchAdapter(
 
     class ShowViewHolder(
         v: View,
-        onItemClickListener: OnItemClickListener,
+        itemClickListener: ItemClickListener,
         private val drawableStar: Drawable?,
         private val drawableStarZero: Drawable?
     ) {
@@ -77,7 +77,7 @@ class ShowSearchAdapter(
         private val remainingCount: TextView = v.findViewById(R.id.textViewShowsRemaining)
         private val poster: ImageView = v.findViewById(R.id.showposter)
         private val favorited: ImageView = v.findViewById(R.id.favoritedLabel)
-        private val contextMenu: ImageView = v.findViewById(R.id.imageViewShowsContextMenu)
+        private val moreOptionsButton: ImageView = v.findViewById(R.id.imageViewShowMoreOptions)
         var showId = 0L
         var isFavorited = false
         var isHidden = false
@@ -85,15 +85,15 @@ class ShowSearchAdapter(
         init {
             // item
             v.setOnClickListener { view: View ->
-                onItemClickListener.onItemClick(view, this)
+                itemClickListener.onItemClick(view, this)
             }
             // favorite star
             favorited.setOnClickListener {
-                onItemClickListener.onFavoriteClick(showId, !isFavorited)
+                itemClickListener.onFavoriteClick(showId, !isFavorited)
             }
             // context menu
-            contextMenu.setOnClickListener { view: View ->
-                onItemClickListener.onMenuClick(view, this@ShowViewHolder)
+            moreOptionsButton.setOnClickListener { view: View ->
+                itemClickListener.onMoreOptionsClick(view, this@ShowViewHolder)
             }
         }
 

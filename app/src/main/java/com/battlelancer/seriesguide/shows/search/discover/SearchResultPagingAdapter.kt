@@ -9,13 +9,13 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 
 class SearchResultPagingAdapter(
-    private val onItemClickListener: BaseAddShowsFragment.OnItemClickListener
+     private val itemClickListener: BaseAddShowsFragment.ItemClickListener
 ) : PagingDataAdapter<SearchResult, RecyclerView.ViewHolder>(
     SearchResultDiffCallback()
 ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return SearchResultViewHolder.create(parent, onItemClickListener)
+        return SearchResultViewHolder.create(parent, itemClickListener)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

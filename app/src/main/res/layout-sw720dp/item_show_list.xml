@@ -51,7 +51,7 @@
 
     <!-- 24dp dense icon, though 48dp touch target -->
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imageViewShowsContextMenu"
+        android:id="@+id/imageViewShowListMoreOptions"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:background="?attr/selectableItemBackgroundBorderless"
@@ -73,7 +73,7 @@
         android:maxLines="1"
         android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Dim"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageViewShowsContextMenu"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewShowListMoreOptions"
         app:layout_constraintStart_toEndOf="@+id/cardView"
         app:layout_constraintTop_toBottomOf="@+id/episodetime"
         app:layout_constraintVertical_bias="0.0"
@@ -106,7 +106,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold"
-        app:layout_constraintEnd_toStartOf="@+id/imageViewShowsContextMenu"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewShowListMoreOptions"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/cardView"
         app:layout_constraintTop_toBottomOf="@+id/textViewShowsTimeAndNetwork"

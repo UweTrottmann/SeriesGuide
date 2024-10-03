@@ -118,7 +118,7 @@ class ShowsFragment : Fragment() {
         }
 
         // prepare view adapter
-        adapter = ShowsAdapter(requireContext(), onItemClickListener, firstRunClickListener)
+        adapter = ShowsAdapter(requireContext(), itemClickListener, firstRunClickListener)
         if (!FirstRunView.hasSeenFirstRunFragment(requireContext())) {
             adapter.displayFirstRunHeader = true
         }
@@ -255,8 +255,8 @@ class ShowsFragment : Fragment() {
         activityModel.selectDiscoverTab()
     }
 
-    private val onItemClickListener: ShowsAdapter.OnItemClickListener =
-        object : ShowsAdapter.OnItemClickListener {
+    private val itemClickListener: ShowsAdapter.ItemClickListener =
+        object : ShowsAdapter.ItemClickListener {
             override fun onItemClick(anchor: View, showRowId: Long) {
                 // display overview for this show
                 val intent = intentShow(requireContext(), showRowId)
@@ -269,7 +269,7 @@ class ShowsFragment : Fragment() {
                 )
             }
 
-            override fun onItemMenuClick(anchor: View, show: ShowItem) {
+            override fun onMoreOptionsClick(anchor: View, show: ShowItem) {
                 val popupMenu = PopupMenu(anchor.context, anchor)
                 popupMenu.inflate(R.menu.shows_popup_menu)
 
@@ -288,7 +288,7 @@ class ShowsFragment : Fragment() {
                 popupMenu.show()
             }
 
-            override fun onItemSetWatchedClick(show: ShowItem) {
+            override fun onSetWatchedClick(show: ShowItem) {
                 EpisodeTools.episodeWatchedIfNotZero(context, show.nextEpisodeId)
             }
         }

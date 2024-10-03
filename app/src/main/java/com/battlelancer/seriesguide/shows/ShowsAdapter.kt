@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2018-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows
 
@@ -22,17 +22,17 @@ import org.threeten.bp.Instant
 
 class ShowsAdapter(
     private val context: Context,
-    private val onItemClickListener: OnItemClickListener,
+    private val itemClickListener: ItemClickListener,
     private val firstRunClickListener: FirstRunClickListener
 ) :
     ListAdapter<ShowsAdapter.ShowItem, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
-    interface OnItemClickListener {
+    interface ItemClickListener {
         fun onItemClick(anchor: View, showRowId: Long)
 
-        fun onItemMenuClick(anchor: View, show: ShowItem)
+        fun onMoreOptionsClick(anchor: View, show: ShowItem)
 
-        fun onItemSetWatchedClick(show: ShowItem)
+        fun onSetWatchedClick(show: ShowItem)
     }
 
     var displayFirstRunHeader: Boolean = false
@@ -66,7 +66,7 @@ class ShowsAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             VIEW_TYPE_FIRST_RUN -> FirstRunViewHolder.create(parent, firstRunClickListener)
-            VIEW_TYPE_SHOW_ITEM -> ShowsViewHolder.create(parent, onItemClickListener)
+            VIEW_TYPE_SHOW_ITEM -> ShowsViewHolder.create(parent, itemClickListener)
             else -> throw IllegalArgumentException("Unknown view type $viewType")
         }
     }

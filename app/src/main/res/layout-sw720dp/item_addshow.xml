@@ -46,7 +46,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/buttonItemAddMore"
+            android:id="@+id/buttonItemAddMoreOptions"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="?attr/selectableItemBackgroundBorderless"

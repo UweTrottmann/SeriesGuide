@@ -85,7 +85,7 @@
             app:srcCompat="@drawable/ic_collected_24dp" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imageViewContextMenu"
+            android:id="@+id/imageViewItemEpisodeMoreOptions"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_alignParentRight="true"

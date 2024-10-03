@@ -29,11 +29,11 @@ import org.threeten.bp.Instant
 
 class SgListItemAdapter(
     private val context: Context,
-    private val onItemClickListener: SgListItemViewHolder.OnItemClickListener
+    private val itemClickListener: SgListItemViewHolder.ItemClickListener
 ) : ListAdapter<SgListItemWithDetails, SgListItemViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SgListItemViewHolder {
-        return SgListItemViewHolder.create(onItemClickListener, parent)
+        return SgListItemViewHolder.create(itemClickListener, parent)
     }
 
     override fun onBindViewHolder(holder: SgListItemViewHolder, position: Int) {
@@ -58,13 +58,13 @@ class SgListItemAdapter(
 
 class SgListItemViewHolder(
     private val binding: ItemShowListBinding,
-    private val onItemClickListener: OnItemClickListener
+    private val itemClickListener: ItemClickListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    interface OnItemClickListener {
+    interface ItemClickListener {
         fun onItemClick(anchor: View, item: SgListItemWithDetails)
-        fun onMenuClick(anchor: View, item: SgListItemWithDetails)
-        fun onItemSetWatchedClick(item: SgListItemWithDetails)
+        fun onMoreOptionsClick(anchor: View, item: SgListItemWithDetails)
+        fun onSetWatchedClick(item: SgListItemWithDetails)
     }
 
     var item: SgListItemWithDetails? = null
@@ -72,30 +72,30 @@ class SgListItemViewHolder(
     init {
         // item
         binding.root.setOnClickListener { view ->
-            item?.let { onItemClickListener.onItemClick(view, it) }
+            item?.let { itemClickListener.onItemClick(view, it) }
         }
         // set watched button
         binding.imageViewShowsSetWatched.apply {
             TooltipCompat.setTooltipText(this, this.contentDescription)
             setOnClickListener {
-                item?.let { onItemClickListener.onItemSetWatchedClick(it) }
+                item?.let { itemClickListener.onSetWatchedClick(it) }
             }
         }
-        // context menu
+        // more options button
         binding.root.setOnLongClickListener {
-            openContextMenu()
+            onMoreOptionsClick()
             true
         }
-        binding.imageViewShowsContextMenu.apply {
+        binding.imageViewShowListMoreOptions.apply {
             TooltipCompat.setTooltipText(this, this.contentDescription)
             setOnClickListener {
-                openContextMenu()
+                onMoreOptionsClick()
             }
         }
     }
 
-    private fun openContextMenu() {
-        item?.let { onItemClickListener.onMenuClick(binding.imageViewShowsContextMenu, it) }
+    private fun onMoreOptionsClick() {
+        item?.let { itemClickListener.onMoreOptionsClick(binding.imageViewShowListMoreOptions, it) }
     }
 
     fun bindTo(item: SgListItemWithDetails?, context: Context) {
@@ -228,7 +228,7 @@ class SgListItemViewHolder(
 
     companion object {
         fun create(
-            onItemClickListener: OnItemClickListener,
+            itemClickListener: ItemClickListener,
             parent: ViewGroup
         ): SgListItemViewHolder = SgListItemViewHolder(
             ItemShowListBinding.inflate(
@@ -236,7 +236,7 @@ class SgListItemViewHolder(
                 parent,
                 false
             ),
-            onItemClickListener
+            itemClickListener
         )
     }
 

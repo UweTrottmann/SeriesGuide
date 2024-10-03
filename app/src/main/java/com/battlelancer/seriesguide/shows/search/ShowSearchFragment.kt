@@ -59,7 +59,7 @@ class ShowSearchFragment : BaseSearchFragment() {
         (emptyView as EmptyView).setButtonClickListener {
             navigateToAddShow()
         }
-        adapter = ShowSearchAdapter(requireContext(), onItemClickListener).also {
+        adapter = ShowSearchAdapter(requireContext(), itemClickListener).also {
             gridView.adapter = it
         }
 
@@ -127,7 +127,7 @@ class ShowSearchFragment : BaseSearchFragment() {
         }
     }
 
-    private val onItemClickListener = object : ShowSearchAdapter.OnItemClickListener {
+    private val itemClickListener = object : ShowSearchAdapter.ItemClickListener {
 
         override fun onItemClick(anchor: View, viewHolder: ShowSearchAdapter.ShowViewHolder) {
             OverviewActivity.intentShow(requireContext(), viewHolder.showId).let {
@@ -141,7 +141,7 @@ class ShowSearchFragment : BaseSearchFragment() {
             }
         }
 
-        override fun onMenuClick(anchor: View, viewHolder: ShowSearchAdapter.ShowViewHolder) {
+        override fun onMoreOptionsClick(anchor: View, viewHolder: ShowSearchAdapter.ShowViewHolder) {
             PopupMenu(anchor.context, anchor).apply {
                 inflate(R.menu.shows_popup_menu)
                 menu.apply {

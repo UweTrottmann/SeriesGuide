@@ -54,15 +54,15 @@ class CalendarItemViewHolder(
             }
         }
         itemContainer.setOnLongClickListener {
-            openContextMenu()
+            onMoreOptionsClick()
             true
         }
         contextMenu.setOnClickListener {
-            openContextMenu()
+            onMoreOptionsClick()
         }
         watchedBox.setOnClickListener {
             item?.episode?.let {
-                itemClickListener.onItemWatchBoxClick(
+                itemClickListener.onWatchedBoxClick(
                     it,
                     EpisodeTools.isWatched(watchedBox.episodeFlag)
                 )
@@ -72,9 +72,9 @@ class CalendarItemViewHolder(
         TooltipCompat.setTooltipText(watchedBox, watchedBox.contentDescription)
     }
 
-    private fun openContextMenu() {
+    private fun onMoreOptionsClick() {
         item?.episode?.let {
-            itemClickListener.onItemContextMenuClick(contextMenu, it)
+            itemClickListener.onMoreOptionsClick(contextMenu, it)
         }
     }
 

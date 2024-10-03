@@ -27,23 +27,23 @@ class MovieViewHolder(
     private val title = binding.includeMovie.textViewMovieTitle
     private val date = binding.includeMovie.textViewMovieDate
     private val poster = binding.includeMovie.imageViewMoviePoster
-    private val contextMenu = binding.includeMovie.imageViewMovieItemContextMenu
+    private val moreOptions = binding.includeMovie.imageViewMovieMoreOptions
 
     init {
         itemView.setOnClickListener {
-            itemClickListener?.onClickMovie(movieTmdbId, poster)
+            itemClickListener?.onMovieClick(movieTmdbId, poster)
         }
         itemView.setOnLongClickListener {
-            openContextMenu()
+            onMoreOptionsClick()
             true
         }
-        contextMenu.setOnClickListener {
-            openContextMenu()
+        moreOptions.setOnClickListener {
+            onMoreOptionsClick()
         }
     }
 
-    private fun openContextMenu() {
-        itemClickListener?.onClickMovieMoreOptions(movieTmdbId, contextMenu)
+    private fun onMoreOptionsClick() {
+        itemClickListener?.onMoreOptionsClick(movieTmdbId, moreOptions)
     }
 
     @SuppressLint("SetTextI18n")

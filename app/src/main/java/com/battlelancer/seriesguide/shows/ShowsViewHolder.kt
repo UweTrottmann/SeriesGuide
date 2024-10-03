@@ -16,7 +16,7 @@ import com.battlelancer.seriesguide.util.ImageTools
 
 class ShowsViewHolder(
     itemView: View,
-    private val onItemClickListener: ShowsAdapter.OnItemClickListener
+    private val itemClickListener: ShowsAdapter.ItemClickListener
 ) : RecyclerView.ViewHolder(itemView) {
 
     private val name: TextView = itemView.findViewById(R.id.seriesname)
@@ -27,7 +27,7 @@ class ShowsViewHolder(
     private val poster: ImageView = itemView.findViewById(R.id.showposter)
     private val favorited: ImageView = itemView.findViewById(R.id.favoritedLabel)
     private val setWatchedButton: ImageView = itemView.findViewById(R.id.imageViewShowsSetWatched)
-    private val contextMenu: ImageView = itemView.findViewById(R.id.imageViewShowsContextMenu)
+    private val moreOptionsButton: ImageView = itemView.findViewById(R.id.imageViewShowListMoreOptions)
 
     private var showItem: ShowsAdapter.ShowItem? = null
 
@@ -35,7 +35,7 @@ class ShowsViewHolder(
         // item
         itemView.setOnClickListener { view ->
             showItem?.let {
-                onItemClickListener.onItemClick(view, it.rowId)
+                itemClickListener.onItemClick(view, it.rowId)
             }
         }
         // set watched button
@@ -43,23 +43,23 @@ class ShowsViewHolder(
         @Suppress("UNUSED_ANONYMOUS_PARAMETER")
         setWatchedButton.setOnClickListener { v ->
             showItem?.let {
-                onItemClickListener.onItemSetWatchedClick(it)
+                itemClickListener.onSetWatchedClick(it)
             }
         }
-        // context menu
+        // more options button
         itemView.setOnLongClickListener {
-            openContextMenu()
+            onMoreOptionsClick()
             true
         }
-        TooltipCompat.setTooltipText(contextMenu, contextMenu.contentDescription)
-        contextMenu.setOnClickListener {
-            openContextMenu()
+        TooltipCompat.setTooltipText(moreOptionsButton, moreOptionsButton.contentDescription)
+        moreOptionsButton.setOnClickListener {
+            onMoreOptionsClick()
         }
     }
 
-    private fun openContextMenu() {
+    private fun onMoreOptionsClick() {
         showItem?.let {
-            onItemClickListener.onItemMenuClick(contextMenu, it)
+            itemClickListener.onMoreOptionsClick(moreOptionsButton, it)
         }
     }
 
@@ -86,11 +86,11 @@ class ShowsViewHolder(
 
         fun create(
             parent: ViewGroup,
-            onItemClickListener: ShowsAdapter.OnItemClickListener
+            itemClickListener: ShowsAdapter.ItemClickListener
         ): ShowsViewHolder {
             val v = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_show_list, parent, false)
-            return ShowsViewHolder(v, onItemClickListener)
+            return ShowsViewHolder(v, itemClickListener)
         }
     }
 

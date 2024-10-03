@@ -46,7 +46,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/buttonItemAddMore"
+            android:id="@+id/buttonItemAddMoreOptions"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="?attr/selectableItemBackgroundBorderless"
@@ -65,7 +65,7 @@
             android:layout_marginTop="12dp"
             android:ellipsize="end"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold"
-            app:layout_constraintEnd_toStartOf="@+id/buttonItemAddMore"
+            app:layout_constraintEnd_toStartOf="@+id/addIndicatorAddShow"
             app:layout_constraintStart_toEndOf="@+id/cardViewAddPoster"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Cosmos: A Spacetime Odyssey" />

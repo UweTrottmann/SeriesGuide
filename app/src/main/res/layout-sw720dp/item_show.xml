@@ -44,7 +44,7 @@
 
     <!-- 20dp dense icon, though 48dp touch target -->
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imageViewShowsContextMenu"
+        android:id="@+id/imageViewShowMoreOptions"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:background="?attr/selectableItemBackgroundBorderless"

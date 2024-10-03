@@ -14,25 +14,25 @@ import com.battlelancer.seriesguide.util.ImageTools
 
 class SearchResultViewHolder(
     itemView: View,
-    onItemClickListener: BaseAddShowsFragment.OnItemClickListener
+    itemClickListener: BaseAddShowsFragment.ItemClickListener
 ) : RecyclerView.ViewHolder(itemView) {
 
     private val title = itemView.findViewById<TextView>(R.id.textViewAddTitle)
     private val description = itemView.findViewById<TextView>(R.id.textViewAddDescription)
     private val poster = itemView.findViewById<ImageView>(R.id.imageViewAddPoster)
     private val addIndicator = itemView.findViewById<AddIndicator>(R.id.addIndicatorAddShow)
-    private val buttonContextMenu = itemView.findViewById<ImageView>(R.id.buttonItemAddMore)
+    private val moreOptionsButton = itemView.findViewById<ImageView>(R.id.buttonItemAddMoreOptions)
     private var item: SearchResult? = null
 
     init {
         itemView.setOnClickListener { _ ->
             item?.let {
-                onItemClickListener.onItemClick(it)
+                itemClickListener.onItemClick(it)
             }
         }
         addIndicator.setOnAddClickListener { _ ->
             item?.let {
-                onItemClickListener.onAddClick(it)
+                itemClickListener.onAddClick(it)
             }
         }
     }
@@ -40,8 +40,8 @@ class SearchResultViewHolder(
     fun bindTo(searchResult: SearchResult?) {
         this.item = searchResult
 
-        // hide watchlist menu
-        buttonContextMenu.visibility = View.GONE
+        // hide more options button
+        moreOptionsButton.visibility = View.GONE
 
         // display added indicator instead of add button if already added that show
         val showTitle = searchResult?.title
@@ -74,11 +74,11 @@ class SearchResultViewHolder(
     companion object {
         fun create(
             parent: ViewGroup,
-            onItemClickListener: BaseAddShowsFragment.OnItemClickListener
+            itemClickListener: BaseAddShowsFragment.ItemClickListener
         ): SearchResultViewHolder {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_addshow, parent, false)
-            return SearchResultViewHolder(view, onItemClickListener)
+            return SearchResultViewHolder(view, itemClickListener)
         }
     }
 

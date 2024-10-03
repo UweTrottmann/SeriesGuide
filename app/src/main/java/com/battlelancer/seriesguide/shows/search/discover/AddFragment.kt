@@ -152,14 +152,14 @@ abstract class AddFragment : Fragment() {
     class AddAdapter(
         activity: Activity,
         objects: List<SearchResult>,
-        private val menuClickListener: OnItemClickListener,
-        private val enableContextMenu: Boolean
+        private val itemClickListener: ItemClickListener,
+        private val enableMoreOptions: Boolean
     ) : ArrayAdapter<SearchResult>(activity, 0, objects) {
 
-        interface OnItemClickListener {
+        interface ItemClickListener {
             fun onItemClick(item: SearchResult)
             fun onAddClick(item: SearchResult)
-            fun onContextMenuClick(view: View, showTmdbId: Int)
+            fun onMoreOptionsClick(view: View, showTmdbId: Int)
         }
 
         private fun getItemForShowTmdbId(showTmdbId: Int): SearchResult? {
@@ -196,7 +196,7 @@ abstract class AddFragment : Fragment() {
             val view: View
             val holder: ViewHolder
             if (convertView == null) {
-                holder = ViewHolder.inflate(parent, menuClickListener)
+                holder = ViewHolder.inflate(parent, itemClickListener)
                     .also { it.binding.root.tag = it }
                 view = holder.binding.root
             } else {
@@ -205,50 +205,53 @@ abstract class AddFragment : Fragment() {
             }
 
             val item = getItem(position)
-            holder.bindTo(item, context, enableContextMenu)
+            holder.bindTo(item, context, enableMoreOptions)
 
             return view
         }
 
         class ViewHolder(
             val binding: ItemAddshowBinding,
-            private val onItemClickListener: OnItemClickListener
+            private val itemClickListener: ItemClickListener
         ) {
             private var item: SearchResult? = null
 
             init {
                 binding.root.setOnClickListener {
-                    item?.let { onItemClickListener.onItemClick(it) }
+                    item?.let { itemClickListener.onItemClick(it) }
                 }
                 binding.addIndicatorAddShow.setOnAddClickListener {
-                    item?.let { onItemClickListener.onAddClick(it) }
+                    item?.let { itemClickListener.onAddClick(it) }
                 }
             }
 
-            private fun openContextMenu() {
+            private fun onMoreOptionsClick() {
                 item?.let {
-                    onItemClickListener.onContextMenuClick(binding.buttonItemAddMore, it.tmdbId)
+                    itemClickListener.onMoreOptionsClick(
+                        binding.buttonItemAddMoreOptions,
+                        it.tmdbId
+                    )
                 }
             }
 
-            fun bindTo(item: SearchResult?, context: Context, enableContextMenu: Boolean) {
+            fun bindTo(item: SearchResult?, context: Context, enableMoreOptions: Boolean) {
                 this.item = item
 
-                if (enableContextMenu) {
+                if (enableMoreOptions) {
                     binding.root.setOnLongClickListener {
-                        openContextMenu()
+                        onMoreOptionsClick()
                         true
                     }
-                    binding.buttonItemAddMore.setOnClickListener {
-                        openContextMenu()
+                    binding.buttonItemAddMoreOptions.setOnClickListener {
+                        onMoreOptionsClick()
                     }
                 } else {
                     // Remove listener so there is no long press feedback
                     binding.root.setOnLongClickListener(null)
-                    binding.buttonItemAddMore.setOnClickListener(null)
+                    binding.buttonItemAddMoreOptions.setOnClickListener(null)
                 }
-                binding.buttonItemAddMore.visibility =
-                    if (enableContextMenu) View.VISIBLE else View.GONE
+                binding.buttonItemAddMoreOptions.visibility =
+                    if (enableMoreOptions) View.VISIBLE else View.GONE
 
                 if (item == null) {
                     binding.addIndicatorAddShow.setState(SearchResult.STATE_ADD)
@@ -284,14 +287,14 @@ abstract class AddFragment : Fragment() {
             }
 
             companion object {
-                fun inflate(parent: ViewGroup, onItemClickListener: OnItemClickListener) =
+                fun inflate(parent: ViewGroup, itemClickListener: ItemClickListener) =
                     ViewHolder(
                         ItemAddshowBinding.inflate(
                             LayoutInflater.from(parent.context),
                             parent,
                             false
                         ),
-                        onItemClickListener
+                        itemClickListener
                     )
             }
         }

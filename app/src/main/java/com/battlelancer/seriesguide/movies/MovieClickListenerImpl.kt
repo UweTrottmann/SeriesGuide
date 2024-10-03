@@ -16,7 +16,7 @@ import com.battlelancer.seriesguide.util.Utils
 
 open class MovieClickListenerImpl(val context: Context) : MovieClickListener {
 
-    override fun onClickMovie(movieTmdbId: Int, posterView: ImageView) {
+    override fun onMovieClick(movieTmdbId: Int, posterView: ImageView) {
         if (movieTmdbId == -1) return
 
         // launch details activity
@@ -24,7 +24,7 @@ open class MovieClickListenerImpl(val context: Context) : MovieClickListener {
         Utils.startActivityWithAnimation(context, intent, posterView)
     }
 
-    override fun onClickMovieMoreOptions(movieTmdbId: Int, anchor: View) {
+    override fun onMoreOptionsClick(movieTmdbId: Int, anchor: View) {
         if (movieTmdbId == -1) return
 
         // check if movie is already in database (watchlist, collection or watched)

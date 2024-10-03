@@ -120,7 +120,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         )
     }
 
-    private val discoverItemClickListener = object : ShowsDiscoverAdapter.OnItemClickListener {
+    private val discoverItemClickListener = object : ShowsDiscoverAdapter.ItemClickListener {
         override fun onLinkClick(anchor: View, link: DiscoverShowsLink) {
             val intent =
                 when (link) {
@@ -196,7 +196,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
             TaskManager.getInstance().performAddTask(context, item)
         }
 
-        override fun onContextMenuClick(view: View, showTmdbId: Int) {
+        override fun onMoreOptionsClick(view: View, showTmdbId: Int) {
             PopupMenu(view.context, view).apply {
                 inflate(R.menu.add_show_popup_menu)
                 // only support adding shows to watchlist

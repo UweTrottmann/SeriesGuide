@@ -21,8 +21,8 @@ class CalendarAdapter2(
 
     interface ItemClickListener {
         fun onItemClick(episodeId: Long)
-        fun onItemContextMenuClick(anchor: View, episode: SgEpisode2WithShow)
-        fun onItemWatchBoxClick(episode: SgEpisode2WithShow, isWatched: Boolean)
+        fun onMoreOptionsClick(anchor: View, episode: SgEpisode2WithShow)
+        fun onWatchedBoxClick(episode: SgEpisode2WithShow, isWatched: Boolean)
     }
 
     var isMultiColumn: Boolean = false

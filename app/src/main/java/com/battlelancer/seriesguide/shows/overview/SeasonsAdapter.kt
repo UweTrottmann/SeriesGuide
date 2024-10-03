@@ -29,7 +29,7 @@ class SeasonsAdapter(
 
     interface ItemClickListener {
         fun onItemClick(v: View, seasonRowId: Long)
-        fun onContextMenuClick(v: View, seasonRowId: Long)
+        fun onMoreOptionsClick(v: View, seasonRowId: Long)
     }
 
     class ViewHolder(
@@ -47,17 +47,17 @@ class SeasonsAdapter(
                 }
             }
             itemView.setOnLongClickListener {
-                openContextMenu()
+                onMoreOptionsClick()
                 true
             }
-            binding.imageViewContextMenu.setOnClickListener {
-                openContextMenu()
+            binding.imageViewSeasonMoreOptions.setOnClickListener {
+                onMoreOptionsClick()
             }
         }
 
-        private fun openContextMenu() {
+        private fun onMoreOptionsClick() {
             season?.also {
-                itemClickListener.onContextMenuClick(binding.imageViewContextMenu, it.id)
+                itemClickListener.onMoreOptionsClick(binding.imageViewSeasonMoreOptions, it.id)
             }
         }
 
