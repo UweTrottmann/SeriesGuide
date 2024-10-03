@@ -5,7 +5,6 @@ package com.battlelancer.seriesguide.shows
 
 import android.content.Context
 import android.text.TextUtils
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -22,18 +21,10 @@ import org.threeten.bp.Instant
 
 class ShowsAdapter(
     private val context: Context,
-    private val itemClickListener: ItemClickListener,
+    private val itemClickListener: ShowsViewHolder.ItemClickListener,
     private val firstRunClickListener: FirstRunClickListener
 ) :
     ListAdapter<ShowsAdapter.ShowItem, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
-
-    interface ItemClickListener {
-        fun onItemClick(anchor: View, showRowId: Long)
-
-        fun onMoreOptionsClick(anchor: View, show: ShowItem)
-
-        fun onSetWatchedClick(show: ShowItem)
-    }
 
     var displayFirstRunHeader: Boolean = false
 

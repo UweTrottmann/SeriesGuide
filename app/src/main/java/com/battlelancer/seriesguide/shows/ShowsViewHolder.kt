@@ -12,12 +12,19 @@ import android.widget.TextView
 import androidx.appcompat.widget.TooltipCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.ItemShowListBinding
 import com.battlelancer.seriesguide.util.ImageTools
 
 class ShowsViewHolder(
     itemView: View,
-    private val itemClickListener: ShowsAdapter.ItemClickListener
+    private val itemClickListener: ItemClickListener
 ) : RecyclerView.ViewHolder(itemView) {
+
+    interface ItemClickListener {
+        fun onItemClick(anchor: View, showRowId: Long)
+        fun onMoreOptionsClick(anchor: View, show: ShowsAdapter.ShowItem)
+        fun onSetWatchedClick(show: ShowsAdapter.ShowItem)
+    }
 
     private val name: TextView = itemView.findViewById(R.id.seriesname)
     private val timeAndNetwork: TextView = itemView.findViewById(R.id.textViewShowsTimeAndNetwork)
@@ -86,7 +93,7 @@ class ShowsViewHolder(
 
         fun create(
             parent: ViewGroup,
-            itemClickListener: ShowsAdapter.ItemClickListener
+            itemClickListener: ItemClickListener
         ): ShowsViewHolder {
             val v = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_show_list, parent, false)

@@ -255,8 +255,8 @@ class ShowsFragment : Fragment() {
         activityModel.selectDiscoverTab()
     }
 
-    private val itemClickListener: ShowsAdapter.ItemClickListener =
-        object : ShowsAdapter.ItemClickListener {
+    private val itemClickListener: ShowsViewHolder.ItemClickListener =
+        object : ShowsViewHolder.ItemClickListener {
             override fun onItemClick(anchor: View, showRowId: Long) {
                 // display overview for this show
                 val intent = intentShow(requireContext(), showRowId)
