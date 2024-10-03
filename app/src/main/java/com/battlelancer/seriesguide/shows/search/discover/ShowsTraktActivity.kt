@@ -39,8 +39,14 @@ class ShowsTraktActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddSho
         setupActionBar(link)
 
         if (savedInstanceState == null) {
+            val traktListType = when (link) {
+                DiscoverShowsLink.WATCHED -> TraktAddLoader.Type.WATCHED
+                DiscoverShowsLink.COLLECTION -> TraktAddLoader.Type.COLLECTION
+                DiscoverShowsLink.WATCHLIST -> TraktAddLoader.Type.WATCHLIST
+                else -> throw IllegalArgumentException("Link $link is not supported")
+            }
             supportFragmentManager.commitReorderingAllowed {
-                add(R.id.containerTraktShowsFragment, TraktAddFragment.newInstance(link))
+                add(R.id.containerTraktShowsFragment, TraktAddFragment.newInstance(traktListType))
             }
         }
 

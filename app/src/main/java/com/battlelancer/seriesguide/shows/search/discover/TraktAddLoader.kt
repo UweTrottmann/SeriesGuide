@@ -24,8 +24,12 @@ import java.util.LinkedList
  */
 class TraktAddLoader(
     context: Context,
-    private val type: DiscoverShowsLink
+    private val type: Type
 ) : GenericSimpleLoader<TraktAddLoader.Result>(context) {
+
+    enum class Type {
+        WATCHED, COLLECTION, WATCHLIST
+    }
 
     class Result {
         var results: List<SearchResult>
@@ -50,23 +54,19 @@ class TraktAddLoader(
         try {
             val response: Response<List<BaseShow>>
             when (type) {
-                DiscoverShowsLink.WATCHED -> {
+                Type.WATCHED -> {
                     action = "load watched shows"
                     response = trakt.sync().watchedShows(Extended.NOSEASONS).execute()
                 }
 
-                DiscoverShowsLink.COLLECTION -> {
+                Type.COLLECTION -> {
                     action = "load show collection"
                     response = trakt.sync().collectionShows(null).execute()
                 }
 
-                DiscoverShowsLink.WATCHLIST -> {
+                Type.WATCHLIST -> {
                     action = "load show watchlist"
                     response = trakt.sync().watchlistShows(Extended.FULL).execute()
-                }
-
-                else -> {
-                    throw IllegalArgumentException("Unknown type $type")
                 }
             }
 

@@ -33,19 +33,19 @@ import org.greenrobot.eventbus.ThreadMode
 import java.util.LinkedList
 
 /**
- * Can display either the connected trakt user's watched, collected or watchlist-ed shows and offer
- * to add them.
+ * Displays the watched shows, show collection or shows watchlist of the connected Trakt user for
+ * the purpose of adding them. Shows on the watchlist can also be removed from the watchlist.
  */
 class TraktAddFragment : AddFragment() {
 
     private var binding: FragmentAddshowTraktBinding? = null
-    private lateinit var listType: DiscoverShowsLink
+    private lateinit var listType: TraktAddLoader.Type
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val args = arguments
-        listType =
-            DiscoverShowsLink.fromId(args?.getInt(ARG_TYPE) ?: DiscoverShowsLink.NO_LINK_ID)!!
+        val typeOrdinal = requireArguments().getInt(ARG_TYPE)
+        listType = TraktAddLoader.Type.entries.find { it.ordinal == typeOrdinal }
+            ?: throw IllegalArgumentException("Invalid Type ordinal $typeOrdinal")
     }
 
     override fun onCreateView(
@@ -79,13 +79,13 @@ class TraktAddFragment : AddFragment() {
         // setup adapter, enable context menu only for watchlist
         adapter = AddAdapter(
             requireActivity(), ArrayList(), itemClickListener,
-            listType == DiscoverShowsLink.WATCHLIST
+            listType == TraktAddLoader.Type.WATCHLIST
         )
 
         // load data
         LoaderManager.getInstance(this)
             .initLoader(
-                ShowsTraktActivity.TRAKT_BASE_LOADER_ID + listType.id, null,
+                ShowsTraktActivity.TRAKT_BASE_LOADER_ID + listType.ordinal, null,
                 traktAddCallbacks
             )
 
@@ -123,7 +123,7 @@ class TraktAddFragment : AddFragment() {
                 popupMenu.inflate(R.menu.add_dialog_popup_menu)
 
                 // prevent adding shows to watchlist already on watchlist
-                if (listType == DiscoverShowsLink.WATCHLIST) {
+                if (listType == TraktAddLoader.Type.WATCHLIST) {
                     popupMenu.menu.findItem(R.id.menu_action_show_watchlist_add).isVisible = false
                 }
                 popupMenu.setOnMenuItemClickListener(
@@ -192,11 +192,11 @@ class TraktAddFragment : AddFragment() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventMainThread(@Suppress("UNUSED_PARAMETER") event: ShowChangedEvent?) {
-        if (listType == DiscoverShowsLink.WATCHLIST) {
+        if (listType == TraktAddLoader.Type.WATCHLIST) {
             // reload watchlist if a show was removed
             LoaderManager.getInstance(this)
                 .restartLoader(
-                    ShowsTraktActivity.TRAKT_BASE_LOADER_ID + listType.id, null,
+                    ShowsTraktActivity.TRAKT_BASE_LOADER_ID + listType.ordinal, null,
                     traktAddCallbacks
                 )
         }
@@ -207,7 +207,7 @@ class TraktAddFragment : AddFragment() {
             setProgressVisible(visible = true, animate = false)
             LoaderManager.getInstance(this@TraktAddFragment)
                 .restartLoader(
-                    ShowsTraktActivity.TRAKT_BASE_LOADER_ID + listType.id, null,
+                    ShowsTraktActivity.TRAKT_BASE_LOADER_ID + listType.ordinal, null,
                     traktAddCallbacks
                 )
         }
@@ -216,7 +216,7 @@ class TraktAddFragment : AddFragment() {
     private val traktAddCallbacks: LoaderManager.LoaderCallbacks<TraktAddLoader.Result> =
         object : LoaderManager.LoaderCallbacks<TraktAddLoader.Result> {
             override fun onCreateLoader(id: Int, args: Bundle?): Loader<TraktAddLoader.Result> {
-                return TraktAddLoader(context, listType)
+                return TraktAddLoader(requireContext(), listType)
             }
 
             override fun onLoadFinished(
@@ -235,16 +235,16 @@ class TraktAddFragment : AddFragment() {
 
     companion object {
         /**
-         * Which trakt list should be shown. One of [DiscoverShowsLink].
+         * Which Trakt list should be shown. Ordinal of one of [TraktAddLoader.Type].
          */
         private const val ARG_TYPE = "traktListType"
 
         val liftOnScrollTargetViewId = R.id.gridViewAdd
 
-        fun newInstance(link: DiscoverShowsLink): TraktAddFragment {
+        fun newInstance(type: TraktAddLoader.Type): TraktAddFragment {
             val f = TraktAddFragment()
             val args = Bundle()
-            args.putInt(ARG_TYPE, link.id)
+            args.putInt(ARG_TYPE, type.ordinal)
             f.arguments = args
             return f
         }
