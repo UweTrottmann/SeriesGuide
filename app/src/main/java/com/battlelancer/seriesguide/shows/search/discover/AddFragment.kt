@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2011-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.search.discover
 
@@ -153,13 +153,13 @@ abstract class AddFragment : Fragment() {
         activity: Activity,
         objects: List<SearchResult>,
         private val menuClickListener: OnItemClickListener,
-        private val showMenuWatchlist: Boolean
+        private val enableContextMenu: Boolean
     ) : ArrayAdapter<SearchResult>(activity, 0, objects) {
 
         interface OnItemClickListener {
             fun onItemClick(item: SearchResult)
             fun onAddClick(item: SearchResult)
-            fun onMenuWatchlistClick(view: View, showTmdbId: Int)
+            fun onContextMenuClick(view: View, showTmdbId: Int)
         }
 
         private fun getItemForShowTmdbId(showTmdbId: Int): SearchResult? {
@@ -205,14 +205,14 @@ abstract class AddFragment : Fragment() {
             }
 
             val item = getItem(position)
-            holder.bindTo(item, context, showMenuWatchlist)
+            holder.bindTo(item, context, enableContextMenu)
 
             return view
         }
 
         class ViewHolder(
             val binding: ItemAddshowBinding,
-            onItemClickListener: OnItemClickListener
+            private val onItemClickListener: OnItemClickListener
         ) {
             private var item: SearchResult? = null
 
@@ -223,17 +223,32 @@ abstract class AddFragment : Fragment() {
                 binding.addIndicatorAddShow.setOnAddClickListener {
                     item?.let { onItemClickListener.onAddClick(it) }
                 }
-                binding.buttonItemAddMore.setOnClickListener { v: View ->
-                    item?.let { onItemClickListener.onMenuWatchlistClick(v, it.tmdbId) }
+            }
+
+            private fun openContextMenu() {
+                item?.let {
+                    onItemClickListener.onContextMenuClick(binding.buttonItemAddMore, it.tmdbId)
                 }
             }
 
-            fun bindTo(item: SearchResult?, context: Context, showMenuWatchlist: Boolean) {
+            fun bindTo(item: SearchResult?, context: Context, enableContextMenu: Boolean) {
                 this.item = item
 
-                // hide watchlist menu if not useful
+                if (enableContextMenu) {
+                    binding.root.setOnLongClickListener {
+                        openContextMenu()
+                        true
+                    }
+                    binding.buttonItemAddMore.setOnClickListener {
+                        openContextMenu()
+                    }
+                } else {
+                    // Remove listener so there is no long press feedback
+                    binding.root.setOnLongClickListener(null)
+                    binding.buttonItemAddMore.setOnClickListener(null)
+                }
                 binding.buttonItemAddMore.visibility =
-                    if (showMenuWatchlist) View.VISIBLE else View.GONE
+                    if (enableContextMenu) View.VISIBLE else View.GONE
 
                 if (item == null) {
                     binding.addIndicatorAddShow.setState(SearchResult.STATE_ADD)

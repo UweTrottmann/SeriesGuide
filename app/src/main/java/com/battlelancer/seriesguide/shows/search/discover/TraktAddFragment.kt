@@ -118,9 +118,9 @@ class TraktAddFragment : AddFragment() {
                 TaskManager.getInstance().performAddTask(requireContext(), item)
             }
 
-            override fun onMenuWatchlistClick(view: View, showTmdbId: Int) {
+            override fun onContextMenuClick(view: View, showTmdbId: Int) {
                 val popupMenu = PopupMenu(view.context, view)
-                popupMenu.inflate(R.menu.add_dialog_popup_menu)
+                popupMenu.inflate(R.menu.add_show_popup_menu)
 
                 // prevent adding shows to watchlist already on watchlist
                 if (listType == TraktAddLoader.Type.WATCHLIST) {

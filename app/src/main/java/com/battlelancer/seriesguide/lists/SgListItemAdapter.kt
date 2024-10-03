@@ -58,7 +58,7 @@ class SgListItemAdapter(
 
 class SgListItemViewHolder(
     private val binding: ItemShowListBinding,
-    onItemClickListener: OnItemClickListener
+    private val onItemClickListener: OnItemClickListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
     interface OnItemClickListener {
@@ -82,12 +82,20 @@ class SgListItemViewHolder(
             }
         }
         // context menu
+        binding.root.setOnLongClickListener {
+            openContextMenu()
+            true
+        }
         binding.imageViewShowsContextMenu.apply {
             TooltipCompat.setTooltipText(this, this.contentDescription)
-            setOnClickListener { view ->
-                item?.let { onItemClickListener.onMenuClick(view, it) }
+            setOnClickListener {
+                openContextMenu()
             }
         }
+    }
+
+    private fun openContextMenu() {
+        item?.let { onItemClickListener.onMenuClick(binding.imageViewShowsContextMenu, it) }
     }
 
     fun bindTo(item: SgListItemWithDetails?, context: Context) {

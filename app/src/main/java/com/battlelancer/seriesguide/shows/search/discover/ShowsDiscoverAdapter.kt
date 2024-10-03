@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.TooltipCompat
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
@@ -156,7 +158,7 @@ class ShowsDiscoverAdapter(
         fun onHeaderButtonClick(anchor: View)
         fun onItemClick(item: SearchResult)
         fun onAddClick(item: SearchResult)
-        fun onMenuWatchlistClick(view: View, showTmdbId: Int)
+        fun onContextMenuClick(view: View, showTmdbId: Int)
         fun onEmptyViewButtonClick()
     }
 
@@ -245,7 +247,7 @@ class ShowsDiscoverAdapter(
 
     class ShowViewHolder(
         private val binding: ItemAddshowBinding,
-        onItemClickListener: OnItemClickListener
+        private val onItemClickListener: OnItemClickListener
     ) : RecyclerView.ViewHolder(binding.root) {
 
         private var item: SearchResult? = null
@@ -257,8 +259,11 @@ class ShowsDiscoverAdapter(
             binding.addIndicatorAddShow.setOnAddClickListener {
                 item?.let { onItemClickListener.onAddClick(it) }
             }
-            binding.buttonItemAddMore.setOnClickListener { view ->
-                item?.let { onItemClickListener.onMenuWatchlistClick(view, it.tmdbId) }
+        }
+
+        private fun openContextMenu() {
+            item?.let {
+                onItemClickListener.onContextMenuClick(binding.buttonItemAddMore, it.tmdbId)
             }
         }
 
@@ -270,13 +275,23 @@ class ShowsDiscoverAdapter(
         ) {
             this.item = item
 
-            // hide watchlist menu if not useful
+            // hide and disable watchlist menu if not useful
             val showMenuWatchlistActual = showMenuWatchlist
                     && (!hideMenuWatchlistIfAdded || item.state != SearchResult.STATE_ADDED)
-            binding.buttonItemAddMore.visibility = if (showMenuWatchlistActual) {
-                View.VISIBLE
+            if (showMenuWatchlistActual) {
+                itemView.setOnLongClickListener {
+                    openContextMenu()
+                    true
+                }
+                binding.buttonItemAddMore.setOnClickListener {
+                    openContextMenu()
+                }
+                binding.buttonItemAddMore.isVisible = true
             } else {
-                View.GONE
+                // remove listener to prevent long press feedback
+                itemView.setOnLongClickListener(null)
+                binding.buttonItemAddMore.setOnClickListener(null)
+                binding.buttonItemAddMore.isGone = true
             }
             // display added indicator instead of add button if already added that show
             binding.addIndicatorAddShow.setState(item.state)

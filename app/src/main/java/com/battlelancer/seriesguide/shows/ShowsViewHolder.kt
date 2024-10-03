@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2018-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows
 
@@ -16,7 +16,7 @@ import com.battlelancer.seriesguide.util.ImageTools
 
 class ShowsViewHolder(
     itemView: View,
-    onItemClickListener: ShowsAdapter.OnItemClickListener
+    private val onItemClickListener: ShowsAdapter.OnItemClickListener
 ) : RecyclerView.ViewHolder(itemView) {
 
     private val name: TextView = itemView.findViewById(R.id.seriesname)
@@ -47,11 +47,19 @@ class ShowsViewHolder(
             }
         }
         // context menu
+        itemView.setOnLongClickListener {
+            openContextMenu()
+            true
+        }
         TooltipCompat.setTooltipText(contextMenu, contextMenu.contentDescription)
-        contextMenu.setOnClickListener { v ->
-            showItem?.let {
-                onItemClickListener.onItemMenuClick(v, it)
-            }
+        contextMenu.setOnClickListener {
+            openContextMenu()
+        }
+    }
+
+    private fun openContextMenu() {
+        showItem?.let {
+            onItemClickListener.onItemMenuClick(contextMenu, it)
         }
     }
 

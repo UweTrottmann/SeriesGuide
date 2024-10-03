@@ -29,12 +29,12 @@ class SeasonsAdapter(
 
     interface ItemClickListener {
         fun onItemClick(v: View, seasonRowId: Long)
-        fun onPopupMenuClick(v: View, seasonRowId: Long)
+        fun onContextMenuClick(v: View, seasonRowId: Long)
     }
 
     class ViewHolder(
         private val binding: ItemSeasonBinding,
-        itemClickListener: ItemClickListener
+        private val itemClickListener: ItemClickListener
     ) : RecyclerView.ViewHolder(binding.root) {
 
         private val isRtlLayout = AndroidUtils.isRtlLayout
@@ -46,10 +46,18 @@ class SeasonsAdapter(
                     itemClickListener.onItemClick(view, it.id)
                 }
             }
-            binding.imageViewContextMenu.setOnClickListener { view ->
-                season?.also {
-                    itemClickListener.onPopupMenuClick(view, it.id)
-                }
+            itemView.setOnLongClickListener {
+                openContextMenu()
+                true
+            }
+            binding.imageViewContextMenu.setOnClickListener {
+                openContextMenu()
+            }
+        }
+
+        private fun openContextMenu() {
+            season?.also {
+                itemClickListener.onContextMenuClick(binding.imageViewContextMenu, it.id)
             }
         }
 

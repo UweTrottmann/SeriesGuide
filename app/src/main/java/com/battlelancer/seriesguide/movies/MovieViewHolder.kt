@@ -18,8 +18,8 @@ import com.uwetrottmann.tmdb2.entities.BaseMovie
 import java.text.DateFormat
 
 class MovieViewHolder(
-    val binding: ItemMovieBinding,
-    itemClickListener: MovieClickListener?
+    binding: ItemMovieBinding,
+    private val itemClickListener: MovieClickListener?
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private var movieTmdbId: Int = 0
@@ -33,9 +33,17 @@ class MovieViewHolder(
         itemView.setOnClickListener {
             itemClickListener?.onClickMovie(movieTmdbId, poster)
         }
-        contextMenu.setOnClickListener { v ->
-            itemClickListener?.onClickMovieMoreOptions(movieTmdbId, v)
+        itemView.setOnLongClickListener {
+            openContextMenu()
+            true
         }
+        contextMenu.setOnClickListener {
+            openContextMenu()
+        }
+    }
+
+    private fun openContextMenu() {
+        itemClickListener?.onClickMovieMoreOptions(movieTmdbId, contextMenu)
     }
 
     @SuppressLint("SetTextI18n")
