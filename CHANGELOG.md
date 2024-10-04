@@ -1,8 +1,8 @@
 # Release notes
 
-🌟 = New.
-🔧 = Improved or tweaked.
-🔨 = Resolved or fixed.
+🌟 = New.  
+🔧 = Improved or tweaked.  
+🔨 = Resolved or fixed.  
 📝 = Notable change.
 
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
