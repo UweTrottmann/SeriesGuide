@@ -23,7 +23,8 @@
             android:layout_marginBottom="@dimen/grid_topbottom_padding"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
             <ImageView
                 android:id="@+id/imageViewAddPoster"
@@ -45,7 +46,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/buttonItemAddMore"
+            android:id="@+id/buttonItemAddMoreOptions"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="?attr/selectableItemBackgroundBorderless"
@@ -53,8 +54,7 @@
             android:scaleType="centerInside"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_more_vert_black_20dp"
-            tools:ignore="MissingPrefix" />
+            app:srcCompat="@drawable/ic_more_vert_black_20dp" />
 
         <TextView
             android:id="@+id/textViewAddTitle"
@@ -62,7 +62,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="12dp"
             android:ellipsize="end"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold"
             app:layout_constraintEnd_toStartOf="@+id/addIndicatorAddShow"
@@ -75,14 +75,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
             android:layout_marginBottom="8dp"
             android:ellipsize="end"
             android:lines="3"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/addIndicatorAddShow"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/cardViewAddPoster"
             app:layout_constraintTop_toBottomOf="@+id/textViewAddTitle"
             app:layout_constraintVertical_bias="0.0"

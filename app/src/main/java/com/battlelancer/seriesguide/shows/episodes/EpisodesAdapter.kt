@@ -19,12 +19,13 @@ import com.battlelancer.seriesguide.settings.DisplaySettings.preventSpoilers
 import com.battlelancer.seriesguide.shows.database.SgEpisode2Info
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
+import com.battlelancer.seriesguide.util.ViewTools.setContextAndLongClickListener
 import java.text.NumberFormat
 
 
 class EpisodesAdapter(
     private val context: Context,
-    private val clickListener: ClickListener
+    private val itemClickListener: ItemClickListener
 ) : ListAdapter<SgEpisode2Info, EpisodeViewHolder>(SgEpisode2InfoDiffCallback) {
 
     var selectedItemId: Long = -1
@@ -38,7 +39,7 @@ class EpisodesAdapter(
         currentList.getOrNull(position)?.id ?: RecyclerView.NO_ID
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EpisodeViewHolder {
-        return EpisodeViewHolder.create(parent, clickListener)
+        return EpisodeViewHolder.create(parent, itemClickListener)
     }
 
     override fun onBindViewHolder(holder: EpisodeViewHolder, position: Int) {
@@ -64,10 +65,10 @@ class EpisodesAdapter(
         return selectedItemId
     }
 
-    interface ClickListener {
+    interface ItemClickListener {
         fun onItemClick(position: Int)
         fun onWatchedBoxClick(anchor: View, episodeId: Long, watchedFlag: Int)
-        fun onContextMenuClick(
+        fun onMoreOptionsClick(
             anchor: View, episodeId: Long, episodeNumber: Int,
             releaseTimeMs: Long, watchedFlag: Int, isCollected: Boolean
         )
@@ -85,7 +86,7 @@ object SgEpisode2InfoDiffCallback : DiffUtil.ItemCallback<SgEpisode2Info>() {
 
 class EpisodeViewHolder(
     private val binding: ItemEpisodeBinding,
-    private val clickListener: EpisodesAdapter.ClickListener
+    private val itemClickListener: EpisodesAdapter.ItemClickListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private val integerFormat = NumberFormat.getIntegerInstance()
@@ -93,29 +94,28 @@ class EpisodeViewHolder(
 
     init {
         binding.root.setOnClickListener {
-            clickListener.onItemClick(absoluteAdapterPosition)
+            itemClickListener.onItemClick(absoluteAdapterPosition)
         }
         binding.watchedBoxEpisode.setOnClickListener { view ->
             episode?.let {
                 val box = view as WatchedBox
                 // disable button, will be re-enabled on data reload once action completes
                 box.isEnabled = false
-                clickListener.onWatchedBoxClick(view, it.id, box.episodeFlag)
+                itemClickListener.onWatchedBoxClick(view, it.id, box.episodeFlag)
             }
         }
-        binding.root.setOnLongClickListener {
-            openContextMenu()
-            true
+        binding.root.setContextAndLongClickListener {
+            onMoreOptionsClick()
         }
-        binding.imageViewContextMenu.setOnClickListener { view ->
-            openContextMenu()
+        binding.imageViewItemEpisodeMoreOptions.setOnClickListener {
+            onMoreOptionsClick()
         }
     }
 
-    private fun openContextMenu() {
+    private fun onMoreOptionsClick() {
         episode?.let {
-            clickListener.onContextMenuClick(
-                binding.imageViewContextMenu,
+            itemClickListener.onMoreOptionsClick(
+                binding.imageViewItemEpisodeMoreOptions,
                 it.id,
                 it.episodenumber,
                 it.firstReleasedMs,
@@ -230,7 +230,7 @@ class EpisodeViewHolder(
     companion object {
         fun create(
             parent: ViewGroup,
-            clickListener: EpisodesAdapter.ClickListener
+            itemClickListener: EpisodesAdapter.ItemClickListener
         ): EpisodeViewHolder {
             return EpisodeViewHolder(
                 ItemEpisodeBinding.inflate(
@@ -238,7 +238,7 @@ class EpisodeViewHolder(
                     parent,
                     false
                 ),
-                clickListener
+                itemClickListener
             )
         }
     }

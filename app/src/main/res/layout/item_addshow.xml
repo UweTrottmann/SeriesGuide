@@ -23,7 +23,8 @@
             android:layout_marginBottom="@dimen/grid_topbottom_padding"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
             <ImageView
                 android:id="@+id/imageViewAddPoster"
@@ -35,28 +36,25 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <ImageView
-            android:id="@+id/buttonItemAddMore"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/description_menu_overflow"
-            android:scaleType="centerInside"
-            app:layout_constraintBottom_toBottomOf="@+id/cardViewAddPoster"
-            app:layout_constraintEnd_toStartOf="@+id/addIndicatorAddShow"
-            app:layout_constraintTop_toTopOf="@+id/cardViewAddPoster"
-            app:srcCompat="@drawable/ic_more_vert_black_20dp"
-            tools:ignore="MissingPrefix" />
-
         <com.battlelancer.seriesguide.shows.search.discover.AddIndicator
             android:id="@+id/addIndicatorAddShow"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginTop="0dp"
             android:layout_marginBottom="0dp"
-            app:layout_constraintBottom_toBottomOf="@+id/cardViewAddPoster"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/cardViewAddPoster" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/buttonItemAddMoreOptions"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/description_menu_overflow"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_more_vert_black_20dp" />
 
         <TextView
             android:id="@+id/textViewAddTitle"
@@ -64,10 +62,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="12dp"
             android:ellipsize="end"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold"
-            app:layout_constraintEnd_toStartOf="@+id/buttonItemAddMore"
+            app:layout_constraintEnd_toStartOf="@+id/addIndicatorAddShow"
             app:layout_constraintStart_toEndOf="@+id/cardViewAddPoster"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Cosmos: A Spacetime Odyssey" />
@@ -77,14 +75,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
             android:layout_marginBottom="8dp"
             android:ellipsize="end"
             android:lines="3"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/buttonItemAddMore"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintEnd_toStartOf="@+id/addIndicatorAddShow"
             app:layout_constraintStart_toEndOf="@+id/cardViewAddPoster"
             app:layout_constraintTop_toBottomOf="@+id/textViewAddTitle"
             app:layout_constraintVertical_bias="0.0"

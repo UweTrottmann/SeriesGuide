@@ -22,6 +22,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.databinding.FragmentShowSearchBinding
 import com.battlelancer.seriesguide.shows.ShowMenuItemClickListener
+import com.battlelancer.seriesguide.shows.database.SgShow2ForLists
 import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverPagingActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.widgets.EmptyView
@@ -59,7 +60,7 @@ class ShowSearchFragment : BaseSearchFragment() {
         (emptyView as EmptyView).setButtonClickListener {
             navigateToAddShow()
         }
-        adapter = ShowSearchAdapter(requireContext(), onItemClickListener).also {
+        adapter = ShowSearchAdapter(requireContext(), itemClickListener).also {
             gridView.adapter = it
         }
 
@@ -127,10 +128,10 @@ class ShowSearchFragment : BaseSearchFragment() {
         }
     }
 
-    private val onItemClickListener = object : ShowSearchAdapter.OnItemClickListener {
+    private val itemClickListener = object : ShowSearchAdapter.ItemClickListener {
 
-        override fun onItemClick(anchor: View, viewHolder: ShowSearchAdapter.ShowViewHolder) {
-            OverviewActivity.intentShow(requireContext(), viewHolder.showId).let {
+        override fun onItemClick(anchor: View, showId: Long) {
+            OverviewActivity.intentShow(requireContext(), showId).let {
                 ActivityCompat.startActivity(
                     requireActivity(), it,
                     ActivityOptionsCompat.makeScaleUpAnimation(
@@ -141,19 +142,15 @@ class ShowSearchFragment : BaseSearchFragment() {
             }
         }
 
-        override fun onMenuClick(anchor: View, viewHolder: ShowSearchAdapter.ShowViewHolder) {
+        override fun onMoreOptionsClick(anchor: View, show: SgShow2ForLists) {
             PopupMenu(anchor.context, anchor).apply {
                 inflate(R.menu.shows_popup_menu)
                 menu.apply {
                     // show/hide some menu items depending on show properties
-                    findItem(
-                        R.id.menu_action_shows_favorites_add
-                    ).isVisible = !viewHolder.isFavorited
-                    findItem(
-                        R.id.menu_action_shows_favorites_remove
-                    ).isVisible = viewHolder.isFavorited
-                    findItem(R.id.menu_action_shows_hide).isVisible = !viewHolder.isHidden
-                    findItem(R.id.menu_action_shows_unhide).isVisible = viewHolder.isHidden
+                    findItem(R.id.menu_action_shows_favorites_add).isVisible = !show.favorite
+                    findItem(R.id.menu_action_shows_favorites_remove).isVisible = show.favorite
+                    findItem(R.id.menu_action_shows_hide).isVisible = !show.hidden
+                    findItem(R.id.menu_action_shows_unhide).isVisible = show.hidden
 
                     // hide unused actions
                     findItem(R.id.menu_action_shows_watched_next).isVisible = false
@@ -162,7 +159,7 @@ class ShowSearchFragment : BaseSearchFragment() {
                     ShowMenuItemClickListener(
                         requireContext(),
                         parentFragmentManager,
-                        viewHolder.showId,
+                        show.id,
                         0
                     )
                 )

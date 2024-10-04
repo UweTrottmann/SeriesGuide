@@ -21,11 +21,12 @@ import com.battlelancer.seriesguide.shows.episodes.WatchedBox
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
+import com.battlelancer.seriesguide.util.ViewTools.setContextAndLongClickListener
 import java.util.Date
 
 class CalendarItemViewHolder(
     parent: ViewGroup,
-    itemClickListener: CalendarAdapter2.ItemClickListener
+    private val itemClickListener: CalendarAdapter2.ItemClickListener
 ) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(
         R.layout.item_calendar,
@@ -40,6 +41,7 @@ class CalendarItemViewHolder(
     private val episodeTextView: TextView = itemView.findViewById(R.id.textViewActivityEpisode)
     private val collected: View = itemView.findViewById(R.id.imageViewActivityCollected)
     private val watchedBox: WatchedBox = itemView.findViewById(R.id.watchedBoxActivity)
+    private val contextMenu: ImageView = itemView.findViewById(R.id.imageViewActivityMoreOptions)
     private val info: TextView = itemView.findViewById(R.id.textViewActivityInfo)
     private val timestamp: TextView = itemView.findViewById(R.id.textViewActivityTimestamp)
     private val poster: ImageView = itemView.findViewById(R.id.imageViewActivityPoster)
@@ -52,15 +54,15 @@ class CalendarItemViewHolder(
                 itemClickListener.onItemClick(it.id)
             }
         }
-        itemContainer.setOnLongClickListener {
-            item?.episode?.let {
-                itemClickListener.onItemLongClick(itemView, it)
-            }
-            true
+        itemContainer.setContextAndLongClickListener {
+            onMoreOptionsClick()
+        }
+        contextMenu.setOnClickListener {
+            onMoreOptionsClick()
         }
         watchedBox.setOnClickListener {
             item?.episode?.let {
-                itemClickListener.onItemWatchBoxClick(
+                itemClickListener.onWatchedBoxClick(
                     it,
                     EpisodeTools.isWatched(watchedBox.episodeFlag)
                 )
@@ -68,6 +70,12 @@ class CalendarItemViewHolder(
         }
 
         TooltipCompat.setTooltipText(watchedBox, watchedBox.contentDescription)
+    }
+
+    private fun onMoreOptionsClick() {
+        item?.episode?.let {
+            itemClickListener.onMoreOptionsClick(contextMenu, it)
+        }
     }
 
     fun bind(

@@ -11,13 +11,13 @@ import com.battlelancer.seriesguide.shows.search.discover.SearchResultDiffCallba
 import com.battlelancer.seriesguide.shows.search.discover.SearchResultViewHolder
 
 class SimilarShowsAdapter(
-    private val onItemClickListener: BaseAddShowsFragment.OnItemClickListener
+    private val itemClickListener: BaseAddShowsFragment.ItemClickListener
 ) : ListAdapter<SearchResult, SearchResultViewHolder>(
     SearchResultDiffCallback()
 ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultViewHolder {
-        return SearchResultViewHolder.create(parent, onItemClickListener)
+        return SearchResultViewHolder.create(parent, itemClickListener)
     }
 
     override fun onBindViewHolder(holder: SearchResultViewHolder, position: Int) {

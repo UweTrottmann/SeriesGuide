@@ -97,8 +97,8 @@ class TraktAddFragment : AddFragment() {
         )
     }
 
-    private val itemClickListener: AddAdapter.OnItemClickListener =
-        object : AddAdapter.OnItemClickListener {
+    private val itemClickListener: AddAdapter.ItemClickListener =
+        object : AddAdapter.ItemClickListener {
             override fun onItemClick(item: SearchResult) {
                 if (item.state != SearchResult.STATE_ADDING) {
                     if (item.state == SearchResult.STATE_ADDED) {
@@ -118,9 +118,9 @@ class TraktAddFragment : AddFragment() {
                 TaskManager.getInstance().performAddTask(requireContext(), item)
             }
 
-            override fun onMenuWatchlistClick(view: View, showTmdbId: Int) {
+            override fun onMoreOptionsClick(view: View, showTmdbId: Int) {
                 val popupMenu = PopupMenu(view.context, view)
-                popupMenu.inflate(R.menu.add_dialog_popup_menu)
+                popupMenu.inflate(R.menu.add_show_popup_menu)
 
                 // prevent adding shows to watchlist already on watchlist
                 if (listType == TraktAddLoader.Type.WATCHLIST) {

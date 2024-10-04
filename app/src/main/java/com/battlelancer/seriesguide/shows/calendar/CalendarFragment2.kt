@@ -230,7 +230,7 @@ abstract class CalendarFragment2 : Fragment() {
             Utils.startActivityWithAnimation(activity, intent, view)
         }
 
-        override fun onItemLongClick(anchor: View, episode: SgEpisode2WithShow) {
+        override fun onMoreOptionsClick(anchor: View, episode: SgEpisode2WithShow) {
             val context = anchor.context
 
             val popupMenu = PopupMenu(context, anchor)
@@ -290,7 +290,7 @@ abstract class CalendarFragment2 : Fragment() {
             popupMenu.show()
         }
 
-        override fun onItemWatchBoxClick(episode: SgEpisode2WithShow, isWatched: Boolean) {
+        override fun onWatchedBoxClick(episode: SgEpisode2WithShow, isWatched: Boolean) {
             updateEpisodeWatchedState(episode.id, !isWatched)
         }
     }

@@ -122,6 +122,7 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- Add end margin to reduce overlap with scrollbar -->
         <com.battlelancer.seriesguide.shows.episodes.WatchedBox
             android:id="@+id/watchedBoxActivity"
             android:layout_width="48dp"
@@ -131,9 +132,20 @@
             android:layout_marginBottom="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:scaleType="centerInside"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageViewActivityMoreOptions"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginRight="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/description_menu_overflow"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_more_vert_black_20dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

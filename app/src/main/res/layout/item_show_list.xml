@@ -9,7 +9,7 @@
     android:focusable="true">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardView"
+        android:id="@+id/cardViewItemShowListPoster"
         style="?attr/materialCardViewElevatedStyle"
         android:layout_width="@dimen/show_poster_width_default"
         android:layout_height="@dimen/show_poster_height_default"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/showposter"
+            android:id="@+id/imageViewItemShowListPoster"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@null"
@@ -29,7 +29,7 @@
             tools:src="?attr/sgColorShadow" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/favoritedLabel"
+            android:id="@+id/imageViewItemShowListFavorited"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:contentDescription="@string/state_favorite"
@@ -39,7 +39,7 @@
 
     <!-- 20dp dense icon, though 48dp touch target -->
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imageViewShowsSetWatched"
+        android:id="@+id/imageViewItemShowListSetWatched"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:background="?attr/selectableItemBackgroundBorderless"
@@ -54,7 +54,7 @@
 
     <!-- 20dp dense icon, though 48dp touch target -->
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imageViewShowsContextMenu"
+        android:id="@+id/imageViewItemShowListMoreOptions"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:background="?attr/selectableItemBackgroundBorderless"
@@ -65,7 +65,7 @@
         app:srcCompat="@drawable/ic_more_vert_black_20dp" />
 
     <TextView
-        android:id="@+id/textViewShowsRemaining"
+        android:id="@+id/textViewItemShowListRemaining"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/grid_leftright_padding"
@@ -73,12 +73,12 @@
         android:ellipsize="end"
         android:lines="1"
         android:textAppearance="@style/TextAppearance.SeriesGuide.Caption.Dim"
-        app:layout_constraintStart_toEndOf="@+id/cardView"
+        app:layout_constraintStart_toEndOf="@+id/cardViewItemShowListPoster"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="42 remaining" />
 
     <TextView
-        android:id="@+id/textViewShowsTimeAndNetwork"
+        android:id="@+id/textViewItemShowListTimeAndNetwork"
         style="@style/Widget.SeriesGuide.TextView.SingleLine"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -89,13 +89,13 @@
         android:text="@string/norating"
         android:textAppearance="@style/TextAppearance.SeriesGuide.Caption.Dim"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textViewShowsRemaining"
+        app:layout_constraintStart_toEndOf="@+id/textViewItemShowListRemaining"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Showtime Network · Tue 08:00 PM" />
 
     <!-- remaining count may be hidden, so to bottom of network -->
     <TextView
-        android:id="@+id/seriesname"
+        android:id="@+id/textViewItemShowListTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/grid_leftright_padding"
@@ -103,13 +103,13 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold"
-        app:layout_constraintEnd_toStartOf="@+id/imageViewShowsContextMenu"
-        app:layout_constraintStart_toEndOf="@+id/cardView"
-        app:layout_constraintTop_toBottomOf="@+id/textViewShowsTimeAndNetwork"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewItemShowListMoreOptions"
+        app:layout_constraintStart_toEndOf="@+id/cardViewItemShowListPoster"
+        app:layout_constraintTop_toBottomOf="@+id/textViewItemShowListTimeAndNetwork"
         tools:text="Some Show Title" />
 
     <TextView
-        android:id="@+id/TextViewShowListNextEpisode"
+        android:id="@+id/textViewItemShowListNextEpisode"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/grid_leftright_padding"
@@ -117,13 +117,13 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
-        app:layout_constraintEnd_toStartOf="@+id/imageViewShowsContextMenu"
-        app:layout_constraintStart_toEndOf="@+id/cardView"
-        app:layout_constraintTop_toBottomOf="@+id/seriesname"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewItemShowListMoreOptions"
+        app:layout_constraintStart_toEndOf="@+id/cardViewItemShowListPoster"
+        app:layout_constraintTop_toBottomOf="@+id/textViewItemShowListTitle"
         tools:text="10x456 Some Very Cool Episode Title Therefore" />
 
     <TextView
-        android:id="@+id/episodetime"
+        android:id="@+id/textViewItemShowListNextEpisodeTime"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/grid_leftright_padding"
@@ -133,9 +133,9 @@
         android:maxLines="1"
         android:textAppearance="@style/TextAppearance.SeriesGuide.Caption.Dim"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageViewShowsContextMenu"
-        app:layout_constraintStart_toEndOf="@+id/cardView"
-        app:layout_constraintTop_toBottomOf="@+id/TextViewShowListNextEpisode"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewItemShowListMoreOptions"
+        app:layout_constraintStart_toEndOf="@+id/cardViewItemShowListPoster"
+        app:layout_constraintTop_toBottomOf="@+id/textViewItemShowListNextEpisode"
         app:layout_constraintVertical_bias="0.0"
         tools:text="Jan 8, 2009 (Thur)" />
 

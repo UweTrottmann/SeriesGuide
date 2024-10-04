@@ -174,7 +174,7 @@ class SeasonsFragment() : Fragment() {
             )
         }
 
-        override fun onPopupMenuClick(v: View, seasonRowId: Long) {
+        override fun onMoreOptionsClick(v: View, seasonRowId: Long) {
             PopupMenu(v.context, v).apply {
                 inflate(R.menu.seasons_popup_menu)
                 setOnMenuItemClickListener { item ->

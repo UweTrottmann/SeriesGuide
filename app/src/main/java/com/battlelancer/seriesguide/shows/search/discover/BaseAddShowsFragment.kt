@@ -65,12 +65,12 @@ abstract class BaseAddShowsFragment : Fragment() {
         }
     }
 
-    interface OnItemClickListener {
+    interface ItemClickListener {
         fun onItemClick(item: SearchResult)
         fun onAddClick(item: SearchResult)
     }
 
-    protected val itemClickListener = object : OnItemClickListener {
+    protected val itemClickListener = object : ItemClickListener {
         override fun onItemClick(item: SearchResult) {
             if (item.state != SearchResult.STATE_ADDING) {
                 if (item.state == SearchResult.STATE_ADDED) {

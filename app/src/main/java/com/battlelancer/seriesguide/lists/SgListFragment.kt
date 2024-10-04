@@ -60,7 +60,7 @@ class SgListFragment : Fragment() {
 
         ViewTools.setVectorDrawableTop(binding.emptyViewList, R.drawable.ic_list_white_24dp)
 
-        val adapter = SgListItemAdapter(requireContext(), onItemClickListener)
+        val adapter = SgListItemAdapter(requireContext(), itemClickListener)
 
         val recyclerView = binding.recyclerViewListItems.also {
             SgFastScroller(requireContext(), it)
@@ -109,8 +109,8 @@ class SgListFragment : Fragment() {
         model.updateQuery()
     }
 
-    private val onItemClickListener: SgListItemViewHolder.OnItemClickListener =
-        object : SgListItemViewHolder.OnItemClickListener {
+    private val itemClickListener: SgListItemViewHolder.ItemClickListener =
+        object : SgListItemViewHolder.ItemClickListener {
             override fun onItemClick(anchor: View, item: SgListItemWithDetails) {
                 Utils.startActivityWithAnimation(
                     requireActivity(),
@@ -119,7 +119,7 @@ class SgListFragment : Fragment() {
                 )
             }
 
-            override fun onMenuClick(anchor: View, item: SgListItemWithDetails) {
+            override fun onMoreOptionsClick(anchor: View, item: SgListItemWithDetails) {
                 val popupMenu = PopupMenu(anchor.context, anchor)
                 popupMenu.inflate(R.menu.lists_popup_menu)
                 val menu = popupMenu.menu
@@ -144,7 +144,7 @@ class SgListFragment : Fragment() {
                 popupMenu.show()
             }
 
-            override fun onItemSetWatchedClick(item: SgListItemWithDetails) {
+            override fun onSetWatchedClick(item: SgListItemWithDetails) {
                 EpisodeTools.episodeWatchedIfNotZero(context, item.nextEpisodeId)
             }
         }

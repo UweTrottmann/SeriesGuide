@@ -95,7 +95,7 @@ class EpisodesFragment : Fragment() {
             binding.imageViewEpisodesWatched.setImageResource(R.drawable.ic_watch_all_black_24dp)
             binding.imageViewEpisodesCollected.setImageResource(R.drawable.ic_collect_all_black_24dp)
 
-            adapter = EpisodesAdapter(requireActivity(), episodesListClickListener)
+            adapter = EpisodesAdapter(requireActivity(), episodesListItemClickListener)
             adapter.selectedItemId = model.selectedItemId
 
             binding.recyclerViewEpisodes.also {
@@ -179,7 +179,7 @@ class EpisodesFragment : Fragment() {
         }
     }
 
-    private val episodesListClickListener = object : EpisodesAdapter.ClickListener {
+    private val episodesListItemClickListener = object : EpisodesAdapter.ItemClickListener {
 
         override fun onItemClick(position: Int) {
             showDetails(position)
@@ -215,7 +215,7 @@ class EpisodesFragment : Fragment() {
         }
 
 
-        override fun onContextMenuClick(
+        override fun onMoreOptionsClick(
             anchor: View,
             episodeId: Long,
             episodeNumber: Int,

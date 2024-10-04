@@ -25,6 +25,6 @@
         android:clipToPadding="false"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        tools:listitem="@layout/item_show" />
+        tools:listitem="@layout/item_show_list" />
 
 </FrameLayout>

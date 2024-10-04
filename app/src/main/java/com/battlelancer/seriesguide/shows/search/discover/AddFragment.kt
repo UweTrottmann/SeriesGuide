@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2011-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.search.discover
 
@@ -21,6 +21,7 @@ import com.battlelancer.seriesguide.shows.tools.AddShowTask.OnShowAddedEvent
 import com.battlelancer.seriesguide.shows.tools.ShowTools2.OnShowRemovedEvent
 import com.battlelancer.seriesguide.ui.widgets.EmptyView
 import com.battlelancer.seriesguide.util.ImageTools
+import com.battlelancer.seriesguide.util.ViewTools.setContextAndLongClickListener
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -152,14 +153,14 @@ abstract class AddFragment : Fragment() {
     class AddAdapter(
         activity: Activity,
         objects: List<SearchResult>,
-        private val menuClickListener: OnItemClickListener,
-        private val showMenuWatchlist: Boolean
+        private val itemClickListener: ItemClickListener,
+        private val enableMoreOptions: Boolean
     ) : ArrayAdapter<SearchResult>(activity, 0, objects) {
 
-        interface OnItemClickListener {
+        interface ItemClickListener {
             fun onItemClick(item: SearchResult)
             fun onAddClick(item: SearchResult)
-            fun onMenuWatchlistClick(view: View, showTmdbId: Int)
+            fun onMoreOptionsClick(view: View, showTmdbId: Int)
         }
 
         private fun getItemForShowTmdbId(showTmdbId: Int): SearchResult? {
@@ -196,7 +197,7 @@ abstract class AddFragment : Fragment() {
             val view: View
             val holder: ViewHolder
             if (convertView == null) {
-                holder = ViewHolder.inflate(parent, menuClickListener)
+                holder = ViewHolder.inflate(parent, itemClickListener)
                     .also { it.binding.root.tag = it }
                 view = holder.binding.root
             } else {
@@ -205,35 +206,52 @@ abstract class AddFragment : Fragment() {
             }
 
             val item = getItem(position)
-            holder.bindTo(item, context, showMenuWatchlist)
+            holder.bindTo(item, context, enableMoreOptions)
 
             return view
         }
 
         class ViewHolder(
             val binding: ItemAddshowBinding,
-            onItemClickListener: OnItemClickListener
+            private val itemClickListener: ItemClickListener
         ) {
             private var item: SearchResult? = null
 
             init {
                 binding.root.setOnClickListener {
-                    item?.let { onItemClickListener.onItemClick(it) }
+                    item?.let { itemClickListener.onItemClick(it) }
                 }
                 binding.addIndicatorAddShow.setOnAddClickListener {
-                    item?.let { onItemClickListener.onAddClick(it) }
-                }
-                binding.buttonItemAddMore.setOnClickListener { v: View ->
-                    item?.let { onItemClickListener.onMenuWatchlistClick(v, it.tmdbId) }
+                    item?.let { itemClickListener.onAddClick(it) }
                 }
             }
 
-            fun bindTo(item: SearchResult?, context: Context, showMenuWatchlist: Boolean) {
+            private fun onMoreOptionsClick() {
+                item?.let {
+                    itemClickListener.onMoreOptionsClick(
+                        binding.buttonItemAddMoreOptions,
+                        it.tmdbId
+                    )
+                }
+            }
+
+            fun bindTo(item: SearchResult?, context: Context, enableMoreOptions: Boolean) {
                 this.item = item
 
-                // hide watchlist menu if not useful
-                binding.buttonItemAddMore.visibility =
-                    if (showMenuWatchlist) View.VISIBLE else View.GONE
+                if (enableMoreOptions) {
+                    binding.root.setContextAndLongClickListener {
+                        onMoreOptionsClick()
+                    }
+                    binding.buttonItemAddMoreOptions.setOnClickListener {
+                        onMoreOptionsClick()
+                    }
+                } else {
+                    // Remove listener so there is no long press feedback
+                    binding.root.setContextAndLongClickListener(null)
+                    binding.buttonItemAddMoreOptions.setOnClickListener(null)
+                }
+                binding.buttonItemAddMoreOptions.visibility =
+                    if (enableMoreOptions) View.VISIBLE else View.GONE
 
                 if (item == null) {
                     binding.addIndicatorAddShow.setState(SearchResult.STATE_ADD)
@@ -269,14 +287,14 @@ abstract class AddFragment : Fragment() {
             }
 
             companion object {
-                fun inflate(parent: ViewGroup, onItemClickListener: OnItemClickListener) =
+                fun inflate(parent: ViewGroup, itemClickListener: ItemClickListener) =
                     ViewHolder(
                         ItemAddshowBinding.inflate(
                             LayoutInflater.from(parent.context),
                             parent,
                             false
                         ),
-                        onItemClickListener
+                        itemClickListener
                     )
             }
         }

@@ -25,15 +25,16 @@ import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.TimeTools.formatWithDeviceZoneToDayAndTime
+import com.battlelancer.seriesguide.util.ViewTools.setContextAndLongClickListener
 import org.threeten.bp.Instant
 
 class SgListItemAdapter(
     private val context: Context,
-    private val onItemClickListener: SgListItemViewHolder.OnItemClickListener
+    private val itemClickListener: SgListItemViewHolder.ItemClickListener
 ) : ListAdapter<SgListItemWithDetails, SgListItemViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SgListItemViewHolder {
-        return SgListItemViewHolder.create(onItemClickListener, parent)
+        return SgListItemViewHolder.create(itemClickListener, parent)
     }
 
     override fun onBindViewHolder(holder: SgListItemViewHolder, position: Int) {
@@ -58,13 +59,13 @@ class SgListItemAdapter(
 
 class SgListItemViewHolder(
     private val binding: ItemShowListBinding,
-    onItemClickListener: OnItemClickListener
+    private val itemClickListener: ItemClickListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    interface OnItemClickListener {
+    interface ItemClickListener {
         fun onItemClick(anchor: View, item: SgListItemWithDetails)
-        fun onMenuClick(anchor: View, item: SgListItemWithDetails)
-        fun onItemSetWatchedClick(item: SgListItemWithDetails)
+        fun onMoreOptionsClick(anchor: View, item: SgListItemWithDetails)
+        fun onSetWatchedClick(item: SgListItemWithDetails)
     }
 
     var item: SgListItemWithDetails? = null
@@ -72,21 +73,33 @@ class SgListItemViewHolder(
     init {
         // item
         binding.root.setOnClickListener { view ->
-            item?.let { onItemClickListener.onItemClick(view, it) }
+            item?.let { itemClickListener.onItemClick(view, it) }
         }
         // set watched button
-        binding.imageViewShowsSetWatched.apply {
+        binding.imageViewItemShowListSetWatched.apply {
             TooltipCompat.setTooltipText(this, this.contentDescription)
             setOnClickListener {
-                item?.let { onItemClickListener.onItemSetWatchedClick(it) }
+                item?.let { itemClickListener.onSetWatchedClick(it) }
             }
         }
-        // context menu
-        binding.imageViewShowsContextMenu.apply {
+        // more options button
+        binding.root.setContextAndLongClickListener {
+            onMoreOptionsClick()
+        }
+        binding.imageViewItemShowListMoreOptions.apply {
             TooltipCompat.setTooltipText(this, this.contentDescription)
-            setOnClickListener { view ->
-                item?.let { onItemClickListener.onMenuClick(view, it) }
+            setOnClickListener {
+                onMoreOptionsClick()
             }
+        }
+    }
+
+    private fun onMoreOptionsClick() {
+        item?.let {
+            itemClickListener.onMoreOptionsClick(
+                binding.imageViewItemShowListMoreOptions,
+                it
+            )
         }
     }
 
@@ -94,17 +107,21 @@ class SgListItemViewHolder(
         this.item = item
 
         if (item == null) {
-            binding.seriesname.text = null
+            binding.textViewItemShowListTitle.text = null
             return
         }
 
-        binding.seriesname.text = item.title
-        binding.favoritedLabel.isVisible = item.favorite
-        ImageTools.loadShowPosterResizeCrop(context, binding.showposter, item.posterSmall)
+        binding.textViewItemShowListTitle.text = item.title
+        binding.imageViewItemShowListFavorited.isVisible = item.favorite
+        ImageTools.loadShowPosterResizeCrop(
+            context,
+            binding.imageViewItemShowListPoster,
+            item.posterSmall
+        )
 
         val isShow = item.type == ListItemTypes.TMDB_SHOW || item.type == ListItemTypes.TVDB_SHOW
         // Hide set watched button for legacy season and episode items
-        binding.imageViewShowsSetWatched.isVisible = isShow
+        binding.imageViewItemShowListSetWatched.isVisible = isShow
 
         // network, regular day and time, or type for legacy season/episode
         if (isShow) {
@@ -114,7 +131,7 @@ class SgListItemViewHolder(
 
             val releaseTimeShow = TimeTools.getReleaseDateTime(context, item)
 
-            binding.textViewShowsTimeAndNetwork.text = TextTools.dotSeparate(
+            binding.textViewItemShowListTimeAndNetwork.text = TextTools.dotSeparate(
                 network,
                 releaseTimeShow?.formatWithDeviceZoneToDayAndTime()
             )
@@ -122,13 +139,14 @@ class SgListItemViewHolder(
             // next episode info
             val fieldValue: String? = item.nextText
             val hasNoNextEpisode = fieldValue.isNullOrEmpty()
-            binding.imageViewShowsSetWatched.isGone = hasNoNextEpisode
+            binding.imageViewItemShowListSetWatched.isGone = hasNoNextEpisode
             if (hasNoNextEpisode) {
                 // display show status if there is no next episode
-                binding.episodetime.text = ShowStatus.getStatus(context, item.statusOrUnknown)
-                binding.TextViewShowListNextEpisode.text = null
+                binding.textViewItemShowListNextEpisodeTime.text =
+                    ShowStatus.getStatus(context, item.statusOrUnknown)
+                binding.textViewItemShowListNextEpisode.text = null
             } else {
-                binding.TextViewShowListNextEpisode.text = fieldValue
+                binding.textViewItemShowListNextEpisode.text = fieldValue
 
                 val releaseTimeEpisode = TimeTools.applyUserOffset(context, item.nextAirdateMs)
                 val displayExactDate = DisplaySettings.isDisplayExactDate(context)
@@ -143,10 +161,10 @@ class SgListItemViewHolder(
                         weekDay
                     )) {
                     // just display date
-                    binding.episodetime.text = dateTime
+                    binding.textViewItemShowListNextEpisodeTime.text = dateTime
                 } else {
                     // display date and explicitly day
-                    binding.episodetime.text = context.getString(
+                    binding.textViewItemShowListNextEpisodeTime.text = context.getString(
                         R.string.format_date_and_day, dateTime,
                         TimeTools.formatToLocalDay(releaseTimeEpisode)
                     )
@@ -156,25 +174,25 @@ class SgListItemViewHolder(
             // remaining count
             setRemainingCount(item.unwatchedCount)
         } else if (item.type == ListItemTypes.SEASON) {
-            binding.textViewShowsTimeAndNetwork.setText(R.string.season)
-            binding.episodetime.text = null
-            binding.textViewShowsRemaining.visibility = View.GONE
+            binding.textViewItemShowListTimeAndNetwork.setText(R.string.season)
+            binding.textViewItemShowListNextEpisodeTime.text = null
+            binding.textViewItemShowListRemaining.visibility = View.GONE
 
             // Note: Running query in adapter, but it's for legacy items, so fine for now.
             val sesaonTvdbId: Int = item.itemRefId.toIntOrNull() ?: 0
             val seasonNumbersOrNull = SgRoomDatabase.getInstance(context).sgSeason2Helper()
                 .getSeasonNumbersByTvdbId(sesaonTvdbId)
             if (seasonNumbersOrNull != null) {
-                binding.TextViewShowListNextEpisode.text = SeasonTools.getSeasonString(
+                binding.textViewItemShowListNextEpisode.text = SeasonTools.getSeasonString(
                     context,
                     seasonNumbersOrNull.number
                 )
             } else {
-                binding.TextViewShowListNextEpisode.setText(R.string.unknown)
+                binding.textViewItemShowListNextEpisode.setText(R.string.unknown)
             }
         } else if (item.type == ListItemTypes.EPISODE) {
-            binding.textViewShowsTimeAndNetwork.setText(R.string.episode)
-            binding.textViewShowsRemaining.visibility = View.GONE
+            binding.textViewItemShowListTimeAndNetwork.setText(R.string.episode)
+            binding.textViewItemShowListRemaining.visibility = View.GONE
 
             // Note: Running query in adapter, but it's for legacy items, so fine for now.
             val episodeTvdbId: Int = item.itemRefId.toIntOrNull() ?: 0
@@ -185,7 +203,7 @@ class SgListItemViewHolder(
             } else null
 
             if (episodeInfo != null) {
-                binding.TextViewShowListNextEpisode.text = TextTools.getNextEpisodeString(
+                binding.textViewItemShowListNextEpisode.text = TextTools.getNextEpisodeString(
                     context,
                     episodeInfo.season,
                     episodeInfo.episodenumber,
@@ -195,21 +213,21 @@ class SgListItemViewHolder(
                 if (releaseTime != -1L) {
                     // "in 15 mins (Fri)"
                     val actualRelease = TimeTools.applyUserOffset(context, releaseTime)
-                    binding.episodetime.text = context.getString(
+                    binding.textViewItemShowListNextEpisodeTime.text = context.getString(
                         R.string.format_date_and_day,
                         TimeTools.formatToLocalRelativeTime(context, actualRelease),
                         TimeTools.formatToLocalDay(actualRelease)
                     )
                 }
             } else {
-                binding.TextViewShowListNextEpisode.setText(R.string.unknown)
-                binding.episodetime.text = null
+                binding.textViewItemShowListNextEpisode.setText(R.string.unknown)
+                binding.textViewItemShowListNextEpisodeTime.text = null
             }
         }
     }
 
     private fun setRemainingCount(unwatched: Int) {
-        val textView = binding.textViewShowsRemaining
+        val textView = binding.textViewItemShowListRemaining
         textView.text = TextTools.getRemainingEpisodes(textView.resources, unwatched)
         if (unwatched > 0) {
             textView.visibility = View.VISIBLE
@@ -220,7 +238,7 @@ class SgListItemViewHolder(
 
     companion object {
         fun create(
-            onItemClickListener: OnItemClickListener,
+            itemClickListener: ItemClickListener,
             parent: ViewGroup
         ): SgListItemViewHolder = SgListItemViewHolder(
             ItemShowListBinding.inflate(
@@ -228,7 +246,7 @@ class SgListItemViewHolder(
                 parent,
                 false
             ),
-            onItemClickListener
+            itemClickListener
         )
     }
 
