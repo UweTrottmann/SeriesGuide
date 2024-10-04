@@ -627,6 +627,7 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
     private fun loadEpisodeImage(imageView: ImageView, detailsHiddenView: View, imagePath: String?) {
         if (imagePath.isNullOrEmpty()) {
             imageView.setImageDrawable(null)
+            detailsHiddenView.isGone = true
             return
         }
 
