@@ -18,6 +18,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
   Dex) as well.
 * 🔧 Where touch and hold copies text, support right click to copy as well.
 * 🔨 Show overview: do not display no spoiler warning if there is no image.
+* 🔨 Consistently style more options menus.
 
 ### 2024.4.3 - 2024-09-13 🧪
 

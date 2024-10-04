@@ -20,3 +20,9 @@ Example: `ItemClickListener`
 The methods are named based on what is clicked.
 
 Example: `onMoreOptionsClick`.
+
+## PopupMenu
+
+Use `androidx.appcompat.widget.PopupMenu` so Material 3 styles are correctly applied.
+(Could also use the platform one and set Widget.Material3.PopupMenu with android:popupMenuStyle,
+but rather use the same implementation on all versions.)

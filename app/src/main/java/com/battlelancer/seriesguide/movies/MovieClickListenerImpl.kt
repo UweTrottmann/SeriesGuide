@@ -6,7 +6,7 @@ package com.battlelancer.seriesguide.movies
 import android.content.Context
 import android.view.View
 import android.widget.ImageView
-import android.widget.PopupMenu
+import androidx.appcompat.widget.PopupMenu
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.movies.database.SgMovieFlags
 import com.battlelancer.seriesguide.movies.details.MovieDetailsActivity
