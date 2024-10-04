@@ -140,7 +140,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         }
 
         override fun onHeaderButtonClick(anchor: View) {
-            val popupMenu = PopupMenu(context, anchor)
+            val popupMenu = PopupMenu(anchor.context, anchor)
             popupMenu.inflate(R.menu.new_episodes_filter_popup_menu)
             popupMenu.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
