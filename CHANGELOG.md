@@ -1,8 +1,4 @@
-
-<a name="top"></a>
-
-Release notes
-=============
+# Release notes
 
 🌟 = New.
 🔧 = Improved or tweaked.
@@ -11,9 +7,7 @@ Release notes
 
 Releases marked with 🧪 were released on [the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
 
-Version 2024.4
---------------
-*in development*
+## Version 2024.4
 
 ### next
 
@@ -51,9 +45,7 @@ Version 2024.4
 * 🌟 Movies: display the collection (like a movie series) a movie is in, view the collection.
 * 📝 Latest user interface translations from Crowdin.
 
-Version 2024.3
---------------
-*2024-07-18*
+## Version 2024.3
 
 * 🔧 Shows: move Discover screen to top-level.
 * 🌟 Shows: add permanent year and language filters to Discover tab.
@@ -130,9 +122,7 @@ Version 2024.3
 * 🔨 Trakt comments: refresh will actually show the latest comments, including after posting one.
 * 📝 Latest user interface translations from Crowdin.
 
-Version 2024.2
---------------
-*2024-05-10*
+## Version 2024.2
 
 * 🌟 Discover: add year and original language filters where possible.
 * 🌟 Ratings: display TMDB rating for shows. Tap rating to open TMDB or Trakt page.
@@ -188,9 +178,7 @@ Version 2024.2
 
 * 🌟 Year and original language filter for popular shows screen.
 
-Version 72
-----------
-*2024-03-27*
+## Version 72
 
 * 🌟 Shows: stream or purchase filter. See which shows are available on a service.
   After updating it may take a day or so for filter options to appear.
@@ -266,9 +254,7 @@ Version 72
   and its own actions.
 * 📝 Latest user interface translations from Crowdin.
 
-Version 71
-----------
-*2024-01-18*
+## Version 71
 
 * 🌟 Shows: link to trailers, if available.
 * 🔨 Shows/Movies: repair Metacritic search links.
@@ -308,9 +294,7 @@ Version 71
 
 * 🌟 Shows: support opening show trailer when adding a show and in details.
 
-Version 70
-----------
-*2023-11-09*
+## Version 70
 
 * 🌟 Movies: support displaying similar movies.
 * 🔧 Switch to TMDBs recommendations when looking for similar shows or movies.
@@ -340,9 +324,7 @@ Version 70
 * 🌟 Movies: support displaying similar movies.
 * 🔧 Switch to TMDBs recommendations when looking for similar shows or movies.
 
-Version 69
-----------
-*2023-09-15*
+## Version 69
 
 * 🔧 Streaming search: add latest supported countries.
 * 🔧 Notifications: on Android 12 and newer, ask for permission to set precise alarm.
@@ -381,9 +363,7 @@ Version 69
   backup files for device-to-device transfer (Android 12 and newer).
 * 📝 Latest user interface translations from Crowdin.
 
-Version 68
-----------
-*2023-07-06*
+## Version 68
 
 * 🌟 Shows: support setting custom release time and day offset.
 * 🔧 Use in-app browser only for websites related to the app.
@@ -436,9 +416,7 @@ Version 68
 * 🔧 Use in-app browser only for websites related to the app.
 * 📝 Latest user interface translations from Crowdin.
 
-Version 67
-----------
-*2023-03-01*
+## Version 67
 
 * 🔧 On Android 8 and newer, use system settings to configure notification settings.
 * 🔧 On Android 13, ask to allow notifications.
@@ -471,9 +449,7 @@ Version 67
 
 * 🔧 Appearance: use card to separate details on large episodes and people screens.
 
-Version 66
-----------
-*2023-01-19*
+## Version 66
 
 * 🔧 Appearance updates.
 * 🔧 Trakt: show special error messages if watchlist limit is exceeded.
@@ -529,9 +505,7 @@ Version 66
 * 🔨 Manage lists: fix an item getting removed from other lists if there are many lists.
 * 📝 Latest user interface translations from Crowdin.
 
-Version 65
-----------
-*2022-09-01*
+## Version 65
 
 * 🔧 Clean up supported languages for show and movie content. Languages not longer supported are
   changed to US English.
@@ -583,9 +557,7 @@ English at random.
 * 🔧 Choose newest unwatched episode as next when adding a show that has watched episodes, e.g.
 after signing into Cloud on a new device.
 
-Version 64
-----------
-*2022-05-18*
+## Version 64
 
 * 🔧 Show filters: move no released episodes option there, display status also as text.
 * 🔧 Clearly label the next episode to watch in the overview screen.
@@ -646,9 +618,7 @@ inexact episode notifications instead.
 * 🔨 Display error if managing lists of a show is not possible.
 * 📝 Latest user interface translations from Crowdin.
 
-Version 63
-----------
-*2022-02-18*
+## Version 63
 
 * 🌟 Some design updates to fit with latest Material style.
 * 🌟 Add setting to use system colors on Android 12.
@@ -688,9 +658,7 @@ Version 63
 * 📝 Optimization for Android 12. 
 * 📝 Latest translations from Crowdin.
 
-Version 62
-----------
-*2021-12-09*
+## Version 62
 
 * 🌟 Discover: filter popular shows and shows with new episodes by streaming service.
 * 🌟 Discover: filter popular movies and movies with digital release by streaming service.
@@ -754,9 +722,7 @@ Version 62
 * 🔧 Display error message if creating a shortcut fails.
 * 🔨 Only move shows by a day if released in the hour past midnight for the CBS and NBC networks.
 
-Version 61
-----------
-*2021-09-23*
+## Version 61
 
 * 🌟 App widget: add system theme that supports dark mode, colors on Android 12. Modernize existing themes.
 * 🌟 App widget: add watch button.
@@ -807,9 +773,7 @@ Version 61
 * 🔧 Drop unused storage permissions, should have no impact on supported devices.
 * 📝 Latest translations from Crowdin.
 
-Version 60
-----------
-*2021-07-28*
+## Version 60
 
 * 🌟 Support signing into Cloud with email and password. With this update you are asked to sign into Cloud again.
   Choose email if you use other devices that do not support Google sign-in, like Amazon devices.
@@ -849,9 +813,7 @@ Version 60
 * 🔨 Lists: do not jump to top on database changes.
 * 📝 Errors: drop Countly reporting.
 
-Version 59
-----------
-*2021-06-17*
+## Version 59
 
 * 🌟 Add language setting for person details.
 * 🌟 Shows: add sort by status option.
@@ -895,9 +857,7 @@ Version 59
 * 🔨 Statistics: do not count canceled shows as with next episodes.
 * 🔨 Fix Chinese, French, Spanish language variants.
 
-Version 58
-----------
-*2021-04-15*
+## Version 58
 
 * 🌟 Switch show data source to themoviedb.org (TMDB). Shows need to update before all features,
   like Trakt or Cloud, can be used again. Shows or episodes not available on TMDB remain in your
@@ -1009,9 +969,7 @@ Version 58
 * 🔧 Allow longer check in messages.
 * 📝 Latest translations from crowdin.
 
-Version 57
-----------
-*2020-12-04*
+## Version 57
 
 * 🌟 For shows, add Portuguese (Brazil) to supported languages.
 * 🔧 Detect locked Trakt accounts during sign-in.
@@ -1057,9 +1015,7 @@ Version 57
 * 🔧 Optimization for Android 11 (this time for real).
 * 📝 Latest translations from crowdin.
 
-Version 56
-----------
-*2020-10-15*
+## Version 56
 
 * 🌟 Limited support for watching episodes and movies multiple times. Synced with Cloud or Trakt.
   Only available for supporters.
@@ -1114,9 +1070,7 @@ Version 56
 * 🔧 Link to battery settings/app info page from notification settings to make users aware of these system settings.
 * 📝 Latest translations from crowdin.
 
-Version 55
-----------
-*2020-07-16*
+## Version 55
 
 * 🌟 Movie search results, popular, digital and disc release lists now display all items.
 * 🔧 More compact and cleaner statistics.
@@ -1182,9 +1136,7 @@ Version 55
 * 🔧 More compact and cleaner statistics.
 * 📝 Latest translations from crowdin.
 
-Version 54
-----------
-*2020-04-30*
+## Version 54
 
 * 🌟 Switch to bottom navigation bar.
 * 🔧 Auto backups are created in an app specific directory, no longer requiring any setup. For most
@@ -1249,9 +1201,7 @@ Version 54
 * 📝 Importing an empty backup file will no longer fail and just remove existing data.
 * 📝 Support Android 10.
 
-Version 53
-----------
-*2020-03-12*
+## Version 53
 
 * New Dark and Light app and widget theme.
 * By default, set app theme based on system setting (Android 10) or by Battery Saver (Android 9 and older).
@@ -1312,9 +1262,7 @@ Version 53
 * 🔨 Background work may crash on some devices in certain situations.
 * 📝 Latest translations from crowdin.
 
-Version 52
-----------
-*2019-12-05*
+## Version 52
 
 * 🌟 Calendar: add option to only display premieres.
 * 🔧 Episodes: button to set all episodes watched up to (including) the current one.
@@ -1370,9 +1318,7 @@ Version 52
 * 🔧 Episode details: button to set all episodes watched up to (including) the current one.
 * 📝 Latest translations from crowdin.
 
-Version 51
-----------
-*2019-10-02*
+## Version 51
 
 * 🌟 Display similar shows from the show details dialog and screen. Powered by themoviedb.org!
 * 🔧 Display streaming search in show details dialog, if it was configured.
@@ -1430,9 +1376,7 @@ Version 51
 * 🔨 Fix discover screen displaying shows that can not be added.
 * 🔨 Fix the subscriptions screen displaying a developer error in some cases.
 
-Version 50
-----------
-*2019-08-16*
+## Version 50
 
 * 🌟 Add Sponsor and Supporter subscriptions. If you can or want to you can now make a more
   significant contribution to help me make future updates.
@@ -1496,9 +1440,7 @@ Version 50
 * 🔧 Restore infinite calendar option due to feedback. Defaults to enabled for new and existing users.
 * 🔨 Potential fixes for crashes due to extensions.
 
-Version 49
-----------
-*2019-06-28*
+## Version 49
 
 * 🔧 Calendar is always infinite, uses all available space on large screens, has larger fast 
   scroller that is easier to grab.
@@ -1564,9 +1506,7 @@ Version 49
 * 📝 The infinite calendar option has been removed. Instead upcoming/recent now show up to 50 episodes.
 * 📝 Drop support for beaming shows from overview screen. Share the TheTVDB link instead.
 
-Version 48
-----------
-*2019-05-02*
+## Version 48
 
 * Support 'Upcoming' status for shows.
 * Add watched movies tab.
@@ -1619,9 +1559,7 @@ Version 48
 * 🔧 Backup screens: show file path below button for better readability.
 * 📝 Latest translations from crowdin.
 
-Version 47
-----------
-*2019-02-22*
+## Version 47
 
 * 🔧 Show list: replace favorite button with set watched button.
 * 🌟 Set movies watched (previously only when connected to trakt).
@@ -1691,7 +1629,6 @@ Version 47
 * 📝 Only support Android 5.0 (Lollipop) and newer.
 * 📝 Latest translations from crowdin.
 
-Version 46 and older
-----------
+## Version 46 and older
 
 See [CHANGELOG-K.md](CHANGELOG-K.md).
