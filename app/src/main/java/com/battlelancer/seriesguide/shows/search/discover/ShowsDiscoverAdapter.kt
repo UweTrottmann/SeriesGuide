@@ -260,6 +260,9 @@ class ShowsDiscoverAdapter(
             binding.addIndicatorAddShow.setOnAddClickListener {
                 item?.let { itemClickListener.onAddClick(it) }
             }
+            binding.buttonItemAddMoreOptions.also {
+                TooltipCompat.setTooltipText(it, it.contentDescription)
+            }
         }
 
         private fun onMoreOptionsClick() {
