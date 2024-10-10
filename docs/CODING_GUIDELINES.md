@@ -8,6 +8,8 @@ View IDs should be unique across the project to support refactoring using Androi
 
 Example: `textViewItemEpisodeTitle` in `item_episode.xml`
 
+Use dimension resources (like `@dimen/default_padding`) for margin and padding to avoid looking them up.
+
 ## Click listeners
 
 The interface class is owned by the class that owns the views that trigger the click events, for
