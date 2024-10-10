@@ -18,6 +18,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
   Dex) as well.
 * 🔧 Where touch and hold copies text, support right click to copy as well.
 * 🔧 Add manual sync action back to Upcoming and Recent menu.
+* 🔧 Seasons: move skipped and collection indicators to the right to work better with multi-line
+  status text.
 * 🔨 Show overview: do not display no spoiler warning if there is no image.
 * 🔨 Consistently style more options menus.
 
