@@ -22,8 +22,12 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TooltipBox
+import androidx.compose.material3.TooltipDefaults
+import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -91,14 +95,22 @@ fun WatchProviderList(
                 ) {
                     Text(stringResource(id = R.string.action_reset))
                 }
-                IconButton(
-                    modifier = Modifier.padding(top = 2.dp, start = 4.dp, end = 4.dp),
-                    onClick = onSelectRegion
+                val descriptionStreamSettingsButton =
+                    stringResource(id = R.string.action_stream_info)
+                TooltipBox(
+                    positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+                    tooltip = { PlainTooltip { Text(descriptionStreamSettingsButton) } },
+                    state = rememberTooltipState()
                 ) {
-                    Icon(
-                        imageVector = Icons.Outlined.Settings,
-                        contentDescription = stringResource(id = R.string.action_stream_info)
-                    )
+                    IconButton(
+                        modifier = Modifier.padding(top = 2.dp, start = 4.dp, end = 4.dp),
+                        onClick = onSelectRegion
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.Settings,
+                            contentDescription = descriptionStreamSettingsButton
+                        )
+                    }
                 }
             }
         }

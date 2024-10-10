@@ -108,8 +108,11 @@ class EpisodeViewHolder(
         binding.root.setContextAndLongClickListener {
             onMoreOptionsClick()
         }
-        binding.imageViewItemEpisodeMoreOptions.setOnClickListener {
-            onMoreOptionsClick()
+        binding.imageViewItemEpisodeMoreOptions.also {
+            TooltipCompat.setTooltipText(it, it.contentDescription)
+            it.setOnClickListener {
+                onMoreOptionsClick()
+            }
         }
     }
 

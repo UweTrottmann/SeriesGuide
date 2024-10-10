@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ArrayAdapter
 import android.widget.GridView
+import androidx.appcompat.widget.TooltipCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import com.battlelancer.seriesguide.R
@@ -223,6 +224,9 @@ abstract class AddFragment : Fragment() {
                 }
                 binding.addIndicatorAddShow.setOnAddClickListener {
                     item?.let { itemClickListener.onAddClick(it) }
+                }
+                binding.buttonItemAddMoreOptions.also {
+                    TooltipCompat.setTooltipText(it, it.contentDescription)
                 }
             }
 
