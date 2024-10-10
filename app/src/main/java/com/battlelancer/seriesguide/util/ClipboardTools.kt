@@ -34,8 +34,11 @@ private val onLongClickListener = View.OnLongClickListener {
     return@OnLongClickListener it is TextView && copyTextToClipboard(it.context, it.text)
 }
 
-private val onContextClickListener = View.OnContextClickListener {
-    return@OnContextClickListener it is TextView && copyTextToClipboard(it.context, it.text)
+// Use lazy to avoid crashing on older Android versions where OnContextClickListener is not available
+private val onContextClickListener by lazy {
+    View.OnContextClickListener {
+        return@OnContextClickListener it is TextView && copyTextToClipboard(it.context, it.text)
+    }
 }
 
 /**
