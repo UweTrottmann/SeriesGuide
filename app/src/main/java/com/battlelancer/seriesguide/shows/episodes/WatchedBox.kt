@@ -1,56 +1,50 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2011-2024 Uwe Trottmann
 
-package com.battlelancer.seriesguide.shows.episodes;
+package com.battlelancer.seriesguide.shows.episodes
 
-import android.content.Context;
-import android.util.AttributeSet;
-import androidx.appcompat.widget.AppCompatImageView;
-import com.battlelancer.seriesguide.R;
+import android.content.Context
+import android.util.AttributeSet
+import androidx.appcompat.widget.AppCompatImageView
+import com.battlelancer.seriesguide.R
 
 /**
  * Image view that displays a watched, skipped or watch icon depending on the given episode flag.
  */
-public class WatchedBox extends AppCompatImageView {
+class WatchedBox(context: Context, attrs: AttributeSet?) : AppCompatImageView(context, attrs) {
 
-    private int episodeFlag;
+    /**
+     * An [EpisodeFlags] flag.
+     */
+    var episodeFlag = 0
+        set(value) {
+            EpisodeTools.validateFlags(value)
+            field = value
+            updateStateImage()
+        }
 
-    public WatchedBox(Context context, AttributeSet attrs) {
-        super(context, attrs);
-
-        if (isInEditMode()) {
-            episodeFlag = EpisodeFlags.UNWATCHED;
-            updateStateImage();
+    init {
+        if (isInEditMode) {
+            episodeFlag = EpisodeFlags.UNWATCHED
         }
     }
 
-    public int getEpisodeFlag() {
-        return episodeFlag;
-    }
-
-    /**
-     * Set an {@link EpisodeFlags} flag.
-     */
-    public void setEpisodeFlag(int episodeFlag) {
-        EpisodeTools.validateFlags(episodeFlag);
-        this.episodeFlag = episodeFlag;
-        updateStateImage();
-    }
-
-    private void updateStateImage() {
-        switch (episodeFlag) {
-            case EpisodeFlags.WATCHED: {
-                setImageResource(R.drawable.ic_watched_24dp);
-                break;
+    private fun updateStateImage() {
+        when (episodeFlag) {
+            EpisodeFlags.WATCHED -> {
+                setImageResource(R.drawable.ic_watched_24dp)
             }
-            case EpisodeFlags.SKIPPED: {
-                setImageResource(R.drawable.ic_skipped_24dp);
-                break;
+
+            EpisodeFlags.SKIPPED -> {
+                setImageResource(R.drawable.ic_skipped_24dp)
             }
-            case EpisodeFlags.UNWATCHED:
-            default: {
-                setImageResource(R.drawable.ic_watch_black_24dp);
-                break;
+
+            EpisodeFlags.UNWATCHED -> {
+                setImageResource(R.drawable.ic_watch_black_24dp)
+            }
+
+            else -> {
+                setImageResource(R.drawable.ic_watch_black_24dp)
             }
         }
     }
