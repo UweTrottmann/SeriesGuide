@@ -3,106 +3,120 @@
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 <!-- Copyright 2011-2018, 2020-2022, 2024 Uwe Trottmann -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayoutItemSeason"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground"
-    android:paddingLeft="@dimen/large_padding"
-    tools:ignore="RtlSymmetry">
-
-    <TextView
-        android:id="@+id/textViewSeasonTitle"
-        style="@style/Widget.SeriesGuide.TextView.SingleLine"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/textViewSeasonProgress"
-        android:ellipsize="end"
-        android:paddingTop="@dimen/large_padding"
-        android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold"
-        tools:text="@string/season_number" />
+    android:paddingStart="@dimen/large_padding">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageViewSeasonMoreOptions"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/description_menu_overflow"
         android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_more_vert_black_20dp" />
 
     <TextView
         android:id="@+id/textViewSeasonProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/default_padding"
-        android:layout_toLeftOf="@id/imageViewSeasonMoreOptions"
-        android:paddingTop="@dimen/large_padding"
+        android:layout_marginTop="@dimen/large_padding"
         android:text="@string/norating"
         android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Secondary"
+        app:layout_constraintEnd_toStartOf="@id/imageViewSeasonMoreOptions"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="3/24" />
+
+    <TextView
+        android:id="@+id/textViewSeasonTitle"
+        style="@style/Widget.SeriesGuide.TextView.SingleLine"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/large_padding"
+        android:layout_marginEnd="@dimen/default_padding"
+        android:ellipsize="end"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold"
+        app:layout_constraintEnd_toStartOf="@id/textViewSeasonProgress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/season_number" />
 
     <ProgressBar
         android:id="@+id/progressBarSeason"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textViewSeasonTitle"
-        android:layout_toLeftOf="@id/imageViewSeasonMoreOptions" />
+        app:layout_constraintEnd_toStartOf="@id/imageViewSeasonMoreOptions"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewSeasonTitle" />
 
     <ImageView
         android:id="@+id/imageViewSeasonSkipped"
         android:layout_width="16dp"
         android:layout_height="16dp"
-        android:layout_below="@id/progressBarSeason"
-        android:layout_alignParentLeft="true"
-        android:layout_marginRight="4dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="@dimen/inline_padding"
+        android:layout_marginBottom="@dimen/inline_padding"
         android:contentDescription="@null"
+        app:layout_constraintEnd_toStartOf="@id/imageViewSeasonSkippedAll"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/progressBarSeason"
         app:srcCompat="@drawable/ic_skip_black_24dp" />
 
     <ImageView
         android:id="@+id/imageViewSeasonSkippedAll"
         android:layout_width="16dp"
         android:layout_height="16dp"
-        android:layout_below="@id/progressBarSeason"
-        android:layout_marginRight="4dp"
-        android:layout_toRightOf="@id/imageViewSeasonSkipped"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="@dimen/inline_padding"
         android:contentDescription="@null"
+        app:layout_constraintEnd_toStartOf="@id/imageViewSeasonCollected"
+        app:layout_constraintStart_toEndOf="@id/imageViewSeasonSkipped"
+        app:layout_constraintTop_toBottomOf="@id/progressBarSeason"
         app:srcCompat="@drawable/ic_skipped_24dp" />
 
     <ImageView
         android:id="@+id/imageViewSeasonCollected"
         android:layout_width="16dp"
         android:layout_height="16dp"
-        android:layout_below="@id/progressBarSeason"
-        android:layout_marginRight="4dp"
-        android:layout_toRightOf="@id/imageViewSeasonSkippedAll"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="@dimen/inline_padding"
         android:contentDescription="@null"
+        app:layout_constraintEnd_toStartOf="@id/imageViewSeasonCollectedAll"
+        app:layout_constraintStart_toEndOf="@id/imageViewSeasonSkippedAll"
+        app:layout_constraintTop_toBottomOf="@id/progressBarSeason"
         app:srcCompat="@drawable/ic_collect_black_24dp" />
 
     <ImageView
         android:id="@+id/imageViewSeasonCollectedAll"
         android:layout_width="16dp"
         android:layout_height="16dp"
-        android:layout_below="@id/progressBarSeason"
-        android:layout_marginRight="4dp"
-        android:layout_toRightOf="@id/imageViewSeasonCollected"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="@dimen/inline_padding"
         android:contentDescription="@null"
+        app:layout_constraintEnd_toStartOf="@id/textViewSeasonWatchCount"
+        app:layout_constraintStart_toEndOf="@id/imageViewSeasonCollected"
+        app:layout_constraintTop_toBottomOf="@id/progressBarSeason"
         app:srcCompat="@drawable/ic_collected_24dp" />
 
     <TextView
         android:id="@+id/textViewSeasonWatchCount"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/progressBarSeason"
-        android:layout_toLeftOf="@id/imageViewSeasonMoreOptions"
-        android:layout_toRightOf="@id/imageViewSeasonCollectedAll"
-        android:paddingBottom="@dimen/large_padding"
+        android:layout_marginBottom="@dimen/large_padding"
         android:textAppearance="@style/TextAppearance.SeriesGuide.Caption.Narrow"
-        tools:text="77 remaining - 7 skipped - 7 in collection" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/imageViewSeasonMoreOptions"
+        app:layout_constraintStart_toEndOf="@id/imageViewSeasonCollectedAll"
+        app:layout_constraintTop_toBottomOf="@id/progressBarSeason"
+        tools:text="77 remaining - 21 other episodes - 5 to be released - 7 skipped - 7 in collection" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
