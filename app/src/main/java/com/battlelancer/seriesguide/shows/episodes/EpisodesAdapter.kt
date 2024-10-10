@@ -98,10 +98,11 @@ class EpisodeViewHolder(
         }
         binding.watchedBoxEpisode.setOnClickListener { view ->
             episode?.let {
-                val box = view as WatchedBox
-                // disable button, will be re-enabled on data reload once action completes
-                box.isEnabled = false
-                itemClickListener.onWatchedBoxClick(view, it.id, box.episodeFlag)
+                itemClickListener.onWatchedBoxClick(
+                    view,
+                    it.id,
+                    binding.watchedBoxEpisode.episodeFlag
+                )
             }
         }
         binding.root.setContextAndLongClickListener {

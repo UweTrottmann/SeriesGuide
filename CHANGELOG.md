@@ -22,6 +22,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
   status text.
 * 🔨 Show overview: do not display no spoiler warning if there is no image.
 * 🔨 Consistently style more options menus.
+* 🔨 Episodes: can use watched button also after dismissing the popup menu.
 
 ### 2024.4.3 - 2024-09-13 🧪
 
