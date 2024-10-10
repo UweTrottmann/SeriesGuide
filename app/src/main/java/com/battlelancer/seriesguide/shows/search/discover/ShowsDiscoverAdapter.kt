@@ -260,6 +260,9 @@ class ShowsDiscoverAdapter(
             binding.addIndicatorAddShow.setOnAddClickListener {
                 item?.let { itemClickListener.onAddClick(it) }
             }
+            binding.buttonItemAddMoreOptions.also {
+                TooltipCompat.setTooltipText(it, it.contentDescription)
+            }
         }
 
         private fun onMoreOptionsClick() {
@@ -296,9 +299,7 @@ class ShowsDiscoverAdapter(
             // display added indicator instead of add button if already added that show
             binding.addIndicatorAddShow.setState(item.state)
             val showTitle = item.title
-            binding.addIndicatorAddShow.setContentDescriptionAdded(
-                context.getString(R.string.add_already_exists, showTitle)
-            )
+            binding.addIndicatorAddShow.setNameOfAssociatedItem(showTitle)
 
             // set text properties immediately
             binding.textViewAddTitle.text = showTitle
