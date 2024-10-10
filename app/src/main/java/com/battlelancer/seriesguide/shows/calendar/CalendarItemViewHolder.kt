@@ -155,12 +155,10 @@ class CalendarItemViewHolder(
         info.text = TextTools.dotSeparate(episode.network, time)
 
         // watched box
-        watchedBox.isEnabled = true
-        val episodeFlag = episode.watched
-        watchedBox.episodeFlag = episodeFlag
-        val watched = EpisodeTools.isWatched(episodeFlag)
-        watchedBox.contentDescription =
-            context.getString(if (watched) R.string.action_unwatched else R.string.action_watched)
+        watchedBox.apply {
+            isEnabled = true
+            episodeFlag = episode.watched
+        }
 
         // collected indicator
         collected.isGone = !episode.episode_collected

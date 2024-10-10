@@ -162,18 +162,6 @@ class EpisodeViewHolder(
         // watched box
         binding.watchedBoxEpisode.episodeFlag = watchedFlag
         binding.watchedBoxEpisode.isEnabled = true
-        val watched =
-            EpisodeTools.isWatched(
-                watchedFlag
-            )
-        binding.watchedBoxEpisode.contentDescription =
-            context.getString(if (watched) R.string.action_unwatched else R.string.action_watched)
-        TooltipCompat.setTooltipText(
-            binding.watchedBoxEpisode,
-            binding.watchedBoxEpisode.context.getString(
-                if (watched) R.string.action_unwatched else R.string.action_watched
-            )
-        )
 
         // collected tag
         val isCollected = episode.collected
