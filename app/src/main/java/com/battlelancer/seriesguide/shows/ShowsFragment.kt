@@ -237,11 +237,12 @@ class ShowsFragment : Fragment() {
                     true
                 }
 
-                R.id.menu_action_shows_update -> {
+                R.id.menu_action_shows_sync_update -> {
                     SgSyncAdapter.requestSyncDeltaImmediate(requireContext(), true)
                     true
                 }
-                R.id.menu_action_shows_redownload -> {
+
+                R.id.menu_action_shows_sync_download -> {
                     SgSyncAdapter.requestSyncFullImmediate(requireContext(), true)
                     true
                 }

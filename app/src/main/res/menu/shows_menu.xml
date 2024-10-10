@@ -26,16 +26,16 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/menu_action_shows_advanced"
-        android:orderInCategory="6"
+        android:id="@+id/menu_action_shows_manual_sync"
+        android:orderInCategory="3"
         android:title="@string/sync_manually"
         app:showAsAction="never">
         <menu>
             <item
-                android:id="@+id/menu_action_shows_update"
+                android:id="@+id/menu_action_shows_sync_update"
                 android:title="@string/sync_and_update" />
             <item
-                android:id="@+id/menu_action_shows_redownload"
+                android:id="@+id/menu_action_shows_sync_download"
                 android:title="@string/sync_and_download_all" />
         </menu>
     </item>

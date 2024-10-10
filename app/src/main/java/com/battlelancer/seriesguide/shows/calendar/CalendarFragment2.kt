@@ -32,6 +32,7 @@ import com.battlelancer.seriesguide.shows.database.SgEpisode2WithShow
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
+import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
@@ -192,6 +193,16 @@ abstract class CalendarFragment2 : Fragment() {
 
                 R.id.menu_action_calendar_infinite -> {
                     toggleFilterSetting(menuItem, CalendarSettings.KEY_INFINITE_SCROLLING_2)
+                    true
+                }
+
+                R.id.menu_action_calendar_sync_update -> {
+                    SgSyncAdapter.requestSyncDeltaImmediate(requireContext(), true)
+                    true
+                }
+
+                R.id.menu_action_calendar_sync_download -> {
+                    SgSyncAdapter.requestSyncFullImmediate(requireContext(), true)
                     true
                 }
 
