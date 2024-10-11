@@ -17,7 +17,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 * 🔧 Display more options of list items on touch and hold and right click (for example in Samsung
   Dex) as well.
 * 🔧 Where touch and hold copies text, support right click to copy as well.
-* 🔧 Add manual sync action back to Upcoming and Recent menu.
+* 🔧 Add manual sync action back to show Upcoming, Recent tabs, new to movie Watchlist, Collection,
+  Watched tabs.
 * 🔧 Seasons: move skipped and collection indicators to the right to work better with multi-line
   status text.
 * 🔨 Show overview: do not display no spoiler warning if there is no image.
