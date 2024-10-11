@@ -22,7 +22,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -42,11 +41,11 @@ import com.battlelancer.seriesguide.shows.ShowsAdapter.ShowItem
 import com.battlelancer.seriesguide.shows.ShowsDistillationFragment.Companion.show
 import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowFilter
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
-import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity.Companion.intentShow
 import com.battlelancer.seriesguide.ui.SearchActivity
+import com.battlelancer.seriesguide.ui.menus.ManualSyncMenu
 import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
 import com.battlelancer.seriesguide.util.ViewTools
 import com.google.android.material.snackbar.Snackbar
@@ -205,50 +204,44 @@ class ShowsFragment : Fragment() {
         prefs.unregisterOnSharedPreferenceChangeListener(onPreferenceChangeListener)
     }
 
-    private val optionsMenuProvider = object : MenuProvider {
-        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-            menuInflater.inflate(R.menu.shows_menu, menu)
+    private val optionsMenuProvider by lazy {
+        object : ManualSyncMenu(requireContext(), R.menu.shows_menu) {
 
-            // set filter icon state
-            menu.findItem(R.id.menu_action_shows_filter)
-                .setIcon(
-                    if (model.uiState.value.isFiltersActive) {
-                        R.drawable.ic_filter_selected_white_24dp
-                    } else {
-                        R.drawable.ic_filter_white_24dp
-                    }
-                )
-        }
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                super.onCreateMenu(menu, menuInflater)
 
-        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-            return when (menuItem.itemId) {
-                R.id.menu_action_shows_search -> {
-                    startActivity(Intent(requireContext(), SearchActivity::class.java))
-                    true
-                }
-
-                R.id.menu_action_shows_add -> {
-                    navigateToAddShows()
-                    true
-                }
-
-                R.id.menu_action_shows_filter -> {
-                    show(parentFragmentManager)
-                    true
-                }
-
-                R.id.menu_action_shows_sync_update -> {
-                    SgSyncAdapter.requestSyncDeltaImmediate(requireContext(), true)
-                    true
-                }
-
-                R.id.menu_action_shows_sync_download -> {
-                    SgSyncAdapter.requestSyncFullImmediate(requireContext(), true)
-                    true
-                }
-
-                else -> false
+                // set filter icon state
+                menu.findItem(R.id.menu_action_shows_filter)
+                    .setIcon(
+                        if (model.uiState.value.isFiltersActive) {
+                            R.drawable.ic_filter_selected_white_24dp
+                        } else {
+                            R.drawable.ic_filter_white_24dp
+                        }
+                    )
             }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.menu_action_shows_search -> {
+                        startActivity(Intent(requireContext(), SearchActivity::class.java))
+                        true
+                    }
+
+                    R.id.menu_action_shows_add -> {
+                        navigateToAddShows()
+                        true
+                    }
+
+                    R.id.menu_action_shows_filter -> {
+                        show(parentFragmentManager)
+                        true
+                    }
+
+                    else -> super.onMenuItemSelected(menuItem)
+                }
+            }
+
         }
     }
 

@@ -25,19 +25,4 @@
         android:title="@string/action_shows_add"
         app:showAsAction="never" />
 
-    <item
-        android:id="@+id/menu_action_shows_manual_sync"
-        android:orderInCategory="3"
-        android:title="@string/sync_manually"
-        app:showAsAction="never">
-        <menu>
-            <item
-                android:id="@+id/menu_action_shows_sync_update"
-                android:title="@string/sync_and_update" />
-            <item
-                android:id="@+id/menu_action_shows_sync_download"
-                android:title="@string/sync_and_download_all" />
-        </menu>
-    </item>
-
 </menu>
