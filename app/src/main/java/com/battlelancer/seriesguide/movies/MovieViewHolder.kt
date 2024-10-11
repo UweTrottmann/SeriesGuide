@@ -7,6 +7,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.widget.TooltipCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
@@ -37,8 +38,11 @@ class MovieViewHolder(
         itemView.setContextAndLongClickListener {
             onMoreOptionsClick()
         }
-        moreOptions.setOnClickListener {
-            onMoreOptionsClick()
+        moreOptions.also {
+            TooltipCompat.setTooltipText(it, it.contentDescription)
+            it.setOnClickListener {
+                onMoreOptionsClick()
+            }
         }
     }
 

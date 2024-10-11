@@ -12,6 +12,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
+import androidx.appcompat.widget.TooltipCompat
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -341,17 +342,18 @@ class EpisodesFragment : Fragment() {
 
     private fun setWatchedToggleState(unwatchedEpisodes: Int) {
         watchedAllEpisodes = unwatchedEpisodes == 0
-        binding?.imageViewEpisodesWatched?.apply {
+        binding?.imageViewEpisodesWatched?.also {
             // using vectors is safe because it will be an AppCompatImageView
-            contentDescription = if (watchedAllEpisodes) {
-                setImageResource(R.drawable.ic_watched_all_24dp)
-                getString(R.string.unmark_all)
+            if (watchedAllEpisodes) {
+                it.setImageResource(R.drawable.ic_watched_all_24dp)
+                it.contentDescription = getString(R.string.unmark_all)
             } else {
-                setImageResource(R.drawable.ic_watch_all_black_24dp)
-                getString(R.string.mark_all)
+                it.setImageResource(R.drawable.ic_watch_all_black_24dp)
+                it.contentDescription = getString(R.string.mark_all)
             }
+            TooltipCompat.setTooltipText(it, it.contentDescription)
             // set onClick listener not before here to avoid unexpected actions
-            setOnClickListener(watchedAllClickListener)
+            it.setOnClickListener(watchedAllClickListener)
         }
     }
 
@@ -389,17 +391,18 @@ class EpisodesFragment : Fragment() {
 
     private fun setCollectedToggleState(uncollectedEpisodes: Int) {
         collectedAllEpisodes = uncollectedEpisodes == 0
-        binding?.imageViewEpisodesCollected?.apply {
+        binding?.imageViewEpisodesCollected?.also {
             // using vectors is safe because it will be an AppCompatImageView
-            contentDescription = if (collectedAllEpisodes) {
-                setImageResource(R.drawable.ic_collected_all_24dp)
-                getString(R.string.uncollect_all)
+            if (collectedAllEpisodes) {
+                it.setImageResource(R.drawable.ic_collected_all_24dp)
+                it.contentDescription = getString(R.string.uncollect_all)
             } else {
-                setImageResource(R.drawable.ic_collect_all_black_24dp)
-                getString(R.string.collect_all)
+                it.setImageResource(R.drawable.ic_collect_all_black_24dp)
+                it.contentDescription = getString(R.string.collect_all)
             }
+            TooltipCompat.setTooltipText(it, it.contentDescription)
             // set onClick listener not before here to avoid unexpected actions
-            setOnClickListener(collectedAllClickListener)
+            it.setOnClickListener(collectedAllClickListener)
         }
     }
 

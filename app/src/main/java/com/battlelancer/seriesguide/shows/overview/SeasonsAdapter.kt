@@ -7,6 +7,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.TooltipCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.DiffUtil
@@ -50,8 +51,11 @@ class SeasonsAdapter(
             itemView.setContextAndLongClickListener {
                 onMoreOptionsClick()
             }
-            binding.imageViewSeasonMoreOptions.setOnClickListener {
-                onMoreOptionsClick()
+            binding.imageViewSeasonMoreOptions.also {
+                TooltipCompat.setTooltipText(it, it.contentDescription)
+                it.setOnClickListener {
+                    onMoreOptionsClick()
+                }
             }
         }
 

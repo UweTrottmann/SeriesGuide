@@ -43,19 +43,16 @@ class SearchResultViewHolder(
         // hide more options button
         moreOptionsButton.visibility = View.GONE
 
-        // display added indicator instead of add button if already added that show
-        val showTitle = searchResult?.title
+        // add indicator
         if (searchResult != null) {
             addIndicator.setState(searchResult.state)
-            addIndicator.setContentDescriptionAdded(
-                itemView.context.getString(R.string.add_already_exists, showTitle)
-            )
+            addIndicator.setNameOfAssociatedItem(searchResult.title)
             addIndicator.visibility = View.VISIBLE
         } else {
             addIndicator.visibility = View.GONE
         }
 
-        title.text = showTitle
+        title.text = searchResult?.title
         description.text = searchResult?.overview
 
         // only local shows will have a poster path set

@@ -12,9 +12,11 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ArrayAdapter
 import android.widget.GridView
+import androidx.appcompat.widget.TooltipCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemAddshowBinding
 import com.battlelancer.seriesguide.enums.NetworkResult
 import com.battlelancer.seriesguide.shows.tools.AddShowTask.OnShowAddedEvent
@@ -224,6 +226,9 @@ abstract class AddFragment : Fragment() {
                 binding.addIndicatorAddShow.setOnAddClickListener {
                     item?.let { itemClickListener.onAddClick(it) }
                 }
+                binding.buttonItemAddMoreOptions.also {
+                    TooltipCompat.setTooltipText(it, it.contentDescription)
+                }
             }
 
             private fun onMoreOptionsClick() {
@@ -254,18 +259,18 @@ abstract class AddFragment : Fragment() {
                     if (enableMoreOptions) View.VISIBLE else View.GONE
 
                 if (item == null) {
-                    binding.addIndicatorAddShow.setState(SearchResult.STATE_ADD)
-                    binding.addIndicatorAddShow.setContentDescriptionAdded(null)
+                    binding.addIndicatorAddShow.isGone = true
                     binding.textViewAddTitle.text = null
                     binding.textViewAddDescription.text = null
                     binding.imageViewAddPoster.setImageDrawable(null)
                 } else {
-                    // display added indicator instead of add button if already added that show
-                    binding.addIndicatorAddShow.setState(item.state)
+                    // add indicator
                     val showTitle = item.title
-                    binding.addIndicatorAddShow.setContentDescriptionAdded(
-                        context.getString(R.string.add_already_exists, showTitle)
-                    )
+                    binding.addIndicatorAddShow.apply {
+                        setState(item.state)
+                        setNameOfAssociatedItem(showTitle)
+                        isVisible = true
+                    }
 
                     // set text properties immediately
                     binding.textViewAddTitle.text = showTitle

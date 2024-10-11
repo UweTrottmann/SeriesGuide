@@ -41,7 +41,7 @@ class CalendarItemViewHolder(
     private val episodeTextView: TextView = itemView.findViewById(R.id.textViewActivityEpisode)
     private val collected: View = itemView.findViewById(R.id.imageViewActivityCollected)
     private val watchedBox: WatchedBox = itemView.findViewById(R.id.watchedBoxActivity)
-    private val contextMenu: ImageView = itemView.findViewById(R.id.imageViewActivityMoreOptions)
+    private val moreOptionsButton: ImageView = itemView.findViewById(R.id.imageViewActivityMoreOptions)
     private val info: TextView = itemView.findViewById(R.id.textViewActivityInfo)
     private val timestamp: TextView = itemView.findViewById(R.id.textViewActivityTimestamp)
     private val poster: ImageView = itemView.findViewById(R.id.imageViewActivityPoster)
@@ -57,8 +57,11 @@ class CalendarItemViewHolder(
         itemContainer.setContextAndLongClickListener {
             onMoreOptionsClick()
         }
-        contextMenu.setOnClickListener {
-            onMoreOptionsClick()
+        moreOptionsButton.also {
+            TooltipCompat.setTooltipText(it, it.contentDescription)
+            it.setOnClickListener {
+                onMoreOptionsClick()
+            }
         }
         watchedBox.setOnClickListener {
             item?.episode?.let {
@@ -74,7 +77,7 @@ class CalendarItemViewHolder(
 
     private fun onMoreOptionsClick() {
         item?.episode?.let {
-            itemClickListener.onMoreOptionsClick(contextMenu, it)
+            itemClickListener.onMoreOptionsClick(moreOptionsButton, it)
         }
     }
 
@@ -152,12 +155,10 @@ class CalendarItemViewHolder(
         info.text = TextTools.dotSeparate(episode.network, time)
 
         // watched box
-        watchedBox.isEnabled = true
-        val episodeFlag = episode.watched
-        watchedBox.episodeFlag = episodeFlag
-        val watched = EpisodeTools.isWatched(episodeFlag)
-        watchedBox.contentDescription =
-            context.getString(if (watched) R.string.action_unwatched else R.string.action_watched)
+        watchedBox.apply {
+            isEnabled = true
+            episodeFlag = episode.watched
+        }
 
         // collected indicator
         collected.isGone = !episode.episode_collected
