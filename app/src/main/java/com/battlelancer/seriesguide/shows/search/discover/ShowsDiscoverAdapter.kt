@@ -15,7 +15,6 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemDiscoverEmptyBinding
 import com.battlelancer.seriesguide.databinding.ItemDiscoverHeaderBinding
 import com.battlelancer.seriesguide.databinding.ItemDiscoverLinkBinding
-import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.util.ViewTools
 
@@ -50,21 +49,12 @@ class ShowsDiscoverAdapter(
         }
     }
 
-    init {
-        links.add(DiscoverShowsLink.POPULAR)
-        if (TraktCredentials.get(context).hasCredentials()) {
-            links.add(DiscoverShowsLink.WATCHED)
-            links.add(DiscoverShowsLink.COLLECTION)
-            links.add(DiscoverShowsLink.WATCHLIST)
-        }
-    }
-
     @SuppressLint("NotifyDataSetChanged") // No need for incremental updates/animations.
     fun updateSearchResults(
         newSearchResults: List<SearchResult>?,
         emptyText: String,
         hasError: Boolean,
-        showWatchlistActions: Boolean
+        enableTraktFeatures: Boolean
     ) {
         searchResults.clear()
         if (newSearchResults != null) {
@@ -72,8 +62,20 @@ class ShowsDiscoverAdapter(
         }
         this.emptyText = emptyText
         this.hasError = hasError
-        this.showWatchlistActions = showWatchlistActions
+        this.showWatchlistActions = enableTraktFeatures
+        updateLinks(enableTraktFeatures)
         notifyDataSetChanged()
+    }
+
+    private fun updateLinks(enableTraktFeatures: Boolean) {
+        val links = mutableListOf(DiscoverShowsLink.POPULAR)
+        if (enableTraktFeatures) {
+            links.add(DiscoverShowsLink.WATCHED)
+            links.add(DiscoverShowsLink.COLLECTION)
+            links.add(DiscoverShowsLink.WATCHLIST)
+        }
+        this.links.clear()
+        this.links.addAll(links)
     }
 
     @SuppressLint("NotifyDataSetChanged") // Too much work to track changed positions.

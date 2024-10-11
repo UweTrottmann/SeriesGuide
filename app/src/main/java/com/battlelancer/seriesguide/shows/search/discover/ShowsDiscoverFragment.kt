@@ -84,7 +84,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
                     it.searchResults,
                     it.emptyText,
                     hasError = !it.successful,
-                    showWatchlistActions = TraktCredentials.get(requireContext()).hasCredentials()
+                    enableTraktFeatures = TraktCredentials.get(requireContext()).hasCredentials()
                 )
             }
         }
