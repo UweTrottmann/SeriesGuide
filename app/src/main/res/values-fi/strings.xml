@@ -224,7 +224,7 @@
     <string name="add_empty">Täällä ei ole yhtään ohjelmaa</string>
     <string name="empty_show_search">Ei löytynyt ohjelmalistastasi</string>
     <string name="action_try_again">Yritä uudelleen</string>
-    <string name="tvdb_error_does_not_exist">Ohjelma ei ole (vielä) TMDB:ssä. Yritä myöhemmin uudelleen.</string>
+    <string name="tvdb_error_does_not_exist">Ei ole (vielä) TMDB:ssä. Yritä myöhemmin uudelleen.</string>
     <string name="add_all">Lisää kaikki</string>
     <string name="add_multiple">Kaikki ohjelmat ilmestyvät pian ohjelmalistaasi</string>
     <string name="add_started">%s ilmestyy pian ohjelmalistallesi</string>
@@ -375,9 +375,9 @@
     <string name="pref_quick_checkin">Nopea kuittaus</string>
     <string name="pref_quick_checkin_summary">Älä kysy kuittausviestiä</string>
     <!-- Help -->
-    <string name="feedback">Lähetä sähköposti</string>
+    <string name="feedback">Lähetä sähköpostia</string>
     <!-- Settings -->
-    <string name="action_translate">Käännä tämä sovellus</string>
+    <string name="action_translate">Auta kääntämisessä</string>
     <string name="prefs_category_advanced">Edistyneet</string>
     <string name="prefs_category_about">Tietoja</string>
     <string name="pref_onlyfuture">Ei esitettyjä jaksoja</string>
@@ -468,7 +468,7 @@
     <string name="action_select_file">Valitse tiedosto</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Automaattinen varmuuskopiointi</string>
-    <string name="pref_autobackupsummary">Viikoittainen varmuuskopio ohjelmistasi, listoistasi ja elokuvistasi.</string>
+    <string name="pref_autobackupsummary">Viikoittainen varmuuskopio ohjelmistasi, listoistasi ja elokuvistasi</string>
     <string name="autobackup_details">Nämä varmuuskopiot eivät ole käytettävissä, jos sovellus asennetaan uudelleen, ellei sovelluksen tietojen varmuuskopiointia ole otettu käyttöön tällä laitteella (Android 6+). Luo kopioita säilyttääksesi ne muuten.</string>
     <string name="last_auto_backup">Viimeisin automaattinen varmuuskopiointi: %s</string>
     <string name="restore_auto_backup">Palauta automaattinen varmuuskopio</string>

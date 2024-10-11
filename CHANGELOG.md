@@ -25,6 +25,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 * 🔨 Consistently style more options menus.
 * 🔨 Episodes: can use watched button also after dismissing the popup menu.
 * 🔨 Consistently show tooltips for actions.
+* 📝 Latest user interface translations from Crowdin.
 
 ### 2024.4.3 - 2024-09-13 🧪
 

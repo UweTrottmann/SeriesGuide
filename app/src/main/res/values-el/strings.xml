@@ -20,7 +20,7 @@
     <string name="specialseason">Ειδικά Επεισόδια</string>
     <string name="ratings">Βαθμολογίες</string>
     <!-- Descriptions -->
-    <string name="navigate_up">Navigate up</string>
+    <string name="navigate_up">Πλοήγηση προς τα επάνω</string>
     <string name="description_overview">Επισκόπηση</string>
     <string name="description_poster">Εμφάνιση αφίσας</string>
     <string name="description_image">Εικόνα επεισοδίου</string>
@@ -39,14 +39,14 @@
     <string name="action_stream">Stream ή αγορά</string>
     <string name="action_stream_info">Πληροφορίες ροής ή αγοράς</string>
     <string name="action_select_region">Επιλογή περιοχής</string>
-    <string name="action_reset">Reset</string>
+    <string name="action_reset">Επαναφορά</string>
     <!-- Search -->
     <string name="clear_search_history">Εκκαθάριση ιστορικού αναζήτησης</string>
     <string name="search_hint">Αναζήτηση επεισοδίων</string>
     <string name="empty_no_results">Κανένα αποτέλεσμα</string>
     <!-- Status messages -->
     <string name="updated">Ενημέρωση για την πιο πρόσφατη έκδοση.</string>
-    <string name="updated_what_is_new">What\'s new</string>
+    <string name="updated_what_is_new">Τι νέο υπάρχει</string>
     <string name="norating">μη διαθέσιμο</string>
     <string name="unknown">άγνωστο</string>
     <string name="offline">Συνδεθείτε σε ένα δίκτυο και, ξανά προσπαθήστε.</string>
@@ -57,7 +57,7 @@
     <string name="api_error_generic">Δεν είναι δυνατή η επικοινωνία με το %s. Ξαναδοκιμάστε αργότερα.</string>
     <string name="api_failed">Αποτυχία: %s</string>
     <string name="copy_to_clipboard">Αντιγράφηκε στο πρόχειρο</string>
-    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="not_migrated">Η σειρά δεν έχει μεταφερθεί στα δεδομένα του TMDB. Ορισμένες ενέργειες, όπως ο συγχρονισμός με το Trakt και το cloud, ενδέχεται να μη λειτουργούν. Μπορείτε να αναζητήσετε μια αντικατάσταση και να αφαιρέσετε αυτήν τη σειρά. Πατήστε για να δείτε λεπτομέρειες.</string>
     <!-- Sharing -->
     <string name="share">Μοίρασε</string>
     <string name="share_show">Κοινοποίηση σειράς</string>
@@ -71,10 +71,10 @@
     <string name="shout_hint">Πληκτρολογίστε ένα σχόλιο (Αγγλικά, 5+ λέξεις)</string>
     <string name="shout_invalid">Το σχόλιο σας δεν πληροί της προϋποθέσεις!</string>
     <string name="action_post">Ανάρτηση</string>
-    <string name="action_edit_comment">Edit</string>
-    <string name="action_delete_comment">Delete</string>
-    <string name="confirmation_delete_comment">Delete this comment?</string>
-    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
+    <string name="action_edit_comment">Επεξεργασία</string>
+    <string name="action_delete_comment">Διαγραφή</string>
+    <string name="confirmation_delete_comment">Διαγραφή σχολίου;</string>
+    <string name="error_delete_comment">Το σχόλιο δεν διαγράφηκε, είναι πολύ παλιό ή έχει απαντήσεις</string>
     <string name="isspoiler">Προειδοποίηση spoiler!</string>
     <string name="no_shouts">Be the first to shout!</string>
     <string name="refresh">Ανανέωση</string>
@@ -104,15 +104,15 @@
     <string name="no_translation_title">Χωρίς μετάφραση</string>
     <string name="no_spoilers">Κάποιες λεπτομέρειες είναι μη ορατές ώστε να μην αποκαλυφθούν πληροφορίες για την υπόθεση. Για να το απενεργοποιήσετε πηγαίνετε στις Ρυθμίσεις.</string>
     <string name="format_source">Πηγή: %s</string>
-    <string name="last_updated">Last updated</string>
-    <string name="custom_release_time_edit">Edit release time</string>
-    <string name="custom_release_time_earlier">earlier</string>
-    <string name="custom_release_time_later">later</string>
+    <string name="last_updated">Τελευταία ενημέρωση</string>
+    <string name="custom_release_time_edit">Επεξεργασία χρόνου κυκλοφορίας</string>
+    <string name="custom_release_time_earlier">νωρίτερα</string>
+    <string name="custom_release_time_later">αργότερα</string>
     <!-- Date and Time -->
     <string name="today">Σήμερα</string>
     <string name="now">τώρα</string>
-    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
-    <string name="runtime_minutes_format">%d min</string>
+    <string name="runtime_hours_minutes_format">%1$d ώρες %2$d λεπτά</string>
+    <string name="runtime_minutes_format">%d λεπτά</string>
     <!-- Flagging -->
     <string name="mark_all">Έχουν παρακολουθηθεί όλα</string>
     <string name="unmark_all">Δεν έχει παρακολουθηθεί κανένα</string>
@@ -133,7 +133,7 @@
     <string name="state_on_watchlist">Σε λίστα παρακολούθησης</string>
     <string name="state_favorite">Αγαπημένο</string>
     <!-- Shows -->
-    <string name="title_shows_added">Added</string>
+    <string name="title_shows_added">Προσθήκες</string>
     <string name="confirm_delete">Θέλετε πράγματι να αφαιρέσετε %s?</string>
     <string name="delete_error">Δεν ήταν δυνατή η αφαίρεση της σειράς. Προσπαθήστε ξανά αργότερα.</string>
     <string name="delete_show">Αφαίρεση</string>
@@ -155,9 +155,9 @@
     <string name="action_shows_filter_unwatched">Δεν έχουν παρακολουθηθεί</string>
     <string name="action_shows_filter_upcoming">Επερχόμενα</string>
     <string name="action_shows_filter_hidden">Κρυφά</string>
-    <string name="state_shows_filter_disabled">Disabled</string>
-    <string name="state_shows_filter_included">Included</string>
-    <string name="state_shows_filter_excluded">Excluded</string>
+    <string name="state_shows_filter_disabled">Ανενεργό</string>
+    <string name="state_shows_filter_included">Περιλαμβάνονται</string>
+    <string name="state_shows_filter_excluded">Εξαιρούνται</string>
     <string name="action_shows_make_all_visible">Εμφάνιση όλων των κρυφών</string>
     <string name="description_make_all_visible_format">Να γίνουν όλες οι κρυφές σειρές (%s) φανερές ξανά;</string>
     <string name="action_shows_sort">Ταξινόμηση σειρών</string>
@@ -171,7 +171,7 @@
     <string name="context_updateshow">Ενημέρωση</string>
     <string name="context_marknext">Το επόμενο επεισόδιο έχει παρακολουθηθεί</string>
     <string name="action_episodes_switch_view">Αλλαγή προβολής</string>
-    <string name="next_to_watch">Next to watch</string>
+    <string name="next_to_watch">Επόμενο για προβολή</string>
     <!-- History -->
     <string name="user_stream">Ιστορικό</string>
     <string name="recently_watched">Παρακολουθήσατε πρόσφατα</string>
@@ -208,16 +208,16 @@
         <item quantity="other">%d απομένουν</item>
     </plurals>
     <plurals name="remaining_of_total_episodes_plural">
-        <item quantity="one">%1$d of %2$d remaining</item>
-        <item quantity="other">%1$d of %2$d remaining</item>
+        <item quantity="one">Απομένει %1$d από %2$d</item>
+        <item quantity="other">Απομένουν %1$d από %2$d</item>
     </plurals>
     <plurals name="skipped_episodes_plural">
-        <item quantity="one">%d skipped</item>
-        <item quantity="other">%d skipped</item>
+        <item quantity="one">Παραλείφθηκε %d</item>
+        <item quantity="other">Παραλείφθηκαν %d</item>
     </plurals>
     <plurals name="collected_episodes_plural">
-        <item quantity="one">%d in collection</item>
-        <item quantity="other">%d in collection</item>
+        <item quantity="one">%d στη συλλογή</item>
+        <item quantity="other">%d στη συλλογή</item>
     </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Πληκτρολογήστε το όνομα μιας σειράς</string>
@@ -235,30 +235,30 @@
     <string name="shows_collection">Συλλογή</string>
     <string name="watchlist">Λίστα προς παρακολούθηση</string>
     <!-- Similar shows -->
-    <string name="action_similar">Similar</string>
+    <string name="action_similar">Παρόμοια</string>
     <string name="title_similar_shows">Παρόμοιες σειρές</string>
     <!-- Popular -->
     <string name="title_popular">Δημοφιλείς</string>
-    <string name="filter_year">Year</string>
-    <string name="filter_year_current">Current year</string>
-    <string name="filter_language">Language</string>
+    <string name="filter_year">Έτος</string>
+    <string name="filter_year_current">Τρέχον έτος</string>
+    <string name="filter_language">Γλώσσα</string>
     <!-- Lists -->
     <string name="first_list">Πρώτη λίστα</string>
     <string name="list_add">Προσθήκη λίστας</string>
-    <string name="ack_list_added">List added</string>
+    <string name="ack_list_added">Η λίστα προστέθηκε</string>
     <string name="list_title_hint">Ονομάστε τη λίστα σας</string>
     <string name="list_remove">Κατάργηση λίστας</string>
     <string name="list_manage">Διαχείριση λίστας</string>
-    <string name="ack_list_renamed">List renamed</string>
-    <string name="ack_list_removed">List removed</string>
+    <string name="ack_list_renamed">Η λίστα μετονομάστηκε</string>
+    <string name="ack_list_removed">Η λίστα αφαιρέθηκε</string>
     <string name="list_item_manage">Διαχείριση λιστών</string>
-    <string name="ack_list_item_manage">Lists updated</string>
+    <string name="ack_list_item_manage">Οι λίστες ενημερώθηκαν</string>
     <string name="list_item_remove">Κατάργηση από τη λίστα</string>
-    <string name="ack_list_item_removed">Removed from list</string>
+    <string name="ack_list_item_removed">Αφαιρέθηκε από τη λίστα</string>
     <string name="list_empty">Μπορείτε να προσθέσετε σειρές σε αυτή τη λίστα</string>
     <string name="action_lists_sort">Ταξινόμημένες λίστες</string>
     <string name="action_lists_reorder">Ταξινομημένες λίστες</string>
-    <string name="ack_lists_reordered">Lists reordered</string>
+    <string name="ack_lists_reordered">Οι λίστες αναδιατάχθηκαν</string>
     <string name="error_name_already_exists">Υπάρχει ήδη μία λίστα με αυτό το όνομα</string>
     <!-- Movies -->
     <string name="title_discover">Ανακαλύψτε</string>
@@ -282,7 +282,7 @@
     <string name="action_movies_sort_title">Τίτλος</string>
     <string name="action_movies_sort_release">Ημερομηνία προβολής</string>
     <string name="action_movies_filter">Φιλτράρισμα ταινιών</string>
-    <string name="title_similar_movies">Similar movies</string>
+    <string name="title_similar_movies">Παρόμοιες ταινίες</string>
     <!-- Statistics -->
     <string name="statistics_failed">Δε μπορέσαμε να υπολογίσουμε στατιστικά.</string>
     <string name="shows_finished">%s τελείωσε την προβολή</string>
@@ -325,7 +325,7 @@
     <string name="hexagon_signed_out">Αποσυνδεθείτε από το SeriesGuide Cloud.</string>
     <string name="hexagon_signin_fail_format">Σφάλμα με την είσοδο (%s)</string>
     <string name="hexagon_signin_google_only">Η διεύθυνση ηλεκτρονικού ταχυδρομείου απαιτεί είσοδο στο Google</string>
-    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
+    <string name="hexagon_signin_choose">Επιλέξτε τη σύνδεση μέσω email αν χρησιμοποιείτε το SeriesGuide σε άλλες συσκευές που δεν υποστηρίζουν τη σύνδεση μέσω Google.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Υποβολή στο trakt.</string>
     <string name="checkin_success_trakt">Ελέγχεται σε %s στο trakt.</string>
@@ -337,9 +337,9 @@
     <string name="trakt_error_credentials">Κάτι πήγε στραβά. Παρακαλώ ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά.</string>
     <string name="trakt_error_not_exists">Δεν είναι (ακόμα) διαθέσιμο στο trakt. Ξαναδοκιμάστε αργότερα.</string>
     <string name="trakt_notice_not_exists">Δεν είναι δυνατή (ακόμα) η παρακολούθηση με το trakt.</string>
-    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded">Η λίστα παρακολούθησης είναι πλήρης, αφαιρέστε κάτι πρώτα.</string>
     <!-- Connect trakt -->
-    <string name="trakt_required">To use this, connect to Trakt</string>
+    <string name="trakt_required">Για να το χρησιμοποιήσετε αυτό, συνδεθείτε στο Trakt</string>
     <string name="connect_trakt">Σύνδεση trakt</string>
     <string name="trakt_reconnect">Σύνδεση του SeriesGuide με το trakt</string>
     <string name="trakt_reconnect_details">Έλεγχος διαπιστευτηρίων trakt</string>
@@ -351,9 +351,9 @@
     <string name="support_trakt">Υποστήριξη Trakt με VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Αξιολόγηση</string>
-    <string name="ack_rated">Rating sent</string>
+    <string name="ack_rated">Η βαθμολογία απεστάλη</string>
     <string name="your_rating">Η βαθμολογία σας</string>
-    <string name="action_remove_rating">Remove rating</string>
+    <string name="action_remove_rating">Αφαίρεση βαθμολογίας</string>
     <string name="love">Εντελώς ninja!</string>
     <string name="hate">Ξεφτίλα :(</string>
     <string name="rating2">Άθλιο</string>
@@ -375,7 +375,7 @@
     <string name="pref_quick_checkin">Γρήγορο check in</string>
     <string name="pref_quick_checkin_summary">Να μη ζητείται check in</string>
     <!-- Help -->
-    <string name="feedback">Send email</string>
+    <string name="feedback">Αποστολή email</string>
     <!-- Settings -->
     <string name="action_translate">Μετάφραση αυτής της εφαρμογής</string>
     <string name="prefs_category_advanced">Για προχωρημένους</string>
@@ -484,8 +484,8 @@
     <string name="upcoming_display">Επιλέξτε, για να εμφανίσετε τις επερχόμενες σειρές</string>
     <string name="pref_notifications">Ειδοποιήσεις</string>
     <string name="pref_notificationssummary">Ειδοποίηση για νέα επεισόδια</string>
-    <string name="pref_notifications_settings">Notification settings</string>
-    <string name="pref_notifications_settings_summary">Configure if and how notifications appear</string>
+    <string name="pref_notifications_settings">Ρυθμίσεις ειδοποιήσεων</string>
+    <string name="pref_notifications_settings_summary">Ρυθμίστε εάν και πώς θα εμφανίζονται οι ειδοποιήσεις</string>
     <string name="pref_ringtone">Ήχος κλήσης</string>
     <string name="pref_vibrate">Δόνηση</string>
     <string name="pref_vibratesummary">Δόνηση και κατά την εμφάνιση ειδοποίησης</string>
@@ -499,10 +499,10 @@
     <string name="pref_notifications_next_episodes_only_summary">Ειδοποίηση μόνο αν το νέο επιεσόδιο είναι το επόμενο για προβολή</string>
     <string name="pref_notifications_battery_settings">Ρυθμίσεις μπαταρίας</string>
     <string name="pref_notifications_battery_settings_summary">Πηγαίνετε στις Ρυθμίσεις μπαταρίας για να απενεργοποιήσετε τις βελτιστοποιήσεις μπαταρίας για αξιόπιστες ειδοποιήσεις</string>
-    <string name="notifications_allow">Allow notifications</string>
-    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them</string>
-    <string name="precise_notifications_allow">Allow on-time notifications</string>
-    <string name="precise_notifications_allow_reason">To receive notifications on time, go to Settings and allow setting reminders</string>
+    <string name="notifications_allow">Αποδοχή ειδοποιήσεων</string>
+    <string name="notifications_allow_reason">Για να λάβετε ειδοποιήσεις επεισοδίων και σφαλμάτων, μεταβείτε στις Ρυθμίσεις και επιτρέψετέ τις</string>
+    <string name="precise_notifications_allow">Αποδοχή έγκαιρων ειδοποιήσεων</string>
+    <string name="precise_notifications_allow_reason">Για να λαμβάνετε ειδοποιήσεις εγκαίρως, μεταβείτε στις Ρυθμίσεις και επιτρέψετε τον ορισμό υπενθυμίσεων</string>
     <!-- List Widget -->
     <string name="hide_watched">Απόκρυψη παρακολουθημένων επεισοδίων</string>
     <string name="pref_widget_opacity">Φόντο widget</string>
@@ -522,7 +522,7 @@
     <string name="billing_action_manage_subscriptions">Διαχείριση συνδρομών</string>
     <string name="billing_action_pass">Αποκτήστε το X Pass App</string>
     <string name="billing_duration_format">%1$s/έτος</string>
-    <string name="billing_free_trial">Free trial</string>
+    <string name="billing_free_trial">Δωρεάν δοκιμή</string>
     <string name="billing_sub_description">Δοκιμάστε δωρεάν για 30 ημέρες, ακυρώστε όποτε θέλετε. </string>
     <string name="billing_price_pass">εφάπαξ αγοράς</string>
     <string name="upgrade_description">Κάθε συνδρομή ξεκλειδώνει όλες τις δυνατότητες και υποστηρίζει μελλοντικές ενημερώσεις. Η συνδρομή δεν είναι απαραίτητη γιατη χρήση της εφαρμογής.</string>
@@ -539,7 +539,7 @@
     <string name="action_extensions_configure">Προσαρμοσμένες επεκτάσεις</string>
     <string name="action_extensions_add">Προσθήκη επέκταση</string>
     <string name="action_extensions_search">Λήψη περισσότερων επεκτάσεων</string>
-    <string name="action_extensions_develop">Develop an extension</string>
+    <string name="action_extensions_develop">Ανάπτυξη επέκτασης</string>
     <string name="action_extension_remove">Αφαίρεση</string>
     <string name="extension_amazon">Αναζήτηση στο Amazon</string>
     <string name="description_extension_amazon">Ψάξτε στον τοπικό σας ιστότοπο Amazon</string>
