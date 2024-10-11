@@ -1,17 +1,15 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2013-2024 Uwe Trottmann
 
-package com.battlelancer.seriesguide.shows.episodes;
+package com.battlelancer.seriesguide.shows.episodes
 
 /**
- * {@link #WATCHED}, {@link #SKIPPED} and {@link #UNWATCHED} flag for episode watched state.
+ * [WATCHED], [SKIPPED] and [UNWATCHED] flag for episode watched state.
  */
-public interface EpisodeFlags {
+object EpisodeFlags {
+    const val UNWATCHED: Int = 0x0
 
-    int UNWATCHED = 0x0;
+    const val WATCHED: Int = 0x1
 
-    int WATCHED = 0x1;
-
-    int SKIPPED = 0x2;
-
+    const val SKIPPED: Int = 0x2
 }
