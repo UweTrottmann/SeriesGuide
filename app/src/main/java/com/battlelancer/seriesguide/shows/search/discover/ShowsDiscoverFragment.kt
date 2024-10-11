@@ -21,23 +21,19 @@ import com.battlelancer.seriesguide.databinding.FragmentShowsDiscoverBinding
 import com.battlelancer.seriesguide.shows.ShowsActivityImpl
 import com.battlelancer.seriesguide.shows.ShowsActivityViewModel
 import com.battlelancer.seriesguide.shows.ShowsSettings
-import com.battlelancer.seriesguide.shows.search.discover.AddFragment.OnAddingShowEvent
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsActivity
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsFragment
 import com.battlelancer.seriesguide.streaming.WatchProviderFilterDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
-import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.LanguagePickerDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.YearPickerDialogFragment
-import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.findDialog
 import com.battlelancer.seriesguide.util.safeShow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -122,95 +118,68 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         )
     }
 
-    private val discoverItemClickListener = object : ShowsDiscoverAdapter.ItemClickListener {
-        override fun onLinkClick(anchor: View, link: DiscoverShowsLink) {
-            val intent =
-                when (link) {
-                    DiscoverShowsLink.POPULAR,
-                    DiscoverShowsLink.NEW_EPISODES -> {
-                        ShowsDiscoverPagingActivity.intentLink(requireContext(), link)
+    private val discoverItemClickListener: ShowsDiscoverAdapter.ItemClickListener
+        get() = object :
+            ItemAddShowClickListener(requireContext(), lifecycle, parentFragmentManager),
+            ShowsDiscoverAdapter.ItemClickListener {
+            override fun onLinkClick(anchor: View, link: DiscoverShowsLink) {
+                val intent =
+                    when (link) {
+                        DiscoverShowsLink.POPULAR,
+                        DiscoverShowsLink.NEW_EPISODES -> {
+                            ShowsDiscoverPagingActivity.intentLink(requireContext(), link)
+                        }
+
+                        DiscoverShowsLink.WATCHLIST,
+                        DiscoverShowsLink.WATCHED,
+                        DiscoverShowsLink.COLLECTION -> {
+                            ShowsTraktActivity.intent(requireContext(), link)
+                        }
+
                     }
-
-                    DiscoverShowsLink.WATCHLIST,
-                    DiscoverShowsLink.WATCHED,
-                    DiscoverShowsLink.COLLECTION -> {
-                        ShowsTraktActivity.intent(requireContext(), link)
-                    }
-
-                }
-            Utils.startActivityWithAnimation(activity, intent, anchor)
-        }
-
-        override fun onHeaderButtonClick(anchor: View) {
-            val popupMenu = PopupMenu(anchor.context, anchor)
-            popupMenu.inflate(R.menu.new_episodes_filter_popup_menu)
-            popupMenu.setOnMenuItemClickListener { menuItem ->
-                when (menuItem.itemId) {
-                    R.id.menu_action_new_episodes_filter_year -> {
-                        YearPickerDialogFragment
-                            .create(ShowsDiscoverSettings.getFirstReleaseYearRaw(requireContext()))
-                            .also { yearPicker = it }
-                            .apply { onPickedListener = firstReleaseYearPickedListener }
-                            .safeShow(parentFragmentManager, TAG_YEAR_PICKER)
-                        return@setOnMenuItemClickListener true
-                    }
-
-                    R.id.menu_action_new_episodes_filter_language -> {
-                        LanguagePickerDialogFragment
-                            .createForShows(ShowsDiscoverSettings.getOriginalLanguage(requireContext()))
-                            .also { languagePicker = it }
-                            .apply { onPickedListener = originalLanguagePickedListener }
-                            .safeShow(parentFragmentManager, TAG_LANGUAGE_PICKER)
-                        return@setOnMenuItemClickListener true
-                    }
-
-                    R.id.menu_action_new_episodes_filter_providers -> {
-                        WatchProviderFilterDialogFragment.showForShows(parentFragmentManager)
-                        return@setOnMenuItemClickListener true
-                    }
-
-                    else -> return@setOnMenuItemClickListener false
-                }
+                Utils.startActivityWithAnimation(activity, intent, anchor)
             }
-            popupMenu.show()
-        }
 
-        override fun onItemClick(item: SearchResult) {
-            if (item.state != SearchResult.STATE_ADDING) {
-                if (item.state == SearchResult.STATE_ADDED) {
-                    // already in library, open it
-                    startActivity(
-                        OverviewActivity.intentShowByTmdbId(
-                            requireContext(),
-                            item.tmdbId
-                        )
-                    )
-                } else {
-                    // display more details in a dialog
-                    AddShowDialogFragment.show(parentFragmentManager, item)
+            override fun onHeaderButtonClick(anchor: View) {
+                val popupMenu = PopupMenu(anchor.context, anchor)
+                popupMenu.inflate(R.menu.new_episodes_filter_popup_menu)
+                popupMenu.setOnMenuItemClickListener { menuItem ->
+                    when (menuItem.itemId) {
+                        R.id.menu_action_new_episodes_filter_year -> {
+                            YearPickerDialogFragment
+                                .create(ShowsDiscoverSettings.getFirstReleaseYearRaw(requireContext()))
+                                .also { yearPicker = it }
+                                .apply { onPickedListener = firstReleaseYearPickedListener }
+                                .safeShow(parentFragmentManager, TAG_YEAR_PICKER)
+                            return@setOnMenuItemClickListener true
+                        }
+
+                        R.id.menu_action_new_episodes_filter_language -> {
+                            LanguagePickerDialogFragment
+                                .createForShows(
+                                    ShowsDiscoverSettings.getOriginalLanguage(requireContext())
+                                )
+                                .also { languagePicker = it }
+                                .apply { onPickedListener = originalLanguagePickedListener }
+                                .safeShow(parentFragmentManager, TAG_LANGUAGE_PICKER)
+                            return@setOnMenuItemClickListener true
+                        }
+
+                        R.id.menu_action_new_episodes_filter_providers -> {
+                            WatchProviderFilterDialogFragment.showForShows(parentFragmentManager)
+                            return@setOnMenuItemClickListener true
+                        }
+
+                        else -> return@setOnMenuItemClickListener false
+                    }
                 }
+                popupMenu.show()
+            }
+
+            override fun onEmptyViewButtonClick() {
+                refreshData()
             }
         }
-
-        override fun onAddClick(item: SearchResult) {
-            // post to let other fragments know show is getting added
-            EventBus.getDefault().post(OnAddingShowEvent(item.tmdbId))
-            TaskManager.getInstance().performAddTask(context, item)
-        }
-
-        override fun onMoreOptionsClick(view: View, show: SearchResult) {
-            val isTraktConnected = TraktCredentials.get(requireContext()).hasCredentials()
-            AddShowPopupMenu(requireContext(), show, view).apply {
-                if (!isTraktConnected) hideAddToWatchlistAction()
-                // this does not know watchlist state, so only show the add to watchlist action
-                hideRemoveFromWatchlistAction()
-            }.show()
-        }
-
-        override fun onEmptyViewButtonClick() {
-            refreshData()
-        }
-    }
 
     private fun refreshData() {
         model.refreshData()
