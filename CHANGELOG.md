@@ -10,7 +10,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2024.4
 
-### Unreleased
+### 2024.4.4 - 2024-10-16 🧪
 
 * 🔧 Episodes: in list view, can again set watched with one tap.
 * 🔧 Calendar: add discoverable more options button on items, does the same thing as touch and hold.
