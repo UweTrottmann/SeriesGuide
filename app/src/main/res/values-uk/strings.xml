@@ -37,7 +37,7 @@
     <string name="sync_and_update">Синхронізація та Оновлення</string>
     <string name="sync_and_download_all">Синхронізація&amp; Завантажити все</string>
     <string name="action_stream">Переглянути або замовити</string>
-    <string name="action_stream_info">Інформація про трансляцію або покупку</string>
+    <string name="action_stream_settings">Інформація про трансляцію або покупку</string>
     <string name="action_select_region">Виберіть регіон</string>
     <string name="action_reset">Скинути</string>
     <!-- Search -->

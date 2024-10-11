@@ -37,7 +37,7 @@
     <string name="sync_and_update">ซิงค์ &amp; อัปเดต</string>
     <string name="sync_and_download_all">ซิงค์ &amp; ดาวน์โหลดทั้งหมด</string>
     <string name="action_stream">สตรีมหรือซื้อ</string>
-    <string name="action_stream_info">ข้อมูลการสตรีมหรือซื้อ</string>
+    <string name="action_stream_settings">ข้อมูลการสตรีมหรือซื้อ</string>
     <string name="action_select_region">เลือกภูมิภาค</string>
     <string name="action_reset">Reset</string>
     <!-- Search -->

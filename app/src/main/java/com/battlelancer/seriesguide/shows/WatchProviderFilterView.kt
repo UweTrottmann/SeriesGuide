@@ -96,7 +96,7 @@ fun WatchProviderList(
                     Text(stringResource(id = R.string.action_reset))
                 }
                 val descriptionStreamSettingsButton =
-                    stringResource(id = R.string.action_stream_info)
+                    stringResource(id = R.string.action_stream_settings)
                 TooltipBox(
                     positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
                     tooltip = { PlainTooltip { Text(descriptionStreamSettingsButton) } },

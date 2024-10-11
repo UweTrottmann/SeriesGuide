@@ -37,7 +37,7 @@
     <string name="sync_and_update">هم‌گام سازی و به‌روز رسانی</string>
     <string name="sync_and_download_all">هم‌گام سازی و بارگیری همه</string>
     <string name="action_stream">پخش یا خرید</string>
-    <string name="action_stream_info">اطّلاعات پخش یا خرید</string>
+    <string name="action_stream_settings">اطّلاعات پخش یا خرید</string>
     <string name="action_select_region">گزینش ناحیه</string>
     <string name="action_reset">بازنشانی</string>
     <!-- Search -->

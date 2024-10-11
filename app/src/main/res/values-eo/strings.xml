@@ -37,7 +37,7 @@
     <string name="sync_and_update">Sinkronigi kaj ĝisdatigi</string>
     <string name="sync_and_download_all">Sinkronigi kaj elŝuti ĉiujn</string>
     <string name="action_stream">Elsendi aŭ aĉeti</string>
-    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_stream_settings">Stream or purchase info</string>
     <string name="action_select_region">Elekti regionon</string>
     <string name="action_reset">Reset</string>
     <!-- Search -->

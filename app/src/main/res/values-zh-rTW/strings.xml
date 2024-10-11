@@ -37,7 +37,7 @@
     <string name="sync_and_update">同步並更新差異</string>
     <string name="sync_and_download_all">同步並全部重新下載</string>
     <string name="action_stream">串流播放或購買</string>
-    <string name="action_stream_info">串流播放或購買資訊</string>
+    <string name="action_stream_settings">串流播放或購買資訊</string>
     <string name="action_select_region">選擇地區</string>
     <string name="action_reset">Reset</string>
     <!-- Search -->

@@ -37,7 +37,7 @@
     <string name="sync_and_update">Synchroniser &amp; Mettre à jour</string>
     <string name="sync_and_download_all">Synchroniser &amp; Télécharger tout</string>
     <string name="action_stream">Stream or purchase</string>
-    <string name="action_stream_info">Informations sur le streaming et l\'achat</string>
+    <string name="action_stream_settings">Informations sur le streaming et l\'achat</string>
     <string name="action_select_region">Sélectionner une région</string>
     <string name="action_reset">Réinitialiser</string>
     <!-- Search -->

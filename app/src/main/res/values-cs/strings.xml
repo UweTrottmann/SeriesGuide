@@ -37,7 +37,7 @@
     <string name="sync_and_update">Synchronizuj &amp; Aktualizuj</string>
     <string name="sync_and_download_all">Synchronizuj &amp; Stáhni vše</string>
     <string name="action_stream">Streamování nebo nákup</string>
-    <string name="action_stream_info">Informace o streamování nebo nákupu</string>
+    <string name="action_stream_settings">Informace o streamování nebo nákupu</string>
     <string name="action_select_region">Vyberte region</string>
     <string name="action_reset">Obnovit</string>
     <!-- Search -->

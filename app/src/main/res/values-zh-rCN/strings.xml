@@ -37,7 +37,7 @@
     <string name="sync_and_update">同步并更新</string>
     <string name="sync_and_download_all">同步并全部重新下载</string>
     <string name="action_stream">流媒体播放或购买</string>
-    <string name="action_stream_info">流媒体播放或购买信息</string>
+    <string name="action_stream_settings">流媒体播放或购买信息</string>
     <string name="action_select_region">选择地区</string>
     <string name="action_reset">重置</string>
     <!-- Search -->

@@ -37,7 +37,7 @@
     <string name="sync_and_update">المزامنة &amp; والتحديث</string>
     <string name="sync_and_download_all">المزامنة &amp; وتحميل كل البيانات</string>
     <string name="action_stream">بث أو شراء</string>
-    <string name="action_stream_info">معلومات البث أو الشراء</string>
+    <string name="action_stream_settings">معلومات البث أو الشراء</string>
     <string name="action_select_region">حدد المنطقة</string>
     <string name="action_reset">Reset</string>
     <!-- Search -->

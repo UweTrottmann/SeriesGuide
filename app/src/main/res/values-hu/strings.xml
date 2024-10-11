@@ -37,7 +37,7 @@
     <string name="sync_and_update">Szinkronizálás &amp; Frissítés</string>
     <string name="sync_and_download_all">Szinkronizálás &amp; Összes letöltése</string>
     <string name="action_stream">Streamelés vagy vásárlás</string>
-    <string name="action_stream_info">Stream vagy vásárlási információk</string>
+    <string name="action_stream_settings">Stream vagy vásárlási információk</string>
     <string name="action_select_region">Válassz régiót</string>
     <string name="action_reset">Visszaállítás</string>
     <!-- Search -->

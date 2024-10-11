@@ -37,7 +37,7 @@
     <string name="sync_and_update">Synkronoi ja päivitä</string>
     <string name="sync_and_download_all">Synkronoi ja lataa kaikki</string>
     <string name="action_stream">Suoratoista tai osta</string>
-    <string name="action_stream_info">Suoratoisto- tai ostotiedot</string>
+    <string name="action_stream_settings">Suoratoisto- tai ostotiedot</string>
     <string name="action_select_region">Valitse alue</string>
     <string name="action_reset">Nollaa</string>
     <!-- Search -->

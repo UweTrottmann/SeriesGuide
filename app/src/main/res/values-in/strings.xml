@@ -37,7 +37,7 @@
     <string name="sync_and_update">Sync &amp; Perbarui</string>
     <string name="sync_and_download_all">Sync &amp; unduh semua</string>
     <string name="action_stream">Tonton atau beli</string>
-    <string name="action_stream_info">Tonton atau info pembelian</string>
+    <string name="action_stream_settings">Tonton atau info pembelian</string>
     <string name="action_select_region">Pilih wilayah</string>
     <string name="action_reset">Reset</string>
     <!-- Search -->

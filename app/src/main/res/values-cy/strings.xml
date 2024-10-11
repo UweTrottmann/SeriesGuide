@@ -37,7 +37,7 @@
     <string name="sync_and_update">Sync &amp; Diweddariad</string>
     <string name="sync_and_download_all">Sync &amp; Dadlwythwch y cyfan</string>
     <string name="action_stream">Ffrwd neu brynu</string>
-    <string name="action_stream_info">Ffrydio neu brynu gwybodaeth</string>
+    <string name="action_stream_settings">Ffrydio neu brynu gwybodaeth</string>
     <string name="action_select_region">Dewis rhanbarth</string>
     <string name="action_reset">Reset</string>
     <!-- Search -->

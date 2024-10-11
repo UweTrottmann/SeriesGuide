@@ -37,7 +37,7 @@
     <string name="sync_and_update">同期して更新</string>
     <string name="sync_and_download_all">すべて同期してダウンロード</string>
     <string name="action_stream">ストリーミング・購入</string>
-    <string name="action_stream_info">ストリーミング・購入</string>
+    <string name="action_stream_settings">ストリーミング・購入</string>
     <string name="action_select_region">エリアの選択</string>
     <string name="action_reset">Reset</string>
     <!-- Search -->
