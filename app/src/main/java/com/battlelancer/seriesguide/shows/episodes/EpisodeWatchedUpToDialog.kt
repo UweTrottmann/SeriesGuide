@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2020-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.episodes
 
@@ -34,7 +34,7 @@ class EpisodeWatchedUpToDialog : AppCompatDialogFragment() {
             .setTitle(R.string.confirmation_watched_up_to)
             .setPositiveButton(R.string.action_watched_up_to) { _, _ ->
                 EpisodeTools.episodeWatchedUpTo(
-                    context, showId, episodeReleaseTime, episodeNumber
+                    requireContext(), showId, episodeReleaseTime, episodeNumber
                 )
             }
             .setNegativeButton(android.R.string.cancel) { _, _ -> dismiss() }

@@ -320,7 +320,7 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
 
     private fun onButtonCollectedClick() {
         runIfHasEpisode { episode ->
-            EpisodeTools.episodeCollected(context, episode.id, !episode.collected)
+            EpisodeTools.episodeCollected(requireContext(), episode.id, !episode.collected)
         }
     }
 
@@ -330,7 +330,7 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
 
     private fun changeEpisodeFlag(episodeFlag: Int) {
         runIfHasEpisode { episode ->
-            EpisodeTools.episodeWatched(context, episode.id, episodeFlag)
+            EpisodeTools.episodeWatched(requireContext(), episode.id, episodeFlag)
         }
     }
 

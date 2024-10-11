@@ -307,12 +307,14 @@ abstract class CalendarFragment2 : Fragment() {
     }
 
     private fun updateEpisodeCollectionState(episodeId: Long, addToCollection: Boolean) {
-        EpisodeTools.episodeCollected(context, episodeId, addToCollection)
+        EpisodeTools.episodeCollected(requireContext(), episodeId, addToCollection)
     }
 
     private fun updateEpisodeWatchedState(episodeId: Long, isWatched: Boolean) {
         EpisodeTools.episodeWatched(
-            context, episodeId, if (isWatched) EpisodeFlags.WATCHED else EpisodeFlags.UNWATCHED
+            requireContext(),
+            episodeId,
+            if (isWatched) EpisodeFlags.WATCHED else EpisodeFlags.UNWATCHED
         )
     }
 

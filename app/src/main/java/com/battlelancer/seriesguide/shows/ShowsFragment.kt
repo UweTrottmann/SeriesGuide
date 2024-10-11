@@ -290,7 +290,7 @@ class ShowsFragment : Fragment() {
             }
 
             override fun onSetWatchedClick(show: ShowItem) {
-                EpisodeTools.episodeWatchedIfNotZero(context, show.nextEpisodeId)
+                EpisodeTools.episodeWatchedIfNotZero(requireContext(), show.nextEpisodeId)
             }
         }
 

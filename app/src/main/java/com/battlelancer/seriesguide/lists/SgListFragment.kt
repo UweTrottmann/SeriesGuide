@@ -145,7 +145,7 @@ class SgListFragment : Fragment() {
             }
 
             override fun onSetWatchedClick(item: SgListItemWithDetails) {
-                EpisodeTools.episodeWatchedIfNotZero(context, item.nextEpisodeId)
+                EpisodeTools.episodeWatchedIfNotZero(requireContext(), item.nextEpisodeId)
             }
         }
 

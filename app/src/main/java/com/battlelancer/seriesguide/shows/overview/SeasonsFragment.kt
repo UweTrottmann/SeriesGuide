@@ -232,7 +232,7 @@ class SeasonsFragment() : Fragment() {
     }
 
     private fun onFlagSeasonSkipped(seasonId: Long) {
-        EpisodeTools.seasonWatched(context, seasonId, EpisodeFlags.SKIPPED)
+        EpisodeTools.seasonWatched(requireContext(), seasonId, EpisodeFlags.SKIPPED)
     }
 
     /**
@@ -240,7 +240,7 @@ class SeasonsFragment() : Fragment() {
      */
     private fun onFlagSeasonWatched(seasonId: Long, isWatched: Boolean) {
         EpisodeTools.seasonWatched(
-            context,
+            requireContext(),
             seasonId,
             if (isWatched) EpisodeFlags.WATCHED else EpisodeFlags.UNWATCHED
         )
@@ -250,7 +250,7 @@ class SeasonsFragment() : Fragment() {
      * Changes the seasons episodes collected flags.
      */
     private fun onFlagSeasonCollected(seasonId: Long, isCollected: Boolean) {
-        EpisodeTools.seasonCollected(context, seasonId, isCollected)
+        EpisodeTools.seasonCollected(requireContext(), seasonId, isCollected)
     }
 
     /**
@@ -258,7 +258,7 @@ class SeasonsFragment() : Fragment() {
      * seasons.
      */
     private fun onFlagShowWatched(isWatched: Boolean) {
-        EpisodeTools.showWatched(context, showId, isWatched)
+        EpisodeTools.showWatched(requireContext(), showId, isWatched)
     }
 
     /**
@@ -266,7 +266,7 @@ class SeasonsFragment() : Fragment() {
      * all seasons.
      */
     private fun onFlagShowCollected(isCollected: Boolean) {
-        EpisodeTools.showCollected(context, showId, isCollected)
+        EpisodeTools.showCollected(requireContext(), showId, isCollected)
     }
 
     /**

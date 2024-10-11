@@ -365,7 +365,7 @@ class EpisodesFragment : Fragment() {
                 when (item.itemId) {
                     CONTEXT_WATCHED_ALL -> {
                         EpisodeTools.seasonWatched(
-                            context,
+                            requireContext(),
                             seasonId,
                             EpisodeFlags.WATCHED
                         )
@@ -374,7 +374,7 @@ class EpisodesFragment : Fragment() {
 
                     CONTEXT_WATCHED_NONE -> {
                         EpisodeTools.seasonWatched(
-                            context,
+                            requireContext(),
                             seasonId,
                             EpisodeFlags.UNWATCHED
                         )
@@ -413,7 +413,7 @@ class EpisodesFragment : Fragment() {
                 when (item.itemId) {
                     CONTEXT_COLLECTED_ALL -> {
                         EpisodeTools.seasonCollected(
-                            context,
+                            requireContext(),
                             seasonId,
                             true
                         )
@@ -422,7 +422,7 @@ class EpisodesFragment : Fragment() {
 
                     CONTEXT_COLLECTED_NONE -> {
                         EpisodeTools.seasonCollected(
-                            context,
+                            requireContext(),
                             seasonId,
                             false
                         )
