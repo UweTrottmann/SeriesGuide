@@ -156,13 +156,13 @@ abstract class AddFragment : Fragment() {
         activity: Activity,
         objects: List<SearchResult>,
         private val itemClickListener: ItemClickListener,
-        private val enableMoreOptions: Boolean
+        private val showWatchlistActions: Boolean
     ) : ArrayAdapter<SearchResult>(activity, 0, objects) {
 
         interface ItemClickListener {
             fun onItemClick(item: SearchResult)
             fun onAddClick(item: SearchResult)
-            fun onMoreOptionsClick(view: View, showTmdbId: Int)
+            fun onMoreOptionsClick(view: View, show: SearchResult)
         }
 
         private fun getItemForShowTmdbId(showTmdbId: Int): SearchResult? {
@@ -208,7 +208,7 @@ abstract class AddFragment : Fragment() {
             }
 
             val item = getItem(position)
-            holder.bindTo(item, context, enableMoreOptions)
+            holder.bindTo(item, context, showWatchlistActions)
 
             return view
         }
@@ -231,32 +231,14 @@ abstract class AddFragment : Fragment() {
                 }
             }
 
-            private fun onMoreOptionsClick() {
+            private fun onMoreOptionsClick(anchor: View) {
                 item?.let {
-                    itemClickListener.onMoreOptionsClick(
-                        binding.buttonItemAddMoreOptions,
-                        it.tmdbId
-                    )
+                    itemClickListener.onMoreOptionsClick(anchor, it)
                 }
             }
 
-            fun bindTo(item: SearchResult?, context: Context, enableMoreOptions: Boolean) {
+            fun bindTo(item: SearchResult?, context: Context, showWatchlistActions: Boolean) {
                 this.item = item
-
-                if (enableMoreOptions) {
-                    binding.root.setContextAndLongClickListener {
-                        onMoreOptionsClick()
-                    }
-                    binding.buttonItemAddMoreOptions.setOnClickListener {
-                        onMoreOptionsClick()
-                    }
-                } else {
-                    // Remove listener so there is no long press feedback
-                    binding.root.setContextAndLongClickListener(null)
-                    binding.buttonItemAddMoreOptions.setOnClickListener(null)
-                }
-                binding.buttonItemAddMoreOptions.visibility =
-                    if (enableMoreOptions) View.VISIBLE else View.GONE
 
                 if (item == null) {
                     binding.addIndicatorAddShow.isGone = true
@@ -264,6 +246,31 @@ abstract class AddFragment : Fragment() {
                     binding.textViewAddDescription.text = null
                     binding.imageViewAddPoster.setImageDrawable(null)
                 } else {
+                    val canBeAdded = item.state == SearchResult.STATE_ADD
+                    // If not added, always display add action on long press for accessibility
+                    binding.root.apply {
+                        if (canBeAdded) {
+                            setContextAndLongClickListener {
+                                onMoreOptionsClick(binding.root)
+                            }
+                        } else {
+                            // Remove listener so there is no long press feedback
+                            setContextAndLongClickListener(null)
+                        }
+                    }
+                    // Only display more options button when displaying remove from watchlist action
+                    binding.buttonItemAddMoreOptions.apply {
+                        if (showWatchlistActions) {
+                            setOnClickListener {
+                                onMoreOptionsClick(binding.buttonItemAddMoreOptions)
+                            }
+                            isVisible = true
+                        } else {
+                            setOnClickListener(null)
+                            isGone = true
+                        }
+                    }
+
                     // add indicator
                     val showTitle = item.title
                     binding.addIndicatorAddShow.apply {

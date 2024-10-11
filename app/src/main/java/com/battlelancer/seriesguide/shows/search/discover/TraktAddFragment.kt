@@ -3,8 +3,6 @@
 
 package com.battlelancer.seriesguide.shows.search.discover
 
-import android.content.Context
-import android.os.AsyncTask
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -13,7 +11,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.GridView
-import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.loader.app.LoaderManager
@@ -24,9 +21,7 @@ import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.widgets.EmptyView
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ThemeUtils
-import com.battlelancer.seriesguide.util.tasks.AddShowToWatchlistTask
 import com.battlelancer.seriesguide.util.tasks.BaseShowActionTask.ShowChangedEvent
-import com.battlelancer.seriesguide.util.tasks.RemoveShowFromWatchlistTask
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -76,7 +71,7 @@ class TraktAddFragment : AddFragment() {
         // set initial view states
         setProgressVisible(visible = true, animate = false)
 
-        // setup adapter, enable context menu only for watchlist
+        // set up adapter
         adapter = AddAdapter(
             requireActivity(), ArrayList(), itemClickListener,
             listType == TraktAddLoader.Type.WATCHLIST
@@ -118,42 +113,16 @@ class TraktAddFragment : AddFragment() {
                 TaskManager.getInstance().performAddTask(requireContext(), item)
             }
 
-            override fun onMoreOptionsClick(view: View, showTmdbId: Int) {
-                val popupMenu = PopupMenu(view.context, view)
-                popupMenu.inflate(R.menu.add_show_popup_menu)
-
-                // prevent adding shows to watchlist already on watchlist
-                if (listType == TraktAddLoader.Type.WATCHLIST) {
-                    popupMenu.menu.findItem(R.id.menu_action_show_watchlist_add).isVisible = false
-                }
-                popupMenu.setOnMenuItemClickListener(
-                    AddItemMenuItemClickListener(requireContext(), showTmdbId)
-                )
-                popupMenu.show()
+            override fun onMoreOptionsClick(view: View, show: SearchResult) {
+                AddShowPopupMenu(requireContext(), show, view).apply {
+                    // For watchlist only show remove from, for other lists show no watchlist option
+                    hideAddToWatchlistAction()
+                    if (listType != TraktAddLoader.Type.WATCHLIST) {
+                        hideRemoveFromWatchlistAction()
+                    }
+                }.show()
             }
         }
-
-    class AddItemMenuItemClickListener(
-        private val context: Context,
-        private val showTmdbId: Int
-    ) : PopupMenu.OnMenuItemClickListener {
-        override fun onMenuItemClick(item: MenuItem): Boolean {
-            val itemId = item.itemId
-            if (itemId == R.id.menu_action_show_watchlist_add) {
-                @Suppress("DEPRECATION") // AsyncTask
-                AddShowToWatchlistTask(context, showTmdbId)
-                    .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-                return true
-            }
-            if (itemId == R.id.menu_action_show_watchlist_remove) {
-                @Suppress("DEPRECATION") // AsyncTask
-                RemoveShowFromWatchlistTask(context, showTmdbId)
-                    .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-                return true
-            }
-            return false
-        }
-    }
 
     private val optionsMenuProvider: MenuProvider = object : MenuProvider {
         override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {

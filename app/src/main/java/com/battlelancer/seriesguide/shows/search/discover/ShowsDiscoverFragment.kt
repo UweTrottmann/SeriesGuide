@@ -73,10 +73,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         swipeRefreshLayout.setOnRefreshListener { refreshData() }
         ViewTools.setSwipeRefreshLayoutColors(requireActivity().theme, swipeRefreshLayout)
 
-        adapter = ShowsDiscoverAdapter(
-            requireContext(), discoverItemClickListener,
-            TraktCredentials.get(requireContext()).hasCredentials(), true
-        )
+        adapter = ShowsDiscoverAdapter(requireContext(), discoverItemClickListener)
         val recyclerView = binding.recyclerViewShowsDiscover
         recyclerView.also {
             it.setHasFixedSize(true)
@@ -87,7 +84,12 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         // observe results and loading state
         viewLifecycleOwner.lifecycleScope.launch {
             model.data.collectLatest {
-                adapter.updateSearchResults(it.searchResults, it.emptyText, !it.successful)
+                adapter.updateSearchResults(
+                    it.searchResults,
+                    it.emptyText,
+                    hasError = !it.successful,
+                    showWatchlistActions = TraktCredentials.get(requireContext()).hasCredentials()
+                )
             }
         }
         viewLifecycleOwner.lifecycleScope.launch {
@@ -196,14 +198,12 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
             TaskManager.getInstance().performAddTask(context, item)
         }
 
-        override fun onMoreOptionsClick(view: View, showTmdbId: Int) {
-            PopupMenu(view.context, view).apply {
-                inflate(R.menu.add_show_popup_menu)
-                // only support adding shows to watchlist
-                menu.findItem(R.id.menu_action_show_watchlist_remove).isVisible = false
-                setOnMenuItemClickListener(
-                    TraktAddFragment.AddItemMenuItemClickListener(requireContext(), showTmdbId)
-                )
+        override fun onMoreOptionsClick(view: View, show: SearchResult) {
+            val isTraktConnected = TraktCredentials.get(requireContext()).hasCredentials()
+            AddShowPopupMenu(requireContext(), show, view).apply {
+                if (!isTraktConnected) hideAddToWatchlistAction()
+                // this does not know watchlist state, so only show the add to watchlist action
+                hideRemoveFromWatchlistAction()
             }.show()
         }
 

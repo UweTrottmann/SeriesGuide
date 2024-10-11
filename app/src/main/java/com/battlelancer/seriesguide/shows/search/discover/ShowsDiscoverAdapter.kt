@@ -29,13 +29,12 @@ import com.battlelancer.seriesguide.util.ViewTools.setContextAndLongClickListene
  */
 class ShowsDiscoverAdapter(
     private val context: Context,
-    private val itemClickListener: ItemClickListener,
-    private val showMenuWatchlist: Boolean,
-    private val hideMenuWatchlistIfAdded: Boolean
+    private val itemClickListener: ItemClickListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var emptyText: String = ""
     private var hasError: Boolean = false
+    private var showWatchlistActions: Boolean = false
     private val searchResults = mutableListOf<SearchResult>()
     private val links: MutableList<DiscoverShowsLink> = mutableListOf()
 
@@ -69,7 +68,8 @@ class ShowsDiscoverAdapter(
     fun updateSearchResults(
         newSearchResults: List<SearchResult>?,
         emptyText: String,
-        hasError: Boolean
+        hasError: Boolean,
+        showWatchlistActions: Boolean
     ) {
         searchResults.clear()
         if (newSearchResults != null) {
@@ -77,6 +77,7 @@ class ShowsDiscoverAdapter(
         }
         this.emptyText = emptyText
         this.hasError = hasError
+        this.showWatchlistActions = showWatchlistActions
         notifyDataSetChanged()
     }
 
@@ -128,6 +129,7 @@ class ShowsDiscoverAdapter(
             VIEW_TYPE_LINK -> LinkViewHolder.inflate(parent, itemClickListener)
             VIEW_TYPE_HEADER -> HeaderViewHolder.inflate(parent, itemClickListener)
             VIEW_TYPE_SHOW -> ShowViewHolder.inflate(parent, itemClickListener)
+
             VIEW_TYPE_EMPTY -> EmptyViewHolder.inflate(parent, itemClickListener)
             else -> throw IllegalArgumentException("View type $viewType is unknown")
         }
@@ -145,7 +147,7 @@ class ShowsDiscoverAdapter(
 
             is ShowViewHolder -> {
                 val item = getSearchResultFor(position)
-                holder.bindTo(context, item, showMenuWatchlist, hideMenuWatchlistIfAdded)
+                holder.bindTo(context, item, showWatchlistActions)
             }
 
             is EmptyViewHolder -> {
@@ -159,7 +161,7 @@ class ShowsDiscoverAdapter(
         fun onHeaderButtonClick(anchor: View)
         fun onItemClick(item: SearchResult)
         fun onAddClick(item: SearchResult)
-        fun onMoreOptionsClick(view: View, showTmdbId: Int)
+        fun onMoreOptionsClick(view: View, show: SearchResult)
         fun onEmptyViewButtonClick()
     }
 
@@ -265,38 +267,44 @@ class ShowsDiscoverAdapter(
             }
         }
 
-        private fun onMoreOptionsClick() {
+        private fun onMoreOptionsClick(anchor: View) {
             item?.let {
-                itemClickListener.onMoreOptionsClick(binding.buttonItemAddMoreOptions, it.tmdbId)
+                itemClickListener.onMoreOptionsClick(anchor, it)
             }
         }
 
         fun bindTo(
             context: Context,
             item: SearchResult,
-            showMenuWatchlist: Boolean,
-            hideMenuWatchlistIfAdded: Boolean
+            showWatchlistActions: Boolean,
         ) {
             this.item = item
 
-            // hide and disable watchlist menu if not useful
-            val showMenuWatchlistActual = showMenuWatchlist
-                    && (!hideMenuWatchlistIfAdded || item.state != SearchResult.STATE_ADDED)
-            if (showMenuWatchlistActual) {
+            val canBeAdded = item.state == SearchResult.STATE_ADD
+            // If not added, always display add action on long press for accessibility
+            if (canBeAdded) {
                 itemView.setContextAndLongClickListener {
-                    onMoreOptionsClick()
+                    onMoreOptionsClick(itemView)
                 }
-                binding.buttonItemAddMoreOptions.setOnClickListener {
-                    onMoreOptionsClick()
-                }
-                binding.buttonItemAddMoreOptions.isVisible = true
             } else {
-                // remove listener to prevent long press feedback
+                // Remove listener to prevent long press feedback
                 itemView.setContextAndLongClickListener(null)
-                binding.buttonItemAddMoreOptions.setOnClickListener(null)
-                binding.buttonItemAddMoreOptions.isGone = true
             }
-            // display added indicator instead of add button if already added that show
+            // Only display more options button when displaying add to watchlist action,
+            // but only when a show is not added.
+            binding.buttonItemAddMoreOptions.apply {
+                if (showWatchlistActions && canBeAdded) {
+                    setOnClickListener {
+                        onMoreOptionsClick(binding.buttonItemAddMoreOptions)
+                    }
+                    isVisible = true
+                } else {
+                    setOnClickListener(null)
+                    isGone = true
+                }
+            }
+
+            // add button/indicator
             binding.addIndicatorAddShow.setState(item.state)
             val showTitle = item.title
             binding.addIndicatorAddShow.setNameOfAssociatedItem(showTitle)
