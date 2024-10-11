@@ -5,22 +5,25 @@ package com.battlelancer.seriesguide.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.ActivitySinglepaneBinding
 import com.battlelancer.seriesguide.util.commitReorderingAllowed
 
 /**
- * Is a [SinglePaneActivity].
+ * Is a [SinglePaneActivity]. And [BaseMessageActivity] for Trakt watchlist actions.
  */
-abstract class BaseSimilarActivity : BaseActivity() {
+abstract class BaseSimilarActivity : BaseMessageActivity() {
 
     abstract val liftOnScrollTargetViewId: Int
     abstract val titleStringRes: Int
     abstract fun createFragment(tmdbId: Int, title: String?): Fragment
+    private lateinit var binding: ActivitySinglepaneBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = SinglePaneActivity.onCreateFor(this)
+        binding = SinglePaneActivity.onCreateFor(this)
         binding.sgAppBarLayout.sgAppBarLayout.liftOnScrollTargetViewId =
             liftOnScrollTargetViewId
         setupActionBar()
@@ -60,6 +63,9 @@ abstract class BaseSimilarActivity : BaseActivity() {
             }
         }
     }
+
+    override val snackbarParentView: View
+        get() = binding.root
 
     companion object {
         private const val EXTRA_TMDB_ID = "EXTRA_TMDB_ID"

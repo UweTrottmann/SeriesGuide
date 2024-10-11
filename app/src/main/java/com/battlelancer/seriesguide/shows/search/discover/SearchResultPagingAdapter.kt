@@ -4,22 +4,24 @@
 package com.battlelancer.seriesguide.shows.search.discover
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.RecyclerView
 
 class SearchResultPagingAdapter(
-     private val itemClickListener: BaseAddShowsFragment.ItemClickListener
-) : PagingDataAdapter<SearchResult, RecyclerView.ViewHolder>(
+    private val context: Context,
+    private val itemClickListener: ItemAddShowViewHolder.ClickListener,
+    private val showWatchlistActions: Boolean
+) : PagingDataAdapter<SearchResult, ItemAddShowViewHolder>(
     SearchResultDiffCallback()
 ) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return SearchResultViewHolder.create(parent, itemClickListener)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemAddShowViewHolder {
+        return ItemAddShowViewHolder.create(parent, itemClickListener)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as SearchResultViewHolder).bindTo(getItem(position))
+    override fun onBindViewHolder(holder: ItemAddShowViewHolder, position: Int) {
+        holder.bindTo(context, getItem(position), showWatchlistActions)
     }
 
     fun setStateForTmdbId(showTmdbId: Int, newState: Int) {

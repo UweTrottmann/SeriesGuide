@@ -9,33 +9,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.TooltipCompat
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.databinding.ItemAddshowBinding
 import com.battlelancer.seriesguide.databinding.ItemDiscoverEmptyBinding
 import com.battlelancer.seriesguide.databinding.ItemDiscoverHeaderBinding
 import com.battlelancer.seriesguide.databinding.ItemDiscoverLinkBinding
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
-import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ViewTools
-import com.battlelancer.seriesguide.util.ViewTools.setContextAndLongClickListener
 
 /**
  * Displays a set of links and if loaded a list of results, separated by a header.
  */
 class ShowsDiscoverAdapter(
     private val context: Context,
-    private val itemClickListener: ItemClickListener,
-    private val showMenuWatchlist: Boolean,
-    private val hideMenuWatchlistIfAdded: Boolean
+    private val itemClickListener: ItemClickListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var emptyText: String = ""
     private var hasError: Boolean = false
+    private var showWatchlistActions: Boolean = false
     private val searchResults = mutableListOf<SearchResult>()
     private val links: MutableList<DiscoverShowsLink> = mutableListOf()
 
@@ -69,7 +63,8 @@ class ShowsDiscoverAdapter(
     fun updateSearchResults(
         newSearchResults: List<SearchResult>?,
         emptyText: String,
-        hasError: Boolean
+        hasError: Boolean,
+        showWatchlistActions: Boolean
     ) {
         searchResults.clear()
         if (newSearchResults != null) {
@@ -77,6 +72,7 @@ class ShowsDiscoverAdapter(
         }
         this.emptyText = emptyText
         this.hasError = hasError
+        this.showWatchlistActions = showWatchlistActions
         notifyDataSetChanged()
     }
 
@@ -127,7 +123,7 @@ class ShowsDiscoverAdapter(
         return when (viewType) {
             VIEW_TYPE_LINK -> LinkViewHolder.inflate(parent, itemClickListener)
             VIEW_TYPE_HEADER -> HeaderViewHolder.inflate(parent, itemClickListener)
-            VIEW_TYPE_SHOW -> ShowViewHolder.inflate(parent, itemClickListener)
+            VIEW_TYPE_SHOW -> ItemAddShowViewHolder.create(parent, itemClickListener)
             VIEW_TYPE_EMPTY -> EmptyViewHolder.inflate(parent, itemClickListener)
             else -> throw IllegalArgumentException("View type $viewType is unknown")
         }
@@ -143,9 +139,9 @@ class ShowsDiscoverAdapter(
                 holder.bindTo(DiscoverShowsLink.NEW_EPISODES)
             }
 
-            is ShowViewHolder -> {
+            is ItemAddShowViewHolder -> {
                 val item = getSearchResultFor(position)
-                holder.bindTo(context, item, showMenuWatchlist, hideMenuWatchlistIfAdded)
+                holder.bindTo(context, item, showWatchlistActions)
             }
 
             is EmptyViewHolder -> {
@@ -154,12 +150,9 @@ class ShowsDiscoverAdapter(
         }
     }
 
-    interface ItemClickListener {
+    interface ItemClickListener : ItemAddShowViewHolder.ClickListener {
         fun onLinkClick(anchor: View, link: DiscoverShowsLink)
         fun onHeaderButtonClick(anchor: View)
-        fun onItemClick(item: SearchResult)
-        fun onAddClick(item: SearchResult)
-        fun onMoreOptionsClick(view: View, showTmdbId: Int)
         fun onEmptyViewButtonClick()
     }
 
@@ -241,81 +234,6 @@ class ShowsDiscoverAdapter(
                         parent,
                         false
                     ),
-                    itemClickListener
-                )
-        }
-    }
-
-    class ShowViewHolder(
-        private val binding: ItemAddshowBinding,
-        private val itemClickListener: ItemClickListener
-    ) : RecyclerView.ViewHolder(binding.root) {
-
-        private var item: SearchResult? = null
-
-        init {
-            itemView.setOnClickListener {
-                item?.let { itemClickListener.onItemClick(it) }
-            }
-            binding.addIndicatorAddShow.setOnAddClickListener {
-                item?.let { itemClickListener.onAddClick(it) }
-            }
-            binding.buttonItemAddMoreOptions.also {
-                TooltipCompat.setTooltipText(it, it.contentDescription)
-            }
-        }
-
-        private fun onMoreOptionsClick() {
-            item?.let {
-                itemClickListener.onMoreOptionsClick(binding.buttonItemAddMoreOptions, it.tmdbId)
-            }
-        }
-
-        fun bindTo(
-            context: Context,
-            item: SearchResult,
-            showMenuWatchlist: Boolean,
-            hideMenuWatchlistIfAdded: Boolean
-        ) {
-            this.item = item
-
-            // hide and disable watchlist menu if not useful
-            val showMenuWatchlistActual = showMenuWatchlist
-                    && (!hideMenuWatchlistIfAdded || item.state != SearchResult.STATE_ADDED)
-            if (showMenuWatchlistActual) {
-                itemView.setContextAndLongClickListener {
-                    onMoreOptionsClick()
-                }
-                binding.buttonItemAddMoreOptions.setOnClickListener {
-                    onMoreOptionsClick()
-                }
-                binding.buttonItemAddMoreOptions.isVisible = true
-            } else {
-                // remove listener to prevent long press feedback
-                itemView.setContextAndLongClickListener(null)
-                binding.buttonItemAddMoreOptions.setOnClickListener(null)
-                binding.buttonItemAddMoreOptions.isGone = true
-            }
-            // display added indicator instead of add button if already added that show
-            binding.addIndicatorAddShow.setState(item.state)
-            val showTitle = item.title
-            binding.addIndicatorAddShow.setNameOfAssociatedItem(showTitle)
-
-            // set text properties immediately
-            binding.textViewAddTitle.text = showTitle
-            binding.textViewAddDescription.text = item.overview
-
-            ImageTools.loadShowPosterResizeCrop(
-                context,
-                binding.imageViewAddPoster,
-                item.posterPath
-            )
-        }
-
-        companion object {
-            fun inflate(parent: ViewGroup, itemClickListener: ItemClickListener) =
-                ShowViewHolder(
-                    ItemAddshowBinding.inflate(LayoutInflater.from(parent.context), parent, false),
                     itemClickListener
                 )
         }

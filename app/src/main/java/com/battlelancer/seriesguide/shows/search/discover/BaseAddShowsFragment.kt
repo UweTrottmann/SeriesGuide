@@ -4,17 +4,9 @@
 package com.battlelancer.seriesguide.shows.search.discover
 
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.enums.NetworkResult
-import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.tools.AddShowTask
 import com.battlelancer.seriesguide.shows.tools.ShowTools2
-import com.battlelancer.seriesguide.ui.OverviewActivity
-import com.battlelancer.seriesguide.util.TaskManager
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -65,36 +57,6 @@ abstract class BaseAddShowsFragment : Fragment() {
         }
     }
 
-    interface ItemClickListener {
-        fun onItemClick(item: SearchResult)
-        fun onAddClick(item: SearchResult)
-    }
-
-    protected val itemClickListener = object : ItemClickListener {
-        override fun onItemClick(item: SearchResult) {
-            if (item.state != SearchResult.STATE_ADDING) {
-                if (item.state == SearchResult.STATE_ADDED) {
-                    // Already in library, open it.
-                    lifecycleScope.launch {
-                        val showId = withContext(Dispatchers.IO) {
-                            SgRoomDatabase.getInstance(requireContext()).sgShow2Helper()
-                                .getShowIdByTmdbId(item.tmdbId)
-                        }
-                        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
-                            startActivity(OverviewActivity.intentShow(requireContext(), showId))
-                        }
-                    }
-                } else {
-                    // Display more details in a dialog.
-                    AddShowDialogFragment.show(parentFragmentManager, item)
-                }
-            }
-        }
-
-        override fun onAddClick(item: SearchResult) {
-            EventBus.getDefault().post(AddFragment.OnAddingShowEvent(item.tmdbId))
-            TaskManager.getInstance().performAddTask(context, item)
-        }
-
-    }
+    protected val itemClickListener
+        get() = ItemAddShowClickListener(requireContext(), lifecycle, parentFragmentManager)
 }

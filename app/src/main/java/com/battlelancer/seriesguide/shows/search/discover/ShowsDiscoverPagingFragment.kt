@@ -30,6 +30,7 @@ import com.battlelancer.seriesguide.databinding.FragmentShowsPopularBinding
 import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.shows.search.TmdbIdExtractor
 import com.battlelancer.seriesguide.streaming.WatchProviderFilterDialogFragment
+import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.LanguagePickerDialogFragment
@@ -190,7 +191,11 @@ class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
                 )
         }
 
-        adapter = SearchResultPagingAdapter(itemClickListener)
+        adapter = SearchResultPagingAdapter(
+            requireContext(),
+            itemClickListener,
+            showWatchlistActions = TraktCredentials.get(requireContext()).hasCredentials()
+        )
         binding.recyclerViewShowsPopular.adapter = adapter
 
         viewLifecycleOwner.lifecycleScope.launch {
