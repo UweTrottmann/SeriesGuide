@@ -66,7 +66,6 @@
     <!-- Settings -->
     <string name="pref_key_notifications_hidden">com.battlelancer.seriesguide.notifications.hidden</string>
     <string name="pref_community">Forum</string>
-    <string name="pref_discord">Discord</string>
     <string name="pref_category_danger">Danger Zone</string>
     <string name="pref_user_debug_mode">Debug mode</string>
     <string name="pref_user_debug_mode_summary">Allows to diagnose errors, but slows down the app.</string>
