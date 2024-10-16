@@ -4,9 +4,11 @@
 package com.battlelancer.seriesguide.backend
 
 import android.os.Bundle
+import androidx.fragment.app.add
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.BaseActivity
 import com.battlelancer.seriesguide.ui.SinglePaneActivity
+import com.battlelancer.seriesguide.util.commitReorderingAllowed
 
 /**
  * Hosts [CloudSetupFragment] to setup hexagon.
@@ -19,10 +21,9 @@ class CloudSetupActivity : BaseActivity() {
         setupActionBar()
 
         if (savedInstanceState == null) {
-            val f = CloudSetupFragment()
-            supportFragmentManager.beginTransaction()
-                .add(R.id.content_frame, f)
-                .commit()
+            supportFragmentManager.commitReorderingAllowed {
+                add<CloudSetupFragment>(R.id.content_frame)
+            }
         }
     }
 

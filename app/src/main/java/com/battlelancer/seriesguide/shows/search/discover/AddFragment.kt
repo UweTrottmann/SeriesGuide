@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2011-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.search.discover
 
@@ -12,15 +12,18 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ArrayAdapter
 import android.widget.GridView
+import androidx.appcompat.widget.TooltipCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemAddshowBinding
 import com.battlelancer.seriesguide.enums.NetworkResult
 import com.battlelancer.seriesguide.shows.tools.AddShowTask.OnShowAddedEvent
 import com.battlelancer.seriesguide.shows.tools.ShowTools2.OnShowRemovedEvent
 import com.battlelancer.seriesguide.ui.widgets.EmptyView
 import com.battlelancer.seriesguide.util.ImageTools
+import com.battlelancer.seriesguide.util.ViewTools.setContextAndLongClickListener
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -152,14 +155,14 @@ abstract class AddFragment : Fragment() {
     class AddAdapter(
         activity: Activity,
         objects: List<SearchResult>,
-        private val menuClickListener: OnItemClickListener,
-        private val showMenuWatchlist: Boolean
+        private val itemClickListener: ItemClickListener,
+        private val showWatchlistActions: Boolean
     ) : ArrayAdapter<SearchResult>(activity, 0, objects) {
 
-        interface OnItemClickListener {
+        interface ItemClickListener {
             fun onItemClick(item: SearchResult)
             fun onAddClick(item: SearchResult)
-            fun onMenuWatchlistClick(view: View, showTmdbId: Int)
+            fun onMoreOptionsClick(view: View, show: SearchResult)
         }
 
         private fun getItemForShowTmdbId(showTmdbId: Int): SearchResult? {
@@ -196,7 +199,7 @@ abstract class AddFragment : Fragment() {
             val view: View
             val holder: ViewHolder
             if (convertView == null) {
-                holder = ViewHolder.inflate(parent, menuClickListener)
+                holder = ViewHolder.inflate(parent, itemClickListener)
                     .also { it.binding.root.tag = it }
                 view = holder.binding.root
             } else {
@@ -205,49 +208,77 @@ abstract class AddFragment : Fragment() {
             }
 
             val item = getItem(position)
-            holder.bindTo(item, context, showMenuWatchlist)
+            holder.bindTo(item, context, showWatchlistActions)
 
             return view
         }
 
         class ViewHolder(
             val binding: ItemAddshowBinding,
-            onItemClickListener: OnItemClickListener
+            private val itemClickListener: ItemClickListener
         ) {
             private var item: SearchResult? = null
 
             init {
                 binding.root.setOnClickListener {
-                    item?.let { onItemClickListener.onItemClick(it) }
+                    item?.let { itemClickListener.onItemClick(it) }
                 }
                 binding.addIndicatorAddShow.setOnAddClickListener {
-                    item?.let { onItemClickListener.onAddClick(it) }
+                    item?.let { itemClickListener.onAddClick(it) }
                 }
-                binding.buttonItemAddMore.setOnClickListener { v: View ->
-                    item?.let { onItemClickListener.onMenuWatchlistClick(v, it.tmdbId) }
+                binding.buttonItemAddMoreOptions.also {
+                    TooltipCompat.setTooltipText(it, it.contentDescription)
                 }
             }
 
-            fun bindTo(item: SearchResult?, context: Context, showMenuWatchlist: Boolean) {
+            private fun onMoreOptionsClick(anchor: View) {
+                item?.let {
+                    itemClickListener.onMoreOptionsClick(anchor, it)
+                }
+            }
+
+            fun bindTo(item: SearchResult?, context: Context, showWatchlistActions: Boolean) {
                 this.item = item
 
-                // hide watchlist menu if not useful
-                binding.buttonItemAddMore.visibility =
-                    if (showMenuWatchlist) View.VISIBLE else View.GONE
-
                 if (item == null) {
-                    binding.addIndicatorAddShow.setState(SearchResult.STATE_ADD)
-                    binding.addIndicatorAddShow.setContentDescriptionAdded(null)
+                    binding.addIndicatorAddShow.isGone = true
                     binding.textViewAddTitle.text = null
                     binding.textViewAddDescription.text = null
                     binding.imageViewAddPoster.setImageDrawable(null)
                 } else {
-                    // display added indicator instead of add button if already added that show
-                    binding.addIndicatorAddShow.setState(item.state)
+                    val canBeAdded = item.state == SearchResult.STATE_ADD
+                    // Even if not displaying more options button, if not added, always display add action on
+                    // long press for accessibility.
+                    binding.root.apply {
+                        if (showWatchlistActions || canBeAdded) {
+                            setContextAndLongClickListener {
+                                onMoreOptionsClick(binding.root)
+                            }
+                        } else {
+                            // Remove listener so there is no long press feedback
+                            setContextAndLongClickListener(null)
+                        }
+                    }
+                    // Only display more options button when displaying remove from watchlist action
+                    binding.buttonItemAddMoreOptions.apply {
+                        if (showWatchlistActions) {
+                            setOnClickListener {
+                                onMoreOptionsClick(binding.buttonItemAddMoreOptions)
+                            }
+                            isVisible = true
+                        } else {
+                            setOnClickListener(null)
+                            isGone = true
+                        }
+                    }
+
+                    // add indicator
                     val showTitle = item.title
-                    binding.addIndicatorAddShow.setContentDescriptionAdded(
-                        context.getString(R.string.add_already_exists, showTitle)
-                    )
+                    binding.addIndicatorAddShow.apply {
+                        setState(item.state)
+                        setNameOfAssociatedItem(showTitle)
+                        isVisible = true
+                    }
 
                     // set text properties immediately
                     binding.textViewAddTitle.text = showTitle
@@ -269,14 +300,14 @@ abstract class AddFragment : Fragment() {
             }
 
             companion object {
-                fun inflate(parent: ViewGroup, onItemClickListener: OnItemClickListener) =
+                fun inflate(parent: ViewGroup, itemClickListener: ItemClickListener) =
                     ViewHolder(
                         ItemAddshowBinding.inflate(
                             LayoutInflater.from(parent.context),
                             parent,
                             false
                         ),
-                        onItemClickListener
+                        itemClickListener
                     )
             }
         }

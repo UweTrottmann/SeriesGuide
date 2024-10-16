@@ -20,6 +20,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.shows.search.discover.BaseAddShowsFragment
 import com.battlelancer.seriesguide.shows.search.discover.SearchResult
 import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverPagingActivity
+import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.widgets.EmptyView
 import com.battlelancer.seriesguide.util.ThemeUtils
@@ -89,7 +90,11 @@ class SimilarShowsFragment : BaseAddShowsFragment() {
                 )
         }
 
-        adapter = SimilarShowsAdapter(itemClickListener)
+        adapter = SimilarShowsAdapter(
+            requireContext(),
+            itemClickListener,
+            showWatchlistActions = TraktCredentials.get(requireContext()).hasCredentials()
+        )
         recyclerView.adapter = adapter
 
         similarShowsViewModel.resultLiveData.observe(viewLifecycleOwner) {

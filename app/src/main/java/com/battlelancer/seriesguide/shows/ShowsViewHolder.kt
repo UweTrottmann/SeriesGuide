@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2018-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows
 
@@ -7,27 +7,22 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.widget.TooltipCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.ItemShowListBinding
 import com.battlelancer.seriesguide.util.ImageTools
+import com.battlelancer.seriesguide.util.ViewTools.setContextAndLongClickListener
 
 class ShowsViewHolder(
-    itemView: View,
-    onItemClickListener: ShowsAdapter.OnItemClickListener
-) : RecyclerView.ViewHolder(itemView) {
+    private val binding: ItemShowListBinding,
+    private val itemClickListener: ItemClickListener
+) : RecyclerView.ViewHolder(binding.root) {
 
-    private val name: TextView = itemView.findViewById(R.id.seriesname)
-    private val timeAndNetwork: TextView = itemView.findViewById(R.id.textViewShowsTimeAndNetwork)
-    private val episode: TextView = itemView.findViewById(R.id.TextViewShowListNextEpisode)
-    private val episodeTime: TextView = itemView.findViewById(R.id.episodetime)
-    private val remainingCount: TextView = itemView.findViewById(R.id.textViewShowsRemaining)
-    private val poster: ImageView = itemView.findViewById(R.id.showposter)
-    private val favorited: ImageView = itemView.findViewById(R.id.favoritedLabel)
-    private val setWatchedButton: ImageView = itemView.findViewById(R.id.imageViewShowsSetWatched)
-    private val contextMenu: ImageView = itemView.findViewById(R.id.imageViewShowsContextMenu)
+    interface ItemClickListener {
+        fun onItemClick(anchor: View, showRowId: Long)
+        fun onMoreOptionsClick(anchor: View, show: ShowsAdapter.ShowItem)
+        fun onSetWatchedClick(show: ShowsAdapter.ShowItem)
+    }
 
     private var showItem: ShowsAdapter.ShowItem? = null
 
@@ -35,54 +30,74 @@ class ShowsViewHolder(
         // item
         itemView.setOnClickListener { view ->
             showItem?.let {
-                onItemClickListener.onItemClick(view, it.rowId)
+                itemClickListener.onItemClick(view, it.rowId)
             }
         }
         // set watched button
-        TooltipCompat.setTooltipText(setWatchedButton, setWatchedButton.contentDescription)
-        @Suppress("UNUSED_ANONYMOUS_PARAMETER")
-        setWatchedButton.setOnClickListener { v ->
-            showItem?.let {
-                onItemClickListener.onItemSetWatchedClick(it)
+        binding.imageViewItemShowListSetWatched.also {
+            TooltipCompat.setTooltipText(it, it.contentDescription)
+            @Suppress("UNUSED_ANONYMOUS_PARAMETER")
+            it.setOnClickListener { v ->
+                showItem?.let {
+                    itemClickListener.onSetWatchedClick(it)
+                }
             }
         }
-        // context menu
-        TooltipCompat.setTooltipText(contextMenu, contextMenu.contentDescription)
-        contextMenu.setOnClickListener { v ->
-            showItem?.let {
-                onItemClickListener.onItemMenuClick(v, it)
+        // more options button
+        itemView.setContextAndLongClickListener {
+            onMoreOptionsClick()
+        }
+        binding.imageViewItemShowListMoreOptions.also {
+            TooltipCompat.setTooltipText(it, it.contentDescription)
+            it.setOnClickListener {
+                onMoreOptionsClick()
             }
+        }
+    }
+
+    private fun onMoreOptionsClick() {
+        showItem?.let {
+            itemClickListener.onMoreOptionsClick(binding.imageViewItemShowListMoreOptions, it)
         }
     }
 
     fun bind(show: ShowsAdapter.ShowItem, context: Context) {
         showItem = show
 
-        name.text = show.name
-        timeAndNetwork.text = show.timeAndNetwork
-        episode.text = show.episode
-        episodeTime.text = show.episodeTime
+        binding.textViewItemShowListTitle.text = show.name
+        binding.textViewItemShowListTimeAndNetwork.text = show.timeAndNetwork
+        binding.textViewItemShowListNextEpisode.text = show.episode
+        binding.textViewItemShowListNextEpisodeTime.text = show.episodeTime
 
-        remainingCount.text = show.remainingCount
-        remainingCount.visibility = if (show.remainingCount != null) View.VISIBLE else View.GONE
+        binding.textViewItemShowListRemaining.apply {
+            text = show.remainingCount
+            visibility = if (show.remainingCount != null) View.VISIBLE else View.GONE
+        }
 
-        favorited.visibility = if (show.isFavorite) View.VISIBLE else View.GONE
+        binding.imageViewItemShowListFavorited.visibility =
+            if (show.isFavorite) View.VISIBLE else View.GONE
 
-        setWatchedButton.visibility = if (show.hasNextEpisode) View.VISIBLE else View.GONE
+        binding.imageViewItemShowListSetWatched.visibility =
+            if (show.hasNextEpisode) View.VISIBLE else View.GONE
 
         // set poster
-        ImageTools.loadShowPosterResizeCrop(context, poster, show.posterPath)
+        ImageTools.loadShowPosterResizeCrop(
+            context,
+            binding.imageViewItemShowListPoster,
+            show.posterPath
+        )
     }
 
     companion object {
 
         fun create(
             parent: ViewGroup,
-            onItemClickListener: ShowsAdapter.OnItemClickListener
+            itemClickListener: ItemClickListener
         ): ShowsViewHolder {
-            val v = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_show_list, parent, false)
-            return ShowsViewHolder(v, onItemClickListener)
+            return ShowsViewHolder(
+                ItemShowListBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+                itemClickListener
+            )
         }
     }
 

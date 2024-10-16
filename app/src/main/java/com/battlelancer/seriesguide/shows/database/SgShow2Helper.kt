@@ -16,7 +16,6 @@ import androidx.sqlite.db.SupportSQLiteQuery
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.shows.tools.ShowStatus
-import com.battlelancer.seriesguide.sync.ShowLastWatchedInfo
 
 @Dao
 interface SgShow2Helper {
@@ -367,4 +366,10 @@ data class SgShow2CloudUpdate(
     @ColumnInfo(name = SgShow2Columns.CUSTOM_RELEASE_DAY_OFFSET) var customReleaseDayOffset: Int?,
     @ColumnInfo(name = SgShow2Columns.CUSTOM_RELEASE_TIME_ZONE) var customReleaseTimeZone: String?,
     @ColumnInfo(name = SgShow2Columns.LASTUPDATED) var lastUpdatedMs: Long
+)
+
+data class ShowLastWatchedInfo(
+    val lastWatchedMs: Long,
+    val episodeSeason: Int,
+    val episodeNumber: Int
 )

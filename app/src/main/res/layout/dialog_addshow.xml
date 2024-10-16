@@ -138,7 +138,7 @@
                     android:layout_width="48dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="0dp"
-                    android:contentDescription="@string/action_stream_info"
+                    android:contentDescription="@string/action_stream_settings"
                     android:insetLeft="0dp"
                     android:insetRight="8dp"
                     app:icon="@drawable/ic_settings_control_24dp" />

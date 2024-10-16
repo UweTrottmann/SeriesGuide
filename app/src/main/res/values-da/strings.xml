@@ -37,7 +37,7 @@
     <string name="sync_and_update">Synkronisér og opdatér</string>
     <string name="sync_and_download_all">Synkronisér og opdatér alle</string>
     <string name="action_stream">Stream eller køb</string>
-    <string name="action_stream_info">Streaming- eller købsinformation</string>
+    <string name="action_stream_settings">Stream- eller købsindstillinger</string>
     <string name="action_select_region">Vælg region</string>
     <string name="action_reset">Nulstil</string>
     <!-- Search -->
@@ -239,7 +239,7 @@
     <string name="title_similar_shows">Lignende serier</string>
     <!-- Popular -->
     <string name="title_popular">Populær</string>
-    <string name="filter_year">Årstal</string>
+    <string name="filter_year">År</string>
     <string name="filter_year_current">Indeværende år</string>
     <string name="filter_language">Sprog</string>
     <!-- Lists -->
@@ -485,6 +485,7 @@
     <string name="pref_notifications">Meddelelser</string>
     <string name="pref_notificationssummary">Underret om nye episoder</string>
     <string name="pref_notifications_settings">Meddelelsesindstillinger</string>
+    <string name="pref_notifications_settings_summary">Konfigurer om og hvordan notifikationer vises</string>
     <string name="pref_ringtone">Lyd</string>
     <string name="pref_vibrate">Vibrér</string>
     <string name="pref_vibratesummary">Vibrér også ved visning af meddelelse</string>

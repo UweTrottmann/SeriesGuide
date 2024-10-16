@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- This top app bar allows longer titles and elevates if content scrolls behind it,
+ but stays otherwise in place. -->
+<!-- Note: collapsing (setting layout_scrollFlags) breaks insets. -->
+
+<com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sgAppBarLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true"
+    app:liftOnScroll="true">
+
+    <!-- Use titleCollapseMode="scale" so CollapsingToolbarLayout
+    does not disable liftOnScroll of app bar. -->
+    <com.google.android.material.appbar.CollapsingToolbarLayout
+        style="?attr/collapsingToolbarLayoutMediumStyle"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/collapsingToolbarLayoutMediumSize"
+        android:theme="@style/ThemeOverlay.SeriesGuide.Toolbar.Surface"
+        app:maxLines="2"
+        app:titleCollapseMode="scale">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/sgToolbar"
+            style="@style/Widget.SeriesGuide.Toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:title="App Bar Title That Is Very Long And Will Wrap" />
+
+    </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+</com.google.android.material.appbar.AppBarLayout>

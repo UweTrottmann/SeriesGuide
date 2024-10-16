@@ -12,7 +12,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.lifecycle.viewmodel.MutableCreationExtras
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.DialogCustomReleaseTimeBinding
 import com.battlelancer.seriesguide.util.safeShow
@@ -36,12 +35,10 @@ class CustomReleaseTimeDialogFragment() : AppCompatDialogFragment() {
 
     private val model: CustomReleaseTimeDialogModel by viewModels(
         extrasProducer = {
-            MutableCreationExtras(defaultViewModelCreationExtras).apply {
-                set(
-                    CustomReleaseTimeDialogModel.SHOW_ID_KEY,
-                    requireArguments().getLong(ARG_SHOW_ID)
-                )
-            }
+            CustomReleaseTimeDialogModel.creationExtras(
+                defaultViewModelCreationExtras,
+                requireArguments().getLong(ARG_SHOW_ID)
+            )
         },
         factoryProducer = { CustomReleaseTimeDialogModel.Factory }
     )

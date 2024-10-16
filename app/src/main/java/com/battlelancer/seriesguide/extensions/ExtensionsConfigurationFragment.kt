@@ -16,8 +16,8 @@ import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -243,7 +243,7 @@ class ExtensionsConfigurationFragment : Fragment() {
 
     private fun showAddExtensionPopupMenu(anchorView: View) {
         addExtensionPopupMenu?.dismiss()
-        val popupMenu = PopupMenu(activity, anchorView)
+        val popupMenu = PopupMenu(anchorView.context, anchorView)
             .also { addExtensionPopupMenu = it }
         val menu = popupMenu.menu
 
