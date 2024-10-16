@@ -37,7 +37,7 @@
     <string name="sync_and_update">Synkronisering og oppdatering</string>
     <string name="sync_and_download_all">Synkroniser og last ned alle</string>
     <string name="action_stream">Strøm eller kjøp</string>
-    <string name="action_stream_settings">Strøm eller kjøp informasjon</string>
+    <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">Velg region</string>
     <string name="action_reset">Reset</string>
     <!-- Search -->

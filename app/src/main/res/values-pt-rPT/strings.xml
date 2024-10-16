@@ -37,7 +37,7 @@
     <string name="sync_and_update">Sincronizar e Atualizar</string>
     <string name="sync_and_download_all">Sincronizar e Retransferir</string>
     <string name="action_stream">Comprar ou ver em streaming</string>
-    <string name="action_stream_settings">Informações sobre comprar ou ver em streaming</string>
+    <string name="action_stream_settings">Definições de streaming ou compra</string>
     <string name="action_select_region">Selecionar região</string>
     <string name="action_reset">Reiniciar</string>
     <!-- Search -->
@@ -327,7 +327,7 @@
     <string name="hexagon_signin_google_only">O endereço de e-mail requer Início de Sessão da Google</string>
     <string name="hexagon_signin_choose">Escolhe o e-mail para te conectares se estiveres a usar o SeriesGuide em outros dispositivos que não suportem o início de sessão da Google.</string>
     <!-- trakt -->
-    <string name="trakt_submitqueued">A submeter ao Trakt.</string>
+    <string name="trakt_submitqueued">A enviar para o Trakt.</string>
     <string name="checkin_success_trakt">Deu entrada a %s no Trakt</string>
     <string name="checkin_canceled_success_trakt">Entrada cancelada no Trakt</string>
     <string name="traktcheckin_cancel">Substituir</string>
@@ -347,7 +347,7 @@
     <string name="connect">Conectar</string>
     <string name="disconnect">Desconectar</string>
     <string name="show_library">Adicionar séries do Trakt</string>
-    <string name="about_trakt">O Trakt ajuda-te a manter a par da lista de séries e filmes que tu assistes.</string>
+    <string name="about_trakt">O Trakt ajuda-te a manter um registo das séries de televisão e dos filmes que vês.</string>
     <string name="support_trakt">Apoia o Trakt tornando-te VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Classificar</string>

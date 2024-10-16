@@ -37,7 +37,7 @@
     <string name="sync_and_update">Sinhronizuj &amp; Unapredi</string>
     <string name="sync_and_download_all">Sinhronizuj &amp; Skini sve</string>
     <string name="action_stream">Strimuj ili kupi</string>
-    <string name="action_stream_settings">Информације о стримовању или куповини</string>
+    <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">Одабери регион</string>
     <string name="action_reset">Ресетуј</string>
     <!-- Search -->

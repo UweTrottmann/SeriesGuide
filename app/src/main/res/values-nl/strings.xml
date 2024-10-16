@@ -37,7 +37,7 @@
     <string name="sync_and_update">Synchroniseren &amp; bijwerken</string>
     <string name="sync_and_download_all">Synchroniseren &amp; alles downloaden</string>
     <string name="action_stream">Streamen of kopen</string>
-    <string name="action_stream_settings">Streaming- of aankoopinformatie</string>
+    <string name="action_stream_settings">Streamen- of aankoopinstellingen</string>
     <string name="action_select_region">Regio selecteren</string>
     <string name="action_reset">Herstellen</string>
     <!-- Search -->

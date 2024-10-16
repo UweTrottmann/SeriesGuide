@@ -37,7 +37,7 @@
     <string name="sync_and_update">Sincronització i actualització</string>
     <string name="sync_and_download_all">Sincronitza i descarrega tot</string>
     <string name="action_stream">Veure en línia o comprar</string>
-    <string name="action_stream_settings">Veure en línia o informació de la compra</string>
+    <string name="action_stream_settings">Veure en línia o configuració de la compra</string>
     <string name="action_select_region">Selecciona la regió</string>
     <string name="action_reset">Restablir</string>
     <!-- Search -->

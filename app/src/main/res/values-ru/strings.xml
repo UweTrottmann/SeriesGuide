@@ -37,7 +37,7 @@
     <string name="sync_and_update">Синхронизировать и обновить</string>
     <string name="sync_and_download_all">Синхронизировать и обновить всё</string>
     <string name="action_stream">Стриминг или покупка</string>
-    <string name="action_stream_settings">Стриминг или покупка</string>
+    <string name="action_stream_settings">Настройка трансляции или покупка</string>
     <string name="action_select_region">Выберите регион</string>
     <string name="action_reset">Сброс</string>
     <!-- Search -->

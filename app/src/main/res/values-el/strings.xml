@@ -37,7 +37,7 @@
     <string name="sync_and_update">Συγχρονισμός &amp; Ενημέρωση</string>
     <string name="sync_and_download_all">Συγχρονισμός &amp; Λήψη όλων</string>
     <string name="action_stream">Stream ή αγορά</string>
-    <string name="action_stream_settings">Πληροφορίες ροής ή αγοράς</string>
+    <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">Επιλογή περιοχής</string>
     <string name="action_reset">Επαναφορά</string>
     <!-- Search -->
