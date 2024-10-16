@@ -82,8 +82,9 @@ class ItemAddShowViewHolder(
 
         // context/long press listener and more options button
         val canBeAdded = item.state == SearchResult.STATE_ADD
-        // If not added, always display add action on long press for accessibility
-        if (canBeAdded) {
+        // Even if not displaying more options button, if not added, always display add action on
+        // long press for accessibility.
+        if (showWatchlistActions || canBeAdded) {
             itemView.setContextAndLongClickListener {
                 onMoreOptionsClick(itemView)
             }
