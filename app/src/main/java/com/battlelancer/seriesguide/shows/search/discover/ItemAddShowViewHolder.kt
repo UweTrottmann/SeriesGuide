@@ -74,10 +74,17 @@ class ItemAddShowViewHolder(
         }
 
         // image
-        ImageTools.loadShowPosterResizeCrop(
-            context,
-            binding.imageViewAddPoster,
-            item.posterPath
+        // If item is provided from Trakt source, it does not provide images,
+        // so need to resolve them.
+        val posterUrl = ImageTools.posterUrlOrResolve(
+            item.posterPath,
+            item.tmdbId,
+            item.language,
+            context
+        )
+        ImageTools.loadShowPosterUrlResizeCrop(
+            context, binding.imageViewAddPoster,
+            posterUrl
         )
 
         // context/long press listener and more options button

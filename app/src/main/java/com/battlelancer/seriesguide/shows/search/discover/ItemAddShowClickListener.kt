@@ -44,7 +44,7 @@ open class ItemAddShowClickListener(
     }
 
     override fun onAddClick(item: SearchResult) {
-        EventBus.getDefault().post(AddFragment.OnAddingShowEvent(item.tmdbId))
+        EventBus.getDefault().post(OnAddingShowEvent(item.tmdbId))
         TaskManager.getInstance().performAddTask(context, item)
     }
 

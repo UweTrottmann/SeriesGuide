@@ -35,7 +35,7 @@ abstract class BaseAddShowsFragment : Fragment() {
      * actually added, yet.
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventAddingShow(event: AddFragment.OnAddingShowEvent) {
+    fun onEventAddingShow(event: OnAddingShowEvent) {
         if (event.showTmdbId > 0) {
             setStateForTmdbId(event.showTmdbId, SearchResult.STATE_ADDING)
         }
