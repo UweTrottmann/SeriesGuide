@@ -3,7 +3,6 @@
 
 package com.battlelancer.seriesguide.shows.search.discover
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,26 +14,20 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ArrayAdapter
 import android.widget.GridView
-import androidx.appcompat.widget.TooltipCompat
 import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentAddshowTraktBinding
-import com.battlelancer.seriesguide.databinding.ItemAddshowBinding
 import com.battlelancer.seriesguide.enums.NetworkResult
 import com.battlelancer.seriesguide.shows.tools.AddShowTask
 import com.battlelancer.seriesguide.shows.tools.ShowTools2
 import com.battlelancer.seriesguide.ui.widgets.EmptyView
-import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ThemeUtils
-import com.battlelancer.seriesguide.util.ViewTools.setContextAndLongClickListener
 import com.battlelancer.seriesguide.util.tasks.BaseShowActionTask.ShowChangedEvent
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -95,7 +88,7 @@ class TraktAddFragment : Fragment() {
 
         // set up adapter
         adapter = AddAdapter(
-            requireActivity(), ArrayList(), itemClickListener,
+            requireContext(), ArrayList(), itemClickListener,
             listType == TraktAddLoader.Type.WATCHLIST
         )
 
@@ -302,11 +295,11 @@ class TraktAddFragment : Fragment() {
     }
 
     class AddAdapter(
-        activity: Activity,
+        context: Context,
         objects: List<SearchResult>,
         private val itemClickListener: ItemAddShowViewHolder.ClickListener,
         private val showWatchlistActions: Boolean
-    ) : ArrayAdapter<SearchResult>(activity, 0, objects) {
+    ) : ArrayAdapter<SearchResult>(context, 0, objects) {
 
         private fun getItemForShowTmdbId(showTmdbId: Int): SearchResult? {
             val count = count
@@ -340,117 +333,22 @@ class TraktAddFragment : Fragment() {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             val view: View
-            val holder: ViewHolder
+            // Re-use ItemAddShowViewHolder, but not using the RecyclerView features
+            val holder: ItemAddShowViewHolder
             if (convertView == null) {
-                holder = ViewHolder.inflate(parent, itemClickListener)
-                    .also { it.binding.root.tag = it }
-                view = holder.binding.root
+                holder = ItemAddShowViewHolder.create(parent, itemClickListener)
+                    .also { it.itemView.tag = it }
+                view = holder.itemView
             } else {
-                holder = convertView.tag as ViewHolder
+                holder = convertView.tag as ItemAddShowViewHolder
                 view = convertView
             }
 
             val item = getItem(position)
-            holder.bindTo(item, context, showWatchlistActions)
+            holder.bindTo(context, item, showWatchlistActions)
 
             return view
         }
 
-        class ViewHolder(
-            val binding: ItemAddshowBinding,
-            private val itemClickListener: ItemAddShowViewHolder.ClickListener
-        ) {
-            private var item: SearchResult? = null
-
-            init {
-                binding.root.setOnClickListener {
-                    item?.let { itemClickListener.onItemClick(it) }
-                }
-                binding.addIndicatorAddShow.setOnAddClickListener {
-                    item?.let { itemClickListener.onAddClick(it) }
-                }
-                binding.buttonItemAddMoreOptions.also {
-                    TooltipCompat.setTooltipText(it, it.contentDescription)
-                }
-            }
-
-            private fun onMoreOptionsClick(anchor: View) {
-                item?.let {
-                    itemClickListener.onMoreOptionsClick(anchor, it)
-                }
-            }
-
-            fun bindTo(item: SearchResult?, context: Context, showWatchlistActions: Boolean) {
-                this.item = item
-
-                if (item == null) {
-                    binding.addIndicatorAddShow.isGone = true
-                    binding.textViewAddTitle.text = null
-                    binding.textViewAddDescription.text = null
-                    binding.imageViewAddPoster.setImageDrawable(null)
-                } else {
-                    val canBeAdded = item.state == SearchResult.STATE_ADD
-                    // Even if not displaying more options button, if not added, always display add action on
-                    // long press for accessibility.
-                    binding.root.apply {
-                        if (showWatchlistActions || canBeAdded) {
-                            setContextAndLongClickListener {
-                                onMoreOptionsClick(binding.root)
-                            }
-                        } else {
-                            // Remove listener so there is no long press feedback
-                            setContextAndLongClickListener(null)
-                        }
-                    }
-                    // Only display more options button when displaying remove from watchlist action
-                    binding.buttonItemAddMoreOptions.apply {
-                        if (showWatchlistActions) {
-                            setOnClickListener {
-                                onMoreOptionsClick(binding.buttonItemAddMoreOptions)
-                            }
-                            isVisible = true
-                        } else {
-                            setOnClickListener(null)
-                            isGone = true
-                        }
-                    }
-
-                    // add indicator
-                    val showTitle = item.title
-                    binding.addIndicatorAddShow.apply {
-                        setState(item.state)
-                        setNameOfAssociatedItem(showTitle)
-                        isVisible = true
-                    }
-
-                    // set text properties immediately
-                    binding.textViewAddTitle.text = showTitle
-                    binding.textViewAddDescription.text = item.overview
-
-                    // only local shows will have a poster path set
-                    // try to fall back to the TMDB poster for all others
-                    val posterUrl = ImageTools.posterUrlOrResolve(
-                        item.posterPath,
-                        item.tmdbId,
-                        item.language,
-                        context
-                    )
-                    ImageTools.loadShowPosterUrlResizeCrop(
-                        context, binding.imageViewAddPoster,
-                        posterUrl
-                    )
-                }
-            }
-
-            companion object {
-                fun inflate(
-                    parent: ViewGroup,
-                    itemClickListener: ItemAddShowViewHolder.ClickListener
-                ) = ViewHolder(
-                    ItemAddshowBinding.inflate(LayoutInflater.from(parent.context), parent, false),
-                    itemClickListener
-                )
-            }
-        }
     }
 }
