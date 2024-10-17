@@ -14,7 +14,7 @@ class SimilarShowsActivity : BaseSimilarActivity() {
 
     override val liftOnScrollTargetViewId: Int = SimilarShowsFragment.liftOnScrollTargetViewId
     override val titleStringRes: Int = R.string.title_similar_shows
-    override fun createFragment(tmdbId: Int, title: String?): Fragment =
+    override fun createFragment(tmdbId: Int, title: String): Fragment =
         SimilarShowsFragment.newInstance(tmdbId, title)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +27,7 @@ class SimilarShowsActivity : BaseSimilarActivity() {
     }
 
     companion object {
-        fun intent(context: Context, showTmdbId: Int, showTitle: String?): Intent {
+        fun intent(context: Context, showTmdbId: Int, showTitle: String): Intent {
             return Intent(context, SimilarShowsActivity::class.java)
                 .putExtras(showTmdbId, showTitle)
         }

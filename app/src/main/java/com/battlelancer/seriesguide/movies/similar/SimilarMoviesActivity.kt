@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2023-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies.similar
 
@@ -14,11 +14,11 @@ class SimilarMoviesActivity : BaseSimilarActivity() {
 
     override val liftOnScrollTargetViewId: Int = SimilarShowsFragment.liftOnScrollTargetViewId
     override val titleStringRes: Int = R.string.title_similar_movies
-    override fun createFragment(tmdbId: Int, title: String?): Fragment =
+    override fun createFragment(tmdbId: Int, title: String): Fragment =
         SimilarMoviesFragment.newInstance(tmdbId, title)
 
     companion object {
-        fun intent(context: Context, movieTmdbId: Int, title: String?): Intent {
+        fun intent(context: Context, movieTmdbId: Int, title: String): Intent {
             return Intent(context, SimilarMoviesActivity::class.java)
                 .putExtras(movieTmdbId, title)
         }

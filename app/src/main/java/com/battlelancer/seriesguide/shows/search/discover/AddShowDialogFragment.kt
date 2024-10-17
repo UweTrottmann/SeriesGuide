@@ -123,10 +123,12 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
                 val details = model.showDetails.value
                 if (details?.show != null) {
                     dismissAllowingStateLoss()
-                    SimilarShowsFragment.displaySimilarShowsEventLiveData.postValue(SearchResult().also {
-                        it.tmdbId = showTmdbId
-                        it.title = details.show.title
-                    })
+                    SimilarShowsFragment.displaySimilarShowsEventLiveData.postValue(
+                        SimilarShowsFragment.SimilarShowEvent(
+                            tmdbId = showTmdbId,
+                            title = details.show.title
+                        )
+                    )
                 }
             }
         }

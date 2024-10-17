@@ -18,7 +18,7 @@ abstract class BaseSimilarActivity : BaseMessageActivity() {
 
     abstract val liftOnScrollTargetViewId: Int
     abstract val titleStringRes: Int
-    abstract fun createFragment(tmdbId: Int, title: String?): Fragment
+    abstract fun createFragment(tmdbId: Int, title: String): Fragment
     private lateinit var binding: ActivitySinglepaneBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,14 +28,13 @@ abstract class BaseSimilarActivity : BaseMessageActivity() {
             liftOnScrollTargetViewId
         setupActionBar()
 
-        val tmdbId = intent.getIntExtra(EXTRA_TMDB_ID, 0)
-        if (tmdbId <= 0) {
-            finish()
-            return
-        }
-
-        val title = intent.getStringExtra(EXTRA_TITLE)
         if (savedInstanceState == null) {
+            val tmdbId = intent.getIntExtra(EXTRA_TMDB_ID, 0)
+            val title = intent.getStringExtra(EXTRA_TITLE)
+            if (tmdbId <= 0 || title == null) {
+                finish()
+                return
+            }
             addFragment(tmdbId, title)
         }
     }
@@ -50,7 +49,7 @@ abstract class BaseSimilarActivity : BaseMessageActivity() {
 
     fun addFragment(
         tmdbId: Int,
-        title: String?,
+        title: String,
         addToBackStack: Boolean = false
     ) {
         val fragment = createFragment(tmdbId, title)
@@ -71,7 +70,7 @@ abstract class BaseSimilarActivity : BaseMessageActivity() {
         private const val EXTRA_TMDB_ID = "EXTRA_TMDB_ID"
         private const val EXTRA_TITLE = "EXTRA_TITLE"
 
-        fun Intent.putExtras(showTmdbId: Int, title: String?): Intent {
+        fun Intent.putExtras(showTmdbId: Int, title: String): Intent {
             return this
                 .putExtra(EXTRA_TMDB_ID, showTmdbId)
                 .putExtra(EXTRA_TITLE, title)
