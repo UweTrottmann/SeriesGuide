@@ -30,7 +30,6 @@ import com.battlelancer.seriesguide.databinding.ItemAddshowBinding
 import com.battlelancer.seriesguide.enums.NetworkResult
 import com.battlelancer.seriesguide.shows.tools.AddShowTask
 import com.battlelancer.seriesguide.shows.tools.ShowTools2
-import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.widgets.EmptyView
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.TaskManager
@@ -130,26 +129,9 @@ class TraktAddFragment : Fragment() {
         binding = null
     }
 
-    private val itemClickListener: AddAdapter.ItemClickListener =
-        object : AddAdapter.ItemClickListener {
-            override fun onItemClick(item: SearchResult) {
-                if (item.state != SearchResult.STATE_ADDING) {
-                    if (item.state == SearchResult.STATE_ADDED) {
-                        // already in library, open it
-                        startActivity(
-                            OverviewActivity.intentShowByTmdbId(requireContext(), item.tmdbId)
-                        )
-                    } else {
-                        // display more details in a dialog
-                        AddShowDialogFragment.show(parentFragmentManager, item)
-                    }
-                }
-            }
-
-            override fun onAddClick(item: SearchResult) {
-                EventBus.getDefault().post(OnAddingShowEvent(item.tmdbId))
-                TaskManager.getInstance().performAddTask(requireContext(), item)
-            }
+    private val itemClickListener
+        get() = object :
+            ItemAddShowClickListener(requireContext(), lifecycle, parentFragmentManager) {
 
             override fun onMoreOptionsClick(view: View, show: SearchResult) {
                 AddShowPopupMenu(requireContext(), show, view).apply {
@@ -322,15 +304,9 @@ class TraktAddFragment : Fragment() {
     class AddAdapter(
         activity: Activity,
         objects: List<SearchResult>,
-        private val itemClickListener: ItemClickListener,
+        private val itemClickListener: ItemAddShowViewHolder.ClickListener,
         private val showWatchlistActions: Boolean
     ) : ArrayAdapter<SearchResult>(activity, 0, objects) {
-
-        interface ItemClickListener {
-            fun onItemClick(item: SearchResult)
-            fun onAddClick(item: SearchResult)
-            fun onMoreOptionsClick(view: View, show: SearchResult)
-        }
 
         private fun getItemForShowTmdbId(showTmdbId: Int): SearchResult? {
             val count = count
@@ -382,7 +358,7 @@ class TraktAddFragment : Fragment() {
 
         class ViewHolder(
             val binding: ItemAddshowBinding,
-            private val itemClickListener: ItemClickListener
+            private val itemClickListener: ItemAddShowViewHolder.ClickListener
         ) {
             private var item: SearchResult? = null
 
@@ -467,15 +443,13 @@ class TraktAddFragment : Fragment() {
             }
 
             companion object {
-                fun inflate(parent: ViewGroup, itemClickListener: ItemClickListener) =
-                    ViewHolder(
-                        ItemAddshowBinding.inflate(
-                            LayoutInflater.from(parent.context),
-                            parent,
-                            false
-                        ),
-                        itemClickListener
-                    )
+                fun inflate(
+                    parent: ViewGroup,
+                    itemClickListener: ItemAddShowViewHolder.ClickListener
+                ) = ViewHolder(
+                    ItemAddshowBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+                    itemClickListener
+                )
             }
         }
     }
