@@ -74,7 +74,15 @@ class TraktAddFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupEmptyView(emptyView)
+        emptyView.setButtonClickListener {
+            setProgressVisible(visible = true, animate = false)
+            LoaderManager.getInstance(this@TraktAddFragment)
+                .restartLoader(
+                    ShowsTraktActivity.TRAKT_BASE_LOADER_ID + listType.ordinal, null,
+                    traktAddCallbacks
+                )
+        }
+
         // basic setup of grid view
         resultsGridView.emptyView = emptyView
         // enable app bar scrolling out of view
@@ -105,6 +113,20 @@ class TraktAddFragment : Fragment() {
             viewLifecycleOwner,
             Lifecycle.State.RESUMED
         )
+    }
+
+    /**
+     * Hides the content container and shows a progress bar.
+     */
+    private fun setProgressVisible(visible: Boolean, animate: Boolean) {
+        if (animate) {
+            val fadeOut = AnimationUtils.loadAnimation(activity, android.R.anim.fade_out)
+            val fadeIn = AnimationUtils.loadAnimation(activity, android.R.anim.fade_in)
+            contentContainer.startAnimation(if (visible) fadeOut else fadeIn)
+            progressBar.startAnimation(if (visible) fadeIn else fadeOut)
+        }
+        contentContainer.visibility = if (visible) View.GONE else View.VISIBLE
+        progressBar.visibility = if (visible) View.VISIBLE else View.GONE
     }
 
     override fun onStart() {
@@ -179,45 +201,6 @@ class TraktAddFragment : Fragment() {
         }
     }
 
-    private fun setupEmptyView(buttonEmptyView: EmptyView) {
-        buttonEmptyView.setButtonClickListener {
-            setProgressVisible(visible = true, animate = false)
-            LoaderManager.getInstance(this@TraktAddFragment)
-                .restartLoader(
-                    ShowsTraktActivity.TRAKT_BASE_LOADER_ID + listType.ordinal, null,
-                    traktAddCallbacks
-                )
-        }
-    }
-
-    /**
-     * Changes the empty message.
-     */
-    private fun setEmptyMessage(message: CharSequence) {
-        emptyView.setMessage(message)
-    }
-
-    private fun updateSearchResults(searchResults: List<SearchResult>) {
-        this.searchResults = searchResults
-        adapter.clear()
-        adapter.addAll(searchResults)
-        resultsGridView.adapter = adapter
-    }
-
-    /**
-     * Hides the content container and shows a progress bar.
-     */
-    private fun setProgressVisible(visible: Boolean, animate: Boolean) {
-        if (animate) {
-            val fadeOut = AnimationUtils.loadAnimation(activity, android.R.anim.fade_out)
-            val fadeIn = AnimationUtils.loadAnimation(activity, android.R.anim.fade_in)
-            contentContainer.startAnimation(if (visible) fadeOut else fadeIn)
-            progressBar.startAnimation(if (visible) fadeIn else fadeOut)
-        }
-        contentContainer.visibility = if (visible) View.GONE else View.VISIBLE
-        progressBar.visibility = if (visible) View.VISIBLE else View.GONE
-    }
-
     /**
      * Called if the user triggers adding a single new show through the add dialog. The show is not
      * actually added, yet.
@@ -267,15 +250,22 @@ class TraktAddFragment : Fragment() {
                 loader: Loader<TraktAddLoader.Result>,
                 data: TraktAddLoader.Result
             ) {
-                updateSearchResults(data.results)
-                setEmptyMessage(data.emptyText)
-                setProgressVisible(false, true)
+                updateSearchResults(data.results, data.emptyText)
+                setProgressVisible(visible = false, animate = true)
             }
 
             override fun onLoaderReset(loader: Loader<TraktAddLoader.Result>) {
                 // keep currently displayed data
             }
         }
+
+    private fun updateSearchResults(results: List<SearchResult>, emptyText: CharSequence) {
+        this.searchResults = results
+        adapter.clear()
+        adapter.addAll(results)
+        resultsGridView.adapter = adapter
+        emptyView.setMessage(emptyText)
+    }
 
     companion object {
         /**
