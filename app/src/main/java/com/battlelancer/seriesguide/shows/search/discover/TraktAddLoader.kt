@@ -5,7 +5,6 @@ package com.battlelancer.seriesguide.shows.search.discover
 
 import android.content.Context
 import androidx.annotation.StringRes
-import androidx.collection.SparseArrayCompat
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.shows.ShowsSettings
@@ -97,13 +96,11 @@ class TraktAddLoader(
             return buildResultSuccess(emptyList())
         }
 
-        return buildResultSuccess(
-            parseTraktShowsToSearchResults(
-                shows,
-                SgApp.getServicesComponent(context).showTools().getTmdbIdsToPoster(),
-                ShowsSettings.getShowsSearchLanguage(context)
-            )
-        )
+
+        val searchResults =
+            TraktSearchResultMapper(context, ShowsSettings.getShowsSearchLanguage(context))
+                .mapToSearchResults(shows)
+        return buildResultSuccess(searchResults)
     }
 
     private fun buildResultSuccess(results: List<SearchResult>): Result {
@@ -124,45 +121,4 @@ class TraktAddLoader(
         return Result(LinkedList(), context, errorResId)
     }
 
-
-    /**
-     * Transforms a list of Trakt shows to a list of [SearchResult], marks shows already in
-     * the local database as added.
-     */
-    private fun parseTraktShowsToSearchResults(
-        traktShows: List<BaseShow>,
-        existingPosterPaths: SparseArrayCompat<String>,
-        overrideLanguage: String
-    ): List<SearchResult> {
-        val results: MutableList<SearchResult> = ArrayList()
-
-        // build list
-        for (baseShow in traktShows) {
-            val show = baseShow.show
-            val tmdbId = show?.ids?.tmdb
-                ?: continue // has no TMDB id
-
-            val result = SearchResult().also {
-                it.tmdbId = tmdbId
-                it.title = show.title
-                // Trakt might not return an overview, so use the year if available
-                it.overview = if (!show.overview.isNullOrEmpty()) {
-                    show.overview
-                } else if (show.year != null) {
-                    show.year!!.toString()
-                } else {
-                    ""
-                }
-                if (existingPosterPaths.indexOfKey(tmdbId) >= 0) {
-                    // is already in local database
-                    it.state = SearchResult.STATE_ADDED
-                    // use the poster fetched for it (or null if there is none)
-                    it.posterPath = existingPosterPaths[tmdbId]
-                }
-                it.language = overrideLanguage
-            }
-            results.add(result)
-        }
-        return results
-    }
 }

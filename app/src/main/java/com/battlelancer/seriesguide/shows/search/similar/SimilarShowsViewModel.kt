@@ -11,7 +11,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.shows.search.discover.SearchResult
-import com.battlelancer.seriesguide.shows.search.discover.SearchTools
+import com.battlelancer.seriesguide.shows.search.discover.TmdbSearchResultMapper
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
 import kotlinx.coroutines.Dispatchers
@@ -63,10 +63,8 @@ class SimilarShowsViewModel(
                 page.results
             }
 
-            val searchResults = SearchTools.mapTvShowsToSearchResults(languageCode, results)
-            // Mark local shows and use existing posters.
-            SearchTools.markLocalShowsAsAddedAndPreferLocalPoster(context, searchResults)
-
+            val searchResults = TmdbSearchResultMapper(context, languageCode)
+                .mapToSearchResults(results)
             postSuccessfulResult(searchResults)
         }
     }
