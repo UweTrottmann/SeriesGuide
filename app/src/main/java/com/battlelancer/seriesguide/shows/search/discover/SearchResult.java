@@ -12,7 +12,6 @@ public class SearchResult {
     public static final int STATE_ADDING = 1;
     public static final int STATE_ADDED = 2;
 
-    private int tvdbid;
     private int tmdbId;
     private String language;
     private String title;
@@ -25,7 +24,6 @@ public class SearchResult {
 
     public SearchResult copy() {
         SearchResult copy = new SearchResult();
-        copy.setTvdbid(this.getTvdbid());
         copy.setTmdbId(this.getTmdbId());
         copy.setLanguage(this.getLanguage());
         copy.setTitle(this.getTitle());
@@ -33,20 +31,6 @@ public class SearchResult {
         copy.setPosterPath(this.getPosterPath());
         copy.setState(this.getState());
         return copy;
-    }
-
-    /**
-     * @deprecated Use {@link #getTmdbId()} instead.
-     */
-    public int getTvdbid() {
-        return tvdbid;
-    }
-
-    /**
-     * @deprecated Use {@link #setTmdbId(int)} instead.
-     */
-    public void setTvdbid(int tvdbid) {
-        this.tvdbid = tvdbid;
     }
 
     public int getTmdbId() {
