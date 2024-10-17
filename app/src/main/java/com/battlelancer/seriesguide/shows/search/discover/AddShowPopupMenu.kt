@@ -41,7 +41,7 @@ class AddShowPopupMenu(
                 // post so other fragments can display a progress indicator for that show
                 EventBus.getDefault().post(OnAddingShowEvent(show.tmdbId))
                 TaskManager.performAddTask(
-                    context, AddShowTask.Show(show.tmdbId, show.language!!, show.title)
+                    context, AddShowTask.Show(show.tmdbId, show.languageCode, show.title)
                 )
                 true
             }

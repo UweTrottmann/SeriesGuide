@@ -39,7 +39,7 @@ open class ItemAddShowClickListener(
                 }
             } else {
                 // Display more details in a dialog.
-                AddShowDialogFragment.show(fragmentManager, item.tmdbId, item.language!!)
+                AddShowDialogFragment.show(fragmentManager, item.tmdbId, item.languageCode)
             }
         }
     }
@@ -47,7 +47,7 @@ open class ItemAddShowClickListener(
     override fun onAddClick(item: SearchResult) {
         EventBus.getDefault().post(OnAddingShowEvent(item.tmdbId))
         TaskManager.performAddTask(
-            context, AddShowTask.Show(item.tmdbId, item.language!!, item.title)
+            context, AddShowTask.Show(item.tmdbId, item.languageCode, item.title)
         )
     }
 

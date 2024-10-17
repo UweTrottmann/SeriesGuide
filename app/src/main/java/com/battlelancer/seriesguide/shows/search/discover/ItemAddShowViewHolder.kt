@@ -74,10 +74,7 @@ class ItemAddShowViewHolder(
         }
 
         // poster
-        ImageTools.loadShowPosterUrlResizeCrop(
-            context, binding.imageViewAddPoster,
-            item.posterPath // actually the poster URL
-        )
+        ImageTools.loadShowPosterUrlResizeCrop(context, binding.imageViewAddPoster, item.posterUrl)
 
         // context/long press listener and more options button
         val canBeAdded = item.state == SearchResult.STATE_ADD

@@ -176,7 +176,7 @@ class TraktAddFragment : Fragment() {
                             showsToAdd.add(
                                 AddShowTask.Show(
                                     result.tmdbId,
-                                    result.language!!,
+                                    result.languageCode,
                                     result.title
                                 )
                             )

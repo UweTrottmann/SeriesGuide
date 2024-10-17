@@ -36,15 +36,15 @@ abstract class SearchResultMapper<SHOW>(
                 // Is already in local database.
                 searchResult.state = SearchResult.STATE_ADDED
                 // Use the poster already fetched for it.
-                val posterOrNull = localShowsToPoster[searchResult.tmdbId]
-                if (posterOrNull != null) {
-                    searchResult.posterPath = posterOrNull
+                val posterPathOrNull = localShowsToPoster[searchResult.tmdbId]
+                if (posterPathOrNull != null) {
+                    searchResult.posterUrl = posterPathOrNull
                 }
             }
 
             // It may take some time to build the image cache URL, so do this here instead of when
             // binding to the view.
-            searchResult.posterPath = buildPosterUrl(searchResult)
+            searchResult.posterUrl = buildPosterUrl(searchResult)
 
             searchResult
         }
@@ -63,17 +63,18 @@ class TmdbSearchResultMapper(
 
     override fun mapToSearchResult(show: BaseTvShow): SearchResult? {
         val tmdbId = show.id ?: return null
-        return SearchResult().also {
-            it.tmdbId = tmdbId
-            it.title = show.name
-            it.overview = show.overview
-            it.language = languageCode
-            it.posterPath = show.poster_path
-        }
+        val name = show.name ?: return null
+        return SearchResult(
+            tmdbId = tmdbId,
+            title = name,
+            overview = show.overview ?: "",
+            languageCode = languageCode,
+            posterUrl = show.poster_path // temporarily store path
+        )
     }
 
     override fun buildPosterUrl(searchResult: SearchResult): String? {
-        return ImageTools.tmdbOrTvdbPosterUrl(searchResult.posterPath, context)
+        return ImageTools.tmdbOrTvdbPosterUrl(searchResult.posterUrl, context)
     }
 
 }
@@ -88,21 +89,22 @@ class TraktSearchResultMapper(
 
     override fun mapToSearchResult(show: BaseShow): SearchResult? {
         val traktShow = show.show
-        val tmdbId = traktShow?.ids?.tmdb
-            ?: return null // has no TMDB id
-        return SearchResult().also {
-            it.tmdbId = tmdbId
-            it.title = traktShow.title
+        val tmdbId = traktShow?.ids?.tmdb ?: return null // has no TMDB id
+        val title = traktShow.title ?: return null
+        return SearchResult(
+            tmdbId = tmdbId,
+            title = title,
             // Trakt might not return an overview, so use the year if available
-            it.overview = if (!traktShow.overview.isNullOrEmpty()) {
+            overview = if (!traktShow.overview.isNullOrEmpty()) {
                 traktShow.overview
             } else if (traktShow.year != null) {
                 traktShow.year!!.toString()
             } else {
                 ""
-            }
-            it.language = languageCode
-        }
+            },
+            languageCode = languageCode,
+            posterUrl = null // Trakt does not supply poster URLs
+        )
     }
 
     /**
@@ -113,9 +115,9 @@ class TraktSearchResultMapper(
      */
     override fun buildPosterUrl(searchResult: SearchResult): String? {
         return ImageTools.posterUrlOrResolve(
-            searchResult.posterPath,
+            searchResult.posterUrl,
             searchResult.tmdbId,
-            searchResult.language,
+            searchResult.languageCode,
             context
         )
     }
