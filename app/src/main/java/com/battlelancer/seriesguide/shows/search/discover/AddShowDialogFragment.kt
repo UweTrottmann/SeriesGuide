@@ -235,7 +235,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
             // Not added, offer to add.
             binding.buttonPositive.setText(R.string.action_shows_add)
             binding.buttonPositive.setOnClickListener {
-                EventBus.getDefault().post(AddFragment.OnAddingShowEvent(showTmdbId))
+                EventBus.getDefault().post(OnAddingShowEvent(showTmdbId))
                 addShowListener.onAddShow(SearchResult().also {
                     it.tmdbId = showTmdbId
                     it.title = show.title

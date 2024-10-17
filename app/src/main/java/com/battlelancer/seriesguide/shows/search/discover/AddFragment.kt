@@ -33,18 +33,6 @@ import org.greenrobot.eventbus.ThreadMode
  */
 abstract class AddFragment : Fragment() {
 
-    class OnAddingShowEvent(
-        /**
-         * Is -1 if adding all shows this lists.
-         */
-        val showTmdbId: Int
-    ) {
-        /**
-         * Sets TMDB id to -1 to indicate all shows of this are added.
-         */
-        internal constructor() : this(-1)
-    }
-
     protected var searchResults: List<SearchResult>? = null
         private set
     protected lateinit var adapter: AddAdapter

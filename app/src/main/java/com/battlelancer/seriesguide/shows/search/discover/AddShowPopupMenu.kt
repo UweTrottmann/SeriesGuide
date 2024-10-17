@@ -9,7 +9,6 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.shows.search.discover.AddFragment.OnAddingShowEvent
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.tasks.AddShowToWatchlistTask
 import com.battlelancer.seriesguide.util.tasks.RemoveShowFromWatchlistTask
