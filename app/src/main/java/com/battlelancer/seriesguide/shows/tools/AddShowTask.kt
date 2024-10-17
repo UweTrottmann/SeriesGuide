@@ -3,9 +3,7 @@
 
 package com.battlelancer.seriesguide.shows.tools
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.os.AsyncTask
 import android.widget.Toast
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.R
@@ -20,7 +18,6 @@ import com.battlelancer.seriesguide.traktapi.TraktSettings
 import com.battlelancer.seriesguide.traktapi.TraktTools2
 import com.battlelancer.seriesguide.traktapi.TraktTools2.ServiceResult
 import com.battlelancer.seriesguide.util.Errors
-import com.battlelancer.seriesguide.util.TaskManager
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.trakt5.entities.BaseShow
 import org.greenrobot.eventbus.EventBus
@@ -28,15 +25,15 @@ import timber.log.Timber
 import java.util.LinkedList
 
 /**
- * Adds shows to the local database, tries to get watched and collected episodes if a trakt account
+ * Adds shows to the local database, tries to get watched and collected episodes if a Trakt account
  * is connected.
  */
 class AddShowTask(
     context: Context,
     shows: List<Show>,
-    isSilentMode: Boolean,
-    isMergingShows: Boolean
-) : AsyncTask<Void?, String, Void?>() {
+    private val isSilentMode: Boolean,
+    private val isMergingShows: Boolean
+) {
 
     /**
      * [tmdbId] and [languageCode] are passed to [AddUpdateShowTools.addShow]. The [title] is only
@@ -105,61 +102,30 @@ class AddShowTask(
         }
     }
 
-    @SuppressLint("StaticFieldLeak")
     private val context: Context = context.applicationContext
     private val addQueue = LinkedList<Show>()
 
-    private var isFinishedAddingShows = false
-    private var isSilentMode: Boolean
-    private var isMergingShows: Boolean
-
     init {
         addQueue.addAll(shows)
-        this.isSilentMode = isSilentMode
-        this.isMergingShows = isMergingShows
     }
 
-    /**
-     * Adds shows to the add queue. If this returns false, the shows were not added because the task
-     * is finishing up. Create a new one instead.
-     */
-    fun addShows(
-        shows: List<Show>,
-        isSilentMode: Boolean,
-        isMergingShows: Boolean
-    ): Boolean {
-        if (isFinishedAddingShows) {
-            Timber.d("addShows: failed, already finishing up.")
-            return false
-        } else {
-            this.isSilentMode = isSilentMode
-            // never reset isMergingShows once true, so merged flag is correctly set on completion
-            this.isMergingShows = this.isMergingShows || isMergingShows
-            addQueue.addAll(shows)
-            Timber.d("addShows: added shows to queue.")
-            return true
-        }
+    fun run() {
+        doInBackground()
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun doInBackground(vararg params: Void?): Void? {
+    private fun doInBackground() {
         Timber.d("Starting to add shows...")
 
         val firstShow = addQueue.peek()
         if (firstShow == null) {
             Timber.d("Finished. Queue was empty.")
-            return null
+            return
         }
 
         if (!AndroidUtils.isNetworkConnected(context)) {
             Timber.d("Finished. No internet connection.")
             publishProgress(RESULT_OFFLINE, firstShow.tmdbId, firstShow.title)
-            return null
-        }
-
-        if (isCancelled) {
-            Timber.d("Finished. Cancelled.")
-            return null
+            return
         }
 
         // if not connected to Hexagon, get episodes from trakt
@@ -169,10 +135,10 @@ class AddShowTask(
             Timber.d("Getting watched and collected episodes from trakt.")
             // get collection
             traktCollection = getTraktShows(true)
-                ?: return null // can not get collected state from trakt, give up.
+                ?: return // can not get collected state from trakt, give up.
             // get watched
             traktWatched = getTraktShows(false)
-                ?: return null // can not get watched state from trakt, give up.
+                ?: return // can not get watched state from trakt, give up.
         }
 
         val services = SgApp.getServicesComponent(context)
@@ -184,13 +150,6 @@ class AddShowTask(
         var failedMergingShows = false
         while (!addQueue.isEmpty()) {
             Timber.d("Starting to add next show...")
-            if (isCancelled) {
-                Timber.d("Finished. Cancelled.")
-                // only cancelled on config change, so don't rebuild fts
-                // table yet
-                return null
-            }
-
             val nextShow = addQueue.removeFirst()
             // set values required for progress update
             val currentShowName = nextShow.title
@@ -250,8 +209,6 @@ class AddShowTask(
             Timber.d("Finished adding show. (Result code: %s)", result)
         }
 
-        isFinishedAddingShows = true
-
         // when merging shows down from Hexagon, set success flag
         if (isMergingShows && !failedMergingShows) {
             HexagonSettings.setHasMergedShows(context, true)
@@ -270,20 +227,19 @@ class AddShowTask(
         }
 
         Timber.d("Finished adding shows.")
-        return null
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onProgressUpdate(vararg values: String) {
+    private fun publishProgress(
+        result: Int,
+        showTmdbId: Int,
+        showTitle: String
+    ) {
         if (isSilentMode) {
             Timber.d("SILENT MODE: do not show progress toast")
             return
         }
 
         // Not catching format/null exceptions, should not occur if values correctly passed.
-        val result = values[0].toInt()
-        val showTmdbId = values[1].toInt()
-        val showTitle = values[2]
         val event = when (result) {
             PROGRESS_SUCCESS ->
                 // do nothing, user will see show added to show list
@@ -305,7 +261,10 @@ class AddShowTask(
 
             PROGRESS_ERROR_HEXAGON -> OnShowAddedEvent.failedDetails(
                 context, showTmdbId, showTitle,
-                context.getString(R.string.api_error_generic, context.getString(R.string.hexagon))
+                context.getString(
+                    R.string.api_error_generic,
+                    context.getString(R.string.hexagon)
+                )
             )
 
             PROGRESS_ERROR_DATA -> OnShowAddedEvent.failedDetails(
@@ -326,21 +285,15 @@ class AddShowTask(
         }
 
         if (event != null) {
+            // TODO Is this necessary?
+//            withContext(Dispatchers.Main) {
             EventBus.getDefault().post(event)
+//            }
         }
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onPostExecute(aVoid: Void?) {
-        TaskManager.releaseAddTaskRef()
-    }
-
     private fun publishProgress(result: Int) {
-        publishProgress(result.toString(), "0", "")
-    }
-
-    private fun publishProgress(result: Int, showTmdbId: Int, showTitle: String) {
-        publishProgress(result.toString(), showTmdbId.toString(), showTitle)
+        publishProgress(result, 0, "")
     }
 
     private fun getTraktShows(isCollectionNotWatched: Boolean): Map<Int, BaseShow>? {

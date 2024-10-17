@@ -120,7 +120,11 @@ class JsonImportTask(
 
     private fun doInBackground(coroutineScope: CoroutineScope): Int {
         // Ensure no large database ops are running
-        if (SgSyncAdapter.isSyncActive(context, false) || TaskManager.isAddTaskRunning) {
+        if (SgSyncAdapter.isSyncActive(context, false)) {
+            return ERROR_LARGE_DB_OP
+        }
+        // Do not import if an add or backup task is running
+        if (!TaskManager.addShowOrBackupSemaphore.tryAcquire()) {
             return ERROR_LARGE_DB_OP
         }
 
@@ -162,6 +166,9 @@ class JsonImportTask(
 
         // Renew search table
         SeriesGuideDatabase.rebuildFtsTable(context)
+
+        // allow other tasks to resume
+        TaskManager.addShowOrBackupSemaphore.release()
 
         return SUCCESS
     }
