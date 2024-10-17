@@ -3,27 +3,42 @@
 
 package com.battlelancer.seriesguide.util
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.AsyncTask
 import android.widget.Toast
 import androidx.annotation.MainThread
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask
 import com.battlelancer.seriesguide.shows.tools.AddShowTask
 import com.battlelancer.seriesguide.shows.tools.LatestEpisodeUpdateTask
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withPermit
 
 /**
- * Holds on to task instances while they are running to ensure only one is executing at a time.
+ * Helps to ensure that for some tasks only one is running at a time.
  */
 object TaskManager {
 
-    @SuppressLint("StaticFieldLeak") // AddShowTask holds an application context
-    private var addShowTask: AddShowTask? = null
-    private var backupTask: Job? = null
+    /**
+     * Ensures that only one task that
+     * - adds shows,
+     * - runs a backup
+     * - runs an import
+     * runs at a time.
+     *
+     * Note: this currently does not cover all tasks that modify shows, like updating and removing.
+     */
+    val addShowOrBackupSemaphore = Semaphore(1)
+    private var hasBackupTask: Boolean = false
     private var nextEpisodeUpdateTask: LatestEpisodeUpdateTask? = null
 
+    /**
+     * Like the full [performAddTask], but adds only a single show.
+     */
     @MainThread
     @Synchronized
     fun performAddTask(context: Context, show: AddShowTask.Show) {
@@ -33,8 +48,10 @@ object TaskManager {
     /**
      * Schedule shows to be added to the database.
      *
-     * @param isSilentMode   Whether to display status toasts if a show could not be added.
-     * @param isMergingShows Whether to set the Hexagon show merged flag to true if all shows were
+     * Set [isSilentMode] to not display status messages to the user, even on failure.
+     *
+     * Set [isMergingShows] to set [HexagonSettings.setHasMergedShows] if all shows were added
+     * successfully.
      */
     @JvmStatic
     @MainThread
@@ -60,42 +77,43 @@ object TaskManager {
             }
         }
 
-        // add the show(s) to a running add task or create a new one
-        if (!isAddTaskRunning || !addShowTask!!.addShows(shows, isSilentMode, isMergingShows)) {
-            AddShowTask(context, shows, isSilentMode, isMergingShows)
-                .also { this.addShowTask = it }
-                .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        // Queue another add task
+        SgApp.coroutineScope.launch(Dispatchers.IO) {
+            addShowOrBackupSemaphore.withPermit {
+                AddShowTask(context, shows, isSilentMode, isMergingShows).run()
+            }
         }
     }
 
-    @Synchronized
-    fun releaseAddTaskRef() {
-        addShowTask = null // clear reference to avoid holding on to task context
-    }
-
-    val isAddTaskRunning: Boolean
-        get() = !(addShowTask == null || addShowTask!!.status == AsyncTask.Status.FINISHED)
-
     /**
-     * If no [AddShowTask] or [JsonExportTask] created by this [TaskManager] is running a
-     * [JsonExportTask] is scheduled in silent mode.
+     * Queues a [JsonExportTask] in auto backup mode, unless this has already queued one and it has
+     * not completed, yet.
      */
     @MainThread
     @Synchronized
     fun tryBackupTask(context: Context): Boolean {
-        val backupTask = backupTask
-        if (!isAddTaskRunning
-            && (backupTask == null || backupTask.isCompleted)) {
-            val exportTask = JsonExportTask(context, null, false, true, null)
-            this.backupTask = exportTask.launch()
-            return true
+        if (hasBackupTask) {
+            return false
         }
-        return false
-    }
+        hasBackupTask = true
 
-    @Synchronized
-    fun releaseBackupTaskRef() {
-        backupTask = null // clear reference to avoid holding on to task context
+        // Queue backup task
+        SgApp.coroutineScope.launch(Dispatchers.IO) {
+            addShowOrBackupSemaphore.withPermit {
+                try {
+                    JsonExportTask(
+                        context, null,
+                        isFullDump = false,
+                        isAutoBackupMode = true,
+                        type = null
+                    ).run()
+                } finally {
+                    // If backup task gets cancelled for any reason, ensure flag is reset
+                    hasBackupTask = false
+                }
+            }
+        }
+        return true
     }
 
     /**

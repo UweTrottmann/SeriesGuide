@@ -25,7 +25,6 @@ import com.battlelancer.seriesguide.shows.database.SgSeason2Helper
 import com.battlelancer.seriesguide.shows.database.SgShow2Helper
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.util.Errors
-import com.battlelancer.seriesguide.util.TaskManager
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
 import com.google.gson.stream.JsonWriter
@@ -44,6 +43,7 @@ import java.io.IOException
 import java.io.OutputStream
 import java.io.OutputStreamWriter
 import java.nio.charset.StandardCharsets
+import kotlin.collections.List
 import com.battlelancer.seriesguide.dataliberation.model.List as ExportList
 
 /**
@@ -174,8 +174,6 @@ class JsonExportTask(
     }
 
     private fun onPostExecute(result: Int) {
-        TaskManager.releaseBackupTaskRef()
-
         if (!isAutoBackupMode) {
             val messageId: Int
             val showIndefinite: Boolean

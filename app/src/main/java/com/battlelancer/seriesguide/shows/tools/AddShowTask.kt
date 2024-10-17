@@ -3,24 +3,21 @@
 
 package com.battlelancer.seriesguide.shows.tools
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.os.AsyncTask
 import android.widget.Toast
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
-import com.battlelancer.seriesguide.backend.settings.HexagonSettings.isEnabled
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
+import com.battlelancer.seriesguide.shows.tools.AddShowTask.OnShowAddedEvent
 import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowResult
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync
-import com.battlelancer.seriesguide.traktapi.TraktCredentials.Companion.get
+import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktSettings
 import com.battlelancer.seriesguide.traktapi.TraktTools2
 import com.battlelancer.seriesguide.traktapi.TraktTools2.ServiceResult
 import com.battlelancer.seriesguide.util.Errors
-import com.battlelancer.seriesguide.util.TaskManager
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.trakt5.entities.BaseShow
 import org.greenrobot.eventbus.EventBus
@@ -28,15 +25,19 @@ import timber.log.Timber
 import java.util.LinkedList
 
 /**
- * Adds shows to the local database, tries to get watched and collected episodes if a trakt account
- * is connected.
+ * Adds shows to the local database using [AddUpdateShowTools.addShow].
+ *
+ * Set [isSilentMode] to not send [OnShowAddedEvent] events, even on failure.
+ *
+ * Set [isMergingShows] to set [HexagonSettings.setHasMergedShows] if all shows were added
+ * successfully.
  */
 class AddShowTask(
     context: Context,
     shows: List<Show>,
-    isSilentMode: Boolean,
-    isMergingShows: Boolean
-) : AsyncTask<Void?, String, Void?>() {
+    private val isSilentMode: Boolean,
+    private val isMergingShows: Boolean
+) {
 
     /**
      * [tmdbId] and [languageCode] are passed to [AddUpdateShowTools.addShow]. The [title] is only
@@ -105,74 +106,39 @@ class AddShowTask(
         }
     }
 
-    @SuppressLint("StaticFieldLeak")
     private val context: Context = context.applicationContext
     private val addQueue = LinkedList<Show>()
 
-    private var isFinishedAddingShows = false
-    private var isSilentMode: Boolean
-    private var isMergingShows: Boolean
-
     init {
         addQueue.addAll(shows)
-        this.isSilentMode = isSilentMode
-        this.isMergingShows = isMergingShows
     }
 
-    /**
-     * Adds shows to the add queue. If this returns false, the shows were not added because the task
-     * is finishing up. Create a new one instead.
-     */
-    fun addShows(
-        shows: List<Show>,
-        isSilentMode: Boolean,
-        isMergingShows: Boolean
-    ): Boolean {
-        if (isFinishedAddingShows) {
-            Timber.d("addShows: failed, already finishing up.")
-            return false
-        } else {
-            this.isSilentMode = isSilentMode
-            // never reset isMergingShows once true, so merged flag is correctly set on completion
-            this.isMergingShows = this.isMergingShows || isMergingShows
-            addQueue.addAll(shows)
-            Timber.d("addShows: added shows to queue.")
-            return true
-        }
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun doInBackground(vararg params: Void?): Void? {
+    fun run() {
         Timber.d("Starting to add shows...")
 
         val firstShow = addQueue.peek()
         if (firstShow == null) {
             Timber.d("Finished. Queue was empty.")
-            return null
+            return
         }
 
         if (!AndroidUtils.isNetworkConnected(context)) {
             Timber.d("Finished. No internet connection.")
             publishProgress(RESULT_OFFLINE, firstShow.tmdbId, firstShow.title)
-            return null
+            return
         }
 
-        if (isCancelled) {
-            Timber.d("Finished. Cancelled.")
-            return null
-        }
-
-        // if not connected to Hexagon, get episodes from trakt
+        // If not connected to Hexagon, get episodes from Trakt
         var traktCollection: Map<Int, BaseShow>? = null
         var traktWatched: Map<Int, BaseShow>? = null
-        if (!isEnabled(context) && get(context).hasCredentials()) {
+        if (!HexagonSettings.isEnabled(context) && TraktCredentials.get(context).hasCredentials()) {
             Timber.d("Getting watched and collected episodes from trakt.")
             // get collection
             traktCollection = getTraktShows(true)
-                ?: return null // can not get collected state from trakt, give up.
+                ?: return // can not get collected state, give up
             // get watched
             traktWatched = getTraktShows(false)
-                ?: return null // can not get watched state from trakt, give up.
+                ?: return // can not get watched state, give up
         }
 
         val services = SgApp.getServicesComponent(context)
@@ -184,15 +150,7 @@ class AddShowTask(
         var failedMergingShows = false
         while (!addQueue.isEmpty()) {
             Timber.d("Starting to add next show...")
-            if (isCancelled) {
-                Timber.d("Finished. Cancelled.")
-                // only cancelled on config change, so don't rebuild fts
-                // table yet
-                return null
-            }
-
             val nextShow = addQueue.removeFirst()
-            // set values required for progress update
             val currentShowName = nextShow.title
             val currentShowTmdbId = nextShow.tmdbId
 
@@ -231,8 +189,8 @@ class AddShowTask(
                 else -> {
                     Timber.e("Adding show failed: %s", addResult)
 
-                    // Only fail a hexagon merge if show can not be added due to network error,
-                    // not because it does not (longer) exist.
+                    // Only fail a Hexagon merge if a show can not be added due to a network error,
+                    // not because it does not or no longer exist at the source.
                     if (isMergingShows && addResult != ShowResult.DOES_NOT_EXIST) {
                         failedMergingShows = true
                     }
@@ -250,43 +208,39 @@ class AddShowTask(
             Timber.d("Finished adding show. (Result code: %s)", result)
         }
 
-        isFinishedAddingShows = true
-
-        // when merging shows down from Hexagon, set success flag
+        // When merging shows down from Hexagon, set success flag
         if (isMergingShows && !failedMergingShows) {
             HexagonSettings.setHasMergedShows(context, true)
         }
 
         if (addedAtLeastOneShow) {
-            // make sure the next sync will download all ratings
+            // Make sure the next sync will download all ratings
             PreferenceManager.getDefaultSharedPreferences(context).edit()
                 .putLong(TraktSettings.KEY_LAST_SHOWS_RATED_AT, 0)
                 .putLong(TraktSettings.KEY_LAST_EPISODES_RATED_AT, 0)
                 .apply()
 
-            // renew FTS3 table
             Timber.d("Renewing search table.")
             SeriesGuideDatabase.rebuildFtsTable(context)
         }
 
         Timber.d("Finished adding shows.")
-        return null
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onProgressUpdate(vararg values: String) {
+    private fun publishProgress(
+        result: Int,
+        showTmdbId: Int,
+        showTitle: String
+    ) {
         if (isSilentMode) {
             Timber.d("SILENT MODE: do not show progress toast")
             return
         }
 
         // Not catching format/null exceptions, should not occur if values correctly passed.
-        val result = values[0].toInt()
-        val showTmdbId = values[1].toInt()
-        val showTitle = values[2]
         val event = when (result) {
             PROGRESS_SUCCESS ->
-                // do nothing, user will see show added to show list
+                // Do nothing, user will see show added to show list
                 OnShowAddedEvent.successful(showTmdbId)
 
             PROGRESS_EXISTS -> OnShowAddedEvent.exists(context, showTmdbId, showTitle)
@@ -305,7 +259,10 @@ class AddShowTask(
 
             PROGRESS_ERROR_HEXAGON -> OnShowAddedEvent.failedDetails(
                 context, showTmdbId, showTitle,
-                context.getString(R.string.api_error_generic, context.getString(R.string.hexagon))
+                context.getString(
+                    R.string.api_error_generic,
+                    context.getString(R.string.hexagon)
+                )
             )
 
             PROGRESS_ERROR_DATA -> OnShowAddedEvent.failedDetails(
@@ -330,17 +287,8 @@ class AddShowTask(
         }
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onPostExecute(aVoid: Void?) {
-        TaskManager.releaseAddTaskRef()
-    }
-
     private fun publishProgress(result: Int) {
-        publishProgress(result.toString(), "0", "")
-    }
-
-    private fun publishProgress(result: Int, showTmdbId: Int, showTitle: String) {
-        publishProgress(result.toString(), showTmdbId.toString(), showTitle)
+        publishProgress(result, 0, "")
     }
 
     private fun getTraktShows(isCollectionNotWatched: Boolean): Map<Int, BaseShow>? {

@@ -77,6 +77,14 @@ class AddUpdateShowTools @Inject constructor(
         DATABASE_ERROR
     }
 
+    /**
+     * Add a show to the database.
+     *
+     * If Hexagon is enabled, gets show and episode state from Hexagon.
+     *
+     * If Hexagon is not enabled and [traktCollection] and [traktWatched] are given, uses
+     * [TraktEpisodeSync.storeEpisodeFlags].
+     */
     fun addShow(
         showTmdbId: Int,
         languageCode: String,
