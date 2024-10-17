@@ -39,7 +39,7 @@ class AddShowPopupMenu(
             R.id.menu_action_add_show_add -> {
                 // post so other fragments can display a progress indicator for that show
                 EventBus.getDefault().post(OnAddingShowEvent(show.tmdbId))
-                TaskManager.getInstance().performAddTask(context, show)
+                TaskManager.performAddTask(context, show)
                 true
             }
 

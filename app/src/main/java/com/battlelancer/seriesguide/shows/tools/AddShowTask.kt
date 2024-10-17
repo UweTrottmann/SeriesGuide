@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2011-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.tools
 
@@ -321,7 +321,7 @@ class AddShowTask(
 
     @Deprecated("Deprecated in Java")
     override fun onPostExecute(aVoid: Void?) {
-        TaskManager.getInstance().releaseAddTaskRef()
+        TaskManager.releaseAddTaskRef()
     }
 
     private fun publishProgress(result: Int) {

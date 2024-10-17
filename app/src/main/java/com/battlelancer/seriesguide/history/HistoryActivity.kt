@@ -64,7 +64,7 @@ class HistoryActivity : BaseActivity(), OnAddShowListener {
      * Called if the user adds a show from a trakt stream fragment.
      */
     override fun onAddShow(show: SearchResult) {
-        TaskManager.getInstance().performAddTask(this, show)
+        TaskManager.performAddTask(this, show)
     }
 
     companion object {

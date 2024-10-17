@@ -178,8 +178,10 @@ class TraktAddFragment : Fragment() {
                         }
                     }
                     EventBus.getDefault().post(OnAddingShowEvent())
-                    TaskManager.getInstance()
-                        .performAddTask(context, showsToAdd, false, false)
+                    TaskManager.performAddTask(requireContext(), showsToAdd,
+                        isSilentMode = false,
+                        isMergingShows = false
+                    )
                 }
                 // disable the item so the user has to come back
                 menuItem.isEnabled = false

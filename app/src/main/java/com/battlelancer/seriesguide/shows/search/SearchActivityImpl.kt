@@ -194,7 +194,7 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
     }
 
     override fun onAddShow(show: SearchResult) {
-        TaskManager.getInstance().performAddTask(this, show)
+        TaskManager.performAddTask(this, show)
     }
 
 

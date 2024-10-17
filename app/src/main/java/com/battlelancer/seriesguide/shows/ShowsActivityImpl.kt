@@ -312,7 +312,7 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
         }
 
         // update next episodes
-        TaskManager.getInstance().tryNextEpisodeUpdateTask(this)
+        TaskManager.tryNextEpisodeUpdateTask(this)
     }
 
     override fun onPause() {
@@ -336,7 +336,7 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
      * Called if the user adds a show from a trakt stream fragment.
      */
     override fun onAddShow(show: SearchResult) {
-        TaskManager.getInstance().performAddTask(this, show)
+        TaskManager.performAddTask(this, show)
     }
 
     override val snackbarParentView: View

@@ -45,7 +45,7 @@ open class ItemAddShowClickListener(
 
     override fun onAddClick(item: SearchResult) {
         EventBus.getDefault().post(OnAddingShowEvent(item.tmdbId))
-        TaskManager.getInstance().performAddTask(context, item)
+        TaskManager.performAddTask(context, item)
     }
 
     override fun onMoreOptionsClick(view: View, show: SearchResult) {

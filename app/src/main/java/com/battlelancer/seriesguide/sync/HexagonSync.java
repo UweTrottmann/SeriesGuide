@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2017-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.sync;
 
@@ -156,7 +156,7 @@ public class HexagonSync {
         boolean addNewShows = !newShows.isEmpty();
         if (addNewShows) {
             List<SearchResult> newShowsList = new LinkedList<>(newShows.values());
-            TaskManager.getInstance().performAddTask(context, newShowsList, true, !hasMergedShows);
+            TaskManager.performAddTask(context, newShowsList, true, !hasMergedShows);
         } else if (!hasMergedShows) {
             // set shows as merged
             HexagonSettings.setHasMergedShows(context, true);

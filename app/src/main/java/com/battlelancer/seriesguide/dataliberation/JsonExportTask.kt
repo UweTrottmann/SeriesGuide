@@ -174,7 +174,7 @@ class JsonExportTask(
     }
 
     private fun onPostExecute(result: Int) {
-        TaskManager.getInstance().releaseBackupTaskRef()
+        TaskManager.releaseBackupTaskRef()
 
         if (!isAutoBackupMode) {
             val messageId: Int

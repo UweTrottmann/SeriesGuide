@@ -74,7 +74,7 @@ class ShowsDiscoverPagingActivity : BaseMessageActivity(), AddShowDialogFragment
     }
 
     override fun onAddShow(show: SearchResult) {
-        TaskManager.getInstance().performAddTask(this, show)
+        TaskManager.performAddTask(this, show)
     }
 
     companion object {

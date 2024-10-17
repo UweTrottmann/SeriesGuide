@@ -62,7 +62,7 @@ class ShowsTraktActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddSho
     }
 
     override fun onAddShow(show: SearchResult) {
-        TaskManager.getInstance().performAddTask(this, show)
+        TaskManager.performAddTask(this, show)
     }
 
     companion object {
