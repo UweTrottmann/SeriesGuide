@@ -59,13 +59,8 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         showTmdbId = requireArguments().getInt(ARG_INT_SHOW_TMDBID)
-        val languageCodeOrNull = requireArguments().getString(ARG_STRING_LANGUAGE_CODE)
-        if (languageCodeOrNull.isNullOrEmpty()) {
-            // Use search language.
-            this.languageCode = ShowsSettings.getShowsSearchLanguage(context)
-        } else {
-            this.languageCode = languageCodeOrNull
-        }
+        languageCode = requireArguments().getString(ARG_STRING_LANGUAGE_CODE)
+            ?: throw IllegalArgumentException("Language code must not be null")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -300,32 +295,27 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         private const val ARG_STRING_LANGUAGE_CODE = "language"
 
         /**
-         * Display a [AddShowDialogFragment] for the given show. The language of the show should
-         * be set.
+         * Display an [AddShowDialogFragment] for the given show. The language of the show should
+         * be set, otherwise uses [ShowsSettings.getShowsSearchLanguage].
          */
-        @JvmStatic
-        fun show(fm: FragmentManager, show: SearchResult) {
+        fun show(fm: FragmentManager, showTmdbId: Int, languageCode: String) {
             // Replace any currently showing add dialog (do not add it to the back stack).
             val ft = fm.beginTransaction()
             val prev = fm.findFragmentByTag(TAG)
             if (prev != null) {
                 ft.remove(prev)
             }
-            newInstance(show.tmdbId, show.language).safeShow(fm, ft, TAG)
+            newInstance(showTmdbId, languageCode).safeShow(fm, ft, TAG)
         }
 
         /**
-         * Display a [AddShowDialogFragment] for the given show.
+         * Display an [AddShowDialogFragment] for the given show.
          *
-         * Use if there is no actual search result but just an id available. Uses the search
-         * or fall back language.
+         * Use if there is just an id available. The language code is always
+         * [ShowsSettings.getShowsSearchLanguage].
          */
-        @JvmStatic
-        fun show(fm: FragmentManager, showTmdbId: Int) {
-            val fakeResult = SearchResult().apply {
-                tmdbId = showTmdbId
-            }
-            show(fm, fakeResult)
+        fun show(context: Context, fm: FragmentManager, showTmdbId: Int) {
+            show(fm, showTmdbId, ShowsSettings.getShowsSearchLanguage(context))
         }
 
         private fun newInstance(showTmdbId: Int, languageCode: String?): AddShowDialogFragment {

@@ -311,7 +311,7 @@ class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
             val showTmdbId = TmdbIdExtractor(requireContext(), query).tryToExtract()
             if (showTmdbId > 0) {
                 // found an id, display the add dialog
-                AddShowDialogFragment.show(parentFragmentManager, showTmdbId)
+                AddShowDialogFragment.show(requireContext(), parentFragmentManager, showTmdbId)
             } else {
                 // no id, do a search instead
                 searchEditText.setText(query)

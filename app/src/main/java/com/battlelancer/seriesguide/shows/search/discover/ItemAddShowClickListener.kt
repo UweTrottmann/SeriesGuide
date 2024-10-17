@@ -39,7 +39,7 @@ open class ItemAddShowClickListener(
                 }
             } else {
                 // Display more details in a dialog.
-                AddShowDialogFragment.show(fragmentManager, item)
+                AddShowDialogFragment.show(fragmentManager, item.tmdbId, item.language!!)
             }
         }
     }
