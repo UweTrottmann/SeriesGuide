@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.coroutineScope
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.shows.tools.AddShowTask
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.util.TaskManager
@@ -45,7 +46,9 @@ open class ItemAddShowClickListener(
 
     override fun onAddClick(item: SearchResult) {
         EventBus.getDefault().post(OnAddingShowEvent(item.tmdbId))
-        TaskManager.performAddTask(context, item)
+        TaskManager.performAddTask(
+            context, AddShowTask.Show(item.tmdbId, item.language!!, item.title)
+        )
     }
 
     override fun onMoreOptionsClick(view: View, show: SearchResult) {

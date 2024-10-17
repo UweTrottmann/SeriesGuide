@@ -13,7 +13,6 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings.isEnabled
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
-import com.battlelancer.seriesguide.shows.search.discover.SearchResult
 import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowResult
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync
 import com.battlelancer.seriesguide.traktapi.TraktCredentials.Companion.get
@@ -34,10 +33,20 @@ import java.util.LinkedList
  */
 class AddShowTask(
     context: Context,
-    shows: List<SearchResult>,
+    shows: List<Show>,
     isSilentMode: Boolean,
     isMergingShows: Boolean
 ) : AsyncTask<Void?, String, Void?>() {
+
+    /**
+     * [tmdbId] and [languageCode] are passed to [AddUpdateShowTools.addShow]. The [title] is only
+     * used for notifying the user, so it can be empty if the task is running in silent mode.
+     */
+    data class Show(
+        val tmdbId: Int,
+        val languageCode: String,
+        val title: String
+    )
 
     class OnShowAddedEvent private constructor(
         /**
@@ -98,7 +107,7 @@ class AddShowTask(
 
     @SuppressLint("StaticFieldLeak")
     private val context: Context = context.applicationContext
-    private val addQueue = LinkedList<SearchResult>()
+    private val addQueue = LinkedList<Show>()
 
     private var isFinishedAddingShows = false
     private var isSilentMode: Boolean
@@ -115,7 +124,7 @@ class AddShowTask(
      * is finishing up. Create a new one instead.
      */
     fun addShows(
-        show: List<SearchResult>,
+        shows: List<Show>,
         isSilentMode: Boolean,
         isMergingShows: Boolean
     ): Boolean {
@@ -126,7 +135,7 @@ class AddShowTask(
             this.isSilentMode = isSilentMode
             // never reset isMergingShows once true, so merged flag is correctly set on completion
             this.isMergingShows = this.isMergingShows || isMergingShows
-            addQueue.addAll(show)
+            addQueue.addAll(shows)
             Timber.d("addShows: added shows to queue.")
             return true
         }
@@ -204,8 +213,10 @@ class AddShowTask(
             }
 
             val addResult = showTools.addShow(
-                nextShow.tmdbId, nextShow.language,
-                traktCollection, traktWatched, hexagonEpisodeSync
+                nextShow.tmdbId,
+                nextShow.languageCode,
+                traktCollection, traktWatched,
+                hexagonEpisodeSync
             )
             when (addResult) {
                 ShowResult.SUCCESS -> {

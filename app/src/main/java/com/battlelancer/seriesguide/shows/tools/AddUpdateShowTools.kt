@@ -79,7 +79,7 @@ class AddUpdateShowTools @Inject constructor(
 
     fun addShow(
         showTmdbId: Int,
-        desiredLanguage: String?,
+        languageCode: String,
         traktCollection: Map<Int, BaseShow>?,
         traktWatched: Map<Int, BaseShow>?,
         hexagonEpisodeSync: HexagonEpisodeSync
@@ -89,9 +89,7 @@ class AddUpdateShowTools @Inject constructor(
             return ShowResult.IN_DATABASE
         }
 
-        val language = desiredLanguage ?: LanguageTools.LANGUAGE_EN
-
-        val showDetails = getShowTools.getShowDetails(showTmdbId, language)
+        val showDetails = getShowTools.getShowDetails(showTmdbId, languageCode)
             .getOrElse { return it.toShowResult() }
         val show = showDetails.show!!
 
@@ -160,7 +158,7 @@ class AddUpdateShowTools @Inject constructor(
                     showId,
                     season.number,
                     seasonId,
-                    language,
+                    languageCode,
                     null,
                     null
                 ).getOrElse { return@runInTransaction ShowResult.TMDB_ERROR }
@@ -185,7 +183,7 @@ class AddUpdateShowTools @Inject constructor(
             // updates the language, so the show will be auto-added on other connected devices.
             val cloudShow = SgCloudShow()
             cloudShow.tmdbId = showTmdbId
-            cloudShow.language = language
+            cloudShow.language = languageCode
             cloudShow.isRemoved = false
             // Prevent losing restored properties from a legacy Cloud show (see
             // hexagonTools.get().getShow used above) by always sending them.

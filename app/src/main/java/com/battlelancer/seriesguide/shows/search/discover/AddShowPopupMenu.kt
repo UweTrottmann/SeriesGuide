@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.shows.tools.AddShowTask
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.tasks.AddShowToWatchlistTask
 import com.battlelancer.seriesguide.util.tasks.RemoveShowFromWatchlistTask
@@ -39,7 +40,9 @@ class AddShowPopupMenu(
             R.id.menu_action_add_show_add -> {
                 // post so other fragments can display a progress indicator for that show
                 EventBus.getDefault().post(OnAddingShowEvent(show.tmdbId))
-                TaskManager.performAddTask(context, show)
+                TaskManager.performAddTask(
+                    context, AddShowTask.Show(show.tmdbId, show.language!!, show.title)
+                )
                 true
             }
 

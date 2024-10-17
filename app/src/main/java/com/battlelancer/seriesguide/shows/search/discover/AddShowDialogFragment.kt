@@ -19,6 +19,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.DialogAddshowBinding
 import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsFragment
+import com.battlelancer.seriesguide.shows.tools.AddShowTask
 import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.ui.OverviewActivity
@@ -28,6 +29,7 @@ import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.RatingsTools.initialize
 import com.battlelancer.seriesguide.util.RatingsTools.setRatingValues
 import com.battlelancer.seriesguide.util.ServiceUtils
+import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.ViewTools
@@ -47,12 +49,7 @@ import timber.log.Timber
  */
 class AddShowDialogFragment : AppCompatDialogFragment() {
 
-    interface OnAddShowListener {
-        fun onAddShow(show: SearchResult)
-    }
-
     private var binding: DialogAddshowBinding? = null
-    private lateinit var addShowListener: OnAddShowListener
     private var showTmdbId: Int = 0
     private lateinit var languageCode: String
     private val model by viewModels<AddShowDialogViewModel> {
@@ -61,12 +58,6 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        try {
-            addShowListener = context as OnAddShowListener
-        } catch (e: ClassCastException) {
-            throw ClassCastException("$context must implement OnAddShowListener")
-        }
-
         showTmdbId = requireArguments().getInt(ARG_INT_SHOW_TMDBID)
         val languageCodeOrNull = requireArguments().getString(ARG_STRING_LANGUAGE_CODE)
         if (languageCodeOrNull.isNullOrEmpty()) {
@@ -236,11 +227,10 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
             binding.buttonPositive.setText(R.string.action_shows_add)
             binding.buttonPositive.setOnClickListener {
                 EventBus.getDefault().post(OnAddingShowEvent(showTmdbId))
-                addShowListener.onAddShow(SearchResult().also {
-                    it.tmdbId = showTmdbId
-                    it.title = show.title
-                    it.language = languageCode
-                })
+                TaskManager.performAddTask(
+                    requireContext(),
+                    AddShowTask.Show(showTmdbId, languageCode, show.title)
+                )
                 dismiss()
             }
         }

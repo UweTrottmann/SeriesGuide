@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2023 Uwe Trottmann
+// Copyright 2011-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.util
 
@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.annotation.MainThread
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask
-import com.battlelancer.seriesguide.shows.search.discover.SearchResult
 import com.battlelancer.seriesguide.shows.tools.AddShowTask
 import com.battlelancer.seriesguide.shows.tools.LatestEpisodeUpdateTask
 import kotlinx.coroutines.Job
@@ -27,8 +26,9 @@ object TaskManager {
 
     @MainThread
     @Synchronized
-    fun performAddTask(context: Context, show: SearchResult) =
+    fun performAddTask(context: Context, show: AddShowTask.Show) {
         performAddTask(context, listOf(show), isSilentMode = false, isMergingShows = false)
+    }
 
     /**
      * Schedule shows to be added to the database.
@@ -41,7 +41,7 @@ object TaskManager {
     @Synchronized
     fun performAddTask(
         context: Context,
-        shows: List<SearchResult>,
+        shows: List<AddShowTask.Show>,
         isSilentMode: Boolean,
         isMergingShows: Boolean
     ) {

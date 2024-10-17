@@ -11,14 +11,13 @@ import com.battlelancer.seriesguide.databinding.ActivityTraktShowsBinding
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsActivity
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsFragment
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
-import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.commitReorderingAllowed
 
 /**
  * Hosts [TraktAddFragment] configured by [DiscoverShowsLink].
  */
-class ShowsTraktActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowListener {
+class ShowsTraktActivity : BaseMessageActivity() {
 
     lateinit var binding: ActivityTraktShowsBinding
 
@@ -59,10 +58,6 @@ class ShowsTraktActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddSho
         setupActionBar()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setTitle(link.titleRes)
-    }
-
-    override fun onAddShow(show: SearchResult) {
-        TaskManager.performAddTask(this, show)
     }
 
     companion object {

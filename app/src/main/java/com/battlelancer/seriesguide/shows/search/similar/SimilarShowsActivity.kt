@@ -8,12 +8,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment
-import com.battlelancer.seriesguide.shows.search.discover.SearchResult
 import com.battlelancer.seriesguide.ui.BaseSimilarActivity
-import com.battlelancer.seriesguide.util.TaskManager
 
-class SimilarShowsActivity : BaseSimilarActivity(), AddShowDialogFragment.OnAddShowListener {
+class SimilarShowsActivity : BaseSimilarActivity() {
 
     override val liftOnScrollTargetViewId: Int = SimilarShowsFragment.liftOnScrollTargetViewId
     override val titleStringRes: Int = R.string.title_similar_shows
@@ -27,10 +24,6 @@ class SimilarShowsActivity : BaseSimilarActivity(), AddShowDialogFragment.OnAddS
         SimilarShowsFragment.displaySimilarShowsEventLiveData.observe(this) {
             addFragment(it.tmdbId, it.title, true)
         }
-    }
-
-    override fun onAddShow(show: SearchResult) {
-        TaskManager.performAddTask(this, show)
     }
 
     companion object {

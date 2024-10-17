@@ -14,12 +14,9 @@ import android.view.inputmethod.EditorInfo
 import androidx.viewpager2.widget.ViewPager2
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ActivitySearchBinding
-import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment
-import com.battlelancer.seriesguide.shows.search.discover.SearchResult
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.TabStripAdapter
 import com.battlelancer.seriesguide.util.TabClickEvent
-import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.google.android.gms.actions.SearchIntents
@@ -33,7 +30,7 @@ import org.greenrobot.eventbus.EventBus
  * When [SearchManager.APP_DATA] contains a [EpisodeSearchFragment.ARG_SHOW_TITLE] switches to the
  * episodes tab.
  */
-open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnAddShowListener {
+open class SearchActivityImpl : BaseMessageActivity() {
 
     private lateinit var binding: ActivitySearchBinding
 
@@ -192,11 +189,6 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
         // remove any stored initial queries so they are not used when re-creating
         EventBus.getDefault().removeStickyEvent(SearchQueryEvent::class.java)
     }
-
-    override fun onAddShow(show: SearchResult) {
-        TaskManager.performAddTask(this, show)
-    }
-
 
     override val snackbarParentView: View
         get() = findViewById(R.id.coordinatorLayoutSearch)
