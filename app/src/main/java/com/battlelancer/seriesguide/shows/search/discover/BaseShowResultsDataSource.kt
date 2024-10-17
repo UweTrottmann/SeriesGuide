@@ -58,8 +58,8 @@ abstract class BaseShowResultsDataSource(
                 nextKey = null
             )
         } else {
-            val searchResults = SearchTools.mapTvShowsToSearchResults(languageCode, shows)
-            SearchTools.markLocalShowsAsAddedAndPreferLocalPoster(context, searchResults)
+            val searchResults = TmdbSearchResultMapper(context, languageCode)
+                .mapToSearchResults(shows)
             LoadResult.Page(
                 data = searchResults,
                 prevKey = null, // Only paging forward.

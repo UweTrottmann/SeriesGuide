@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2023-2024 Uwe Trottmann
+// Copyright 2019-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies.similar
 
@@ -119,7 +119,7 @@ class SimilarMoviesFragment : Fragment() {
         private const val ARG_TMDB_ID = "ARG_TMDB_ID"
         private const val ARG_TITLE = "ARG_TITLE"
 
-        fun newInstance(tmdbId: Int, title: String?): SimilarMoviesFragment {
+        fun newInstance(tmdbId: Int, title: String): SimilarMoviesFragment {
             return SimilarMoviesFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_TMDB_ID, tmdbId)

@@ -169,17 +169,26 @@ class TraktAddFragment : Fragment() {
             if (itemId == R.id.menu_add_all) {
                 val searchResults = searchResults
                 if (searchResults != null) {
-                    val showsToAdd = LinkedList<SearchResult>()
+                    val showsToAdd = LinkedList<AddShowTask.Show>()
                     // only include shows not already added
                     for (result in searchResults) {
                         if (result.state == SearchResult.STATE_ADD) {
-                            showsToAdd.add(result)
+                            showsToAdd.add(
+                                AddShowTask.Show(
+                                    result.tmdbId,
+                                    result.languageCode,
+                                    result.title
+                                )
+                            )
                             result.state = SearchResult.STATE_ADDING
                         }
                     }
                     EventBus.getDefault().post(OnAddingShowEvent())
-                    TaskManager.getInstance()
-                        .performAddTask(context, showsToAdd, false, false)
+                    TaskManager.performAddTask(
+                        requireContext(), showsToAdd,
+                        isSilentMode = false,
+                        isMergingShows = false
+                    )
                 }
                 // disable the item so the user has to come back
                 menuItem.isEnabled = false

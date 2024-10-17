@@ -361,7 +361,7 @@ class ShowsHistoryFragment : Fragment() {
                     showDetails(view, episodeRowId)
                 } else if (showTmdbId != null && showTmdbId > 0) {
                     // episode missing: show likely not in database, suggest adding it
-                    AddShowDialogFragment.show(parentFragmentManager, showTmdbId)
+                    AddShowDialogFragment.show(requireContext(), parentFragmentManager, showTmdbId)
                 }
             }
         }

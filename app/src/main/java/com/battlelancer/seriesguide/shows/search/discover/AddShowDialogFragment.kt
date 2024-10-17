@@ -19,6 +19,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.DialogAddshowBinding
 import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsFragment
+import com.battlelancer.seriesguide.shows.tools.AddShowTask
 import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.ui.OverviewActivity
@@ -28,6 +29,7 @@ import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.RatingsTools.initialize
 import com.battlelancer.seriesguide.util.RatingsTools.setRatingValues
 import com.battlelancer.seriesguide.util.ServiceUtils
+import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.ViewTools
@@ -47,12 +49,7 @@ import timber.log.Timber
  */
 class AddShowDialogFragment : AppCompatDialogFragment() {
 
-    interface OnAddShowListener {
-        fun onAddShow(show: SearchResult)
-    }
-
     private var binding: DialogAddshowBinding? = null
-    private lateinit var addShowListener: OnAddShowListener
     private var showTmdbId: Int = 0
     private lateinit var languageCode: String
     private val model by viewModels<AddShowDialogViewModel> {
@@ -61,20 +58,9 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        try {
-            addShowListener = context as OnAddShowListener
-        } catch (e: ClassCastException) {
-            throw ClassCastException("$context must implement OnAddShowListener")
-        }
-
         showTmdbId = requireArguments().getInt(ARG_INT_SHOW_TMDBID)
-        val languageCodeOrNull = requireArguments().getString(ARG_STRING_LANGUAGE_CODE)
-        if (languageCodeOrNull.isNullOrEmpty()) {
-            // Use search language.
-            this.languageCode = ShowsSettings.getShowsSearchLanguage(context)
-        } else {
-            this.languageCode = languageCodeOrNull
-        }
+        languageCode = requireArguments().getString(ARG_STRING_LANGUAGE_CODE)
+            ?: throw IllegalArgumentException("Language code must not be null")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -132,10 +118,12 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
                 val details = model.showDetails.value
                 if (details?.show != null) {
                     dismissAllowingStateLoss()
-                    SimilarShowsFragment.displaySimilarShowsEventLiveData.postValue(SearchResult().also {
-                        it.tmdbId = showTmdbId
-                        it.title = details.show.title
-                    })
+                    SimilarShowsFragment.displaySimilarShowsEventLiveData.postValue(
+                        SimilarShowsFragment.SimilarShowEvent(
+                            tmdbId = showTmdbId,
+                            title = details.show.title
+                        )
+                    )
                 }
             }
         }
@@ -236,11 +224,10 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
             binding.buttonPositive.setText(R.string.action_shows_add)
             binding.buttonPositive.setOnClickListener {
                 EventBus.getDefault().post(OnAddingShowEvent(showTmdbId))
-                addShowListener.onAddShow(SearchResult().also {
-                    it.tmdbId = showTmdbId
-                    it.title = show.title
-                    it.language = languageCode
-                })
+                TaskManager.performAddTask(
+                    requireContext(),
+                    AddShowTask.Show(showTmdbId, languageCode, show.title)
+                )
                 dismiss()
             }
         }
@@ -308,32 +295,27 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         private const val ARG_STRING_LANGUAGE_CODE = "language"
 
         /**
-         * Display a [AddShowDialogFragment] for the given show. The language of the show should
-         * be set.
+         * Display an [AddShowDialogFragment] for the given show. The language of the show should
+         * be set, otherwise uses [ShowsSettings.getShowsSearchLanguage].
          */
-        @JvmStatic
-        fun show(fm: FragmentManager, show: SearchResult) {
+        fun show(fm: FragmentManager, showTmdbId: Int, languageCode: String) {
             // Replace any currently showing add dialog (do not add it to the back stack).
             val ft = fm.beginTransaction()
             val prev = fm.findFragmentByTag(TAG)
             if (prev != null) {
                 ft.remove(prev)
             }
-            newInstance(show.tmdbId, show.language).safeShow(fm, ft, TAG)
+            newInstance(showTmdbId, languageCode).safeShow(fm, ft, TAG)
         }
 
         /**
-         * Display a [AddShowDialogFragment] for the given show.
+         * Display an [AddShowDialogFragment] for the given show.
          *
-         * Use if there is no actual search result but just an id available. Uses the search
-         * or fall back language.
+         * Use if there is just an id available. The language code is always
+         * [ShowsSettings.getShowsSearchLanguage].
          */
-        @JvmStatic
-        fun show(fm: FragmentManager, showTmdbId: Int) {
-            val fakeResult = SearchResult().apply {
-                tmdbId = showTmdbId
-            }
-            show(fm, fakeResult)
+        fun show(context: Context, fm: FragmentManager, showTmdbId: Int) {
+            show(fm, showTmdbId, ShowsSettings.getShowsSearchLanguage(context))
         }
 
         private fun newInstance(showTmdbId: Int, languageCode: String?): AddShowDialogFragment {

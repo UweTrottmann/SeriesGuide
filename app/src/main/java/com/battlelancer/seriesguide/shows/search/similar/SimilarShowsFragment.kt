@@ -18,7 +18,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.shows.search.discover.BaseAddShowsFragment
-import com.battlelancer.seriesguide.shows.search.discover.SearchResult
 import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverPagingActivity
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
@@ -151,6 +150,11 @@ class SimilarShowsFragment : BaseAddShowsFragment() {
         similarShowsViewModel.setStateForTmdbId(showTmdbId, newState)
     }
 
+    data class SimilarShowEvent(
+        val tmdbId: Int,
+        val title: String
+    )
+
     companion object {
         val liftOnScrollTargetViewId = R.id.recyclerViewShowsSimilar
 
@@ -159,9 +163,9 @@ class SimilarShowsFragment : BaseAddShowsFragment() {
         private const val MENU_ITEM_SEARCH_ID = 1
 
         @JvmStatic
-        val displaySimilarShowsEventLiveData = SingleLiveEvent<SearchResult>()
+        val displaySimilarShowsEventLiveData = SingleLiveEvent<SimilarShowEvent>()
 
-        fun newInstance(showTmdbId: Int, showTitle: String?): SimilarShowsFragment {
+        fun newInstance(showTmdbId: Int, showTitle: String): SimilarShowsFragment {
             return SimilarShowsFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_SHOW_TMDB_ID, showTmdbId)
