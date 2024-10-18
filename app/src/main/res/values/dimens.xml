@@ -61,7 +61,7 @@
     <dimen name="movie_poster_width">@dimen/movie_poster_width_default</dimen>
     <dimen name="movie_poster_height">@dimen/movie_poster_height_default</dimen>
     <!-- The minimum width the item_movie layout should get in a grid view -->
-    <dimen name="movie_grid_columnWidth">@dimen/movie_grid_column_width_default</dimen>
+    <dimen name="movie_grid_column_width">@dimen/movie_grid_column_width_default</dimen>
     <!-- movie_poster_width_default + 2 * grid_item_margin_horizontal -->
     <dimen name="movie_grid_column_width_default">107dp</dimen>
     <!-- movie_poster_width_large + 2 * grid_item_margin_horizontal -->

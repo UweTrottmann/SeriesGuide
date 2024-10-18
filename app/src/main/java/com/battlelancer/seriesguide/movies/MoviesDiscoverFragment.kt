@@ -66,7 +66,7 @@ class MoviesDiscoverFragment : Fragment() {
 
         val layoutManager = AutoGridLayoutManager(
             context,
-            R.dimen.movie_grid_columnWidth, 2, 6
+            R.dimen.movie_grid_column_width, 2, 6
         )
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {

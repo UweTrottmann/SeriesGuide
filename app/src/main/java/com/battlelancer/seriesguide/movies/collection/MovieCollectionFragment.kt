@@ -73,7 +73,7 @@ class MovieCollectionFragment : Fragment() {
         binding.recyclerViewShowsSimilar.also {
             it.setHasFixedSize(true)
             it.layoutManager =
-                AutoGridLayoutManager(it.context, R.dimen.movie_grid_columnWidth, 1, 1)
+                AutoGridLayoutManager(it.context, R.dimen.movie_grid_column_width, 1, 1)
             it.adapter = adapter
         }
 

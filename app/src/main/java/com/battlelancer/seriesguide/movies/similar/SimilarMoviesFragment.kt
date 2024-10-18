@@ -85,7 +85,7 @@ class SimilarMoviesFragment : Fragment() {
             layoutManager =
                 AutoGridLayoutManager(
                     context,
-                    R.dimen.movie_grid_columnWidth,
+                    R.dimen.movie_grid_column_width,
                     1,
                     1
                 )
