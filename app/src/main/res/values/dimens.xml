@@ -52,6 +52,7 @@
     <!-- Person images -->
     <dimen name="person_headshot_size">40dp</dimen>
 
+    <!-- Movies -->
     <!-- Movie posters, 2:3 aspect ratio, though using 66% here to fit percent layouts -->
     <dimen name="movie_poster_width_default">99dp</dimen>
     <dimen name="movie_poster_height_default">150dp</dimen>
@@ -59,9 +60,12 @@
     <dimen name="movie_poster_height_large">200dp</dimen>
     <dimen name="movie_poster_width">@dimen/movie_poster_width_default</dimen>
     <dimen name="movie_poster_height">@dimen/movie_poster_height_default</dimen>
-
-    <!-- Movies -->
-    <dimen name="movie_grid_columnWidth">@dimen/movie_poster_width</dimen>
+    <!-- The minimum width the item_movie layout should get in a grid view -->
+    <dimen name="movie_grid_columnWidth">@dimen/movie_grid_column_width_default</dimen>
+    <!-- movie_poster_width_default + 2 * grid_item_margin_horizontal -->
+    <dimen name="movie_grid_column_width_default">107dp</dimen>
+    <!-- movie_poster_width_large + 2 * grid_item_margin_horizontal -->
+    <dimen name="movie_grid_column_width_large">140dp</dimen>
 
     <!-- Inline buttons -->
     <dimen name="buttons_min_height">64dp</dimen>

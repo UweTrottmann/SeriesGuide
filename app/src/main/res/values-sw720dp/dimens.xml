@@ -8,5 +8,6 @@
 
     <dimen name="movie_poster_width">@dimen/movie_poster_width_large</dimen>
     <dimen name="movie_poster_height">@dimen/movie_poster_height_large</dimen>
+    <dimen name="movie_grid_columnWidth">@dimen/movie_grid_column_width_large</dimen>
 
 </resources>
