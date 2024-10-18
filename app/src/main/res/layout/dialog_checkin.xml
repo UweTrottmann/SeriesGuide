@@ -84,7 +84,7 @@
             android:layout_marginLeft="@dimen/default_padding"
             android:layout_marginRight="@dimen/default_padding"
             android:contentDescription="@null"
-            android:src="@drawable/ic_trakt_icon_red" />
+            android:src="@drawable/ic_trakt_control_24dp" />
 
         <Button
             android:id="@+id/buttonCheckIn"

@@ -180,7 +180,7 @@ class ShowsDiscoverAdapter(
             if (link != DiscoverShowsLink.POPULAR) {
                 ViewTools.setVectorDrawableLeft(
                     binding.textViewDiscoverLink,
-                    R.drawable.ic_trakt_icon_primary_24dp
+                    R.drawable.ic_trakt_primary_24dp
                 )
             } else {
                 binding.textViewDiscoverLink.setCompoundDrawables(null, null, null, null)

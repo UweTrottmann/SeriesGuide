@@ -56,7 +56,7 @@ open class ShowsHistoryAdapter(
             if (showTraktLogo) {
                 ViewTools.setVectorDrawableLeft(
                     textViewGridHeader,
-                    R.drawable.ic_trakt_icon_primary_20dp
+                    R.drawable.ic_trakt_primary_20dp
                 )
             } else {
                 textViewGridHeader.setCompoundDrawables(null, null, null, null)

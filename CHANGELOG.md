@@ -10,6 +10,10 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2024.4
 
+### Unreleased
+
+* 🔧 Trakt: use new logo.
+
 ### 2024.4.4 - 2024-10-16 🧪
 
 * 🔧 Episodes: in list view, can again set watched with one tap.

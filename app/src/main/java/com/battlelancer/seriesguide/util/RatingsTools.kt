@@ -34,7 +34,7 @@ object RatingsTools {
             }
             ratingViewTrakt.apply {
                 setRange(it)
-                setIcon(R.drawable.ic_trakt_icon_control, R.string.trakt)
+                setIcon(R.drawable.ic_trakt_control_24dp, R.string.trakt)
             }
         }
 
