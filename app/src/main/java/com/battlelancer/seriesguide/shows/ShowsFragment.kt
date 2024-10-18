@@ -96,7 +96,7 @@ class ShowsFragment : Fragment() {
         val layoutManager =
             AutoGridLayoutManager(
                 context,
-                R.dimen.showgrid_columnWidth, 1, 1
+                R.dimen.show_grid_column_width, 1, 1
             )
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {

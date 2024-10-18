@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground"
     android:clipToPadding="false"
-    android:focusable="true">
+    android:focusable="true"
+    tools:layout_width="@dimen/show_grid_column_width_large">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardViewItemShowListPoster"

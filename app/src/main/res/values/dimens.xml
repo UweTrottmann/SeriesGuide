@@ -21,7 +21,9 @@
     <dimen name="widget_padding_text_top">2dp</dimen>
 
     <!-- Grids -->
-    <dimen name="showgrid_columnWidth">275dp</dimen>
+    <dimen name="show_grid_column_width">@dimen/show_grid_column_width_default</dimen>
+    <dimen name="show_grid_column_width_default">275dp</dimen>
+    <dimen name="show_grid_column_width_large">330dp</dimen>
     <integer name="grid_column_count">1</integer>
     <dimen name="grid_topbottom_padding">8dp</dimen>
     <dimen name="grid_leftright_padding">8dp</dimen>

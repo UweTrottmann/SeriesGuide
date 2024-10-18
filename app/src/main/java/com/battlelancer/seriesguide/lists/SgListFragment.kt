@@ -67,7 +67,7 @@ class SgListFragment : Fragment() {
             it.setHasFixedSize(true)
             it.layoutManager =
                 AutoGridLayoutManager(
-                    requireContext(), R.dimen.showgrid_columnWidth, 1, 1
+                    requireContext(), R.dimen.show_grid_column_width, 1, 1
                 )
             it.adapter = adapter
         }
