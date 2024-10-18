@@ -33,7 +33,7 @@ class ShowsDiscoverAdapter(
     private val links: MutableList<DiscoverShowsLink> = mutableListOf()
 
     val layoutManager = AutoGridLayoutManager(
-        context, R.dimen.showgrid_columnWidth,
+        context, R.dimen.show_grid_column_width,
         2, 2
     ).apply {
         spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {

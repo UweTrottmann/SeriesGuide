@@ -83,7 +83,7 @@ class SimilarShowsFragment : BaseAddShowsFragment() {
             layoutManager =
                 AutoGridLayoutManager(
                     context,
-                    R.dimen.showgrid_columnWidth,
+                    R.dimen.show_grid_column_width,
                     1,
                     1
                 )

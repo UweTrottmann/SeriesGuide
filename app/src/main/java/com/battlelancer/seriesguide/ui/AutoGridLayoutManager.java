@@ -9,7 +9,6 @@ import androidx.annotation.DimenRes;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.battlelancer.seriesguide.R;
 
 public class AutoGridLayoutManager extends GridLayoutManager {
 
@@ -24,33 +23,32 @@ public class AutoGridLayoutManager extends GridLayoutManager {
     private boolean columnWidthChanged;
 
     /**
-     * @param itemWidthRes Expected width of item to use to calculate span count.
+     * @param columnWidthRes Expected width of column to use to calculate span count.
      * @param itemSpanSize Span size of item to use to calculate span count.
      * @param minSpanCount Grid will have at least this many spans.
      */
-    public AutoGridLayoutManager(Context context, @DimenRes int itemWidthRes, int itemSpanSize,
+    public AutoGridLayoutManager(Context context, @DimenRes int columnWidthRes, int itemSpanSize,
             int minSpanCount) {
-        this(context, itemWidthRes, itemSpanSize, minSpanCount, null);
+        this(context, columnWidthRes, itemSpanSize, minSpanCount, null);
     }
 
     /**
-     * @param itemWidthRes Expected width of item to use to calculate span count.
+     * @param columnWidthRes Expected width of column to use to calculate span count.
      * @param itemSpanSize Span size of item to use to calculate span count.
      * @param minSpanCount Grid will have at least this many spans.
      * @param spanCountListener Called once the span count has been determined.
      */
-    public AutoGridLayoutManager(Context context, @DimenRes int itemWidthRes, int itemSpanSize,
+    public AutoGridLayoutManager(Context context, @DimenRes int columnWidthRes, int itemSpanSize,
             int minSpanCount, @Nullable SpanCountListener spanCountListener) {
         super(context, minSpanCount);
         this.spanCountListener = spanCountListener;
 
         Resources resources = context.getResources();
-        int itemWidth = resources.getDimensionPixelSize(itemWidthRes);
-        if (itemWidth < 1) {
+        int columnWidth = resources.getDimensionPixelSize(columnWidthRes);
+        if (columnWidth < 1) {
             throw new IllegalArgumentException("Item width should be 1 or bigger.");
         }
-        int itemMargin = resources.getDimensionPixelSize(R.dimen.grid_item_margin_horizontal);
-        this.columnWidth = itemWidth + 2 * itemMargin;
+        this.columnWidth = columnWidth;
         columnWidthChanged = true;
 
         if (itemSpanSize < 1) {
