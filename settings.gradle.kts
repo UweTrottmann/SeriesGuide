@@ -24,6 +24,7 @@ dependencyResolutionManagement {
         mavenCentral()
         // For debugdrawer.
         maven { url = uri("https://jitpack.io") }
+        mavenLocal() // FIXME
     }
 }
 

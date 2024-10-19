@@ -1,11 +1,10 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.traktapi
 
 import android.content.Context
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowResult
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.isRetryError
 import com.github.michaelbull.result.Err
@@ -14,20 +13,73 @@ import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.andThen
 import com.github.michaelbull.result.mapError
 import com.github.michaelbull.result.runCatching
+import com.uwetrottmann.trakt5.TraktV2
+import com.uwetrottmann.trakt5.entities.AddNoteRequest
 import com.uwetrottmann.trakt5.entities.BaseShow
-import com.uwetrottmann.trakt5.entities.LastActivities
 import com.uwetrottmann.trakt5.entities.LastActivity
 import com.uwetrottmann.trakt5.entities.LastActivityMore
+import com.uwetrottmann.trakt5.entities.LastActivityUpdated
+import com.uwetrottmann.trakt5.entities.Note
 import com.uwetrottmann.trakt5.entities.Ratings
 import com.uwetrottmann.trakt5.entities.Show
+import com.uwetrottmann.trakt5.entities.ShowIds
 import com.uwetrottmann.trakt5.enums.Extended
 import com.uwetrottmann.trakt5.enums.IdType
 import com.uwetrottmann.trakt5.enums.Type
+import retrofit2.Call
 import retrofit2.Response
+import retrofit2.awaitResponse
 
 object TraktTools2 {
 
-    data class SearchResult(val result: ShowResult, val show: Show?)
+    sealed class TraktResponse<T> {
+        data class Success<T>(val data: T) : TraktResponse<T>()
+        class IsNotVip<T> : TraktResponse<T>()
+        class IsUnauthorized<T> : TraktResponse<T>()
+        class Error<T> : TraktResponse<T>()
+    }
+
+    /**
+     * Adds or updates the note for the given show.
+     */
+    suspend fun saveNoteForShow(
+        trakt: SgTrakt,
+        showTmdbId: Int,
+        noteText: String
+    ): TraktResponse<Note> {
+        return awaitTraktCall(trakt.notes().addNote(
+            AddNoteRequest(
+                Show().apply {
+                    ids = ShowIds.tmdb(showTmdbId)
+                },
+                noteText
+            )
+        ), "update note")
+    }
+
+    suspend fun deleteNote(
+        trakt: SgTrakt,
+        noteId: Long
+    ): TraktResponse<Void> {
+        return awaitTraktCall(trakt.notes().deleteNote(noteId), "delete note")
+    }
+
+    private suspend fun <T> awaitTraktCall(call: Call<T>, action: String): TraktResponse<T> {
+        try {
+            val response = call.awaitResponse()
+            if (response.isSuccessful) {
+                response.body()
+                    ?.let { return TraktResponse.Success(it) }
+            } else {
+                if (TraktV2.isNotVip(response)) return TraktResponse.IsNotVip()
+                if (TraktV2.isUnauthorized(response)) return TraktResponse.IsUnauthorized()
+                Errors.logAndReport(action, response)
+            }
+        } catch (e: Exception) {
+            Errors.logAndReport(action, e)
+        }
+        return TraktResponse.Error()
+    }
 
     /**
      * Look up a show by its TMDB ID, may return `null` if not found.
@@ -140,6 +192,7 @@ object TraktTools2 {
         val episodes: LastActivityMore,
         val shows: LastActivity,
         val movies: LastActivityMore,
+        val notes: LastActivityUpdated,
     )
 
     fun getLastActivity(context: Context): Result<LastActivities, TraktError> {
@@ -157,12 +210,14 @@ object TraktTools2 {
                 val episodes = lastActivities?.episodes
                 val shows = lastActivities?.shows
                 val movies = lastActivities?.movies
-                if (episodes != null && shows != null && movies != null) {
+                val notes = lastActivities?.notes
+                if (episodes != null && shows != null && movies != null && notes != null) {
                     return@andThen Ok(
                         LastActivities(
                             episodes = episodes,
                             shows = shows,
-                            movies = movies
+                            movies = movies,
+                            notes = notes
                         )
                     )
                 } else {

@@ -10,7 +10,6 @@ import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.traktapi.SgTrakt
-import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktSettings
 import com.battlelancer.seriesguide.util.DBUtils
 import com.battlelancer.seriesguide.util.Errors
@@ -46,10 +45,6 @@ class TraktRatingsSync(
             // not initial sync, no ratings have changed
             Timber.d("downloadForShows: no changes since %tF %tT", lastRatedAt, lastRatedAt)
             return true
-        }
-
-        if (!TraktCredentials.get(context).hasCredentials()) {
-            return false
         }
 
         // download rated shows
@@ -133,10 +128,6 @@ class TraktRatingsSync(
             return true
         }
 
-        if (!TraktCredentials.get(context).hasCredentials()) {
-            return false
-        }
-
         // download rated episodes
         val ratedEpisodes: List<RatedEpisode>?
         try {
@@ -215,10 +206,6 @@ class TraktRatingsSync(
             // not initial sync, no ratings have changed
             Timber.d("downloadForMovies: no changes since %tF %tT", lastRatedAt, lastRatedAt)
             return true
-        }
-
-        if (!TraktCredentials.get(context).hasCredentials()) {
-            return false
         }
 
         // download rated shows
