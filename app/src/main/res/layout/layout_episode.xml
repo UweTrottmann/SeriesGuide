@@ -83,6 +83,21 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/textViewEpisodeDetailsHidden"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/default_padding"
+                android:gravity="center_horizontal"
+                android:padding="@dimen/large_padding"
+                android:text="@string/no_spoilers"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Dim"
+                app:drawableTopCompat="@drawable/ic_visibility_off_black_24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>

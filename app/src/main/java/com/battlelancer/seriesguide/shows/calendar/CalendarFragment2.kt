@@ -11,10 +11,9 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.PopupMenu
 import android.widget.TextView
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.edit
-import androidx.core.view.MenuProvider
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -36,6 +35,7 @@ import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.SearchActivity
+import com.battlelancer.seriesguide.ui.menus.ManualSyncMenu
 import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
 import com.battlelancer.seriesguide.util.Utils
 import kotlinx.coroutines.delay
@@ -69,7 +69,7 @@ abstract class CalendarFragment2 : Fragment() {
         val layoutManager =
             AutoGridLayoutManager(
                 context,
-                R.dimen.showgrid_columnWidth, 1, 1,
+                R.dimen.show_grid_column_width, 1, 1,
                 adapter
             )
 
@@ -138,65 +138,69 @@ abstract class CalendarFragment2 : Fragment() {
             .unregisterOnSharedPreferenceChangeListener(prefChangeListener)
     }
 
-    private val optionsMenuProvider = object : MenuProvider {
-        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-            menuInflater.inflate(R.menu.calendar_menu, menu)
+    private val optionsMenuProvider by lazy {
+        object : ManualSyncMenu(requireContext(), R.menu.calendar_menu) {
 
-            // set menu items to current values
-            val context = requireContext()
-            menu.findItem(R.id.menu_action_calendar_onlyfavorites).isChecked =
-                CalendarSettings.isOnlyFavorites(context)
-            menu.findItem(R.id.menu_action_calendar_onlypremieres).isChecked =
-                CalendarSettings.isOnlyPremieres(context)
-            menu.findItem(R.id.menu_action_calendar_onlycollected).isChecked =
-                CalendarSettings.isOnlyCollected(context)
-            menu.findItem(R.id.menu_action_calendar_nospecials).isChecked =
-                DisplaySettings.isHidingSpecials(context)
-            menu.findItem(R.id.menu_action_calendar_nowatched).isChecked =
-                CalendarSettings.isHidingWatchedEpisodes(context)
-            menu.findItem(R.id.menu_action_calendar_infinite).isChecked =
-                CalendarSettings.isInfiniteScrolling(context)
-        }
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                super.onCreateMenu(menu, menuInflater)
 
-        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-            return when (menuItem.itemId) {
-                R.id.menu_action_calendar_search -> {
-                    startActivity(Intent(requireContext(), SearchActivity::class.java))
-                    true
-                }
-
-                R.id.menu_action_calendar_onlyfavorites -> {
-                    toggleFilterSetting(menuItem, CalendarSettings.KEY_ONLY_FAVORITE_SHOWS)
-                    true
-                }
-
-                R.id.menu_action_calendar_onlypremieres -> {
-                    toggleFilterSetting(menuItem, CalendarSettings.KEY_ONLY_PREMIERES)
-                    true
-                }
-
-                R.id.menu_action_calendar_onlycollected -> {
-                    toggleFilterSetting(menuItem, CalendarSettings.KEY_ONLY_COLLECTED)
-                    true
-                }
-
-                R.id.menu_action_calendar_nospecials -> {
-                    toggleFilterSetting(menuItem, DisplaySettings.KEY_HIDE_SPECIALS)
-                    true
-                }
-
-                R.id.menu_action_calendar_nowatched -> {
-                    toggleFilterSetting(menuItem, CalendarSettings.KEY_HIDE_WATCHED_EPISODES)
-                    true
-                }
-
-                R.id.menu_action_calendar_infinite -> {
-                    toggleFilterSetting(menuItem, CalendarSettings.KEY_INFINITE_SCROLLING_2)
-                    true
-                }
-
-                else -> false
+                // set menu items to current values
+                val context = requireContext()
+                menu.findItem(R.id.menu_action_calendar_onlyfavorites).isChecked =
+                    CalendarSettings.isOnlyFavorites(context)
+                menu.findItem(R.id.menu_action_calendar_onlypremieres).isChecked =
+                    CalendarSettings.isOnlyPremieres(context)
+                menu.findItem(R.id.menu_action_calendar_onlycollected).isChecked =
+                    CalendarSettings.isOnlyCollected(context)
+                menu.findItem(R.id.menu_action_calendar_nospecials).isChecked =
+                    DisplaySettings.isHidingSpecials(context)
+                menu.findItem(R.id.menu_action_calendar_nowatched).isChecked =
+                    CalendarSettings.isHidingWatchedEpisodes(context)
+                menu.findItem(R.id.menu_action_calendar_infinite).isChecked =
+                    CalendarSettings.isInfiniteScrolling(context)
             }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.menu_action_calendar_search -> {
+                        startActivity(Intent(requireContext(), SearchActivity::class.java))
+                        true
+                    }
+
+                    R.id.menu_action_calendar_onlyfavorites -> {
+                        toggleFilterSetting(menuItem, CalendarSettings.KEY_ONLY_FAVORITE_SHOWS)
+                        true
+                    }
+
+                    R.id.menu_action_calendar_onlypremieres -> {
+                        toggleFilterSetting(menuItem, CalendarSettings.KEY_ONLY_PREMIERES)
+                        true
+                    }
+
+                    R.id.menu_action_calendar_onlycollected -> {
+                        toggleFilterSetting(menuItem, CalendarSettings.KEY_ONLY_COLLECTED)
+                        true
+                    }
+
+                    R.id.menu_action_calendar_nospecials -> {
+                        toggleFilterSetting(menuItem, DisplaySettings.KEY_HIDE_SPECIALS)
+                        true
+                    }
+
+                    R.id.menu_action_calendar_nowatched -> {
+                        toggleFilterSetting(menuItem, CalendarSettings.KEY_HIDE_WATCHED_EPISODES)
+                        true
+                    }
+
+                    R.id.menu_action_calendar_infinite -> {
+                        toggleFilterSetting(menuItem, CalendarSettings.KEY_INFINITE_SCROLLING_2)
+                        true
+                    }
+
+                    else -> super.onMenuItemSelected(menuItem)
+                }
+            }
+
         }
     }
 
@@ -230,7 +234,7 @@ abstract class CalendarFragment2 : Fragment() {
             Utils.startActivityWithAnimation(activity, intent, view)
         }
 
-        override fun onItemLongClick(anchor: View, episode: SgEpisode2WithShow) {
+        override fun onMoreOptionsClick(anchor: View, episode: SgEpisode2WithShow) {
             val context = anchor.context
 
             val popupMenu = PopupMenu(context, anchor)
@@ -290,18 +294,20 @@ abstract class CalendarFragment2 : Fragment() {
             popupMenu.show()
         }
 
-        override fun onItemWatchBoxClick(episode: SgEpisode2WithShow, isWatched: Boolean) {
+        override fun onWatchedBoxClick(episode: SgEpisode2WithShow, isWatched: Boolean) {
             updateEpisodeWatchedState(episode.id, !isWatched)
         }
     }
 
     private fun updateEpisodeCollectionState(episodeId: Long, addToCollection: Boolean) {
-        EpisodeTools.episodeCollected(context, episodeId, addToCollection)
+        EpisodeTools.episodeCollected(requireContext(), episodeId, addToCollection)
     }
 
     private fun updateEpisodeWatchedState(episodeId: Long, isWatched: Boolean) {
         EpisodeTools.episodeWatched(
-            context, episodeId, if (isWatched) EpisodeFlags.WATCHED else EpisodeFlags.UNWATCHED
+            requireContext(),
+            episodeId,
+            if (isWatched) EpisodeFlags.WATCHED else EpisodeFlags.UNWATCHED
         )
     }
 

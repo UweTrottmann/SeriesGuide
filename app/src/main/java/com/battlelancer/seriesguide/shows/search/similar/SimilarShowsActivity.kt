@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.search.similar
 
@@ -8,16 +8,13 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment
-import com.battlelancer.seriesguide.shows.search.discover.SearchResult
 import com.battlelancer.seriesguide.ui.BaseSimilarActivity
-import com.battlelancer.seriesguide.util.TaskManager
 
-class SimilarShowsActivity : BaseSimilarActivity(), AddShowDialogFragment.OnAddShowListener {
+class SimilarShowsActivity : BaseSimilarActivity() {
 
     override val liftOnScrollTargetViewId: Int = SimilarShowsFragment.liftOnScrollTargetViewId
     override val titleStringRes: Int = R.string.title_similar_shows
-    override fun createFragment(tmdbId: Int, title: String?): Fragment =
+    override fun createFragment(tmdbId: Int, title: String): Fragment =
         SimilarShowsFragment.newInstance(tmdbId, title)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,12 +26,8 @@ class SimilarShowsActivity : BaseSimilarActivity(), AddShowDialogFragment.OnAddS
         }
     }
 
-    override fun onAddShow(show: SearchResult) {
-        TaskManager.getInstance().performAddTask(this, show)
-    }
-
     companion object {
-        fun intent(context: Context, showTmdbId: Int, showTitle: String?): Intent {
+        fun intent(context: Context, showTmdbId: Int, showTitle: String): Intent {
             return Intent(context, SimilarShowsActivity::class.java)
                 .putExtras(showTmdbId, showTitle)
         }

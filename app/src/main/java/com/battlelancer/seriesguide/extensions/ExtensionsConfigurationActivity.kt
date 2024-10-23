@@ -8,6 +8,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.api.SeriesGuideExtension
 import com.battlelancer.seriesguide.ui.BaseActivity
 import com.battlelancer.seriesguide.ui.SinglePaneActivity
+import com.battlelancer.seriesguide.util.commitReorderingAllowed
 
 /**
  * Just hosting a [com.battlelancer.seriesguide.extensions.ExtensionsConfigurationFragment].
@@ -32,9 +33,9 @@ class ExtensionsConfigurationActivity : BaseActivity() {
             } else {
                 ExtensionsConfigurationFragment()
             }
-            supportFragmentManager.beginTransaction()
-                .add(R.id.content_frame, f)
-                .commit()
+            supportFragmentManager.commitReorderingAllowed {
+                add(R.id.content_frame, f)
+            }
         }
     }
 

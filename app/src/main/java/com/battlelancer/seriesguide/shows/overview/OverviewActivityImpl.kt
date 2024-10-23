@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2022-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.overview
 
@@ -11,6 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
@@ -27,6 +28,7 @@ import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.TabStripAdapter
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
+import com.battlelancer.seriesguide.util.commitReorderingAllowed
 import com.google.android.material.appbar.AppBarLayout
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
 import kotlinx.coroutines.Dispatchers
@@ -133,7 +135,9 @@ open class OverviewActivityImpl : BaseMessageActivity() {
             // clear up left-over fragments from single-pane layout
             val isSwitchingLayouts = activeFragments.size != 0
             for (fragment in activeFragments) {
-                supportFragmentManager.beginTransaction().remove(fragment).commit()
+                supportFragmentManager.commitReorderingAllowed {
+                    remove(fragment)
+                }
             }
 
             // attach new fragments if there are none or if layouts just switched
@@ -144,23 +148,14 @@ open class OverviewActivityImpl : BaseMessageActivity() {
     }
 
     private fun setupPanes() {
-        val showsFragment: Fragment = ShowFragment(showId)
-        val ft1 = supportFragmentManager.beginTransaction()
-        ft1.setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
-        ft1.replace(R.id.fragment_show, showsFragment)
-        ft1.commit()
-
-        val overviewFragment: Fragment = OverviewFragment(showId)
-        val ft2 = supportFragmentManager.beginTransaction()
-        ft2.setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
-        ft2.replace(R.id.fragment_overview, overviewFragment)
-        ft2.commit()
-
-        val seasonsFragment: Fragment = SeasonsFragment(showId)
-        val ft3 = supportFragmentManager.beginTransaction()
-        ft3.setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
-        ft3.replace(R.id.fragment_seasons, seasonsFragment)
-        ft3.commit()
+        supportFragmentManager.commitReorderingAllowed {
+            setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+            replace(R.id.fragment_show, ShowFragment(showId))
+            setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+            replace(R.id.fragment_overview, OverviewFragment(showId))
+            setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+            replace(R.id.fragment_seasons, SeasonsFragment(showId))
+        }
     }
 
     private fun setupViewPager(isNotRestoringState: Boolean) {
@@ -221,7 +216,9 @@ open class OverviewActivityImpl : BaseMessageActivity() {
     private fun findAndRemoveFragment(fragmentId: Int) {
         val overviewFragment = supportFragmentManager.findFragmentById(fragmentId)
         if (overviewFragment != null) {
-            supportFragmentManager.beginTransaction().remove(overviewFragment).commit()
+            supportFragmentManager.commitReorderingAllowed {
+                remove(overviewFragment)
+            }
         }
     }
 
@@ -230,16 +227,16 @@ open class OverviewActivityImpl : BaseMessageActivity() {
     @Deprecated("Deprecated in Java")
     override fun onAttachFragment(fragment: Fragment) {
         /*
-         * View pager fragments have tags set by the pager, we can use this to
-         * only add refs to those then, making them available to get removed if
-         * we switch to a non-pager layout.
+         * View pager fragments have tags set by the pager. Note that DialogFragments have, too.
+         * Use this to only add refs to View pager fragments then, making them available to get
+         * removed if switching to a non-pager layout.
          */
-        if (fragment.tag != null) {
+        if (fragment.tag != null && fragment !is DialogFragment) {
             fragments.add(WeakReference(fragment))
         }
     }
 
-    val activeFragments: ArrayList<Fragment>
+    private val activeFragments: ArrayList<Fragment>
         get() {
             val ret = ArrayList<Fragment>()
             for (ref in fragments) {

@@ -7,6 +7,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.TooltipCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.DiffUtil
@@ -17,6 +18,7 @@ import com.battlelancer.seriesguide.databinding.ItemSeasonBinding
 import com.battlelancer.seriesguide.shows.database.SgSeason2
 import com.battlelancer.seriesguide.shows.overview.SeasonsViewModel.SgSeasonWithStats
 import com.battlelancer.seriesguide.util.TextTools
+import com.battlelancer.seriesguide.util.ViewTools.setContextAndLongClickListener
 import com.uwetrottmann.androidutils.AndroidUtils
 
 /**
@@ -29,12 +31,12 @@ class SeasonsAdapter(
 
     interface ItemClickListener {
         fun onItemClick(v: View, seasonRowId: Long)
-        fun onPopupMenuClick(v: View, seasonRowId: Long)
+        fun onMoreOptionsClick(v: View, seasonRowId: Long)
     }
 
     class ViewHolder(
         private val binding: ItemSeasonBinding,
-        itemClickListener: ItemClickListener
+        private val itemClickListener: ItemClickListener
     ) : RecyclerView.ViewHolder(binding.root) {
 
         private val isRtlLayout = AndroidUtils.isRtlLayout
@@ -46,10 +48,20 @@ class SeasonsAdapter(
                     itemClickListener.onItemClick(view, it.id)
                 }
             }
-            binding.imageViewContextMenu.setOnClickListener { view ->
-                season?.also {
-                    itemClickListener.onPopupMenuClick(view, it.id)
+            itemView.setContextAndLongClickListener {
+                onMoreOptionsClick()
+            }
+            binding.imageViewSeasonMoreOptions.also {
+                TooltipCompat.setTooltipText(it, it.contentDescription)
+                it.setOnClickListener {
+                    onMoreOptionsClick()
                 }
+            }
+        }
+
+        private fun onMoreOptionsClick() {
+            season?.also {
+                itemClickListener.onMoreOptionsClick(binding.imageViewSeasonMoreOptions, it.id)
             }
         }
 

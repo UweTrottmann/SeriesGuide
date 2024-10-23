@@ -34,9 +34,23 @@ private val onLongClickListener = View.OnLongClickListener {
     return@OnLongClickListener it is TextView && copyTextToClipboard(it.context, it.text)
 }
 
+// Use lazy to avoid crashing on older Android versions where OnContextClickListener is not available
+private val onContextClickListener by lazy {
+    View.OnContextClickListener {
+        return@OnContextClickListener it is TextView && copyTextToClipboard(it.context, it.text)
+    }
+}
+
+/**
+ * Sets a long click listener and on Android 6 or newer a context click listener that enables
+ * right clicks with a mouse.
+ */
 fun TextView.copyTextToClipboardOnLongClick() {
-    // globally shared click listener instance
+    // globally shared click listener instances
     setOnLongClickListener(onLongClickListener)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        setOnContextClickListener(onContextClickListener)
+    }
 }
 
 fun View.copyTextToClipboardOnLongClick(text: CharSequence) {

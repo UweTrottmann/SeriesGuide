@@ -37,7 +37,7 @@
     <string name="sync_and_update">동기화하고 업데이트</string>
     <string name="sync_and_download_all">동기화하고 모두 다운로드</string>
     <string name="action_stream">스트리밍 or 구매</string>
-    <string name="action_stream_info">스트리밍 또 구매</string>
+    <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">국가 선택</string>
     <string name="action_reset">재설정</string>
     <!-- Search -->
@@ -471,6 +471,7 @@
     <string name="pref_notifications">알림</string>
     <string name="pref_notificationssummary">새로운 에피소드를 알려줍니다.</string>
     <string name="pref_notifications_settings">Notification settings</string>
+    <string name="pref_notifications_settings_summary">Configure if and how notifications appear</string>
     <string name="pref_ringtone">벨소리</string>
     <string name="pref_vibrate">진동</string>
     <string name="pref_vibratesummary">알림 시 진동</string>
@@ -485,9 +486,9 @@
     <string name="pref_notifications_battery_settings">배터리 설정</string>
     <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
     <string name="notifications_allow">Allow notifications</string>
-    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
-    <string name="precise_notifications_allow">Allow precise notifications</string>
-    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
+    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them</string>
+    <string name="precise_notifications_allow">Allow on-time notifications</string>
+    <string name="precise_notifications_allow_reason">To receive notifications on time, go to Settings and allow setting reminders</string>
     <!-- List Widget -->
     <string name="hide_watched">시청한 에피소드 숨기기</string>
     <string name="pref_widget_opacity">위젯 배경</string>
@@ -505,11 +506,9 @@
     <string name="action_upgrade">모든 기능 사용하기</string>
     <string name="billing_action_subscribe">구독</string>
     <string name="billing_action_manage_subscriptions">구독 관리</string>
-    <string name="billing_action_pass">X Pass App 구매</string>
     <string name="billing_duration_format">%1$s/year</string>
     <string name="billing_free_trial">Free trial</string>
     <string name="billing_sub_description">Try for 30 days, cancel any time.</string>
-    <string name="billing_price_pass">1회 구매로 계속 사용</string>
     <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">SeriesGuide를 지원해주셔서 감사합니다! 모든 기능을 사용할 수 있습니다.</string>
     <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>

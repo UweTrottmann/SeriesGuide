@@ -37,7 +37,7 @@
     <string name="sync_and_update">Synchronizuj i aktualizuj</string>
     <string name="sync_and_download_all">Synchronizuj i pobierz wszystko</string>
     <string name="action_stream">Kup lub strumieniuj</string>
-    <string name="action_stream_info">Informacja o zakupie lub strumieniowaniu</string>
+    <string name="action_stream_settings">Opcje kupowania i strumieniowania</string>
     <string name="action_select_region">Wybierz region</string>
     <string name="action_reset">Przywróć</string>
     <!-- Search -->
@@ -513,6 +513,7 @@
     <string name="pref_notifications">Powiadomienia</string>
     <string name="pref_notificationssummary">Informuj o nowych odcinkach</string>
     <string name="pref_notifications_settings">Ustawienia powiadomień</string>
+    <string name="pref_notifications_settings_summary">Skonfiguruj czy i jak powiadomienia będą wyświetlane</string>
     <string name="pref_ringtone">Dzwonek</string>
     <string name="pref_vibrate">Wibracja</string>
     <string name="pref_vibratesummary">Wibruj również przy wyświetlaniu powiadomienia</string>
@@ -547,11 +548,9 @@
     <string name="action_upgrade">Odblokuj wszystkie funkcje</string>
     <string name="billing_action_subscribe">Subskrybuj</string>
     <string name="billing_action_manage_subscriptions">Zarządzaj subskrypcjami</string>
-    <string name="billing_action_pass">Kup X Pass App</string>
     <string name="billing_duration_format">%1$s/rok</string>
     <string name="billing_free_trial">Darmowy okres próbny</string>
     <string name="billing_sub_description">Wypróbuj przez 30 dni. Anuluj w dowolnym momencie.</string>
-    <string name="billing_price_pass">jednorazowy zakup</string>
     <string name="upgrade_description">Każda subskrypcja odblokowuje wszystkie funkcje i wspiera kolejne aktualizacje. Subskrypcja nie jest wymagana do korzystania z tej aplikacji.</string>
     <string name="upgrade_success">Dziękujemy za wsparcie SeriesGuide! Masz dostęp do wszystkich funkcji.</string>
     <string name="billing_unlock_detected">Wykryto aplikację X Pass. Nadal możesz subskrybować w celu wsparcia przyszłych aktualizacji.</string>

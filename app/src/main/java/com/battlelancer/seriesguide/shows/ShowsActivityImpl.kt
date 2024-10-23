@@ -23,7 +23,6 @@ import com.battlelancer.seriesguide.shows.calendar.UpcomingFragment
 import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.shows.history.ShowsHistoryFragment
 import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment
-import com.battlelancer.seriesguide.shows.search.discover.SearchResult
 import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverFragment
 import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverPagingActivity
 import com.battlelancer.seriesguide.sync.AccountUtils
@@ -47,7 +46,7 @@ import kotlinx.coroutines.launch
  * Provides the apps main screen, displays tabs for shows, discover, history,
  * recent and upcoming episodes. Runs upgrade code and checks billing state.
  */
-open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddShowListener {
+open class ShowsActivityImpl : BaseTopActivity() {
 
     private lateinit var tabsAdapter: TabStripAdapter
     private lateinit var viewPager: ViewPager2
@@ -154,7 +153,7 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
                     }
                 } else {
                     // Show not added, offer to.
-                    AddShowDialogFragment.show(supportFragmentManager, showTmdbId)
+                    AddShowDialogFragment.show(this, supportFragmentManager, showTmdbId)
                 }
             }
         } else if (Intents.ACTION_VIEW_SHOW == action) {
@@ -170,7 +169,7 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
                 viewIntent = OverviewActivity.intentShow(this, showId)
             } else {
                 // no such show, offer to add it
-                AddShowDialogFragment.show(supportFragmentManager, showTmdbId)
+                AddShowDialogFragment.show(this, supportFragmentManager, showTmdbId)
             }
         }
 
@@ -312,7 +311,7 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
         }
 
         // update next episodes
-        TaskManager.getInstance().tryNextEpisodeUpdateTask(this)
+        TaskManager.tryNextEpisodeUpdateTask(this)
     }
 
     override fun onPause() {
@@ -330,13 +329,6 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
     override fun onKeyLongPress(keyCode: Int, event: KeyEvent): Boolean {
         // prevent navigating to top activity as this is the top activity
         return keyCode == KeyEvent.KEYCODE_BACK
-    }
-
-    /**
-     * Called if the user adds a show from a trakt stream fragment.
-     */
-    override fun onAddShow(show: SearchResult) {
-        TaskManager.getInstance().performAddTask(this, show)
     }
 
     override val snackbarParentView: View

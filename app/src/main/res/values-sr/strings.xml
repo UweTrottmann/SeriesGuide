@@ -37,7 +37,7 @@
     <string name="sync_and_update">Sinhronizuj &amp; Unapredi</string>
     <string name="sync_and_download_all">Sinhronizuj &amp; Skini sve</string>
     <string name="action_stream">Strimuj ili kupi</string>
-    <string name="action_stream_info">Информације о стримовању или куповини</string>
+    <string name="action_stream_settings">Подешавања о стримовању или куповини</string>
     <string name="action_select_region">Одабери регион</string>
     <string name="action_reset">Ресетуј</string>
     <!-- Search -->
@@ -46,7 +46,7 @@
     <string name="empty_no_results">Нема резултата</string>
     <!-- Status messages -->
     <string name="updated">Ажурирано на последњу верзију.</string>
-    <string name="updated_what_is_new">What\'s new</string>
+    <string name="updated_what_is_new">Шта је ново</string>
     <string name="norating">непознато</string>
     <string name="unknown">непознато</string>
     <string name="offline">Спојите се на мрежу и покушајте поново.</string>
@@ -499,6 +499,7 @@
     <string name="pref_notifications">Обавештења</string>
     <string name="pref_notificationssummary">Обавести ме само о новим епизодама</string>
     <string name="pref_notifications_settings">Подешавања обавештења</string>
+    <string name="pref_notifications_settings_summary">Конфигуришите да ли се и како појављују обавештења</string>
     <string name="pref_ringtone">Звоно</string>
     <string name="pref_vibrate">Вибрирање</string>
     <string name="pref_vibratesummary">Такође вибрирај при обавештењима</string>
@@ -533,11 +534,9 @@
     <string name="action_upgrade">Откључај све опције</string>
     <string name="billing_action_subscribe">Претплати се</string>
     <string name="billing_action_manage_subscriptions">Управљајте претплатама</string>
-    <string name="billing_action_pass">Купи X Pass App</string>
     <string name="billing_duration_format">%1$s годишње</string>
     <string name="billing_free_trial">Пробајте бесплатно</string>
     <string name="billing_sub_description">Покушајте 30 дана, откажите било када.</string>
-    <string name="billing_price_pass">доживотна куповина</string>
     <string name="upgrade_description">Свака претплата откључава све функције и подржава будућа ажурирања. За коришћење ове апликације није потребна претплата.</string>
     <string name="upgrade_success">Хвала што сте подржали SeriesGuide! Омогућен вам је приступ свим опцијама.</string>
     <string name="billing_unlock_detected">X Pass апликације је нађена. И даље се можете претплатити за пдршку будућа ажурирања.</string>

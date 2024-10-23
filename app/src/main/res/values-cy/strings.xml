@@ -37,7 +37,7 @@
     <string name="sync_and_update">Sync &amp; Diweddariad</string>
     <string name="sync_and_download_all">Sync &amp; Dadlwythwch y cyfan</string>
     <string name="action_stream">Ffrwd neu brynu</string>
-    <string name="action_stream_info">Ffrydio neu brynu gwybodaeth</string>
+    <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">Dewis rhanbarth</string>
     <string name="action_reset">Reset</string>
     <!-- Search -->
@@ -541,6 +541,7 @@
     <string name="pref_notifications">Hysbysiadau</string>
     <string name="pref_notificationssummary">Hysbysu am benodau newydd</string>
     <string name="pref_notifications_settings">Notification settings</string>
+    <string name="pref_notifications_settings_summary">Configure if and how notifications appear</string>
     <string name="pref_ringtone">Sain</string>
     <string name="pref_vibrate">Dirgrynu</string>
     <string name="pref_vibratesummary">Dirgrynu hefyd wrth arddangos hysbysiad</string>
@@ -555,9 +556,9 @@
     <string name="pref_notifications_battery_settings">Gosodiadau batri</string>
     <string name="pref_notifications_battery_settings_summary">Ewch i leoliadau Batri i analluogi optimeiddiadau batri ar gyfer hysbysiadau dibynadwy</string>
     <string name="notifications_allow">Allow notifications</string>
-    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
-    <string name="precise_notifications_allow">Allow precise notifications</string>
-    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
+    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them</string>
+    <string name="precise_notifications_allow">Allow on-time notifications</string>
+    <string name="precise_notifications_allow_reason">To receive notifications on time, go to Settings and allow setting reminders</string>
     <!-- List Widget -->
     <string name="hide_watched">Cuddio penodau gwylio</string>
     <string name="pref_widget_opacity">Cefndir Widget</string>
@@ -575,11 +576,9 @@
     <string name="action_upgrade">Datgloi pob nodwedd</string>
     <string name="billing_action_subscribe">Tanysgrifiwch</string>
     <string name="billing_action_manage_subscriptions">Rheoli tanysgrifiadau</string>
-    <string name="billing_action_pass">Cael X Pass App</string>
     <string name="billing_duration_format">%1$s/y flwyddyn</string>
     <string name="billing_free_trial">Free trial</string>
     <string name="billing_sub_description">Rhowch gynnig ar 30 diwrnod am ddim, canslo unrhyw amser.</string>
-    <string name="billing_price_pass">pryniant un-amser</string>
     <string name="upgrade_description">Mae pob tanysgrifiad yn datgloi pob nodwedd ac yn cefnogi diweddariadau yn y dyfodol. Nid oes angen tanysgrifiad i ddefnyddio\'r app hon.</string>
     <string name="upgrade_success">Diolch am gefnogi SeriesGuide! Mae gennych fynediad i\'r holl nodweddion.</string>
     <string name="billing_unlock_detected">Canfod ap X Pass. Efallai y byddwch chi\'n dal i danysgrifio i gefnogi diweddariadau yn y dyfodol.</string>

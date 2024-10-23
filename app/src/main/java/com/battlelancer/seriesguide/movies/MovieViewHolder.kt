@@ -3,22 +3,25 @@
 
 package com.battlelancer.seriesguide.movies
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.widget.TooltipCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemMovieBinding
 import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.util.ImageTools
+import com.battlelancer.seriesguide.util.ViewTools.setContextAndLongClickListener
 import com.squareup.picasso.Picasso
 import com.uwetrottmann.tmdb2.entities.BaseMovie
 import java.text.DateFormat
 
 class MovieViewHolder(
-    val binding: ItemMovieBinding,
-    itemClickListener: MovieClickListener?
+    binding: ItemMovieBinding,
+    private val itemClickListener: MovieClickListener?
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private var movieTmdbId: Int = 0
@@ -26,17 +29,28 @@ class MovieViewHolder(
     private val title = binding.includeMovie.textViewMovieTitle
     private val date = binding.includeMovie.textViewMovieDate
     private val poster = binding.includeMovie.imageViewMoviePoster
-    private val contextMenu = binding.includeMovie.imageViewMovieItemContextMenu
+    private val moreOptions = binding.includeMovie.imageViewMovieMoreOptions
 
     init {
         itemView.setOnClickListener {
-            itemClickListener?.onClickMovie(movieTmdbId, poster)
+            itemClickListener?.onMovieClick(movieTmdbId, poster)
         }
-        contextMenu.setOnClickListener { v ->
-            itemClickListener?.onClickMovieMoreOptions(movieTmdbId, v)
+        itemView.setContextAndLongClickListener {
+            onMoreOptionsClick()
+        }
+        moreOptions.also {
+            TooltipCompat.setTooltipText(it, it.contentDescription)
+            it.setOnClickListener {
+                onMoreOptionsClick()
+            }
         }
     }
 
+    private fun onMoreOptionsClick() {
+        itemClickListener?.onMoreOptionsClick(movieTmdbId, moreOptions)
+    }
+
+    @SuppressLint("SetTextI18n")
     fun bindTo(sgMovie: SgMovie?, dateFormatMovieReleaseDate: DateFormat, posterBaseUrl: String) {
         if (sgMovie == null) {
             movieTmdbId = -1
@@ -63,6 +77,7 @@ class MovieViewHolder(
         }
     }
 
+    @SuppressLint("SetTextI18n")
     fun bindTo(
         tmdbMovie: BaseMovie?,
         context: Context,

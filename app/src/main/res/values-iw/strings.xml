@@ -37,7 +37,7 @@
     <string name="sync_and_update">סנכרון &amp; עדכון</string>
     <string name="sync_and_download_all">סנכרון &amp; הורד הכל</string>
     <string name="action_stream">צפה או רכוש</string>
-    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">Select region</string>
     <string name="action_reset">Reset</string>
     <!-- Search -->
@@ -513,6 +513,7 @@
     <string name="pref_notifications">התראות</string>
     <string name="pref_notificationssummary">עדכן אותי על פרקים חדשים</string>
     <string name="pref_notifications_settings">Notification settings</string>
+    <string name="pref_notifications_settings_summary">Configure if and how notifications appear</string>
     <string name="pref_ringtone">רינגטון</string>
     <string name="pref_vibrate">רטט</string>
     <string name="pref_vibratesummary">רטוט גם בזמן הצגת התראות</string>
@@ -527,9 +528,9 @@
     <string name="pref_notifications_battery_settings">Battery settings</string>
     <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
     <string name="notifications_allow">Allow notifications</string>
-    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
-    <string name="precise_notifications_allow">Allow precise notifications</string>
-    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
+    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them</string>
+    <string name="precise_notifications_allow">Allow on-time notifications</string>
+    <string name="precise_notifications_allow_reason">To receive notifications on time, go to Settings and allow setting reminders</string>
     <!-- List Widget -->
     <string name="hide_watched">הסתר פרקים שנצפו</string>
     <string name="pref_widget_opacity">רקע ווידג\'ט</string>
@@ -547,11 +548,9 @@
     <string name="action_upgrade">פתח את כל האפשרויות</string>
     <string name="billing_action_subscribe">הצטרף כמנוי</string>
     <string name="billing_action_manage_subscriptions">נהל הרשמות</string>
-    <string name="billing_action_pass">קבל את X Pass App</string>
     <string name="billing_duration_format">%1$s/שנה</string>
     <string name="billing_free_trial">Free trial</string>
     <string name="billing_sub_description">נסו 30 יום בחינם, בטלו מתי שתרצו. </string>
-    <string name="billing_price_pass">רכישה חד פעמית</string>
     <string name="upgrade_description">המינוי נותן את כל האפשרויות ותורם לעדכונים עתידיים. מינוי לא דרוש בשביל שימוש באפליקציה.</string>
     <string name="upgrade_success">תודה על תמיכתך ב-SeriesGuide! יש לך גישה לכל האפשרויות.</string>
     <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>

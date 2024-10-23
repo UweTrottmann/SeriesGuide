@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.BaseActivity
 import com.battlelancer.seriesguide.ui.SinglePaneActivity
+import com.battlelancer.seriesguide.util.commitReorderingAllowed
 
 /**
  * Hosts a [DataLiberationFragment].
@@ -31,9 +32,9 @@ class DataLiberationActivity : BaseActivity() {
             } else {
                 DataLiberationFragment()
             }
-            supportFragmentManager.beginTransaction()
-                .add(R.id.content_frame, f)
-                .commit()
+            supportFragmentManager.commitReorderingAllowed {
+                add(R.id.content_frame, f)
+            }
         }
     }
 

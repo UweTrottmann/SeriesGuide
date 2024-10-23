@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2017-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.sync;
 
@@ -9,11 +9,11 @@ import androidx.preference.PreferenceManager;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
+import com.battlelancer.seriesguide.movies.tools.MovieTools;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.shows.database.SgShow2Helper;
 import com.battlelancer.seriesguide.shows.database.SgShow2Ids;
-import com.battlelancer.seriesguide.movies.tools.MovieTools;
-import com.battlelancer.seriesguide.shows.search.discover.SearchResult;
+import com.battlelancer.seriesguide.shows.tools.AddShowTask;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.HashMap;
@@ -138,7 +138,7 @@ public class HexagonSync {
 
         // download shows and apply property changes (if merging only overwrite some properties)
         HexagonShowSync showSync = new HexagonShowSync(context, hexagonTools);
-        HashMap<Integer, SearchResult> newShows = new HashMap<>();
+        HashMap<Integer, AddShowTask.Show> newShows = new HashMap<>();
         boolean downloadSuccessful = showSync.download(tmdbIdsToShowIds, newShows, hasMergedShows);
         if (!downloadSuccessful) {
             return new HexagonResult(false, false);
@@ -155,8 +155,8 @@ public class HexagonSync {
         // add new shows
         boolean addNewShows = !newShows.isEmpty();
         if (addNewShows) {
-            List<SearchResult> newShowsList = new LinkedList<>(newShows.values());
-            TaskManager.getInstance().performAddTask(context, newShowsList, true, !hasMergedShows);
+            List<AddShowTask.Show> newShowsList = new LinkedList<>(newShows.values());
+            TaskManager.performAddTask(context, newShowsList, true, !hasMergedShows);
         } else if (!hasMergedShows) {
             // set shows as merged
             HexagonSettings.setHasMergedShows(context, true);

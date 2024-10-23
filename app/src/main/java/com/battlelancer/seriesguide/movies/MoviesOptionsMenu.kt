@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies
 
@@ -7,23 +7,25 @@ import android.app.Activity
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import androidx.core.view.MenuProvider
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.movies.MoviesDistillationSettings.MoviesSortOrder
 import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.ui.menus.ManualSyncMenu
 import org.greenrobot.eventbus.EventBus
 
-class MoviesOptionsMenu(val activity: Activity) : MenuProvider {
+class MoviesOptionsMenu(val activity: Activity) :
+    ManualSyncMenu(activity, R.menu.movies_lists_menu) {
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-        menuInflater.inflate(R.menu.movies_lists_menu, menu)
+        super.onCreateMenu(menu, menuInflater)
+
         menu.findItem(R.id.menu_action_movies_sort_ignore_articles).isChecked =
             DisplaySettings.isSortOrderIgnoringArticles(activity)
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-        when (menuItem.itemId) {
+        return when (menuItem.itemId) {
             R.id.menu_action_movies_sort_title -> {
                 if (MoviesDistillationSettings.getSortOrderId(activity) == MoviesSortOrder.TITLE_ALPHABETICAL_ID) {
                     changeSortOrder(MoviesSortOrder.TITLE_REVERSE_ALHPABETICAL_ID)
@@ -31,8 +33,9 @@ class MoviesOptionsMenu(val activity: Activity) : MenuProvider {
                     // was sorted title reverse or by release date
                     changeSortOrder(MoviesSortOrder.TITLE_ALPHABETICAL_ID)
                 }
-                return true
+                true
             }
+
             R.id.menu_action_movies_sort_release -> {
                 if (MoviesDistillationSettings.getSortOrderId(activity) == MoviesSortOrder.RELEASE_DATE_NEWEST_FIRST_ID) {
                     changeSortOrder(MoviesSortOrder.RELEASE_DATE_OLDEST_FIRST_ID)
@@ -40,16 +43,18 @@ class MoviesOptionsMenu(val activity: Activity) : MenuProvider {
                     // was sorted by oldest first or by title
                     changeSortOrder(MoviesSortOrder.RELEASE_DATE_NEWEST_FIRST_ID)
                 }
-                return true
+                true
             }
+
             R.id.menu_action_movies_sort_ignore_articles -> {
                 changeSortIgnoreArticles(
                     !DisplaySettings.isSortOrderIgnoringArticles(activity),
                     activity
                 )
-                return true
+                true
             }
-            else -> return false
+
+            else -> super.onMenuItemSelected(menuItem)
         }
     }
 

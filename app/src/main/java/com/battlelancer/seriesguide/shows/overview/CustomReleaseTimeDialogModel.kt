@@ -9,6 +9,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
+import androidx.lifecycle.viewmodel.MutableCreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.battlelancer.seriesguide.R
@@ -139,15 +140,20 @@ class CustomReleaseTimeDialogModel(application: Application, private val showId:
 
     companion object {
 
-        val SHOW_ID_KEY = object : CreationExtras.Key<Long> {}
+        private val KEY_SHOW_ID = object : CreationExtras.Key<Long> {}
 
         val Factory = viewModelFactory {
             initializer {
                 val application = this[APPLICATION_KEY]!!
-                val showId = this[SHOW_ID_KEY]!!
+                val showId = this[KEY_SHOW_ID]!!
                 CustomReleaseTimeDialogModel(application, showId)
             }
         }
+
+        fun creationExtras(defaultExtras: CreationExtras, showId: Long): CreationExtras =
+            MutableCreationExtras(defaultExtras).apply {
+                set(KEY_SHOW_ID, showId)
+            }
     }
 }
 

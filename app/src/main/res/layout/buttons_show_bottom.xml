@@ -23,7 +23,7 @@
             app:flow_horizontalGap="4dp"
             app:flow_horizontalStyle="packed"
             app:flow_wrapMode="chain"
-            app:layout_constraintBottom_toTopOf="@id/flowButtonsShowBottomActions"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -53,48 +53,6 @@
             android:layout_height="wrap_content"
             android:text="@string/imdb"
             app:icon="@drawable/ic_link_black_24dp"
-            app:iconGravity="start" />
-
-        <androidx.constraintlayout.helper.widget.Flow
-            android:id="@+id/flowButtonsShowBottomActions"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:constraint_referenced_ids="buttonShowShortcut,buttonShowWebSearch,buttonShowMetacritic"
-            app:flow_horizontalBias="0"
-            app:flow_horizontalGap="4dp"
-            app:flow_horizontalStyle="packed"
-            app:flow_wrapMode="chain"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/flowButtonsShowBottomLinks" />
-
-        <Button
-            android:id="@+id/buttonShowShortcut"
-            style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/add_to_homescreen"
-            app:icon="@drawable/ic_add_to_home_screen_black_24dp"
-            app:iconGravity="start" />
-
-        <Button
-            android:id="@+id/buttonShowWebSearch"
-            style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/web_search"
-            app:icon="@drawable/ic_search_white_24dp"
-            app:iconGravity="start" />
-
-        <Button
-            android:id="@+id/buttonShowMetacritic"
-            style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/metacritic"
-            app:icon="@drawable/ic_search_white_24dp"
             app:iconGravity="start" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

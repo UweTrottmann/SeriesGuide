@@ -9,7 +9,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -60,14 +60,14 @@ class SgListFragment : Fragment() {
 
         ViewTools.setVectorDrawableTop(binding.emptyViewList, R.drawable.ic_list_white_24dp)
 
-        val adapter = SgListItemAdapter(requireContext(), onItemClickListener)
+        val adapter = SgListItemAdapter(requireContext(), itemClickListener)
 
         val recyclerView = binding.recyclerViewListItems.also {
             SgFastScroller(requireContext(), it)
             it.setHasFixedSize(true)
             it.layoutManager =
                 AutoGridLayoutManager(
-                    requireContext(), R.dimen.showgrid_columnWidth, 1, 1
+                    requireContext(), R.dimen.show_grid_column_width, 1, 1
                 )
             it.adapter = adapter
         }
@@ -109,8 +109,8 @@ class SgListFragment : Fragment() {
         model.updateQuery()
     }
 
-    private val onItemClickListener: SgListItemViewHolder.OnItemClickListener =
-        object : SgListItemViewHolder.OnItemClickListener {
+    private val itemClickListener: SgListItemViewHolder.ItemClickListener =
+        object : SgListItemViewHolder.ItemClickListener {
             override fun onItemClick(anchor: View, item: SgListItemWithDetails) {
                 Utils.startActivityWithAnimation(
                     requireActivity(),
@@ -119,7 +119,7 @@ class SgListFragment : Fragment() {
                 )
             }
 
-            override fun onMenuClick(anchor: View, item: SgListItemWithDetails) {
+            override fun onMoreOptionsClick(anchor: View, item: SgListItemWithDetails) {
                 val popupMenu = PopupMenu(anchor.context, anchor)
                 popupMenu.inflate(R.menu.lists_popup_menu)
                 val menu = popupMenu.menu
@@ -144,8 +144,8 @@ class SgListFragment : Fragment() {
                 popupMenu.show()
             }
 
-            override fun onItemSetWatchedClick(item: SgListItemWithDetails) {
-                EpisodeTools.episodeWatchedIfNotZero(context, item.nextEpisodeId)
+            override fun onSetWatchedClick(item: SgListItemWithDetails) {
+                EpisodeTools.episodeWatchedIfNotZero(requireContext(), item.nextEpisodeId)
             }
         }
 

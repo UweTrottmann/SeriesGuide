@@ -37,7 +37,7 @@
     <string name="sync_and_update">Sincronizar &amp; Actualizar</string>
     <string name="sync_and_download_all">Sincronizar &amp; Descargar todo</string>
     <string name="action_stream">Ver en línea o comprar</string>
-    <string name="action_stream_info">Ver en línea o información sobre compra</string>
+    <string name="action_stream_settings">Configuración de ver en línea o compra</string>
     <string name="action_select_region">Seleccionar región</string>
     <string name="action_reset">Restablecer</string>
     <!-- Search -->
@@ -46,7 +46,7 @@
     <string name="empty_no_results">Sin resultados</string>
     <!-- Status messages -->
     <string name="updated">Actualizado a la última versión.</string>
-    <string name="updated_what_is_new">What\'s new</string>
+    <string name="updated_what_is_new">Novedades</string>
     <string name="norating">n/d</string>
     <string name="unknown">desconocido</string>
     <string name="offline">Conéctate a una red y vuelve a intentarlo.</string>
@@ -212,7 +212,7 @@
         <item quantity="other">%1$d de %2$d restantes</item>
     </plurals>
     <plurals name="skipped_episodes_plural">
-        <item quantity="one">%d skipped</item>
+        <item quantity="one">%d omitidos</item>
         <item quantity="other">%d skipped</item>
     </plurals>
     <plurals name="collected_episodes_plural">
@@ -240,7 +240,7 @@
     <!-- Popular -->
     <string name="title_popular">Populares</string>
     <string name="filter_year">Año</string>
-    <string name="filter_year_current">Current year</string>
+    <string name="filter_year_current">Año actual</string>
     <string name="filter_language">Idioma</string>
     <!-- Lists -->
     <string name="first_list">Primera lista</string>
@@ -486,6 +486,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="pref_notifications">Notificaciones</string>
     <string name="pref_notificationssummary">Notificar sobre nuevos episodios</string>
     <string name="pref_notifications_settings">Configuración de notificaciones</string>
+    <string name="pref_notifications_settings_summary">Configurar si aparecen las notificaciones y cómo</string>
     <string name="pref_ringtone">Ringtone</string>
     <string name="pref_vibrate">Vibrar</string>
     <string name="pref_vibratesummary">También vibrar al mostrar una notificación</string>
@@ -520,11 +521,9 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="action_upgrade">Desbloquea todas las funciones</string>
     <string name="billing_action_subscribe">Suscríbete</string>
     <string name="billing_action_manage_subscriptions">Gestionar suscripciones</string>
-    <string name="billing_action_pass">Obtener X Pass App</string>
     <string name="billing_duration_format">%1$s/año</string>
     <string name="billing_free_trial">Prueba gratuita</string>
     <string name="billing_sub_description">Pruebe 30 días gratis. Cancela cuando quieras.</string>
-    <string name="billing_price_pass">Compra por única vez</string>
     <string name="upgrade_description">Cada suscripción desbloquea todas las funciones y soporta actualizaciones futuras. No se requiere una suscripción para usar esta aplicación.</string>
     <string name="upgrade_success">Gracias por apoyar a SeriesGuide! Tienes acceso a todas las funciones.</string>
     <string name="billing_unlock_detected">Aplicación X Pass detectada. Aún puedes suscribirte para ayudar con futuras actualizaciones.</string>

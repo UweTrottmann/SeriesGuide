@@ -7,17 +7,15 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment.OnAddShowListener
-import com.battlelancer.seriesguide.shows.search.discover.SearchResult
 import com.battlelancer.seriesguide.ui.BaseActivity
 import com.battlelancer.seriesguide.ui.SinglePaneActivity
-import com.battlelancer.seriesguide.util.TaskManager
+import com.battlelancer.seriesguide.util.commitReorderingAllowed
 import timber.log.Timber
 
 /**
  * Displays history of watched episodes or movies.
  */
-class HistoryActivity : BaseActivity(), OnAddShowListener {
+class HistoryActivity : BaseActivity() {
 
     interface InitBundle {
         companion object {
@@ -48,22 +46,15 @@ class HistoryActivity : BaseActivity(), OnAddShowListener {
                 }
             }
             f.arguments = intent.extras
-            supportFragmentManager.beginTransaction()
-                .add(R.id.content_frame, f)
-                .commit()
+            supportFragmentManager.commitReorderingAllowed {
+                add(R.id.content_frame, f)
+            }
         }
     }
 
     override fun setupActionBar() {
         super.setupActionBar()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
-    /**
-     * Called if the user adds a show from a trakt stream fragment.
-     */
-    override fun onAddShow(show: SearchResult) {
-        TaskManager.getInstance().performAddTask(this, show)
     }
 
     companion object {

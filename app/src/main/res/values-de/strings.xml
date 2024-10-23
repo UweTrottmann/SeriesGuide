@@ -37,7 +37,7 @@
     <string name="sync_and_update">Synch. &amp; Aktualisieren</string>
     <string name="sync_and_download_all">Synch. &amp; Alles herunterladen</string>
     <string name="action_stream">Streamen oder Kaufen</string>
-    <string name="action_stream_info">Streamen oder Kaufen Info</string>
+    <string name="action_stream_settings">Streamen oder Kaufen Einstellungen</string>
     <string name="action_select_region">Region auswählen</string>
     <string name="action_reset">Zurücksetzen</string>
     <!-- Search -->
@@ -321,7 +321,7 @@
     <string name="hexagon_remove_account_success">Konto gelöscht</string>
     <string name="hexagon_remove_account_failure">Konto konnte nicht gelöscht werden</string>
     <string name="hexagon_remove_account_confirmation">Dies entfernt Ihre Serien, Listen und Filme aus SeriesGuide Cloud</string>
-    <string name="hexagon_api_queued">Sende an SeriesGuide Cloud.</string>
+    <string name="hexagon_api_queued">Sende an SeriesGuide Cloud</string>
     <string name="hexagon_signed_out">Von SeriesGuide Cloud abgemeldet</string>
     <string name="hexagon_signin_fail_format">Fehler beim Anmelden (%s)</string>
     <string name="hexagon_signin_google_only">E-Mail-Adresse erfordert Anmeldung mit Google</string>
@@ -485,6 +485,7 @@
     <string name="pref_notifications">Benachrichtigungen</string>
     <string name="pref_notificationssummary">Benachrichtigung bei neuen Folgen</string>
     <string name="pref_notifications_settings">Benachrichtigungseinstellungen</string>
+    <string name="pref_notifications_settings_summary">Einstellen ob und wie Benachrichtigungen angezeigt werden</string>
     <string name="pref_ringtone">Ton</string>
     <string name="pref_vibrate">Vibrieren</string>
     <string name="pref_vibratesummary">Bei Anzeige einer Benachrichtigung vibrieren</string>
@@ -499,9 +500,9 @@
     <string name="pref_notifications_battery_settings">Akku-Einstellungen</string>
     <string name="pref_notifications_battery_settings_summary">Zu Akku-Einstellungen gehen um Akkuverbrauch optimieren für zuverlässige Benachrichtigungen auszuschalten</string>
     <string name="notifications_allow">Benachrichtigungen erlauben</string>
-    <string name="notifications_allow_reason">Um Benachrichtigungen für Folgen oder Fehler zu erhalten, erlauben Sie diese in den Einstellungen.</string>
-    <string name="precise_notifications_allow">Präzise Benachrichtigungen erlauben</string>
-    <string name="precise_notifications_allow_reason">Um präzise Benachrichtigungen für Folgen zu erhalten, erlauben Sie diese in den Einstellungen.</string>
+    <string name="notifications_allow_reason">Um Benachrichtigungen für Folgen oder Fehler zu erhalten, erlauben Sie diese in den Einstellungen</string>
+    <string name="precise_notifications_allow">Pünktliche Benachrichtigungen erlauben</string>
+    <string name="precise_notifications_allow_reason">Um pünktliche Benachrichtigungen zu erhalten, erlauben Sie in den Einstellungen das Einrichten von Erinnerungen</string>
     <!-- List Widget -->
     <string name="hide_watched">Angesehene Folgen verstecken</string>
     <string name="pref_widget_opacity">Widget-Hintergrund</string>
@@ -519,11 +520,9 @@
     <string name="action_upgrade">Alle Funktionen freischalten</string>
     <string name="billing_action_subscribe">Abonnieren</string>
     <string name="billing_action_manage_subscriptions">Abos verwalten</string>
-    <string name="billing_action_pass">X Pass App holen</string>
     <string name="billing_duration_format">%1$s/Jahr</string>
     <string name="billing_free_trial">Kostenlos testen</string>
     <string name="billing_sub_description">30 Tage testen, jederzeit kündigen.</string>
-    <string name="billing_price_pass">einmaliger Kauf</string>
     <string name="upgrade_description">Jedes Abo schaltet alle Funktionen frei und unterstützt zukünftige Updates. Ein Abo wird nicht benötigt um diese App zu nutzen.</string>
     <string name="upgrade_success">Danke für die Unterstützung von SeriesGuide! Sie haben Zugriff auf alle Funktionen.</string>
     <string name="billing_unlock_detected">X Pass App erkannt. Sie können trotzdem abonnieren um zukünftige Updates zu unterstützen.</string>
