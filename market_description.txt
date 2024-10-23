@@ -2,19 +2,23 @@ SeriesGuide: show manager
 
 Keep track of your favorite TV shows and movies.
 
-With SeriesGuide you can find shows and movies to watch, keep track of your watched episodes and movies, get notifications about upcoming episodes and back it up and sync it across devices.
+SeriesGuide is a free app to discover TV shows and movies, keep track of your watched episodes and movies, and get notified about upcoming episodes.
 
-<b>Discover.</b> Find shows with new episodes, which are popular or are similar to those you are watching. Explore movies currently in cinemas, released digitally or on disc.
+<b>Discover TV shows and movies</b> that are available on your streaming services, new, popular or similar to those you are watching.
 
-<b>Backup and sync.</b> Sign into SeriesGuide Cloud to backup and sync your shows, lists and movies.
+<b>Check off and keep track</b> of watched episodes and movies. <b>Find where to watch</b> a TV show or movie. Stay aware of new episodes.
 
-<b>Integrates with Trakt.</b> Connect your Trakt account to access your watchlist and collection, check in, rate and comment. Sync watched episodes and movies between apps and media centers supported by Trakt.
+<b>Back up and sync</b> your TV shows, lists and movies across devices using SeriesGuide Cloud.
 
-<b>Extensions.</b> Add an extension button provided by a third-party app or build your own.
+<b>Connect to Trakt</b> to sync your watched and collected episodes and movies, access your history and see what others are watching. Post ratings and comments.
 
-<b>Get the subscription to unlock all features and support SeriesGuide!</b> You will get more list widget options, notifications for new episodes and more. You also support continued fixes and new features.
+<b>No account required</b> to use the app. If you want, you can back up and restore your library using JSON files only.
 
-NOTE: You can not watch episodes or movies. For episodes only the release date on the original network is listed.
+<b>Open source and independent</b>: SeriesGuide is supported by its subscribers, not by advertisers or investors.
+
+For support, questions or more information visit https://www.seriesgui.de/help
+
+To check out the source code, visit https://github.com/UweTrottmann/SeriesGuide
 
 SeriesGuide X Unlock Key
 
