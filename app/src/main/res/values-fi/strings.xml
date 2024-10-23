@@ -520,11 +520,9 @@
     <string name="action_upgrade">Avaa kaikki ominaisuudet</string>
     <string name="billing_action_subscribe">Tilaa</string>
     <string name="billing_action_manage_subscriptions">Hallitse tilauksia</string>
-    <string name="billing_action_pass">Hanki X Pass App</string>
     <string name="billing_duration_format">%1$s/vuosi</string>
     <string name="billing_free_trial">Ilmaiskokeilu</string>
     <string name="billing_sub_description">Kokeile 30 päivää ilmaiseksi, peruuta milloin tahansa.</string>
-    <string name="billing_price_pass">kertaluontoinen osto</string>
     <string name="upgrade_description">Jokainen tilaus avaa kaikki ominaisuudet ja tukee tulevia päivityksiä. Tilausta ei tarvita tämän sovelluksen käyttämiseksi.</string>
     <string name="upgrade_success">Kiitos SeriesGuiden tukemisesta! Voit käyttää kaikkia ominaisuuksia.</string>
     <string name="billing_unlock_detected">X Pass -sovellus havaittu. Voit silti tilata tukeaksesi kehitystä.</string>

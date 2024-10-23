@@ -548,11 +548,9 @@
     <string name="action_upgrade">Odomknúť všetky funkcie</string>
     <string name="billing_action_subscribe">Predplatiť</string>
     <string name="billing_action_manage_subscriptions">Správa predplatného</string>
-    <string name="billing_action_pass">Získať X Pass App</string>
     <string name="billing_duration_format">%1$s/rok</string>
     <string name="billing_free_trial">Skúšobná verzia zadarmo</string>
     <string name="billing_sub_description">Vyskúšajte 30 dní zadarmo, kedykoľvek môžete zrušiť.</string>
-    <string name="billing_price_pass">jednorázová platba</string>
     <string name="upgrade_description">Každé predplatné odomkne všetky funkcie a podporuje budúce aktualizácie. Na používanie tejto aplikácie sa nevyžaduje predplatné.</string>
     <string name="upgrade_success">Ďakujeme za podporu SeriesGuide! Máte prístup ku všetkým funkciám.</string>
     <string name="billing_unlock_detected">X Pass aplikácia detekovaná. Stále sa môžete prihlásiť k odberu pre podporu budúcich aktualizácií.</string>

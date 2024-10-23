@@ -520,11 +520,9 @@
     <string name="action_upgrade">Déverrouiller toutes les fonctionnalités</string>
     <string name="billing_action_subscribe">Souscrire</string>
     <string name="billing_action_manage_subscriptions">Gérer les abonnements</string>
-    <string name="billing_action_pass">Obtenir X Pass App</string>
     <string name="billing_duration_format">%1$s/an</string>
     <string name="billing_free_trial">Essai gratuit</string>
     <string name="billing_sub_description">Essayez 30 jours gratuitement, annulez à tout moment.</string>
-    <string name="billing_price_pass">Achat à vie</string>
     <string name="upgrade_description">Chaque abonnement débloque toutes les fonctionnalités et prend en charge les mises à jour futures. Un abonnement n\'est pas nécessaire pour utiliser cette application.</string>
     <string name="upgrade_success">Merci de supporter SeriesGuide ! Vous avez maintenant accès à toutes les fonctionnalités.</string>
     <string name="billing_unlock_detected">Application X Pass détectée. Vous pouvez toujours vous abonner pour soutenir les mises à jour à venir.</string>

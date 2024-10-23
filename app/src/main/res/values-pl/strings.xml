@@ -548,11 +548,9 @@
     <string name="action_upgrade">Odblokuj wszystkie funkcje</string>
     <string name="billing_action_subscribe">Subskrybuj</string>
     <string name="billing_action_manage_subscriptions">Zarządzaj subskrypcjami</string>
-    <string name="billing_action_pass">Kup X Pass App</string>
     <string name="billing_duration_format">%1$s/rok</string>
     <string name="billing_free_trial">Darmowy okres próbny</string>
     <string name="billing_sub_description">Wypróbuj przez 30 dni. Anuluj w dowolnym momencie.</string>
-    <string name="billing_price_pass">jednorazowy zakup</string>
     <string name="upgrade_description">Każda subskrypcja odblokowuje wszystkie funkcje i wspiera kolejne aktualizacje. Subskrypcja nie jest wymagana do korzystania z tej aplikacji.</string>
     <string name="upgrade_success">Dziękujemy za wsparcie SeriesGuide! Masz dostęp do wszystkich funkcji.</string>
     <string name="billing_unlock_detected">Wykryto aplikację X Pass. Nadal możesz subskrybować w celu wsparcia przyszłych aktualizacji.</string>

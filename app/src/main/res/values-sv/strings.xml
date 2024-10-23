@@ -520,11 +520,9 @@
     <string name="action_upgrade">Lås upp alla funktioner</string>
     <string name="billing_action_subscribe">Prenumerera</string>
     <string name="billing_action_manage_subscriptions">Hantera prenumerationer</string>
-    <string name="billing_action_pass">Skaffa X Pass App</string>
     <string name="billing_duration_format">%1$s/år</string>
     <string name="billing_free_trial">Gratis provperiod</string>
     <string name="billing_sub_description">Prova 30 dagar gratis, avbryt när som helst.</string>
-    <string name="billing_price_pass">engångsköp</string>
     <string name="upgrade_description">Varje prenumeration låser upp alla funktioner och stöder framtida uppdateringar. En prenumeration krävs inte för att använda den här appen.</string>
     <string name="upgrade_success">Tack för att du stödjer SeriesGuide! Du har tillgång till alla funktioner.</string>
     <string name="billing_unlock_detected">X Pass-app upptäckt. Du kan fortfarande prenumerera för att stödja framtida uppdateringar.</string>

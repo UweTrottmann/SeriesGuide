@@ -506,11 +506,9 @@
     <string name="action_upgrade">Buka semua fitur</string>
     <string name="billing_action_subscribe">Berlangganan</string>
     <string name="billing_action_manage_subscriptions">Kelola langganan</string>
-    <string name="billing_action_pass">Dapatkan X Pass App</string>
     <string name="billing_duration_format">%1$s/tahun</string>
     <string name="billing_free_trial">Free trial</string>
     <string name="billing_sub_description">Coba gratis 30 hari, batalkan kapan saja.</string>
-    <string name="billing_price_pass">pembelian satu kali</string>
     <string name="upgrade_description">Setiap langganan membuka semua fitur dan mendukung pembaruan yang akan datang. tidak perlu langganan untuk menggunakan aplikasi ini.</string>
     <string name="upgrade_success">Terima kasih telah mendukung SeriesGuide! Anda memiliki akses ke semua fitur.</string>
     <string name="billing_unlock_detected">Aplikasi X Pass terdeteksi. Anda masih dapat berlangganan untuk mendukung pembaruan di masa mendatang.</string>

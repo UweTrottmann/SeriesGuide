@@ -548,11 +548,9 @@
     <string name="action_upgrade">פתח את כל האפשרויות</string>
     <string name="billing_action_subscribe">הצטרף כמנוי</string>
     <string name="billing_action_manage_subscriptions">נהל הרשמות</string>
-    <string name="billing_action_pass">קבל את X Pass App</string>
     <string name="billing_duration_format">%1$s/שנה</string>
     <string name="billing_free_trial">Free trial</string>
     <string name="billing_sub_description">נסו 30 יום בחינם, בטלו מתי שתרצו. </string>
-    <string name="billing_price_pass">רכישה חד פעמית</string>
     <string name="upgrade_description">המינוי נותן את כל האפשרויות ותורם לעדכונים עתידיים. מינוי לא דרוש בשביל שימוש באפליקציה.</string>
     <string name="upgrade_success">תודה על תמיכתך ב-SeriesGuide! יש לך גישה לכל האפשרויות.</string>
     <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>

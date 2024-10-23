@@ -520,11 +520,9 @@
     <string name="action_upgrade">Desbloqueie todos os recursos</string>
     <string name="billing_action_subscribe">Assinar</string>
     <string name="billing_action_manage_subscriptions">Gerenciar assinaturas</string>
-    <string name="billing_action_pass">Adquira o X Pass App</string>
     <string name="billing_duration_format">%1$s/ano</string>
     <string name="billing_free_trial">Teste grátis</string>
     <string name="billing_sub_description">Teste grátis por 30 dias, cancele a qualquer momento</string>
-    <string name="billing_price_pass">Compra única</string>
     <string name="upgrade_description">Toda assinatura desbloqueia os recursos e apoia atualizações futuras. Uma assinatura não é necessária para usar o aplicativo.</string>
     <string name="upgrade_success">Obrigado por apoiar o SeriesGuide! Você agora tem acesso a todos os recursos.</string>
     <string name="billing_unlock_detected">X Pass detectado. Você ainda pode se inscrever para apoiar atualizações futuras.</string>

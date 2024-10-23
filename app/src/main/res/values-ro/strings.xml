@@ -534,11 +534,9 @@
     <string name="action_upgrade">Deblocați toate opțiunile</string>
     <string name="billing_action_subscribe">Abonează-te</string>
     <string name="billing_action_manage_subscriptions">Gestionaţi abonamentele</string>
-    <string name="billing_action_pass">Obțineți X Pass App</string>
     <string name="billing_duration_format">%1$s/year</string>
     <string name="billing_free_trial">Free trial</string>
     <string name="billing_sub_description">Try for 30 days, cancel any time.</string>
-    <string name="billing_price_pass">plată unică</string>
     <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Mulțumim pentru suportul SeriesGuide! Ai access la toate opțiunile.</string>
     <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>

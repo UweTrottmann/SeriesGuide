@@ -520,11 +520,9 @@
     <string name="action_upgrade">Desbloquejar totes les opcions</string>
     <string name="billing_action_subscribe">Vull subscriure\'m</string>
     <string name="billing_action_manage_subscriptions">Gestionar subscripcions</string>
-    <string name="billing_action_pass">Obtenir un «X Pass App»</string>
     <string name="billing_duration_format">%1$s l\'any</string>
     <string name="billing_free_trial">Prova gratuïta</string>
     <string name="billing_sub_description">Prova 30 dies gratuïtament, cancel·la en qualsevol moment</string>
-    <string name="billing_price_pass">compra única</string>
     <string name="upgrade_description">Cada subscripció allibera totes les característiques i ajuda a futures actualitzacions. No és necessita cap subscripció per fer servir aquesta aplicació.</string>
     <string name="upgrade_success">Gràcies per donar support a SeriesGuide! Tens accés a totes les opcions.</string>
     <string name="billing_unlock_detected">Aplicació X Pass detectada. Encara hauries de subscriure\'t per ajudar a futures actualitzacions.</string>

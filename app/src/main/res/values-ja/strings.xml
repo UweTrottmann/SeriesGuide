@@ -506,11 +506,9 @@
     <string name="action_upgrade">すべての機能のロックを解除</string>
     <string name="billing_action_subscribe">登録する</string>
     <string name="billing_action_manage_subscriptions">サブスクリプションを管理する</string>
-    <string name="billing_action_pass">X Pass App を入手</string>
     <string name="billing_duration_format">%1$s/年</string>
     <string name="billing_free_trial">Free trial</string>
     <string name="billing_sub_description">無料で30日間お試しください。いつでもキャンセルできます</string>
-    <string name="billing_price_pass">一回限りの支払</string>
     <string name="upgrade_description">サブスクリプションで、すべての機能がロック解除され、将来のアップデートをサポートします。サブスクリプションはこのアプリを使用する上で必須ではありません。</string>
     <string name="upgrade_success">SeriesGuide のサポートをありがとうございます! すべての機能にアクセスすることができます。</string>
     <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>

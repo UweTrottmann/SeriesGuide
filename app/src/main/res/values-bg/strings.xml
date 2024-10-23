@@ -520,11 +520,9 @@
     <string name="action_upgrade">Отключване на всички функции</string>
     <string name="billing_action_subscribe">Абониране</string>
     <string name="billing_action_manage_subscriptions">Управление на абонаменти</string>
-    <string name="billing_action_pass">Вземете X Pass App</string>
     <string name="billing_duration_format">%1$s/година</string>
     <string name="billing_free_trial">Пробен период</string>
     <string name="billing_sub_description">Пробвайте за 30 дни, откажете се по всяко време.</string>
-    <string name="billing_price_pass">еднократно закупуване</string>
     <string name="upgrade_description">Всички абонаменти дават достъп до всички функции и бъдещи добавки. Не се изисква абонамент, за да ползвате приложението.</string>
     <string name="upgrade_success">Благодаря, че подкрепихте SeriesGuide! Имате достъп до всички фунцкии.</string>
     <string name="billing_unlock_detected">Имате приложението X Pass. Все пак можете да се абонирате, за да ни подкрепите.</string>

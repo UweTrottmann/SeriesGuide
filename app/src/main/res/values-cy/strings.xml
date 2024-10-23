@@ -576,11 +576,9 @@
     <string name="action_upgrade">Datgloi pob nodwedd</string>
     <string name="billing_action_subscribe">Tanysgrifiwch</string>
     <string name="billing_action_manage_subscriptions">Rheoli tanysgrifiadau</string>
-    <string name="billing_action_pass">Cael X Pass App</string>
     <string name="billing_duration_format">%1$s/y flwyddyn</string>
     <string name="billing_free_trial">Free trial</string>
     <string name="billing_sub_description">Rhowch gynnig ar 30 diwrnod am ddim, canslo unrhyw amser.</string>
-    <string name="billing_price_pass">pryniant un-amser</string>
     <string name="upgrade_description">Mae pob tanysgrifiad yn datgloi pob nodwedd ac yn cefnogi diweddariadau yn y dyfodol. Nid oes angen tanysgrifiad i ddefnyddio\'r app hon.</string>
     <string name="upgrade_success">Diolch am gefnogi SeriesGuide! Mae gennych fynediad i\'r holl nodweddion.</string>
     <string name="billing_unlock_detected">Canfod ap X Pass. Efallai y byddwch chi\'n dal i danysgrifio i gefnogi diweddariadau yn y dyfodol.</string>

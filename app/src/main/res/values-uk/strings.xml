@@ -548,11 +548,9 @@
     <string name="action_upgrade">Розблокувати усі можливості</string>
     <string name="billing_action_subscribe">Підписатись</string>
     <string name="billing_action_manage_subscriptions">Впорядкувати підписки</string>
-    <string name="billing_action_pass">Отримати X Pass App</string>
     <string name="billing_duration_format">%1$s/рік</string>
     <string name="billing_free_trial">Безкоштовна пробна версія</string>
     <string name="billing_sub_description">Спробуйте 30 днів безкоштовно, скасуйте у будь-який час.</string>
-    <string name="billing_price_pass">Одноразове замовлення</string>
     <string name="upgrade_description">Кожна підписка розблоковує всі функції та підтримує майбутні оновлення. Підписка не обов\'язкова для використання цього додатка.</string>
     <string name="upgrade_success">Дякую за підтримку SeriesGuide! Тепер ви маєте доступ до всіх функцій.</string>
     <string name="billing_unlock_detected">Виявлено додаток X Pass. Ви все ще можете підписатися на підтримку майбутніх оновлень.</string>

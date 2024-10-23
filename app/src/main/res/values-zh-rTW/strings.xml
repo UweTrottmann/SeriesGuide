@@ -506,11 +506,9 @@
     <string name="action_upgrade">解鎖所有功能</string>
     <string name="billing_action_subscribe">訂閱</string>
     <string name="billing_action_manage_subscriptions">管理訂閱</string>
-    <string name="billing_action_pass">取得 X Pass App</string>
     <string name="billing_duration_format">%1$s / 年</string>
     <string name="billing_free_trial">免費試用</string>
     <string name="billing_sub_description">免費試用 30 天，隨時取消。</string>
-    <string name="billing_price_pass">一次購買</string>
     <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">謝謝贊助SeriesGuide ！您可以使用的所有功能。</string>
     <string name="billing_unlock_detected">已檢測到 X Pass App。您仍可以通過訂閱來支援未來的更新。</string>
