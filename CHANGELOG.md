@@ -10,7 +10,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2024.4
 
-### Unreleased
+### 2024.4.5 - 2024-10-23 🧪
 
 * 🔧 Trakt: use new logo.
 * 📝 Latest user interface translations from Crowdin.
