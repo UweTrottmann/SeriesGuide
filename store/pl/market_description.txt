@@ -1,0 +1,30 @@
+SeriesGuide: menedżer seriali
+
+Zarządzaj oglądaniem swoich ulubionych seriali i filmów.
+
+Dzięki SeriesGuide możesz wyszukiwać seriale i filmy do obejrzenia, śledzić obejrzane odcinki i filmy, otrzymywać powiadomienia o nadchodzących odcinkach, wykonywać kopię zapasową i synchronizować pomiędzy urządzeniami.
+
+<b>Odkrywaj.</b> Znajdź seriale, które są popularne lub podobne do tych, które oglądasz. Przeglądaj filmy aktualnie wyświetlane w kinach, wydanych cyfrowo lub na płytach.
+
+<b>Kopia zapasowa i synchronizacja.</b> Zaloguj się do SeriesGuide Cloud, aby wykonać kopię zapasową lub zsynchronizować seriale, listy i filmy.
+
+<b>Integracja z Trakt.</b> Połącz swoje konto Trakt, aby uzyskać dostęp do listy obejrzanych i kolekcji, współdzielonych, ocen i komentarzy. Synchronizuj obejrzane odcinki i filmy pomiędzy aplikacjami i centrami multimedialnymi obsługiwanymi przez Trakt.
+
+<b>Rozszerzenia.</b> Dodaj przycisk rozszerzenia z zewnętrznej aplikacji, albo zbuduj własne rozszerzenie.
+
+<b>Kup subskrypcję, aby odblokować wszystkie funkcję i wesprzeć SeriesGuide!</b> Otrzymasz więcej opcji widżetów list, powiadomień o nowych odcinkach i więcej. W ten sposób wspierasz też rozwój nowych funkcji i wprowadzanie poprawek.
+
+UWAGA: aplikacja nie umożliwia oglądania filmów, ani seriali. Wyświetlane są tylko daty pierwszej emisji na oryginalnej stacji.
+
+Klucz odblokowujący SeriesGuide X
+
+Odblokuj dostęp do wszystkich funkcji SeriesGuide. Wymaga instalacji zarówno SeriesGuide, jak i tego klucza.
+
+Subskrypcja "pełen dostęp"
+Odblokuj wszystkie funkcje, włącznie z kopią zapasową w chmurze.
+
+Subskrypcja wspierająca
+Wspiera rozwój przyszłych aktualizacji. Zawiera "pełen dostęp".
+
+Subskrypcja sponsorująca
+Duża dotacja zapewniająca przyszłe aktualizacje. Zawiera "pełen dostęp".

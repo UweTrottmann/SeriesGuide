@@ -1,0 +1,30 @@
+SeriesGuide : Gestion séries
+
+Gardez une trace de vos émissions TV et films préférés.
+
+Avec SeriesGuide, vous pouvez trouver des séries et des films à regarder, garder une trace des épisodes et films regardés, être notifié sur les prochains épisodes et sauvegarder et synchroniser votre historique sur tous vos appareils.
+
+<b>Découvrez.</b> Trouvez des séries avec de nouveaux épisodes, qui sont populaires ou similaires à celles que vous regardez. Explorez les films actuellement au cinéma, sortis numériquement ou en dvd.
+
+<b>Sauvegarde et synchronisation.</b> Connectez-vous à SeriesGuide Cloud pour sauvegarder et synchroniser vos séries, listes et films.
+
+<b>S'intègre à Trakt.</b> Connectez votre compte Trakt pour accéder à votre liste de suivi et à votre collecte, enregistrement, évaluation et commentaire. Synchroniser les épisodes et les films vus entre les applications et les centres multimédia pris en charge par Trakt.
+
+<b>Extensions.</b> Ajoutez des extensions fournies par une autre application ou développez la vôtre.
+
+<b>Abonnez vous pour débloquer toutes les fonctionnalités et soutenir SeriesGuide !</b> Vous obtiendrez plus d'options de widget, de notifications pour les nouveaux épisodes et plus encore. Vous soutiendrez également le développement de correctifs et de nouvelles fonctionnalités.
+
+REMARQUE : Vous ne pouvez pas regarder des épisodes ou des films. Pour les épisodes, seule la date de sortie sur le réseau original est répertoriée.
+
+SeriesGuide X Clef
+
+Déverrouiller l'accès à toutes les fonctionnalités de SeriesGuide. Requiert l'installation à la fois de SeriesGuide et de cette clé.
+
+Abonnement Tous Accès
+Débloquer toutes les fonctions, incluant la sauvegarde Cloud.
+
+Abonnement Supporter
+Soutenir le développement des prochaines mises à jours. Inclut Tous les Accès.
+
+Commanditaire
+Grosse contribution pour assurer les mises à jours futures. Inclut Tous les Accès.
