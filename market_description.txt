@@ -18,7 +18,7 @@ SeriesGuide is a free app to discover TV shows and movies, keep track of your wa
 
 <b>Open source and independent</b>: SeriesGuide is supported by its subscribers, not by advertisers or investors.
 
-For support, questions or more information visit https://www.seriesgui.de/help
+For help, questions or more information visit https://www.seriesgui.de/help
 
 To check out the source code, visit https://github.com/UweTrottmann/SeriesGuide
 
