@@ -1,24 +1,24 @@
-SeriesGuide: Serien verwalten
+Behalte den Überblick über deine Lieblings-Serien und Filme.
 
-Behalten Sie den Überblick über Ihre Lieblings-TV-Serien und Filme.
+SeriesGuide ist eine kostenlose App um Serien und Filme zu entdecken, deine gesehenen Folgen und Filme im Überblick zu behalten, und über kommende Folgen benachrichtigt zu werden.
 
-Mit SeriesGuide können Sie Serien und Filme zum Anschauen finden, den Überblick über Ihre angesehenen Folgen und Filme behalten, Benachrichtigungen über kommende Folgen erhalten, es sichern und geräteübergreifend synchronisieren.
+<b>Entdecke Serien und Filme</b>: Finde heraus was auf deinen Streaming-Diensten verfügbar, neu, beliebt oder ähnlich zu dem ist, was du gerade schaust.
 
-<b>Entdecken.</b> Finden Sie Serien mit neuen Folgen, die beliebt sind oder denen ähneln, die Sie gerade anschauen. Durchstöbern Sie Filme, die derzeit im Kino laufen, oder die digital oder auf Disc veröffentlicht wurden.
+<b>Hilft dabei, was und wo man schauen kann</b>: zeigt was als Nächstes zu schauen ist, und hilft herauszufinden, wo eine Serie oder ein Film gestreamt oder gekauft werden kann.
 
-<b>Sichern und Synchronisieren.</b> Melden Sie sich bei SeriesGuide Cloud an, um Ihre Serien, Listen und Filme zu sichern und zu synchronisieren.
+<b>Abhaken und den Überblick behalten</b>: Führe eine Liste der gesehenen Folgen und Filme, sieh deinen Fortschritt. Bleibe über neue Folgen informiert.
 
-<b>Integriert mit Trakt.</b> Verbinden Sie Ihr Trakt-Konto, um auf Ihre Merkliste und Sammlung zuzugreifen, einzuchecken, zu bewerten und zu kommentieren. Synchronisieren Sie gesehene Folgen und Filme zwischen Apps und Media-Centern, die von Trakt unterstützt werden.
+<b>Sichern und synchronisieren</b>: Benutze SeriesGuide Cloud um auf deine Serien, Listen und Filme auf mehreren Geräten zuzugreifen.
 
-<b>Erweiterungen.</b> Fügen Sie eine Erweiterungs-Schaltfläche hinzu, die von einer Drittanbieter-App bereitgestellt wird, oder erstellen Sie Ihre eigene.
+<b>Mit Trakt verbinden</b>: Synchronisiere deine gesehenen und gesammelten Folgen und Filme, greife auf deinen Verlauf zu und sieh, was andere schauen. Gib Bewertungen ab und poste Kommentare.
 
-<b>Holen Sie sich das Abonnement um alle Funktionen freizuschalten und SeriesGuide zu unterstützen!</b> Sie erhalten mehr Einstellungsmöglichkeiten für das Listen-Widget, Benachrichtigungen über neue Folgen und mehr. Sie unterstützen auch weitere Verbesserungen und neue Funktionen.
+<b>Kein Konto erforderlich</b>: Wenn du möchtest, kannst du deine Bibliothek nur über JSON-Dateien sichern und wiederherstellen.
 
-HINWEIS: Sie können keine Folgen oder Filme ansehen. Für Folgen ist nur das Veröffentlichungsdatum des ursprünglichen Senders angegeben.
+<b>Open Source und unabhängig</b>: SeriesGuide wird von seinen Abonnenten unterstützt, nicht von Werbetreibenden oder Investoren.
 
-SeriesGuide X Schlüssel
+Für Hilfe, Fragen oder weitere Informationen besuche https://www.seriesgui.de/help
 
-Schalten Sie permanent alle Funktionen von SeriesGuide frei. Erfordert, dass sowohl SeriesGuide als auch dieser Schlüssel installiert sind.
+Um den Quellcode anzusehen, besuche https://github.com/UweTrottmann/SeriesGuide
 
 All Access Abo
 Zugriff auf alle Funktionen, inklusive Cloud-Sicherung.
