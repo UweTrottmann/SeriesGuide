@@ -1,5 +1,3 @@
-SeriesGuide: show manager
-
 Keep track of your favorite TV shows and movies.
 
 SeriesGuide is a free app to discover TV shows and movies, keep track of your watched episodes and movies, and get notified about upcoming episodes.
