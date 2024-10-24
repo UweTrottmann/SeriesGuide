@@ -6,9 +6,9 @@ SeriesGuide is a free app to discover TV shows and movies, keep track of your wa
 
 <b>Discover TV shows and movies</b>: find out what is available on your streaming services, new, popular or similar to what you are watching.
 
-<b>Check off and keep track</b>: keep a record of watched episodes and movies, see your progress. Stay aware of new episodes.
+<b>Assists with what and where to watch</b>: see what to watch next and find where a TV show or movie is available to stream or purchase.
 
-<b>Find where to watch</b>: see where a TV show or movie is available to stream or purchase.
+<b>Check off and keep track</b>: keep a record of watched episodes and movies, see your progress. Stay aware of new episodes.
 
 <b>Back up and sync</b>: access your TV shows, lists and movies on multiple devices using SeriesGuide Cloud.
 
