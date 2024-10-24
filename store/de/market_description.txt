@@ -1,0 +1,30 @@
+Behalte den Überblick über deine Lieblings-Serien und Filme.
+
+SeriesGuide ist eine kostenlose App um Serien und Filme zu entdecken, deine gesehenen Folgen und Filme im Überblick zu behalten, und über kommende Folgen benachrichtigt zu werden.
+
+<b>Entdecke Serien und Filme</b>: Finde heraus was auf deinen Streaming-Diensten verfügbar, neu, beliebt oder ähnlich zu dem ist, was du gerade schaust.
+
+<b>Hilft dabei, was und wo man schauen kann</b>: zeigt was als Nächstes zu schauen ist, und hilft herauszufinden, wo eine Serie oder ein Film gestreamt oder gekauft werden kann.
+
+<b>Abhaken und den Überblick behalten</b>: Führe eine Liste der gesehenen Folgen und Filme, sieh deinen Fortschritt. Bleibe über neue Folgen informiert.
+
+<b>Sichern und synchronisieren</b>: Benutze SeriesGuide Cloud um auf deine Serien, Listen und Filme auf mehreren Geräten zuzugreifen.
+
+<b>Mit Trakt verbinden</b>: Synchronisiere deine gesehenen und gesammelten Folgen und Filme, greife auf deinen Verlauf zu und sieh, was andere schauen. Gib Bewertungen ab und poste Kommentare.
+
+<b>Kein Konto erforderlich</b>: Wenn du möchtest, kannst du deine Bibliothek nur über JSON-Dateien sichern und wiederherstellen.
+
+<b>Open Source und unabhängig</b>: SeriesGuide wird von seinen Abonnenten unterstützt, nicht von Werbetreibenden oder Investoren.
+
+Für Hilfe, Fragen oder weitere Informationen besuche https://www.seriesgui.de/help
+
+Um den Quellcode anzusehen, besuche https://github.com/UweTrottmann/SeriesGuide
+
+All Access Abo
+Zugriff auf alle Funktionen, inklusive Cloud-Sicherung.
+
+Unterstützer Abo
+Unterstütze die Entwicklung zukünftiger Updates. Enthält All Access.
+
+Sponsor Abo
+Großer Beitrag um zukünftige Updates sicherzustellen. Enthält All Access.

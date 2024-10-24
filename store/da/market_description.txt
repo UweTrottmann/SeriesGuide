@@ -1,0 +1,30 @@
+SeriesGuide: Serieadmin.
+
+Hold styr på dine foretrukne TV-serier og film.
+
+Med SeriesGuide kan du finde TV-serier og film, du vil se, holde styr på dine sete episoder og film, modtage meddelelser om kommende episoder og sikkerhedskopiere og synkronisere lister på tværs af alle dine enheder.
+
+<b>Gå på opdagelse.</b> Find TV-serier med nye episoder, som er populære, eller svarer til de TV-serier, du ser i øjeblikket. Udforsk film, der vises i biograferne i øjeblikket, eller som er udgivet digitalt eller på disk.
+
+<b>Sikkerhedskopiering og synkronisering.</b> Log ind på SeriesGuide Cloud for at sikkerhedskopiere dine TV-serier, lister og film.
+
+<b>Trakt-integration.</b> Forbind din Trakt-konto for at tilgå din overvågningsliste og samling, checke ind, bedømme og kommentere. Synkronisér sete episoder og film mellem apps og mediecentre understøttet af Trakt.
+
+<b>Udvidelser.</b> Tilføj en udvidelsesknap stillet til rådighed af en tredjeparts-app, eller design din egen.
+
+<b>Tegn et abonnement for at oplåse alle funktioner og støtte SeriesGuide!</b> Du vil flere widget-funktioner, meddelelser om nye episoder og meget mere. Du støtter også kontinuerlige fejlrettelser og nye funktioner.
+
+BEMÆRK: Du kan ikke se episoder eller film. For episoder vises kun udgivelsesdatoen fra det oprindelige netværk.
+
+SeriesGuide X-oplåsningsnøgle
+
+Oplås alle funktioner i SeriesGuide permanent. Kræver, at både SeriesGuide og denne nøgle er installeret.
+
+All Access Sub
+Oplås alle funktioner, inklusive Cloud-backup.
+
+Supporter Sub
+Støt udviklingen af fremtidige opdateringer. Inkluderer All Access.
+
+Sponsor Sub
+Den store støtte-pakke, der sikrer fremtidige opdateringer. Inkluderer All Access.
