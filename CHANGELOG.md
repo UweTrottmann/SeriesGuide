@@ -8,6 +8,10 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
 
+## Unreleased
+
+* 🔧 Overview: use local number format for absolute episode number.
+
 ## Version 2024.4
 
 ### 2024.4.5 - 2024-10-23 🧪

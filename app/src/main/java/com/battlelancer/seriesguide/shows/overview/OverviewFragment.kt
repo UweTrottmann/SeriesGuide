@@ -82,6 +82,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
+import java.text.NumberFormat
 
 /**
  * Displays general information about a show and, if there is one, the next episode to watch.
@@ -470,7 +471,9 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
         val episodeAbsoluteNumber = episode.absoluteNumber
         if (episodeAbsoluteNumber != null
             && episodeAbsoluteNumber > 0 && episodeAbsoluteNumber != number) {
-            infoText.append(" (").append(episodeAbsoluteNumber).append(")")
+            infoText.append(" (")
+                .append(NumberFormat.getIntegerInstance().format(episodeAbsoluteNumber.toLong()))
+                .append(")")
         }
 
         // release date
@@ -624,7 +627,11 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
         )
     }
 
-    private fun loadEpisodeImage(imageView: ImageView, detailsHiddenView: View, imagePath: String?) {
+    private fun loadEpisodeImage(
+        imageView: ImageView,
+        detailsHiddenView: View,
+        imagePath: String?
+    ) {
         if (imagePath.isNullOrEmpty()) {
             imageView.setImageDrawable(null)
             detailsHiddenView.isGone = true
