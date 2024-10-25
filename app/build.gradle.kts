@@ -113,16 +113,18 @@ android {
         }
     }
 
+    val keystoreConfigFile = rootProject.file("../upload-keystore-uwe-trottmann.properties")
+    val hasKeystoreConfig = keystoreConfigFile.exists()
     signingConfigs {
         create("release") {
-            if (rootProject.file("keystore.properties").exists()) {
+            if (hasKeystoreConfig) {
                 val props = Properties()
-                props.load(FileInputStream(rootProject.file("keystore.properties")))
+                props.load(FileInputStream(keystoreConfigFile))
 
-                storeFile = file(props["storeFile"]!!)
-                storePassword = props["storePassword"]!!.toString()
-                keyAlias = props["keyAlias"]!!.toString()
-                keyPassword = props["keyPassword"]!!.toString()
+                storeFile = file(props["storeFile"] as String)
+                storePassword = props["storePassword"] as String
+                keyAlias = props["keyAlias"] as String
+                keyPassword = props["keyPassword"] as String
             }
         }
     }
@@ -133,7 +135,7 @@ android {
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
 
-            if (rootProject.file("keystore.properties").exists()) {
+            if (hasKeystoreConfig) {
                 signingConfig = signingConfigs.getByName("release")
             }
         }
