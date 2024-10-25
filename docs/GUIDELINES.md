@@ -1,6 +1,6 @@
-# Coding Guidelines
+# Guidelines
 
-Collecting design decisions. New and updated code should follow them.
+Collecting design decisions. New and updated code and resources should follow them.
 
 ## Layout resources
 
@@ -9,6 +9,17 @@ View IDs should be unique across the project to support refactoring using Androi
 Example: `textViewItemEpisodeTitle` in `item_episode.xml`
 
 Use dimension resources (like `@dimen/default_padding`) for margin and padding to avoid looking them up.
+
+### Icons
+
+Use [Material Icons](https://fonts.google.com/icons) with
+
+- **Rounded** style
+- weight 400
+- no grade
+- typically 24dp size
+
+Some existing icons may still use the old Filled or the old non-rounded Outlined style.
 
 ## Click listeners
 
