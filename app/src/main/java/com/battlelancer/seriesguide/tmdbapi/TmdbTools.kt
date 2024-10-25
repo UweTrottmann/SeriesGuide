@@ -46,6 +46,10 @@ object TmdbTools {
         return BASE_URL + PATH_PERSON + personTmdbId
     }
 
+    fun buildMovieReleaseDatesUrl(movieTmdbId: Int): String {
+        return "${buildMovieUrl(movieTmdbId)}/releases"
+    }
+
     /**
      * Build URL to a profile image using the given size spec and current TMDB image url
      * (see [com.battlelancer.seriesguide.settings.TmdbSettings.getImageBaseUrl]).

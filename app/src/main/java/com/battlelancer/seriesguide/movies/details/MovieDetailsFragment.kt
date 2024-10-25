@@ -135,6 +135,13 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                 }
                 isEnabled = false
             }
+            // release dates button
+            buttonMovieReleaseDates.setOnClickListener {
+                WebTools.openInCustomTab(
+                    requireContext(),
+                    TmdbTools.buildMovieReleaseDatesUrl(tmdbId)
+                )
+            }
             // similar movies button
             buttonMovieSimilar.setOnClickListener {
                 movieDetails?.tmdbMovie()
