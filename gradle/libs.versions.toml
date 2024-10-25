@@ -125,7 +125,8 @@ androidx-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-
 
 [plugins]
 # https://developer.android.com/build/releases/gradle-plugin
-android = { id = "com.android.application", version = "8.7.1" }
+# 8.7.0+ has false positive lint error for SCHEDULE_EXACT_ALARM permission https://issuetracker.google.com/issues/375352607
+android = { id = "com.android.application", version = "8.6.1" }
 # https://kotlinlang.org/docs/releases.html#release-details
 # When updating, must also update kotlinCompilerExtensionVersion in app/build.gradle
 kotlin = { id = "org.jetbrains.kotlin.android", version = "1.9.24" }
