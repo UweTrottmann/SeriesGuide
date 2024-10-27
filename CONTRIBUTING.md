@@ -5,7 +5,7 @@ If you contribute any
 [non-trivial](http://www.gnu.org/prep/maintain/maintain.html#Legally-Significant)
 patches or translations make sure you have read it and agree with it.
 
-#### Would you like to contribute code?
+**Would you like to contribute code?**
 
 1. [Fork SeriesGuide](https://github.com/UweTrottmann/SeriesGuide/fork) and clone your fork.
 2. See the notes about [building](#building) the app below.
@@ -14,10 +14,11 @@ patches or translations make sure you have read it and agree with it.
 4. Make [great commits](http://robots.thoughtbot.com/post/48933156625/5-useful-tips-for-a-better-commit-message). For non-trivial changes, add a copyright line at the top of the files you edited.
 5. [Start a pull request](https://github.com/UweTrottmann/SeriesGuide/compare) and reference [issues](https://github.com/UweTrottmann/SeriesGuide/issues) if needed.
 
-#### No code!
-* You can [discuss or submit bug reports](https://github.com/UweTrottmann/SeriesGuide/issues).
-* You can [suggest features](https://discuss.seriesgui.de).
-* You can [translate the app](https://crowdin.com/project/seriesguide-translations).
+**No code!**
+
+- You can [discuss or submit bug reports](https://github.com/UweTrottmann/SeriesGuide/issues).
+- You can [suggest features](https://discuss.seriesgui.de).
+- You can [translate the app](https://crowdin.com/project/seriesguide-translations).
 
 ## Building
 
@@ -34,20 +35,23 @@ To get started:
 
 Debug builds should just work.
 
-### TMDB, trakt
-To add shows or movies you need to create an API key for [TMDB](https://www.themoviedb.org/settings/api) 
-and OAuth credentials for [trakt](https://trakt.tv/oauth/applications). 
+### TMDB, Trakt
+
+To add shows or movies you need to create an API key for [TMDB](https://www.themoviedb.org/settings/api)
+and OAuth credentials for [Trakt](https://trakt.tv/oauth/applications).
 Place them in `secret.properties` in the project directory (where `settings.gradle` is):
 
-```
+```text
 SG_TMDB_API_KEY=<your api key>
 SG_TRAKT_CLIENT_ID=<your trakt client id>
 SG_TRAKT_CLIENT_SECRET=<your trakt client secret>
 ```
 
 ### Release
+
 To release some additional `secret.properties` values might be necessary:
-```
+
+```text
 # Play Store in-app billing public key
 SG_IAP_KEY_A=<keypart>
 SG_IAP_KEY_B=<keypart>
