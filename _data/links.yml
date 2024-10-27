@@ -12,3 +12,5 @@ mastodon: https://mastodon.social/@SeriesGuide
 # discord: https://discord.gg/qYVphE9f
 paypal: https://paypal.me/uwetrottmann
 testing: https://play.google.com/apps/testing/com.battlelancer.seriesguide
+json: https://github.com/UweTrottmann/SeriesGuide/blob/dev/docs/backup-json-schema.md
+legacy: https://github.com/UweTrottmann/SeriesGuide/blob/dev/docs/legacy-versions.md
