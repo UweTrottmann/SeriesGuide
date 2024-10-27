@@ -22,8 +22,8 @@ patches or translations make sure you have read it and agree with it.
 
 ## Building
 
-- `dev` is the main development and [test release](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) branch.
-- `main` has always the latest [stable version](https://seriesgui.de).
+- `dev` contains the latest changes.
+- `main` contains the latest stable version.
 
 To get started:
 
