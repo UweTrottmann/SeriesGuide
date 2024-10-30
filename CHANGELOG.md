@@ -14,7 +14,14 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2024.4
 
-### 2024.4.5 - 2024-10-23 🧪
+* 🌟 Movies: display the collection (like a movie series) a movie is in, support to view the 
+  collection.
+* 🔧 Shows: display cast and crew of all seasons instead of just the latest one.
+* 🔧 Episodes: in list view, can again set watched with one tap.
+* 🔧 Display more options of list items on touch and hold and right click (for example in Samsung
+  Dex) as well.
+
+### 2024.4.5 - 2024-10-23
 
 * 🔧 Trakt: use new logo.
 * 📝 Latest user interface translations from Crowdin.
