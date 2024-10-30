@@ -18,11 +18,10 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.PopupMenu
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -42,11 +41,11 @@ import com.battlelancer.seriesguide.shows.ShowsAdapter.ShowItem
 import com.battlelancer.seriesguide.shows.ShowsDistillationFragment.Companion.show
 import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowFilter
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
-import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity.Companion.intentShow
 import com.battlelancer.seriesguide.ui.SearchActivity
+import com.battlelancer.seriesguide.ui.menus.ManualSyncMenu
 import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
 import com.battlelancer.seriesguide.util.ViewTools
 import com.google.android.material.snackbar.Snackbar
@@ -97,7 +96,7 @@ class ShowsFragment : Fragment() {
         val layoutManager =
             AutoGridLayoutManager(
                 context,
-                R.dimen.showgrid_columnWidth, 1, 1
+                R.dimen.show_grid_column_width, 1, 1
             )
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
@@ -118,7 +117,7 @@ class ShowsFragment : Fragment() {
         }
 
         // prepare view adapter
-        adapter = ShowsAdapter(requireContext(), onItemClickListener, firstRunClickListener)
+        adapter = ShowsAdapter(requireContext(), itemClickListener, firstRunClickListener)
         if (!FirstRunView.hasSeenFirstRunFragment(requireContext())) {
             adapter.displayFirstRunHeader = true
         }
@@ -205,49 +204,44 @@ class ShowsFragment : Fragment() {
         prefs.unregisterOnSharedPreferenceChangeListener(onPreferenceChangeListener)
     }
 
-    private val optionsMenuProvider = object : MenuProvider {
-        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-            menuInflater.inflate(R.menu.shows_menu, menu)
+    private val optionsMenuProvider by lazy {
+        object : ManualSyncMenu(requireContext(), R.menu.shows_menu) {
 
-            // set filter icon state
-            menu.findItem(R.id.menu_action_shows_filter)
-                .setIcon(
-                    if (model.uiState.value.isFiltersActive) {
-                        R.drawable.ic_filter_selected_white_24dp
-                    } else {
-                        R.drawable.ic_filter_white_24dp
-                    }
-                )
-        }
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                super.onCreateMenu(menu, menuInflater)
 
-        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-            return when (menuItem.itemId) {
-                R.id.menu_action_shows_search -> {
-                    startActivity(Intent(requireContext(), SearchActivity::class.java))
-                    true
-                }
-
-                R.id.menu_action_shows_add -> {
-                    navigateToAddShows()
-                    true
-                }
-
-                R.id.menu_action_shows_filter -> {
-                    show(parentFragmentManager)
-                    true
-                }
-
-                R.id.menu_action_shows_update -> {
-                    SgSyncAdapter.requestSyncDeltaImmediate(requireContext(), true)
-                    true
-                }
-                R.id.menu_action_shows_redownload -> {
-                    SgSyncAdapter.requestSyncFullImmediate(requireContext(), true)
-                    true
-                }
-
-                else -> false
+                // set filter icon state
+                menu.findItem(R.id.menu_action_shows_filter)
+                    .setIcon(
+                        if (model.uiState.value.isFiltersActive) {
+                            R.drawable.ic_filter_selected_white_24dp
+                        } else {
+                            R.drawable.ic_filter_white_24dp
+                        }
+                    )
             }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.menu_action_shows_search -> {
+                        startActivity(Intent(requireContext(), SearchActivity::class.java))
+                        true
+                    }
+
+                    R.id.menu_action_shows_add -> {
+                        navigateToAddShows()
+                        true
+                    }
+
+                    R.id.menu_action_shows_filter -> {
+                        show(parentFragmentManager)
+                        true
+                    }
+
+                    else -> super.onMenuItemSelected(menuItem)
+                }
+            }
+
         }
     }
 
@@ -255,8 +249,8 @@ class ShowsFragment : Fragment() {
         activityModel.selectDiscoverTab()
     }
 
-    private val onItemClickListener: ShowsAdapter.OnItemClickListener =
-        object : ShowsAdapter.OnItemClickListener {
+    private val itemClickListener: ShowsViewHolder.ItemClickListener =
+        object : ShowsViewHolder.ItemClickListener {
             override fun onItemClick(anchor: View, showRowId: Long) {
                 // display overview for this show
                 val intent = intentShow(requireContext(), showRowId)
@@ -269,7 +263,7 @@ class ShowsFragment : Fragment() {
                 )
             }
 
-            override fun onItemMenuClick(anchor: View, show: ShowItem) {
+            override fun onMoreOptionsClick(anchor: View, show: ShowItem) {
                 val popupMenu = PopupMenu(anchor.context, anchor)
                 popupMenu.inflate(R.menu.shows_popup_menu)
 
@@ -288,8 +282,8 @@ class ShowsFragment : Fragment() {
                 popupMenu.show()
             }
 
-            override fun onItemSetWatchedClick(show: ShowItem) {
-                EpisodeTools.episodeWatchedIfNotZero(context, show.nextEpisodeId)
+            override fun onSetWatchedClick(show: ShowItem) {
+                EpisodeTools.episodeWatchedIfNotZero(requireContext(), show.nextEpisodeId)
             }
         }
 

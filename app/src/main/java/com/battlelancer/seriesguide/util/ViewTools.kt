@@ -6,6 +6,7 @@ package com.battlelancer.seriesguide.util
 import android.app.Activity
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.view.MenuItem
 import android.view.View
 import android.view.Window
@@ -96,6 +97,30 @@ object ViewTools {
 
     fun setMenuItemActiveString(item: MenuItem) {
         item.title = item.title.toString() + " ◀"
+    }
+
+    /**
+     * Sets a long click listener and on Android 6 or newer a context click listener that enables
+     * right clicks with a mouse.
+     */
+    fun View.setContextAndLongClickListener(action: (() -> Unit)?) {
+        if (action == null) {
+            setOnLongClickListener(null)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                setOnContextClickListener(null)
+            }
+        } else {
+            setOnLongClickListener {
+                action()
+                true
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                setOnContextClickListener {
+                    action()
+                    true
+                }
+            }
+        }
     }
 
     @JvmStatic

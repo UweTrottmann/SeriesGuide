@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.search
 
@@ -10,26 +10,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.ItemShowBinding
 import com.battlelancer.seriesguide.shows.database.SgShow2ForLists
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.TimeTools.formatWithDeviceZoneToDayAndTime
+import com.battlelancer.seriesguide.util.ViewTools.setContextAndLongClickListener
 
 /**
  * Display show search results.
  */
 class ShowSearchAdapter(
     context: Context,
-    private val listener: OnItemClickListener
+    private val itemClickListener: ItemClickListener
 ) : ArrayAdapter<SgShow2ForLists>(context, 0) {
 
-    interface OnItemClickListener {
-        fun onItemClick(anchor: View, viewHolder: ShowViewHolder)
-        fun onMenuClick(anchor: View, viewHolder: ShowViewHolder)
+    interface ItemClickListener {
+        fun onItemClick(anchor: View, showId: Long)
+        fun onMoreOptionsClick(anchor: View, show: SgShow2ForLists)
         fun onFavoriteClick(showId: Long, isFavorite: Boolean)
     }
 
@@ -46,14 +47,11 @@ class ShowSearchAdapter(
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val view =
-            convertView ?: LayoutInflater.from(context).inflate(R.layout.item_show, parent, false)
         val viewHolder = if (convertView == null) {
-            ShowViewHolder(view, listener, drawableStar, drawableStarZero).also {
-                view.tag = it
-            }
+            ShowSearchViewHolder.create(parent, itemClickListener, drawableStar, drawableStarZero)
+                .also { it.binding.root.tag = it }
         } else {
-            convertView.tag as ShowViewHolder
+            convertView.tag as ShowSearchViewHolder
         }
 
         val item: SgShow2ForLists? = getItem(position)
@@ -61,71 +59,89 @@ class ShowSearchAdapter(
             viewHolder.bindTo(item, context)
         }
 
-        return view
+        return viewHolder.binding.root
     }
 
-    class ShowViewHolder(
-        v: View,
-        onItemClickListener: OnItemClickListener,
+    class ShowSearchViewHolder(
+        val binding: ItemShowBinding,
+        private val itemClickListener: ItemClickListener,
         private val drawableStar: Drawable?,
         private val drawableStarZero: Drawable?
     ) {
-        private val name: TextView = v.findViewById(R.id.seriesname)
-        private val timeAndNetwork: TextView = v.findViewById(R.id.textViewShowsTimeAndNetwork)
-        private val episode: TextView = v.findViewById(R.id.TextViewShowListNextEpisode)
-        private val episodeTime: TextView = v.findViewById(R.id.episodetime)
-        private val remainingCount: TextView = v.findViewById(R.id.textViewShowsRemaining)
-        private val poster: ImageView = v.findViewById(R.id.showposter)
-        private val favorited: ImageView = v.findViewById(R.id.favoritedLabel)
-        private val contextMenu: ImageView = v.findViewById(R.id.imageViewShowsContextMenu)
-        var showId = 0L
-        var isFavorited = false
-        var isHidden = false
+
+        var show: SgShow2ForLists? = null
 
         init {
             // item
-            v.setOnClickListener { view: View ->
-                onItemClickListener.onItemClick(view, this)
+            binding.root.setOnClickListener { view: View ->
+                show?.let {
+                    itemClickListener.onItemClick(view, it.id)
+                }
             }
             // favorite star
-            favorited.setOnClickListener {
-                onItemClickListener.onFavoriteClick(showId, !isFavorited)
+            binding.imageViewItemShowFavorited.setOnClickListener {
+                show?.let {
+                    itemClickListener.onFavoriteClick(it.id, !it.favorite)
+                }
             }
-            // context menu
-            contextMenu.setOnClickListener { view: View ->
-                onItemClickListener.onMenuClick(view, this@ShowViewHolder)
+            // more options button
+            binding.root.setContextAndLongClickListener {
+                onMoreOptionsClick()
+            }
+            binding.imageViewShowMoreOptions.setOnClickListener {
+                onMoreOptionsClick()
+            }
+        }
+
+        private fun onMoreOptionsClick() {
+            show?.let {
+                itemClickListener.onMoreOptionsClick(binding.imageViewShowMoreOptions, it)
             }
         }
 
         fun bindTo(show: SgShow2ForLists, context: Context) {
-            showId = show.id
-            isFavorited = show.favorite
+            this.show = show
 
             // show title
-            name.text = show.title
+            binding.textViewItemShowTitle.text = show.title
 
             // favorited label
-            setFavoriteState(favorited, isFavorited)
+            setFavoriteState(binding.imageViewItemShowFavorited, show.favorite)
 
             // network, day and time
-            timeAndNetwork.text = TextTools.dotSeparate(
+            binding.textViewItemShowTimeAndNetwork.text = TextTools.dotSeparate(
                 show.network,
                 TimeTools.getReleaseDateTime(context, show)
                     ?.formatWithDeviceZoneToDayAndTime()
             )
-            remainingCount.visibility = View.GONE // unused
+            binding.textViewItemShowRemaining.visibility = View.GONE // unused
 
             // poster
-            ImageTools.loadShowPosterResizeCrop(context, poster, show.posterSmall)
-
-            // context menu
-            isHidden = show.hidden
+            ImageTools.loadShowPosterResizeCrop(
+                context,
+                binding.imageViewItemShowPoster,
+                show.posterSmall
+            )
         }
 
         private fun setFavoriteState(view: ImageView, isFavorite: Boolean) {
             view.setImageDrawable(if (isFavorite) drawableStar else drawableStarZero)
             view.contentDescription =
                 view.context.getString(if (isFavorite) R.string.context_unfavorite else R.string.context_favorite)
+        }
+
+        companion object {
+            fun create(
+                parent: ViewGroup,
+                itemClickListener: ItemClickListener,
+                drawableStar: Drawable?,
+                drawableStarZero: Drawable?
+            ): ShowSearchViewHolder {
+                return ShowSearchViewHolder(
+                    ItemShowBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+                    itemClickListener, drawableStar, drawableStarZero
+                )
+            }
         }
     }
 

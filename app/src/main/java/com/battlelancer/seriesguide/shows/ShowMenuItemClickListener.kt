@@ -5,7 +5,7 @@ package com.battlelancer.seriesguide.shows
 
 import android.content.Context
 import android.view.MenuItem
-import android.widget.PopupMenu
+import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.FragmentManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp

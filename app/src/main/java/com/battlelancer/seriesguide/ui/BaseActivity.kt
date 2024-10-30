@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2011-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.ui
 
@@ -93,7 +93,7 @@ abstract class BaseActivity : BaseThemeActivity() {
         if (!BackupSettings.isTimeForAutoBackup(this)) {
             return false
         }
-        TaskManager.getInstance().tryBackupTask(this)
+        TaskManager.tryBackupTask(this)
         return true
     }
 

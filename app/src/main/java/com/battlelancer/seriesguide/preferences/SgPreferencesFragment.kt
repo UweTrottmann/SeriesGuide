@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.preferences
 
@@ -193,7 +193,7 @@ class SgPreferencesFragment : BasePreferencesFragment(),
             val channelsPref: Preference = findPreference(NotificationSettings.KEY_CHANNELS)!!
             if (isSupporter) {
                 if (NotificationSettings.areNotificationsAllowed(requireContext())) {
-                    channelsPref.summary = null
+                    channelsPref.setSummary(R.string.pref_notifications_settings_summary)
                 } else {
                     channelsPref.setSummary(R.string.notifications_allow_reason)
                 }

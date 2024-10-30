@@ -12,8 +12,10 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.PopupMenu
+import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.TooltipCompat
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -239,13 +241,11 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
     }
 
     /**
-     * If episode was watched, flags as unwatched. Otherwise, flags as watched.
+     * If episode is watched, asks whether to watch again or set not watched.
+     * Otherwise, flags as watched.
      */
     private fun onToggleWatched() {
-        val watched =
-            EpisodeTools.isWatched(
-                episodeFlag
-            )
+        val watched = EpisodeTools.isWatched(episodeFlag)
         if (watched) {
             val anchor: View = bindingButtons!!.buttonEpisodeWatched
             val popupMenu = PopupMenu(anchor.context, anchor)
@@ -352,10 +352,10 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
             requireContext(),
             episode.title, episode.number
         )
-        val hideDetails = EpisodeTools.isUnwatched(
-            episodeFlag
-        )
+
+        val hideDetails = EpisodeTools.isUnwatched(episodeFlag)
                 && DisplaySettings.preventSpoilers(requireContext())
+
         binding.textviewTitle.text = TextTools.getEpisodeTitle(
             requireContext(), if (hideDetails) null else episodeTitle, episodeNumber
         )
@@ -673,11 +673,15 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
         }
 
         if (hideDetails) {
-            // show image placeholder
-            binding.imageviewScreenshot.scaleType = ImageView.ScaleType.CENTER_INSIDE
-            binding.imageviewScreenshot.setImageResource(R.drawable.ic_photo_gray_24dp)
+            // Display no spoilers info
+            binding.imageviewScreenshot.apply {
+                scaleType = ImageView.ScaleType.CENTER_INSIDE
+                setImageDrawable(null)
+            }
+            binding.textViewEpisodeDetailsHidden.isVisible = true
         } else {
-            // try loading image
+            binding.textViewEpisodeDetailsHidden.isGone = true
+            // Try loading image
             binding.containerImage.visibility = View.VISIBLE
             ImageTools.loadWithPicasso(
                 requireContext(),

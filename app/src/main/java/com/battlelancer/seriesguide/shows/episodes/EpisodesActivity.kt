@@ -30,6 +30,7 @@ import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ThemeUtils.setDefaultStyle
+import com.battlelancer.seriesguide.util.commitReorderingAllowed
 import com.google.android.material.shape.MaterialShapeDrawable
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -240,9 +241,9 @@ class EpisodesActivity : BaseMessageActivity() {
                 info.seasonAndShowInfo.seasonId,
                 info.startPosition
             ).also {
-                supportFragmentManager.beginTransaction()
-                    .add(R.id.containerEpisodesList, it, "episodes")
-                    .commit()
+                supportFragmentManager.commitReorderingAllowed {
+                    add(R.id.containerEpisodesList, it, "episodes")
+                }
             }
         }
 

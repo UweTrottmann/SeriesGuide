@@ -20,7 +20,7 @@
         style="@style/Widget.SeriesGuide.Grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:columnWidth="@dimen/showgrid_columnWidth"
+        android:columnWidth="@dimen/show_grid_column_width"
         android:listSelector="@color/transparent"
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth"

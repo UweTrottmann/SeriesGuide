@@ -6,9 +6,11 @@ package com.battlelancer.seriesguide.comments
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.fragment.app.add
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.BaseActivity
 import com.battlelancer.seriesguide.ui.SinglePaneActivity
+import com.battlelancer.seriesguide.util.commitReorderingAllowed
 import timber.log.Timber
 
 /**
@@ -31,11 +33,9 @@ class TraktCommentsActivity : BaseActivity() {
         setupActionBar()
 
         if (savedInstanceState == null) {
-            val f = TraktCommentsFragment()
-                .apply { arguments = intent.extras }
-            supportFragmentManager.beginTransaction()
-                .add(R.id.content_frame, f)
-                .commit()
+            supportFragmentManager.commitReorderingAllowed {
+                add<TraktCommentsFragment>(R.id.content_frame, args = intent.extras)
+            }
         }
     }
 

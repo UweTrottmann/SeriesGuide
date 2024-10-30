@@ -67,7 +67,7 @@ class ShowsDiscoverLiveData(
     }
 
     private suspend fun getShowsWithNewEpisodes(
-        language: String,
+        languageCode: String,
         watchProviderIds: List<Int>?,
         watchRegion: String?,
         firstReleaseYear: Int?,
@@ -76,7 +76,7 @@ class ShowsDiscoverLiveData(
         val tmdb = SgApp.getServicesComponent(context.applicationContext).tmdb()
         val results = TmdbTools2().getShowsWithNewEpisodes(
             tmdb = tmdb,
-            language = language,
+            language = languageCode,
             page = 1,
             firstReleaseYear = firstReleaseYear,
             originalLanguage = originalLanguage,
@@ -85,8 +85,8 @@ class ShowsDiscoverLiveData(
         )?.results
 
         val result = if (results != null) {
-            val searchResults = SearchTools.mapTvShowsToSearchResults(language, results)
-            SearchTools.markLocalShowsAsAddedAndPreferLocalPoster(context, searchResults)
+            val searchResults = TmdbSearchResultMapper(context, languageCode)
+                .mapToSearchResults(results)
             buildResultSuccess(searchResults, R.string.add_empty)
         } else {
             buildResultFailure()

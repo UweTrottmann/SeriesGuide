@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2014-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.tools;
 
@@ -32,7 +32,7 @@ public class LatestEpisodeUpdateTask extends AsyncTask<Integer, Void, Void> {
 
     @Override
     protected void onPostExecute(Void aVoid) {
-        TaskManager.getInstance().releaseNextEpisodeUpdateTaskRef();
+        TaskManager.releaseNextEpisodeUpdateTaskRef();
     }
 
     public static void updateLatestEpisodeFor(Context context, Long showId) {

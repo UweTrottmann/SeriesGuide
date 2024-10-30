@@ -4,9 +4,11 @@
 package com.battlelancer.seriesguide.traktapi
 
 import android.os.Bundle
+import androidx.fragment.app.add
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.BaseActivity
 import com.battlelancer.seriesguide.ui.SinglePaneActivity
+import com.battlelancer.seriesguide.util.commitReorderingAllowed
 
 /**
  * Hosts a [ConnectTraktCredentialsFragment].
@@ -19,10 +21,9 @@ class ConnectTraktActivity : BaseActivity() {
         setupActionBar()
 
         if (savedInstanceState == null) {
-            val f = ConnectTraktCredentialsFragment()
-            supportFragmentManager.beginTransaction()
-                .add(R.id.content_frame, f)
-                .commit()
+            supportFragmentManager.commitReorderingAllowed {
+                add<ConnectTraktCredentialsFragment>(R.id.content_frame)
+            }
         }
     }
 

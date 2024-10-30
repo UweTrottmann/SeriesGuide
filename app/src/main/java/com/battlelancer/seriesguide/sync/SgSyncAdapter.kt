@@ -204,7 +204,7 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
                 if (Thread.interrupted()) throw InterruptedException()
 
                 // update next episodes for all shows
-                TaskManager.getInstance().tryNextEpisodeUpdateTask(context)
+                TaskManager.tryNextEpisodeUpdateTask(context)
 
                 updateTimeAndFailedCounter(prefs, resultCode)
             }

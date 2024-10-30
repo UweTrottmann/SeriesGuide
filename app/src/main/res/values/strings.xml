@@ -41,7 +41,7 @@
     <string name="sync_and_update">Sync &amp; Update</string>
     <string name="sync_and_download_all">Sync &amp; Download all</string>
     <string name="action_stream">Stream or purchase</string>
-    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">Select region</string>
     <string name="action_reset">Reset</string>
 
@@ -59,7 +59,7 @@
     <string name="app_not_available">No app available to handle this</string>
     <string name="people_empty">Nobody here?! Touch to try again.</string>
     <string name="database_error">Could not modify data</string>
-    <string name="reinstall_info">Try to backup in Settings, re-install and restore</string>
+    <string name="reinstall_info">Try to create a backup in Settings, re-install and restore</string>
     <string name="api_error_generic">Could not talk to %s. Try again later.</string>
     <string name="api_failed">Failed: %s</string>
     <string name="copy_to_clipboard">Copied to clipboard</string>
@@ -336,7 +336,7 @@
     <string name="feature_sync">Sync</string>
 
     <!-- Hexagon -->
-    <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
+    <string name="hexagon_description">SeriesGuide Cloud helps to back up and sync your shows, lists and movies</string>
     <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some Trakt features are not available</string>
     <string name="hexagon_signin">Sign In</string>
     <string name="hexagon_signout">Sign Out</string>
@@ -484,7 +484,7 @@
     <string name="pref_other">Other</string>
     <string name="pref_autoupdatesummary">Automatically sync and update content</string>
     <string name="backup">Backup/Restore</string>
-    <string name="backup_summary">Backup or restore your shows, lists and movies</string>
+    <string name="backup_summary">Back up or restore your shows, lists and movies</string>
     <string name="pref_number">Number format</string>
     <string name="pref_offset">Manual time offset</string>
     <string name="pref_offsetsummary">Offset air times by %d hours</string>
@@ -493,7 +493,7 @@
 
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Include descriptions, details, ratings</string>
-    <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
+    <string name="backup_failed_file_access">Can\'t create backup. A backup file can not be found or accessed.</string>
     <string name="backup_success">Backup successful</string>
     <string name="backup_failed">Backup failed</string>
     <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
@@ -527,6 +527,7 @@
     <string name="pref_notifications">Notifications</string>
     <string name="pref_notificationssummary">Notify about new episodes</string>
     <string name="pref_notifications_settings">Notification settings</string>
+    <string name="pref_notifications_settings_summary">Configure if and how notifications appear</string>
     <string name="pref_ringtone">Sound</string>
     <string name="pref_vibrate">Vibrate</string>
     <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
@@ -541,9 +542,9 @@
     <string name="pref_notifications_battery_settings">Battery settings</string>
     <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
     <string name="notifications_allow">Allow notifications</string>
-    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
-    <string name="precise_notifications_allow">Allow precise notifications</string>
-    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
+    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them</string>
+    <string name="precise_notifications_allow">Allow on-time notifications</string>
+    <string name="precise_notifications_allow_reason">To receive notifications on time, go to Settings and allow setting reminders</string>
 
     <!-- List Widget -->
     <string name="hide_watched">Hide watched episodes</string>
@@ -564,11 +565,9 @@
     <string name="action_upgrade">Unlock all features</string>
     <string name="billing_action_subscribe">Subscribe</string>
     <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
-    <string name="billing_action_pass">Get X Pass App</string>
     <string name="billing_duration_format">%1$s/year</string>
     <string name="billing_free_trial">Free trial</string>
     <string name="billing_sub_description">Try for 30 days, cancel any time.</string>
-    <string name="billing_price_pass">one-time purchase</string>
     <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Thanks for supporting SeriesGuide! You have access to all features.</string>
     <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>

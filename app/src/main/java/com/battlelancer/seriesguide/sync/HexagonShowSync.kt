@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2017-2023 Uwe Trottmann
+// Copyright 2017-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.sync
 
@@ -9,8 +9,9 @@ import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.modules.ApplicationContext
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.shows.database.SgShow2CloudUpdate
-import com.battlelancer.seriesguide.shows.search.discover.SearchResult
+import com.battlelancer.seriesguide.shows.tools.AddShowTask
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.battlelancer.seriesguide.util.Errors.Companion.logAndReportHexagon
 import com.battlelancer.seriesguide.util.LanguageTools
@@ -42,7 +43,7 @@ class HexagonShowSync @Inject constructor(
      */
     fun download(
         tmdbIdsToShowIds: Map<Int, Long>,
-        toAdd: HashMap<Int, SearchResult>,
+        toAdd: HashMap<Int, AddShowTask.Show>,
         hasMergedShows: Boolean
     ): Boolean {
         val updates: MutableList<SgShow2CloudUpdate> = ArrayList()
@@ -86,7 +87,7 @@ class HexagonShowSync @Inject constructor(
         updates: MutableList<SgShow2CloudUpdate>,
         toUpdate: MutableSet<Long>,
         removed: MutableSet<Int>,
-        toAdd: HashMap<Int, SearchResult>,
+        toAdd: HashMap<Int, AddShowTask.Show>,
         tmdbIdsToShowIds: Map<Int, Long>,
         hasMergedShows: Boolean,
         lastSyncTime: DateTime
@@ -158,7 +159,7 @@ class HexagonShowSync @Inject constructor(
         updates: MutableList<SgShow2CloudUpdate>,
         toUpdate: MutableSet<Long>,
         removed: MutableSet<Int>,
-        toAdd: HashMap<Int, SearchResult>,
+        toAdd: HashMap<Int, AddShowTask.Show>,
         tmdbIdsToShowIds: Map<Int, Long>
     ): Boolean {
         var cursor: String? = null
@@ -255,11 +256,12 @@ class HexagonShowSync @Inject constructor(
         updates: MutableList<SgShow2CloudUpdate>,
         toUpdate: MutableSet<Long>,
         removed: MutableSet<Int>,
-        toAdd: MutableMap<Int, SearchResult>,
+        toAdd: MutableMap<Int, AddShowTask.Show>,
         shows: List<SgCloudShow>,
         tmdbIdsToShowIds: Map<Int, Long>,
         mergeValues: Boolean
     ) {
+        val defaultLanguageCode = ShowsSettings.getShowsSearchLanguage(context)
         for (show in shows) {
             // schedule to add shows not in local database
             val showTmdbId = show.tmdbId ?: continue // Invalid data.
@@ -275,10 +277,12 @@ class HexagonShowSync @Inject constructor(
                     continue
                 }
                 if (!toAdd.containsKey(showTmdbId)) {
-                    val item = SearchResult()
-                    item.tmdbId = showTmdbId
-                    item.language = show.language?.let { LanguageTools.mapLegacyShowCode(it) }
-                    item.title = ""
+                    val item = AddShowTask.Show(
+                        tmdbId = showTmdbId,
+                        languageCode = show.language?.let { LanguageTools.mapLegacyShowCode(it) }
+                            ?: defaultLanguageCode,
+                        title = ""
+                    )
                     toAdd[showTmdbId] = item
                 }
             } else if (!toUpdate.contains(showIdOrNull)) {

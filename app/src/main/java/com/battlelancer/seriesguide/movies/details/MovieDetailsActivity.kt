@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2013-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies.details
 
@@ -9,6 +9,7 @@ import android.os.Bundle
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.util.ThemeUtils
+import com.battlelancer.seriesguide.util.commitReorderingAllowed
 import com.google.android.material.appbar.AppBarLayout
 
 /**
@@ -37,8 +38,9 @@ class MovieDetailsActivity : BaseMessageActivity() {
         }
 
         if (savedInstanceState == null) {
-            val f = MovieDetailsFragment.newInstance(tmdbId)
-            supportFragmentManager.beginTransaction().add(R.id.content_frame, f).commit()
+            supportFragmentManager.commitReorderingAllowed {
+                add(R.id.content_frame, MovieDetailsFragment.newInstance(tmdbId))
+            }
         }
     }
 

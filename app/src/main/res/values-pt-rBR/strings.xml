@@ -37,7 +37,7 @@
     <string name="sync_and_update">Sincronizar e atualizar</string>
     <string name="sync_and_download_all">Sincronizar e baixar dados</string>
     <string name="action_stream">Assista ou compre</string>
-    <string name="action_stream_info">Informação de stream ou compra</string>
+    <string name="action_stream_settings">Configurações de streaming ou compra</string>
     <string name="action_select_region">Selecionar região</string>
     <string name="action_reset">Redefinir</string>
     <!-- Search -->
@@ -46,7 +46,7 @@
     <string name="empty_no_results">Sem resultados</string>
     <!-- Status messages -->
     <string name="updated">Atualizado para a versão mais recente.</string>
-    <string name="updated_what_is_new">What\'s new</string>
+    <string name="updated_what_is_new">Novidades</string>
     <string name="norating">n/a</string>
     <string name="unknown">desconhecido</string>
     <string name="offline">Conecte-se a uma rede e tente novamente.</string>
@@ -240,7 +240,7 @@
     <!-- Popular -->
     <string name="title_popular">Popular</string>
     <string name="filter_year">Ano</string>
-    <string name="filter_year_current">Current year</string>
+    <string name="filter_year_current">Ano atual</string>
     <string name="filter_language">Idioma</string>
     <!-- Lists -->
     <string name="first_list">Primeira lista</string>
@@ -485,6 +485,7 @@
     <string name="pref_notifications">Notificações</string>
     <string name="pref_notificationssummary">Notificar sobre novos episódios</string>
     <string name="pref_notifications_settings">Configurações de notificação</string>
+    <string name="pref_notifications_settings_summary">Configurar como as notificações aparecem</string>
     <string name="pref_ringtone">Toque</string>
     <string name="pref_vibrate">Vibrar</string>
     <string name="pref_vibratesummary">Também vibrar ao exibir uma notificação</string>
@@ -519,11 +520,9 @@
     <string name="action_upgrade">Desbloqueie todos os recursos</string>
     <string name="billing_action_subscribe">Assinar</string>
     <string name="billing_action_manage_subscriptions">Gerenciar assinaturas</string>
-    <string name="billing_action_pass">Adquira o X Pass App</string>
     <string name="billing_duration_format">%1$s/ano</string>
     <string name="billing_free_trial">Teste grátis</string>
     <string name="billing_sub_description">Teste grátis por 30 dias, cancele a qualquer momento</string>
-    <string name="billing_price_pass">Compra única</string>
     <string name="upgrade_description">Toda assinatura desbloqueia os recursos e apoia atualizações futuras. Uma assinatura não é necessária para usar o aplicativo.</string>
     <string name="upgrade_success">Obrigado por apoiar o SeriesGuide! Você agora tem acesso a todos os recursos.</string>
     <string name="billing_unlock_detected">X Pass detectado. Você ainda pode se inscrever para apoiar atualizações futuras.</string>

@@ -57,7 +57,7 @@ abstract class MoviesBaseFragment : Fragment() {
             it.setHasFixedSize(true)
             it.layoutManager =
                 AutoGridLayoutManager(
-                    context, R.dimen.movie_grid_columnWidth, 1, 3
+                    context, R.dimen.movie_grid_column_width, 1, 3
                 )
             it.adapter = adapter
             SgFastScroller(requireContext(), it)

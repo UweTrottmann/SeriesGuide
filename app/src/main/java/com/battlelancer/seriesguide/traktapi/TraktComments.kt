@@ -112,7 +112,7 @@ class TraktComments(
                 } else if (SgTrakt.isUnauthorized(response)) {
                     // for users banned from posting comments requests also return 401
                     // so do not sign out if an error header does not indicate the token is invalid
-                    val authHeader = response.headers()["Www-Authenticate"]
+                    val authHeader = response.headers()["WWW-Authenticate"]
                     if (authHeader != null && !authHeader.contains("invalid_token")) {
                         val pattern = Pattern.compile("error_description=\"(.*)\"")
                         val matcher = pattern.matcher(authHeader)

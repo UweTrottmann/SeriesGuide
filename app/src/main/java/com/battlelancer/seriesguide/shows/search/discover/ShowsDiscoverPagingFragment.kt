@@ -30,6 +30,7 @@ import com.battlelancer.seriesguide.databinding.FragmentShowsPopularBinding
 import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.shows.search.TmdbIdExtractor
 import com.battlelancer.seriesguide.streaming.WatchProviderFilterDialogFragment
+import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.LanguagePickerDialogFragment
@@ -184,13 +185,17 @@ class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
             layoutManager =
                 AutoGridLayoutManager(
                     context,
-                    R.dimen.showgrid_columnWidth,
+                    R.dimen.show_grid_column_width,
                     1,
                     1
                 )
         }
 
-        adapter = SearchResultPagingAdapter(itemClickListener)
+        adapter = SearchResultPagingAdapter(
+            requireContext(),
+            itemClickListener,
+            showWatchlistActions = TraktCredentials.get(requireContext()).hasCredentials()
+        )
         binding.recyclerViewShowsPopular.adapter = adapter
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -306,7 +311,7 @@ class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
             val showTmdbId = TmdbIdExtractor(requireContext(), query).tryToExtract()
             if (showTmdbId > 0) {
                 // found an id, display the add dialog
-                AddShowDialogFragment.show(parentFragmentManager, showTmdbId)
+                AddShowDialogFragment.show(requireContext(), parentFragmentManager, showTmdbId)
             } else {
                 // no id, do a search instead
                 searchEditText.setText(query)

@@ -15,8 +15,8 @@ import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverPagingAct
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsActivity
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsFragment
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
-import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ThemeUtils
+import com.battlelancer.seriesguide.util.commitReorderingAllowed
 
 /**
  * Hosts [ShowsDiscoverPagingFragment] determined by [DiscoverShowsLink].
@@ -25,7 +25,7 @@ import com.battlelancer.seriesguide.util.ThemeUtils
  * If launched with [intentLink] the search bar can be shown with a menu item and hidden by
  * going up or back.
  */
-class ShowsDiscoverPagingActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowListener {
+class ShowsDiscoverPagingActivity : BaseMessageActivity() {
 
     // Re-using layout of movies as filter chips are currently identical
     lateinit var binding: ActivityMoviesSearchBinding
@@ -48,13 +48,12 @@ class ShowsDiscoverPagingActivity : BaseMessageActivity(), AddShowDialogFragment
                 intent.getIntExtra(EXTRA_LINK, DiscoverShowsLink.NO_LINK_ID)
             )
             val query = getQueryFromIntent()
-            supportFragmentManager
-                .beginTransaction()
-                .add(
+            supportFragmentManager.commitReorderingAllowed {
+                add(
                     R.id.containerMoviesSearchFragment,
                     ShowsDiscoverPagingFragment.newInstance(link, query)
                 )
-                .commit()
+            }
         }
 
         SimilarShowsFragment.displaySimilarShowsEventLiveData.observe(this) {
@@ -71,10 +70,6 @@ class ShowsDiscoverPagingActivity : BaseMessageActivity(), AddShowDialogFragment
             }
         }
         return intent.getStringExtra(EXTRA_QUERY)
-    }
-
-    override fun onAddShow(show: SearchResult) {
-        TaskManager.getInstance().performAddTask(this, show)
     }
 
     companion object {

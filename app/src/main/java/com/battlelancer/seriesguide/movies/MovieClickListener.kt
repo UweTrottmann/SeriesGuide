@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies
 
@@ -10,7 +10,7 @@ import android.widget.ImageView
  * Use with adapters for a list of movies.
  */
 interface MovieClickListener {
-    fun onClickMovie(movieTmdbId: Int, posterView: ImageView)
+    fun onMovieClick(movieTmdbId: Int, posterView: ImageView)
 
-    fun onClickMovieMoreOptions(movieTmdbId: Int, anchor: View)
+    fun onMoreOptionsClick(movieTmdbId: Int, anchor: View)
 }

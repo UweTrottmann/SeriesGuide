@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2018-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.episodes
 
@@ -11,7 +11,8 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
+import androidx.appcompat.widget.PopupMenu
+import androidx.appcompat.widget.TooltipCompat
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -23,6 +24,7 @@ import com.battlelancer.seriesguide.databinding.FragmentEpisodesBinding
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
 import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
 import com.battlelancer.seriesguide.util.ThemeUtils
+import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.safeShow
 
 /**
@@ -94,7 +96,7 @@ class EpisodesFragment : Fragment() {
             binding.imageViewEpisodesWatched.setImageResource(R.drawable.ic_watch_all_black_24dp)
             binding.imageViewEpisodesCollected.setImageResource(R.drawable.ic_collect_all_black_24dp)
 
-            adapter = EpisodesAdapter(requireActivity(), episodesListClickListener)
+            adapter = EpisodesAdapter(requireActivity(), episodesListItemClickListener)
             adapter.selectedItemId = model.selectedItemId
 
             binding.recyclerViewEpisodes.also {
@@ -172,42 +174,69 @@ class EpisodesFragment : Fragment() {
                     showSortDialog()
                     true
                 }
+
                 else -> false
             }
         }
     }
 
-    private val episodesListClickListener = object : EpisodesAdapter.ClickListener {
+    private val episodesListItemClickListener = object : EpisodesAdapter.ItemClickListener {
 
         override fun onItemClick(position: Int) {
             showDetails(position)
         }
 
-        override fun onPopupMenuClick(
-            v: View,
+        /**
+         * If episode is watched, asks whether to watch again or set not watched.
+         * Otherwise, flags as watched.
+         */
+        override fun onWatchedBoxClick(anchor: View, episodeId: Long, watchedFlag: Int) {
+            val watched = EpisodeTools.isWatched(watchedFlag)
+            if (watched) {
+                PopupMenu(anchor.context, anchor).apply {
+                    inflate(R.menu.watched_popup_menu)
+                    setOnMenuItemClickListener { item: MenuItem ->
+                        val itemId = item.itemId
+                        if (itemId == R.id.watched_popup_menu_watch_again) {
+                            // Multiple plays are for supporters only.
+                            if (!Utils.hasAccessToX(requireContext())) {
+                                Utils.advertiseSubscription(requireContext())
+                            } else {
+                                onFlagEpisodeWatched(episodeId, true)
+                            }
+                        } else if (itemId == R.id.watched_popup_menu_set_not_watched) {
+                            onFlagEpisodeWatched(episodeId, false)
+                        }
+                        true
+                    }
+                }.show()
+            } else {
+                onFlagEpisodeWatched(episodeId, true)
+            }
+        }
+
+
+        override fun onMoreOptionsClick(
+            anchor: View,
             episodeId: Long,
             episodeNumber: Int,
             releaseTimeMs: Long,
             watchedFlag: Int,
             isCollected: Boolean
         ) {
-            PopupMenu(v.context, v).apply {
+            PopupMenu(anchor.context, anchor).apply {
                 inflate(R.menu.episodes_popup_menu)
                 menu.apply {
                     findItem(R.id.menu_action_episodes_collection_add).isVisible = !isCollected
-                    findItem(R.id.menu_action_episodes_collection_remove).isVisible = isCollected
-                    val isWatched =
-                        EpisodeTools.isWatched(
-                            watchedFlag
-                        )
-                    // To allow re-watching set watched is always visible
+                    findItem(R.id.menu_action_episodes_collection_remove).isVisible =
+                        isCollected
+                    val isWatched = EpisodeTools.isWatched(watchedFlag)
+                    findItem(R.id.menu_action_episodes_watched).isVisible = !isWatched
                     findItem(R.id.menu_action_episodes_not_watched).isVisible = isWatched
                     findItem(R.id.menu_action_episodes_watched_up_to).isVisible = !isWatched
-                    val isSkipped =
-                        EpisodeTools.isSkipped(
-                            watchedFlag
-                        )
-                    findItem(R.id.menu_action_episodes_skip).isVisible = !isWatched && !isSkipped
+                    val isSkipped = EpisodeTools.isSkipped(watchedFlag)
+                    findItem(R.id.menu_action_episodes_skip).isVisible =
+                        !isWatched && !isSkipped
                     findItem(R.id.menu_action_episodes_dont_skip).isVisible = isSkipped
                 }
                 setOnMenuItemClickListener { item ->
@@ -216,26 +245,32 @@ class EpisodesFragment : Fragment() {
                             onFlagEpisodeWatched(episodeId, true)
                             true
                         }
+
                         R.id.menu_action_episodes_not_watched -> {
                             onFlagEpisodeWatched(episodeId, false)
                             true
                         }
+
                         R.id.menu_action_episodes_collection_add -> {
                             onFlagEpisodeCollected(episodeId, true)
                             true
                         }
+
                         R.id.menu_action_episodes_collection_remove -> {
                             onFlagEpisodeCollected(episodeId, false)
                             true
                         }
+
                         R.id.menu_action_episodes_skip -> {
                             onFlagEpisodeSkipped(episodeId, true)
                             true
                         }
+
                         R.id.menu_action_episodes_dont_skip -> {
                             onFlagEpisodeSkipped(episodeId, false)
                             true
                         }
+
                         R.id.menu_action_episodes_watched_up_to -> {
                             EpisodeWatchedUpToDialog.newInstance(
                                 model.showId,
@@ -244,12 +279,11 @@ class EpisodesFragment : Fragment() {
                             ).safeShow(parentFragmentManager, "EpisodeWatchedUpToDialog")
                             true
                         }
+
                         else -> false
                     }
                 }
-                show()
-            }
-
+            }.show()
         }
     }
 
@@ -281,8 +315,10 @@ class EpisodesFragment : Fragment() {
         SingleChoiceDialogFragment.show(
             parentFragmentManager,
             R.array.epsorting,
-            R.array.epsortingData, EpisodesSettings.getEpisodeSortOrder(requireActivity()).index(),
-            EpisodesSettings.KEY_EPISODE_SORT_ORDER, R.string.pref_episodesorting,
+            R.array.epsortingData,
+            EpisodesSettings.getEpisodeSortOrder(requireActivity()).index(),
+            EpisodesSettings.KEY_EPISODE_SORT_ORDER,
+            R.string.pref_episodesorting,
             "episodeSortOrderDialog"
         )
     }
@@ -306,17 +342,18 @@ class EpisodesFragment : Fragment() {
 
     private fun setWatchedToggleState(unwatchedEpisodes: Int) {
         watchedAllEpisodes = unwatchedEpisodes == 0
-        binding?.imageViewEpisodesWatched?.apply {
+        binding?.imageViewEpisodesWatched?.also {
             // using vectors is safe because it will be an AppCompatImageView
-            contentDescription = if (watchedAllEpisodes) {
-                setImageResource(R.drawable.ic_watched_all_24dp)
-                getString(R.string.unmark_all)
+            if (watchedAllEpisodes) {
+                it.setImageResource(R.drawable.ic_watched_all_24dp)
+                it.contentDescription = getString(R.string.unmark_all)
             } else {
-                setImageResource(R.drawable.ic_watch_all_black_24dp)
-                getString(R.string.mark_all)
+                it.setImageResource(R.drawable.ic_watch_all_black_24dp)
+                it.contentDescription = getString(R.string.mark_all)
             }
+            TooltipCompat.setTooltipText(it, it.contentDescription)
             // set onClick listener not before here to avoid unexpected actions
-            setOnClickListener(watchedAllClickListener)
+            it.setOnClickListener(watchedAllClickListener)
         }
     }
 
@@ -330,20 +367,22 @@ class EpisodesFragment : Fragment() {
                 when (item.itemId) {
                     CONTEXT_WATCHED_ALL -> {
                         EpisodeTools.seasonWatched(
-                            context,
+                            requireContext(),
                             seasonId,
                             EpisodeFlags.WATCHED
                         )
                         true
                     }
+
                     CONTEXT_WATCHED_NONE -> {
                         EpisodeTools.seasonWatched(
-                            context,
+                            requireContext(),
                             seasonId,
                             EpisodeFlags.UNWATCHED
                         )
                         true
                     }
+
                     else -> false
                 }
             }
@@ -352,17 +391,18 @@ class EpisodesFragment : Fragment() {
 
     private fun setCollectedToggleState(uncollectedEpisodes: Int) {
         collectedAllEpisodes = uncollectedEpisodes == 0
-        binding?.imageViewEpisodesCollected?.apply {
+        binding?.imageViewEpisodesCollected?.also {
             // using vectors is safe because it will be an AppCompatImageView
-            contentDescription = if (collectedAllEpisodes) {
-                setImageResource(R.drawable.ic_collected_all_24dp)
-                getString(R.string.uncollect_all)
+            if (collectedAllEpisodes) {
+                it.setImageResource(R.drawable.ic_collected_all_24dp)
+                it.contentDescription = getString(R.string.uncollect_all)
             } else {
-                setImageResource(R.drawable.ic_collect_all_black_24dp)
-                getString(R.string.collect_all)
+                it.setImageResource(R.drawable.ic_collect_all_black_24dp)
+                it.contentDescription = getString(R.string.collect_all)
             }
+            TooltipCompat.setTooltipText(it, it.contentDescription)
             // set onClick listener not before here to avoid unexpected actions
-            setOnClickListener(collectedAllClickListener)
+            it.setOnClickListener(collectedAllClickListener)
         }
     }
 
@@ -376,20 +416,22 @@ class EpisodesFragment : Fragment() {
                 when (item.itemId) {
                     CONTEXT_COLLECTED_ALL -> {
                         EpisodeTools.seasonCollected(
-                            context,
+                            requireContext(),
                             seasonId,
                             true
                         )
                         true
                     }
+
                     CONTEXT_COLLECTED_NONE -> {
                         EpisodeTools.seasonCollected(
-                            context,
+                            requireContext(),
                             seasonId,
                             false
                         )
                         true
                     }
+
                     else -> false
                 }
             }

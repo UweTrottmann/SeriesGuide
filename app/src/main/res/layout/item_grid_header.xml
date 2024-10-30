@@ -11,5 +11,5 @@
     android:paddingRight="@dimen/default_padding"
     android:paddingBottom="0dp"
     android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold"
-    tools:drawableStart="@drawable/ic_trakt_icon_primary_20dp"
+    tools:drawableStart="@drawable/ic_trakt_primary_20dp"
     tools:text="Recently Watched" />

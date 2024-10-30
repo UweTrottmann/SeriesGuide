@@ -37,7 +37,7 @@
     <string name="sync_and_update">同步并更新</string>
     <string name="sync_and_download_all">同步并全部重新下载</string>
     <string name="action_stream">流媒体播放或购买</string>
-    <string name="action_stream_info">流媒体播放或购买信息</string>
+    <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">选择地区</string>
     <string name="action_reset">重置</string>
     <!-- Search -->
@@ -46,7 +46,7 @@
     <string name="empty_no_results">无结果</string>
     <!-- Status messages -->
     <string name="updated">已更新至最新版本。</string>
-    <string name="updated_what_is_new">What\'s new</string>
+    <string name="updated_what_is_new">更新内容</string>
     <string name="norating">无评分</string>
     <string name="unknown">未知</string>
     <string name="offline">请连接到互联网后重试</string>
@@ -233,7 +233,7 @@
     <!-- Popular -->
     <string name="title_popular">热门</string>
     <string name="filter_year">年份</string>
-    <string name="filter_year_current">Current year</string>
+    <string name="filter_year_current">本年</string>
     <string name="filter_language">语言</string>
     <!-- Lists -->
     <string name="first_list">默认列表</string>
@@ -471,6 +471,7 @@
     <string name="pref_notifications">通知</string>
     <string name="pref_notificationssummary">剧集更新通知</string>
     <string name="pref_notifications_settings">通知设置</string>
+    <string name="pref_notifications_settings_summary">配置通知是否和如何显示</string>
     <string name="pref_ringtone">铃声</string>
     <string name="pref_vibrate">振动</string>
     <string name="pref_vibratesummary">显示通知时振动</string>
@@ -505,11 +506,9 @@
     <string name="action_upgrade">解锁所有功能</string>
     <string name="billing_action_subscribe">订阅</string>
     <string name="billing_action_manage_subscriptions">管理订阅</string>
-    <string name="billing_action_pass">购买 X Pass App</string>
     <string name="billing_duration_format">%1$s / 年</string>
     <string name="billing_free_trial">免费试用</string>
     <string name="billing_sub_description">免费试用 30 天，随时取消。</string>
-    <string name="billing_price_pass">一次性买断</string>
     <string name="upgrade_description">每种订阅都能解锁所有功能并支持未来的更新。使用本应用无需订阅。</string>
     <string name="upgrade_success">感谢您对 SeriesGuide 的支持！您可以使用所有功能。</string>
     <string name="billing_unlock_detected">已检测到 X Pass App。您仍可以通过订阅来支持未来的更新。</string>

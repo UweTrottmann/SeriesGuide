@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.BaseThemeActivity
 import com.battlelancer.seriesguide.util.ThemeUtils
+import com.battlelancer.seriesguide.util.commitReorderingAllowed
 
 /**
  * Allows tweaking of various SeriesGuide settings. Does NOT inherit
@@ -26,9 +27,9 @@ open class PreferencesActivityImpl : BaseThemeActivity() {
         setupActionBar()
 
         if (savedInstanceState == null) {
-            val ft = supportFragmentManager.beginTransaction()
-            ft.add(R.id.containerSettings, SgPreferencesFragment())
-            ft.commit()
+            supportFragmentManager.commitReorderingAllowed {
+                add(R.id.containerSettings, SgPreferencesFragment())
+            }
 
             // open a sub settings screen if requested
             val settingsScreen = intent.getStringExtra(EXTRA_SETTINGS_SCREEN)
@@ -64,12 +65,12 @@ open class PreferencesActivityImpl : BaseThemeActivity() {
                 putString(EXTRA_SETTINGS_SCREEN, settingsId)
             }
         }
-        val ft = supportFragmentManager.beginTransaction()
-        ft.replace(R.id.containerSettings, f)
-        // Keep transition for predictive back animation
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-        ft.addToBackStack(null)
-        ft.commit()
+        supportFragmentManager.commitReorderingAllowed {
+            replace(R.id.containerSettings, f)
+            // Keep transition for predictive back animation
+            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            addToBackStack(null)
+        }
         updateOnBackPressedPopBackStack()
     }
 

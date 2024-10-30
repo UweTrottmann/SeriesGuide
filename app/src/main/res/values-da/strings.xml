@@ -37,7 +37,7 @@
     <string name="sync_and_update">Synkronisér og opdatér</string>
     <string name="sync_and_download_all">Synkronisér og opdatér alle</string>
     <string name="action_stream">Stream eller køb</string>
-    <string name="action_stream_info">Streaming- eller købsinformation</string>
+    <string name="action_stream_settings">Stream- eller købsindstillinger</string>
     <string name="action_select_region">Vælg region</string>
     <string name="action_reset">Nulstil</string>
     <!-- Search -->
@@ -239,7 +239,7 @@
     <string name="title_similar_shows">Lignende serier</string>
     <!-- Popular -->
     <string name="title_popular">Populær</string>
-    <string name="filter_year">Årstal</string>
+    <string name="filter_year">År</string>
     <string name="filter_year_current">Indeværende år</string>
     <string name="filter_language">Sprog</string>
     <!-- Lists -->
@@ -485,6 +485,7 @@
     <string name="pref_notifications">Meddelelser</string>
     <string name="pref_notificationssummary">Underret om nye episoder</string>
     <string name="pref_notifications_settings">Meddelelsesindstillinger</string>
+    <string name="pref_notifications_settings_summary">Konfigurer om og hvordan notifikationer vises</string>
     <string name="pref_ringtone">Lyd</string>
     <string name="pref_vibrate">Vibrér</string>
     <string name="pref_vibratesummary">Vibrér også ved visning af meddelelse</string>
@@ -519,11 +520,9 @@
     <string name="action_upgrade">Oplås alle funktioner</string>
     <string name="billing_action_subscribe">Abonnér</string>
     <string name="billing_action_manage_subscriptions">Administrer abonnementer</string>
-    <string name="billing_action_pass">Få X Pass App</string>
     <string name="billing_duration_format">%1$s/år</string>
     <string name="billing_free_trial">Gratis prøveversion</string>
     <string name="billing_sub_description">Prøv 30 dage gratis, opsig når som helst.</string>
-    <string name="billing_price_pass">engangskøb</string>
     <string name="upgrade_description">Hver type abonnement oplåser alle funktioner og støtter fremtidige opdateringer. Et abonnement er ikke påkrævet for at benytte denne app.</string>
     <string name="upgrade_success">Tak for din støtte til SeriesGuide! Du har nu adgang til alle funktioner.</string>
     <string name="billing_unlock_detected">X Pass app fundet. Du kan stadig abonnere for at supportere fremtidige opdateringer.</string>

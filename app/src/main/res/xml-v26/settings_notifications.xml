@@ -3,6 +3,7 @@
 
     <!-- Android 8+: removed in-app notification vibrate and sound settings. -->
 
+    <!-- Summary set in code -->
     <Preference
         app:iconSpaceReserved="false"
         app:key="com.battlelancer.seriesguide.notifications.channels"

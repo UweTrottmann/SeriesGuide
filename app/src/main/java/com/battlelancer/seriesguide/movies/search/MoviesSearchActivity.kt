@@ -18,6 +18,7 @@ import android.widget.TextView.OnEditorActionListener
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.core.view.isGone
+import androidx.fragment.app.add
 import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ActivityMoviesSearchBinding
@@ -35,6 +36,7 @@ import com.battlelancer.seriesguide.util.SearchHistory
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.ViewTools.hideSoftKeyboard
+import com.battlelancer.seriesguide.util.commitReorderingAllowed
 import com.battlelancer.seriesguide.util.findDialog
 import com.battlelancer.seriesguide.util.safeShow
 import kotlinx.coroutines.flow.collectLatest
@@ -90,9 +92,9 @@ class MoviesSearchActivity : BaseMessageActivity() {
             if (showSearchView) {
                 ViewTools.showSoftKeyboardOnSearchView(window, binding.autoCompleteViewToolbar)
             }
-            supportFragmentManager.beginTransaction()
-                .add(R.id.containerMoviesSearchFragment, MoviesSearchFragment())
-                .commit()
+            supportFragmentManager.commitReorderingAllowed {
+                add<MoviesSearchFragment>(R.id.containerMoviesSearchFragment)
+            }
         } else {
             postponeEnterTransition()
             // allow the adapter to repopulate during the next layout pass

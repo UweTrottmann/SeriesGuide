@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2013-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.dataliberation
 
@@ -119,9 +119,12 @@ class JsonImportTask(
     }
 
     private fun doInBackground(coroutineScope: CoroutineScope): Int {
-        // Ensure no large database ops are running
-        val tm = TaskManager.getInstance()
-        if (SgSyncAdapter.isSyncActive(context, false) || tm.isAddTaskRunning) {
+        // Do not import if an update task is running
+        if (SgSyncAdapter.isSyncActive(context, false)) {
+            return ERROR_LARGE_DB_OP
+        }
+        // Do not import if an add or backup task is running
+        if (!TaskManager.addShowOrBackupSemaphore.tryAcquire()) {
             return ERROR_LARGE_DB_OP
         }
 
@@ -163,6 +166,9 @@ class JsonImportTask(
 
         // Renew search table
         SeriesGuideDatabase.rebuildFtsTable(context)
+
+        // allow other tasks to resume
+        TaskManager.addShowOrBackupSemaphore.release()
 
         return SUCCESS
     }

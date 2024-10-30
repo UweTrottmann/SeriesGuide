@@ -147,7 +147,7 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
 
         override fun onNoReleasedChanged(value: Boolean) {
             DisplaySettings.setNoReleasedEpisodes(requireContext(), value)
-            TaskManager.getInstance().tryNextEpisodeUpdateTask(requireContext())
+            TaskManager.tryNextEpisodeUpdateTask(requireContext())
         }
 
     }

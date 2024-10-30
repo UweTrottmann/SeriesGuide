@@ -37,7 +37,7 @@
     <string name="sync_and_update">Synchronizovať a aktualizovať</string>
     <string name="sync_and_download_all">Synchronizovať a stiahnuť všetko</string>
     <string name="action_stream">Streamovanie alebo zakúpenie</string>
-    <string name="action_stream_info">Streamovanie alebo info o zakúpení</string>
+    <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">Vybrať región</string>
     <string name="action_reset">Resetovať</string>
     <!-- Search -->
@@ -46,7 +46,7 @@
     <string name="empty_no_results">Žiadne výsledky</string>
     <!-- Status messages -->
     <string name="updated">Aktualizované na najnovšiu verziu.</string>
-    <string name="updated_what_is_new">What\'s new</string>
+    <string name="updated_what_is_new">Čo je nové</string>
     <string name="norating">Nedostupné</string>
     <string name="unknown">neznámy</string>
     <string name="offline">Pripojte sa k sieti a skúste to znova.</string>
@@ -254,7 +254,7 @@
     <!-- Popular -->
     <string name="title_popular">Populárne</string>
     <string name="filter_year">Rok</string>
-    <string name="filter_year_current">Current year</string>
+    <string name="filter_year_current">Aktuálny rok</string>
     <string name="filter_language">Jazyk</string>
     <!-- Lists -->
     <string name="first_list">Prvý zoznam</string>
@@ -513,6 +513,7 @@
     <string name="pref_notifications">Upozornenia</string>
     <string name="pref_notificationssummary">Upozorňovať na nové epizódy</string>
     <string name="pref_notifications_settings">Nastavenia oznámení</string>
+    <string name="pref_notifications_settings_summary">Configure if and how notifications appear</string>
     <string name="pref_ringtone">Tón upozornenia</string>
     <string name="pref_vibrate">Vibrovať</string>
     <string name="pref_vibratesummary">Pri upozornení vibrovať</string>
@@ -547,11 +548,9 @@
     <string name="action_upgrade">Odomknúť všetky funkcie</string>
     <string name="billing_action_subscribe">Predplatiť</string>
     <string name="billing_action_manage_subscriptions">Správa predplatného</string>
-    <string name="billing_action_pass">Získať X Pass App</string>
     <string name="billing_duration_format">%1$s/rok</string>
     <string name="billing_free_trial">Skúšobná verzia zadarmo</string>
     <string name="billing_sub_description">Vyskúšajte 30 dní zadarmo, kedykoľvek môžete zrušiť.</string>
-    <string name="billing_price_pass">jednorázová platba</string>
     <string name="upgrade_description">Každé predplatné odomkne všetky funkcie a podporuje budúce aktualizácie. Na používanie tejto aplikácie sa nevyžaduje predplatné.</string>
     <string name="upgrade_success">Ďakujeme za podporu SeriesGuide! Máte prístup ku všetkým funkciám.</string>
     <string name="billing_unlock_detected">X Pass aplikácia detekovaná. Stále sa môžete prihlásiť k odberu pre podporu budúcich aktualizácií.</string>

@@ -273,8 +273,11 @@ class TimeToolsTest {
     @Test
     fun getDateTimeZone() {
         val defaultTimeZone = getDateTimeZone(null)
-        Truth.assertWithMessage("Emulators by default set to GMT")
-            .that(defaultTimeZone.toString()).isEqualTo("GMT")
+        // The point is to verify getDateTimeZone returns the default time zone if no identifier
+        // is given. As new emulators use the dev machine time zone, not sure how to verify other
+        // than hard code dev time zones.
+        Truth.assertWithMessage("Emulators by default set to GMT or system time zone")
+            .that(defaultTimeZone.toString()).isAnyOf("GMT", "Europe/Berlin")
         // Test some common time zones to make sure threetenbp works.
         assertThat(getDateTimeZone("Europe/Berlin").toString())
             .isEqualTo("Europe/Berlin")

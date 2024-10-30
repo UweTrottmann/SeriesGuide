@@ -11,7 +11,8 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
+import androidx.appcompat.widget.PopupMenu
+import androidx.appcompat.widget.TooltipCompat
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.os.bundleOf
@@ -174,7 +175,7 @@ class SeasonsFragment() : Fragment() {
             )
         }
 
-        override fun onPopupMenuClick(v: View, seasonRowId: Long) {
+        override fun onMoreOptionsClick(v: View, seasonRowId: Long) {
             PopupMenu(v.context, v).apply {
                 inflate(R.menu.seasons_popup_menu)
                 setOnMenuItemClickListener { item ->
@@ -232,7 +233,7 @@ class SeasonsFragment() : Fragment() {
     }
 
     private fun onFlagSeasonSkipped(seasonId: Long) {
-        EpisodeTools.seasonWatched(context, seasonId, EpisodeFlags.SKIPPED)
+        EpisodeTools.seasonWatched(requireContext(), seasonId, EpisodeFlags.SKIPPED)
     }
 
     /**
@@ -240,7 +241,7 @@ class SeasonsFragment() : Fragment() {
      */
     private fun onFlagSeasonWatched(seasonId: Long, isWatched: Boolean) {
         EpisodeTools.seasonWatched(
-            context,
+            requireContext(),
             seasonId,
             if (isWatched) EpisodeFlags.WATCHED else EpisodeFlags.UNWATCHED
         )
@@ -250,7 +251,7 @@ class SeasonsFragment() : Fragment() {
      * Changes the seasons episodes collected flags.
      */
     private fun onFlagSeasonCollected(seasonId: Long, isCollected: Boolean) {
-        EpisodeTools.seasonCollected(context, seasonId, isCollected)
+        EpisodeTools.seasonCollected(requireContext(), seasonId, isCollected)
     }
 
     /**
@@ -258,7 +259,7 @@ class SeasonsFragment() : Fragment() {
      * seasons.
      */
     private fun onFlagShowWatched(isWatched: Boolean) {
-        EpisodeTools.showWatched(context, showId, isWatched)
+        EpisodeTools.showWatched(requireContext(), showId, isWatched)
     }
 
     /**
@@ -266,7 +267,7 @@ class SeasonsFragment() : Fragment() {
      * all seasons.
      */
     private fun onFlagShowCollected(isCollected: Boolean) {
-        EpisodeTools.showCollected(context, showId, isCollected)
+        EpisodeTools.showCollected(requireContext(), showId, isCollected)
     }
 
     /**
@@ -296,17 +297,18 @@ class SeasonsFragment() : Fragment() {
 
     private fun setWatchedToggleState(watchedAllEpisodes: Boolean) {
         this.watchedAllEpisodes = watchedAllEpisodes
-        binding?.imageViewSeasonsWatchedToggle?.apply {
+        binding?.imageViewSeasonsWatchedToggle?.also {
             // using vectors is safe because it will be an AppCompatImageView
-            contentDescription = if (watchedAllEpisodes) {
-                setImageResource(R.drawable.ic_watched_all_24dp)
-                getString(R.string.unmark_all)
+            if (watchedAllEpisodes) {
+                it.setImageResource(R.drawable.ic_watched_all_24dp)
+                it.contentDescription = getString(R.string.unmark_all)
             } else {
-                setImageResource(R.drawable.ic_watch_all_black_24dp)
-                getString(R.string.mark_all)
+                it.setImageResource(R.drawable.ic_watch_all_black_24dp)
+                it.contentDescription = getString(R.string.mark_all)
             }
+            TooltipCompat.setTooltipText(it, it.contentDescription)
             // set onClick listener not before here to avoid unexpected actions
-            setOnClickListener(watchedAllClickListener)
+            it.setOnClickListener(watchedAllClickListener)
         }
     }
 
@@ -336,17 +338,18 @@ class SeasonsFragment() : Fragment() {
 
     private fun setCollectedToggleState(collectedAllEpisodes: Boolean) {
         this.collectedAllEpisodes = collectedAllEpisodes
-        binding?.imageViewSeasonsCollectedToggle?.apply {
+        binding?.imageViewSeasonsCollectedToggle?.also {
             // using vectors is safe because it will be an AppCompatImageView
-            contentDescription = if (collectedAllEpisodes) {
-                setImageResource(R.drawable.ic_collected_all_24dp)
-                getString(R.string.uncollect_all)
+            if (collectedAllEpisodes) {
+                it.setImageResource(R.drawable.ic_collected_all_24dp)
+                it.contentDescription = getString(R.string.uncollect_all)
             } else {
-                setImageResource(R.drawable.ic_collect_all_black_24dp)
-                getString(R.string.collect_all)
+                it.setImageResource(R.drawable.ic_collect_all_black_24dp)
+                it.contentDescription = getString(R.string.collect_all)
             }
+            TooltipCompat.setTooltipText(it, it.contentDescription)
             // set onClick listener not before here to avoid unexpected actions
-            setOnClickListener(collectedAllClickListener)
+            it.setOnClickListener(collectedAllClickListener)
         }
     }
 

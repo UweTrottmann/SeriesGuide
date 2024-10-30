@@ -37,7 +37,7 @@
     <string name="sync_and_update">Синхронізація та Оновлення</string>
     <string name="sync_and_download_all">Синхронізація&amp; Завантажити все</string>
     <string name="action_stream">Переглянути або замовити</string>
-    <string name="action_stream_info">Інформація про трансляцію або покупку</string>
+    <string name="action_stream_settings">Налаштування трансляції або купівлі</string>
     <string name="action_select_region">Виберіть регіон</string>
     <string name="action_reset">Скинути</string>
     <!-- Search -->
@@ -46,7 +46,7 @@
     <string name="empty_no_results">Немає результатів</string>
     <!-- Status messages -->
     <string name="updated">Оновлено до останньої версії.</string>
-    <string name="updated_what_is_new">What\'s new</string>
+    <string name="updated_what_is_new">Що нового</string>
     <string name="norating">Немає даних</string>
     <string name="unknown">Невідомо</string>
     <string name="offline">Перевірте підключення до мережі та повторіть спробу.</string>
@@ -513,6 +513,7 @@
     <string name="pref_notifications">Сповіщення</string>
     <string name="pref_notificationssummary">Повідомляти про нові серії</string>
     <string name="pref_notifications_settings">Налаштування сповіщень</string>
+    <string name="pref_notifications_settings_summary">Налаштуйте, чи з\'являтимуться сповіщення та як саме</string>
     <string name="pref_ringtone">Рингтон</string>
     <string name="pref_vibrate">Вібрація</string>
     <string name="pref_vibratesummary">Вібрувати при відображенні сповіщення</string>
@@ -547,11 +548,9 @@
     <string name="action_upgrade">Розблокувати усі можливості</string>
     <string name="billing_action_subscribe">Підписатись</string>
     <string name="billing_action_manage_subscriptions">Впорядкувати підписки</string>
-    <string name="billing_action_pass">Отримати X Pass App</string>
     <string name="billing_duration_format">%1$s/рік</string>
     <string name="billing_free_trial">Безкоштовна пробна версія</string>
     <string name="billing_sub_description">Спробуйте 30 днів безкоштовно, скасуйте у будь-який час.</string>
-    <string name="billing_price_pass">Одноразове замовлення</string>
     <string name="upgrade_description">Кожна підписка розблоковує всі функції та підтримує майбутні оновлення. Підписка не обов\'язкова для використання цього додатка.</string>
     <string name="upgrade_success">Дякую за підтримку SeriesGuide! Тепер ви маєте доступ до всіх функцій.</string>
     <string name="billing_unlock_detected">Виявлено додаток X Pass. Ви все ще можете підписатися на підтримку майбутніх оновлень.</string>

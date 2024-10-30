@@ -54,7 +54,7 @@
         tools:text="13.11.2013" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imageViewMovieItemContextMenu"
+        android:id="@+id/imageViewMovieMoreOptions"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_alignBottom="@id/textViewMovieDate"
