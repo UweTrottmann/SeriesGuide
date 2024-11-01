@@ -475,6 +475,9 @@ class ShowTools2 @Inject constructor(
         return !isConnected
     }
 
+    /**
+     * Calls [HexagonShowSync.upload].
+     */
     private suspend fun uploadShowToCloud(show: SgCloudShow): Boolean {
         return hexagonShowSync.get().upload(show)
     }

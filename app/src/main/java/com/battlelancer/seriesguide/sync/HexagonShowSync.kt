@@ -399,7 +399,7 @@ class HexagonShowSync @Inject constructor(
     }
 
     /**
-     * Uploads the given list of shows to Hexagon.
+     * Uploads the given list of shows to Hexagon. Returns `true` if upload succeeded.
      */
     fun upload(shows: List<SgCloudShow>): Boolean {
         if (shows.isEmpty()) {
@@ -430,6 +430,9 @@ class HexagonShowSync @Inject constructor(
         return true
     }
 
+    /**
+     * Calls [upload] on the IO dispatcher. Returns `true` if upload succeeded.
+     */
     suspend fun upload(show: SgCloudShow): Boolean {
         return withContext(Dispatchers.IO) {
             upload(listOf(show))
