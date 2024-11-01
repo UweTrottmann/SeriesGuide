@@ -22,28 +22,28 @@ object TmdbTools {
         }
     }
 
-    private const val BASE_URL = "https://www.themoviedb.org/"
-    private const val PATH_TV = "tv/"
-    private const val PATH_MOVIES = "movie/"
-    private const val PATH_PERSON = "person/"
+    private const val BASE_URL = "https://www.themoviedb.org"
+    private const val PATH_TV = "tv"
+    private const val PATH_MOVIES = "movie"
+    private const val PATH_PERSON = "person"
 
     @JvmStatic
     fun buildEpisodeUrl(showTmdbId: Int, season: Int, episode: Int): String {
-        return "$BASE_URL$PATH_TV$showTmdbId/season/$season/episode/$episode"
+        return "$BASE_URL/$PATH_TV/$showTmdbId/season/$season/episode/$episode"
     }
 
     @JvmStatic
     fun buildShowUrl(showTmdbId: Int): String {
-        return BASE_URL + PATH_TV + showTmdbId
+        return "$BASE_URL/$PATH_TV/$showTmdbId"
     }
 
     @JvmStatic
     fun buildMovieUrl(movieTmdbId: Int): String {
-        return BASE_URL + PATH_MOVIES + movieTmdbId
+        return "$BASE_URL/$PATH_MOVIES/$movieTmdbId"
     }
 
     fun buildPersonUrl(personTmdbId: Int): String {
-        return BASE_URL + PATH_PERSON + personTmdbId
+        return "$BASE_URL/$PATH_PERSON/$personTmdbId"
     }
 
     fun buildMovieReleaseDatesUrl(movieTmdbId: Int): String {
