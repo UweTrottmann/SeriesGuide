@@ -34,8 +34,8 @@
     <string name="add_to_homescreen">Adicionar ao Ecrã inicial</string>
     <string name="action_open">Abrir</string>
     <string name="sync_manually">Sincronizar manualmente</string>
-    <string name="sync_and_update">Sincronizar e Atualizar</string>
-    <string name="sync_and_download_all">Sincronizar e Retransferir</string>
+    <string name="sync_and_update">Sincronizar e atualizar</string>
+    <string name="sync_and_download_all">Sincronizar e retransferir</string>
     <string name="action_stream">Comprar ou ver em streaming</string>
     <string name="action_stream_settings">Definições de streaming ou compra</string>
     <string name="action_select_region">Selecionar região</string>
@@ -277,13 +277,13 @@
     <string name="movies_watchlist_empty">Não adicionaste filmes à lista dos que desejas ver.</string>
     <string name="trailer">Trailer</string>
     <string name="movie_cast">Elenco</string>
-    <string name="movie_crew">Equipa Técnica</string>
+    <string name="movie_crew">Equipa técnica</string>
     <string name="action_movies_sort">Ordenar filmes</string>
     <string name="action_movies_sort_title">Título</string>
     <string name="action_movies_sort_release">Data de estreia</string>
     <string name="action_movies_filter">Filtrar filmes</string>
     <string name="title_similar_movies">Filmes semelhantes</string>
-    <string name="title_release_dates">Release dates</string>
+    <string name="title_release_dates">Datas de estreia</string>
     <!-- Statistics -->
     <string name="statistics_failed">Não foi possível calcular as estatísticas.</string>
     <string name="shows_finished">%s vistas completamente</string>
@@ -379,7 +379,7 @@
     <string name="feedback">Enviar e-mail</string>
     <!-- Settings -->
     <string name="action_translate">Traduzir esta aplicação</string>
-    <string name="prefs_category_advanced">Avançado</string>
+    <string name="prefs_category_advanced">Avançadas</string>
     <string name="prefs_category_about">Sobre</string>
     <string name="pref_onlyfuture">Nenhum episódio em exibição</string>
     <string name="pref_onlyfuturesummary">Não mostrar episódios que já tenham estreado</string>
@@ -457,7 +457,7 @@
     <string name="backup_full_dump">Incluir as descrições, os detalhes e as classificações</string>
     <string name="backup_failed_file_access">Cópia de segurança interrompida. Uma cópia de segurança não pôde ser encontrada ou acedida.</string>
     <string name="backup_success">Cópia de segurança bem sucedida.</string>
-    <string name="backup_failed">A cópia de segurança não foi efectuada com sucesso.</string>
+    <string name="backup_failed">A cópia de segurança não foi efetuada com sucesso.</string>
     <string name="import_failed_nosd">Não é possível restaurar a cópia de segurança. A pasta das cópias de segurança não se encontra disponível.</string>
     <string name="import_failed_nofile">Não existe nenhuma cópia de segurança que possa ser lida.</string>
     <string name="import_success">Cópia de segurança restaurada com sucesso.</string>

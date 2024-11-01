@@ -12,6 +12,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 * 🌟 Movies: add link to all release dates.
 * 🔧 Overview: use local number format for absolute episode number.
+* 📝 Latest user interface translations from Crowdin.
 
 ## Version 2024.4
 

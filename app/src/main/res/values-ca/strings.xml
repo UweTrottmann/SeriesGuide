@@ -53,7 +53,7 @@
     <string name="app_not_available">Cap aplicació disponible per gestionar això</string>
     <string name="people_empty">No hi ha ningú? Toqueu per intentar-ho novament.</string>
     <string name="database_error">No s\'han pogut modificar les dades.</string>
-    <string name="reinstall_info">Intenta fer un backup en el panell de Configuraciò, torneu a instal·lar i restaurar.</string>
+    <string name="reinstall_info">Intenta fer una còpia de seguretat en el panell de Configuració, torneu a instal·lar i restaurar.</string>
     <string name="api_error_generic">No és possible contactar amb %s. Proveu-ho més tard.</string>
     <string name="api_failed">Ha fallat: %s</string>
     <string name="copy_to_clipboard">copiat al porta-retalls</string>
@@ -208,7 +208,7 @@
         <item quantity="other">%d restants</item>
     </plurals>
     <plurals name="remaining_of_total_episodes_plural">
-        <item quantity="one">%1$d of %2$d restant</item>
+        <item quantity="one">%1$d de %2$d restant</item>
         <item quantity="other">%1$d de %2$d restants</item>
     </plurals>
     <plurals name="skipped_episodes_plural">
@@ -283,7 +283,7 @@
     <string name="action_movies_sort_release">Data de llançament</string>
     <string name="action_movies_filter">Filtre de pel·lícules</string>
     <string name="title_similar_movies">Pel·lícules similars</string>
-    <string name="title_release_dates">Release dates</string>
+    <string name="title_release_dates">Dates de llançament</string>
     <!-- Statistics -->
     <string name="statistics_failed">No s\'han pogut calcular les estadístiques.</string>
     <string name="shows_finished">%s acabat de veure</string>

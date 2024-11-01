@@ -283,7 +283,7 @@
     <string name="action_movies_sort_release">Ημερομηνία προβολής</string>
     <string name="action_movies_filter">Φιλτράρισμα ταινιών</string>
     <string name="title_similar_movies">Παρόμοιες ταινίες</string>
-    <string name="title_release_dates">Release dates</string>
+    <string name="title_release_dates">Ημερομηνίες κυκλοφορίας</string>
     <!-- Statistics -->
     <string name="statistics_failed">Δε μπορέσαμε να υπολογίσουμε στατιστικά.</string>
     <string name="shows_finished">%s τελείωσε την προβολή</string>
