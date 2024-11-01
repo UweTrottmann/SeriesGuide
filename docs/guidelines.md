@@ -21,6 +21,9 @@ Use [Material Icons](https://fonts.google.com/icons) with
 
 Some existing icons may still use the old Filled or the old non-rounded Outlined style.
 
+Name icon resource files like `ic_<name>_<tint>_<size>dp.xml`,
+for example `ic_event_control_24dp.xml`.
+
 ## Click listeners
 
 The interface class is owned by the class that owns the views that trigger the click events, for
