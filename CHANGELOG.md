@@ -10,6 +10,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Unreleased
 
+* 🌟 Movies: add link to all release dates.
 * 🔧 Overview: use local number format for absolute episode number.
 
 ## Version 2024.4
