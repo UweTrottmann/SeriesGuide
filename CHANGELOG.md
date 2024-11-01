@@ -17,6 +17,10 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 * 🔧 Display more options of list items on touch and hold and right click (for example in Samsung
   Dex) as well.
 
+### Unreleased
+
+* 🔨 Trakt: do not crash when opening Connect Trakt screen on Android 6 or older.
+
 ### 2024.4.5 - 2024-10-23
 
 * 🔧 Trakt: use new logo.
