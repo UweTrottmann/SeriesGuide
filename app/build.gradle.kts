@@ -39,6 +39,7 @@ android {
         minSdk = sgMinSdk
         targetSdk = sgTargetSdk
 
+        // Prevent plugin from generating PNGs, use compat loading instead https://developer.android.com/studio/write/vector-asset-studio#sloption
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
