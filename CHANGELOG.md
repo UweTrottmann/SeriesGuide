@@ -8,7 +8,9 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
 
-## Unreleased
+## Version 2024.5
+
+### 2024.5.0 - 2024-11-06 🧪
 
 * 🌟 Movies: add link to all release dates.
 * 🔧 Overview: use local number format for absolute episode number.
