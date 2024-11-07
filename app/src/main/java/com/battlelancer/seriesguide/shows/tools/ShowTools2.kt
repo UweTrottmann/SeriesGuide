@@ -457,11 +457,14 @@ class ShowTools2 @Inject constructor(
     data class StoreUserNoteResult(val text: String, val traktId: Long?)
 
     /**
-     * Uploads to Hexagon and Trakt and on success saves to local database.
+     * Uploads to Hexagon and Trakt and on success saves to local database,
+     * on failure returns `null`.
      *
-     * [noteDraft] is shortened to at most [SgShow2.MAX_USER_NOTE_LENGTH] characters and a blank
-     * string is treated as an empty string. If the resulting string is empty, an existing note will
-     * be deleted at Trakt.
+     * Fails if [noteDraft] exceeds [SgShow2.MAX_USER_NOTE_LENGTH] characters.
+     *
+     * A blank string is treated as an empty string.
+     *
+     * If the final string is empty, an existing note will be deleted at Trakt.
      *
      * Returns the stored text (as Trakt may modify it) and optional assigned Trakt ID.
      */
@@ -471,8 +474,10 @@ class ShowTools2 @Inject constructor(
         noteTraktId: Long?
     ): StoreUserNoteResult? {
         val noteText = noteDraft
-            .take(SgShow2.MAX_USER_NOTE_LENGTH)
-            .ifBlank { "" } // To provide useful UI, but also Trakt does not allow a blank text
+            .ifBlank { "" } // Avoid storing useless data, but also Trakt does not allow a blank text
+
+        // Fail if string is too long
+        if (noteText.length > SgShow2.MAX_USER_NOTE_LENGTH) return null
 
         // Send to Cloud first, Trakt may fail if user is not VIP
         val isSendToCloudSuccess: Boolean = if (HexagonSettings.isEnabled(context)) {

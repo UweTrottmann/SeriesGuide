@@ -13,6 +13,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.shows.tools.ShowTools2
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -54,7 +55,7 @@ class EditNoteDialogViewModel(application: Application, private val showId: Long
     }
 
     /**
-     * Saves the note, but only up to the number of allowed characters.
+     * Tries to save the note, see [ShowTools2.storeUserNote].
      *
      * Updates UI state depending on success.
      */
