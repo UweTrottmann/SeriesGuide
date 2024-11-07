@@ -22,7 +22,7 @@ class EditNoteDialogViewModel(application: Application, private val showId: Long
     AndroidViewModel(application) {
 
     data class EditNoteDialogUiState(
-        val noteText: String? = null,
+        val noteText: String = "",
         val noteTraktId: Long? = null,
         val isEditingEnabled: Boolean = false,
         val isNoteSaved: Boolean = false
@@ -38,7 +38,7 @@ class EditNoteDialogViewModel(application: Application, private val showId: Long
             if (show != null) {
                 uiState.update {
                     it.copy(
-                        noteText = show.userNote,
+                        noteText = show.userNoteOrEmpty,
                         noteTraktId = show.userNoteTraktId,
                         isEditingEnabled = true
                     )
@@ -49,7 +49,7 @@ class EditNoteDialogViewModel(application: Application, private val showId: Long
 
     fun updateNote(text: String?) {
         uiState.update {
-            it.copy(noteText = text)
+            it.copy(noteText = text ?: "")
         }
     }
 

@@ -389,6 +389,8 @@ class HexagonShowSync @Inject constructor(
             val tmdbId = localShow.tmdbId ?: continue
             val cloudShow = SgCloudShow()
             cloudShow.tmdbId = tmdbId
+            // It's fine if some of these are null (and would be ignored by Cloud) as existing shows
+            // on Cloud were downloaded before this.
             cloudShow.isFavorite = localShow.favorite
             cloudShow.notify = localShow.favorite
             cloudShow.isHidden = localShow.hidden

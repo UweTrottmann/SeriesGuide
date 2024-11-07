@@ -197,6 +197,8 @@ data class SgShow2(
         get() = releaseWeekDay ?: TimeTools.RELEASE_WEEKDAY_UNKNOWN
     val statusOrUnknown: Int
         get() = status ?: ShowStatus.UNKNOWN
+    val userNoteOrEmpty: String
+        get() = userNote ?: ""
 
     companion object {
         /**

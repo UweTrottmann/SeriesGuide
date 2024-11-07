@@ -454,21 +454,25 @@ class ShowTools2 @Inject constructor(
         notifyAboutSyncing()
     }
 
-    data class StoreUserNoteResult(val text: String?, val traktId: Long?)
+    data class StoreUserNoteResult(val text: String, val traktId: Long?)
 
     /**
      * Uploads to Hexagon and Trakt and on success saves to local database.
+     *
+     * [noteDraft] is shortened to at most [SgShow2.MAX_USER_NOTE_LENGTH] characters and a blank
+     * string is treated as an empty string. If the resulting string is empty, an existing note will
+     * be deleted at Trakt.
      *
      * Returns the stored text (as Trakt may modify it) and optional assigned Trakt ID.
      */
     suspend fun storeUserNote(
         showId: Long,
-        noteDraft: String?,
+        noteDraft: String,
         noteTraktId: Long?
     ): StoreUserNoteResult? {
         val noteText = noteDraft
-            ?.take(SgShow2.MAX_USER_NOTE_LENGTH)
-            ?.ifEmpty { null } // Map empty string to null so note is removed at Trakt
+            .take(SgShow2.MAX_USER_NOTE_LENGTH)
+            .ifBlank { "" } // To provide useful UI, but also Trakt does not allow a blank text
 
         // Send to Cloud first, Trakt may fail if user is not VIP
         val isSendToCloudSuccess: Boolean = if (HexagonSettings.isEnabled(context)) {
@@ -484,6 +488,7 @@ class ShowTools2 @Inject constructor(
 
                 val show = SgCloudShow()
                 show.tmdbId = showTmdbId
+                // Must be empty to remove, Cloud ignores null values
                 show.note = noteText
                 return@withContext uploadShowToCloud(show)
             }
@@ -509,13 +514,13 @@ class ShowTools2 @Inject constructor(
                 if (showTmdbId == 0) return@withContext null
 
                 val trakt = SgApp.getServicesComponent(context).trakt()
-                if (noteText == null) {
+                if (noteText.isEmpty()) {
                     // Delete note
                     if (noteTraktId == null) return@withContext null
                     val response = TraktTools2.deleteNote(trakt, noteTraktId)
                     return@withContext when (response) {
                         is TraktTools2.TraktResponse.Success -> {
-                            StoreUserNoteResult(null, null) // Remove text and Trakt ID
+                            StoreUserNoteResult("", null) // Remove text and Trakt ID
                         }
 
                         is TraktTools2.TraktResponse.IsUnauthorized -> {
@@ -533,7 +538,8 @@ class ShowTools2 @Inject constructor(
                         is TraktTools2.TraktResponse.Success -> {
                             // Store ID and note text from Trakt
                             // (which may shorten or otherwise modify it).
-                            StoreUserNoteResult(response.data.notes, response.data.id)
+                            val storedText = response.data.notes ?: ""
+                            StoreUserNoteResult(storedText, response.data.id)
                         }
 
                         is TraktTools2.TraktResponse.IsUnauthorized -> {

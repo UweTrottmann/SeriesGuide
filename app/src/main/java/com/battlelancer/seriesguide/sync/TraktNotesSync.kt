@@ -101,7 +101,7 @@ class TraktNotesSync(
         } else {
             // Remove notes from shows that are not on Trakt, meaning their note got removed
             showHelper.updateUserNotes(showIdsWithNotesToUploadOrRemove
-                .associateWith { SgShow2Helper.NoteUpdate(null, null) })
+                .associateWith { SgShow2Helper.NoteUpdate("", null) })
         }
 
         if (isInitialSync) {
