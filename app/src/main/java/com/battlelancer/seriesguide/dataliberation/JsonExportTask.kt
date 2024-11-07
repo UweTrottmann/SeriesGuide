@@ -324,7 +324,8 @@ class JsonExportTask(
             show.trakt_id = sgShow.traktId
             show.first_aired = sgShow.firstRelease
             show.rating_user = sgShow.ratingUser
-            show.user_note = sgShow.userNote
+            // Do not export blank text, if null export empty string to allow easy editing of JSON
+            show.user_note = sgShow.userNote?.ifBlank { "" } ?: ""
             show.user_note_trakt_id = sgShow.userNoteTraktId
             if (isFullDump) {
                 show.overview = sgShow.overview

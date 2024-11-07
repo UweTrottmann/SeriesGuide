@@ -159,6 +159,7 @@ class TraktNotesSync(
             val showTmdbId = show.tmdbId
                 ?: continue // Need a TMDB ID to upload
             val noteText = show.userNote
+                ?.ifBlank { null } // Trakt does not allow blank text
                 ?: continue // Note got removed in the meantime
 
             try {

@@ -394,8 +394,8 @@ class ShowFragment() : Fragment() {
 
         // note
         binding.textViewNote.apply {
-            text = show.userNote
-            isGone = show.userNote.isNullOrEmpty()
+            text = showForUi.userNote
+            isGone = showForUi.userNote.isEmpty()
         }
 
         // overview

@@ -197,8 +197,12 @@ data class SgShow2(
         get() = releaseWeekDay ?: TimeTools.RELEASE_WEEKDAY_UNKNOWN
     val statusOrUnknown: Int
         get() = status ?: ShowStatus.UNKNOWN
+
+    /**
+     * Maps blank or null to empty string.
+     */
     val userNoteOrEmpty: String
-        get() = userNote ?: ""
+        get() = userNote?.ifBlank { "" } ?: ""
 
     companion object {
         /**
