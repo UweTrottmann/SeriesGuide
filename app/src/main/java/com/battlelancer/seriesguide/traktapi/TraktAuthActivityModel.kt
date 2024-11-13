@@ -1,14 +1,12 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.traktapi
 
 import android.app.Application
-import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.jobs.NetworkJobProcessor
 import com.battlelancer.seriesguide.util.Errors
@@ -97,23 +95,8 @@ class TraktAuthActivityModel(application: Application) : AndroidViewModel(applic
             }
 
             // reset sync state before hasCredentials may return true
-            NetworkJobProcessor(getApplication())
-                .removeObsoleteJobs(false)
-            PreferenceManager.getDefaultSharedPreferences(getApplication()).edit {
-                // make next sync merge local watched and collected episodes with those on trakt
-                putBoolean(TraktSettings.KEY_HAS_MERGED_EPISODES, false)
-                // make next sync merge local movies with those on trakt
-                putBoolean(TraktSettings.KEY_HAS_MERGED_MOVIES, false)
-
-                // make sure the next sync will run a full episode sync
-                putLong(TraktSettings.KEY_LAST_FULL_EPISODE_SYNC, 0)
-                // make sure the next sync will download all watched movies
-                putLong(TraktSettings.KEY_LAST_MOVIES_WATCHED_AT, 0)
-                // make sure the next sync will download all ratings
-                putLong(TraktSettings.KEY_LAST_SHOWS_RATED_AT, 0)
-                putLong(TraktSettings.KEY_LAST_EPISODES_RATED_AT, 0)
-                putLong(TraktSettings.KEY_LAST_MOVIES_RATED_AT, 0)
-            }
+            NetworkJobProcessor(getApplication()).removeObsoleteJobs(false)
+            TraktSettings.resetToInitialSync(getApplication())
 
             // store the access token, refresh token and expiry time
             TraktCredentials.get(getApplication()).storeAccessToken(accessToken)

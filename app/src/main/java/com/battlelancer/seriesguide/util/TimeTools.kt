@@ -64,7 +64,6 @@ object TimeTools {
         return dateTime.toInstant().isBefore(Instant.ofEpochMilli(millis))
     }
 
-    @JvmStatic
     fun isAfterMillis(dateTime: OffsetDateTime, millis: Long): Boolean {
         return dateTime.toInstant().isAfter(Instant.ofEpochMilli(millis))
     }
