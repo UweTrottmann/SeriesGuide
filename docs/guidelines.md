@@ -44,6 +44,26 @@ The methods are named based on what is clicked.
 
 Example: `onMoreOptionsClick`.
 
+## Dialogs
+
+Using `AppCompatDialogFragment` and overriding `onCreateView` will use `dialogTheme` of the theme.
+
+If possible, use an alert dialog with a custom layout instead for improved sizing, easy adding of title and buttons.
+
+## Alert dialogs (recommended)
+
+Using `AppCompatDialogFragment` and overriding `onCreateDialog` with `MaterialAlertDialogBuilder`.
+
+The dialog theme is `materialAlertDialogTheme`, which only sets `android:windowMinWidthMajor` and `android:windowMinWidthMinor`.
+
+The layout used is `abc_alert_dialog_material.xml` defined via `alertDialogStyle` of the theme.
+
+When using a custom layout via `setView()`:
+
+- `layout_width` and `layout_height` of the root view are overwritten to `match_parent` (see `androidx.appcompat.app.AlertController#setupCustomContent`)
+- its parents use `layout_width="match_parent"`, `layout_height="wrap_content"`, `minHeight="48dp"` (see `abc_alert_dialog_material.xml`)
+- its `customPanel` parent is resized to take only as much space as is available (see `AlertDialogLayout`)
+
 ## PopupMenu
 
 Use `androidx.appcompat.widget.PopupMenu` so Material 3 styles are correctly applied.
