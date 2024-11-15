@@ -5,8 +5,10 @@ package com.battlelancer.seriesguide.shows.overview
 
 import android.app.Dialog
 import android.os.Bundle
+import android.text.Editable
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.core.os.bundleOf
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -47,6 +49,10 @@ class EditNoteDialog() : AppCompatDialogFragment() {
         // Text field
         binding.textFieldEditNote.counterMaxLength = SgShow2.MAX_USER_NOTE_LENGTH
         val editText = binding.textFieldEditNote.editText!!
+        // Disable save button if text is too long to save
+        editText.doAfterTextChanged { text ->
+            setSaveEnabled(model.uiState.value.isEditingEnabled, text.textHasNoError())
+        }
 
         // Buttons
         // Can not use dialog buttons as they dismiss the dialog right away,
@@ -69,7 +75,7 @@ class EditNoteDialog() : AppCompatDialogFragment() {
                 model.uiState.collect { state ->
                     Timber.d("Display note")
                     editText.setText(state.noteText)
-                    setViewsEnabled(state.isEditingEnabled)
+                    setViewsEnabled(state.isEditingEnabled, editText.text.textHasNoError())
                     if (state.isNoteSaved) {
                         dismiss()
                     }
@@ -83,11 +89,20 @@ class EditNoteDialog() : AppCompatDialogFragment() {
             .create()
     }
 
-    private fun setViewsEnabled(enabled: Boolean) {
+    private fun setViewsEnabled(isEditingEnabled: Boolean, hasNoError: Boolean) {
         binding?.apply {
-            textFieldEditNote.isEnabled = enabled
-            buttonPositive.isEnabled = enabled
+            textFieldEditNote.isEnabled = isEditingEnabled
+            setSaveEnabled(isEditingEnabled, hasNoError)
         }
+    }
+
+    private fun Editable?.textHasNoError(): Boolean {
+        val textLength = this?.length ?: 0
+        return textLength <= SgShow2.MAX_USER_NOTE_LENGTH
+    }
+
+    private fun setSaveEnabled(isEditingEnabled: Boolean, hasNoError: Boolean) {
+        binding?.buttonPositive?.isEnabled = isEditingEnabled && hasNoError
     }
 
     override fun onPause() {
