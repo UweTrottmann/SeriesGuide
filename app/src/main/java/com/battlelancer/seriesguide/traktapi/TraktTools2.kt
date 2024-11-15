@@ -26,6 +26,7 @@ import com.uwetrottmann.trakt5.entities.ShowIds
 import com.uwetrottmann.trakt5.enums.Extended
 import com.uwetrottmann.trakt5.enums.IdType
 import com.uwetrottmann.trakt5.enums.Type
+import com.uwetrottmann.trakt5.services.Notes
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.awaitResponse
@@ -43,13 +44,13 @@ object TraktTools2 {
      * Adds or updates the note for the given show.
      */
     suspend fun saveNoteForShow(
-        trakt: SgTrakt,
+        traktNotes: Notes,
         showTmdbId: Int,
         noteText: String
     ): TraktResponse<Note> {
         // Note: calling the add endpoint for an existing note will update it
         return awaitTraktCall(
-            trakt.notes().addNote(
+            traktNotes.addNote(
                 AddNoteRequest(
                     Show().apply {
                         ids = ShowIds.tmdb(showTmdbId)

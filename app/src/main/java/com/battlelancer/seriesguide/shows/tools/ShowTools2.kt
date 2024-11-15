@@ -538,7 +538,7 @@ class ShowTools2 @Inject constructor(
                     }
                 } else {
                     // Add or update note
-                    val response = TraktTools2.saveNoteForShow(trakt, showTmdbId, noteText)
+                    val response = TraktTools2.saveNoteForShow(trakt.notes(), showTmdbId, noteText)
                     return@withContext when (response) {
                         is TraktTools2.TraktResponse.Success -> {
                             // Store ID and note text from Trakt

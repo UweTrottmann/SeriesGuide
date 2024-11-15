@@ -7,14 +7,14 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgShow2Helper
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktSettings
+import com.battlelancer.seriesguide.traktapi.TraktTools2
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.TimeTools
 import com.uwetrottmann.trakt5.TraktV2
-import com.uwetrottmann.trakt5.entities.AddNoteRequest
 import com.uwetrottmann.trakt5.entities.NoteResponse
-import com.uwetrottmann.trakt5.entities.Show
-import com.uwetrottmann.trakt5.entities.ShowIds
 import com.uwetrottmann.trakt5.entities.UserSlug
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import org.threeten.bp.OffsetDateTime
 import timber.log.Timber
 
@@ -153,8 +153,7 @@ class TraktNotesSync(
      */
     private fun uploadNotesForShows(showIdsWithNotesToUpload: MutableList<Long>): Boolean {
         // Cache service
-        val notes = traktSync.trakt.notes()
-        val action = "add note"
+        val traktNotes = traktSync.trakt.notes()
 
         val noteUpdates = mutableMapOf<Long, SgShow2Helper.NoteUpdate>()
         try {
@@ -167,39 +166,25 @@ class TraktNotesSync(
                     ?.ifBlank { null } // Trakt does not allow blank text
                     ?: continue // Note got removed in the meantime
 
-                try {
-                    val response = notes.addNote(
-                        AddNoteRequest(
-                            Show().apply {
-                                ids = ShowIds.tmdb(showTmdbId)
-                            },
-                            noteText
-                        )
-                    ).execute()
-                    if (response.isSuccessful) {
-                        val body = response.body()
-                        if (body != null) {
-                            val storedText = body.notes ?: ""
-                            val noteTraktId = body.id
-                            noteUpdates[showId] = SgShow2Helper.NoteUpdate(storedText, noteTraktId)
-                        } else {
-                            Errors.logAndReport(action, response, "body is null")
-                            return false // Stop uploading
-                        }
-                    } else if (!response.isSuccessful) {
-                        // Note: downloaded notes before, which would have required VIP;
-                        // so assume it expired when getting until this point.
-                        if (TraktV2.isNotVip(response)
-                            || SgTrakt.isUnauthorized(context, response)) {
-                            return false // Stop uploading
-                        }
-                        Errors.logAndReport(action, response)
-                        return false // Stop uploading
+                // If this thread is interrupted throws InterruptedException
+                val storedNote = runBlocking(Dispatchers.Default) {
+                    val response = TraktTools2
+                        .saveNoteForShow(traktNotes, showTmdbId, noteText)
+                    when (response) {
+                        is TraktTools2.TraktResponse.Success -> response.data
+                        // Note: if failing due to not VIP, downloaded notes before, which would
+                        // have required VIP; so assume it expired when getting until this point.
+                        else -> null
                     }
-                } catch (e: Exception) {
-                    Errors.logAndReport(action, e)
+                }
+
+                if (storedNote == null) {
                     return false // Stop uploading
                 }
+
+                val storedText = storedNote.notes ?: ""
+                val noteTraktId = storedNote.id
+                noteUpdates[showId] = SgShow2Helper.NoteUpdate(storedText, noteTraktId)
             }
         } finally {
             // In any case, save updates to any already sent notes
