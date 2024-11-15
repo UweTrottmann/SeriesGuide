@@ -8,6 +8,14 @@ When importing, not all but a few required values need to be present. SeriesGuid
 
 ## Shows
 
+Based on the
+
+- [Show](/app/src/main/java/com/battlelancer/seriesguide/dataliberation/model/Show.java)
+- [Season](/app/src/main/java/com/battlelancer/seriesguide/dataliberation/model/Season.java)
+- [Episode](/app/src/main/java/com/battlelancer/seriesguide/dataliberation/model/Episode.java)
+
+classes.
+
 ```json
 [
     {
@@ -59,6 +67,13 @@ When importing, not all but a few required values need to be present. SeriesGuid
 
 ## Lists
 
+Based on the
+
+- [List](/app/src/main/java/com/battlelancer/seriesguide/dataliberation/model/List.java)
+- [ListItem](/app/src/main/java/com/battlelancer/seriesguide/dataliberation/model/ListItem.java)
+
+classes.
+
 ```json
 [
     {
@@ -99,6 +114,8 @@ When importing, not all but a few required values need to be present. SeriesGuid
 ```
 
 ## Movies
+
+Based on the [Movie](/app/src/main/java/com/battlelancer/seriesguide/dataliberation/model/Movie.java) class.
 
 ```json
 [
