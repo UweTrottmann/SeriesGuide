@@ -12,6 +12,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ### Unreleased
 
+* 🌟 Shows: add a note to a show, synced with SeriesGuide Cloud or Trakt (VIP only).
 * 🔧 Shows: also use plus symbol for button on discover screen to be consistent.
 
 ### 2024.5.0 - 2024-11-06 🧪
