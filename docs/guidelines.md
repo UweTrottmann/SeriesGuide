@@ -69,3 +69,29 @@ When using a custom layout via `setView()`:
 Use `androidx.appcompat.widget.PopupMenu` so Material 3 styles are correctly applied.
 (Could also use the platform one and set Widget.Material3.PopupMenu with android:popupMenuStyle,
 but rather use the same implementation on all versions.)
+
+## TextInputLayout
+
+When trying to make `TextInputLayout` (grow to) fill available height, if the contained `TextInputEditText` is too tall the counter or error text can get pushed outside of its bounds.
+
+As it is a `LinearLayout`, [until this is fixed](https://github.com/material-components/material-components-android/issues/1435) resolve by using `android:layout_weight="1"` on the contained `TextInputEditText`:
+
+```xml
+<com.google.android.material.textfield.TextInputLayout
+    android:id="@+id/textFieldEditNote"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    app:counterEnabled="true"
+    app:counterMaxLength="500">
+
+    <!-- This can grow up to the height of the TextInputLayout by default and will push the
+        counter out of bounds. As TextInputLayout is a LinearLayout, set layout_weight="1"
+        to resolve. -->
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+</com.google.android.material.textfield.TextInputLayout>
+```
