@@ -78,7 +78,7 @@ class EditNoteDialog() : AppCompatDialogFragment() {
         }
 
         return MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.title_note)
+            .setTitle(R.string.action_edit_note)
             .setView(binding.root)
             .create()
     }

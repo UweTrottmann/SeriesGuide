@@ -276,7 +276,7 @@
                     style="@style/Widget.SeriesGuide.Button.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/title_note"
+                    android:text="@string/action_edit_note"
                     app:icon="@drawable/ic_edit_note_control_24dp"
                     app:iconGravity="start" />
 
