@@ -146,44 +146,64 @@ class TraktNotesSync(
     }
 
     /**
-     * Returns whether all notes were successfully added.
+     * Adds the notes at Trakt and updates the local show with the saved text (Trakt may modify it)
+     * and note ID.
+     *
+     * Returns whether all notes were successfully uploaded.
      */
     private fun uploadNotesForShows(showIdsWithNotesToUpload: MutableList<Long>): Boolean {
         // Cache service
         val notes = traktSync.trakt.notes()
+        val action = "add note"
 
-        for (showId in showIdsWithNotesToUpload) {
+        val noteUpdates = mutableMapOf<Long, SgShow2Helper.NoteUpdate>()
+        try {
+            for (showId in showIdsWithNotesToUpload) {
+                val show = showHelper.getShowWithNote(showId)
+                    ?: continue // Show was removed in the meantime
+                val showTmdbId = show.tmdbId
+                    ?: continue // Need a TMDB ID to upload
+                val noteText = show.userNote
+                    ?.ifBlank { null } // Trakt does not allow blank text
+                    ?: continue // Note got removed in the meantime
 
-            val show = showHelper.getShowWithNote(showId)
-                ?: continue // Show was removed in the meantime
-            val showTmdbId = show.tmdbId
-                ?: continue // Need a TMDB ID to upload
-            val noteText = show.userNote
-                ?.ifBlank { null } // Trakt does not allow blank text
-                ?: continue // Note got removed in the meantime
-
-            try {
-                val response = notes.addNote(
-                    AddNoteRequest(
-                        Show().apply {
-                            ids = ShowIds.tmdb(showTmdbId)
-                        },
-                        noteText
-                    )
-                ).execute()
-                if (!response.isSuccessful) {
-                    // Note: downloaded notes before, which would have required VIP;
-                    // so assume it expired when getting until this point.
-                    if (TraktV2.isNotVip(response) || SgTrakt.isUnauthorized(context, response)) {
+                try {
+                    val response = notes.addNote(
+                        AddNoteRequest(
+                            Show().apply {
+                                ids = ShowIds.tmdb(showTmdbId)
+                            },
+                            noteText
+                        )
+                    ).execute()
+                    if (response.isSuccessful) {
+                        val body = response.body()
+                        if (body != null) {
+                            val storedText = body.notes ?: ""
+                            val noteTraktId = body.id
+                            noteUpdates[showId] = SgShow2Helper.NoteUpdate(storedText, noteTraktId)
+                        } else {
+                            Errors.logAndReport(action, response, "body is null")
+                            return false // Stop uploading
+                        }
+                    } else if (!response.isSuccessful) {
+                        // Note: downloaded notes before, which would have required VIP;
+                        // so assume it expired when getting until this point.
+                        if (TraktV2.isNotVip(response)
+                            || SgTrakt.isUnauthorized(context, response)) {
+                            return false // Stop uploading
+                        }
+                        Errors.logAndReport(action, response)
                         return false // Stop uploading
                     }
-                    Errors.logAndReport("add note", response)
+                } catch (e: Exception) {
+                    Errors.logAndReport(action, e)
                     return false // Stop uploading
                 }
-            } catch (e: Exception) {
-                Errors.logAndReport("add note", e)
-                return false // Stop uploading
             }
+        } finally {
+            // In any case, save updates to any already sent notes
+            showHelper.updateUserNotes(noteUpdates)
         }
 
         return true
