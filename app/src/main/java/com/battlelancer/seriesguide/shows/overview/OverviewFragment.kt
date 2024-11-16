@@ -60,7 +60,6 @@ import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceActiveEvent
 import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceCompletedEvent
 import com.battlelancer.seriesguide.util.ImageTools
-import com.battlelancer.seriesguide.util.ImageTools.tmdbOrTvdbStillUrl
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.RatingsTools.initialize
 import com.battlelancer.seriesguide.util.RatingsTools.setLink
@@ -650,7 +649,7 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
             // Try loading image
             ImageTools.loadWithPicasso(
                 requireContext(),
-                tmdbOrTvdbStillUrl(imagePath, requireContext(), false)
+                ImageTools.buildEpisodeImageUrl(imagePath, requireContext())
             )
                 .error(R.drawable.ic_photo_gray_24dp)
                 .into(imageView,

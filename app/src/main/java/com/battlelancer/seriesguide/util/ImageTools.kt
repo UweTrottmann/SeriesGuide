@@ -123,15 +123,22 @@ object ImageTools {
         "https://seriesgui.de/demo/sitcom.jpg",
     )
 
-    private val demoStillUrl = "https://seriesgui.de/demo/episode-anime.jpg"
+    private val demoEpisodeImageUrl = "https://seriesgui.de/demo/episode-anime.jpg"
 
     private fun pickDemoPosterUrl(imagePath: String): String {
         // Map an image path always to the same image
         return demoPosterUrls[imagePath.hashCode().mod(demoPosterUrls.size)]
     }
 
-    @JvmStatic
-    fun tmdbOrTvdbStillUrl(
+    /**
+     * Builds an image cache URL, or returns null if [imagePath] is null or empty.
+     *
+     * Returns demo images if [AppSettings.isDemoModeEnabled] is enabled.
+     *
+     * If [imagePath] starts with `/` builds a TMDB episode image path with resolution depending on
+     * [originalSize]. Otherwise a legacy TVDB URL.
+     */
+    fun buildEpisodeImageUrl(
         imagePath: String?,
         context: Context,
         originalSize: Boolean = false
@@ -140,7 +147,7 @@ object ImageTools {
             null
         } else {
             if (AppSettings.isDemoModeEnabled(context)) {
-                return demoStillUrl
+                return demoEpisodeImageUrl
             }
 
             // If the path contains the legacy TVDB cache prefix, use the www subdomain as it has
@@ -159,7 +166,7 @@ object ImageTools {
                     if (originalSize) {
                         TmdbSettings.getImageOriginalUrl(context, imagePath)
                     } else {
-                        TmdbSettings.getStillUrl(context, imagePath)
+                        TmdbSettings.buildBackdropUrl(context, imagePath)
                     }
                 }
 
@@ -174,7 +181,7 @@ object ImageTools {
     /**
      * [posterUrl] must not be empty.
      */
-    fun buildImageCacheUrl(posterUrl: String): String? {
+    private fun buildImageCacheUrl(posterUrl: String): String? {
         @Suppress("SENSELESS_COMPARISON")
         if (BuildConfig.IMAGE_CACHE_URL == null) {
             return posterUrl // no cache
