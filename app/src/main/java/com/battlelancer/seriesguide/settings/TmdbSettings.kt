@@ -21,7 +21,7 @@ object TmdbSettings {
     private const val KEY_TMDB_BASE_URL = "com.battlelancer.seriesguide.tmdb.baseurl"
     const val POSTER_SIZE_SPEC_W154 = "w154"
     const val POSTER_SIZE_SPEC_W342 = "w342"
-    private const val BACKDROP_SMALL_SIZE_SPEC = "w300"
+    const val BACKDROP_SMALL_SIZE_SPEC = "w300"
     private const val IMAGE_SIZE_SPEC_ORIGINAL = "original"
     const val DEFAULT_BASE_URL = "https://image.tmdb.org/t/p/"
 
