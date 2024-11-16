@@ -21,7 +21,21 @@ object TmdbSettings {
     private const val KEY_TMDB_BASE_URL = "com.battlelancer.seriesguide.tmdb.baseurl"
     const val POSTER_SIZE_SPEC_W154 = "w154"
     const val POSTER_SIZE_SPEC_W342 = "w342"
-    const val BACKDROP_SMALL_SIZE_SPEC = "w300"
+
+    /**
+     * As of 2024-11:
+     *
+     * - w300 (300 × 169 px) JPEG is around 9-16 kB
+     * - w780 (780 × 439 px) JPEG is around 30-70 kB
+     * - w1280 (1280 × 720 px) JPEG is around 60-140 KB
+     *
+     * Samples:
+     *
+     * - https://image.tmdb.org/t/p/original/8Tvnx22rzhwArofFPhmcfaBvgjN.jpg (smallest)
+     * - https://image.tmdb.org/t/p/original/j4WEC9Jh4AyXF8ynpX3pz633tse.jpg
+     * - https://image.tmdb.org/t/p/original/5Bh7EE3p6OOS0NzH22AE0N7DYO8.jpg (largest)
+     */
+    const val BACKDROP_SMALL_SIZE_SPEC = "w780"
     private const val IMAGE_SIZE_SPEC_ORIGINAL = "original"
     const val DEFAULT_BASE_URL = "https://image.tmdb.org/t/p/"
 
