@@ -135,7 +135,7 @@ class HexagonShowSync @Inject constructor(
                 logAndReportHexagon("get shows", e)
                 return false
             }
-            if (shows == null || shows.isEmpty()) {
+            if (shows.isNullOrEmpty()) {
                 // nothing to do here
                 break
             }
@@ -324,6 +324,14 @@ class HexagonShowSync @Inject constructor(
                             hasUpdates = true
                         }
                     }
+                    if (show.note != null) {
+                        // When merging, only overwrite if note on server is not empty:
+                        // this might cause a previously deleted note to get uploaded later, but
+                        // that's less bad than deleting a note that only exists on this device.
+                        if (!mergeValues || show.note.isNotEmpty()) {
+                            update.userNote = show.note
+                        }
+                    }
                     // If below properties have changed (new value != old value), should
                     // trigger a sync for this show.
                     var scheduleShowUpdate = false
@@ -381,6 +389,8 @@ class HexagonShowSync @Inject constructor(
             val tmdbId = localShow.tmdbId ?: continue
             val cloudShow = SgCloudShow()
             cloudShow.tmdbId = tmdbId
+            // It's fine if some of these are null (and would be ignored by Cloud) as existing shows
+            // on Cloud were downloaded before this.
             cloudShow.isFavorite = localShow.favorite
             cloudShow.notify = localShow.favorite
             cloudShow.isHidden = localShow.hidden
@@ -388,6 +398,7 @@ class HexagonShowSync @Inject constructor(
             cloudShow.customReleaseTime = localShow.customReleaseTime
             cloudShow.customReleaseDayOffset = localShow.customReleaseDayOffset
             cloudShow.customReleaseTimeZone = localShow.customReleaseTimeZone
+            cloudShow.note = localShow.userNote
             shows.add(cloudShow)
         }
         if (shows.size == 0) {

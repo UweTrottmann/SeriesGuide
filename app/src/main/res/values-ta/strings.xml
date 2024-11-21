@@ -40,6 +40,7 @@
     <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">Select region</string>
     <string name="action_reset">Reset</string>
+    <string name="action_save">Save</string>
     <!-- Search -->
     <string name="clear_search_history">தேடல் வரலாற்றை நீக்கு</string>
     <string name="search_hint">தேடல் episodes</string>
@@ -172,6 +173,8 @@
     <string name="context_marknext">பார்த்த அடுத்த சம்பவம்</string>
     <string name="action_episodes_switch_view">Switch view</string>
     <string name="next_to_watch">Next to watch</string>
+    <string name="title_notes">Notes</string>
+    <string name="action_edit_note">Edit note</string>
     <!-- History -->
     <string name="user_stream">வரலாறு</string>
     <string name="recently_watched">சமீபத்தில் பார்த்த</string>

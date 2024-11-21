@@ -44,6 +44,7 @@
     <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">Select region</string>
     <string name="action_reset">Reset</string>
+    <string name="action_save">Save</string>
 
     <!-- Search -->
     <string name="clear_search_history">Clear search history</string>
@@ -184,6 +185,8 @@
     <string name="context_marknext">Watched next episode</string>
     <string name="action_episodes_switch_view">Switch view</string>
     <string name="next_to_watch">Next to watch</string>
+    <string name="title_notes">Notes</string>
+    <string name="action_edit_note">Edit note</string>
 
     <!-- History -->
     <string name="user_stream">History</string>

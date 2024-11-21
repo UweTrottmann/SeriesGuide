@@ -40,6 +40,7 @@
     <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">Válassz régiót</string>
     <string name="action_reset">Visszaállítás</string>
+    <string name="action_save">Save</string>
     <!-- Search -->
     <string name="clear_search_history">Keresési előzmények törlése</string>
     <string name="search_hint">Epizódok keresése</string>
@@ -172,6 +173,8 @@
     <string name="context_marknext">Láttam a következő epizódot</string>
     <string name="action_episodes_switch_view">Nézet váltása</string>
     <string name="next_to_watch">Következő megnézendő</string>
+    <string name="title_notes">Notes</string>
+    <string name="action_edit_note">Edit note</string>
     <!-- History -->
     <string name="user_stream">Előzmények</string>
     <string name="recently_watched">Nemrég megnézett</string>

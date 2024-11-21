@@ -40,6 +40,7 @@
     <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">گزینش ناحیه</string>
     <string name="action_reset">بازنشانی</string>
+    <string name="action_save">Save</string>
     <!-- Search -->
     <string name="clear_search_history">پاک‌سازی تاریخچهٔ جست‌وجو</string>
     <string name="search_hint">جست‌وجوی قسمت‌ها</string>
@@ -172,6 +173,8 @@
     <string name="context_marknext">قسمت بعدی تماشا شد</string>
     <string name="action_episodes_switch_view">تعویض نما</string>
     <string name="next_to_watch">برنامهٔ بعدی</string>
+    <string name="title_notes">Notes</string>
+    <string name="action_edit_note">Edit note</string>
     <!-- History -->
     <string name="user_stream">تاریخچه</string>
     <string name="recently_watched">به‌تازگی تماشا شده</string>

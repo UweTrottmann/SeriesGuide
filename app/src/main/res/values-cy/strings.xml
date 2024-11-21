@@ -40,6 +40,7 @@
     <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">Dewis rhanbarth</string>
     <string name="action_reset">Reset</string>
+    <string name="action_save">Save</string>
     <!-- Search -->
     <string name="clear_search_history">Hanes chwilio clir</string>
     <string name="search_hint">Chwilio penodau</string>
@@ -176,6 +177,8 @@
     <string name="context_marknext">Wedi gwylio\'r bennod nesaf</string>
     <string name="action_episodes_switch_view">Newid golygfa</string>
     <string name="next_to_watch">Nesaf i wylio</string>
+    <string name="title_notes">Notes</string>
+    <string name="action_edit_note">Edit note</string>
     <!-- History -->
     <string name="user_stream">Hanes</string>
     <string name="recently_watched">Gwyliwyd yn ddiweddar</string>

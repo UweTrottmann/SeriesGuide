@@ -46,6 +46,9 @@ object TraktSettings {
     private const val KEY_LAST_MOVIES_WATCHED_AT
             : String = "trakt.last_activity.movies.watched"
 
+    private const val KEY_LAST_NOTES_UPDATED_AT
+            : String = "trakt.last_activity.notes.updated"
+
     /**
      * Unused, but kept for reference.
      *
@@ -65,6 +68,9 @@ object TraktSettings {
 
     private const val KEY_HAS_MERGED_MOVIES
             : String = "com.battlelancer.seriesguide.trakt.mergedmovies"
+
+    private const val KEY_HAS_MERGED_SHOW_NOTES
+            : String = "trakt.notes.shows.merged"
 
     /**
      * Used in settings_basic.xml.
@@ -134,6 +140,20 @@ object TraktSettings {
     fun getLastMoviesWatchedAt(context: Context): Long {
         return PreferenceManager.getDefaultSharedPreferences(context)
             .getLong(KEY_LAST_MOVIES_WATCHED_AT, 0)
+    }
+
+    /**
+     * The last time notes were updated or 0 if no value exists.
+     */
+    fun getLastNotesUpdatedAt(context: Context): Long {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+            .getLong(KEY_LAST_NOTES_UPDATED_AT, 0)
+    }
+
+    fun storeLastNotesUpdatedAt(context: Context, updatedAt: OffsetDateTime) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit {
+            putLong(KEY_LAST_NOTES_UPDATED_AT, updatedAt.toInstant().toEpochMilli())
+        }
     }
 
     /**
@@ -227,10 +247,26 @@ object TraktSettings {
         }
     }
 
+    /**
+     * Returns if show notes have not been synced with the current Trakt account.
+     */
+    fun isInitialSyncShowNotes(context: Context): Boolean {
+        return !PreferenceManager.getDefaultSharedPreferences(context)
+            .getBoolean(KEY_HAS_MERGED_SHOW_NOTES, false)
+    }
+
+    fun setInitialSyncShowNotesCompleted(context: Context) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit {
+            putBoolean(KEY_HAS_MERGED_SHOW_NOTES, true)
+        }
+    }
+
+
     fun resetToInitialSync(context: Context) {
         PreferenceManager.getDefaultSharedPreferences(context).edit {
             putBoolean(KEY_HAS_MERGED_EPISODES, false)
             putBoolean(KEY_HAS_MERGED_MOVIES, false)
+            putBoolean(KEY_HAS_MERGED_SHOW_NOTES, false)
             // Not actually necessary, but also reset timestamps for episodes and movies
             putLong(KEY_LAST_EPISODES_WATCHED_AT, 0)
             putLong(KEY_LAST_EPISODES_COLLECTED_AT, 0)

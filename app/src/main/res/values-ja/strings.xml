@@ -40,6 +40,7 @@
     <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">エリアの選択</string>
     <string name="action_reset">Reset</string>
+    <string name="action_save">Save</string>
     <!-- Search -->
     <string name="clear_search_history">検索履歴を削除</string>
     <string name="search_hint">エピソードを検索</string>
@@ -171,6 +172,8 @@
     <string name="context_marknext">視聴済次のエピソード</string>
     <string name="action_episodes_switch_view">表示切替</string>
     <string name="next_to_watch">Next to watch</string>
+    <string name="title_notes">Notes</string>
+    <string name="action_edit_note">Edit note</string>
     <!-- History -->
     <string name="user_stream">履歴</string>
     <string name="recently_watched">最近観た作品</string>

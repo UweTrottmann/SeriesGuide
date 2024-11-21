@@ -40,6 +40,7 @@
     <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">Elekti regionon</string>
     <string name="action_reset">Reset</string>
+    <string name="action_save">Save</string>
     <!-- Search -->
     <string name="clear_search_history">Viŝi serĉhistorion</string>
     <string name="search_hint">Serĉi epizodojn</string>
@@ -172,6 +173,8 @@
     <string name="context_marknext">Spektis sekvan epizodon</string>
     <string name="action_episodes_switch_view">Baskuli vidon</string>
     <string name="next_to_watch">Next to watch</string>
+    <string name="title_notes">Notes</string>
+    <string name="action_edit_note">Edit note</string>
     <!-- History -->
     <string name="user_stream">Historio</string>
     <string name="recently_watched">Laste spektita</string>

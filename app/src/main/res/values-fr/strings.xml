@@ -40,6 +40,7 @@
     <string name="action_stream_settings">Options de streaming et d\'achat</string>
     <string name="action_select_region">Sélectionner une région</string>
     <string name="action_reset">Réinitialiser</string>
+    <string name="action_save">Save</string>
     <!-- Search -->
     <string name="clear_search_history">Effacer l\'historique de recherche</string>
     <string name="search_hint">Recherche d\'épisodes</string>
@@ -172,6 +173,8 @@
     <string name="context_marknext">Prochain épisode vu</string>
     <string name="action_episodes_switch_view">Basculer l’affichage</string>
     <string name="next_to_watch">Prochain à voir</string>
+    <string name="title_notes">Notes</string>
+    <string name="action_edit_note">Edit note</string>
     <!-- History -->
     <string name="user_stream">Historique</string>
     <string name="recently_watched">Vu récemment</string>

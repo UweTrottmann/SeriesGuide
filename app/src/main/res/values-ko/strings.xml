@@ -40,6 +40,7 @@
     <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">국가 선택</string>
     <string name="action_reset">재설정</string>
+    <string name="action_save">Save</string>
     <!-- Search -->
     <string name="clear_search_history">검색 기록 삭제</string>
     <string name="search_hint">에피소드 검색</string>
@@ -171,6 +172,8 @@
     <string name="context_marknext">다음 에피소드 시청 완료</string>
     <string name="action_episodes_switch_view">Switch view</string>
     <string name="next_to_watch">Next to watch</string>
+    <string name="title_notes">Notes</string>
+    <string name="action_edit_note">Edit note</string>
     <!-- History -->
     <string name="user_stream">기록</string>
     <string name="recently_watched">최근 시청 항목</string>

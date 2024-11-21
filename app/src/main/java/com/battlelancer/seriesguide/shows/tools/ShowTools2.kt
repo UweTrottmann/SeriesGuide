@@ -15,7 +15,13 @@ import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.sync.HexagonShowSync
+import com.battlelancer.seriesguide.traktapi.TraktCredentials
+import com.battlelancer.seriesguide.traktapi.TraktTools2
+import com.battlelancer.seriesguide.traktapi.TraktTools2.TraktErrorResponse
+import com.battlelancer.seriesguide.traktapi.TraktTools2.TraktNonNullResponse
+import com.battlelancer.seriesguide.traktapi.TraktTools2.TraktResponse
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow
 import dagger.Lazy
@@ -23,6 +29,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
+import timber.log.Timber
 import javax.inject.Inject
 import kotlin.collections.set
 import com.battlelancer.seriesguide.enums.Result as SgResult
@@ -449,6 +456,131 @@ class ShowTools2 @Inject constructor(
         }
 
         notifyAboutSyncing()
+    }
+
+    data class StoreUserNoteResult(val text: String, val traktId: Long?)
+
+    /**
+     * Uploads to Hexagon and Trakt and on success saves to local database,
+     * on failure returns `null`.
+     *
+     * Fails if [noteDraft] exceeds [SgShow2.MAX_USER_NOTE_LENGTH] characters.
+     *
+     * A blank string is treated as an empty string.
+     *
+     * If the final string is empty, an existing note will be deleted at Trakt.
+     *
+     * Returns the stored text (as Trakt may modify it) and optional assigned Trakt ID.
+     */
+    suspend fun storeUserNote(
+        showId: Long,
+        noteDraft: String,
+        noteTraktId: Long?
+    ): StoreUserNoteResult? {
+        val noteText = noteDraft
+            .ifBlank { "" } // Avoid storing useless data, but also Trakt does not allow a blank text
+
+        // Fail if string is too long
+        if (noteText.length > SgShow2.MAX_USER_NOTE_LENGTH) return null
+
+        // Send to Cloud first, Trakt may fail if user is not VIP
+        val isSendToCloudSuccess: Boolean = if (HexagonSettings.isEnabled(context)) {
+            withContext(Dispatchers.Default) {
+                if (isNotConnected(context)) {
+                    return@withContext false
+                }
+
+                val showTmdbId = withContext(Dispatchers.IO) {
+                    SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTmdbId(showId)
+                }
+                if (showTmdbId == 0) return@withContext false
+
+                val show = SgCloudShow()
+                show.tmdbId = showTmdbId
+                // Must be empty to remove, Cloud ignores null values
+                show.note = noteText
+                return@withContext uploadShowToCloud(show)
+            }
+        } else {
+            true // Not sending to Cloud
+        }
+
+        // If sending to Cloud failed, do not even try Trakt or save to database
+        if (!isSendToCloudSuccess) return null
+
+        var result: StoreUserNoteResult? = StoreUserNoteResult(text = noteText, traktId = null)
+
+        val sendToTrakt = TraktCredentials.get(context).hasCredentials()
+        if (sendToTrakt) {
+            result = withContext(Dispatchers.Default) {
+                if (isNotConnected(context)) {
+                    return@withContext null
+                }
+
+                val showTmdbId = withContext(Dispatchers.IO) {
+                    SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTmdbId(showId)
+                }
+                if (showTmdbId == 0) return@withContext null
+
+                val trakt = SgApp.getServicesComponent(context).trakt()
+                if (noteText.isEmpty()) {
+                    // Delete note
+                    if (noteTraktId == null) return@withContext null
+                    val response = TraktTools2.deleteNote(trakt, noteTraktId)
+                    return@withContext when (response) {
+                        is TraktResponse.Success -> {
+                            StoreUserNoteResult("", null) // Remove text and Trakt ID
+                        }
+
+                        is TraktErrorResponse.IsUnauthorized -> {
+                            TraktCredentials.get(context).setCredentialsInvalid()
+                            null // Abort
+                        }
+
+                        is TraktErrorResponse.IsNotVip -> {
+                            Timber.d("storeUserNote: user is not Trakt VIP, can not delete at Trakt")
+                            result // Store as is
+                        }
+
+                        is TraktErrorResponse.Other -> null // Abort
+                    }
+                } else {
+                    // Add or update note
+                    val response = TraktTools2.saveNoteForShow(trakt.notes(), showTmdbId, noteText)
+                    return@withContext when (response) {
+                        is TraktNonNullResponse.Success -> {
+                            // Store ID and note text from Trakt
+                            // (which may shorten or otherwise modify it).
+                            val storedText = response.data.notes ?: ""
+                            StoreUserNoteResult(storedText, response.data.id)
+                        }
+
+                        is TraktErrorResponse.IsUnauthorized -> {
+                            TraktCredentials.get(context).setCredentialsInvalid()
+                            null
+                        }
+
+                        is TraktErrorResponse.IsNotVip -> {
+                            Timber.d("storeUserNote: user is not Trakt VIP, can not upload to Trakt")
+                            result // Store as is
+                        }
+
+                        is TraktErrorResponse.Other -> null // Abort
+                    }
+                }
+            }
+        }
+
+        // Do not save to local database if sending to Trakt has failed,
+        // but not if user is just not VIP.
+        if (result == null) return null
+
+        // Save to local database
+        withContext(Dispatchers.IO) {
+            SgRoomDatabase.getInstance(context).sgShow2Helper()
+                .updateUserNote(showId, result.text, result.traktId)
+        }
+        return result
     }
 
     private suspend fun notifyAboutSyncing() {

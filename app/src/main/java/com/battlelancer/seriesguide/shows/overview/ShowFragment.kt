@@ -17,6 +17,7 @@ import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isGone
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -111,6 +112,8 @@ class ShowFragment() : Fragment() {
         val buttonWebSearch: Button
         val buttonComments: Button
         val buttonShare: Button
+        val buttonEditNote: Button
+        val textViewNote: TextView
         val castLabel: TextView
         val castContainer: LinearLayout
         val crewLabel: TextView
@@ -147,6 +150,8 @@ class ShowFragment() : Fragment() {
             buttonWebSearch = view.findViewById(R.id.buttonShowWebSearch)
             buttonComments = view.findViewById(R.id.buttonShowComments)
             buttonShare = view.findViewById(R.id.buttonShowShare)
+            buttonEditNote = view.findViewById(R.id.buttonShowNote)
+            textViewNote = view.findViewById(R.id.textViewShowNote)
             castLabel = view.findViewById(R.id.labelCast)
             castContainer = view.findViewById(R.id.containerCast)
             crewLabel = view.findViewById(R.id.labelCrew)
@@ -182,6 +187,11 @@ class ShowFragment() : Fragment() {
                     "custom-release-time"
                 )
             }
+        }
+
+        // Edit note button
+        binding.buttonEditNote.setOnClickListener {
+            EditNoteDialog(showId).safeShow(parentFragmentManager, "edit-note")
         }
 
         // language button
@@ -380,6 +390,12 @@ class ShowFragment() : Fragment() {
                 SgApp.getServicesComponent(requireContext()).showTools()
                     .storeIsHidden(showId, !isHidden)
             }
+        }
+
+        // note
+        binding.textViewNote.apply {
+            text = showForUi.userNote
+            isGone = showForUi.userNote.isEmpty()
         }
 
         // overview

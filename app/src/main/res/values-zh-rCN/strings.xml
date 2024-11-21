@@ -40,6 +40,7 @@
     <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">选择地区</string>
     <string name="action_reset">重置</string>
+    <string name="action_save">Save</string>
     <!-- Search -->
     <string name="clear_search_history">清除搜索记录</string>
     <string name="search_hint">搜索剧集</string>
@@ -171,6 +172,8 @@
     <string name="context_marknext">标记本集为看过</string>
     <string name="action_episodes_switch_view">切换视图</string>
     <string name="next_to_watch">接下来要看的一集</string>
+    <string name="title_notes">Notes</string>
+    <string name="action_edit_note">Edit note</string>
     <!-- History -->
     <string name="user_stream">历史记录</string>
     <string name="recently_watched">最近看过</string>

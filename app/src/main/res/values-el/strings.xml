@@ -40,6 +40,7 @@
     <string name="action_stream_settings">Ρυθμίσεις streaming ή αγορών</string>
     <string name="action_select_region">Επιλογή περιοχής</string>
     <string name="action_reset">Επαναφορά</string>
+    <string name="action_save">Save</string>
     <!-- Search -->
     <string name="clear_search_history">Εκκαθάριση ιστορικού αναζήτησης</string>
     <string name="search_hint">Αναζήτηση επεισοδίων</string>
@@ -172,6 +173,8 @@
     <string name="context_marknext">Το επόμενο επεισόδιο έχει παρακολουθηθεί</string>
     <string name="action_episodes_switch_view">Αλλαγή προβολής</string>
     <string name="next_to_watch">Επόμενο για προβολή</string>
+    <string name="title_notes">Notes</string>
+    <string name="action_edit_note">Edit note</string>
     <!-- History -->
     <string name="user_stream">Ιστορικό</string>
     <string name="recently_watched">Παρακολουθήσατε πρόσφατα</string>

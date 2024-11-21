@@ -40,6 +40,7 @@
     <string name="action_stream_settings">İzleme veya satın alma ayarları</string>
     <string name="action_select_region">Bölge seçin</string>
     <string name="action_reset">Sıfırla</string>
+    <string name="action_save">Kaydet</string>
     <!-- Search -->
     <string name="clear_search_history">Arama geçmişini temizle</string>
     <string name="search_hint">Bölüm ara</string>
@@ -172,6 +173,8 @@
     <string name="context_marknext">Sıradaki bölüm izlendi</string>
     <string name="action_episodes_switch_view">Görünümü değiştir</string>
     <string name="next_to_watch">Sıradaki izlenecek</string>
+    <string name="title_notes">Notes</string>
+    <string name="action_edit_note">Edit note</string>
     <!-- History -->
     <string name="user_stream">Geçmiş</string>
     <string name="recently_watched">Yakın zamanda izlenen</string>
