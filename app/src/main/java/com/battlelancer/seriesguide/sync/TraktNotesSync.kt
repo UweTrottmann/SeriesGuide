@@ -137,7 +137,9 @@ class TraktNotesSync(
             val localShow = showHelper.getShowWithNote(localShowId)
                 ?: continue // Show was removed in the meantime
 
-            if (localShow.userNote != noteText) {
+            // Not sure how it could happen, but also update when the Trakt ID has changed to
+            // always have the correct one.
+            if (localShow.userNote != noteText || localShow.userNoteTraktId != noteTraktId) {
                 noteUpdates[localShowId] = SgShow2Helper.NoteUpdate(noteText, noteTraktId)
             }
         }

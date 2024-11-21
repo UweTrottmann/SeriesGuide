@@ -148,7 +148,7 @@ interface SgShow2Helper {
     @Query("SELECT _id FROM sg_show WHERE series_user_note IS NOT NULL AND series_user_note != ''")
     fun getShowIdsWithNotes(): MutableList<Long>
 
-    @Query("SELECT _id, series_tmdb_id, series_user_note FROM sg_show WHERE _id = :id")
+    @Query("SELECT _id, series_tmdb_id, series_user_note, series_user_note_trakt_id FROM sg_show WHERE _id = :id")
     fun getShowWithNote(id: Long): SgShow2WithNote?
 
     @Query("UPDATE sg_show SET series_user_note = :note, series_user_note_trakt_id = :traktId WHERE _id = :id")
@@ -396,5 +396,6 @@ data class ShowLastWatchedInfo(
 data class SgShow2WithNote(
     @ColumnInfo(name = SgShow2Columns._ID) val id: Long,
     @ColumnInfo(name = SgShow2Columns.TMDB_ID) val tmdbId: Int?,
-    @ColumnInfo(name = SgShow2Columns.USER_NOTE) var userNote: String?
+    @ColumnInfo(name = SgShow2Columns.USER_NOTE) var userNote: String?,
+    @ColumnInfo(name = SgShow2Columns.USER_NOTE_TRAKT_ID) val userNoteTraktId: Long?
 )
