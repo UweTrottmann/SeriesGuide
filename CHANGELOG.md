@@ -10,6 +10,10 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2024.5
 
+### Unreleased
+
+* 🔧 Shows: also use plus symbol for button on discover screen to be consistent.
+
 ### 2024.5.0 - 2024-11-06 🧪
 
 * 🌟 Movies: add link to all release dates.
