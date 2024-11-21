@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">נקה</string>
     <string name="discard">בטל</string>
-    <string name="save_selection">שמור בחירה</string>
     <string name="action_display_all">הצג הכל</string>
     <string name="web_search">חיפוש באינטרנט</string>
     <string name="add_to_homescreen">הוסף לדף הבית</string>

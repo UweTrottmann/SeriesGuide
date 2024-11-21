@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">Effacer</string>
     <string name="discard">Annuler</string>
-    <string name="save_selection">Enregistrer</string>
     <string name="action_display_all">Afficher tout</string>
     <string name="web_search">Recherche Web</string>
     <string name="add_to_homescreen">Ajouter à l\'écran d\'accueil</string>

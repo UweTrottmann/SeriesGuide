@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">Καθαρισμός</string>
     <string name="discard">Απόρριψη</string>
-    <string name="save_selection">Αποθήκευση επιλογής</string>
     <string name="action_display_all">Εμφάνιση όλων</string>
     <string name="web_search">Αναζήτηση στον ιστό</string>
     <string name="add_to_homescreen">Προσθήκη στην Αρχική οθόνη</string>

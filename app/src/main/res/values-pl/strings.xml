@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">Wyczyść</string>
     <string name="discard">Anuluj</string>
-    <string name="save_selection">Zapisz zaznaczone</string>
     <string name="action_display_all">Pokaż wszystko</string>
     <string name="web_search">Wyszukiwarka</string>
     <string name="add_to_homescreen">Dodaj do strony głównej</string>

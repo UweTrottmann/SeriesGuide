@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">Viŝi</string>
     <string name="discard">Forĵeti</string>
-    <string name="save_selection">Konservi elekton</string>
     <string name="action_display_all">Montri ĉiujn</string>
     <string name="web_search">Serĉi retume</string>
     <string name="add_to_homescreen">Aldoni al Hejma ekrano</string>

@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">Rensa</string>
     <string name="discard">Avbryt</string>
-    <string name="save_selection">Spara valda</string>
     <string name="action_display_all">Visa alla</string>
     <string name="web_search">Webbsökning</string>
     <string name="add_to_homescreen">Lägg till på hemskärmen</string>

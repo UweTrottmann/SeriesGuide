@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">پاک‌سازی</string>
     <string name="discard">نپذیرفتن</string>
-    <string name="save_selection">ذخیرهٔ گزینش</string>
     <string name="action_display_all">نمایش همه</string>
     <string name="web_search">جست‌وجوی وب</string>
     <string name="add_to_homescreen">افزودن به صفحه اصلی</string>

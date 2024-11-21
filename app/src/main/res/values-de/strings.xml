@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">Löschen</string>
     <string name="discard">Verwerfen</string>
-    <string name="save_selection">Auswahl speichern</string>
     <string name="action_display_all">Alle anzeigen</string>
     <string name="web_search">Web-Suche</string>
     <string name="add_to_homescreen">Zum Startbildschirm hinzufügen</string>

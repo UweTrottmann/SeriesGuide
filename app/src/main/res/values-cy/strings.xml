@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">Clir</string>
     <string name="discard">Gwared</string>
-    <string name="save_selection">Cadw dewis</string>
     <string name="action_display_all">Dangos y cyfan</string>
     <string name="web_search">Chwilio\'r We</string>
     <string name="add_to_homescreen">Ychwanegu i\'r sgrin gartref</string>

@@ -5,7 +5,7 @@
     <item
         android:id="@+id/menu_save"
         android:icon="@drawable/ic_watch_black_24dp"
-        android:title="@string/save_selection"
+        android:title="@string/action_save"
         app:showAsAction="ifRoom|withText" />
 
 </menu>

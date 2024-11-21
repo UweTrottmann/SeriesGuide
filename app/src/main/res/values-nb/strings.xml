@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">Fjern</string>
     <string name="discard">Avbryt</string>
-    <string name="save_selection">Lagre valg</string>
     <string name="action_display_all">Vis alle</string>
     <string name="web_search">Nettsøk</string>
     <string name="add_to_homescreen">Legg til på hjem-skjermen</string>

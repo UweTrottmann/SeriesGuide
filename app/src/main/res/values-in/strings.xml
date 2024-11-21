@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">Bersihkan</string>
     <string name="discard">Singkirkan</string>
-    <string name="save_selection">Simpan bagian</string>
     <string name="action_display_all">Tunjukan semua</string>
     <string name="web_search">Pencarian Web</string>
     <string name="add_to_homescreen">Tambahkan ke beranda</string>

@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">Limpiar</string>
     <string name="discard">Descartar</string>
-    <string name="save_selection">Guardar selección</string>
     <string name="action_display_all">Ver todos</string>
     <string name="web_search">Búsqueda en la web</string>
     <string name="add_to_homescreen">Agregar a la pantalla principal</string>

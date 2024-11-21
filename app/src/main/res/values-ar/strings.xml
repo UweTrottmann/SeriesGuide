@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">تنظيف</string>
     <string name="discard">تجاهل</string>
-    <string name="save_selection">حفظ التحديد</string>
     <string name="action_display_all">عرض الكل</string>
     <string name="web_search">البحث في الانترنت</string>
     <string name="add_to_homescreen">إضافة إلى الشاشة الرئيسية</string>

@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">Wissen</string>
     <string name="discard">Negeren</string>
-    <string name="save_selection">Selectie bewaren</string>
     <string name="action_display_all">Toon alles</string>
     <string name="web_search">Zoeken op het web</string>
     <string name="add_to_homescreen">Toevoegen aan startscherm</string>

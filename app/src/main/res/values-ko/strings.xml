@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">지우기</string>
     <string name="discard">취소</string>
-    <string name="save_selection">선택 항목 저장 완료</string>
     <string name="action_display_all">모두 보기</string>
     <string name="web_search">웹 검색</string>
     <string name="add_to_homescreen">홈 화면에 추가</string>

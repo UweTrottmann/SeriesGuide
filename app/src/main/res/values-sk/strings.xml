@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">Zmazať</string>
     <string name="discard">Zrušiť</string>
-    <string name="save_selection">Uložiť výber</string>
     <string name="action_display_all">Zobraziť všetko</string>
     <string name="web_search">Hľadať na webe</string>
     <string name="add_to_homescreen">Pridať na domovskú obrazovku</string>

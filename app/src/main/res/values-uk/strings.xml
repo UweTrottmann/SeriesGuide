@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">Очистити</string>
     <string name="discard">Відмінити</string>
-    <string name="save_selection">Зберегти вибране</string>
     <string name="action_display_all">Показати все</string>
     <string name="web_search">Веб пошук</string>
     <string name="add_to_homescreen">Додати на Домашній екран</string>

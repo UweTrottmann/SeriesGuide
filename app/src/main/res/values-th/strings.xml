@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">ล้าง</string>
     <string name="discard">ยกเลิก</string>
-    <string name="save_selection">บันทึกที่เลือก</string>
     <string name="action_display_all">แสดงทั้งหมด</string>
     <string name="web_search">ค้นเว็บ</string>
     <string name="add_to_homescreen">เพิ่มไปยังหน้าจอหลัก</string>

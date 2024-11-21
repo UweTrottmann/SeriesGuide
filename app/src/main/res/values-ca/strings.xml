@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">Buida</string>
     <string name="discard">Descarta</string>
-    <string name="save_selection">Desa la selecció</string>
     <string name="action_display_all">Mostra-ho tot</string>
     <string name="web_search">Cerca web</string>
     <string name="add_to_homescreen">Afegir a la pantalla d\'inici</string>

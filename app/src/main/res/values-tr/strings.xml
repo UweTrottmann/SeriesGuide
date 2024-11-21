@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">Temizle</string>
     <string name="discard">Yoksay</string>
-    <string name="save_selection">Seçimi kaydet</string>
     <string name="action_display_all">Tümünü göster</string>
     <string name="web_search">Web\'de ara</string>
     <string name="add_to_homescreen">Ana ekrana ekle</string>

@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">Vyčistit</string>
     <string name="discard">Zrušit</string>
-    <string name="save_selection">Uložit výběr</string>
     <string name="action_display_all">Zobrazit vše</string>
     <string name="web_search">Vyhledávání na webu</string>
     <string name="add_to_homescreen">Přidat na základní obrazovku</string>

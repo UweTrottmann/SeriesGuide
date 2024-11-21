@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">Izbriši</string>
     <string name="discard">Odbaci</string>
-    <string name="save_selection">Pohrani odabrano</string>
     <string name="action_display_all">Prikaži sve</string>
     <string name="web_search">Pretraži web</string>
     <string name="add_to_homescreen">Dodaj na početni zaslon</string>

@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">Удалить</string>
     <string name="discard">Отменить</string>
-    <string name="save_selection">Сохранить выбор</string>
     <string name="action_display_all">Показать все</string>
     <string name="web_search">Веб-поиск</string>
     <string name="add_to_homescreen">Добавить на главный экран</string>

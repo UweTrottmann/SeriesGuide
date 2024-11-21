@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">Ryd</string>
     <string name="discard">Kassér</string>
-    <string name="save_selection">Gem markering</string>
     <string name="action_display_all">Vis alle</string>
     <string name="web_search">Websøgning</string>
     <string name="add_to_homescreen">Tilføj til startskærmen</string>
