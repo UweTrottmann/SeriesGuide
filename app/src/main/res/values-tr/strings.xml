@@ -172,8 +172,8 @@
     <string name="context_marknext">Sıradaki bölüm izlendi</string>
     <string name="action_episodes_switch_view">Görünümü değiştir</string>
     <string name="next_to_watch">Sıradaki izlenecek</string>
-    <string name="title_notes">Notes</string>
-    <string name="action_edit_note">Edit note</string>
+    <string name="title_notes">Notlar</string>
+    <string name="action_edit_note">Notu düzenle</string>
     <!-- History -->
     <string name="user_stream">Geçmiş</string>
     <string name="recently_watched">Yakın zamanda izlenen</string>

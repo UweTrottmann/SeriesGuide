@@ -39,7 +39,7 @@
     <string name="action_stream_settings">Streaming o impostazioni acquisto</string>
     <string name="action_select_region">Seleziona regione</string>
     <string name="action_reset">Reimposta</string>
-    <string name="action_save">Save</string>
+    <string name="action_save">Salva</string>
     <!-- Search -->
     <string name="clear_search_history">Cancella la cronologia di ricerca</string>
     <string name="search_hint">Cerca episodi</string>
@@ -172,8 +172,8 @@
     <string name="context_marknext">Episodio seguente visto</string>
     <string name="action_episodes_switch_view">Cambia vista</string>
     <string name="next_to_watch">Prossimo da vedere</string>
-    <string name="title_notes">Notes</string>
-    <string name="action_edit_note">Edit note</string>
+    <string name="title_notes">Note</string>
+    <string name="action_edit_note">Modifica nota</string>
     <!-- History -->
     <string name="user_stream">Cronologia</string>
     <string name="recently_watched">Visti di recente</string>

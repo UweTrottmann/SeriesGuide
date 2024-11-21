@@ -39,7 +39,7 @@
     <string name="action_stream_settings">Streamen- of aankoopinstellingen</string>
     <string name="action_select_region">Regio selecteren</string>
     <string name="action_reset">Herstellen</string>
-    <string name="action_save">Save</string>
+    <string name="action_save">Opslaan</string>
     <!-- Search -->
     <string name="clear_search_history">Verwijder zoekgeschiedenis</string>
     <string name="search_hint">Afleveringen zoeken</string>
@@ -172,8 +172,8 @@
     <string name="context_marknext">Volgende aflevering bekeken</string>
     <string name="action_episodes_switch_view">Wissel weergave</string>
     <string name="next_to_watch">Volgende om te bekijken</string>
-    <string name="title_notes">Notes</string>
-    <string name="action_edit_note">Edit note</string>
+    <string name="title_notes">Notities</string>
+    <string name="action_edit_note">Notitie bewerken</string>
     <!-- History -->
     <string name="user_stream">Geschiedenis</string>
     <string name="recently_watched">Laatst gekeken</string>

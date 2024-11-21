@@ -39,7 +39,7 @@
     <string name="action_stream_settings">Налаштування трансляції або купівлі</string>
     <string name="action_select_region">Виберіть регіон</string>
     <string name="action_reset">Скинути</string>
-    <string name="action_save">Save</string>
+    <string name="action_save">Зберегти</string>
     <!-- Search -->
     <string name="clear_search_history">Очистити історію пошуку</string>
     <string name="search_hint">Пошук серій</string>
@@ -174,8 +174,8 @@
     <string name="context_marknext">Переглянута наступна серія</string>
     <string name="action_episodes_switch_view">Змінити вигляд</string>
     <string name="next_to_watch">До перегляду далі</string>
-    <string name="title_notes">Notes</string>
-    <string name="action_edit_note">Edit note</string>
+    <string name="title_notes">Нотатки</string>
+    <string name="action_edit_note">Змінити нотатку</string>
     <!-- History -->
     <string name="user_stream">Історія</string>
     <string name="recently_watched">Недавно переглянуті</string>
