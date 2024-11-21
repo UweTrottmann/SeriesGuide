@@ -40,6 +40,7 @@
     <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">Vyberte region</string>
     <string name="action_reset">Obnovit</string>
+    <string name="action_save">Save</string>
     <!-- Search -->
     <string name="clear_search_history">Vymazat historii vyhledávání</string>
     <string name="search_hint">Hledat epizody</string>
@@ -174,6 +175,8 @@
     <string name="context_marknext">Následujicí epizoda zhlédnuta</string>
     <string name="action_episodes_switch_view">Přepnout zobrazení</string>
     <string name="next_to_watch">Další ke zhlédnutí</string>
+    <string name="title_notes">Notes</string>
+    <string name="action_edit_note">Edit note</string>
     <!-- History -->
     <string name="user_stream">Historie</string>
     <string name="recently_watched">Nedávno zhlédnuto</string>

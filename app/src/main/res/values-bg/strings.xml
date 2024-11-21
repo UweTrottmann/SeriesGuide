@@ -40,6 +40,7 @@
     <string name="action_stream_settings">Настройки за стрийм или поръчка</string>
     <string name="action_select_region">Избор на регион</string>
     <string name="action_reset">Нулиране</string>
+    <string name="action_save">Save</string>
     <!-- Search -->
     <string name="clear_search_history">Изчисти историята на търсене</string>
     <string name="search_hint">Търсене на епизоди</string>
@@ -172,6 +173,8 @@
     <string name="context_marknext">Гледан следващ епизод</string>
     <string name="action_episodes_switch_view">Промени изгледа</string>
     <string name="next_to_watch">Следващ за гледане</string>
+    <string name="title_notes">Notes</string>
+    <string name="action_edit_note">Edit note</string>
     <!-- History -->
     <string name="user_stream">История</string>
     <string name="recently_watched">Наскоро гледан/и</string>

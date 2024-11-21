@@ -40,6 +40,7 @@
     <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">เลือกภูมิภาค</string>
     <string name="action_reset">Reset</string>
+    <string name="action_save">Save</string>
     <!-- Search -->
     <string name="clear_search_history">ล้างประวัติการค้นหา</string>
     <string name="search_hint">ค้นหาตอน</string>
@@ -171,6 +172,8 @@
     <string name="context_marknext">ดูตอนถัดไป</string>
     <string name="action_episodes_switch_view">เปลี่ยนมุมมอง</string>
     <string name="next_to_watch">ดูถัดไป</string>
+    <string name="title_notes">Notes</string>
+    <string name="action_edit_note">Edit note</string>
     <!-- History -->
     <string name="user_stream">ประวัติ</string>
     <string name="recently_watched">เพิ่งดู</string>

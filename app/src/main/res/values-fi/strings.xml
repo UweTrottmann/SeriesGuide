@@ -40,6 +40,7 @@
     <string name="action_stream_settings">Suoratoisto- tai ostoasetukset</string>
     <string name="action_select_region">Valitse alue</string>
     <string name="action_reset">Nollaa</string>
+    <string name="action_save">Save</string>
     <!-- Search -->
     <string name="clear_search_history">Tyhjennä hakuhistoria</string>
     <string name="search_hint">Hae jaksoja</string>
@@ -172,6 +173,8 @@
     <string name="context_marknext">Seuraava jakso katsottu</string>
     <string name="action_episodes_switch_view">Vaihda näkymä</string>
     <string name="next_to_watch">Seuraava katsottava</string>
+    <string name="title_notes">Notes</string>
+    <string name="action_edit_note">Edit note</string>
     <!-- History -->
     <string name="user_stream">Historia</string>
     <string name="recently_watched">Äskettäin katsotut</string>
