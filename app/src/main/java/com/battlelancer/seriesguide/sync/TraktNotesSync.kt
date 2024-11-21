@@ -67,6 +67,7 @@ class TraktNotesSync(
                     if (TraktV2.isNotVip(response)) {
                         // Do not error; also do not set initial sync complete or last updated in
                         // case the user gets VIP later, or loses VIP and gets it again.
+                        Timber.d("syncForShows: user is not VIP, giving up")
                         return true
                     }
                     if (SgTrakt.isUnauthorized(context, response)) {
@@ -100,6 +101,10 @@ class TraktNotesSync(
             if (!uploadNotesForShows(showIdsWithNotesToUploadOrRemove)) return false
         } else {
             // Remove notes from shows that are not on Trakt, meaning their note got removed
+            Timber.d(
+                "syncForShows: remove notes no longer on Trakt for %s shows",
+                showIdsWithNotesToUploadOrRemove.size
+            )
             showHelper.updateUserNotes(showIdsWithNotesToUploadOrRemove
                 .associateWith { SgShow2Helper.NoteUpdate("", null) })
         }
@@ -118,6 +123,7 @@ class TraktNotesSync(
         showIdsWithNotesToUploadOrRemove: MutableList<Long>
     ) {
         if (response.isEmpty()) {
+            Timber.d("processShowNotes: nothing to process")
             return
         }
 
@@ -144,6 +150,7 @@ class TraktNotesSync(
             }
         }
 
+        Timber.d("processShowNotes: updating note text or ID for %s shows", noteUpdates.size)
         showHelper.updateUserNotes(noteUpdates)
     }
 
@@ -154,6 +161,8 @@ class TraktNotesSync(
      * Returns whether all notes were successfully uploaded.
      */
     private fun uploadNotesForShows(showIdsWithNotesToUpload: MutableList<Long>): Boolean {
+        Timber.d("uploadNotesForShows: uploading for %s shows", showIdsWithNotesToUpload.size)
+
         // Cache service
         val traktNotes = traktSync.trakt.notes()
 
@@ -176,6 +185,11 @@ class TraktNotesSync(
                         is TraktTools2.TraktResponse.Success -> response.data
                         // Note: if failing due to not VIP, downloaded notes before, which would
                         // have required VIP; so assume it expired when getting until this point.
+                        is TraktTools2.TraktResponse.IsNotVip -> {
+                            Timber.e("uploadNotesForShows: user is no longer VIP")
+                            null
+                        }
+
                         else -> null
                     }
                 }
@@ -189,6 +203,7 @@ class TraktNotesSync(
                 noteUpdates[showId] = SgShow2Helper.NoteUpdate(storedText, noteTraktId)
             }
         } finally {
+            Timber.d("uploadNotesForShows: uploaded for %s shows", noteUpdates.size)
             // In any case, save updates to any already sent notes
             showHelper.updateUserNotes(noteUpdates)
         }

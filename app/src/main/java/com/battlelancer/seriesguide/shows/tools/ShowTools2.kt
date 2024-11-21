@@ -26,6 +26,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
+import timber.log.Timber
 import javax.inject.Inject
 import kotlin.collections.set
 import com.battlelancer.seriesguide.enums.Result as SgResult
@@ -533,7 +534,11 @@ class ShowTools2 @Inject constructor(
                             null // Abort
                         }
 
-                        is TraktTools2.TraktResponse.IsNotVip -> result // Store as is
+                        is TraktTools2.TraktResponse.IsNotVip -> {
+                            Timber.d("storeUserNote: user is not Trakt VIP, can not delete at Trakt")
+                            result // Store as is
+                        }
+
                         is TraktTools2.TraktResponse.Error -> null // Abort
                     }
                 } else {
@@ -552,7 +557,11 @@ class ShowTools2 @Inject constructor(
                             null
                         }
 
-                        is TraktTools2.TraktResponse.IsNotVip -> result // Store as is
+                        is TraktTools2.TraktResponse.IsNotVip -> {
+                            Timber.d("storeUserNote: user is not Trakt VIP, can not upload to Trakt")
+                            result // Store as is
+                        }
+
                         is TraktTools2.TraktResponse.Error -> null // Abort
                     }
                 }
