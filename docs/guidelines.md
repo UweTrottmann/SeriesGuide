@@ -2,6 +2,19 @@
 
 Collecting design decisions. New and updated code and resources should follow them.
 
+## Kotlin
+
+For function calls, specify names of function parameters when the name of the passed value does not
+make it obvious:
+
+```kotlin
+// DO
+setVisible(true)
+doSomething(avoidWork = true)
+// AVOID
+doSomething(true)
+```
+
 ## Layout resources
 
 View IDs should be unique across the project to support refactoring using Android Studio.
