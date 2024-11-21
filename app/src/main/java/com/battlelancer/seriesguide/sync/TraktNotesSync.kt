@@ -8,6 +8,8 @@ import com.battlelancer.seriesguide.shows.database.SgShow2Helper
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktSettings
 import com.battlelancer.seriesguide.traktapi.TraktTools2
+import com.battlelancer.seriesguide.traktapi.TraktTools2.TraktErrorResponse
+import com.battlelancer.seriesguide.traktapi.TraktTools2.TraktNonNullResponse
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.TimeTools
 import com.uwetrottmann.trakt5.TraktV2
@@ -182,10 +184,10 @@ class TraktNotesSync(
                     val response = TraktTools2
                         .saveNoteForShow(traktNotes, showTmdbId, noteText)
                     when (response) {
-                        is TraktTools2.TraktResponse.Success -> response.data
-                        // Note: if failing due to not VIP, downloaded notes before, which would
-                        // have required VIP; so assume it expired when getting until this point.
-                        is TraktTools2.TraktResponse.IsNotVip -> {
+                        is TraktNonNullResponse.Success -> response.data
+                        is TraktErrorResponse.IsNotVip -> {
+                            // Note: if failing due to not VIP, downloaded notes before, which would
+                            // have required VIP; so assume it expired when getting until this point.
                             Timber.e("uploadNotesForShows: user is no longer VIP")
                             null
                         }

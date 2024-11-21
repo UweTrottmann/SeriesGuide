@@ -33,11 +33,23 @@ import retrofit2.awaitResponse
 
 object TraktTools2 {
 
-    sealed class TraktResponse<T> {
-        data class Success<T>(val data: T) : TraktResponse<T>()
-        class IsNotVip<T> : TraktResponse<T>()
-        class IsUnauthorized<T> : TraktResponse<T>()
-        class Error<T> : TraktResponse<T>()
+    sealed interface TraktResponse<T> {
+        data class Success<T>(
+            /**
+             * If T is [Void] this is always `null`.
+             */
+            val data: T?
+        ) : TraktResponse<T>
+    }
+
+    sealed interface TraktNonNullResponse<T> {
+        data class Success<T>(val data: T) : TraktNonNullResponse<T>
+    }
+
+    sealed interface TraktErrorResponse {
+        class IsNotVip<T> : TraktResponse<T>, TraktNonNullResponse<T>
+        class IsUnauthorized<T> : TraktResponse<T>, TraktNonNullResponse<T>
+        class Other<T> : TraktResponse<T>, TraktNonNullResponse<T>
     }
 
     /**
@@ -47,9 +59,9 @@ object TraktTools2 {
         traktNotes: Notes,
         showTmdbId: Int,
         noteText: String
-    ): TraktResponse<Note> {
+    ): TraktNonNullResponse<Note> {
         // Note: calling the add endpoint for an existing note will update it
-        return awaitTraktCall(
+        return awaitTraktCallNonNull(
             traktNotes.addNote(
                 AddNoteRequest(
                     Show().apply {
@@ -68,25 +80,58 @@ object TraktTools2 {
         return awaitTraktCall(trakt.notes().deleteNote(noteId), "delete note")
     }
 
-    private suspend fun <T> awaitTraktCall(call: Call<T>, action: String): TraktResponse<T> {
-        try {
-            val response = call.awaitResponse()
-            if (response.isSuccessful) {
-                val body = response.body()
-                if (body != null) {
-                    return TraktResponse.Success(body)
-                } else {
-                    Errors.logAndReport(action, response, "body is null")
-                }
-            } else {
-                if (TraktV2.isNotVip(response)) return TraktResponse.IsNotVip()
-                if (TraktV2.isUnauthorized(response)) return TraktResponse.IsUnauthorized()
-                Errors.logAndReport(action, response)
-            }
+    private suspend fun <T> awaitTraktCall(
+        call: Call<T>,
+        action: String,
+        logErrorOnNullBody: Boolean = false
+    ): TraktResponse<T> {
+        val response = try {
+            call.awaitResponse()
         } catch (e: Exception) {
             Errors.logAndReport(action, e)
+            return TraktErrorResponse.Other()
         }
-        return TraktResponse.Error()
+
+        if (!response.isSuccessful) {
+            return when {
+                TraktV2.isNotVip(response) -> TraktErrorResponse.IsNotVip()
+                TraktV2.isUnauthorized(response) -> TraktErrorResponse.IsUnauthorized()
+                else -> {
+                    Errors.logAndReport(action, response)
+                    TraktErrorResponse.Other()
+                }
+            }
+        }
+
+        val body = response.body()
+
+        if (logErrorOnNullBody && body == null) {
+            Errors.logAndReport(action, response, "body is null")
+        }
+
+        return TraktResponse.Success(body)
+    }
+
+    /**
+     * Like [awaitTraktCall], but ensures the response data is not null.
+     */
+    private suspend fun <T> awaitTraktCallNonNull(
+        call: Call<T>,
+        action: String
+    ): TraktNonNullResponse<T> {
+        return when (val response = awaitTraktCall(call, action, logErrorOnNullBody = true)) {
+            is TraktErrorResponse.Other -> response
+            is TraktErrorResponse.IsNotVip -> response
+            is TraktErrorResponse.IsUnauthorized -> response
+            is TraktResponse.Success -> {
+                val data = response.data
+                if (data == null) {
+                    TraktErrorResponse.Other()
+                } else {
+                    TraktNonNullResponse.Success(data)
+                }
+            }
+        }
     }
 
     /**

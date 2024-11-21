@@ -19,6 +19,9 @@ import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.sync.HexagonShowSync
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktTools2
+import com.battlelancer.seriesguide.traktapi.TraktTools2.TraktErrorResponse
+import com.battlelancer.seriesguide.traktapi.TraktTools2.TraktNonNullResponse
+import com.battlelancer.seriesguide.traktapi.TraktTools2.TraktResponse
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow
 import dagger.Lazy
@@ -525,44 +528,44 @@ class ShowTools2 @Inject constructor(
                     if (noteTraktId == null) return@withContext null
                     val response = TraktTools2.deleteNote(trakt, noteTraktId)
                     return@withContext when (response) {
-                        is TraktTools2.TraktResponse.Success -> {
+                        is TraktResponse.Success -> {
                             StoreUserNoteResult("", null) // Remove text and Trakt ID
                         }
 
-                        is TraktTools2.TraktResponse.IsUnauthorized -> {
+                        is TraktErrorResponse.IsUnauthorized -> {
                             TraktCredentials.get(context).setCredentialsInvalid()
                             null // Abort
                         }
 
-                        is TraktTools2.TraktResponse.IsNotVip -> {
+                        is TraktErrorResponse.IsNotVip -> {
                             Timber.d("storeUserNote: user is not Trakt VIP, can not delete at Trakt")
                             result // Store as is
                         }
 
-                        is TraktTools2.TraktResponse.Error -> null // Abort
+                        is TraktErrorResponse.Other -> null // Abort
                     }
                 } else {
                     // Add or update note
                     val response = TraktTools2.saveNoteForShow(trakt.notes(), showTmdbId, noteText)
                     return@withContext when (response) {
-                        is TraktTools2.TraktResponse.Success -> {
+                        is TraktNonNullResponse.Success -> {
                             // Store ID and note text from Trakt
                             // (which may shorten or otherwise modify it).
                             val storedText = response.data.notes ?: ""
                             StoreUserNoteResult(storedText, response.data.id)
                         }
 
-                        is TraktTools2.TraktResponse.IsUnauthorized -> {
+                        is TraktErrorResponse.IsUnauthorized -> {
                             TraktCredentials.get(context).setCredentialsInvalid()
                             null
                         }
 
-                        is TraktTools2.TraktResponse.IsNotVip -> {
+                        is TraktErrorResponse.IsNotVip -> {
                             Timber.d("storeUserNote: user is not Trakt VIP, can not upload to Trakt")
                             result // Store as is
                         }
 
-                        is TraktTools2.TraktResponse.Error -> null // Abort
+                        is TraktErrorResponse.Other -> null // Abort
                     }
                 }
             }
