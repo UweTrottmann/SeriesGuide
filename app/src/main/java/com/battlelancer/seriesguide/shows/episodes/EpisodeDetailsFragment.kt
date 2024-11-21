@@ -451,7 +451,7 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
             val intent = intent(
                 requireContext(),
                 ImageTools.buildEpisodeImageUrl(imagePath, requireContext()),
-                ImageTools.buildEpisodeImageUrl(imagePath, requireContext(), true)
+                ImageTools.buildEpisodeImageUrl(imagePath, requireContext(), originalSize = true)
             )
             Utils.startActivityWithAnimation(requireActivity(), intent, v)
         }

@@ -43,7 +43,7 @@ class ImageToolsTest {
                 ImageTools.buildEpisodeImageUrl(path, context)
             },
             tmdbUrlOriginalBuilder = { path ->
-                ImageTools.buildEpisodeImageUrl(path, context, true)
+                ImageTools.buildEpisodeImageUrl(path, context, originalSize = true)
             },
             tvdbUrlBuilder = { path ->
                 ImageTools.buildEpisodeImageUrl(path, context)
