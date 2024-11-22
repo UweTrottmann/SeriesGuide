@@ -5,14 +5,14 @@ Android app to help you keep track of your favorite TV shows and movies.
 </p>
 
 <p align="center">
-  <a href="https://seriesgui.de">Download</a> •
-  <a href="https://seriesgui.de/whypay">Support the dev</a> •
+  <a href="https://www.seriesgui.de">Download</a> •
+  <a href="https://www.seriesgui.de/whypay">Support the dev</a> •
   <a href="CONTRIBUTING.md">Contributing</a> •
   <a href="https://discuss.seriesgui.de/">Announcements & Help</a>
 </p>
 
 <p align="center">
-  <a href="https://seriesgui.de">
+  <a href="https://github.com/UweTrottmann/SeriesGuide/blob/main/CHANGELOG.md#release-notes">
     <img src="https://img.shields.io/github/v/release/UweTrottmann/SeriesGuide?style=flat">
   </a>
   <a href="https://github.com/UweTrottmann/SeriesGuide/actions/workflows/assemble-test-lint.yml">
