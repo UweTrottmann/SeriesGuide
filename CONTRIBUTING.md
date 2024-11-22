@@ -1,11 +1,14 @@
 # Contributing
 
-**Note:** This work is licensed under the [Apache License 2.0](LICENSE.txt).
-If you contribute any 
+ℹ️ This work is licensed under the [Apache License 2.0](LICENSE.txt).
+If you contribute any
 [non-trivial](http://www.gnu.org/prep/maintain/maintain.html#Legally-Significant)
 patches or translations make sure you have read it and agree with it.
 
 **Would you like to contribute code?**
+
+ℹ️ If you want to contribute larger changes, please talk to me first (comment on a related issue
+or create one). Otherwise, it is likely I won't accept your merge request.
 
 1. [Fork SeriesGuide](https://github.com/UweTrottmann/SeriesGuide/fork) and clone your fork.
 2. See the notes about [building](#building) the app below. Take the [guidelines of this project](/docs/guidelines.md) into account.
