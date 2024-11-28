@@ -160,7 +160,6 @@
     <string name="state_shows_filter_excluded">exclosos</string>
     <string name="action_shows_make_all_visible">Fes tot els ocults visibles</string>
     <string name="description_make_all_visible_format">Fer totes les sèries amagades (%s) visibles un altre cop?</string>
-    <string name="action_shows_sort">Ordena sèries</string>
     <string name="action_shows_sort_title">Títol</string>
     <string name="action_shows_sort_latest_episode">Últim episodi</string>
     <string name="action_shows_sort_oldest_episode">Episodi més antic</string>

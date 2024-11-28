@@ -160,7 +160,6 @@
     <string name="state_shows_filter_excluded">Exkluderad</string>
     <string name="action_shows_make_all_visible">Gör alla gömda synliga</string>
     <string name="description_make_all_visible_format">Göra alla gömda serier (%s) synliga igen?</string>
-    <string name="action_shows_sort">Sortera serier</string>
     <string name="action_shows_sort_title">Titel</string>
     <string name="action_shows_sort_latest_episode">Senaste avsnitt</string>
     <string name="action_shows_sort_oldest_episode">Äldsta avsnitt</string>

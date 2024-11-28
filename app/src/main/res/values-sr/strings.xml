@@ -161,7 +161,6 @@
     <string name="state_shows_filter_excluded">Искључено</string>
     <string name="action_shows_make_all_visible">Учините све скривено видљивим</string>
     <string name="description_make_all_visible_format">Поставите све скривене серије (%s) поново видљиве?</string>
-    <string name="action_shows_sort">Сортирај серије</string>
     <string name="action_shows_sort_title">Наслов</string>
     <string name="action_shows_sort_latest_episode">Poslednja epizoda</string>
     <string name="action_shows_sort_oldest_episode">Najstarija epizoda</string>

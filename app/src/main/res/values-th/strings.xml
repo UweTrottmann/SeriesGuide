@@ -159,7 +159,6 @@
     <string name="state_shows_filter_excluded">ไม่รวม</string>
     <string name="action_shows_make_all_visible">เลิกซ่อนรายการทั้งหมด</string>
     <string name="description_make_all_visible_format">ทำให้รายการที่ซ่อนไว้ทั้งหมด (%s) กลับมาแสดงอีกครั้ง?</string>
-    <string name="action_shows_sort">แสดงซีรีส์</string>
     <string name="action_shows_sort_title">ชื่อเรื่อง</string>
     <string name="action_shows_sort_latest_episode">ตอนล่าสุด</string>
     <string name="action_shows_sort_oldest_episode">ตอนเก่าที่สุด</string>

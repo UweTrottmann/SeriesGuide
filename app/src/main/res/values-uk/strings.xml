@@ -162,7 +162,6 @@
     <string name="state_shows_filter_excluded">Виключно</string>
     <string name="action_shows_make_all_visible">Зробити все приховане видимим</string>
     <string name="description_make_all_visible_format">Зробити всі приховані серіали (%s) видимими знову?</string>
-    <string name="action_shows_sort">Сортувати серіали за</string>
     <string name="action_shows_sort_title">Назвою</string>
     <string name="action_shows_sort_latest_episode">Найновішою серією</string>
     <string name="action_shows_sort_oldest_episode">Найстарішою серією</string>

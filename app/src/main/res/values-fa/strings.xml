@@ -160,7 +160,6 @@
     <string name="state_shows_filter_excluded">مستثتی شده</string>
     <string name="action_shows_make_all_visible">آشکارسازی همه‌ی پنهان‌شده‌ها</string>
     <string name="description_make_all_visible_format">آشکارسازی مجدد همه‌ی (%s) برنامه‌ی تلویزیونی?</string>
-    <string name="action_shows_sort">چینش آثار نمایشی</string>
     <string name="action_shows_sort_title">عنوان</string>
     <string name="action_shows_sort_latest_episode">جدیدترین قسمت</string>
     <string name="action_shows_sort_oldest_episode">قدیمی‌ترین قسمت</string>

@@ -159,7 +159,6 @@
     <string name="state_shows_filter_excluded">Excluded</string>
     <string name="action_shows_make_all_visible">Perlihatkan yang tersembunyi</string>
     <string name="description_make_all_visible_format">Buat semua acara tersembunyi (%s) terlihat lagi ?</string>
-    <string name="action_shows_sort">Sortir acara</string>
     <string name="action_shows_sort_title">Judul</string>
     <string name="action_shows_sort_latest_episode">Episode Terbaru</string>
     <string name="action_shows_sort_oldest_episode">Episode Terlama</string>

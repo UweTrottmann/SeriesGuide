@@ -160,7 +160,6 @@
     <string name="state_shows_filter_excluded">Kizárva</string>
     <string name="action_shows_make_all_visible">Elrejtett szöveg mutatása</string>
     <string name="description_make_all_visible_format">Az összes elrejtett sorozat (%s) mutatása?</string>
-    <string name="action_shows_sort">Sorozatok rendezése</string>
     <string name="action_shows_sort_title">Cím</string>
     <string name="action_shows_sort_latest_episode">Legújabb epizód</string>
     <string name="action_shows_sort_oldest_episode">Legrégebbi epizód</string>

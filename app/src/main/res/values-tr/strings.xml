@@ -160,7 +160,6 @@
     <string name="state_shows_filter_excluded">Hariç tutulan</string>
     <string name="action_shows_make_all_visible">Tüm gizli öğeleri görünür yap</string>
     <string name="description_make_all_visible_format">Tüm (%s) gizli program tekrar görünür hale gelsin mi?</string>
-    <string name="action_shows_sort">Dizileri sırala</string>
     <string name="action_shows_sort_title">Başlık</string>
     <string name="action_shows_sort_latest_episode">Son bölüme göre</string>
     <string name="action_shows_sort_oldest_episode">En eski bölüme göre</string>

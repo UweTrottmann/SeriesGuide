@@ -160,7 +160,6 @@
     <string name="state_shows_filter_excluded">Excluido</string>
     <string name="action_shows_make_all_visible">Todo visible</string>
     <string name="description_make_all_visible_format">¿Hacer visibles todas las series ocultas (%s) de nuevo?</string>
-    <string name="action_shows_sort">Ordenar series</string>
     <string name="action_shows_sort_title">Título</string>
     <string name="action_shows_sort_latest_episode">Último episodio</string>
     <string name="action_shows_sort_oldest_episode">Episodio más antiguo</string>

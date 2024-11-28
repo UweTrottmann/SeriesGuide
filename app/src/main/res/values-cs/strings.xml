@@ -162,7 +162,6 @@
     <string name="state_shows_filter_excluded">Vyloučené</string>
     <string name="action_shows_make_all_visible">Zviditelnit všechny skryté</string>
     <string name="description_make_all_visible_format">Znovu zviditelnit všechny skryté seriály (%s)?</string>
-    <string name="action_shows_sort">Seřadit seriály</string>
     <string name="action_shows_sort_title">Název</string>
     <string name="action_shows_sort_latest_episode">Nejnovější díl</string>
     <string name="action_shows_sort_oldest_episode">Nejstarší díl</string>

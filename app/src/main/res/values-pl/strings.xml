@@ -162,7 +162,6 @@
     <string name="state_shows_filter_excluded">Wykluczone</string>
     <string name="action_shows_make_all_visible">Przywróć ukryte seriale</string>
     <string name="description_make_all_visible_format">Przywrócić wszystkie ukryte seriale (%s)?</string>
-    <string name="action_shows_sort">Sortuj seriale</string>
     <string name="action_shows_sort_title">Tytuł</string>
     <string name="action_shows_sort_latest_episode">Najnowszy odcinek</string>
     <string name="action_shows_sort_oldest_episode">Najstarszy odcinek</string>

@@ -159,7 +159,6 @@
     <string name="state_shows_filter_excluded">已排除</string>
     <string name="action_shows_make_all_visible">顯示所有隱藏的節目</string>
     <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
-    <string name="action_shows_sort">排序節目</string>
     <string name="action_shows_sort_title">按節目名稱</string>
     <string name="action_shows_sort_latest_episode">按最新一集</string>
     <string name="action_shows_sort_oldest_episode">按最舊一集</string>

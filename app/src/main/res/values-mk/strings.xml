@@ -160,7 +160,6 @@
     <string name="state_shows_filter_excluded">Excluded</string>
     <string name="action_shows_make_all_visible">Make all hidden visible</string>
     <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
-    <string name="action_shows_sort">Подреди серии</string>
     <string name="action_shows_sort_title">Наслов</string>
     <string name="action_shows_sort_latest_episode">Следна епизода</string>
     <string name="action_shows_sort_oldest_episode">Најстара епизода</string>

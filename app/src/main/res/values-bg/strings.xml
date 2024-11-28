@@ -160,7 +160,6 @@
     <string name="state_shows_filter_excluded">Без тези</string>
     <string name="action_shows_make_all_visible">Виж всички скрити</string>
     <string name="description_make_all_visible_format">Направи всички скрити сериали (%s) видими?</string>
-    <string name="action_shows_sort">Сортирай сериалите</string>
     <string name="action_shows_sort_title">Заглавие</string>
     <string name="action_shows_sort_latest_episode">Последен епизод</string>
     <string name="action_shows_sort_oldest_episode">Най-старият епизод</string>
