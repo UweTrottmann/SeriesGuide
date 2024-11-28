@@ -6,7 +6,7 @@
 📝 = Notable change.
 
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
-[the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
+[the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
 
 ## Version 2024.5
 
