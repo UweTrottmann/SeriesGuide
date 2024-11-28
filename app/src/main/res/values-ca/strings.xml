@@ -256,7 +256,6 @@
     <string name="list_item_remove">Esborra de la llista</string>
     <string name="ack_list_item_removed">Eliminada de la llista</string>
     <string name="list_empty">Pots afegir sèries a aquesta llista</string>
-    <string name="action_lists_sort">Ordena les llistes</string>
     <string name="action_lists_reorder">Reordenar les llistes</string>
     <string name="ack_lists_reordered">Llistes reordenades</string>
     <string name="error_name_already_exists">Ja existeix una llista amb aquest nom</string>
@@ -278,7 +277,6 @@
     <string name="trailer">Tràiler</string>
     <string name="movie_cast">Repartiment</string>
     <string name="movie_crew">Equip</string>
-    <string name="action_movies_sort">Ordena les peŀlícules</string>
     <string name="action_movies_sort_title">Títol</string>
     <string name="action_movies_sort_release">Data de llançament</string>
     <string name="title_similar_movies">Pel·lícules similars</string>
@@ -388,8 +386,6 @@
     <string name="pref_exactdates_summary">\"31 d\'octubre\" enlloc de \"D\'aquí a 3 dies\"</string>
     <string name="pref_nospoilers">Evita els spoilers</string>
     <string name="pref_nospoilers_summary">Amaga els detalls fins que l\'episodi s\'hagi vist</string>
-    <string name="pref_seasonsorting">Ordena les temporades per&#8230;</string>
-    <string name="pref_episodesorting">Ordena els capítols per&#8230;</string>
     <string name="pref_language">Idioma preferit del contingut</string>
     <string name="pref_language_fallback">Idioma alternatiu</string>
     <string name="pref_updatewifionly">Imatges només via xarxa sense fils</string>

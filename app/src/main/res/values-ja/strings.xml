@@ -249,7 +249,6 @@
     <string name="list_item_remove">リストから削除</string>
     <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">You can add shows to this list</string>
-    <string name="action_lists_sort">リストの並べ替え</string>
     <string name="action_lists_reorder">リストの再並べ替え</string>
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">この名前のリストがすでに存在します</string>
@@ -271,7 +270,6 @@
     <string name="trailer">予告編</string>
     <string name="movie_cast">キャスト</string>
     <string name="movie_crew">スタッフ</string>
-    <string name="action_movies_sort">映画の並べ替え</string>
     <string name="action_movies_sort_title">タイトル</string>
     <string name="action_movies_sort_release">発売日</string>
     <string name="title_similar_movies">Similar movies</string>
@@ -377,8 +375,6 @@
     <string name="pref_exactdates_summary">「3 日以内」ではなく「10 月 31 日」</string>
     <string name="pref_nospoilers">ネタバレを防ぐ</string>
     <string name="pref_nospoilers_summary">エピソードを見るまで詳細を非表示</string>
-    <string name="pref_seasonsorting">シーズンを並び替え&#8230;</string>
-    <string name="pref_episodesorting">エピソードを並び替え&#8230;</string>
     <string name="pref_language">ご希望のコンテンツ言語</string>
     <string name="pref_language_fallback">別の言語</string>
     <string name="pref_updatewifionly">画像は Wi-Fi 経由のみ</string>

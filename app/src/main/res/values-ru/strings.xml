@@ -270,7 +270,6 @@
     <string name="list_item_remove">Удалить из списка</string>
     <string name="ack_list_item_removed">Удалено из списка</string>
     <string name="list_empty">Вы можете добавить сериалы в этот список</string>
-    <string name="action_lists_sort">Отсортировать списки</string>
     <string name="action_lists_reorder">Сортировка списков</string>
     <string name="ack_lists_reordered">Списки переупорядочены</string>
     <string name="error_name_already_exists">Список с таким именем уже существует</string>
@@ -292,7 +291,6 @@
     <string name="trailer">Трейлер</string>
     <string name="movie_cast">Актерский состав</string>
     <string name="movie_crew">Съёмочная группа</string>
-    <string name="action_movies_sort">Сортировать фильмы</string>
     <string name="action_movies_sort_title">Название</string>
     <string name="action_movies_sort_release">Дата выпуска</string>
     <string name="title_similar_movies">Похожие фильмы</string>
@@ -410,8 +408,6 @@
     <string name="pref_exactdates_summary">\"31 октября\" вместо \"Через 3 дня\"</string>
     <string name="pref_nospoilers">Предотвратить спойлеры</string>
     <string name="pref_nospoilers_summary">Скрывать подробности, пока эпизод не просмотрен</string>
-    <string name="pref_seasonsorting">Сортировка сезонов по&#8230;</string>
-    <string name="pref_episodesorting">Сортировка эпизодов по&#8230;</string>
     <string name="pref_language">Предпочитаемый язык контента</string>
     <string name="pref_language_fallback">Альтернативное изображение</string>
     <string name="pref_updatewifionly">Картинки только через Wi-Fi</string>

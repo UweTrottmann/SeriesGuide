@@ -256,7 +256,6 @@
     <string name="list_item_remove">Forigi el listo</string>
     <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">Vi povas aldoni televidaĵojn al ĉi tiu listo</string>
-    <string name="action_lists_sort">Ordigi listojn</string>
     <string name="action_lists_reorder">Reordigi listojn</string>
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">Listo kun ĉi tiu nomo jam ekzistas</string>
@@ -278,7 +277,6 @@
     <string name="trailer">Antaŭprezentaĵo</string>
     <string name="movie_cast">Aktoraro</string>
     <string name="movie_crew">Ekipo</string>
-    <string name="action_movies_sort">Ordigi filmojn</string>
     <string name="action_movies_sort_title">Titolo</string>
     <string name="action_movies_sort_release">Eldondato</string>
     <string name="title_similar_movies">Similar movies</string>
@@ -388,8 +386,6 @@
     <string name="pref_exactdates_summary">\"Oktobro 31\" anstataŭ \"en 3 tagoj\"</string>
     <string name="pref_nospoilers">Preventi malkaŝaĵojn</string>
     <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
-    <string name="pref_seasonsorting">Ordigi sezonojn laŭ&#8230;</string>
-    <string name="pref_episodesorting">Ordigi epizodojn laŭ&#8230;</string>
     <string name="pref_language">Preferata lingvo de enhavo</string>
     <string name="pref_language_fallback">Alternativa lingvo</string>
     <string name="pref_updatewifionly">Bildojn nur per vifio</string>

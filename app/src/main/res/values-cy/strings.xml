@@ -284,7 +284,6 @@
     <string name="list_item_remove">Tynnu o\'r rhestr</string>
     <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">Gallwch ychwanegu sioeau at y rhestr hon</string>
-    <string name="action_lists_sort">Trefnu rhestrau</string>
     <string name="action_lists_reorder">Rhestrau ail-archebu</string>
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">Mae rhestr gyda\'r enw hwn eisoes yn bodoli</string>
@@ -306,7 +305,6 @@
     <string name="trailer">Trelar Ffilm</string>
     <string name="movie_cast">Cast Ffilm</string>
     <string name="movie_crew">Criw Ffilm</string>
-    <string name="action_movies_sort">Trefnu ffilmiau</string>
     <string name="action_movies_sort_title">Teitl</string>
     <string name="action_movies_sort_release">Dyddiad rhyddhau</string>
     <string name="title_similar_movies">Similar movies</string>
@@ -432,8 +430,6 @@
     <string name="pref_exactdates_summary">\"Hydref 31\" yn lle \"mewn 3 diwrnod\"</string>
     <string name="pref_nospoilers">Atal anrheithwyr</string>
     <string name="pref_nospoilers_summary">Cuddiwch fanylion nes bod pennod yn cael ei gwylio</string>
-    <string name="pref_seasonsorting">Trefnu tymhorau yn ôl&#8230;</string>
-    <string name="pref_episodesorting">Trefnu penodau yn ôl&#8230;</string>
     <string name="pref_language">Yr iaith cynnwys a ffefrir</string>
     <string name="pref_language_fallback">Iaith amgen</string>
     <string name="pref_updatewifionly">Delweddau trwy Wi-Fi yn unig</string>

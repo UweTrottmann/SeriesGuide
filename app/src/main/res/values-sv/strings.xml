@@ -256,7 +256,6 @@
     <string name="list_item_remove">Ta bort från lista</string>
     <string name="ack_list_item_removed">Borttagen från lista</string>
     <string name="list_empty">Du kan lägga till serier i denna lista</string>
-    <string name="action_lists_sort">Sortera listor</string>
     <string name="action_lists_reorder">Sortera om listor</string>
     <string name="ack_lists_reordered">Listor omordnade</string>
     <string name="error_name_already_exists">En lista med detta namn finns redan</string>
@@ -278,7 +277,6 @@
     <string name="trailer">Trailer</string>
     <string name="movie_cast">Rollista</string>
     <string name="movie_crew">Medverkande</string>
-    <string name="action_movies_sort">Sortera filmer</string>
     <string name="action_movies_sort_title">Titel</string>
     <string name="action_movies_sort_release">Utgivningsdatum</string>
     <string name="title_similar_movies">Liknande filmer</string>
@@ -388,8 +386,6 @@
     <string name="pref_exactdates_summary">\"31 oktober\" istället för \"om 3 dagar\"</string>
     <string name="pref_nospoilers">Förhindra spoilers</string>
     <string name="pref_nospoilers_summary">Dölj detaljer tills ett avsnitt har setts</string>
-    <string name="pref_seasonsorting">Sortera säsonger efter&#8230;</string>
-    <string name="pref_episodesorting">Sortera avsnitt efter&#8230;</string>
     <string name="pref_language">Innehållsspråk som föredras</string>
     <string name="pref_language_fallback">Alternativt språk</string>
     <string name="pref_updatewifionly">Endast bilder via Wi-Fi</string>

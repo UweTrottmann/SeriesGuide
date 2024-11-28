@@ -256,7 +256,6 @@
     <string name="list_item_remove">Retirer de la liste</string>
     <string name="ack_list_item_removed">Retiré de la liste</string>
     <string name="list_empty">Vous pouvez ajouter des séries à cette liste.</string>
-    <string name="action_lists_sort">Trier les listes</string>
     <string name="action_lists_reorder">Réorganiser les listes</string>
     <string name="ack_lists_reordered">Listes réordonnées</string>
     <string name="error_name_already_exists">Une liste portant ce nom existe déjà</string>
@@ -278,7 +277,6 @@
     <string name="trailer">Bande-annonce</string>
     <string name="movie_cast">Casting</string>
     <string name="movie_crew">Équipe technique</string>
-    <string name="action_movies_sort">Trier les films</string>
     <string name="action_movies_sort_title">Titre</string>
     <string name="action_movies_sort_release">Date de parution</string>
     <string name="title_similar_movies">Films similaires</string>
@@ -388,8 +386,6 @@
     <string name="pref_exactdates_summary">« 31 octobre » au lieu de « dans 3 jours »</string>
     <string name="pref_nospoilers">Éviter les spoilers</string>
     <string name="pref_nospoilers_summary">Masquer les détails jusqu\'à ce qu’un épisode soit vu</string>
-    <string name="pref_seasonsorting">Trier les saisons par&#8230;</string>
-    <string name="pref_episodesorting">Trier les épisodes par&#8230;</string>
     <string name="pref_language">Langue préférée pour le contenu</string>
     <string name="pref_language_fallback">Langue alternative</string>
     <string name="pref_updatewifionly">Images uniquement via Wi-Fi</string>

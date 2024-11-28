@@ -256,7 +256,6 @@
     <string name="list_item_remove">Listeden kaldır</string>
     <string name="ack_list_item_removed">Listeden kaldırıldı</string>
     <string name="list_empty">Bu listeye dizi ekleyebilirsiniz</string>
-    <string name="action_lists_sort">Listeyi sırala</string>
     <string name="action_lists_reorder">Listeleri tekrar sırala</string>
     <string name="ack_lists_reordered">Listeler yeniden sıralandı</string>
     <string name="error_name_already_exists">Bu ada sahip bir liste zaten var</string>
@@ -278,7 +277,6 @@
     <string name="trailer">Fragman</string>
     <string name="movie_cast">Oyuncular</string>
     <string name="movie_crew">Ekip</string>
-    <string name="action_movies_sort">Filmleri sırala</string>
     <string name="action_movies_sort_title">Başlık</string>
     <string name="action_movies_sort_release">Yayın tarihi</string>
     <string name="title_similar_movies">Benzer filmler</string>
@@ -388,8 +386,6 @@
     <string name="pref_exactdates_summary">\"3 gün içinde\" yerine \"31 Ekim\"</string>
     <string name="pref_nospoilers">Spoiler önle</string>
     <string name="pref_nospoilers_summary">İzlenene kadar bölüm ayrıntılarını gizle</string>
-    <string name="pref_seasonsorting">Sezonları sırala&#8230;</string>
-    <string name="pref_episodesorting">Bölümleri sırala&#8230;</string>
     <string name="pref_language">Tercih edilen içerik dili</string>
     <string name="pref_language_fallback">Alternatif dil</string>
     <string name="pref_updatewifionly">Görüntüler sadece Wi-Fi üzerinden</string>

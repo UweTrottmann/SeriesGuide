@@ -256,7 +256,6 @@
     <string name="list_item_remove">Verwijderen uit lijst</string>
     <string name="ack_list_item_removed">Verwijderd uit lijst</string>
     <string name="list_empty">U kunt series toevoegen aan deze lijst</string>
-    <string name="action_lists_sort">Lijst sorteren</string>
     <string name="action_lists_reorder">Lijsten opnieuw ordenen</string>
     <string name="ack_lists_reordered">Lijsten gerangschikt</string>
     <string name="error_name_already_exists">Een lijst met deze naam bestaat al</string>
@@ -278,7 +277,6 @@
     <string name="trailer">Trailer</string>
     <string name="movie_cast">Cast</string>
     <string name="movie_crew">Filmploeg</string>
-    <string name="action_movies_sort">Sorteer films</string>
     <string name="action_movies_sort_title">Titel</string>
     <string name="action_movies_sort_release">Releasedatum</string>
     <string name="title_similar_movies">Vergelijkbare films</string>
@@ -388,8 +386,6 @@
     <string name="pref_exactdates_summary">\"31 oktober\" in plaats van \"over 3 dagen\"</string>
     <string name="pref_nospoilers">Spoilers voorkomen</string>
     <string name="pref_nospoilers_summary">Details verbergen totdat een aflevering is bekeken</string>
-    <string name="pref_seasonsorting">Seizoenen sorteren op&#8230;</string>
-    <string name="pref_episodesorting">Afleveringen sorteren op&#8230;</string>
     <string name="pref_language">Voorkeurstaal voor inhoud</string>
     <string name="pref_language_fallback">Alternatieve taal</string>
     <string name="pref_updatewifionly">Afbeeldingen alleen via Wi-Fi</string>

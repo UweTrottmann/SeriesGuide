@@ -263,7 +263,6 @@
     <string name="list_item_remove">Șterge din listă</string>
     <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">You can add shows to this list</string>
-    <string name="action_lists_sort">Sortează lista</string>
     <string name="action_lists_reorder">Reordonaţi lista</string>
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">O listă cu acest nume deja există</string>
@@ -285,7 +284,6 @@
     <string name="trailer">Trailer</string>
     <string name="movie_cast">Distributie</string>
     <string name="movie_crew">Echipa</string>
-    <string name="action_movies_sort">Sortare filme</string>
     <string name="action_movies_sort_title">Titlu</string>
     <string name="action_movies_sort_release">Data de lansare</string>
     <string name="title_similar_movies">Similar movies</string>
@@ -399,8 +397,6 @@
     <string name="pref_exactdates_summary">\"31 Octombrie\" în loc de \"în 3 zile\"</string>
     <string name="pref_nospoilers">Ascunde spoilerele</string>
     <string name="pref_nospoilers_summary">Ascunde detaliile până episodul este vizionat</string>
-    <string name="pref_seasonsorting">Sortare sezoane după&#8230;</string>
-    <string name="pref_episodesorting">Sortare episoade după&#8230;</string>
     <string name="pref_language">Limba preferată</string>
     <string name="pref_language_fallback">Limba alternativa</string>
     <string name="pref_updatewifionly">Imaginile se vor încarca doar prin intermediul Wi-Fi</string>

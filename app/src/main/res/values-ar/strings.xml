@@ -284,7 +284,6 @@
     <string name="list_item_remove">إزالة من القائمة</string>
     <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">يمكنك إضافة مسلسلات إلى هذه القائمة</string>
-    <string name="action_lists_sort">ترتيب القوائم</string>
     <string name="action_lists_reorder">إعادة ترتيب القوائم</string>
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">يوجد بالفعل قائمة بهذا الإسم</string>
@@ -306,7 +305,6 @@
     <string name="trailer">العرض الدعائي</string>
     <string name="movie_cast">طاقم التمثيل</string>
     <string name="movie_crew">طاقم</string>
-    <string name="action_movies_sort">فرز الأفلام</string>
     <string name="action_movies_sort_title">العنوان</string>
     <string name="action_movies_sort_release">تاريخ الإصدار</string>
     <string name="title_similar_movies">Similar movies</string>
@@ -432,8 +430,6 @@
     <string name="pref_exactdates_summary">\"31 أكتوبر\" بدلاً من \"في 3 أيام\"</string>
     <string name="pref_nospoilers">منع المفسدين</string>
     <string name="pref_nospoilers_summary">إخفاء التفاصيل حتى هو شاهد الحلقة</string>
-    <string name="pref_seasonsorting">ترتيب المواسم حسب&#8230;</string>
-    <string name="pref_episodesorting">ترتيب الحلقات حسب&#8230;</string>
     <string name="pref_language">اللغة المفضلة</string>
     <string name="pref_language_fallback">اللغة البديلة</string>
     <string name="pref_updatewifionly">تحميل الصور بواسطة الواي فاي فقط</string>

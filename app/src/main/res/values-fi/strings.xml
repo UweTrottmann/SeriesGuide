@@ -256,7 +256,6 @@
     <string name="list_item_remove">Poista listalta</string>
     <string name="ack_list_item_removed">Poistettiin listasta</string>
     <string name="list_empty">Voit lisätä ohjelmia tähän listaan</string>
-    <string name="action_lists_sort">Lajittele listat</string>
     <string name="action_lists_reorder">Järjestä listat uudelleen</string>
     <string name="ack_lists_reordered">Listat uudelleenjärjestettiin</string>
     <string name="error_name_already_exists">Samanniminen lista on jo olemassa</string>
@@ -278,7 +277,6 @@
     <string name="trailer">Traileri</string>
     <string name="movie_cast">Näyttelijät</string>
     <string name="movie_crew">Kuvausryhmä</string>
-    <string name="action_movies_sort">Lajittele elokuvat</string>
     <string name="action_movies_sort_title">Nimi</string>
     <string name="action_movies_sort_release">Julkaisupäivä</string>
     <string name="title_similar_movies">Samankaltaisia elokuvia</string>
@@ -388,8 +386,6 @@
     <string name="pref_exactdates_summary">Käytä \"3 päivän kuluttua\" sijasta \"31. lokakuuta\"</string>
     <string name="pref_nospoilers">Estä juonipaljastukset</string>
     <string name="pref_nospoilers_summary">Piilota tiedot, kunnes jakso on katsottu</string>
-    <string name="pref_seasonsorting">Lajittele kaudet&#8230;</string>
-    <string name="pref_episodesorting">Lajittele jaksot&#8230;</string>
     <string name="pref_language">Ensisijainen sisällön kieli</string>
     <string name="pref_language_fallback">Vaihtoehtoinen kieli</string>
     <string name="pref_updatewifionly">Kuvat vain Wi-Fin kautta</string>

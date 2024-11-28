@@ -270,7 +270,6 @@
     <string name="list_item_remove">Odebrat ze seznamu</string>
     <string name="ack_list_item_removed">Odstraněno ze seznamu</string>
     <string name="list_empty">Můžete přidat seriály do tohoto seznamu</string>
-    <string name="action_lists_sort">Třídit seznamy</string>
     <string name="action_lists_reorder">Uspořádat seznamy</string>
     <string name="ack_lists_reordered">Řazení seznamů změněno</string>
     <string name="error_name_already_exists">Seznam s tímto názvem již existuje</string>
@@ -292,7 +291,6 @@
     <string name="trailer">Trailer</string>
     <string name="movie_cast">Obsazení</string>
     <string name="movie_crew">Kolektiv</string>
-    <string name="action_movies_sort">Seřadit filmy</string>
     <string name="action_movies_sort_title">Název</string>
     <string name="action_movies_sort_release">Datum vysílání</string>
     <string name="title_similar_movies">Podobné filmy</string>
@@ -410,8 +408,6 @@
     <string name="pref_exactdates_summary">\"31. října\" místo \"za 3 dny\"</string>
     <string name="pref_nospoilers">Zabraň spoilerům</string>
     <string name="pref_nospoilers_summary">Skrýt podrobnosti, dokud není epizoda zhlédnuta</string>
-    <string name="pref_seasonsorting">Řadit série dle&#8230;</string>
-    <string name="pref_episodesorting">Řadit epizody dle&#8230;</string>
     <string name="pref_language">Preferovaný jazyk obsahu</string>
     <string name="pref_language_fallback">Alternativní jazyk</string>
     <string name="pref_updatewifionly">Obrázky pouze přes Wi-Fi</string>

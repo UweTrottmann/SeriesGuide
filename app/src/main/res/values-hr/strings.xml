@@ -263,7 +263,6 @@
     <string name="list_item_remove">Ukloni s popisa</string>
     <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">You can add shows to this list</string>
-    <string name="action_lists_sort">Sortiraj popise</string>
     <string name="action_lists_reorder">Promijeni redoslijed popisa</string>
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">Popis sa ovim nazivom već postoji</string>
@@ -285,7 +284,6 @@
     <string name="trailer">Trailer</string>
     <string name="movie_cast">Uloge</string>
     <string name="movie_crew">Ekipa</string>
-    <string name="action_movies_sort">Kratki filmovi</string>
     <string name="action_movies_sort_title">Naslov</string>
     <string name="action_movies_sort_release">Datum emitiranja</string>
     <string name="title_similar_movies">Similar movies</string>
@@ -399,8 +397,6 @@
     <string name="pref_exactdates_summary">\"31 listopad\" umjesto \"za 3 dana\"</string>
     <string name="pref_nospoilers">Spriječi spojlere</string>
     <string name="pref_nospoilers_summary">Sakrij detalje dok epizoda nije pogledana</string>
-    <string name="pref_seasonsorting">Poredaj sezone prema&#8230;</string>
-    <string name="pref_episodesorting">Poredaj epizode prema&#8230;</string>
     <string name="pref_language">Preferirani jezik sadržaja</string>
     <string name="pref_language_fallback">Alternativni jezik</string>
     <string name="pref_updatewifionly">Slike samo putem Wi-Fi mreže</string>

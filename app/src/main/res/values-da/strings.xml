@@ -256,7 +256,6 @@
     <string name="list_item_remove">Fjern fra liste</string>
     <string name="ack_list_item_removed">Fjernet fra listen</string>
     <string name="list_empty">Du kan tilføje serier til denne liste</string>
-    <string name="action_lists_sort">Sortér lister</string>
     <string name="action_lists_reorder">Omarrangér lister</string>
     <string name="ack_lists_reordered">Lister omarrangeret</string>
     <string name="error_name_already_exists">En liste med dette navn findes allerede</string>
@@ -278,7 +277,6 @@
     <string name="trailer">Trailer</string>
     <string name="movie_cast">Medvirkende</string>
     <string name="movie_crew">Besætning</string>
-    <string name="action_movies_sort">Sortér film</string>
     <string name="action_movies_sort_title">Titel</string>
     <string name="action_movies_sort_release">Udgivelsesdato</string>
     <string name="title_similar_movies">Lignende film</string>
@@ -388,8 +386,6 @@
     <string name="pref_exactdates_summary">\"31. oktober\" i stedet for \"om 3 dage\"</string>
     <string name="pref_nospoilers">Undgå spoilers</string>
     <string name="pref_nospoilers_summary">Skjul detaljer, indtil en episode er set</string>
-    <string name="pref_seasonsorting">Sortér sæsoner efter&#8230;</string>
-    <string name="pref_episodesorting">Sortér episoder efter&#8230;</string>
     <string name="pref_language">Foretrukket indholdssprog</string>
     <string name="pref_language_fallback">Alternativt sprog</string>
     <string name="pref_updatewifionly">Download kun billeder via Wi-Fi</string>

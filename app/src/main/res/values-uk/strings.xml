@@ -270,7 +270,6 @@
     <string name="list_item_remove">Видалити зі списку</string>
     <string name="ack_list_item_removed">Усунено зі списку</string>
     <string name="list_empty">Ви можете додати серіали в цей список</string>
-    <string name="action_lists_sort">Сортувати списки</string>
     <string name="action_lists_reorder">Впорядкувати список</string>
     <string name="ack_lists_reordered">Список перевпорядковано</string>
     <string name="error_name_already_exists">Список з таким іменем вже існує</string>
@@ -292,7 +291,6 @@
     <string name="trailer">Трейлер</string>
     <string name="movie_cast">У ролях</string>
     <string name="movie_crew">Знімальна група</string>
-    <string name="action_movies_sort">Сортувати фільми</string>
     <string name="action_movies_sort_title">Назвою</string>
     <string name="action_movies_sort_release">Датою виходу</string>
     <string name="title_similar_movies">Схожі фільми</string>
@@ -410,8 +408,6 @@
     <string name="pref_exactdates_summary">\"31 жовтня\" замість \" 3 дні\"</string>
     <string name="pref_nospoilers">Запобігання спойлерам</string>
     <string name="pref_nospoilers_summary">Приховати подробиці до перегляду епізоду</string>
-    <string name="pref_seasonsorting">Сортувати сезони за&#8230;</string>
-    <string name="pref_episodesorting">Сортувати серії за&#8230;</string>
     <string name="pref_language">Бажана мова контенту</string>
     <string name="pref_language_fallback">Альтернативна мова</string>
     <string name="pref_updatewifionly">Зображення лише через Wi-Fi</string>

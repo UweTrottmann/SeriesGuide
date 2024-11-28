@@ -249,7 +249,6 @@
     <string name="list_item_remove">Hapus dari daftar</string>
     <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">Kau bisa menambahkan acara ke daftar ini</string>
-    <string name="action_lists_sort">Urutkan daftar</string>
     <string name="action_lists_reorder">Susun ulang daftar</string>
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">Daftar dengan nama ini sudah ada</string>
@@ -271,7 +270,6 @@
     <string name="trailer">Cuplikan</string>
     <string name="movie_cast">Pemeran</string>
     <string name="movie_crew">Kru</string>
-    <string name="action_movies_sort">Sortir film</string>
     <string name="action_movies_sort_title">Judul</string>
     <string name="action_movies_sort_release">Tanggal rilis</string>
     <string name="title_similar_movies">Similar movies</string>
@@ -377,8 +375,6 @@
     <string name="pref_exactdates_summary">\"31 Oktober\" daripada \"dalam 3 hari\"</string>
     <string name="pref_nospoilers">Cegah bocoran</string>
     <string name="pref_nospoilers_summary">Sembunyikan rician sampai satu episode ditonton</string>
-    <string name="pref_seasonsorting">Sortir musim berdasarkan&#8230;</string>
-    <string name="pref_episodesorting">Sortir musim berdasarkan&#8230;</string>
     <string name="pref_language">Bahasa konten yang diutamakan</string>
     <string name="pref_language_fallback">Alternatif bahasa</string>
     <string name="pref_updatewifionly">Gambar hanya melalui Wi-fi</string>

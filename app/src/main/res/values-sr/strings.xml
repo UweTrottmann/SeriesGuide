@@ -263,7 +263,6 @@
     <string name="list_item_remove">Уклони са листе</string>
     <string name="ack_list_item_removed">Уклоњено са листе</string>
     <string name="list_empty">Можете додати емисије на ову листу</string>
-    <string name="action_lists_sort">Листе за сортирање</string>
     <string name="action_lists_reorder">Поново сортирајте листе</string>
     <string name="ack_lists_reordered">Листе су преуређене</string>
     <string name="error_name_already_exists">Lista sa ovim imenom već postoji</string>
@@ -285,7 +284,6 @@
     <string name="trailer">Трејлер</string>
     <string name="movie_cast">Улоге</string>
     <string name="movie_crew">Екипа</string>
-    <string name="action_movies_sort">Сортирај филмове</string>
     <string name="action_movies_sort_title">Наслов</string>
     <string name="action_movies_sort_release">Датум емитовања</string>
     <string name="title_similar_movies">Слични филмови</string>
@@ -399,8 +397,6 @@
     <string name="pref_exactdates_summary">\"31 октобар\" у место од \"за 3 дана\"</string>
     <string name="pref_nospoilers">Спречити спојлере</string>
     <string name="pref_nospoilers_summary">Сакрити детаље док се епизода не погледа</string>
-    <string name="pref_seasonsorting">Поређај сезоне по&#8230;</string>
-    <string name="pref_episodesorting">Поређај епизоде по&#8230;</string>
     <string name="pref_language">Жељени језик садржаја</string>
     <string name="pref_language_fallback">Алтернативни језик</string>
     <string name="pref_updatewifionly">Слике само кроз бежичну мрежу</string>

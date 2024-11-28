@@ -249,7 +249,6 @@
     <string name="list_item_remove">ลบออกจากรายการ</string>
     <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">คุณสามารถเพิ่มซีรีส์นี้ไปยังรายการ</string>
-    <string name="action_lists_sort">เรียงรายการ</string>
     <string name="action_lists_reorder">เรียงรายการใหม่</string>
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">มีรายการชื่อนี้อยู่แล้ว</string>
@@ -271,7 +270,6 @@
     <string name="trailer">ตัวอย่าง</string>
     <string name="movie_cast">นักแสดง</string>
     <string name="movie_crew">ทีมงาน</string>
-    <string name="action_movies_sort">เรียงภาพยนตร์</string>
     <string name="action_movies_sort_title">ชื่อเรื่อง</string>
     <string name="action_movies_sort_release">วันที่ออกฉาย</string>
     <string name="title_similar_movies">Similar movies</string>
@@ -377,8 +375,6 @@
     <string name="pref_exactdates_summary">\"31 ตุลาคม\" แทน \"ใน 3 วัน\"</string>
     <string name="pref_nospoilers">ป้องกันการสปอยล์</string>
     <string name="pref_nospoilers_summary">ซ่อนรายละเอียดเฉพาะตอนที่ยังไม่ได้ดู</string>
-    <string name="pref_seasonsorting">เรียงซีซั่นโดย&#8230;</string>
-    <string name="pref_episodesorting">เรียงตอนโดย&#8230;</string>
     <string name="pref_language">ภาษาของเนื้อหาที่ต้องการ</string>
     <string name="pref_language_fallback">ภาษารอง</string>
     <string name="pref_updatewifionly">รูปภาพผ่านไวไฟเท่านั้น</string>

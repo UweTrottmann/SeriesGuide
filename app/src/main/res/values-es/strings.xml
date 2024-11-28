@@ -256,7 +256,6 @@
     <string name="list_item_remove">Eliminar de la lista</string>
     <string name="ack_list_item_removed">Eliminado de la lista</string>
     <string name="list_empty">Puedes añadir series a esta lista</string>
-    <string name="action_lists_sort">Ordenar listas</string>
     <string name="action_lists_reorder">Reordenar listas</string>
     <string name="ack_lists_reordered">Listas reordenadas</string>
     <string name="error_name_already_exists">Ya existe una lista con este nombre</string>
@@ -278,7 +277,6 @@
     <string name="trailer">Trailer</string>
     <string name="movie_cast">Reparto</string>
     <string name="movie_crew">Equipo técnico</string>
-    <string name="action_movies_sort">Ordenar películas</string>
     <string name="action_movies_sort_title">Título</string>
     <string name="action_movies_sort_release">Fecha de estreno</string>
     <string name="title_similar_movies">Películas similares</string>
@@ -389,8 +387,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="pref_exactdates_summary">\"El 31 de octubre\" en lugar de \"en 3 días\"</string>
     <string name="pref_nospoilers">Evitar spoilers</string>
     <string name="pref_nospoilers_summary">Ocultar detalles hasta que un episodio sea visto</string>
-    <string name="pref_seasonsorting">Ordenar temporadas por&#8230;</string>
-    <string name="pref_episodesorting">Ordenar episodios por&#8230;</string>
     <string name="pref_language">Lenguaje preferido para el contenido</string>
     <string name="pref_language_fallback">Idioma alternativo</string>
     <string name="pref_updatewifionly">Imágenes sólo por Wi-Fi</string>

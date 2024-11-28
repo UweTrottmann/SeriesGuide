@@ -256,7 +256,6 @@
     <string name="list_item_remove">பட்டியலில் இருந்து அகற்று</string>
     <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">You can add shows to this list</string>
-    <string name="action_lists_sort">அடுக்கு பட்டியல்கள்</string>
     <string name="action_lists_reorder">பட்டியல்களை மறு வரிசையாக்க இழுத்து</string>
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">இந்த பட்டியலை ஏற்கனவே உள்ளது</string>
@@ -278,7 +277,6 @@
     <string name="trailer">முன்னோட்டம்</string>
     <string name="movie_cast">நடிகர்கள்</string>
     <string name="movie_crew">குழுவினர்</string>
-    <string name="action_movies_sort">அடுக்கு திரைப்படங்கள்</string>
     <string name="action_movies_sort_title">தலைப்பு</string>
     <string name="action_movies_sort_release">வெளியீட்டு தேதி</string>
     <string name="title_similar_movies">Similar movies</string>
@@ -388,8 +386,6 @@
     <string name="pref_exactdates_summary">\"அக்டோபர் 31\" பதிலாக \"உள்ள நாட்கள்\"</string>
     <string name="pref_nospoilers">Prevent spoilers</string>
     <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
-    <string name="pref_seasonsorting">மூலம் அடுக்கு சீசன்ஸ்&#8230;</string>
-    <string name="pref_episodesorting">மூலம் அடுக்கு episodes&#8230;</string>
     <string name="pref_language">விருப்ப உள்ளடக்க மொழி</string>
     <string name="pref_language_fallback">Alternative language</string>
     <string name="pref_updatewifionly">படிமங்கள் வழியாக Wi-Fi மட்டும்</string>
