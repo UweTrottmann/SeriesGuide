@@ -282,7 +282,6 @@
     <string name="action_movies_sort">Filmek rendezése</string>
     <string name="action_movies_sort_title">Cím</string>
     <string name="action_movies_sort_release">Első adás</string>
-    <string name="action_movies_filter">Filmek szűrése</string>
     <string name="title_similar_movies">Hasonló filmek</string>
     <string name="title_release_dates">Release dates</string>
     <!-- Statistics -->

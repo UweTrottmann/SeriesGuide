@@ -296,7 +296,6 @@
     <string name="action_movies_sort">Seřadit filmy</string>
     <string name="action_movies_sort_title">Název</string>
     <string name="action_movies_sort_release">Datum vysílání</string>
-    <string name="action_movies_filter">Filtrovat filmy</string>
     <string name="title_similar_movies">Podobné filmy</string>
     <string name="title_release_dates">Release dates</string>
     <!-- Statistics -->

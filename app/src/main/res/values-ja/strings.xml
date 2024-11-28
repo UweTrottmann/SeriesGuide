@@ -275,7 +275,6 @@
     <string name="action_movies_sort">映画の並べ替え</string>
     <string name="action_movies_sort_title">タイトル</string>
     <string name="action_movies_sort_release">発売日</string>
-    <string name="action_movies_filter">Filter movies</string>
     <string name="title_similar_movies">Similar movies</string>
     <string name="title_release_dates">Release dates</string>
     <!-- Statistics -->

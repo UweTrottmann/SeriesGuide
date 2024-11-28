@@ -289,7 +289,6 @@
     <string name="action_movies_sort">Сортирај филмове</string>
     <string name="action_movies_sort_title">Наслов</string>
     <string name="action_movies_sort_release">Датум емитовања</string>
-    <string name="action_movies_filter">Филтрирати филмове</string>
     <string name="title_similar_movies">Слични филмови</string>
     <string name="title_release_dates">Release dates</string>
     <!-- Statistics -->

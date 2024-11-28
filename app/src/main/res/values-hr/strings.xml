@@ -289,7 +289,6 @@
     <string name="action_movies_sort">Kratki filmovi</string>
     <string name="action_movies_sort_title">Naslov</string>
     <string name="action_movies_sort_release">Datum emitiranja</string>
-    <string name="action_movies_filter">Filter movies</string>
     <string name="title_similar_movies">Similar movies</string>
     <string name="title_release_dates">Release dates</string>
     <!-- Statistics -->

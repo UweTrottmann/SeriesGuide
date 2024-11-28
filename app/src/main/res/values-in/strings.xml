@@ -275,7 +275,6 @@
     <string name="action_movies_sort">Sortir film</string>
     <string name="action_movies_sort_title">Judul</string>
     <string name="action_movies_sort_release">Tanggal rilis</string>
-    <string name="action_movies_filter">Filter movies</string>
     <string name="title_similar_movies">Similar movies</string>
     <string name="title_release_dates">Release dates</string>
     <!-- Statistics -->

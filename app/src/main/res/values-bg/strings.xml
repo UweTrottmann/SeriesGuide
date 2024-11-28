@@ -282,7 +282,6 @@
     <string name="action_movies_sort">Подреждане на филми</string>
     <string name="action_movies_sort_title">Заглавие</string>
     <string name="action_movies_sort_release">Дата на издаване</string>
-    <string name="action_movies_filter">Филтриране</string>
     <string name="title_similar_movies">Подобни филми</string>
     <string name="title_release_dates">Release dates</string>
     <!-- Statistics -->

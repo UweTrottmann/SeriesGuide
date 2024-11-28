@@ -282,7 +282,6 @@
     <string name="action_movies_sort">Filmleri sırala</string>
     <string name="action_movies_sort_title">Başlık</string>
     <string name="action_movies_sort_release">Yayın tarihi</string>
-    <string name="action_movies_filter">Filmleri filtrele</string>
     <string name="title_similar_movies">Benzer filmler</string>
     <string name="title_release_dates">Yayın tarihleri</string>
     <!-- Statistics -->

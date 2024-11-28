@@ -282,7 +282,6 @@
     <string name="action_movies_sort">Sorteer films</string>
     <string name="action_movies_sort_title">Titel</string>
     <string name="action_movies_sort_release">Releasedatum</string>
-    <string name="action_movies_filter">Films filteren</string>
     <string name="title_similar_movies">Vergelijkbare films</string>
     <string name="title_release_dates">Releasedatums</string>
     <!-- Statistics -->

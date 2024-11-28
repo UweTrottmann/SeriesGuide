@@ -282,7 +282,6 @@
     <string name="action_movies_sort">Sorter filmer</string>
     <string name="action_movies_sort_title">Tittel</string>
     <string name="action_movies_sort_release">Utgivelsesdato</string>
-    <string name="action_movies_filter">Filter movies</string>
     <string name="title_similar_movies">Similar movies</string>
     <string name="title_release_dates">Release dates</string>
     <!-- Statistics -->

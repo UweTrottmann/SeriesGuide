@@ -282,7 +282,6 @@
     <string name="action_movies_sort">چینش فیلم‌ها</string>
     <string name="action_movies_sort_title">عنوان</string>
     <string name="action_movies_sort_release">تاریخ انتشار</string>
-    <string name="action_movies_filter">پالایش فیلم‌ها</string>
     <string name="title_similar_movies">فیلم‌های مشابه</string>
     <string name="title_release_dates">Release dates</string>
     <!-- Statistics -->
