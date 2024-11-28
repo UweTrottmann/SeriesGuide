@@ -259,8 +259,10 @@
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Similar shows</string>
 
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">Discover</string>
     <string name="title_popular">Popular</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">Year</string>
     <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
@@ -285,7 +287,6 @@
     <string name="error_name_already_exists">A list with this name already exists</string>
 
     <!-- Movies -->
-    <string name="title_discover">Discover</string>
     <string name="title_digital_releases">Digital releases</string>
     <string name="title_disc_releases">Disc releases</string>
     <string name="movies_in_theatres">In theaters</string>
