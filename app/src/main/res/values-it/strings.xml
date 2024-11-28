@@ -149,7 +149,6 @@
     <string name="hidden">Spostato nei non visibili</string>
     <string name="unhidden">Visualizza non nascosti</string>
     <string name="action_shows_add">Aggiungi una serie</string>
-    <string name="action_shows_filter">Filtra le serie</string>
     <string name="empty_filter">Rimuovi tutti i filtri</string>
     <string name="action_shows_filter_favorites">Preferiti</string>
     <string name="action_shows_filter_unwatched">Non visti</string>

@@ -163,7 +163,6 @@
     <string name="action_shows_add">Add show</string>
     <string name="action_filter_and_sort">Filter and sort</string>
     <string name="title_filter_general">General</string>
-    <string name="action_shows_filter">Filter shows</string>
     <string name="empty_filter">Reset filters</string>
     <string name="action_shows_filter_favorites">Favorites</string>
     <string name="action_shows_filter_unwatched">Unwatched</string>

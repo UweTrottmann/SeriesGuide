@@ -151,7 +151,6 @@
     <string name="hidden">Перемещено в скрытые </string>
     <string name="unhidden">Сериал снова виден</string>
     <string name="action_shows_add">Добавить сериал</string>
-    <string name="action_shows_filter">Фильтр сериалов</string>
     <string name="empty_filter">Очистить фильтры</string>
     <string name="action_shows_filter_favorites">Избранное</string>
     <string name="action_shows_filter_unwatched">Непросмотренные</string>

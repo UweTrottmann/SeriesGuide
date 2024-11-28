@@ -151,7 +151,6 @@
     <string name="hidden">סדרה מוסתרת</string>
     <string name="unhidden">סדרה לא מוסתרת</string>
     <string name="action_shows_add">הוספת סדרה</string>
-    <string name="action_shows_filter">סינון סדרות</string>
     <string name="empty_filter">הסרת כל המסננים</string>
     <string name="action_shows_filter_favorites">מועדפים</string>
     <string name="action_shows_filter_unwatched">טרם נצפה</string>

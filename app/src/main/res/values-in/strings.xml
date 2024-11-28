@@ -148,7 +148,6 @@
     <string name="hidden">Dipindahkan ke tersembunyi</string>
     <string name="unhidden">Acara terlihat kembali</string>
     <string name="action_shows_add">Tambahkan acara</string>
-    <string name="action_shows_filter">Saring acara</string>
     <string name="empty_filter">Hapus semua filter</string>
     <string name="action_shows_filter_favorites">Favorit</string>
     <string name="action_shows_filter_unwatched">Belum ditonton</string>

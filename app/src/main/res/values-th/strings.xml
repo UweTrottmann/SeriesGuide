@@ -148,7 +148,6 @@
     <string name="hidden">ซ่อนรายการแล้ว</string>
     <string name="unhidden">แสดงซีรีส์อีกครั้ง</string>
     <string name="action_shows_add">เพิ่มซีรีส์</string>
-    <string name="action_shows_filter">กรองซีรีส์</string>
     <string name="empty_filter">ลบตัวกรองทั้งหมด</string>
     <string name="action_shows_filter_favorites">รายการโปรด</string>
     <string name="action_shows_filter_unwatched">ยังไม่ได้ดู</string>

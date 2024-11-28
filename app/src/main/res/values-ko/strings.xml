@@ -148,7 +148,6 @@
     <string name="hidden">숨김 완료</string>
     <string name="unhidden">표시 완료</string>
     <string name="action_shows_add">프로그램 추가</string>
-    <string name="action_shows_filter">프로그램 필터</string>
     <string name="empty_filter">모든 필터 제거</string>
     <string name="action_shows_filter_favorites">즐겨찾기</string>
     <string name="action_shows_filter_unwatched">미시청</string>

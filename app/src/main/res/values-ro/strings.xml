@@ -150,7 +150,6 @@
     <string name="hidden">Emisiune ascunsă</string>
     <string name="unhidden">Emisiune neascunsă</string>
     <string name="action_shows_add">Adaugă serial</string>
-    <string name="action_shows_filter">Filtrează serialele</string>
     <string name="empty_filter">Ștergeți toate filtrele</string>
     <string name="action_shows_filter_favorites">Favorite</string>
     <string name="action_shows_filter_unwatched">Nevizualizate</string>

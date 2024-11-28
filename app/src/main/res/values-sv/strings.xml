@@ -149,7 +149,6 @@
     <string name="hidden">Dold serie</string>
     <string name="unhidden">Visar serie</string>
     <string name="action_shows_add">Lägg till serie</string>
-    <string name="action_shows_filter">Filtrera serier</string>
     <string name="empty_filter">Ta bort alla filter</string>
     <string name="action_shows_filter_favorites">Favoriter</string>
     <string name="action_shows_filter_unwatched">Osedda</string>

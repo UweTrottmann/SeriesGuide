@@ -150,7 +150,6 @@
     <string name="hidden">Sakrivena serija</string>
     <string name="unhidden">Prikazana serija</string>
     <string name="action_shows_add">Dodaj seriju</string>
-    <string name="action_shows_filter">Filtriraj serije</string>
     <string name="empty_filter">Ukloni sve filtere</string>
     <string name="action_shows_filter_favorites">Favoriti</string>
     <string name="action_shows_filter_unwatched">Nije pogledano</string>

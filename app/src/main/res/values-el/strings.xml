@@ -149,7 +149,6 @@
     <string name="hidden">Κρυφή σειρα </string>
     <string name="unhidden">μη-κρυφή σειρά</string>
     <string name="action_shows_add">Προσθήκη Σειράς</string>
-    <string name="action_shows_filter">Φίλτρο</string>
     <string name="empty_filter">Κατάργηση όλων των φίλτρων</string>
     <string name="action_shows_filter_favorites">Αγαπημένα</string>
     <string name="action_shows_filter_unwatched">Δεν έχουν παρακολουθηθεί</string>

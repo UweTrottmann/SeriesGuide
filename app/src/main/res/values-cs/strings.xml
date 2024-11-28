@@ -151,7 +151,6 @@
     <string name="hidden">Skrytý seriál</string>
     <string name="unhidden">Obnovený seriál</string>
     <string name="action_shows_add">Přidat seriál</string>
-    <string name="action_shows_filter">Filtrovat seriály</string>
     <string name="empty_filter">Zrušit všechny filtry</string>
     <string name="action_shows_filter_favorites">Oblíbené</string>
     <string name="action_shows_filter_unwatched">Nezhlédnuté</string>

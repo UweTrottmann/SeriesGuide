@@ -153,7 +153,6 @@
     <string name="hidden">Wedi\'i symud i gudd</string>
     <string name="unhidden">Sioe i\'w gweld eto</string>
     <string name="action_shows_add">Ychwanegu sioe</string>
-    <string name="action_shows_filter">Hidlo sioeau</string>
     <string name="empty_filter">Tynnwch yr holl hidlwyr</string>
     <string name="action_shows_filter_favorites">Hoff</string>
     <string name="action_shows_filter_unwatched">Heb ei wylio</string>

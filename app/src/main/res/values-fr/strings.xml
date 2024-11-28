@@ -149,7 +149,6 @@
     <string name="hidden">Série cachée</string>
     <string name="unhidden">Série affichée</string>
     <string name="action_shows_add">Ajouter une série</string>
-    <string name="action_shows_filter">Filtrer les séries</string>
     <string name="empty_filter">Enlever tous les filtres</string>
     <string name="action_shows_filter_favorites">Favoris</string>
     <string name="action_shows_filter_unwatched">Non visionnés</string>

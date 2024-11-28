@@ -148,7 +148,6 @@
     <string name="hidden">已隐藏该节目</string>
     <string name="unhidden">已重新显示该节目</string>
     <string name="action_shows_add">添加节目</string>
-    <string name="action_shows_filter">筛选节目</string>
     <string name="empty_filter">移除所有筛选条件</string>
     <string name="action_shows_filter_favorites">已标记为喜爱</string>
     <string name="action_shows_filter_unwatched">未观看</string>

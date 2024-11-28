@@ -149,7 +149,6 @@
     <string name="hidden">Siirretty piilotettuihin</string>
     <string name="unhidden">Ohjelma on taas näkyvissä</string>
     <string name="action_shows_add">Lisää ohjelma</string>
-    <string name="action_shows_filter">Suodata ohjelmat</string>
     <string name="empty_filter">Poista kaikki suodattimet</string>
     <string name="action_shows_filter_favorites">Suosikit</string>
     <string name="action_shows_filter_unwatched">Katsomattomat</string>

@@ -149,7 +149,6 @@
     <string name="hidden">Sèrie oculta</string>
     <string name="unhidden">Sèrie visible</string>
     <string name="action_shows_add">Afegeix sèrie</string>
-    <string name="action_shows_filter">Filtra sèries</string>
     <string name="empty_filter">Desactiva tots els filtres</string>
     <string name="action_shows_filter_favorites">Preferits</string>
     <string name="action_shows_filter_unwatched">No vist</string>

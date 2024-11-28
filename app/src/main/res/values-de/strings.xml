@@ -149,7 +149,6 @@
     <string name="hidden">Serie ausgeblendet</string>
     <string name="unhidden">Serie wieder sichtbar</string>
     <string name="action_shows_add">Serie hinzufügen</string>
-    <string name="action_shows_filter">Serien filtern</string>
     <string name="action_filter_and_sort">Filtern und sortieren</string>
     <string name="title_filter_general">Allgemein</string>
     <string name="empty_filter">Filter zurücksetzen</string>

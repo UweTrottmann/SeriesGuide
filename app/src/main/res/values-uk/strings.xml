@@ -151,7 +151,6 @@
     <string name="hidden">Приховані серіали</string>
     <string name="unhidden">Не приховані серіали</string>
     <string name="action_shows_add">Додати серіал</string>
-    <string name="action_shows_filter">Фільтрувати серіали</string>
     <string name="empty_filter">Видалити всі фільтри</string>
     <string name="action_shows_filter_favorites">Улюблені</string>
     <string name="action_shows_filter_unwatched">Непереглянуті</string>

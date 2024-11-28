@@ -149,7 +149,6 @@
     <string name="hidden">Movita al kaŝitaj</string>
     <string name="unhidden">Televidaĵo estas videbla denove</string>
     <string name="action_shows_add">Aldoni televidaĵon</string>
-    <string name="action_shows_filter">Filtri televidaĵojn</string>
     <string name="empty_filter">Forigi ĉiujn filtrilojn</string>
     <string name="action_shows_filter_favorites">Plej ŝatataj</string>
     <string name="action_shows_filter_unwatched">Nespektitaj</string>

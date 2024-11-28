@@ -151,7 +151,6 @@
     <string name="hidden">Serial został ukryty</string>
     <string name="unhidden">Odkryty serial</string>
     <string name="action_shows_add">Dodaj serial</string>
-    <string name="action_shows_filter">Filtruj seriale</string>
     <string name="empty_filter">Usuń wszystkie filtry</string>
     <string name="action_shows_filter_favorites">Ulubione</string>
     <string name="action_shows_filter_unwatched">Nieobejrzane</string>

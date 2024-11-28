@@ -148,7 +148,6 @@
     <string name="hidden">非表示に移動しました</string>
     <string name="unhidden">番組は再び表示されます</string>
     <string name="action_shows_add">番組を追加</string>
-    <string name="action_shows_filter">番組をフィルター</string>
     <string name="empty_filter">すべてのフィルターを削除</string>
     <string name="action_shows_filter_favorites">お気に入り</string>
     <string name="action_shows_filter_unwatched">未視聴</string>

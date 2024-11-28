@@ -149,7 +149,6 @@
     <string name="hidden">Verborgen serie</string>
     <string name="unhidden">Serie is opnieuw zichtbaar</string>
     <string name="action_shows_add">Serie toevoegen</string>
-    <string name="action_shows_filter">Series filteren</string>
     <string name="empty_filter">Alle filters verwijderen</string>
     <string name="action_shows_filter_favorites">Favorieten</string>
     <string name="action_shows_filter_unwatched">Onbekeken</string>

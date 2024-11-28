@@ -149,7 +149,6 @@
     <string name="hidden">Rejtett sorozat</string>
     <string name="unhidden">Látható műsor</string>
     <string name="action_shows_add">Sorozat hozzáadása</string>
-    <string name="action_shows_filter">Sorozatok szűrése</string>
     <string name="empty_filter">Minden szűrő eltávolítása</string>
     <string name="action_shows_filter_favorites">Kedvencek</string>
     <string name="action_shows_filter_unwatched">Nem látott</string>

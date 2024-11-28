@@ -149,7 +149,6 @@
     <string name="hidden">Скрито ТВ предаване</string>
     <string name="unhidden">Показано ТВ предаване</string>
     <string name="action_shows_add">Добавяне на тв предаване</string>
-    <string name="action_shows_filter">Филтриране на сериали</string>
     <string name="empty_filter">Премахни всички филтри</string>
     <string name="action_shows_filter_favorites">Любими</string>
     <string name="action_shows_filter_unwatched">Негледани</string>

@@ -149,7 +149,6 @@
     <string name="hidden">Skjuler serie</string>
     <string name="unhidden">Viser serie igjen</string>
     <string name="action_shows_add">Legg til serie</string>
-    <string name="action_shows_filter">Filtrer serier</string>
     <string name="empty_filter">Fjern alle filtre</string>
     <string name="action_shows_filter_favorites">Favoritter</string>
     <string name="action_shows_filter_unwatched">Ikke sett</string>

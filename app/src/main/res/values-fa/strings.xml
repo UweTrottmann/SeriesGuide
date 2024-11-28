@@ -149,7 +149,6 @@
     <string name="hidden">به پنهان منتقل شد</string>
     <string name="unhidden">اثر نمایشی دوباره قابل مشاهده است</string>
     <string name="action_shows_add">افزودن اثر نمایشی</string>
-    <string name="action_shows_filter">آثار نمایشی برحسب فیلتر</string>
     <string name="empty_filter">حذف همه فیلترها</string>
     <string name="action_shows_filter_favorites">برگزیده‌ها</string>
     <string name="action_shows_filter_unwatched">تماشا نشده</string>

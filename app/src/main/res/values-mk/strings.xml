@@ -149,7 +149,6 @@
     <string name="hidden">Премести во скриени</string>
     <string name="unhidden">Серијата е видлива повторно</string>
     <string name="action_shows_add">Додади серија</string>
-    <string name="action_shows_filter">Филтрирај серија</string>
     <string name="empty_filter">Избриши ги сите филтри</string>
     <string name="action_shows_filter_favorites">Омилени</string>
     <string name="action_shows_filter_unwatched">Не гледани</string>

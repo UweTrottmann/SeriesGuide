@@ -149,7 +149,6 @@
     <string name="hidden">Gizlendi</string>
     <string name="unhidden">Gizlenmemiş dizi</string>
     <string name="action_shows_add">Dizi ekle</string>
-    <string name="action_shows_filter">Dizileri filtrele</string>
     <string name="empty_filter">Tüm filtreleri kaldır</string>
     <string name="action_shows_filter_favorites">Favoriler</string>
     <string name="action_shows_filter_unwatched">İzlenmemiş</string>

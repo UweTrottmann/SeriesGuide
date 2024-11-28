@@ -148,7 +148,6 @@
     <string name="hidden">隱藏影集</string>
     <string name="unhidden">取消隱藏影集</string>
     <string name="action_shows_add">新增節目</string>
-    <string name="action_shows_filter">篩選節目</string>
     <string name="empty_filter">重設篩選條件</string>
     <string name="action_shows_filter_favorites">最喜愛的節目</string>
     <string name="action_shows_filter_unwatched">尚未觀看</string>

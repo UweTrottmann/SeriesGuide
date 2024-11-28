@@ -153,7 +153,6 @@
     <string name="hidden">تم الإخفاء</string>
     <string name="unhidden">تم إظهار المسلسل</string>
     <string name="action_shows_add">إضافة مسلسل</string>
-    <string name="action_shows_filter">فلترة المسلسلات</string>
     <string name="empty_filter">إزالة كل عوامل التصفية</string>
     <string name="action_shows_filter_favorites">المفضلة</string>
     <string name="action_shows_filter_unwatched">الغير مشاهدة</string>

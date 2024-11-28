@@ -149,7 +149,6 @@
     <string name="hidden">நகர்த்த மறைந்த</string>
     <string name="unhidden">காட்சி காணப்படும் மீண்டும்</string>
     <string name="action_shows_add">காட்சி சேர்</string>
-    <string name="action_shows_filter">வடிகட்டி காட்சிகள்</string>
     <string name="empty_filter">அனைத்து வடிகட்டிகளை நீக்கு</string>
     <string name="action_shows_filter_favorites">பிடித்தவை</string>
     <string name="action_shows_filter_unwatched">கவனிக்கப்படாத</string>
