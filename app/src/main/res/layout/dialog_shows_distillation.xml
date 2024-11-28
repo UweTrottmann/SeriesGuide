@@ -26,7 +26,7 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/action_shows_sort" />
+            android:text="@string/sort" />
 
     </com.google.android.material.tabs.TabLayout>
 
