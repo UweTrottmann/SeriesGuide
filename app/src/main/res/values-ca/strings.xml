@@ -39,7 +39,7 @@
     <string name="action_stream_settings">Veure en línia o configuració de la compra</string>
     <string name="action_select_region">Selecciona la regió</string>
     <string name="action_reset">Restablir</string>
-    <string name="action_save">Save</string>
+    <string name="action_save">Desar</string>
     <!-- Search -->
     <string name="clear_search_history">Esborra l\'historial</string>
     <string name="search_hint">Cerca episodis</string>
@@ -173,7 +173,7 @@
     <string name="action_episodes_switch_view">Canvia la vista</string>
     <string name="next_to_watch">Següent a mirar</string>
     <string name="title_notes">Notes</string>
-    <string name="action_edit_note">Edit note</string>
+    <string name="action_edit_note">Editar la nota</string>
     <!-- History -->
     <string name="user_stream">Històric</string>
     <string name="recently_watched">Vist Recentment</string>

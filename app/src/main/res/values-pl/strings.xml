@@ -39,7 +39,7 @@
     <string name="action_stream_settings">Opcje kupowania i strumieniowania</string>
     <string name="action_select_region">Wybierz region</string>
     <string name="action_reset">Przywróć</string>
-    <string name="action_save">Save</string>
+    <string name="action_save">Zapisz</string>
     <!-- Search -->
     <string name="clear_search_history">Wyczyść historię wyszukiwania</string>
     <string name="search_hint">Szukaj odcinków</string>
@@ -174,8 +174,8 @@
     <string name="context_marknext">Odcinek obejrzany</string>
     <string name="action_episodes_switch_view">Przełącz widok</string>
     <string name="next_to_watch">Następny do obejrzenia</string>
-    <string name="title_notes">Notes</string>
-    <string name="action_edit_note">Edit note</string>
+    <string name="title_notes">Notatki</string>
+    <string name="action_edit_note">Edytuj notatkę</string>
     <!-- History -->
     <string name="user_stream">Historia</string>
     <string name="recently_watched">Niedawno obejrzane</string>

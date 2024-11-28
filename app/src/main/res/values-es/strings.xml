@@ -39,7 +39,7 @@
     <string name="action_stream_settings">Configuración de ver en línea o compra</string>
     <string name="action_select_region">Seleccionar región</string>
     <string name="action_reset">Restablecer</string>
-    <string name="action_save">Save</string>
+    <string name="action_save">Guardar</string>
     <!-- Search -->
     <string name="clear_search_history">Limpiar historial de búsqueda</string>
     <string name="search_hint">Buscar episodios</string>
@@ -172,8 +172,8 @@
     <string name="context_marknext">Siguiente episodio visto</string>
     <string name="action_episodes_switch_view">Cambiar vista</string>
     <string name="next_to_watch">Siguiente para ver</string>
-    <string name="title_notes">Notes</string>
-    <string name="action_edit_note">Edit note</string>
+    <string name="title_notes">Notas</string>
+    <string name="action_edit_note">Editar nota</string>
     <!-- History -->
     <string name="user_stream">Historial</string>
     <string name="recently_watched">Vistas recientemente</string>

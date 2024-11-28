@@ -10,6 +10,10 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2024.5
 
+### Unreleased
+
+* 📝 Latest user interface translations from Crowdin.
+
 ### 2024.5.1 - 2024-11-21 🧪
 
 * 🌟 Shows: add a note to a show, synced with SeriesGuide Cloud or Trakt (VIP only).
