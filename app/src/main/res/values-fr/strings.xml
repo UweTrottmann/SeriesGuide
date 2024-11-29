@@ -149,6 +149,8 @@
     <string name="hidden">Série cachée</string>
     <string name="unhidden">Série affichée</string>
     <string name="action_shows_add">Ajouter une série</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">Enlever tous les filtres</string>
     <string name="action_shows_filter_favorites">Favoris</string>
     <string name="action_shows_filter_unwatched">Non visionnés</string>
@@ -237,8 +239,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Similaires</string>
     <string name="title_similar_shows">Séries similaires</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">A découvrir</string>
     <string name="title_popular">Populaire</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">Année</string>
     <string name="filter_year_current">Cette année</string>
     <string name="filter_language">Langue</string>
@@ -260,7 +264,6 @@
     <string name="ack_lists_reordered">Listes réordonnées</string>
     <string name="error_name_already_exists">Une liste portant ce nom existe déjà</string>
     <!-- Movies -->
-    <string name="title_discover">A découvrir</string>
     <string name="title_digital_releases">Versions numériques</string>
     <string name="title_disc_releases">Sorties DVD</string>
     <string name="movies_in_theatres">Dans les salles</string>

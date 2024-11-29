@@ -149,6 +149,8 @@
     <string name="hidden">Κρυφή σειρα </string>
     <string name="unhidden">μη-κρυφή σειρά</string>
     <string name="action_shows_add">Προσθήκη Σειράς</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">Κατάργηση όλων των φίλτρων</string>
     <string name="action_shows_filter_favorites">Αγαπημένα</string>
     <string name="action_shows_filter_unwatched">Δεν έχουν παρακολουθηθεί</string>
@@ -237,8 +239,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Παρόμοια</string>
     <string name="title_similar_shows">Παρόμοιες σειρές</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">Ανακαλύψτε</string>
     <string name="title_popular">Δημοφιλείς</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">Έτος</string>
     <string name="filter_year_current">Τρέχον έτος</string>
     <string name="filter_language">Γλώσσα</string>
@@ -260,7 +264,6 @@
     <string name="ack_lists_reordered">Οι λίστες αναδιατάχθηκαν</string>
     <string name="error_name_already_exists">Υπάρχει ήδη μία λίστα με αυτό το όνομα</string>
     <!-- Movies -->
-    <string name="title_discover">Ανακαλύψτε</string>
     <string name="title_digital_releases">Ψηφιακές κυκλοφορίες</string>
     <string name="title_disc_releases">Κυκλοφορίες δίσκων</string>
     <string name="movies_in_theatres">Στους κινηματογράφους</string>

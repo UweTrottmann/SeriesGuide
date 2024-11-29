@@ -153,6 +153,8 @@
     <string name="hidden">تم الإخفاء</string>
     <string name="unhidden">تم إظهار المسلسل</string>
     <string name="action_shows_add">إضافة مسلسل</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">إزالة كل عوامل التصفية</string>
     <string name="action_shows_filter_favorites">المفضلة</string>
     <string name="action_shows_filter_unwatched">الغير مشاهدة</string>
@@ -265,8 +267,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">مسلسلات مشابهة</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">استكشاف</string>
     <string name="title_popular">الأكثر شعبية</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">Year</string>
     <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
@@ -288,7 +292,6 @@
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">يوجد بالفعل قائمة بهذا الإسم</string>
     <!-- Movies -->
-    <string name="title_discover">استكشاف</string>
     <string name="title_digital_releases">الإصدارات الرقمية</string>
     <string name="title_disc_releases">إصدارات القرص</string>
     <string name="movies_in_theatres">حاليا في السينما</string>

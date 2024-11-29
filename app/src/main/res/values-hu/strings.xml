@@ -149,6 +149,8 @@
     <string name="hidden">Rejtett sorozat</string>
     <string name="unhidden">Látható műsor</string>
     <string name="action_shows_add">Sorozat hozzáadása</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">Minden szűrő eltávolítása</string>
     <string name="action_shows_filter_favorites">Kedvencek</string>
     <string name="action_shows_filter_unwatched">Nem látott</string>
@@ -237,8 +239,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Hasonló</string>
     <string name="title_similar_shows">Hasonló sorozatok</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">Felfedezés</string>
     <string name="title_popular">Népszerű</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">Year</string>
     <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
@@ -260,7 +264,6 @@
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">Már létezik egy lista ezzel a névvel</string>
     <!-- Movies -->
-    <string name="title_discover">Felfedezés</string>
     <string name="title_digital_releases">Digitalis megjelenések</string>
     <string name="title_disc_releases">Lemez megjelenések</string>
     <string name="movies_in_theatres">Mozikban</string>

@@ -149,6 +149,8 @@
     <string name="hidden">Verborgen serie</string>
     <string name="unhidden">Serie is opnieuw zichtbaar</string>
     <string name="action_shows_add">Serie toevoegen</string>
+    <string name="action_filter_and_sort">Filteren en sorteren</string>
+    <string name="title_filter_general">Algemeen</string>
     <string name="empty_filter">Alle filters verwijderen</string>
     <string name="action_shows_filter_favorites">Favorieten</string>
     <string name="action_shows_filter_unwatched">Onbekeken</string>
@@ -237,8 +239,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Soortgelijk</string>
     <string name="title_similar_shows">Soortgelijke shows</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">Ontdekken</string>
     <string name="title_popular">Populair</string>
+    <string name="action_filter">Filteren</string>
     <string name="filter_year">Jaar</string>
     <string name="filter_year_current">Huidig jaar</string>
     <string name="filter_language">Taal</string>
@@ -260,7 +264,6 @@
     <string name="ack_lists_reordered">Lijsten gerangschikt</string>
     <string name="error_name_already_exists">Een lijst met deze naam bestaat al</string>
     <!-- Movies -->
-    <string name="title_discover">Ontdekken</string>
     <string name="title_digital_releases">Digitale releases</string>
     <string name="title_disc_releases">Releases op schijf</string>
     <string name="movies_in_theatres">In de bioscoop</string>

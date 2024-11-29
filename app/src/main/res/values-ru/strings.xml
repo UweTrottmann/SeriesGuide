@@ -151,6 +151,8 @@
     <string name="hidden">Перемещено в скрытые </string>
     <string name="unhidden">Сериал снова виден</string>
     <string name="action_shows_add">Добавить сериал</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">Очистить фильтры</string>
     <string name="action_shows_filter_favorites">Избранное</string>
     <string name="action_shows_filter_unwatched">Непросмотренные</string>
@@ -251,8 +253,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Похожие</string>
     <string name="title_similar_shows">Похожие сериалы</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">Подборка</string>
     <string name="title_popular">Популярные</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">Год</string>
     <string name="filter_year_current">Текущий год</string>
     <string name="filter_language">Язык</string>
@@ -274,7 +278,6 @@
     <string name="ack_lists_reordered">Списки переупорядочены</string>
     <string name="error_name_already_exists">Список с таким именем уже существует</string>
     <!-- Movies -->
-    <string name="title_discover">Подборка</string>
     <string name="title_digital_releases">Цифровые версии</string>
     <string name="title_disc_releases">Диски</string>
     <string name="movies_in_theatres">Смотрите в кинотеатрах</string>

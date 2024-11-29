@@ -149,6 +149,8 @@
     <string name="hidden">Movita al kaŝitaj</string>
     <string name="unhidden">Televidaĵo estas videbla denove</string>
     <string name="action_shows_add">Aldoni televidaĵon</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">Forigi ĉiujn filtrilojn</string>
     <string name="action_shows_filter_favorites">Plej ŝatataj</string>
     <string name="action_shows_filter_unwatched">Nespektitaj</string>
@@ -237,8 +239,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Similaj televidaĵoj</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">Esplori</string>
     <string name="title_popular">Popularaj</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">Year</string>
     <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
@@ -260,7 +264,6 @@
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">Listo kun ĉi tiu nomo jam ekzistas</string>
     <!-- Movies -->
-    <string name="title_discover">Esplori</string>
     <string name="title_digital_releases">Bitaj eldonoj</string>
     <string name="title_disc_releases">Diskaj eldonoj</string>
     <string name="movies_in_theatres">En kinejoj</string>

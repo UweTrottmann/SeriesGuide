@@ -149,6 +149,8 @@
     <string name="hidden">Siirretty piilotettuihin</string>
     <string name="unhidden">Ohjelma on taas näkyvissä</string>
     <string name="action_shows_add">Lisää ohjelma</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">Poista kaikki suodattimet</string>
     <string name="action_shows_filter_favorites">Suosikit</string>
     <string name="action_shows_filter_unwatched">Katsomattomat</string>
@@ -237,8 +239,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Samankaltaiset</string>
     <string name="title_similar_shows">Samankaltaisia sarjoja</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">Tutustu</string>
     <string name="title_popular">Suositut</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">Vuosi</string>
     <string name="filter_year_current">Kuluva vuosi</string>
     <string name="filter_language">Kieli</string>
@@ -260,7 +264,6 @@
     <string name="ack_lists_reordered">Listat uudelleenjärjestettiin</string>
     <string name="error_name_already_exists">Samanniminen lista on jo olemassa</string>
     <!-- Movies -->
-    <string name="title_discover">Tutustu</string>
     <string name="title_digital_releases">Digitaaliset julkaisut</string>
     <string name="title_disc_releases">Levyjulkaisut</string>
     <string name="movies_in_theatres">Teattereissa</string>

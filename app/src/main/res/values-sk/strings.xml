@@ -151,6 +151,8 @@
     <string name="hidden">Skrytý seriál</string>
     <string name="unhidden">Obnovený seriál</string>
     <string name="action_shows_add">Pridať seriál</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">Odstrániť všetky filtre</string>
     <string name="action_shows_filter_favorites">Obľúbené</string>
     <string name="action_shows_filter_unwatched">Nevidené</string>
@@ -251,8 +253,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Podobné</string>
     <string name="title_similar_shows">Podobné relácie</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">Objaviť</string>
     <string name="title_popular">Populárne</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">Rok</string>
     <string name="filter_year_current">Aktuálny rok</string>
     <string name="filter_language">Jazyk</string>
@@ -274,7 +278,6 @@
     <string name="ack_lists_reordered">Poradie zoznamov zmenené</string>
     <string name="error_name_already_exists">Zoznam s týmto názvom už existuje</string>
     <!-- Movies -->
-    <string name="title_discover">Objaviť</string>
     <string name="title_digital_releases">Digitálne médiá</string>
     <string name="title_disc_releases">Diskové médiá</string>
     <string name="movies_in_theatres">V kinách</string>

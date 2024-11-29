@@ -148,6 +148,8 @@
     <string name="hidden">已隐藏该节目</string>
     <string name="unhidden">已重新显示该节目</string>
     <string name="action_shows_add">添加节目</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">移除所有筛选条件</string>
     <string name="action_shows_filter_favorites">已标记为喜爱</string>
     <string name="action_shows_filter_unwatched">未观看</string>
@@ -230,8 +232,10 @@
     <!-- Similar shows -->
     <string name="action_similar">相似</string>
     <string name="title_similar_shows">相似节目</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">发现</string>
     <string name="title_popular">热门</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">年份</string>
     <string name="filter_year_current">本年</string>
     <string name="filter_language">语言</string>
@@ -253,7 +257,6 @@
     <string name="ack_lists_reordered">列表已重新排序</string>
     <string name="error_name_already_exists">已存在同名列表</string>
     <!-- Movies -->
-    <string name="title_discover">发现</string>
     <string name="title_digital_releases">数字发行</string>
     <string name="title_disc_releases">光盘发行</string>
     <string name="movies_in_theatres">上映中</string>

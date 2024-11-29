@@ -148,6 +148,8 @@
     <string name="hidden">숨김 완료</string>
     <string name="unhidden">표시 완료</string>
     <string name="action_shows_add">프로그램 추가</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">모든 필터 제거</string>
     <string name="action_shows_filter_favorites">즐겨찾기</string>
     <string name="action_shows_filter_unwatched">미시청</string>
@@ -230,8 +232,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Similar shows</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">찾기</string>
     <string name="title_popular">인기 항목</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">Year</string>
     <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
@@ -253,7 +257,6 @@
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">이 이름을 가진 목록이 이미 존재합니다</string>
     <!-- Movies -->
-    <string name="title_discover">찾기</string>
     <string name="title_digital_releases">디지털 출시</string>
     <string name="title_disc_releases">디스크 출시</string>
     <string name="movies_in_theatres">상영 중</string>

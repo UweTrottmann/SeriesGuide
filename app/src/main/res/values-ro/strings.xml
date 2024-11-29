@@ -150,6 +150,8 @@
     <string name="hidden">Emisiune ascunsă</string>
     <string name="unhidden">Emisiune neascunsă</string>
     <string name="action_shows_add">Adaugă serial</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">Ștergeți toate filtrele</string>
     <string name="action_shows_filter_favorites">Favorite</string>
     <string name="action_shows_filter_unwatched">Nevizualizate</string>
@@ -244,8 +246,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Similar shows</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">Descoperă</string>
     <string name="title_popular">Popular</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">Year</string>
     <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
@@ -267,7 +271,6 @@
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">O listă cu acest nume deja există</string>
     <!-- Movies -->
-    <string name="title_discover">Descoperă</string>
     <string name="title_digital_releases">Lansări digitale</string>
     <string name="title_disc_releases">Lansări pe disc</string>
     <string name="movies_in_theatres">În cinematografe</string>

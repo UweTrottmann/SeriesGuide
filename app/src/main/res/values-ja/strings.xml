@@ -148,6 +148,8 @@
     <string name="hidden">非表示に移動しました</string>
     <string name="unhidden">番組は再び表示されます</string>
     <string name="action_shows_add">番組を追加</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">すべてのフィルターを削除</string>
     <string name="action_shows_filter_favorites">お気に入り</string>
     <string name="action_shows_filter_unwatched">未視聴</string>
@@ -230,8 +232,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">類似の番組</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">見つける</string>
     <string name="title_popular">人気</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">Year</string>
     <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
@@ -253,7 +257,6 @@
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">この名前のリストがすでに存在します</string>
     <!-- Movies -->
-    <string name="title_discover">見つける</string>
     <string name="title_digital_releases">デジタル リリース</string>
     <string name="title_disc_releases">ディスク リリース</string>
     <string name="movies_in_theatres">上映中</string>

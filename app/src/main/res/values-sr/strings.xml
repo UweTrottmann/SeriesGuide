@@ -150,6 +150,8 @@
     <string name="hidden">Сакривена серија</string>
     <string name="unhidden">Приказана серија</string>
     <string name="action_shows_add">Додај серију</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">Уклони све филтере</string>
     <string name="action_shows_filter_favorites">Омиљене</string>
     <string name="action_shows_filter_unwatched">Неодгледано</string>
@@ -244,8 +246,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Слично</string>
     <string name="title_similar_shows">Сличне емисије</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">Otkrijte</string>
     <string name="title_popular">Popularno</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">Година</string>
     <string name="filter_year_current">Актуелна година</string>
     <string name="filter_language">Језик</string>
@@ -267,7 +271,6 @@
     <string name="ack_lists_reordered">Листе су преуређене</string>
     <string name="error_name_already_exists">Lista sa ovim imenom već postoji</string>
     <!-- Movies -->
-    <string name="title_discover">Otkrijte</string>
     <string name="title_digital_releases">Digitalna izdanja</string>
     <string name="title_disc_releases">Disk izdanja</string>
     <string name="movies_in_theatres">U bioskopima</string>

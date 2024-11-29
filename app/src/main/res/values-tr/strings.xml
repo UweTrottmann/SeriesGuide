@@ -149,6 +149,8 @@
     <string name="hidden">Gizlendi</string>
     <string name="unhidden">Gizlenmemiş dizi</string>
     <string name="action_shows_add">Dizi ekle</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">Tüm filtreleri kaldır</string>
     <string name="action_shows_filter_favorites">Favoriler</string>
     <string name="action_shows_filter_unwatched">İzlenmemiş</string>
@@ -237,8 +239,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Benzerleri</string>
     <string name="title_similar_shows">Benzer diziler</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">Keşfet</string>
     <string name="title_popular">Popüler</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">Yıl</string>
     <string name="filter_year_current">Mevcut yıl</string>
     <string name="filter_language">Dil</string>
@@ -260,7 +264,6 @@
     <string name="ack_lists_reordered">Listeler yeniden sıralandı</string>
     <string name="error_name_already_exists">Bu ada sahip bir liste zaten var</string>
     <!-- Movies -->
-    <string name="title_discover">Keşfet</string>
     <string name="title_digital_releases">Dijital Yayınlanan</string>
     <string name="title_disc_releases">Disk\'i Yayınlanan</string>
     <string name="movies_in_theatres">Vizyonda</string>

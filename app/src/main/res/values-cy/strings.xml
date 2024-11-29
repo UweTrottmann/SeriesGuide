@@ -153,6 +153,8 @@
     <string name="hidden">Wedi\'i symud i gudd</string>
     <string name="unhidden">Sioe i\'w gweld eto</string>
     <string name="action_shows_add">Ychwanegu sioe</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">Tynnwch yr holl hidlwyr</string>
     <string name="action_shows_filter_favorites">Hoff</string>
     <string name="action_shows_filter_unwatched">Heb ei wylio</string>
@@ -265,8 +267,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Sioeau tebyg</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">Darganfod</string>
     <string name="title_popular">Poblogaidd</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">Year</string>
     <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
@@ -288,7 +292,6 @@
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">Mae rhestr gyda\'r enw hwn eisoes yn bodoli</string>
     <!-- Movies -->
-    <string name="title_discover">Darganfod</string>
     <string name="title_digital_releases">Datganiadau digidol</string>
     <string name="title_disc_releases">Datganiadau disg</string>
     <string name="movies_in_theatres">Mewn sinemâu</string>

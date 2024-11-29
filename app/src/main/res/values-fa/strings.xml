@@ -149,6 +149,8 @@
     <string name="hidden">به پنهان منتقل شد</string>
     <string name="unhidden">اثر نمایشی دوباره قابل مشاهده است</string>
     <string name="action_shows_add">افزودن اثر نمایشی</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">حذف همه فیلترها</string>
     <string name="action_shows_filter_favorites">برگزیده‌ها</string>
     <string name="action_shows_filter_unwatched">تماشا نشده</string>
@@ -237,8 +239,10 @@
     <!-- Similar shows -->
     <string name="action_similar">مشابه</string>
     <string name="title_similar_shows">سریال‌های مشابه</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">کشف</string>
     <string name="title_popular">محبوب</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">سال</string>
     <string name="filter_year_current">امسال</string>
     <string name="filter_language">زبان</string>
@@ -260,7 +264,6 @@
     <string name="ack_lists_reordered">ترتیب سیاهه عوض شد</string>
     <string name="error_name_already_exists">فهرستی با این اسم موجود است</string>
     <!-- Movies -->
-    <string name="title_discover">کشف</string>
     <string name="title_digital_releases">نسخه های دیجیتال</string>
     <string name="title_disc_releases">منتشر شده روی دیسک</string>
     <string name="movies_in_theatres">در سینماها</string>

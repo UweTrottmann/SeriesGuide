@@ -151,6 +151,8 @@
     <string name="hidden">Приховані серіали</string>
     <string name="unhidden">Не приховані серіали</string>
     <string name="action_shows_add">Додати серіал</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">Видалити всі фільтри</string>
     <string name="action_shows_filter_favorites">Улюблені</string>
     <string name="action_shows_filter_unwatched">Непереглянуті</string>
@@ -251,8 +253,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Схожі</string>
     <string name="title_similar_shows">Подібні серіали</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">Дослідити</string>
     <string name="title_popular">Популярне</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">Рік</string>
     <string name="filter_year_current">Поточний рік</string>
     <string name="filter_language">Мова</string>
@@ -274,7 +278,6 @@
     <string name="ack_lists_reordered">Список перевпорядковано</string>
     <string name="error_name_already_exists">Список з таким іменем вже існує</string>
     <!-- Movies -->
-    <string name="title_discover">Дослідити</string>
     <string name="title_digital_releases">Цифрові видання</string>
     <string name="title_disc_releases">Видання на диску</string>
     <string name="movies_in_theatres">В театрах</string>
