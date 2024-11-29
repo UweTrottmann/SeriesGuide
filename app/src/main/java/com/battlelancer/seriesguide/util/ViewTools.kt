@@ -19,6 +19,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.battlelancer.seriesguide.R
+import java.text.NumberFormat
 
 object ViewTools {
 
@@ -86,7 +87,7 @@ object ViewTools {
         return if (value != null && value > 0.0) {
             label.visibility = View.VISIBLE
             text.visibility = View.VISIBLE
-            text.text = value.toString()
+            text.text = NumberFormat.getNumberInstance().format(value)
             true
         } else {
             label.visibility = View.GONE
