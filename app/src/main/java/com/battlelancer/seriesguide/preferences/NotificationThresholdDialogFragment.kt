@@ -1,8 +1,9 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2017-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.preferences
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.DialogInterface
 import android.content.res.Resources
@@ -29,6 +30,7 @@ class NotificationThresholdDialogFragment : AppCompatDialogFragment() {
     private var binding: DialogNotificationThresholdBinding? = null
     private var value = 0
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val binding = DialogNotificationThresholdBinding.inflate(layoutInflater)
         this.binding = binding
@@ -52,6 +54,8 @@ class NotificationThresholdDialogFragment : AppCompatDialogFragment() {
             value = minutes
             binding.radioGroupThreshold.check(R.id.radioButtonThresholdMinutes)
         }
+        // Suppress SetTextI18n: to accept Arabic numbers, would need to add custom text parsing
+        // and remove the inputType number restriction.
         binding.editTextThresholdValue.setText(value.toString())
         // radio buttons are updated by text watcher
 
