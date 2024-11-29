@@ -148,7 +148,8 @@
     <string name="hidden">已隐藏该节目</string>
     <string name="unhidden">已重新显示该节目</string>
     <string name="action_shows_add">添加节目</string>
-    <string name="action_shows_filter">筛选节目</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">移除所有筛选条件</string>
     <string name="action_shows_filter_favorites">已标记为喜爱</string>
     <string name="action_shows_filter_unwatched">未观看</string>
@@ -159,7 +160,6 @@
     <string name="state_shows_filter_excluded">已排除</string>
     <string name="action_shows_make_all_visible">显示所有隐藏的节目</string>
     <string name="description_make_all_visible_format">重新显示所有隐藏的节目（共 %s 个）吗？</string>
-    <string name="action_shows_sort">排序节目</string>
     <string name="action_shows_sort_title">按片名</string>
     <string name="action_shows_sort_latest_episode">按最新一集</string>
     <string name="action_shows_sort_oldest_episode">按最早一集</string>
@@ -232,8 +232,10 @@
     <!-- Similar shows -->
     <string name="action_similar">相似</string>
     <string name="title_similar_shows">相似节目</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">发现</string>
     <string name="title_popular">热门</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">年份</string>
     <string name="filter_year_current">本年</string>
     <string name="filter_language">语言</string>
@@ -251,12 +253,10 @@
     <string name="list_item_remove">从列表中移除</string>
     <string name="ack_list_item_removed">已从列表中删除</string>
     <string name="list_empty">您可以添加节目到此列表</string>
-    <string name="action_lists_sort">排序列表</string>
     <string name="action_lists_reorder">对列表重新排序</string>
     <string name="ack_lists_reordered">列表已重新排序</string>
     <string name="error_name_already_exists">已存在同名列表</string>
     <!-- Movies -->
-    <string name="title_discover">发现</string>
     <string name="title_digital_releases">数字发行</string>
     <string name="title_disc_releases">光盘发行</string>
     <string name="movies_in_theatres">上映中</string>
@@ -273,10 +273,8 @@
     <string name="trailer">预告片</string>
     <string name="movie_cast">演员</string>
     <string name="movie_crew">工作人员</string>
-    <string name="action_movies_sort">排序电影</string>
     <string name="action_movies_sort_title">按片名</string>
     <string name="action_movies_sort_release">按发行日期</string>
-    <string name="action_movies_filter">筛选电影</string>
     <string name="title_similar_movies">相似电影</string>
     <string name="title_release_dates">Release dates</string>
     <!-- Statistics -->
@@ -380,8 +378,6 @@
     <string name="pref_exactdates_summary">如显示为「10 月 31 日」而不是「3 天后」</string>
     <string name="pref_nospoilers">防止剧透</string>
     <string name="pref_nospoilers_summary">隐藏未观看剧集的详细信息</string>
-    <string name="pref_seasonsorting">季排序方式&#8230;</string>
-    <string name="pref_episodesorting">集排序方式&#8230;</string>
     <string name="pref_language">内容首选的语言</string>
     <string name="pref_language_fallback">副语言</string>
     <string name="pref_updatewifionly">仅通过 Wi-Fi 下载图片</string>

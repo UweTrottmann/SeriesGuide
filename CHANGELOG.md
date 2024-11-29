@@ -12,6 +12,11 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ### Unreleased
 
+* 🔧 Shows: when viewing the stream or purchase provider filters, the reset button is shown as
+  disabled when no provider is selected. Also tabs are renamed and display icons to differentiate
+  filter from sort options.
+* 🔨 Show scrollbars for show filter and sort options.
+* 🔧 Use common "Sort by" action name.
 * 📝 Latest user interface translations from Crowdin.
 
 ### 2024.5.1 - 2024-11-21 🧪

@@ -383,7 +383,7 @@ class SeasonsFragment() : Fragment() {
             parentFragmentManager,
             R.array.sesorting,
             R.array.sesortingData, sortOrder.index,
-            SeasonsSettings.KEY_SEASON_SORT_ORDER, R.string.pref_seasonsorting,
+            SeasonsSettings.KEY_SEASON_SORT_ORDER, R.string.sort,
             "seasonSortOrderDialog"
         )
     }

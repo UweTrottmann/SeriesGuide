@@ -149,7 +149,8 @@
     <string name="hidden">Rejtett sorozat</string>
     <string name="unhidden">Látható műsor</string>
     <string name="action_shows_add">Sorozat hozzáadása</string>
-    <string name="action_shows_filter">Sorozatok szűrése</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">Minden szűrő eltávolítása</string>
     <string name="action_shows_filter_favorites">Kedvencek</string>
     <string name="action_shows_filter_unwatched">Nem látott</string>
@@ -160,7 +161,6 @@
     <string name="state_shows_filter_excluded">Kizárva</string>
     <string name="action_shows_make_all_visible">Elrejtett szöveg mutatása</string>
     <string name="description_make_all_visible_format">Az összes elrejtett sorozat (%s) mutatása?</string>
-    <string name="action_shows_sort">Sorozatok rendezése</string>
     <string name="action_shows_sort_title">Cím</string>
     <string name="action_shows_sort_latest_episode">Legújabb epizód</string>
     <string name="action_shows_sort_oldest_episode">Legrégebbi epizód</string>
@@ -239,8 +239,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Hasonló</string>
     <string name="title_similar_shows">Hasonló sorozatok</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">Felfedezés</string>
     <string name="title_popular">Népszerű</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">Year</string>
     <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
@@ -258,12 +260,10 @@
     <string name="list_item_remove">Eltávolítás a listáról</string>
     <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">Sorozatokat adhat hozzá a listhoz</string>
-    <string name="action_lists_sort">Listák rendezése</string>
     <string name="action_lists_reorder">Listák újrarendezése</string>
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">Már létezik egy lista ezzel a névvel</string>
     <!-- Movies -->
-    <string name="title_discover">Felfedezés</string>
     <string name="title_digital_releases">Digitalis megjelenések</string>
     <string name="title_disc_releases">Lemez megjelenések</string>
     <string name="movies_in_theatres">Mozikban</string>
@@ -280,10 +280,8 @@
     <string name="trailer">Előzetes</string>
     <string name="movie_cast">Szereplők</string>
     <string name="movie_crew">Stáb</string>
-    <string name="action_movies_sort">Filmek rendezése</string>
     <string name="action_movies_sort_title">Cím</string>
     <string name="action_movies_sort_release">Első adás</string>
-    <string name="action_movies_filter">Filmek szűrése</string>
     <string name="title_similar_movies">Hasonló filmek</string>
     <string name="title_release_dates">Release dates</string>
     <!-- Statistics -->
@@ -391,8 +389,6 @@
     <string name="pref_exactdates_summary">\"Október 31\" a \"3 napon belül\" helyett</string>
     <string name="pref_nospoilers">Spoilerek megakadályozása</string>
     <string name="pref_nospoilers_summary">Részletek elrejtése, amíg az epizód nincs megnézve</string>
-    <string name="pref_seasonsorting">Évadok rendezése</string>
-    <string name="pref_episodesorting">Epizódok rendezése</string>
     <string name="pref_language">Tartalom preferált nyelve</string>
     <string name="pref_language_fallback">Alternatív nyelv</string>
     <string name="pref_updatewifionly">Képek csak Wi-Fi-n keresztül</string>

@@ -149,7 +149,8 @@
     <string name="hidden">Премести во скриени</string>
     <string name="unhidden">Серијата е видлива повторно</string>
     <string name="action_shows_add">Додади серија</string>
-    <string name="action_shows_filter">Филтрирај серија</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">Избриши ги сите филтри</string>
     <string name="action_shows_filter_favorites">Омилени</string>
     <string name="action_shows_filter_unwatched">Не гледани</string>
@@ -160,7 +161,6 @@
     <string name="state_shows_filter_excluded">Excluded</string>
     <string name="action_shows_make_all_visible">Make all hidden visible</string>
     <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
-    <string name="action_shows_sort">Подреди серии</string>
     <string name="action_shows_sort_title">Наслов</string>
     <string name="action_shows_sort_latest_episode">Следна епизода</string>
     <string name="action_shows_sort_oldest_episode">Најстара епизода</string>
@@ -239,8 +239,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Similar shows</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">Откриј</string>
     <string name="title_popular">Популарни</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">Year</string>
     <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
@@ -258,12 +260,10 @@
     <string name="list_item_remove">Избриши од листа</string>
     <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">You can add shows to this list</string>
-    <string name="action_lists_sort">Листа за сортирање</string>
     <string name="action_lists_reorder">Поново сортирајте листа</string>
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">Една група со ова име веќе постои</string>
     <!-- Movies -->
-    <string name="title_discover">Откриј</string>
     <string name="title_digital_releases">Дигитално издание</string>
     <string name="title_disc_releases">Диск изданија</string>
     <string name="movies_in_theatres">Во кината</string>
@@ -280,10 +280,8 @@
     <string name="trailer">Трејлер</string>
     <string name="movie_cast">Улоги</string>
     <string name="movie_crew">Екипа</string>
-    <string name="action_movies_sort">Сортирај филмови</string>
     <string name="action_movies_sort_title">Наслов</string>
     <string name="action_movies_sort_release">Датум на емитување</string>
-    <string name="action_movies_filter">Filter movies</string>
     <string name="title_similar_movies">Similar movies</string>
     <string name="title_release_dates">Release dates</string>
     <!-- Statistics -->
@@ -391,8 +389,6 @@
     <string name="pref_exactdates_summary">\"Октомври 31\" отколку \"во 3 денови\"</string>
     <string name="pref_nospoilers">Спречи спојлери</string>
     <string name="pref_nospoilers_summary">Сокриј детали додека епизодата не е гледана</string>
-    <string name="pref_seasonsorting">Сортирај сезоните по&#8230;</string>
-    <string name="pref_episodesorting">Сортирај по епизоди&#8230;</string>
     <string name="pref_language">Предпрoчитaн јaзик нa сoдржинaтa</string>
     <string name="pref_language_fallback">Алтернативен јазик</string>
     <string name="pref_updatewifionly">Слики од Wi-Fi само</string>

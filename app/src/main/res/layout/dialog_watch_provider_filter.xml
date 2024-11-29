@@ -5,25 +5,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textViewTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:textAppearance="@style/TextAppearance.SeriesGuide.TitleLarge.Bold"
-        tools:text="@string/action_shows_filter" />
-
-    <TextView
-        android:id="@+id/textViewSubTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:text="@string/action_stream"
-        android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold" />
-
     <com.google.android.material.chip.Chip
         android:id="@+id/buttonWatchRegion"
         android:layout_width="wrap_content"

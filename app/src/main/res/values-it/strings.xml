@@ -149,7 +149,8 @@
     <string name="hidden">Spostato nei non visibili</string>
     <string name="unhidden">Visualizza non nascosti</string>
     <string name="action_shows_add">Aggiungi una serie</string>
-    <string name="action_shows_filter">Filtra le serie</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">Rimuovi tutti i filtri</string>
     <string name="action_shows_filter_favorites">Preferiti</string>
     <string name="action_shows_filter_unwatched">Non visti</string>
@@ -160,7 +161,6 @@
     <string name="state_shows_filter_excluded">Esclusi</string>
     <string name="action_shows_make_all_visible">Rendi visibili tutti i nascosti</string>
     <string name="description_make_all_visible_format">Rendere tutte le serie TV nascoste (%s) di nuovo visibili?</string>
-    <string name="action_shows_sort">Ordina le serie</string>
     <string name="action_shows_sort_title">Titolo</string>
     <string name="action_shows_sort_latest_episode">Episodio più recente</string>
     <string name="action_shows_sort_oldest_episode">Episodio più vecchio</string>
@@ -239,8 +239,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Simili</string>
     <string name="title_similar_shows">Serie simili</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">Scopri</string>
     <string name="title_popular">Popolari</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">Anno</string>
     <string name="filter_year_current">Quest\'anno</string>
     <string name="filter_language">Lingua</string>
@@ -258,12 +260,10 @@
     <string name="list_item_remove">Rimuovi dalla lista</string>
     <string name="ack_list_item_removed">Rimosso dalla lista</string>
     <string name="list_empty">Puoi aggiungere delle serie a questa lista</string>
-    <string name="action_lists_sort">Ordina liste</string>
     <string name="action_lists_reorder">Riordina le liste</string>
     <string name="ack_lists_reordered">Lista riordinata</string>
     <string name="error_name_already_exists">Una lista con questo nome esiste già</string>
     <!-- Movies -->
-    <string name="title_discover">Scopri</string>
     <string name="title_digital_releases">Uscite in digitale</string>
     <string name="title_disc_releases">Uscite su disco</string>
     <string name="movies_in_theatres">Al cinema</string>
@@ -280,10 +280,8 @@
     <string name="trailer">Trailer</string>
     <string name="movie_cast">Cast</string>
     <string name="movie_crew">Squadra</string>
-    <string name="action_movies_sort">Ordina film</string>
     <string name="action_movies_sort_title">Titolo</string>
     <string name="action_movies_sort_release">Data di uscita</string>
-    <string name="action_movies_filter">Filtra i film</string>
     <string name="title_similar_movies">Film simili</string>
     <string name="title_release_dates">Date di uscita</string>
     <!-- Statistics -->
@@ -391,8 +389,6 @@
     <string name="pref_exactdates_summary">\"31 Ottobre\" invece di \"tra 3 giorni\"</string>
     <string name="pref_nospoilers">Evita spoiler</string>
     <string name="pref_nospoilers_summary">Nascondi i dettagli fino a quando l\'episodio è visto</string>
-    <string name="pref_seasonsorting">Ordina stagioni per&#8230;</string>
-    <string name="pref_episodesorting">Ordina episodi per&#8230;</string>
     <string name="pref_language">Lingua preferita per i contenuti</string>
     <string name="pref_language_fallback">Lingua alternativa</string>
     <string name="pref_updatewifionly">Immagini solo in Wi-Fi</string>

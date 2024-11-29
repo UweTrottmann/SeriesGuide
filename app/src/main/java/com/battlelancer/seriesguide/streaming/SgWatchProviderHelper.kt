@@ -55,8 +55,8 @@ interface SgWatchProviderHelper {
     @Query("SELECT sg_watch_provider.* FROM sg_watch_provider JOIN sg_watch_provider_show_mappings ON sg_watch_provider.provider_id=sg_watch_provider_show_mappings.provider_id WHERE type=:type GROUP BY _id ORDER BY provider_name COLLATE UNICODE ASC")
     fun usedWatchProvidersFlow(type: Int): Flow<List<SgWatchProvider>>
 
-    /* Note: never just get those with filter_local=1 as once a show does not longer use a provider
-     it is not longer shown in the filter UI, so it can not be disabled. */
+    /* Note: never just get those with filter_local=1 as once a show does no longer use a provider
+     it is no longer shown in the filter UI, so it can not be disabled. */
     @Query("SELECT sg_watch_provider.* FROM sg_watch_provider JOIN sg_watch_provider_show_mappings ON sg_watch_provider.provider_id=sg_watch_provider_show_mappings.provider_id WHERE type=:type AND filter_local=1 GROUP BY _id")
     fun filterLocalWatchProviders(type: Int): Flow<List<SgWatchProvider>>
 

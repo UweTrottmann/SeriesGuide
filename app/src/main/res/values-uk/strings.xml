@@ -151,7 +151,8 @@
     <string name="hidden">Приховані серіали</string>
     <string name="unhidden">Не приховані серіали</string>
     <string name="action_shows_add">Додати серіал</string>
-    <string name="action_shows_filter">Фільтрувати серіали</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">Видалити всі фільтри</string>
     <string name="action_shows_filter_favorites">Улюблені</string>
     <string name="action_shows_filter_unwatched">Непереглянуті</string>
@@ -162,7 +163,6 @@
     <string name="state_shows_filter_excluded">Виключно</string>
     <string name="action_shows_make_all_visible">Зробити все приховане видимим</string>
     <string name="description_make_all_visible_format">Зробити всі приховані серіали (%s) видимими знову?</string>
-    <string name="action_shows_sort">Сортувати серіали за</string>
     <string name="action_shows_sort_title">Назвою</string>
     <string name="action_shows_sort_latest_episode">Найновішою серією</string>
     <string name="action_shows_sort_oldest_episode">Найстарішою серією</string>
@@ -253,8 +253,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Схожі</string>
     <string name="title_similar_shows">Подібні серіали</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">Дослідити</string>
     <string name="title_popular">Популярне</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">Рік</string>
     <string name="filter_year_current">Поточний рік</string>
     <string name="filter_language">Мова</string>
@@ -272,12 +274,10 @@
     <string name="list_item_remove">Видалити зі списку</string>
     <string name="ack_list_item_removed">Усунено зі списку</string>
     <string name="list_empty">Ви можете додати серіали в цей список</string>
-    <string name="action_lists_sort">Сортувати списки</string>
     <string name="action_lists_reorder">Впорядкувати список</string>
     <string name="ack_lists_reordered">Список перевпорядковано</string>
     <string name="error_name_already_exists">Список з таким іменем вже існує</string>
     <!-- Movies -->
-    <string name="title_discover">Дослідити</string>
     <string name="title_digital_releases">Цифрові видання</string>
     <string name="title_disc_releases">Видання на диску</string>
     <string name="movies_in_theatres">В театрах</string>
@@ -294,10 +294,8 @@
     <string name="trailer">Трейлер</string>
     <string name="movie_cast">У ролях</string>
     <string name="movie_crew">Знімальна група</string>
-    <string name="action_movies_sort">Сортувати фільми</string>
     <string name="action_movies_sort_title">Назвою</string>
     <string name="action_movies_sort_release">Датою виходу</string>
-    <string name="action_movies_filter">Фільтрувати фільми</string>
     <string name="title_similar_movies">Схожі фільми</string>
     <string name="title_release_dates">Дати випусків</string>
     <!-- Statistics -->
@@ -413,8 +411,6 @@
     <string name="pref_exactdates_summary">\"31 жовтня\" замість \" 3 дні\"</string>
     <string name="pref_nospoilers">Запобігання спойлерам</string>
     <string name="pref_nospoilers_summary">Приховати подробиці до перегляду епізоду</string>
-    <string name="pref_seasonsorting">Сортувати сезони за&#8230;</string>
-    <string name="pref_episodesorting">Сортувати серії за&#8230;</string>
     <string name="pref_language">Бажана мова контенту</string>
     <string name="pref_language_fallback">Альтернативна мова</string>
     <string name="pref_updatewifionly">Зображення лише через Wi-Fi</string>
