@@ -14,7 +14,7 @@ plugins {
 }
 
 buildscript {
-    val sgCompileSdk by extra(34) // Android 14 (UPSIDE_DOWN_CAKE)
+    val sgCompileSdk by extra(35) // Android 15 (VANILLA_ICE_CREAM)
     val sgMinSdk by extra(21) // Android 5 (L)
     val sgTargetSdk by extra(34) // Android 14 (UPSIDE_DOWN_CAKE)
 
