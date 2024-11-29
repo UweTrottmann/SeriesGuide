@@ -1,8 +1,9 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2015-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.lists
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
@@ -24,6 +25,8 @@ class ListsReorderDialogFragment : AppCompatDialogFragment() {
     private var binding: DialogListsReorderBinding? = null
     private lateinit var adapter: ListsAdapter
 
+    // ClickableViewAccessibility: there is nothing to click
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val binding = DialogListsReorderBinding.inflate(layoutInflater)
         this.binding = binding

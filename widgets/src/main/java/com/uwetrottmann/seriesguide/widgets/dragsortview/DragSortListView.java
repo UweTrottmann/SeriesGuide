@@ -1,6 +1,6 @@
-// Copyright 2012 Carl Bauer
-// Copyright 2014, 2015, 2017-2019 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2012 Carl Bauer
+// Copyright 2014-2024 Uwe Trottmann
 
 package com.uwetrottmann.seriesguide.widgets.dragsortview;
 
@@ -1522,6 +1522,8 @@ public class DragSortListView extends ListView {
         }
     }
 
+    // ClickableViewAccessibility: there is nothing to click
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         if (mIgnoreTouchEvent) {
