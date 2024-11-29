@@ -51,7 +51,7 @@ abstract class BaseThemeActivity : AppCompatActivity() {
             android.R.id.home -> {
                 val upIntent = NavUtils.getParentActivityIntent(this)
                 if (upIntent != null) {
-                    if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
+                    if (shouldUpRecreateTask(upIntent)) {
                         // This activity is NOT part of this app's task, so create a new task
                         // when navigating up, with a synthesized back stack.
                         TaskStackBuilder.create(this)
@@ -62,7 +62,7 @@ abstract class BaseThemeActivity : AppCompatActivity() {
                     } else {
                         // This activity is part of this app's task, so simply
                         // navigate up to the logical parent activity.
-                        NavUtils.navigateUpTo(this, upIntent)
+                        navigateUpTo(upIntent)
                     }
                 } else {
                     // No parent activity defined in AndroidManifest, let back press handle up
