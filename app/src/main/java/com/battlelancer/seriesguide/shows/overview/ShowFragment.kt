@@ -52,6 +52,7 @@ import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.battlelancer.seriesguide.util.safeShow
+import com.battlelancer.seriesguide.util.startActivityWithAnimation
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.uwetrottmann.androidutils.AndroidUtils
@@ -477,7 +478,7 @@ class ShowFragment() : Fragment() {
             val showId = showId
             if (showId > 0) {
                 val i = TraktCommentsActivity.intentShow(requireContext(), show.title, showId)
-                Utils.startActivityWithAnimation(activity, i, v)
+                requireActivity().startActivityWithAnimation(i, v)
             }
         }
 
@@ -501,7 +502,7 @@ class ShowFragment() : Fragment() {
                         originalSize = true
                     )
                 )
-                Utils.startActivityWithAnimation(activity, intent, v)
+                requireActivity().startActivityWithAnimation(intent, v)
             }
         }
     }

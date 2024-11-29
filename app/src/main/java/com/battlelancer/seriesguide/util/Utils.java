@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2011-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.util;
 
@@ -8,11 +8,8 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
@@ -62,8 +59,8 @@ public class Utils {
     }
 
     /**
-     * Launches {@link com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity} or {@link
-     * BillingActivity} and notifies that something is only available with the subscription.
+     * Launches {@link com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity} or
+     * {@link BillingActivity} and notifies that something is only available with the subscription.
      */
     public static void advertiseSubscription(Context context) {
         Toast.makeText(context, R.string.onlyx, Toast.LENGTH_SHORT).show();
@@ -81,15 +78,15 @@ public class Utils {
     @NonNull
     public static Intent getBillingActivityIntent(Context context) {
         if (Utils.isAmazonVersion()) {
-           return new Intent(context, AmazonBillingActivity.class);
+            return new Intent(context, AmazonBillingActivity.class);
         } else {
             return new Intent(context, BillingActivity.class);
         }
     }
 
     /**
-     * Returns false if there is an active, but metered connection and
-     * the user did not approve it for large data downloads (e.g. images).
+     * Returns false if there is an active, but metered connection and the user did not approve it
+     * for large data downloads (e.g. images).
      */
     static boolean isAllowedLargeDataConnection(Context context) {
         boolean isConnected;
@@ -174,14 +171,6 @@ public class Utils {
         }
     }
 
-    public static void startActivityWithAnimation(Context context, Intent intent, View view) {
-        ActivityCompat.startActivity(context, intent,
-                ActivityOptionsCompat
-                        .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
-                        .toBundle()
-        );
-    }
-
     /**
      * Tries to start the given intent as a new document (e.g. opening a website, other app) so it
      * appears as a new entry in the task switcher using {@link #tryStartActivity}.
@@ -191,5 +180,4 @@ public class Utils {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
         return Utils.tryStartActivity(context, intent, true);
     }
-
 }

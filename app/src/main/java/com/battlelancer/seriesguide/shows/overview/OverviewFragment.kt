@@ -74,6 +74,7 @@ import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.WebTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.battlelancer.seriesguide.util.safeShow
+import com.battlelancer.seriesguide.util.startActivityWithAnimation
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.Job
@@ -146,11 +147,11 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
             }
             buttonOverviewFavoriteShow.setOnClickListener { onButtonFavoriteClick() }
 
-            containerOverviewEpisodeCard.setOnClickListener { v: View? ->
+            containerOverviewEpisodeCard.setOnClickListener { v: View ->
                 runIfHasEpisode { episode ->
                     // display episode details
                     val intent = EpisodesActivity.intentEpisode(episode.id, requireContext())
-                    Utils.startActivityWithAnimation(activity, intent, v)
+                    requireActivity().startActivityWithAnimation(intent, v)
                 }
             }
 
@@ -341,10 +342,10 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
         }
     }
 
-    private fun onButtonCommentsClick(v: View?) {
+    private fun onButtonCommentsClick(v: View) {
         runIfHasEpisode { episode ->
             val i = TraktCommentsActivity.intentEpisode(requireContext(), episode.title, episode.id)
-            Utils.startActivityWithAnimation(activity, i, v)
+            requireActivity().startActivityWithAnimation(i, v)
         }
     }
 

@@ -25,8 +25,8 @@ import com.battlelancer.seriesguide.movies.MovieLocalizationDialogFragment.Local
 import com.battlelancer.seriesguide.movies.MoviesActivityViewModel.ScrollTabToTopEvent
 import com.battlelancer.seriesguide.movies.search.MoviesSearchActivity
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
-import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.util.startActivityWithAnimation
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -144,7 +144,7 @@ class MoviesDiscoverFragment : Fragment() {
         MoviesDiscoverAdapter.ItemClickListener {
         override fun onLinkClick(link: MoviesDiscoverLink, anchor: View) {
             MoviesSearchActivity.intentLink(context, link)
-                .let { Utils.startActivityWithAnimation(context, it, anchor) }
+                .let { context.startActivityWithAnimation(it, anchor) }
         }
     }
 

@@ -1,15 +1,14 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2014-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.history
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityOptionsCompat
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
 import com.battlelancer.seriesguide.movies.details.MovieDetailsActivity
+import com.battlelancer.seriesguide.util.startActivityWithAnimation
 import com.uwetrottmann.trakt5.entities.HistoryEntry
 
 /**
@@ -46,11 +45,7 @@ class UserMovieStreamFragment : StreamFragment() {
             // display movie details
             val tmdb = item.movie?.ids?.tmdb ?: return
             val i = MovieDetailsActivity.intentMovie(requireContext(), tmdb)
-            ActivityCompat.startActivity(
-                requireContext(), i, ActivityOptionsCompat
-                    .makeScaleUpAnimation(view, 0, 0, view.width, view.height)
-                    .toBundle()
-            )
+            requireContext().startActivityWithAnimation(i, view)
         }
     }
 
