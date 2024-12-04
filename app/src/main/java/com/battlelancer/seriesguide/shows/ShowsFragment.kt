@@ -20,8 +20,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.PopupMenu
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -48,6 +46,7 @@ import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.menus.ManualSyncMenu
 import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
 import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.util.startActivityWithAnimation
 import com.google.android.material.snackbar.Snackbar
 import com.uwetrottmann.androidutils.AndroidUtils
 import kotlinx.coroutines.Job
@@ -254,13 +253,7 @@ class ShowsFragment : Fragment() {
             override fun onItemClick(anchor: View, showRowId: Long) {
                 // display overview for this show
                 val intent = intentShow(requireContext(), showRowId)
-                ActivityCompat.startActivity(
-                    requireContext(), intent,
-                    ActivityOptionsCompat.makeScaleUpAnimation(
-                        anchor, 0, 0, anchor.width,
-                        anchor.height
-                    ).toBundle()
-                )
+                requireContext().startActivityWithAnimation(intent, anchor)
             }
 
             override fun onMoreOptionsClick(anchor: View, show: ShowItem) {

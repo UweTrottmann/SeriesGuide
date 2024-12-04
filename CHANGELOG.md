@@ -17,6 +17,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
   filter from sort options.
 * 🔨 Show scrollbars for show filter and sort options.
 * 🔧 Use common "Sort by" action name.
+* 🔧 Android 15: turn predictive back animation back on after more issues are resolved.
 * 📝 Latest user interface translations from Crowdin.
 
 ### 2024.5.1 - 2024-11-21 🧪

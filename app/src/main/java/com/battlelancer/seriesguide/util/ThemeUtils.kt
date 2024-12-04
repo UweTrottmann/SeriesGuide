@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2015-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.util
 
@@ -167,7 +167,7 @@ object ThemeUtils {
         return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             // A light status bar is only supported on M+.
             // Use a translucent black status bar instead.
-            val opaqueStatusBarColor: Int =
+            @Suppress("DEPRECATION") val opaqueStatusBarColor: Int =
                 MaterialColors.getColor(context, android.R.attr.statusBarColor, Color.BLACK)
             ColorUtils.setAlphaComponent(opaqueStatusBarColor, EDGE_TO_EDGE_BAR_ALPHA)
         } else {
@@ -179,7 +179,7 @@ object ThemeUtils {
         return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O_MR1) {
             // A light navigation bar is only supported on O_MR1+.
             // Use a translucent black navigation bar instead.
-            val opaqueNavBarColor =
+            @Suppress("DEPRECATION") val opaqueNavBarColor =
                 MaterialColors.getColor(context, android.R.attr.navigationBarColor, Color.BLACK)
             ColorUtils.setAlphaComponent(opaqueNavBarColor, EDGE_TO_EDGE_BAR_ALPHA)
         } else {

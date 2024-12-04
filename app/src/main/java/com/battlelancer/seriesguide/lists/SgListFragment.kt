@@ -25,8 +25,8 @@ import com.battlelancer.seriesguide.shows.tools.ShowSync
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
-import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.util.startActivityWithAnimation
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -112,8 +112,7 @@ class SgListFragment : Fragment() {
     private val itemClickListener: SgListItemViewHolder.ItemClickListener =
         object : SgListItemViewHolder.ItemClickListener {
             override fun onItemClick(anchor: View, item: SgListItemWithDetails) {
-                Utils.startActivityWithAnimation(
-                    requireActivity(),
+                requireActivity().startActivityWithAnimation(
                     OverviewActivity.intentShow(requireActivity(), item.showId),
                     anchor
                 )
