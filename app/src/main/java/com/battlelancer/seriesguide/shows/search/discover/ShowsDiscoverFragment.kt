@@ -28,10 +28,10 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.LanguagePickerDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.YearPickerDialogFragment
-import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.findDialog
 import com.battlelancer.seriesguide.util.safeShow
+import com.battlelancer.seriesguide.util.startActivityWithAnimation
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.Subscribe
@@ -137,7 +137,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
                         }
 
                     }
-                Utils.startActivityWithAnimation(activity, intent, anchor)
+                requireActivity().startActivityWithAnimation(intent, anchor)
             }
 
             override fun onHeaderButtonClick(anchor: View) {

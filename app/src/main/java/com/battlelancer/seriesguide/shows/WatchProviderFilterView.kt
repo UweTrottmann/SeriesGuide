@@ -4,6 +4,7 @@
 package com.battlelancer.seriesguide.shows
 
 import android.content.res.Configuration
+import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -21,6 +22,7 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Surface
@@ -29,6 +31,7 @@ import androidx.compose.material3.TooltipBox
 import androidx.compose.material3.TooltipDefaults
 import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -84,16 +87,25 @@ fun WatchProviderList(
             }
             HorizontalDivider()
             Row {
+                // Disabling makes it easier to see if any of the shown provider filters is enabled,
+                // however, it prevents re-setting not shown providers. Which should not matter as
+                // only shown ones are considered for filtering (see
+                // SgWatchProviderHelper.filterLocalWatchProviders).
+                val isResetEnabled = watchProviders.find { it.filter_local } != null
                 Row(
                     modifier = Modifier
                         .weight(1f)
                         .clickable(
+                            enabled = isResetEnabled,
                             role = Role.Button,
                             onClick = onProviderIncludeAny
                         )
                         .padding(16.dp)
                 ) {
-                    Text(stringResource(id = R.string.action_reset))
+                    TextWithDisabledState(
+                        id = R.string.action_reset,
+                        enabled = isResetEnabled
+                    )
                 }
                 val descriptionStreamSettingsButton =
                     stringResource(id = R.string.action_stream_settings)
@@ -114,6 +126,23 @@ fun WatchProviderList(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun TextWithDisabledState(@StringRes id: Int, enabled: Boolean) {
+    // https://developer.android.com/develop/ui/compose/designsystems/material2-material3#emphasis-and
+    // https://developer.android.com/develop/ui/compose/designsystems/material3#emphasis
+    CompositionLocalProvider(
+        LocalContentColor.provides(
+            if (enabled) {
+                MaterialTheme.colorScheme.onSurface
+            } else {
+                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
+            }
+        )
+    ) {
+        Text(stringResource(id = id))
     }
 }
 

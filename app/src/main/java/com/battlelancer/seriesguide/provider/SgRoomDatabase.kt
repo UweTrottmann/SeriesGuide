@@ -67,6 +67,10 @@ import timber.log.Timber
         AutoMigration(
             from = SgRoomDatabase.VERSION_52_WATCH_PROVIDER_FILTERS,
             to = SgRoomDatabase.VERSION_53_SHOW_TMDB_RATINGS
+        ),
+        AutoMigration(
+            from = SgRoomDatabase.VERSION_53_SHOW_TMDB_RATINGS,
+            to = SgRoomDatabase.VERSION_54_SHOW_NOTES
         )
     ]
 )
@@ -139,7 +143,13 @@ abstract class SgRoomDatabase : RoomDatabase() {
          * - Add [SgEpisode2.ratingTmdb] and [SgEpisode2.ratingTmdbVotes].
          */
         const val VERSION_53_SHOW_TMDB_RATINGS = 53
-        const val VERSION = VERSION_53_SHOW_TMDB_RATINGS
+
+        /**
+         * - Add [SgShow2.userNote] and [SgShow2.userNoteTraktId].
+         */
+        const val VERSION_54_SHOW_NOTES = 54
+
+        const val VERSION = VERSION_54_SHOW_NOTES
 
         @Volatile
         private var instance: SgRoomDatabase? = null

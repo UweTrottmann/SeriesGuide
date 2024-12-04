@@ -39,6 +39,7 @@ android {
         minSdk = sgMinSdk
         targetSdk = sgTargetSdk
 
+        // Prevent plugin from generating PNGs, use compat loading instead https://developer.android.com/studio/write/vector-asset-studio#sloption
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -155,6 +156,9 @@ android {
             // Based on https://docs.oracle.com/en/java/javase/17/docs/specs/jar/jar.html#jar-index
             // only used by network applications like applets, so safe to exclude.
             excludes += "/META-INF/INDEX.LIST"
+            // Exclude Coroutines debug file
+            // https://github.com/Kotlin/kotlinx.coroutines?tab=readme-ov-file#avoiding-including-the-debug-infrastructure-in-the-resulting-apk
+            excludes += "DebugProbesKt.bin"
         }
     }
 }

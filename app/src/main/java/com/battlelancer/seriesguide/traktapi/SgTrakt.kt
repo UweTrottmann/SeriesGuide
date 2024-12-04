@@ -41,15 +41,6 @@ class SgTrakt(
     }
 
     companion object {
-        /**
-         * Check if the request was unauthorized.
-         *
-         * @see isUnauthorized accepting context
-         */
-        @JvmStatic
-        fun isUnauthorized(response: Response<*>): Boolean {
-            return response.code() == 401
-        }
 
         /**
          * Returns if the request was not authorized. If it was, also calls
@@ -57,20 +48,13 @@ class SgTrakt(
          */
         @JvmStatic
         fun isUnauthorized(context: Context, response: Response<*>): Boolean {
-            if (response.code() == 401) {
+            if (isUnauthorized(response)) {
                 // current access token is invalid, remove it and notify user to re-connect
                 TraktCredentials.get(context).setCredentialsInvalid()
                 return true
             } else {
                 return false
             }
-        }
-
-        /**
-         * Check if the associated [Trakt account is locked](https://trakt.docs.apiary.io/#introduction/locked-user-account).
-         */
-        fun isAccountLocked(response: Response<*>): Boolean {
-            return response.code() == 423
         }
 
         fun checkForTraktError(trakt: TraktV2, response: Response<*>): String? {

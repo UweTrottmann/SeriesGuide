@@ -1,0 +1,30 @@
+SeriesGuide: Sarjojen ja elokuvien hallinta
+
+Pidä kirjaa suosikki ohjelmiesi ja elokuviesi katsomisesta.
+
+SeriesGuiden avulla voit löytää ohjelmia ja elokuvia katsottavaksi, pitää kirjaa katsomistasi jaksoista ja elokuvista, saada ilmoituksia tulevista jaksoista ja varmuuskopioida ja synkronoida tiedot laitteiden välillä.
+
+<b>Löydä uutta katsottavaa.</b> Löydä ohjelmia uusilla jaksoilla, jotka ovat suosittuja tai samanlaisia kuin katsomasi. Tutustu tällä hetkellä teattereissa pyöriviin, tai digitaalisesti tai levyllä julkaistuihin elokuviin.
+
+<b>Varmuuskopiointi ja synkronointi.</b> Kirjaudu sisään SeriesGuide Cloudiin varmuuskopioidaksesi ja synkronoidaksesi ohjelmasi, listasi ja elokuvasi.
+
+<b>Integroituu Traktin kanssa.</b> Yhdistä Trakt-tilisi, jotta voit hallita seurantalistaasi ja kokoelmaasi, kuitata, arvostella ja kommentoida. Synkronoi katsotut jaksot ja elokuvat Traktin tukemien sovellusten ja mediakeskusten välillä.
+
+<b>Laajennukset.</b> Lisää kolmannen osapuolen sovelluksen tarjoama laajennuspainike tai luo omasi.
+
+<b>Avaa kaikki ominaisuudet ja tue SeriesGuidea hankkimalla tilaus!</b> Saat lisää vaihtoehtoja lista-widgetille, ilmoituksia uusista jaksoista ja paljon muuta. Tuet samalla korjauksia ja uusia ominaisuuksia.
+
+HUOMAUTUS: Et voi katsella jaksoja tai elokuvia. Jaksojen kohdalla näkyy vain alkuperäisen verkon julkaisupäivä.
+
+SeriesGuide X -avausavain
+
+Avaa pysyvä pääsy kaikkiin SeriesGuiden ominaisuuksiin. Edellyttää sekä SeriesGuiden että tämän avaimen asentamista.
+
+Täysi pääsy -tilaus
+Avaa kaikki ominaisuudet, mukaan lukien pilvivarmuuskopiointi.
+
+Tukija-tilaus
+Tue tulevien päivitysten kehittämistä. Sisältää Täysi pääsy -tilauksen.
+
+Sponsori-tilaus
+Suuri panos tulevien päivitysten varmistamiseksi. Sisältää Täysi pääsy -tilauksen.

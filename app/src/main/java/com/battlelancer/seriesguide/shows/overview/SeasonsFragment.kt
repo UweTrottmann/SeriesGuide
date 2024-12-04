@@ -13,8 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.TooltipCompat
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityOptionsCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -32,6 +30,7 @@ import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
 import com.battlelancer.seriesguide.util.ThemeUtils
+import com.battlelancer.seriesguide.util.startActivityWithAnimation
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
@@ -167,12 +166,7 @@ class SeasonsFragment() : Fragment() {
     private val listOnItemClickListener = object : SeasonsAdapter.ItemClickListener {
         override fun onItemClick(v: View, seasonRowId: Long) {
             val intent = EpisodesActivity.intentSeason(seasonRowId, requireActivity())
-            ActivityCompat.startActivity(
-                requireActivity(), intent,
-                ActivityOptionsCompat
-                    .makeScaleUpAnimation(v, 0, 0, v.width, v.height)
-                    .toBundle()
-            )
+            requireActivity().startActivityWithAnimation(intent, v)
         }
 
         override fun onMoreOptionsClick(v: View, seasonRowId: Long) {
@@ -383,7 +377,7 @@ class SeasonsFragment() : Fragment() {
             parentFragmentManager,
             R.array.sesorting,
             R.array.sesortingData, sortOrder.index,
-            SeasonsSettings.KEY_SEASON_SORT_ORDER, R.string.pref_seasonsorting,
+            SeasonsSettings.KEY_SEASON_SORT_ORDER, R.string.sort,
             "seasonSortOrderDialog"
         )
     }

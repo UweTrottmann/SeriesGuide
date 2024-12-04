@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">Wissen</string>
     <string name="discard">Negeren</string>
-    <string name="save_selection">Selectie bewaren</string>
     <string name="action_display_all">Toon alles</string>
     <string name="web_search">Zoeken op het web</string>
     <string name="add_to_homescreen">Toevoegen aan startscherm</string>
@@ -40,6 +39,7 @@
     <string name="action_stream_settings">Streamen- of aankoopinstellingen</string>
     <string name="action_select_region">Regio selecteren</string>
     <string name="action_reset">Herstellen</string>
+    <string name="action_save">Opslaan</string>
     <!-- Search -->
     <string name="clear_search_history">Verwijder zoekgeschiedenis</string>
     <string name="search_hint">Afleveringen zoeken</string>
@@ -149,7 +149,8 @@
     <string name="hidden">Verborgen serie</string>
     <string name="unhidden">Serie is opnieuw zichtbaar</string>
     <string name="action_shows_add">Serie toevoegen</string>
-    <string name="action_shows_filter">Series filteren</string>
+    <string name="action_filter_and_sort">Filteren en sorteren</string>
+    <string name="title_filter_general">Algemeen</string>
     <string name="empty_filter">Alle filters verwijderen</string>
     <string name="action_shows_filter_favorites">Favorieten</string>
     <string name="action_shows_filter_unwatched">Onbekeken</string>
@@ -160,7 +161,6 @@
     <string name="state_shows_filter_excluded">Uitgesloten</string>
     <string name="action_shows_make_all_visible">Alle verborgen tonen</string>
     <string name="description_make_all_visible_format">Alle verborgen series (%s) opnieuw zichtbaar maken?</string>
-    <string name="action_shows_sort">Series sorteren</string>
     <string name="action_shows_sort_title">Titel</string>
     <string name="action_shows_sort_latest_episode">Laatste aflevering</string>
     <string name="action_shows_sort_oldest_episode">Oudste aflevering</string>
@@ -172,6 +172,8 @@
     <string name="context_marknext">Volgende aflevering bekeken</string>
     <string name="action_episodes_switch_view">Wissel weergave</string>
     <string name="next_to_watch">Volgende om te bekijken</string>
+    <string name="title_notes">Notities</string>
+    <string name="action_edit_note">Notitie bewerken</string>
     <!-- History -->
     <string name="user_stream">Geschiedenis</string>
     <string name="recently_watched">Laatst gekeken</string>
@@ -237,8 +239,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Soortgelijk</string>
     <string name="title_similar_shows">Soortgelijke shows</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">Ontdekken</string>
     <string name="title_popular">Populair</string>
+    <string name="action_filter">Filteren</string>
     <string name="filter_year">Jaar</string>
     <string name="filter_year_current">Huidig jaar</string>
     <string name="filter_language">Taal</string>
@@ -256,12 +260,10 @@
     <string name="list_item_remove">Verwijderen uit lijst</string>
     <string name="ack_list_item_removed">Verwijderd uit lijst</string>
     <string name="list_empty">U kunt series toevoegen aan deze lijst</string>
-    <string name="action_lists_sort">Lijst sorteren</string>
     <string name="action_lists_reorder">Lijsten opnieuw ordenen</string>
     <string name="ack_lists_reordered">Lijsten gerangschikt</string>
     <string name="error_name_already_exists">Een lijst met deze naam bestaat al</string>
     <!-- Movies -->
-    <string name="title_discover">Ontdekken</string>
     <string name="title_digital_releases">Digitale releases</string>
     <string name="title_disc_releases">Releases op schijf</string>
     <string name="movies_in_theatres">In de bioscoop</string>
@@ -278,11 +280,10 @@
     <string name="trailer">Trailer</string>
     <string name="movie_cast">Cast</string>
     <string name="movie_crew">Filmploeg</string>
-    <string name="action_movies_sort">Sorteer films</string>
     <string name="action_movies_sort_title">Titel</string>
     <string name="action_movies_sort_release">Releasedatum</string>
-    <string name="action_movies_filter">Films filteren</string>
     <string name="title_similar_movies">Vergelijkbare films</string>
+    <string name="title_release_dates">Releasedatums</string>
     <!-- Statistics -->
     <string name="statistics_failed">Kon statistieken niet berekenen.</string>
     <string name="shows_finished">%s klaar met kijken</string>
@@ -388,8 +389,6 @@
     <string name="pref_exactdates_summary">\"31 oktober\" in plaats van \"over 3 dagen\"</string>
     <string name="pref_nospoilers">Spoilers voorkomen</string>
     <string name="pref_nospoilers_summary">Details verbergen totdat een aflevering is bekeken</string>
-    <string name="pref_seasonsorting">Seizoenen sorteren op&#8230;</string>
-    <string name="pref_episodesorting">Afleveringen sorteren op&#8230;</string>
     <string name="pref_language">Voorkeurstaal voor inhoud</string>
     <string name="pref_language_fallback">Alternatieve taal</string>
     <string name="pref_updatewifionly">Afbeeldingen alleen via Wi-Fi</string>

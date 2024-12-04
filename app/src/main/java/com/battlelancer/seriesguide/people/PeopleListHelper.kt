@@ -16,7 +16,7 @@ import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.util.CircleTransformation
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
-import com.battlelancer.seriesguide.util.Utils
+import com.battlelancer.seriesguide.util.startActivityWithAnimation
 import timber.log.Timber
 
 /**
@@ -230,7 +230,7 @@ class PeopleListHelper {
                 // showing a specific person
                 i.putExtra(PersonFragment.ARG_PERSON_TMDB_ID, personTmdbId)
             }
-            Utils.startActivityWithAnimation(context, i, v)
+            context.startActivityWithAnimation(i, v)
         }
     }
 }

@@ -109,7 +109,7 @@ class TraktComments(
                     errorMessageOrNull = context.getString(R.string.error_delete_comment)
                 } else if (response.code() == 404) {
                     errorMessageOrNull = context.getString(R.string.trakt_error_not_exists)
-                } else if (SgTrakt.isUnauthorized(response)) {
+                } else if (TraktV2.isUnauthorized(response)) {
                     // for users banned from posting comments requests also return 401
                     // so do not sign out if an error header does not indicate the token is invalid
                     val authHeader = response.headers()["WWW-Authenticate"]

@@ -1,0 +1,30 @@
+SeriesGuide: seriehanterare
+
+Håll koll på dina favoriter bland tv-serier och filmer.
+
+Med SeriesGuide kan du hitta serier och filmer att titta på, hålla koll på vilka avsnitt och filmer du sett, bli notifierad om uppkommande avsnitt och säkerhetskopiera och synka det mellan enheter.
+
+<b>Upptäck.</b> Hitta serier med nya avsnitt, som är populära eller liknar de du tittar på. Upptäck filmer som visas på bio, har släppts digitalt eller på skiva.
+
+<b>Säkerhetskopiera och synka.</b> Logga in på SeriesGuide Cloud för att säkerhetskopiera och synka dina serier, listor och filmer.
+
+<b>Integrerar med Trakt.</b> Koppla ditt Trakt-konto för att få tillgång till din bevakningslista och samling, checka in, betygsätt och kommentera. Synka sedda avsnitt och filmer mellan appar och mediacenter som stöds av Trakt.
+
+<b>Tillägg.</b> Lägg till en tilläggsknapp tillhandahållen av en tredjepartsapp eller bygg din egen.
+
+<b>Prenumerera för att låsa upp alla funktioner och stödja SeriesGuide!</b> Du får fler widgetalternativ, notifieringar om nya avsnitt och mera. Du ger även ditt stöd för fortsatta buggfixar och nya funktioner.
+
+NOTERA: Du kan inte titta på avsnitt eller filmer. För avsnitt är endast sändningsdatumet hos det ursprungliga Tv-nätverket listat.
+
+SeriesGuide X upplåsningsnyckel
+
+Lås upp permanent tillgång till alla funktioner i SeriesGuide. Kräver att både SeriesGuide och denna nyckel är installerade.
+
+Full tillgångs-prenumeration
+Lås upp alla funktioner, inklusive säkerhetskopiering till molnet.
+
+Anhängare-prenumeration
+Stöd utveckling av framtida uppdateringar. Inkluderar full tillgång.
+
+Sponsor-prenumeration
+Stort bidrag för att säkerställa framtida uppdateringar. Inkluderar full tillgång.

@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">Limpar</string>
     <string name="discard">Descartar</string>
-    <string name="save_selection">Salvar seleção</string>
     <string name="action_display_all">Mostrar tudo</string>
     <string name="web_search">Pesquisa na Web</string>
     <string name="add_to_homescreen">Adicionar à tela inicial</string>
@@ -40,6 +39,7 @@
     <string name="action_stream_settings">Configurações de streaming ou compra</string>
     <string name="action_select_region">Selecionar região</string>
     <string name="action_reset">Redefinir</string>
+    <string name="action_save">Save</string>
     <!-- Search -->
     <string name="clear_search_history">Limpar histórico de pesquisa</string>
     <string name="search_hint">Pesquisar episódios</string>
@@ -149,7 +149,8 @@
     <string name="hidden">Ocultar série</string>
     <string name="unhidden">Série visível novamente</string>
     <string name="action_shows_add">Adicionar série</string>
-    <string name="action_shows_filter">Filtrar séries</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">Remover todos os filtros</string>
     <string name="action_shows_filter_favorites">Favoritos</string>
     <string name="action_shows_filter_unwatched">Não assistidos</string>
@@ -160,7 +161,6 @@
     <string name="state_shows_filter_excluded">Excluído</string>
     <string name="action_shows_make_all_visible">Exibir todos os ocultos</string>
     <string name="description_make_all_visible_format">Tornar todas as séries ocultas (%s) visíveis novamente?</string>
-    <string name="action_shows_sort">Ordenar séries</string>
     <string name="action_shows_sort_title">Título</string>
     <string name="action_shows_sort_latest_episode">Último episódio</string>
     <string name="action_shows_sort_oldest_episode">Episódio mais antigo</string>
@@ -172,6 +172,8 @@
     <string name="context_marknext">Próximo episódio já assistido</string>
     <string name="action_episodes_switch_view">Alterar visualização</string>
     <string name="next_to_watch">Próximo a assistir</string>
+    <string name="title_notes">Notes</string>
+    <string name="action_edit_note">Edit note</string>
     <!-- History -->
     <string name="user_stream">Histórico</string>
     <string name="recently_watched">Recentemente assistido</string>
@@ -237,8 +239,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Similares</string>
     <string name="title_similar_shows">Séries similares</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">Descubra</string>
     <string name="title_popular">Popular</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">Ano</string>
     <string name="filter_year_current">Ano atual</string>
     <string name="filter_language">Idioma</string>
@@ -256,12 +260,10 @@
     <string name="list_item_remove">Remover da lista</string>
     <string name="ack_list_item_removed">Removido da lista</string>
     <string name="list_empty">Você pode adicionar séries à lista</string>
-    <string name="action_lists_sort">Ordenar listas</string>
     <string name="action_lists_reorder">Reordenar listas</string>
     <string name="ack_lists_reordered">Listas reordenadas</string>
     <string name="error_name_already_exists">Já existe uma lista com este nome</string>
     <!-- Movies -->
-    <string name="title_discover">Descubra</string>
     <string name="title_digital_releases">Lançamentos digitais</string>
     <string name="title_disc_releases">Lançamentos em disco</string>
     <string name="movies_in_theatres">Nos cinemas</string>
@@ -278,11 +280,10 @@
     <string name="trailer">Trailer</string>
     <string name="movie_cast">Elenco</string>
     <string name="movie_crew">Equipe</string>
-    <string name="action_movies_sort">Ordenar filmes</string>
     <string name="action_movies_sort_title">Título</string>
     <string name="action_movies_sort_release">Data de lançamento</string>
-    <string name="action_movies_filter">Filtrar filmes</string>
     <string name="title_similar_movies">Filmes parecidos</string>
+    <string name="title_release_dates">Datas de lançamento</string>
     <!-- Statistics -->
     <string name="statistics_failed">Não é possível calcular as estatísticas.</string>
     <string name="shows_finished">%s assistido completamente</string>
@@ -388,8 +389,6 @@
     <string name="pref_exactdates_summary">\"31 de Outubro\" em vez de \"em 3 dias\"</string>
     <string name="pref_nospoilers">Evitar spoilers</string>
     <string name="pref_nospoilers_summary">Oculte detalhes até que o episódio seja assistido</string>
-    <string name="pref_seasonsorting">Ordenar temporadas por&#8230;</string>
-    <string name="pref_episodesorting">Ordenar episódios por&#8230;</string>
     <string name="pref_language">Idioma preferido do conteúdo</string>
     <string name="pref_language_fallback">Idioma alternativo</string>
     <string name="pref_updatewifionly">Imagens apenas via Wi-Fi</string>

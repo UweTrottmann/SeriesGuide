@@ -5,7 +5,6 @@ package com.battlelancer.seriesguide.shows
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -324,11 +323,6 @@ open class ShowsActivityImpl : BaseTopActivity() {
 
         // save selected tab index
         ShowsSettings.saveLastShowsTabPosition(this, viewPager.currentItem)
-    }
-
-    override fun onKeyLongPress(keyCode: Int, event: KeyEvent): Boolean {
-        // prevent navigating to top activity as this is the top activity
-        return keyCode == KeyEvent.KEYCODE_BACK
     }
 
     override val snackbarParentView: View

@@ -13,6 +13,7 @@ import com.battlelancer.seriesguide.movies.details.MovieDetailsActivity
 import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.util.Utils
+import com.battlelancer.seriesguide.util.startActivityWithAnimation
 
 open class MovieClickListenerImpl(val context: Context) : MovieClickListener {
 
@@ -21,7 +22,7 @@ open class MovieClickListenerImpl(val context: Context) : MovieClickListener {
 
         // launch details activity
         val intent = MovieDetailsActivity.intentMovie(context, movieTmdbId)
-        Utils.startActivityWithAnimation(context, intent, posterView)
+        context.startActivityWithAnimation(intent, posterView)
     }
 
     override fun onMoreOptionsClick(movieTmdbId: Int, anchor: View) {

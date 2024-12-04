@@ -12,8 +12,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -36,6 +34,7 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceCompletedEvent
 import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.util.startActivityWithAnimation
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
@@ -266,13 +265,7 @@ class ShowsHistoryFragment : Fragment() {
      */
     private fun showDetails(view: View, episodeId: Long) {
         val intent = EpisodesActivity.intentEpisode(episodeId, requireContext())
-
-        ActivityCompat.startActivity(
-            requireContext(), intent,
-            ActivityOptionsCompat
-                .makeScaleUpAnimation(view, 0, 0, view.width, view.height)
-                .toBundle()
-        )
+        requireContext().startActivityWithAnimation(intent, view)
     }
 
     private fun showError(errorText: String?) {
