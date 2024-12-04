@@ -10,7 +10,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2024.5
 
-### Unreleased
+### 2024.5.2 - 2024-12-04 🧪
 
 * 🔧 Shows: when viewing the stream or purchase provider filters, the reset button is shown as
   disabled when no provider is selected. Also tabs are renamed and display icons to differentiate
