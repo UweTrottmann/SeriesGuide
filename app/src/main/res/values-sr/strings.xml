@@ -39,7 +39,7 @@
     <string name="action_stream_settings">Подешавања о стримовању или куповини</string>
     <string name="action_select_region">Одабери регион</string>
     <string name="action_reset">Ресетуј</string>
-    <string name="action_save">Save</string>
+    <string name="action_save">Сачувај</string>
     <!-- Search -->
     <string name="clear_search_history">Обриши историју претраге</string>
     <string name="search_hint">Тражи епизоде</string>
@@ -150,8 +150,8 @@
     <string name="hidden">Сакривена серија</string>
     <string name="unhidden">Приказана серија</string>
     <string name="action_shows_add">Додај серију</string>
-    <string name="action_filter_and_sort">Filter and sort</string>
-    <string name="title_filter_general">General</string>
+    <string name="action_filter_and_sort">Филтрирајте и сортирајте</string>
+    <string name="title_filter_general">Опште</string>
     <string name="empty_filter">Уклони све филтере</string>
     <string name="action_shows_filter_favorites">Омиљене</string>
     <string name="action_shows_filter_unwatched">Неодгледано</string>
@@ -173,8 +173,8 @@
     <string name="context_marknext">Погледана, следећа епизода</string>
     <string name="action_episodes_switch_view">Пребацити излед</string>
     <string name="next_to_watch">Следеће за гледање</string>
-    <string name="title_notes">Notes</string>
-    <string name="action_edit_note">Edit note</string>
+    <string name="title_notes">Белешке</string>
+    <string name="action_edit_note">Уреди белешку</string>
     <!-- History -->
     <string name="user_stream">Историјат</string>
     <string name="recently_watched">Недавно гледано</string>
@@ -249,7 +249,7 @@
     <!-- Discover -->
     <string name="title_discover">Otkrijte</string>
     <string name="title_popular">Popularno</string>
-    <string name="action_filter">Filter</string>
+    <string name="action_filter">Филтер</string>
     <string name="filter_year">Година</string>
     <string name="filter_year_current">Актуелна година</string>
     <string name="filter_language">Језик</string>
@@ -290,7 +290,7 @@
     <string name="action_movies_sort_title">Наслов</string>
     <string name="action_movies_sort_release">Датум емитовања</string>
     <string name="title_similar_movies">Слични филмови</string>
-    <string name="title_release_dates">Release dates</string>
+    <string name="title_release_dates">Датуми емитовања</string>
     <!-- Statistics -->
     <string name="statistics_failed">Nije bilo moguće obraditi statistiku</string>
     <string name="shows_finished">%s завршио гледање</string>
@@ -336,7 +336,7 @@
     <string name="hexagon_signed_out">Izlogovan iz SeriesGuide Cloud-a</string>
     <string name="hexagon_signin_fail_format">Грешка са пријавом (%s)</string>
     <string name="hexagon_signin_google_only">Имејл захтева пријављивање на Google</string>
-    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
+    <string name="hexagon_signin_choose">Изаберите имејл за пријаву ако користите SeriesGuide на другим уређајима који не подржавају пријављивање на Google.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Послато на тракт.</string>
     <string name="checkin_success_trakt">Пријављено гледање %s на trakt.</string>

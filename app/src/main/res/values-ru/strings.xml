@@ -151,8 +151,8 @@
     <string name="hidden">Перемещено в скрытые </string>
     <string name="unhidden">Сериал снова виден</string>
     <string name="action_shows_add">Добавить сериал</string>
-    <string name="action_filter_and_sort">Filter and sort</string>
-    <string name="title_filter_general">General</string>
+    <string name="action_filter_and_sort">Фильтр и сортировка</string>
+    <string name="title_filter_general">Общее</string>
     <string name="empty_filter">Очистить фильтры</string>
     <string name="action_shows_filter_favorites">Избранное</string>
     <string name="action_shows_filter_unwatched">Непросмотренные</string>
@@ -256,7 +256,7 @@
     <!-- Discover -->
     <string name="title_discover">Подборка</string>
     <string name="title_popular">Популярные</string>
-    <string name="action_filter">Filter</string>
+    <string name="action_filter">Фильтр</string>
     <string name="filter_year">Год</string>
     <string name="filter_year_current">Текущий год</string>
     <string name="filter_language">Язык</string>

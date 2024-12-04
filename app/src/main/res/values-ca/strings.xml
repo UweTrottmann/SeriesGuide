@@ -149,7 +149,7 @@
     <string name="hidden">Sèrie oculta</string>
     <string name="unhidden">Sèrie visible</string>
     <string name="action_shows_add">Afegeix sèrie</string>
-    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="action_filter_and_sort">Filtra i ordena</string>
     <string name="title_filter_general">General</string>
     <string name="empty_filter">Desactiva tots els filtres</string>
     <string name="action_shows_filter_favorites">Preferits</string>
@@ -242,7 +242,7 @@
     <!-- Discover -->
     <string name="title_discover">Descobrir</string>
     <string name="title_popular">Popular</string>
-    <string name="action_filter">Filter</string>
+    <string name="action_filter">Filtres</string>
     <string name="filter_year">Any</string>
     <string name="filter_year_current">Any Actual</string>
     <string name="filter_language">Idioma</string>

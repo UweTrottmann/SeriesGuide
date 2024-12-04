@@ -151,8 +151,8 @@
     <string name="hidden">Приховані серіали</string>
     <string name="unhidden">Не приховані серіали</string>
     <string name="action_shows_add">Додати серіал</string>
-    <string name="action_filter_and_sort">Filter and sort</string>
-    <string name="title_filter_general">General</string>
+    <string name="action_filter_and_sort">Фільтр і сортування</string>
+    <string name="title_filter_general">Типові</string>
     <string name="empty_filter">Видалити всі фільтри</string>
     <string name="action_shows_filter_favorites">Улюблені</string>
     <string name="action_shows_filter_unwatched">Непереглянуті</string>
@@ -256,7 +256,7 @@
     <!-- Discover -->
     <string name="title_discover">Дослідити</string>
     <string name="title_popular">Популярне</string>
-    <string name="action_filter">Filter</string>
+    <string name="action_filter">Фільтри</string>
     <string name="filter_year">Рік</string>
     <string name="filter_year_current">Поточний рік</string>
     <string name="filter_language">Мова</string>

@@ -151,8 +151,8 @@
     <string name="hidden">Serial został ukryty</string>
     <string name="unhidden">Odkryty serial</string>
     <string name="action_shows_add">Dodaj serial</string>
-    <string name="action_filter_and_sort">Filter and sort</string>
-    <string name="title_filter_general">General</string>
+    <string name="action_filter_and_sort">Filtruj i sortuj</string>
+    <string name="title_filter_general">Ogólne</string>
     <string name="empty_filter">Usuń wszystkie filtry</string>
     <string name="action_shows_filter_favorites">Ulubione</string>
     <string name="action_shows_filter_unwatched">Nieobejrzane</string>
@@ -256,7 +256,7 @@
     <!-- Discover -->
     <string name="title_discover">Odkrywaj</string>
     <string name="title_popular">Popularne</string>
-    <string name="action_filter">Filter</string>
+    <string name="action_filter">Filtruj</string>
     <string name="filter_year">Rok</string>
     <string name="filter_year_current">Bieżący rok</string>
     <string name="filter_language">Język</string>

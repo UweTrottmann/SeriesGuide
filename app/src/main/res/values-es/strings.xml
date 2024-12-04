@@ -149,7 +149,7 @@
     <string name="hidden">Se movió a ocultos</string>
     <string name="unhidden">Mostrar serie</string>
     <string name="action_shows_add">Añadir serie</string>
-    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="action_filter_and_sort">Filtrar y ordenar</string>
     <string name="title_filter_general">General</string>
     <string name="empty_filter">Quitar todos los filtros</string>
     <string name="action_shows_filter_favorites">Favoritos</string>
@@ -242,7 +242,7 @@
     <!-- Discover -->
     <string name="title_discover">Descubrir</string>
     <string name="title_popular">Populares</string>
-    <string name="action_filter">Filter</string>
+    <string name="action_filter">Filtrar</string>
     <string name="filter_year">Año</string>
     <string name="filter_year_current">Año actual</string>
     <string name="filter_language">Idioma</string>
