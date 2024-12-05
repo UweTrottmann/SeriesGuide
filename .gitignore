@@ -48,6 +48,9 @@ $RECYCLE.BIN/
 .gradle/
 build/
 
+## Kotlin
+.kotlin/
+
 ## Proguard
 unused.txt
 
