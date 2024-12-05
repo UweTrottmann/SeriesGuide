@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     kotlin("android")
-    kotlin("kapt")
+    alias(libs.plugins.ksp)
 }
 
 val sgCompileSdk: Int by rootProject.extra
@@ -50,7 +50,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel)
     // Room
     implementation(libs.androidx.room.runtime)
-    kapt(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
 
     implementation(libs.timber)
 }

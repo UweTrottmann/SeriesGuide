@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.android)
     kotlin("android")
     kotlin("kapt")
+    alias(libs.plugins.ksp)
     alias(libs.plugins.compose.compiler)
 }
 
@@ -163,9 +164,13 @@ android {
 kapt {
     arguments {
         arg("eventBusIndex", "com.battlelancer.seriesguide.SgEventBusIndex")
-        arg("room.schemaLocation", "$projectDir/schemas")
     }
 }
+
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
+}
+
 
 dependencies {
     implementation(libs.kotlinx.coroutines.core)
@@ -218,7 +223,7 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     // Paging 3 Integration
     implementation(libs.androidx.room.paging)
-    kapt(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
 
     implementation(libs.dagger)
     kapt(libs.dagger.compiler)
