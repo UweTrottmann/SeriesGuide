@@ -134,11 +134,13 @@ android-library = { id = "com.android.library" }
 # Also look for compatible Gradle and Android Plugin versions:
 # https://kotlinlang.org/docs/gradle-configure-project.html#apply-the-plugin
 # Also coroutines version must be compatible.
-# 2.1.0 is compatible with Gradle 7.6.3–8.10 and AGP 7.3.1–8.7.2
-kotlin = { id = "org.jetbrains.kotlin.android", version = "2.1.0" }
-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version = "2.1.0" }
+# 2.0.21 is compatible with Gradle 6.8.3–8.8 and AGP 7.1.3–8.5
+# Have to use 2.0 as the Room 2.6.1 annotation processor only supports metadata version up to 2.0,
+# but still using AGP 8.6 to compile with SDK 35 (as it appears there are only minor changes).
+kotlin = { id = "org.jetbrains.kotlin.android", version = "2.0.21" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version = "2.0.21" }
 # https://github.com/google/ksp/releases
-ksp = { id = "com.google.devtools.ksp", version = "2.1.0-1.0.29" }
+ksp = { id = "com.google.devtools.ksp", version = "2.0.21-1.0.28" }
 # https://github.com/ben-manes/gradle-versions-plugin/releases
 versions = { id = "com.github.ben-manes.versions", version = "0.51.0" }
 # https://github.com/gradle-nexus/publish-plugin/releases
