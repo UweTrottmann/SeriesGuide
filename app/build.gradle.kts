@@ -164,7 +164,6 @@ kapt {
     arguments {
         arg("eventBusIndex", "com.battlelancer.seriesguide.SgEventBusIndex")
         arg("room.schemaLocation", "$projectDir/schemas")
-        arg("room.incremental", "true")
     }
 }
 
