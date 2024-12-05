@@ -1,6 +1,6 @@
 plugins {
-    alias(libs.plugins.android.library)
-    kotlin("android")
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android")
 //    id("com.google.cloud.tools.endpoints-framework-client")
 }
 

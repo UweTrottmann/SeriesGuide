@@ -2,7 +2,7 @@ import java.io.FileInputStream
 import java.util.Properties
 
 plugins {
-    alias(libs.plugins.android)
+    id("com.android.application")
     kotlin("android")
     kotlin("kapt")
     alias(libs.plugins.ksp)

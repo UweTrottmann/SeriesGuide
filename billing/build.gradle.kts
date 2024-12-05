@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.android.library)
+    id("com.android.library")
     kotlin("android")
     alias(libs.plugins.ksp)
 }
