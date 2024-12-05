@@ -127,6 +127,8 @@ androidx-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-
 # https://developer.android.com/build/releases/gradle-plugin
 # 8.7.0+ has false positive lint error for SCHEDULE_EXACT_ALARM permission https://issuetracker.google.com/issues/375352607
 android = { id = "com.android.application", version = "8.6.1" }
+# The library plugin is included with the application plugin, just add this to apply using an alias
+android-library = { id = "com.android.library" }
 # https://kotlinlang.org/docs/releases.html#release-details
 # When updating, must also update compose plugin.
 # Also look for compatible Gradle and Android Plugin versions:
