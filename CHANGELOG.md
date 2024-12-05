@@ -10,6 +10,10 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2024.5
 
+### Unreleased
+
+* 🔧 Shows: revert to search symbol for primary button on discover screen.
+
 ### 2024.5.2 - 2024-12-04 🧪
 
 * 🔧 Shows: when viewing the stream or purchase provider filters, the reset button is shown as

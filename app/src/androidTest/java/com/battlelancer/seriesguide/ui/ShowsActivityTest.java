@@ -64,7 +64,7 @@ public class ShowsActivityTest {
 
         // Open discover screen
         ViewInteraction floatingActionButton = onView(
-                allOf(withId(R.id.buttonShowsAdd), isDisplayed()));
+                allOf(withId(R.id.buttonShowsFloating), isDisplayed()));
         floatingActionButton.perform(click());
 
         // Added a sleep statement to match the app's execution delay.

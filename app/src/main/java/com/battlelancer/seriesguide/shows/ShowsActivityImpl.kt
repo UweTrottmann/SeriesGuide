@@ -187,9 +187,9 @@ open class ShowsActivityImpl : BaseTopActivity() {
     }
 
     private fun setupViews() {
-        // setup floating action button for adding shows
-        val buttonAddShow = findViewById<FloatingActionButton>(R.id.buttonShowsAdd)
-        buttonAddShow.setOnClickListener {
+        // setup floating action button
+        val floatingActionButton = findViewById<FloatingActionButton>(R.id.buttonShowsFloating)
+        floatingActionButton.setOnClickListener {
             startActivity(ShowsDiscoverPagingActivity.intentSearch(this))
         }
 
@@ -204,7 +204,7 @@ open class ShowsActivityImpl : BaseTopActivity() {
         tabs.setOnPageChangeListener(
             ShowsPageChangeListener(
                 findViewById(R.id.sgAppBarLayout),
-                buttonAddShow,
+                floatingActionButton,
                 viewModel
             )
         )
@@ -357,7 +357,6 @@ open class ShowsActivityImpl : BaseTopActivity() {
             }
             appBarLayout.liftOnScrollTargetViewId = liftOnScrollTarget
 
-            // only display add show button on Shows tab
             if (position == Tab.DISCOVER.index) {
                 floatingActionButton.show()
             } else {
