@@ -1,7 +1,7 @@
 plugins {
     id("com.android.library")
     kotlin("android")
-    alias(libs.plugins.ksp)
+    kotlin("kapt")
 }
 
 val sgCompileSdk: Int by rootProject.extra
@@ -50,7 +50,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel)
     // Room
     implementation(libs.androidx.room.runtime)
-    ksp(libs.androidx.room.compiler)
+    // KSP appears deprecated. KSP 2 is still under development.
+    //noinspection KaptUsageInsteadOfKsp
+    kapt(libs.androidx.room.compiler)
 
     implementation(libs.timber)
 }
