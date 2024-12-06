@@ -271,7 +271,7 @@
     <string name="list_add">Add list</string>
     <string name="ack_list_added">List added</string>
     <string name="list_title_hint">Name your list</string>
-    <string name="list_remove">Remove list</string>
+    <string name="list_remove">Delete list</string>
     <string name="list_manage">Manage list</string>
     <string name="ack_list_renamed">List renamed</string>
     <string name="ack_list_removed">List removed</string>
