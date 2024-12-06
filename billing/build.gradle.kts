@@ -50,6 +50,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel)
     // Room
     implementation(libs.androidx.room.runtime)
+    // KSP appears deprecated. KSP 2 is still under development.
+    //noinspection KaptUsageInsteadOfKsp
     kapt(libs.androidx.room.compiler)
 
     implementation(libs.timber)

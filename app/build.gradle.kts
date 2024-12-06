@@ -5,6 +5,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
+    alias(libs.plugins.compose.compiler)
 }
 
 if (project.file("google-services.json").exists()) {
@@ -29,7 +30,7 @@ android {
 
     buildFeatures {
         buildConfig = true
-        // https://developer.android.com/jetpack/compose/interop/adding
+        // https://developer.android.com/develop/ui/compose/setup
         compose = true
         // https://firebase.google.com/support/release-notes/android
         viewBinding = true
@@ -64,11 +65,6 @@ android {
         encoding = "UTF-8"
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    composeOptions {
-        // https://developer.android.com/jetpack/androidx/releases/compose-kotlin
-        kotlinCompilerExtensionVersion = "1.5.14" // For Kotlin 1.9.24
     }
 
     kotlinOptions {
@@ -168,7 +164,6 @@ kapt {
     arguments {
         arg("eventBusIndex", "com.battlelancer.seriesguide.SgEventBusIndex")
         arg("room.schemaLocation", "$projectDir/schemas")
-        arg("room.incremental", "true")
     }
 }
 
@@ -223,6 +218,8 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     // Paging 3 Integration
     implementation(libs.androidx.room.paging)
+    // KSP appears deprecated. KSP 2 is still under development.
+    //noinspection KaptUsageInsteadOfKsp
     kapt(libs.androidx.room.compiler)
 
     implementation(libs.dagger)
