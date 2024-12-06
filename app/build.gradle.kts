@@ -76,7 +76,8 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
         // Using experimental flatMapLatest for Paging 3
         // Using experimental Material 3 compose APIs
-        freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi,androidx.compose.material3.ExperimentalMaterial3Api"
+        freeCompilerArgs =
+            freeCompilerArgs + "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi,androidx.compose.material3.ExperimentalMaterial3Api"
     }
 
     lint {
@@ -97,7 +98,8 @@ android {
 
     productFlavors {
         create("pure") {
-            isDefault = true // Make Studio select this by default, it often resets (after updates, randomly)
+            // Make Studio select this by default, it often resets (after updates, randomly)
+            isDefault = true
 
             applicationId = "com.battlelancer.seriesguide"
             versionCode = sgVersionCode
@@ -208,7 +210,7 @@ dependencies {
     // Optional - Integration with activities
     implementation(libs.androidx.activity.compose)
     // Optional - Integration with ViewModels
-    implementation( libs.androidx.lifecycle.compose)
+    implementation(libs.androidx.lifecycle.compose)
 
     // ViewModel and LiveData
     implementation(libs.androidx.lifecycle.livedata)
