@@ -251,10 +251,10 @@
     <string name="list_add">Liste hinzufügen</string>
     <string name="ack_list_added">Liste hinzugefügt</string>
     <string name="list_title_hint">Liste benennen</string>
-    <string name="list_remove">Liste entfernen</string>
+    <string name="list_remove">Liste löschen</string>
     <string name="list_manage">Liste verwalten</string>
     <string name="ack_list_renamed">Liste umbenannt</string>
-    <string name="ack_list_removed">Liste entfernt</string>
+    <string name="ack_list_removed">Liste gelöscht</string>
     <string name="list_item_manage">Listen verwalten</string>
     <string name="ack_list_item_manage">Liste aktualisiert</string>
     <string name="list_item_remove">Von Liste entfernen</string>

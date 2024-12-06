@@ -13,7 +13,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.tasks.AddListTask;
 import com.battlelancer.seriesguide.util.tasks.ChangeListItemListsTask;
 import com.battlelancer.seriesguide.util.tasks.RemoveListItemTask;
-import com.battlelancer.seriesguide.util.tasks.RemoveListTask;
+import com.battlelancer.seriesguide.util.tasks.DeleteListTask;
 import com.battlelancer.seriesguide.util.tasks.RenameListTask;
 import com.battlelancer.seriesguide.util.tasks.ReorderListsTask;
 import com.uwetrottmann.seriesguide.backend.lists.model.SgListItem;
@@ -60,8 +60,8 @@ public class ListsTools {
                 AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    static void removeList(@NonNull Context context, @NonNull String listId) {
-        new RemoveListTask(context, listId).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    static void deleteList(@NonNull Context context, @NonNull String listId) {
+        new DeleteListTask(context, listId).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     static void reorderLists(@NonNull Context context,
