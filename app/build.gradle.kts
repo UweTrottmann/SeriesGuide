@@ -22,6 +22,11 @@ val sgTargetSdk: Int by rootProject.extra
 val sgVersionCode: Int by rootProject.extra
 val sgVersionName: String by rootProject.extra
 
+tasks.withType(JavaCompile::class.java).configureEach {
+    // Suppress JDK 21 warning about deprecated, but not yet removed, source and target value 8 support
+    options.compilerArgs.add("-Xlint:-options")
+}
+
 android {
     namespace = "com.battlelancer.seriesguide"
     compileSdk = sgCompileSdk
