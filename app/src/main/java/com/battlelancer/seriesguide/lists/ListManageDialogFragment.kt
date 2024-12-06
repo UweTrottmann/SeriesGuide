@@ -42,8 +42,9 @@ class ListManageDialogFragment : AppCompatDialogFragment() {
         binding.buttonNegative.isEnabled = false
         binding.buttonNegative.setText(R.string.list_remove)
         binding.buttonNegative.setOnClickListener {
-            // remove list and items
-            ListsTools.removeList(requireContext(), listId)
+            // ask about removing list
+            DeleteListDialogFragment.create(listId)
+                .safeShow(parentFragmentManager, "confirm-delete-list")
             dismiss()
         }
         binding.buttonPositive.setText(android.R.string.ok)

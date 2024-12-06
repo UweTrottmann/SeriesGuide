@@ -14,13 +14,13 @@ import com.uwetrottmann.seriesguide.backend.lists.Lists;
 import java.io.IOException;
 
 /**
- * Task to remove a list.
+ * Task to delete a list and its items.
  */
-public class RemoveListTask extends BaseActionTask {
+public class DeleteListTask extends BaseActionTask {
 
     @NonNull protected final String listId;
 
-    public RemoveListTask(@NonNull Context context, @NonNull String listId) {
+    public DeleteListTask(@NonNull Context context, @NonNull String listId) {
         super(context);
         this.listId = listId;
     }
