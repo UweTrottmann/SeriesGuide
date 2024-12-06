@@ -22,6 +22,11 @@ val sgTargetSdk: Int by rootProject.extra
 val sgVersionCode: Int by rootProject.extra
 val sgVersionName: String by rootProject.extra
 
+tasks.withType(JavaCompile::class.java).configureEach {
+    // Suppress JDK 21 warning about deprecated, but not yet removed, source and target value 8 support
+    options.compilerArgs.add("-Xlint:-options")
+}
+
 android {
     namespace = "com.battlelancer.seriesguide"
     compileSdk = sgCompileSdk
@@ -71,7 +76,8 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
         // Using experimental flatMapLatest for Paging 3
         // Using experimental Material 3 compose APIs
-        freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi,androidx.compose.material3.ExperimentalMaterial3Api"
+        freeCompilerArgs =
+            freeCompilerArgs + "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi,androidx.compose.material3.ExperimentalMaterial3Api"
     }
 
     lint {
@@ -92,7 +98,8 @@ android {
 
     productFlavors {
         create("pure") {
-            isDefault = true // Make Studio select this by default, it often resets (after updates, randomly)
+            // Make Studio select this by default, it often resets (after updates, randomly)
+            isDefault = true
 
             applicationId = "com.battlelancer.seriesguide"
             versionCode = sgVersionCode
@@ -203,7 +210,7 @@ dependencies {
     // Optional - Integration with activities
     implementation(libs.androidx.activity.compose)
     // Optional - Integration with ViewModels
-    implementation( libs.androidx.lifecycle.compose)
+    implementation(libs.androidx.lifecycle.compose)
 
     // ViewModel and LiveData
     implementation(libs.androidx.lifecycle.livedata)
