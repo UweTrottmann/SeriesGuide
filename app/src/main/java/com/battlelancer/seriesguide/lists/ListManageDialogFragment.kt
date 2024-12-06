@@ -12,7 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.DialogListManageBinding
-import com.battlelancer.seriesguide.provider.SeriesGuideContract
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.util.safeShow
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
@@ -71,26 +71,16 @@ class ListManageDialogFragment : AppCompatDialogFragment() {
     }
 
     private fun configureViews() {
+        // Querying on main thread as the queries are very small
+        val listHelper = SgRoomDatabase.getInstance(requireContext()).sgListHelper()
         // pre-populate list title
-        val list = requireContext().contentResolver
-            .query(
-                SeriesGuideContract.Lists.buildListUri(listId), arrayOf(
-                    SeriesGuideContract.Lists.NAME
-                ), null, null, null
-            )
+        val list = listHelper.getList(listId)
         if (list == null) {
             // list might have been removed, or query failed
             dismiss()
             return
         }
-        if (!list.moveToFirst()) {
-            // list not found
-            list.close()
-            dismiss()
-            return
-        }
-        val listName = list.getString(0)
-        list.close()
+        val listName = list.name
 
         val binding = this@ListManageDialogFragment.binding
         if (binding == null) {
@@ -109,16 +99,9 @@ class ListManageDialogFragment : AppCompatDialogFragment() {
         )
 
         // do only allow removing if this is NOT the last list
-        val lists = requireContext().contentResolver.query(
-            SeriesGuideContract.Lists.CONTENT_URI, arrayOf(
-                SeriesGuideContract.Lists._ID
-            ), null, null, null
-        )
-        if (lists != null) {
-            if (lists.count > 1) {
-                binding.buttonNegative.isEnabled = true
-            }
-            lists.close()
+        val listsCount = listHelper.getListsCount()
+        if (listsCount > 1) {
+            binding.buttonNegative.isEnabled = true
         }
     }
 
