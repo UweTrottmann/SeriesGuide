@@ -254,7 +254,7 @@
     <string name="list_remove">Forigi liston</string>
     <string name="list_manage">Administri liston</string>
     <string name="ack_list_renamed">List renamed</string>
-    <string name="ack_list_removed">List removed</string>
+    <string name="ack_list_removed">List deleted</string>
     <string name="list_item_manage">Administri listojn</string>
     <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">Forigi el listo</string>

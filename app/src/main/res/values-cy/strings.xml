@@ -282,7 +282,7 @@
     <string name="list_remove">Dileu\'r rhestr</string>
     <string name="list_manage">Rheoli rhestr</string>
     <string name="ack_list_renamed">List renamed</string>
-    <string name="ack_list_removed">List removed</string>
+    <string name="ack_list_removed">List deleted</string>
     <string name="list_item_manage">Rheoli rhestrau</string>
     <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">Tynnu o\'r rhestr</string>
