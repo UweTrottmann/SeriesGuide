@@ -6,7 +6,38 @@
 📝 = Notable change.
 
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
-[the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
+[the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
+
+## Version 2024.5
+
+### 2024.5.3 - 2024-12-11 🧪
+
+* 🔧 Shows: revert to search symbol for primary button on discover screen.
+* 🔧 Lists: ask for confirmation before deleting a list, actually call it delete instead of "just"
+  remove.
+* 📝 Latest user interface translations from Crowdin.
+
+### 2024.5.2 - 2024-12-04 🧪
+
+* 🔧 Shows: when viewing the stream or purchase provider filters, the reset button is shown as
+  disabled when no provider is selected. Also tabs are renamed and display icons to differentiate
+  filter from sort options.
+* 🔨 Show scrollbars for show filter and sort options.
+* 🔧 Use common "Sort by" action name.
+* 🔧 Android 15: turn predictive back animation back on after more issues are resolved.
+* 📝 Latest user interface translations from Crowdin.
+
+### 2024.5.1 - 2024-11-21 🧪
+
+* 🌟 Shows: add a note to a show, synced with SeriesGuide Cloud or Trakt (VIP only).
+* 🔧 Shows: increase resolution of episode images.
+* 🔧 Shows: also use plus symbol for button on discover screen to be consistent.
+
+### 2024.5.0 - 2024-11-06 🧪
+
+* 🌟 Movies: add link to all release dates.
+* 🔧 Overview: use local number format for absolute episode number.
+* 📝 Latest user interface translations from Crowdin.
 
 ## Version 2024.4
 

@@ -215,7 +215,7 @@ class ShowsDiscoverAdapter(
             }
             binding.buttonDiscoverHeader.apply {
                 setIconResource(R.drawable.ic_filter_white_24dp)
-                contentDescription = context.getString(R.string.action_shows_filter)
+                contentDescription = context.getString(R.string.action_filter)
                 TooltipCompat.setTooltipText(this, contentDescription)
                 setOnClickListener { view ->
                     itemClickListener.onHeaderButtonClick(view)

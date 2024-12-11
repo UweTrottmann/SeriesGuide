@@ -1,18 +1,17 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2014-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.history
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment
+import com.battlelancer.seriesguide.util.startActivityWithAnimation
 import com.uwetrottmann.trakt5.entities.HistoryEntry
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -73,12 +72,7 @@ class UserEpisodeStreamFragment : StreamFragment() {
                         // Is in database, show details.
                         val intent =
                             EpisodesActivity.intentEpisode(episodeIdOrNull, requireContext())
-                        ActivityCompat.startActivity(
-                            requireActivity(), intent,
-                            ActivityOptionsCompat
-                                .makeScaleUpAnimation(view, 0, 0, view.width, view.height)
-                                .toBundle()
-                        )
+                        requireActivity().startActivityWithAnimation(intent, view)
                     } else {
                         // Offer to add the show if not in database.
                         AddShowDialogFragment.show(

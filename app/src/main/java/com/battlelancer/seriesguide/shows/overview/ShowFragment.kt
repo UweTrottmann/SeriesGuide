@@ -17,6 +17,7 @@ import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isGone
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -51,6 +52,7 @@ import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.battlelancer.seriesguide.util.safeShow
+import com.battlelancer.seriesguide.util.startActivityWithAnimation
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.uwetrottmann.androidutils.AndroidUtils
@@ -111,6 +113,8 @@ class ShowFragment() : Fragment() {
         val buttonWebSearch: Button
         val buttonComments: Button
         val buttonShare: Button
+        val buttonEditNote: Button
+        val textViewNote: TextView
         val castLabel: TextView
         val castContainer: LinearLayout
         val crewLabel: TextView
@@ -147,6 +151,8 @@ class ShowFragment() : Fragment() {
             buttonWebSearch = view.findViewById(R.id.buttonShowWebSearch)
             buttonComments = view.findViewById(R.id.buttonShowComments)
             buttonShare = view.findViewById(R.id.buttonShowShare)
+            buttonEditNote = view.findViewById(R.id.buttonShowNote)
+            textViewNote = view.findViewById(R.id.textViewShowNote)
             castLabel = view.findViewById(R.id.labelCast)
             castContainer = view.findViewById(R.id.containerCast)
             crewLabel = view.findViewById(R.id.labelCrew)
@@ -182,6 +188,11 @@ class ShowFragment() : Fragment() {
                     "custom-release-time"
                 )
             }
+        }
+
+        // Edit note button
+        binding.buttonEditNote.setOnClickListener {
+            EditNoteDialog(showId).safeShow(parentFragmentManager, "edit-note")
         }
 
         // language button
@@ -382,6 +393,12 @@ class ShowFragment() : Fragment() {
             }
         }
 
+        // note
+        binding.textViewNote.apply {
+            text = showForUi.userNote
+            isGone = showForUi.userNote.isEmpty()
+        }
+
         // overview
         // Source text requires styling, so needs UI context
         binding.textViewOverview.text =
@@ -461,7 +478,7 @@ class ShowFragment() : Fragment() {
             val showId = showId
             if (showId > 0) {
                 val i = TraktCommentsActivity.intentShow(requireContext(), show.title, showId)
-                Utils.startActivityWithAnimation(activity, i, v)
+                requireActivity().startActivityWithAnimation(i, v)
             }
         }
 
@@ -485,7 +502,7 @@ class ShowFragment() : Fragment() {
                         originalSize = true
                     )
                 )
-                Utils.startActivityWithAnimation(activity, intent, v)
+                requireActivity().startActivityWithAnimation(intent, v)
             }
         }
     }

@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">Bersihkan</string>
     <string name="discard">Singkirkan</string>
-    <string name="save_selection">Simpan bagian</string>
     <string name="action_display_all">Tunjukan semua</string>
     <string name="web_search">Pencarian Web</string>
     <string name="add_to_homescreen">Tambahkan ke beranda</string>
@@ -40,6 +39,7 @@
     <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">Pilih wilayah</string>
     <string name="action_reset">Reset</string>
+    <string name="action_save">Save</string>
     <!-- Search -->
     <string name="clear_search_history">Bersihkan riwayat pencarian</string>
     <string name="search_hint">Cari episode</string>
@@ -148,7 +148,8 @@
     <string name="hidden">Dipindahkan ke tersembunyi</string>
     <string name="unhidden">Acara terlihat kembali</string>
     <string name="action_shows_add">Tambahkan acara</string>
-    <string name="action_shows_filter">Saring acara</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">Hapus semua filter</string>
     <string name="action_shows_filter_favorites">Favorit</string>
     <string name="action_shows_filter_unwatched">Belum ditonton</string>
@@ -159,7 +160,6 @@
     <string name="state_shows_filter_excluded">Excluded</string>
     <string name="action_shows_make_all_visible">Perlihatkan yang tersembunyi</string>
     <string name="description_make_all_visible_format">Buat semua acara tersembunyi (%s) terlihat lagi ?</string>
-    <string name="action_shows_sort">Sortir acara</string>
     <string name="action_shows_sort_title">Judul</string>
     <string name="action_shows_sort_latest_episode">Episode Terbaru</string>
     <string name="action_shows_sort_oldest_episode">Episode Terlama</string>
@@ -171,6 +171,8 @@
     <string name="context_marknext">Episode selanjutnya ditonton</string>
     <string name="action_episodes_switch_view">Ganti tampilan</string>
     <string name="next_to_watch">Next to watch</string>
+    <string name="title_notes">Notes</string>
+    <string name="action_edit_note">Edit note</string>
     <!-- History -->
     <string name="user_stream">Riwayat</string>
     <string name="recently_watched">Baru-baru ini ditonton</string>
@@ -230,8 +232,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Acara Serupa</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">Jelajahi</string>
     <string name="title_popular">Populer</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">Year</string>
     <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
@@ -243,18 +247,16 @@
     <string name="list_remove">Hapus daftar</string>
     <string name="list_manage">Kelola daftar</string>
     <string name="ack_list_renamed">List renamed</string>
-    <string name="ack_list_removed">List removed</string>
+    <string name="ack_list_removed">List deleted</string>
     <string name="list_item_manage">Kelola daftar</string>
     <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">Hapus dari daftar</string>
     <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">Kau bisa menambahkan acara ke daftar ini</string>
-    <string name="action_lists_sort">Urutkan daftar</string>
     <string name="action_lists_reorder">Susun ulang daftar</string>
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">Daftar dengan nama ini sudah ada</string>
     <!-- Movies -->
-    <string name="title_discover">Jelajahi</string>
     <string name="title_digital_releases">Rilisan digital</string>
     <string name="title_disc_releases">Rilisan cakram</string>
     <string name="movies_in_theatres">Di bioskop</string>
@@ -271,11 +273,10 @@
     <string name="trailer">Cuplikan</string>
     <string name="movie_cast">Pemeran</string>
     <string name="movie_crew">Kru</string>
-    <string name="action_movies_sort">Sortir film</string>
     <string name="action_movies_sort_title">Judul</string>
     <string name="action_movies_sort_release">Tanggal rilis</string>
-    <string name="action_movies_filter">Filter movies</string>
     <string name="title_similar_movies">Similar movies</string>
+    <string name="title_release_dates">Release dates</string>
     <!-- Statistics -->
     <string name="statistics_failed">Tidak dapat menghitung statistik.</string>
     <string name="shows_finished">%s selesai ditonton</string>
@@ -377,8 +378,6 @@
     <string name="pref_exactdates_summary">\"31 Oktober\" daripada \"dalam 3 hari\"</string>
     <string name="pref_nospoilers">Cegah bocoran</string>
     <string name="pref_nospoilers_summary">Sembunyikan rician sampai satu episode ditonton</string>
-    <string name="pref_seasonsorting">Sortir musim berdasarkan&#8230;</string>
-    <string name="pref_episodesorting">Sortir musim berdasarkan&#8230;</string>
     <string name="pref_language">Bahasa konten yang diutamakan</string>
     <string name="pref_language_fallback">Alternatif bahasa</string>
     <string name="pref_updatewifionly">Gambar hanya melalui Wi-fi</string>

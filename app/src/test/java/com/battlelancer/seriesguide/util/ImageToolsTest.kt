@@ -1,11 +1,12 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.util
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.battlelancer.seriesguide.EmptyTestApplication
+import com.battlelancer.seriesguide.settings.TmdbSettings
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -20,15 +21,51 @@ class ImageToolsTest {
 
     @Test
     fun posterUrl() {
+        assertImageUrl(
+            TmdbSettings.POSTER_SIZE_SPEC_W154,
+            tmdbUrlBuilder = { path ->
+                ImageTools.tmdbOrTvdbPosterUrl(path, context)
+            },
+            tmdbUrlOriginalBuilder = { path ->
+                ImageTools.tmdbOrTvdbPosterUrl(path, context, true)
+            },
+            tvdbUrlBuilder = { path ->
+                ImageTools.tmdbOrTvdbPosterUrl(path, context)
+            }
+        )
+    }
+
+    @Test
+    fun episodeImageUrl() {
+        assertImageUrl(
+            TmdbSettings.BACKDROP_SMALL_SIZE_SPEC,
+            tmdbUrlBuilder = { path ->
+                ImageTools.buildEpisodeImageUrl(path, context)
+            },
+            tmdbUrlOriginalBuilder = { path ->
+                ImageTools.buildEpisodeImageUrl(path, context, originalSize = true)
+            },
+            tvdbUrlBuilder = { path ->
+                ImageTools.buildEpisodeImageUrl(path, context)
+            }
+        )
+    }
+
+    private fun assertImageUrl(
+        smallSize: String,
+        tmdbUrlBuilder: (String) -> String?,
+        tmdbUrlOriginalBuilder: (String) -> String?,
+        tvdbUrlBuilder: (String) -> String?
+    ) {
         // Note: TMDB image paths start with / whereas TVDB paths do not.
-        val tmdbUrl = ImageTools.tmdbOrTvdbPosterUrl("/example.jpg", context)
-        val tmdbUrlOriginal = ImageTools.tmdbOrTvdbPosterUrl("/example.jpg", context, true)
-        val tvdbUrl = ImageTools.tmdbOrTvdbPosterUrl("posters/example.jpg", context)
+        val tmdbUrl = tmdbUrlBuilder("/example.jpg")
+        val tmdbUrlOriginal = tmdbUrlOriginalBuilder("/example.jpg")
+        val tvdbUrl = tvdbUrlBuilder("posters/example.jpg")
         println("TMDB URL: $tmdbUrl")
         println("TMDB original URL: $tmdbUrlOriginal")
         println("TVDB URL: $tvdbUrl")
         assertThat(tmdbUrl).isNotEmpty()
-        assertThat(tmdbUrl).endsWith("https://image.tmdb.org/t/p/w154/example.jpg")
+        assertThat(tmdbUrl).endsWith("https://image.tmdb.org/t/p/$smallSize/example.jpg")
         assertThat(tmdbUrlOriginal).isNotEmpty()
         assertThat(tmdbUrlOriginal).endsWith("https://image.tmdb.org/t/p/original/example.jpg")
         assertThat(tvdbUrl).isNotEmpty()

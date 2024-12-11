@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">נקה</string>
     <string name="discard">בטל</string>
-    <string name="save_selection">שמור בחירה</string>
     <string name="action_display_all">הצג הכל</string>
     <string name="web_search">חיפוש באינטרנט</string>
     <string name="add_to_homescreen">הוסף לדף הבית</string>
@@ -40,6 +39,7 @@
     <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">Select region</string>
     <string name="action_reset">Reset</string>
+    <string name="action_save">Save</string>
     <!-- Search -->
     <string name="clear_search_history">נקה את היסטוריית החיפוש</string>
     <string name="search_hint">חפש פרקים</string>
@@ -151,7 +151,8 @@
     <string name="hidden">סדרה מוסתרת</string>
     <string name="unhidden">סדרה לא מוסתרת</string>
     <string name="action_shows_add">הוספת סדרה</string>
-    <string name="action_shows_filter">סינון סדרות</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">הסרת כל המסננים</string>
     <string name="action_shows_filter_favorites">מועדפים</string>
     <string name="action_shows_filter_unwatched">טרם נצפה</string>
@@ -162,7 +163,6 @@
     <string name="state_shows_filter_excluded">לא כולל</string>
     <string name="action_shows_make_all_visible">הצג את כל המוסתרים</string>
     <string name="description_make_all_visible_format">הצג שוב את כל הסדרות המוסתרות (%s)?</string>
-    <string name="action_shows_sort">מיון סדרות</string>
     <string name="action_shows_sort_title">שם</string>
     <string name="action_shows_sort_latest_episode">הפרק האחרון</string>
     <string name="action_shows_sort_oldest_episode">הפרק הכי ישן</string>
@@ -174,6 +174,8 @@
     <string name="context_marknext">צפה בפרק הבא</string>
     <string name="action_episodes_switch_view">שינוי מצב</string>
     <string name="next_to_watch">Next to watch</string>
+    <string name="title_notes">Notes</string>
+    <string name="action_edit_note">Edit note</string>
     <!-- History -->
     <string name="user_stream">היסטוריה</string>
     <string name="recently_watched">נצפה לאחרונה</string>
@@ -251,8 +253,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">סדרות דומות</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">גלו עוד</string>
     <string name="title_popular">פופולרי</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">Year</string>
     <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
@@ -264,18 +268,16 @@
     <string name="list_remove">הסר רשימה</string>
     <string name="list_manage">נהל רשימה</string>
     <string name="ack_list_renamed">List renamed</string>
-    <string name="ack_list_removed">List removed</string>
+    <string name="ack_list_removed">List deleted</string>
     <string name="list_item_manage">נהל רשימות</string>
     <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">הסר מהרשימה</string>
     <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">You can add shows to this list</string>
-    <string name="action_lists_sort">מיין רשימה</string>
     <string name="action_lists_reorder">סדר מחדש רשימות</string>
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">רשימה עם השם הזה כבר קיימת</string>
     <!-- Movies -->
-    <string name="title_discover">גלו עוד</string>
     <string name="title_digital_releases">שיחרור דיגיטלי</string>
     <string name="title_disc_releases">שיחרור מדיסק</string>
     <string name="movies_in_theatres">בבתי הקולנוע</string>
@@ -292,11 +294,10 @@
     <string name="trailer">טריילר</string>
     <string name="movie_cast">משתתפים</string>
     <string name="movie_crew">צוות</string>
-    <string name="action_movies_sort">מיין סרטים</string>
     <string name="action_movies_sort_title">שם</string>
     <string name="action_movies_sort_release">תאריך הפצה</string>
-    <string name="action_movies_filter">Filter movies</string>
     <string name="title_similar_movies">Similar movies</string>
+    <string name="title_release_dates">Release dates</string>
     <!-- Statistics -->
     <string name="statistics_failed">לא ניתן לחשב את הסטטיסטיקה.</string>
     <string name="shows_finished">%s finished watching</string>
@@ -410,8 +411,6 @@
     <string name="pref_exactdates_summary">\"31 באוקטובר\" במקום \"ב-3 ימים\"</string>
     <string name="pref_nospoilers">מנע ספוילרים</string>
     <string name="pref_nospoilers_summary">הסתר פרטים עד שנצפה בפרק</string>
-    <string name="pref_seasonsorting">מיין עונות לפי</string>
-    <string name="pref_episodesorting">מיין פרקים לפי</string>
     <string name="pref_language">שפת תוכן מועדפת</string>
     <string name="pref_language_fallback">שפה חלופית</string>
     <string name="pref_updatewifionly">תמונות באמצעות Wi-Fi בלבד</string>

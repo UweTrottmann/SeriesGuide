@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">Rensa</string>
     <string name="discard">Avbryt</string>
-    <string name="save_selection">Spara valda</string>
     <string name="action_display_all">Visa alla</string>
     <string name="web_search">Webbsökning</string>
     <string name="add_to_homescreen">Lägg till på hemskärmen</string>
@@ -40,6 +39,7 @@
     <string name="action_stream_settings">Stream- eller köpinställningar</string>
     <string name="action_select_region">Välj region</string>
     <string name="action_reset">Återställ</string>
+    <string name="action_save">Save</string>
     <!-- Search -->
     <string name="clear_search_history">Rensa sökhistorik</string>
     <string name="search_hint">Sök avsnitt</string>
@@ -149,7 +149,8 @@
     <string name="hidden">Dold serie</string>
     <string name="unhidden">Visar serie</string>
     <string name="action_shows_add">Lägg till serie</string>
-    <string name="action_shows_filter">Filtrera serier</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">Ta bort alla filter</string>
     <string name="action_shows_filter_favorites">Favoriter</string>
     <string name="action_shows_filter_unwatched">Osedda</string>
@@ -160,7 +161,6 @@
     <string name="state_shows_filter_excluded">Exkluderad</string>
     <string name="action_shows_make_all_visible">Gör alla gömda synliga</string>
     <string name="description_make_all_visible_format">Göra alla gömda serier (%s) synliga igen?</string>
-    <string name="action_shows_sort">Sortera serier</string>
     <string name="action_shows_sort_title">Titel</string>
     <string name="action_shows_sort_latest_episode">Senaste avsnitt</string>
     <string name="action_shows_sort_oldest_episode">Äldsta avsnitt</string>
@@ -172,6 +172,8 @@
     <string name="context_marknext">Sett nästa avsnitt</string>
     <string name="action_episodes_switch_view">Ändra vy</string>
     <string name="next_to_watch">Härnäst</string>
+    <string name="title_notes">Notes</string>
+    <string name="action_edit_note">Edit note</string>
     <!-- History -->
     <string name="user_stream">Historik</string>
     <string name="recently_watched">Nyligen sedda</string>
@@ -237,8 +239,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Liknande</string>
     <string name="title_similar_shows">Liknande program</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">Upptäck</string>
     <string name="title_popular">Populärt</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">År</string>
     <string name="filter_year_current">Nuvarande år</string>
     <string name="filter_language">Språk</string>
@@ -256,12 +260,10 @@
     <string name="list_item_remove">Ta bort från lista</string>
     <string name="ack_list_item_removed">Borttagen från lista</string>
     <string name="list_empty">Du kan lägga till serier i denna lista</string>
-    <string name="action_lists_sort">Sortera listor</string>
     <string name="action_lists_reorder">Sortera om listor</string>
     <string name="ack_lists_reordered">Listor omordnade</string>
     <string name="error_name_already_exists">En lista med detta namn finns redan</string>
     <!-- Movies -->
-    <string name="title_discover">Upptäck</string>
     <string name="title_digital_releases">Digitala utgivningar</string>
     <string name="title_disc_releases">Utgivningar på skiva</string>
     <string name="movies_in_theatres">På bio</string>
@@ -278,11 +280,10 @@
     <string name="trailer">Trailer</string>
     <string name="movie_cast">Rollista</string>
     <string name="movie_crew">Medverkande</string>
-    <string name="action_movies_sort">Sortera filmer</string>
     <string name="action_movies_sort_title">Titel</string>
     <string name="action_movies_sort_release">Utgivningsdatum</string>
-    <string name="action_movies_filter">Filtrera filmer</string>
     <string name="title_similar_movies">Liknande filmer</string>
+    <string name="title_release_dates">Release dates</string>
     <!-- Statistics -->
     <string name="statistics_failed">Gick inte att beräkna statistik.</string>
     <string name="shows_finished">%s färdigtittade</string>
@@ -388,8 +389,6 @@
     <string name="pref_exactdates_summary">\"31 oktober\" istället för \"om 3 dagar\"</string>
     <string name="pref_nospoilers">Förhindra spoilers</string>
     <string name="pref_nospoilers_summary">Dölj detaljer tills ett avsnitt har setts</string>
-    <string name="pref_seasonsorting">Sortera säsonger efter&#8230;</string>
-    <string name="pref_episodesorting">Sortera avsnitt efter&#8230;</string>
     <string name="pref_language">Innehållsspråk som föredras</string>
     <string name="pref_language_fallback">Alternativt språk</string>
     <string name="pref_updatewifionly">Endast bilder via Wi-Fi</string>

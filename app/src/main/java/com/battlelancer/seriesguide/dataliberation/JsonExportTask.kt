@@ -324,6 +324,10 @@ class JsonExportTask(
             show.trakt_id = sgShow.traktId
             show.first_aired = sgShow.firstRelease
             show.rating_user = sgShow.ratingUser
+            // Do not export empty or blank text (blank text should never get saved, but don't
+            // trust what's in the database) to keep file small and imports fast.
+            show.user_note = sgShow.userNote?.ifBlank { null }
+            show.user_note_trakt_id = sgShow.userNoteTraktId
             if (isFullDump) {
                 show.overview = sgShow.overview
                 show.rating_tmdb = sgShow.ratingTmdb

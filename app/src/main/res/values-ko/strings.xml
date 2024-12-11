@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">지우기</string>
     <string name="discard">취소</string>
-    <string name="save_selection">선택 항목 저장 완료</string>
     <string name="action_display_all">모두 보기</string>
     <string name="web_search">웹 검색</string>
     <string name="add_to_homescreen">홈 화면에 추가</string>
@@ -40,6 +39,7 @@
     <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">국가 선택</string>
     <string name="action_reset">재설정</string>
+    <string name="action_save">Save</string>
     <!-- Search -->
     <string name="clear_search_history">검색 기록 삭제</string>
     <string name="search_hint">에피소드 검색</string>
@@ -148,7 +148,8 @@
     <string name="hidden">숨김 완료</string>
     <string name="unhidden">표시 완료</string>
     <string name="action_shows_add">프로그램 추가</string>
-    <string name="action_shows_filter">프로그램 필터</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">모든 필터 제거</string>
     <string name="action_shows_filter_favorites">즐겨찾기</string>
     <string name="action_shows_filter_unwatched">미시청</string>
@@ -159,7 +160,6 @@
     <string name="state_shows_filter_excluded">Excluded</string>
     <string name="action_shows_make_all_visible">Make all hidden visible</string>
     <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
-    <string name="action_shows_sort">프로그램 정렬</string>
     <string name="action_shows_sort_title">제목</string>
     <string name="action_shows_sort_latest_episode">최근 에피소드</string>
     <string name="action_shows_sort_oldest_episode">오래된 에피소드</string>
@@ -171,6 +171,8 @@
     <string name="context_marknext">다음 에피소드 시청 완료</string>
     <string name="action_episodes_switch_view">Switch view</string>
     <string name="next_to_watch">Next to watch</string>
+    <string name="title_notes">Notes</string>
+    <string name="action_edit_note">Edit note</string>
     <!-- History -->
     <string name="user_stream">기록</string>
     <string name="recently_watched">최근 시청 항목</string>
@@ -230,8 +232,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Similar shows</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">찾기</string>
     <string name="title_popular">인기 항목</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">Year</string>
     <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
@@ -243,18 +247,16 @@
     <string name="list_remove">목록 제거</string>
     <string name="list_manage">목록 관리</string>
     <string name="ack_list_renamed">List renamed</string>
-    <string name="ack_list_removed">List removed</string>
+    <string name="ack_list_removed">List deleted</string>
     <string name="list_item_manage">목록 관리</string>
     <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">목록에서 제거</string>
     <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">You can add shows to this list</string>
-    <string name="action_lists_sort">목록 정렬</string>
     <string name="action_lists_reorder">목록 재정렬</string>
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">이 이름을 가진 목록이 이미 존재합니다</string>
     <!-- Movies -->
-    <string name="title_discover">찾기</string>
     <string name="title_digital_releases">디지털 출시</string>
     <string name="title_disc_releases">디스크 출시</string>
     <string name="movies_in_theatres">상영 중</string>
@@ -271,11 +273,10 @@
     <string name="trailer">예고편</string>
     <string name="movie_cast">출연진</string>
     <string name="movie_crew">제작진</string>
-    <string name="action_movies_sort">영화 정렬</string>
     <string name="action_movies_sort_title">제목</string>
     <string name="action_movies_sort_release">개봉일</string>
-    <string name="action_movies_filter">Filter movies</string>
     <string name="title_similar_movies">Similar movies</string>
+    <string name="title_release_dates">Release dates</string>
     <!-- Statistics -->
     <string name="statistics_failed">통계를 계산할 수 없습니다.</string>
     <string name="shows_finished">%s finished watching</string>
@@ -377,8 +378,6 @@
     <string name="pref_exactdates_summary">\"10월 31일\" 대신 \"3일안에\"</string>
     <string name="pref_nospoilers">스포일러 방지</string>
     <string name="pref_nospoilers_summary">시청할 때까지 세부 정보를 숨깁니다.</string>
-    <string name="pref_seasonsorting">시즌 정렬</string>
-    <string name="pref_episodesorting">에피소드 정렬</string>
     <string name="pref_language">선호하는 컨텐츠 언어</string>
     <string name="pref_language_fallback">기타 언어</string>
     <string name="pref_updatewifionly">와이파이를 이용하여 이미지 다운받기</string>

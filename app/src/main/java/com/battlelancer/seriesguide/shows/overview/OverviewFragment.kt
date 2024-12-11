@@ -60,7 +60,6 @@ import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceActiveEvent
 import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceCompletedEvent
 import com.battlelancer.seriesguide.util.ImageTools
-import com.battlelancer.seriesguide.util.ImageTools.tmdbOrTvdbStillUrl
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.RatingsTools.initialize
 import com.battlelancer.seriesguide.util.RatingsTools.setLink
@@ -75,6 +74,7 @@ import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.WebTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.battlelancer.seriesguide.util.safeShow
+import com.battlelancer.seriesguide.util.startActivityWithAnimation
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.Job
@@ -82,6 +82,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
+import java.text.NumberFormat
 
 /**
  * Displays general information about a show and, if there is one, the next episode to watch.
@@ -146,11 +147,11 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
             }
             buttonOverviewFavoriteShow.setOnClickListener { onButtonFavoriteClick() }
 
-            containerOverviewEpisodeCard.setOnClickListener { v: View? ->
+            containerOverviewEpisodeCard.setOnClickListener { v: View ->
                 runIfHasEpisode { episode ->
                     // display episode details
                     val intent = EpisodesActivity.intentEpisode(episode.id, requireContext())
-                    Utils.startActivityWithAnimation(activity, intent, v)
+                    requireActivity().startActivityWithAnimation(intent, v)
                 }
             }
 
@@ -341,10 +342,10 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
         }
     }
 
-    private fun onButtonCommentsClick(v: View?) {
+    private fun onButtonCommentsClick(v: View) {
         runIfHasEpisode { episode ->
             val i = TraktCommentsActivity.intentEpisode(requireContext(), episode.title, episode.id)
-            Utils.startActivityWithAnimation(activity, i, v)
+            requireActivity().startActivityWithAnimation(i, v)
         }
     }
 
@@ -470,7 +471,9 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
         val episodeAbsoluteNumber = episode.absoluteNumber
         if (episodeAbsoluteNumber != null
             && episodeAbsoluteNumber > 0 && episodeAbsoluteNumber != number) {
-            infoText.append(" (").append(episodeAbsoluteNumber).append(")")
+            infoText.append(" (")
+                .append(NumberFormat.getIntegerInstance().format(episodeAbsoluteNumber.toLong()))
+                .append(")")
         }
 
         // release date
@@ -624,7 +627,11 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
         )
     }
 
-    private fun loadEpisodeImage(imageView: ImageView, detailsHiddenView: View, imagePath: String?) {
+    private fun loadEpisodeImage(
+        imageView: ImageView,
+        detailsHiddenView: View,
+        imagePath: String?
+    ) {
         if (imagePath.isNullOrEmpty()) {
             imageView.setImageDrawable(null)
             detailsHiddenView.isGone = true
@@ -643,7 +650,7 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
             // Try loading image
             ImageTools.loadWithPicasso(
                 requireContext(),
-                tmdbOrTvdbStillUrl(imagePath, requireContext(), false)
+                ImageTools.buildEpisodeImageUrl(imagePath, requireContext())
             )
                 .error(R.drawable.ic_photo_gray_24dp)
                 .into(imageView,

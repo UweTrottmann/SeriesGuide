@@ -33,6 +33,7 @@ class TimeOffsetDialogFragment : AppCompatDialogFragment() {
 
     private var hours = 0
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val binding = DialogTimeOffsetBinding.inflate(layoutInflater)
         this.binding = binding
@@ -42,6 +43,8 @@ class TimeOffsetDialogFragment : AppCompatDialogFragment() {
         binding.editTextOffsetValue.addTextChangedListener(textWatcher)
 
         val hours = getShowsTimeOffset(requireContext())
+        // Suppress SetTextI18n: to accept Arabic numbers, would need to add custom text parsing
+        // and remove the inputType numberSigned restriction.
         binding.editTextOffsetValue.setText(hours.toString())
         // text views are updated by text watcher
 

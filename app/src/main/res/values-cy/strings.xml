@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">Clir</string>
     <string name="discard">Gwared</string>
-    <string name="save_selection">Cadw dewis</string>
     <string name="action_display_all">Dangos y cyfan</string>
     <string name="web_search">Chwilio\'r We</string>
     <string name="add_to_homescreen">Ychwanegu i\'r sgrin gartref</string>
@@ -40,6 +39,7 @@
     <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">Dewis rhanbarth</string>
     <string name="action_reset">Reset</string>
+    <string name="action_save">Save</string>
     <!-- Search -->
     <string name="clear_search_history">Hanes chwilio clir</string>
     <string name="search_hint">Chwilio penodau</string>
@@ -153,7 +153,8 @@
     <string name="hidden">Wedi\'i symud i gudd</string>
     <string name="unhidden">Sioe i\'w gweld eto</string>
     <string name="action_shows_add">Ychwanegu sioe</string>
-    <string name="action_shows_filter">Hidlo sioeau</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">Tynnwch yr holl hidlwyr</string>
     <string name="action_shows_filter_favorites">Hoff</string>
     <string name="action_shows_filter_unwatched">Heb ei wylio</string>
@@ -164,7 +165,6 @@
     <string name="state_shows_filter_excluded">Eithriedig</string>
     <string name="action_shows_make_all_visible">Gwneud pob cudd yn weladwy</string>
     <string name="description_make_all_visible_format">Gwneud pob sioe gudd (%s) yn weladwy eto?</string>
-    <string name="action_shows_sort">Trefnu sioeau</string>
     <string name="action_shows_sort_title">Teitl</string>
     <string name="action_shows_sort_latest_episode">Y bennod ddiweddaraf</string>
     <string name="action_shows_sort_oldest_episode">Y bennod hynaf</string>
@@ -176,6 +176,8 @@
     <string name="context_marknext">Wedi gwylio\'r bennod nesaf</string>
     <string name="action_episodes_switch_view">Newid golygfa</string>
     <string name="next_to_watch">Nesaf i wylio</string>
+    <string name="title_notes">Notes</string>
+    <string name="action_edit_note">Edit note</string>
     <!-- History -->
     <string name="user_stream">Hanes</string>
     <string name="recently_watched">Gwyliwyd yn ddiweddar</string>
@@ -265,8 +267,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Sioeau tebyg</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">Darganfod</string>
     <string name="title_popular">Poblogaidd</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">Year</string>
     <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
@@ -278,18 +282,16 @@
     <string name="list_remove">Dileu\'r rhestr</string>
     <string name="list_manage">Rheoli rhestr</string>
     <string name="ack_list_renamed">List renamed</string>
-    <string name="ack_list_removed">List removed</string>
+    <string name="ack_list_removed">List deleted</string>
     <string name="list_item_manage">Rheoli rhestrau</string>
     <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">Tynnu o\'r rhestr</string>
     <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">Gallwch ychwanegu sioeau at y rhestr hon</string>
-    <string name="action_lists_sort">Trefnu rhestrau</string>
     <string name="action_lists_reorder">Rhestrau ail-archebu</string>
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">Mae rhestr gyda\'r enw hwn eisoes yn bodoli</string>
     <!-- Movies -->
-    <string name="title_discover">Darganfod</string>
     <string name="title_digital_releases">Datganiadau digidol</string>
     <string name="title_disc_releases">Datganiadau disg</string>
     <string name="movies_in_theatres">Mewn sinemâu</string>
@@ -306,11 +308,10 @@
     <string name="trailer">Trelar Ffilm</string>
     <string name="movie_cast">Cast Ffilm</string>
     <string name="movie_crew">Criw Ffilm</string>
-    <string name="action_movies_sort">Trefnu ffilmiau</string>
     <string name="action_movies_sort_title">Teitl</string>
     <string name="action_movies_sort_release">Dyddiad rhyddhau</string>
-    <string name="action_movies_filter">hidlo ffilmiau</string>
     <string name="title_similar_movies">Similar movies</string>
+    <string name="title_release_dates">Release dates</string>
     <!-- Statistics -->
     <string name="statistics_failed">Methu cyfrifo ystadegau</string>
     <string name="shows_finished">%s gorffen gwylio</string>
@@ -432,8 +433,6 @@
     <string name="pref_exactdates_summary">\"Hydref 31\" yn lle \"mewn 3 diwrnod\"</string>
     <string name="pref_nospoilers">Atal anrheithwyr</string>
     <string name="pref_nospoilers_summary">Cuddiwch fanylion nes bod pennod yn cael ei gwylio</string>
-    <string name="pref_seasonsorting">Trefnu tymhorau yn ôl&#8230;</string>
-    <string name="pref_episodesorting">Trefnu penodau yn ôl&#8230;</string>
     <string name="pref_language">Yr iaith cynnwys a ffefrir</string>
     <string name="pref_language_fallback">Iaith amgen</string>
     <string name="pref_updatewifionly">Delweddau trwy Wi-Fi yn unig</string>

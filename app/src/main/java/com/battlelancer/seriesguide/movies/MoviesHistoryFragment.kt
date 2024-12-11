@@ -29,8 +29,8 @@ import com.battlelancer.seriesguide.shows.history.ShowsHistoryAdapter
 import com.battlelancer.seriesguide.shows.history.ShowsHistoryAdapter.Item
 import com.battlelancer.seriesguide.shows.history.TraktRecentEpisodeHistoryLoader
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
-import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.util.startActivityWithAnimation
 
 /**
  * From Trakt, displays recently watched movies of the user and Trakt friends.
@@ -254,9 +254,8 @@ class MoviesHistoryFragment : Fragment() {
 
                 // display movie details
                 val i = MovieDetailsActivity.intentMovie(requireContext(), movieTmdbId)
-
                 // simple scale up animation as there are no images
-                Utils.startActivityWithAnimation(activity, i, view)
+                requireActivity().startActivityWithAnimation(i, view)
             }
         }
 

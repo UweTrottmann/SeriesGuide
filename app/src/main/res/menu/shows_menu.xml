@@ -16,7 +16,7 @@
         android:id="@+id/menu_action_shows_filter"
         android:icon="@drawable/ic_filter_white_24dp"
         android:orderInCategory="1"
-        android:title="@string/action_shows_filter"
+        android:title="@string/action_filter_and_sort"
         app:showAsAction="ifRoom" />
 
     <item

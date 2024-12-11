@@ -1,0 +1,30 @@
+Keep track of your favorite TV shows and movies.
+
+SeriesGuide is a free app to discover TV shows and movies, keep track of your watched episodes and movies, and get notified about upcoming episodes.
+
+<b>Discover TV shows and movies</b>: find out what is available on your streaming services, new, popular or similar to what you are watching.
+
+<b>Assists with what and where to watch</b>: see what to watch next and find where a TV show or movie is available to stream or purchase.
+
+<b>Check off and keep track</b>: keep a record of watched episodes and movies, see your progress. Stay aware of new episodes.
+
+<b>Back up and sync</b>: access your TV shows, lists and movies on multiple devices using SeriesGuide Cloud.
+
+<b>Connect to Trakt</b>: sync your watched and collected episodes and movies, access your history and see what others are watching. Post ratings and comments.
+
+<b>No account required</b>: if you want, you can back up and restore your library using JSON files only.
+
+<b>Open source and independent</b>: SeriesGuide is supported by its subscribers, not by advertisers or investors.
+
+For help, questions or more information visit https://www.seriesgui.de/help
+
+To check out the source code, visit https://github.com/UweTrottmann/SeriesGuide
+
+All Access Sub
+Unlock all features, including Cloud backup.
+
+Supporter Sub
+Support development of future updates. Includes All Access.
+
+Sponsor Sub
+Big contribution to ensure future updates. Includes All Access.

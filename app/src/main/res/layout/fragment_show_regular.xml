@@ -256,6 +256,45 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardShowNote"
+            style="?attr/materialCardViewFilledStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            app:cardBackgroundColor="?attr/sgColorBackgroundDim">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/buttonShowNote"
+                    style="@style/Widget.SeriesGuide.Button.Borderless"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/action_edit_note"
+                    app:icon="@drawable/ic_edit_note_control_24dp"
+                    app:iconGravity="start" />
+
+                <TextView
+                    android:id="@+id/textViewShowNote"
+                    style="@style/Widget.SeriesGuide.TextView.Body.MaxEms"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginBottom="8dp"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    tools:text="This is an example note." />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
         <include
             android:id="@+id/containerRatings"
             layout="@layout/layout_ratings" />

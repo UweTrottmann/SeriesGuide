@@ -21,8 +21,8 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceGroup
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.ui.BasePreferencesFragment
 import com.battlelancer.seriesguide.settings.WidgetSettings
+import com.battlelancer.seriesguide.ui.BasePreferencesFragment
 import com.battlelancer.seriesguide.util.Utils
 
 /**
@@ -58,7 +58,7 @@ class ListWidgetPreferenceFragment : BasePreferencesFragment() {
         // Shows only sort order.
         showsSortPref = createListPref(
             WidgetSettings.KEY_PREFIX_WIDGET_SHOWS_SORT_ORDER + appWidgetId,
-            R.string.action_shows_sort,
+            R.string.sort,
             R.array.widgetShowSortOrder,
             R.array.widgetShowSortOrderData,
             getString(R.string.widget_default_show_sort_order)

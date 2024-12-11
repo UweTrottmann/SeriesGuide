@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">Удалить</string>
     <string name="discard">Отменить</string>
-    <string name="save_selection">Сохранить выбор</string>
     <string name="action_display_all">Показать все</string>
     <string name="web_search">Веб-поиск</string>
     <string name="add_to_homescreen">Добавить на главный экран</string>
@@ -40,6 +39,7 @@
     <string name="action_stream_settings">Настройка трансляции или покупка</string>
     <string name="action_select_region">Выберите регион</string>
     <string name="action_reset">Сброс</string>
+    <string name="action_save">Сохранить</string>
     <!-- Search -->
     <string name="clear_search_history">Очистить историю поиска</string>
     <string name="search_hint">Поиск эпизодов</string>
@@ -151,7 +151,8 @@
     <string name="hidden">Перемещено в скрытые </string>
     <string name="unhidden">Сериал снова виден</string>
     <string name="action_shows_add">Добавить сериал</string>
-    <string name="action_shows_filter">Фильтр сериалов</string>
+    <string name="action_filter_and_sort">Фильтр и сортировка</string>
+    <string name="title_filter_general">Общее</string>
     <string name="empty_filter">Очистить фильтры</string>
     <string name="action_shows_filter_favorites">Избранное</string>
     <string name="action_shows_filter_unwatched">Непросмотренные</string>
@@ -162,7 +163,6 @@
     <string name="state_shows_filter_excluded">Исключено</string>
     <string name="action_shows_make_all_visible">Сделать всё скрытое видимым</string>
     <string name="description_make_all_visible_format">Сделать все скрытые сериалы (%s) снова видимыми?</string>
-    <string name="action_shows_sort">Сортировать сериалы</string>
     <string name="action_shows_sort_title">Название</string>
     <string name="action_shows_sort_latest_episode">Последний эпизод</string>
     <string name="action_shows_sort_oldest_episode">Старейший эпизод</string>
@@ -174,6 +174,8 @@
     <string name="context_marknext">Смотреть следующий эпизод</string>
     <string name="action_episodes_switch_view">Изменить вид</string>
     <string name="next_to_watch">Далее к просмотру</string>
+    <string name="title_notes">Заметка</string>
+    <string name="action_edit_note">Редактировать заметку</string>
     <!-- History -->
     <string name="user_stream">История</string>
     <string name="recently_watched">Недавно просмотренные</string>
@@ -251,8 +253,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Похожие</string>
     <string name="title_similar_shows">Похожие сериалы</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">Подборка</string>
     <string name="title_popular">Популярные</string>
+    <string name="action_filter">Фильтр</string>
     <string name="filter_year">Год</string>
     <string name="filter_year_current">Текущий год</string>
     <string name="filter_language">Язык</string>
@@ -270,12 +274,10 @@
     <string name="list_item_remove">Удалить из списка</string>
     <string name="ack_list_item_removed">Удалено из списка</string>
     <string name="list_empty">Вы можете добавить сериалы в этот список</string>
-    <string name="action_lists_sort">Отсортировать списки</string>
     <string name="action_lists_reorder">Сортировка списков</string>
     <string name="ack_lists_reordered">Списки переупорядочены</string>
     <string name="error_name_already_exists">Список с таким именем уже существует</string>
     <!-- Movies -->
-    <string name="title_discover">Подборка</string>
     <string name="title_digital_releases">Цифровые версии</string>
     <string name="title_disc_releases">Диски</string>
     <string name="movies_in_theatres">Смотрите в кинотеатрах</string>
@@ -292,11 +294,10 @@
     <string name="trailer">Трейлер</string>
     <string name="movie_cast">Актерский состав</string>
     <string name="movie_crew">Съёмочная группа</string>
-    <string name="action_movies_sort">Сортировать фильмы</string>
     <string name="action_movies_sort_title">Название</string>
     <string name="action_movies_sort_release">Дата выпуска</string>
-    <string name="action_movies_filter">Фильтр фильмов</string>
     <string name="title_similar_movies">Похожие фильмы</string>
+    <string name="title_release_dates">Даты выпуска</string>
     <!-- Statistics -->
     <string name="statistics_failed">Не удалось рассчитать статистику.</string>
     <string name="shows_finished">%s завершенных просмотров</string>
@@ -410,8 +411,6 @@
     <string name="pref_exactdates_summary">\"31 октября\" вместо \"Через 3 дня\"</string>
     <string name="pref_nospoilers">Предотвратить спойлеры</string>
     <string name="pref_nospoilers_summary">Скрывать подробности, пока эпизод не просмотрен</string>
-    <string name="pref_seasonsorting">Сортировка сезонов по&#8230;</string>
-    <string name="pref_episodesorting">Сортировка эпизодов по&#8230;</string>
     <string name="pref_language">Предпочитаемый язык контента</string>
     <string name="pref_language_fallback">Альтернативное изображение</string>
     <string name="pref_updatewifionly">Картинки только через Wi-Fi</string>

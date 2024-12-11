@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2012-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.lists
 
@@ -12,7 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.DialogListManageBinding
-import com.battlelancer.seriesguide.provider.SeriesGuideContract
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.util.safeShow
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
@@ -39,23 +39,29 @@ class ListManageDialogFragment : AppCompatDialogFragment() {
         this.binding = binding
 
         // buttons
-        binding.buttonNegative.isEnabled = false
-        binding.buttonNegative.setText(R.string.list_remove)
-        binding.buttonNegative.setOnClickListener {
-            // remove list and items
-            ListsTools.removeList(requireContext(), listId)
-            dismiss()
+        binding.buttonListManageDelete.apply {
+            isEnabled = false
+            setText(R.string.list_remove)
+            setOnClickListener {
+                // ask about removing list
+                DeleteListDialogFragment.create(listId)
+                    .safeShow(parentFragmentManager, "confirm-delete-list")
+                dismiss()
+            }
         }
-        binding.buttonPositive.setText(android.R.string.ok)
-        binding.buttonPositive.setOnClickListener {
-            val editText = this.binding?.textInputLayoutListManageListName?.editText
-                ?: return@setOnClickListener
+        binding.buttonListManageConfirm.apply {
+            setText(R.string.action_save)
+            setOnClickListener {
+                val editText =
+                    this@ListManageDialogFragment.binding?.textInputLayoutListManageListName?.editText
+                        ?: return@setOnClickListener
 
-            // update title
-            val listName = editText.text.toString().trim()
-            ListsTools.renameList(requireContext(), listId, listName)
+                // update title
+                val listName = editText.text.toString().trim()
+                ListsTools.renameList(requireContext(), listId, listName)
 
-            dismiss()
+                dismiss()
+            }
         }
 
         // Delay loading data for views to after this function
@@ -71,26 +77,16 @@ class ListManageDialogFragment : AppCompatDialogFragment() {
     }
 
     private fun configureViews() {
+        // Querying on main thread as the queries are very small
+        val listHelper = SgRoomDatabase.getInstance(requireContext()).sgListHelper()
         // pre-populate list title
-        val list = requireContext().contentResolver
-            .query(
-                SeriesGuideContract.Lists.buildListUri(listId), arrayOf(
-                    SeriesGuideContract.Lists.NAME
-                ), null, null, null
-            )
+        val list = listHelper.getList(listId)
         if (list == null) {
             // list might have been removed, or query failed
             dismiss()
             return
         }
-        if (!list.moveToFirst()) {
-            // list not found
-            list.close()
-            dismiss()
-            return
-        }
-        val listName = list.getString(0)
-        list.close()
+        val listName = list.name
 
         val binding = this@ListManageDialogFragment.binding
         if (binding == null) {
@@ -104,21 +100,14 @@ class ListManageDialogFragment : AppCompatDialogFragment() {
         editTextName.addTextChangedListener(
             AddListDialogFragment.ListNameTextWatcher(
                 requireContext(), textInputLayoutName,
-                binding.buttonPositive, listName
+                binding.buttonListManageConfirm, listName
             )
         )
 
         // do only allow removing if this is NOT the last list
-        val lists = requireContext().contentResolver.query(
-            SeriesGuideContract.Lists.CONTENT_URI, arrayOf(
-                SeriesGuideContract.Lists._ID
-            ), null, null, null
-        )
-        if (lists != null) {
-            if (lists.count > 1) {
-                binding.buttonNegative.isEnabled = true
-            }
-            lists.close()
+        val listsCount = listHelper.getListsCount()
+        if (listsCount > 1) {
+            binding.buttonListManageDelete.isEnabled = true
         }
     }
 

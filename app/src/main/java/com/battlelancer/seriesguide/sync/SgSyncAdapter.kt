@@ -26,12 +26,13 @@ import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.settings.UpdateSettings
 import com.battlelancer.seriesguide.shows.tools.ShowSync
+import com.battlelancer.seriesguide.shows.tools.ShowTools2
 import com.battlelancer.seriesguide.sync.SyncOptions.SyncType
+import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.util.TaskManager
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.services.ConfigurationService
-import com.uwetrottmann.trakt5.services.Sync
 import dagger.Lazy
 import timber.log.Timber
 import javax.inject.Inject
@@ -52,7 +53,10 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
     lateinit var hexagonTools: Lazy<HexagonTools>
 
     @Inject
-    lateinit var traktSync: Lazy<Sync>
+    lateinit var trakt: Lazy<SgTrakt>
+
+    @Inject
+    lateinit var showTools2: Lazy<ShowTools2>
 
     @Inject
     lateinit var movieTools: Lazy<MovieTools>
@@ -189,9 +193,12 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
                 // sync with trakt (only ratings if hexagon is enabled)
                 if (TraktCredentials.get(context).hasCredentials()) {
                     val resultTraktSync = TraktSync(
-                        context, movieTools.get(),
-                        traktSync.get(), progress
-                    ).sync(currentTime, isHexagonEnabled)
+                        context,
+                        showTools2.get(),
+                        movieTools.get(),
+                        trakt.get(),
+                        progress
+                    ).sync(isHexagonEnabled)
                     // don't overwrite failure
                     if (resultCode == UpdateResult.SUCCESS) {
                         resultCode = resultTraktSync

@@ -7,6 +7,11 @@ plugins {
 val sgCompileSdk: Int by rootProject.extra
 val sgMinSdk: Int by rootProject.extra
 
+tasks.withType(JavaCompile::class.java).configureEach {
+    // Suppress JDK 21 warning about deprecated, but not yet removed, source and target value 8 support
+    options.compilerArgs.add("-Xlint:-options")
+}
+
 android {
     namespace = "com.uwetrottmann.seriesguide.billing"
     compileSdk = sgCompileSdk
@@ -50,6 +55,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel)
     // Room
     implementation(libs.androidx.room.runtime)
+    // KSP appears deprecated. KSP 2 is still under development.
+    //noinspection KaptUsageInsteadOfKsp
     kapt(libs.androidx.room.compiler)
 
     implementation(libs.timber)

@@ -33,7 +33,6 @@ import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 class ShowsDistillationFragment : AppCompatDialogFragment() {
 
     private val model: ShowsDistillationViewModel by viewModels()
-    private var binding: DialogShowsDistillationBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -176,11 +175,6 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
             }
         }
 
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
     }
 
     companion object {

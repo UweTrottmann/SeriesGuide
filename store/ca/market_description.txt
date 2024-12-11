@@ -1,0 +1,30 @@
+SeriesGuide: gestor de sèries
+
+Fes un seguiment de les teves sèries de TV i pel·lícules favorites.
+
+Amb SeriesGuide podeu trobar programes i pel·lícules per veure, fer un seguiment dels vostres episodis i pel·lícules vistos, rebre notificacions sobre episodis propers i fer-ne una còpia de seguretat i sincronitzar-la entre dispositius.
+
+<b> Descobrir. </b> Busqueu programes amb episodis nous, que són populars o similars als que esteu veient. Busqueu pel•lícules actualment en cinemes, publicades digitalment o en disc
+
+<b> Còpia de seguretat i sincronització. </b> Inicieu la sessió a SeriesGuide Cloud per fer còpies de seguretat i sincronitzar els vostres programes, llistes i pel·lícules.
+
+<b> S'integra amb Trakt. </b> Connecta el  teu compte de Trakt per accedir a la vostra llista i col·lecció, registre, valoració i comentari. Sincronitza episodis i pel·lícules vistes entre aplicacions i centres multimèdia compatibles amb Trakt.
+
+<b>Extensions.</b> Afegeix un botó d'extensió proporcionat per una aplicació de tercers o construeix-ne un de propi.
+
+<b>Obteniu la subscripció per desbloquejar totes les funcions i doneu suport a SeriesGuide!</b> Obtindreu més opcions de ginys, notificacions per a episodis nous i molt més. També doneu suport a contínues correccions i noves característiques.
+
+NOTA: no podeu veure episodis ni pel·lícules. Als episodis només es mostra la data de llançament a la xarxa original.
+
+Clau de SeriesGuide X
+
+Desbloqueja permanentment l'accés a totes les funcionalitats de SeriesGuide. Requereix tenir instal·lat tant SeriesGuide com X Pass.
+
+Subscripció Accés Total
+Desbloquegeu totes les funcions, inclosa la còpia de seguretat de Cloud.
+
+Subscripció Supporter
+Suport al desenvolupament de futures actualitzacions Inclou Accés Total
+
+Subscripció Sponsor
+Gran contribució per garantir futures actualitzacions. Inclou Accés Total

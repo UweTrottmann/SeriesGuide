@@ -5,6 +5,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
+    alias(libs.plugins.compose.compiler)
 }
 
 if (project.file("google-services.json").exists()) {
@@ -21,6 +22,11 @@ val sgTargetSdk: Int by rootProject.extra
 val sgVersionCode: Int by rootProject.extra
 val sgVersionName: String by rootProject.extra
 
+tasks.withType(JavaCompile::class.java).configureEach {
+    // Suppress JDK 21 warning about deprecated, but not yet removed, source and target value 8 support
+    options.compilerArgs.add("-Xlint:-options")
+}
+
 android {
     namespace = "com.battlelancer.seriesguide"
     compileSdk = sgCompileSdk
@@ -29,7 +35,7 @@ android {
 
     buildFeatures {
         buildConfig = true
-        // https://developer.android.com/jetpack/compose/interop/adding
+        // https://developer.android.com/develop/ui/compose/setup
         compose = true
         // https://firebase.google.com/support/release-notes/android
         viewBinding = true
@@ -39,6 +45,7 @@ android {
         minSdk = sgMinSdk
         targetSdk = sgTargetSdk
 
+        // Prevent plugin from generating PNGs, use compat loading instead https://developer.android.com/studio/write/vector-asset-studio#sloption
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -65,16 +72,12 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    composeOptions {
-        // https://developer.android.com/jetpack/androidx/releases/compose-kotlin
-        kotlinCompilerExtensionVersion = "1.5.14" // For Kotlin 1.9.24
-    }
-
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
         // Using experimental flatMapLatest for Paging 3
         // Using experimental Material 3 compose APIs
-        freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi,androidx.compose.material3.ExperimentalMaterial3Api"
+        freeCompilerArgs =
+            freeCompilerArgs + "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi,androidx.compose.material3.ExperimentalMaterial3Api"
     }
 
     lint {
@@ -95,7 +98,8 @@ android {
 
     productFlavors {
         create("pure") {
-            isDefault = true // Make Studio select this by default, it often resets (after updates, randomly)
+            // Make Studio select this by default, it often resets (after updates, randomly)
+            isDefault = true
 
             applicationId = "com.battlelancer.seriesguide"
             versionCode = sgVersionCode
@@ -155,6 +159,9 @@ android {
             // Based on https://docs.oracle.com/en/java/javase/17/docs/specs/jar/jar.html#jar-index
             // only used by network applications like applets, so safe to exclude.
             excludes += "/META-INF/INDEX.LIST"
+            // Exclude Coroutines debug file
+            // https://github.com/Kotlin/kotlinx.coroutines?tab=readme-ov-file#avoiding-including-the-debug-infrastructure-in-the-resulting-apk
+            excludes += "DebugProbesKt.bin"
         }
     }
 }
@@ -164,7 +171,6 @@ kapt {
     arguments {
         arg("eventBusIndex", "com.battlelancer.seriesguide.SgEventBusIndex")
         arg("room.schemaLocation", "$projectDir/schemas")
-        arg("room.incremental", "true")
     }
 }
 
@@ -204,7 +210,7 @@ dependencies {
     // Optional - Integration with activities
     implementation(libs.androidx.activity.compose)
     // Optional - Integration with ViewModels
-    implementation( libs.androidx.lifecycle.compose)
+    implementation(libs.androidx.lifecycle.compose)
 
     // ViewModel and LiveData
     implementation(libs.androidx.lifecycle.livedata)
@@ -219,6 +225,8 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     // Paging 3 Integration
     implementation(libs.androidx.room.paging)
+    // KSP appears deprecated. KSP 2 is still under development.
+    //noinspection KaptUsageInsteadOfKsp
     kapt(libs.androidx.room.compiler)
 
     implementation(libs.dagger)

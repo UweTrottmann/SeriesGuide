@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">Обриши</string>
     <string name="discard">Одбаци</string>
-    <string name="save_selection">Сачувај изабрано</string>
     <string name="action_display_all">Прикажи све</string>
     <string name="web_search">Веб претрага</string>
     <string name="add_to_homescreen">Dodaj na Home ekran</string>
@@ -40,6 +39,7 @@
     <string name="action_stream_settings">Подешавања о стримовању или куповини</string>
     <string name="action_select_region">Одабери регион</string>
     <string name="action_reset">Ресетуј</string>
+    <string name="action_save">Сачувај</string>
     <!-- Search -->
     <string name="clear_search_history">Обриши историју претраге</string>
     <string name="search_hint">Тражи епизоде</string>
@@ -150,7 +150,8 @@
     <string name="hidden">Сакривена серија</string>
     <string name="unhidden">Приказана серија</string>
     <string name="action_shows_add">Додај серију</string>
-    <string name="action_shows_filter">Филтрирај серије</string>
+    <string name="action_filter_and_sort">Филтрирајте и сортирајте</string>
+    <string name="title_filter_general">Опште</string>
     <string name="empty_filter">Уклони све филтере</string>
     <string name="action_shows_filter_favorites">Омиљене</string>
     <string name="action_shows_filter_unwatched">Неодгледано</string>
@@ -161,7 +162,6 @@
     <string name="state_shows_filter_excluded">Искључено</string>
     <string name="action_shows_make_all_visible">Учините све скривено видљивим</string>
     <string name="description_make_all_visible_format">Поставите све скривене серије (%s) поново видљиве?</string>
-    <string name="action_shows_sort">Сортирај серије</string>
     <string name="action_shows_sort_title">Наслов</string>
     <string name="action_shows_sort_latest_episode">Poslednja epizoda</string>
     <string name="action_shows_sort_oldest_episode">Najstarija epizoda</string>
@@ -173,6 +173,8 @@
     <string name="context_marknext">Погледана, следећа епизода</string>
     <string name="action_episodes_switch_view">Пребацити излед</string>
     <string name="next_to_watch">Следеће за гледање</string>
+    <string name="title_notes">Белешке</string>
+    <string name="action_edit_note">Уреди белешку</string>
     <!-- History -->
     <string name="user_stream">Историјат</string>
     <string name="recently_watched">Недавно гледано</string>
@@ -244,8 +246,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Слично</string>
     <string name="title_similar_shows">Сличне емисије</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">Otkrijte</string>
     <string name="title_popular">Popularno</string>
+    <string name="action_filter">Филтер</string>
     <string name="filter_year">Година</string>
     <string name="filter_year_current">Актуелна година</string>
     <string name="filter_language">Језик</string>
@@ -263,12 +267,10 @@
     <string name="list_item_remove">Уклони са листе</string>
     <string name="ack_list_item_removed">Уклоњено са листе</string>
     <string name="list_empty">Можете додати емисије на ову листу</string>
-    <string name="action_lists_sort">Листе за сортирање</string>
     <string name="action_lists_reorder">Поново сортирајте листе</string>
     <string name="ack_lists_reordered">Листе су преуређене</string>
     <string name="error_name_already_exists">Lista sa ovim imenom već postoji</string>
     <!-- Movies -->
-    <string name="title_discover">Otkrijte</string>
     <string name="title_digital_releases">Digitalna izdanja</string>
     <string name="title_disc_releases">Disk izdanja</string>
     <string name="movies_in_theatres">U bioskopima</string>
@@ -285,11 +287,10 @@
     <string name="trailer">Трејлер</string>
     <string name="movie_cast">Улоге</string>
     <string name="movie_crew">Екипа</string>
-    <string name="action_movies_sort">Сортирај филмове</string>
     <string name="action_movies_sort_title">Наслов</string>
     <string name="action_movies_sort_release">Датум емитовања</string>
-    <string name="action_movies_filter">Филтрирати филмове</string>
     <string name="title_similar_movies">Слични филмови</string>
+    <string name="title_release_dates">Датуми емитовања</string>
     <!-- Statistics -->
     <string name="statistics_failed">Nije bilo moguće obraditi statistiku</string>
     <string name="shows_finished">%s завршио гледање</string>
@@ -335,7 +336,7 @@
     <string name="hexagon_signed_out">Izlogovan iz SeriesGuide Cloud-a</string>
     <string name="hexagon_signin_fail_format">Грешка са пријавом (%s)</string>
     <string name="hexagon_signin_google_only">Имејл захтева пријављивање на Google</string>
-    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
+    <string name="hexagon_signin_choose">Изаберите имејл за пријаву ако користите SeriesGuide на другим уређајима који не подржавају пријављивање на Google.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Послато на тракт.</string>
     <string name="checkin_success_trakt">Пријављено гледање %s на trakt.</string>
@@ -399,8 +400,6 @@
     <string name="pref_exactdates_summary">\"31 октобар\" у место од \"за 3 дана\"</string>
     <string name="pref_nospoilers">Спречити спојлере</string>
     <string name="pref_nospoilers_summary">Сакрити детаље док се епизода не погледа</string>
-    <string name="pref_seasonsorting">Поређај сезоне по&#8230;</string>
-    <string name="pref_episodesorting">Поређај епизоде по&#8230;</string>
     <string name="pref_language">Жељени језик садржаја</string>
     <string name="pref_language_fallback">Алтернативни језик</string>
     <string name="pref_updatewifionly">Слике само кроз бежичну мрежу</string>

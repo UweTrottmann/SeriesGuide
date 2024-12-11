@@ -37,7 +37,7 @@ import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.menus.ManualSyncMenu
 import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
-import com.battlelancer.seriesguide.util.Utils
+import com.battlelancer.seriesguide.util.startActivityWithAnimation
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.conflate
@@ -231,7 +231,7 @@ abstract class CalendarFragment2 : Fragment() {
         CalendarAdapter2.ItemClickListener {
         override fun onItemClick(episodeId: Long) {
             val intent = EpisodesActivity.intentEpisode(episodeId, requireContext())
-            Utils.startActivityWithAnimation(activity, intent, view)
+            requireActivity().startActivityWithAnimation(intent, view!!)
         }
 
         override fun onMoreOptionsClick(anchor: View, episode: SgEpisode2WithShow) {

@@ -15,7 +15,7 @@ import com.battlelancer.seriesguide.databinding.FragmentSearchBinding
 import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.shows.search.EpisodeSearchFragment.Companion.ARG_SHOW_TITLE
 import com.battlelancer.seriesguide.util.TabClickEvent
-import com.battlelancer.seriesguide.util.Utils
+import com.battlelancer.seriesguide.util.startActivityWithAnimation
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -96,7 +96,7 @@ class EpisodeSearchFragment : BaseSearchFragment() {
     private val onItemClickListener = object : EpisodeSearchAdapter.OnItemClickListener {
         override fun onItemClick(anchor: View, episodeId: Long) {
             EpisodesActivity.intentEpisode(episodeId, requireContext())
-                .also { Utils.startActivityWithAnimation(activity, it, anchor) }
+                .also { requireActivity().startActivityWithAnimation(it, anchor) }
         }
     }
 

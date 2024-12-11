@@ -23,6 +23,7 @@ public class SyncProgress {
         TRAKT(R.string.trakt, 0),
         TRAKT_EPISODES(R.string.trakt, R.string.episodes),
         TRAKT_RATINGS(R.string.trakt, R.string.ratings),
+        TRAKT_NOTES(R.string.trakt, R.string.title_notes),
         TRAKT_MOVIES(R.string.trakt, R.string.movies);
 
         public final int serviceRes;
