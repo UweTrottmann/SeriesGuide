@@ -39,24 +39,29 @@ class ListManageDialogFragment : AppCompatDialogFragment() {
         this.binding = binding
 
         // buttons
-        binding.buttonNegative.isEnabled = false
-        binding.buttonNegative.setText(R.string.list_remove)
-        binding.buttonNegative.setOnClickListener {
-            // ask about removing list
-            DeleteListDialogFragment.create(listId)
-                .safeShow(parentFragmentManager, "confirm-delete-list")
-            dismiss()
+        binding.buttonListManageDelete.apply {
+            isEnabled = false
+            setText(R.string.list_remove)
+            setOnClickListener {
+                // ask about removing list
+                DeleteListDialogFragment.create(listId)
+                    .safeShow(parentFragmentManager, "confirm-delete-list")
+                dismiss()
+            }
         }
-        binding.buttonPositive.setText(android.R.string.ok)
-        binding.buttonPositive.setOnClickListener {
-            val editText = this.binding?.textInputLayoutListManageListName?.editText
-                ?: return@setOnClickListener
+        binding.buttonListManageConfirm.apply {
+            setText(R.string.action_save)
+            setOnClickListener {
+                val editText =
+                    this@ListManageDialogFragment.binding?.textInputLayoutListManageListName?.editText
+                        ?: return@setOnClickListener
 
-            // update title
-            val listName = editText.text.toString().trim()
-            ListsTools.renameList(requireContext(), listId, listName)
+                // update title
+                val listName = editText.text.toString().trim()
+                ListsTools.renameList(requireContext(), listId, listName)
 
-            dismiss()
+                dismiss()
+            }
         }
 
         // Delay loading data for views to after this function
@@ -95,14 +100,14 @@ class ListManageDialogFragment : AppCompatDialogFragment() {
         editTextName.addTextChangedListener(
             AddListDialogFragment.ListNameTextWatcher(
                 requireContext(), textInputLayoutName,
-                binding.buttonPositive, listName
+                binding.buttonListManageConfirm, listName
             )
         )
 
         // do only allow removing if this is NOT the last list
         val listsCount = listHelper.getListsCount()
         if (listsCount > 1) {
-            binding.buttonNegative.isEnabled = true
+            binding.buttonListManageDelete.isEnabled = true
         }
     }
 
