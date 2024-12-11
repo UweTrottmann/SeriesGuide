@@ -39,7 +39,7 @@
     <string name="action_stream_settings">Suoratoisto- tai ostoasetukset</string>
     <string name="action_select_region">Valitse alue</string>
     <string name="action_reset">Nollaa</string>
-    <string name="action_save">Save</string>
+    <string name="action_save">Tallenna</string>
     <!-- Search -->
     <string name="clear_search_history">Tyhjennä hakuhistoria</string>
     <string name="search_hint">Hae jaksoja</string>
@@ -149,8 +149,8 @@
     <string name="hidden">Siirretty piilotettuihin</string>
     <string name="unhidden">Ohjelma on taas näkyvissä</string>
     <string name="action_shows_add">Lisää ohjelma</string>
-    <string name="action_filter_and_sort">Filter and sort</string>
-    <string name="title_filter_general">General</string>
+    <string name="action_filter_and_sort">Suodata ja lajittele</string>
+    <string name="title_filter_general">Yleiset</string>
     <string name="empty_filter">Poista kaikki suodattimet</string>
     <string name="action_shows_filter_favorites">Suosikit</string>
     <string name="action_shows_filter_unwatched">Katsomattomat</string>
@@ -242,7 +242,7 @@
     <!-- Discover -->
     <string name="title_discover">Tutustu</string>
     <string name="title_popular">Suositut</string>
-    <string name="action_filter">Filter</string>
+    <string name="action_filter">Suodata</string>
     <string name="filter_year">Vuosi</string>
     <string name="filter_year_current">Kuluva vuosi</string>
     <string name="filter_language">Kieli</string>
