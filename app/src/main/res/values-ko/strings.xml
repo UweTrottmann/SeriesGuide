@@ -247,7 +247,7 @@
     <string name="list_remove">목록 제거</string>
     <string name="list_manage">목록 관리</string>
     <string name="ack_list_renamed">List renamed</string>
-    <string name="ack_list_removed">List removed</string>
+    <string name="ack_list_removed">List deleted</string>
     <string name="list_item_manage">목록 관리</string>
     <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">목록에서 제거</string>

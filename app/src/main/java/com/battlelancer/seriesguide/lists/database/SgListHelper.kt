@@ -23,11 +23,23 @@ import com.battlelancer.seriesguide.shows.tools.ShowStatus
 @Dao
 interface SgListHelper {
 
+    /**
+     * Is null on error or if it does not exist.
+     */
+    @Query("SELECT * FROM lists WHERE list_id = :id")
+    fun getList(id: String): SgList?
+
     @Query("SELECT * FROM lists ORDER BY ${Lists.SORT_ORDER_THEN_NAME}")
     fun getListsForDisplay(): LiveData<List<SgList>>
 
     @Query("SELECT * FROM lists ORDER BY ${Lists.SORT_ORDER_THEN_NAME}")
     fun getListsForExport(): List<SgList>
+
+    /**
+     * Is 0 on error.
+     */
+    @Query("SELECT COUNT(_id) FROM lists")
+    fun getListsCount(): Int
 
     @Query("SELECT  * FROM listitems WHERE item_ref_id = :tmdbId AND item_type = ${ListItemTypes.TMDB_SHOW}")
     fun getListItemsWithTmdbId(tmdbId: Int): List<SgListItem>

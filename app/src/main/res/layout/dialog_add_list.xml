@@ -15,8 +15,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutListManageListName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:endIconMode="clear_text">
+            android:layout_height="wrap_content">
 
             <!-- Set inputType as it does not default to (single-line) text like EditText. -->
             <!-- Set minWidth on EditText so FrameLayout sizes correctly. -->
@@ -39,13 +38,12 @@
         android:paddingRight="@dimen/large_padding"
         android:paddingBottom="@dimen/inline_padding">
 
-        <!-- Use spread_inside so delete button is far away from OK button -->
         <androidx.constraintlayout.helper.widget.Flow
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="buttonListManageDelete,buttonListManageConfirm"
+            app:constraint_referenced_ids="buttonNegative,buttonPositive"
             app:flow_horizontalBias="1"
-            app:flow_horizontalStyle="spread_inside"
+            app:flow_horizontalStyle="packed"
             app:flow_wrapMode="chain"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -53,14 +51,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/buttonListManageDelete"
+            android:id="@+id/buttonNegative"
             style="?attr/buttonBarNegativeButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="Button Negative With Long Text" />
 
         <Button
-            android:id="@+id/buttonListManageConfirm"
+            android:id="@+id/buttonPositive"
             style="?attr/buttonBarPositiveButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
