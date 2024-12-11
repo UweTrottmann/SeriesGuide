@@ -10,7 +10,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2024.5
 
-### Unreleased
+### 2024.5.3 - 2024-12-11 🧪
 
 * 🔧 Shows: revert to search symbol for primary button on discover screen.
 * 🔧 Lists: ask for confirmation before deleting a list, actually call it delete instead of "just"
