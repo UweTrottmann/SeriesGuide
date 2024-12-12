@@ -1,24 +1,24 @@
-SeriesGuide: organize séries
-
 Organiza e guarda um registo dos teus filmes e séries favoritos.
 
-Com o SeriesGuide podes encontrar que filmes e séries ver, estar a par sobre o que já viste, receber notificações de episódios que estejam prestes a estrear e de poderes guardar toda essa informação e de partilhá-la entre dispositivos.
+O SeriesGuide é uma aplicação gratuita para explorar séries e filmes, acompanhar os episódios e filmes que viste e receber notificações sobre os próximos episódios.
 
-<b>Explora.</b> Encontra séries com novos episódios, que são populares ou semelhantes aos que estás a ver. Explora os filmes atualmente nos cinemas, lançados em formato físico ou digital.
+<b>Explorar séries e filmes</b>: descobre o que está disponível nos teus serviços de streaming, o que é novo, popular ou semelhante ao que estás a ver.
 
-<b>Cópia de segurança e sincronização.</b> Inicia Sessão no SeriesGuide Cloud para fazer uma cópia de segurança e sincronizar as tuas séries, listas e filmes.
+<b>Ajuda com o que e onde ver</b>: vê o que ver a seguir e descobre onde uma série ou filme está disponível para se comprar ou ver em streaming.
 
-<b>Integração com o Trakt.</b> Conecta a tua conta Trakt para acederes à tua lista e coleção, para classificar e comentar. Sincronizar episódios e filmes vistos entre aplicações e centros de multimédia suportados pelo Trakt.
+<b>Verificar e acompanhar</b>: mantém um registo dos episódios e filmes vistos, vê o teu progresso. Fica a par dos novos episódios.
 
-<b>Extensões.</b> Adiciona uma extensão fornecida por uma aplicação de terceiros ou cria a tua própria extensão.
+<b>Cópia de segurança e sincronização</b>: acede às tuas séries, listas e filmes em vários dispositivos utilizando o SeriesGuide Cloud.
 
-<b>Obtém a assinatura para desbloquear todos os recursos e apoiar o SeriesGuide!</b> Receberás mais opções de widget, notificações de novos episódios e muito mais. Ao adquirires também estarás a apoiar correções contínuas e novas funcionalidades.
+<b>Liga-te ao Trakt</b>: sincroniza os episódios e filmes que viste e colecionaste, acede ao teu histórico e vê o que os outros estão a ver. Publicar classificações e comentários.
 
-NOTA: Esta app não é para ver filmes ou séries!!! Apenas para organizar o que vês! Nas Séries apenas é indicado a data de estreia do canal original.
+<b>Não é necessária uma conta</b>: se quiseres, podes fazer cópias de segurança e restaurar a tua biblioteca utilizando apenas ficheiros JSON.
 
-SeriesGuide X Desbloquear Pass
+<b>Código aberto e independente</b>: O SeriesGuide é suportado pelos seus subscritores, não por anunciantes ou investidores.
 
-Desbloqueia o acesso permanente a todas as funcionalidades do SeriesGuide. Requer a instalação do SeriesGuide e deste Pass.
+Para obter ajuda, perguntas ou mais informações, visita visit https://www.seriesgui.de/help
+
+Para veres o código fonte, visita https://github.com/UweTrottmann/SeriesGuide
 
 Subscrição de Acesso Total
 Desbloqueia todos os recursos, incluindo a cópia de segurança na Cloud.

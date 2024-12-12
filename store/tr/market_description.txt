@@ -1,30 +1,30 @@
-SeriesGuide: show manager
-
 Favori dizi ve filmlerinizi takip edin.
 
-SeriesGuide ile, izlemek için dizi ve filmler bulabilirsin, izlediğin bölümlerin ve filmlerin takibini yapabilirsin, çıkacak olan bölümler hakkında bildirim alabilir ve yedekleyip cihazlar arasında senkronize edebilirsin.
+SeriesGuide, TV şovlarını ve filmleri keşfetmek, izlediğiniz bölümleri ve filmleri takip etmek ve gelecek bölümler hakkında bildirim almak için ücretsiz bir uygulamadır.
 
-<b>Keşfet</b> Popüler olan ve ya izlediklerine benzer dizileri yeni bölümleriyle bulabilirsin. Şuanda sinemalarda olan, dijital olarak veya diskte yayınlanan filmleri keşfedin.
+<b>Dizileri ve filmleri keşfedin</b>: yayın hizmetlerinizde nelerin mevcut olduğunu, yeni, popüler veya izlediklerinize benzer olanları öğrenin.
 
-<b>Yedekle ve senkronize et</b> Dizilerinizi, listelerinizi ve filmlerinizi yedekleyip senkronize etmek için SeriesGuide Bulut hizmetine giriş yapın.
+<b>Neyi, nerede izleyeceğinize yardımcı olur</b>: sırada ne izleyeceğinizi görün ve bir TV şovunun veya filmin nerede yayınlanabileceğini veya satın alınabileceğini bulun.
 
-<b>Trakt ile entegrasyon</b> İzleme listene ve koleksiyonuna, izlemeye devam ettiklerine, oylarına ve yorumlarına erişim sağlamak için Trakt hesabınızı bağlayın. İzlenmiş bölümleri ve filmleri uygulamalar arasında ve Trakt tarafından desteklenen medya medya merkezleriyle senkronize edin.
+<b>İşaretleyin ve takip edin</b>: izlediğiniz bölümlerin ve filmlerin kaydını tutun, ilerlemenizi görün. Yeni bölümlerden haberdar olun.
 
-<b>Eklentiler</b> Üçüncü taraf bir uygulamadan sağlanan bir eklenti butonu ekleyin ve ya kendinizinkini yapın.
+<b>Yedekle ve senkronize et</b>: SeriesGuide Cloud'u kullanarak TV şovlarınıza, listelerinize ve filmlerinize birden fazla cihazdan erişin.
 
-<b>Tüm özellikleri açmak ve SeriesGuide' i desteklemek için abonelik alın!</b> Alacaklarınız; daha fazla liste widgeti seçeneği, yeni bölümler için bildirimler ve daha fazlası. Ayrıca hata düzeltmelerini ve yeni özelliklerin gelişini desteklersiniz.
+<b>Trakt'a bağlanın</b>: izlediğiniz ve biriktirdiğiniz bölümleri ve filmleri senkronize edin, geçmişinize erişin ve başkalarının ne izlediğini görün. Puan ver ve yorum gönder.
 
-NOT: Dizi veya filmleri izleyemezsiniz. Bölümler için yalnızca orijinal ağdaki yayınlanma tarihi listelenir.
+<b>Hesap gerekmez</b>: isterseniz, yalnızca JSON dosyalarını kullanarak kitaplığınızı yedekleyebilir ve geri yükleyebilirsiniz.
 
-SeriesGuide X Unlock Key
+<b>Açık kaynaklı ve bağımsız</b>: SeriesGuide, reklam verenler veya yatırımcılar tarafından değil, aboneleri tarafından desteklenmektedir.
 
-SeriesGuide'ın tüm özellikleri için sınırsız erişimi açın. Requires both SeriesGuide and this key to be installed.
+Yardım, soru veya daha fazla bilgi için https://www.seriesgui.de/help adresini ziyaret edin.
 
-Tam Erişim Üyeliği
+Kaynak koduna göz atmak için https://github.com/UweTrottmann/SeriesGuide adresini ziyaret edin
+
+Tam Erişim Aboneliği
 Bulut yedekleme dahil olmak üzere bütün özellikleri açın.
 
-Destekçi Üyeliği
-Gelecekteki güncellemelerin geliştirilmesini destekle. Tam Erişim Üyeliğini de içerir.
+Destekçi Aboneliği
+Gelecekteki güncellemelerin geliştirilmesini destekle. Tüm Erişimi İçerir.
 
-Sponsor Üyeliği
-Gelecekteki güncellemelerin teminatı için büyük bir katkı. Tam Erişim Üyeliğini de içerir.
+Sponsor Aboneliği
+Gelecekteki güncellemelerin sağlanmasına büyük katkı. Tüm Erişimi İçerir.
