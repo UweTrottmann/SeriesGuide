@@ -1,24 +1,24 @@
-SeriesGuide: Sarjojen ja elokuvien hallinta
+Ole aina kartalla suosikki-tv-ohjelmistasi ja -elokuvistasi.
 
-Pidä kirjaa suosikki ohjelmiesi ja elokuviesi katsomisesta.
+SeriesGuide on ilmainen sovellus, jonka avulla voit löytää uusia TV-ohjelmia ja elokuvia, seurata katseluhistoriaasi ja saada ilmoituksia tulevista jaksoista.
 
-SeriesGuiden avulla voit löytää ohjelmia ja elokuvia katsottavaksi, pitää kirjaa katsomistasi jaksoista ja elokuvista, saada ilmoituksia tulevista jaksoista ja varmuuskopioida ja synkronoida tiedot laitteiden välillä.
+<b>Löydä uusia tv-sarjoja ja elokuvia</b>: selvitä, mitä on tarjolla suoratoistopalveluissasi, uutta, suosittua tai vastaavaa kuin mitä katsot juuri nyt.
 
-<b>Löydä uutta katsottavaa.</b> Löydä ohjelmia uusilla jaksoilla, jotka ovat suosittuja tai samanlaisia kuin katsomasi. Tutustu tällä hetkellä teattereissa pyöriviin, tai digitaalisesti tai levyllä julkaistuihin elokuviin.
+<b>Opastaa viihteen maailmassa</b>: suosittelee seuraavia ohjelmia ja elokuvia sekä kertoo, mistä voit katsoa niitä eri suoratoistopalveluista tai ostaa.
 
-<b>Varmuuskopiointi ja synkronointi.</b> Kirjaudu sisään SeriesGuide Cloudiin varmuuskopioidaksesi ja synkronoidaksesi ohjelmasi, listasi ja elokuvasi.
+<b>Kuittaa ja seuraa edistymistä</b>: pidä kirjaa katsotuista jaksoista ja elokuvista ja seuraa edistymistäsi. Ole ajan tasalla uusista jaksoista.
 
-<b>Integroituu Traktin kanssa.</b> Yhdistä Trakt-tilisi, jotta voit hallita seurantalistaasi ja kokoelmaasi, kuitata, arvostella ja kommentoida. Synkronoi katsotut jaksot ja elokuvat Traktin tukemien sovellusten ja mediakeskusten välillä.
+<b>Säilytä viihdetietosi pilvessä</b>: synkronoi SeriesGuide Cloudia käyttäen ja katsele suosikkien edistymistä missä tahansa.
 
-<b>Laajennukset.</b> Lisää kolmannen osapuolen sovelluksen tarjoama laajennuspainike tai luo omasi.
+<b>Yhdistä Traktiin</b>: synkronoi katselu- ja kokoelmahistoriasi, pääse käsiksi katseluhistoriaasi ja katso, mitä muut katselevat. Jaa arvosteluja ja kommentteja
 
-<b>Avaa kaikki ominaisuudet ja tue SeriesGuidea hankkimalla tilaus!</b> Saat lisää vaihtoehtoja lista-widgetille, ilmoituksia uusista jaksoista ja paljon muuta. Tuet samalla korjauksia ja uusia ominaisuuksia.
+<b>Tiliä ei tarvita</b>: varmuuskopioi ja palauta kirjastosi ilman tiliä JSON-tiedostojen avulla.
 
-HUOMAUTUS: Et voi katsella jaksoja tai elokuvia. Jaksojen kohdalla näkyy vain alkuperäisen verkon julkaisupäivä.
+<b>Avoin lähdekoodi ja riippumaton</b>: SeriesGuide on riippumaton ja avoimen lähdekoodin sovellus, jonka kehitystä rahoittavat sen käyttäjät.
 
-SeriesGuide X -avausavain
+Tarvitsetko apua? Onko kysyttävää? Lisätietoja löydät osoitteesta https://www.seriesgui.de/help
 
-Avaa pysyvä pääsy kaikkiin SeriesGuiden ominaisuuksiin. Edellyttää sekä SeriesGuiden että tämän avaimen asentamista.
+Haluatko nähdä konepellin alle vai kiinnostaako koodaaminen? SeriesGuiden lähdekoodi löytyy osoitteesta https://github.com/UweTrottmann/SeriesGuide
 
 Täysi pääsy -tilaus
 Avaa kaikki ominaisuudet, mukaan lukien pilvivarmuuskopiointi.
