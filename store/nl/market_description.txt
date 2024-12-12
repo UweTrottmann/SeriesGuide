@@ -1,24 +1,24 @@
-SeriesGuide: series beheren
-
 Blijf op de hoogte van uw favoriete TV-series en films.
 
-Met SeriesGuide kunt u series en films vinden om te bekijken, bijhouden welke afleveringen en films u bekeken heeft, meldingen ontvangen over nieuwe afleveringen, een backup van uw gegevens makenen en deze tussen al uw apparaten synchroniseren.
+SeriesGuide is een gratis app om TV-series en films te ontdekken, de bekeken afleveringen en films bij te houden en een melding te geven over toekomstige afleveringen.
 
-<b>Discover.</b> Ontdek populaire voor u aanbevolen series en nieuwe afleveringen. Ontdek films die momenteel in de bioscoop te zien zijn, digitaal of op schijf uitgebracht.
+<b>Ontdek TV-series en films</b>: ontdek wat er beschikbaar is voor uw streaming-diensten, nieuw, populair of vergelijkbaar met wat je bekijkt.
 
-<b>Back-up en synchronisatie.</b> Meld aan bij SeriesGuide Cloud om uw series, lijsten en films te back-uppen en te synchroniseren.
+<b>Assisteert met wat en waar te bekijken</b>: zie wat er hierna kan worden bekeken en ontdek waar een TV-show of film beschikbaar is om te streamen of te kopen.
 
-<b>Integratie met Trakt.</b> Verbind met uw Trakt-account om toegang te hebben tot uw watchlist en verzameling, check-ins, beoordelingen en opmerkingen. Synchroniseer bekeken aflevering en films tussen apps en mediacentra die Trakt ondersteunen.
+<b>Afvinken en bijhouden</b>: houd bij welke afleveringen en films je hebt gekeken, bekijk je voortgang. Blijf op de hoogte van nieuwe afleveringen.
 
-<b>Extensies.</b> Voeg een extensie knop toe die verstrekt wordt door een derde partij of bouw er zelf een.
+<b>Back-up maken en synchroniseren</b>: toegang tot je tv-programma's, lijsten en films op meerdere apparaten met SeriesGuide Cloud.
 
-<b>Neem het abonnement om alle functies te ontgrendelen en SeriesGuide te steunen!</b> U zal toegang krijgen tot meer lijstwidgets, meldingen voor nieuwe afleveringen en meer. U ondersteunt ook voortdurende verbeteringen en nieuwe mogelijkheden.
+<b>Verbind met Trakt</b>: synchroniseer je bekeken en verzamelde afleveringen en films, krijg toegang tot je geschiedenis en kijk wat anderen aan het kijken zijn. Beoordelingen en commentaren plaatsen.
 
-OPMERKING: U kan geen afleveringen of films bekijken. Voor afleveringen wordt enkel de releasedatum op het oorspronkelijke netwerk getoond.
+<b>Geen account nodig</b>: als je wilt, kun je een back-up maken van je bibliotheek en deze herstellen met alleen JSON-bestanden.
 
-SeriesGuide X ontgrendelingssleutel
+<b>Open source en onafhankelijk</b>: SeriesGuide wordt ondersteund door abonnees, niet door adverteerders of investeerders.
 
-Krijg permanent toegang tot alle functies van SeriesGuide. Vereist dat zowel SeriesGuide als deze sleutel worden geïnstalleerd.
+Voor hulp, vragen of meer informatie bezoek https://www.seriesgui.de/help
+
+Om de broncode te bekijken, bezoek https://github.com/UweTrottmann/SeriesGuide
 
 All Access-abonnement
 Ontgrendel alle functies, inclusief back-up in de cloud.
@@ -27,4 +27,4 @@ Supporter-abonnement
 Ondersteun de ontwikkeling van toekomstige updates. Inclusief All Access.
 
 Sponsor-abonnement
-Grote bijdrage om toekomstige updates te garanderen. Inclusief All Access.
+Grote bijdrage om toekomstige updates te garanderen. Inclusief alle toegang.
