@@ -10,6 +10,12 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2024.5
 
+In development.
+
+### Unreleased
+
+* 🔨 Trakt: retry if show not yet in Trakt profile failed to upload during initial sync.
+
 ### 2024.5.3 - 2024-12-11 🧪
 
 * 🔧 Shows: revert to search symbol for primary button on discover screen.
