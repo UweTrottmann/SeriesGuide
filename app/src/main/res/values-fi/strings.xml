@@ -172,8 +172,8 @@
     <string name="context_marknext">Seuraava jakso katsottu</string>
     <string name="action_episodes_switch_view">Vaihda näkymä</string>
     <string name="next_to_watch">Seuraava katsottava</string>
-    <string name="title_notes">Notes</string>
-    <string name="action_edit_note">Edit note</string>
+    <string name="title_notes">Muistiinpanot</string>
+    <string name="action_edit_note">Muokkaa muistiinpanoa</string>
     <!-- History -->
     <string name="user_stream">Historia</string>
     <string name="recently_watched">Äskettäin katsotut</string>
