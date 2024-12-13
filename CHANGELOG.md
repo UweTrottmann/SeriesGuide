@@ -12,7 +12,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 In development.
 
-### Unreleased
+### 2024.5.4 - 2024-12-13 🧪
 
 * 🔨 Trakt: retry if show not yet in Trakt profile failed to upload during initial sync.
 * 📝 Latest user interface translations from Crowdin.
