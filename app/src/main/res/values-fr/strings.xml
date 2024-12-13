@@ -39,7 +39,7 @@
     <string name="action_stream_settings">Options de streaming et d\'achat</string>
     <string name="action_select_region">Sélectionner une région</string>
     <string name="action_reset">Réinitialiser</string>
-    <string name="action_save">Save</string>
+    <string name="action_save">Enregistrer</string>
     <!-- Search -->
     <string name="clear_search_history">Effacer l\'historique de recherche</string>
     <string name="search_hint">Recherche d\'épisodes</string>
@@ -149,8 +149,8 @@
     <string name="hidden">Série cachée</string>
     <string name="unhidden">Série affichée</string>
     <string name="action_shows_add">Ajouter une série</string>
-    <string name="action_filter_and_sort">Filter and sort</string>
-    <string name="title_filter_general">General</string>
+    <string name="action_filter_and_sort">Filtrer et trier</string>
+    <string name="title_filter_general">Général</string>
     <string name="empty_filter">Enlever tous les filtres</string>
     <string name="action_shows_filter_favorites">Favoris</string>
     <string name="action_shows_filter_unwatched">Non visionnés</string>
@@ -173,7 +173,7 @@
     <string name="action_episodes_switch_view">Basculer l’affichage</string>
     <string name="next_to_watch">Prochain à voir</string>
     <string name="title_notes">Notes</string>
-    <string name="action_edit_note">Edit note</string>
+    <string name="action_edit_note">Modifier la note</string>
     <!-- History -->
     <string name="user_stream">Historique</string>
     <string name="recently_watched">Vu récemment</string>
@@ -214,12 +214,12 @@
         <item quantity="other">%1$d restants sur %2$d</item>
     </plurals>
     <plurals name="skipped_episodes_plural">
-        <item quantity="one">%d skipped</item>
-        <item quantity="other">%d skipped</item>
+        <item quantity="one">%d ignoré</item>
+        <item quantity="other">%d ignorés</item>
     </plurals>
     <plurals name="collected_episodes_plural">
-        <item quantity="one">%d in collection</item>
-        <item quantity="other">%d in collection</item>
+        <item quantity="one">%d dans la collection</item>
+        <item quantity="other">%d dans la collection</item>
     </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Entrez un nom de série</string>
@@ -242,7 +242,7 @@
     <!-- Discover -->
     <string name="title_discover">A découvrir</string>
     <string name="title_popular">Populaire</string>
-    <string name="action_filter">Filter</string>
+    <string name="action_filter">Filtrer</string>
     <string name="filter_year">Année</string>
     <string name="filter_year_current">Cette année</string>
     <string name="filter_language">Langue</string>

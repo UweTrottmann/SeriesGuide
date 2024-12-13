@@ -15,6 +15,7 @@ In development.
 ### Unreleased
 
 * 🔨 Trakt: retry if show not yet in Trakt profile failed to upload during initial sync.
+* 📝 Latest user interface translations from Crowdin.
 
 ### 2024.5.3 - 2024-12-11 🧪
 
