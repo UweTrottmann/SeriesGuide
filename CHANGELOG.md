@@ -10,9 +10,11 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2024.5
 
-In development.
+* 🌟 Shows: add a note to a show, synced with SeriesGuide Cloud or Trakt (VIP only).
+* 🌟 Movies: add link to all release dates.
+* 🔧 Shows: increase resolution of episode images.
 
-### 2024.5.4 - 2024-12-13 🧪
+### 2024.5.4 - 2024-12-13
 
 * 🔨 Trakt: retry if show not yet in Trakt profile failed to upload during initial sync.
 * 📝 Latest user interface translations from Crowdin.
