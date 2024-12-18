@@ -1,22 +1,20 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2017-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.sync
 
 import android.content.Context
-import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.movies.tools.MovieTools
+import com.battlelancer.seriesguide.shows.tools.ShowTools2
 import com.battlelancer.seriesguide.traktapi.SgTrakt
-import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktSettings
 import com.battlelancer.seriesguide.traktapi.TraktTools2
 import com.battlelancer.seriesguide.util.Errors
 import com.github.michaelbull.result.getOrElse
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.trakt5.entities.LastActivityMore
-import com.uwetrottmann.trakt5.services.Sync
 import retrofit2.Response
 import timber.log.Timber
 
@@ -27,20 +25,36 @@ import timber.log.Timber
  */
 class TraktSync(
     val context: Context,
+    val showTools2: ShowTools2,
     val movieTools: MovieTools,
-    val sync: Sync,
+    val trakt: SgTrakt,
     val progress: SyncProgress
 ) {
+
+    // Cache services
+    val sync = trakt.sync()
+    val users = trakt.users()
+
+    private fun noConnection(): Boolean {
+        return if (AndroidUtils.isNetworkConnected(context)) {
+            false
+        } else {
+            progress.recordError()
+            true
+        }
+    }
+
     /**
      * To not conflict with Hexagon sync, can turn on [onlyRatings] so only
      * ratings are synced.
      */
-    fun sync(currentTime: Long, onlyRatings: Boolean): SgSyncAdapter.UpdateResult {
+    fun sync(onlyRatings: Boolean): SgSyncAdapter.UpdateResult {
         progress.publish(SyncProgress.Step.TRAKT)
-        if (!AndroidUtils.isNetworkConnected(context)) {
-            progress.recordError()
-            return SgSyncAdapter.UpdateResult.INCOMPLETE
-        }
+        // While responses might get returned from the disk cache,
+        // this is not desirable when syncing, so frequently check for a network connection.
+        // Note: looked into creating a separate HTTP client without cache, but it makes sense
+        // to keep one as some of the responses are re-used in other parts of the app.
+        if (noConnection()) return SgSyncAdapter.UpdateResult.INCOMPLETE
 
         // Get last activity timestamps.
         val lastActivity = TraktTools2.getLastActivity(context)
@@ -60,21 +74,15 @@ class TraktSync(
             if (!onlyRatings) {
                 // Download and upload episode watched and collected flags.
                 progress.publish(SyncProgress.Step.TRAKT_EPISODES)
-                if (!AndroidUtils.isNetworkConnected(context)) {
-                    progress.recordError()
-                    return SgSyncAdapter.UpdateResult.INCOMPLETE
-                }
-                if (!syncEpisodes(tmdbIdsToShowIds, lastActivity.episodes, currentTime)) {
+                if (noConnection()) return SgSyncAdapter.UpdateResult.INCOMPLETE
+                if (!syncEpisodes(tmdbIdsToShowIds, lastActivity.episodes)) {
                     progress.recordError()
                     return SgSyncAdapter.UpdateResult.INCOMPLETE
                 }
             }
             // Download episode ratings.
             progress.publish(SyncProgress.Step.TRAKT_RATINGS)
-            if (!AndroidUtils.isNetworkConnected(context)) {
-                progress.recordError()
-                return SgSyncAdapter.UpdateResult.INCOMPLETE
-            }
+            if (noConnection()) return SgSyncAdapter.UpdateResult.INCOMPLETE
             if (!ratingsSync.downloadForEpisodes(lastActivity.episodes.rated_at)) {
                 progress.recordError()
                 return SgSyncAdapter.UpdateResult.INCOMPLETE
@@ -82,13 +90,19 @@ class TraktSync(
 
             // SHOWS
             // Download show ratings.
-            if (!AndroidUtils.isNetworkConnected(context)) {
-                progress.recordError()
-                return SgSyncAdapter.UpdateResult.INCOMPLETE
-            }
+            if (noConnection()) return SgSyncAdapter.UpdateResult.INCOMPLETE
             if (!ratingsSync.downloadForShows(lastActivity.shows.rated_at)) {
                 progress.recordError()
                 return SgSyncAdapter.UpdateResult.INCOMPLETE
+            }
+            // Download notes
+            if (!onlyRatings) {
+                progress.publish(SyncProgress.Step.TRAKT_NOTES)
+                if (noConnection()) return SgSyncAdapter.UpdateResult.INCOMPLETE
+                if (!TraktNotesSync(this).syncForShows(lastActivity.notes.updated_at)) {
+                    progress.recordError()
+                    return SgSyncAdapter.UpdateResult.INCOMPLETE
+                }
             }
         }
 
@@ -96,10 +110,7 @@ class TraktSync(
         progress.publish(SyncProgress.Step.TRAKT_MOVIES)
         // Sync watchlist, collection and watched movies.
         if (!onlyRatings) {
-            if (!AndroidUtils.isNetworkConnected(context)) {
-                progress.recordError()
-                return SgSyncAdapter.UpdateResult.INCOMPLETE
-            }
+            if (noConnection()) return SgSyncAdapter.UpdateResult.INCOMPLETE
             if (!TraktMovieSync(this).syncLists(lastActivity.movies)) {
                 progress.recordError()
                 return SgSyncAdapter.UpdateResult.INCOMPLETE
@@ -109,10 +120,7 @@ class TraktSync(
         }
         // Download movie ratings.
         progress.publish(SyncProgress.Step.TRAKT_RATINGS)
-        if (!AndroidUtils.isNetworkConnected(context)) {
-            progress.recordError()
-            return SgSyncAdapter.UpdateResult.INCOMPLETE
-        }
+        if (noConnection()) return SgSyncAdapter.UpdateResult.INCOMPLETE
         if (!ratingsSync.downloadForMovies(lastActivity.movies.rated_at)) {
             progress.recordError()
             return SgSyncAdapter.UpdateResult.INCOMPLETE
@@ -128,17 +136,12 @@ class TraktSync(
      */
     private fun syncEpisodes(
         tmdbIdsToShowIds: Map<Int, Long>,
-        lastActivity: LastActivityMore,
-        currentTime: Long
+        lastActivity: LastActivityMore
     ): Boolean {
-        if (!TraktCredentials.get(context).hasCredentials()) {
-            return false // Auth was removed.
-        }
-
         // Download flags.
         // If initial sync, upload any flags missing on Trakt
         // otherwise clear all local flags not on Trakt.
-        val isInitialSync = !TraktSettings.hasMergedEpisodes(context)
+        val isInitialSync = TraktSettings.isInitialSyncEpisodes(context)
 
         // Watched episodes.
         val episodeSync = TraktEpisodeSync(this)
@@ -153,14 +156,10 @@ class TraktSync(
             return false
         }
 
-        val editor = PreferenceManager.getDefaultSharedPreferences(context).edit()
         if (isInitialSync) {
             // Success, set initial sync as complete.
-            editor.putBoolean(TraktSettings.KEY_HAS_MERGED_EPISODES, true)
+            TraktSettings.setInitialSyncEpisodesCompleted(context)
         }
-        // Success, set last sync time to now.
-        editor.putLong(TraktSettings.KEY_LAST_FULL_EPISODE_SYNC, currentTime)
-        editor.apply()
         return true
     }
 

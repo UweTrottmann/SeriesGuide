@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">تنظيف</string>
     <string name="discard">تجاهل</string>
-    <string name="save_selection">حفظ التحديد</string>
     <string name="action_display_all">عرض الكل</string>
     <string name="web_search">البحث في الانترنت</string>
     <string name="add_to_homescreen">إضافة إلى الشاشة الرئيسية</string>
@@ -40,6 +39,7 @@
     <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">حدد المنطقة</string>
     <string name="action_reset">Reset</string>
+    <string name="action_save">Save</string>
     <!-- Search -->
     <string name="clear_search_history">إزالة تاريخ البحث</string>
     <string name="search_hint">البحث عن الحلقات</string>
@@ -153,7 +153,8 @@
     <string name="hidden">تم الإخفاء</string>
     <string name="unhidden">تم إظهار المسلسل</string>
     <string name="action_shows_add">إضافة مسلسل</string>
-    <string name="action_shows_filter">فلترة المسلسلات</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">إزالة كل عوامل التصفية</string>
     <string name="action_shows_filter_favorites">المفضلة</string>
     <string name="action_shows_filter_unwatched">الغير مشاهدة</string>
@@ -164,7 +165,6 @@
     <string name="state_shows_filter_excluded">مستبعدة</string>
     <string name="action_shows_make_all_visible">اظهار الجميع</string>
     <string name="description_make_all_visible_format">هل تريد إظهار كل المسلسلات المخفية %s مرة أخرى؟</string>
-    <string name="action_shows_sort">ترتيب المسلسلات</string>
     <string name="action_shows_sort_title">العنوان</string>
     <string name="action_shows_sort_latest_episode">آخر حلقة</string>
     <string name="action_shows_sort_oldest_episode">أقدم حلقة</string>
@@ -176,6 +176,8 @@
     <string name="context_marknext">تم مشاهدة الحلقة، الحلقة التالية</string>
     <string name="action_episodes_switch_view">تغيير طريقة العرض</string>
     <string name="next_to_watch">التالي للمشاهدة</string>
+    <string name="title_notes">Notes</string>
+    <string name="action_edit_note">Edit note</string>
     <!-- History -->
     <string name="user_stream">السجل</string>
     <string name="recently_watched">تم مشاهدته مؤخراً</string>
@@ -265,8 +267,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">مسلسلات مشابهة</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">استكشاف</string>
     <string name="title_popular">الأكثر شعبية</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">Year</string>
     <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
@@ -278,18 +282,16 @@
     <string name="list_remove">إزالة القائمة</string>
     <string name="list_manage">إدارة القائمة</string>
     <string name="ack_list_renamed">List renamed</string>
-    <string name="ack_list_removed">List removed</string>
+    <string name="ack_list_removed">List deleted</string>
     <string name="list_item_manage">إدارة القوائم</string>
     <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">إزالة من القائمة</string>
     <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">يمكنك إضافة مسلسلات إلى هذه القائمة</string>
-    <string name="action_lists_sort">ترتيب القوائم</string>
     <string name="action_lists_reorder">إعادة ترتيب القوائم</string>
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">يوجد بالفعل قائمة بهذا الإسم</string>
     <!-- Movies -->
-    <string name="title_discover">استكشاف</string>
     <string name="title_digital_releases">الإصدارات الرقمية</string>
     <string name="title_disc_releases">إصدارات القرص</string>
     <string name="movies_in_theatres">حاليا في السينما</string>
@@ -306,11 +308,10 @@
     <string name="trailer">العرض الدعائي</string>
     <string name="movie_cast">طاقم التمثيل</string>
     <string name="movie_crew">طاقم</string>
-    <string name="action_movies_sort">فرز الأفلام</string>
     <string name="action_movies_sort_title">العنوان</string>
     <string name="action_movies_sort_release">تاريخ الإصدار</string>
-    <string name="action_movies_filter">تصفية الأفلام</string>
     <string name="title_similar_movies">Similar movies</string>
+    <string name="title_release_dates">Release dates</string>
     <!-- Statistics -->
     <string name="statistics_failed">خطأ في الإحصائيات.</string>
     <string name="shows_finished">%s انتهى مشاهدة</string>
@@ -432,8 +433,6 @@
     <string name="pref_exactdates_summary">\"31 أكتوبر\" بدلاً من \"في 3 أيام\"</string>
     <string name="pref_nospoilers">منع المفسدين</string>
     <string name="pref_nospoilers_summary">إخفاء التفاصيل حتى هو شاهد الحلقة</string>
-    <string name="pref_seasonsorting">ترتيب المواسم حسب&#8230;</string>
-    <string name="pref_episodesorting">ترتيب الحلقات حسب&#8230;</string>
     <string name="pref_language">اللغة المفضلة</string>
     <string name="pref_language_fallback">اللغة البديلة</string>
     <string name="pref_updatewifionly">تحميل الصور بواسطة الواي فاي فقط</string>

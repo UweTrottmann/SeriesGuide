@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">நீக்கு</string>
     <string name="discard">புறக்கணி</string>
-    <string name="save_selection">தேர்வு சேமி</string>
     <string name="action_display_all">எல்லாம் காண்பி</string>
     <string name="web_search">வலை தேடல்</string>
     <string name="add_to_homescreen">Add to Home screen</string>
@@ -40,6 +39,7 @@
     <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">Select region</string>
     <string name="action_reset">Reset</string>
+    <string name="action_save">Save</string>
     <!-- Search -->
     <string name="clear_search_history">தேடல் வரலாற்றை நீக்கு</string>
     <string name="search_hint">தேடல் episodes</string>
@@ -149,7 +149,8 @@
     <string name="hidden">நகர்த்த மறைந்த</string>
     <string name="unhidden">காட்சி காணப்படும் மீண்டும்</string>
     <string name="action_shows_add">காட்சி சேர்</string>
-    <string name="action_shows_filter">வடிகட்டி காட்சிகள்</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">அனைத்து வடிகட்டிகளை நீக்கு</string>
     <string name="action_shows_filter_favorites">பிடித்தவை</string>
     <string name="action_shows_filter_unwatched">கவனிக்கப்படாத</string>
@@ -160,7 +161,6 @@
     <string name="state_shows_filter_excluded">Excluded</string>
     <string name="action_shows_make_all_visible">Make all hidden visible</string>
     <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
-    <string name="action_shows_sort">அடுக்கு காட்சிகள்</string>
     <string name="action_shows_sort_title">தலைப்பு</string>
     <string name="action_shows_sort_latest_episode">Latest episode</string>
     <string name="action_shows_sort_oldest_episode">Oldest episode</string>
@@ -172,6 +172,8 @@
     <string name="context_marknext">பார்த்த அடுத்த சம்பவம்</string>
     <string name="action_episodes_switch_view">Switch view</string>
     <string name="next_to_watch">Next to watch</string>
+    <string name="title_notes">Notes</string>
+    <string name="action_edit_note">Edit note</string>
     <!-- History -->
     <string name="user_stream">வரலாறு</string>
     <string name="recently_watched">சமீபத்தில் பார்த்த</string>
@@ -237,8 +239,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Similar shows</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">Discover</string>
     <string name="title_popular">பிரபலமானவை</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">Year</string>
     <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
@@ -250,18 +254,16 @@
     <string name="list_remove">பட்டியலை நீக்கு</string>
     <string name="list_manage">பட்டியலை நிர்வகி</string>
     <string name="ack_list_renamed">List renamed</string>
-    <string name="ack_list_removed">List removed</string>
+    <string name="ack_list_removed">List deleted</string>
     <string name="list_item_manage">பட்டியல்களை நிர்வகி</string>
     <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">பட்டியலில் இருந்து அகற்று</string>
     <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">You can add shows to this list</string>
-    <string name="action_lists_sort">அடுக்கு பட்டியல்கள்</string>
     <string name="action_lists_reorder">பட்டியல்களை மறு வரிசையாக்க இழுத்து</string>
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">இந்த பட்டியலை ஏற்கனவே உள்ளது</string>
     <!-- Movies -->
-    <string name="title_discover">Discover</string>
     <string name="title_digital_releases">Digital releases</string>
     <string name="title_disc_releases">Disc releases</string>
     <string name="movies_in_theatres">In theaters</string>
@@ -278,11 +280,10 @@
     <string name="trailer">முன்னோட்டம்</string>
     <string name="movie_cast">நடிகர்கள்</string>
     <string name="movie_crew">குழுவினர்</string>
-    <string name="action_movies_sort">அடுக்கு திரைப்படங்கள்</string>
     <string name="action_movies_sort_title">தலைப்பு</string>
     <string name="action_movies_sort_release">வெளியீட்டு தேதி</string>
-    <string name="action_movies_filter">Filter movies</string>
     <string name="title_similar_movies">Similar movies</string>
+    <string name="title_release_dates">Release dates</string>
     <!-- Statistics -->
     <string name="statistics_failed">புள்ளிவிவரம் கணக்கிட முடியவில்லை.</string>
     <string name="shows_finished">%s finished watching</string>
@@ -388,8 +389,6 @@
     <string name="pref_exactdates_summary">\"அக்டோபர் 31\" பதிலாக \"உள்ள நாட்கள்\"</string>
     <string name="pref_nospoilers">Prevent spoilers</string>
     <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
-    <string name="pref_seasonsorting">மூலம் அடுக்கு சீசன்ஸ்&#8230;</string>
-    <string name="pref_episodesorting">மூலம் அடுக்கு episodes&#8230;</string>
     <string name="pref_language">விருப்ப உள்ளடக்க மொழி</string>
     <string name="pref_language_fallback">Alternative language</string>
     <string name="pref_updatewifionly">படிமங்கள் வழியாக Wi-Fi மட்டும்</string>

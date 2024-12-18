@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">Изчисти</string>
     <string name="discard">Откажи</string>
-    <string name="save_selection">Запази избраните</string>
     <string name="action_display_all">Покажи всички</string>
     <string name="web_search">Търсене в мрежата</string>
     <string name="add_to_homescreen">Добави към стартовия екран</string>
@@ -37,9 +36,10 @@
     <string name="sync_and_update">Синхронизиране &amp; актуализация</string>
     <string name="sync_and_download_all">Синхронизиране &amp; Изтегли всички</string>
     <string name="action_stream">Стрийм или закупи</string>
-    <string name="action_stream_settings">Stream or purchase settings</string>
+    <string name="action_stream_settings">Настройки за стрийм или поръчка</string>
     <string name="action_select_region">Избор на регион</string>
     <string name="action_reset">Нулиране</string>
+    <string name="action_save">Save</string>
     <!-- Search -->
     <string name="clear_search_history">Изчисти историята на търсене</string>
     <string name="search_hint">Търсене на епизоди</string>
@@ -149,7 +149,8 @@
     <string name="hidden">Скрито ТВ предаване</string>
     <string name="unhidden">Показано ТВ предаване</string>
     <string name="action_shows_add">Добавяне на тв предаване</string>
-    <string name="action_shows_filter">Филтриране на сериали</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">Премахни всички филтри</string>
     <string name="action_shows_filter_favorites">Любими</string>
     <string name="action_shows_filter_unwatched">Негледани</string>
@@ -160,7 +161,6 @@
     <string name="state_shows_filter_excluded">Без тези</string>
     <string name="action_shows_make_all_visible">Виж всички скрити</string>
     <string name="description_make_all_visible_format">Направи всички скрити сериали (%s) видими?</string>
-    <string name="action_shows_sort">Сортирай сериалите</string>
     <string name="action_shows_sort_title">Заглавие</string>
     <string name="action_shows_sort_latest_episode">Последен епизод</string>
     <string name="action_shows_sort_oldest_episode">Най-старият епизод</string>
@@ -172,6 +172,8 @@
     <string name="context_marknext">Гледан следващ епизод</string>
     <string name="action_episodes_switch_view">Промени изгледа</string>
     <string name="next_to_watch">Следващ за гледане</string>
+    <string name="title_notes">Notes</string>
+    <string name="action_edit_note">Edit note</string>
     <!-- History -->
     <string name="user_stream">История</string>
     <string name="recently_watched">Наскоро гледан/и</string>
@@ -237,8 +239,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Подобни</string>
     <string name="title_similar_shows">Подобни сериали</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">Открийте</string>
     <string name="title_popular">Популярни</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">Година</string>
     <string name="filter_year_current">Текуща година</string>
     <string name="filter_language">Език</string>
@@ -256,12 +260,10 @@
     <string name="list_item_remove">Премахване от списъка</string>
     <string name="ack_list_item_removed">Премахнато от списъка</string>
     <string name="list_empty">Добавете сериали в този списък</string>
-    <string name="action_lists_sort">Подреждане на списъка</string>
     <string name="action_lists_reorder">Пренареждане на списъците</string>
     <string name="ack_lists_reordered">Списъците са подредени</string>
     <string name="error_name_already_exists">Списък с това име вече съществува</string>
     <!-- Movies -->
-    <string name="title_discover">Открийте</string>
     <string name="title_digital_releases">Дихитални издания</string>
     <string name="title_disc_releases">Излезли на диск</string>
     <string name="movies_in_theatres">В кината</string>
@@ -278,11 +280,10 @@
     <string name="trailer">Трейлър</string>
     <string name="movie_cast">В ролите</string>
     <string name="movie_crew">Екип</string>
-    <string name="action_movies_sort">Подреждане на филми</string>
     <string name="action_movies_sort_title">Заглавие</string>
     <string name="action_movies_sort_release">Дата на издаване</string>
-    <string name="action_movies_filter">Филтриране</string>
     <string name="title_similar_movies">Подобни филми</string>
+    <string name="title_release_dates">Release dates</string>
     <!-- Statistics -->
     <string name="statistics_failed">Не може да се изчисли статистиката.</string>
     <string name="shows_finished">%s изгледани и приключени</string>
@@ -388,8 +389,6 @@
     <string name="pref_exactdates_summary">\"31 октомври\" вместо \"след 3 дни\"</string>
     <string name="pref_nospoilers">Предотвратяване на спойлери</string>
     <string name="pref_nospoilers_summary">Скрий детайлите, докато е епизода бъде гледан</string>
-    <string name="pref_seasonsorting">Сортирай сезоните по&#8230;</string>
-    <string name="pref_episodesorting">Сортирай епизодите по&#8230;</string>
     <string name="pref_language">Предпочитан език на съдържанието</string>
     <string name="pref_language_fallback">Алтернативен език</string>
     <string name="pref_updatewifionly">Изображения само при Wi-Fi</string>

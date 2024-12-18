@@ -67,11 +67,11 @@
                     android:layout_marginTop="6dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="@null"
-                    android:src="@drawable/ic_schedule_black_24dp"
                     app:layout_constraintEnd_toStartOf="@id/buttonOverviewFavoriteShow"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:tint="?attr/sgColorIcon" />
+                    app:srcCompat="@drawable/ic_schedule_black_24dp" />
 
+                <!-- Icon set in code -->
                 <ImageButton
                     android:id="@+id/buttonOverviewFavoriteShow"
                     style="?attr/borderlessButtonStyle"

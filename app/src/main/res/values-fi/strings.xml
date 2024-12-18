@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">Tyhjennä</string>
     <string name="discard">Peruuta</string>
-    <string name="save_selection">Tallenna valinta</string>
     <string name="action_display_all">Näytä kaikki</string>
     <string name="web_search">Verkkohaku</string>
     <string name="add_to_homescreen">Lisää aloitusnäytölle</string>
@@ -40,6 +39,7 @@
     <string name="action_stream_settings">Suoratoisto- tai ostoasetukset</string>
     <string name="action_select_region">Valitse alue</string>
     <string name="action_reset">Nollaa</string>
+    <string name="action_save">Tallenna</string>
     <!-- Search -->
     <string name="clear_search_history">Tyhjennä hakuhistoria</string>
     <string name="search_hint">Hae jaksoja</string>
@@ -149,7 +149,8 @@
     <string name="hidden">Siirretty piilotettuihin</string>
     <string name="unhidden">Ohjelma on taas näkyvissä</string>
     <string name="action_shows_add">Lisää ohjelma</string>
-    <string name="action_shows_filter">Suodata ohjelmat</string>
+    <string name="action_filter_and_sort">Suodata ja lajittele</string>
+    <string name="title_filter_general">Yleiset</string>
     <string name="empty_filter">Poista kaikki suodattimet</string>
     <string name="action_shows_filter_favorites">Suosikit</string>
     <string name="action_shows_filter_unwatched">Katsomattomat</string>
@@ -160,7 +161,6 @@
     <string name="state_shows_filter_excluded">Poissuljettu</string>
     <string name="action_shows_make_all_visible">Paljasta kaikki piilotetut</string>
     <string name="description_make_all_visible_format">Paljastetaanko kaikki piilotetut ohjelmat (%s)?</string>
-    <string name="action_shows_sort">Lajittele ohjelmat</string>
     <string name="action_shows_sort_title">Nimi</string>
     <string name="action_shows_sort_latest_episode">Uusin jakso</string>
     <string name="action_shows_sort_oldest_episode">Vanhin jakso</string>
@@ -172,6 +172,8 @@
     <string name="context_marknext">Seuraava jakso katsottu</string>
     <string name="action_episodes_switch_view">Vaihda näkymä</string>
     <string name="next_to_watch">Seuraava katsottava</string>
+    <string name="title_notes">Muistiinpanot</string>
+    <string name="action_edit_note">Muokkaa muistiinpanoa</string>
     <!-- History -->
     <string name="user_stream">Historia</string>
     <string name="recently_watched">Äskettäin katsotut</string>
@@ -237,8 +239,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Samankaltaiset</string>
     <string name="title_similar_shows">Samankaltaisia sarjoja</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">Tutustu</string>
     <string name="title_popular">Suositut</string>
+    <string name="action_filter">Suodata</string>
     <string name="filter_year">Vuosi</string>
     <string name="filter_year_current">Kuluva vuosi</string>
     <string name="filter_language">Kieli</string>
@@ -256,12 +260,10 @@
     <string name="list_item_remove">Poista listalta</string>
     <string name="ack_list_item_removed">Poistettiin listasta</string>
     <string name="list_empty">Voit lisätä ohjelmia tähän listaan</string>
-    <string name="action_lists_sort">Lajittele listat</string>
     <string name="action_lists_reorder">Järjestä listat uudelleen</string>
     <string name="ack_lists_reordered">Listat uudelleenjärjestettiin</string>
     <string name="error_name_already_exists">Samanniminen lista on jo olemassa</string>
     <!-- Movies -->
-    <string name="title_discover">Tutustu</string>
     <string name="title_digital_releases">Digitaaliset julkaisut</string>
     <string name="title_disc_releases">Levyjulkaisut</string>
     <string name="movies_in_theatres">Teattereissa</string>
@@ -278,11 +280,10 @@
     <string name="trailer">Traileri</string>
     <string name="movie_cast">Näyttelijät</string>
     <string name="movie_crew">Kuvausryhmä</string>
-    <string name="action_movies_sort">Lajittele elokuvat</string>
     <string name="action_movies_sort_title">Nimi</string>
     <string name="action_movies_sort_release">Julkaisupäivä</string>
-    <string name="action_movies_filter">Suodata elokuvat</string>
     <string name="title_similar_movies">Samankaltaisia elokuvia</string>
+    <string name="title_release_dates">Julkaisupäivät</string>
     <!-- Statistics -->
     <string name="statistics_failed">Tilastojen laskeminen ei onnistunut.</string>
     <string name="shows_finished">%s katsottu loppuun</string>
@@ -388,8 +389,6 @@
     <string name="pref_exactdates_summary">Käytä \"3 päivän kuluttua\" sijasta \"31. lokakuuta\"</string>
     <string name="pref_nospoilers">Estä juonipaljastukset</string>
     <string name="pref_nospoilers_summary">Piilota tiedot, kunnes jakso on katsottu</string>
-    <string name="pref_seasonsorting">Lajittele kaudet&#8230;</string>
-    <string name="pref_episodesorting">Lajittele jaksot&#8230;</string>
     <string name="pref_language">Ensisijainen sisällön kieli</string>
     <string name="pref_language_fallback">Vaihtoehtoinen kieli</string>
     <string name="pref_updatewifionly">Kuvat vain Wi-Fin kautta</string>

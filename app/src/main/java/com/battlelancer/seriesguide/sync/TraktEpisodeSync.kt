@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2017-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.sync
 
@@ -49,7 +49,7 @@ class TraktEpisodeSync(
         showRowId: Long,
         flag: Flag
     ): Boolean {
-        if (tmdbIdsToTraktShow == null || tmdbIdsToTraktShow.isEmpty()) {
+        if (tmdbIdsToTraktShow.isNullOrEmpty()) {
             return true // no watched/collected shows on Trakt, done.
         }
         val traktShow = tmdbIdsToTraktShow[showTmdbId]
@@ -219,7 +219,9 @@ class TraktEpisodeSync(
                     if (isInitialSync) {
                         // upload all watched/collected episodes of the show
                         // do in between processing to stretch uploads over longer time periods
-                        uploadShow(traktSync!!, showId, showTraktId, flag)
+                        if (!uploadShow(traktSync!!, showId, showTraktId, flag)) {
+                            return false // uploading failed, stop and try again later
+                        }
                         uploadedShowsCount++
                     } else {
                         // Set all watched/collected episodes of show not watched/collected,
@@ -470,6 +472,8 @@ class TraktEpisodeSync(
 
     /**
      * Uploads all watched/collected episodes for the given show to Trakt.
+     *
+     * Returns true if the upload was successful or there was nothing to upload.
      */
     private fun uploadShow(
         traktSync: TraktSync,
@@ -492,6 +496,8 @@ class TraktEpisodeSync(
 
     /**
      * Uploads all the given watched/collected episodes of the given show to Trakt.
+     *
+     * Returns true if the upload was successful.
      */
     private fun upload(
         traktSync: TraktSync,
@@ -538,6 +544,7 @@ class TraktEpisodeSync(
             Flag.WATCHED -> {
                 helper.getWatchedEpisodesForTraktSync(seasonId)
             }
+
             Flag.COLLECTED -> {
                 helper.getCollectedEpisodesForTraktSync(seasonId)
             }

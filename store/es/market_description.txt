@@ -1,0 +1,30 @@
+SeriesGuide: Gestor de Series
+
+Mantén seguimiento de tus series y películas favoritas.
+
+Con SeriesGuide puedes encontrar series y películas para ver, seguir tus episodios y películas vistas, obtener notificaciones sobre los próximos episodios y hacer una copia de seguridad y sincronizarla entre dispositivos.
+
+<b>Descubre.</b> Encuentra los episodios de tus series favoritas o similares a las que estás viendo. Explora películas actualmente en cines, publicadas digitalmente o en disco.
+
+<b>Copia de seguridad y sincronización.</b> Inicie sesión en SeriesGuide para sincronizar sus series, listas, y películas desde la nube.
+
+<b>Integrado con Trakt.</b> Inicie sesión en su cuenta de Trakt para acceder a su lista de reproducción de modo que pueda registrar cualquier serie, evaluarla y comentarla. Sincronice los episodios y películas que ha visto en aplicaciones y centros multimedia soportados por Trakt.
+
+<b>Extensiones.</b> Añada una extensión proporcionada por una aplicación de terceros o cree la suya.
+
+<b>¡Obtenga la suscripción para desbloquear todas las funciones y apoye a SeriesGuide!</b> Tendrá más características disponibles, notificaciones de nuevos episodios y mucho más. También ayudas a que sigamos haciendo correcciones y añadiendo nuevas características.
+
+NOTA: Debe saber que esta aplicación no puede ver episodios o películas. Los episodios solo mostrarán la fecha en la que ha sido emitida.
+
+Clave de SeriesGuide X
+
+Desbloquea el acceso permanente a todas las funciones de SeriesGuide. Requiere tanto SeriesGuide como esta clave para instalarse.
+
+Acceda a todo
+Desbloquee todas las funciones, incluyendo la copia de seguridad en Cloud.
+
+Soporte para suscriptores
+Apoye el desarrollo de futuras actualizaciones. Incluye todo el acceso.
+
+Patrocinador
+Una gran contribución para asegurar futuras actualizaciones. Incluye todo el acceso.

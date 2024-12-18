@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2023-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.util
 
@@ -26,11 +26,12 @@ object PackageTools {
      * Get version name from this apps package.
      */
     fun getVersion(context: Context): String {
-        return try {
+        val version = try {
             getAppPackage(context).versionName
         } catch (e: PackageManager.NameNotFoundException) {
-            "UnknownVersion"
+            null
         }
+        return version ?: "UnknownVersion"
     }
 
     /**
@@ -72,7 +73,8 @@ object PackageTools {
                 )
             val sgSignatures = appInfoSeriesGuide.signatures
             val xSignatures = appInfoSeriesGuideX.signatures
-            if (sgSignatures.size == xSignatures.size) {
+            if (sgSignatures != null && xSignatures != null
+                && sgSignatures.size == xSignatures.size) {
                 for (i in sgSignatures.indices) {
                     if (sgSignatures[i].toCharsString() != xSignatures[i].toCharsString()) {
                         return false // a signature does not match

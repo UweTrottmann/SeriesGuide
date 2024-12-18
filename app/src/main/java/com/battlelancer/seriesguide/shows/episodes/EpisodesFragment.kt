@@ -318,7 +318,7 @@ class EpisodesFragment : Fragment() {
             R.array.epsortingData,
             EpisodesSettings.getEpisodeSortOrder(requireActivity()).index(),
             EpisodesSettings.KEY_EPISODE_SORT_ORDER,
-            R.string.pref_episodesorting,
+            R.string.sort,
             "episodeSortOrderDialog"
         )
     }

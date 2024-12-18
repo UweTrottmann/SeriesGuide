@@ -131,6 +131,9 @@ class AddUpdateShowTools @Inject constructor(
                 if (hexagonShow.customReleaseTimeZone != null) {
                     show.customReleaseTimeZone = hexagonShow.customReleaseTimeZone
                 }
+                if (hexagonShow.note != null) {
+                    show.userNote = hexagonShow.note
+                }
             }
         }
 
@@ -679,6 +682,7 @@ class AddUpdateShowTools @Inject constructor(
                             it.customReleaseTime = show.customReleaseTime
                             it.customReleaseDayOffset = show.customReleaseDayOffset
                             it.customReleaseTimeZone = show.customReleaseTimeZone
+                            it.note = show.userNote
                             it.isRemoved = false
                         }))
                         if (!uploadSuccess) return@andThen Err(UpdateResult.ApiErrorStop(HEXAGON))

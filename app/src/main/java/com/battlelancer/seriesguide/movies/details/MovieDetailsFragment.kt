@@ -70,6 +70,7 @@ import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.WebTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
+import com.battlelancer.seriesguide.util.startActivityWithAnimation
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.uwetrottmann.androidutils.AndroidUtils
@@ -134,6 +135,13 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                     trailerYoutubeId?.let { ServiceUtils.openYoutube(it, requireContext()) }
                 }
                 isEnabled = false
+            }
+            // release dates button
+            buttonMovieReleaseDates.setOnClickListener {
+                WebTools.openInCustomTab(
+                    requireContext(),
+                    TmdbTools.buildMovieReleaseDatesUrl(tmdbId)
+                )
             }
             // similar movies button
             buttonMovieSimilar.setOnClickListener {
@@ -469,7 +477,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                 val tmdbId = tmdbId
                 if (tmdbId > 0) {
                     val i = TraktCommentsActivity.intentMovie(requireContext(), movieTitle, tmdbId)
-                    Utils.startActivityWithAnimation(activity, i, v)
+                    requireActivity().startActivityWithAnimation(i, v)
                 }
             }
         }
@@ -600,7 +608,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                         smallImageUrl,
                         largeImageUrl
                     )
-                    Utils.startActivityWithAnimation(activity, intent, view)
+                    requireActivity().startActivityWithAnimation(intent, view)
                 }
             }
         }

@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">ล้าง</string>
     <string name="discard">ยกเลิก</string>
-    <string name="save_selection">บันทึกที่เลือก</string>
     <string name="action_display_all">แสดงทั้งหมด</string>
     <string name="web_search">ค้นเว็บ</string>
     <string name="add_to_homescreen">เพิ่มไปยังหน้าจอหลัก</string>
@@ -40,6 +39,7 @@
     <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">เลือกภูมิภาค</string>
     <string name="action_reset">Reset</string>
+    <string name="action_save">Save</string>
     <!-- Search -->
     <string name="clear_search_history">ล้างประวัติการค้นหา</string>
     <string name="search_hint">ค้นหาตอน</string>
@@ -148,7 +148,8 @@
     <string name="hidden">ซ่อนรายการแล้ว</string>
     <string name="unhidden">แสดงซีรีส์อีกครั้ง</string>
     <string name="action_shows_add">เพิ่มซีรีส์</string>
-    <string name="action_shows_filter">กรองซีรีส์</string>
+    <string name="action_filter_and_sort">Filter and sort</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">ลบตัวกรองทั้งหมด</string>
     <string name="action_shows_filter_favorites">รายการโปรด</string>
     <string name="action_shows_filter_unwatched">ยังไม่ได้ดู</string>
@@ -159,7 +160,6 @@
     <string name="state_shows_filter_excluded">ไม่รวม</string>
     <string name="action_shows_make_all_visible">เลิกซ่อนรายการทั้งหมด</string>
     <string name="description_make_all_visible_format">ทำให้รายการที่ซ่อนไว้ทั้งหมด (%s) กลับมาแสดงอีกครั้ง?</string>
-    <string name="action_shows_sort">แสดงซีรีส์</string>
     <string name="action_shows_sort_title">ชื่อเรื่อง</string>
     <string name="action_shows_sort_latest_episode">ตอนล่าสุด</string>
     <string name="action_shows_sort_oldest_episode">ตอนเก่าที่สุด</string>
@@ -171,6 +171,8 @@
     <string name="context_marknext">ดูตอนถัดไป</string>
     <string name="action_episodes_switch_view">เปลี่ยนมุมมอง</string>
     <string name="next_to_watch">ดูถัดไป</string>
+    <string name="title_notes">Notes</string>
+    <string name="action_edit_note">Edit note</string>
     <!-- History -->
     <string name="user_stream">ประวัติ</string>
     <string name="recently_watched">เพิ่งดู</string>
@@ -230,8 +232,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">ซีรีส์ที่คล้ายกัน</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">สำรวจ</string>
     <string name="title_popular">ยอดนิยม</string>
+    <string name="action_filter">Filter</string>
     <string name="filter_year">Year</string>
     <string name="filter_year_current">Current year</string>
     <string name="filter_language">Language</string>
@@ -243,18 +247,16 @@
     <string name="list_remove">ลบรายการ</string>
     <string name="list_manage">จัดการรายการ</string>
     <string name="ack_list_renamed">List renamed</string>
-    <string name="ack_list_removed">List removed</string>
+    <string name="ack_list_removed">List deleted</string>
     <string name="list_item_manage">จัดการรายการ</string>
     <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">ลบออกจากรายการ</string>
     <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">คุณสามารถเพิ่มซีรีส์นี้ไปยังรายการ</string>
-    <string name="action_lists_sort">เรียงรายการ</string>
     <string name="action_lists_reorder">เรียงรายการใหม่</string>
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">มีรายการชื่อนี้อยู่แล้ว</string>
     <!-- Movies -->
-    <string name="title_discover">สำรวจ</string>
     <string name="title_digital_releases">ออกเป็นดิจิทัล</string>
     <string name="title_disc_releases">ออกเป็นแผ่น</string>
     <string name="movies_in_theatres">ในโรง</string>
@@ -271,11 +273,10 @@
     <string name="trailer">ตัวอย่าง</string>
     <string name="movie_cast">นักแสดง</string>
     <string name="movie_crew">ทีมงาน</string>
-    <string name="action_movies_sort">เรียงภาพยนตร์</string>
     <string name="action_movies_sort_title">ชื่อเรื่อง</string>
     <string name="action_movies_sort_release">วันที่ออกฉาย</string>
-    <string name="action_movies_filter">กรองภาพยนตร์</string>
     <string name="title_similar_movies">Similar movies</string>
+    <string name="title_release_dates">Release dates</string>
     <!-- Statistics -->
     <string name="statistics_failed">ไม่สามารถคำนวณสถิติ</string>
     <string name="shows_finished">%s ดูจบแล้ว</string>
@@ -377,8 +378,6 @@
     <string name="pref_exactdates_summary">\"31 ตุลาคม\" แทน \"ใน 3 วัน\"</string>
     <string name="pref_nospoilers">ป้องกันการสปอยล์</string>
     <string name="pref_nospoilers_summary">ซ่อนรายละเอียดเฉพาะตอนที่ยังไม่ได้ดู</string>
-    <string name="pref_seasonsorting">เรียงซีซั่นโดย&#8230;</string>
-    <string name="pref_episodesorting">เรียงตอนโดย&#8230;</string>
     <string name="pref_language">ภาษาของเนื้อหาที่ต้องการ</string>
     <string name="pref_language_fallback">ภาษารอง</string>
     <string name="pref_updatewifionly">รูปภาพผ่านไวไฟเท่านั้น</string>

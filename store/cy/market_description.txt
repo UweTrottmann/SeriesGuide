@@ -1,0 +1,30 @@
+SeriesGuide: rheolwr rhaglen
+
+Cadwch olwg ar eich hoff sioeau teledu a ffilmiau.
+
+Gyda SeriesGuide gallwch ddod o hyd i sioeau a ffilmiau i'w gwylio, cadw golwg ar eich penodau a'ch ffilmiau a wyliwyd, cael hysbysiadau am benodau sydd ar ddod a'i ategu a'i gysoni ar draws dyfeisiau.
+
+<b>Darganfod.</b> Dewch o hyd i sioeau gyda phenodau newydd, sy'n boblogaidd neu'n debyg i'r rhai rydych chi'n eu gwylio. Archwiliwch ffilmiau mewn sinemâu ar hyn o bryd, wedi'u rhyddhau'n ddigidol neu ar ddisg.
+
+<b>Gwneud copi wrth gefn a sync.</b> Mewngofnodi i SeriesGuide Cloud i wneud copi wrth gefn a sync eich sioeau, rhestrau a ffilmiau
+
+<b>Yn integreiddio â Trakt.</b> Cysylltwch eich cyfrif Trakt i gael mynediad i'ch rhestr wylio a'ch casgliad, gwirio i mewn, graddio a rhoi sylwadau. Gwyliodd Sync benodau a ffilmiau rhwng apiau a chanolfannau cyfryngau gyda chefnogaeth Trakt.
+
+<b>Extensions.</b> Add an extension button provided by a third-party app or build your own.
+
+<b>Sicrhewch y tanysgrifiad i ddatgloi pob nodwedd a chefnogi SeriesGuide!</b> Byddwch yn cael mwy o opsiynau teclyn rhestr, hysbysiadau ar gyfer penodau newydd a mwy. Rydych hefyd yn cefnogi atebion parhaus a nodweddion newydd.
+
+SYLWCH: Ni allwch wylio penodau neu ffilmiau. Ar gyfer penodau dim ond y dyddiad rhyddhau ar y rhwydwaith gwreiddiol a restrir.
+
+SeriesGuide X Datgloi Allwedd
+
+Datgloi mynediad parhaol i holl nodweddion SeriesGuide. Mae angen gosod SeriesGuide a'r allwedd hon.
+
+Pob Is-fynediad
+Datgloi pob nodwedd, gan gynnwys Cloud wrth gefn.
+
+Is-gefnogwr
+Cefnogi datblygiad diweddariadau yn y dyfodol. Yn cynnwys Pob Mynediad.
+
+Noddwr Is
+Cyfraniad mawr i sicrhau diweddariadau yn y dyfodol. Yn cynnwys Pob Mynediad.

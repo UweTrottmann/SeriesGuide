@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.util
 
@@ -71,45 +71,24 @@ object ImageTools {
         return tmdbOrTvdbPosterUrl(imagePath, context)
     }
 
+    /**
+     * Calls [buildTmdbOrTvdbImageCacheUrl] with small image and demo URLs for show posters.
+     */
     @JvmStatic
     fun tmdbOrTvdbPosterUrl(
         imagePath: String?,
         context: Context,
         originalSize: Boolean = false
     ): String? {
-        return if (imagePath.isNullOrEmpty()) {
-            null
-        } else {
-            if (AppSettings.isDemoModeEnabled(context)) {
-                return pickDemoPosterUrl(imagePath)
+        return buildTmdbOrTvdbImageCacheUrl(
+            imagePath, context, originalSize,
+            demoUrl = { nonNullImagePath ->
+                pickDemoPosterUrl(nonNullImagePath)
+            },
+            tmdbSmallImageUrl = { nonNullImagePath ->
+                "${TmdbSettings.getPosterBaseUrl(context)}$nonNullImagePath"
             }
-
-            // If the path contains the legacy TVDB cache prefix, use the www subdomain as it has
-            // a redirect to the new thumbnail URL set up (artworks subdomain + file name postfix).
-            // E.g. https://www.thetvdb.com/banners/_cache/posters/example.jpg redirects to
-            // https://artworks.thetvdb.com/banners/posters/example_t.jpg
-            // Using the artworks subdomain with the legacy cache prefix is not supported.
-            val imageUrl = when {
-                imagePath.contains(TVDB_LEGACY_CACHE_PREFIX, false) -> {
-                    "${TVDB_LEGACY_MIRROR_BANNERS}$imagePath"
-                }
-
-                imagePath.startsWith("/") -> {
-                    // TMDB images have no path at all, but always start with /.
-                    // Use small size based on density, or original size (as large as possible).
-                    if (originalSize) {
-                        TmdbSettings.getImageOriginalUrl(context, imagePath)
-                    } else {
-                        "${TmdbSettings.getPosterBaseUrl(context)}$imagePath"
-                    }
-                }
-
-                else -> {
-                    "${TVDB_MIRROR_BANNERS}$imagePath"
-                }
-            }
-            buildImageCacheUrl(imageUrl)
-        }
+        )
     }
 
     private val demoPosterUrls = listOf(
@@ -123,24 +102,50 @@ object ImageTools {
         "https://seriesgui.de/demo/sitcom.jpg",
     )
 
-    private val demoStillUrl = "https://seriesgui.de/demo/episode-anime.jpg"
+    private val demoEpisodeImageUrl = "https://seriesgui.de/demo/episode-anime.jpg"
 
     private fun pickDemoPosterUrl(imagePath: String): String {
         // Map an image path always to the same image
         return demoPosterUrls[imagePath.hashCode().mod(demoPosterUrls.size)]
     }
 
-    @JvmStatic
-    fun tmdbOrTvdbStillUrl(
+    /**
+     * Calls [buildTmdbOrTvdbImageCacheUrl] with small image and demo URLs for episode images.
+     */
+    fun buildEpisodeImageUrl(
         imagePath: String?,
         context: Context,
         originalSize: Boolean = false
+    ): String? {
+        return buildTmdbOrTvdbImageCacheUrl(
+            imagePath, context, originalSize,
+            demoUrl = { demoEpisodeImageUrl },
+            tmdbSmallImageUrl = { nonNullImagePath ->
+                TmdbSettings.buildBackdropUrl(context, nonNullImagePath)
+            }
+        )
+    }
+
+    /**
+     * Builds an image cache URL, or returns null if [imagePath] is null or empty.
+     *
+     * Returns [demoUrl] if [AppSettings.isDemoModeEnabled] is enabled.
+     *
+     * If [imagePath] starts with `/` builds a TMDB episode image path with resolution depending on
+     * [originalSize]. Otherwise a legacy TVDB URL.
+     */
+    private fun buildTmdbOrTvdbImageCacheUrl(
+        imagePath: String?,
+        context: Context,
+        originalSize: Boolean = false,
+        demoUrl: (String) -> String,
+        tmdbSmallImageUrl: (String) -> String
     ): String? {
         return if (imagePath.isNullOrEmpty()) {
             null
         } else {
             if (AppSettings.isDemoModeEnabled(context)) {
-                return demoStillUrl
+                return demoUrl(imagePath)
             }
 
             // If the path contains the legacy TVDB cache prefix, use the www subdomain as it has
@@ -159,7 +164,7 @@ object ImageTools {
                     if (originalSize) {
                         TmdbSettings.getImageOriginalUrl(context, imagePath)
                     } else {
-                        TmdbSettings.getStillUrl(context, imagePath)
+                        tmdbSmallImageUrl(imagePath)
                     }
                 }
 
@@ -174,7 +179,7 @@ object ImageTools {
     /**
      * [posterUrl] must not be empty.
      */
-    fun buildImageCacheUrl(posterUrl: String): String? {
+    private fun buildImageCacheUrl(posterUrl: String): String? {
         @Suppress("SENSELESS_COMPARISON")
         if (BuildConfig.IMAGE_CACHE_URL == null) {
             return posterUrl // no cache

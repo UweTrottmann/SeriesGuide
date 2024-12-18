@@ -1,0 +1,30 @@
+SeriesGuide: správca seriálov
+
+Majte prehľad o svojich obľúbených seriáloch a filmoch.
+
+S programom SeriesGuide môžete nájsť seriály a filmy, ktoré chcete pozerať, sledovať svoje videné epizódy a filmy, dostávať upozornenia na nadchádzajúce epizódy a zálohovať ich a synchronizovať medzi rôznymi zariadeniami.
+
+<b> Objaviť. </b> Nájdite relácie s novými epizódami, ktoré sú populárne alebo podobné tým, ktoré sledujete. Preskúmajte filmy aktuálne v kinách, vydané digitálne alebo na disku.
+
+<b> Zálohujte a synchronizujte. </b> Prihláste sa do služby SeriesGuide Cloud pre zálohu a synchronizáciu svojich seriálov, zoznamov a filmov.
+
+<b>Integrácia Trakt.</b> Pripojte svoj účet Trakt, aby ste mali prístup k chcem vidieť a zbierke, videné, hodnotiť a komentovať. Synchronizujte sledované epizódy a filmy medzi aplikáciami a mediálnymi centrami podporovanými službou Trakt.
+
+<b> Rozšírenia. </b> Pridajte tlačidlo rozšírenia poskytované aplikáciou tretej strany alebo si vytvorte vlastné.
+
+<b>Získajte predplatné pre odomknutie všetkých funkcií a podporu SeriesGuide!</b> Získate viac možností widgetu, oznámenia o nových epizódach a ďalšie. Zároveň podporíte autora aby opravoval chyby a pridával nové funkcie.
+
+POZNÁMKA: Aplikácia neslúži na sledovanie seriálov alebo filmov. Pre epizódy je uvedený iba dátum vydania na pôvodnej sieti.
+
+SeriesGuide X Kľúč
+
+Odomknite stály prístup ku všetkým funkciám v SeriesGuide. Vyžaduje inštaláciu SeriesGuide a aj tohto kľúča.
+
+Predplatné "Úplný prístup"
+Odomkne všetky funkcie, vrátane zálohovania na Cloud.
+
+Podporné predplatné
+Podporiť vývoj budúcich aktualizácií. Zahŕňa "Úplný prístup".
+
+Sponzorské predplatné
+Veľký príspevok na zabezpečenie budúcich aktualizácií. Zahŕňa "Úplný prístup".

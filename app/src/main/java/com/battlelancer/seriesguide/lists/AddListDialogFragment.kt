@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2012-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.lists
 
@@ -12,7 +12,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.FragmentManager
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.databinding.DialogListManageBinding
+import com.battlelancer.seriesguide.databinding.DialogAddListBinding
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.util.safeShow
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -23,10 +23,10 @@ import com.google.android.material.textfield.TextInputLayout
  */
 class AddListDialogFragment : AppCompatDialogFragment() {
 
-    private var binding: DialogListManageBinding? = null
+    private var binding: DialogAddListBinding? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val binding = DialogListManageBinding.inflate(layoutInflater)
+        val binding = DialogAddListBinding.inflate(layoutInflater)
         this.binding = binding
 
         // title

@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">Temizle</string>
     <string name="discard">Yoksay</string>
-    <string name="save_selection">Seçimi kaydet</string>
     <string name="action_display_all">Tümünü göster</string>
     <string name="web_search">Web\'de ara</string>
     <string name="add_to_homescreen">Ana ekrana ekle</string>
@@ -40,6 +39,7 @@
     <string name="action_stream_settings">İzleme veya satın alma ayarları</string>
     <string name="action_select_region">Bölge seçin</string>
     <string name="action_reset">Sıfırla</string>
+    <string name="action_save">Kaydet</string>
     <!-- Search -->
     <string name="clear_search_history">Arama geçmişini temizle</string>
     <string name="search_hint">Bölüm ara</string>
@@ -149,7 +149,8 @@
     <string name="hidden">Gizlendi</string>
     <string name="unhidden">Gizlenmemiş dizi</string>
     <string name="action_shows_add">Dizi ekle</string>
-    <string name="action_shows_filter">Dizileri filtrele</string>
+    <string name="action_filter_and_sort">Filtrele ve sırala</string>
+    <string name="title_filter_general">Genel</string>
     <string name="empty_filter">Tüm filtreleri kaldır</string>
     <string name="action_shows_filter_favorites">Favoriler</string>
     <string name="action_shows_filter_unwatched">İzlenmemiş</string>
@@ -160,7 +161,6 @@
     <string name="state_shows_filter_excluded">Hariç tutulan</string>
     <string name="action_shows_make_all_visible">Tüm gizli öğeleri görünür yap</string>
     <string name="description_make_all_visible_format">Tüm (%s) gizli program tekrar görünür hale gelsin mi?</string>
-    <string name="action_shows_sort">Dizileri sırala</string>
     <string name="action_shows_sort_title">Başlık</string>
     <string name="action_shows_sort_latest_episode">Son bölüme göre</string>
     <string name="action_shows_sort_oldest_episode">En eski bölüme göre</string>
@@ -172,6 +172,8 @@
     <string name="context_marknext">Sıradaki bölüm izlendi</string>
     <string name="action_episodes_switch_view">Görünümü değiştir</string>
     <string name="next_to_watch">Sıradaki izlenecek</string>
+    <string name="title_notes">Notlar</string>
+    <string name="action_edit_note">Notu düzenle</string>
     <!-- History -->
     <string name="user_stream">Geçmiş</string>
     <string name="recently_watched">Yakın zamanda izlenen</string>
@@ -237,8 +239,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Benzerleri</string>
     <string name="title_similar_shows">Benzer diziler</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">Keşfet</string>
     <string name="title_popular">Popüler</string>
+    <string name="action_filter">Filtrele</string>
     <string name="filter_year">Yıl</string>
     <string name="filter_year_current">Mevcut yıl</string>
     <string name="filter_language">Dil</string>
@@ -256,12 +260,10 @@
     <string name="list_item_remove">Listeden kaldır</string>
     <string name="ack_list_item_removed">Listeden kaldırıldı</string>
     <string name="list_empty">Bu listeye dizi ekleyebilirsiniz</string>
-    <string name="action_lists_sort">Listeyi sırala</string>
     <string name="action_lists_reorder">Listeleri tekrar sırala</string>
     <string name="ack_lists_reordered">Listeler yeniden sıralandı</string>
     <string name="error_name_already_exists">Bu ada sahip bir liste zaten var</string>
     <!-- Movies -->
-    <string name="title_discover">Keşfet</string>
     <string name="title_digital_releases">Dijital Yayınlanan</string>
     <string name="title_disc_releases">Disk\'i Yayınlanan</string>
     <string name="movies_in_theatres">Vizyonda</string>
@@ -278,11 +280,10 @@
     <string name="trailer">Fragman</string>
     <string name="movie_cast">Oyuncular</string>
     <string name="movie_crew">Ekip</string>
-    <string name="action_movies_sort">Filmleri sırala</string>
     <string name="action_movies_sort_title">Başlık</string>
     <string name="action_movies_sort_release">Yayın tarihi</string>
-    <string name="action_movies_filter">Filmleri filtrele</string>
     <string name="title_similar_movies">Benzer filmler</string>
+    <string name="title_release_dates">Yayın tarihleri</string>
     <!-- Statistics -->
     <string name="statistics_failed">İstatistik hesaplanamadı.</string>
     <string name="shows_finished">%s izlendi</string>
@@ -388,8 +389,6 @@
     <string name="pref_exactdates_summary">\"3 gün içinde\" yerine \"31 Ekim\"</string>
     <string name="pref_nospoilers">Spoiler önle</string>
     <string name="pref_nospoilers_summary">İzlenene kadar bölüm ayrıntılarını gizle</string>
-    <string name="pref_seasonsorting">Sezonları sırala&#8230;</string>
-    <string name="pref_episodesorting">Bölümleri sırala&#8230;</string>
     <string name="pref_language">Tercih edilen içerik dili</string>
     <string name="pref_language_fallback">Alternatif dil</string>
     <string name="pref_updatewifionly">Görüntüler sadece Wi-Fi üzerinden</string>

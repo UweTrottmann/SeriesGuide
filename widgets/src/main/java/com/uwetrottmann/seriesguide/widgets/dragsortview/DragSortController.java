@@ -1,8 +1,9 @@
-// Copyright 2014, 2015, 2017-2019 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2014-2024 Uwe Trottmann
 
 package com.uwetrottmann.seriesguide.widgets.dragsortview;
 
+import android.annotation.SuppressLint;
 import android.graphics.Point;
 import android.view.GestureDetector;
 import android.view.HapticFeedbackConstants;
@@ -238,6 +239,8 @@ public class DragSortController extends SimpleFloatViewManager
         return mDragging;
     }
 
+    // ClickableViewAccessibility: there is nothing to click
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouch(View v, MotionEvent ev) {
         if (!mDslv.isDragEnabled() || mDslv.listViewIntercepted()) {

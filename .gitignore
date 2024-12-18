@@ -41,11 +41,15 @@ $RECYCLE.BIN/
 !.idea/codeStyleSettings.xml
 !.idea/codeStyles
 !.idea/copyright
+!.idea/inspectionProfiles
 !.idea/scopes
 
 ### Gradle
 .gradle/
 build/
+
+## Kotlin
+.kotlin/
 
 ## Proguard
 unused.txt

@@ -145,6 +145,24 @@ interface SgShow2Helper {
     @Query("UPDATE sg_show SET series_tmdb_id = :tmdbId WHERE _id = :id")
     fun updateTmdbId(id: Long, tmdbId: Int): Int
 
+    @Query("SELECT _id FROM sg_show WHERE series_user_note IS NOT NULL AND series_user_note != ''")
+    fun getShowIdsWithNotes(): MutableList<Long>
+
+    @Query("SELECT _id, series_tmdb_id, series_user_note, series_user_note_trakt_id FROM sg_show WHERE _id = :id")
+    fun getShowWithNote(id: Long): SgShow2WithNote?
+
+    @Query("UPDATE sg_show SET series_user_note = :note, series_user_note_trakt_id = :traktId WHERE _id = :id")
+    fun updateUserNote(id: Long, note: String, traktId: Long?)
+
+    data class NoteUpdate(val text: String, val traktId: Long?)
+
+    @Transaction
+    fun updateUserNotes(notesById: Map<Long, NoteUpdate>) {
+        for (entry in notesById) {
+            updateUserNote(entry.key, entry.value.text, entry.value.traktId)
+        }
+    }
+
     @Query("DELETE FROM sg_show")
     fun deleteAllShows()
 
@@ -163,10 +181,10 @@ interface SgShow2Helper {
     @Query("UPDATE sg_show SET series_syncenabled = 1 WHERE _id = :id")
     fun setHexagonMergeCompleted(id: Long)
 
-    @Query("SELECT _id, series_tmdb_id, series_language, series_favorite, series_hidden, series_notify, series_custom_release_time, series_custom_day_offset, series_custom_timezone, series_lastupdate FROM sg_show WHERE _id = :id")
+    @Query("SELECT _id, series_tmdb_id, series_language, series_favorite, series_hidden, series_notify, series_custom_release_time, series_custom_day_offset, series_custom_timezone, series_lastupdate, series_user_note FROM sg_show WHERE _id = :id")
     fun getForCloudUpdate(id: Long): SgShow2CloudUpdate?
 
-    @Query("SELECT _id, series_tmdb_id, series_language, series_favorite, series_hidden, series_notify, series_custom_release_time, series_custom_day_offset, series_custom_timezone, series_lastupdate FROM sg_show")
+    @Query("SELECT _id, series_tmdb_id, series_language, series_favorite, series_hidden, series_notify, series_custom_release_time, series_custom_day_offset, series_custom_timezone, series_lastupdate, series_user_note FROM sg_show")
     fun getForCloudUpdate(): List<SgShow2CloudUpdate>
 
     @Update(entity = SgShow2::class)
@@ -365,11 +383,19 @@ data class SgShow2CloudUpdate(
     @ColumnInfo(name = SgShow2Columns.CUSTOM_RELEASE_TIME) var customReleaseTime: Int?,
     @ColumnInfo(name = SgShow2Columns.CUSTOM_RELEASE_DAY_OFFSET) var customReleaseDayOffset: Int?,
     @ColumnInfo(name = SgShow2Columns.CUSTOM_RELEASE_TIME_ZONE) var customReleaseTimeZone: String?,
-    @ColumnInfo(name = SgShow2Columns.LASTUPDATED) var lastUpdatedMs: Long
+    @ColumnInfo(name = SgShow2Columns.LASTUPDATED) var lastUpdatedMs: Long,
+    @ColumnInfo(name = SgShow2Columns.USER_NOTE) var userNote: String?,
 )
 
 data class ShowLastWatchedInfo(
     val lastWatchedMs: Long,
     val episodeSeason: Int,
     val episodeNumber: Int
+)
+
+data class SgShow2WithNote(
+    @ColumnInfo(name = SgShow2Columns._ID) val id: Long,
+    @ColumnInfo(name = SgShow2Columns.TMDB_ID) val tmdbId: Int?,
+    @ColumnInfo(name = SgShow2Columns.USER_NOTE) var userNote: String?,
+    @ColumnInfo(name = SgShow2Columns.USER_NOTE_TRAKT_ID) val userNoteTraktId: Long?
 )

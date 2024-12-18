@@ -49,8 +49,11 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns.
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns.TRAKT_ID
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns.TVDB_ID
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns.UNWATCHED_COUNT
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns.USER_NOTE
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns.USER_NOTE_TRAKT_ID
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns._ID
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.shows.database.SgShow2.Companion.MAX_USER_NOTE_LENGTH
 import com.battlelancer.seriesguide.shows.tools.NextEpisodeUpdater
 import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.battlelancer.seriesguide.util.TimeTools
@@ -163,6 +166,22 @@ data class SgShow2(
     @ColumnInfo(name = CUSTOM_RELEASE_TIME) var customReleaseTime: Int?,
     @ColumnInfo(name = CUSTOM_RELEASE_DAY_OFFSET) var customReleaseDayOffset: Int?,
     @ColumnInfo(name = CUSTOM_RELEASE_TIME_ZONE) var customReleaseTimeZone: String?,
+    /**
+     * A user editable text note for this show.
+     *
+     * Default `null`. Should be at most [MAX_USER_NOTE_LENGTH].
+     *
+     * Added with [SgRoomDatabase.VERSION_54_SHOW_NOTES].
+     */
+    @ColumnInfo(name = USER_NOTE) var userNote: String?,
+    /**
+     * Trakt ID for [userNote].
+     *
+     * Default `null`.
+     *
+     * Added with [SgRoomDatabase.VERSION_54_SHOW_NOTES].
+     */
+    @ColumnInfo(name = USER_NOTE_TRAKT_ID) val userNoteTraktId: Long?
 ) {
     val releaseTimeOrDefault: Int
         get() = releaseTime ?: -1
@@ -178,6 +197,12 @@ data class SgShow2(
         get() = releaseWeekDay ?: TimeTools.RELEASE_WEEKDAY_UNKNOWN
     val statusOrUnknown: Int
         get() = status ?: ShowStatus.UNKNOWN
+
+    /**
+     * Maps blank or null to empty string.
+     */
+    val userNoteOrEmpty: String
+        get() = userNote?.ifBlank { "" } ?: ""
 
     companion object {
         /**
@@ -197,5 +222,11 @@ data class SgShow2(
          * Maximum absolute (so positive or negative) value of the [customReleaseDayOffset].
          */
         const val MAX_CUSTOM_DAY_OFFSET = 28
+
+        /**
+         * Max note length to support Trakt and Hexagon
+         * (Trakt supports up to 500 characters, Hexagon up to 2000).
+         */
+        const val MAX_USER_NOTE_LENGTH = 500
     }
 }

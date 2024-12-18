@@ -13,8 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.GridView
 import androidx.appcompat.widget.PopupMenu
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -27,6 +25,7 @@ import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverPagingAct
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.widgets.EmptyView
 import com.battlelancer.seriesguide.util.TabClickEvent
+import com.battlelancer.seriesguide.util.startActivityWithAnimation
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -132,13 +131,7 @@ class ShowSearchFragment : BaseSearchFragment() {
 
         override fun onItemClick(anchor: View, showId: Long) {
             OverviewActivity.intentShow(requireContext(), showId).let {
-                ActivityCompat.startActivity(
-                    requireActivity(), it,
-                    ActivityOptionsCompat.makeScaleUpAnimation(
-                        anchor, 0, 0,
-                        anchor.width, anchor.height
-                    ).toBundle()
-                )
+                requireActivity().startActivityWithAnimation(it, anchor)
             }
         }
 

@@ -28,7 +28,6 @@
     <!-- Actions -->
     <string name="clear">Buida</string>
     <string name="discard">Descarta</string>
-    <string name="save_selection">Desa la selecció</string>
     <string name="action_display_all">Mostra-ho tot</string>
     <string name="web_search">Cerca web</string>
     <string name="add_to_homescreen">Afegir a la pantalla d\'inici</string>
@@ -40,6 +39,7 @@
     <string name="action_stream_settings">Veure en línia o configuració de la compra</string>
     <string name="action_select_region">Selecciona la regió</string>
     <string name="action_reset">Restablir</string>
+    <string name="action_save">Desar</string>
     <!-- Search -->
     <string name="clear_search_history">Esborra l\'historial</string>
     <string name="search_hint">Cerca episodis</string>
@@ -53,7 +53,7 @@
     <string name="app_not_available">Cap aplicació disponible per gestionar això</string>
     <string name="people_empty">No hi ha ningú? Toqueu per intentar-ho novament.</string>
     <string name="database_error">No s\'han pogut modificar les dades.</string>
-    <string name="reinstall_info">Intenta fer un backup en el panell de Configuraciò, torneu a instal·lar i restaurar.</string>
+    <string name="reinstall_info">Intenta fer una còpia de seguretat en el panell de Configuració, torneu a instal·lar i restaurar.</string>
     <string name="api_error_generic">No és possible contactar amb %s. Proveu-ho més tard.</string>
     <string name="api_failed">Ha fallat: %s</string>
     <string name="copy_to_clipboard">copiat al porta-retalls</string>
@@ -149,7 +149,8 @@
     <string name="hidden">Sèrie oculta</string>
     <string name="unhidden">Sèrie visible</string>
     <string name="action_shows_add">Afegeix sèrie</string>
-    <string name="action_shows_filter">Filtra sèries</string>
+    <string name="action_filter_and_sort">Filtra i ordena</string>
+    <string name="title_filter_general">General</string>
     <string name="empty_filter">Desactiva tots els filtres</string>
     <string name="action_shows_filter_favorites">Preferits</string>
     <string name="action_shows_filter_unwatched">No vist</string>
@@ -160,7 +161,6 @@
     <string name="state_shows_filter_excluded">exclosos</string>
     <string name="action_shows_make_all_visible">Fes tot els ocults visibles</string>
     <string name="description_make_all_visible_format">Fer totes les sèries amagades (%s) visibles un altre cop?</string>
-    <string name="action_shows_sort">Ordena sèries</string>
     <string name="action_shows_sort_title">Títol</string>
     <string name="action_shows_sort_latest_episode">Últim episodi</string>
     <string name="action_shows_sort_oldest_episode">Episodi més antic</string>
@@ -172,6 +172,8 @@
     <string name="context_marknext">Següent episodi vist</string>
     <string name="action_episodes_switch_view">Canvia la vista</string>
     <string name="next_to_watch">Següent a mirar</string>
+    <string name="title_notes">Notes</string>
+    <string name="action_edit_note">Editar la nota</string>
     <!-- History -->
     <string name="user_stream">Històric</string>
     <string name="recently_watched">Vist Recentment</string>
@@ -208,7 +210,7 @@
         <item quantity="other">%d restants</item>
     </plurals>
     <plurals name="remaining_of_total_episodes_plural">
-        <item quantity="one">%1$d of %2$d restant</item>
+        <item quantity="one">%1$d de %2$d restant</item>
         <item quantity="other">%1$d de %2$d restants</item>
     </plurals>
     <plurals name="skipped_episodes_plural">
@@ -237,8 +239,10 @@
     <!-- Similar shows -->
     <string name="action_similar">Semblants</string>
     <string name="title_similar_shows">Sèries similars</string>
-    <!-- Popular -->
+    <!-- Discover -->
+    <string name="title_discover">Descobrir</string>
     <string name="title_popular">Popular</string>
+    <string name="action_filter">Filtres</string>
     <string name="filter_year">Any</string>
     <string name="filter_year_current">Any Actual</string>
     <string name="filter_language">Idioma</string>
@@ -256,12 +260,10 @@
     <string name="list_item_remove">Esborra de la llista</string>
     <string name="ack_list_item_removed">Eliminada de la llista</string>
     <string name="list_empty">Pots afegir sèries a aquesta llista</string>
-    <string name="action_lists_sort">Ordena les llistes</string>
     <string name="action_lists_reorder">Reordenar les llistes</string>
     <string name="ack_lists_reordered">Llistes reordenades</string>
     <string name="error_name_already_exists">Ja existeix una llista amb aquest nom</string>
     <!-- Movies -->
-    <string name="title_discover">Descobrir</string>
     <string name="title_digital_releases">Publicació digital</string>
     <string name="title_disc_releases">Publicació en disc</string>
     <string name="movies_in_theatres">En els cinemes</string>
@@ -278,11 +280,10 @@
     <string name="trailer">Tràiler</string>
     <string name="movie_cast">Repartiment</string>
     <string name="movie_crew">Equip</string>
-    <string name="action_movies_sort">Ordena les peŀlícules</string>
     <string name="action_movies_sort_title">Títol</string>
     <string name="action_movies_sort_release">Data de llançament</string>
-    <string name="action_movies_filter">Filtre de pel·lícules</string>
     <string name="title_similar_movies">Pel·lícules similars</string>
+    <string name="title_release_dates">Dates de llançament</string>
     <!-- Statistics -->
     <string name="statistics_failed">No s\'han pogut calcular les estadístiques.</string>
     <string name="shows_finished">%s acabat de veure</string>
@@ -388,8 +389,6 @@
     <string name="pref_exactdates_summary">\"31 d\'octubre\" enlloc de \"D\'aquí a 3 dies\"</string>
     <string name="pref_nospoilers">Evita els spoilers</string>
     <string name="pref_nospoilers_summary">Amaga els detalls fins que l\'episodi s\'hagi vist</string>
-    <string name="pref_seasonsorting">Ordena les temporades per&#8230;</string>
-    <string name="pref_episodesorting">Ordena els capítols per&#8230;</string>
     <string name="pref_language">Idioma preferit del contingut</string>
     <string name="pref_language_fallback">Idioma alternatiu</string>
     <string name="pref_updatewifionly">Imatges només via xarxa sense fils</string>

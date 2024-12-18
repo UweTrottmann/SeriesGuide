@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/linearLayoutShowsDistillation"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -9,24 +10,28 @@
         android:id="@+id/tabLayoutShowsDistillation"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:background="?attr/sgColorDivider">
+        android:background="?attr/sgColorDivider"
+        app:tabMode="scrollable">
 
         <!-- Note: can not use IDs as the TabItems below are just informational for TabLayout
         which removes them once tabs are created. -->
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/action_shows_filter" />
+            android:icon="@drawable/ic_filter_white_24dp"
+            android:text="@string/title_filter_general" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:icon="@drawable/ic_filter_white_24dp"
             android:text="@string/action_stream" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/action_shows_sort" />
+            android:icon="@drawable/ic_sort_white_24dp"
+            android:text="@string/sort" />
 
     </com.google.android.material.tabs.TabLayout>
 
