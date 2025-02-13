@@ -8,6 +8,8 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
 
+## Next release
+
 ## Version 2024.5
 
 * 🌟 Shows: add a note to a show, synced with SeriesGuide Cloud or Trakt (VIP only).
