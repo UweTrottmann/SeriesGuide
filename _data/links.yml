@@ -2,6 +2,7 @@ community: https://discuss.seriesgui.de
 crowdin: https://crowdin.com/project/seriesguide-translations
 github: https://github.com/UweTrottmann/SeriesGuide/
 github-install: https://github.com/UweTrottmann/SeriesGuide/blob/dev/docs/get-from-github.md
+github-contributing: https://github.com/UweTrottmann/SeriesGuide/blob/dev/CONTRIBUTING.md
 release-notes: https://github.com/UweTrottmann/SeriesGuide/blob/dev/CHANGELOG.md
 thetvdb: https://www.thetvdb.com/
 tmdb: https://www.themoviedb.org/
