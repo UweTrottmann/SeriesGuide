@@ -169,7 +169,11 @@ class TraktSync(
             return // Do not report auth errors.
         }
         when (response.code()) {
-            420 -> progress.setImportantErrorIfNone(context.getString(R.string.trakt_error_limit_exceeded))
+            420 -> {
+                // Currently should only occur on initial sync when uploading items to watchlist or
+                // collection (notes upload has its own error handling).
+                progress.setImportantErrorIfNone(context.getString(R.string.trakt_error_limit_exceeded_upload))
+            }
             423 -> {
                 // Note: Even though uploading typically happens after signing in, which should
                 // detect locked accounts, it's possible an account becomes locked afterwards.

@@ -71,7 +71,8 @@ abstract class BaseNetworkJob(
                 removeJob = true
             }
             ERROR_TRAKT_ACCOUNT_LIMIT_EXCEEDED -> {
-                error = context.getString(R.string.trakt_error_limit_exceeded)
+                // Should only occur when adding to collection
+                error = context.getString(R.string.trakt_error_limit_exceeded_add)
                 removeJob = true
             }
             ERROR_TRAKT_ACCOUNT_LOCKED -> {
