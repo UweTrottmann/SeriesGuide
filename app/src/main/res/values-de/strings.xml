@@ -338,7 +338,8 @@
     <string name="trakt_error_credentials">Etwas lief schief. Bitte prüfen Sie Ihre Trakt-Zugangsdaten und versuchen Sie es erneut.</string>
     <string name="trakt_error_not_exists">(Noch) nicht bei Trakt verfügbar. Versuchen Sie es später erneut.</string>
     <string name="trakt_notice_not_exists">Kann (noch) nicht mit Trakt verwaltet werden</string>
-    <string name="trakt_error_limit_exceeded">Merkliste ist voll, entferne Sie zuerst etwas.</string>
+    <string name="trakt_error_limit_exceeded_add">Kann nicht hinzugefügt werden, Trakt Kontolimit erreicht.</string>
+    <string name="trakt_error_limit_exceeded_upload">Kann nicht hochgeladen werden, Trakt Kontolimit erreicht.</string>
     <!-- Connect trakt -->
     <string name="trakt_required">Um dies zu nutzen, mit Trakt verbinden</string>
     <string name="connect_trakt">Mit Trakt verbinden</string>
@@ -350,6 +351,7 @@
     <string name="show_library">Serien von Trakt hinzufügen</string>
     <string name="about_trakt">Trakt hilft TV-Sendungen und Filme zu speichern, die Sie angesehen haben.</string>
     <string name="support_trakt">Unterstütze Trakt mit VIP</string>
+    <string name="action_trakt_view_limits">Kontolimits anzeigen</string>
     <!-- trakt ratings -->
     <string name="action_rate">Bewerten</string>
     <string name="ack_rated">Bewertung übermittelt</string>

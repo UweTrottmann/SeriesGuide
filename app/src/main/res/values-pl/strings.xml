@@ -358,7 +358,8 @@
     <string name="trakt_error_credentials">Coś poszło nie tak. Sprawdź swoje poświadczenia i spróbuj ponownie.</string>
     <string name="trakt_error_not_exists">Jeszcze niedostępne na trakt. Spróbuj ponownie później.</string>
     <string name="trakt_notice_not_exists">Nie może być jeszcze śledzone na trakt.</string>
-    <string name="trakt_error_limit_exceeded">Lista jest pełna. Należy najpierw coś z niej usunąć.</string>
+    <string name="trakt_error_limit_exceeded_add">Can\'t add, Trakt account limit reached.</string>
+    <string name="trakt_error_limit_exceeded_upload">Can\'t upload, Trakt account limit reached.</string>
     <!-- Connect trakt -->
     <string name="trakt_required">Aby użyć tej funkcji, połącz z Trakt</string>
     <string name="connect_trakt">Połącz z trakt</string>
@@ -370,6 +371,7 @@
     <string name="show_library">Dodaj seriale z Trakt</string>
     <string name="about_trakt">Trakt pomaga zarządzać jakie seriale i filmy oglądasz.</string>
     <string name="support_trakt">Wspomóż Trakt z VIP</string>
+    <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">Oceń</string>
     <string name="ack_rated">Ocena wysłana</string>

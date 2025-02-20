@@ -338,7 +338,8 @@
     <string name="trakt_error_credentials">Нещо се обърка. Проверете идентификационните си данни и опитайте отново.</string>
     <string name="trakt_error_not_exists">Няма (все още) в trakt. Опитайте отново по-късно.</string>
     <string name="trakt_notice_not_exists">Не може (все още) да се проследи от trakt.</string>
-    <string name="trakt_error_limit_exceeded">Списъкът е пълен, първо изтрийте нещо.</string>
+    <string name="trakt_error_limit_exceeded_add">Can\'t add, Trakt account limit reached.</string>
+    <string name="trakt_error_limit_exceeded_upload">Can\'t upload, Trakt account limit reached.</string>
     <!-- Connect trakt -->
     <string name="trakt_required">Необходимо е свързване с Trakt</string>
     <string name="connect_trakt">Свържете се с trakt</string>
@@ -350,6 +351,7 @@
     <string name="show_library">Добавяне на сериали от Trakt</string>
     <string name="about_trakt">Trakt записва какви сериали и филми гледате.</string>
     <string name="support_trakt">Подкрепете Trakt с ВИП</string>
+    <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">Оцени</string>
     <string name="ack_rated">Рейтингът е изпратен</string>

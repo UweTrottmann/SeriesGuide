@@ -328,7 +328,8 @@
     <string name="trakt_error_credentials">發生錯誤，請檢查您的trakt憑證並重試。</string>
     <string name="trakt_error_not_exists">Trakt 上沒有或尚未提供。請稍後再試。</string>
     <string name="trakt_notice_not_exists">無法或尚未能以 Trakt 追蹤</string>
-    <string name="trakt_error_limit_exceeded">列表已滿，請先移除某些內容。</string>
+    <string name="trakt_error_limit_exceeded_add">Can\'t add, Trakt account limit reached.</string>
+    <string name="trakt_error_limit_exceeded_upload">Can\'t upload, Trakt account limit reached.</string>
     <!-- Connect trakt -->
     <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">連接 trakt</string>
@@ -340,6 +341,7 @@
     <string name="show_library">從 Trakt 中新增節目</string>
     <string name="about_trakt">Trakt 能幫你紀錄看了哪些電視節目和電影。</string>
     <string name="support_trakt">加入 VIP 支持 Trakt</string>
+    <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">評分</string>
     <string name="ack_rated">Rating sent</string>

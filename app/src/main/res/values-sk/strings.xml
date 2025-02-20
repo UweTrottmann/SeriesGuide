@@ -358,7 +358,8 @@
     <string name="trakt_error_credentials">Chyba. Skontrolujte užívateľské meno/heslo na trakt a skúste to znova.</string>
     <string name="trakt_error_not_exists">Nie je (zatiaľ) dostupné na trakt. Skúste to znova neskôr.</string>
     <string name="trakt_notice_not_exists">Nie je (zatiaľ) možné sledovať na trakt.</string>
-    <string name="trakt_error_limit_exceeded">Zoznam je plný, najskôr niečo odstráňte.</string>
+    <string name="trakt_error_limit_exceeded_add">Can\'t add, Trakt account limit reached.</string>
+    <string name="trakt_error_limit_exceeded_upload">Can\'t upload, Trakt account limit reached.</string>
     <!-- Connect trakt -->
     <string name="trakt_required">Aby ste to mohli použiť, pripojte sa k Trakt</string>
     <string name="connect_trakt">Pripojiť na trakt</string>
@@ -370,6 +371,7 @@
     <string name="show_library">Pridať seriály z Trakt</string>
     <string name="about_trakt">V Trakt zaznamenávate, ktoré seriály a filmy sledujete.</string>
     <string name="support_trakt">Podporte Trakt s VIP</string>
+    <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">Hodnotiť</string>
     <string name="ack_rated">Hodnotenie odoslané</string>

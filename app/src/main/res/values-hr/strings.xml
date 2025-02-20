@@ -348,7 +348,8 @@
     <string name="trakt_error_credentials">Nešto je pošlo po zlu. Provjerite svoje podatke i pokušajte ponovno.</string>
     <string name="trakt_error_not_exists">Nije dostupno na trakt (još). Pokušajte ponovno kasnije.</string>
     <string name="trakt_notice_not_exists">Nije moguće povezivanje sa trakt-om (još).</string>
-    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded_add">Can\'t add, Trakt account limit reached.</string>
+    <string name="trakt_error_limit_exceeded_upload">Can\'t upload, Trakt account limit reached.</string>
     <!-- Connect trakt -->
     <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">Poveži trakt</string>
@@ -360,6 +361,7 @@
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt vam pomaže pratiti koje serije i filmove gledate.</string>
     <string name="support_trakt">Support Trakt with VIP</string>
+    <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">Ocijeni</string>
     <string name="ack_rated">Rating sent</string>
