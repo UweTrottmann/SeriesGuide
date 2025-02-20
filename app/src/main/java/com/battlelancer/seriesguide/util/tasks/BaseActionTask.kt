@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2015-2024 Uwe Trottmann
+// Copyright 2015-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.util.tasks
 
@@ -101,12 +101,11 @@ abstract class BaseActionTask(context: Context) : AsyncTask<Void?, Void?, Int?>(
                     action, response,
                     SgTrakt.checkForTraktError(trakt, response)
                 )
-                val code = response.code()
-                return if (code == 429 || code >= 500) {
+                return if (SgTrakt.isRateLimitExceeded(response) || SgTrakt.isServerError(response)) {
                     ERROR_TRAKT_API_SERVER
-                } else if (code == 420) {
+                } else if (SgTrakt.isAccountLimitExceeded(response)) {
                     ERROR_TRAKT_ACCOUNT_LIMIT_EXCEEDED
-                } else if (code == 423) {
+                } else if (TraktV2.isAccountLocked(response)) {
                     ERROR_TRAKT_ACCOUNT_LOCKED
                 } else {
                     ERROR_TRAKT_API_CLIENT
