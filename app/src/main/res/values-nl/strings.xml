@@ -338,7 +338,8 @@
     <string name="trakt_error_credentials">Er ging iets fout. Controleer uw inlog gegevens en probeer het opnieuw.</string>
     <string name="trakt_error_not_exists">Nog (niet) beschikbaar op trakt. Probeer het later nog eens.</string>
     <string name="trakt_notice_not_exists">Kan (nog) niet gevolgd worden via trakt.</string>
-    <string name="trakt_error_limit_exceeded">Lijst is vol, verwijder eerst iets.</string>
+    <string name="trakt_error_limit_exceeded_add">Can\'t add, Trakt account limit reached.</string>
+    <string name="trakt_error_limit_exceeded_upload">Can\'t upload, Trakt account limit reached.</string>
     <!-- Connect trakt -->
     <string name="trakt_required">Om dit te gebruiken, maak je verbinding met Trakt</string>
     <string name="connect_trakt">Verbinden met trakt</string>
@@ -350,6 +351,7 @@
     <string name="show_library">Series van Trakt toevoegen</string>
     <string name="about_trakt">Trakt helpt met het bijhouden van welke TV-shows en films u aan het bekijken bent.</string>
     <string name="support_trakt">Trakt ondersteunen met VIP</string>
+    <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">Beoordelen</string>
     <string name="ack_rated">Beoordeling verstuurd</string>

@@ -338,7 +338,8 @@
     <string name="trakt_error_credentials">اشتباهی رخ داد. اطلاعات کاربری trakt خود را بررسی کنید و دوباره امتحان کنید.</string>
     <string name="trakt_error_not_exists">(هنوز) روی trakt موجود نیست. بعداً دوباره تلاش کنید.</string>
     <string name="trakt_notice_not_exists">(هنوز) نمی‌توان با trakt ردیابی کرد.</string>
-    <string name="trakt_error_limit_exceeded">سیاههٔ نمایش پر است. نخست چیزی را بردارید.</string>
+    <string name="trakt_error_limit_exceeded_add">Can\'t add, Trakt account limit reached.</string>
+    <string name="trakt_error_limit_exceeded_upload">Can\'t upload, Trakt account limit reached.</string>
     <!-- Connect trakt -->
     <string name="trakt_required">وصل شدن به ترکت برای استفاده</string>
     <string name="connect_trakt">اتصال به ترکت</string>
@@ -350,6 +351,7 @@
     <string name="show_library">افزودن نمایش‌ها از ترکت</string>
     <string name="about_trakt">Trakt کمک می‌کند تا حساب نمایش‌های تلویزیونی و فیلم‌هایی که می‌بینید را داشته باشید.</string>
     <string name="support_trakt">پشتیبانی از ترکت با وی‌آی‌پی</string>
+    <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">نمره</string>
     <string name="ack_rated">رتبه فرستاده شد</string>

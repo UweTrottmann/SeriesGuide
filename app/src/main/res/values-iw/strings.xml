@@ -358,7 +358,8 @@
     <string name="trakt_error_credentials">משהו השתבש. אנא בדוק את הסיסמא/שם המשתמש שלך ונסה שוב.</string>
     <string name="trakt_error_not_exists">לא זמין (עדיין) ב-trakt. נסה שוב מאוחר יותר.</string>
     <string name="trakt_notice_not_exists">לא ניתן (עדיין) לעקוב עם trakt.</string>
-    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded_add">Can\'t add, Trakt account limit reached.</string>
+    <string name="trakt_error_limit_exceeded_upload">Can\'t upload, Trakt account limit reached.</string>
     <!-- Connect trakt -->
     <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">התחבר trakt</string>
@@ -370,6 +371,7 @@
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt מסייעת לשמור רשימה של אילו תוכניות טלוויזיה וסרטים אתה צופה.</string>
     <string name="support_trakt">Support Trakt with VIP</string>
+    <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">דרג</string>
     <string name="ack_rated">Rating sent</string>

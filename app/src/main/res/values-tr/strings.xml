@@ -338,7 +338,8 @@
     <string name="trakt_error_credentials">Bir şeyler yanlış gitti. Trakt giriş bilgilerinizi kontrol edin ve tekrar deneyin.</string>
     <string name="trakt_error_not_exists">Trakt\'ta (henüz) mevcut değil. Daha sonra tekrar deneyin.</string>
     <string name="trakt_notice_not_exists">Trakt\'ta (henüz) mevcut değil.</string>
-    <string name="trakt_error_limit_exceeded">Liste dolu, önce bir şeyi kaldırın.</string>
+    <string name="trakt_error_limit_exceeded_add">Can\'t add, Trakt account limit reached.</string>
+    <string name="trakt_error_limit_exceeded_upload">Can\'t upload, Trakt account limit reached.</string>
     <!-- Connect trakt -->
     <string name="trakt_required">Bunu kullanmak için Trakt\'a bağlanın</string>
     <string name="connect_trakt">Trakt\'a bağlan</string>
@@ -350,6 +351,7 @@
     <string name="show_library">Trakt\'tan dizileri ekle</string>
     <string name="about_trakt">Trakt, izlediğiniz dizi ve filmlerin kaydını tutmanıza yardımcı olur.</string>
     <string name="support_trakt">Trakt\'ı VIP olarak destekle</string>
+    <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">Puan ver</string>
     <string name="ack_rated">Puan gönderildi</string>

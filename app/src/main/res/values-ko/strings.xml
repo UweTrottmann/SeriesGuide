@@ -328,7 +328,8 @@
     <string name="trakt_error_credentials">오류가 있습니다. trakt 계정을 확인하고 재시도해주세요.</string>
     <string name="trakt_error_not_exists">아직 trakt에 정보가 없습니다. 나중에 다시 시도하세요.</string>
     <string name="trakt_notice_not_exists">아직 trakt에서 추적할 수 없습니다.</string>
-    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded_add">Can\'t add, Trakt account limit reached.</string>
+    <string name="trakt_error_limit_exceeded_upload">Can\'t upload, Trakt account limit reached.</string>
     <!-- Connect trakt -->
     <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">trakt에 연결하기</string>
@@ -340,6 +341,7 @@
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt는 여러분이 시청한 TV 프로그램과 영화를 개록해줍니다.</string>
     <string name="support_trakt">Support Trakt with VIP</string>
+    <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">평가</string>
     <string name="ack_rated">Rating sent</string>

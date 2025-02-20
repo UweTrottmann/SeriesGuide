@@ -338,7 +338,8 @@
     <string name="trakt_error_credentials">Jokin meni pieleen. Tarkista Trakt-tunnuksesi ja yritä uudelleen.</string>
     <string name="trakt_error_not_exists">Ei (vielä) saatavilla Traktissa. Yritä myöhemmin uudelleen.</string>
     <string name="trakt_notice_not_exists">Ei voida (vielä) seurata Traktissa</string>
-    <string name="trakt_error_limit_exceeded">Lista on täynnä, poista ensin jotakin.</string>
+    <string name="trakt_error_limit_exceeded_add">Can\'t add, Trakt account limit reached.</string>
+    <string name="trakt_error_limit_exceeded_upload">Can\'t upload, Trakt account limit reached.</string>
     <!-- Connect trakt -->
     <string name="trakt_required">Käyttääksesi tätä, yhdistä Traktiin</string>
     <string name="connect_trakt">Yhdistä Traktiin</string>
@@ -350,6 +351,7 @@
     <string name="show_library">Lisää ohjelmat Traktista</string>
     <string name="about_trakt">Trakt auttaa sinua pysymään kärryillä katsomistasi ohjelmista ja elokuvista.</string>
     <string name="support_trakt">Tue Traktia VIP-tilauksella</string>
+    <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">Arvostele</string>
     <string name="ack_rated">Arvosana lähetettiin</string>
