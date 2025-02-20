@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2012-2024 Uwe Trottmann
+// Copyright 2012-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.traktapi
 
@@ -51,15 +51,17 @@ class ConnectTraktCredentialsFragment : Fragment() {
                 ShowsActivity.newIntent(requireContext(), ShowsActivityImpl.Tab.DISCOVER.index)
             )
         }
-        // Learn more button
+        ViewTools.openUrlOnClickAndCopyOnLongPress(
+            binding.buttonTraktAccountLimits,
+            getString(R.string.url_trakt_account_limits)
+        )
+        ViewTools.openUrlOnClickAndCopyOnLongPress(
+            binding.buttonTraktViewVip,
+            getString(R.string.url_trakt_vip)
+        )
         ViewTools.openUrlOnClickAndCopyOnLongPress(
             binding.buttonTraktWebsite,
             getString(R.string.url_trakt)
-        )
-        // VIP button
-        ViewTools.openUrlOnClickAndCopyOnLongPress(
-            binding.buttonTraktSupport,
-            getString(R.string.url_trakt_vip)
         )
         ViewTools.openUrlOnClickAndCopyOnLongPress(
             binding.buttonTraktDeleteAccount,
@@ -108,7 +110,8 @@ class ConnectTraktCredentialsFragment : Fragment() {
         }
         setAccountButtonState(!hasCredentials)
         binding.buttonTraktLibrary.isGone = !hasCredentials
-        binding.buttonTraktSupport.isGone = !hasCredentials
+        binding.buttonTraktAccountLimits.isGone = !hasCredentials
+        binding.buttonTraktViewVip.isGone = !hasCredentials
     }
 
     private fun connect() {
