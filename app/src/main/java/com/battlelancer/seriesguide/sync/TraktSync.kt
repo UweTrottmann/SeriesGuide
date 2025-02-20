@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2017-2024 Uwe Trottmann
+// Copyright 2017-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.sync
 
@@ -14,6 +14,7 @@ import com.battlelancer.seriesguide.traktapi.TraktTools2
 import com.battlelancer.seriesguide.util.Errors
 import com.github.michaelbull.result.getOrElse
 import com.uwetrottmann.androidutils.AndroidUtils
+import com.uwetrottmann.trakt5.TraktV2
 import com.uwetrottmann.trakt5.entities.LastActivityMore
 import retrofit2.Response
 import timber.log.Timber
@@ -164,21 +165,16 @@ class TraktSync(
     }
 
     fun <T> handleUnsuccessfulResponse(response: Response<T>, action: String) {
-        // Handle auth error.
         if (SgTrakt.isUnauthorized(context, response)) {
             return // Do not report auth errors.
-        }
-        when (response.code()) {
-            420 -> {
-                // Currently should only occur on initial sync when uploading items to watchlist or
-                // collection (notes upload has its own error handling).
-                progress.setImportantErrorIfNone(context.getString(R.string.trakt_error_limit_exceeded_upload))
-            }
-            423 -> {
-                // Note: Even though uploading typically happens after signing in, which should
-                // detect locked accounts, it's possible an account becomes locked afterwards.
-                progress.setImportantErrorIfNone(context.getString(R.string.trakt_error_account_locked))
-            }
+        } else if (SgTrakt.isAccountLimitExceeded(response)) {
+            // Currently should only occur on initial sync when uploading items to watchlist or
+            // collection (notes upload has its own error handling).
+            progress.setImportantErrorIfNone(context.getString(R.string.trakt_error_limit_exceeded_upload))
+        } else if (TraktV2.isAccountLocked(response)) {
+            // Note: Even though uploading typically happens after signing in, which should
+            // detect locked accounts, it's possible an account becomes locked afterwards.
+            progress.setImportantErrorIfNone(context.getString(R.string.trakt_error_account_locked))
         }
         Errors.logAndReport(action, response)
     }

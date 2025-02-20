@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2017-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.jobs
 
@@ -124,12 +124,10 @@ abstract class BaseNetworkJob(
                     action, response,
                     SgTrakt.checkForTraktError(trakt, response)
                 )
-                val code = response.code()
                 val resultCode = when {
-                    // 429 Rate Limit Exceeded or server error
-                    code == 429 || code >= 500 -> ERROR_TRAKT_SERVER
-                    code == 420 -> ERROR_TRAKT_ACCOUNT_LIMIT_EXCEEDED
-                    code == 423 -> ERROR_TRAKT_ACCOUNT_LOCKED
+                    SgTrakt.isRateLimitExceeded(response) || SgTrakt.isServerError(response) -> ERROR_TRAKT_SERVER
+                    SgTrakt.isAccountLimitExceeded(response) -> ERROR_TRAKT_ACCOUNT_LIMIT_EXCEEDED
+                    TraktV2.isAccountLocked(response) -> ERROR_TRAKT_ACCOUNT_LOCKED
                     else -> ERROR_TRAKT_CLIENT
                 }
                 return Err(resultCode)

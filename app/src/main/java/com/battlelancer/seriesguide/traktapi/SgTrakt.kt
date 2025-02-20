@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2014-2024 Uwe Trottmann
+// Copyright 2014-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.traktapi
 
@@ -55,6 +55,30 @@ class SgTrakt(
             } else {
                 return false
             }
+        }
+
+        /**
+         * Returns if the response code is 420, which indicates an account limit would be exceeded.
+         * These limits [can be higher for VIP users](https://trakt.docs.apiary.io/#introduction/vip-methods).
+         */
+        fun isAccountLimitExceeded(response: Response<*>): Boolean {
+            return response.code() == 420
+        }
+
+        /**
+         * Returns if the response code is 429, which indicates the rate limit was exceeded.
+         *
+         * [Trakt rate limiting info](https://trakt.docs.apiary.io/#introduction/rate-limiting)
+         */
+        fun isRateLimitExceeded(response: Response<*>): Boolean {
+            return response.code() == 429
+        }
+
+        /**
+         * Returns if the response code is 500 or greater, which indicates a server error.
+         */
+        fun isServerError(response: Response<*>): Boolean {
+            return response.code() >= 500
         }
 
         fun checkForTraktError(trakt: TraktV2, response: Response<*>): String? {
