@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2021-2024 Uwe Trottmann
+// Copyright 2021-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.traktapi
 
@@ -49,11 +49,44 @@ object TraktTools2 {
     sealed interface TraktErrorResponse {
         class IsNotVip<T> : TraktResponse<T>, TraktNonNullResponse<T>
         class IsUnauthorized<T> : TraktResponse<T>, TraktNonNullResponse<T>
+        class IsAccountLimitExceeded<T> : TraktResponse<T>, TraktNonNullResponse<T>
         class Other<T> : TraktResponse<T>, TraktNonNullResponse<T>
     }
 
     /**
+     * Performs the call. On [TraktErrorResponse.IsUnauthorized] will [TraktCredentials.setCredentialsInvalid].
+     *
+     * Note: not handling in [awaitTraktCall] to not require [Context] or other Android APIs for it.
+     */
+    suspend fun <T> awaitAndHandleAuthError(
+        context: Context,
+        call: suspend () -> TraktResponse<T>
+    ): TraktResponse<T> {
+        val response = call()
+        if (response is TraktErrorResponse.IsUnauthorized) {
+            TraktCredentials.get(context).setCredentialsInvalid()
+        }
+        return response
+    }
+
+    /**
+     * Like [awaitAndHandleAuthError], but for non-null responses.
+     */
+    suspend fun <T> awaitAndHandleAuthErrorNonNull(
+        context: Context,
+        call: suspend () -> TraktNonNullResponse<T>
+    ): TraktNonNullResponse<T> {
+        val response = call()
+        if (response is TraktErrorResponse.IsUnauthorized) {
+            TraktCredentials.get(context).setCredentialsInvalid()
+        }
+        return response
+    }
+
+    /**
      * Adds or updates the note for the given show.
+     *
+     * See [awaitTraktCall] for details.
      */
     suspend fun saveNoteForShow(
         traktNotes: Notes,
@@ -69,20 +102,39 @@ object TraktTools2 {
                     },
                     noteText
                 )
-            ), "update note"
+            ),
+            "update note",
+            reportIsNotVip = true // Should work even if not VIP
         )
     }
 
+    /**
+     * See [awaitTraktCall] for details.
+     */
     suspend fun deleteNote(
         trakt: SgTrakt,
         noteId: Long
     ): TraktResponse<Void> {
-        return awaitTraktCall(trakt.notes().deleteNote(noteId), "delete note")
+        return awaitTraktCall(
+            trakt.notes().deleteNote(noteId),
+            "delete note",
+            reportIsNotVip = true // Should work even if not VIP
+        )
     }
 
+    /**
+     * Makes the call and returns [TraktResponse.Success] with the body if successful or one of
+     * [TraktErrorResponse] otherwise.
+     *
+     * If there is an error, logs and reports it. Except for [TraktErrorResponse.IsNotVip] and
+     * [TraktErrorResponse.IsUnauthorized].
+     *
+     * Use [reportIsNotVip] to report this error if it is unexpected.
+     */
     private suspend fun <T> awaitTraktCall(
         call: Call<T>,
         action: String,
+        reportIsNotVip: Boolean = false,
         logErrorOnNullBody: Boolean = false
     ): TraktResponse<T> {
         val response = try {
@@ -94,7 +146,16 @@ object TraktTools2 {
 
         if (!response.isSuccessful) {
             return when {
-                TraktV2.isNotVip(response) -> TraktErrorResponse.IsNotVip()
+                SgTrakt.isAccountLimitExceeded(response) -> {
+                    Errors.logAndReport(action, response)
+                    TraktErrorResponse.IsAccountLimitExceeded()
+                }
+
+                TraktV2.isNotVip(response) -> {
+                    if (reportIsNotVip) Errors.logAndReport(action, response)
+                    TraktErrorResponse.IsNotVip()
+                }
+
                 TraktV2.isUnauthorized(response) -> TraktErrorResponse.IsUnauthorized()
                 else -> {
                     Errors.logAndReport(action, response)
@@ -117,10 +178,13 @@ object TraktTools2 {
      */
     private suspend fun <T> awaitTraktCallNonNull(
         call: Call<T>,
-        action: String
+        action: String,
+        reportIsNotVip: Boolean = false
     ): TraktNonNullResponse<T> {
-        return when (val response = awaitTraktCall(call, action, logErrorOnNullBody = true)) {
+        return when (val response =
+            awaitTraktCall(call, action, reportIsNotVip, logErrorOnNullBody = true)) {
             is TraktErrorResponse.Other -> response
+            is TraktErrorResponse.IsAccountLimitExceeded -> response
             is TraktErrorResponse.IsNotVip -> response
             is TraktErrorResponse.IsUnauthorized -> response
             is TraktResponse.Success -> {
