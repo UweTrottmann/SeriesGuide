@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2022-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.tools
 
@@ -29,7 +29,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
-import timber.log.Timber
 import javax.inject.Inject
 import kotlin.collections.set
 import com.battlelancer.seriesguide.enums.Result as SgResult
@@ -484,7 +483,8 @@ class ShowTools2 @Inject constructor(
         if (noteText.length > SgShow2.MAX_USER_NOTE_LENGTH) return null
 
         // Send to Cloud first, Trakt may fail if user is not VIP
-        val isSendToCloudSuccess: Boolean = if (HexagonSettings.isEnabled(context)) {
+        val isCloudEnabled = HexagonSettings.isEnabled(context)
+        val isSendToCloudSuccess: Boolean = if (isCloudEnabled) {
             withContext(Dispatchers.Default) {
                 if (isNotConnected(context)) {
                     return@withContext false
@@ -526,27 +526,24 @@ class ShowTools2 @Inject constructor(
                 if (noteText.isEmpty()) {
                     // Delete note
                     if (noteTraktId == null) return@withContext null
-                    val response = TraktTools2.deleteNote(trakt, noteTraktId)
+                    val response = TraktTools2.awaitAndHandleAuthError(context) {
+                        TraktTools2.deleteNote(trakt, noteTraktId)
+                    }
                     return@withContext when (response) {
                         is TraktResponse.Success -> {
                             StoreUserNoteResult("", null) // Remove text and Trakt ID
                         }
 
-                        is TraktErrorResponse.IsUnauthorized -> {
-                            TraktCredentials.get(context).setCredentialsInvalid()
-                            null // Abort
-                        }
-
-                        is TraktErrorResponse.IsNotVip -> {
-                            Timber.d("storeUserNote: user is not Trakt VIP, can not delete at Trakt")
-                            result // Store as is
-                        }
-
+                        is TraktErrorResponse.IsAccountLimitExceeded,
+                        is TraktErrorResponse.IsNotVip,
+                        is TraktErrorResponse.IsUnauthorized,
                         is TraktErrorResponse.Other -> null // Abort
                     }
                 } else {
                     // Add or update note
-                    val response = TraktTools2.saveNoteForShow(trakt.notes(), showTmdbId, noteText)
+                    val response = TraktTools2.awaitAndHandleAuthErrorNonNull(context) {
+                        TraktTools2.saveNoteForShow(trakt.notes(), showTmdbId, noteText)
+                    }
                     return@withContext when (response) {
                         is TraktNonNullResponse.Success -> {
                             // Store ID and note text from Trakt
@@ -555,24 +552,32 @@ class ShowTools2 @Inject constructor(
                             StoreUserNoteResult(storedText, response.data.id)
                         }
 
-                        is TraktErrorResponse.IsUnauthorized -> {
-                            TraktCredentials.get(context).setCredentialsInvalid()
-                            null
+                        is TraktErrorResponse.IsAccountLimitExceeded -> {
+                            withContext(Dispatchers.Main) {
+                                Toast.makeText(
+                                    context,
+                                    R.string.trakt_error_limit_exceeded_upload,
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                            // If Cloud is also connected (Trakt sync is off, only sending actions
+                            // to Trakt), store to database, to not prevent using it only if Trakt
+                            // account limit is hit. Users can re-save the note if needed.
+                            if (isCloudEnabled) {
+                                result // Store as is
+                            } else {
+                                null // Abort
+                            }
                         }
 
-                        is TraktErrorResponse.IsNotVip -> {
-                            Timber.d("storeUserNote: user is not Trakt VIP, can not upload to Trakt")
-                            result // Store as is
-                        }
-
+                        is TraktErrorResponse.IsNotVip,
+                        is TraktErrorResponse.IsUnauthorized,
                         is TraktErrorResponse.Other -> null // Abort
                     }
                 }
             }
         }
-
-        // Do not save to local database if sending to Trakt has failed,
-        // but not if user is just not VIP.
+        // Do not save to local database if Trakt upload indicates to abort (see error handling)
         if (result == null) return null
 
         // Save to local database

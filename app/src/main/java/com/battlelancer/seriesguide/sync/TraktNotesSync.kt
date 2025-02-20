@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2024 Uwe Trottmann
+// Copyright 2024-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.sync
 
+import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgShow2Helper
 import com.battlelancer.seriesguide.traktapi.SgTrakt
@@ -23,7 +24,8 @@ import timber.log.Timber
 /**
  * Syncs notes, currently only for shows, with Trakt.
  *
- * This will do nothing if the user is not a Trakt VIP.
+ * Note: an initial sync will fail if the note limit of a Trakt free user would be exceeded when
+ * uploading notes not on Trakt.
  */
 class TraktNotesSync(
     private val traktSync: TraktSync
@@ -66,12 +68,6 @@ class TraktNotesSync(
                     .execute()
 
                 if (!response.isSuccessful) {
-                    if (TraktV2.isNotVip(response)) {
-                        // Do not error; also do not set initial sync complete or last updated in
-                        // case the user gets VIP later, or loses VIP and gets it again.
-                        Timber.d("syncForShows: user is not VIP, giving up")
-                        return true
-                    }
                     if (SgTrakt.isUnauthorized(context, response)) {
                         return false
                     }
@@ -181,18 +177,23 @@ class TraktNotesSync(
 
                 // If this thread is interrupted throws InterruptedException
                 val storedNote = runBlocking(Dispatchers.Default) {
-                    val response = TraktTools2
-                        .saveNoteForShow(traktNotes, showTmdbId, noteText)
+                    val response = TraktTools2.awaitAndHandleAuthErrorNonNull(context) {
+                        TraktTools2.saveNoteForShow(traktNotes, showTmdbId, noteText)
+                    }
                     when (response) {
                         is TraktNonNullResponse.Success -> response.data
-                        is TraktErrorResponse.IsNotVip -> {
-                            // Note: if failing due to not VIP, downloaded notes before, which would
-                            // have required VIP; so assume it expired when getting until this point.
-                            Timber.e("uploadNotesForShows: user is no longer VIP")
+
+                        is TraktErrorResponse.IsAccountLimitExceeded -> {
+                            traktSync.progress.setImportantErrorIfNone(
+                                context.getString(R.string.trakt_error_limit_exceeded_upload)
+                            )
                             null
                         }
 
-                        else -> null
+                        // For other errors just fail to display generic error
+                        is TraktErrorResponse.IsNotVip,
+                        is TraktErrorResponse.IsUnauthorized,
+                        is TraktErrorResponse.Other -> null
                     }
                 }
 
