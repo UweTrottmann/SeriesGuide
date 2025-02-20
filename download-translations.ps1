@@ -5,7 +5,7 @@ $downloadDir = ".\temp\"
 $destinationDir = ".\app\src\main\res"
 
 Write-Host "Dropping region specifiers for all but [zh], [pt]..."
-Get-ChildItem -Path $downloadDir | Where-Object {$_.PsIsContainer -and $_.Name -notlike "*zh*" -and $_.Name -notlike "*pt*" } |  Rename-Item  -NewName { $_.Name -creplace "-r[A-Z]+", "" }
+Get-ChildItem -Path $downloadDir | Where-Object {$_.PsIsContainer -and $_.Name -notlike "*zh*" -and $_.Name -notlike "*pt*" -and $_.Name -notlike "*sr*" } |  Rename-Item  -NewName { $_.Name -creplace "-r[A-Z]+", "" }
 
 Write-Host "Copying files..."
 Get-ChildItem -Path $downloadDir | Where-Object {$_.PsIsContainer -and $_.FullName -like "*values-*"} | Copy-Item -Destination $destinationDir -Force -Recurse
