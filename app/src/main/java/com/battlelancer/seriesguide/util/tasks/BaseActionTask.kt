@@ -148,7 +148,7 @@ abstract class BaseActionTask(context: Context) : AsyncTask<Void?, Void?, Int?>(
                     context.getString(R.string.hexagon)
                 )
 
-                ERROR_TRAKT_ACCOUNT_LIMIT_EXCEEDED -> context.getString(R.string.trakt_error_limit_exceeded)
+                ERROR_TRAKT_ACCOUNT_LIMIT_EXCEEDED -> context.getString(R.string.trakt_error_limit_exceeded_add)
                 ERROR_TRAKT_ACCOUNT_LOCKED -> context.getString(R.string.trakt_error_account_locked)
                 else -> null
             }
@@ -169,7 +169,8 @@ abstract class BaseActionTask(context: Context) : AsyncTask<Void?, Void?, Int?>(
         private const val ERROR_TRAKT_API_SERVER = -7
 
         /**
-         * Account limit exceeded (list count, item count, ...).
+         * Account limit exceeded (list count, item count, ...). Should currently only occur when
+         * adding to watchlist.
          */
         private const val ERROR_TRAKT_ACCOUNT_LIMIT_EXCEEDED = -8
 
