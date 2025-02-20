@@ -149,8 +149,8 @@
     <string name="hidden">Flyttet til skjulte</string>
     <string name="unhidden">Serie er synlig igen</string>
     <string name="action_shows_add">Tilføj serie</string>
-    <string name="action_filter_and_sort">Filter and sort</string>
-    <string name="title_filter_general">General</string>
+    <string name="action_filter_and_sort">Filtrer og sorter</string>
+    <string name="title_filter_general">Generelt</string>
     <string name="empty_filter">Fjern alle filtre</string>
     <string name="action_shows_filter_favorites">Foretrukne</string>
     <string name="action_shows_filter_unwatched">Ikke set</string>
@@ -242,7 +242,7 @@
     <!-- Discover -->
     <string name="title_discover">Opdag</string>
     <string name="title_popular">Populær</string>
-    <string name="action_filter">Filter</string>
+    <string name="action_filter">Filtrer</string>
     <string name="filter_year">År</string>
     <string name="filter_year_current">Indeværende år</string>
     <string name="filter_language">Sprog</string>

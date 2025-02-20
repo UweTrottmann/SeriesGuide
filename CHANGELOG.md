@@ -10,6 +10,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Next release
 
+* 📝 Latest user interface translations from Crowdin.
+
 ## Version 2024.5
 
 * 🌟 Shows: add a note to a show, synced with SeriesGuide Cloud or Trakt (VIP only).

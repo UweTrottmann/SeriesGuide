@@ -39,7 +39,7 @@
     <string name="action_stream_settings">Stream- eller köpinställningar</string>
     <string name="action_select_region">Välj region</string>
     <string name="action_reset">Återställ</string>
-    <string name="action_save">Save</string>
+    <string name="action_save">Spara</string>
     <!-- Search -->
     <string name="clear_search_history">Rensa sökhistorik</string>
     <string name="search_hint">Sök avsnitt</string>
@@ -149,8 +149,8 @@
     <string name="hidden">Dold serie</string>
     <string name="unhidden">Visar serie</string>
     <string name="action_shows_add">Lägg till serie</string>
-    <string name="action_filter_and_sort">Filter and sort</string>
-    <string name="title_filter_general">General</string>
+    <string name="action_filter_and_sort">Filtrera och sortera</string>
+    <string name="title_filter_general">Allmänt</string>
     <string name="empty_filter">Ta bort alla filter</string>
     <string name="action_shows_filter_favorites">Favoriter</string>
     <string name="action_shows_filter_unwatched">Osedda</string>
@@ -172,8 +172,8 @@
     <string name="context_marknext">Sett nästa avsnitt</string>
     <string name="action_episodes_switch_view">Ändra vy</string>
     <string name="next_to_watch">Härnäst</string>
-    <string name="title_notes">Notes</string>
-    <string name="action_edit_note">Edit note</string>
+    <string name="title_notes">Anteckningar</string>
+    <string name="action_edit_note">Redigera anteckning</string>
     <!-- History -->
     <string name="user_stream">Historik</string>
     <string name="recently_watched">Nyligen sedda</string>
@@ -242,7 +242,7 @@
     <!-- Discover -->
     <string name="title_discover">Upptäck</string>
     <string name="title_popular">Populärt</string>
-    <string name="action_filter">Filter</string>
+    <string name="action_filter">Filtrera</string>
     <string name="filter_year">År</string>
     <string name="filter_year_current">Nuvarande år</string>
     <string name="filter_language">Språk</string>
@@ -283,7 +283,7 @@
     <string name="action_movies_sort_title">Titel</string>
     <string name="action_movies_sort_release">Utgivningsdatum</string>
     <string name="title_similar_movies">Liknande filmer</string>
-    <string name="title_release_dates">Release dates</string>
+    <string name="title_release_dates">Premiärdatum</string>
     <!-- Statistics -->
     <string name="statistics_failed">Gick inte att beräkna statistik.</string>
     <string name="shows_finished">%s färdigtittade</string>
