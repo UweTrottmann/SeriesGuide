@@ -9,7 +9,7 @@
     <string name="search">Тражи</string>
     <string name="preferences">Подешавања</string>
     <string name="help">Помоћ</string>
-    <string name="no_more_updates">SeriesGuide neće više dobijati unapređenja za ovu verziju Androida.</string>
+    <string name="no_more_updates">SeriesGuide више неће примати ажурирања за ову верзију Андроид-а.</string>
     <!-- Media items -->
     <string name="show_details">Детаљи</string>
     <string name="episode">Епизода</string>
@@ -18,7 +18,7 @@
     <string name="season">Сезона</string>
     <string name="season_number">Сезона %d</string>
     <string name="specialseason">Специјалне епизоде</string>
-    <string name="ratings">Rejtinzi</string>
+    <string name="ratings">Оцене</string>
     <!-- Descriptions -->
     <string name="navigate_up">Кретање нагоре</string>
     <string name="description_overview">Преглед</string>
@@ -30,12 +30,12 @@
     <string name="discard">Одбаци</string>
     <string name="action_display_all">Прикажи све</string>
     <string name="web_search">Веб претрага</string>
-    <string name="add_to_homescreen">Dodaj na Home ekran</string>
+    <string name="add_to_homescreen">Додај на почетни екран</string>
     <string name="action_open">Отворено</string>
-    <string name="sync_manually">Ručno sinhronizovanje</string>
-    <string name="sync_and_update">Sinhronizuj &amp; Unapredi</string>
-    <string name="sync_and_download_all">Sinhronizuj &amp; Skini sve</string>
-    <string name="action_stream">Strimuj ili kupi</string>
+    <string name="sync_manually">Синхронизујте ручно</string>
+    <string name="sync_and_update">Синхронизуј &amp; Унапреди</string>
+    <string name="sync_and_download_all">Синхронизуј &amp; Скини све</string>
+    <string name="action_stream">Стримуј или купи</string>
     <string name="action_stream_settings">Подешавања о стримовању или куповини</string>
     <string name="action_select_region">Одабери регион</string>
     <string name="action_reset">Ресетуј</string>
@@ -50,13 +50,13 @@
     <string name="norating">непознато</string>
     <string name="unknown">непознато</string>
     <string name="offline">Спојите се на мрежу и покушајте поново.</string>
-    <string name="app_not_available">Ne postoji aplikacija koja može da uradi ovo za Vas</string>
+    <string name="app_not_available">Нема доступне апликације за ово</string>
     <string name="people_empty">Нема никога?! Поновите претрагу.</string>
     <string name="database_error">Није могуће променити податке.</string>
-    <string name="reinstall_info">Pokušajte da napravite rezervnu kopiju u Settings, reinstalirajte i povratite</string>
-    <string name="api_error_generic">Neuspešna komunikacija sa %s. Pokušajte ponovo kasnije.</string>
-    <string name="api_failed">Neuspelo %s</string>
-    <string name="copy_to_clipboard">Kopirano u klipbord</string>
+    <string name="reinstall_info">Покушајте да направите резервну копију у подешавањима, поново инсталирајте и вратите</string>
+    <string name="api_error_generic">Није могуће разговарати са %s. Покушајте поново касније.</string>
+    <string name="api_failed">Неуспело %s</string>
+    <string name="copy_to_clipboard">Копирано у клипбоард</string>
     <string name="not_migrated">Серија није пребачена у TMDB. Неке акције као Trakt/Cloud синхронизација могу да не раде. Можда потражите замену и уклоните ову емисију. Додирните за детаље.</string>
     <!-- Sharing -->
     <string name="share">Подели</string>
@@ -79,9 +79,9 @@
     <string name="no_shouts">Буди први који ће коментарисати!</string>
     <string name="refresh">Освежи</string>
     <plurals name="replies_plural">
-        <item quantity="one">%d odgovor</item>
-        <item quantity="few">%d odgovora</item>
-        <item quantity="other">%d odgovora</item>
+        <item quantity="one">%d одговор</item>
+        <item quantity="few">%d одговора</item>
+        <item quantity="other">%d одговора</item>
     </plurals>
     <!-- Metadata -->
     <string name="episode_number_disk">DVD</string>
@@ -102,9 +102,9 @@
     <string name="show_status_pilot">Пилот</string>
     <string name="show_status_canceled">Отказано</string>
     <string name="no_translation">Не постоји опис преведен на %1$s који је доступан на %2$s.</string>
-    <string name="no_translation_title">Nije prevedeno</string>
-    <string name="no_spoilers">Neki od detalja nisu vidljivi da se izbegnu spojleri. Da isključite ovo posetite Settings.</string>
-    <string name="format_source">Izvor %s</string>
+    <string name="no_translation_title">Није преведено</string>
+    <string name="no_spoilers">Неки детаљи су скривени да би се спречили спојлери. Да бисте ово искључили, идите на Подешавања.</string>
+    <string name="format_source">Извор %s</string>
     <string name="last_updated">Последње ажурирање</string>
     <string name="custom_release_time_edit">Уредите време објављивања</string>
     <string name="custom_release_time_earlier">раније</string>
@@ -143,8 +143,8 @@
     <string name="context_unfavorite">Уклони из омиљених</string>
     <string name="favorited">Додато у омиљене</string>
     <string name="unfavorited">Уклоњено из омиљених</string>
-    <string name="action_episode_notifications_on">Uključite notifikacije za epizodu</string>
-    <string name="action_episode_notifications_off">Isključite notifikacije za epizodu</string>
+    <string name="action_episode_notifications_on">Укључите обавештења о епизодама</string>
+    <string name="action_episode_notifications_off">Искључите обавештења о епизодама</string>
     <string name="context_hide">Сакриј</string>
     <string name="context_unhide">Прикажи</string>
     <string name="hidden">Сакривена серија</string>
@@ -163,22 +163,22 @@
     <string name="action_shows_make_all_visible">Учините све скривено видљивим</string>
     <string name="description_make_all_visible_format">Поставите све скривене серије (%s) поново видљиве?</string>
     <string name="action_shows_sort_title">Наслов</string>
-    <string name="action_shows_sort_latest_episode">Poslednja epizoda</string>
-    <string name="action_shows_sort_oldest_episode">Najstarija epizoda</string>
-    <string name="action_shows_sort_last_watched">Poslednje gledano</string>
-    <string name="action_shows_sort_remaining">Preostale epizode</string>
+    <string name="action_shows_sort_latest_episode">Последња епизода</string>
+    <string name="action_shows_sort_oldest_episode">Најстарија епизода</string>
+    <string name="action_shows_sort_last_watched">Последње гледано</string>
+    <string name="action_shows_sort_remaining">Преостале епизоде</string>
     <string name="action_shows_sort_status">Стање</string>
     <string name="action_shows_sort_favorites">Прво омиљене</string>
     <string name="context_updateshow">Ажурирање</string>
     <string name="context_marknext">Погледана, следећа епизода</string>
-    <string name="action_episodes_switch_view">Пребацити излед</string>
+    <string name="action_episodes_switch_view">Пребацити изглед</string>
     <string name="next_to_watch">Следеће за гледање</string>
     <string name="title_notes">Белешке</string>
     <string name="action_edit_note">Уреди белешку</string>
     <!-- History -->
     <string name="user_stream">Историјат</string>
     <string name="recently_watched">Недавно гледано</string>
-    <string name="friends_recently">Твоји trakt пријатељи</string>
+    <string name="friends_recently">Твоји Trakt пријатељи</string>
     <string name="now_empty">Досадно вам је. Погледајте неке серије!</string>
     <string name="now_movies_empty">Досадно вам је. Погледајте неке филмове!</string>
     <!-- Calendar -->
@@ -187,9 +187,9 @@
     <string name="released_today">Објављено данас</string>
     <string name="noupcoming">Нема предстојећих епизода.</string>
     <string name="norecent">Нема скорашњих епизода.</string>
-    <string name="calendar_settings">Kalendar opcije</string>
+    <string name="calendar_settings">Поставке календара</string>
     <string name="only_favorites">Само омиљене серије</string>
-    <string name="calendar_only_collected">Samo kolektovane epizode</string>
+    <string name="calendar_only_collected">Само прикупљене епизоде</string>
     <string name="calendar_only_premieres">Само премијере</string>
     <string name="pref_infinite_scrolling">Календар</string>
     <!-- Updating -->
@@ -199,19 +199,19 @@
     <!-- Seasons -->
     <string name="season_allwatched">Све епизоде одгледане</string>
     <plurals name="other_episodes_plural">
-        <item quantity="one">%d druga epizoda</item>
-        <item quantity="few">%d drugih epizoda</item>
-        <item quantity="other">%d drugih epizoda</item>
+        <item quantity="one">%d друга епизода</item>
+        <item quantity="few">%d других епизода</item>
+        <item quantity="other">%d других епизода</item>
     </plurals>
     <plurals name="not_released_episodes_plural">
-        <item quantity="one">%d neizašla</item>
-        <item quantity="few">%d neizašlih</item>
-        <item quantity="other">%d neizašlih</item>
+        <item quantity="one">%d неизашла</item>
+        <item quantity="few">%d неизашлих</item>
+        <item quantity="other">%d неизашлих</item>
     </plurals>
     <plurals name="remaining_episodes_plural">
-        <item quantity="one">%d preostala</item>
-        <item quantity="few">%d preostalih</item>
-        <item quantity="other">%d preostalih</item>
+        <item quantity="one">%d преостала</item>
+        <item quantity="few">%d преосталих</item>
+        <item quantity="other">%d преосталих</item>
     </plurals>
     <plurals name="remaining_of_total_episodes_plural">
         <item quantity="one">Остало %1$d од %2$d</item>
@@ -239,7 +239,7 @@
     <string name="add_started">%s ће се ускоро појавити у вашој листи серија.</string>
     <string name="add_error">Немогуће додати %s.</string>
     <string name="add_already_exists">%s је већ на вашој листи.</string>
-    <string name="title_new_episodes">Nove epizode</string>
+    <string name="title_new_episodes">Нове епизоде</string>
     <string name="watched_shows">Одгледано</string>
     <string name="shows_collection">Колекција</string>
     <string name="watchlist">Листа за гледање</string>
@@ -247,8 +247,8 @@
     <string name="action_similar">Слично</string>
     <string name="title_similar_shows">Сличне емисије</string>
     <!-- Discover -->
-    <string name="title_discover">Otkrijte</string>
-    <string name="title_popular">Popularno</string>
+    <string name="title_discover">Откријте</string>
+    <string name="title_popular">Популарно</string>
     <string name="action_filter">Филтер</string>
     <string name="filter_year">Година</string>
     <string name="filter_year_current">Актуелна година</string>
@@ -269,11 +269,11 @@
     <string name="list_empty">Можете додати емисије на ову листу</string>
     <string name="action_lists_reorder">Поново сортирајте листе</string>
     <string name="ack_lists_reordered">Листе су преуређене</string>
-    <string name="error_name_already_exists">Lista sa ovim imenom već postoji</string>
+    <string name="error_name_already_exists">Листа са овим именом већ постоји</string>
     <!-- Movies -->
-    <string name="title_digital_releases">Digitalna izdanja</string>
-    <string name="title_disc_releases">Disk izdanja</string>
-    <string name="movies_in_theatres">U bioskopima</string>
+    <string name="title_digital_releases">Дигитална издања</string>
+    <string name="title_disc_releases">Диск издања</string>
+    <string name="movies_in_theatres">У биоскопима</string>
     <string name="movies_collection">Колекција</string>
     <string name="movies_watchlist">Листа за гледање</string>
     <string name="movies_watched">Одгледано</string>
@@ -301,29 +301,29 @@
     <string name="stats_in_collection_format">%d у колекцији</string>
     <string name="movies_watched_format">%s погледано</string>
     <plurals name="days_plural">
-        <item quantity="one">%d dan</item>
-        <item quantity="few">%d dana</item>
-        <item quantity="other">%d dana</item>
+        <item quantity="one">%d дан</item>
+        <item quantity="few">%d дана</item>
+        <item quantity="other">%d дана</item>
     </plurals>
     <plurals name="hours_plural">
-        <item quantity="one">%d sat</item>
-        <item quantity="few">%d sati</item>
-        <item quantity="other">%d sati</item>
+        <item quantity="one">%d сат</item>
+        <item quantity="few">%d сати</item>
+        <item quantity="other">%d сати</item>
     </plurals>
     <plurals name="minutes_plural">
-        <item quantity="one">%d minut</item>
-        <item quantity="few">%d minuta</item>
-        <item quantity="other">%d minuta</item>
+        <item quantity="one">%d минут</item>
+        <item quantity="few">%d минута</item>
+        <item quantity="other">%d минута</item>
     </plurals>
     <!-- Features -->
-    <string name="feature_supported">Podržano</string>
-    <string name="feature_not_supported">Nije podržano</string>
-    <string name="feature_history">Lična i istorija prijatelja</string>
-    <string name="feature_comments">Postujte komentare</string>
-    <string name="feature_sync">Sinhronizacija</string>
+    <string name="feature_supported">Подржано</string>
+    <string name="feature_not_supported">Није подржано</string>
+    <string name="feature_history">Лична и историја пријатеља</string>
+    <string name="feature_comments">Постујте коментаре</string>
+    <string name="feature_sync">Синхронизација</string>
     <!-- Hexagon -->
-    <string name="hexagon_description">SeriusGuide Cloud vam pomaže da bekapujete i sinhronozujete svoje serije, liste i filmove</string>
-    <string name="hexagon_warning_trakt">Dok god budete ulogovani sa SeriesGuide Cloud neke trakt opcije vam neće biti dostupne</string>
+    <string name="hexagon_description">SeriusGuide Cloud вам помаже да направите резервну копију и синхронизујете ваше емисије, листе и филмове</string>
+    <string name="hexagon_warning_trakt">Док сте пријављени помоћу SeriesGuide Clouda-a, неке Trakt функције нису доступне</string>
     <string name="hexagon_signin">Пријави се</string>
     <string name="hexagon_signout">Одјави се</string>
     <string name="hexagon_setup_incomplete">Подешавање SeriesGuide Cloud-а није обављено.</string>
@@ -333,7 +333,7 @@
     <string name="hexagon_remove_account_failure">Налог није уклоњен.</string>
     <string name="hexagon_remove_account_confirmation">Брисање вашег налога ће обрисати све серије и филмове са SeriesGuide Cloud. Побрините се да га обришете и са осталих повезаних уређаја.</string>
     <string name="hexagon_api_queued">Слање на SeriesGuide Cloud.</string>
-    <string name="hexagon_signed_out">Izlogovan iz SeriesGuide Cloud-a</string>
+    <string name="hexagon_signed_out">Излогован из SeriesGuide Cloud-a</string>
     <string name="hexagon_signin_fail_format">Грешка са пријавом (%s)</string>
     <string name="hexagon_signin_google_only">Имејл захтева пријављивање на Google</string>
     <string name="hexagon_signin_choose">Изаберите имејл за пријаву ако користите SeriesGuide на другим уређајима који не подржавају пријављивање на Google.</string>
@@ -348,11 +348,11 @@
     <string name="trakt_error_credentials">Нешто није у реду. Молимо проверите Ваше акредитиве и покушајте поново.</string>
     <string name="trakt_error_not_exists">Није (још) доступно на Trakt-у. Покушајте поново касније.</string>
     <string name="trakt_notice_not_exists">Не може се (још) пратити са Trakt</string>
-    <string name="trakt_error_limit_exceeded_add">Can\'t add, Trakt account limit reached.</string>
-    <string name="trakt_error_limit_exceeded_upload">Can\'t upload, Trakt account limit reached.</string>
+    <string name="trakt_error_limit_exceeded_add">Није могуће додати, достигнуто је ограничење Тракт налога.</string>
+    <string name="trakt_error_limit_exceeded_upload">Отпремање није могуће, достигнуто је ограничење налога Тракт.</string>
     <!-- Connect trakt -->
     <string name="trakt_required">Да бисте ово користили, повежите се на Trakt</string>
-    <string name="connect_trakt">Повежи trakt</string>
+    <string name="connect_trakt">Повежи Trakt</string>
     <string name="trakt_reconnect">Повезати SeriesGuide са Trakt</string>
     <string name="trakt_reconnect_details">Проверите акредитиве Trakt-а</string>
     <string name="waitplease">Тренутак, молим&#8230;</string>
@@ -361,7 +361,7 @@
     <string name="show_library">Додајте емисије из Trakt</string>
     <string name="about_trakt">Trakt води евиденцију серија и филмова које гледате.</string>
     <string name="support_trakt">Подежите Trakt са VIP</string>
-    <string name="action_trakt_view_limits">View account limits</string>
+    <string name="action_trakt_view_limits">Погледајте ограничења налога</string>
     <!-- trakt ratings -->
     <string name="action_rate">Оцени</string>
     <string name="ack_rated">Оцена послата</string>
@@ -423,7 +423,7 @@
         <item quantity="other">Пре %d минута</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">Полиса приватности</string>
+    <string name="privacy_policy">Политика приватности</string>
     <string name="licence_themoviedb">Овај производ користи TMDB API, али није потврђен или оверен од TMDB-а.</string>
     <string name="licence_trakt">Ова апликација користи податке и слике Trakt-а.</string>
     <string name="about_open_source">SeriesGuide је направљен помоћу софтвера отвореног кода.</string>
@@ -540,7 +540,7 @@
     <string name="billing_sub_description">Покушајте 30 дана, откажите било када.</string>
     <string name="upgrade_description">Свака претплата откључава све функције и подржава будућа ажурирања. За коришћење ове апликације није потребна претплата.</string>
     <string name="upgrade_success">Хвала што сте подржали SeriesGuide! Омогућен вам је приступ свим опцијама.</string>
-    <string name="billing_unlock_detected">X Pass апликације је нађена. И даље се можете претплатити за пдршку будућа ажурирања.</string>
+    <string name="billing_unlock_detected">X Pass апликације је нађена. И даље се можете претплатити за подршку будућа ажурирања.</string>
     <string name="billing_learn_more">Више информација и помоћи</string>
     <string name="subscription_expired_details">Ваша претплата за Х опције је истекла.</string>
     <!-- Amazon In-App Billing -->

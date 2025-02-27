@@ -39,7 +39,7 @@
     <string name="action_stream_settings">Ρυθμίσεις streaming ή αγορών</string>
     <string name="action_select_region">Επιλογή περιοχής</string>
     <string name="action_reset">Επαναφορά</string>
-    <string name="action_save">Save</string>
+    <string name="action_save">Αποθήκευση</string>
     <!-- Search -->
     <string name="clear_search_history">Εκκαθάριση ιστορικού αναζήτησης</string>
     <string name="search_hint">Αναζήτηση επεισοδίων</string>
@@ -149,8 +149,8 @@
     <string name="hidden">Κρυφή σειρα </string>
     <string name="unhidden">μη-κρυφή σειρά</string>
     <string name="action_shows_add">Προσθήκη Σειράς</string>
-    <string name="action_filter_and_sort">Filter and sort</string>
-    <string name="title_filter_general">General</string>
+    <string name="action_filter_and_sort">Φιλτράρισμα και ταξινόμηση</string>
+    <string name="title_filter_general">Γενικά</string>
     <string name="empty_filter">Κατάργηση όλων των φίλτρων</string>
     <string name="action_shows_filter_favorites">Αγαπημένα</string>
     <string name="action_shows_filter_unwatched">Δεν έχουν παρακολουθηθεί</string>
@@ -172,8 +172,8 @@
     <string name="context_marknext">Το επόμενο επεισόδιο έχει παρακολουθηθεί</string>
     <string name="action_episodes_switch_view">Αλλαγή προβολής</string>
     <string name="next_to_watch">Επόμενο για προβολή</string>
-    <string name="title_notes">Notes</string>
-    <string name="action_edit_note">Edit note</string>
+    <string name="title_notes">Σημειώσεις</string>
+    <string name="action_edit_note">Επεξεργασία σημείωσης</string>
     <!-- History -->
     <string name="user_stream">Ιστορικό</string>
     <string name="recently_watched">Παρακολουθήσατε πρόσφατα</string>
@@ -242,7 +242,7 @@
     <!-- Discover -->
     <string name="title_discover">Ανακαλύψτε</string>
     <string name="title_popular">Δημοφιλείς</string>
-    <string name="action_filter">Filter</string>
+    <string name="action_filter">Φιλτράρισμα</string>
     <string name="filter_year">Έτος</string>
     <string name="filter_year_current">Τρέχον έτος</string>
     <string name="filter_language">Γλώσσα</string>
@@ -338,8 +338,8 @@
     <string name="trakt_error_credentials">Κάτι πήγε στραβά. Παρακαλώ ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά.</string>
     <string name="trakt_error_not_exists">Δεν είναι (ακόμα) διαθέσιμο στο trakt. Ξαναδοκιμάστε αργότερα.</string>
     <string name="trakt_notice_not_exists">Δεν είναι δυνατή (ακόμα) η παρακολούθηση με το trakt.</string>
-    <string name="trakt_error_limit_exceeded_add">Can\'t add, Trakt account limit reached.</string>
-    <string name="trakt_error_limit_exceeded_upload">Can\'t upload, Trakt account limit reached.</string>
+    <string name="trakt_error_limit_exceeded_add">Δεν είναι δυνατή η προσθήκη, έχετε φτάσει το όριο του λογαριασμού Trakt.</string>
+    <string name="trakt_error_limit_exceeded_upload">Δεν είναι δυνατή η μεταφόρτωση, έχετε φτάσει το όριο του λογαριασμού Trakt.</string>
     <!-- Connect trakt -->
     <string name="trakt_required">Για να το χρησιμοποιήσετε αυτό, συνδεθείτε στο Trakt</string>
     <string name="connect_trakt">Σύνδεση trakt</string>
@@ -351,7 +351,7 @@
     <string name="show_library">Προσθήκη σειρών από Trakt</string>
     <string name="about_trakt">Το Trakt βοηθά να καταγράψετε τα τηλεοπτικά προγράμματα και τις ταινίες που βλέπετε.</string>
     <string name="support_trakt">Υποστήριξη Trakt με VIP</string>
-    <string name="action_trakt_view_limits">View account limits</string>
+    <string name="action_trakt_view_limits">Προβολή ορίων λογαριασμού</string>
     <!-- trakt ratings -->
     <string name="action_rate">Αξιολόγηση</string>
     <string name="ack_rated">Η βαθμολογία απεστάλη</string>

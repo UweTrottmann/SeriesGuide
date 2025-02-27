@@ -358,8 +358,8 @@
     <string name="trakt_error_credentials">Что-то пошло не так. Пожалуйста, проверьте ваши учётные данные и повторите попытку.</string>
     <string name="trakt_error_not_exists">Недоступно (пока) на Trakt. Попробуйте позже.</string>
     <string name="trakt_notice_not_exists">Невозможно (пока) отследить с помощью Trakt</string>
-    <string name="trakt_error_limit_exceeded_add">Can\'t add, Trakt account limit reached.</string>
-    <string name="trakt_error_limit_exceeded_upload">Can\'t upload, Trakt account limit reached.</string>
+    <string name="trakt_error_limit_exceeded_add">Не удалось добавить, достигнут лимит аккаунта Trakt.</string>
+    <string name="trakt_error_limit_exceeded_upload">Не удалось загрузить, достигнут лимит аккаунта Trakt.</string>
     <!-- Connect trakt -->
     <string name="trakt_required">Чтобы использовать это, подключитесь к Trakt</string>
     <string name="connect_trakt">Подключение trakt</string>
@@ -371,7 +371,7 @@
     <string name="show_library">Добавить сериалы из Trakt</string>
     <string name="about_trakt">Trakt помогает вести учет, какие сериалы и фильмы Вы смотрите.</string>
     <string name="support_trakt">Поддержка Trakt с VIP</string>
-    <string name="action_trakt_view_limits">View account limits</string>
+    <string name="action_trakt_view_limits">Просмотр ограничений аккаунта</string>
     <!-- trakt ratings -->
     <string name="action_rate">Oценить</string>
     <string name="ack_rated">Оценка отправлена</string>
