@@ -3,34 +3,37 @@ layout: default
 ---
 
 <div class="row pb-3 pb-sm-0">
-  <div class="col-sm-6 col-md-5 pb-3 pb-sm-0"> 
+
+  <div class="col-sm-6 col-md-5 pb-3 pb-sm-0">
+
     <div id="opener" class="mt-lg-8 mt-sm-5 mt-3 text-center text-sm-left">
       <h2 id="app-description">SeriesGuide helps you keep track of your favorite TV shows and movies.</h2>
     </div> 
 
     <div id="download-buttons" class="text-center text-sm-left mt-5">
+
       <a href="https://play.google.com/store/apps/details?id=com.battlelancer.seriesguide">
         <img class="mt-1 mr-2" alt="Get it on Google Play&trade;" src="images/google-play-link-403x120.png" width="200" height="60" />
       </a>
-      <a href="/amazon">
-        <img class="mt-1" alt="Available at Amazon" src="images/amazon-apps-link.png" width="175" height="60" />
-      </a>
 
-      <a href="{% link whypay.html %}" class="btn btn-primary btn-lg mt-5">Subscribe to support</a>
+      <h4 class="mt-3">Other releases</h4>
+      <div class="row">
+        <div class="col-md-12">
+          <a class="btn btn-outline-dark btn-sm mb-1" href="{{ site.data.links.github-install }}">Get it on GitHub or Obtainium (no Cloud support)</a>
+          <a class="btn btn-outline-dark btn-sm mb-1" href="{% link amazon.html %}">Get it on Amazon (only Kindle devices)</a>
+          <a class="btn btn-outline-dark btn-sm mb-1" href="{% link _help/how-to/basics/preview.html %}">Preview program</a>
+          <a class="btn btn-outline-dark btn-sm mb-1" href="{{ site.data.links.legacy }}">Legacy versions (APK, Android 4.x)</a>
+        </div>
+      </div>
+
+      <a href="{% link whypay.html %}" class="btn btn-primary btn-lg mt-4">Subscribe to support</a>
 
     </div><!-- download-buttons -->
+
   </div>
 
   <div class="col-sm-6 col-md-7">
     <img src="images/hero.png" class="img-fluid d-block mx-auto mt-sm-3 img-hero" alt="Screenshot showing the main screen of SeriesGuide with a list of shows."/>
   </div>
-</div>
 
-<h4>Other releases</h4>
-<div class="row pb-3">
-  <div class="col-md-12">
-    <a class="btn btn-outline-dark btn-sm mb-1" href="{{ site.data.links.github-install }}">Get it on GitHub or Obtainium</a>
-    <a class="btn btn-outline-dark btn-sm mb-1" href="{% link _help/how-to/basics/preview.html %}">Preview program</a>
-    <a class="btn btn-outline-dark btn-sm mb-1" href="{{ site.data.links.legacy }}">Legacy versions (APK, Android 4.x)</a>
-  </div>
 </div>
