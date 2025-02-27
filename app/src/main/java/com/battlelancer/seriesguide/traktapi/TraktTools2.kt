@@ -27,9 +27,10 @@ import com.uwetrottmann.trakt5.enums.Extended
 import com.uwetrottmann.trakt5.enums.IdType
 import com.uwetrottmann.trakt5.enums.Type
 import com.uwetrottmann.trakt5.services.Notes
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.ResponseBody.Companion.toResponseBody
 import retrofit2.Call
 import retrofit2.Response
-import retrofit2.awaitResponse
 
 object TraktTools2 {
 
@@ -138,7 +139,12 @@ object TraktTools2 {
         logErrorOnNullBody: Boolean = false
     ): TraktResponse<T> {
         val response = try {
-            call.awaitResponse()
+            // FIXME Debugging
+            Response.error<T>(
+                420,
+                "Account limit exceeded".toResponseBody("text/plain; charset=utf-8".toMediaType())
+            )
+//            call.awaitResponse()
         } catch (e: Exception) {
             Errors.logAndReport(action, e)
             return TraktErrorResponse.Other()

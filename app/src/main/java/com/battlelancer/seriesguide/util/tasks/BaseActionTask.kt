@@ -16,8 +16,11 @@ import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceCompletedEvent
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.trakt5.TraktV2
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.greenrobot.eventbus.EventBus
 import retrofit2.Call
+import retrofit2.Response
 
 @Suppress("DEPRECATION") // Just a warning that AsyncTask should not be used for new code
 abstract class BaseActionTask(context: Context) : AsyncTask<Void?, Void?, Int?>() {
@@ -89,7 +92,11 @@ abstract class BaseActionTask(context: Context) : AsyncTask<Void?, Void?, Int?>(
         callbackOnSuccess: ResponseCallback<T>
     ): Int {
         try {
-            val response = call.execute()
+            // FIXME Debugging
+            val response =  Response.error<T>(
+                        420,
+                "Account limit exceeded".toResponseBody("text/plain; charset=utf-8".toMediaType()))
+//            val response = call.execute()
             if (response.isSuccessful) {
                 val body = response.body() ?: return ERROR_TRAKT_API_CLIENT
                 return callbackOnSuccess.handleSuccessfulResponse(body)

@@ -15,6 +15,8 @@ import com.github.michaelbull.result.andThen
 import com.github.michaelbull.result.mapError
 import com.github.michaelbull.result.runCatching
 import com.uwetrottmann.trakt5.TraktV2
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.ResponseBody.Companion.toResponseBody
 import retrofit2.Call
 import retrofit2.Response
 
@@ -103,7 +105,10 @@ abstract class BaseNetworkJob(
         bodyAction: (Response<T>, T) -> Result<R, Int>
     ): Result<R, Int> {
         return runCatching {
-            call.execute()
+            Response.error<T>(
+                420,
+                "Account limit exceeded".toResponseBody("text/plain; charset=utf-8".toMediaType()))
+//            call.execute()
         }.mapError {
             Errors.logAndReport(action, it)
             ERROR_CONNECTION
