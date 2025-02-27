@@ -4,10 +4,32 @@ Translations are managed by a Crowdin project and are imported into this repo by
 
 [download-translations.ps1](/download-translations.ps1)
 
-Strips all region specifiers so translations are used by Android for all regional variants.
+If there are not multiple region or script variants, strips the region specifier so translations are
+used by Android for any language variants.
 
-Except for when multiple variants are translated on Crowdin:
+Does renames to support regional variants:
 
-- Chinese: Mainland or Simplified (`values-zh-rCN`) and Taiwan or Traditional (`values-zh-rTW`)
-- Portuguese: Brazil (`values-pt-rBR`) and Portugal (`values-pt-rPT`)
-- Serbian: Cyrillic (`values-sr-rSP`) and Latin (`values-sr-rCS`)
+- Chinese `zh`
+  - Mainland or Simplified `values-zh-rCN`
+  - Taiwan or Traditional `values-zh-rTW`
+- Portuguese `pt`
+  - Brazil `values-pt-rBR`
+  - Portugal `values-pt-rPT`
+
+And renames to support script variants:
+
+- Serbian `sr`
+  - keeps Cyrillic Serbian as `values-sr`
+  - Latin Serbian `values-b+sr+Latn`
+    - Only use BCP 47 tag (`b+sr+Latn`) for script variant as officially only Android 7.0+ supports
+      them. This is what `androidx.appcompat` does. However, this seems to work even on an Android
+      5.0 emulator (incl. using a BCP 47 tag for the Cyrillic variant, but not doing that in case
+      other devices don't support it).
+
+## Adding or removing a language
+
+- Add or remove the `values-<tags>` directory.
+  When adding, take the file from the download script above!
+- Update [locales_config.xml](/app/src/main/res/xml/locales_config.xml) to 
+  [support per-app language preferences](https://developer.android.com/guide/topics/resources/app-languages#sample-config).
+  See the link for supported language codes. They differ from the resource directory name!
