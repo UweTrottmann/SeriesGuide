@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2024 Uwe Trottmann
+// Copyright 2024-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.overview
 
@@ -47,8 +47,9 @@ class EditNoteDialog() : AppCompatDialogFragment() {
             .also { this.binding = it }
 
         // Text field
-        binding.textFieldEditNote.counterMaxLength = SgShow2.MAX_USER_NOTE_LENGTH
-        val editText = binding.textFieldEditNote.editText!!
+        val noteTextField = binding.textFieldEditNote
+        noteTextField.counterMaxLength = SgShow2.MAX_USER_NOTE_LENGTH
+        val editText = noteTextField.editText!!
         // Disable save button if text is too long to save
         editText.doAfterTextChanged { text ->
             setSaveEnabled(model.uiState.value.isEditingEnabled, text.textHasNoError())
@@ -75,6 +76,7 @@ class EditNoteDialog() : AppCompatDialogFragment() {
                 model.uiState.collect { state ->
                     Timber.d("Display note")
                     editText.setText(state.noteText)
+                    noteTextField.error = state.errorText
                     setViewsEnabled(state.isEditingEnabled, editText.text.textHasNoError())
                     if (state.isNoteSaved) {
                         dismiss()

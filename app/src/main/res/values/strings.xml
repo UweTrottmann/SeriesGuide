@@ -364,7 +364,8 @@
     <string name="trakt_error_credentials">Something went wrong. Check your Trakt credentials and try again.</string>
     <string name="trakt_error_not_exists">Not (yet) available on Trakt. Try again later.</string>
     <string name="trakt_notice_not_exists">Can not (yet) be tracked with Trakt</string>
-    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded_add">Can\'t add, Trakt account limit reached.</string>
+    <string name="trakt_error_limit_exceeded_upload">Can\'t upload, Trakt account limit reached.</string>
 
     <!-- Connect trakt -->
     <string name="trakt_required">To use this, connect to Trakt</string>
@@ -377,6 +378,7 @@
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt helps keep a record of what TV shows and movies you are watching.</string>
     <string name="support_trakt">Support Trakt with VIP</string>
+    <string name="action_trakt_view_limits">View account limits</string>
 
     <!-- trakt ratings -->
     <string name="action_rate">Rate</string>

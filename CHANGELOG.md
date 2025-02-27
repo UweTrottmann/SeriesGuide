@@ -10,6 +10,9 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Next release
 
+* 🔧 Trakt: more general error message when the maximum number of something is reached.
+* 🔧 Trakt: display error when uploading notes fails because the account limit of notes is reached.
+* 🔧 Trakt: add shortcut to view account limits to Connect Trakt screen.
 * 📝 Latest user interface translations from Crowdin.
 
 ## Version 2024.5

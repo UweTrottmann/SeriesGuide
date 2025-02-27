@@ -338,7 +338,8 @@
     <string name="trakt_error_credentials">Нешто тргна наопаку. Проверете ја вашата trakt сметка и обидете се повторно.</string>
     <string name="trakt_error_not_exists">Не е (сеуште) достапно на trakt. Пробајте подоцна.</string>
     <string name="trakt_notice_not_exists">Не може (сеуште) да бидат тракирани со trakt.</string>
-    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded_add">Can\'t add, Trakt account limit reached.</string>
+    <string name="trakt_error_limit_exceeded_upload">Can\'t upload, Trakt account limit reached.</string>
     <!-- Connect trakt -->
     <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">Поврзи trakt</string>
@@ -350,6 +351,7 @@
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt помага да води евиденција кој ТВ емисии и филмови вие гледате.</string>
     <string name="support_trakt">Support Trakt with VIP</string>
+    <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">Оцени</string>
     <string name="ack_rated">Rating sent</string>
