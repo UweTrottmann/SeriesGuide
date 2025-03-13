@@ -417,7 +417,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                         }
                         .show()
                 } else {
-                    MovieTools.watchedMovie(context, tmdbId, plays, inWatchlist)
+                    MovieTools.watchedMovie(requireContext(), tmdbId, plays, inWatchlist)
                 }
             }
         }
@@ -440,9 +440,9 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             )
             it.setOnClickListener {
                 if (inCollection) {
-                    MovieTools.removeFromCollection(context, tmdbId)
+                    MovieTools.removeFromCollection(requireContext(), tmdbId)
                 } else {
-                    MovieTools.addToCollection(context, tmdbId)
+                    MovieTools.addToCollection(requireContext(), tmdbId)
                 }
             }
         }
@@ -464,9 +464,9 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             )
             it.setOnClickListener {
                 if (inWatchlist) {
-                    MovieTools.removeFromWatchlist(context, tmdbId)
+                    MovieTools.removeFromWatchlist(requireContext(), tmdbId)
                 } else {
-                    MovieTools.addToWatchlist(context, tmdbId)
+                    MovieTools.addToWatchlist(requireContext(), tmdbId)
                 }
             }
         }

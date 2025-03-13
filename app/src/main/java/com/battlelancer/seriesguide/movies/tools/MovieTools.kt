@@ -1,327 +1,112 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2014-2024 Uwe Trottmann
+// Copyright 2014-2025 Uwe Trottmann
 
-package com.battlelancer.seriesguide.movies.tools;
+package com.battlelancer.seriesguide.movies.tools
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.text.TextUtils;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.battlelancer.seriesguide.jobs.FlagJobExecutor;
-import com.battlelancer.seriesguide.jobs.movies.MovieCollectionJob;
-import com.battlelancer.seriesguide.jobs.movies.MovieWatchedJob;
-import com.battlelancer.seriesguide.jobs.movies.MovieWatchlistJob;
-import com.battlelancer.seriesguide.modules.ApplicationContext;
-import com.battlelancer.seriesguide.movies.MoviesSettings;
-import com.battlelancer.seriesguide.movies.database.MovieHelper;
-import com.battlelancer.seriesguide.movies.database.SgMovieFlags;
-import com.battlelancer.seriesguide.movies.details.MovieDetails;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
-import com.battlelancer.seriesguide.provider.SgRoomDatabase;
-import com.battlelancer.seriesguide.traktapi.SgTrakt;
-import com.battlelancer.seriesguide.traktapi.TraktSettings;
-import com.battlelancer.seriesguide.traktapi.TraktTools;
-import com.battlelancer.seriesguide.util.Errors;
-import com.battlelancer.seriesguide.util.TextTools;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.tmdb2.entities.AppendToResponse;
-import com.uwetrottmann.tmdb2.entities.Movie;
-import com.uwetrottmann.tmdb2.enumerations.AppendToResponseItem;
-import com.uwetrottmann.tmdb2.services.MoviesService;
-import com.uwetrottmann.trakt5.entities.Ratings;
-import dagger.Lazy;
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import javax.inject.Inject;
-import retrofit2.Response;
-import timber.log.Timber;
+import android.content.ContentValues
+import android.content.Context
+import android.text.TextUtils
+import com.battlelancer.seriesguide.jobs.FlagJobExecutor
+import com.battlelancer.seriesguide.jobs.movies.MovieCollectionJob
+import com.battlelancer.seriesguide.jobs.movies.MovieWatchedJob
+import com.battlelancer.seriesguide.jobs.movies.MovieWatchlistJob
+import com.battlelancer.seriesguide.modules.ApplicationContext
+import com.battlelancer.seriesguide.movies.MoviesSettings
+import com.battlelancer.seriesguide.movies.details.MovieDetails
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.traktapi.SgTrakt
+import com.battlelancer.seriesguide.traktapi.TraktSettings
+import com.battlelancer.seriesguide.traktapi.TraktTools
+import com.battlelancer.seriesguide.util.Errors
+import com.battlelancer.seriesguide.util.TextTools
+import com.uwetrottmann.androidutils.AndroidUtils
+import com.uwetrottmann.tmdb2.entities.AppendToResponse
+import com.uwetrottmann.tmdb2.entities.Movie
+import com.uwetrottmann.tmdb2.enumerations.AppendToResponseItem
+import com.uwetrottmann.tmdb2.services.MoviesService
+import com.uwetrottmann.trakt5.entities.Ratings
+import dagger.Lazy
+import timber.log.Timber
+import java.text.DateFormat
+import java.util.Date
+import java.util.LinkedList
+import javax.inject.Inject
 
-public class MovieTools {
+/**
+ * Helps with loading movie details and adding or removing movies from lists.
+ */
+class MovieTools @Inject constructor(
+    @param:ApplicationContext private val context: Context,
+    private val tmdbMovies: Lazy<MoviesService>,
+    private val trakt: Lazy<SgTrakt>
+) {
 
-    public static class MovieChangedEvent {
-        public int movieTmdbId;
+    class MovieChangedEvent(var movieTmdbId: Int)
 
-        public MovieChangedEvent(int movieTmdbId) {
-            this.movieTmdbId = movieTmdbId;
-        }
-    }
-
-    public enum Lists {
+    enum class Lists(val databaseColumn: String) {
         COLLECTION(Movies.IN_COLLECTION),
         WATCHLIST(Movies.IN_WATCHLIST),
-        WATCHED(Movies.WATCHED);
-
-        public final String databaseColumn;
-
-        Lists(String databaseColumn) {
-            this.databaseColumn = databaseColumn;
-        }
+        WATCHED(Movies.WATCHED)
     }
 
-    private final Context context;
-    private final Lazy<MoviesService> tmdbMovies;
-    private final Lazy<SgTrakt> trakt;
-    private final MovieTools2 movieTools2;
-
-    @Inject
-    public MovieTools(
-            @ApplicationContext Context context,
-            Lazy<MoviesService> tmdbMovies,
-            Lazy<SgTrakt> trakt
-    ) {
-        this.context = context;
-        this.tmdbMovies = tmdbMovies;
-        this.trakt = trakt;
-        this.movieTools2 = new MovieTools2();
-    }
-
-    /**
-     * Date format using only numbers.
-     */
-    public static DateFormat getMovieShortDateFormat() {
-        // use SHORT as in some languages (Portuguese) the MEDIUM string is longer than expected
-        return DateFormat.getDateInstance(DateFormat.SHORT);
-    }
-
-    /**
-     * Return release date or null if unknown from millisecond value stored in the database as
-     * {@link Movies#RELEASED_UTC_MS}.
-     */
-    @Nullable
-    public static Date movieReleaseDateFrom(long releaseDateMs) {
-        return releaseDateMs == Long.MAX_VALUE ? null : new Date(releaseDateMs);
-    }
-
-    /**
-     * Deletes all movies which are not watched and not in any list.
-     */
-    public static void deleteUnusedMovies(Context context) {
-        int rowsDeleted = context.getContentResolver()
-                .delete(Movies.CONTENT_URI,
-                        Movies.SELECTION_UNWATCHED
-                                + " AND " + Movies.SELECTION_NOT_COLLECTION
-                                + " AND " + Movies.SELECTION_NOT_WATCHLIST,
-                        null);
-        Timber.d("deleteUnusedMovies: removed %s movies", rowsDeleted);
-    }
-
-    public static void addToCollection(Context context, int movieTmdbId) {
-        FlagJobExecutor.execute(context, new MovieCollectionJob(movieTmdbId, true));
-    }
-
-    public static void addToWatchlist(Context context, int movieTmdbId) {
-        FlagJobExecutor.execute(context, new MovieWatchlistJob(movieTmdbId, true));
-    }
+    private val movieTools2 = MovieTools2()
 
     /**
      * Adds the movie to the given list. If it was not in any list before, adds the movie to the
      * local database first. Returns if the database operation was successful.
      */
-    public boolean addToList(int movieTmdbId, Lists list) {
-        boolean movieExists = isMovieInDatabase(movieTmdbId);
-        if (movieExists) {
-            return updateMovie(context, movieTmdbId, list, true);
+    fun addToList(movieTmdbId: Int, list: Lists): Boolean {
+        val movieExists = isMovieInDatabase(movieTmdbId)
+        return if (movieExists) {
+            updateMovie(context, movieTmdbId, list, true)
         } else {
-            return addMovie(movieTmdbId, list);
+            addMovie(movieTmdbId, list)
         }
     }
 
-    private boolean isMovieInDatabase(int movieTmdbId) {
-        int count = SgRoomDatabase.getInstance(context).movieHelper().getCount(movieTmdbId);
-        return count > 0;
+    private fun isMovieInDatabase(movieTmdbId: Int): Boolean {
+        val count = SgRoomDatabase.getInstance(context).movieHelper().getCount(movieTmdbId)
+        return count > 0
     }
 
-    public static void removeFromCollection(Context context, int movieTmdbId) {
-        FlagJobExecutor.execute(context, new MovieCollectionJob(movieTmdbId, false));
-    }
-
-    public static void removeFromWatchlist(Context context, int movieTmdbId) {
-        FlagJobExecutor.execute(context, new MovieWatchlistJob(movieTmdbId, false));
-    }
-
-    /**
-     * Removes the movie from the given list.
-     *
-     * <p>If it would not be on any list afterwards, deletes the movie from the local database.
-     *
-     * @return If the database operation was successful.
-     */
-    public static boolean removeFromList(Context context, int movieTmdbId, Lists listToRemoveFrom) {
-        SgMovieFlags movieFlags = SgRoomDatabase.getInstance(context).movieHelper()
-                .getMovieFlags(movieTmdbId);
-        if (movieFlags == null) {
-            return false; // query failed
-        }
-
-        boolean removeMovie = false;
-        if (listToRemoveFrom == Lists.COLLECTION) {
-            removeMovie = !movieFlags.getInWatchlist() && !movieFlags.getWatched();
-        } else if (listToRemoveFrom == Lists.WATCHLIST) {
-            removeMovie = !movieFlags.getInCollection() && !movieFlags.getWatched();
-        } else if (listToRemoveFrom == Lists.WATCHED) {
-            removeMovie = !movieFlags.getInCollection() && !movieFlags.getInWatchlist();
-        }
-
-        // if movie will not be in any list, remove it completely
-        if (removeMovie) {
-            return deleteMovie(context, movieTmdbId);
-        } else {
-            // otherwise, just update
-            return updateMovie(context, movieTmdbId, listToRemoveFrom, false);
-        }
-    }
-
-    public static void watchedMovie(
-            Context context,
-            int movieTmdbId,
-            int currentPlays,
-            boolean inWatchlist
-    ) {
-        FlagJobExecutor.execute(
-                context,
-                new MovieWatchedJob(movieTmdbId, true, currentPlays)
-        );
-        // trakt removes from watchlist automatically, but app would not show until next sync
-        // and not mirror on hexagon, so do it manually
-        if (inWatchlist) {
-            removeFromWatchlist(context, movieTmdbId);
-        }
-    }
-
-    public static void unwatchedMovie(Context context, int movieTmdbId) {
-        FlagJobExecutor.execute(context, new MovieWatchedJob(movieTmdbId, false, 0));
-    }
-
-    private static ContentValues[] buildMoviesContentValues(List<MovieDetails> movies) {
-        ContentValues[] valuesArray = new ContentValues[movies.size()];
-        int index = 0;
-        for (MovieDetails movie : movies) {
-            valuesArray[index] = movie.toContentValuesInsert();
-            index++;
-        }
-        return valuesArray;
-    }
-
-    /**
-     * Returns a set of the TMDb ids of all movies in the local database.
-     *
-     * @return null if there was an error, empty list if there are no movies.
-     */
-    public static HashSet<Integer> getMovieTmdbIdsAsSet(Context context) {
-        HashSet<Integer> localMoviesIds = new HashSet<>();
-
-        Cursor movies = context.getContentResolver().query(Movies.CONTENT_URI,
-                new String[]{Movies.TMDB_ID},
-                null, null, null);
-        if (movies == null) {
-            return null;
-        }
-
-        while (movies.moveToNext()) {
-            localMoviesIds.add(movies.getInt(0));
-        }
-
-        movies.close();
-
-        return localMoviesIds;
-    }
-
-    private boolean addMovie(int movieTmdbId, Lists listToAddTo) {
+    private fun addMovie(movieTmdbId: Int, listToAddTo: Lists): Boolean {
         // get movie info
-        MovieDetails details = getMovieDetails(movieTmdbId, false);
+        val details = getMovieDetails(movieTmdbId, false)
         if (details.tmdbMovie() == null) {
             // abort if minimal data failed to load
-            return false;
+            return false
         }
 
         // build values
-        details.setInCollection(listToAddTo == Lists.COLLECTION);
-        details.setInWatchlist(listToAddTo == Lists.WATCHLIST);
-        boolean isWatched = listToAddTo == Lists.WATCHED;
-        details.setWatched(isWatched);
-        details.setPlays(isWatched ? 1 : 0);
-        ContentValues values = details.toContentValuesInsert();
+        details.isInCollection = listToAddTo == Lists.COLLECTION
+        details.isInWatchlist = listToAddTo == Lists.WATCHLIST
+        val isWatched = listToAddTo == Lists.WATCHED
+        details.isWatched = isWatched
+        details.plays = if (isWatched) 1 else 0
+        val values = details.toContentValuesInsert()
 
         // add to database
-        context.getContentResolver().insert(Movies.CONTENT_URI, values);
+        context.contentResolver.insert(Movies.CONTENT_URI, values)
 
         // ensure ratings for new movie are downloaded on next sync
-        TraktSettings.resetMoviesLastRatedAt(context);
+        TraktSettings.resetMoviesLastRatedAt(context)
 
-        return true;
-    }
-
-    /**
-     * Returns {@code true} if the movie was updated.
-     */
-    private static boolean updateMovie(
-            Context context,
-            int movieTmdbId,
-            Lists list,
-            boolean value
-    ) {
-        MovieHelper helper = SgRoomDatabase.getInstance(context).movieHelper();
-
-        int rowsUpdated;
-        switch (list) {
-            case COLLECTION:
-                rowsUpdated = helper.updateInCollection(movieTmdbId, value);
-                break;
-            case WATCHLIST:
-                rowsUpdated = helper.updateInWatchlist(movieTmdbId, value);
-                break;
-            case WATCHED:
-                if (value) {
-                    rowsUpdated = helper.setWatchedAndAddPlay(movieTmdbId);
-                } else {
-                    rowsUpdated = helper.setNotWatchedAndRemovePlays(movieTmdbId);
-                }
-                break;
-            default:
-                throw new IllegalArgumentException("Unsupported Lists type " + list);
-        }
-
-        // As some movie lists still use the old ContentProvider, notify the movie URI.
-        context.getContentResolver().notifyChange(Movies.CONTENT_URI, null);
-
-        return rowsUpdated > 0;
+        return true
     }
 
     /**
      * Updates existing movie. If movie does not exist in database, will do nothing.
      */
-    public void updateMovie(MovieDetails details, int tmdbId) {
-        ContentValues values = details.toContentValuesUpdate();
+    fun updateMovie(details: MovieDetails, tmdbId: Int) {
+        val values = details.toContentValuesUpdate()
         if (values.size() == 0) {
-            return; // nothing to update, downloading probably failed :(
+            return  // nothing to update, downloading probably failed :(
         }
 
-        values.put(Movies.LAST_UPDATED, System.currentTimeMillis());
+        values.put(Movies.LAST_UPDATED, System.currentTimeMillis())
 
-        context.getContentResolver().update(Movies.buildMovieUri(tmdbId),
-                values, null, null);
-    }
-
-    /**
-     * Returns {@code true} if the movie was deleted.
-     */
-    private static boolean deleteMovie(Context context, int movieTmdbId) {
-        int rowsDeleted = SgRoomDatabase.getInstance(context).movieHelper()
-                .deleteMovie(movieTmdbId);
-        Timber.d("deleteMovie: deleted %s movies", rowsDeleted);
-
-        // As some movie lists still use the old ContentProvider, notify the movie URI.
-        context.getContentResolver().notifyChange(Movies.CONTENT_URI, null);
-
-        return rowsDeleted > 0;
+        context.contentResolver.update(Movies.buildMovieUri(tmdbId), values, null, null)
     }
 
     /**
@@ -331,184 +116,374 @@ public class MovieTools {
      * @param newWatchlistMovies      Movie TMDB ids to add to the watchlist.
      * @param newWatchedMoviesToPlays Movie TMDB ids to set watched mapped to play count.
      */
-    public boolean addMovies(
-            @NonNull Set<Integer> newCollectionMovies,
-            @NonNull Set<Integer> newWatchlistMovies,
-            @NonNull Map<Integer, Integer> newWatchedMoviesToPlays
-    ) {
+    fun addMovies(
+        newCollectionMovies: Set<Int>,
+        newWatchlistMovies: Set<Int>,
+        newWatchedMoviesToPlays: Map<Int, Int?>
+    ): Boolean {
         Timber.d(
-                "addMovies: %s to collection, %s to watchlist, %s to watched",
-                newCollectionMovies.size(),
-                newWatchlistMovies.size(),
-                newWatchedMoviesToPlays.size()
-        );
+            "addMovies: %s to collection, %s to watchlist, %s to watched",
+            newCollectionMovies.size,
+            newWatchlistMovies.size,
+            newWatchedMoviesToPlays.size
+        )
 
         // build a single list of tmdb ids
-        Set<Integer> newMovies = new HashSet<>();
-        newMovies.addAll(newCollectionMovies);
-        newMovies.addAll(newWatchlistMovies);
-        newMovies.addAll(newWatchedMoviesToPlays.keySet());
+        val newMovies: MutableSet<Int> = HashSet()
+        newMovies.addAll(newCollectionMovies)
+        newMovies.addAll(newWatchlistMovies)
+        newMovies.addAll(newWatchedMoviesToPlays.keys)
 
-        String languageCode = MoviesSettings.getMoviesLanguage(context);
-        String regionCode = MoviesSettings.getMoviesRegion(context);
-        List<MovieDetails> movies = new LinkedList<>();
+        val languageCode = MoviesSettings.getMoviesLanguage(context)
+        val regionCode = MoviesSettings.getMoviesRegion(context)
+        val movies: MutableList<MovieDetails> = LinkedList()
 
         // loop through ids
-        for (Iterator<Integer> iterator = newMovies.iterator(); iterator.hasNext(); ) {
-            int tmdbId = iterator.next();
+        val iterator: Iterator<Int> = newMovies.iterator()
+        while (iterator.hasNext()) {
+            val tmdbId = iterator.next()
             if (!AndroidUtils.isNetworkConnected(context)) {
-                Timber.e("addMovies: no network connection");
-                return false;
+                Timber.e("addMovies: no network connection")
+                return false
             }
 
             // download movie data
-            MovieDetails movieDetails = getMovieDetails(languageCode, regionCode, tmdbId, false);
+            val movieDetails = getMovieDetails(languageCode, regionCode, tmdbId, false)
             if (movieDetails.tmdbMovie() == null) {
                 // skip if minimal values failed to load
-                Timber.d("addMovies: downloaded movie %s incomplete, skipping", tmdbId);
-                continue;
+                Timber.d("addMovies: downloaded movie %s incomplete, skipping", tmdbId)
+                continue
             }
 
             // set flags
-            movieDetails.setInCollection(newCollectionMovies.contains(tmdbId));
-            movieDetails.setInWatchlist(newWatchlistMovies.contains(tmdbId));
-            Integer plays = newWatchedMoviesToPlays.get(tmdbId);
-            boolean isWatched = plays != null;
-            movieDetails.setWatched(isWatched);
-            movieDetails.setPlays(isWatched ? plays : 0);
+            movieDetails.isInCollection = newCollectionMovies.contains(tmdbId)
+            movieDetails.isInWatchlist = newWatchlistMovies.contains(tmdbId)
+            val plays = newWatchedMoviesToPlays[tmdbId]
+            val isWatched = plays != null
+            movieDetails.isWatched = isWatched
+            movieDetails.plays = (if (isWatched) plays else 0)!!
 
-            movies.add(movieDetails);
+            movies.add(movieDetails)
 
             // Already add to the database if we have 10 movies so UI can already update.
-            if (movies.size() == 10) {
-                context.getContentResolver().bulkInsert(Movies.CONTENT_URI,
-                        buildMoviesContentValues(movies));
-                movies.clear(); // Start a new batch.
+            if (movies.size == 10) {
+                context.contentResolver.bulkInsert(
+                    Movies.CONTENT_URI,
+                    buildMoviesContentValues(movies)
+                )
+                movies.clear() // Start a new batch.
             }
         }
 
         // Insert remaining new movies into the database.
-        if (!movies.isEmpty()) {
-            context.getContentResolver().bulkInsert(Movies.CONTENT_URI,
-                    buildMoviesContentValues(movies));
+        if (movies.isNotEmpty()) {
+            context.contentResolver.bulkInsert(
+                Movies.CONTENT_URI,
+                buildMoviesContentValues(movies)
+            )
         }
 
-        return true;
+        return true
     }
 
     /**
-     * Download movie data from TMDB (and trakt) using
-     * {@link MoviesSettings#getMoviesLanguage(Context)}
-     * and {@link MoviesSettings#getMoviesRegion(Context)}.
+     * Download movie data from TMDB (and trakt) using [MoviesSettings.getMoviesLanguage]
+     * and [MoviesSettings.getMoviesRegion].
      *
      * @param getTraktRating Rating from TMDB is always fetched. Fetching trakt rating involves
-     *                       looking up the trakt id first, so skip if not necessary.
+     * looking up the trakt id first, so skip if not necessary.
      */
-    public MovieDetails getMovieDetails(int movieTmdbId, boolean getTraktRating) {
-        String languageCode = MoviesSettings.getMoviesLanguage(context);
-        String regionCode = MoviesSettings.getMoviesRegion(context);
-        return getMovieDetails(languageCode, regionCode, movieTmdbId, getTraktRating);
+    fun getMovieDetails(movieTmdbId: Int, getTraktRating: Boolean): MovieDetails {
+        val languageCode = MoviesSettings.getMoviesLanguage(context)
+        val regionCode = MoviesSettings.getMoviesRegion(context)
+        return getMovieDetails(languageCode, regionCode, movieTmdbId, getTraktRating)
     }
 
     /**
      * Download movie data from TMDB (and trakt).
      *
      * @param getTraktRating Rating from TMDB is always fetched. Fetching trakt rating involves
-     *                       looking up the trakt id first, so skip if not necessary.
+     * looking up the trakt id first, so skip if not necessary.
      */
-    public MovieDetails getMovieDetails(String languageCode, String regionCode, int movieTmdbId,
-            boolean getTraktRating) {
-        MovieDetails details = new MovieDetails();
+    fun getMovieDetails(
+        languageCode: String?,
+        regionCode: String,
+        movieTmdbId: Int,
+        getTraktRating: Boolean
+    ): MovieDetails {
+        val details = MovieDetails()
 
         // load ratings from trakt
         if (getTraktRating) {
-            Integer movieTraktId = TraktTools.lookupMovieTraktId(trakt.get(), movieTmdbId);
+            val movieTraktId = TraktTools.lookupMovieTraktId(trakt.get(), movieTmdbId)
             if (movieTraktId != null) {
-                details.traktRatings(loadRatingsFromTrakt(movieTraktId));
+                details.traktRatings(loadRatingsFromTrakt(movieTraktId))
             }
         }
 
         // load summary from tmdb
-        details.tmdbMovie(loadSummaryFromTmdb(languageCode, regionCode, movieTmdbId));
+        details.tmdbMovie(loadSummaryFromTmdb(languageCode, regionCode, movieTmdbId))
 
-        return details;
+        return details
     }
 
-    private Ratings loadRatingsFromTrakt(int movieTraktId) {
+    private fun loadRatingsFromTrakt(movieTraktId: Int): Ratings? {
         try {
-            Response<Ratings> response = trakt.get().movies()
-                    .ratings(String.valueOf(movieTraktId))
-                    .execute();
-            if (response.isSuccessful()) {
-                return response.body();
+            val response = trakt.get().movies()
+                .ratings(movieTraktId.toString())
+                .execute()
+            if (response.isSuccessful) {
+                return response.body()
             }
-            Errors.logAndReport("get movie rating", response);
-        } catch (Exception e) {
-            Errors.logAndReport("get movie rating", e);
+            Errors.logAndReport("get movie rating", response)
+        } catch (e: Exception) {
+            Errors.logAndReport("get movie rating", e)
         }
-        return null;
+        return null
     }
 
-    @Nullable
-    private com.uwetrottmann.tmdb2.entities.Movie loadSummaryFromTmdb(
-            @Nullable String languageCode,
-            String regionCode,
-            int movieTmdbId
-    ) {
+    private fun loadSummaryFromTmdb(
+        languageCode: String?,
+        regionCode: String,
+        movieTmdbId: Int
+    ): Movie? {
         // try to get local movie summary
-        Movie movie = getMovieSummary("get local movie summary",
-                languageCode, movieTmdbId, true);
+        val movie = getMovieSummary(
+            "get local movie summary",
+            languageCode, movieTmdbId, true
+        )
         if (movie != null && !TextUtils.isEmpty(movie.overview)) {
-            movieTools2.updateReleaseDateForRegion(movie, movie.release_dates, regionCode);
-            return movie;
+            movieTools2.updateReleaseDateForRegion(movie, movie.release_dates, regionCode)
+            return movie
         }
 
         // fall back to default language if TMDb has no localized text
-        Movie movieFallback = getMovieSummary("get default movie summary",
-                null, movieTmdbId, false);
+        val movieFallback = getMovieSummary(
+            "get default movie summary",
+            null, movieTmdbId, false
+        )
         if (movieFallback != null) {
             // add note about non-translated or non-existing overview
-            String untranslatedOverview = movieFallback.overview;
-            movieFallback.overview = TextTools
-                    .textNoTranslationMovieLanguage(context, languageCode,
-                            MoviesSettings.getMoviesLanguage(context));
+            val untranslatedOverview = movieFallback.overview
+            var overview = TextTools.textNoTranslationMovieLanguage(
+                context, languageCode,
+                MoviesSettings.getMoviesLanguage(context)
+            )
             if (!TextUtils.isEmpty(untranslatedOverview)) {
-                movieFallback.overview += "\n\n" + untranslatedOverview;
+                overview += "\n\n" + untranslatedOverview
             }
+            movieFallback.overview = overview
             if (movie != null) {
-                movieTools2.updateReleaseDateForRegion(movie, movie.release_dates, regionCode);
+                movieTools2.updateReleaseDateForRegion(movie, movie.release_dates, regionCode)
             }
         }
-        return movieFallback;
+        return movieFallback
     }
 
-    @Nullable
-    public Movie getMovieSummary(int movieTmdbId) {
-        String languageCode = MoviesSettings.getMoviesLanguage(context);
-        return getMovieSummary("get local movie summary", languageCode, movieTmdbId, false);
+    fun getMovieSummary(movieTmdbId: Int): Movie? {
+        val languageCode = MoviesSettings.getMoviesLanguage(context)
+        return getMovieSummary("get local movie summary", languageCode, movieTmdbId, false)
     }
 
-    @Nullable
-    private Movie getMovieSummary(@NonNull String action, @Nullable String language,
-            int movieTmdbId, boolean includeReleaseDates) {
+    private fun getMovieSummary(
+        action: String,
+        language: String?,
+        movieTmdbId: Int,
+        includeReleaseDates: Boolean
+    ): Movie? {
         try {
-            Response<Movie> response = tmdbMovies.get()
-                    .summary(
-                            movieTmdbId,
-                            language,
-                            includeReleaseDates
-                                    ? new AppendToResponse(AppendToResponseItem.RELEASE_DATES)
-                                    : null
-                    )
-                    .execute();
-            if (response.isSuccessful()) {
-                return response.body();
+            val response = tmdbMovies.get()
+                .summary(
+                    movieTmdbId,
+                    language,
+                    if (includeReleaseDates)
+                        AppendToResponse(AppendToResponseItem.RELEASE_DATES)
+                    else
+                        null
+                )
+                .execute()
+            if (response.isSuccessful) {
+                return response.body()
             } else {
-                Errors.logAndReport(action, response);
+                Errors.logAndReport(action, response)
             }
-        } catch (Exception e) {
-            Errors.logAndReport(action, e);
+        } catch (e: Exception) {
+            Errors.logAndReport(action, e)
         }
-        return null;
+        return null
+    }
+
+    companion object {
+
+        /**
+         * Date format using only numbers.
+         */
+        fun getMovieShortDateFormat(): DateFormat {
+            // use SHORT as in some languages (Portuguese) the MEDIUM string is longer than expected
+            return DateFormat.getDateInstance(DateFormat.SHORT)
+        }
+
+        /**
+         * Return release date or null if unknown from millisecond value stored in the database as
+         * [Movies.RELEASED_UTC_MS].
+         */
+        fun movieReleaseDateFrom(releaseDateMs: Long): Date? {
+            return if (releaseDateMs == Long.MAX_VALUE) null else Date(releaseDateMs)
+        }
+
+        /**
+         * Deletes all movies which are not watched and not in any list.
+         */
+        fun deleteUnusedMovies(context: Context) {
+            val rowsDeleted = context.contentResolver
+                .delete(
+                    Movies.CONTENT_URI,
+                    "${Movies.SELECTION_UNWATCHED} AND ${Movies.SELECTION_NOT_COLLECTION} AND ${Movies.SELECTION_NOT_WATCHLIST}",
+                    null
+                )
+            Timber.d("deleteUnusedMovies: removed %s movies", rowsDeleted)
+        }
+
+        fun addToCollection(context: Context, movieTmdbId: Int) {
+            FlagJobExecutor.execute(context, MovieCollectionJob(movieTmdbId, true))
+        }
+
+        fun addToWatchlist(context: Context, movieTmdbId: Int) {
+            FlagJobExecutor.execute(context, MovieWatchlistJob(movieTmdbId, true))
+        }
+
+        fun removeFromCollection(context: Context, movieTmdbId: Int) {
+            FlagJobExecutor.execute(context, MovieCollectionJob(movieTmdbId, false))
+        }
+
+        fun removeFromWatchlist(context: Context, movieTmdbId: Int) {
+            FlagJobExecutor.execute(context, MovieWatchlistJob(movieTmdbId, false))
+        }
+
+        /**
+         * Removes the movie from the given list.
+         *
+         * If it would not be on any list afterwards, deletes the movie from the local database.
+         *
+         * @return If the database operation was successful.
+         */
+        fun removeFromList(context: Context, movieTmdbId: Int, listToRemoveFrom: Lists): Boolean {
+            val movieFlags = SgRoomDatabase.getInstance(context).movieHelper()
+                .getMovieFlags(movieTmdbId)
+            if (movieFlags == null) {
+                return false // query failed
+            }
+
+            var removeMovie = false
+            if (listToRemoveFrom == Lists.COLLECTION) {
+                removeMovie = !movieFlags.inWatchlist && !movieFlags.watched
+            } else if (listToRemoveFrom == Lists.WATCHLIST) {
+                removeMovie = !movieFlags.inCollection && !movieFlags.watched
+            } else if (listToRemoveFrom == Lists.WATCHED) {
+                removeMovie = !movieFlags.inCollection && !movieFlags.inWatchlist
+            }
+
+            // if movie will not be in any list, remove it completely
+            return if (removeMovie) {
+                deleteMovie(context, movieTmdbId)
+            } else {
+                // otherwise, just update
+                updateMovie(context, movieTmdbId, listToRemoveFrom, false)
+            }
+        }
+
+        fun watchedMovie(
+            context: Context,
+            movieTmdbId: Int,
+            currentPlays: Int,
+            inWatchlist: Boolean
+        ) {
+            FlagJobExecutor.execute(
+                context,
+                MovieWatchedJob(movieTmdbId, true, currentPlays)
+            )
+            // trakt removes from watchlist automatically, but app would not show until next sync
+            // and not mirror on hexagon, so do it manually
+            if (inWatchlist) {
+                removeFromWatchlist(context, movieTmdbId)
+            }
+        }
+
+        fun unwatchedMovie(context: Context, movieTmdbId: Int) {
+            FlagJobExecutor.execute(context, MovieWatchedJob(movieTmdbId, false, 0))
+        }
+
+        private fun buildMoviesContentValues(movies: List<MovieDetails>): Array<ContentValues> {
+            return movies.map { it.toContentValuesInsert() }.toTypedArray()
+        }
+
+        /**
+         * Returns a set of the TMDb ids of all movies in the local database.
+         *
+         * @return null if there was an error, empty list if there are no movies.
+         */
+        fun getMovieTmdbIdsAsSet(context: Context): HashSet<Int>? {
+            val localMoviesIds = HashSet<Int>()
+
+            val movies = context.contentResolver.query(
+                Movies.CONTENT_URI,
+                arrayOf(Movies.TMDB_ID),
+                null, null, null
+            )
+            if (movies == null) {
+                return null
+            }
+
+            while (movies.moveToNext()) {
+                localMoviesIds.add(movies.getInt(0))
+            }
+
+            movies.close()
+
+            return localMoviesIds
+        }
+
+        /**
+         * Returns `true` if the movie was updated.
+         */
+        private fun updateMovie(
+            context: Context,
+            movieTmdbId: Int,
+            list: Lists,
+            value: Boolean
+        ): Boolean {
+            val helper = SgRoomDatabase.getInstance(context).movieHelper()
+
+            val rowsUpdated = when (list) {
+                Lists.COLLECTION -> helper.updateInCollection(movieTmdbId, value)
+
+                Lists.WATCHLIST -> helper.updateInWatchlist(movieTmdbId, value)
+
+                Lists.WATCHED -> if (value) {
+                    helper.setWatchedAndAddPlay(movieTmdbId)
+                } else {
+                    helper.setNotWatchedAndRemovePlays(movieTmdbId)
+                }
+            }
+
+            // As some movie lists still use the old ContentProvider, notify the movie URI.
+            context.contentResolver.notifyChange(Movies.CONTENT_URI, null)
+
+            return rowsUpdated > 0
+        }
+
+        /**
+         * Returns `true` if the movie was deleted.
+         */
+        private fun deleteMovie(context: Context, movieTmdbId: Int): Boolean {
+            val rowsDeleted = SgRoomDatabase.getInstance(context).movieHelper()
+                .deleteMovie(movieTmdbId)
+            Timber.d("deleteMovie: deleted %s movies", rowsDeleted)
+
+            // As some movie lists still use the old ContentProvider, notify the movie URI.
+            context.contentResolver.notifyChange(Movies.CONTENT_URI, null)
+
+            return rowsDeleted > 0
+        }
     }
 }
