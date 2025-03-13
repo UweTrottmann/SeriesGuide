@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2022-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies.tools
 
@@ -15,11 +15,10 @@ class MovieToolsTest {
 
     @Test
     fun updateReleaseDateForRegion() {
-        val movieTools = MovieTools2()
         val movie = Movie()
             .apply { release_date = Date(1) }
 
-        movieTools.updateReleaseDateForRegion(movie, null, "DE")
+        MovieTools.updateReleaseDateForRegion(movie, null, "DE")
         assertThat(movie.release_date).isEqualTo(Date(1)) // not updated.
 
         val releaseDates = ReleaseDatesResults().apply {
@@ -53,11 +52,11 @@ class MovieToolsTest {
             )
         }
 
-        movieTools.updateReleaseDateForRegion(movie, releaseDates, "DE")
+        MovieTools.updateReleaseDateForRegion(movie, releaseDates, "DE")
         // Picks oldest DE theatrical release date.
         assertThat(movie.release_date).isEqualTo(Date(1234))
 
-        movieTools.updateReleaseDateForRegion(movie, releaseDates, "US")
+        MovieTools.updateReleaseDateForRegion(movie, releaseDates, "US")
         // Picks single US date.
         assertThat(movie.release_date).isEqualTo(Date(123456))
     }

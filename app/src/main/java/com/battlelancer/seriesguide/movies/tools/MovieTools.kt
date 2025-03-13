@@ -13,6 +13,7 @@ import com.battlelancer.seriesguide.jobs.movies.MovieWatchlistJob
 import com.battlelancer.seriesguide.modules.ApplicationContext
 import com.battlelancer.seriesguide.movies.MoviesSettings
 import com.battlelancer.seriesguide.movies.details.MovieDetails
+import com.battlelancer.seriesguide.movies.tools.MovieTools.Lists
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.traktapi.SgTrakt
@@ -23,6 +24,8 @@ import com.battlelancer.seriesguide.util.TextTools
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.entities.AppendToResponse
 import com.uwetrottmann.tmdb2.entities.Movie
+import com.uwetrottmann.tmdb2.entities.ReleaseDate
+import com.uwetrottmann.tmdb2.entities.ReleaseDatesResults
 import com.uwetrottmann.tmdb2.enumerations.AppendToResponseItem
 import com.uwetrottmann.tmdb2.services.MoviesService
 import com.uwetrottmann.trakt5.entities.Ratings
@@ -34,7 +37,7 @@ import java.util.LinkedList
 import javax.inject.Inject
 
 /**
- * Helps with loading movie details and adding or removing movies from lists.
+ * Helps with loading movie details and adding or removing movies from [Lists].
  */
 class MovieTools @Inject constructor(
     @param:ApplicationContext private val context: Context,
@@ -42,13 +45,11 @@ class MovieTools @Inject constructor(
     private val trakt: Lazy<SgTrakt>
 ) {
 
-    enum class Lists(val databaseColumn: String) {
-        COLLECTION(Movies.IN_COLLECTION),
-        WATCHLIST(Movies.IN_WATCHLIST),
-        WATCHED(Movies.WATCHED)
+    enum class Lists {
+        COLLECTION,
+        WATCHLIST,
+        WATCHED
     }
-
-    private val movieTools2 = MovieTools2()
 
     /**
      * Adds the movie to the given list. If it was not in any list before, adds the movie to the
@@ -251,7 +252,7 @@ class MovieTools @Inject constructor(
             languageCode, movieTmdbId, true
         )
         if (movie != null && !TextUtils.isEmpty(movie.overview)) {
-            movieTools2.updateReleaseDateForRegion(movie, movie.release_dates, regionCode)
+            updateReleaseDateForRegion(movie, movie.release_dates, regionCode)
             return movie
         }
 
@@ -272,7 +273,7 @@ class MovieTools @Inject constructor(
             }
             movieFallback.overview = overview
             if (movie != null) {
-                movieTools2.updateReleaseDateForRegion(movie, movie.release_dates, regionCode)
+                updateReleaseDateForRegion(movie, movie.release_dates, regionCode)
             }
         }
         return movieFallback
@@ -327,6 +328,45 @@ class MovieTools @Inject constructor(
          */
         fun movieReleaseDateFrom(releaseDateMs: Long): Date? {
             return if (releaseDateMs == Long.MAX_VALUE) null else Date(releaseDateMs)
+        }
+
+        /**
+         * Replaces the release date of the movie with one of the given region, if available.
+         * Picks the theatrical release or if not available the first date for that region.
+         * This is not always the best approach, e.g. when viewing disc or digital releases this might
+         * not display the correct date. But this is the best possible right now.
+         */
+        fun updateReleaseDateForRegion(
+            movie: Movie,
+            results: ReleaseDatesResults?,
+            regionCode: String
+        ) {
+            results?.results?.find {
+                it.iso_3166_1 == regionCode
+            }?.let { region ->
+                val releaseDates = region.release_dates ?: return // No release dates.
+
+                // Only one date? Pick it.
+                if (releaseDates.size == 1) {
+                    releaseDates[0].release_date?.let { date ->
+                        movie.release_date = date
+                    }
+                    return
+                }
+
+                // Pick the oldest theatrical release, if available.
+                val theatricalRelease = releaseDates
+                    .filter { it.type == ReleaseDate.TYPE_THEATRICAL }
+                    .minOfOrNull { it.release_date }
+                if (theatricalRelease != null) {
+                    movie.release_date = theatricalRelease
+                } else {
+                    // Otherwise just get the first one, if available.
+                    releaseDates[0]?.release_date?.let { date ->
+                        movie.release_date = date
+                    }
+                }
+            }
         }
 
         /**
