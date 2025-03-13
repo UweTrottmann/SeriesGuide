@@ -7,7 +7,7 @@ import android.content.Context
 import com.battlelancer.seriesguide.jobs.BaseFlagJob
 import com.battlelancer.seriesguide.jobs.SgJobInfo
 import com.battlelancer.seriesguide.jobs.episodes.JobAction
-import com.battlelancer.seriesguide.movies.tools.MovieTools.MovieChangedEvent
+import com.battlelancer.seriesguide.movies.details.MovieDetailsFragment.MovieChangedEvent
 import com.google.flatbuffers.FlatBufferBuilder
 import org.greenrobot.eventbus.EventBus
 

@@ -42,8 +42,6 @@ class MovieTools @Inject constructor(
     private val trakt: Lazy<SgTrakt>
 ) {
 
-    class MovieChangedEvent(var movieTmdbId: Int)
-
     enum class Lists(val databaseColumn: String) {
         COLLECTION(Movies.IN_COLLECTION),
         WATCHLIST(Movies.IN_WATCHLIST),

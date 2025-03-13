@@ -4,7 +4,7 @@
 package com.battlelancer.seriesguide.util.tasks
 
 import android.content.Context
-import com.battlelancer.seriesguide.movies.tools.MovieTools
+import com.battlelancer.seriesguide.movies.details.MovieDetailsFragment
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.uwetrottmann.trakt5.entities.MovieIds
 import com.uwetrottmann.trakt5.entities.SyncItems
@@ -40,7 +40,7 @@ class RateMovieTask(
         super.onPostExecute(result)
 
         // post event so movie UI reloads (it is not listening to database changes)
-        EventBus.getDefault().post(MovieTools.MovieChangedEvent(movieTmdbId))
+        EventBus.getDefault().post(MovieDetailsFragment.MovieChangedEvent(movieTmdbId))
     }
 
 }

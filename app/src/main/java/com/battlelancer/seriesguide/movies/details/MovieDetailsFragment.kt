@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2019-2024 Uwe Trottmann
+// Copyright 2019-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies.details
 
@@ -683,7 +683,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEvent(event: MovieTools.MovieChangedEvent) {
+    fun onEvent(event: MovieChangedEvent) {
         if (event.movieTmdbId != tmdbId) {
             return
         }
@@ -910,4 +910,9 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             }
         }
     }
+
+    /**
+     * Post to make [MovieDetailsFragment] update movie details.
+     */
+    class MovieChangedEvent(var movieTmdbId: Int)
 }
