@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2015-2024 Uwe Trottmann
+// Copyright 2015-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.util.tasks
 
@@ -101,12 +101,11 @@ abstract class BaseActionTask(context: Context) : AsyncTask<Void?, Void?, Int?>(
                     action, response,
                     SgTrakt.checkForTraktError(trakt, response)
                 )
-                val code = response.code()
-                return if (code == 429 || code >= 500) {
+                return if (SgTrakt.isRateLimitExceeded(response) || SgTrakt.isServerError(response)) {
                     ERROR_TRAKT_API_SERVER
-                } else if (code == 420) {
+                } else if (SgTrakt.isAccountLimitExceeded(response)) {
                     ERROR_TRAKT_ACCOUNT_LIMIT_EXCEEDED
-                } else if (code == 423) {
+                } else if (TraktV2.isAccountLocked(response)) {
                     ERROR_TRAKT_ACCOUNT_LOCKED
                 } else {
                     ERROR_TRAKT_API_CLIENT
@@ -148,7 +147,7 @@ abstract class BaseActionTask(context: Context) : AsyncTask<Void?, Void?, Int?>(
                     context.getString(R.string.hexagon)
                 )
 
-                ERROR_TRAKT_ACCOUNT_LIMIT_EXCEEDED -> context.getString(R.string.trakt_error_limit_exceeded)
+                ERROR_TRAKT_ACCOUNT_LIMIT_EXCEEDED -> context.getString(R.string.trakt_error_limit_exceeded_add)
                 ERROR_TRAKT_ACCOUNT_LOCKED -> context.getString(R.string.trakt_error_account_locked)
                 else -> null
             }
@@ -169,7 +168,8 @@ abstract class BaseActionTask(context: Context) : AsyncTask<Void?, Void?, Int?>(
         private const val ERROR_TRAKT_API_SERVER = -7
 
         /**
-         * Account limit exceeded (list count, item count, ...).
+         * Account limit exceeded (list count, item count, ...). Should currently only occur when
+         * adding to watchlist.
          */
         private const val ERROR_TRAKT_ACCOUNT_LIMIT_EXCEEDED = -8
 

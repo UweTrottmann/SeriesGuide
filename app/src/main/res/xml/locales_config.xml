@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale-config xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- This must match the added values-<lang> folders. -->
+    <!-- See docs/translations.md on how to update this -->
     <locale android:name="ar"/> <!-- Arabic -->
     <locale android:name="bg"/> <!-- Bulgarian -->
     <locale android:name="ca"/> <!-- Catalan -->
@@ -33,6 +33,7 @@
     <locale android:name="ru"/> <!-- Russian -->
     <locale android:name="sk"/> <!-- Slovak -->
     <locale android:name="sr"/> <!-- Serbian (Cyrillic) -->
+    <locale android:name="sr-Latn"/> <!-- Serbian (Latin) -->
     <locale android:name="sv"/> <!-- Swedish -->
     <locale android:name="ta"/> <!-- Tamil -->
     <locale android:name="th"/> <!-- Thai -->

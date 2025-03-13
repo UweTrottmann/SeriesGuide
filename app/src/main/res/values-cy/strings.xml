@@ -378,7 +378,8 @@
     <string name="trakt_error_credentials">Aeth rhywbeth o\'i le. Gwiriwch eich cymwysterau Trakt a rhoi cynnig arall arni.</string>
     <string name="trakt_error_not_exists">Ddim (eto) ar gael ar Trakt. Rhowch gynnig arall arni yn nes ymlaen.</string>
     <string name="trakt_notice_not_exists">Ni ellir (eto) olrhain gyda Trakt</string>
-    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded_add">Can\'t add, Trakt account limit reached.</string>
+    <string name="trakt_error_limit_exceeded_upload">Can\'t upload, Trakt account limit reached.</string>
     <!-- Connect trakt -->
     <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">Cysylltu Trakt</string>
@@ -390,6 +391,7 @@
     <string name="show_library">Ychwanegu rhaglenni o Trakt</string>
     <string name="about_trakt">Mae Trakt yn helpu i gadw cofnod o\'r rhaglenni teledu a\'r ffilmiau rydych chi\'n eu gwylio.</string>
     <string name="support_trakt">Support Trakt with VIP</string>
+    <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">Cyfradd</string>
     <string name="ack_rated">Rating sent</string>

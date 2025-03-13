@@ -17,7 +17,8 @@
         android:layout_weight="1"
         app:counterEnabled="true"
         app:counterMaxLength="500"
-        app:endIconMode="clear_text">
+        app:endIconMode="clear_text"
+        app:errorEnabled="true">
 
         <!-- This can grow up to the height of the TextInputLayout by default and will push the
          counter out of bounds. As TextInputLayout is a LinearLayout, set layout_weight="1"

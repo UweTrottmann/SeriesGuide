@@ -338,7 +338,8 @@
     <string name="trakt_error_credentials">Alguna cosa no ha funcionat. Torneu a introduir les vostres credencials i proveu-ho una altra vegada.</string>
     <string name="trakt_error_not_exists">No disponible (encara) a trakt. Prova més tard.</string>
     <string name="trakt_notice_not_exists">No pot ser registrada (encara) a Trakt.</string>
-    <string name="trakt_error_limit_exceeded">La llista és plena, esborra alguna cosa primer.</string>
+    <string name="trakt_error_limit_exceeded_add">No es pot afegir, s\'ha arribat al límit del compte de Trakt.</string>
+    <string name="trakt_error_limit_exceeded_upload">No es pot pujar, s\'ha arribat al límit del compte de Trakt.</string>
     <!-- Connect trakt -->
     <string name="trakt_required">Per fer-ho servir, connecta\'t a Trakt</string>
     <string name="connect_trakt">Connecta\'t al Trakt</string>
@@ -350,6 +351,7 @@
     <string name="show_library">Afegir sèries de Trakt</string>
     <string name="about_trakt">La plataforma Trakt us ajuda a controlar les sèries i pel·lícules que esteu veient.</string>
     <string name="support_trakt">Ajuda a Trakt amb VIP</string>
+    <string name="action_trakt_view_limits">Veure els límits del compte</string>
     <!-- trakt ratings -->
     <string name="action_rate">Puntua</string>
     <string name="ack_rated">Valoració enviada</string>

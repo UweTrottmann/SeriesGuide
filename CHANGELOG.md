@@ -8,6 +8,24 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
 
+## Version 2025.1
+
+* 🔧 Trakt: improved error messages when an account limit is reached.
+* 🔧 Trakt: add shortcut to view account limits to Connect Trakt screen.
+* 📝 Add Latin Serbian user interface translation, thanks to kesaa89!
+
+### 2025.1.1 - 2025-03-13
+
+* 📝 Imported latest user interface translations.
+
+### 2025.1.0 - 2025-02-27
+
+* 🔧 Trakt: more general error message when the maximum number of something is reached.
+* 🔧 Trakt: display error when uploading notes fails because the account limit of notes is reached.
+* 🔧 Trakt: add shortcut to view account limits to Connect Trakt screen.
+* 📝 Add Latin Serbian user interface translation, thanks to kesaa89!
+* 📝 Imported latest user interface translations.
+
 ## Version 2024.5
 
 * 🌟 Shows: add a note to a show, synced with SeriesGuide Cloud or Trakt (VIP only).

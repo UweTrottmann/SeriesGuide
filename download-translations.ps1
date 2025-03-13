@@ -1,16 +1,32 @@
-# https://crowdin.github.io/crowdin-cli/
-crowdin.bat pull
-
 $downloadDir = ".\temp\"
 $destinationDir = ".\app\src\main\res"
 
-Write-Host "Dropping region specifiers for all but [zh], [pt]..."
-Get-ChildItem -Path $downloadDir | Where-Object {$_.PsIsContainer -and $_.Name -notlike "*zh*" -and $_.Name -notlike "*pt*" } |  Rename-Item  -NewName { $_.Name -creplace "-r[A-Z]+", "" }
+Write-Host "Clean up download folder ($downloadDir)..."
+Remove-Item -Path $downloadDir -Recurse -ErrorAction SilentlyContinue
 
-Write-Host "Copying files..."
-Get-ChildItem -Path $downloadDir | Where-Object {$_.PsIsContainer -and $_.FullName -like "*values-*"} | Copy-Item -Destination $destinationDir -Force -Recurse
+# https://crowdin.github.io/crowdin-cli/
+crowdin.bat pull
 
-Write-Host "Removing folder..."
+$directories = Get-ChildItem -Path $downloadDir -Directory
+foreach ($dir in $directories) {
+    if ($dir.Name -like "*sr-rCS") {
+        Write-Host "Rename Latin Serbian to values-b+sr+Latn"
+        $newName = $dir.Name -replace "sr-rCS$", "b+sr+Latn"        
+        Rename-Item -NewName $newName $dir
+    } elseif ($dir.Name -notlike "*pt*" -and $dir.Name -notlike "*zh*") {
+        # Note: keeping region for pt and zh
+        Write-Host "Dropping region for $($dir.Name)"
+        $newName = $dir.Name -creplace "-r[A-Z]+", ""
+        Rename-Item -NewName $newName $dir
+    } else {
+        Write-Host "Keeping $($dir.Name)"
+    }
+}
+
+Write-Host "Copying to destination ($destinationDir)..."
+Get-ChildItem -Path $downloadDir -Directory | Where-Object {$_.FullName -like "*values-*"} | Copy-Item -Destination $destinationDir -Force -Recurse
+
+Write-Host "Clean up download folder ($downloadDir)..."
 Remove-Item -Path $downloadDir -Recurse
 
 Write-Host "DONE"

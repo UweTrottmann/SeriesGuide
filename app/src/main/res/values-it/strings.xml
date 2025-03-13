@@ -338,7 +338,8 @@
     <string name="trakt_error_credentials">Qualcosa è andato storto. Per favore verifica le credenziali e riprova.</string>
     <string name="trakt_error_not_exists">Non (ancora) disponibile su trakt. Riprova più tardi.</string>
     <string name="trakt_notice_not_exists">Non è (ancora) possibile monitorarlo con trakt.</string>
-    <string name="trakt_error_limit_exceeded">La lista è piena, prima rimuovi qualcosa.</string>
+    <string name="trakt_error_limit_exceeded_add">Impossibile aggiungere, raggiunto il limite dell\'account Trakt.</string>
+    <string name="trakt_error_limit_exceeded_upload">Impossibile caricare, raggiunto il limite dell\'account Trakt.</string>
     <!-- Connect trakt -->
     <string name="trakt_required">Per usare questo, connettiti a Trakt</string>
     <string name="connect_trakt">Collegati a trakt</string>
@@ -350,6 +351,7 @@
     <string name="show_library">Aggiungi serie da Trakt</string>
     <string name="about_trakt">Trakt ti aiuta a tenere traccia delle serie TV e dei film che guardi.</string>
     <string name="support_trakt">Supporta Trakt con VIP</string>
+    <string name="action_trakt_view_limits">Visualizza limiti account</string>
     <!-- trakt ratings -->
     <string name="action_rate">Vota</string>
     <string name="ack_rated">Valutazione inviata</string>

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2024 Uwe Trottmann
+// Copyright 2024-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.overview
 
@@ -25,6 +25,7 @@ class EditNoteDialogViewModel(application: Application, private val showId: Long
     data class EditNoteDialogUiState(
         val noteText: String = "",
         val noteTraktId: Long? = null,
+        val errorText: String? = null,
         val isEditingEnabled: Boolean = false,
         val isNoteSaved: Boolean = false
     )
@@ -69,7 +70,7 @@ class EditNoteDialogViewModel(application: Application, private val showId: Long
             val result = SgApp.getServicesComponent(getApplication()).showTools()
                 .storeUserNote(showId, noteDraft, noteTraktId)
             uiState.update {
-                if (result != null) {
+                if (result.errorMessage == null) {
                     it.copy(
                         noteText = result.text,
                         noteTraktId = result.traktId,
@@ -77,8 +78,9 @@ class EditNoteDialogViewModel(application: Application, private val showId: Long
                         isNoteSaved = true
                     )
                 } else {
-                    // Failed, re-enable buttons
+                    // Failed: if there is an error message, display it, also re-enable buttons
                     it.copy(
+                        errorText = result.errorMessage.ifEmpty { null },
                         isEditingEnabled = true
                     )
                 }

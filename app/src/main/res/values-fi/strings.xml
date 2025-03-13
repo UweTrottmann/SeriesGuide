@@ -338,7 +338,8 @@
     <string name="trakt_error_credentials">Jokin meni pieleen. Tarkista Trakt-tunnuksesi ja yritä uudelleen.</string>
     <string name="trakt_error_not_exists">Ei (vielä) saatavilla Traktissa. Yritä myöhemmin uudelleen.</string>
     <string name="trakt_notice_not_exists">Ei voida (vielä) seurata Traktissa</string>
-    <string name="trakt_error_limit_exceeded">Lista on täynnä, poista ensin jotakin.</string>
+    <string name="trakt_error_limit_exceeded_add">Ei voida lisätä, Trakt-tilin raja saavutettu.</string>
+    <string name="trakt_error_limit_exceeded_upload">Ei voida lähettää, Trakt-tilin raja saavutettu.</string>
     <!-- Connect trakt -->
     <string name="trakt_required">Käyttääksesi tätä, yhdistä Traktiin</string>
     <string name="connect_trakt">Yhdistä Traktiin</string>
@@ -350,6 +351,7 @@
     <string name="show_library">Lisää ohjelmat Traktista</string>
     <string name="about_trakt">Trakt auttaa sinua pysymään kärryillä katsomistasi ohjelmista ja elokuvista.</string>
     <string name="support_trakt">Tue Traktia VIP-tilauksella</string>
+    <string name="action_trakt_view_limits">Näytä tilin rajat</string>
     <!-- trakt ratings -->
     <string name="action_rate">Arvostele</string>
     <string name="ack_rated">Arvosana lähetettiin</string>
@@ -499,9 +501,9 @@
     <string name="pref_notifications_battery_settings">Akkuasetukset</string>
     <string name="pref_notifications_battery_settings_summary">Siirry kohtaan Akku-asetukset poistaaksesi käytöstä akkuoptimoinnit luotettavien ilmoitusten saamiseksi</string>
     <string name="notifications_allow">Salli ilmoitukset</string>
-    <string name="notifications_allow_reason">Jos haluat saada jakso- ja virheilmoituksia, siirry asetuksiin ja salli ne.</string>
+    <string name="notifications_allow_reason">Vastaanottaaksesi jakso- ja virheilmoituksia, siirry Asetuksiin ja salli ne</string>
     <string name="precise_notifications_allow">Salli tarkat ilmoitukset</string>
-    <string name="precise_notifications_allow_reason">Jos haluat saada tarkkoja jakso-ilmoituksia, siirry asetuksiin ja salli ne.</string>
+    <string name="precise_notifications_allow_reason">Saadaksesi ilmoitukset ajoissa, siirry Asetuksiin ja salli muistutusten lisääminen</string>
     <!-- List Widget -->
     <string name="hide_watched">Piilota katsotut jaksot</string>
     <string name="pref_widget_opacity">Widgetin tausta</string>

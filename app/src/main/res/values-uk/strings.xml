@@ -358,7 +358,8 @@
     <string name="trakt_error_credentials">Щось пішло не так. Перевірте ваші облікові дані та повторіть спробу.</string>
     <string name="trakt_error_not_exists">Не доступно (поки що) на trakt. Спробуйте пізніше.</string>
     <string name="trakt_notice_not_exists">Не можна (поки що) відслідкувати на trakt.</string>
-    <string name="trakt_error_limit_exceeded">Список перегляду переповнений, спочатку щось видаліть.</string>
+    <string name="trakt_error_limit_exceeded_add">Неможливо додати, вичерпано ліміт облікового запису Trakt.</string>
+    <string name="trakt_error_limit_exceeded_upload">Неможливо завантажити, вичерпано ліміт облікового запису Trakt.</string>
     <!-- Connect trakt -->
     <string name="trakt_required">Щоб це використовувати, спершу під\'єднайтеся до Trakt</string>
     <string name="connect_trakt">Підключитись до trakt</string>
@@ -370,6 +371,7 @@
     <string name="show_library">Додати серіали чи фільми з Trakt</string>
     <string name="about_trakt">Trakt допомагає зберігати запис про те які телесеріали та фільми ви дивитеся.</string>
     <string name="support_trakt">Підтримати Trakt з VIP</string>
+    <string name="action_trakt_view_limits">Переглянути обмеження облікового запису</string>
     <!-- trakt ratings -->
     <string name="action_rate">Рейтинг</string>
     <string name="ack_rated">Рейтинг відправлено</string>

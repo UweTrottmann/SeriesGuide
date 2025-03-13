@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2022-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.tools
 
@@ -29,7 +29,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
-import timber.log.Timber
 import javax.inject.Inject
 import kotlin.collections.set
 import com.battlelancer.seriesguide.enums.Result as SgResult
@@ -458,11 +457,18 @@ class ShowTools2 @Inject constructor(
         notifyAboutSyncing()
     }
 
-    data class StoreUserNoteResult(val text: String, val traktId: Long?)
+    data class StoreUserNoteResult(
+        val text: String,
+        val traktId: Long?,
+        val errorMessage: String?
+    )
 
     /**
      * Uploads to Hexagon and Trakt and on success saves to local database,
-     * on failure returns `null`.
+     * on failure [StoreUserNoteResult.errorMessage] is non-null (but might be empty).
+     *
+     * If adding a new note on Trakt fails due to reaching the account limit and Cloud is connected,
+     * will still save to the database. But return an error message.
      *
      * Fails if [noteDraft] exceeds [SgShow2.MAX_USER_NOTE_LENGTH] characters.
      *
@@ -476,109 +482,161 @@ class ShowTools2 @Inject constructor(
         showId: Long,
         noteDraft: String,
         noteTraktId: Long?
-    ): StoreUserNoteResult? {
+    ): StoreUserNoteResult {
         val noteText = noteDraft
             .ifBlank { "" } // Avoid storing useless data, but also Trakt does not allow a blank text
 
-        // Fail if string is too long
-        if (noteText.length > SgShow2.MAX_USER_NOTE_LENGTH) return null
+        // Safeguard: fail if string is too long. This expects the caller ensures the string is
+        // short enough.
+        if (noteText.length > SgShow2.MAX_USER_NOTE_LENGTH) {
+            return StoreUserNoteResult(noteText, null, "")
+        }
+
+        // Connected check if sending to Cloud or Trakt
+        val isCloudEnabled = HexagonSettings.isEnabled(context)
+        val sendToTrakt = TraktCredentials.get(context).hasCredentials()
+        val uploading = isCloudEnabled || sendToTrakt
+        if (uploading) {
+            val isConnected = withContext(Dispatchers.Default) {
+                return@withContext AndroidUtils.isNetworkConnected(context)
+            }
+            if (!isConnected) return StoreUserNoteResult(
+                noteText,
+                null,
+                context.getString(R.string.offline)
+            )
+        }
+
+        // Get TMDB ID required to upload to Cloud or Trakt
+        val showTmdbId = withContext(Dispatchers.IO) {
+            SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTmdbId(showId)
+        }
+        if (uploading && showTmdbId <= 0) return StoreUserNoteResult(
+            noteText,
+            null,
+            context.getString(R.string.database_error)
+        )
 
         // Send to Cloud first, Trakt may fail if user is not VIP
-        val isSendToCloudSuccess: Boolean = if (HexagonSettings.isEnabled(context)) {
+        val errorCloud: String? = if (isCloudEnabled) {
             withContext(Dispatchers.Default) {
-                if (isNotConnected(context)) {
-                    return@withContext false
-                }
-
-                val showTmdbId = withContext(Dispatchers.IO) {
-                    SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTmdbId(showId)
-                }
-                if (showTmdbId == 0) return@withContext false
-
                 val show = SgCloudShow()
                 show.tmdbId = showTmdbId
                 // Must be empty to remove, Cloud ignores null values
                 show.note = noteText
-                return@withContext uploadShowToCloud(show)
+                if (uploadShowToCloud(show)) {
+                    null // Success
+                } else {
+                    context.getString(
+                        R.string.api_error_generic,
+                        context.getString(R.string.hexagon)
+                    )
+                }
             }
         } else {
-            true // Not sending to Cloud
+            null // Not sending to Cloud
         }
-
         // If sending to Cloud failed, do not even try Trakt or save to database
-        if (!isSendToCloudSuccess) return null
+        if (errorCloud != null) return StoreUserNoteResult(noteText, null, errorCloud)
 
-        var result: StoreUserNoteResult? = StoreUserNoteResult(text = noteText, traktId = null)
+        var result = StoreUserNoteResult(noteText, null, null)
+        var saveToDatabase = true
 
-        val sendToTrakt = TraktCredentials.get(context).hasCredentials()
         if (sendToTrakt) {
             result = withContext(Dispatchers.Default) {
-                if (isNotConnected(context)) {
-                    return@withContext null
-                }
-
-                val showTmdbId = withContext(Dispatchers.IO) {
-                    SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTmdbId(showId)
-                }
-                if (showTmdbId == 0) return@withContext null
-
                 val trakt = SgApp.getServicesComponent(context).trakt()
                 if (noteText.isEmpty()) {
                     // Delete note
-                    if (noteTraktId == null) return@withContext null
-                    val response = TraktTools2.deleteNote(trakt, noteTraktId)
+                    if (noteTraktId == null) {
+                        // If there is no Trakt ID and Cloud is not connected (which turns off Trakt
+                        // syncing), do not delete. Assuming the next Trakt sync to add one or
+                        // remove this note.
+                        saveToDatabase = isCloudEnabled
+                        return@withContext StoreUserNoteResult(noteText, null, "")
+                    }
+                    val response = TraktTools2.awaitAndHandleAuthError(context) {
+                        TraktTools2.deleteNote(trakt, noteTraktId)
+                    }
                     return@withContext when (response) {
                         is TraktResponse.Success -> {
-                            StoreUserNoteResult("", null) // Remove text and Trakt ID
+                            // Remove text and Trakt ID
+                            StoreUserNoteResult("", null, null)
                         }
 
-                        is TraktErrorResponse.IsUnauthorized -> {
-                            TraktCredentials.get(context).setCredentialsInvalid()
-                            null // Abort
+                        // Still do not delete from database when Cloud is connected to give user a
+                        // chance to retry immediately. Regardless, the next Cloud sync will delete
+                        // the note.
+                        is TraktErrorResponse.IsAccountLimitExceeded,
+                        is TraktErrorResponse.IsNotVip,
+                        is TraktErrorResponse.IsUnauthorized,
+                        is TraktErrorResponse.Other -> {
+                            saveToDatabase = false
+                            StoreUserNoteResult(
+                                noteText,
+                                noteTraktId,
+                                context.getString(
+                                    R.string.api_error_generic,
+                                    context.getString(R.string.trakt)
+                                )
+                            )
                         }
-
-                        is TraktErrorResponse.IsNotVip -> {
-                            Timber.d("storeUserNote: user is not Trakt VIP, can not delete at Trakt")
-                            result // Store as is
-                        }
-
-                        is TraktErrorResponse.Other -> null // Abort
                     }
                 } else {
                     // Add or update note
-                    val response = TraktTools2.saveNoteForShow(trakt.notes(), showTmdbId, noteText)
+                    val response = TraktTools2.awaitAndHandleAuthErrorNonNull(context) {
+                        TraktTools2.saveNoteForShow(trakt.notes(), showTmdbId, noteText)
+                    }
                     return@withContext when (response) {
                         is TraktNonNullResponse.Success -> {
                             // Store ID and note text from Trakt
                             // (which may shorten or otherwise modify it).
                             val storedText = response.data.notes ?: ""
-                            StoreUserNoteResult(storedText, response.data.id)
+                            StoreUserNoteResult(storedText, response.data.id, null)
                         }
 
-                        is TraktErrorResponse.IsUnauthorized -> {
-                            TraktCredentials.get(context).setCredentialsInvalid()
-                            null
+                        is TraktErrorResponse.IsAccountLimitExceeded -> {
+                            // If Cloud is also connected (Trakt sync is off, only sending actions
+                            // to Trakt), store to database, to not prevent using it only if Trakt
+                            // account limit is hit. Users can re-save the note to try uploading to
+                            // Trakt again.
+                            saveToDatabase = isCloudEnabled
+                            StoreUserNoteResult(
+                                noteText,
+                                noteTraktId,
+                                context.getString(R.string.trakt_error_limit_exceeded_upload)
+                            )
                         }
 
-                        is TraktErrorResponse.IsNotVip -> {
-                            Timber.d("storeUserNote: user is not Trakt VIP, can not upload to Trakt")
-                            result // Store as is
+                        // Still do not save to database when Cloud is connected to give user a
+                        // chance to retry immediately. Regardless, the next Cloud sync will add
+                        // the note.
+                        is TraktErrorResponse.IsNotVip,
+                        is TraktErrorResponse.IsUnauthorized,
+                        is TraktErrorResponse.Other -> {
+                            saveToDatabase = false
+                            StoreUserNoteResult(
+                                noteText,
+                                noteTraktId,
+                                context.getString(
+                                    R.string.api_error_generic,
+                                    context.getString(R.string.trakt)
+                                )
+                            )
                         }
-
-                        is TraktErrorResponse.Other -> null // Abort
                     }
                 }
             }
         }
 
-        // Do not save to local database if sending to Trakt has failed,
-        // but not if user is just not VIP.
-        if (result == null) return null
-
-        // Save to local database
-        withContext(Dispatchers.IO) {
-            SgRoomDatabase.getInstance(context).sgShow2Helper()
-                .updateUserNote(showId, result.text, result.traktId)
+        // Do not save to local database if Trakt upload indicates not to. If Cloud is connected
+        // (which turns off Trakt sync), the next Cloud sync might add or delete the note anyhow.
+        // See notes on Trakt error handling above.
+        if (saveToDatabase) {
+            // Save to local database
+            withContext(Dispatchers.IO) {
+                SgRoomDatabase.getInstance(context).sgShow2Helper()
+                    .updateUserNote(showId, result.text, result.traktId)
+            }
         }
         return result
     }

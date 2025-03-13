@@ -338,7 +338,8 @@
     <string name="trakt_error_credentials">Algo está errado. Certifica-te, por favor, que as tuas credenciais do Trakt estão correctas e tenta de novo.</string>
     <string name="trakt_error_not_exists">Não está (ainda) disponível no Trakt. Tenta mais tarde.</string>
     <string name="trakt_notice_not_exists">Não pode (ainda) ser seguido com o Trakt</string>
-    <string name="trakt_error_limit_exceeded">A lista está cheia, remove algo primeiro.</string>
+    <string name="trakt_error_limit_exceeded_add">Não é possível adicionar, o limite da conta Trakt foi atingido.</string>
+    <string name="trakt_error_limit_exceeded_upload">Não é possível carregar, o limite da conta Trakt foi atingido.</string>
     <!-- Connect trakt -->
     <string name="trakt_required">Para utilizar esta opção, conecta-te ao Trakt</string>
     <string name="connect_trakt">Conectar ao Trakt</string>
@@ -350,6 +351,7 @@
     <string name="show_library">Adicionar séries do Trakt</string>
     <string name="about_trakt">O Trakt ajuda-te a manter um registo das séries de televisão e dos filmes que vês.</string>
     <string name="support_trakt">Apoia o Trakt tornando-te VIP</string>
+    <string name="action_trakt_view_limits">Ver limites da conta</string>
     <!-- trakt ratings -->
     <string name="action_rate">Classificar</string>
     <string name="ack_rated">Classificação enviada</string>
@@ -433,7 +435,7 @@
     <string name="upcoming_upto_one_month">1 mês</string>
     <string name="upcoming_all">todos</string>
     <!-- Appearance settings -->
-    <string name="pref_appearance">Aparência</string>
+    <string name="pref_appearance">Aspeto</string>
     <string name="pref_theme">Tema</string>
     <string name="pref_dynamic_colors">Usar cores do sistema</string>
     <!-- Themes -->
@@ -445,15 +447,15 @@
     <string name="pref_other">Outro</string>
     <string name="pref_autoupdatesummary">Sincroniza e atualiza automaticamente os dados do SeriesGuide</string>
     <string name="backup">Cópia de Segurança/Restaurar</string>
-    <string name="backup_summary">Fazer uma cópia de segurança ou restaurar as tuas séries</string>
+    <string name="backup_summary">Faz uma cópia de segurança ou restaura as tuas séries, listas e filmes</string>
     <string name="pref_number">Formato numérico</string>
     <string name="pref_offset">Acerto manual do fuso horário</string>
     <string name="pref_offsetsummary">Ajustar o fuso horário da exibição em %d horas</string>
-    <string name="clear_cache">Apagar imagens da Cache</string>
+    <string name="clear_cache">Limpar cache</string>
     <string name="clear_cache_summary">Remove todas as imagens em cache do teu dispositivo</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Incluir as descrições, os detalhes e as classificações</string>
-    <string name="backup_failed_file_access">Cópia de segurança interrompida. Uma cópia de segurança não pôde ser encontrada ou acedida.</string>
+    <string name="backup_failed_file_access">Não é possível criar uma cópia de segurança. Não foi possível encontrar ou aceder a um ficheiro de cópia de segurança.</string>
     <string name="backup_success">Cópia de segurança bem sucedida.</string>
     <string name="backup_failed">A cópia de segurança não foi efetuada com sucesso.</string>
     <string name="import_failed_nosd">Não é possível restaurar a cópia de segurança. A pasta das cópias de segurança não se encontra disponível.</string>
@@ -466,11 +468,11 @@
     <string name="no_file_selected">Nenhum ficheiro selecionado</string>
     <string name="action_select_file">Selecionar ficheiro</string>
     <!-- Auto backup -->
-    <string name="pref_autobackup">Cópia de Segurança Automática</string>
-    <string name="pref_autobackupsummary">Cópia de segurança semanal das tuas listas, séries e filmes</string>
+    <string name="pref_autobackup">Cópia de segurança automática</string>
+    <string name="pref_autobackupsummary">Faz uma cópia de segurança semanal das tuas listas, séries e filmes</string>
     <string name="autobackup_details">Essas cópias de segurança não estarão disponíveis se a aplicação for reinstalada novamente, a menos que a cópia de segurança da aplicação esteja ativada para este dispositivo (Android 6+). Caso contrário, crie cópias para preservá-las.</string>
-    <string name="last_auto_backup">Última Cópia de Segurança Automática: %s</string>
-    <string name="restore_auto_backup">Restaurar Cópia de Segurança Automática</string>
+    <string name="last_auto_backup">Última cópia de segurança automática: %s</string>
+    <string name="restore_auto_backup">Restaurar cópia de segurança automática</string>
     <string name="autobackup_failed">A última cópia de segurança automática não foi efectuada com sucesso</string>
     <string name="autobackup_files_missing">Para usar a cópia de segurança automática, seleciona ficheiros de cópias de segurança válidos.</string>
     <string name="autobackup_create_user_copy">Cria uma cópia após cada cópia de segurança</string>

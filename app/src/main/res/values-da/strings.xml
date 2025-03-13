@@ -149,8 +149,8 @@
     <string name="hidden">Flyttet til skjulte</string>
     <string name="unhidden">Serie er synlig igen</string>
     <string name="action_shows_add">Tilføj serie</string>
-    <string name="action_filter_and_sort">Filter and sort</string>
-    <string name="title_filter_general">General</string>
+    <string name="action_filter_and_sort">Filtrer og sorter</string>
+    <string name="title_filter_general">Generelt</string>
     <string name="empty_filter">Fjern alle filtre</string>
     <string name="action_shows_filter_favorites">Foretrukne</string>
     <string name="action_shows_filter_unwatched">Ikke set</string>
@@ -242,7 +242,7 @@
     <!-- Discover -->
     <string name="title_discover">Opdag</string>
     <string name="title_popular">Populær</string>
-    <string name="action_filter">Filter</string>
+    <string name="action_filter">Filtrer</string>
     <string name="filter_year">År</string>
     <string name="filter_year_current">Indeværende år</string>
     <string name="filter_language">Sprog</string>
@@ -338,7 +338,8 @@
     <string name="trakt_error_credentials">Noget gik galt. Kontrollér dine trakt-brugeroplysninger, og prøv igen.</string>
     <string name="trakt_error_not_exists">Ikke tilgængelig på trakt (endnu). Prøv igen senere.</string>
     <string name="trakt_notice_not_exists">Kan ikke spores med trakt (endnu).</string>
-    <string name="trakt_error_limit_exceeded">Listen er fuld. Fjern nogle punkter først.</string>
+    <string name="trakt_error_limit_exceeded_add">Kan ikke tilføje, Trakt-kontogrænse er nået.</string>
+    <string name="trakt_error_limit_exceeded_upload">Kan ikke sende, Trakt-kontogrænse nået.</string>
     <!-- Connect trakt -->
     <string name="trakt_required">For at bruge dette, forbind til Trakt</string>
     <string name="connect_trakt">Forbind til trakt</string>
@@ -350,6 +351,7 @@
     <string name="show_library">Tilføj serier fra Trakt</string>
     <string name="about_trakt">Trakt hjælper dig med at holde styr på dine TV-serier.</string>
     <string name="support_trakt">Støt Trakt med VIP</string>
+    <string name="action_trakt_view_limits">Se kontobegrænsninger</string>
     <!-- trakt ratings -->
     <string name="action_rate">Bedøm</string>
     <string name="ack_rated">Bedømmelse sendt</string>
