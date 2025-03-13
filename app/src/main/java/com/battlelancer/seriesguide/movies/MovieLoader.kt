@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2020-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies
 
@@ -24,7 +24,7 @@ internal class MovieLoader(
     override fun loadInBackground(): MovieDetails {
         // try loading from trakt and tmdb, this might return a cached response
         val movieTools = getServicesComponent(context).movieTools()
-        val details = movieTools.getMovieDetails(tmdbId, true)
+        val details = movieTools.getMovieDetailsWithDefaults(tmdbId, true).movieDetails
 
         // Update local database (no-op if movie not in database).
         movieTools.updateMovie(details, tmdbId)
