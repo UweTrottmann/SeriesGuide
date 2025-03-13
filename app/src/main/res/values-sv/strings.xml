@@ -338,8 +338,8 @@
     <string name="trakt_error_credentials">Något gick fel. Vänligen kontrollera dina uppgifter och försök igen.</string>
     <string name="trakt_error_not_exists">Inte (än) tillgänglig på trakt. Försök igen senare.</string>
     <string name="trakt_notice_not_exists">Kan inte (ännu) följas med trakt.</string>
-    <string name="trakt_error_limit_exceeded_add">Can\'t add, Trakt account limit reached.</string>
-    <string name="trakt_error_limit_exceeded_upload">Can\'t upload, Trakt account limit reached.</string>
+    <string name="trakt_error_limit_exceeded_add">Kan inte lägga till, gränsen på Trakt-kontot nådd.</string>
+    <string name="trakt_error_limit_exceeded_upload">Kan inte ladda upp, gränsen på Trakt-kontot nådd.</string>
     <!-- Connect trakt -->
     <string name="trakt_required">För att använda detta, anslut till Trakt</string>
     <string name="connect_trakt">Anslut till trakt</string>
@@ -351,7 +351,7 @@
     <string name="show_library">Lägg till serier från Trakt</string>
     <string name="about_trakt">Trakt hjälper till att hålla ett register över vilka TV-serier och filmer du ser på.</string>
     <string name="support_trakt">Stöd Trakt med VIP</string>
-    <string name="action_trakt_view_limits">View account limits</string>
+    <string name="action_trakt_view_limits">Visa kontogränser</string>
     <!-- trakt ratings -->
     <string name="action_rate">Betygsätt</string>
     <string name="ack_rated">Betyg har skickats</string>

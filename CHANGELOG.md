@@ -10,6 +10,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Next release
 
+* 📝 Imported latest user interface translations.
+
 ### 2025.1.0 - 2025-02-27
 
 * 🔧 Trakt: more general error message when the maximum number of something is reached.
