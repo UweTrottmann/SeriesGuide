@@ -1,15 +1,16 @@
 # Download and update SeriesGuide via GitHub
 
-The Android Package (APK) for each stable release is available attached to 
-[GitHub releases](https://github.com/UweTrottmann/SeriesGuide/releases) on this repository.
+The Android Package (APK) for each production release is attached to its associated 
+[GitHub release](https://github.com/UweTrottmann/SeriesGuide/releases/latest).
 
-However, it is recommended to use a manager app to ensure the latest updates are installed 
-automatically or you are notified about new updates.
+However, I **recommend to use an update manager app** to ensure the latest updates are installed
+automatically or you are notified about new updates. For example:
 
 ## Install and update via Obtainium
 
-- Install [Obtainium](https://obtainium.imranr.dev) and then
-- add the SeriesGuide app using the following URL:
+[Get SeriesGuide with Obtainium](https://apps.obtainium.imranr.dev/redirect.html?r=obtainium://add/https://github.com/UweTrottmann/SeriesGuide)
+
+Or manually add it using the following URL:
 
 ```text
 https://github.com/UweTrottmann/SeriesGuide
