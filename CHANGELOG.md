@@ -8,7 +8,15 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
 
-## Next release
+## Version 2025.1
+
+* 🔧 Trakt: improved error messages when an account limit is reached.
+* 🔧 Trakt: add shortcut to view account limits to Connect Trakt screen.
+* 📝 Add Latin Serbian user interface translation, thanks to kesaa89!
+
+### 2025.1.1 - 2025-03-13
+
+* 📝 Imported latest user interface translations.
 
 ### 2025.1.0 - 2025-02-27
 
