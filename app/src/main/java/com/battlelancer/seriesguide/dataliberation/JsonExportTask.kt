@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2021-2024 Uwe Trottmann
+// Copyright 2021-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.dataliberation
 
@@ -490,10 +490,10 @@ class JsonExportTask(
             movie.releasedUtcMs = sgMovie.releasedMsOrDefault
             movie.runtimeMin = sgMovie.runtimeMinOrDefault
             movie.poster = sgMovie.poster
-            movie.inCollection = sgMovie.inCollection
-            movie.inWatchlist = sgMovie.inWatchlist
-            movie.watched = sgMovie.watched
-            movie.plays = sgMovie.plays
+            movie.inCollection = sgMovie.inCollectionOrDefault
+            movie.inWatchlist = sgMovie.inWatchlistOrDefault
+            movie.watched = sgMovie.watchedOrDefault
+            movie.plays = sgMovie.playsOrDefault
             movie.lastUpdatedMs = sgMovie.lastUpdatedOrDefault
             if (isFullDump) {
                 movie.overview = sgMovie.overview

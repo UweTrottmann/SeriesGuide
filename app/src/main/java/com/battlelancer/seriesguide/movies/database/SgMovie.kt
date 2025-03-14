@@ -1,90 +1,113 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2018-2025 Uwe Trottmann
 
-package com.battlelancer.seriesguide.movies.database;
+package com.battlelancer.seriesguide.movies.database
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.Index;
-import androidx.room.PrimaryKey;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.Index
+import androidx.room.PrimaryKey
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
 
 /**
  * Note: ensure to use CONFLICT_REPLACE when inserting to mimic SQLite UNIQUE x ON CONFLICT REPLACE.
  */
 @Entity(
-        tableName = Tables.MOVIES,
-        indices = {@Index(value = Movies.TMDB_ID, unique = true)}
+    tableName = Tables.MOVIES,
+    indices = [Index(value = [Movies.TMDB_ID], unique = true)]
 )
-public class SgMovie {
-
+data class SgMovie(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = Movies._ID)
-    public Integer id;
+    val id: Int? = null,
 
     @ColumnInfo(name = Movies.TMDB_ID)
-    public int tmdbId;
+    val tmdbId: Int,
 
     @ColumnInfo(name = Movies.IMDB_ID)
-    public String imdbId;
+    val imdbId: String? = null,
 
     @ColumnInfo(name = Movies.TITLE)
-    public String title;
+    val title: String? = null,
+
     @ColumnInfo(name = Movies.TITLE_NOARTICLE)
-    public String titleNoArticle;
+    val titleNoArticle: String? = null,
 
     @ColumnInfo(name = Movies.POSTER)
-    public String poster;
+    val poster: String? = null,
+
     @ColumnInfo(name = Movies.GENRES)
-    public String genres;
+    val genres: String? = null,
+
     @ColumnInfo(name = Movies.OVERVIEW)
-    public String overview;
+    val overview: String? = null,
+
     @ColumnInfo(name = Movies.RELEASED_UTC_MS)
-    public Long releasedMs;
+    val releasedMs: Long? = null,
+
     @ColumnInfo(name = Movies.RUNTIME_MIN)
-    public Integer runtimeMin = 0;
+    val runtimeMin: Int? = 0,
+
     @ColumnInfo(name = Movies.TRAILER)
-    public String trailer;
+    val trailer: String? = null,
+
     @ColumnInfo(name = Movies.CERTIFICATION)
-    public String certification;
+    val certification: String? = null,
 
     @ColumnInfo(name = Movies.IN_COLLECTION)
-    public Boolean inCollection = false;
+    val inCollection: Boolean? = false,
+
     @ColumnInfo(name = Movies.IN_WATCHLIST)
-    public Boolean inWatchlist = false;
+    val inWatchlist: Boolean? = false,
+
     @ColumnInfo(name = Movies.PLAYS)
-    public Integer plays = 0;
+    val plays: Int? = 0,
+
     @ColumnInfo(name = Movies.WATCHED)
-    public Boolean watched = false;
+    val watched: Boolean? = false,
 
     @ColumnInfo(name = Movies.RATING_TMDB)
-    public Double ratingTmdb = 0.0;
+    val ratingTmdb: Double? = 0.0,
+
     @ColumnInfo(name = Movies.RATING_VOTES_TMDB)
-    public Integer ratingVotesTmdb = 0;
+    val ratingVotesTmdb: Int? = 0,
+
     @ColumnInfo(name = Movies.RATING_TRAKT)
-    public Integer ratingTrakt = 0;
+    val ratingTrakt: Int? = 0,
+
     @ColumnInfo(name = Movies.RATING_VOTES_TRAKT)
-    public Integer ratingVotesTrakt = 0;
+    val ratingVotesTrakt: Int? = 0,
+
     @ColumnInfo(name = Movies.RATING_USER)
-    public Integer ratingUser;
+    val ratingUser: Int? = null,
 
     @ColumnInfo(name = Movies.LAST_UPDATED)
-    public Long lastUpdated;
+    val lastUpdated: Long? = null
+) {
 
     /**
-     * If {@link #releasedMs} is not null returns it, otherwise {@link Long#MAX_VALUE}.
-     * See {@link Movies#RELEASED_UTC_MS RELEASED_UTC_MS}.
+     * If [releasedMs] is not null returns it, otherwise [Long.MAX_VALUE].
+     * See [Movies.RELEASED_UTC_MS].
      */
-    public long getReleasedMsOrDefault() {
-        return releasedMs != null ? releasedMs : Long.MAX_VALUE;
-    }
+    val releasedMsOrDefault: Long
+        get() = releasedMs ?: Long.MAX_VALUE
 
-    public int getRuntimeMinOrDefault() {
-        return runtimeMin != null ? runtimeMin : 0;
-    }
+    val runtimeMinOrDefault: Int
+        get() = runtimeMin ?: 0
 
-    public long getLastUpdatedOrDefault() {
-        return lastUpdated != null ? lastUpdated : 0;
-    }
+    val inCollectionOrDefault: Boolean
+        get() = inCollection ?: false
+
+    val inWatchlistOrDefault: Boolean
+        get() = inWatchlist ?: false
+
+    val playsOrDefault: Int
+        get() = plays ?: 0
+
+    val watchedOrDefault: Boolean
+        get() = watched ?: false
+
+    val lastUpdatedOrDefault: Long
+        get() = lastUpdated ?: 0
 }

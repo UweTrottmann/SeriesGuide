@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2021-2024 Uwe Trottmann
+// Copyright 2021-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.dataliberation
 
@@ -381,24 +381,24 @@ class JsonExportTaskTest {
     }
 
     private val listOfTestMovies = listOf(
-        SgMovie().apply {
-            tmdbId = 1
-            imdbId = "imdbidvalue"
-            title = "First Movie"
-            releasedMs = 1234567890
-            runtimeMin = 123
-            poster = "/path/to/poster.jpg"
-            overview = "This is a movie description."
-            inCollection = true
-            inWatchlist = true
-            plays = 2
-            watched = true
+        SgMovie(
+            tmdbId = 1,
+            imdbId = "imdbidvalue",
+            title = "First Movie",
+            releasedMs = 1234567890,
+            runtimeMin = 123,
+            poster = "/path/to/poster.jpg",
+            overview = "This is a movie description.",
+            inCollection = true,
+            inWatchlist = true,
+            plays = 2,
+            watched = true,
             lastUpdated = 1234567890
-        },
-        SgMovie().apply {
-            tmdbId = 2
+        ),
+        SgMovie(
+            tmdbId = 2,
             title = "Second Movie"
-        }
+        )
     )
 
 }

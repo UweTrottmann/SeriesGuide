@@ -49,10 +49,10 @@ internal class MovieLoader(
 
         // set local state for watched, collected and watchlist status
         // assumption: local db has the truth for these
-        details.isInCollection = dbMovieOrNull.inCollection
-        details.isInWatchlist = dbMovieOrNull.inWatchlist
-        details.isWatched = dbMovieOrNull.watched
-        details.plays = dbMovieOrNull.plays
+        details.isInCollection = dbMovieOrNull.inCollectionOrDefault
+        details.isInWatchlist = dbMovieOrNull.inWatchlistOrDefault
+        details.isWatched = dbMovieOrNull.watchedOrDefault
+        details.plays = dbMovieOrNull.playsOrDefault
         // also use local state of user rating
         details.userRating = dbMovieOrNull.ratingUser ?: 0
         details.lastUpdatedMillis = dbMovieOrNull.lastUpdated ?: 0
