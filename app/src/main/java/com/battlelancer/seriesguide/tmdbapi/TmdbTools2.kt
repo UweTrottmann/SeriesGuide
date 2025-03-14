@@ -23,6 +23,7 @@ import com.uwetrottmann.tmdb2.entities.AppendToResponse
 import com.uwetrottmann.tmdb2.entities.Collection
 import com.uwetrottmann.tmdb2.entities.DiscoverFilter
 import com.uwetrottmann.tmdb2.entities.DiscoverFilter.Separator.OR
+import com.uwetrottmann.tmdb2.entities.Genre
 import com.uwetrottmann.tmdb2.entities.Person
 import com.uwetrottmann.tmdb2.entities.TmdbDate
 import com.uwetrottmann.tmdb2.entities.TvEpisode
@@ -261,6 +262,20 @@ class TmdbTools2 {
         }
         return builder.build()
             .awaitResponse("load popular shows")
+    }
+
+    suspend fun getShowGenres(tmdb: Tmdb, language: String): List<Genre>? {
+        try {
+            val response = tmdb.genreService().tv(language).awaitResponse()
+            if (response.isSuccessful) {
+                return response.body()?.genres
+            } else {
+                Errors.logAndReport("load show genres", response)
+            }
+        } catch (e: Exception) {
+            Errors.logAndReport("load show genres", e)
+        }
+        return null
     }
 
     fun getShowTrailerYoutubeId(
