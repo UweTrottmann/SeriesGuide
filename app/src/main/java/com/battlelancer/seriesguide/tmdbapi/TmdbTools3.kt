@@ -22,6 +22,9 @@ import com.uwetrottmann.tmdb2.enumerations.ExternalSource
 
 /**
  * Uses third-party [Result] API for result handling. Errors are [TmdbError].
+ *
+ * New code should use [TmdbTools4] design patterns. The [Result] API might block future Kotlin
+ * version updates or enforce new patterns.
  */
 object TmdbTools3 {
 

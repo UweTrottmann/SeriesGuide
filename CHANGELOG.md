@@ -10,6 +10,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Next release
 
+* 🔨 Movies: when connecting Cloud or Trakt, movies might not have been added if downloading them
+  failed. Any missing movies will be added on the next sync.
 * 📝 Devices running Android 5.0 and 5.1 will receive no more updates in the future.
 * 📝 Import latest user interface translations.
 

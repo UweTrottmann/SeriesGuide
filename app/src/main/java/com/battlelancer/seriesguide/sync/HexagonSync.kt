@@ -12,6 +12,7 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.tools.AddShowTask
 import com.battlelancer.seriesguide.util.TaskManager
 import com.uwetrottmann.androidutils.AndroidUtils
+import kotlinx.coroutines.runBlocking
 import java.util.LinkedList
 
 class HexagonSync(
@@ -31,7 +32,10 @@ class HexagonSync(
      *
      * Merges shows, episodes and movies after a sign-in. Consecutive syncs will only download
      * changes to shows, episodes and movies.
+     *
+     * Note: this calls [syncMovies] which may throw [InterruptedException].
      */
+    @Throws(InterruptedException::class)
     fun sync(): HexagonResult {
         val tmdbIdsToShowIds = SgApp.getServicesComponent(context).showTools()
             .getTmdbIdsToShowIds()
@@ -143,6 +147,11 @@ class HexagonSync(
         return HexagonResult(addNewShows, true)
     }
 
+    /**
+     * Note: this uses [runBlocking], so if the calling thread is interrupted this will throw
+     * [InterruptedException].
+     */
+    @Throws(InterruptedException::class)
     private fun syncMovies(): Boolean {
         val hasMergedMovies = HexagonSettings.hasMergedMovies(context)
 
@@ -169,8 +178,9 @@ class HexagonSync(
         }
 
         // add new movies with the just downloaded properties
-        val addingSuccessful = movieTools
-            .addMovies(newCollectionMovies, newWatchlistMovies, newWatchedMoviesToPlays)
+        val addingSuccessful = runBlocking {
+            movieTools.addMovies(newCollectionMovies, newWatchlistMovies, newWatchedMoviesToPlays)
+        }
         if (!hasMergedMovies) {
             // ensure all missing movies from Hexagon are added before merge is complete
             if (!addingSuccessful) {
