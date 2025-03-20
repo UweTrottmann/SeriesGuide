@@ -14,6 +14,7 @@ import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools3
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.RatingsTools
@@ -120,7 +121,7 @@ class ShowViewModel(application: Application) : AndroidViewModel(application) {
                     // Do network request after returning data from the database
                     val showTmdbId = show.tmdbId
                     if (showTmdbId != null && languageData != null) {
-                        TmdbTools2().getShowTrailerYoutubeId(
+                        TmdbTools3.getShowTrailerYoutubeId(
                             application,
                             show.tmdbId,
                             languageData.languageCode

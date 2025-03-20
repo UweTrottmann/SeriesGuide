@@ -34,10 +34,11 @@ import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync
 import com.battlelancer.seriesguide.sync.HexagonShowSync
 import com.battlelancer.seriesguide.sync.TraktEpisodeSync
-import com.battlelancer.seriesguide.tmdbapi.TmdbError
-import com.battlelancer.seriesguide.tmdbapi.TmdbRetry
-import com.battlelancer.seriesguide.tmdbapi.TmdbStop
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools3
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools3.TmdbError
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools3.TmdbRetry
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools3.TmdbStop
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
@@ -264,13 +265,13 @@ class AddUpdateShowTools @Inject constructor(
         val fallbackLanguage: String? = ShowsSettings.getShowsLanguageFallback(context)
             .let { if (it != language) it else null }
 
-        val tmdbEpisodes = TmdbTools2().getSeason(showTmdbId, seasonNumber, language, context)
+        val tmdbEpisodes = TmdbTools3.getSeason(showTmdbId, seasonNumber, language, context)
             .getOrElse { return Err(it) }
 
         val tmdbEpisodesFallback = if (fallbackLanguage != null
             && tmdbEpisodes.find { it.name.isNullOrEmpty() || it.overview.isNullOrEmpty() } != null) {
             // Also fetch in fallback language if some episodes have no name or overview.
-            TmdbTools2().getSeason(showTmdbId, seasonNumber, fallbackLanguage, context)
+            TmdbTools3.getSeason(showTmdbId, seasonNumber, fallbackLanguage, context)
                 .getOrElse { return Err(it) }
         } else {
             null
@@ -654,7 +655,7 @@ class AddUpdateShowTools @Inject constructor(
         if (showTvdbId == 0) return Err(UpdateResult.DatabaseError)
 
         // Find TMDB ID
-        return TmdbTools2().findShowTmdbId(context, showTvdbId)
+        return TmdbTools3.findShowTmdbId(context, showTvdbId)
             .mapError { it.toUpdateResult() }
             .andThen {
                 if (it == null) Err(UpdateResult.DoesNotExist) else Ok(it)
@@ -704,7 +705,7 @@ class AddUpdateShowTools @Inject constructor(
     ): UpdateResult {
         val database = SgRoomDatabase.getInstance(context)
         val seasonNumbers = database.sgSeason2Helper().getSeasonNumbersOfShow(showId)
-        val tmdbShow = TmdbTools2().getShowAndExternalIds(showTmdbId, language, context)
+        val tmdbShow = TmdbTools3.getShowAndExternalIds(showTmdbId, language, context)
             .getOrElse { return it.toUpdateResult() }
             ?: return UpdateResult.DoesNotExist
         val tmdbSeasons = tmdbShow.seasons
@@ -735,7 +736,7 @@ class AddUpdateShowTools @Inject constructor(
             val episodeNumbers =
                 database.sgEpisode2Helper().getEpisodeNumbersOfSeason(localSeason.id)
             val tmdbEpisodes =
-                TmdbTools2().getSeason(showTmdbId, localSeason.number, language, context)
+                TmdbTools3.getSeason(showTmdbId, localSeason.number, language, context)
                     .getOrElse { return it.toUpdateResult() }
 
             if (tmdbEpisodes.isEmpty()) {

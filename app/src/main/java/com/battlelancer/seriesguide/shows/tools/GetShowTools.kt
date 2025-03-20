@@ -15,10 +15,10 @@ import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowService.T
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowDoesNotExist
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowRetry
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowStop
-import com.battlelancer.seriesguide.tmdbapi.TmdbError
-import com.battlelancer.seriesguide.tmdbapi.TmdbRetry
-import com.battlelancer.seriesguide.tmdbapi.TmdbStop
-import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools3
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools3.TmdbError
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools3.TmdbRetry
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools3.TmdbStop
 import com.battlelancer.seriesguide.traktapi.TraktTools3
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
@@ -46,14 +46,14 @@ class GetShowTools @Inject constructor(
         desiredLanguage: String,
         existingShow: SgShow2? = null
     ): Result<ShowDetails, GetShowError> {
-        var tmdbShow = TmdbTools2().getShowAndExternalIds(showTmdbId, desiredLanguage, context)
+        var tmdbShow = TmdbTools3.getShowAndExternalIds(showTmdbId, desiredLanguage, context)
             .getOrElse { return Err(it.toGetShowError()) }
             ?: return Err(GetShowDoesNotExist)
         val tmdbSeasons = tmdbShow.seasons
 
         val noTranslation = tmdbShow.overview.isNullOrEmpty()
         if (noTranslation) {
-            tmdbShow = TmdbTools2().getShowAndExternalIds(
+            tmdbShow = TmdbTools3.getShowAndExternalIds(
                 showTmdbId,
                 ShowsSettings.getShowsLanguageFallback(context),
                 context
