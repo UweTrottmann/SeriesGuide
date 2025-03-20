@@ -5,6 +5,9 @@ package com.battlelancer.seriesguide.traktapi
 
 import android.content.Context
 import com.battlelancer.seriesguide.BuildConfig
+import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktErrorResponse
+import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse
+import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktResponse
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.trakt5.TraktV2
 import okhttp3.OkHttpClient
@@ -38,6 +41,36 @@ class SgTrakt(
 
     fun sgComments(): TraktComments {
         return TraktComments(context, this)
+    }
+
+    /**
+     * Performs a [TraktTools4] [call]. On [TraktErrorResponse.IsUnauthorized] will
+     * [TraktCredentials.setCredentialsInvalid].
+     *
+     * Note: not handling in [TraktTools4.awaitTraktCall] to not require [Context] or other Android
+     * APIs for it.
+     */
+    suspend fun <T> awaitAndHandleAuthError(
+        call: suspend () -> TraktResponse<T>
+    ): TraktResponse<T> {
+        val response = call()
+        if (response is TraktErrorResponse.IsUnauthorized) {
+            TraktCredentials.get(context).setCredentialsInvalid()
+        }
+        return response
+    }
+
+    /**
+     * Like [awaitAndHandleAuthError], but for non-null responses.
+     */
+    suspend fun <T> awaitAndHandleAuthErrorNonNull(
+        call: suspend () -> TraktNonNullResponse<T>
+    ): TraktNonNullResponse<T> {
+        val response = call()
+        if (response is TraktErrorResponse.IsUnauthorized) {
+            TraktCredentials.get(context).setCredentialsInvalid()
+        }
+        return response
     }
 
     companion object {

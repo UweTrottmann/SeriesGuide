@@ -10,7 +10,7 @@ import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.shows.tools.ShowTools2
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktSettings
-import com.battlelancer.seriesguide.traktapi.TraktTools2
+import com.battlelancer.seriesguide.traktapi.TraktTools3
 import com.battlelancer.seriesguide.util.Errors
 import com.github.michaelbull.result.getOrElse
 import com.uwetrottmann.androidutils.AndroidUtils
@@ -58,7 +58,7 @@ class TraktSync(
         if (noConnection()) return SgSyncAdapter.UpdateResult.INCOMPLETE
 
         // Get last activity timestamps.
-        val lastActivity = TraktTools2.getLastActivity(context)
+        val lastActivity = TraktTools3.getLastActivity(context)
             .getOrElse {
                 progress.recordError()
                 Timber.e("performTraktSync: last activity download failed")

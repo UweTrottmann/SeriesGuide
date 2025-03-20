@@ -19,7 +19,7 @@ import com.battlelancer.seriesguide.tmdbapi.TmdbError
 import com.battlelancer.seriesguide.tmdbapi.TmdbRetry
 import com.battlelancer.seriesguide.tmdbapi.TmdbStop
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
-import com.battlelancer.seriesguide.traktapi.TraktTools2
+import com.battlelancer.seriesguide.traktapi.TraktTools3
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.github.michaelbull.result.Err
@@ -61,7 +61,7 @@ class GetShowTools @Inject constructor(
                 ?: return Err(GetShowDoesNotExist)
         }
 
-        val traktDetails = TraktTools2.getShowByTmdbId(showTmdbId, context)
+        val traktDetails = TraktTools3.getShowByTmdbId(showTmdbId, context)
             .andThen { traktShow ->
                 if (traktShow == null) {
                     Timber.w("getShowDetails: no Trakt show found, using default values.")
