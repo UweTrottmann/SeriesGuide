@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright 2015-2025 Uwe Trottmann
 
+@file:Suppress("DEPRECATION") // Ignore warning that AsyncTask should not be used for new code
+
 package com.battlelancer.seriesguide.util.tasks
 
 import android.annotation.SuppressLint
@@ -19,7 +21,7 @@ import com.uwetrottmann.trakt5.TraktV2
 import org.greenrobot.eventbus.EventBus
 import retrofit2.Call
 
-@Suppress("DEPRECATION") // Just a warning that AsyncTask should not be used for new code
+@Suppress("DEPRECATION") // Ignore warning that AsyncTask should not be used for new code
 abstract class BaseActionTask(context: Context) : AsyncTask<Void?, Void?, Int?>() {
 
     @SuppressLint("StaticFieldLeak") // using application context
