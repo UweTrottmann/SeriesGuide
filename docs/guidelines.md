@@ -2,7 +2,9 @@
 
 Collecting design decisions. New and updated code and resources should follow them.
 
-## Kotlin
+## Coding patterns
+
+### Kotlin
 
 For function calls, specify names of function parameters when the name of the passed value does not
 make it obvious:
@@ -15,7 +17,22 @@ doSomething(avoidWork = true)
 doSomething(true)
 ```
 
-## Layout resources
+### Click listeners
+
+The interface class is owned by the class that owns the views that trigger the click events, for
+example the item view holder.
+
+The interface class is named based on what the listener is for.
+
+Example: `ItemClickListener`
+
+The methods are named based on what is clicked.
+
+Example: `onMoreOptionsClick`.
+
+## User interface
+
+### Layout resources
 
 View IDs should be unique across the project to support refactoring using Android Studio.
 
@@ -46,26 +63,13 @@ so they work (tinting) and do not crash (gradients) on all supported releases:
 - **Optionally** if the drawable is just a color
 - **Not** for app widget layouts as the system initializes them
 
-## Click listeners
-
-The interface class is owned by the class that owns the views that trigger the click events, for
-example the item view holder.
-
-The interface class is named based on what the listener is for.
-
-Example: `ItemClickListener`
-
-The methods are named based on what is clicked.
-
-Example: `onMoreOptionsClick`.
-
-## Dialogs
+### Dialogs
 
 Using `AppCompatDialogFragment` and overriding `onCreateView` will use `dialogTheme` of the theme.
 
 If possible, use an alert dialog with a custom layout instead for improved sizing, easy adding of title and buttons.
 
-## Alert dialogs (recommended)
+### Alert dialogs (recommended)
 
 Using `AppCompatDialogFragment` and overriding `onCreateDialog` with `MaterialAlertDialogBuilder`.
 
@@ -79,13 +83,13 @@ When using a custom layout via `setView()`:
 - its parents use `layout_width="match_parent"`, `layout_height="wrap_content"`, `minHeight="48dp"` (see `abc_alert_dialog_material.xml`)
 - its `customPanel` parent is resized to take only as much space as is available (see `AlertDialogLayout`)
 
-## PopupMenu
+### PopupMenu
 
 Use `androidx.appcompat.widget.PopupMenu` so Material 3 styles are correctly applied.
 (Could also use the platform one and set Widget.Material3.PopupMenu with android:popupMenuStyle,
 but rather use the same implementation on all versions.)
 
-## TextInputLayout
+### TextInputLayout
 
 When trying to make `TextInputLayout` (grow to) fill available height, if the contained `TextInputEditText` is too tall the counter or error text can get pushed outside of its bounds.
 
