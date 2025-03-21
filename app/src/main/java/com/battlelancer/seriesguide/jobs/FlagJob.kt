@@ -17,6 +17,6 @@ interface FlagJob {
      * @return If local changes were applied successfully and if requested the network op was
      * persisted.
      */
-    fun applyLocalChanges(context: Context, requiresNetworkJob: Boolean): Boolean
+    suspend fun applyLocalChanges(context: Context, requiresNetworkJob: Boolean): Boolean
 
 }

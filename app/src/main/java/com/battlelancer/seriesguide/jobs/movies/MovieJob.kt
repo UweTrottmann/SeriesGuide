@@ -25,7 +25,7 @@ abstract class MovieJob(
         return true
     }
 
-    override fun applyLocalChanges(context: Context, requiresNetworkJob: Boolean): Boolean {
+    override suspend fun applyLocalChanges(context: Context, requiresNetworkJob: Boolean): Boolean {
         // prepare network job
         var networkJobInfo: ByteArray? = null
         if (requiresNetworkJob) {
@@ -52,7 +52,7 @@ abstract class MovieJob(
         return true
     }
 
-    protected abstract fun applyDatabaseUpdate(context: Context, movieTmdbId: Int): Boolean
+    protected abstract suspend fun applyDatabaseUpdate(context: Context, movieTmdbId: Int): Boolean
 
     private fun prepareNetworkJob(): ByteArray? {
         val builder = FlatBufferBuilder(0)

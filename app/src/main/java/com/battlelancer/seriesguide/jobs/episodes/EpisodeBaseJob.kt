@@ -19,7 +19,7 @@ abstract class EpisodeBaseJob(
 
     lateinit var episode: SgEpisode2Numbers
 
-    override fun applyLocalChanges(context: Context, requiresNetworkJob: Boolean): Boolean {
+    override suspend fun applyLocalChanges(context: Context, requiresNetworkJob: Boolean): Boolean {
         // Gather data needed for later steps.
         val helper: SgEpisode2Helper = SgRoomDatabase.getInstance(context).sgEpisode2Helper()
         val episode: SgEpisode2Numbers = helper.getEpisodeNumbers(episodeId)

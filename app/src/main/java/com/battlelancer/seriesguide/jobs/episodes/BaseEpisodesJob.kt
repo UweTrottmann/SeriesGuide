@@ -37,7 +37,7 @@ abstract class BaseEpisodesJob(
      * notifies affected URIs, may update the list widget.
      */
     @CallSuper
-    override fun applyLocalChanges(context: Context, requiresNetworkJob: Boolean): Boolean {
+    override suspend fun applyLocalChanges(context: Context, requiresNetworkJob: Boolean): Boolean {
         val episodes: List<SgEpisode2Numbers> = getAffectedEpisodes(context)
 
         // prepare network job
