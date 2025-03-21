@@ -39,23 +39,27 @@ internal class HexagonMovieSync(
         newWatchedMoviesToPlays: MutableMap<Int, Int>,
         hasMergedMovies: Boolean
     ): Boolean {
+        val localMovies = MovieTools.getMovieTmdbIdsAsSet(context)
+        if (localMovies == null) {
+            Timber.e("download: querying for local movies failed")
+            return false
+        }
+
+        val lastSyncTime = HexagonSettings.getLastMoviesSyncTime(context)?.let { DateTime(it) }
+        if (hasMergedMovies) {
+            if (lastSyncTime != null) {
+                Timber.d("download: NOT merging, get CHANGED since %s", lastSyncTime)
+            } else {
+                Timber.d("download: NOT merging, get ALL movies")
+            }
+        } else {
+            Timber.d("download: MERGING, get ALL movies")
+        }
+
         var movies: List<Movie>?
         var hasMoreMovies = true
         var cursor: String? = null
         val currentTime = System.currentTimeMillis()
-        val lastSyncTime = DateTime(HexagonSettings.getLastMoviesSyncTime(context))
-        val localMovies = MovieTools.getMovieTmdbIdsAsSet(context)
-        if (localMovies == null) {
-            Timber.e("download: querying for local movies failed.")
-            return false
-        }
-
-        if (hasMergedMovies) {
-            Timber.d("download: movies changed since %s", lastSyncTime)
-        } else {
-            Timber.d("download: all movies")
-        }
-
         var updatedCount = 0
         var removedCount = 0
 
@@ -71,7 +75,7 @@ internal class HexagonMovieSync(
                 val moviesService = hexagonTools.moviesService ?: return false
 
                 val request = moviesService.get()  // use default server limit
-                if (hasMergedMovies) {
+                if (hasMergedMovies && lastSyncTime != null) {
                     request.updatedSince = lastSyncTime
                 }
                 if (!TextUtils.isEmpty(cursor)) {

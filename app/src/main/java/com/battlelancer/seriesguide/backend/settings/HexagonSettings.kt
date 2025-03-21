@@ -138,16 +138,6 @@ object HexagonSettings {
     }
 
     /**
-     * Like [resetSyncState], but only for movies.
-     */
-    fun resetMovieSyncState(context: Context) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit {
-            putBoolean(KEY_MERGED_MOVIES, false)
-            remove(KEY_LAST_SYNC_MOVIES)
-        }
-    }
-
-    /**
      * Whether shows in the local database have been merged with those on Hexagon.
      */
     fun hasMergedShows(context: Context): Boolean {
@@ -222,13 +212,27 @@ object HexagonSettings {
         }
     }
 
-    fun getLastMoviesSyncTime(context: Context): Long {
-        return getLastSyncTime(context, KEY_LAST_SYNC_MOVIES)
+    fun getLastMoviesSyncTime(context: Context): Long? {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        if (!prefs.contains(KEY_LAST_SYNC_MOVIES)) return null
+        return prefs.getLong(
+            KEY_LAST_SYNC_MOVIES,
+            0 /* Never returned, returning null above if it does not exist */
+        )
     }
 
     fun setLastMoviesSyncTime(context: Context, timeInMs: Long) {
         PreferenceManager.getDefaultSharedPreferences(context).edit {
             putLong(KEY_LAST_SYNC_MOVIES, timeInMs)
+        }
+    }
+
+    /**
+     * Sets [getLastMoviesSyncTime] so that all movies are downloaded on the next sync.
+     */
+    fun resetLastMoviesSyncTime(context: Context) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit {
+            remove(KEY_LAST_SYNC_MOVIES)
         }
     }
 

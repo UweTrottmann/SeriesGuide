@@ -119,7 +119,7 @@ class AppUpgrade(
             // or Trakt if the TMDB request failed for any reason. As Cloud by default only
             // downloads recently changed movies, reset its movie sync state so they are all
             // downloaded again, adding any missing movies to the database.
-            HexagonSettings.resetMovieSyncState(context)
+            HexagonSettings.resetLastMoviesSyncTime(context)
         }
     }
 
