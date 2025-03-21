@@ -38,7 +38,10 @@ class TraktNotesSync(
      * So if the local show has a note, it is overwritten (server is source of truth).
      * When a note is removed (or rather does not exist) at Trakt, will either on the initial sync
      * upload the note or for consecutive syncs remove the note on the local show.
+     *
+     * Note: this calls [uploadNotesForShows] which may throw [InterruptedException].
      */
+    @Throws(InterruptedException::class)
     fun syncForShows(updatedAt: OffsetDateTime?): Boolean {
         if (updatedAt == null) {
             Timber.e("syncForShows: null updatedAt")
@@ -157,7 +160,11 @@ class TraktNotesSync(
      * and note ID.
      *
      * Returns whether all notes were successfully uploaded.
+     *
+     * Note: this uses [runBlocking], so if the calling thread is interrupted this will throw
+     * [InterruptedException].
      */
+    @Throws(InterruptedException::class)
     private fun uploadNotesForShows(showIdsWithNotesToUpload: MutableList<Long>): Boolean {
         Timber.d("uploadNotesForShows: uploading for %s shows", showIdsWithNotesToUpload.size)
 
@@ -176,7 +183,6 @@ class TraktNotesSync(
                     ?.ifBlank { null } // Trakt does not allow blank text
                     ?: continue // Note got removed in the meantime
 
-                // If this thread is interrupted throws InterruptedException
                 val storedNote = runBlocking(Dispatchers.Default) {
                     val response = trakt.awaitAndHandleAuthErrorNonNull {
                         TraktTools4.saveNoteForShow(traktNotes, showTmdbId, noteText)

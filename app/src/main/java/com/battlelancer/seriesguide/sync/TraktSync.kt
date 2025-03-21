@@ -48,7 +48,10 @@ class TraktSync(
     /**
      * To not conflict with Hexagon sync, can turn on [onlyRatings] so only
      * ratings are synced.
+     *
+     * Note: this calls [TraktNotesSync.syncForShows] which may throw [InterruptedException].
      */
+    @Throws(InterruptedException::class)
     fun sync(onlyRatings: Boolean): SgSyncAdapter.UpdateResult {
         progress.publish(SyncProgress.Step.TRAKT)
         // While responses might get returned from the disk cache,

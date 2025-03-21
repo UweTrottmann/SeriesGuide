@@ -119,6 +119,15 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
         progress.publishFinished()
     }
 
+    /**
+     * Note: this calls
+     *
+     * - [TmdbSync.updateConfigurationAndWatchProviders]
+     * - [ShowSync.sync]
+     * - [TraktSync.sync]
+     *
+     * which may throw [InterruptedException].
+     */
     @Throws(InterruptedException::class)
     private fun sync(showSync: ShowSync, currentTime: Long, progress: SyncProgress) {
         progress.publish(SyncProgress.Step.TMDB)

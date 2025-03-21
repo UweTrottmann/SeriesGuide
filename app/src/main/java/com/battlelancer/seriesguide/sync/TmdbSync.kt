@@ -24,6 +24,10 @@ class TmdbSync internal constructor(
     private val movieTools: MovieTools
 ) {
 
+    /**
+     * Note: this uses [runBlocking], so if the calling thread is interrupted this will throw
+     * [InterruptedException].
+     */
     @Throws(InterruptedException::class)
     fun updateConfigurationAndWatchProviders(progress: SyncProgress) {
         if (TmdbSettings.isConfigurationUpToDate(context)) {
@@ -40,7 +44,6 @@ class TmdbSync internal constructor(
         // Show watch providers
         StreamingSearch.getCurrentRegionOrNull(context)?.also {
             // Note: only updating for shows to keep local watch provider filter up-to-date
-            // If this thread is interrupted throws InterruptedException
             val providersUpdated = runBlocking(SgApp.SINGLE) {
                 StreamingSearch
                     .updateWatchProviders(context, SgWatchProvider.Type.SHOWS, it)

@@ -85,7 +85,10 @@ class AddUpdateShowTools @Inject constructor(
      *
      * If Hexagon is not enabled and [traktCollection] and [traktWatched] are given, uses
      * [TraktEpisodeSync.storeEpisodeFlags].
+     *
+     * Note: this calls [updateWatchProviderMappings] which may throw [InterruptedException].
      */
+    @Throws(InterruptedException::class)
     fun addShow(
         showTmdbId: Int,
         languageCode: String,
@@ -441,8 +444,7 @@ class AddUpdateShowTools @Inject constructor(
     /**
      * Updates a show. Adds new, updates changed and removes orphaned episodes.
      *
-     * This runs coroutines blocking the current thread (see [updateWatchProviderMappings]).
-     * If it is interrupted, [InterruptedException] is thrown.
+     * Note: this calls [updateWatchProviderMappings] which may throw [InterruptedException].
      */
     @Throws(InterruptedException::class)
     fun updateShow(showId: Long): UpdateResult {
@@ -545,6 +547,9 @@ class AddUpdateShowTools @Inject constructor(
 
     /**
      * Download and store watch provider mappings if a streaming search region is configured.
+     *
+     * Note: this uses [runBlocking], so if the calling thread is interrupted this will throw
+     * [InterruptedException].
      */
     @Throws(InterruptedException::class)
     private fun updateWatchProviderMappings(showId: Long, showTmdbId: Int) {
