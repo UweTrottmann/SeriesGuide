@@ -27,6 +27,7 @@ $RECYCLE.BIN/
 !.idea/copyright
 !.idea/inspectionProfiles
 !.idea/scopes
+!.idea/vcs.xml
 
 # Gradle
 .gradle/
