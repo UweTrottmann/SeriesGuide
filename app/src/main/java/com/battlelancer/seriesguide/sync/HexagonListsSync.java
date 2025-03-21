@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2017-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.sync;
 
@@ -31,8 +31,8 @@ public class HexagonListsSync {
 
     private static final int LISTS_MAX_BATCH_SIZE = 10;
 
-    private Context context;
-    private HexagonTools hexagonTools;
+    private final Context context;
+    private final HexagonTools hexagonTools;
 
     public HexagonListsSync(Context context, HexagonTools hexagonTools) {
         this.context = context;
