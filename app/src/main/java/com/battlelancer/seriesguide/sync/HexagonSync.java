@@ -25,10 +25,10 @@ import java.util.Set;
 
 public class HexagonSync {
 
-    private Context context;
-    private HexagonTools hexagonTools;
-    private MovieTools movieTools;
-    private SyncProgress progress;
+    private final Context context;
+    private final HexagonTools hexagonTools;
+    private final MovieTools movieTools;
+    private final SyncProgress progress;
 
     HexagonSync(Context context, HexagonTools hexagonTools,
             MovieTools movieTools, SyncProgress progress) {
