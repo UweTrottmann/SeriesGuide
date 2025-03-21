@@ -138,6 +138,16 @@ object HexagonSettings {
     }
 
     /**
+     * Like [resetSyncState], but only for movies.
+     */
+    fun resetMovieSyncState(context: Context) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit {
+            putBoolean(KEY_MERGED_MOVIES, false)
+            remove(KEY_LAST_SYNC_MOVIES)
+        }
+    }
+
+    /**
      * Whether shows in the local database have been merged with those on Hexagon.
      */
     fun hasMergedShows(context: Context): Boolean {

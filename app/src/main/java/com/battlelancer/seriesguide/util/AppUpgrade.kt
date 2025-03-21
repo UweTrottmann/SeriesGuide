@@ -113,6 +113,14 @@ class AppUpgrade(
                 remove("com.battlelancer.seriesguide.listsActiveTab")
             }
         }
+
+        if (lastVersion <= SgApp.RELEASE_VERSION_2025_1_1) {
+            // In this and older versions movies might not have gotten added when signing into Cloud
+            // or Trakt if the TMDB request failed for any reason. As Cloud by default only
+            // downloads recently changed movies, reset its movie sync state so they are all
+            // downloaded again, adding any missing movies to the database.
+            HexagonSettings.resetMovieSyncState(context)
+        }
     }
 
     /**
