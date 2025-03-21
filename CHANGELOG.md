@@ -11,6 +11,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 ## Next release
 
 * 📝 Devices running Android 5.0 and 5.1 will receive no more updates in the future.
+* 📝 Import latest user interface translations.
 
 ## Version 2025.1
 

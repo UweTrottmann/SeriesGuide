@@ -39,7 +39,7 @@
     <string name="action_stream_settings">Настройки за стрийм или поръчка</string>
     <string name="action_select_region">Избор на регион</string>
     <string name="action_reset">Нулиране</string>
-    <string name="action_save">Save</string>
+    <string name="action_save">Запис</string>
     <!-- Search -->
     <string name="clear_search_history">Изчисти историята на търсене</string>
     <string name="search_hint">Търсене на епизоди</string>
@@ -149,8 +149,8 @@
     <string name="hidden">Скрито ТВ предаване</string>
     <string name="unhidden">Показано ТВ предаване</string>
     <string name="action_shows_add">Добавяне на тв предаване</string>
-    <string name="action_filter_and_sort">Filter and sort</string>
-    <string name="title_filter_general">General</string>
+    <string name="action_filter_and_sort">Филтриране и сортиране</string>
+    <string name="title_filter_general">Общи</string>
     <string name="empty_filter">Премахни всички филтри</string>
     <string name="action_shows_filter_favorites">Любими</string>
     <string name="action_shows_filter_unwatched">Негледани</string>
@@ -172,8 +172,8 @@
     <string name="context_marknext">Гледан следващ епизод</string>
     <string name="action_episodes_switch_view">Промени изгледа</string>
     <string name="next_to_watch">Следващ за гледане</string>
-    <string name="title_notes">Notes</string>
-    <string name="action_edit_note">Edit note</string>
+    <string name="title_notes">Бележки</string>
+    <string name="action_edit_note">Промяна на бележка</string>
     <!-- History -->
     <string name="user_stream">История</string>
     <string name="recently_watched">Наскоро гледан/и</string>
@@ -242,7 +242,7 @@
     <!-- Discover -->
     <string name="title_discover">Открийте</string>
     <string name="title_popular">Популярни</string>
-    <string name="action_filter">Filter</string>
+    <string name="action_filter">Филтри</string>
     <string name="filter_year">Година</string>
     <string name="filter_year_current">Текуща година</string>
     <string name="filter_language">Език</string>
@@ -283,7 +283,7 @@
     <string name="action_movies_sort_title">Заглавие</string>
     <string name="action_movies_sort_release">Дата на издаване</string>
     <string name="title_similar_movies">Подобни филми</string>
-    <string name="title_release_dates">Release dates</string>
+    <string name="title_release_dates">Дати на излизане</string>
     <!-- Statistics -->
     <string name="statistics_failed">Не може да се изчисли статистиката.</string>
     <string name="shows_finished">%s изгледани и приключени</string>
@@ -338,8 +338,8 @@
     <string name="trakt_error_credentials">Нещо се обърка. Проверете идентификационните си данни и опитайте отново.</string>
     <string name="trakt_error_not_exists">Няма (все още) в trakt. Опитайте отново по-късно.</string>
     <string name="trakt_notice_not_exists">Не може (все още) да се проследи от trakt.</string>
-    <string name="trakt_error_limit_exceeded_add">Can\'t add, Trakt account limit reached.</string>
-    <string name="trakt_error_limit_exceeded_upload">Can\'t upload, Trakt account limit reached.</string>
+    <string name="trakt_error_limit_exceeded_add">Не може да бъде добавено, достигнат лимит.</string>
+    <string name="trakt_error_limit_exceeded_upload">Не може да бъде качено, достигнат лимит.</string>
     <!-- Connect trakt -->
     <string name="trakt_required">Необходимо е свързване с Trakt</string>
     <string name="connect_trakt">Свържете се с trakt</string>
@@ -351,7 +351,7 @@
     <string name="show_library">Добавяне на сериали от Trakt</string>
     <string name="about_trakt">Trakt записва какви сериали и филми гледате.</string>
     <string name="support_trakt">Подкрепете Trakt с ВИП</string>
-    <string name="action_trakt_view_limits">View account limits</string>
+    <string name="action_trakt_view_limits">Проверете лимитите</string>
     <!-- trakt ratings -->
     <string name="action_rate">Оцени</string>
     <string name="ack_rated">Рейтингът е изпратен</string>
