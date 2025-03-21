@@ -8,6 +8,10 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
 
+## Next release
+
+* 📝 Devices running Android 5.0 and 5.1 will receive no more updates in the future.
+
 ## Version 2025.1
 
 * 🔧 Trakt: improved error messages when an account limit is reached.
