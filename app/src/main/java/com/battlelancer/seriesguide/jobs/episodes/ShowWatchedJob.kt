@@ -21,16 +21,6 @@ class ShowWatchedJob(
         currentTimePlusOneHour = currentTime + DateUtils.HOUR_IN_MILLIS
     }
 
-    override fun applyLocalChanges(context: Context, requiresNetworkJob: Boolean): Boolean {
-        if (!super.applyLocalChanges(context, requiresNetworkJob)) {
-            return false
-        }
-
-
-
-        return true
-    }
-
     override fun applyDatabaseChanges(
         context: Context,
         episodes: List<SgEpisode2Numbers>
