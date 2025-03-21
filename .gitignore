@@ -1,38 +1,22 @@
-﻿# Specific files to exclude
-
-# Any keystores
-*.keystore
-
-# Local configuration files (sdk path, etc)
-keystore.properties
-local.properties
-secret.properties
-
-### bundletool
-bundletool
-
-### Firebase
-google-services.json
-
-### Linux
+﻿# Linux
 !.gitignore
 *~
 
-### Windows
-# Windows image file caches
+# Windows
+## Windows image file caches
 Thumbs.db
 ehthumbs.db
 
-# Folder config file
+## Folder config file
 Desktop.ini
 
-# Recycle Bin used on file shares
+## Recycle Bin used on file shares
 $RECYCLE.BIN/
 
-### OSX
+# OSX
 .DS_Store
 
-### IntelliJ
+# IntelliJ
 *.iml
 *.ipr
 *.iws
@@ -44,15 +28,33 @@ $RECYCLE.BIN/
 !.idea/inspectionProfiles
 !.idea/scopes
 
-### Gradle
+# Gradle
 .gradle/
 build/
 
-## Kotlin
+# Kotlin
 .kotlin/
+
+# Android
+## Any keystores
+*.keystore
+
+## Local configuration files (SDK path, etc)
+keystore.properties
+local.properties
+
+# SeriesGuide
+## Local configuration files
+secret.properties
+
+## Firebase
+google-services.json
 
 ## Proguard
 unused.txt
 
 ## Flatbuffers
 flatc.exe
+
+## bundletool
+bundletool
