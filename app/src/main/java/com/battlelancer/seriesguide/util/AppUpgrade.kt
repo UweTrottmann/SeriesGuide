@@ -35,9 +35,9 @@ class AppUpgrade(
             Timber.i("Upgrading from %d to %d", lastVersion, currentVersion)
             doUpgrades()
             // Update last version to current version
-            PreferenceManager.getDefaultSharedPreferences(context).edit()
-                .putInt(AppSettings.KEY_VERSION, currentVersion)
-                .apply()
+            PreferenceManager.getDefaultSharedPreferences(context).edit {
+                putInt(AppSettings.KEY_VERSION, currentVersion)
+            }
             true
         } else {
             false
