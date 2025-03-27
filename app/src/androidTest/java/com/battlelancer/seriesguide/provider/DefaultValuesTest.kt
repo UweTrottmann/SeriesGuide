@@ -1,277 +1,270 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2018-2025 Uwe Trottmann
 
-package com.battlelancer.seriesguide.provider;
+package com.battlelancer.seriesguide.provider
 
-import static com.google.common.truth.Truth.assertThat;
+import android.content.ContentProviderOperation
+import android.content.ContentResolver
+import android.content.Context
+import android.database.Cursor
+import androidx.test.core.app.ApplicationProvider
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgEpisodeForImport
+import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgSeasonForImport
+import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgShowForImport
+import com.battlelancer.seriesguide.dataliberation.model.Episode
+import com.battlelancer.seriesguide.dataliberation.model.List
+import com.battlelancer.seriesguide.dataliberation.model.Season
+import com.battlelancer.seriesguide.dataliberation.model.Show
+import com.battlelancer.seriesguide.movies.details.MovieDetails
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
+import com.battlelancer.seriesguide.shows.database.SgShow2
+import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
+import com.battlelancer.seriesguide.util.tasks.AddListTask
+import com.google.common.truth.Truth.assertThat
+import com.uwetrottmann.tmdb2.entities.Movie
+import org.junit.After
+import org.junit.Assert.fail
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
 
-import android.content.ContentProviderOperation;
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import androidx.test.core.app.ApplicationProvider;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.dataliberation.ImportTools;
-import com.battlelancer.seriesguide.dataliberation.model.Episode;
-import com.battlelancer.seriesguide.dataliberation.model.List;
-import com.battlelancer.seriesguide.dataliberation.model.Season;
-import com.battlelancer.seriesguide.dataliberation.model.Show;
-import com.battlelancer.seriesguide.lists.database.SgList;
-import com.battlelancer.seriesguide.movies.details.MovieDetails;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
-import com.battlelancer.seriesguide.shows.database.SgEpisode2;
-import com.battlelancer.seriesguide.shows.database.SgSeason2;
-import com.battlelancer.seriesguide.shows.database.SgShow2;
-import com.battlelancer.seriesguide.shows.database.SgShow2Helper;
-import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags;
-import com.battlelancer.seriesguide.util.tasks.AddListTask;
-import com.uwetrottmann.tmdb2.entities.Movie;
-import java.util.ArrayList;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+@RunWith(AndroidJUnit4::class)
+class DefaultValuesTest {
 
-@RunWith(AndroidJUnit4.class)
-public class DefaultValuesTest {
+    private lateinit var resolver: ContentResolver
 
-    private static final Show SHOW;
-    private static final Season SEASON;
-    private static final Episode EPISODE;
-    private static final MovieDetails MOVIE;
-    private static final com.battlelancer.seriesguide.dataliberation.model.Movie MOVIE_I;
-
-    private static final List LIST;
-
-    static {
-        SHOW = new Show();
-        SHOW.tmdb_id = 12;
-        SHOW.tvdb_id = 12;
-
-        SEASON = new Season();
-        SEASON.tmdb_id = "1234";
-        SEASON.tvdbId = 1234;
-        SEASON.season = 42;
-
-        EPISODE = new Episode();
-        EPISODE.tmdb_id = 123456;
-        EPISODE.tvdbId = 123456;
-
-        LIST = new List();
-        LIST.name = "Test List";
-        LIST.listId = SeriesGuideContract.Lists.generateListId(LIST.name);
-
-        MOVIE = new MovieDetails();
-        Movie tmdbMovie = new Movie();
-        tmdbMovie.id = 12;
-        MOVIE.tmdbMovie(tmdbMovie);
-
-        MOVIE_I = new com.battlelancer.seriesguide.dataliberation.model.Movie();
+    companion object {
+        private val SHOW = Show().apply {
+            tmdb_id = 12
+            tvdb_id = 12
+        }
+        private val SEASON = Season().apply {
+            tmdb_id = "1234"
+            tvdbId = 1234
+            season = 42
+        }
+        private val EPISODE = Episode().apply {
+            tmdb_id = 123456
+            tvdbId = 123456
+        }
+        private val LIST = List().apply {
+            name = "Test List"
+            listId = Lists.generateListId(name)
+        }
+        private val MOVIE = MovieDetails().apply {
+            val tmdbMovie = Movie().apply { id = 12 }
+            tmdbMovie(tmdbMovie)
+        }
+        private val MOVIE_I = com.battlelancer.seriesguide.dataliberation.model.Movie()
     }
 
-    private ContentResolver resolver;
-
     @Before
-    public void switchToInMemoryDb() {
+    fun switchToInMemoryDb() {
         // ProviderTestRule does not work with Room
         // so instead blatantly replace the instance with one that uses an in-memory database
         // and use the real ContentResolver
-        Context context = ApplicationProvider.getApplicationContext();
-        SgRoomDatabase.switchToInMemory(context);
-        resolver = context.getContentResolver();
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        SgRoomDatabase.switchToInMemory(context)
+        resolver = context.contentResolver
     }
 
     @After
-    public void closeDb() {
-        SgRoomDatabase.getInstance(ApplicationProvider.getApplicationContext()).close();
+    fun closeDb() {
+        SgRoomDatabase.getInstance(ApplicationProvider.getApplicationContext()).close()
     }
 
     @Test
-    public void showDefaultValuesImport() {
-        Context context = ApplicationProvider.getApplicationContext();
-        SgShow2Helper showHelper = SgRoomDatabase.getInstance(context).sgShow2Helper();
+    fun showDefaultValuesImport() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val showHelper = SgRoomDatabase.getInstance(context).sgShow2Helper()
 
-        SgShow2 sgShow = ImportTools.toSgShowForImport(SHOW);
-        long showId = showHelper.insertShow(sgShow);
+        val sgShow = SHOW.toSgShowForImport()
+        val showId = showHelper.insertShow(sgShow)
 
-        SgShow2 show = showHelper.getShow(showId);
-        assertThat(show).isNotNull();
+        val show = showHelper.getShow(showId)
+        if (show == null) {
+            fail("show is null")
+            return
+        }
 
         // Note: compare with SgShow2 and ImportTools.
-        assertThat(show.getTvdbId()).isEqualTo(SHOW.tvdb_id);
-        assertThat(show.getTitle()).isNotNull();
-        assertThat(show.getOverview()).isNotNull();
-        assertThat(show.getGenres()).isNotNull();
-        assertThat(show.getNetwork()).isNotNull();
-        assertThat(show.getRuntime()).isNotNull();
-        assertThat(show.getStatus()).isNotNull();
-        assertThat(show.getContentRating()).isNotNull();
-        assertThat(show.getNextEpisode()).isNotNull();
-        assertThat(show.getPoster()).isNotNull();
-        assertThat(show.getPosterSmall()).isNotNull();
-        assertThat(show.getNextText()).isNotNull();
-        assertThat(show.getImdbId()).isNotNull();
-        assertThat(show.getTraktId()).isEqualTo(0);
-        assertThat(show.getFavorite()).isFalse();
-        assertThat(show.getHexagonMergeComplete()).isTrue();
-        assertThat(show.getHidden()).isFalse();
-        assertThat(show.getLastUpdatedMs()).isEqualTo(0);
-        assertThat(show.getLastEditedSec()).isEqualTo(0);
-        assertThat(show.getLastWatchedEpisodeId()).isEqualTo(0);
-        assertThat(show.getLastWatchedMs()).isEqualTo(0);
-        assertThat(show.getLanguage()).isNotNull();
-        assertThat(show.getUnwatchedCount()).isEqualTo(SgShow2.UNKNOWN_UNWATCHED_COUNT);
-        assertThat(show.getNotify()).isTrue();
-        assertThat(show.getCustomReleaseTime()).isNull();
-        assertThat(show.getCustomReleaseDayOffset()).isNull();
-        assertThat(show.getCustomReleaseTimeZone()).isNull();
-        assertThat(show.getUserNote()).isNull();
-        assertThat(show.getUserNoteTraktId()).isNull();
+        assertThat(show.tvdbId).isEqualTo(SHOW.tvdb_id)
+        assertThat(show.title).isNotNull()
+        assertThat(show.overview).isNotNull()
+        assertThat(show.genres).isNotNull()
+        assertThat(show.network).isNotNull()
+        assertThat(show.runtime).isNotNull()
+        assertThat(show.status).isNotNull()
+        assertThat(show.contentRating).isNotNull()
+        assertThat(show.nextEpisode).isNotNull()
+        assertThat(show.poster).isNotNull()
+        assertThat(show.posterSmall).isNotNull()
+        assertThat(show.nextText).isNotNull()
+        assertThat(show.imdbId).isNotNull()
+        assertThat(show.traktId).isEqualTo(0)
+        assertThat(show.favorite).isFalse()
+        assertThat(show.hexagonMergeComplete).isTrue()
+        assertThat(show.hidden).isFalse()
+        assertThat(show.lastUpdatedMs).isEqualTo(0)
+        assertThat(show.lastEditedSec).isEqualTo(0)
+        assertThat(show.lastWatchedEpisodeId).isEqualTo(0)
+        assertThat(show.lastWatchedMs).isEqualTo(0)
+        assertThat(show.language).isNotNull()
+        assertThat(show.unwatchedCount).isEqualTo(SgShow2.UNKNOWN_UNWATCHED_COUNT)
+        assertThat(show.notify).isTrue()
+        assertThat(show.customReleaseTime).isNull()
+        assertThat(show.customReleaseDayOffset).isNull()
+        assertThat(show.customReleaseTimeZone).isNull()
+        assertThat(show.userNote).isNull()
+        assertThat(show.userNoteTraktId).isNull()
     }
 
     @Test
-    public void seasonDefaultValuesImport() {
+    fun seasonDefaultValuesImport() {
         // with Room insert actually checks constraints, so add a matching show first
-        Context context = ApplicationProvider.getApplicationContext();
-        SgRoomDatabase database = SgRoomDatabase.getInstance(context);
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val database = SgRoomDatabase.getInstance(context)
 
-        SgShow2 sgShow = ImportTools.toSgShowForImport(SHOW);
-        long showId = database.sgShow2Helper().insertShow(sgShow);
+        val sgShow = SHOW.toSgShowForImport()
+        val showId = database.sgShow2Helper().insertShow(sgShow)
 
-        SgSeason2 sgSeason = ImportTools.toSgSeasonForImport(SEASON, showId);
-        long seasonId = database.sgSeason2Helper().insertSeason(sgSeason);
+        val sgSeason = SEASON.toSgSeasonForImport(showId)
+        val seasonId = database.sgSeason2Helper().insertSeason(sgSeason)
 
-        SgSeason2 season = database.sgSeason2Helper().getSeason(seasonId);
-        assertThat(season).isNotNull();
+        val season = database.sgSeason2Helper().getSeason(seasonId)
+        if (season == null) {
+            fail("season is null")
+            return
+        }
 
-        assertThat(season.getTmdbId()).isEqualTo(SEASON.tmdb_id);
-        assertThat(season.getTvdbId()).isEqualTo(SEASON.tvdbId);
-        assertThat(season.getShowId()).isEqualTo(showId);
-        assertThat(season.getNumberOrNull()).isEqualTo(SEASON.season);
+        assertThat(season.tmdbId).isEqualTo(SEASON.tmdb_id)
+        assertThat(season.tvdbId).isEqualTo(SEASON.tvdbId)
+        assertThat(season.showId).isEqualTo(showId)
+        assertThat(season.numberOrNull).isEqualTo(SEASON.season)
         // getInt returns 0 if NULL, so check explicitly
-        assertThat(season.getNotWatchedReleasedOrNull()).isEqualTo(0);
-        assertThat(season.getNotWatchedToBeReleasedOrNull()).isEqualTo(0);
-        assertThat(season.getNotWatchedNoReleaseOrNull()).isEqualTo(0);
-        assertThat(season.getTotalOrNull()).isEqualTo(0);
+        assertThat(season.notWatchedReleasedOrNull).isEqualTo(0)
+        assertThat(season.notWatchedToBeReleasedOrNull).isEqualTo(0)
+        assertThat(season.notWatchedNoReleaseOrNull).isEqualTo(0)
+        assertThat(season.totalOrNull).isEqualTo(0)
     }
 
     @Test
-    public void episodeDefaultValuesImport() {
+    fun episodeDefaultValuesImport() {
         // with Room insert actually checks constraints, so add a matching show and season first
-        Context context = ApplicationProvider.getApplicationContext();
-        SgRoomDatabase database = SgRoomDatabase.getInstance(context);
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val database = SgRoomDatabase.getInstance(context)
 
-        SgShow2 sgShow = ImportTools.toSgShowForImport(SHOW);
-        long showId = database.sgShow2Helper().insertShow(sgShow);
+        val sgShow = SHOW.toSgShowForImport()
+        val showId = database.sgShow2Helper().insertShow(sgShow)
 
-        SgSeason2 sgSeason = ImportTools.toSgSeasonForImport(SEASON, showId);
-        long seasonId = database.sgSeason2Helper().insertSeason(sgSeason);
+        val sgSeason = SEASON.toSgSeasonForImport(showId)
+        val seasonId = database.sgSeason2Helper().insertSeason(sgSeason)
 
-        SgEpisode2 sgEpisode = ImportTools
-                .toSgEpisodeForImport(EPISODE, showId, seasonId, sgSeason.getNumber());
-        long episodeId = database.sgEpisode2Helper().insertEpisode(sgEpisode);
+        val sgEpisode = EPISODE.toSgEpisodeForImport(showId, seasonId, sgSeason.number)
+        val episodeId = database.sgEpisode2Helper().insertEpisode(sgEpisode)
 
-        SgEpisode2 episode = database.sgEpisode2Helper().getEpisode(episodeId);
-        assertThat(episode).isNotNull();
+        val episode = database.sgEpisode2Helper().getEpisode(episodeId)
+        if (episode == null) {
+            fail("episode is null")
+            return
+        }
 
-        assertThat(episode.getTitle()).isNotNull();
-        assertThat(episode.getNumber()).isEqualTo(0);
-        assertThat(episode.getWatched()).isEqualTo(EpisodeFlags.UNWATCHED);
-        assertThat(episode.getPlays()).isEqualTo(0);
-        assertThat(episode.getDirectors()).isNotNull();
-        assertThat(episode.getGuestStars()).isNotNull();
-        assertThat(episode.getWriters()).isNotNull();
-        assertThat(episode.getImage()).isNotNull();
-        assertThat(episode.getCollected()).isFalse();
-        assertThat(episode.getImdbId()).isNotNull();
-        assertThat(episode.getLastEditedSec()).isEqualTo(0);
-        assertThat(episode.getLastUpdatedSec()).isEqualTo(0);
+        assertThat(episode.title).isNotNull()
+        assertThat(episode.number).isEqualTo(0)
+        assertThat(episode.watched).isEqualTo(EpisodeFlags.UNWATCHED)
+        assertThat(episode.plays).isEqualTo(0)
+        assertThat(episode.directors).isNotNull()
+        assertThat(episode.guestStars).isNotNull()
+        assertThat(episode.writers).isNotNull()
+        assertThat(episode.image).isNotNull()
+        assertThat(episode.collected).isFalse()
+        assertThat(episode.imdbId).isNotNull()
+        assertThat(episode.lastEditedSec).isEqualTo(0)
+        assertThat(episode.lastUpdatedSec).isEqualTo(0)
     }
 
     @Test
-    public void listDefaultValues() {
-        Context context = ApplicationProvider.getApplicationContext();
-        SgRoomDatabase database = SgRoomDatabase.getInstance(context);
+    fun listDefaultValues() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val database = SgRoomDatabase.getInstance(context)
 
-        AddListTask addListTask = new AddListTask(ApplicationProvider.getApplicationContext(),
-                LIST.name);
-        addListTask.doDatabaseUpdate(resolver, addListTask.getListId());
+        val addListTask = AddListTask(ApplicationProvider.getApplicationContext(), LIST.name)
+        addListTask.doDatabaseUpdate(resolver, addListTask.listId)
 
-        java.util.List<SgList> lists = database.sgListHelper().getListsForExport();
+        val lists = database.sgListHelper().getListsForExport()
         // Initial data + new list from above; initial data asserted with RoomInitialDataTest.
-        assertThat(lists).hasSize(2);
-        assertThat(lists.get(1).name).isEqualTo(LIST.name);
+        assertThat(lists).hasSize(2)
+        assertThat(lists[1].name).isEqualTo(LIST.name)
 
-        assertThat(lists.get(1).order).isEqualTo(0);
+        assertThat(lists[1].order).isEqualTo(0)
     }
 
     @Test
-    public void listDefaultValuesImport() throws Exception {
-        Context context = ApplicationProvider.getApplicationContext();
-        SgRoomDatabase database = SgRoomDatabase.getInstance(context);
+    fun listDefaultValuesImport() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val database = SgRoomDatabase.getInstance(context)
         // Delete initial list.
-        database.sgListHelper().deleteAllLists();
+        database.sgListHelper().deleteAllLists()
 
-        ContentValues values = LIST.toContentValues();
+        val values = LIST.toContentValues()
 
-        ContentProviderOperation op = ContentProviderOperation.newInsert(Lists.CONTENT_URI)
-                .withValues(values).build();
+        val op = ContentProviderOperation.newInsert(Lists.CONTENT_URI)
+            .withValues(values).build()
 
-        ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-        batch.add(op);
-        resolver.applyBatch(SgApp.CONTENT_AUTHORITY, batch);
+        val batch = ArrayList<ContentProviderOperation>()
+        batch.add(op)
+        resolver.applyBatch(SgApp.CONTENT_AUTHORITY, batch)
 
-        java.util.List<SgList> lists = database.sgListHelper().getListsForExport();
-        assertThat(lists).hasSize(1);
-        assertThat(lists.get(0).name).isEqualTo(LIST.name);
+        val lists = database.sgListHelper().getListsForExport()
+        assertThat(lists).hasSize(1)
+        assertThat(lists[0].name).isEqualTo(LIST.name)
 
-        assertThat(lists.get(0).order).isEqualTo(0);
+        assertThat(lists[0].order).isEqualTo(0)
     }
 
     @Test
-    public void movieDefaultValues() {
-        ContentValues values = MOVIE.toContentValuesInsert();
-        resolver.insert(Movies.CONTENT_URI, values);
+    fun movieDefaultValues() {
+        val values = MOVIE.toContentValuesInsert()
+        resolver.insert(Movies.CONTENT_URI, values)
 
-        assertMovie();
+        assertMovie()
     }
 
     @Test
-    public void movieDefaultValuesImport() {
-        resolver.insert(Movies.CONTENT_URI, MOVIE_I.toContentValues());
+    fun movieDefaultValuesImport() {
+        resolver.insert(Movies.CONTENT_URI, MOVIE_I.toContentValues())
 
-        assertMovie();
+        assertMovie()
     }
 
-    private void assertMovie() {
-        Cursor query = resolver.query(Movies.CONTENT_URI, null,
-                null, null, null);
-        assertThat(query).isNotNull();
-        assertThat(query.getCount()).isEqualTo(1);
-        assertThat(query.moveToFirst()).isTrue();
+    private fun assertMovie() {
+        val query = resolver.query(Movies.CONTENT_URI, null, null, null, null)
+        assertThat(query).isNotNull()
+        assertThat(query!!.count).isEqualTo(1)
+        assertThat(query.moveToFirst()).isTrue()
 
-        assertDefaultValue(query, Movies.RUNTIME_MIN, 0);
-        assertDefaultValue(query, Movies.IN_COLLECTION, 0);
-        assertDefaultValue(query, Movies.IN_WATCHLIST, 0);
-        assertDefaultValue(query, Movies.PLAYS, 0);
-        assertDefaultValue(query, Movies.WATCHED, 0);
-        assertDefaultValue(query, Movies.RATING_TMDB, 0);
-        assertDefaultValue(query, Movies.RATING_VOTES_TMDB, 0);
-        assertDefaultValue(query, Movies.RATING_TRAKT, 0);
-        assertDefaultValue(query, Movies.RATING_VOTES_TRAKT, 0);
+        assertDefaultValue(query, Movies.RUNTIME_MIN, 0)
+        assertDefaultValue(query, Movies.IN_COLLECTION, 0)
+        assertDefaultValue(query, Movies.IN_WATCHLIST, 0)
+        assertDefaultValue(query, Movies.PLAYS, 0)
+        assertDefaultValue(query, Movies.WATCHED, 0)
+        assertDefaultValue(query, Movies.RATING_TMDB, 0)
+        assertDefaultValue(query, Movies.RATING_VOTES_TMDB, 0)
+        assertDefaultValue(query, Movies.RATING_TRAKT, 0)
+        assertDefaultValue(query, Movies.RATING_VOTES_TRAKT, 0)
 
-        query.close();
+        query.close()
     }
 
-    private void assertNotNullValue(Cursor query, String column) {
-        assertThat(query.isNull(query.getColumnIndexOrThrow(column))).isFalse();
+    private fun assertNotNullValue(query: Cursor, column: String) {
+        assertThat(query.isNull(query.getColumnIndexOrThrow(column))).isFalse()
     }
 
-    private void assertDefaultValue(Cursor query, String column, int defaultValue) {
-        assertNotNullValue(query, column);
-        assertThat(query.getInt(query.getColumnIndexOrThrow(column))).isEqualTo(defaultValue);
+    private fun assertDefaultValue(query: Cursor, column: String, defaultValue: Int) {
+        assertNotNullValue(query, column)
+        assertThat(query.getInt(query.getColumnIndexOrThrow(column))).isEqualTo(defaultValue)
     }
 }
