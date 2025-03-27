@@ -47,16 +47,22 @@ class AppUpgrade(
     private fun doUpgrades() {
         // Run some required tasks after updating to certain versions.
         // NOTE: see version codes for upgrade description.
+
         if (lastVersion < SgApp.RELEASE_VERSION_16_BETA1) {
+            // Requires legacy cache clearing due to switch to Picasso for posters.
             clearLegacyExternalFileCache(context)
         }
 
         if (lastVersion < SgApp.RELEASE_VERSION_23_BETA4) {
+            // Requires Trakt watched movie (re-)download.
+
             // make next trakt sync download watched movies
             TraktSettings.resetMoviesLastWatchedAt(context)
         }
 
         if (lastVersion < SgApp.RELEASE_VERSION_36_BETA2) {
+            // Switched to Google Sign-In: notify existing Cloud users to sign in again.
+
             // used account name to determine sign-in state before switch to Google Sign-In
             if (!HexagonSettings.getAccountName(context).isNullOrEmpty()) {
                 // tell users to sign in again
@@ -65,11 +71,14 @@ class AppUpgrade(
         }
 
         if (lastVersion < SgApp.RELEASE_VERSION_40_BETA4) {
+            // Extensions API v2, old extensions no longer work.
             ExtensionManager.get(context).setDefaultEnabledExtensions(context)
         }
 
         if (lastVersion != SgApp.RELEASE_VERSION_50_1
             && lastVersion < SgApp.RELEASE_VERSION_51_BETA4) {
+            // For Trakt and hexagon sync movies were not added in all cases, reset sync times.
+
             // Movies were not added in all cases when syncing, so ensure they are now.
             TraktSettings.resetMoviesLastWatchedAt(context)
             HexagonSettings.resetSyncState(context)
@@ -83,7 +92,9 @@ class AppUpgrade(
         }
 
         if (lastVersion < SgApp.RELEASE_VERSION_72_0_1) {
-            // Schedule all shows for updating to quickly populate watch provider mappings
+            // Added show watch provider mapping table.
+
+            // Schedule all shows for updating to quickly populate watch provider mappings.
             if (StreamingSearch.getCurrentRegionOrNull(context) != null) {
                 SgApp.coroutineScope.launch(Dispatchers.IO) {
                     SgRoomDatabase.getInstance(context).sgShow2Helper().resetLastUpdated()
@@ -92,6 +103,8 @@ class AppUpgrade(
         }
 
         if (lastVersion < SgApp.RELEASE_VERSION_2024_3_5) {
+            // Reset selected shows and movies tab as there is
+            // a new discover tab for shows and the order has changed for movies.
             PreferenceManager.getDefaultSharedPreferences(context).edit {
                 // Remove old settings keys for selected tab
                 remove("com.battlelancer.seriesguide.activitytab")
