@@ -3,7 +3,7 @@
 - If it does not exist, create a release branch. If it exists, merge latest changes.
 
   ```shell
-  git checkout -b release-2025.1
+  git checkout -b release-2025.2
   # or
   git merge dev
   ```
@@ -20,8 +20,8 @@
 - Commit and push
 
   ```shell
-  git commit --all --message "Prepare version 2025.1.1 (21250102)"
-  git push --set-upstream origin release-2025.1
+  git commit --all --message "Prepare version 2025.2.0 (21250200)"
+  git push --set-upstream origin release-2025.2
   ```
 
 - If it does not exist, [create a merge request](https://github.com/UweTrottmann/SeriesGuide/compare/main...) against `main`
@@ -42,8 +42,11 @@
 - Tag release commit
   
   ```shell
-  git tag v2025.1.1
-  git push origin v2025.1.1
+  git tag v2025.2.0
+  git push origin v2025.2.0
+  git checkout dev
+  git merge release-2025.2
+  git push origin dev
   ```
 
 - Promote to beta channel

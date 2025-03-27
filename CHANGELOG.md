@@ -8,7 +8,9 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
 
-## Next release
+## Version 2025.2
+
+### 2025.2.0 - 2025-03-27 🧪
 
 * 🔨 Movies: when connecting Cloud or Trakt, movies might not have been added if downloading them
   failed. Any missing movies will be added on the next sync.
