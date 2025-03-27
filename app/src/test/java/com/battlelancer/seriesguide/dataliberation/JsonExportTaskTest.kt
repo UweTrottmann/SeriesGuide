@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2021-2024 Uwe Trottmann
+// Copyright 2021-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.dataliberation
 
@@ -181,6 +181,7 @@ class JsonExportTaskTest {
                 userNoteTraktId = null
             )
         )
+
         @Language("json")
         const val expectedJsonShows =
             """[{"tmdb_id":95479,"imdb_id":"imdbidvalue","trakt_id":52,"title":"Jujutsu Kaisen","overview":"It\u0027s all about hollow purple.","language":"de","first_aired":"2021-02-27T05:11:12.345Z","release_time":1234,"release_weekday":1,"release_timezone":"America/New_York","country":"JP","custom_release_time":1215,"custom_release_day_offset":28,"custom_release_timezone":"Europe/Berlin","poster":"someurl/to/a/poster.jpg","content_rating":"","status":"ended","runtime":24,"genres":"Animation|Action \u0026 Adventure|Sci-Fi \u0026 Fantasy","network":"MBS","rating_tmdb":2.4,"rating_tmdb_votes":4321,"rating":10.0,"rating_votes":1234,"rating_user":4,"favorite":false,"notify":true,"hidden":false,"last_watched_ms":1234567890,"user_note":"This is an example note 😀","user_note_trakt_id":12345,"seasons":[{"tmdb_id":"1","season":1,"episodes":[{"tmdb_id":1,"episode":1,"title":"First Episode","first_aired":1234567890,"watched":true,"plays":1,"skipped":false,"collected":false,"imdb_id":"","overview":"First overview","image":"/first/still/path.jpg","writers":"writers string","gueststars":"guest stars string","directors":"directors string","rating_tmdb":2.4,"rating_tmdb_votes":4321,"rating":10.0,"rating_votes":1234,"rating_user":4},{"tmdb_id":2,"episode":2,"title":"Second Episode","first_aired":1234567890,"watched":false,"plays":0,"skipped":true,"collected":true,"imdb_id":"","overview":"Second overview","image":"/first/still/path.jpg","writers":"writers string","gueststars":"guest stars string","directors":"directors string"}]},{"tmdb_id":"2","season":2,"episodes":[{"tmdb_id":1,"episode":1,"title":"First Episode","first_aired":1234567890,"watched":true,"plays":1,"skipped":false,"collected":false,"imdb_id":"","overview":"First overview","image":"/first/still/path.jpg","writers":"writers string","gueststars":"guest stars string","directors":"directors string","rating_tmdb":2.4,"rating_tmdb_votes":4321,"rating":10.0,"rating_votes":1234,"rating_user":4},{"tmdb_id":2,"episode":2,"title":"Second Episode","first_aired":1234567890,"watched":false,"plays":0,"skipped":true,"collected":true,"imdb_id":"","overview":"Second overview","image":"/first/still/path.jpg","writers":"writers string","gueststars":"guest stars string","directors":"directors string"}]}]},{"imdb_id":"","title":"","overview":"","language":"","release_time":-1,"release_weekday":-1,"release_timezone":"","poster":"","content_rating":"","status":"unknown","runtime":0,"genres":"","network":"","favorite":false,"notify":true,"hidden":false,"last_watched_ms":0,"seasons":[]}]"""
@@ -300,43 +301,43 @@ class JsonExportTaskTest {
     }
 
     private val listOfTestLists = listOf(
-        SgList().apply {
-            listId = "list-1"
-            name = "First List"
+        SgList(
+            listId = "list-1",
+            name = "First List",
             order = 0
-        },
-        SgList().apply {
-            listId = "list-2"
-            name = "Empty List"
+        ),
+        SgList(
+            listId = "list-2",
+            name = "Empty List",
             order = 1
-        }
+        )
     )
 
     private val listOfTestListItems = listOf(
-        SgListItem().apply {
-            listId = "list-1"
-            listItemId = "list-1-item-1"
-            itemRefId = "item-ref-1"
+        SgListItem(
+            listId = "list-1",
+            listItemId = "list-1-item-1",
+            itemRefId = "item-ref-1",
             type = SeriesGuideContract.ListItemTypes.TMDB_SHOW
-        },
-        SgListItem().apply {
-            listId = "list-1"
-            listItemId = "list-1-item-2"
-            itemRefId = "item-ref-2"
-            type = SeriesGuideContract.ListItemTypes.TVDB_SHOW
-        },
-        SgListItem().apply {
-            listId = "list-1"
-            listItemId = "list-1-item-3"
-            itemRefId = "item-ref-3"
-            type = SeriesGuideContract.ListItemTypes.SEASON
-        },
-        SgListItem().apply {
-            listId = "list-1"
-            listItemId = "list-1-item-4"
-            itemRefId = "item-ref-4"
+        ),
+        SgListItem(
+            listId = "list-1",
+            listItemId = "list-1-item-2",
+            itemRefId = "item-ref-2",
+            type = SeriesGuideContract.ListItemTypes.TVDB_SHOW,
+        ),
+        SgListItem(
+            listId = "list-1",
+            listItemId = "list-1-item-3",
+            itemRefId = "item-ref-3",
+            type = SeriesGuideContract.ListItemTypes.SEASON,
+        ),
+        SgListItem(
+            listId = "list-1",
+            listItemId = "list-1-item-4",
+            itemRefId = "item-ref-4",
             type = SeriesGuideContract.ListItemTypes.EPISODE
-        }
+        )
     )
 
     @Test
@@ -381,24 +382,24 @@ class JsonExportTaskTest {
     }
 
     private val listOfTestMovies = listOf(
-        SgMovie().apply {
-            tmdbId = 1
-            imdbId = "imdbidvalue"
-            title = "First Movie"
-            releasedMs = 1234567890
-            runtimeMin = 123
-            poster = "/path/to/poster.jpg"
-            overview = "This is a movie description."
-            inCollection = true
-            inWatchlist = true
-            plays = 2
-            watched = true
+        SgMovie(
+            tmdbId = 1,
+            imdbId = "imdbidvalue",
+            title = "First Movie",
+            releasedMs = 1234567890,
+            runtimeMin = 123,
+            poster = "/path/to/poster.jpg",
+            overview = "This is a movie description.",
+            inCollection = true,
+            inWatchlist = true,
+            plays = 2,
+            watched = true,
             lastUpdated = 1234567890
-        },
-        SgMovie().apply {
-            tmdbId = 2
+        ),
+        SgMovie(
+            tmdbId = 2,
             title = "Second Movie"
-        }
+        )
     )
 
 }

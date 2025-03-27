@@ -17,6 +17,15 @@ doSomething(avoidWork = true)
 doSomething(true)
 ```
 
+### Room database
+
+The `@Entity` data classes should use nullable types for all columns (besides the ID). Validation,
+like null or empty checks, should always happen in code as the app has no control over modifications
+to the database.
+
+Prefer to define table and column names using constants (like `@ColumnInfo(name = CONSTANT)`). 
+This makes them safer to re-use.
+
 ### Click listeners
 
 The interface class is owned by the class that owns the views that trigger the click events, for
