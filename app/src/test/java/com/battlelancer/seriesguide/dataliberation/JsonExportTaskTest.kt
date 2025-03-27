@@ -314,30 +314,30 @@ class JsonExportTaskTest {
     )
 
     private val listOfTestListItems = listOf(
-        SgListItem().apply {
-            listId = "list-1"
-            listItemId = "list-1-item-1"
-            itemRefId = "item-ref-1"
+        SgListItem(
+            listId = "list-1",
+            listItemId = "list-1-item-1",
+            itemRefId = "item-ref-1",
             type = SeriesGuideContract.ListItemTypes.TMDB_SHOW
-        },
-        SgListItem().apply {
-            listId = "list-1"
-            listItemId = "list-1-item-2"
-            itemRefId = "item-ref-2"
-            type = SeriesGuideContract.ListItemTypes.TVDB_SHOW
-        },
-        SgListItem().apply {
-            listId = "list-1"
-            listItemId = "list-1-item-3"
-            itemRefId = "item-ref-3"
-            type = SeriesGuideContract.ListItemTypes.SEASON
-        },
-        SgListItem().apply {
-            listId = "list-1"
-            listItemId = "list-1-item-4"
-            itemRefId = "item-ref-4"
+        ),
+        SgListItem(
+            listId = "list-1",
+            listItemId = "list-1-item-2",
+            itemRefId = "item-ref-2",
+            type = SeriesGuideContract.ListItemTypes.TVDB_SHOW,
+        ),
+        SgListItem(
+            listId = "list-1",
+            listItemId = "list-1-item-3",
+            itemRefId = "item-ref-3",
+            type = SeriesGuideContract.ListItemTypes.SEASON,
+        ),
+        SgListItem(
+            listId = "list-1",
+            listItemId = "list-1-item-4",
+            itemRefId = "item-ref-4",
             type = SeriesGuideContract.ListItemTypes.EPISODE
-        }
+        )
     )
 
     @Test
