@@ -290,16 +290,14 @@ class MovieTools @Inject constructor(
                 val movie = movieResult.data
                 updateReleaseDateForRegion(movie, movie.release_dates, regionCode)
 
-                // If there is no overview, try with default language
+                // The title will never be empty, TMDB returns the title in the default language if
+                // there is no translation. However, the overview might be empty if not translated.
+                // So if there is no overview, try to get the default one.
                 if (movie.overview.isNullOrEmpty()) {
-                    return getEnhancedMovieFromTmdbDefaultLanguage(
-                        movie.release_date,
-                        languageCode,
-                        movieTmdbId
-                    )
-                } else {
-                    return EnhancedTmdbMovieResult(movie)
+                    movie.overview = getMovieDefaultOverviewFromTmdb(languageCode, movieTmdbId)
                 }
+
+                return EnhancedTmdbMovieResult(movie)
             }
 
             is IsNotFound -> {
@@ -312,11 +310,10 @@ class MovieTools @Inject constructor(
         }
     }
 
-    private suspend fun getEnhancedMovieFromTmdbDefaultLanguage(
-        originalReleaseDate: Date?,
+    private suspend fun getMovieDefaultOverviewFromTmdb(
         originalLanguageCode: String,
         movieTmdbId: Int
-    ): EnhancedTmdbMovieResult {
+    ): String {
         // Try with default language if TMDb has no localized overview
         val fallbackResult = TmdbTools4.getMovieSummary(
             tmdbMovies.get(),
@@ -325,34 +322,23 @@ class MovieTools @Inject constructor(
             includeReleaseDates = false,
             "get default movie summary"
         )
-        when (fallbackResult) {
-            is Success -> {
-                val fallbackMovie = fallbackResult.data
-                // Add note about non-translated or non-existing overview
-                var overviewWithNote = TextTools.textNoTranslationMovieLanguage(
-                    context, originalLanguageCode,
-                    MoviesSettings.getMoviesLanguage(context)
-                )
-                val overview = fallbackMovie.overview
-                if (!overview.isNullOrEmpty()) {
-                    overviewWithNote += "\n\n" + overview
-                }
-                fallbackMovie.overview = overviewWithNote
-                fallbackMovie.release_date = originalReleaseDate
-                return EnhancedTmdbMovieResult(fallbackMovie)
-            }
 
-            is IsNotFound -> {
-                // Should technically never happen as then loading in the desired language would
-                // already have returned IsNotFound, but due to caching or other server issues this
-                // might still occur.
-                return EnhancedTmdbMovieResult(isNotFoundOnTmdb = true)
-            }
+        // Add note about non-translated or non-existing overview
+        var overviewWithNote = TextTools.textNoTranslationMovieLanguage(
+            context, originalLanguageCode,
+            MoviesSettings.getMoviesLanguage(context)
+        )
 
-            is TmdbErrorResponse.Other -> {
-                return EnhancedTmdbMovieResult(isNotFoundOnTmdb = false)
+        // Add default overview
+        if (fallbackResult is Success) {
+            val fallbackMovie = fallbackResult.data
+            val defaultOverview = fallbackMovie.overview
+            if (!defaultOverview.isNullOrEmpty()) {
+                overviewWithNote += "\n\n" + defaultOverview
             }
         }
+
+        return overviewWithNote
     }
 
     /**
