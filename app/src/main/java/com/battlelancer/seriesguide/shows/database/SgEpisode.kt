@@ -1,97 +1,100 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2018-2025 Uwe Trottmann
 
-package com.battlelancer.seriesguide.shows.database;
+package com.battlelancer.seriesguide.shows.database
 
-import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.ForeignKey;
-import androidx.room.Index;
-import androidx.room.PrimaryKey;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.SeasonsColumns;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ShowsColumns;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
+import androidx.room.PrimaryKey
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SeasonsColumns
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ShowsColumns
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
 
 /**
- * Legacy episode entity kept for migration of legacy data. See {@link SgEpisode2}.
+ * Legacy episode entity kept for migration of legacy data. See [SgEpisode2].
  */
 @Entity(
-        tableName = Tables.EPISODES,
-        foreignKeys = {
-                @ForeignKey(entity = SgSeason.class,
-                        parentColumns = Seasons._ID, childColumns = SeasonsColumns.REF_SEASON_ID),
-                @ForeignKey(entity = SgShow.class,
-                        parentColumns = Shows._ID, childColumns = ShowsColumns.REF_SHOW_ID)
-        },
-        indices = {
-                @Index(SeasonsColumns.REF_SEASON_ID),
-                @Index(ShowsColumns.REF_SHOW_ID)
-        }
+    tableName = Tables.EPISODES,
+    foreignKeys = [
+        ForeignKey(
+            entity = SgSeason::class,
+            parentColumns = [Seasons._ID],
+            childColumns = [SeasonsColumns.REF_SEASON_ID]
+        ),
+        ForeignKey(
+            entity = SgShow::class,
+            parentColumns = [Shows._ID],
+            childColumns = [ShowsColumns.REF_SHOW_ID]
+        )
+    ],
+    indices = [
+        Index(SeasonsColumns.REF_SEASON_ID),
+        Index(ShowsColumns.REF_SHOW_ID)
+    ]
 )
-public class SgEpisode {
-
+data class SgEpisode(
     @PrimaryKey
     @ColumnInfo(name = Episodes._ID)
-    public int tvdbId;
+    var tvdbId: Int,
 
-    @NonNull
     @ColumnInfo(name = Episodes.TITLE)
-    public String title = "";
+    var title: String = "",
     @ColumnInfo(name = Episodes.OVERVIEW)
-    public String overview;
+    var overview: String? = null,
 
     @ColumnInfo(name = Episodes.NUMBER)
-    public int number = 0;
+    var number: Int = 0,
     @ColumnInfo(name = Episodes.SEASON)
-    public int season = 0;
+    var season: Int = 0,
     @ColumnInfo(name = Episodes.DVDNUMBER)
-    public Double dvdNumber;
+    var dvdNumber: Double? = null,
 
     @ColumnInfo(name = SeasonsColumns.REF_SEASON_ID)
-    public int seasonTvdbId;
+    var seasonTvdbId: Int,
     @ColumnInfo(name = ShowsColumns.REF_SHOW_ID)
-    public int showTvdbId;
+    var showTvdbId: Int,
 
     @ColumnInfo(name = Episodes.WATCHED)
-    public int watched = 0;
+    var watched: Int = 0,
     @ColumnInfo(name = Episodes.PLAYS)
-    public Integer plays = 0;
+    var plays: Int? = 0,
 
     @ColumnInfo(name = Episodes.DIRECTORS)
-    public String directors = "";
+    var directors: String? = "",
     @ColumnInfo(name = Episodes.GUESTSTARS)
-    public String guestStars = "";
+    var guestStars: String? = "",
     @ColumnInfo(name = Episodes.WRITERS)
-    public String writers = "";
+    var writers: String? = "",
     @ColumnInfo(name = Episodes.IMAGE)
-    public String image = "";
+    var image: String? = "",
 
     @ColumnInfo(name = Episodes.FIRSTAIREDMS)
-    public long firstReleasedMs = -1L;
+    var firstReleasedMs: Long = -1L,
 
     @ColumnInfo(name = Episodes.COLLECTED)
-    public boolean collected = false;
+    var collected: Boolean = false,
 
     @ColumnInfo(name = Episodes.RATING_GLOBAL)
-    public Double ratingGlobal;
+    var ratingGlobal: Double? = null,
     @ColumnInfo(name = Episodes.RATING_VOTES)
-    public Integer ratingVotes;
+    var ratingVotes: Int? = null,
     @ColumnInfo(name = Episodes.RATING_USER)
-    public Integer ratingUser;
+    var ratingUser: Int? = null,
 
     @ColumnInfo(name = Episodes.IMDBID)
-    public String imdbId = "";
+    var imdbId: String? = "",
 
     @ColumnInfo(name = Episodes.LAST_EDITED)
-    public long lastEditedSec = 0L;
+    var lastEditedSec: Long = 0L,
 
     @ColumnInfo(name = Episodes.ABSOLUTE_NUMBER)
-    public Integer absoluteNumber;
+    var absoluteNumber: Int? = null,
 
     @ColumnInfo(name = Episodes.LAST_UPDATED)
-    public long lastUpdatedSec = 0L;
-}
+    var lastUpdatedSec: Long = 0L
+)
