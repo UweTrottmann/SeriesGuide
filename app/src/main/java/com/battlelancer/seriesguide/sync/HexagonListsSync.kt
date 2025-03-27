@@ -7,7 +7,6 @@ import android.content.ContentProviderOperation
 import android.content.Context
 import android.content.OperationApplicationException
 import android.text.TextUtils
-import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.lists.ListsTools
@@ -78,12 +77,8 @@ class HexagonListsSync(
             }
         } while (!TextUtils.isEmpty(cursor)) // fetch next batch
 
-        // set new last sync time
         if (hasMergedLists) {
-            PreferenceManager.getDefaultSharedPreferences(context)
-                .edit()
-                .putLong(HexagonSettings.KEY_LAST_SYNC_LISTS, currentTime)
-                .apply()
+            HexagonSettings.setLastListsSyncTime(context, currentTime)
         }
 
         return true

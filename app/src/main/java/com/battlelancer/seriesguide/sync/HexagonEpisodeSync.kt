@@ -1,12 +1,11 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2017-2024 Uwe Trottmann
+// Copyright 2017-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.sync
 
 import android.content.Context
 import android.text.TextUtils
 import androidx.core.util.Pair
-import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
@@ -141,10 +140,7 @@ class HexagonEpisodeSync(
                 )
         }
 
-        // store new last sync time
-        PreferenceManager.getDefaultSharedPreferences(context).edit()
-            .putLong(HexagonSettings.KEY_LAST_SYNC_EPISODES, currentTime)
-            .apply()
+        HexagonSettings.setLastEpisodesSyncTime(context, currentTime)
 
         return true
     }

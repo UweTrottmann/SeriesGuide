@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2017-2024 Uwe Trottmann
+// Copyright 2017-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.sync
 
 import android.content.Context
-import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.modules.ApplicationContext
@@ -74,11 +73,7 @@ class HexagonShowSync @Inject constructor(
         // Apply all updates
         SgRoomDatabase.getInstance(context).sgShow2Helper().updateForCloudUpdate(updates)
         if (hasMergedShows) {
-            // set new last sync time
-            PreferenceManager.getDefaultSharedPreferences(context)
-                .edit()
-                .putLong(HexagonSettings.KEY_LAST_SYNC_SHOWS, currentTime)
-                .apply()
+            HexagonSettings.setLastShowsSyncTime(context, currentTime)
         }
         return true
     }

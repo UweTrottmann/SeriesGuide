@@ -4,7 +4,6 @@
 package com.battlelancer.seriesguide.sync
 
 import android.content.Context
-import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
@@ -138,7 +137,7 @@ class HexagonSync(
             TaskManager.performAddTask(context, newShowsList, true, !hasMergedShows)
         } else if (!hasMergedShows) {
             // set shows as merged
-            HexagonSettings.setHasMergedShows(context, true)
+            HexagonSettings.setHasMergedShows(context)
         }
 
         return HexagonResult(addNewShows, true)
@@ -177,11 +176,7 @@ class HexagonSync(
             if (!addingSuccessful) {
                 return false
             }
-            // set movies as merged
-            PreferenceManager.getDefaultSharedPreferences(context)
-                .edit()
-                .putBoolean(HexagonSettings.KEY_MERGED_MOVIES, true)
-                .apply()
+            HexagonSettings.setHasMergedMovies(context)
         }
 
         return addingSuccessful
@@ -208,11 +203,7 @@ class HexagonSync(
         }
 
         if (!hasMergedLists) {
-            // set lists as merged
-            PreferenceManager.getDefaultSharedPreferences(context)
-                .edit()
-                .putBoolean(HexagonSettings.KEY_MERGED_LISTS, true)
-                .apply()
+            HexagonSettings.setHasMergedLists(context)
         }
 
         return true

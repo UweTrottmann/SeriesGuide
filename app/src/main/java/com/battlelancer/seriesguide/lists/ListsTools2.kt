@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.lists
 
@@ -93,7 +93,7 @@ object ListsTools2 {
                 if (e is HttpResponseException && e.statusCode == 400) {
                     // Bad Request, do not try again, but require a full lists sync.
                     // Note: had reports on Cloud where save failed due to not yet saved lists.
-                    if (!HexagonSettings.setListsNotMerged(context)) {
+                    if (!HexagonSettings.setHasNotMergedLists(context)) {
                         // Failed to save, try again next sync
                         return
                     }

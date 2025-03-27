@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2021-2024 Uwe Trottmann
+// Copyright 2021-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.util
 
@@ -60,9 +60,7 @@ class AppUpgrade(
             // used account name to determine sign-in state before switch to Google Sign-In
             if (!HexagonSettings.getAccountName(context).isNullOrEmpty()) {
                 // tell users to sign in again
-                PreferenceManager.getDefaultSharedPreferences(context).edit()
-                    .putBoolean(HexagonSettings.KEY_SHOULD_VALIDATE_ACCOUNT, true)
-                    .apply()
+                HexagonSettings.setShouldValidateAccount(context, true)
             }
         }
 

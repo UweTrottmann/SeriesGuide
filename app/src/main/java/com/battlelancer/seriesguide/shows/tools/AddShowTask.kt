@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2011-2024 Uwe Trottmann
+// Copyright 2011-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.tools
 
@@ -210,7 +210,7 @@ class AddShowTask(
 
         // When merging shows down from Hexagon, set success flag
         if (isMergingShows && !failedMergingShows) {
-            HexagonSettings.setHasMergedShows(context, true)
+            HexagonSettings.setHasMergedShows(context)
         }
 
         if (addedAtLeastOneShow) {

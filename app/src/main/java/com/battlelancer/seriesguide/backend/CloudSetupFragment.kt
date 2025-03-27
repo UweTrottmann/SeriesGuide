@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2019-2024 Uwe Trottmann
+// Copyright 2019-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.backend
 
@@ -167,7 +167,7 @@ class CloudSetupFragment : Fragment() {
         } else {
             signInAccount = null
             errorIfNull?.let {
-                HexagonSettings.shouldValidateAccount(requireContext(), true)
+                HexagonSettings.setShouldValidateAccount(requireContext(), true)
                 showSnackbar(getString(R.string.hexagon_signin_fail_format, it))
             }
         }

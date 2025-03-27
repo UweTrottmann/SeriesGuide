@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2019-2023 Uwe Trottmann
+// Copyright 2019-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.sync
 
@@ -8,7 +8,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.OperationApplicationException
 import android.text.TextUtils
-import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.movies.tools.MovieTools
@@ -191,12 +190,8 @@ internal class HexagonMovieSync(
 
         Timber.d("download: updated %d and removed %d movies", updatedCount, removedCount)
 
-        // set new last sync time
         if (hasMergedMovies) {
-            PreferenceManager.getDefaultSharedPreferences(context)
-                .edit()
-                .putLong(HexagonSettings.KEY_LAST_SYNC_MOVIES, currentTime)
-                .apply()
+            HexagonSettings.setLastMoviesSyncTime(context, currentTime)
         }
 
         return true
