@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2018-2020, 2022, 2024 Uwe Trottmann
+// Copyright 2018-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.sync
 
 import android.content.Context
 import android.text.format.DateUtils
+import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.movies.MoviesSettings
 import com.battlelancer.seriesguide.movies.tools.MovieTools
@@ -86,7 +87,11 @@ class TmdbSync internal constructor(
     /**
      * Regularly updates current and future movies (or those without a release date) with data from
      * themoviedb.org. All other movies are updated rarely.
+     *
+     * Note: this uses [runBlocking], so if the calling thread is interrupted this will throw
+     * [InterruptedException].
      */
+    @Throws(InterruptedException::class)
     fun updateMovies(progress: SyncProgress): Boolean {
         val currentTimeMillis = System.currentTimeMillis()
         // update movies released 6 months ago or newer, should cover most edits
@@ -111,9 +116,10 @@ class TmdbSync internal constructor(
             }
 
             // try loading details from tmdb
-            val details = movieTools.getMovieDetails(
-                languageCode, regionCode, movie.tmdbId, false
-            )
+            val detailsResult = runBlocking {
+                movieTools.getMovieDetails(languageCode, regionCode, movie.tmdbId, false)
+            }
+            val details = detailsResult.movieDetails
             if (details.tmdbMovie() != null) {
                 // update local database
                 movieTools.updateMovie(details, movie.tmdbId)
@@ -121,12 +127,19 @@ class TmdbSync internal constructor(
                 // Treat as failure if updating at least one fails.
                 result = false
 
-                val movieTitle = SgRoomDatabase.getInstance(context)
-                    .movieHelper()
-                    .getMovieTitle(movie.tmdbId)
-                val message = "Failed to update movie ('${movieTitle}', TMDB id ${movie.tmdbId})."
-                progress.setImportantErrorIfNone(message)
-                Timber.e(message)
+                if (detailsResult.isNotFoundOnTmdb) {
+                    val movieTitle = SgRoomDatabase.getInstance(context)
+                        .movieHelper()
+                        .getMovieTitle(movie.tmdbId)
+                    val notFoundMessage = context.getString(R.string.error_movie_not_found)
+                    // To be replaced with a properly localized message. Currently looks out of
+                    // place for RTL languages, but want to avoid giving translators a string with
+                    // placeholders.
+                    val message = "'${movieTitle}' (TMDB ID ${movie.tmdbId}) - $notFoundMessage"
+
+                    progress.setImportantErrorIfNone(message)
+                    Timber.e(message)
+                }
             }
         }
 

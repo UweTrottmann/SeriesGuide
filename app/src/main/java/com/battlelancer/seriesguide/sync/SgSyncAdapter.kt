@@ -124,6 +124,8 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
      *
      * - [TmdbSync.updateConfigurationAndWatchProviders]
      * - [ShowSync.sync]
+     * - [TmdbSync.updateMovies]
+     * - [HexagonSync.sync]
      * - [TraktSync.sync]
      *
      * which may throw [InterruptedException].

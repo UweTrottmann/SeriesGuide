@@ -284,6 +284,7 @@
     <string name="action_movies_sort_release">Дата на издаване</string>
     <string name="title_similar_movies">Подобни филми</string>
     <string name="title_release_dates">Дати на излизане</string>
+    <string name="error_movie_not_found">Movie removed from TMDB. Remove it from lists, set it not watched. Using Trakt? On their website, search for its TMDB ID and remove it from history and lists.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Не може да се изчисли статистиката.</string>
     <string name="shows_finished">%s изгледани и приключени</string>

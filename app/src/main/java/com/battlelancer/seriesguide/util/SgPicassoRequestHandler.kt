@@ -16,6 +16,7 @@ import com.squareup.picasso.Picasso.LoadedFrom.DISK
 import com.squareup.picasso.Picasso.LoadedFrom.NETWORK
 import com.squareup.picasso.Request
 import com.squareup.picasso.RequestHandler
+import kotlinx.coroutines.runBlocking
 import okhttp3.CacheControl
 import java.io.IOException
 
@@ -61,9 +62,14 @@ class SgPicassoRequestHandler(
         if (SCHEME_MOVIE_TMDB == scheme) {
             val movieTmdbId = host.toInt()
 
-            val posterPath = SgApp.getServicesComponent(context).movieTools()
-                .getMovieSummary(movieTmdbId)
-                ?.poster_path
+            val posterPath: String? = try {
+                runBlocking {
+                    SgApp.getServicesComponent(context).movieTools()
+                        .getMoviePosterPath(movieTmdbId)
+                }
+            } catch (e: InterruptedException) {
+                null // Do nothing
+            }
             if (posterPath != null) {
                 val imageUrl = TmdbSettings.getImageBaseUrl(context) +
                         TmdbSettings.POSTER_SIZE_SPEC_W342 + posterPath
