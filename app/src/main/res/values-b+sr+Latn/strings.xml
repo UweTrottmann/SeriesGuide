@@ -291,7 +291,7 @@
     <string name="action_movies_sort_release">Datum emitovanja</string>
     <string name="title_similar_movies">Slični filmovi</string>
     <string name="title_release_dates">Datumi emitovanja</string>
-    <string name="error_movie_not_found">Movie removed from TMDB. Remove it from lists, set it not watched. Using Trakt? On their website, search for its TMDB ID and remove it from history and lists.</string>
+    <string name="error_movie_not_found">Film je uklonjen iz TMDB-a. Uklonite ga sa lista, postavite da se ne gleda. Koristite Trakt? Na njihovoj veb lokaciji potražite njegov TMDB ID i uklonite ga iz istorije i lista.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Nije moguće izračunati statistiku</string>
     <string name="shows_finished">%s završio gledanje</string>

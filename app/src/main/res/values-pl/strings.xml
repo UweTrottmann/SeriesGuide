@@ -298,7 +298,7 @@
     <string name="action_movies_sort_release">Data premiery</string>
     <string name="title_similar_movies">Podobne filmy</string>
     <string name="title_release_dates">Daty premier</string>
-    <string name="error_movie_not_found">Movie removed from TMDB. Remove it from lists, set it not watched. Using Trakt? On their website, search for its TMDB ID and remove it from history and lists.</string>
+    <string name="error_movie_not_found">Film został usunięty z TMDB. Usuń go z list oraz ustaw jako nieobejrzany. Używasz Trakt? Na ish stronie wyszukaj ID z bazy TMDB i usuń go z historii oraz list.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Nie można obliczyć statystyk.</string>
     <string name="shows_finished">Zakończono oglądanie %s</string>

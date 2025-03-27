@@ -284,7 +284,7 @@
     <string name="action_movies_sort_release">Udgivelsesdato</string>
     <string name="title_similar_movies">Lignende film</string>
     <string name="title_release_dates">Udgivelsesdatoer</string>
-    <string name="error_movie_not_found">Movie removed from TMDB. Remove it from lists, set it not watched. Using Trakt? On their website, search for its TMDB ID and remove it from history and lists.</string>
+    <string name="error_movie_not_found">Film fjernet fra TMDB. Fjern den fra lister, sæt den ikke set. Brug Trakt? På deres hjemmeside, søg efter dens TMDB ID og fjern den fra historik og lister.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Kunne ikke beregne statistik.</string>
     <string name="shows_finished">%s set færdig</string>
