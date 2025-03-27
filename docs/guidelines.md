@@ -30,6 +30,14 @@ The methods are named based on what is clicked.
 
 Example: `onMoreOptionsClick`.
 
+### SharedPreferences and settings
+
+SharedPreferences should be edited by a dedicated settings class. Other code should get and set 
+settings only through functions, not through the SharedPreferences APIs.
+
+This will hide the actual APIs used to store settings so it's easier to replace and helps keep track
+of code that modifies settings.
+
 ## User interface
 
 ### Layout resources
