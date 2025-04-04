@@ -1,4 +1,4 @@
-name: Android CI
+name: Build Test Lint
 
 # Avoid running this on the gh-pages branch
 on:
