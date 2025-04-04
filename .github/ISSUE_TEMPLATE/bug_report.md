@@ -14,7 +14,7 @@ If it makes sense, please also
 - explain what you expect to happen
 - provide a screenshot to help explain
 - provide the exact steps to reproduce the error
-- [create and include debug logs](https://www.seriesgui.de/help/other/debug)
+- create and include debug logs, see https://www.seriesgui.de/help/other/debug
 
 ### Device details
 
