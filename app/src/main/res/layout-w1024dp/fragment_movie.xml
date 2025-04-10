@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- SPDX-License-Identifier: Apache-2.0 -->
-<!-- Copyright 2016-2024 Uwe Trottmann -->
+<!-- Copyright 2016-2025 Uwe Trottmann -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -209,6 +209,13 @@
                         android:layout_below="@+id/labelMovieLastUpdated"
                         android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
                         tools:text="July 17, 21:48" />
+
+                    <include
+                        android:id="@+id/containerMovieBottom"
+                        layout="@layout/buttons_movie_bottom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textMovieLastUpdated" />
 
                 </RelativeLayout>
 

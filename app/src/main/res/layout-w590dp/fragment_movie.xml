@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- SPDX-License-Identifier: Apache-2.0 -->
-<!-- Copyright 2016-2024 Uwe Trottmann -->
+<!-- Copyright 2016-2025 Uwe Trottmann -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -109,7 +109,8 @@
                     android:layout_width="360dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/containerMovieHeader"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/default_padding">
 
                     <Button
                         android:id="@+id/buttonMovieLanguage"
@@ -188,24 +189,20 @@
                         style="@style/Block"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/large_padding"
                         android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
                         tools:text="July 17, 21:48" />
 
-                    <View
-                        android:id="@+id/dividerMovie3"
+                    <include
+                        android:id="@+id/containerMovieBottom"
+                        layout="@layout/buttons_movie_bottom"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginLeft="@dimen/large_padding"
-                        android:layout_marginRight="@dimen/large_padding"
-                        android:layout_marginBottom="@dimen/default_padding"
-                        android:background="?attr/sgColorDivider"
-                        tools:ignore="UnknownIdInLayout" />
+                        android:layout_height="wrap_content" />
 
                     <LinearLayout
                         android:id="@+id/containerMovieActions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/large_padding"
                         android:orientation="vertical" />
 
                 </LinearLayout>
@@ -217,8 +214,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/containerMovieHeader"
                     android:layout_marginLeft="360dp"
-                    android:layout_marginTop="@dimen/large_padding"
-                    android:layout_marginBottom="@dimen/default_padding" />
+                    android:layout_marginTop="@dimen/default_padding" />
 
             </RelativeLayout>
 
