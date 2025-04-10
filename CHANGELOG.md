@@ -22,7 +22,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 * 🔧 Shows: display indicator on tab icon if a general or a stream and purchase filter is active.
 * 🔧 Widget: update preview to include more items, remove old settings button.
 * 🔧 Update message when there is no description to reflect that there can also be no details at
-  all, not just a missing translation. 
+  all, not just a missing translation.
+* 📝 Import latest user interface translations.
 
 ### 2025.2.0 - 2025-03-27 🧪
 
