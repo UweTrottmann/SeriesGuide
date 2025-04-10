@@ -306,21 +306,17 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         binding.containerMovieButtons.buttonMovieShare.isEnabled = movieTitle != null
 
-        // release date and runtime: "July 17, 2009 | 95 min"
-        val releaseAndRuntime = StringBuilder()
+        // release date and runtime: "July 17, 2009 · 1 h 5 min"
         val releaseDate = tmdbMovie.release_date
-        releaseDate?.let {
-            releaseAndRuntime.append(TimeTools.formatToLocalDate(context, it))
-            releaseAndRuntime.append(" | ")
-        }
+        binding.textViewMovieDate.text = TextTools.dotSeparate(
+            releaseDate?.let { TimeTools.formatToLocalDate(context, it) },
+            tmdbMovie.runtime?.let { TimeTools.formatToHoursAndMinutes(resources, it) }
+        )
+
         // hide create event button if release date is yesterday or older
         binding.containerMovieButtons.buttonMovieCalendar.isGone =
             releaseDate == null || Instant.ofEpochMilli(releaseDate.time)
                 .isBefore(ZonedDateTime.now().minusDays(1).toInstant())
-        tmdbMovie.runtime?.let {
-            releaseAndRuntime.append(TimeTools.formatToHoursAndMinutes(resources, it))
-        }
-        binding.textViewMovieDate.text = releaseAndRuntime.toString()
 
         // hide check-in if not connected to trakt or hexagon is enabled
         val isConnectedToTrakt = TraktCredentials.get(requireContext()).hasCredentials()
