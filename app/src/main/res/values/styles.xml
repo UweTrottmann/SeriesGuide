@@ -64,6 +64,7 @@
     </style>
 
     <style name="TextAppearance.SeriesGuide.Headline5" parent="TextAppearance.Material3.HeadlineSmall" />
+    <style name="TextAppearance.SeriesGuide.TitleLarge" parent="TextAppearance.Material3.TitleLarge" />
     <style name="TextAppearance.SeriesGuide.Headline6" parent="TextAppearance.Material3.TitleMedium" />
     <style name="TextAppearance.SeriesGuide.Headline6.Dim">
         <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>

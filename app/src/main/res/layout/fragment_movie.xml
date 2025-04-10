@@ -69,7 +69,7 @@
                     android:layout_toRightOf="@id/frameLayoutMoviePoster"
                     android:background="?attr/selectableItemBackground"
                     android:focusable="true"
-                    android:textAppearance="@style/TextAppearance.SeriesGuide.Headline6"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.TitleLarge"
                     tools:text="Awesome Movie Title" />
 
                 <TextView
@@ -82,7 +82,7 @@
                     android:layout_toRightOf="@id/frameLayoutMoviePoster"
                     android:background="?attr/selectableItemBackground"
                     android:focusable="true"
-                    android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
                     tools:text="20 Oct 2013" />
 
             </RelativeLayout>
