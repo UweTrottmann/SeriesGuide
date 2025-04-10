@@ -10,7 +10,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2025.2
 
-### Next release
+### 2025.2.1 - 2025-04-11 🧪
 
 * 🔨 Widget: immediately update after syncing.
 * 🔧 Discover: for consistency with movies, move search button back to app bar.
