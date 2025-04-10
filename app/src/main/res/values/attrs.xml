@@ -16,6 +16,9 @@
     <attr name="sgColorStatusBarOverlay" format="reference|color" />
     <attr name="sgColorOutlineLighter" format="reference|color" />
 
+    <!-- Button styles -->
+    <attr name="sgButtonDialogPrimary" format="reference" />
+
     <!-- Custom view attributes -->
     <declare-styleable name="EmptyView">
         <attr name="emptyViewMessage" format="string" />

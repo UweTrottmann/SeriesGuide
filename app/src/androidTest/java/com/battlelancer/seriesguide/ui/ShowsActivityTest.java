@@ -84,7 +84,7 @@ public class ShowsActivityTest {
 
         // Click to add the show
         ViewInteraction appCompatButton = onView(
-                allOf(withId(R.id.buttonPositive), withText(R.string.action_shows_add),
+                allOf(withId(R.id.buttonDialogAddShowPrimary), withText(R.string.action_shows_add),
                         isDisplayed()));
         appCompatButton.perform(click());
 
