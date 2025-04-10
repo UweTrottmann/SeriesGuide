@@ -10,6 +10,10 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2025.2
 
+### Next release
+
+* 🔨 Widget: immediately update after syncing.
+
 ### 2025.2.0 - 2025-03-27 🧪
 
 * 🔨 Movies: when connecting Cloud or Trakt, movies might not have been added if downloading them

@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
 import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.jobs.NetworkJobProcessor
@@ -241,6 +242,9 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
             if (showSync.hasUpdatedShows()) {
                 NotificationService.trigger(context)
             }
+            // Changes to episode data or syncing with Cloud or Trakt might change episode or show
+            // state: update widgets
+            ListWidgetProvider.notifyDataChanged(context)
         }
     }
 
