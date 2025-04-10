@@ -298,7 +298,23 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         movieTitle = tmdbMovie.title
         binding.textViewMovieTitle.text = tmdbMovie.title
-        requireActivity().title = tmdbMovie.title
+
+        val releaseDate = tmdbMovie.release_date
+        val releaseDateAndLength = TextTools.dotSeparate(
+            releaseDate?.let { TimeTools.formatToLocalDate(context, it) },
+            tmdbMovie.runtime?.let { TimeTools.formatToHoursAndMinutes(resources, it) }
+        )
+
+        // Use movie title, release date and length in app bar (shown when scrolling)
+        // Set activity title for accessibility tools
+        (requireActivity() as AppCompatActivity).apply {
+            title = tmdbMovie.title
+            supportActionBar?.let {
+                it.title = tmdbMovie.title
+                it.subtitle = releaseDateAndLength
+            }
+        }
+
         binding.textViewMovieDescription.text = TextTools.textWithTmdbSource(
             binding.textViewMovieDescription.context,
             tmdbMovie.overview
@@ -307,11 +323,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         binding.containerMovieButtons.buttonMovieShare.isEnabled = movieTitle != null
 
         // release date and runtime: "July 17, 2009 · 1 h 5 min"
-        val releaseDate = tmdbMovie.release_date
-        binding.textViewMovieDate.text = TextTools.dotSeparate(
-            releaseDate?.let { TimeTools.formatToLocalDate(context, it) },
-            tmdbMovie.runtime?.let { TimeTools.formatToHoursAndMinutes(resources, it) }
-        )
+        binding.textViewMovieDate.text = releaseDateAndLength
 
         // hide create event button if release date is yesterday or older
         binding.containerMovieButtons.buttonMovieCalendar.isGone =
