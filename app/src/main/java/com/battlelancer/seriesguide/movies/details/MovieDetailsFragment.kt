@@ -423,8 +423,11 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // Metacritic search
         binding.containerMovieButtons.buttonMovieMetacritic.apply {
-            // Metacritic only has English titles, so using the original title is the best bet.
-            val titleOrNull = tmdbMovie.original_title ?: tmdbMovie.title
+            // Metacritic only has English titles so mostly English speaking users will use it,
+            // so its likely the original language of the movie is English.
+            val titleOrNull = if (tmdbMovie.original_language == "en") {
+                tmdbMovie.original_title
+            } else tmdbMovie.title
             isGone = titleOrNull.isNullOrEmpty()
             setOnClickListener {
                 titleOrNull?.let { Metacritic.searchForMovie(requireContext(), it) }
