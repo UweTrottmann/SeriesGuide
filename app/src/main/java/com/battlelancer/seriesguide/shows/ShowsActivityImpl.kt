@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2011-2024 Uwe Trottmann
+// Copyright 2011-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows
 
@@ -23,7 +23,6 @@ import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.shows.history.ShowsHistoryFragment
 import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment
 import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverFragment
-import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverPagingActivity
 import com.battlelancer.seriesguide.sync.AccountUtils
 import com.battlelancer.seriesguide.ui.BaseTopActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
@@ -34,7 +33,6 @@ import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.WebTools
 import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.uwetrottmann.seriesguide.billing.BillingViewModel
 import com.uwetrottmann.seriesguide.billing.BillingViewModelFactory
@@ -187,12 +185,6 @@ open class ShowsActivityImpl : BaseTopActivity() {
     }
 
     private fun setupViews() {
-        // setup floating action button
-        val floatingActionButton = findViewById<FloatingActionButton>(R.id.buttonShowsFloating)
-        floatingActionButton.setOnClickListener {
-            startActivity(ShowsDiscoverPagingActivity.intentSearch(this))
-        }
-
         viewPager = findViewById(R.id.viewPagerTabs)
         val tabs = findViewById<SlidingTabLayout>(R.id.sgTabLayout)
         tabs.setOnTabClickListener { position: Int ->
@@ -204,7 +196,6 @@ open class ShowsActivityImpl : BaseTopActivity() {
         tabs.setOnPageChangeListener(
             ShowsPageChangeListener(
                 findViewById(R.id.sgAppBarLayout),
-                floatingActionButton,
                 viewModel
             )
         )
@@ -329,14 +320,11 @@ open class ShowsActivityImpl : BaseTopActivity() {
         get() = findViewById(R.id.coordinatorLayoutShows)
 
     /**
-     * Page change listener which
-     * - sets the scroll view of the current visible tab as the lift on scroll target view of the
-     *   app bar and
-     * - hides the floating action button for all but the discover tab.
+     * Page change listener which sets the scroll view of the current visible tab as the lift on
+     * scroll target view of the app bar.
      */
     class ShowsPageChangeListener(
         private val appBarLayout: AppBarLayout,
-        private val floatingActionButton: FloatingActionButton,
         private val viewModel: ShowsActivityViewModel
     ) : ViewPager2.OnPageChangeCallback() {
         override fun onPageScrollStateChanged(arg0: Int) {}
@@ -356,12 +344,6 @@ open class ShowsActivityImpl : BaseTopActivity() {
                 else -> throw IllegalArgumentException("Unexpected page position")
             }
             appBarLayout.liftOnScrollTargetViewId = liftOnScrollTarget
-
-            if (position == Tab.DISCOVER.index) {
-                floatingActionButton.show()
-            } else {
-                floatingActionButton.hide()
-            }
         }
     }
 
