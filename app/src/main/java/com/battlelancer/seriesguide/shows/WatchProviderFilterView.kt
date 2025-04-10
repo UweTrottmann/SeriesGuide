@@ -91,7 +91,8 @@ fun WatchProviderList(
                 // however, it prevents re-setting not shown providers. Which should not matter as
                 // only shown ones are considered for filtering (see
                 // SgWatchProviderHelper.filterLocalWatchProviders).
-                val isResetEnabled = watchProviders.find { it.filter_local } != null
+                val isResetEnabled =
+                    ShowsDistillationViewModel.isFilteringByWatchProviders(watchProviders)
                 Row(
                     modifier = Modifier
                         .weight(1f)

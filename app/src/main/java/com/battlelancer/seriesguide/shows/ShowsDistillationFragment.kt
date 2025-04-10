@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2019-2024 Uwe Trottmann
+// Copyright 2019-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows
 
@@ -15,6 +15,9 @@ import androidx.core.view.isGone
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
@@ -29,6 +32,7 @@ import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.safeShow
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import kotlinx.coroutines.launch
 
 class ShowsDistillationFragment : AppCompatDialogFragment() {
 
@@ -102,9 +106,43 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
                 setInitialSort(initialShowSortOrder)
                 setSortOrderListener(sortOrderListener)
             }
+
+            // Display tab icon with indicator if general filter is active
+            lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    ShowsDistillationSettings.showFilter.collect { filters ->
+                        filters?.let {
+                            val isFiltering = filters.isAnyFilterEnabled()
+                            tabLayoutShowsDistillation.setFilterIsActiveIcon(0, isFiltering)
+                        }
+                    }
+                }
+            }
+
+            // Display tab icon with indicator if filtering by watch provider
+            lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    model.watchProvidersFlow.collect { watchProviders ->
+                        val isFiltering =
+                            ShowsDistillationViewModel.isFilteringByWatchProviders(watchProviders)
+                        tabLayoutShowsDistillation.setFilterIsActiveIcon(1, isFiltering)
+                    }
+                }
+            }
         }
 
         return binding.root
+    }
+
+    private fun TabLayout.setFilterIsActiveIcon(index: Int, isFiltering: Boolean) {
+        getTabAt(index)!!
+            .setIcon(
+                if (isFiltering) {
+                    R.drawable.ic_filter_selected_white_24dp
+                } else {
+                    R.drawable.ic_filter_white_24dp
+                }
+            )
     }
 
     private val filterListener = object : FilterShowsView.FilterListener {
