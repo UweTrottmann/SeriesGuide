@@ -58,14 +58,14 @@ class EditNoteDialog() : AppCompatDialogFragment() {
         // Buttons
         // Can not use dialog buttons as they dismiss the dialog right away,
         // but need to keep it visible if saving fails.
-        binding.buttonPositive.apply {
+        binding.buttonDialogEditNoteSave.apply {
             setText(R.string.action_save)
             setOnClickListener {
                 model.updateNote(editText.text?.toString())
                 model.saveNote()
             }
         }
-        binding.buttonNegative.apply {
+        binding.buttonDialogEditNoteCancel.apply {
             setText(android.R.string.cancel)
             setOnClickListener { dismiss() }
         }
@@ -104,7 +104,7 @@ class EditNoteDialog() : AppCompatDialogFragment() {
     }
 
     private fun setSaveEnabled(isEditingEnabled: Boolean, hasNoError: Boolean) {
-        binding?.buttonPositive?.isEnabled = isEditingEnabled && hasNoError
+        binding?.buttonDialogEditNoteSave?.isEnabled = isEditingEnabled && hasNoError
     }
 
     override fun onPause() {

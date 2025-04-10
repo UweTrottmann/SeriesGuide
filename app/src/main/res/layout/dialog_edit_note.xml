@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="24dp"
+        android:layout_marginTop="@dimen/default_padding"
         android:layout_marginEnd="24dp"
         android:layout_weight="1"
         app:counterEnabled="true"
@@ -35,7 +36,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_padding">
 
         <androidx.constraintlayout.helper.widget.Flow
             android:layout_width="0dp"
@@ -44,7 +46,7 @@
             android:paddingTop="@dimen/inline_padding"
             android:paddingEnd="@dimen/default_padding"
             android:paddingBottom="@dimen/inline_padding"
-            app:constraint_referenced_ids="buttonNegative,buttonPositive"
+            app:constraint_referenced_ids="buttonDialogEditNoteCancel,buttonDialogEditNoteSave"
             app:flow_horizontalBias="1"
             app:flow_horizontalStyle="packed"
             app:flow_wrapMode="chain"
@@ -54,18 +56,18 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/buttonNegative"
+            android:id="@+id/buttonDialogEditNoteCancel"
             style="?attr/buttonBarNegativeButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Button Negative With Very Very Long Text" />
+            tools:text="Button Cancel With Very Very Long Text" />
 
         <Button
-            android:id="@+id/buttonPositive"
-            style="?attr/buttonBarPositiveButtonStyle"
+            android:id="@+id/buttonDialogEditNoteSave"
+            style="?attr/sgButtonDialogPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Button Positive" />
+            tools:text="Button Primary" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
