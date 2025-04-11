@@ -65,7 +65,6 @@
     <string name="share_movie">Del film</string>
     <string name="addtocalendar">Legg til i kalender</string>
     <string name="addtocalendar_failed">Kan ikke opprette en kalenderhendelse.</string>
-    <string name="links">Linker</string>
     <!-- Comments -->
     <string name="comments">Kommentarer</string>
     <string name="shout_hint">Skriv en kommentar på engelsk. (Minst 5 ord)</string>

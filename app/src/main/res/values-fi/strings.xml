@@ -65,7 +65,6 @@
     <string name="share_movie">Jaa elokuva</string>
     <string name="addtocalendar">Lisää kalenteriin</string>
     <string name="addtocalendar_failed">Kalenteritapahtumaa ei voi luoda</string>
-    <string name="links">Linkit</string>
     <!-- Comments -->
     <string name="comments">Kommentit</string>
     <string name="shout_hint">Kirjoita kommentti (englanniksi, 5+ sanaa)</string>

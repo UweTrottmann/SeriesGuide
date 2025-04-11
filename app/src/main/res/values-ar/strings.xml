@@ -65,7 +65,6 @@
     <string name="share_movie">مشاركة فيلم</string>
     <string name="addtocalendar">إضافة إلى التقويم</string>
     <string name="addtocalendar_failed">.لا يمكن إنشاء حدث تقويم</string>
-    <string name="links">الروابط</string>
     <!-- Comments -->
     <string name="comments">التعليقات</string>
     <string name="shout_hint">اكتب تعليق (الإنجليزية، 5 كلمات أو أكثر)</string>

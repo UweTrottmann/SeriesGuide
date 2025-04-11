@@ -65,7 +65,6 @@
     <string name="share_movie">分享電影</string>
     <string name="addtocalendar">新增至日曆</string>
     <string name="addtocalendar_failed">無法建立日曆活動</string>
-    <string name="links">連結</string>
     <!-- Comments -->
     <string name="comments">評論</string>
     <string name="shout_hint">輸入評論 (英文，至少五個單字)</string>

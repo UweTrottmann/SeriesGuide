@@ -65,7 +65,6 @@
     <string name="share_movie">பங்கு திரைப்படம்</string>
     <string name="addtocalendar">நாட்காட்டியில் சேர்</string>
     <string name="addtocalendar_failed">ஒரு காலண்டர் நிகழ்வு உருவாக்க முடியும்.</string>
-    <string name="links">இணைப்புகள்</string>
     <!-- Comments -->
     <string name="comments">கருத்துகள்</string>
     <string name="shout_hint">ஒரு கருத்து (ஆங்கிலம், 5 + சொற்கள்) தட்டச்சு செய்யவும்</string>

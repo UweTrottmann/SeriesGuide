@@ -65,7 +65,6 @@
     <string name="share_movie">Konigi filmon</string>
     <string name="addtocalendar">Aldoni al kalendaro</string>
     <string name="addtocalendar_failed">Ne povas krei kalendaran eventon</string>
-    <string name="links">Ligiloj</string>
     <!-- Comments -->
     <string name="comments">Komentoj</string>
     <string name="shout_hint">Tajpu komenton (la Angla, 5+ vortoj)</string>

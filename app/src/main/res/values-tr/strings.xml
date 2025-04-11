@@ -65,7 +65,6 @@
     <string name="share_movie">Filmi paylaş</string>
     <string name="addtocalendar">Takvime ekle</string>
     <string name="addtocalendar_failed">Takvim etkinliği oluşturulamıyor.</string>
-    <string name="links">Bağlantılar</string>
     <!-- Comments -->
     <string name="comments">Yorumlar</string>
     <string name="shout_hint">Bir yorum yaz (Ingilizce, 5+ kelime)</string>

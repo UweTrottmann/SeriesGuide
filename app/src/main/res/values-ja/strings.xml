@@ -65,7 +65,6 @@
     <string name="share_movie">映画を共有</string>
     <string name="addtocalendar">カレンダーに追加</string>
     <string name="addtocalendar_failed">カレンダーイベントを作成できません</string>
-    <string name="links">リンク</string>
     <!-- Comments -->
     <string name="comments">コメント</string>
     <string name="shout_hint">コメントを入力（英語で5語以上）</string>

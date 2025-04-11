@@ -65,7 +65,6 @@
     <string name="share_movie">영화 공유하기</string>
     <string name="addtocalendar">캘린더에 추가</string>
     <string name="addtocalendar_failed">캘린더 이벤트를 만들 수 없습니다.</string>
-    <string name="links">링크</string>
     <!-- Comments -->
     <string name="comments">댓글</string>
     <string name="shout_hint">코멘트를 입력 (영어, 5글자 이상)</string>

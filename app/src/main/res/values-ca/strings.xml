@@ -65,7 +65,6 @@
     <string name="share_movie">Comparteix la pel·lícula</string>
     <string name="addtocalendar">Afegeix al calendari</string>
     <string name="addtocalendar_failed">No es pot crear l\'esdeveniment.</string>
-    <string name="links">Enllaços</string>
     <!-- Comments -->
     <string name="comments">Comentaris</string>
     <string name="shout_hint">Escriu un comentari (anglès, 5+ paraules)</string>

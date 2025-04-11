@@ -65,7 +65,6 @@
     <string name="share_movie">Podeli film</string>
     <string name="addtocalendar">Dodaj u kalendar</string>
     <string name="addtocalendar_failed">Nije moguće napraviti događaj u kalendaru</string>
-    <string name="links">Linkovi</string>
     <!-- Comments -->
     <string name="comments">Komentari</string>
     <string name="shout_hint">Unesite komentar (engleski, 5+ reči)</string>

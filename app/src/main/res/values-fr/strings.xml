@@ -65,7 +65,6 @@
     <string name="share_movie">Partager ce film</string>
     <string name="addtocalendar">Ajouter à l\'agenda</string>
     <string name="addtocalendar_failed">Impossible de créer un évènement sur l\'agenda.</string>
-    <string name="links">Liens</string>
     <!-- Comments -->
     <string name="comments">Commentaires</string>
     <string name="shout_hint">Entrez un commentaire (en anglais, plus de 5 mots)</string>

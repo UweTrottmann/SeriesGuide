@@ -65,7 +65,6 @@
     <string name="share_movie">Bagikan film</string>
     <string name="addtocalendar">Tambah ke kalender</string>
     <string name="addtocalendar_failed">Tidak dapat membuat acara kalender.</string>
-    <string name="links">Tautan</string>
     <!-- Comments -->
     <string name="comments">Komentar</string>
     <string name="shout_hint">Ketik sebuah komentar (Bahasa Inggris, 5+ kata)</string>

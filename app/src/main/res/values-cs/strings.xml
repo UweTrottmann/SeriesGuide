@@ -65,7 +65,6 @@
     <string name="share_movie">Sdílet film</string>
     <string name="addtocalendar">Přidat do kalendáře</string>
     <string name="addtocalendar_failed">V kalendáři nelze založit událost.</string>
-    <string name="links">Odkazy</string>
     <!-- Comments -->
     <string name="comments">Komentáře</string>
     <string name="shout_hint">Napište komentář (anglicky, alespoň 5 slov)</string>

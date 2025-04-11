@@ -65,7 +65,6 @@
     <string name="share_movie">Сподели филм</string>
     <string name="addtocalendar">Добавяне в календара</string>
     <string name="addtocalendar_failed">Не може да създаде календарно събитие.</string>
-    <string name="links">Интернет връзки</string>
     <!-- Comments -->
     <string name="comments">Коментари</string>
     <string name="shout_hint">Въведете коментар (английски, 5 + думи)</string>

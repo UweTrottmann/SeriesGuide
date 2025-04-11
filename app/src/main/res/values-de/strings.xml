@@ -65,7 +65,6 @@
     <string name="share_movie">Film teilen</string>
     <string name="addtocalendar">Termin erstellen</string>
     <string name="addtocalendar_failed">Kalender-Termin kann nicht erstellt werden</string>
-    <string name="links">Links</string>
     <!-- Comments -->
     <string name="comments">Kommentare</string>
     <string name="shout_hint">Schreiben Sie einen Kommentar (Englisch, 5+ Wörter)</string>

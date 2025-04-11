@@ -72,7 +72,6 @@
     <string name="share_movie">Share movie</string>
     <string name="addtocalendar">Create event</string>
     <string name="addtocalendar_failed">Can not create a calendar event</string>
-    <string name="links">Links</string>
 
     <!-- Comments -->
     <string name="comments">Comments</string>
