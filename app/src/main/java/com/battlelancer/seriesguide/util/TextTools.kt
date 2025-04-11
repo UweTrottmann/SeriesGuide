@@ -269,7 +269,6 @@ object TextTools {
         )
     }
 
-    @JvmStatic
     fun textNoTranslationMovieLanguage(context: Context, languageCode: String?, fallback: String): String {
         return context.getString(
             R.string.no_translation,
