@@ -105,7 +105,6 @@
     <string name="show_status_pilot">Peilot Teledu</string>
     <string name="show_status_canceled">Wedi\'i ganslo</string>
     <string name="no_translation">Nid oes disgrifiad wedi\'i gyfieithu i%1$s ar gael ar %2$s.</string>
-    <string name="no_translation_title">Heb ei gyfieithu</string>
     <string name="no_spoilers">Mae rhai manylion wedi\'u cuddio i atal anrheithwyr. I ddiffodd hyn ewch i Gosodiadau.</string>
     <string name="format_source">Ffynhonnell: %s</string>
     <string name="last_updated">Diweddarwyd diwethaf</string>

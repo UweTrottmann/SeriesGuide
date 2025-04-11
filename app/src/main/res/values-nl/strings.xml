@@ -101,7 +101,6 @@
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">Geannuleerd</string>
     <string name="no_translation">Er is op %2$s geen naar het %1$s vertaalde beschrijving beschikbaar.</string>
-    <string name="no_translation_title">Niet vertaald</string>
     <string name="no_spoilers">Sommige details zijn verborgen om te voorkomen dat u spoilers ziet. Om dit uit te zetten ga naar Instellingen.</string>
     <string name="format_source">Bron: %s</string>
     <string name="last_updated">Laatst bijgewerkt</string>

@@ -102,7 +102,6 @@
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">Canceled</string>
     <string name="no_translation">Nu există nici o traducere în %1$s disponibilă pe %2$s.</string>
-    <string name="no_translation_title">Ne tradus</string>
     <string name="no_spoilers">Unele detalii sunt ascunse pentru a evita spoilere. Pentru a nu folosi aceasta protecție mergeți în Setări.</string>
     <string name="format_source">Sursa: %s</string>
     <string name="last_updated">Last updated</string>

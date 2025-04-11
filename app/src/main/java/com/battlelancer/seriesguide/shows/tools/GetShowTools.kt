@@ -106,11 +106,9 @@ class GetShowTools @Inject constructor(
                 }
             }
 
-        val title = if (tmdbShow.name.isNullOrEmpty()) {
-            context.getString(R.string.no_translation_title)
-        } else {
-            tmdbShow.name
-        }
+        // The title returned from TMDB is never empty, even when fetching for a language that does
+        // not have a translation.
+        val title = tmdbShow.name ?: context.getString(R.string.unknown)
 
         val overview = if (noTranslation || tmdbShow.overview.isNullOrEmpty()) {
             // add note about non-translated or non-existing overview

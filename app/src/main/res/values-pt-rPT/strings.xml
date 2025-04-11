@@ -101,7 +101,6 @@
     <string name="show_status_pilot">Piloto</string>
     <string name="show_status_canceled">Cancelada</string>
     <string name="no_translation">Não existe nenhuma descrição traduzida para %1$s disponível em %2$s.</string>
-    <string name="no_translation_title">Por traduzir</string>
     <string name="no_spoilers">Alguns detalhes estão ocultos para evitar spoilers. Para desativar esta opção, vá às definições.</string>
     <string name="format_source">Fonte: %s</string>
     <string name="last_updated">Última atualização</string>

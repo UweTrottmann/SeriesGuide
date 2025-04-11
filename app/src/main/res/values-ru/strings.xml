@@ -103,7 +103,6 @@
     <string name="show_status_pilot">Пилот</string>
     <string name="show_status_canceled">Отменён</string>
     <string name="no_translation">Перевод описания на %1$s недоступно для %2$s.</string>
-    <string name="no_translation_title">Не переведено</string>
     <string name="no_spoilers">Некоторые детали скрыты, чтобы предотвратить спойлеры. Чтобы отключить эту функцию, перейдите в Настройки.</string>
     <string name="format_source">Источник: %s</string>
     <string name="last_updated">Последнее обновление</string>

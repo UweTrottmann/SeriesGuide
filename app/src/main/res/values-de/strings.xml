@@ -101,7 +101,6 @@
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">Eingestellt</string>
     <string name="no_translation">Es ist keine auf %1$s übersetzte Beschreibung bei %2$s verfügbar.</string>
-    <string name="no_translation_title">Nicht übersetzt</string>
     <string name="no_spoilers">Einige Details werden ausgeblendet um Spoiler zu vermeiden. Dies kann in den Einstellungen ausgeschaltet werden.</string>
     <string name="format_source">Quelle: %s</string>
     <string name="last_updated">Zuletzt aktualisiert</string>

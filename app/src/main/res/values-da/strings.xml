@@ -101,7 +101,6 @@
     <string name="show_status_pilot">Pilot-episode</string>
     <string name="show_status_canceled">Annulleret</string>
     <string name="no_translation">Der er ingen beskrivelse oversat til %1$s tilgængelig på %2$s.</string>
-    <string name="no_translation_title">Ikke oversat</string>
     <string name="no_spoilers">Visse detaljer er skjult for at undgå spoilers. Du kan slå dette fra under Indstillinger.</string>
     <string name="format_source">Kilde: %s</string>
     <string name="last_updated">Senest opdateret</string>

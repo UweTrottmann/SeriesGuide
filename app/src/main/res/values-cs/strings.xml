@@ -103,7 +103,6 @@
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">Zrušeno</string>
     <string name="no_translation">Pro jazyk %1$s není na %2$s dostupný žádný popis.</string>
-    <string name="no_translation_title">Nepřeloženo</string>
     <string name="no_spoilers">Některé detaily jsou skryty, aby se zabránilo spoilerům. Toto můžete vypnout v nastavení.</string>
     <string name="format_source">Zdroj: %s</string>
     <string name="last_updated">Poslední aktualizace</string>

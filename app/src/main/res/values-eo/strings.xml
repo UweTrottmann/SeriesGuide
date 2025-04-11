@@ -101,7 +101,6 @@
     <string name="show_status_pilot">Piloto</string>
     <string name="show_status_canceled">Nuligita</string>
     <string name="no_translation">Ne estas priskribo tradukita al %1$s disponebla je %2$s.</string>
-    <string name="no_translation_title">Ne tradukita</string>
     <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
     <string name="format_source">Fonto: %s</string>
     <string name="last_updated">Last updated</string>

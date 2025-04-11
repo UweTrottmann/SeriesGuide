@@ -100,7 +100,6 @@
     <string name="show_status_pilot">นำร่อง</string>
     <string name="show_status_canceled">ยกเลิกแล้ว</string>
     <string name="no_translation">ไม่มีรายละเอียดที่ถูกแปลเป็น %1$s พร้อมใช้งานที่ %2$s</string>
-    <string name="no_translation_title">ยังไม่ถูกแปล</string>
     <string name="no_spoilers">รายละเอียดบางอย่างถูกซ่อนเพื่อป้องกันการสปอยล์ ปิดการป้องกันนี้ได้ในการตั้งค่า</string>
     <string name="format_source">ที่มา: %s</string>
     <string name="last_updated">อัปเดตล่าสุด</string>

@@ -101,7 +101,6 @@
     <string name="show_status_pilot">Pilotti</string>
     <string name="show_status_canceled">Peruttu</string>
     <string name="no_translation">Kuvausta ei ole saatavilla kielellä %1$s palvelussa %2$s.</string>
-    <string name="no_translation_title">Ei käännetty</string>
     <string name="no_spoilers">Osa tiedoista on piilotettu juonipaljastuksien varalta. Voit poistaa tämän käytöstä asetuksista.</string>
     <string name="format_source">Lähde: %s</string>
     <string name="last_updated">Viimeksi päivitetty</string>

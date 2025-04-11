@@ -101,7 +101,6 @@
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">Törölve</string>
     <string name="no_translation">Nincs leírás %1$s nyelven a %2$s adatbázisban.</string>
-    <string name="no_translation_title">Nincs lefordítva</string>
     <string name="no_spoilers">Néhány részlet elrejtésre kerül a spoilerek megakadályozása miatt. A kikapcsoláshoz menj a Beállításokba.</string>
     <string name="format_source">Forrás: %s</string>
     <string name="last_updated">Utoljára frissítve</string>

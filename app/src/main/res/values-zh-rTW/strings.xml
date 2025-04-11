@@ -100,7 +100,6 @@
     <string name="show_status_pilot">試播集</string>
     <string name="show_status_canceled">已取消</string>
     <string name="no_translation">%2$s沒有%1$s的翻譯說明。</string>
-    <string name="no_translation_title">未翻譯</string>
     <string name="no_spoilers">一些細節已隱藏起來避免劇透，可前往設定關閉此功能。</string>
     <string name="format_source">來源：%s</string>
     <string name="last_updated">最後更新</string>

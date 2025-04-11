@@ -103,7 +103,6 @@
     <string name="show_status_pilot">Пілот</string>
     <string name="show_status_canceled">Скасовано</string>
     <string name="no_translation">Переклад опису з %1$s недоступний для %2$s.</string>
-    <string name="no_translation_title">Не перекладено</string>
     <string name="no_spoilers">Деякі деталі приховані для запобігання спойлерам. Щоб вимкнути це використовуйте Налаштування.</string>
     <string name="format_source">Джерело: %s</string>
     <string name="last_updated">Востаннє оновлено</string>

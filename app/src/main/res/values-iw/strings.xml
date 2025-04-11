@@ -103,7 +103,6 @@
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">בוטל</string>
     <string name="no_translation">אין תיאור זמין המתורגם ל%1$s ב-%2$s.</string>
-    <string name="no_translation_title">לא תורגם</string>
     <string name="no_spoilers">פרטים מסוימים מוסתרים כדי למנוע ספוילרים. כדי לבטל את זה עבור להגדרות.</string>
     <string name="format_source">מקור: %s</string>
     <string name="last_updated">Last updated</string>

@@ -101,7 +101,6 @@
     <string name="show_status_pilot">Pilot Bölüm</string>
     <string name="show_status_canceled">İptal Edildi</string>
     <string name="no_translation">%2$s\'de, %1$s diline çevrilmiş hiçbir açıklama bulunmuyor.</string>
-    <string name="no_translation_title">Çevrilmedi</string>
     <string name="no_spoilers">Bazı detaylar spoiler önlemek için gizli kalır. Bunu kapatmak için ayarlara gidiniz.</string>
     <string name="format_source">Kaynak: %s</string>
     <string name="last_updated">Son Güncelleme</string>

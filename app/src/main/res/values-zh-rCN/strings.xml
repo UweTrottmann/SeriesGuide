@@ -100,7 +100,6 @@
     <string name="show_status_pilot">试播集</string>
     <string name="show_status_canceled">已取消</string>
     <string name="no_translation">%2$s 上没有%1$s的剧情简介。</string>
-    <string name="no_translation_title">未翻译</string>
     <string name="no_spoilers">已隐藏部分详细信息来防止剧透。可在设置中关闭此功能。</string>
     <string name="format_source">来源：%s</string>
     <string name="last_updated">最后更新</string>

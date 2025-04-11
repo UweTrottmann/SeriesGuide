@@ -102,7 +102,6 @@
     <string name="show_status_pilot">Пилот</string>
     <string name="show_status_canceled">Отказано</string>
     <string name="no_translation">Не постоји опис преведен на %1$s који је доступан на %2$s.</string>
-    <string name="no_translation_title">Није преведено</string>
     <string name="no_spoilers">Неки детаљи су скривени да би се спречили спојлери. Да бисте ово искључили, идите на Подешавања.</string>
     <string name="format_source">Извор %s</string>
     <string name="last_updated">Последње ажурирање</string>

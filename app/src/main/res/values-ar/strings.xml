@@ -105,7 +105,6 @@
     <string name="show_status_pilot">طيار</string>
     <string name="show_status_canceled">ملغى</string>
     <string name="no_translation">لا يوجد وصف باللغة %1$s متاحة على موقع %2$s.</string>
-    <string name="no_translation_title">غير مترجمة</string>
     <string name="no_spoilers">يتم إخفاء بعض التفاصيل لمنع الحرق. لإيقاف هذا انتقل إلى الإعدادات.</string>
     <string name="format_source">المصدر: %s</string>
     <string name="last_updated">آخر تحديث</string>
