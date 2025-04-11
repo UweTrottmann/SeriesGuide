@@ -12,10 +12,14 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ### Next release
 
+* 🔨 Widget: immediately update after syncing.
 * 🔧 Discover: for consistency with movies, move search button back to app bar.
 * 🔧 Movie details: for consistency with shows, display links and metacritic search as buttons.
+* 🔧 Movie details: increase title on all, increase poster size on phone screens; display date and
+  length in app bar.
+* 🔧 Dialogs: highlight primary button in some dialogs for improved usability, in remove dialog
+  make removing the secondary action.
 * 🔧 Shows: display indicator on tab icon if a general or a stream and purchase filter is active.
-* 🔨 Widget: immediately update after syncing.
 * 🔧 Widget: update preview to include more items, remove old settings button.
 
 ### 2025.2.0 - 2025-03-27 🧪
