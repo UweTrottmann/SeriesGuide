@@ -16,6 +16,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 * 🔧 Movie details: for consistency with shows, display links and metacritic search as buttons.
 * 🔧 Shows: display indicator on tab icon if a general or a stream and purchase filter is active.
 * 🔨 Widget: immediately update after syncing.
+* 🔧 Widget: update preview to include more items, remove old settings button.
 
 ### 2025.2.0 - 2025-03-27 🧪
 
