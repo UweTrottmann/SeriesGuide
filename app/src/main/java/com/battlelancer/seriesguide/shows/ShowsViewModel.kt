@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2018-2024 Uwe Trottmann
+// Copyright 2018-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows
 
@@ -36,7 +36,7 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
     data class ShowsViewUiState(
         val showFilter: ShowsDistillationSettings.ShowFilter,
         val watchProvidersFilter: List<SgWatchProvider>,
-        val showSortOrder: SortShowsView.ShowSortOrder
+        val showSortOrder: ShowsDistillationSettings.ShowSortOrder
     ) {
         val isFiltersActive: Boolean
             get() = showFilter.isAnyFilterEnabled() || watchProvidersFilter.isNotEmpty()
@@ -64,7 +64,7 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
         ShowsViewUiState(
             showFilter = ShowsDistillationSettings.ShowFilter.fromSettings(getApplication()),
             watchProvidersFilter = watchProvidersFilterSource.value,
-            showSortOrder = SortShowsView.ShowSortOrder.fromSettings(getApplication())
+            showSortOrder = ShowsDistillationSettings.ShowSortOrder.fromSettings(getApplication())
         )
     )
 

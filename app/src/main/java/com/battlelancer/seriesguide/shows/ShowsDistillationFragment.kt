@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.core.content.edit
 import androidx.core.view.isGone
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
@@ -19,13 +18,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
 import com.battlelancer.seriesguide.databinding.DialogShowsDistillationBinding
 import com.battlelancer.seriesguide.settings.AdvancedSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowFilter
+import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowSortOrder
 import com.battlelancer.seriesguide.streaming.SgWatchProvider
 import com.battlelancer.seriesguide.streaming.StreamingSearchInfoDialog
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
@@ -56,7 +54,7 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
         val binding = DialogShowsDistillationBinding.inflate(inflater, container, false)
 
         val initialShowFilter = ShowFilter.fromSettings(requireContext())
-        val initialShowSortOrder = SortShowsView.ShowSortOrder.fromSettings(requireContext())
+        val initialShowSortOrder = ShowSortOrder.fromSettings(requireContext())
 
         binding.apply {
             filterShowsView.isGone = false
@@ -189,30 +187,9 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
     }
 
     private val sortOrderListener = object : SortShowsView.SortOrderListener {
-        override fun onSortOrderUpdate(showSortOrder: SortShowsView.ShowSortOrder) {
-            // save new sort order to preferences
-            // TODO Move to ShowsDistillationSettings
-            PreferenceManager.getDefaultSharedPreferences(requireContext()).edit {
-                putInt(ShowsDistillationSettings.KEY_SORT_ORDER, showSortOrder.sortOrderId)
-                putBoolean(
-                    ShowsDistillationSettings.KEY_SORT_FAVORITES_FIRST,
-                    showSortOrder.isSortFavoritesFirst
-                )
-                putBoolean(
-                    DisplaySettings.KEY_SORT_IGNORE_ARTICLE,
-                    showSortOrder.isSortIgnoreArticles
-                )
-            }
-
-            // broadcast new sort order
-            activityModel.showsDistillationSettings.sortOrder.value = showSortOrder
-
-            if (showSortOrder.changedIgnoreArticles) {
-                // refresh all list widgets
-                ListWidgetProvider.notifyDataChanged(context!!)
-            }
+        override fun onSortOrderUpdate(showSortOrder: ShowSortOrder) {
+            activityModel.showsDistillationSettings.saveSortOrder(showSortOrder)
         }
-
     }
 
     companion object {

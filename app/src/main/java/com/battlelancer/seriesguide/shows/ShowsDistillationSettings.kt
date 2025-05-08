@@ -6,7 +6,9 @@ package com.battlelancer.seriesguide.shows
 import android.content.Context
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
+import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
+import com.battlelancer.seriesguide.settings.DisplaySettings
 import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
@@ -24,7 +26,7 @@ class ShowsDistillationSettings(
     /**
      * Initially the current value, emits when the sort order was changed with [saveSortOrder].
      */
-    val sortOrder = MutableStateFlow(SortShowsView.ShowSortOrder.fromSettings(context))
+    val sortOrder = MutableStateFlow(ShowSortOrder.fromSettings(context))
 
     fun saveFilter(showFilter: ShowFilter) {
         // Save setting
@@ -37,6 +39,29 @@ class ShowsDistillationSettings(
         }
         // Broadcast new value
         this.showFilter.value = showFilter
+    }
+
+    fun saveSortOrder(showSortOrder: ShowSortOrder) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit {
+            putInt(KEY_SORT_ORDER, showSortOrder.sortOrderId)
+            putBoolean(
+                KEY_SORT_FAVORITES_FIRST,
+                showSortOrder.isSortFavoritesFirst
+            )
+            putBoolean(
+                DisplaySettings.KEY_SORT_IGNORE_ARTICLE,
+                showSortOrder.isSortIgnoreArticles
+            )
+        }
+
+        // broadcast new sort order
+        sortOrder.value = showSortOrder
+
+        // Note: List widgets continue to share the ignore articles setting
+        if (showSortOrder.changedIgnoreArticles) {
+            // refresh all list widgets
+            ListWidgetProvider.notifyDataChanged(context)
+        }
     }
 
     data class ShowFilter(
@@ -70,25 +95,38 @@ class ShowsDistillationSettings(
         }
     }
 
-    /**
-     * Used by [ShowsFragment] loader and various others to determine sort order of shows.
-     */
-    object ShowsSortOrder {
-        const val TITLE_ID = 0
+    data class ShowSortOrder(
+        val sortOrderId: Int,
+        val isSortFavoritesFirst: Boolean,
+        val isSortIgnoreArticles: Boolean,
+        val changedIgnoreArticles: Boolean
+    ) {
+        companion object {
 
-        // @deprecated Only supporting alphabetical sort order going forward.
-        // int TITLE_REVERSE_ID = 1;
-        const val OLDEST_EPISODE_ID = 2
-        const val LATEST_EPISODE_ID = 3
-        const val LAST_WATCHED_ID = 4
-        const val LEAST_REMAINING_EPISODES_ID = 5
-        const val STATUS = 6
+            const val TITLE_ID = 0
+            // @deprecated Only supporting alphabetical sort order going forward.
+            // int TITLE_REVERSE_ID = 1;
+            const val OLDEST_EPISODE_ID = 2
+            const val LATEST_EPISODE_ID = 3
+            const val LAST_WATCHED_ID = 4
+            const val LEAST_REMAINING_EPISODES_ID = 5
+            const val STATUS = 6
+
+            fun fromSettings(context: Context): ShowSortOrder {
+                return ShowSortOrder(
+                    getSortOrderId(context),
+                    isSortFavoritesFirst(context),
+                    DisplaySettings.isSortOrderIgnoringArticles(context),
+                    false
+                )
+            }
+        }
     }
 
     companion object {
 
-        internal const val KEY_SORT_ORDER = "com.battlelancer.seriesguide.sort.order"
-        internal const val KEY_SORT_FAVORITES_FIRST =
+        private const val KEY_SORT_ORDER = "com.battlelancer.seriesguide.sort.order"
+        private const val KEY_SORT_FAVORITES_FIRST =
             "com.battlelancer.seriesguide.sort.favoritesfirst"
         private const val KEY_FILTER_FAVORITES = "seriesguide.show_filter.favorites"
         private const val KEY_FILTER_UNWATCHED = "seriesguide.show_filter.unwatched"
@@ -133,11 +171,11 @@ class ShowsDistillationSettings(
             }
 
             when (sortOrderId) {
-                ShowsSortOrder.OLDEST_EPISODE_ID -> query.append(SgShow2SortQuery.OLDEST_EPISODE)
-                ShowsSortOrder.LATEST_EPISODE_ID -> query.append(SgShow2SortQuery.LATEST_EPISODE)
-                ShowsSortOrder.LAST_WATCHED_ID -> query.append(SgShow2SortQuery.LAST_WATCHED)
-                ShowsSortOrder.LEAST_REMAINING_EPISODES_ID -> query.append(SgShow2SortQuery.REMAINING_EPISODES)
-                ShowsSortOrder.STATUS -> query.append(SgShow2SortQuery.STATUS)
+                ShowSortOrder.OLDEST_EPISODE_ID -> query.append(SgShow2SortQuery.OLDEST_EPISODE)
+                ShowSortOrder.LATEST_EPISODE_ID -> query.append(SgShow2SortQuery.LATEST_EPISODE)
+                ShowSortOrder.LAST_WATCHED_ID -> query.append(SgShow2SortQuery.LAST_WATCHED)
+                ShowSortOrder.LEAST_REMAINING_EPISODES_ID -> query.append(SgShow2SortQuery.REMAINING_EPISODES)
+                ShowSortOrder.STATUS -> query.append(SgShow2SortQuery.STATUS)
             }
             // always sort by title at last
             query.append(
@@ -152,7 +190,7 @@ class ShowsDistillationSettings(
         }
 
         /**
-         * Returns the id as of [ShowsDistillationSettings.ShowsSortOrder]
+         * Returns the id as of [ShowsDistillationSettings.ShowSortOrder]
          * of the current show sort order.
          */
         internal fun getSortOrderId(context: Context): Int {
