@@ -119,6 +119,9 @@ import org.json.JSONTokener;
  *     android:label="@string/extension_title"&gt;
  *     &lt;intent-filter&gt;
  *         &lt;action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" /&gt;
+*          &lt;!-- Android 15 safer intents: explicitly declare subscribe and update events are supported. --&gt;
+ *         &lt;action android:name="com.battlelancer.seriesguide.api.action.SUBSCRIBE" /&gt;
+ *         &lt;action android:name="com.battlelancer.seriesguide.api.action.UPDATE" /&gt;
  *     &lt;/intent-filter&gt;
  *     &lt;!-- A settings activity is optional --&gt;
  *     &lt;meta-data android:name="settingsActivity"
