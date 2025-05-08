@@ -14,6 +14,7 @@ import androidx.core.content.edit
 import androidx.core.view.isGone
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -36,6 +37,7 @@ import kotlinx.coroutines.launch
 
 class ShowsDistillationFragment : AppCompatDialogFragment() {
 
+    private val activityModel: ShowsActivityViewModel by activityViewModels()
     private val model: ShowsDistillationViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -110,11 +112,8 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
             // Display tab icon with indicator if general filter is active
             lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    ShowsDistillationSettings.showFilter.collect { filters ->
-                        filters?.let {
-                            val isFiltering = filters.isAnyFilterEnabled()
-                            tabLayoutShowsDistillation.setFilterIsActiveIcon(0, isFiltering)
-                        }
+                    activityModel.showsDistillationSettings.showFilter.collect {
+                        tabLayoutShowsDistillation.setFilterIsActiveIcon(0, it.isAnyFilterEnabled())
                     }
                 }
             }
@@ -147,7 +146,7 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
 
     private val filterListener = object : FilterShowsView.FilterListener {
         override fun onFilterUpdate(filter: ShowFilter) {
-            ShowsDistillationSettings.saveFilter(requireContext(), filter)
+            activityModel.showsDistillationSettings.saveFilter(filter)
         }
 
         override fun onConfigureUpcomingRangeClick() {
@@ -192,6 +191,7 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
     private val sortOrderListener = object : SortShowsView.SortOrderListener {
         override fun onSortOrderUpdate(showSortOrder: SortShowsView.ShowSortOrder) {
             // save new sort order to preferences
+            // TODO Move to ShowsDistillationSettings
             PreferenceManager.getDefaultSharedPreferences(requireContext()).edit {
                 putInt(ShowsDistillationSettings.KEY_SORT_ORDER, showSortOrder.sortOrderId)
                 putBoolean(
@@ -205,7 +205,7 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
             }
 
             // broadcast new sort order
-            ShowsDistillationSettings.sortOrder.value = showSortOrder
+            activityModel.showsDistillationSettings.sortOrder.value = showSortOrder
 
             if (showSortOrder.changedIgnoreArticles) {
                 // refresh all list widgets

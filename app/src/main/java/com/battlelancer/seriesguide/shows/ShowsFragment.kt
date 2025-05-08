@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2012-2024 Uwe Trottmann
+// Copyright 2012-2025 Uwe Trottmann
 // Copyright 2013 Andrew Neal
 
 package com.battlelancer.seriesguide.shows
@@ -52,6 +52,7 @@ import com.uwetrottmann.androidutils.AndroidUtils
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import kotlin.random.Random
@@ -84,7 +85,7 @@ class ShowsFragment : Fragment() {
         emptyViewFilter = v.findViewById(R.id.emptyViewShowsFilter)
         ViewTools.setVectorDrawableTop(emptyViewFilter, R.drawable.ic_filter_white_24dp)
         emptyViewFilter.setOnClickListener {
-            ShowsDistillationSettings.saveFilter(requireContext(), ShowFilter.default())
+            activityModel.showsDistillationSettings.saveFilter(ShowFilter.default())
             // Note: not removing watch provider filters as it is ensured they always have matches
         }
         return v
@@ -149,6 +150,22 @@ class ShowsFragment : Fragment() {
             model.uiState.collectLatest {
                 // refresh filter menu icon state
                 requireActivity().invalidateOptionsMenu()
+            }
+        }
+
+        // Note: do not collect the current values, they are set when initializing UiState
+        // watch for sort order changes
+        viewLifecycleOwner.lifecycleScope.launch {
+            activityModel.showsDistillationSettings.sortOrder.drop(1).collect {
+                model.uiState.value = model.uiState.value.copy(showSortOrder = it)
+                model.updateQuery()
+            }
+        }
+        // watch for filter changes
+        viewLifecycleOwner.lifecycleScope.launch {
+            activityModel.showsDistillationSettings.showFilter.drop(1).collect {
+                model.uiState.value = model.uiState.value.copy(showFilter = it)
+                model.updateQuery()
             }
         }
 

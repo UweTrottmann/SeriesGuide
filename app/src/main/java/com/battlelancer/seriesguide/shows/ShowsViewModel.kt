@@ -85,24 +85,6 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
 
-        // watch for sort order changes
-        viewModelScope.launch {
-            ShowsDistillationSettings.sortOrder.collect {
-                if (it == null) return@collect
-                uiState.value = uiState.value.copy(showSortOrder = it)
-                updateQuery()
-            }
-        }
-
-        // watch for filter changes
-        viewModelScope.launch {
-            ShowsDistillationSettings.showFilter.collect {
-                if (it == null) return@collect
-                uiState.value = uiState.value.copy(showFilter = it)
-                updateQuery()
-            }
-        }
-
         // watch for watch provider filter changes
         viewModelScope.launch {
             watchProvidersFilterSource.collect {
