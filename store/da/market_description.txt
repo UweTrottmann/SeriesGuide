@@ -1,0 +1,30 @@
+Hold styr på dine foretrukne TV-serier og film.
+
+SeriesGuide er en gratis app til at opdage tv-serier og film, holde styr på dine sete episoder og film, og få besked om kommende episoder.
+
+<b>Opdag TV-serier og film</b>: find ud af, hvad der er tilgængeligt på dine streamingtjenester, nyt, populært eller minder om det du ser.
+
+<b>Hjælper med, hvad og hvor du skal se med</b>: Se, hvad du skal se som det næste, og find ud af, hvor et tv-program eller en film kan streames eller købes.
+
+<b>Afmærk og hold styr</b>: Før optegnelse over sete episoder og film, se dine fremskridt. Vær opmærksom på nye episoder.
+
+<b>Sikkerhedskopier og synkroniser</b>: få adgang til dine tv-serier, lister og film på flere enheder ved hjælp af SeriesGuide Cloud.
+
+<b>Forbind til Trakt</b>: Synkroniser dine sete og samlede episoder og film, tilgå din historik og se hvad andre ser. Skriv bedømmelser og kommentarer.
+
+<b>Ingen konto kræves</b>: Hvis du ønsker, kan du sikkerhedskopiere og gendanne dit bibliotek ved hjælp af JSON-filer.
+
+<b>Open source og uafhængig</b>: SeriesGuide understøttes af sine abonnenter, ikke af annoncører eller investorer.
+
+For hjælp, spørgsmål eller mere information besøg https://www.seriesgui.de/help
+
+For at tjekke kildekoden, besøg https://github.com/UweTrottmann/SeriesGuide
+
+All Access Sub
+Oplås alle funktioner, inklusive Cloud-backup.
+
+Supporter Sub
+Støt udviklingen af fremtidige opdateringer. Inkluderer All Access.
+
+Sponsor Sub
+Den store støtte-pakke, der sikrer fremtidige opdateringer. Inkluderer All Access.
