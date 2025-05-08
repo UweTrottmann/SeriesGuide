@@ -84,12 +84,14 @@ class ShowsDistillationSettings(
             }
 
             fun fromSettings(context: Context): ShowFilters {
+                val prefs = PreferenceManager.getDefaultSharedPreferences(context)
                 return ShowFilters(
-                    isFilteringFavorites(context),
-                    isFilteringUnwatched(context),
-                    isFilteringUpcoming(context),
-                    isFilteringHidden(context),
-                    isFilteringContinuing(context)
+                    prefs.getInt(KEY_FILTER_FAVORITES, FILTER_DISABLED).mapFilterState(),
+                    prefs.getInt(KEY_FILTER_UNWATCHED, FILTER_DISABLED).mapFilterState(),
+                    prefs.getInt(KEY_FILTER_UPCOMING, FILTER_DISABLED).mapFilterState(),
+                    // exclude hidden shows by default
+                    prefs.getInt(KEY_FILTER_HIDDEN, FILTER_EXCLUDE).mapFilterState(),
+                    prefs.getInt(KEY_FILTER_CONTINUING, FILTER_DISABLED).mapFilterState()
                 )
             }
         }
@@ -113,9 +115,10 @@ class ShowsDistillationSettings(
             const val STATUS = 6
 
             fun fromSettings(context: Context): ShowSortOrder {
+                val prefs = PreferenceManager.getDefaultSharedPreferences(context)
                 return ShowSortOrder(
-                    getSortOrderId(context),
-                    isSortFavoritesFirst(context),
+                    prefs.getInt(KEY_SORT_ORDER, TITLE_ID),
+                    prefs.getBoolean(KEY_SORT_FAVORITES_FIRST, true),
                     DisplaySettings.isSortOrderIgnoringArticles(context),
                     false
                 )
@@ -133,6 +136,26 @@ class ShowsDistillationSettings(
         private const val KEY_FILTER_UPCOMING = "seriesguide.show_filter.upcoming"
         private const val KEY_FILTER_HIDDEN = "seriesguide.show_filter.hidden"
         private const val KEY_FILTER_CONTINUING = "seriesguide.show_filter.continuing"
+
+        private const val FILTER_INCLUDE = 1
+        private const val FILTER_EXCLUDE = -1
+        private const val FILTER_DISABLED = 0
+
+        private fun Int.mapFilterState(): Boolean? {
+            return when (this) {
+                FILTER_INCLUDE -> true
+                FILTER_EXCLUDE -> false
+                else -> null
+            }
+        }
+
+        private fun Boolean?.mapFilterState(): Int {
+            return when (this) {
+                null -> FILTER_DISABLED
+                true -> FILTER_INCLUDE
+                false -> FILTER_EXCLUDE
+            }
+        }
 
         private object SgShow2SortQuery {
             // by oldest next episode, then continued first (for no next episode)
@@ -187,70 +210,6 @@ class ShowsDistillationSettings(
             )
 
             return query.toString()
-        }
-
-        /**
-         * Returns the id as of [ShowsDistillationSettings.ShowSortOrder]
-         * of the current show sort order.
-         */
-        internal fun getSortOrderId(context: Context): Int {
-            return PreferenceManager.getDefaultSharedPreferences(context).getInt(KEY_SORT_ORDER, 0)
-        }
-
-        internal fun isSortFavoritesFirst(context: Context): Boolean {
-            return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(KEY_SORT_FAVORITES_FIRST, true)
-        }
-
-        internal fun isFilteringFavorites(context: Context): Boolean? {
-            return PreferenceManager.getDefaultSharedPreferences(context)
-                .getInt(KEY_FILTER_FAVORITES, FILTER_DISABLED)
-                .mapFilterState()
-        }
-
-        internal fun isFilteringUnwatched(context: Context): Boolean? {
-            return PreferenceManager.getDefaultSharedPreferences(context)
-                .getInt(KEY_FILTER_UNWATCHED, FILTER_DISABLED)
-                .mapFilterState()
-        }
-
-        internal fun isFilteringUpcoming(context: Context): Boolean? {
-            return PreferenceManager.getDefaultSharedPreferences(context)
-                .getInt(KEY_FILTER_UPCOMING, FILTER_DISABLED)
-                .mapFilterState()
-        }
-
-        internal fun isFilteringHidden(context: Context): Boolean? {
-            return PreferenceManager.getDefaultSharedPreferences(context)
-                // exclude hidden shows by default
-                .getInt(KEY_FILTER_HIDDEN, FILTER_EXCLUDE)
-                .mapFilterState()
-        }
-
-        internal fun isFilteringContinuing(context: Context): Boolean? {
-            return PreferenceManager.getDefaultSharedPreferences(context)
-                .getInt(KEY_FILTER_CONTINUING, FILTER_DISABLED)
-                .mapFilterState()
-        }
-
-        private const val FILTER_INCLUDE = 1
-        private const val FILTER_EXCLUDE = -1
-        private const val FILTER_DISABLED = 0
-
-        private fun Int.mapFilterState(): Boolean? {
-            return when (this) {
-                FILTER_INCLUDE -> true
-                FILTER_EXCLUDE -> false
-                else -> null
-            }
-        }
-
-        private fun Boolean?.mapFilterState(): Int {
-            return when (this) {
-                null -> FILTER_DISABLED
-                true -> FILTER_INCLUDE
-                false -> FILTER_EXCLUDE
-            }
         }
     }
 }
