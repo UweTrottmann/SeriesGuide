@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2018-2024 Uwe Trottmann
+// Copyright 2018-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows
 
@@ -34,12 +34,12 @@ import timber.log.Timber
 class ShowsViewModel(application: Application) : AndroidViewModel(application) {
 
     data class ShowsViewUiState(
-        val showFilter: ShowsDistillationSettings.ShowFilter,
+        val showFilters: ShowsDistillationSettings.ShowFilters,
         val watchProvidersFilter: List<SgWatchProvider>,
-        val showSortOrder: SortShowsView.ShowSortOrder
+        val showSortOrder: ShowsDistillationSettings.ShowSortOrder
     ) {
         val isFiltersActive: Boolean
-            get() = showFilter.isAnyFilterEnabled() || watchProvidersFilter.isNotEmpty()
+            get() = showFilters.isAnyFilterEnabled() || watchProvidersFilter.isNotEmpty()
     }
 
     private val queryString = MutableLiveData<String>()
@@ -62,9 +62,9 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
 
     val uiState = MutableStateFlow(
         ShowsViewUiState(
-            showFilter = ShowsDistillationSettings.ShowFilter.fromSettings(getApplication()),
+            showFilters = ShowsDistillationSettings.ShowFilters.fromSettings(getApplication()),
             watchProvidersFilter = watchProvidersFilterSource.value,
-            showSortOrder = SortShowsView.ShowSortOrder.fromSettings(getApplication())
+            showSortOrder = ShowsDistillationSettings.ShowSortOrder.fromSettings(getApplication())
         )
     )
 
@@ -82,24 +82,6 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
                     }
                     showItemsLiveData.postValue(mapped)
                 }
-            }
-        }
-
-        // watch for sort order changes
-        viewModelScope.launch {
-            ShowsDistillationSettings.sortOrder.collect {
-                if (it == null) return@collect
-                uiState.value = uiState.value.copy(showSortOrder = it)
-                updateQuery()
-            }
-        }
-
-        // watch for filter changes
-        viewModelScope.launch {
-            ShowsDistillationSettings.showFilter.collect {
-                if (it == null) return@collect
-                uiState.value = uiState.value.copy(showFilter = it)
-                updateQuery()
             }
         }
 
@@ -135,7 +117,7 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
             Timber.d("Running query update.")
             uiState.value.also {
                 updateQuery(
-                    it.showFilter,
+                    it.showFilters,
                     it.watchProvidersFilter,
                     ShowsDistillationSettings.getSortQuery2(
                         it.showSortOrder.sortOrderId, it.showSortOrder.isSortFavoritesFirst,
@@ -147,7 +129,7 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun updateQuery(
-        filter: ShowsDistillationSettings.ShowFilter,
+        filter: ShowsDistillationSettings.ShowFilters,
         watchProvidersFilter: List<SgWatchProvider>,
         orderClause: String
     ) {

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2012-2024 Uwe Trottmann
+// Copyright 2012-2025 Uwe Trottmann
 // Copyright 2013 Andrew Neal
 
 package com.battlelancer.seriesguide.shows
@@ -37,7 +37,7 @@ import com.battlelancer.seriesguide.settings.AdvancedSettings
 import com.battlelancer.seriesguide.settings.NotificationSettings
 import com.battlelancer.seriesguide.shows.ShowsAdapter.ShowItem
 import com.battlelancer.seriesguide.shows.ShowsDistillationFragment.Companion.show
-import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowFilter
+import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowFilters
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
@@ -52,6 +52,7 @@ import com.uwetrottmann.androidutils.AndroidUtils
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import kotlin.random.Random
@@ -84,7 +85,7 @@ class ShowsFragment : Fragment() {
         emptyViewFilter = v.findViewById(R.id.emptyViewShowsFilter)
         ViewTools.setVectorDrawableTop(emptyViewFilter, R.drawable.ic_filter_white_24dp)
         emptyViewFilter.setOnClickListener {
-            ShowsDistillationSettings.saveFilter(requireContext(), ShowFilter.default())
+            activityModel.showsDistillationSettings.saveFilters(ShowFilters.default())
             // Note: not removing watch provider filters as it is ensured they always have matches
         }
         return v
@@ -149,6 +150,22 @@ class ShowsFragment : Fragment() {
             model.uiState.collectLatest {
                 // refresh filter menu icon state
                 requireActivity().invalidateOptionsMenu()
+            }
+        }
+
+        // Note: do not collect the current values, they are set when initializing UiState
+        // watch for sort order changes
+        viewLifecycleOwner.lifecycleScope.launch {
+            activityModel.showsDistillationSettings.sortOrder.drop(1).collect {
+                model.uiState.value = model.uiState.value.copy(showSortOrder = it)
+                model.updateQuery()
+            }
+        }
+        // watch for filter changes
+        viewLifecycleOwner.lifecycleScope.launch {
+            activityModel.showsDistillationSettings.showFilters.drop(1).collect {
+                model.uiState.value = model.uiState.value.copy(showFilters = it)
+                model.updateQuery()
             }
         }
 

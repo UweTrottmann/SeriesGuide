@@ -10,6 +10,10 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2025.2
 
+### Next release
+
+* 🔨 Shows: correctly display initial tab indicator if there is an active show filter.
+
 ### 2025.2.1 - 2025-04-11 🧪
 
 * 🔨 Widget: immediately update after syncing.
