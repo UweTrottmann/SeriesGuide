@@ -4,6 +4,7 @@
 
 package com.battlelancer.seriesguide
 
+import android.app.Activity
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -50,6 +51,8 @@ import java.util.concurrent.Executors
  * Initializes logging and services.
  */
 class SgApp : Application() {
+
+    lateinit var appContainer: SgAppContainer
 
     companion object {
 
@@ -129,6 +132,8 @@ class SgApp : Application() {
         if (BuildConfig.DEBUG) {
             enableStrictMode()
         }
+
+        appContainer = SgAppContainer(applicationContext)
 
         // set up logging first so crashes during initialization are caught
         initializeLogging()
@@ -282,4 +287,8 @@ class SgApp : Application() {
             StrictMode.setVmPolicy(build())
         }
     }
+}
+
+fun Activity.getSgAppContainer(): SgAppContainer {
+    return (application as SgApp).appContainer
 }
