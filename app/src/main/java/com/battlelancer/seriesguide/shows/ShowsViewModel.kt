@@ -34,12 +34,12 @@ import timber.log.Timber
 class ShowsViewModel(application: Application) : AndroidViewModel(application) {
 
     data class ShowsViewUiState(
-        val showFilter: ShowsDistillationSettings.ShowFilter,
+        val showFilters: ShowsDistillationSettings.ShowFilters,
         val watchProvidersFilter: List<SgWatchProvider>,
         val showSortOrder: ShowsDistillationSettings.ShowSortOrder
     ) {
         val isFiltersActive: Boolean
-            get() = showFilter.isAnyFilterEnabled() || watchProvidersFilter.isNotEmpty()
+            get() = showFilters.isAnyFilterEnabled() || watchProvidersFilter.isNotEmpty()
     }
 
     private val queryString = MutableLiveData<String>()
@@ -62,7 +62,7 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
 
     val uiState = MutableStateFlow(
         ShowsViewUiState(
-            showFilter = ShowsDistillationSettings.ShowFilter.fromSettings(getApplication()),
+            showFilters = ShowsDistillationSettings.ShowFilters.fromSettings(getApplication()),
             watchProvidersFilter = watchProvidersFilterSource.value,
             showSortOrder = ShowsDistillationSettings.ShowSortOrder.fromSettings(getApplication())
         )
@@ -117,7 +117,7 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
             Timber.d("Running query update.")
             uiState.value.also {
                 updateQuery(
-                    it.showFilter,
+                    it.showFilters,
                     it.watchProvidersFilter,
                     ShowsDistillationSettings.getSortQuery2(
                         it.showSortOrder.sortOrderId, it.showSortOrder.isSortFavoritesFirst,
@@ -129,7 +129,7 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun updateQuery(
-        filter: ShowsDistillationSettings.ShowFilter,
+        filter: ShowsDistillationSettings.ShowFilters,
         watchProvidersFilter: List<SgWatchProvider>,
         orderClause: String
     ) {

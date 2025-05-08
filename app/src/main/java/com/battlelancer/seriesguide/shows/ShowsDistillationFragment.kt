@@ -22,7 +22,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.DialogShowsDistillationBinding
 import com.battlelancer.seriesguide.settings.AdvancedSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
-import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowFilter
+import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowFilters
 import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowSortOrder
 import com.battlelancer.seriesguide.streaming.SgWatchProvider
 import com.battlelancer.seriesguide.streaming.StreamingSearchInfoDialog
@@ -53,7 +53,7 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
 
         val binding = DialogShowsDistillationBinding.inflate(inflater, container, false)
 
-        val initialShowFilter = ShowFilter.fromSettings(requireContext())
+        val initialShowFilters = ShowFilters.fromSettings(requireContext())
         val initialShowSortOrder = ShowSortOrder.fromSettings(requireContext())
 
         binding.apply {
@@ -79,7 +79,7 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
 
             filterShowsView.apply {
                 setInitialFilter(
-                    initialShowFilter,
+                    initialShowFilters,
                     DisplaySettings.isNoReleasedEpisodes(context)
                 )
                 setFilterListener(filterListener)
@@ -110,7 +110,7 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
             // Display tab icon with indicator if general filter is active
             lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    activityModel.showsDistillationSettings.showFilter.collect {
+                    activityModel.showsDistillationSettings.showFilters.collect {
                         tabLayoutShowsDistillation.setFilterIsActiveIcon(0, it.isAnyFilterEnabled())
                     }
                 }
@@ -143,8 +143,8 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
     }
 
     private val filterListener = object : FilterShowsView.FilterListener {
-        override fun onFilterUpdate(filter: ShowFilter) {
-            activityModel.showsDistillationSettings.saveFilter(filter)
+        override fun onFilterUpdate(filters: ShowFilters) {
+            activityModel.showsDistillationSettings.saveFilters(filters)
         }
 
         override fun onConfigureUpcomingRangeClick() {

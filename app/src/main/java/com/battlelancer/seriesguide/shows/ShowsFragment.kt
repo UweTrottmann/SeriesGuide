@@ -37,7 +37,7 @@ import com.battlelancer.seriesguide.settings.AdvancedSettings
 import com.battlelancer.seriesguide.settings.NotificationSettings
 import com.battlelancer.seriesguide.shows.ShowsAdapter.ShowItem
 import com.battlelancer.seriesguide.shows.ShowsDistillationFragment.Companion.show
-import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowFilter
+import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowFilters
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
@@ -85,7 +85,7 @@ class ShowsFragment : Fragment() {
         emptyViewFilter = v.findViewById(R.id.emptyViewShowsFilter)
         ViewTools.setVectorDrawableTop(emptyViewFilter, R.drawable.ic_filter_white_24dp)
         emptyViewFilter.setOnClickListener {
-            activityModel.showsDistillationSettings.saveFilter(ShowFilter.default())
+            activityModel.showsDistillationSettings.saveFilters(ShowFilters.default())
             // Note: not removing watch provider filters as it is ensured they always have matches
         }
         return v
@@ -163,8 +163,8 @@ class ShowsFragment : Fragment() {
         }
         // watch for filter changes
         viewLifecycleOwner.lifecycleScope.launch {
-            activityModel.showsDistillationSettings.showFilter.drop(1).collect {
-                model.uiState.value = model.uiState.value.copy(showFilter = it)
+            activityModel.showsDistillationSettings.showFilters.drop(1).collect {
+                model.uiState.value = model.uiState.value.copy(showFilters = it)
                 model.updateQuery()
             }
         }

@@ -19,26 +19,26 @@ class ShowsDistillationSettings(
 ) {
 
     /**
-     * Initially the current value, emits when the filter settings were changed with [saveFilter].
+     * Initially the current value, emits when the filter settings were changed with [saveFilters].
      */
-    val showFilter = MutableStateFlow(ShowFilter.fromSettings(context))
+    val showFilters = MutableStateFlow(ShowFilters.fromSettings(context))
 
     /**
      * Initially the current value, emits when the sort order was changed with [saveSortOrder].
      */
     val sortOrder = MutableStateFlow(ShowSortOrder.fromSettings(context))
 
-    fun saveFilter(showFilter: ShowFilter) {
+    fun saveFilters(showFilters: ShowFilters) {
         // Save setting
         PreferenceManager.getDefaultSharedPreferences(context).edit {
-            putInt(KEY_FILTER_FAVORITES, showFilter.isFilterFavorites.mapFilterState())
-            putInt(KEY_FILTER_UNWATCHED, showFilter.isFilterUnwatched.mapFilterState())
-            putInt(KEY_FILTER_UPCOMING, showFilter.isFilterUpcoming.mapFilterState())
-            putInt(KEY_FILTER_HIDDEN, showFilter.isFilterHidden.mapFilterState())
-            putInt(KEY_FILTER_CONTINUING, showFilter.isFilterContinuing.mapFilterState())
+            putInt(KEY_FILTER_FAVORITES, showFilters.isFilterFavorites.mapFilterState())
+            putInt(KEY_FILTER_UNWATCHED, showFilters.isFilterUnwatched.mapFilterState())
+            putInt(KEY_FILTER_UPCOMING, showFilters.isFilterUpcoming.mapFilterState())
+            putInt(KEY_FILTER_HIDDEN, showFilters.isFilterHidden.mapFilterState())
+            putInt(KEY_FILTER_CONTINUING, showFilters.isFilterContinuing.mapFilterState())
         }
         // Broadcast new value
-        this.showFilter.value = showFilter
+        this.showFilters.value = showFilters
     }
 
     fun saveSortOrder(showSortOrder: ShowSortOrder) {
@@ -64,7 +64,7 @@ class ShowsDistillationSettings(
         }
     }
 
-    data class ShowFilter(
+    data class ShowFilters(
         val isFilterFavorites: Boolean?,
         val isFilterUnwatched: Boolean?,
         val isFilterUpcoming: Boolean?,
@@ -78,13 +78,13 @@ class ShowsDistillationSettings(
         }
 
         companion object {
-            fun default(): ShowFilter {
+            fun default(): ShowFilters {
                 // Exclude hidden, all others disabled.
-                return ShowFilter(null, null, null, false, null)
+                return ShowFilters(null, null, null, false, null)
             }
 
-            fun fromSettings(context: Context): ShowFilter {
-                return ShowFilter(
+            fun fromSettings(context: Context): ShowFilters {
+                return ShowFilters(
                     isFilteringFavorites(context),
                     isFilteringUnwatched(context),
                     isFilteringUpcoming(context),
