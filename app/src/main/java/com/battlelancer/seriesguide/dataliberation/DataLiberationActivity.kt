@@ -41,7 +41,7 @@ class DataLiberationActivity : BaseActivity() {
     override fun setupActionBar() {
         super.setupActionBar()
         val titleRes =
-            if (showAutoBackup) R.string.pref_autobackup else R.string.backup
+            if (showAutoBackup) R.string.pref_autobackup else R.string.title_export_import
         setTitle(titleRes)
         supportActionBar?.apply {
             setHomeAsUpIndicator(R.drawable.ic_clear_24dp)

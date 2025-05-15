@@ -445,8 +445,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Άλλα</string>
     <string name="pref_autoupdatesummary">Αυτόματος συγχρονισμός και ενημέρωση περιεχομένου</string>
-    <string name="backup">Δημιουργία αντιγράφου ασφαλείας/Επαναφορά</string>
-    <string name="backup_summary">Δημιουργία αντιγράφου ασφαλείας ή επαναφορά των σειρών</string>
     <string name="pref_number">Μορφή των αριθμών</string>
     <string name="pref_offset">Χειροκίνητη χρονική μετατόπιση</string>
     <string name="pref_offsetsummary">Μετατόπιση ωρών προβολής κατα %d ώρες</string>
