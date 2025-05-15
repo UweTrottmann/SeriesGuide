@@ -105,7 +105,7 @@
 
     <!-- Content languages -->
     <!-- These are the primary languages of TMDB
-    https://developers.themoviedb.org/3/configuration/get-primary-translations
+    https://developer.themoviedb.org/reference/configuration-primary-translations
      Removed cn-CN because it doesn't seem to exist. -->
     <string name="content_default_language">en-US</string>
     <string-array name="content_languages">
