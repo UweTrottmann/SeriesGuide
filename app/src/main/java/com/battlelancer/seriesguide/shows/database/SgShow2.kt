@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2021-2024 Uwe Trottmann
+// Copyright 2021-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.database
 
@@ -52,7 +52,11 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns.
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns.USER_NOTE
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns.USER_NOTE_TRAKT_ID
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns._ID
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.shows.database.SgShow2.Companion.CUSTOM_RELEASE_DAY_OFFSET_NOT_SET
+import com.battlelancer.seriesguide.shows.database.SgShow2.Companion.CUSTOM_RELEASE_TIME_NOT_SET
+import com.battlelancer.seriesguide.shows.database.SgShow2.Companion.MAX_CUSTOM_DAY_OFFSET
 import com.battlelancer.seriesguide.shows.database.SgShow2.Companion.MAX_USER_NOTE_LENGTH
 import com.battlelancer.seriesguide.shows.tools.NextEpisodeUpdater
 import com.battlelancer.seriesguide.shows.tools.ShowStatus
@@ -80,24 +84,48 @@ data class SgShow2(
     /**
      * Local release time. Encoded as integer (hhmm).
      *
-     * <pre>
+     * ```
      * Example: 2035
      * Default: -1
-     * </pre>
+     * ```
      */
     @ColumnInfo(name = RELEASE_TIME) val releaseTime: Int?,
     /**
      * Local release week day. Encoded as integer.
-     * <pre>
+     *
+     * ```
      * Range:   1-7
      * Daily:   0
      * Default: -1
-     * </pre>
+     * ```
      */
     @ColumnInfo(name = RELEASE_WEEKDAY) val releaseWeekDay: Int?,
+    /**
+     * Release country. Encoded as ISO3166-1 alpha-2 string.
+     *
+     * ```
+     * Example: "us"
+     * Default: ""
+     * ```
+     *
+     * Previous use: Was added in db version 21 to store the air time in pure text.
+     */
     @ColumnInfo(name = RELEASE_COUNTRY) val releaseCountry: String?,
+    /**
+     * Release time zone. Encoded as tzdata "Area/Location" string.
+     *
+     * ```
+     * Example: "America/New_York"
+     * Default: ""
+     * ```
+     *
+     * Added with [SeriesGuideDatabase.DBVER_34_TRAKT_V2].
+     */
     @ColumnInfo(name = RELEASE_TIMEZONE) val releaseTimeZone: String?,
     @ColumnInfo(name = FIRST_RELEASE) val firstRelease: String?,
+    /**
+     * A pipe-separated list of genres.
+     */
     @ColumnInfo(name = GENRES) val genres: String? = "",
     @ColumnInfo(name = NETWORK) val network: String? = "",
     @ColumnInfo(name = IMDBID) val imdbId: String? = "",
@@ -145,10 +173,21 @@ data class SgShow2(
      * ```
      */
     @ColumnInfo(name = RATING_USER) val ratingUser: Int?,
+    /**
+     * Typical length of an episode in minutes. Used to calculate watch time.
+     *
+     * Default: 45 (by GetShowTools)
+     */
     @ColumnInfo(name = RUNTIME) val runtime: Int? = 0,
+    /**
+     * Show status. Encoded as integer. See [ShowStatus].
+     */
     @ColumnInfo(name = STATUS) val status: Int? = ShowStatus.UNKNOWN,
     @ColumnInfo(name = CONTENTRATING) val contentRating: String? = "",
     @ColumnInfo(name = NEXTEPISODE) val nextEpisode: String? = "",
+    /**
+     * A poster path. Needs to be prefixed with the poster server URL.
+     */
     @ColumnInfo(name = POSTER) val poster: String? = "",
     @ColumnInfo(name = POSTER_SMALL) val posterSmall: String? = "",
     @ColumnInfo(name = NEXTAIRDATEMS) val nextAirdateMs: Long? = NextEpisodeUpdater.UNKNOWN_NEXT_RELEASE_DATE,
@@ -156,15 +195,68 @@ data class SgShow2(
     @ColumnInfo(name = LASTUPDATED) val lastUpdatedMs: Long,
     @ColumnInfo(name = LASTEDIT) val lastEditedSec: Long = 0,
     @ColumnInfo(name = LASTWATCHEDID) val lastWatchedEpisodeId: Long = 0,
+    /**
+     * The time in milliseconds an episode was last watched for this show.
+     *
+     * Used to sort shows by last watched.
+     *
+     * Added with [SeriesGuideDatabase.DBVER_39_SHOW_LAST_WATCHED].
+     */
     @ColumnInfo(name = LASTWATCHED_MS) val lastWatchedMs: Long = 0,
     @ColumnInfo(name = LANGUAGE) val language: String? = "",
     @ColumnInfo(name = UNWATCHED_COUNT) val unwatchedCount: Int = UNKNOWN_UNWATCHED_COUNT,
+    /**
+     * Whether this show has been added to favorites.
+     */
     @ColumnInfo(name = FAVORITE) var favorite: Boolean = false,
+    /**
+     * Whether this show has been hidden.
+     *
+     * Added in db version 23.
+     */
     @ColumnInfo(name = HIDDEN) var hidden: Boolean = false,
+    /**
+     * Whether notifications for new episodes of this show should be shown.
+     *
+     * ```
+     * Range: 0-1
+     * Default: 1
+     * ```
+     * Added with [SeriesGuideDatabase.DBVER_40_NOTIFY_PER_SHOW].
+     */
     @ColumnInfo(name = NOTIFY) var notify: Boolean = true,
     @ColumnInfo(name = HEXAGON_MERGE_COMPLETE) val hexagonMergeComplete: Boolean = true,
+    /**
+     * Custom local release time to override the actual one. Encoded as integer (hhmm).
+     * This being set also determines if the other custom release time values (day offset,
+     * time zone) should be used.
+     *
+     * Example: 2035
+     *
+     * Default: [CUSTOM_RELEASE_TIME_NOT_SET]
+     *
+     * Added in [SgRoomDatabase.VERSION_51_CUSTOM_RELEASE_TIME].
+     */
     @ColumnInfo(name = CUSTOM_RELEASE_TIME) var customReleaseTime: Int?,
+    /**
+     * Positive or negative day offset to shift the release day of episodes by.
+     *
+     * Default: [CUSTOM_RELEASE_DAY_OFFSET_NOT_SET]
+     *
+     * Range: -/+ [MAX_CUSTOM_DAY_OFFSET]
+     *
+     * Added in [SgRoomDatabase.VERSION_51_CUSTOM_RELEASE_TIME].
+     */
     @ColumnInfo(name = CUSTOM_RELEASE_DAY_OFFSET) var customReleaseDayOffset: Int?,
+    /**
+     * Custom time zone for computing an episode release time.
+     *
+     * Same format as [releaseTimeZone].
+     *
+     * Default: [SgShow2.CUSTOM_RELEASE_TIME_ZONE_NOT_SET]
+     *
+     * Added in [SgRoomDatabase.VERSION_51_CUSTOM_RELEASE_TIME].
+     */
     @ColumnInfo(name = CUSTOM_RELEASE_TIME_ZONE) var customReleaseTimeZone: String?,
     /**
      * A user editable text note for this show.
