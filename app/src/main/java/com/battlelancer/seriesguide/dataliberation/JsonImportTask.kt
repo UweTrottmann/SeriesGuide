@@ -428,7 +428,7 @@ class JsonImportTask(
     private fun insertSeasonsAndEpisodes(show: Show, showId: Long) {
         for (season in show.seasons) {
             if ((season.tmdb_id == null || season.tmdb_id!!.isEmpty())
-                && (season.tvdbId == null || season.tvdbId!! <= 0)) {
+                && (season.tvdb_id == null || season.tvdb_id!! <= 0)) {
                 // valid id is required
                 continue
             }
@@ -457,7 +457,7 @@ class JsonImportTask(
         val episodeBatch = ArrayList<SgEpisode2>()
         for (episode in season.episodes) {
             if ((episode.tmdb_id == null || episode.tmdb_id!! <= 0)
-                && (episode.tvdbId == null || episode.tvdbId!! <= 0)) {
+                && (episode.tvdb_id == null || episode.tvdb_id!! <= 0)) {
                 // valid id is required
                 continue
             }
@@ -470,9 +470,9 @@ class JsonImportTask(
         if (list.name.isNullOrEmpty()) {
             return // required
         }
-        if (list.listId.isNullOrEmpty()) {
+        if (list.list_id.isNullOrEmpty()) {
             // rebuild from name
-            list.listId = SeriesGuideContract.Lists.generateListId(list.name)
+            list.list_id = SeriesGuideContract.Lists.generateListId(list.name)
         }
 
         // Insert the list
@@ -506,18 +506,18 @@ class JsonImportTask(
             var externalId: String? = null
             if (item.externalId != null && item.externalId.isNotEmpty()) {
                 externalId = item.externalId
-            } else if (item.tvdbId > 0) {
-                externalId = item.tvdbId.toString()
+            } else if (item.tvdb_id > 0) {
+                externalId = item.tvdb_id.toString()
             }
             if (externalId == null) continue  // No external ID, skip
 
             // Generate list item ID from values, do not trust given item ID
             // (e.g. encoded list ID might not match)
-            item.listItemId = ListItems.generateListItemId(externalId, type, list.listId)
+            item.list_item_id = ListItems.generateListItemId(externalId, type, list.list_id)
 
             val itemValues = ContentValues()
-            itemValues.put(ListItems.LIST_ITEM_ID, item.listItemId)
-            itemValues.put(SeriesGuideContract.Lists.LIST_ID, list.listId)
+            itemValues.put(ListItems.LIST_ITEM_ID, item.list_item_id)
+            itemValues.put(SeriesGuideContract.Lists.LIST_ID, list.list_id)
             itemValues.put(ListItems.ITEM_REF_ID, externalId)
             itemValues.put(ListItems.TYPE, type)
 

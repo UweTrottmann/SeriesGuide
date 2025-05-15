@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2013-2024 Uwe Trottmann
+// Copyright 2013-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.dataliberation.model;
 
 import androidx.annotation.Nullable;
-import com.google.gson.annotations.SerializedName;
 
 public class Episode {
 
@@ -22,8 +21,7 @@ public class Episode {
      * May be exported for shows that were added before the TMDB migration.
      */
     @Nullable
-    @SerializedName("tvdb_id")
-    public Integer tvdbId;
+    public Integer tvdb_id;
 
     /**
      * Number of the episode within its season.
@@ -37,8 +35,7 @@ public class Episode {
      * grouping.
      */
     @Nullable
-    @SerializedName("episode_absolute")
-    public Integer episodeAbsolute;
+    public Integer episode_absolute;
 
     @Nullable
     public String title;
@@ -52,8 +49,7 @@ public class Episode {
      * <p>
      * Default: -1
      */
-    @SerializedName("first_aired")
-    public long firstAired;
+    public long first_aired;
 
     /**
      * If this episode is watched.
@@ -88,8 +84,7 @@ public class Episode {
     public boolean collected;
 
     @Nullable
-    @SerializedName("imdb_id")
-    public String imdbId;
+    public String imdb_id;
 
     /*
      * #####################################################
@@ -103,8 +98,7 @@ public class Episode {
      * Only exported for shows added before the TMDB migration.
      */
     @Nullable
-    @SerializedName("episode_dvd")
-    public Double episodeDvd;
+    public Double episode_dvd;
 
     @Nullable
     public String overview;

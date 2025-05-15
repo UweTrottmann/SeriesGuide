@@ -1,37 +1,32 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2014-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.dataliberation.model;
 
 import android.content.ContentValues;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 import com.battlelancer.seriesguide.util.TextTools;
-import com.google.gson.annotations.SerializedName;
 
 public class Movie {
 
     /**
      * Required when importing.
      */
-    @SerializedName("tmdb_id")
-    public int tmdbId;
+    public int tmdb_id;
 
     /**
      * Optional, enables link to IMDB.
      */
-    @SerializedName("imdb_id")
-    public String imdbId;
+    public String imdb_id;
 
     public String title;
 
     /**
      * Release date in milliseconds.
      */
-    @SerializedName("released_utc_ms")
-    public long releasedUtcMs;
+    public long released_utc_ms;
 
-    @SerializedName("runtime_min")
-    public int runtimeMin;
+    public int runtime_min;
 
     /**
      * TMDB poster path.
@@ -40,11 +35,9 @@ public class Movie {
 
     public String overview;
 
-    @SerializedName("in_collection")
-    public boolean inCollection;
+    public boolean in_collection;
 
-    @SerializedName("in_watchlist")
-    public boolean inWatchlist;
+    public boolean in_watchlist;
 
     public boolean watched;
 
@@ -60,20 +53,19 @@ public class Movie {
     /**
      * Time in milliseconds a movie was last updated.
      */
-    @SerializedName("last_updated_ms")
-    public long lastUpdatedMs;
+    public long last_updated_ms;
     
     public ContentValues toContentValues() {
         ContentValues values = new ContentValues();
-        values.put(Movies.TMDB_ID, tmdbId);
-        values.put(Movies.IMDB_ID, imdbId);
+        values.put(Movies.TMDB_ID, tmdb_id);
+        values.put(Movies.IMDB_ID, imdb_id);
         values.put(Movies.TITLE, title);
         values.put(Movies.TITLE_NOARTICLE, TextTools.trimLeadingArticle(title));
-        values.put(Movies.RELEASED_UTC_MS, releasedUtcMs);
-        values.put(Movies.RUNTIME_MIN, runtimeMin);
+        values.put(Movies.RELEASED_UTC_MS, released_utc_ms);
+        values.put(Movies.RUNTIME_MIN, runtime_min);
         values.put(Movies.POSTER, poster);
-        values.put(Movies.IN_COLLECTION, inCollection ? 1 : 0);
-        values.put(Movies.IN_WATCHLIST, inWatchlist ? 1 : 0);
+        values.put(Movies.IN_COLLECTION, in_collection ? 1 : 0);
+        values.put(Movies.IN_WATCHLIST, in_watchlist ? 1 : 0);
         values.put(Movies.WATCHED, watched ? 1 : 0);
         int playsValue;
         if (watched && plays >= 1) {
@@ -82,7 +74,7 @@ public class Movie {
             playsValue = watched ? 1 : 0;
         }
         values.put(Movies.PLAYS, playsValue);
-        values.put(Movies.LAST_UPDATED, lastUpdatedMs);
+        values.put(Movies.LAST_UPDATED, last_updated_ms);
         // full dump values
         values.put(Movies.OVERVIEW, overview);
         // set default values
