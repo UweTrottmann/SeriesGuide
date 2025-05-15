@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2021-2024 Uwe Trottmann
+// Copyright 2021-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.database
 
@@ -37,6 +37,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Colum
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgSeason2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.shows.database.SgEpisode2.Companion.EPISODE_UNKNOWN_RELEASE
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 
 @Entity(
@@ -63,14 +64,52 @@ data class SgEpisode2(
     @ColumnInfo(name = ABSOLUTE_NUMBER) val absoluteNumber: Int? = null,
     @ColumnInfo(name = SEASON) val season: Int = 0,
     @ColumnInfo(name = ORDER) val order: Int = 0,
+    /**
+     * No longer used since the TMDB migration.
+     *
+     * Sometimes episodes are ordered differently when released on DVD. Uses decimal point
+     * notation, e.g. 1.0, 1.5.
+     */
     @ColumnInfo(name = DVDNUMBER) val dvdNumber: Double? = null,
+    /**
+     * One of [EpisodeFlags], whether an episode is watched, skipped or unwatched.
+     */
     @ColumnInfo(name = WATCHED) val watched: Int = EpisodeFlags.UNWATCHED,
+    /**
+     * The number of times an episode was watched.
+     */
     @ColumnInfo(name = PLAYS) val plays: Int? = 0,
+    /**
+     * Whether an episode has been added to the collection.
+     */
     @ColumnInfo(name = COLLECTED) val collected: Boolean = false,
+    /**
+     * A pipe-separated list of directors.
+     */
     @ColumnInfo(name = DIRECTORS) val directors: String? = "",
+    /**
+     * A pipe-separated list of guest stars.
+     */
     @ColumnInfo(name = GUESTSTARS) val guestStars: String? = "",
+    /**
+     * A pipe-separated list of writers.
+     */
     @ColumnInfo(name = WRITERS) val writers: String? = "",
+    /**
+     * A TMDB episode image (still) path.
+     */
     @ColumnInfo(name = IMAGE) val image: String? = "",
+    /**
+     * First aired date in ms.
+     *
+     * This date time is based on the shows (custom) release time and time zone at the time
+     * this episode was last updated. It includes country and time zone specific offsets (currently
+     * only for US western time zones). It does NOT include the user-set offset.
+     *
+     * Range:   long
+     *
+     * Default: [EPISODE_UNKNOWN_RELEASE]
+     */
     @ColumnInfo(name = FIRSTAIREDMS) val firstReleasedMs: Long = -1,
     /**
      * See [SgShow2.ratingTmdb].

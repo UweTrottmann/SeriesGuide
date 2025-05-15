@@ -807,10 +807,6 @@ public class SeriesGuideContract {
          */
         String ORDER = "episode_order";
 
-        /**
-         * Sometimes episodes are ordered differently when released on DVD. Uses decimal point
-         * notation, e.g. 1.0, 1.5.
-         */
         String DVDNUMBER = "episode_dvd_number";
 
         /**
@@ -846,33 +842,13 @@ public class SeriesGuideContract {
         /** See {@link SgShow2#getRatingUser()}. */
         String RATING_USER = "episode_rating_user";
 
-        /**
-         * First aired date in ms.
-         *
-         * <p>This date time is based on the shows release time and time zone at the time this
-         * episode was last updated. It includes country and time zone specific offsets (currently
-         * only for US western time zones). It does NOT include the user-set offset.
-         *
-         * <pre>
-         * Range:   long
-         * Default: {@link SgEpisode2#EPISODE_UNKNOWN_RELEASE}
-         * </pre>
-         */
+        /** See {@link SgEpisode2#getFirstReleasedMs()}. */
         String FIRSTAIREDMS = "episode_firstairedms";
 
-        /**
-         * One of {@link EpisodeFlags}, whether an episode is watched, skipped or unwatched.
-         */
         String WATCHED = "episode_watched";
 
-        /**
-         * The number of times an episode was watched.
-         */
         String PLAYS = "episode_plays";
 
-        /**
-         * Whether an episode has been collected in digital, physical form.
-         */
         String COLLECTED = "episode_collected";
 
         String IMDBID = "episode_imdbid";
