@@ -237,6 +237,30 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupLastTime" />
 
+                <TextView
+                    android:id="@+id/textViewAutoBackupImportCloudWarning"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/import_cloud_warning"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold.Error"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupImportWarning" />
+
+                <TextView
+                    android:id="@+id/textViewAutoBackupImportCloudWarningDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/import_cloud_warning_details"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Error"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupImportCloudWarning" />
+
                 <Button
                     android:id="@+id/buttonAutoBackupImport"
                     android:layout_width="wrap_content"
@@ -246,7 +270,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupImportWarning" />
+                    app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupImportCloudWarningDetails" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
