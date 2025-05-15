@@ -90,6 +90,11 @@ data class SgEpisode2(
     @ColumnInfo(name = RATING_TRAKT_VOTES) val ratingTraktVotes: Int?,
     /** See [SgShow2.ratingUser]. */
     @ColumnInfo(name = RATING_USER) val ratingUser: Int?,
+    /**
+     * No longer used since the TMDB migration, resolved on demand.
+     *
+     * IMDb id for a single episode. Added in db version 27.
+     */
     @ColumnInfo(name = IMDBID) val imdbId: String? = "",
     @ColumnInfo(name = LAST_EDITED) val lastEditedSec: Long = 0,
     @ColumnInfo(name = LAST_UPDATED) val lastUpdatedSec: Long = 0
