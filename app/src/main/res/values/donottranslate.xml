@@ -44,6 +44,7 @@
     <string name="url_trakt_delete_account">https://trakt.tv/settings</string>
     <string name="url_trakt_account_limits">https://trakt.tv/settings/advanced</string>
     <string name="url_extensions_develop">https://seriesgui.de/api</string>
+    <string name="url_import_documentation">https://github.com/UweTrottmann/SeriesGuide/blob/main/docs/backup-json-schema.md</string>
 
     <!-- About screen -->
     <string name="website">seriesgui.de</string>

@@ -18,6 +18,7 @@ import com.battlelancer.seriesguide.dataliberation.DataLiberationTools.CreateExp
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools.SelectImportFileContract
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.OnTaskProgressListener
 import com.battlelancer.seriesguide.util.ThemeUtils
+import com.battlelancer.seriesguide.util.WebTools
 import com.battlelancer.seriesguide.util.tryLaunch
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
@@ -86,6 +87,11 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
         binding.buttonDataLibMoviesImportFile.setOnClickListener {
             selectMoviesImportFileResult.tryLaunch(null, requireContext())
         }
+
+        binding.buttonDataLibImportDocs.setOnClickListener {
+            WebTools.openInApp(requireContext(), getString(R.string.url_import_documentation))
+        }
+
         updateFileViews()
 
         // restore UI state
