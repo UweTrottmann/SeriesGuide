@@ -10,20 +10,32 @@ import com.google.gson.annotations.SerializedName;
 
 public class Movie {
 
+    /**
+     * Required when importing.
+     */
     @SerializedName("tmdb_id")
     public int tmdbId;
 
+    /**
+     * Optional, enables link to IMDB.
+     */
     @SerializedName("imdb_id")
     public String imdbId;
 
     public String title;
 
+    /**
+     * Release date in milliseconds.
+     */
     @SerializedName("released_utc_ms")
     public long releasedUtcMs;
 
     @SerializedName("runtime_min")
     public int runtimeMin;
 
+    /**
+     * TMDB poster path.
+     */
     public String poster;
 
     public String overview;
@@ -36,8 +48,18 @@ public class Movie {
 
     public boolean watched;
 
+    /**
+     * The number of times this was watched.
+     * <p>
+     * Depending on {@link #watched}, defaults to 1 or 0.
+     * <p>
+     * If 1 or greater and {@link #watched} is not {@code true}, is ignored when importing.
+     */
     public int plays;
 
+    /**
+     * Time in milliseconds a movie was last updated.
+     */
     @SerializedName("last_updated_ms")
     public long lastUpdatedMs;
     
