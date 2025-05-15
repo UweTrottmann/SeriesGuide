@@ -29,24 +29,6 @@
 
     <PreferenceCategory
         app:iconSpaceReserved="false"
-        app:title="@string/backup">
-
-        <Preference
-            app:iconSpaceReserved="false"
-            app:key="com.battlelancer.seriesguide.settings.autobackup"
-            app:summary="@string/pref_autobackupsummary"
-            app:title="@string/pref_autobackup" />
-
-        <Preference
-            app:iconSpaceReserved="false"
-            app:key="com.battlelancer.seriesguide.settings.dataliberation"
-            app:summary="@string/backup_summary"
-            app:title="@string/backup" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
         app:title="@string/pref_appearance">
 
         <ListPreference
