@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2013-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.dataliberation
 
@@ -26,7 +26,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 /**
- * One button export or import of the show database using a JSON file on external storage.
+ * One button export or import of shows, lists and movies to or from a JSON file.
  * Uses Storage Access Framework so no permissions are required.
  */
 class DataLiberationFragment : Fragment(), OnTaskProgressListener {

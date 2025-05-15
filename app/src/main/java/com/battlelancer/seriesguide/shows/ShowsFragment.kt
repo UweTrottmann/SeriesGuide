@@ -332,7 +332,7 @@ class ShowsFragment : Fragment() {
         }
 
         override fun onRestoreBackupClicked() {
-            startActivity(Intent(requireActivity(), DataLiberationActivity::class.java))
+            startActivity(DataLiberationActivity.intent(requireActivity()))
         }
 
         override fun onRestoreAutoBackupClicked() {

@@ -24,7 +24,6 @@ import androidx.preference.SwitchPreferenceCompat
 import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
-import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
 import com.battlelancer.seriesguide.getSgAppContainer
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
@@ -313,19 +312,6 @@ class SgPreferencesFragment : BasePreferencesFragment(),
             return true
         }
 
-        // links
-        when (key) {
-            LINK_KEY_AUTOBACKUP -> {
-                startActivity(DataLiberationActivity.intentToShowAutoBackup(requireActivity()))
-                return true
-            }
-
-            LINK_KEY_DATALIBERATION -> {
-                startActivity(Intent(activity, DataLiberationActivity::class.java))
-                return true
-            }
-        }// fall through
-
         // settings
         val supportFragmentManager = (activity as AppCompatActivity)
             .supportFragmentManager
@@ -569,11 +555,6 @@ class SgPreferencesFragment : BasePreferencesFragment(),
             "com.battlelancer.seriesguide.notifications.battery"
         private const val KEY_PRECISE_NOTIFICATION_SETTINGS =
             "com.battlelancer.seriesguide.notifications.notifications.precise"
-
-        // links
-        private const val LINK_BASE_KEY = "com.battlelancer.seriesguide.settings."
-        private const val LINK_KEY_AUTOBACKUP = LINK_BASE_KEY + "autobackup"
-        private const val LINK_KEY_DATALIBERATION = LINK_BASE_KEY + "dataliberation"
 
         private const val KEY_SCREEN_BASIC = "screen_basic"
         private const val KEY_SCREEN_NOTIFICATIONS = "screen_notifications"
