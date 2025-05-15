@@ -505,6 +505,8 @@
     <string name="import_button">Import data</string>
     <string name="action_view_import_documentation">View expected format</string>
     <string name="import_warning">Your current shows, lists or movies will be replaced by the imported data</string>
+    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
+    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
     <string name="no_file_selected">No file selected</string>
     <string name="action_select_file">Select file</string>
 
