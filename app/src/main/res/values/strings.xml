@@ -503,6 +503,7 @@
     <string name="import_success">Backup successfully restored</string>
     <string name="import_failed">Restoring the backup failed</string>
     <string name="import_button">Import data</string>
+    <string name="action_view_import_documentation">View expected format</string>
     <string name="import_warning">Your current shows, lists or movies will be replaced by the imported data</string>
     <string name="no_file_selected">No file selected</string>
     <string name="action_select_file">Select file</string>
