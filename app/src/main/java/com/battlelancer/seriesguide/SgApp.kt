@@ -278,6 +278,13 @@ class SgApp : Application() {
             if (AndroidUtils.isAtLeastOreo) {
                 detectContentUriWithoutPermission()
             }
+            // Check for optional safer intents changes on Android 15
+            // This only affects extensions, where the receiver should declare the subscribe and
+            // update actions that SeriesGuide uses in the broadcast intent.
+            // https://developer.android.com/about/versions/15/behavior-changes-15#safer-intents
+            if (AndroidUtils.isAtLeastS) {
+                detectUnsafeIntentLaunch()
+            }
             // Policy applied to all threads in the virtual machine's process
             StrictMode.setVmPolicy(build())
         }
