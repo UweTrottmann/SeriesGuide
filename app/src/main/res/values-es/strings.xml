@@ -452,13 +452,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="clear_cache_summary">Quitar todas las imágenes en la memoria caché del dispositivo</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Include descriptions, details, ratings</string>
-    <string name="backup_failed_file_access">No se puede hacer copia de seguridad. El archivo de copia de seguridad no se encuentra o es inaccesible.</string>
-    <string name="backup_success">Copia de seguridad correcta.</string>
-    <string name="backup_failed">Falló la copia de seguridad.</string>
-    <string name="import_failed_nosd">No se puede restaurar la copia de seguridad. La carpeta de la copia de seguridad no está disponible.</string>
-    <string name="import_failed_nofile">No hay ningún archivo de copia de seguridad legible.</string>
-    <string name="import_success">Copia de seguridad restaurada correctamente.</string>
-    <string name="import_failed">No se pudo restaurar la copia de seguridad.</string>
     <string name="backup_button">Respaldo</string>
     <string name="import_button">Restaurar la copia de seguridad</string>
     <string name="import_warning">Entiendo que mis series, listas y películas actuales serán reemplazadas!</string>

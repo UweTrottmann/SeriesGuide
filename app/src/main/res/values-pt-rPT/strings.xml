@@ -451,13 +451,6 @@
     <string name="clear_cache_summary">Remove todas as imagens em cache do teu dispositivo</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Incluir as descrições, os detalhes e as classificações</string>
-    <string name="backup_failed_file_access">Não é possível criar uma cópia de segurança. Não foi possível encontrar ou aceder a um ficheiro de cópia de segurança.</string>
-    <string name="backup_success">Cópia de segurança bem sucedida.</string>
-    <string name="backup_failed">A cópia de segurança não foi efetuada com sucesso.</string>
-    <string name="import_failed_nosd">Não é possível restaurar a cópia de segurança. A pasta das cópias de segurança não se encontra disponível.</string>
-    <string name="import_failed_nofile">Não existe nenhuma cópia de segurança que possa ser lida.</string>
-    <string name="import_success">Cópia de segurança restaurada com sucesso.</string>
-    <string name="import_failed">Falha ao restaurar a cópia de segurança.</string>
     <string name="backup_button">Criar cópia de segurança</string>
     <string name="import_button">Restaurar cópia de segurança</string>
     <string name="import_warning">Estou ciente que as minhas listas, séries e filmes serão substituídos!</string>

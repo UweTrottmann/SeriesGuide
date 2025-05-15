@@ -507,13 +507,6 @@
     <string name="clear_cache_summary">Ewch i leoliadau storio i gael gwared ar ddelweddau wedi\'u storio ac ymatebion rhwydwaith</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Cynhwyswch ddisgrifiadau, manylion, graddfeydd</string>
-    <string name="backup_failed_file_access">Methu gwneud copi wrth gefn. Ni ellir dod o hyd i ffeil wrth gefn na\'i chyrchu.</string>
-    <string name="backup_success">Gwneud copi wrth gefn yn llwyddiannus</string>
-    <string name="backup_failed">Methodd y copi wrth gefn</string>
-    <string name="import_failed_nosd">Methu adfer copi wrth gefn. Nid yw\'r ffolder wrth gefn ar gael.</string>
-    <string name="import_failed_nofile">Nid oes ffeil wrth gefn ddarllenadwy</string>
-    <string name="import_success">Adfer y copi wrth gefn yn llwyddiannus</string>
-    <string name="import_failed">Methodd adfer y copi wrth gefn</string>
     <string name="backup_button">Creu copi wrth gefn</string>
     <string name="import_button">Adfer copi wrth gefn</string>
     <string name="import_warning">Bydd y copi wrth gefn yn disodli\'ch sioeau, rhestrau neu ffilmiau cyfredol</string>

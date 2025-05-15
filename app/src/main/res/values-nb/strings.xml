@@ -451,13 +451,6 @@
     <string name="clear_cache_summary">Fjern alle hurtiglagrede bilder fra enheten</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Inkluderer beskrivelser, detaljer og vurderinger</string>
-    <string name="backup_failed_file_access">Sikkerhetskopiering mislyktes. Klarte ikke finne eller åpne filen.</string>
-    <string name="backup_success">Sikkerhetskopiering vellykket.</string>
-    <string name="backup_failed">Sikkerhetskopiering mislyktes.</string>
-    <string name="import_failed_nosd">Klarte ikke gjenopprette sikkerhetskopien. Sikkerhetskopimappen er ikke tilgjengelig.</string>
-    <string name="import_failed_nofile">Fant ingen lesbar sikkerhetskopifil.</string>
-    <string name="import_success">Sikkerhetskopien ble gjenopprettet.</string>
-    <string name="import_failed">Gjenoppretting av sikkerhetskopien mislyktes.</string>
     <string name="backup_button">Opprett sikkerhetskopi</string>
     <string name="import_button">Gjenopprett</string>
     <string name="import_warning">Jeg forstår at mine valgte serier, lister og filmer vil bli erstattet.</string>

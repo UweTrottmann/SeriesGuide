@@ -451,13 +451,6 @@
     <string name="clear_cache_summary">Избриши ги сите кеширани слики од вашиот уред</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Include descriptions, details, ratings</string>
-    <string name="backup_failed_file_access">Can\'t create backup. A backup file can not be found or accessed.</string>
-    <string name="backup_success">Backup заврши успешно.</string>
-    <string name="backup_failed">Архивирањето не беше успешно.</string>
-    <string name="import_failed_nosd">Backup неможе да биде обновен. Backup фолдерот не е достапен.</string>
-    <string name="import_failed_nofile">Не постои backup фајл кој може да се прочита.</string>
-    <string name="import_success">Backup успешно обновен.</string>
-    <string name="import_failed">Враќањето на backup не успеа.</string>
     <string name="backup_button">Архивирај</string>
     <string name="import_button">Restore backup</string>
     <string name="import_warning">Your current shows, lists or movies will be replaced by the backup</string>

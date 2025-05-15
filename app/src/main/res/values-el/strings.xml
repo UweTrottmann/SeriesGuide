@@ -451,13 +451,6 @@
     <string name="clear_cache_summary">Αφαιρέστε όλες τις προσωρινά αποθηκευμένες εικόνες από τη συσκευή σας</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Να περιλαμβάνονται περιγραφές, λεπτομέρειες και αξιολογήσεις</string>
-    <string name="backup_failed_file_access">Αδυναμία λήψης αντιγράφου ασφαλείας. Δεν μπορεί να βρεθεί ή να προσπελαστεί ένα αρχείο αντιγράφου ασφαλείας.</string>
-    <string name="backup_success">Επιτυχής δημιουργία αντιγράφου ασφαλείας.</string>
-    <string name="backup_failed">Απέτυχε η δημιουργία αντιγράφου ασφαλείας.</string>
-    <string name="import_failed_nosd">Αδυναμία επαναφοράς αντιγράφου ασφαλείας. Ο φάκελος αντιγράφων ασφαλείας δεν είναι διαθέσιμος.</string>
-    <string name="import_failed_nofile">Δεν υπάρχει κανένα αναγνώσιμο αρχείο αντιγράφου ασφαλείας.</string>
-    <string name="import_success">Επιτυχής επαναφορά αντιγράφου ασφαλείας.</string>
-    <string name="import_failed">Αποτυχία επαναφοράς του αντιγράφου ασφαλείας.</string>
     <string name="backup_button">Δημιουργία αντιγράφων ασφαλείας</string>
     <string name="import_button">Επαναφορά</string>
     <string name="import_warning">Οι τρέχουσες σειρές, λίστες και ταινίες θα αντικατασταθούν από το αντίγραφο ασφαλείας</string>

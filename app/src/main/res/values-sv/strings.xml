@@ -451,13 +451,6 @@
     <string name="clear_cache_summary">Ta bort alla cachade bilder från enheten</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Inkludera beskrivningar, detaljer, betyg</string>
-    <string name="backup_failed_file_access">Kan inte säkerhetskopiera. En fil för säkerhetskopiering kan inte hittas eller öppnas.</string>
-    <string name="backup_success">Säkerhetskopieringen lyckades.</string>
-    <string name="backup_failed">Säkerhetskopieringen misslyckades.</string>
-    <string name="import_failed_nosd">Kan inte återställa säkerhetskopian. Mappen är inte tillgänglig.</string>
-    <string name="import_failed_nofile">Det finns ingen läsbar backupfil.</string>
-    <string name="import_success">Säkerhetskopian återställdes.</string>
-    <string name="import_failed">Återställning av säkerhetskopian misslyckades.</string>
     <string name="backup_button">Säkerhetskopiera</string>
     <string name="import_button">Återställ säkerhetskopia</string>
     <string name="import_warning">Jag förstår att mina nuvarande serier, listor och filmer kommer ersättas!</string>

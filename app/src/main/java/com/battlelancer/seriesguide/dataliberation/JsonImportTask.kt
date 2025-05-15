@@ -35,6 +35,7 @@ import com.battlelancer.seriesguide.util.DBUtils
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.TaskManager
+import com.battlelancer.seriesguide.util.TextTools
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
 import com.google.gson.stream.JsonReader
@@ -174,34 +175,32 @@ class JsonImportTask(
     }
 
     private fun onPostExecute(result: Int) {
-        val messageId: Int
+        val message: String
         val showIndefinite: Boolean
         when (result) {
             SUCCESS -> {
-                messageId = R.string.import_success
+                message = context.getString(R.string.status_successful)
                 showIndefinite = false
             }
-            ERROR_STORAGE_ACCESS -> {
-                messageId = R.string.import_failed_nosd
-                showIndefinite = true
-            }
             ERROR_FILE_ACCESS -> {
-                messageId = R.string.import_failed_nofile
+                message = TextTools.dotSeparate(
+                    context,
+                    R.string.status_failure,
+                    R.string.status_failed_file_access
+                )
                 showIndefinite = true
             }
             ERROR_LARGE_DB_OP -> {
-                messageId = R.string.update_inprogress
+                message = context.getString(R.string.update_inprogress)
                 showIndefinite = false
             }
             else -> {
-                messageId = R.string.import_failed
+                message = context.getString(R.string.status_failure)
                 showIndefinite = true
             }
         }
         EventBus.getDefault().post(
-            LiberationResultEvent(
-                context.getString(messageId), errorCause, showIndefinite
-            )
+            LiberationResultEvent(context, message, errorCause, showIndefinite)
         )
     }
 
@@ -530,7 +529,6 @@ class JsonImportTask(
 
     companion object {
         const val SUCCESS = 1
-        private const val ERROR_STORAGE_ACCESS = 0
         private const val ERROR = -1
         private const val ERROR_LARGE_DB_OP = -2
         private const val ERROR_FILE_ACCESS = -3

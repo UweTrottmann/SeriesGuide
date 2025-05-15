@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2016-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.util
 
@@ -8,6 +8,7 @@ import android.content.res.Resources
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.TextAppearanceSpan
+import android.view.View
 import androidx.annotation.StringRes
 import androidx.annotation.StyleRes
 import androidx.core.text.set
@@ -209,6 +210,8 @@ object TextTools {
 
     /**
      * Dot separates the two given strings. If one is empty, just returns the other string (no dot).
+     *
+     * Prefer using [dotSeparate] that accepts a [Context] which is RTL aware.
      */
     fun dotSeparate(left: String?, right: String?): String {
         val dotString = StringBuilder(left ?: "")
@@ -219,6 +222,21 @@ object TextTools {
             dotString.append(right)
         }
         return dotString.toString()
+    }
+
+    /**
+     * Like [dotSeparate], but changes order depending on layout direction.
+     */
+    fun dotSeparate(context: Context, left: String?, right: String?): String {
+        return if (context.resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL) {
+            dotSeparate(right, left)
+        } else {
+            dotSeparate(left, right)
+        }
+    }
+
+    fun dotSeparate(context: Context, @StringRes leftRes: Int, @StringRes rightRes: Int): String {
+        return dotSeparate(context, context.getString(leftRes), context.getString(rightRes))
     }
 
     /**

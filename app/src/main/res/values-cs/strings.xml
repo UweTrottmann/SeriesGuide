@@ -479,13 +479,6 @@
     <string name="clear_cache_summary">Přejděte do nastavení úložiště pro odstranění obrázků z mezipaměti a síťových odpovědí</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Zahrnout popisy, detaily, hodnocení</string>
-    <string name="backup_failed_file_access">Nelze zálohovat. Záložní soubor nebyl nalezen nebo není přístupný.</string>
-    <string name="backup_success">Zálohování bylo úspěšné.</string>
-    <string name="backup_failed">Zálohování selhalo.</string>
-    <string name="import_failed_nosd">Zálohu nelze obnovit. Složka zálohy není k dispozici.</string>
-    <string name="import_failed_nofile">Žádný čitelný soubor se zálohou nenalezen.</string>
-    <string name="import_success">Obnovení ze zálohy bylo úspěšné.</string>
-    <string name="import_failed">Obnovení ze zálohy selhalo.</string>
     <string name="backup_button">Zálohovat</string>
     <string name="import_button">Obnovit</string>
     <string name="import_warning">Vaše aktuální seriály, seznamy nebo filmy budou nahrazeny zálohou</string>

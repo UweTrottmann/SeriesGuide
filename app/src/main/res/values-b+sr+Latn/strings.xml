@@ -465,13 +465,6 @@
     <string name="clear_cache_summary">Idite na podešavanja skladištenja da biste uklonili keširane slike i mrežne odgovore</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Uključuje opise, detalje, ocene</string>
-    <string name="backup_failed_file_access">Nije moguće napraviti rezervnu kopiju. Datoteka rezervne kopije se ne može pronaći ili pristupiti.</string>
-    <string name="backup_success">Rezervna kopija uspešna</string>
-    <string name="backup_failed">Rezervna kopija neuspešna</string>
-    <string name="import_failed_nosd">Nije moguće vratiti rezervnu kopiju. Fascikla rezervne kopije nije dostupna.</string>
-    <string name="import_failed_nofile">Nema čitljive rezervne kopije</string>
-    <string name="import_success">Rezervna kopija je uspešno vraćena</string>
-    <string name="import_failed">Vraćanje rezervne kopije nije uspelo</string>
     <string name="backup_button">Napravite rezervnu kopiju</string>
     <string name="import_button">Povratiti rezervnu kopiju</string>
     <string name="import_warning">Vaše trenutne serije, liste ili filmovi biće zamenjeni rezervnom kopijom</string>

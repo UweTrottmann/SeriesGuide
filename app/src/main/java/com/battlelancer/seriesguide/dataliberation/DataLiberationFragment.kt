@@ -3,6 +3,7 @@
 
 package com.battlelancer.seriesguide.dataliberation
 
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,6 +18,7 @@ import com.battlelancer.seriesguide.databinding.FragmentDataLiberationBinding
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools.CreateExportFileContract
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools.SelectImportFileContract
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.OnTaskProgressListener
+import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.WebTools
 import com.battlelancer.seriesguide.util.tryLaunch
@@ -262,13 +264,8 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
             showIndefinite = false
         }
 
-        constructor(message: String?, errorCause: String?, showIndefinite: Boolean) {
-            val finalMessage = if (errorCause != null) {
-                "$message ($errorCause)"
-            } else {
-                message
-            }
-            this.message = finalMessage
+        constructor(context: Context, message: String?, errorCause: String?, showIndefinite: Boolean) {
+            this.message = TextTools.dotSeparate(context, message, errorCause)
             this.showIndefinite = showIndefinite
         }
 

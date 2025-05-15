@@ -437,13 +437,6 @@
     <string name="clear_cache_summary">디바이스에 있는 모든 캐쉬된 이미지를 제거합니다</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">설명, 세부 정보, 평가 내용 등이 포함됩니다.</string>
-    <string name="backup_failed_file_access">백업 실패. 백업 파일이 없거나 접근할 수 없습니다.</string>
-    <string name="backup_success">성공적으로 백업하였습니다.</string>
-    <string name="backup_failed">백업에 실패하였습니다.</string>
-    <string name="import_failed_nosd">복원 실패. 백업 폴더가 존재하지 않습니다.</string>
-    <string name="import_failed_nofile">읽을 수 있는 백업 파일이 없습니다.</string>
-    <string name="import_success">백업을 성공적으로 복원하였습니다.</string>
-    <string name="import_failed">백업을 복원하지 못했습니다.</string>
     <string name="backup_button">백업</string>
     <string name="import_button">복원</string>
     <string name="import_warning">현재 앱에 저장한 프로그램 목록이 교체됩니다</string>

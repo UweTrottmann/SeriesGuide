@@ -451,13 +451,6 @@
     <string name="clear_cache_summary">Zu Speicher-Einstellungen gehen um zwischengesp. Bilder und Netzwerk-Antworten zu löschen</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Beschreibungen, Details, Bewertungen einschließen</string>
-    <string name="backup_failed_file_access">Kann nicht sichern. Eine Sicherungs-Datei konnte nicht gefunden oder beschrieben werden.</string>
-    <string name="backup_success">Sicherung erfolgreich</string>
-    <string name="backup_failed">Sicherung fehlgeschlagen</string>
-    <string name="import_failed_nosd">Wiederherstellen fehlgeschlagen. Der Backup-Ordner ist nicht verfügbar.</string>
-    <string name="import_failed_nofile">Keine lesbare Sicherungs-Datei vorhanden</string>
-    <string name="import_success">Sicherung erfolgreich wiederhergestellt</string>
-    <string name="import_failed">Fehler beim Wiederherstellen der Sicherung</string>
     <string name="backup_button">Sicherung erstellen</string>
     <string name="import_button">Sicherung wiederherstellen</string>
     <string name="import_warning">Ihre aktuellen Serien, Listen oder Filme werden durch die Sicherung ersetzt</string>

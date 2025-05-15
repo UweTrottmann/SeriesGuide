@@ -451,13 +451,6 @@
     <string name="clear_cache_summary">Borrar todas as imaxes da caché do dispositivo</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Incluir descricións, detalles, valoracións</string>
-    <string name="backup_failed_file_access">Non se puido facer a copia de seguridade. Unha copia de seguridade non se atopou ou é inaccesible.</string>
-    <string name="backup_success">Respaldo realizado correctamente</string>
-    <string name="backup_failed">Erro na copia de seguranza</string>
-    <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
-    <string name="import_failed_nofile">There is no readable backup file</string>
-    <string name="import_success">Backup successfully restored</string>
-    <string name="import_failed">Restoring the backup failed</string>
     <string name="backup_button">Crear unha copia de seguranza</string>
     <string name="import_button">Restaurar copia de seguranza</string>
     <string name="import_warning">Your current shows, lists or movies will be replaced by the backup</string>

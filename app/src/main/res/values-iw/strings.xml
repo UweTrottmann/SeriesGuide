@@ -479,13 +479,6 @@
     <string name="clear_cache_summary">הסר את כל מטמוני התמונות ממכשירך</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">כוללים תיאורים, פרטים, דירוגים</string>
-    <string name="backup_failed_file_access">לא ניתן לגבות. קובץ גיבוי לא נמצא או נגיש.</string>
-    <string name="backup_success">הגיבוי הושלם בהצלחה.</string>
-    <string name="backup_failed">הגיבוי נכשל.</string>
-    <string name="import_failed_nosd">אין אפשרות לשחזר. תיקיית הגיבויים אינה זמינה.</string>
-    <string name="import_failed_nofile">אין קובץ גיבוי הניתן לקריאה.</string>
-    <string name="import_success">הגיבוי שוחזר בהצלחה</string>
-    <string name="import_failed">שחזור הגיבוי נכשל</string>
     <string name="backup_button">גיבוי</string>
     <string name="import_button">שחזר</string>
     <string name="import_warning">אני מבין שהסדרות, רשימות והסרטים הנוכחיים שלי יוחלפו!</string>

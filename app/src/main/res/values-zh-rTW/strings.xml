@@ -437,13 +437,6 @@
     <string name="clear_cache_summary">從您的設備中刪除所有暫存的圖片</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">包括劇情簡介、詳細資訊、評分</string>
-    <string name="backup_failed_file_access">無法備份。找不到或無法存取備份檔案。</string>
-    <string name="backup_success">備份成功。</string>
-    <string name="backup_failed">備份失敗。</string>
-    <string name="import_failed_nosd">無法還原備份。備份資料夾無法使用。</string>
-    <string name="import_failed_nofile">沒有可讀的備份檔案。</string>
-    <string name="import_success">已成功還原備份。</string>
-    <string name="import_failed">還原備份檔失敗。</string>
     <string name="backup_button">備份</string>
     <string name="import_button">還原</string>
     <string name="import_warning">我明白我目前的節目，及其他清單和電影將會被取代 ！</string>

@@ -479,13 +479,6 @@
     <string name="clear_cache_summary">Видалити всі кешовані зображення з пристрою</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Включити описи, деталі, рейтинги</string>
-    <string name="backup_failed_file_access">Не можливо створити резервну копію. Файл бекапу не знайдено або немає доступу.</string>
-    <string name="backup_success">Резервне копіювання пройшло успішно.</string>
-    <string name="backup_failed">Не вдалося виконати резервне копіювання.</string>
-    <string name="import_failed_nosd">Не можливо відновити резервну копію. Папка Бекапу недоступна.</string>
-    <string name="import_failed_nofile">Відсутній читабельний файл Бекапу.</string>
-    <string name="import_success">Резервна копія успішно відновлена.</string>
-    <string name="import_failed">Не вдалося виконати відновлення з резервної копії.</string>
     <string name="backup_button">Бекап</string>
     <string name="import_button">Відновити</string>
     <string name="import_warning">Я розумію, що мої поточні серіали, списки та фільми будуть замінені!</string>

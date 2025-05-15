@@ -451,13 +451,6 @@
     <string name="clear_cache_summary">Gå til Lagringsindstillinger for at fjerne cachelagrede billeder og netværkssvar</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Inkluder beskrivelser, detaljer og bedømmelser</string>
-    <string name="backup_failed_file_access">Kan ikke sikkerhedskopiere. En sikkerhedskopieringsfil kan ikke findes eller tilgås.</string>
-    <string name="backup_success">Sikkerhedskopieret.</string>
-    <string name="backup_failed">Sikkerhedskopiering mislykkedes.</string>
-    <string name="import_failed_nosd">Kan ikke gendanne sikkerhedskopi. Sikkerhedskopieringsmappen er utilgængelig.</string>
-    <string name="import_failed_nofile">Der er ingen læsbar sikkerhedskopieringsfil.</string>
-    <string name="import_success">Sikkerhedskopi gendannet.</string>
-    <string name="import_failed">Gendannelse af sikkerhedskopi mislykkedes.</string>
     <string name="backup_button">Opret sikkerhedskopi</string>
     <string name="import_button">Gendan sikkerhedskopi</string>
     <string name="import_warning">Jeg forstår, at mine nuværende serier, lister og film vil blive erstattet!</string>

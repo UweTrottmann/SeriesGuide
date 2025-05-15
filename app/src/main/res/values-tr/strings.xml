@@ -451,13 +451,6 @@
     <string name="clear_cache_summary">Tüm resim önbelleğini cihazınızdan silin</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Açıklamalar, ayrıntılar ve puanlar dahil</string>
-    <string name="backup_failed_file_access">Yedekleme başarısız. Bir yedek dosyası bulunamadı ya da dosyaya erişilemedi.</string>
-    <string name="backup_success">Yedekleme başarılı.</string>
-    <string name="backup_failed">Yedekleme başarısız oldu.</string>
-    <string name="import_failed_nosd">Geri yüklenemiyor. Yedek klasörüne erişilemiyor.</string>
-    <string name="import_failed_nofile">Okunabilir yedekleme dosyası bulunamadı.</string>
-    <string name="import_success">Yedek başarıyla geri yüklendi.</string>
-    <string name="import_failed">Yedek geri yükleme başarısız oldu.</string>
     <string name="backup_button">Yedekle</string>
     <string name="import_button">Geri Yükle</string>
     <string name="import_warning">Mevcut dizileriniz, listeleriniz ve filmleriniz silinerek, yedek ile değiştirilecek</string>

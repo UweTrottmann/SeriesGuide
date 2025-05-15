@@ -451,13 +451,6 @@
     <string name="clear_cache_summary">Elimina totes les imatges que SeriesGuide hagi baixat i que encara siguin al dispositiu</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Incloure descripcions, detalls, valoracions</string>
-    <string name="backup_failed_file_access">No es pot fer còpia de seguretat. No es pot trobar o accedir un arxiu de còpia de seguretat.</string>
-    <string name="backup_success">S\'ha realitzat la còpia de seguretat.</string>
-    <string name="backup_failed">Ha fallat la còpia de seguretat.</string>
-    <string name="import_failed_nosd">No es pot restaurar la còpia de seguretat. La carpeta de còpia de seguretat no està disponible.</string>
-    <string name="import_failed_nofile">No hi ha cap còpia de seguretat que es pugui llegir.</string>
-    <string name="import_success">La còpia de seguretat s\'ha restaurat correctament.</string>
-    <string name="import_failed">La còpia de seguretat no s\'ha pogut restaurar.</string>
     <string name="backup_button">Crea còpia de seguretat</string>
     <string name="import_button">Restaura</string>
     <string name="import_warning">Entenc que les meves sèries, llistes i pel·lícules actuals seran reemplaçades</string>

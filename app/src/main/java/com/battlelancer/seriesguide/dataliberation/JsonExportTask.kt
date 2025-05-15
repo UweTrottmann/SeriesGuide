@@ -25,6 +25,7 @@ import com.battlelancer.seriesguide.shows.database.SgSeason2Helper
 import com.battlelancer.seriesguide.shows.database.SgShow2Helper
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.util.Errors
+import com.battlelancer.seriesguide.util.TextTools
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
 import com.google.gson.stream.JsonWriter
@@ -175,26 +176,32 @@ class JsonExportTask(
 
     private fun onPostExecute(result: Int) {
         if (!isAutoBackupMode) {
-            val messageId: Int
+            val message: String
             val showIndefinite: Boolean
             when (result) {
                 SUCCESS -> {
-                    messageId = R.string.backup_success
+                    message = context.getString(R.string.status_successful)
                     showIndefinite = false
                 }
+
                 ERROR_FILE_ACCESS -> {
-                    messageId = R.string.backup_failed_file_access
+                    message = TextTools.dotSeparate(
+                        context,
+                        R.string.status_failure,
+                        R.string.status_failed_file_access
+                    )
                     showIndefinite = true
                 }
+
                 else -> {
-                    messageId = R.string.backup_failed
+                    message = context.getString(R.string.status_failure)
                     showIndefinite = true
                 }
             }
             EventBus.getDefault()
                 .post(
                     LiberationResultEvent(
-                        context.getString(messageId), errorCause, showIndefinite
+                        context, message, errorCause, showIndefinite
                     )
                 )
         } else {
@@ -230,9 +237,11 @@ class JsonExportTask(
                 BACKUP_SHOWS -> {
                     writeJsonStreamShows(coroutineScope, out)
                 }
+
                 BACKUP_LISTS -> {
                     writeJsonStreamLists(coroutineScope, out)
                 }
+
                 BACKUP_MOVIES -> {
                     writeJsonStreamMovies(coroutineScope, out)
                 }

@@ -451,13 +451,6 @@
     <string name="clear_cache_summary">Remover todas as imagens em cache do seu dispositivo</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Incluir descrições, detalhes, avaliações</string>
-    <string name="backup_failed_file_access">Não foi possível fazer o backup. Um arquivo de backup não foi encontrado ou não pode ser acessado.</string>
-    <string name="backup_success">Backup bem-sucedido.</string>
-    <string name="backup_failed">Backup falhou.</string>
-    <string name="import_failed_nosd">Não foi possível restaurar o backup. A pasta de backup não está disponível.</string>
-    <string name="import_failed_nofile">Não há arquivo de backup legível.</string>
-    <string name="import_success">Backup restaurado com sucesso</string>
-    <string name="import_failed">Falha ao restaurar backup.</string>
     <string name="backup_button">Backup</string>
     <string name="import_button">Restaurar</string>
     <string name="import_warning">Suas séries, listas ou filmes atuais serão substituídos pelo backup</string>

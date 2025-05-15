@@ -451,13 +451,6 @@
     <string name="clear_cache_summary">உங்கள் சாதனத்தில் இருந்து அனைத்து தேக்கக படிமங்களை அகற்று</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Include descriptions, details, ratings</string>
-    <string name="backup_failed_file_access">மறுபிரதி எடு முடியாது. மறுபிரதி கோப்பு அல்ல கண்டறியப்பட்ட அல்லது இயலும் அணுக.</string>
-    <string name="backup_success">மறுபிரதி வெற்றிகரமாக.</string>
-    <string name="backup_failed">மறுபிரதி செயலிழந்தது.</string>
-    <string name="import_failed_nosd">மறுபிரதி மீட்டெடுக்க முடியாது. மறுபிரதி கோப்புறை கிடைக்கப்பெறவில்லை.</string>
-    <string name="import_failed_nofile">எந்த படிக்கக்கூடியதாக மறுபிரதி கோப்பு உள்ளது.</string>
-    <string name="import_success">மறுபிரதி வெற்றிகரமாக மீட்டெடுக்கப்பட்டது.</string>
-    <string name="import_failed">மறுபிரதி மீட்டெடுத்தல் செயலிழந்தது.</string>
     <string name="backup_button">மறுபிரதி உருவாக்கு</string>
     <string name="import_button">மீட்டெடுக்க மறுபிரதி</string>
     <string name="import_warning">நான் எனது தற்போதைய காட்சிகள் புரிந்துகொள்ள, பட்டியல்கள் மற்றும் படங்கள் மாற்றப்படும்!</string>
