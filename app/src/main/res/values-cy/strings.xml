@@ -501,8 +501,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Arall</string>
     <string name="pref_autoupdatesummary">Cysoni a diweddaru cynnwys yn awtomatig</string>
-    <string name="backup">Gwneud copi wrth gefn / Adfer</string>
-    <string name="backup_summary">Gwneud copi wrth gefn neu adfer eich sioeau, rhestrau a ffilmiau</string>
     <string name="pref_number">Fformat rhif</string>
     <string name="pref_offset">Gwrthbwyso amser â llaw</string>
     <string name="pref_offsetsummary">Gwrthbwyso amseroedd aer %d awr</string>

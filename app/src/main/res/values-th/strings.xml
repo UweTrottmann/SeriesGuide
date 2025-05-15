@@ -431,8 +431,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">อื่นๆ</string>
     <string name="pref_autoupdatesummary">ซิงค์และอัปเดตข้อมูล SeriesGuide อัตโนมัติ</string>
-    <string name="backup">สำรอง/กู้คืน</string>
-    <string name="backup_summary">สำรองหรือกู้คืนซีรีส์ของคุณ</string>
     <string name="pref_number">รูปแบบตัวเลข</string>
     <string name="pref_offset">ชดเชยเวลาด้วยตนเอง</string>
     <string name="pref_offsetsummary">ชดเชยเวลาออกอากาศ %d ชั่วโมง</string>
