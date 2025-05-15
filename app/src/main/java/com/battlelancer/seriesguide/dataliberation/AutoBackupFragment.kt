@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2013-2024 Uwe Trottmann
+// Copyright 2013-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.dataliberation
 
@@ -19,6 +19,7 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.databinding.FragmentAutoBackupBinding
 import com.battlelancer.seriesguide.dataliberation.DataLiberationFragment.LiberationResultEvent
 import com.battlelancer.seriesguide.util.TaskManager
+import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.tryLaunch
 import kotlinx.coroutines.launch
@@ -122,15 +123,17 @@ class AutoBackupFragment : Fragment() {
                         binding.imageViewBackupStatus
                             .setImageResource(R.drawable.ic_cancel_red_24dp)
                         binding.textViewBackupStatus.text =
-                            getString(R.string.backup_failed) + " " + errorOrNull
+                            TextTools.dotSeparate(getString(R.string.status_failure), errorOrNull)
                     }
+
                     isBackupAvailableForImport -> {
                         binding.groupState.visibility = View.VISIBLE
 
                         binding.imageViewBackupStatus
                             .setImageResource(R.drawable.ic_check_circle_green_24dp)
-                        binding.textViewBackupStatus.setText(R.string.backup_success)
+                        binding.textViewBackupStatus.setText(R.string.status_successful)
                     }
+
                     else -> {
                         // No error + no backup files.
                         binding.groupState.visibility = View.GONE
