@@ -43,16 +43,16 @@ class DefaultValuesTest {
         }
         private val SEASON = Season().apply {
             tmdb_id = "1234"
-            tvdbId = 1234
+            tvdb_id = 1234
             season = 42
         }
         private val EPISODE = Episode().apply {
             tmdb_id = 123456
-            tvdbId = 123456
+            tvdb_id = 123456
         }
         private val LIST = List().apply {
             name = "Test List"
-            listId = Lists.generateListId(name)
+            list_id = Lists.generateListId(name)
         }
         private val MOVIE = MovieDetails().apply {
             val tmdbMovie = Movie().apply { id = 12 }
@@ -141,7 +141,7 @@ class DefaultValuesTest {
         }
 
         assertThat(season.tmdbId).isEqualTo(SEASON.tmdb_id)
-        assertThat(season.tvdbId).isEqualTo(SEASON.tvdbId)
+        assertThat(season.tvdbId).isEqualTo(SEASON.tvdb_id)
         assertThat(season.showId).isEqualTo(showId)
         assertThat(season.numberOrNull).isEqualTo(SEASON.season)
         // getInt returns 0 if NULL, so check explicitly

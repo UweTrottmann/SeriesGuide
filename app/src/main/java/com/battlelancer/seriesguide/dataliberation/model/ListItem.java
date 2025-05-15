@@ -1,20 +1,16 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2013-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.dataliberation.model;
 
-import com.google.gson.annotations.SerializedName;
-
 public class ListItem {
 
-    @SerializedName("list_item_id")
-    public String listItemId;
+    public String list_item_id;
 
     /**
      * Used in legacy backup files.
      */
-    @SerializedName("tvdb_id")
-    public int tvdbId;
+    public int tvdb_id;
 
     /**
      * TMDB ID for new list items, TVDB ID for legacy list items.

@@ -1,10 +1,9 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2013-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.dataliberation.model;
 
 import androidx.annotation.Nullable;
-import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Season {
@@ -22,9 +21,8 @@ public class Season {
      * <p>
      * May be exported for shows that were added before the TMDB migration.
      */
-    @SerializedName("tvdb_id")
     @Nullable
-    public Integer tvdbId;
+    public Integer tvdb_id;
 
     /**
      * The number of a season. Starting from 0 for Special Episodes.
