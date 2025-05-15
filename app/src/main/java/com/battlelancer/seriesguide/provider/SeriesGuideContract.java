@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2011-2024 Uwe Trottmann
+// Copyright 2011-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.provider;
 
@@ -480,7 +480,7 @@ public class SeriesGuideContract {
         String OVERVIEW = "series_overview";
 
         /**
-         * A poster path. Needs to be prefixed with the poster server URL.
+         * See {@link SgShow2#getPoster()}.
          */
         String POSTER = "series_poster";
         /**
@@ -491,7 +491,7 @@ public class SeriesGuideContract {
         String CONTENTRATING = "series_contentrating";
 
         /**
-         * Show status. Encoded as integer. See {@link ShowStatus}.
+         * See {@link SgShow2#getStatus()}.
          */
         String STATUS = "series_status";
 
@@ -538,67 +538,32 @@ public class SeriesGuideContract {
         String RELEASE_TIME = "series_airstime";
 
         /**
-         * Local release week day. Encoded as integer.
-         * <pre>
-         * Range:   1-7
-         * Daily:   0
-         * Default: -1
-         * </pre>
+         * See {@link SgShow2#getReleaseWeekDay()}.
          */
         String RELEASE_WEEKDAY = "series_airsdayofweek";
 
         /**
-         * Release time zone. Encoded as tzdata "Area/Location" string.
-         *
-         * <pre>
-         * Example: "America/New_York"
-         * Default: ""
-         * </pre>
-         *
-         * <p> Added with {@link com.battlelancer.seriesguide.provider.SeriesGuideDatabase#DBVER_34_TRAKT_V2}.
+         * See {@link SgShow2#getReleaseTimeZone()}.
          */
         String RELEASE_TIMEZONE = "series_timezone";
 
         /**
-         * Release country. Encoded as ISO3166-1 alpha-2 string.
-         *
-         * <pre>
-         * Example: "us"
-         * Default: ""
-         * </pre>
-         *
-         * <p> Previous use: Was added in db version 21 to store the air time in pure text.
+         * See {@link SgShow2#getReleaseCountry()}.
          */
         String RELEASE_COUNTRY = "series_country";
 
         /**
-         * Custom local release time to override the actual one. Encoded as integer (hhmm).
-         * This being set also determines if the other custom release time values (day offset,
-         * time zone) should be used.
-         * <p>
-         * Example: 2035
-         * <p>
-         * Default: {@link SgShow2#CUSTOM_RELEASE_TIME_NOT_SET}
-         * <p>
-         * Added in {@link SgRoomDatabase#VERSION_51_CUSTOM_RELEASE_TIME}.
+         * See {@link SgShow2#getCustomReleaseTime()}.
          */
         String CUSTOM_RELEASE_TIME = "series_custom_release_time";
 
         /**
-         * Positive or negative day offset to shift the release day of episodes by.
-         * <p>
-         * Default: {@link SgShow2#CUSTOM_RELEASE_DAY_OFFSET_NOT_SET}
-         * <p>
-         * Added in {@link SgRoomDatabase#VERSION_51_CUSTOM_RELEASE_TIME}.
+         * See {@link SgShow2#getCustomReleaseDayOffset()}.
          */
         String CUSTOM_RELEASE_DAY_OFFSET = "series_custom_day_offset";
 
         /**
-         * Custom time zone for computing an episode release time.
-         * <p>
-         * Default: {@link SgShow2#CUSTOM_RELEASE_TIME_ZONE_NOT_SET}
-         * <p>
-         * Added in {@link SgRoomDatabase#VERSION_51_CUSTOM_RELEASE_TIME}.
+         * See {@link SgShow2#getCustomReleaseTimeZone()}.
          */
         String CUSTOM_RELEASE_TIME_ZONE = "series_custom_timezone";
 
@@ -615,24 +580,12 @@ public class SeriesGuideContract {
          */
         String TRAKT_ID = "series_trakt_id";
 
-        /**
-         * Whether this show has been favorited.
-         */
         String FAVORITE = "series_favorite";
 
-        /**
-         * Whether this show has been hidden. Added in db version 23.
-         */
         String HIDDEN = "series_hidden";
 
         /**
-         * Whether notifications for new episodes of this show should be shown. Added with {@link
-         * SeriesGuideDatabase#DBVER_40_NOTIFY_PER_SHOW}.
-         *
-         * <pre>
-         * Range: 0-1
-         * Default: 1
-         * </pre>
+         * See {@link SgShow2#getNotify()}.
          */
         String NOTIFY = "series_notify";
 
@@ -699,8 +652,7 @@ public class SeriesGuideContract {
         String LASTWATCHEDID = "series_lastwatchedid";
 
         /**
-         * Store the time an episode was last watched for this show.
-         * Added with {@link SeriesGuideDatabase#DBVER_39_SHOW_LAST_WATCHED}.
+         * See {@link SgShow2#getLastWatchedMs()}.
          */
         String LASTWATCHED_MS = "series_lastwatched_ms";
 
