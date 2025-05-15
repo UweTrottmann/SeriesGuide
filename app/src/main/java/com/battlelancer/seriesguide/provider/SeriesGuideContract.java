@@ -875,9 +875,6 @@ public class SeriesGuideContract {
          */
         String COLLECTED = "episode_collected";
 
-        /**
-         * IMDb id for a single episode. Added in db version 27.
-         */
         String IMDBID = "episode_imdbid";
 
         /**

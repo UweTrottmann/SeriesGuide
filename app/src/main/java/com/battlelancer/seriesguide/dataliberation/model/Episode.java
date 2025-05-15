@@ -83,9 +83,6 @@ public class Episode {
      */
     public boolean collected;
 
-    @Nullable
-    public String imdb_id;
-
     /*
      * #####################################################
      * The following values are only optionally exported.
