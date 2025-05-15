@@ -402,7 +402,6 @@ class JsonExportTask(
             episodeExport.collected = episodeDb.collected
             episodeExport.title = episodeDb.title
             episodeExport.first_aired = episodeDb.firstReleasedMs
-            episodeExport.imdb_id = episodeDb.imdbId
             episodeExport.rating_user = episodeDb.ratingUser
             if (isFullDump) {
                 episodeExport.overview = episodeDb.overview
