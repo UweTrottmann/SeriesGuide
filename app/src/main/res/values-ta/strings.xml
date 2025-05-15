@@ -444,8 +444,6 @@
     <string name="theme_app_light">Light</string>
     <!-- Other advanced settings -->
     <string name="pref_autoupdatesummary">Automatically sync and update content</string>
-    <string name="backup">மறுபிரதி/மீட்டெடுத்தல்</string>
-    <string name="backup_summary">மறுபிரதி எடு அல்லது மீட்டெடு உங்கள் காட்சிகள்</string>
     <string name="pref_number">எண் வடிவமைப்பு</string>
     <string name="pref_offset">கைமுறை நேரம் ஆப்செட்</string>
     <string name="pref_offsetsummary">%d மணிநேரத்தில் ஏர் முறை சரியீடு</string>

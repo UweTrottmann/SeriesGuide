@@ -458,8 +458,6 @@
     <string name="theme_app_light">Svetlo</string>
     <!-- Other advanced settings -->
     <string name="pref_autoupdatesummary">Automatski sinhronizujte i ažurirajte sadržaj</string>
-    <string name="backup">Arhiviranje/Povratak</string>
-    <string name="backup_summary">Napravite rezervnu kopiju ili vratite svoje serije, liste i filmove</string>
     <string name="pref_number">Format broja</string>
     <string name="pref_offset">Ručno podešavanje vremena</string>
     <string name="pref_offsetsummary">Pomeranje vremena emitovanja za %d sati</string>

@@ -171,7 +171,7 @@
                     style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
                     android:layout_width="0dp"
                     android:layout_height="48dp"
-                    android:text="@string/backup"
+                    android:text="@string/title_export_import"
                     app:icon="@drawable/ic_swap_vert_control_24dp"
                     app:iconGravity="start"
                     app:layout_constraintEnd_toEndOf="parent"

@@ -444,8 +444,6 @@
     <string name="theme_app_light">Claro</string>
     <!-- Other advanced settings -->
     <string name="pref_autoupdatesummary">Sincronizar e actualizar os datos automaticamente</string>
-    <string name="backup">Copa de seguridade / Recuperar</string>
-    <string name="backup_summary">Facer unha copia de seguridade ou restaurar as túas series</string>
     <string name="pref_number">Formato numérico</string>
     <string name="pref_offset">Axuste de hora manual</string>
     <string name="pref_offsetsummary">Axustar %d horas os tempos de emisión</string>

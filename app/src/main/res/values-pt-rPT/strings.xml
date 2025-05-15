@@ -444,8 +444,6 @@
     <string name="theme_app_light">Claro</string>
     <!-- Other advanced settings -->
     <string name="pref_autoupdatesummary">Sincroniza e atualiza automaticamente os dados do SeriesGuide</string>
-    <string name="backup">Cópia de Segurança/Restaurar</string>
-    <string name="backup_summary">Faz uma cópia de segurança ou restaura as tuas séries, listas e filmes</string>
     <string name="pref_number">Formato numérico</string>
     <string name="pref_offset">Acerto manual do fuso horário</string>
     <string name="pref_offsetsummary">Ajustar o fuso horário da exibição em %d horas</string>

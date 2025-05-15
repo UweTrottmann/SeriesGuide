@@ -430,8 +430,6 @@
     <string name="theme_app_light">Light</string>
     <!-- Other advanced settings -->
     <string name="pref_autoupdatesummary">자동으로 콘텐츠 동기화 및 업데이트</string>
-    <string name="backup">백업/복원</string>
-    <string name="backup_summary">프로그램 목록을 백업학거나 복원합니다</string>
     <string name="pref_number">에피소드 표시 형식</string>
     <string name="pref_offset">시차 수동 설정</string>
     <string name="pref_offsetsummary">방영 시간을 %d시간 시차 변경하여 나타냅니다</string>

@@ -472,8 +472,6 @@
     <string name="theme_app_light">בהיר</string>
     <!-- Other advanced settings -->
     <string name="pref_autoupdatesummary">בצע סנכרון אוטומטי ועדכן נתונים של SeriesGuide</string>
-    <string name="backup">גיבוי/שחזור</string>
-    <string name="backup_summary">גבה או שחזר את סדרותיך</string>
     <string name="pref_number">תבנית מספרים</string>
     <string name="pref_offset">סטיית שעה ידנית</string>
     <string name="pref_offsetsummary">הסט זמני שידור ב- %d שעות</string>

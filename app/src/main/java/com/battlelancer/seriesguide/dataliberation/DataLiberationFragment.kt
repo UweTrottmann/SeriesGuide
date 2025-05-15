@@ -57,9 +57,7 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
             doDataImport()
         }
 
-        // note: selecting custom backup files is only supported on KitKat and up
-        // as we use Storage Access Framework in this case
-        binding.buttonDataLibShowsExportFile.setOnClickListener {
+        binding.buttonDataLibShowsExport.setOnClickListener {
             createShowExportFileResult.tryLaunch(
                 JsonExportTask.EXPORT_JSON_FILE_SHOWS,
                 requireContext()
@@ -69,7 +67,7 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
             selectShowsImportFileResult.tryLaunch(null, requireContext())
         }
 
-        binding.buttonDataLibListsExportFile.setOnClickListener {
+        binding.buttonDataLibListsExport.setOnClickListener {
             createListsExportFileResult.tryLaunch(
                 JsonExportTask.EXPORT_JSON_FILE_LISTS,
                 requireContext()
@@ -79,7 +77,7 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
             selectListsImportFileResult.tryLaunch(null, requireContext())
         }
 
-        binding.buttonDataLibMoviesExportFile.setOnClickListener {
+        binding.buttonDataLibMoviesExport.setOnClickListener {
             createMovieExportFileResult.tryLaunch(
                 JsonExportTask.EXPORT_JSON_FILE_MOVIES,
                 requireContext()
@@ -145,11 +143,11 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
         }
         binding.progressBarDataLib.visibility = if (isLocked) View.VISIBLE else View.GONE
         binding.checkBoxDataLibFullDump.isEnabled = !isLocked
-        binding.buttonDataLibShowsExportFile.isEnabled = !isLocked
+        binding.buttonDataLibShowsExport.isEnabled = !isLocked
         binding.buttonDataLibShowsImportFile.isEnabled = !isLocked
-        binding.buttonDataLibListsExportFile.isEnabled = !isLocked
+        binding.buttonDataLibListsExport.isEnabled = !isLocked
         binding.buttonDataLibListsImportFile.isEnabled = !isLocked
-        binding.buttonDataLibMoviesExportFile.isEnabled = !isLocked
+        binding.buttonDataLibMoviesExport.isEnabled = !isLocked
         binding.buttonDataLibMoviesImportFile.isEnabled = !isLocked
         binding.checkBoxDataLibShows.isEnabled = !isLocked
         binding.checkBoxDataLibLists.isEnabled = !isLocked
@@ -225,24 +223,6 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
 
     private fun updateFileViews() {
         val binding = binding ?: return
-        setUriOrPlaceholder(
-            binding.textViewDataLibShowsExportFile,
-            BackupSettings.getExportFileUri(
-                context, JsonExportTask.BACKUP_SHOWS, false
-            )
-        )
-        setUriOrPlaceholder(
-            binding.textViewDataLibListsExportFile,
-            BackupSettings.getExportFileUri(
-                context, JsonExportTask.BACKUP_LISTS, false
-            )
-        )
-        setUriOrPlaceholder(
-            binding.textViewDataLibMoviesExportFile,
-            BackupSettings.getExportFileUri(
-                context, JsonExportTask.BACKUP_MOVIES, false
-            )
-        )
         setUriOrPlaceholder(
             binding.textViewDataLibShowsImportFile,
             BackupSettings.getImportFileUriOrExportFileUri(

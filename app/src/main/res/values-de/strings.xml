@@ -444,8 +444,6 @@
     <string name="theme_app_light">Hell</string>
     <!-- Other advanced settings -->
     <string name="pref_autoupdatesummary">Automatisch synchronisieren und Inhalte aktualisieren</string>
-    <string name="backup">Sichern/Wiederherstellen</string>
-    <string name="backup_summary">Sicherung aller Serien, Listen und Filme erstellen oder Sicherung wiederherstellen</string>
     <string name="pref_number">Zahlenformat</string>
     <string name="pref_offset">Manuelle Zeit-Verschiebung</string>
     <string name="pref_offsetsummary">Sendezeit um %d Stunden verschieben</string>

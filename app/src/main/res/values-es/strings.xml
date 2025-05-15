@@ -445,8 +445,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="theme_app_light">Claro</string>
     <!-- Other advanced settings -->
     <string name="pref_autoupdatesummary">Sincronizar y actualizar automáticamente datos de SeriesGuide</string>
-    <string name="backup">Respaldo/Restauración</string>
-    <string name="backup_summary">Respaldar o restaurar sus programas</string>
     <string name="pref_number">Formato numérico</string>
     <string name="pref_offset">Ajuste de hora manual</string>
     <string name="pref_offsetsummary">Ajustar %d horas los tiempos de emisión</string>

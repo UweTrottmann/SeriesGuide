@@ -458,8 +458,6 @@
     <string name="theme_app_light">Svijetla</string>
     <!-- Other advanced settings -->
     <string name="pref_autoupdatesummary">Automatski sinkronizirajte i ažurirajte SeriesGuide podatke</string>
-    <string name="backup">Sigurnosno kopiranje/vraćanje</string>
-    <string name="backup_summary">Napravi sigurnosnu kopiju ili obnovi svoje serije</string>
     <string name="pref_number">Format broja</string>
     <string name="pref_offset">Ručno podešavanje vremenske razlike</string>
     <string name="pref_offsetsummary">Razlika u emitiranju %d sati</string>

@@ -444,8 +444,6 @@
     <string name="theme_app_light">Chiaro</string>
     <!-- Other advanced settings -->
     <string name="pref_autoupdatesummary">Sincronizza e aggiorna automaticamente i dati di SeriesGuide</string>
-    <string name="backup">Backup/Ripristino</string>
-    <string name="backup_summary">Esegui il backup o ripristina le tue serie</string>
     <string name="pref_number">Formato numerico</string>
     <string name="pref_offset">Fuso orario manuale</string>
     <string name="pref_offsetsummary">Compensazione della messa onda di %d ore</string>
