@@ -8,6 +8,7 @@ import android.content.res.Resources
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.TextAppearanceSpan
+import android.view.View
 import androidx.annotation.StringRes
 import androidx.annotation.StyleRes
 import androidx.core.text.set
@@ -219,6 +220,21 @@ object TextTools {
             dotString.append(right)
         }
         return dotString.toString()
+    }
+
+    /**
+     * Like [dotSeparate], but changes order depending on layout direction.
+     */
+    fun dotSeparate(context: Context, left: String?, right: String?): String {
+        return if (context.resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL) {
+            dotSeparate(right, left)
+        } else {
+            dotSeparate(left, right)
+        }
+    }
+
+    fun dotSeparate(context: Context, @StringRes leftRes: Int, @StringRes rightRes: Int): String {
+        return dotSeparate(context, context.getString(leftRes), context.getString(rightRes))
     }
 
     /**
