@@ -13,6 +13,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 ### Next release
 
 * 🔨 Shows: correctly display initial tab indicator if there is an active show filter.
+* 🔧 For external links, replace chain with open icon.
 
 ### 2025.2.1 - 2025-04-11 🧪
 
