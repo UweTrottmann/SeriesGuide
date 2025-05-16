@@ -14,6 +14,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 * 🔨 Shows: correctly display initial tab indicator if there is an active show filter.
 * 🔧 For external links, replace chain with open icon.
+* 🔨 Shows: when updating, also update season number of episodes (useful when importing minimal
+  data).
 
 ### 2025.2.1 - 2025-04-11 🧪
 
