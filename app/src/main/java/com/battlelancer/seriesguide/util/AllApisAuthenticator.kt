@@ -1,77 +1,69 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2016-2024 Uwe Trottmann
+// Copyright 2016-2025 Uwe Trottmann
 
-package com.battlelancer.seriesguide.util;
+package com.battlelancer.seriesguide.util
 
-import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.battlelancer.seriesguide.modules.ApplicationContext;
-import com.battlelancer.seriesguide.traktapi.SgTrakt;
-import com.battlelancer.seriesguide.traktapi.TraktCredentials;
-import com.uwetrottmann.trakt5.TraktV2;
-import dagger.Lazy;
-import javax.inject.Inject;
-import okhttp3.Authenticator;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.Route;
-import timber.log.Timber;
+import android.content.Context
+import com.battlelancer.seriesguide.modules.ApplicationContext
+import com.battlelancer.seriesguide.traktapi.SgTrakt
+import com.battlelancer.seriesguide.traktapi.TraktCredentials
+import com.uwetrottmann.trakt5.TraktV2
+import dagger.Lazy
+import okhttp3.Authenticator
+import okhttp3.Request
+import okhttp3.Response
+import okhttp3.Route
+import timber.log.Timber
+import javax.inject.Inject
 
 /**
- * An {@link Authenticator} that can handle auth for all APIs used with our shared {@link
- * com.battlelancer.seriesguide.modules.HttpClientModule}.
+ * An [Authenticator] that can handle auth for all APIs used with the shared [com.battlelancer.seriesguide.modules.HttpClientModule].
  */
-public class AllApisAuthenticator implements Authenticator {
+class AllApisAuthenticator @Inject constructor(
+    @ApplicationContext private val context: Context,
+    private val trakt: Lazy<SgTrakt>
+) : Authenticator {
 
-    private final Context context;
-    private final Lazy<SgTrakt> trakt;
-
-    @Inject
-    public AllApisAuthenticator(@ApplicationContext Context context, Lazy<SgTrakt> trakt) {
-        this.context = context;
-        this.trakt = trakt;
-    }
-
-    @Override
-    public Request authenticate(@Nullable Route route, @NonNull Response response) {
-        String host = response.request().url().host();
-        if (TraktV2.API_HOST.equals(host)) {
-            return handleTraktAuth(response);
+    override fun authenticate(route: Route?, response: Response): Request? {
+        val host = response.request.url.host
+        return if (TraktV2.API_HOST == host) {
+            handleTraktAuth(response)
+        } else {
+            null
         }
-        return null;
     }
 
-    private Request handleTraktAuth(Response response) {
-        Timber.d("trakt requires auth.");
+    private fun handleTraktAuth(response: Response): Request? {
+        Timber.d("Trakt requires auth.")
 
         if (responseCount(response) >= 2) {
-            Timber.d("trakt auth failed 2 times, give up.");
-            return null;
+            Timber.d("Trakt auth failed 2 times, give up.")
+            return null
         }
 
         // verify that we have existing credentials
-        TraktCredentials credentials = TraktCredentials.get(context);
+        val credentials = TraktCredentials.get(context)
         if (credentials.hasCredentials()) {
             // refresh the token
-            boolean successful = credentials.refreshAccessToken(trakt.get());
+            val successful = credentials.refreshAccessToken(trakt.get())
 
             if (successful) {
                 // retry the request
-                return response.request().newBuilder()
-                        .header(TraktV2.HEADER_AUTHORIZATION,
-                                "Bearer " + credentials.getAccessToken())
-                        .build();
+                return response.request.newBuilder()
+                    .header(TraktV2.HEADER_AUTHORIZATION, "Bearer " + credentials.accessToken)
+                    .build()
             }
         }
-        return null;
+        return null
     }
 
-    private static int responseCount(Response response) {
-        int result = 1;
-        while ((response = response.priorResponse()) != null) {
-            result++;
+    private fun responseCount(response: Response): Int {
+        var result = 1
+        var prior = response.priorResponse
+        while (prior != null) {
+            result++
+            prior = prior.priorResponse
         }
-        return result;
+        return result
     }
 }
