@@ -65,7 +65,6 @@
     <string name="share_movie">分享电影</string>
     <string name="addtocalendar">添加到日历</string>
     <string name="addtocalendar_failed">无法创建日历事件</string>
-    <string name="links">链接</string>
     <!-- Comments -->
     <string name="comments">评论</string>
     <string name="shout_hint">输入一段评论（仅英语，至少五个单词）</string>
@@ -100,7 +99,6 @@
     <string name="show_status_pilot">试播集</string>
     <string name="show_status_canceled">已取消</string>
     <string name="no_translation">%2$s 上没有%1$s的剧情简介。</string>
-    <string name="no_translation_title">未翻译</string>
     <string name="no_spoilers">已隐藏部分详细信息来防止剧透。可在设置中关闭此功能。</string>
     <string name="format_source">来源：%s</string>
     <string name="last_updated">最后更新</string>
@@ -277,6 +275,7 @@
     <string name="action_movies_sort_release">按发行日期</string>
     <string name="title_similar_movies">相似电影</string>
     <string name="title_release_dates">Release dates</string>
+    <string name="error_movie_not_found">Movie removed from TMDB. Remove it from lists, set it not watched. Using Trakt? On their website, search for its TMDB ID and remove it from history and lists.</string>
     <!-- Statistics -->
     <string name="statistics_failed">无法计算统计数据</string>
     <string name="shows_finished">看完了 %s 个节目</string>

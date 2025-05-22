@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2015-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.lists;
 
@@ -8,7 +8,7 @@ import androidx.preference.PreferenceManager;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.shows.ShowsDistillationSettings;
-import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowsSortOrder;
+import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowSortOrder;
 
 /**
  * Provides settings used to sort displayed list items.
@@ -29,19 +29,19 @@ public class ListsDistillationSettings {
         // convert to show sort order id
         switch (sortOrderId) {
             case ListsSortOrder.LATEST_EPISODE_ID:
-                sortOrderId = ShowsSortOrder.LATEST_EPISODE_ID;
+                sortOrderId = ShowSortOrder.LATEST_EPISODE_ID;
                 break;
             case ListsSortOrder.OLDEST_EPISODE_ID:
-                sortOrderId = ShowsSortOrder.OLDEST_EPISODE_ID;
+                sortOrderId = ShowSortOrder.OLDEST_EPISODE_ID;
                 break;
             case ListsSortOrder.LAST_WATCHED_ID:
-                sortOrderId = ShowsSortOrder.LAST_WATCHED_ID;
+                sortOrderId = ShowSortOrder.LAST_WATCHED_ID;
                 break;
             case ListsSortOrder.LEAST_REMAINING_EPISODES_ID:
-                sortOrderId = ShowsSortOrder.LEAST_REMAINING_EPISODES_ID;
+                sortOrderId = ShowSortOrder.LEAST_REMAINING_EPISODES_ID;
                 break;
             default:
-                sortOrderId = ShowsSortOrder.TITLE_ID;
+                sortOrderId = ShowSortOrder.TITLE_ID;
                 break;
         }
 

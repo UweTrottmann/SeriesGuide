@@ -9,29 +9,18 @@ import com.battlelancer.seriesguide.movies.MoviesSettings
 import com.battlelancer.seriesguide.people.Credits
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.util.Errors
-import com.battlelancer.seriesguide.util.isRetryError
-import com.github.michaelbull.result.Err
-import com.github.michaelbull.result.Ok
-import com.github.michaelbull.result.Result
-import com.github.michaelbull.result.andThen
 import com.github.michaelbull.result.get
-import com.github.michaelbull.result.mapError
-import com.github.michaelbull.result.runCatching
 import com.uwetrottmann.tmdb2.DiscoverTvBuilder
 import com.uwetrottmann.tmdb2.Tmdb
-import com.uwetrottmann.tmdb2.entities.AppendToResponse
 import com.uwetrottmann.tmdb2.entities.Collection
 import com.uwetrottmann.tmdb2.entities.DiscoverFilter
 import com.uwetrottmann.tmdb2.entities.DiscoverFilter.Separator.OR
 import com.uwetrottmann.tmdb2.entities.Person
 import com.uwetrottmann.tmdb2.entities.TmdbDate
-import com.uwetrottmann.tmdb2.entities.TvEpisode
 import com.uwetrottmann.tmdb2.entities.TvShow
 import com.uwetrottmann.tmdb2.entities.TvShowResultsPage
 import com.uwetrottmann.tmdb2.entities.Videos
 import com.uwetrottmann.tmdb2.entities.WatchProviders
-import com.uwetrottmann.tmdb2.enumerations.AppendToResponseItem
-import com.uwetrottmann.tmdb2.enumerations.ExternalSource
 import com.uwetrottmann.tmdb2.enumerations.SortBy
 import com.uwetrottmann.tmdb2.enumerations.VideoType
 import com.uwetrottmann.tmdb2.services.PeopleService
@@ -47,43 +36,6 @@ import java.util.Date
 import com.battlelancer.seriesguide.people.Person as SgPerson
 
 class TmdbTools2 {
-
-    /**
-     * Tries to find the TMDB id for the given show's TheTVDB id. Returns null value if not found.
-     */
-    fun findShowTmdbId(context: Context, showTvdbId: Int): Result<Int?, TmdbError> {
-        val action = "find tvdb show"
-        val tmdb = SgApp.getServicesComponent(context.applicationContext).tmdb()
-        return runCatching {
-            tmdb.findService()
-                .find(showTvdbId, ExternalSource.TVDB_ID, null)
-                .execute()
-        }.mapError {
-            Errors.logAndReport(action, it)
-            if (it.isRetryError()) TmdbRetry else TmdbStop
-        }.andThen {
-            if (it.isSuccessful) {
-                val tvResults = it.body()?.tv_results
-                if (tvResults != null) {
-                    if (tvResults.isNotEmpty()) {
-                        val showId = tvResults[0].id
-                        if (showId != null && showId > 0) {
-                            return@andThen Ok(showId) // found it!
-                        } else {
-                            Errors.logAndReport(action, it, "show id is invalid")
-                        }
-                    } else {
-                        return@andThen Ok(null) // not found
-                    }
-                } else {
-                    Errors.logAndReport(action, it, "tv_results is null")
-                }
-            } else {
-                Errors.logAndReport(action, it)
-            }
-            return@andThen Err(TmdbStop)
-        }
-    }
 
     fun getShowDetails(showTmdbId: Int, language: String, context: Context): TvShow? {
         val tmdb = SgApp.getServicesComponent(context.applicationContext).tmdb()
@@ -101,40 +53,6 @@ class TmdbTools2 {
             Errors.logAndReport("show details", e)
         }
         return null
-    }
-
-    /**
-     * Returns null value if the show no longer exists (TMDB returned HTTP 404).
-     */
-    fun getShowAndExternalIds(
-        showTmdbId: Int,
-        language: String,
-        context: Context
-    ): Result<TvShow?, TmdbError> {
-        val action = "show n ids"
-        val tmdb = SgApp.getServicesComponent(context.applicationContext).tmdb()
-        return runCatching {
-            tmdb.tvService()
-                .tv(showTmdbId, language, AppendToResponse(AppendToResponseItem.EXTERNAL_IDS))
-                .execute()
-        }.mapError {
-            Errors.logAndReport(action, it)
-            if (it.isRetryError()) TmdbRetry else TmdbStop
-        }.andThen {
-            if (it.isSuccessful) {
-                val tvShow = it.body()
-                if (tvShow != null) {
-                    return@andThen Ok(tvShow)
-                } else {
-                    Errors.logAndReport(action, it, "show is null")
-                }
-            } else {
-                // Explicitly indicate if result is null because show no longer exists.
-                if (it.code() == 404) return@andThen Ok(null)
-                Errors.logAndReport(action, it)
-            }
-            return@andThen Err(TmdbStop)
-        }
     }
 
     /**
@@ -263,35 +181,6 @@ class TmdbTools2 {
             .awaitResponse("load popular shows")
     }
 
-    fun getShowTrailerYoutubeId(
-        context: Context,
-        showTmdbId: Int,
-        languageCode: String
-    ): Result<String?, TmdbError> {
-        val action = "get show trailer"
-        val tmdb = SgApp.getServicesComponent(context.applicationContext).tmdb()
-        return runCatching {
-            tmdb.tvService()
-                .videos(showTmdbId, languageCode)
-                .execute()
-        }.mapError {
-            Errors.logAndReport(action, it)
-            if (it.isRetryError()) TmdbRetry else TmdbStop
-        }.andThen {
-            if (it.isSuccessful) {
-                val results = it.body()?.results
-                if (results != null) {
-                    return@andThen Ok(extractTrailer(it.body()))
-                } else {
-                    Errors.logAndReport(action, it, "results is null")
-                }
-            } else {
-                Errors.logAndReport(action, it)
-            }
-            return@andThen Err(TmdbStop)
-        }
-    }
-
     /**
      * Loads a YouTube movie trailer from TMDb. Tries to get a local trailer, if not falls back to
      * English.
@@ -338,23 +227,6 @@ class TmdbTools2 {
         return null
     }
 
-    private fun extractTrailer(videos: Videos?): String? {
-        val results = videos?.results
-        if (results == null || results.size == 0) {
-            return null
-        }
-
-        // Pick the first YouTube trailer
-        for (video in results) {
-            val videoId = video.key
-            if (video.type == VideoType.TRAILER && "YouTube" == video.site
-                && !videoId.isNullOrEmpty()) {
-                return videoId
-            }
-        }
-        return null
-    }
-
     suspend fun getShowWatchProviders(
         tmdb: Tmdb,
         language: String,
@@ -392,7 +264,7 @@ class TmdbTools2 {
                 ?: return@withContext null
             val tmdbId = showIds.tmdbId
                 ?: if (showIds.tvdbId != null) {
-                    findShowTmdbId(context, showIds.tvdbId).get()
+                    TmdbTools3.findShowTmdbId(context, showIds.tvdbId).get()
                 } else {
                     null
                 }
@@ -498,36 +370,6 @@ class TmdbTools2 {
             .awaitResponse("get person summary")
     }
 
-    fun getSeason(
-        showTmdbId: Int,
-        seasonNumber: Int,
-        language: String,
-        context: Context
-    ): Result<List<TvEpisode>, TmdbError> {
-        val action = "get season"
-        val tmdb = SgApp.getServicesComponent(context).tmdb()
-        return runCatching {
-            tmdb.tvSeasonsService()
-                .season(showTmdbId, seasonNumber, language)
-                .execute()
-        }.mapError {
-            Errors.logAndReport(action, it)
-            if (it.isRetryError()) TmdbRetry else TmdbStop
-        }.andThen {
-            if (it.isSuccessful) {
-                val tvSeason = it.body()?.episodes
-                if (tvSeason != null) {
-                    return@andThen Ok(tvSeason)
-                } else {
-                    Errors.logAndReport(action, it, "episodes is null")
-                }
-            } else {
-                Errors.logAndReport(action, it)
-            }
-            return@andThen Err(TmdbStop)
-        }
-    }
-
     data class WatchInfo(
         val url: String?,
         val provider: WatchProviders.WatchProvider?,
@@ -598,19 +440,22 @@ class TmdbTools2 {
         // then job (description).
         private val byDepartmentJobAndName: Comparator<SgPerson> =
             compareBy({ it.department }, { it.description }, { it.name })
+
+        fun extractTrailer(videos: Videos?): String? {
+            val results = videos?.results
+            if (results == null || results.size == 0) {
+                return null
+            }
+
+            // Pick the first YouTube trailer
+            for (video in results) {
+                val videoId = video.key
+                if (video.type == VideoType.TRAILER && "YouTube" == video.site
+                    && !videoId.isNullOrEmpty()) {
+                    return videoId
+                }
+            }
+            return null
+        }
     }
 }
-
-sealed class TmdbError
-
-/**
- * The API request might succeed if tried again after a brief delay
- * (e.g. time outs or other temporary network issues).
- */
-object TmdbRetry : TmdbError()
-
-/**
- * The API request is unlikely to succeed if retried, at least right now
- * (e.g. API bugs or changes).
- */
-object TmdbStop : TmdbError()

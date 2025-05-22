@@ -39,4 +39,10 @@ class ShowsDistillationViewModel(application: Application) : AndroidViewModel(ap
         }
     }
 
+    companion object {
+        fun isFilteringByWatchProviders(providerList: List<SgWatchProvider>): Boolean {
+            return providerList.find { it.filter_local } != null
+        }
+    }
+
 }

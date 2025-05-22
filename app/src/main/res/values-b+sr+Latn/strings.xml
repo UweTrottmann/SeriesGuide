@@ -65,7 +65,6 @@
     <string name="share_movie">Podeli film</string>
     <string name="addtocalendar">Dodaj u kalendar</string>
     <string name="addtocalendar_failed">Nije moguće napraviti događaj u kalendaru</string>
-    <string name="links">Linkovi</string>
     <!-- Comments -->
     <string name="comments">Komentari</string>
     <string name="shout_hint">Unesite komentar (engleski, 5+ reči)</string>
@@ -102,7 +101,6 @@
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">Otkazano</string>
     <string name="no_translation">Nema opisa prevedenog na %1$s dostupnog na %2$s.</string>
-    <string name="no_translation_title">Nije prevedeno</string>
     <string name="no_spoilers">Neki detalji su skriveni da bi se sprečili spojleri. Da biste ovo isključili, idite na Podešavanja.</string>
     <string name="format_source">Izvor: %s</string>
     <string name="last_updated">Poslednje ažuriranje</string>
@@ -291,6 +289,7 @@
     <string name="action_movies_sort_release">Datum emitovanja</string>
     <string name="title_similar_movies">Slični filmovi</string>
     <string name="title_release_dates">Datumi emitovanja</string>
+    <string name="error_movie_not_found">Film je uklonjen iz TMDB-a. Uklonite ga sa lista, postavite da se ne gleda. Koristite Trakt? Na njihovoj veb lokaciji potražite njegov TMDB ID i uklonite ga iz istorije i lista.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Nije moguće izračunati statistiku</string>
     <string name="shows_finished">%s završio gledanje</string>

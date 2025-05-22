@@ -16,7 +16,8 @@ abstract class SeasonBaseJob(
 ) : BaseEpisodesJob(flagValue, action) {
 
     private lateinit var season: SgSeason2Numbers
-    override fun applyLocalChanges(context: Context, requiresNetworkJob: Boolean): Boolean {
+
+    override suspend fun applyLocalChanges(context: Context, requiresNetworkJob: Boolean): Boolean {
         val season = SgRoomDatabase.getInstance(context).sgSeason2Helper()
             .getSeasonNumbers(seasonId) ?: return false
         this.season = season

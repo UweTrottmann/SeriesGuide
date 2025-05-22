@@ -47,6 +47,13 @@ class ShowSync(
      *
      * Considers shows that no longer exist at the source to be updated.
      * On network errors retries a few times to update a show before failing.
+     *
+     * Note: this calls
+     *
+     * - [AddUpdateShowTools.updateShow]
+     * - [Thread.sleep]
+     *
+     * which may throw [InterruptedException].
      */
     @SuppressLint("TimberExceptionLogging")
     @Throws(InterruptedException::class)
@@ -79,7 +86,6 @@ class ShowSync(
                 // - show does no longer exist => ignore and continue
                 // - database error => abort, report and try again later
                 // Note: reporting is done where the exception occurs.
-                // If this thread is interrupted throws InterruptedException
                 result = showTools.updateShow(showId)
 
                 if (result is ApiErrorRetry) {
@@ -96,7 +102,6 @@ class ShowSync(
                         // Wait for 2^n seconds + random milliseconds,
                         // with n starting at 0 (so 1 s + random ms)
                         val n = networkErrors - 1
-                        // If this thread is interrupted throws InterruptedException
                         Thread.sleep(
                             (2.0.pow(n)).toLong() * DateUtils.SECOND_IN_MILLIS
                                     + Random.nextInt(0, 1000)

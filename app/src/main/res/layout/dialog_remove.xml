@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -30,14 +30,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/large_padding"
-        android:paddingTop="@dimen/inline_padding"
+        android:paddingTop="@dimen/default_padding"
         android:paddingRight="@dimen/large_padding"
         android:paddingBottom="@dimen/inline_padding">
 
         <androidx.constraintlayout.helper.widget.Flow
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="buttonNegative,buttonPositive"
+            app:constraint_referenced_ids="buttonDialogRemoveRemove,buttonDialogRemoveCancel"
             app:flow_horizontalBias="1"
             app:flow_horizontalStyle="packed"
             app:flow_wrapMode="chain"
@@ -47,15 +47,15 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/buttonNegative"
+            android:id="@+id/buttonDialogRemoveRemove"
             style="?attr/buttonBarNegativeButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="Button Negative With Long Text" />
 
         <Button
-            android:id="@+id/buttonPositive"
-            style="?attr/buttonBarPositiveButtonStyle"
+            android:id="@+id/buttonDialogRemoveCancel"
+            style="?attr/sgButtonDialogPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="Button Positive With Long Text" />

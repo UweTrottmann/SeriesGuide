@@ -65,7 +65,6 @@
     <string name="share_movie">Distribuie film</string>
     <string name="addtocalendar">Adăugați la calendar</string>
     <string name="addtocalendar_failed">Nu puteţi crea evenimentul în calendar.</string>
-    <string name="links">Link-uri</string>
     <!-- Comments -->
     <string name="comments">Comentarii</string>
     <string name="shout_hint">Scrieți un comentariu (engleză, 5+ cuvinte)</string>
@@ -102,7 +101,6 @@
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">Canceled</string>
     <string name="no_translation">Nu există nici o traducere în %1$s disponibilă pe %2$s.</string>
-    <string name="no_translation_title">Ne tradus</string>
     <string name="no_spoilers">Unele detalii sunt ascunse pentru a evita spoilere. Pentru a nu folosi aceasta protecție mergeți în Setări.</string>
     <string name="format_source">Sursa: %s</string>
     <string name="last_updated">Last updated</string>
@@ -291,6 +289,7 @@
     <string name="action_movies_sort_release">Data de lansare</string>
     <string name="title_similar_movies">Similar movies</string>
     <string name="title_release_dates">Release dates</string>
+    <string name="error_movie_not_found">Movie removed from TMDB. Remove it from lists, set it not watched. Using Trakt? On their website, search for its TMDB ID and remove it from history and lists.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Nu am putut calcula statisticile.</string>
     <string name="shows_finished">%s finished watching</string>

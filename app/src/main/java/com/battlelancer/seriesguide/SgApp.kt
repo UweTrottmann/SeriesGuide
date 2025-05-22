@@ -71,59 +71,25 @@ class SgApp : Application() {
 
         const val NOTIFICATION_GROUP_EPISODES = "com.uwetrottmann.seriesguide.EPISODES"
 
-        /**
-         * Time calculation has changed, all episodes need re-calculation.
-         */
-        const val RELEASE_VERSION_12_BETA5 = 218
-
-        /**
-         * Requires legacy cache clearing due to switch to Picasso for posters.
-         */
         const val RELEASE_VERSION_16_BETA1 = 15010
 
-        /**
-         * Requires trakt watched movie (re-)download.
-         */
         const val RELEASE_VERSION_23_BETA4 = 15113
 
-        /**
-         * Requires full show update due to switch to locally stored trakt ids.
-         */
-        const val RELEASE_VERSION_26_BETA3 = 15142
-
-        /**
-         * Populate shows last watched field from activity table.
-         */
-        const val RELEASE_VERSION_34_BETA4 = 15223
-
-        /**
-         * Switched to Google Sign-In: notify existing Cloud users to sign in again.
-         */
         const val RELEASE_VERSION_36_BETA2 = 15241
 
-        /**
-         * Extensions API v2, old extensions no longer work.
-         */
         const val RELEASE_VERSION_40_BETA4 = 1502803
 
-        /**
-         * For trakt and hexagon sync movies were not added in all cases, reset sync times.
-         */
         const val RELEASE_VERSION_50_1 = 2105008
+
         const val RELEASE_VERSION_51_BETA4 = 2105103
 
         const val RELEASE_VERSION_59_BETA1 = 2105900
 
-        /**
-         * Added show watch provider mapping table.
-         */
         const val RELEASE_VERSION_72_0_1 = 2107201
 
-        /**
-         * Reset selected shows and movies tab as there is
-         * a new discover tab for shows and the order has changed for movies.
-         */
         const val RELEASE_VERSION_2024_3_5 = 21240305
+
+        const val RELEASE_VERSION_2025_1_1 = 21250102
 
         /**
          * The content authority used to identify the SeriesGuide [android.content.ContentProvider].
@@ -311,6 +277,13 @@ class SgApp : Application() {
             detectFileUriExposure()
             if (AndroidUtils.isAtLeastOreo) {
                 detectContentUriWithoutPermission()
+            }
+            // Check for optional safer intents changes on Android 15
+            // This only affects extensions, where the receiver should declare the subscribe and
+            // update actions that SeriesGuide uses in the broadcast intent.
+            // https://developer.android.com/about/versions/15/behavior-changes-15#safer-intents
+            if (AndroidUtils.isAtLeastS) {
+                detectUnsafeIntentLaunch()
             }
             // Policy applied to all threads in the virtual machine's process
             StrictMode.setVmPolicy(build())

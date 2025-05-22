@@ -65,7 +65,6 @@
     <string name="share_movie">Dela film</string>
     <string name="addtocalendar">Lägg till i kalendern</string>
     <string name="addtocalendar_failed">Kan inte lägga till i kalendern.</string>
-    <string name="links">Länkar</string>
     <!-- Comments -->
     <string name="comments">Kommentarer</string>
     <string name="shout_hint">Skriv en kommentar (engelska, 5+ ord)</string>
@@ -101,7 +100,6 @@
     <string name="show_status_pilot">Pilotavsnitt</string>
     <string name="show_status_canceled">Nedlagd</string>
     <string name="no_translation">Det finns ingen beskrivning översatt till %1$s tillgänglig på %2$s.</string>
-    <string name="no_translation_title">Ej översatt</string>
     <string name="no_spoilers">Vissa detaljer är dolda för att undvika spoilers. För att stänga av detta, gå till inställningar.</string>
     <string name="format_source">Källa: %s</string>
     <string name="last_updated">Senast uppdaterad</string>
@@ -284,6 +282,7 @@
     <string name="action_movies_sort_release">Utgivningsdatum</string>
     <string name="title_similar_movies">Liknande filmer</string>
     <string name="title_release_dates">Premiärdatum</string>
+    <string name="error_movie_not_found">Movie removed from TMDB. Remove it from lists, set it not watched. Using Trakt? On their website, search for its TMDB ID and remove it from history and lists.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Gick inte att beräkna statistik.</string>
     <string name="shows_finished">%s färdigtittade</string>

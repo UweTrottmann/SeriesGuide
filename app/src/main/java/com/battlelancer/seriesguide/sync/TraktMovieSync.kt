@@ -6,6 +6,7 @@ package com.battlelancer.seriesguide.sync
 import android.content.ContentProviderOperation
 import android.content.OperationApplicationException
 import com.battlelancer.seriesguide.movies.database.SgMovieFlags
+import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.traktapi.SgTrakt
@@ -18,6 +19,7 @@ import com.uwetrottmann.trakt5.entities.MovieIds
 import com.uwetrottmann.trakt5.entities.SyncItems
 import com.uwetrottmann.trakt5.entities.SyncMovie
 import com.uwetrottmann.trakt5.entities.SyncResponse
+import kotlinx.coroutines.runBlocking
 import retrofit2.Response
 import timber.log.Timber
 import kotlin.collections.set
@@ -30,7 +32,7 @@ class TraktMovieSync(
 ) {
 
     private val context = traktSync.context
-    private val movieTools = traktSync.movieTools
+    private val movieTools: MovieTools = traktSync.movieTools
 
     /**
      * Updates the local movie database against trakt movie watchlist, collection and watched
@@ -42,7 +44,11 @@ class TraktMovieSync(
      *
      * Performs **synchronous network access**, make sure to run this on a background
      * thread.
+     *
+     * Note: this uses [runBlocking], so if the calling thread is interrupted this will throw
+     * [InterruptedException].
      */
+    @Throws(InterruptedException::class)
     fun syncLists(activity: LastActivityMore): Boolean {
         val collectedAt = activity.collected_at
         if (collectedAt == null) {
@@ -189,7 +195,9 @@ class TraktMovieSync(
         // add movies from trakt missing locally
         // all local movies were removed from trakt collection, watchlist, and watched list
         // so they only contain movies missing locally
-        val addingSuccessful = movieTools.addMovies(collection, watchlist, watchedWithPlays)
+        val addingSuccessful = runBlocking {
+            movieTools.addMovies(collection, watchlist, watchedWithPlays)
+        }
         if (addingSuccessful) {
             // store last activity timestamps
             TraktSettings.storeLastMoviesChangedAt(

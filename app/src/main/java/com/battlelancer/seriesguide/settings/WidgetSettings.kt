@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2013-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.settings
 
@@ -50,7 +50,7 @@ object WidgetSettings {
     /**
      * Returns the sort order of shows. Should be used when the widget is set to the shows type.
      *
-     * @return A [ShowsDistillationSettings.ShowsSortOrder]
+     * @return A [ShowsDistillationSettings.ShowSortOrder]
      * id.
      */
     fun getWidgetShowsSortOrderId(context: Context, appWidgetId: Int): Int {
@@ -58,11 +58,11 @@ object WidgetSettings {
             .getString(KEY_PREFIX_WIDGET_SHOWS_SORT_ORDER + appWidgetId, null)?.toIntOrNull()
             ?: context.getString(R.string.widget_default_show_sort_order)
         return when (sortOrder) {
-            1 -> ShowsDistillationSettings.ShowsSortOrder.TITLE_ID
-            2 -> ShowsDistillationSettings.ShowsSortOrder.OLDEST_EPISODE_ID
-            3 -> ShowsDistillationSettings.ShowsSortOrder.LAST_WATCHED_ID
-            4 -> ShowsDistillationSettings.ShowsSortOrder.LEAST_REMAINING_EPISODES_ID
-            else -> ShowsDistillationSettings.ShowsSortOrder.LATEST_EPISODE_ID
+            1 -> ShowsDistillationSettings.ShowSortOrder.TITLE_ID
+            2 -> ShowsDistillationSettings.ShowSortOrder.OLDEST_EPISODE_ID
+            3 -> ShowsDistillationSettings.ShowSortOrder.LAST_WATCHED_ID
+            4 -> ShowsDistillationSettings.ShowSortOrder.LEAST_REMAINING_EPISODES_ID
+            else -> ShowsDistillationSettings.ShowSortOrder.LATEST_EPISODE_ID
         }
     }
 

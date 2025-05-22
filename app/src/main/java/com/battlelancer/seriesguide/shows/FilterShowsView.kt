@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows
 
@@ -9,7 +9,7 @@ import android.view.LayoutInflater
 import android.widget.FrameLayout
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ViewFilterShowsBinding
-import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowFilter
+import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowFilters
 import com.battlelancer.seriesguide.util.TextTools
 
 class FilterShowsView @JvmOverloads constructor(
@@ -30,7 +30,7 @@ class FilterShowsView @JvmOverloads constructor(
         binding.checkboxShowsFilterHidden.setOnClickListener { updateFilterListener() }
         binding.checkboxShowsFilterContinuing.setOnClickListener { updateFilterListener() }
         binding.buttonShowsFilterReset.setOnClickListener {
-            setInitialFilter(ShowFilter.default(), binding.checkboxShowsFilterNoReleased.isChecked)
+            setInitialFilter(ShowFilters.default(), binding.checkboxShowsFilterNoReleased.isChecked)
             updateFilterListener()
         }
         binding.buttonShowsFilterAllVisible.setOnClickListener { filterListener?.onMakeAllHiddenVisibleClick() }
@@ -49,7 +49,7 @@ class FilterShowsView @JvmOverloads constructor(
 
     private fun updateFilterListener() {
         filterListener?.onFilterUpdate(
-            ShowFilter(
+            ShowFilters(
                 binding.checkboxShowsFilterFavorites.state,
                 binding.checkboxShowsFilterUnwatched.state,
                 binding.checkboxShowsFilterUpcoming.state,
@@ -59,12 +59,12 @@ class FilterShowsView @JvmOverloads constructor(
         )
     }
 
-    fun setInitialFilter(showFilter: ShowFilter, noReleased: Boolean) {
-        binding.checkboxShowsFilterFavorites.state = showFilter.isFilterFavorites
-        binding.checkboxShowsFilterUnwatched.state = showFilter.isFilterUnwatched
-        binding.checkboxShowsFilterUpcoming.state = showFilter.isFilterUpcoming
-        binding.checkboxShowsFilterHidden.state = showFilter.isFilterHidden
-        binding.checkboxShowsFilterContinuing.state = showFilter.isFilterContinuing
+    fun setInitialFilter(showFilters: ShowFilters, noReleased: Boolean) {
+        binding.checkboxShowsFilterFavorites.state = showFilters.isFilterFavorites
+        binding.checkboxShowsFilterUnwatched.state = showFilters.isFilterUnwatched
+        binding.checkboxShowsFilterUpcoming.state = showFilters.isFilterUpcoming
+        binding.checkboxShowsFilterHidden.state = showFilters.isFilterHidden
+        binding.checkboxShowsFilterContinuing.state = showFilters.isFilterContinuing
         binding.checkboxShowsFilterNoReleased.isChecked = noReleased
     }
 
@@ -73,7 +73,7 @@ class FilterShowsView @JvmOverloads constructor(
     }
 
     interface FilterListener {
-        fun onFilterUpdate(filter: ShowFilter)
+        fun onFilterUpdate(filters: ShowFilters)
         fun onConfigureUpcomingRangeClick()
         fun onMakeAllHiddenVisibleClick()
         fun onNoReleasedChanged(value: Boolean)

@@ -210,7 +210,6 @@ object TextTools {
     /**
      * Dot separates the two given strings. If one is empty, just returns the other string (no dot).
      */
-    @JvmStatic
     fun dotSeparate(left: String?, right: String?): String {
         val dotString = StringBuilder(left ?: "")
         if (!right.isNullOrEmpty()) {
@@ -270,7 +269,6 @@ object TextTools {
         )
     }
 
-    @JvmStatic
     fun textNoTranslationMovieLanguage(context: Context, languageCode: String?, fallback: String): String {
         return context.getString(
             R.string.no_translation,

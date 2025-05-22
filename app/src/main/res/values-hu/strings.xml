@@ -65,7 +65,6 @@
     <string name="share_movie">Film megosztása</string>
     <string name="addtocalendar">Hozzáadás naptárhoz</string>
     <string name="addtocalendar_failed">Nem sikerült az esemény létrehozása.</string>
-    <string name="links">Linkek</string>
     <!-- Comments -->
     <string name="comments">Hozzászólások</string>
     <string name="shout_hint">Írj megjegyzést (angolul, 5+ szóval)</string>
@@ -101,7 +100,6 @@
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">Törölve</string>
     <string name="no_translation">Nincs leírás %1$s nyelven a %2$s adatbázisban.</string>
-    <string name="no_translation_title">Nincs lefordítva</string>
     <string name="no_spoilers">Néhány részlet elrejtésre kerül a spoilerek megakadályozása miatt. A kikapcsoláshoz menj a Beállításokba.</string>
     <string name="format_source">Forrás: %s</string>
     <string name="last_updated">Utoljára frissítve</string>
@@ -284,6 +282,7 @@
     <string name="action_movies_sort_release">Első adás</string>
     <string name="title_similar_movies">Hasonló filmek</string>
     <string name="title_release_dates">Release dates</string>
+    <string name="error_movie_not_found">Movie removed from TMDB. Remove it from lists, set it not watched. Using Trakt? On their website, search for its TMDB ID and remove it from history and lists.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Nem sikerült kiszámítani a statisztikát.</string>
     <string name="shows_finished">%s teljesen megnézve</string>

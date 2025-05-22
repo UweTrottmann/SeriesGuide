@@ -65,7 +65,6 @@
     <string name="share_movie">Κοινοποίηση ταινίας</string>
     <string name="addtocalendar">Προσθήκη στο ημερολόγιο</string>
     <string name="addtocalendar_failed">Δεν είναι δυνατόν να δημιουργηθεί γεγονός ημερολογίου.</string>
-    <string name="links">Σύνδεσμοι</string>
     <!-- Comments -->
     <string name="comments">Σχόλια</string>
     <string name="shout_hint">Πληκτρολογίστε ένα σχόλιο (Αγγλικά, 5+ λέξεις)</string>
@@ -101,7 +100,6 @@
     <string name="show_status_pilot">Πιλότος</string>
     <string name="show_status_canceled">Ακυρώθηκε</string>
     <string name="no_translation">Δεν υπάρχει περιγραφή μεταφρασμένη στα %1$s διαθέσιμη στο %2$s.</string>
-    <string name="no_translation_title">Χωρίς μετάφραση</string>
     <string name="no_spoilers">Κάποιες λεπτομέρειες είναι μη ορατές ώστε να μην αποκαλυφθούν πληροφορίες για την υπόθεση. Για να το απενεργοποιήσετε πηγαίνετε στις Ρυθμίσεις.</string>
     <string name="format_source">Πηγή: %s</string>
     <string name="last_updated">Τελευταία ενημέρωση</string>
@@ -284,6 +282,7 @@
     <string name="action_movies_sort_release">Ημερομηνία προβολής</string>
     <string name="title_similar_movies">Παρόμοιες ταινίες</string>
     <string name="title_release_dates">Ημερομηνίες κυκλοφορίας</string>
+    <string name="error_movie_not_found">Movie removed from TMDB. Remove it from lists, set it not watched. Using Trakt? On their website, search for its TMDB ID and remove it from history and lists.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Δε μπορέσαμε να υπολογίσουμε στατιστικά.</string>
     <string name="shows_finished">%s τελείωσε την προβολή</string>

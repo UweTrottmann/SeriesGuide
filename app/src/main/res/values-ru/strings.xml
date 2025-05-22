@@ -65,7 +65,6 @@
     <string name="share_movie">Поделиться фильмом</string>
     <string name="addtocalendar">Добавить в календарь</string>
     <string name="addtocalendar_failed">Не удалось создать событие календаря.</string>
-    <string name="links">Ссылки</string>
     <!-- Comments -->
     <string name="comments">Комментарии</string>
     <string name="shout_hint">Введите комментарий (На английском, более 5 слов)</string>
@@ -103,7 +102,6 @@
     <string name="show_status_pilot">Пилот</string>
     <string name="show_status_canceled">Отменён</string>
     <string name="no_translation">Перевод описания на %1$s недоступно для %2$s.</string>
-    <string name="no_translation_title">Не переведено</string>
     <string name="no_spoilers">Некоторые детали скрыты, чтобы предотвратить спойлеры. Чтобы отключить эту функцию, перейдите в Настройки.</string>
     <string name="format_source">Источник: %s</string>
     <string name="last_updated">Последнее обновление</string>
@@ -298,6 +296,7 @@
     <string name="action_movies_sort_release">Дата выпуска</string>
     <string name="title_similar_movies">Похожие фильмы</string>
     <string name="title_release_dates">Даты выпуска</string>
+    <string name="error_movie_not_found">Фильм удален из TMDB. Удалите его из списков, установите его не просмотрено. Используете Trakt? Найдите на их сайте  его идентификатор TMDB и удалите его из истории и списков.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Не удалось рассчитать статистику.</string>
     <string name="shows_finished">%s завершенных просмотров</string>

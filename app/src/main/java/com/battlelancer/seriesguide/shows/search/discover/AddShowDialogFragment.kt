@@ -85,11 +85,11 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
             StreamingSearch.initButtons(
                 buttonAddStreamingSearch, buttonAddStreamingSearchInfo, parentFragmentManager
             )
-            buttonNegative.apply {
+            buttonDialogAddShowDismiss.apply {
                 setText(R.string.dismiss)
                 setOnClickListener { dismiss() }
             }
-            buttonPositive.isGone = true
+            buttonDialogAddShowPrimary.isGone = true
 
             containerRatings.initialize(null)
 
@@ -214,15 +214,15 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
 
         if (result.localShowId != null) {
             // Already added, offer to open show instead.
-            binding.buttonPositive.setText(R.string.action_open)
-            binding.buttonPositive.setOnClickListener {
+            binding.buttonDialogAddShowPrimary.setText(R.string.action_open)
+            binding.buttonDialogAddShowPrimary.setOnClickListener {
                 startActivity(OverviewActivity.intentShow(requireContext(), result.localShowId))
                 dismiss()
             }
         } else {
             // Not added, offer to add.
-            binding.buttonPositive.setText(R.string.action_shows_add)
-            binding.buttonPositive.setOnClickListener {
+            binding.buttonDialogAddShowPrimary.setText(R.string.action_shows_add)
+            binding.buttonDialogAddShowPrimary.setOnClickListener {
                 EventBus.getDefault().post(OnAddingShowEvent(showTmdbId))
                 TaskManager.performAddTask(
                     requireContext(),
@@ -231,7 +231,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
                 dismiss()
             }
         }
-        binding.buttonPositive.isGone = false
+        binding.buttonDialogAddShowPrimary.isGone = false
 
         binding.buttonAddLanguage.text =
             LanguageTools.getShowLanguageStringFor(requireContext(), languageCode)
@@ -281,7 +281,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         )
 
         // Enable adding of show.
-        binding.buttonPositive.isEnabled = true
+        binding.buttonDialogAddShowPrimary.isEnabled = true
     }
 
     private fun showProgressBar(isVisible: Boolean) {

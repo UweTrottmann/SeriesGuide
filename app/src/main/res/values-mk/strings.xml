@@ -65,7 +65,6 @@
     <string name="share_movie">Сподели филм</string>
     <string name="addtocalendar">Додај во календар</string>
     <string name="addtocalendar_failed">Не може да се креира настан во календарот.</string>
-    <string name="links">Линкови</string>
     <!-- Comments -->
     <string name="comments">Коментари</string>
     <string name="shout_hint">Напиши коментар (Англиски, 5+ зборови)</string>
@@ -100,8 +99,7 @@
     <string name="show_status_in_production">In Production</string>
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">Canceled</string>
-    <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
-    <string name="no_translation_title">Не преведено</string>
+    <string name="no_translation">No details in %1$s available, consider adding them at %2$s. Or try to change the language.</string>
     <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
     <string name="format_source">Извори: %s</string>
     <string name="last_updated">Last updated</string>
@@ -284,6 +282,7 @@
     <string name="action_movies_sort_release">Датум на емитување</string>
     <string name="title_similar_movies">Similar movies</string>
     <string name="title_release_dates">Release dates</string>
+    <string name="error_movie_not_found">Movie removed from TMDB. Remove it from lists, set it not watched. Using Trakt? On their website, search for its TMDB ID and remove it from history and lists.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Неможе да се пресмета статистика.</string>
     <string name="shows_finished">%s finished watching</string>

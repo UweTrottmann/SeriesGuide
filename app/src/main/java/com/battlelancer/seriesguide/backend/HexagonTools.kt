@@ -1,12 +1,11 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2014-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.backend
 
 import android.content.Context
 import android.os.SystemClock
 import android.text.format.DateUtils
-import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.backend.CloudEndpointUtils.updateBuilder
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.jobs.NetworkJobProcessor
@@ -172,12 +171,7 @@ class HexagonTools @Inject constructor(
             // Note: won't run if Trakt is still signed in.
             NetworkJobProcessor(context).removeObsoleteJobs(true)
         }
-        if (!PreferenceManager.getDefaultSharedPreferences(context).edit()
-                .putBoolean(HexagonSettings.KEY_ENABLED, true)
-                .putBoolean(HexagonSettings.KEY_SHOULD_VALIDATE_ACCOUNT, false)
-                .commit()) {
-            return false
-        }
+        HexagonSettings.setEnabled(context)
         storeAccount(firebaseUser)
         return true
     }
@@ -186,10 +180,7 @@ class HexagonTools @Inject constructor(
      * Disables Hexagon and removes any account data.
      */
     fun removeAccountAndSetDisabled() {
-        PreferenceManager.getDefaultSharedPreferences(context).edit()
-            .putBoolean(HexagonSettings.KEY_ENABLED, false)
-            .putBoolean(HexagonSettings.KEY_SHOULD_VALIDATE_ACCOUNT, false)
-            .apply()
+        HexagonSettings.setDisabled(context)
         storeAccount(null)
     }
 
@@ -200,7 +191,7 @@ class HexagonTools @Inject constructor(
      * account might have gotten signed out).
      *
      * @param checkSignInState If enabled, tries to silently sign in with Google. If it fails, sets
-     * the [HexagonSettings.KEY_SHOULD_VALIDATE_ACCOUNT] flag. If successful, clears the flag.
+     * the [HexagonSettings.setShouldValidateAccount] flag. If successful, clears the flag.
      */
     @Synchronized
     private fun getHttpRequestInitializer(checkSignInState: Boolean): FirebaseHttpRequestInitializer {
@@ -267,7 +258,7 @@ class HexagonTools @Inject constructor(
         }
 
         val shouldFixAccount = account == null
-        HexagonSettings.shouldValidateAccount(context, shouldFixAccount)
+        HexagonSettings.setShouldValidateAccount(context, shouldFixAccount)
     }
 
     private val isTimeForSignInStateCheck: Boolean
@@ -278,9 +269,7 @@ class HexagonTools @Inject constructor(
      */
     private fun storeAccount(firebaseUser: FirebaseUser?) {
         // store or remove account name in settings
-        PreferenceManager.getDefaultSharedPreferences(context).edit()
-            .putString(HexagonSettings.KEY_ACCOUNT_NAME, firebaseUser?.email)
-            .apply()
+        HexagonSettings.setAccountName(context, firebaseUser?.email)
 
         // try to set or remove account on credential
         getHttpRequestInitializer(false).firebaseUser = firebaseUser

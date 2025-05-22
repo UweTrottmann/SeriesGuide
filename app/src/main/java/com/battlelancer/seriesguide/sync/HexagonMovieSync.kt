@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2019-2023 Uwe Trottmann
+// Copyright 2019-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.sync
 
@@ -8,7 +8,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.OperationApplicationException
 import android.text.TextUtils
-import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.movies.tools.MovieTools
@@ -40,23 +39,27 @@ internal class HexagonMovieSync(
         newWatchedMoviesToPlays: MutableMap<Int, Int>,
         hasMergedMovies: Boolean
     ): Boolean {
+        val localMovies = MovieTools.getMovieTmdbIdsAsSet(context)
+        if (localMovies == null) {
+            Timber.e("download: querying for local movies failed")
+            return false
+        }
+
+        val lastSyncTime = HexagonSettings.getLastMoviesSyncTime(context)?.let { DateTime(it) }
+        if (hasMergedMovies) {
+            if (lastSyncTime != null) {
+                Timber.d("download: NOT merging, get CHANGED since %s", lastSyncTime)
+            } else {
+                Timber.d("download: NOT merging, get ALL movies")
+            }
+        } else {
+            Timber.d("download: MERGING, get ALL movies")
+        }
+
         var movies: List<Movie>?
         var hasMoreMovies = true
         var cursor: String? = null
         val currentTime = System.currentTimeMillis()
-        val lastSyncTime = DateTime(HexagonSettings.getLastMoviesSyncTime(context))
-        val localMovies = MovieTools.getMovieTmdbIdsAsSet(context)
-        if (localMovies == null) {
-            Timber.e("download: querying for local movies failed.")
-            return false
-        }
-
-        if (hasMergedMovies) {
-            Timber.d("download: movies changed since %s", lastSyncTime)
-        } else {
-            Timber.d("download: all movies")
-        }
-
         var updatedCount = 0
         var removedCount = 0
 
@@ -72,7 +75,7 @@ internal class HexagonMovieSync(
                 val moviesService = hexagonTools.moviesService ?: return false
 
                 val request = moviesService.get()  // use default server limit
-                if (hasMergedMovies) {
+                if (hasMergedMovies && lastSyncTime != null) {
                     request.updatedSince = lastSyncTime
                 }
                 if (!TextUtils.isEmpty(cursor)) {
@@ -191,12 +194,8 @@ internal class HexagonMovieSync(
 
         Timber.d("download: updated %d and removed %d movies", updatedCount, removedCount)
 
-        // set new last sync time
         if (hasMergedMovies) {
-            PreferenceManager.getDefaultSharedPreferences(context)
-                .edit()
-                .putLong(HexagonSettings.KEY_LAST_SYNC_MOVIES, currentTime)
-                .apply()
+            HexagonSettings.setLastMoviesSyncTime(context, currentTime)
         }
 
         return true

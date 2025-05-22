@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2021-2024 Uwe Trottmann
+// Copyright 2021-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.dataliberation
 
@@ -17,7 +17,6 @@ import kotlin.math.absoluteValue
 
 object ImportTools {
 
-    @JvmStatic
     fun Show.toSgShowForImport(): SgShow2 {
         return SgShow2(
             tmdbId = tmdb_id,

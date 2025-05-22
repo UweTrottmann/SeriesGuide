@@ -65,7 +65,6 @@
     <string name="share_movie">Filmi paylaş</string>
     <string name="addtocalendar">Takvime ekle</string>
     <string name="addtocalendar_failed">Takvim etkinliği oluşturulamıyor.</string>
-    <string name="links">Bağlantılar</string>
     <!-- Comments -->
     <string name="comments">Yorumlar</string>
     <string name="shout_hint">Bir yorum yaz (Ingilizce, 5+ kelime)</string>
@@ -101,7 +100,6 @@
     <string name="show_status_pilot">Pilot Bölüm</string>
     <string name="show_status_canceled">İptal Edildi</string>
     <string name="no_translation">%2$s\'de, %1$s diline çevrilmiş hiçbir açıklama bulunmuyor.</string>
-    <string name="no_translation_title">Çevrilmedi</string>
     <string name="no_spoilers">Bazı detaylar spoiler önlemek için gizli kalır. Bunu kapatmak için ayarlara gidiniz.</string>
     <string name="format_source">Kaynak: %s</string>
     <string name="last_updated">Son Güncelleme</string>
@@ -284,6 +282,7 @@
     <string name="action_movies_sort_release">Yayın tarihi</string>
     <string name="title_similar_movies">Benzer filmler</string>
     <string name="title_release_dates">Yayın tarihleri</string>
+    <string name="error_movie_not_found">Movie removed from TMDB. Remove it from lists, set it not watched. Using Trakt? On their website, search for its TMDB ID and remove it from history and lists.</string>
     <!-- Statistics -->
     <string name="statistics_failed">İstatistik hesaplanamadı.</string>
     <string name="shows_finished">%s izlendi</string>

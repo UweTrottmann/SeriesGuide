@@ -189,7 +189,7 @@
                     android:layout_width="0dp"
                     android:layout_height="48dp"
                     android:text="@string/action_translate"
-                    app:icon="@drawable/ic_link_black_24dp"
+                    app:icon="@drawable/ic_translate_control_24dp"
                     app:iconGravity="start"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

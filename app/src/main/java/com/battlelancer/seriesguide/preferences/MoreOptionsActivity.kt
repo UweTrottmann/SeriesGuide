@@ -57,7 +57,7 @@ class MoreOptionsActivity : BaseTopActivity() {
     private fun configureViews() {
         // Shows a no updates info text if the device is running a version of Android
         // that will not be supported by a future version of this app.
-        binding.textViewNoMoreUpdates.isGone = AndroidUtils.isLollipopOrHigher
+        binding.textViewNoMoreUpdates.isGone = AndroidUtils.isMarshmallowOrHigher
 
         binding.syncStatus.isGone = true
 

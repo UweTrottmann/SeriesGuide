@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2014-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.traktapi
 
@@ -23,11 +23,17 @@ import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.PendingIntentCompat
 import com.uwetrottmann.trakt5.TraktV2
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import timber.log.Timber
 import java.io.IOException
 
 /**
- * A singleton helping to manage the user's trakt credentials.
+ * Manages the user's Trakt credentials.
  */
 class TraktCredentials private constructor(context: Context) {
 
@@ -39,6 +45,12 @@ class TraktCredentials private constructor(context: Context) {
      */
     var username: String?
         private set
+
+    // Mutex to synchronize refreshAccessToken calls
+    private val refreshAccessTokenMutex = Mutex()
+    // Volatile as multiple coroutines running in parallel on different threads my try to refresh
+    @Volatile
+    private var refreshAccessTokenResult: Deferred<Boolean>? = null
 
     init {
         username = PreferenceManager.getDefaultSharedPreferences(this.context)
@@ -179,17 +191,56 @@ class TraktCredentials private constructor(context: Context) {
 
     /**
      * Tries to refresh the current access token. Returns `false` on failure.
+     *
+     * If a refresh job is running, calling this will await its result instead of launching a new
+     * job.
+     *
+     * This is safe to call from coroutines running in parallel on different threads.
      */
-    @Synchronized
-    fun refreshAccessToken(trakt: TraktV2): Boolean {
-        // do we even have a refresh token?
-        val oldRefreshToken = TraktOAuthSettings.getRefreshToken(context)
-        if (oldRefreshToken == null || oldRefreshToken.isEmpty()) {
-            Timber.d("refreshAccessToken: no refresh token, give up.")
-            return false
+    suspend fun refreshAccessTokenAsync(trakt: TraktV2): Boolean {
+        // Fast path: if a refresh is already running, wait for it
+        refreshAccessTokenResult?.let {
+            Timber.d("Trakt access token already getting refreshed, wait")
+            return it.await()
         }
 
-        // try to get a new access token from trakt
+        return coroutineScope {
+            refreshAccessTokenMutex.withLock {
+                // Double-check after acquiring the lock
+                refreshAccessTokenResult?.let {
+                    Timber.d("Trakt access token already getting refreshed, wait")
+                    return@withLock it.await()
+                }
+
+                val result = async(Dispatchers.IO) {
+                    refreshAccessToken(trakt)
+                }
+                refreshAccessTokenResult = result
+                try {
+                    result.await()
+                } finally {
+                    refreshAccessTokenResult = null
+                }
+            }
+        }
+    }
+
+    /**
+     * Note: calls to this should be synchronized.
+     *
+     * Currently [refreshAccessTokenMutex] guarantees synchronization if this is called through
+     * [refreshAccessTokenAsync].
+     */
+    private fun refreshAccessToken(trakt: TraktV2): Boolean {
+        // Is there a refresh token?
+        val oldRefreshToken = TraktOAuthSettings.getRefreshToken(context)
+        if (oldRefreshToken.isNullOrEmpty()) {
+            Timber.d("refreshAccessToken: no refresh token, give up")
+            return false
+        }
+        Timber.d("refreshAccessToken: have refresh token, request to refresh")
+
+        // Try to get a new access token from Trakt
         var accessToken: String? = null
         var refreshToken: String? = null
         var expiresIn: Long = -1
@@ -209,9 +260,9 @@ class TraktCredentials private constructor(context: Context) {
             Errors.logAndReport("refresh access token", e)
         }
 
-        // did we obtain all required data?
+        // Is the returned data valid?
         if (TextUtils.isEmpty(accessToken) || TextUtils.isEmpty(refreshToken) || expiresIn < 1) {
-            Timber.e("refreshAccessToken: failed.")
+            Timber.e("refreshAccessToken: returned data not valid")
             return false
         }
 
@@ -222,7 +273,7 @@ class TraktCredentials private constructor(context: Context) {
             return false
         }
 
-        Timber.d("refreshAccessToken: success.")
+        Timber.d("refreshAccessToken: success")
         return true
     }
 

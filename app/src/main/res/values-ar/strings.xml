@@ -65,7 +65,6 @@
     <string name="share_movie">مشاركة فيلم</string>
     <string name="addtocalendar">إضافة إلى التقويم</string>
     <string name="addtocalendar_failed">.لا يمكن إنشاء حدث تقويم</string>
-    <string name="links">الروابط</string>
     <!-- Comments -->
     <string name="comments">التعليقات</string>
     <string name="shout_hint">اكتب تعليق (الإنجليزية، 5 كلمات أو أكثر)</string>
@@ -105,7 +104,6 @@
     <string name="show_status_pilot">طيار</string>
     <string name="show_status_canceled">ملغى</string>
     <string name="no_translation">لا يوجد وصف باللغة %1$s متاحة على موقع %2$s.</string>
-    <string name="no_translation_title">غير مترجمة</string>
     <string name="no_spoilers">يتم إخفاء بعض التفاصيل لمنع الحرق. لإيقاف هذا انتقل إلى الإعدادات.</string>
     <string name="format_source">المصدر: %s</string>
     <string name="last_updated">آخر تحديث</string>
@@ -312,6 +310,7 @@
     <string name="action_movies_sort_release">تاريخ الإصدار</string>
     <string name="title_similar_movies">Similar movies</string>
     <string name="title_release_dates">Release dates</string>
+    <string name="error_movie_not_found">Movie removed from TMDB. Remove it from lists, set it not watched. Using Trakt? On their website, search for its TMDB ID and remove it from history and lists.</string>
     <!-- Statistics -->
     <string name="statistics_failed">خطأ في الإحصائيات.</string>
     <string name="shows_finished">%s انتهى مشاهدة</string>

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2018-2024 Uwe Trottmann
+// Copyright 2018-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.ui;
 
@@ -62,10 +62,10 @@ public class ShowsActivityTest {
             e.printStackTrace();
         }
 
-        // Open discover screen
-        ViewInteraction floatingActionButton = onView(
-                allOf(withId(R.id.buttonShowsFloating), isDisplayed()));
-        floatingActionButton.perform(click());
+        // Open search screen
+        ViewInteraction searchButton = onView(
+                allOf(withId(R.id.menu_action_shows_discover_search), isDisplayed()));
+        searchButton.perform(click());
 
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
@@ -84,7 +84,7 @@ public class ShowsActivityTest {
 
         // Click to add the show
         ViewInteraction appCompatButton = onView(
-                allOf(withId(R.id.buttonPositive), withText(R.string.action_shows_add),
+                allOf(withId(R.id.buttonDialogAddShowPrimary), withText(R.string.action_shows_add),
                         isDisplayed()));
         appCompatButton.perform(click());
 

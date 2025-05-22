@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2017-2024 Uwe Trottmann
+// Copyright 2017-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.sync
 
 import android.content.Context
-import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.modules.ApplicationContext
@@ -12,7 +11,7 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.shows.database.SgShow2CloudUpdate
 import com.battlelancer.seriesguide.shows.tools.AddShowTask
-import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools3
 import com.battlelancer.seriesguide.util.Errors.Companion.logAndReportHexagon
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.github.michaelbull.result.getOrElse
@@ -74,11 +73,7 @@ class HexagonShowSync @Inject constructor(
         // Apply all updates
         SgRoomDatabase.getInstance(context).sgShow2Helper().updateForCloudUpdate(updates)
         if (hasMergedShows) {
-            // set new last sync time
-            PreferenceManager.getDefaultSharedPreferences(context)
-                .edit()
-                .putLong(HexagonSettings.KEY_LAST_SYNC_SHOWS, currentTime)
-                .apply()
+            HexagonSettings.setLastShowsSyncTime(context, currentTime)
         }
         return true
     }
@@ -232,7 +227,7 @@ class HexagonShowSync @Inject constructor(
             if (showTvdbId == null || showTvdbId <= 0) {
                 continue
             }
-            val showTmdbIdOrNull = TmdbTools2().findShowTmdbId(context, showTvdbId)
+            val showTmdbIdOrNull = TmdbTools3.findShowTmdbId(context, showTvdbId)
                 .getOrElse {
                     // Network or API error, abort.
                     return null

@@ -65,7 +65,6 @@
     <string name="share_movie">Comparteix la pel·lícula</string>
     <string name="addtocalendar">Afegeix al calendari</string>
     <string name="addtocalendar_failed">No es pot crear l\'esdeveniment.</string>
-    <string name="links">Enllaços</string>
     <!-- Comments -->
     <string name="comments">Comentaris</string>
     <string name="shout_hint">Escriu un comentari (anglès, 5+ paraules)</string>
@@ -101,7 +100,6 @@
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">Cancel·lat</string>
     <string name="no_translation">No hi ha cap descripció traduïda al %1$s disponible a %2$s.</string>
-    <string name="no_translation_title">No traduït</string>
     <string name="no_spoilers">Alguns detalls estan amagats per evitar spoilers. Per desactivar aquesta opció aneu a Configuració.</string>
     <string name="format_source">Font: %s</string>
     <string name="last_updated">Darrera actualització</string>
@@ -284,6 +282,7 @@
     <string name="action_movies_sort_release">Data de llançament</string>
     <string name="title_similar_movies">Pel·lícules similars</string>
     <string name="title_release_dates">Dates de llançament</string>
+    <string name="error_movie_not_found">Pel·lícula eliminada de TMDB. Esborra-la de les llistes, posa-la com a no vista. Fas servir Trakt? Al seu web, cerca pel seu TMDB ID i esborra\'l de l\'historial i de les llistes.</string>
     <!-- Statistics -->
     <string name="statistics_failed">No s\'han pogut calcular les estadístiques.</string>
     <string name="shows_finished">%s acabat de veure</string>

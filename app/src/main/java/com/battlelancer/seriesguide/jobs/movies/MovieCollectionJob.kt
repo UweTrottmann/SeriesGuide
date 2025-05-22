@@ -20,7 +20,7 @@ class MovieCollectionJob(
     0 /* Does not change plays. */
 ) {
 
-    override fun applyDatabaseUpdate(context: Context, movieTmdbId: Int): Boolean {
+    override suspend fun applyDatabaseUpdate(context: Context, movieTmdbId: Int): Boolean {
         val movieTools = getServicesComponent(context).movieTools()
         return if (isInCollection) {
             movieTools.addToList(movieTmdbId, MovieTools.Lists.COLLECTION)

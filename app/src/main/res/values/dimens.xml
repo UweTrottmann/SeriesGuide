@@ -76,9 +76,6 @@
     <dimen name="swipe_refresh_progress_bar_start_margin">-40dp</dimen>
     <dimen name="swipe_refresh_progress_bar_end_margin">16dp</dimen>
 
-    <!-- Floating action button -->
-    <dimen name="fab_margin">16dp</dimen>
-
     <!-- Others -->
     <dimen name="max_width_text_size_body">400dp</dimen>
     <dimen name="dialog_min_width">300dp</dimen>

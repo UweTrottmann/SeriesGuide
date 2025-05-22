@@ -65,7 +65,6 @@
     <string name="share_movie">هم‌رسانی فیلم</string>
     <string name="addtocalendar">افزودن به تقویم</string>
     <string name="addtocalendar_failed">ناتوانی در ایجاد یک رویداد تقویم.</string>
-    <string name="links">پیوندها</string>
     <!-- Comments -->
     <string name="comments">نظرها</string>
     <string name="shout_hint">نظری بنویسید (انگلیسی، بالای ۵ واژه)</string>
@@ -101,7 +100,6 @@
     <string name="show_status_pilot">پایلوت</string>
     <string name="show_status_canceled">لغو شده</string>
     <string name="no_translation">هیج توضیحی برای %2$s به %1$s وجود ندارد.</string>
-    <string name="no_translation_title">ترجمه نشده</string>
     <string name="no_spoilers">به‌منظور جلوگیری از لو رفتن، برخی جزئیات نهفته‌اند. برای خاموش کردن این ویژگی به تنظیمات بروید.</string>
     <string name="format_source">منبع: %s</string>
     <string name="last_updated">آخرین به‌روز رسانی</string>
@@ -284,6 +282,7 @@
     <string name="action_movies_sort_release">تاریخ انتشار</string>
     <string name="title_similar_movies">فیلم‌های مشابه</string>
     <string name="title_release_dates">Release dates</string>
+    <string name="error_movie_not_found">Movie removed from TMDB. Remove it from lists, set it not watched. Using Trakt? On their website, search for its TMDB ID and remove it from history and lists.</string>
     <!-- Statistics -->
     <string name="statistics_failed">نمی‌توان آمار را محاسبه کرد.</string>
     <string name="shows_finished">%s تماشا پایان یافته</string>

@@ -65,7 +65,6 @@
     <string name="share_movie">Zdieľať film</string>
     <string name="addtocalendar">Pridať do kalendára</string>
     <string name="addtocalendar_failed">V kalendári nie je možné vytvoriť udalosť.</string>
-    <string name="links">Odkazy</string>
     <!-- Comments -->
     <string name="comments">Komentáre</string>
     <string name="shout_hint">Napíšte komentár (po anglicky, aspoň 5 slov)</string>
@@ -103,7 +102,6 @@
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">Zrušené</string>
     <string name="no_translation">Na %2$s nie je dostupný žiadny popis v %1$s.</string>
-    <string name="no_translation_title">Nie je preložené</string>
     <string name="no_spoilers">Niektoré detaily sú skryté aby sa zabránilo prezradeniu deja. Pre ich zobrazenie prejdite do nastavení.</string>
     <string name="format_source">Zdroj: %s</string>
     <string name="last_updated">Naposledy aktualizované</string>
@@ -298,6 +296,7 @@
     <string name="action_movies_sort_release">Dátum premiéry</string>
     <string name="title_similar_movies">Podobné filmy</string>
     <string name="title_release_dates">Dátumy vydania</string>
+    <string name="error_movie_not_found">Movie removed from TMDB. Remove it from lists, set it not watched. Using Trakt? On their website, search for its TMDB ID and remove it from history and lists.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Nemožno vypočítať štatistiku.</string>
     <string name="shows_finished">%s dopozeraných</string>

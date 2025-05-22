@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tmdb"
-            app:icon="@drawable/ic_link_black_24dp"
+            app:icon="@drawable/ic_open_in_new_control_24dp"
             app:iconGravity="start" />
 
         <Button
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/trakt"
-            app:icon="@drawable/ic_link_black_24dp"
+            app:icon="@drawable/ic_open_in_new_control_24dp"
             app:iconGravity="start" />
 
         <Button
@@ -52,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/imdb"
-            app:icon="@drawable/ic_link_black_24dp"
+            app:icon="@drawable/ic_open_in_new_control_24dp"
             app:iconGravity="start" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

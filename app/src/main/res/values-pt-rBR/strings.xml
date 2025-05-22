@@ -65,7 +65,6 @@
     <string name="share_movie">Compartilhar filme</string>
     <string name="addtocalendar">Adicionar ao calendário</string>
     <string name="addtocalendar_failed">Não é possível criar um evento de calendário.</string>
-    <string name="links">Links</string>
     <!-- Comments -->
     <string name="comments">Comentários</string>
     <string name="shout_hint">Comente (em inglês, + de 5 palavras)</string>
@@ -101,7 +100,6 @@
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">Cancelado</string>
     <string name="no_translation">Não há descrição traduzida para %1$s disponível em %2$s.</string>
-    <string name="no_translation_title">Não traduzido</string>
     <string name="no_spoilers">Alguns detalhes estão ocultos para evitar spoilers. Para desativar, vá até as configurações.</string>
     <string name="format_source">Fonte: %s</string>
     <string name="last_updated">Última atualização</string>
@@ -284,6 +282,7 @@
     <string name="action_movies_sort_release">Data de lançamento</string>
     <string name="title_similar_movies">Filmes parecidos</string>
     <string name="title_release_dates">Datas de lançamento</string>
+    <string name="error_movie_not_found">Filme removido do TMDB. Remova-o das listas, defina-o como não assistido. Usando Trakt? Entre no site, pesquise pelo seu TMDB ID e remova-o do histórico e listas.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Não é possível calcular as estatísticas.</string>
     <string name="shows_finished">%s assistido completamente</string>

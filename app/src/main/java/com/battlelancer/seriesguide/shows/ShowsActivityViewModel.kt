@@ -1,14 +1,15 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2020-2024 Uwe Trottmann
+// Copyright 2020-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.battlelancer.seriesguide.shows.ShowsActivityImpl.Tab
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class ShowsActivityViewModel : ViewModel() {
+class ShowsActivityViewModel(application: Application) : AndroidViewModel(application) {
 
     data class SelectTab(
         val index: Int,
@@ -20,6 +21,9 @@ class ShowsActivityViewModel : ViewModel() {
      */
     val selectedTab = MutableStateFlow(SelectTab(Tab.SHOWS.index, false))
     val scrollTabToTopLiveData = MutableLiveData<Int?>()
+
+    // Used by fragments, tie to ShowsActivity lifecycle to keep instance as short as possible
+    val showsDistillationSettings = ShowsDistillationSettings(application)
 
     /**
      * For [tabPosition] use ShowsActivity.InitBundle.

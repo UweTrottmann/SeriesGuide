@@ -65,7 +65,6 @@
     <string name="share_movie">Bagikan film</string>
     <string name="addtocalendar">Tambah ke kalender</string>
     <string name="addtocalendar_failed">Tidak dapat membuat acara kalender.</string>
-    <string name="links">Tautan</string>
     <!-- Comments -->
     <string name="comments">Komentar</string>
     <string name="shout_hint">Ketik sebuah komentar (Bahasa Inggris, 5+ kata)</string>
@@ -100,7 +99,6 @@
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">Dibatalkan</string>
     <string name="no_translation">Tidak ada deskripsi yang diterjemahkan ke %1$s tersedia di %2$s.</string>
-    <string name="no_translation_title">Belum diterjemahkan</string>
     <string name="no_spoilers">Beberapa detail telah disembunyikan untuk mencegah bocoran. Untuk menonaktikan ini pergi ke pengaturan.</string>
     <string name="format_source">Sumber: %s</string>
     <string name="last_updated">Last updated</string>
@@ -277,6 +275,7 @@
     <string name="action_movies_sort_release">Tanggal rilis</string>
     <string name="title_similar_movies">Similar movies</string>
     <string name="title_release_dates">Release dates</string>
+    <string name="error_movie_not_found">Movie removed from TMDB. Remove it from lists, set it not watched. Using Trakt? On their website, search for its TMDB ID and remove it from history and lists.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Tidak dapat menghitung statistik.</string>
     <string name="shows_finished">%s selesai ditonton</string>

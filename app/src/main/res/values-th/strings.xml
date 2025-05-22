@@ -65,7 +65,6 @@
     <string name="share_movie">แบ่งปันภาพยนตร์</string>
     <string name="addtocalendar">เพิ่มในปฏิทิน</string>
     <string name="addtocalendar_failed">ไม่สามารถสร้างกิจกรรมบนปฏิทิน</string>
-    <string name="links">ลิงก์</string>
     <!-- Comments -->
     <string name="comments">ความคิดเห็น</string>
     <string name="shout_hint">พิมพ์ความคิดเห็น (ภาษาอังกฤษ, 5+ คำ)</string>
@@ -100,7 +99,6 @@
     <string name="show_status_pilot">นำร่อง</string>
     <string name="show_status_canceled">ยกเลิกแล้ว</string>
     <string name="no_translation">ไม่มีรายละเอียดที่ถูกแปลเป็น %1$s พร้อมใช้งานที่ %2$s</string>
-    <string name="no_translation_title">ยังไม่ถูกแปล</string>
     <string name="no_spoilers">รายละเอียดบางอย่างถูกซ่อนเพื่อป้องกันการสปอยล์ ปิดการป้องกันนี้ได้ในการตั้งค่า</string>
     <string name="format_source">ที่มา: %s</string>
     <string name="last_updated">อัปเดตล่าสุด</string>
@@ -277,6 +275,7 @@
     <string name="action_movies_sort_release">วันที่ออกฉาย</string>
     <string name="title_similar_movies">Similar movies</string>
     <string name="title_release_dates">Release dates</string>
+    <string name="error_movie_not_found">Movie removed from TMDB. Remove it from lists, set it not watched. Using Trakt? On their website, search for its TMDB ID and remove it from history and lists.</string>
     <!-- Statistics -->
     <string name="statistics_failed">ไม่สามารถคำนวณสถิติ</string>
     <string name="shows_finished">%s ดูจบแล้ว</string>

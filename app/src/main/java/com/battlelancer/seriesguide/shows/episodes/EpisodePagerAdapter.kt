@@ -1,5 +1,7 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2018-2025 Uwe Trottmann
+
+@file:Suppress("DEPRECATION") // ViewPager2 paging performance is bad, don't need its improvements
 
 package com.battlelancer.seriesguide.shows.episodes
 

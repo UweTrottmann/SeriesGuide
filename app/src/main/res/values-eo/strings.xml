@@ -65,7 +65,6 @@
     <string name="share_movie">Konigi filmon</string>
     <string name="addtocalendar">Aldoni al kalendaro</string>
     <string name="addtocalendar_failed">Ne povas krei kalendaran eventon</string>
-    <string name="links">Ligiloj</string>
     <!-- Comments -->
     <string name="comments">Komentoj</string>
     <string name="shout_hint">Tajpu komenton (la Angla, 5+ vortoj)</string>
@@ -101,7 +100,6 @@
     <string name="show_status_pilot">Piloto</string>
     <string name="show_status_canceled">Nuligita</string>
     <string name="no_translation">Ne estas priskribo tradukita al %1$s disponebla je %2$s.</string>
-    <string name="no_translation_title">Ne tradukita</string>
     <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
     <string name="format_source">Fonto: %s</string>
     <string name="last_updated">Last updated</string>
@@ -284,6 +282,7 @@
     <string name="action_movies_sort_release">Eldondato</string>
     <string name="title_similar_movies">Similar movies</string>
     <string name="title_release_dates">Release dates</string>
+    <string name="error_movie_not_found">Movie removed from TMDB. Remove it from lists, set it not watched. Using Trakt? On their website, search for its TMDB ID and remove it from history and lists.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Ne povas kalkuli statistikaĵojn</string>
     <string name="shows_finished">%s finis spektadi</string>

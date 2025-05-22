@@ -65,7 +65,6 @@
     <string name="share_movie">Del film</string>
     <string name="addtocalendar">Føj til kalender</string>
     <string name="addtocalendar_failed">Kan ikke oprette en kalenderbegivenhed.</string>
-    <string name="links">Links</string>
     <!-- Comments -->
     <string name="comments">Kommentarer</string>
     <string name="shout_hint">Skriv en kommentar (engelsk, 5+ ord)</string>
@@ -101,7 +100,6 @@
     <string name="show_status_pilot">Pilot-episode</string>
     <string name="show_status_canceled">Annulleret</string>
     <string name="no_translation">Der er ingen beskrivelse oversat til %1$s tilgængelig på %2$s.</string>
-    <string name="no_translation_title">Ikke oversat</string>
     <string name="no_spoilers">Visse detaljer er skjult for at undgå spoilers. Du kan slå dette fra under Indstillinger.</string>
     <string name="format_source">Kilde: %s</string>
     <string name="last_updated">Senest opdateret</string>
@@ -284,6 +282,7 @@
     <string name="action_movies_sort_release">Udgivelsesdato</string>
     <string name="title_similar_movies">Lignende film</string>
     <string name="title_release_dates">Udgivelsesdatoer</string>
+    <string name="error_movie_not_found">Film fjernet fra TMDB. Fjern den fra lister, sæt den ikke set. Brug Trakt? På deres hjemmeside, søg efter dens TMDB ID og fjern den fra historik og lister.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Kunne ikke beregne statistik.</string>
     <string name="shows_finished">%s set færdig</string>

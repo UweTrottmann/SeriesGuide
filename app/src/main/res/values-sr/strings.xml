@@ -65,7 +65,6 @@
     <string name="share_movie">Подели филм</string>
     <string name="addtocalendar">Додај у календар</string>
     <string name="addtocalendar_failed">Креирање овог догађаја у календару није успело.</string>
-    <string name="links">Линкови</string>
     <!-- Comments -->
     <string name="comments">Коментари</string>
     <string name="shout_hint">Упишите коментар (на енглеском са више од 5 речи)</string>
@@ -102,7 +101,6 @@
     <string name="show_status_pilot">Пилот</string>
     <string name="show_status_canceled">Отказано</string>
     <string name="no_translation">Не постоји опис преведен на %1$s који је доступан на %2$s.</string>
-    <string name="no_translation_title">Није преведено</string>
     <string name="no_spoilers">Неки детаљи су скривени да би се спречили спојлери. Да бисте ово искључили, идите на Подешавања.</string>
     <string name="format_source">Извор %s</string>
     <string name="last_updated">Последње ажурирање</string>
@@ -291,6 +289,7 @@
     <string name="action_movies_sort_release">Датум емитовања</string>
     <string name="title_similar_movies">Слични филмови</string>
     <string name="title_release_dates">Датуми емитовања</string>
+    <string name="error_movie_not_found">Филм је уклоњен из ТМДБ-а. Уклоните га са листа, поставите да се не гледа. Користите Тракт? На њиховој веб локацији потражите његов ТМДБ ИД и уклоните га из историје и листа.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Nije bilo moguće obraditi statistiku</string>
     <string name="shows_finished">%s завршио гледање</string>

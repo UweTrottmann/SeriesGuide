@@ -65,7 +65,6 @@
     <string name="share_movie">映画を共有</string>
     <string name="addtocalendar">カレンダーに追加</string>
     <string name="addtocalendar_failed">カレンダーイベントを作成できません</string>
-    <string name="links">リンク</string>
     <!-- Comments -->
     <string name="comments">コメント</string>
     <string name="shout_hint">コメントを入力（英語で5語以上）</string>
@@ -100,7 +99,6 @@
     <string name="show_status_pilot">パイロット</string>
     <string name="show_status_canceled">Canceled</string>
     <string name="no_translation">%2$s に %1$s で利用できる説明がありません。</string>
-    <string name="no_translation_title">翻訳されていません</string>
     <string name="no_spoilers">一部の詳細を非表示にして、ネタバレを防ぎます。これを無効にするには設定に移動します。</string>
     <string name="format_source">ソース: %s</string>
     <string name="last_updated">Last updated</string>
@@ -277,6 +275,7 @@
     <string name="action_movies_sort_release">発売日</string>
     <string name="title_similar_movies">Similar movies</string>
     <string name="title_release_dates">Release dates</string>
+    <string name="error_movie_not_found">Movie removed from TMDB. Remove it from lists, set it not watched. Using Trakt? On their website, search for its TMDB ID and remove it from history and lists.</string>
     <!-- Statistics -->
     <string name="statistics_failed">統計情報を計算できませんでした。</string>
     <string name="shows_finished">%s finished watching</string>

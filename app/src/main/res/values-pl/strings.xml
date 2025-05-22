@@ -65,7 +65,6 @@
     <string name="share_movie">Udostępnij film</string>
     <string name="addtocalendar">Dodaj do kalendarza</string>
     <string name="addtocalendar_failed">Nie można utworzyć zdarzenia kalendarza.</string>
-    <string name="links">Odnośniki</string>
     <!-- Comments -->
     <string name="comments">Komentarze</string>
     <string name="shout_hint">Wpisz komentarz (j. angielski, >5 słów)</string>
@@ -103,7 +102,6 @@
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">Anulowany</string>
     <string name="no_translation">Brak opisu w języku %1$s dostępnego w %2$s.</string>
-    <string name="no_translation_title">Nie przetłumaczone</string>
     <string name="no_spoilers">Niektóre informacje zostały ukryte, aby zapobiec spoilerowaniu. W celu wyłączenia tej funkcji wejdź do ustawień.</string>
     <string name="format_source">Źródło: %s</string>
     <string name="last_updated">Zaktualizowano</string>
@@ -298,6 +296,7 @@
     <string name="action_movies_sort_release">Data premiery</string>
     <string name="title_similar_movies">Podobne filmy</string>
     <string name="title_release_dates">Daty premier</string>
+    <string name="error_movie_not_found">Film został usunięty z TMDB. Usuń go z list oraz ustaw jako nieobejrzany. Używasz Trakt? Na ish stronie wyszukaj ID z bazy TMDB i usuń go z historii oraz list.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Nie można obliczyć statystyk.</string>
     <string name="shows_finished">Zakończono oglądanie %s</string>

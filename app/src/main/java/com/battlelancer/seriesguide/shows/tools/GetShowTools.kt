@@ -15,11 +15,11 @@ import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowService.T
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowDoesNotExist
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowRetry
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowStop
-import com.battlelancer.seriesguide.tmdbapi.TmdbError
-import com.battlelancer.seriesguide.tmdbapi.TmdbRetry
-import com.battlelancer.seriesguide.tmdbapi.TmdbStop
-import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
-import com.battlelancer.seriesguide.traktapi.TraktTools2
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools3
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools3.TmdbError
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools3.TmdbRetry
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools3.TmdbStop
+import com.battlelancer.seriesguide.traktapi.TraktTools3
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.github.michaelbull.result.Err
@@ -46,14 +46,14 @@ class GetShowTools @Inject constructor(
         desiredLanguage: String,
         existingShow: SgShow2? = null
     ): Result<ShowDetails, GetShowError> {
-        var tmdbShow = TmdbTools2().getShowAndExternalIds(showTmdbId, desiredLanguage, context)
+        var tmdbShow = TmdbTools3.getShowAndExternalIds(showTmdbId, desiredLanguage, context)
             .getOrElse { return Err(it.toGetShowError()) }
             ?: return Err(GetShowDoesNotExist)
         val tmdbSeasons = tmdbShow.seasons
 
         val noTranslation = tmdbShow.overview.isNullOrEmpty()
         if (noTranslation) {
-            tmdbShow = TmdbTools2().getShowAndExternalIds(
+            tmdbShow = TmdbTools3.getShowAndExternalIds(
                 showTmdbId,
                 ShowsSettings.getShowsLanguageFallback(context),
                 context
@@ -61,7 +61,7 @@ class GetShowTools @Inject constructor(
                 ?: return Err(GetShowDoesNotExist)
         }
 
-        val traktDetails = TraktTools2.getShowByTmdbId(showTmdbId, context)
+        val traktDetails = TraktTools3.getShowByTmdbId(showTmdbId, context)
             .andThen { traktShow ->
                 if (traktShow == null) {
                     Timber.w("getShowDetails: no Trakt show found, using default values.")
@@ -106,11 +106,9 @@ class GetShowTools @Inject constructor(
                 }
             }
 
-        val title = if (tmdbShow.name.isNullOrEmpty()) {
-            context.getString(R.string.no_translation_title)
-        } else {
-            tmdbShow.name
-        }
+        // The title returned from TMDB is never empty, even when fetching for a language that does
+        // not have a translation.
+        val title = tmdbShow.name ?: context.getString(R.string.unknown)
 
         val overview = if (noTranslation || tmdbShow.overview.isNullOrEmpty()) {
             // add note about non-translated or non-existing overview

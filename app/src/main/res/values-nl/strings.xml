@@ -65,7 +65,6 @@
     <string name="share_movie">Film delen</string>
     <string name="addtocalendar">Aan agenda toevoegen</string>
     <string name="addtocalendar_failed">Kan geen agendagebeurtenis aanmaken.</string>
-    <string name="links">Links</string>
     <!-- Comments -->
     <string name="comments">Reacties</string>
     <string name="shout_hint">Voer een opmerking in (in het Engels, meer dan 5 woorden)</string>
@@ -101,7 +100,6 @@
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">Geannuleerd</string>
     <string name="no_translation">Er is op %2$s geen naar het %1$s vertaalde beschrijving beschikbaar.</string>
-    <string name="no_translation_title">Niet vertaald</string>
     <string name="no_spoilers">Sommige details zijn verborgen om te voorkomen dat u spoilers ziet. Om dit uit te zetten ga naar Instellingen.</string>
     <string name="format_source">Bron: %s</string>
     <string name="last_updated">Laatst bijgewerkt</string>
@@ -284,6 +282,7 @@
     <string name="action_movies_sort_release">Releasedatum</string>
     <string name="title_similar_movies">Vergelijkbare films</string>
     <string name="title_release_dates">Releasedatums</string>
+    <string name="error_movie_not_found">Film is verwijderd van TMDB. Verwijder het uit je lijsten, stel in dat het niet bekeken wordt. Gebruik je Trakt? Zoek op hun website naar de TMDB-ID en verwijder deze uit de geschiedenis en lijsten.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Kon statistieken niet berekenen.</string>
     <string name="shows_finished">%s klaar met kijken</string>

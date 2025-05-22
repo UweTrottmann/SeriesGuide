@@ -10,6 +10,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.view.View
+import androidx.core.net.toUri
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
@@ -53,17 +54,19 @@ object ServiceUtils {
     /**
      * Open the IMDb app or web page for the given IMDb id.
      */
-    fun openImdb(imdbId: String?, context: Context?) {
-        if (context == null || imdbId.isNullOrEmpty()) {
+    fun openImdb(imdbId: String, context: Context) {
+        if (imdbId.isEmpty()) {
             return
         }
 
         // try launching the IMDb app
         val intent = Intent(
-            Intent.ACTION_VIEW, Uri
-                .parse("$IMDB_APP_TITLE_URI$imdbId$IMDB_APP_TITLE_URI_POSTFIX")
+            Intent.ACTION_VIEW,
+            "$IMDB_APP_TITLE_URI$imdbId$IMDB_APP_TITLE_URI_POSTFIX".toUri()
+        ).addFlags(
+            Intent.FLAG_ACTIVITY_NEW_DOCUMENT
         )
-            .addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
+
         if (!Utils.tryStartActivity(context, intent, false)) {
             // If the app is not available, open website instead.
             WebTools.openInApp(context, imdbLink(imdbId))

@@ -65,7 +65,6 @@
     <string name="share_movie">Jaa elokuva</string>
     <string name="addtocalendar">Lisää kalenteriin</string>
     <string name="addtocalendar_failed">Kalenteritapahtumaa ei voi luoda</string>
-    <string name="links">Linkit</string>
     <!-- Comments -->
     <string name="comments">Kommentit</string>
     <string name="shout_hint">Kirjoita kommentti (englanniksi, 5+ sanaa)</string>
@@ -101,7 +100,6 @@
     <string name="show_status_pilot">Pilotti</string>
     <string name="show_status_canceled">Peruttu</string>
     <string name="no_translation">Kuvausta ei ole saatavilla kielellä %1$s palvelussa %2$s.</string>
-    <string name="no_translation_title">Ei käännetty</string>
     <string name="no_spoilers">Osa tiedoista on piilotettu juonipaljastuksien varalta. Voit poistaa tämän käytöstä asetuksista.</string>
     <string name="format_source">Lähde: %s</string>
     <string name="last_updated">Viimeksi päivitetty</string>
@@ -284,6 +282,7 @@
     <string name="action_movies_sort_release">Julkaisupäivä</string>
     <string name="title_similar_movies">Samankaltaisia elokuvia</string>
     <string name="title_release_dates">Julkaisupäivät</string>
+    <string name="error_movie_not_found">Elokuva poistettu TMDB:stä. Poista se listoilta ja aseta se ei-katsotuksi. Käytätkö Traktia? Hae elokuvan TMDB ID:tä heidän verkkosivustoiltaan ja poista se historiasta ja listoilta.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Tilastojen laskeminen ei onnistunut.</string>
     <string name="shows_finished">%s katsottu loppuun</string>

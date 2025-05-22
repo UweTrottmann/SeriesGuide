@@ -65,7 +65,6 @@
     <string name="share_movie">Rhannu ffilm</string>
     <string name="addtocalendar">Ychwanegu at y calendr</string>
     <string name="addtocalendar_failed">Methu creu digwyddiad calendr</string>
-    <string name="links">Dolenni</string>
     <!-- Comments -->
     <string name="comments">Sylwadau</string>
     <string name="shout_hint">Teipiwch sylw (Saesneg, 5+ gair)</string>
@@ -105,7 +104,6 @@
     <string name="show_status_pilot">Peilot Teledu</string>
     <string name="show_status_canceled">Wedi\'i ganslo</string>
     <string name="no_translation">Nid oes disgrifiad wedi\'i gyfieithu i%1$s ar gael ar %2$s.</string>
-    <string name="no_translation_title">Heb ei gyfieithu</string>
     <string name="no_spoilers">Mae rhai manylion wedi\'u cuddio i atal anrheithwyr. I ddiffodd hyn ewch i Gosodiadau.</string>
     <string name="format_source">Ffynhonnell: %s</string>
     <string name="last_updated">Diweddarwyd diwethaf</string>
@@ -312,6 +310,7 @@
     <string name="action_movies_sort_release">Dyddiad rhyddhau</string>
     <string name="title_similar_movies">Similar movies</string>
     <string name="title_release_dates">Release dates</string>
+    <string name="error_movie_not_found">Movie removed from TMDB. Remove it from lists, set it not watched. Using Trakt? On their website, search for its TMDB ID and remove it from history and lists.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Methu cyfrifo ystadegau</string>
     <string name="shows_finished">%s gorffen gwylio</string>

@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows
 
@@ -45,9 +45,11 @@ class RemoveShowDialogFragment : AppCompatDialogFragment() {
         this.binding = binding
 
         showProgressBar(true)
-        binding.buttonNegative.setText(android.R.string.cancel)
-        binding.buttonNegative.setOnClickListener { dismiss() }
-        binding.buttonPositive.setText(R.string.delete_show)
+        binding.buttonDialogRemoveCancel.apply {
+            setText(android.R.string.cancel)
+            setOnClickListener { dismiss() }
+        }
+        binding.buttonDialogRemoveRemove.setText(R.string.delete_show)
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -64,7 +66,7 @@ class RemoveShowDialogFragment : AppCompatDialogFragment() {
                     }
                     binding.also {
                         it.textViewRemove.text = getString(R.string.confirm_delete, titleOrNull)
-                        it.buttonPositive.setOnClickListener {
+                        it.buttonDialogRemoveRemove.setOnClickListener {
                             if (!SgSyncAdapter.isSyncActive(requireContext(), true)) {
                                 SgApp.getServicesComponent(requireContext()).showTools()
                                     .removeShow(showId)
@@ -91,7 +93,7 @@ class RemoveShowDialogFragment : AppCompatDialogFragment() {
         binding?.also {
             it.progressBarRemove.isGone = !isVisible
             it.textViewRemove.isGone = isVisible
-            it.buttonPositive.isEnabled = !isVisible
+            it.buttonDialogRemoveRemove.isEnabled = !isVisible
         }
     }
 

@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.lists
 
@@ -36,14 +36,14 @@ class ListsPagerAdapter(
 
     override fun getItemId(position: Int): Long {
         return if (position < items.size) {
-            items[position].id.toLong()
+            items[position].id!!.toLong()
         } else {
             RecyclerView.NO_ID
         }
     }
 
     override fun containsItem(itemId: Long): Boolean {
-        return items.find { it.id.toLong() == itemId } != null
+        return items.find { it.id!!.toLong() == itemId } != null
     }
 
     override fun getItemCount(): Int {

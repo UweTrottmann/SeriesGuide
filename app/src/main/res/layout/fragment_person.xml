@@ -96,7 +96,7 @@
                 android:layout_height="48dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/tmdb"
-                app:icon="@drawable/ic_link_black_24dp"
+                app:icon="@drawable/ic_open_in_new_control_24dp"
                 app:iconGravity="start"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
