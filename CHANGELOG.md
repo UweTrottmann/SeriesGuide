@@ -49,6 +49,10 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 * 🔧 Trakt: add shortcut to view account limits to Connect Trakt screen.
 * 📝 Add Latin Serbian user interface translation, thanks to kesaa89!
 
+### 2025.1.2 - 2025-05-22
+
+* 🔨 Trakt: potentially resolves frequently asking to reconnect to Trakt.
+
 ### 2025.1.1 - 2025-03-13
 
 * 📝 Imported latest user interface translations.
