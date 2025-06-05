@@ -120,12 +120,13 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupShows" />
 
+                <!-- Note: text appearance is set in code -->
                 <TextView
                     android:id="@+id/textViewAutoBackupShowsExportFile"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/large_padding"
-                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Dim"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/buttonAutoBackupShowsExportFile"
@@ -153,12 +154,13 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupLists" />
 
+                <!-- Note: text appearance is set in code -->
                 <TextView
                     android:id="@+id/textViewAutoBackupListsExportFile"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/larger_padding"
-                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Dim"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/buttonAutoBackupListsExportFile"
@@ -186,12 +188,13 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupMovies" />
 
+                <!-- Note: text appearance is set in code -->
                 <TextView
                     android:id="@+id/textViewAutoBackupMoviesExportFile"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/larger_padding"
-                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Dim"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/buttonAutoBackupMoviesExportFile"
