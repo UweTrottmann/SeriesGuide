@@ -23,11 +23,10 @@ class DataLiberationViewModel(application: Application) : AndroidViewModel(appli
         val fileNameShows: String?,
         val fileNameLists: String?,
         val fileNameMovies: String?,
-        val placeholderText: String,
-        val initializeCheckBoxes: Boolean
+        val placeholderText: String
     )
 
-    val importFiles = MutableStateFlow(ImportFiles("", "", "", "", false))
+    val importFiles = MutableStateFlow(ImportFiles("", "", "", ""))
 
     var dataLibJob: Job? = null
 
@@ -44,7 +43,7 @@ class DataLiberationViewModel(application: Application) : AndroidViewModel(appli
         dataLibJob = null
     }
 
-    fun updateImportFileNames(initializeCheckBoxes: Boolean = false) {
+    fun updateImportFileNames() {
         viewModelScope.launch(Dispatchers.IO) {
             val context = getApplication<Application>()
             val showsFileUri = BackupSettings.getImportFileUriOrExportFileUri(
@@ -64,8 +63,7 @@ class DataLiberationViewModel(application: Application) : AndroidViewModel(appli
                 fileNameShows = showsFileUri?.getFileNameFromUriOrLastPathSegment(),
                 fileNameLists = listsFileUri?.getFileNameFromUriOrLastPathSegment(),
                 fileNameMovies = moviesFileUri?.getFileNameFromUriOrLastPathSegment(),
-                placeholderText = context.getString(R.string.no_file_selected),
-                initializeCheckBoxes = initializeCheckBoxes
+                placeholderText = context.getString(R.string.no_file_selected)
             )
         }
     }

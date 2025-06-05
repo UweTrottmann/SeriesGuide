@@ -102,17 +102,11 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
                 binding.textViewDataLibShowsImportFile.text = it.fileNameShows ?: it.placeholderText
                 binding.textViewDataLibListsImportFile.text = it.fileNameLists ?: it.placeholderText
                 binding.textViewDataLibMoviesImportFile.text = it.fileNameMovies ?: it.placeholderText
-
-                if (it.initializeCheckBoxes) {
-                    binding.checkBoxDataLibShows.isChecked = it.fileNameShows != null
-                    binding.checkBoxDataLibLists.isChecked = it.fileNameLists != null
-                    binding.checkBoxDataLibMovies.isChecked = it.fileNameMovies != null
-                }
             }
         }
         // Note: pre-check existing files for import, but do not overwrite any later changes
         if (savedInstanceState == null) {
-            model.updateImportFileNames(initializeCheckBoxes = true)
+            model.updateImportFileNames()
         }
 
         // restore UI state
