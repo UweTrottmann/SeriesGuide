@@ -52,14 +52,16 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
 
         binding.progressBarDataLib.visibility = View.GONE
 
-        // setup listeners
+        // Import check boxes
         binding.checkBoxDataLibShows.setOnCheckedChangeListener { _, _ -> updateImportButtonEnabledState() }
         binding.checkBoxDataLibLists.setOnCheckedChangeListener { _, _ -> updateImportButtonEnabledState() }
         binding.checkBoxDataLibMovies.setOnCheckedChangeListener { _, _ -> updateImportButtonEnabledState() }
+
         binding.buttonDataLibImport.setOnClickListener {
             doDataImport()
         }
 
+        // File select buttons
         binding.buttonDataLibShowsExport.setOnClickListener {
             createShowExportFileResult.tryLaunch(
                 JsonExportTask.EXPORT_JSON_FILE_SHOWS,
@@ -94,7 +96,8 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
             WebTools.openInApp(requireContext(), getString(R.string.url_import_documentation))
         }
 
-        updateFileViews()
+        // Note: Keep any user made changes to checkbox state on config changes
+        updateImportCheckBoxAndFileViews(updateCheckBoxes = savedInstanceState == null)
 
         // restore UI state
         if (model.isDataLibTaskNotCompleted) {
@@ -138,7 +141,7 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
             // don't touch views if fragment is not added to activity any longer
             return
         }
-        updateFileViews()
+        updateImportCheckBoxAndFileViews(updateCheckBoxes = false)
         setProgressLock(false)
     }
 
@@ -179,7 +182,7 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
 
         DataLiberationTools.tryToPersistUri(requireContext(), uri)
         BackupSettings.storeExportFileUri(context, type, uri, false)
-        updateFileViews()
+        updateImportCheckBoxAndFileViews(updateCheckBoxes = false)
 
         val binding = binding ?: return
         setProgressLock(true)
@@ -226,29 +229,31 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
         if (uri == null) return
         DataLiberationTools.tryToPersistUri(requireContext(), uri)
         BackupSettings.storeImportFileUri(context, type, uri)
-        updateFileViews()
+        updateImportCheckBoxAndFileViews(updateCheckBoxes = true)
     }
 
-    private fun updateFileViews() {
+    private fun updateImportCheckBoxAndFileViews(updateCheckBoxes: Boolean) {
         val binding = binding ?: return
-        setUriOrPlaceholder(
-            binding.textViewDataLibShowsImportFile,
-            BackupSettings.getImportFileUriOrExportFileUri(
-                context, JsonExportTask.BACKUP_SHOWS
-            )
-        )
-        setUriOrPlaceholder(
-            binding.textViewDataLibListsImportFile,
-            BackupSettings.getImportFileUriOrExportFileUri(
-                context, JsonExportTask.BACKUP_LISTS
-            )
-        )
-        setUriOrPlaceholder(
-            binding.textViewDataLibMoviesImportFile,
-            BackupSettings.getImportFileUriOrExportFileUri(
-                context, JsonExportTask.BACKUP_MOVIES
-            )
-        )
+
+        val showsFileUri =
+            BackupSettings.getImportFileUriOrExportFileUri(context, JsonExportTask.BACKUP_SHOWS)
+        setUriOrPlaceholder(binding.textViewDataLibShowsImportFile, showsFileUri)
+
+        val listsFileUri =
+            BackupSettings.getImportFileUriOrExportFileUri(context, JsonExportTask.BACKUP_LISTS)
+        setUriOrPlaceholder(binding.textViewDataLibListsImportFile, listsFileUri)
+
+        val moviesFileUri =
+            BackupSettings.getImportFileUriOrExportFileUri(context, JsonExportTask.BACKUP_MOVIES)
+        setUriOrPlaceholder(binding.textViewDataLibMoviesImportFile, moviesFileUri)
+
+        // For convenience and to make the check boxes easier to discover, pre-check them if a file
+        // is selected.
+        if (updateCheckBoxes) {
+            binding.checkBoxDataLibShows.isChecked = showsFileUri != null
+            binding.checkBoxDataLibLists.isChecked = listsFileUri != null
+            binding.checkBoxDataLibMovies.isChecked = moviesFileUri != null
+        }
     }
 
     private fun setUriOrPlaceholder(textView: TextView, uri: Uri?) {
@@ -264,7 +269,12 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
             showIndefinite = false
         }
 
-        constructor(context: Context, message: String?, errorCause: String?, showIndefinite: Boolean) {
+        constructor(
+            context: Context,
+            message: String?,
+            errorCause: String?,
+            showIndefinite: Boolean
+        ) {
             this.message = TextTools.dotSeparate(context, message, errorCause)
             this.showIndefinite = showIndefinite
         }
