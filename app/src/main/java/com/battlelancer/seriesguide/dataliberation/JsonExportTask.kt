@@ -25,6 +25,7 @@ import com.battlelancer.seriesguide.shows.database.SgSeason2Helper
 import com.battlelancer.seriesguide.shows.database.SgShow2Helper
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.util.Errors
+import com.battlelancer.seriesguide.util.TextTools
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
 import com.google.gson.stream.JsonWriter
@@ -175,26 +176,32 @@ class JsonExportTask(
 
     private fun onPostExecute(result: Int) {
         if (!isAutoBackupMode) {
-            val messageId: Int
+            val message: String
             val showIndefinite: Boolean
             when (result) {
                 SUCCESS -> {
-                    messageId = R.string.backup_success
+                    message = context.getString(R.string.status_successful)
                     showIndefinite = false
                 }
+
                 ERROR_FILE_ACCESS -> {
-                    messageId = R.string.backup_failed_file_access
+                    message = TextTools.dotSeparate(
+                        context,
+                        R.string.status_failure,
+                        R.string.status_failed_file_access
+                    )
                     showIndefinite = true
                 }
+
                 else -> {
-                    messageId = R.string.backup_failed
+                    message = context.getString(R.string.status_failure)
                     showIndefinite = true
                 }
             }
             EventBus.getDefault()
                 .post(
                     LiberationResultEvent(
-                        context.getString(messageId), errorCause, showIndefinite
+                        context, message, errorCause, showIndefinite
                     )
                 )
         } else {
@@ -230,9 +237,11 @@ class JsonExportTask(
                 BACKUP_SHOWS -> {
                     writeJsonStreamShows(coroutineScope, out)
                 }
+
                 BACKUP_LISTS -> {
                     writeJsonStreamLists(coroutineScope, out)
                 }
+
                 BACKUP_MOVIES -> {
                     writeJsonStreamMovies(coroutineScope, out)
                 }
@@ -359,7 +368,7 @@ class JsonExportTask(
         for (sgSeason in seasons) {
             val season = Season()
             season.tmdb_id = sgSeason.tmdbId
-            season.tvdbId = sgSeason.tvdbId
+            season.tvdb_id = sgSeason.tvdbId
             season.season = sgSeason.number
 
             season.episodes = getEpisodes(sgSeason.id)
@@ -382,18 +391,17 @@ class JsonExportTask(
         for (episodeDb in episodes) {
             val episodeExport = Episode()
             episodeExport.tmdb_id = episodeDb.tmdbId
-            episodeExport.tvdbId = episodeDb.tvdbId
+            episodeExport.tvdb_id = episodeDb.tvdbId
             episodeExport.episode = episodeDb.number
-            episodeExport.episodeAbsolute = episodeDb.absoluteNumber
-            episodeExport.episodeDvd = episodeDb.dvdNumber
+            episodeExport.episode_absolute = episodeDb.absoluteNumber
+            episodeExport.episode_dvd = episodeDb.dvdNumber
             val episodeFlag = episodeDb.watched
             episodeExport.watched = EpisodeTools.isWatched(episodeFlag)
             episodeExport.skipped = EpisodeTools.isSkipped(episodeFlag)
             episodeExport.plays = episodeDb.playsOrZero
             episodeExport.collected = episodeDb.collected
             episodeExport.title = episodeDb.title
-            episodeExport.firstAired = episodeDb.firstReleasedMs
-            episodeExport.imdbId = episodeDb.imdbId
+            episodeExport.first_aired = episodeDb.firstReleasedMs
             episodeExport.rating_user = episodeDb.ratingUser
             if (isFullDump) {
                 episodeExport.overview = episodeDb.overview
@@ -431,7 +439,7 @@ class JsonExportTask(
             }
 
             val list = ExportList()
-            list.listId = sgList.listId
+            list.list_id = sgList.listId
             list.name = sgList.name
             list.order = sgList.orderOrDefault
 
@@ -447,12 +455,12 @@ class JsonExportTask(
     }
 
     private fun addListItems(list: ExportList) {
-        val listItems = sgListHelper.getListItemsForExport(list.listId)
+        val listItems = sgListHelper.getListItemsForExport(list.list_id)
 
         list.items = ArrayList()
         for (listItem in listItems) {
             val item = ListItem()
-            item.listItemId = listItem.listItemId
+            item.list_item_id = listItem.listItemId
             item.externalId = listItem.itemRefId
             // Note: export legacy types so users can get to legacy data if they need to.
             when (listItem.type) {
@@ -484,17 +492,17 @@ class JsonExportTask(
                 break
             }
             val movie = Movie()
-            movie.tmdbId = sgMovie.tmdbId
-            movie.imdbId = sgMovie.imdbId
+            movie.tmdb_id = sgMovie.tmdbId
+            movie.imdb_id = sgMovie.imdbId
             movie.title = sgMovie.title
-            movie.releasedUtcMs = sgMovie.releasedMsOrDefault
-            movie.runtimeMin = sgMovie.runtimeMinOrDefault
+            movie.released_utc_ms = sgMovie.releasedMsOrDefault
+            movie.runtime_min = sgMovie.runtimeMinOrDefault
             movie.poster = sgMovie.poster
-            movie.inCollection = sgMovie.inCollectionOrDefault
-            movie.inWatchlist = sgMovie.inWatchlistOrDefault
+            movie.in_collection = sgMovie.inCollectionOrDefault
+            movie.in_watchlist = sgMovie.inWatchlistOrDefault
             movie.watched = sgMovie.watchedOrDefault
             movie.plays = sgMovie.playsOrDefault
-            movie.lastUpdatedMs = sgMovie.lastUpdatedOrDefault
+            movie.last_updated_ms = sgMovie.lastUpdatedOrDefault
             if (isFullDump) {
                 movie.overview = sgMovie.overview
             }

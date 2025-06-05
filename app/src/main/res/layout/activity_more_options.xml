@@ -110,6 +110,37 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/containerAutoBackup"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:focusable="true"
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/large_padding"
+                    android:paddingTop="@dimen/default_padding"
+                    android:paddingEnd="@dimen/large_padding"
+                    android:paddingBottom="@dimen/default_padding"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/containerCloud">
+
+                    <TextView
+                        android:id="@+id/textViewMoreAutoBackup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pref_autobackup"
+                        android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle2" />
+
+                    <TextView
+                        android:id="@+id/textViewMoreAutoBackupStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="@string/action_turn_on"
+                        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2" />
+
+                </LinearLayout>
+
                 <Button
                     android:id="@+id/buttonSupportTheApp"
                     style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
@@ -121,7 +152,7 @@
                     app:iconGravity="start"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/containerCloud" />
+                    app:layout_constraintTop_toBottomOf="@+id/containerAutoBackup" />
 
                 <TextView
                     android:id="@+id/textViewThankYouSupporters"
@@ -136,6 +167,18 @@
                     app:layout_constraintTop_toBottomOf="@+id/buttonSupportTheApp" />
 
                 <Button
+                    android:id="@+id/buttonMoreBackupRestore"
+                    style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:text="@string/title_export_import"
+                    app:icon="@drawable/ic_swap_vert_control_24dp"
+                    app:iconGravity="start"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewThankYouSupporters" />
+
+                <Button
                     android:id="@+id/buttonSettings"
                     style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
                     android:layout_width="0dp"
@@ -145,7 +188,7 @@
                     app:iconGravity="start"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewThankYouSupporters" />
+                    app:layout_constraintTop_toBottomOf="@id/buttonMoreBackupRestore" />
 
                 <Button
                     android:id="@+id/buttonHelp"
