@@ -4,11 +4,10 @@
 package com.battlelancer.seriesguide.dataliberation
 
 import android.app.Application
-import android.net.Uri
-import android.provider.OpenableColumns
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.dataliberation.DataLiberationTools.getFileNameFromUriOrLastPathSegment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -60,42 +59,12 @@ class DataLiberationViewModel(application: Application) : AndroidViewModel(appli
             )
 
             importFiles.value = ImportFiles(
-                fileNameShows = showsFileUri?.getFileNameFromUriOrLastPathSegment(),
-                fileNameLists = listsFileUri?.getFileNameFromUriOrLastPathSegment(),
-                fileNameMovies = moviesFileUri?.getFileNameFromUriOrLastPathSegment(),
+                fileNameShows = showsFileUri?.getFileNameFromUriOrLastPathSegment(context),
+                fileNameLists = listsFileUri?.getFileNameFromUriOrLastPathSegment(context),
+                fileNameMovies = moviesFileUri?.getFileNameFromUriOrLastPathSegment(context),
                 placeholderText = context.getString(R.string.no_file_selected)
             )
         }
-    }
-
-    private fun Uri.getFileNameFromUriOrLastPathSegment(): String? {
-        // For the external storage documents provider, return the last path segment, it should
-        // contain the file path and be more helpful.
-        // content://com.android.externalstorage.documents/document/primary%3ADocuments%2Fseriesguide-shows-backup.json
-        val isExternalStorage = authority == "com.android.externalstorage.documents"
-        if (isExternalStorage) {
-            return "$lastPathSegment"
-        }
-
-        // For all other providers return the authority and file name, or if not available last part
-        // of the URI.
-        val authority = authority ?: return null
-        val fileName = getFileName() ?: lastPathSegment ?: return null
-        return "$authority $fileName"
-    }
-
-    private fun Uri.getFileName(): String? {
-        val cursor = getApplication<Application>().contentResolver
-            .query(this, null, null, null, null)
-        cursor?.use {
-            if (it.moveToFirst()) {
-                val nameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-                if (nameIndex != -1) {
-                    return it.getString(nameIndex)
-                }
-            }
-        }
-        return null
     }
 
 }

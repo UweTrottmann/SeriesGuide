@@ -14,6 +14,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 * 🔧 Backup: rename to "Export" and "Import", move them and Auto Backup up to More screen.
 * 🔧 Import: display names of selected files, select for import after selecting a file.
+* 🔧 Auto Backup: display names of selected files.
 * 🔧 Diagnostics: debug log can be turned on without restarting the app.
 * 🔧 Diagnostics: instead of sharing it, the debug log file can be saved to a custom location. This
   allows to view and share it in any way that is desired.

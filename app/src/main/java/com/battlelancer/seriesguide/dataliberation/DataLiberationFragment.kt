@@ -151,6 +151,7 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
             // don't touch views if fragment is not added to activity any longer
             return
         }
+        // Note: export may remove an export file URI which may be used as a default import file
         model.updateImportFileNames()
         setProgressLock(false)
     }
