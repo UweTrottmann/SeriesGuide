@@ -6,8 +6,8 @@ using JSON text files._
 The expected format and values are documented here.
 
 To see an example file, export your data from SeriesGuide. Note that unlike the examples below the
-exported JSON is written without indents and comments to save space and increase performance. Use a
-text editor or other tool to format it for easier reading.
+exported JSON is written without indents to save space and increase performance. Use a text editor
+or other tool to format it for easier reading.
 
 When importing, not all but a few required values need to be present. In most cases, SeriesGuide 
 will fill in the missing values when a show is next updated.
@@ -111,7 +111,8 @@ two-letter language code (like `en`) that can be mapped to one of the supported 
 ]
 ```
 
-When importing from another app our data source here is an example of the minimal amount of values:
+When importing from another app or data source a minimal amount of values can be enough, here is an
+example:
 
 [shows-import-minimal.json](shows-import-minimal.json)
 
