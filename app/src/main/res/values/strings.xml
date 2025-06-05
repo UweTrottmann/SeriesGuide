@@ -60,7 +60,7 @@
     <string name="app_not_available">No app available to handle this</string>
     <string name="people_empty">Nobody here?! Touch to try again.</string>
     <string name="database_error">Could not modify data</string>
-    <string name="reinstall_info">Try to create a backup in Settings, re-install and restore</string>
+    <string name="reinstall_info">Try to export your data, re-install and restore</string>
     <string name="api_error_generic">Could not talk to %s. Try again later.</string>
     <string name="api_failed">Failed: %s</string>
     <string name="copy_to_clipboard">Copied to clipboard</string>
