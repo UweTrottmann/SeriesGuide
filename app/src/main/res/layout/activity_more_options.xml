@@ -136,7 +136,7 @@
                         android:id="@+id/textViewMoreAutoBackupStatus"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/pref_autobackupsummary"
+                        tools:text="@string/action_turn_on"
                         android:textAppearance="@style/TextAppearance.SeriesGuide.Body2" />
 
                 </LinearLayout>

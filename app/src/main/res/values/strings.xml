@@ -44,6 +44,7 @@
     <string name="action_select_region">Select region</string>
     <string name="action_reset">Reset</string>
     <string name="action_save">Save</string>
+    <string name="action_turn_on">Turn on</string>
 
     <!-- Search -->
     <string name="clear_search_history">Clear search history</string>
@@ -64,6 +65,7 @@
     <string name="api_failed">Failed: %s</string>
     <string name="copy_to_clipboard">Copied to clipboard</string>
     <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="status_turned_on">Turned on</string>
 
     <!-- Sharing -->
     <string name="share">Share</string>
