@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.databinding.FragmentDataLiberationBinding
@@ -96,8 +97,23 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
             WebTools.openInApp(requireContext(), getString(R.string.url_import_documentation))
         }
 
-        // Note: Keep any user made changes to checkbox state on config changes
-        updateImportCheckBoxAndFileViews(updateCheckBoxes = savedInstanceState == null)
+        viewLifecycleOwner.lifecycleScope.launch {
+            model.importFiles.collect {
+                binding.textViewDataLibShowsImportFile.text = it.fileNameShows ?: it.placeholderText
+                binding.textViewDataLibListsImportFile.text = it.fileNameLists ?: it.placeholderText
+                binding.textViewDataLibMoviesImportFile.text = it.fileNameMovies ?: it.placeholderText
+
+                if (it.initializeCheckBoxes) {
+                    binding.checkBoxDataLibShows.isChecked = it.fileNameShows != null
+                    binding.checkBoxDataLibLists.isChecked = it.fileNameLists != null
+                    binding.checkBoxDataLibMovies.isChecked = it.fileNameMovies != null
+                }
+            }
+        }
+        // Note: pre-check existing files for import, but do not overwrite any later changes
+        if (savedInstanceState == null) {
+            model.updateImportFileNames(initializeCheckBoxes = true)
+        }
 
         // restore UI state
         if (model.isDataLibTaskNotCompleted) {
@@ -141,7 +157,7 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
             // don't touch views if fragment is not added to activity any longer
             return
         }
-        updateImportCheckBoxAndFileViews(updateCheckBoxes = false)
+        model.updateImportFileNames()
         setProgressLock(false)
     }
 
@@ -182,7 +198,7 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
 
         DataLiberationTools.tryToPersistUri(requireContext(), uri)
         BackupSettings.storeExportFileUri(context, type, uri, false)
-        updateImportCheckBoxAndFileViews(updateCheckBoxes = false)
+        model.updateImportFileNames()
 
         val binding = binding ?: return
         setProgressLock(true)
@@ -213,51 +229,35 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
     private val selectShowsImportFileResult =
         registerForActivityResult(SelectImportFileContract()) { uri ->
             storeImportFileUri(JsonExportTask.BACKUP_SHOWS, uri)
+            // For convenience and discoverability, enable for import after selecting file
+            if (uri != null) {
+                binding?.checkBoxDataLibShows?.isChecked = true
+            }
         }
 
     private val selectListsImportFileResult =
         registerForActivityResult(SelectImportFileContract()) { uri ->
             storeImportFileUri(JsonExportTask.BACKUP_LISTS, uri)
+            // For convenience and discoverability, enable for import after selecting file
+            if (uri != null) {
+                binding?.checkBoxDataLibLists?.isChecked = true
+            }
         }
 
     private val selectMoviesImportFileResult =
         registerForActivityResult(SelectImportFileContract()) { uri ->
             storeImportFileUri(JsonExportTask.BACKUP_MOVIES, uri)
+            // For convenience and discoverability, enable for import after selecting file
+            if (uri != null) {
+                binding?.checkBoxDataLibMovies?.isChecked = true
+            }
         }
 
     private fun storeImportFileUri(type: Int, uri: Uri?) {
         if (uri == null) return
         DataLiberationTools.tryToPersistUri(requireContext(), uri)
         BackupSettings.storeImportFileUri(context, type, uri)
-        updateImportCheckBoxAndFileViews(updateCheckBoxes = true)
-    }
-
-    private fun updateImportCheckBoxAndFileViews(updateCheckBoxes: Boolean) {
-        val binding = binding ?: return
-
-        val showsFileUri =
-            BackupSettings.getImportFileUriOrExportFileUri(context, JsonExportTask.BACKUP_SHOWS)
-        setUriOrPlaceholder(binding.textViewDataLibShowsImportFile, showsFileUri)
-
-        val listsFileUri =
-            BackupSettings.getImportFileUriOrExportFileUri(context, JsonExportTask.BACKUP_LISTS)
-        setUriOrPlaceholder(binding.textViewDataLibListsImportFile, listsFileUri)
-
-        val moviesFileUri =
-            BackupSettings.getImportFileUriOrExportFileUri(context, JsonExportTask.BACKUP_MOVIES)
-        setUriOrPlaceholder(binding.textViewDataLibMoviesImportFile, moviesFileUri)
-
-        // For convenience and to make the check boxes easier to discover, pre-check them if a file
-        // is selected.
-        if (updateCheckBoxes) {
-            binding.checkBoxDataLibShows.isChecked = showsFileUri != null
-            binding.checkBoxDataLibLists.isChecked = listsFileUri != null
-            binding.checkBoxDataLibMovies.isChecked = moviesFileUri != null
-        }
-    }
-
-    private fun setUriOrPlaceholder(textView: TextView, uri: Uri?) {
-        textView.text = uri?.toString() ?: getString(R.string.no_file_selected)
+        model.updateImportFileNames()
     }
 
     class LiberationResultEvent {
