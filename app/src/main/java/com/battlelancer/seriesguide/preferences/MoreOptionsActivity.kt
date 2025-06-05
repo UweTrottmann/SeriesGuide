@@ -15,6 +15,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.CloudSetupActivity
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.databinding.ActivityMoreOptionsBinding
+import com.battlelancer.seriesguide.dataliberation.BackupSettings
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
 import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.sync.SyncProgress
@@ -123,6 +124,11 @@ class MoreOptionsActivity : BaseTopActivity() {
             } else {
                 setText(R.string.connect_trakt)
             }
+        }
+        binding.textViewMoreAutoBackupStatus.apply {
+            BackupSettings.isAutoBackupEnabled(context)
+                .let { if (it) R.string.status_turned_on else R.string.action_turn_on }
+                .let { setText(it) }
         }
 
         // Update supporter status.
