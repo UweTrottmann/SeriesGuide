@@ -129,6 +129,7 @@
 
             <Button
                 android:id="@+id/buttonDataLibShowsImportFile"
+                style="@style/Widget.SeriesGuide.Button.Outlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/action_select_file"
@@ -161,6 +162,7 @@
 
             <Button
                 android:id="@+id/buttonDataLibListsImportFile"
+                style="@style/Widget.SeriesGuide.Button.Outlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/action_select_file"
@@ -193,6 +195,7 @@
 
             <Button
                 android:id="@+id/buttonDataLibMoviesImportFile"
+                style="@style/Widget.SeriesGuide.Button.Outlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/action_select_file"
