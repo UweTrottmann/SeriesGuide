@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2014-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.dataliberation
 
@@ -9,9 +9,13 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.OpenableColumns
 import androidx.activity.result.contract.ActivityResultContract
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Export
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport
 import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 object DataLiberationTools {
 
@@ -114,6 +118,17 @@ object DataLiberationTools {
             return intent?.data
         }
 
+    }
+
+    fun createExportFileTimestamp(): String {
+        return SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.US).format(Date())
+    }
+
+    fun createExportFileName(
+        export: Export,
+        timestamp: String = createExportFileTimestamp()
+    ): String {
+        return "${export.name}-$timestamp.json"
     }
 
     fun Uri.getFileNameFromUriOrLastPathSegment(context: Context): String? {

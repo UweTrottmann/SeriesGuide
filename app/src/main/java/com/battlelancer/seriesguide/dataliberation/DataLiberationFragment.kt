@@ -208,22 +208,22 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
 
     private val createShowExportFileResult =
         registerForActivityResult(CreateExportFileContract()) { uri ->
-            doDataExport(JsonExportTask.BACKUP_SHOWS, uri)
+            doDataExport(JsonExportTask.EXPORT_SHOWS, uri)
         }
 
     private val createListsExportFileResult =
         registerForActivityResult(CreateExportFileContract()) { uri ->
-            doDataExport(JsonExportTask.BACKUP_LISTS, uri)
+            doDataExport(JsonExportTask.EXPORT_LISTS, uri)
         }
 
     private val createMovieExportFileResult =
         registerForActivityResult(CreateExportFileContract()) { uri ->
-            doDataExport(JsonExportTask.BACKUP_MOVIES, uri)
+            doDataExport(JsonExportTask.EXPORT_MOVIES, uri)
         }
 
     private val selectShowsImportFileResult =
         registerForActivityResult(SelectImportFileContract()) { uri ->
-            storeImportFileUri(JsonExportTask.BACKUP_SHOWS, uri)
+            storeImportFileUri(JsonExportTask.EXPORT_SHOWS, uri)
             // For convenience and discoverability, enable for import after selecting file
             if (uri != null) {
                 binding?.checkBoxDataLibShows?.isChecked = true
@@ -232,7 +232,7 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
 
     private val selectListsImportFileResult =
         registerForActivityResult(SelectImportFileContract()) { uri ->
-            storeImportFileUri(JsonExportTask.BACKUP_LISTS, uri)
+            storeImportFileUri(JsonExportTask.EXPORT_LISTS, uri)
             // For convenience and discoverability, enable for import after selecting file
             if (uri != null) {
                 binding?.checkBoxDataLibLists?.isChecked = true
@@ -241,7 +241,7 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
 
     private val selectMoviesImportFileResult =
         registerForActivityResult(SelectImportFileContract()) { uri ->
-            storeImportFileUri(JsonExportTask.BACKUP_MOVIES, uri)
+            storeImportFileUri(JsonExportTask.EXPORT_MOVIES, uri)
             // For convenience and discoverability, enable for import after selecting file
             if (uri != null) {
                 binding?.checkBoxDataLibMovies?.isChecked = true

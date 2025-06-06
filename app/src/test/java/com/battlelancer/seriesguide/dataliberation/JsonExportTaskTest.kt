@@ -64,7 +64,7 @@ class JsonExportTaskTest {
         // Clean any existing file, create an empty file as export task expects one
         Files.deleteIfExists(file.toPath())
         file.createNewFile()
-        exportTask.testBackupFile = file
+        exportTask.testExportFile = file
 
         // Using URI does not work, parsing returns empty path
         // and Robolectric fails with FileNotFoundException
@@ -85,7 +85,7 @@ class JsonExportTaskTest {
             progressListener = null,
             isFullDump = true,
             isAutoBackupMode = false,
-            type = JsonExportTask.BACKUP_SHOWS,
+            type = JsonExportTask.EXPORT_SHOWS,
             sgShow2Helper,
             sgSeason2Helper,
             sgEpisode2Helper,
@@ -266,7 +266,7 @@ class JsonExportTaskTest {
             progressListener = null,
             isFullDump = true,
             isAutoBackupMode = false,
-            type = JsonExportTask.BACKUP_LISTS,
+            type = JsonExportTask.EXPORT_LISTS,
             mock(SgShow2Helper::class.java),
             mock(SgSeason2Helper::class.java),
             mock(SgEpisode2Helper::class.java),
@@ -349,7 +349,7 @@ class JsonExportTaskTest {
             progressListener = null,
             isFullDump = true,
             isAutoBackupMode = false,
-            type = JsonExportTask.BACKUP_MOVIES,
+            type = JsonExportTask.EXPORT_MOVIES,
             mock(SgShow2Helper::class.java),
             mock(SgSeason2Helper::class.java),
             mock(SgEpisode2Helper::class.java),

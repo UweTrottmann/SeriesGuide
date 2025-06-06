@@ -1,14 +1,11 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2020-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.dataliberation
 
 import android.content.Context
 import android.net.Uri
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask.BackupType
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Companion.BACKUP_LISTS
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Companion.BACKUP_MOVIES
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Companion.BACKUP_SHOWS
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Export
 import kotlinx.coroutines.CoroutineScope
 import timber.log.Timber
 import java.io.Closeable
@@ -17,9 +14,6 @@ import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class AutoBackupException(message: String) : IOException(message)
 
@@ -39,15 +33,8 @@ class AutoBackupTask(
     private val context: Context
 ) {
 
-    sealed class Backup(val name: String, @BackupType val type: Int) {
-        object Shows : Backup("seriesguide-shows", BACKUP_SHOWS)
-        object Lists : Backup("seriesguide-lists", BACKUP_LISTS)
-        object Movies : Backup("seriesguide-movies", BACKUP_MOVIES)
-    }
-
-    private fun getBackupFile(backup: Backup, timestamp: String, backupDirectory: File): File {
-        val fileName = "${backup.name}-$timestamp.json"
-        return File(backupDirectory, fileName)
+    private fun getBackupFile(export: Export, timestamp: String, backupDirectory: File): File {
+        return File(backupDirectory, DataLiberationTools.createExportFileName(export, timestamp))
     }
 
     @Throws(AutoBackupException::class)
@@ -62,29 +49,29 @@ class AutoBackupTask(
             }
         }
 
-        val timestamp = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.US).format(Date())
+        val timestamp = DataLiberationTools.createExportFileTimestamp()
 
         // Create backup.
-        val backupFileShows = Backup.Shows.let { type ->
+        val backupFileShows = Export.Shows.let { type ->
             getBackupFile(type, timestamp, backupDirectory)
                 .also { backup(coroutineScope, type, it) }
         }
 
-        val backupFileLists = Backup.Lists.let { type ->
+        val backupFileLists = Export.Lists.let { type ->
             getBackupFile(type, timestamp, backupDirectory)
                 .also { backup(coroutineScope, type, it) }
         }
 
-        val backupFileMovies = Backup.Movies.let { type ->
+        val backupFileMovies = Export.Movies.let { type ->
             getBackupFile(type, timestamp, backupDirectory)
                 .also { backup(coroutineScope, type, it) }
         }
 
         if (BackupSettings.isCreateCopyOfAutoBackup(context)) {
             // Copy to user files.
-            copyBackupToUserFile(Backup.Shows, backupFileShows)
-            copyBackupToUserFile(Backup.Lists, backupFileLists)
-            copyBackupToUserFile(Backup.Movies, backupFileMovies)
+            copyBackupToUserFile(Export.Shows, backupFileShows)
+            copyBackupToUserFile(Export.Lists, backupFileLists)
+            copyBackupToUserFile(Export.Movies, backupFileMovies)
         }
 
         AutoBackupTools.deleteOldBackups(context)
@@ -95,17 +82,17 @@ class AutoBackupTask(
     @Throws(AutoBackupException::class)
     private suspend fun backup(
         coroutineScope: CoroutineScope,
-        backup: Backup,
+        type: Export,
         backupFile: File
     ) {
         var out: FileOutputStream? = null
         try {
             out = FileOutputStream(backupFile)
 
-            when (backup) {
-                Backup.Shows -> jsonExportTask.writeJsonStreamShows(coroutineScope, out)
-                Backup.Lists -> jsonExportTask.writeJsonStreamLists(coroutineScope, out)
-                Backup.Movies -> jsonExportTask.writeJsonStreamMovies(coroutineScope, out)
+            when (type) {
+                Export.Shows -> jsonExportTask.writeJsonStreamShows(coroutineScope, out)
+                Export.Lists -> jsonExportTask.writeJsonStreamLists(coroutineScope, out)
+                Export.Movies -> jsonExportTask.writeJsonStreamMovies(coroutineScope, out)
             }
         } catch (e: Exception) {
             if (backupFile.delete()) {
@@ -120,12 +107,12 @@ class AutoBackupTask(
     }
 
     @Throws(AutoBackupException::class)
-    private fun copyBackupToUserFile(backup: Backup, sourceFile: File) {
+    private fun copyBackupToUserFile(export: Export, sourceFile: File) {
         // Skip if no custom backup file configured.
-        val outFileUri: Uri = jsonExportTask.getDataBackupFile(backup.type)
+        val outFileUri: Uri = jsonExportTask.getExportFileUri(export.type)
             ?: return
 
-        Timber.i("Copying ${backup.name} backup to user file.")
+        Timber.i("Copying ${export.name} backup to user file.")
 
         // Do not guard against FileNotFoundException, backup file should exist.
         FileInputStream(sourceFile)
@@ -147,11 +134,11 @@ class AutoBackupTask(
                     }
                 } catch (e: FileNotFoundException) {
                     Timber.e("Backup file not found, removing from prefs.")
-                    jsonExportTask.removeBackupFileUri(backup.type)
+                    jsonExportTask.removeExportFileUri(export.type)
                     throw e
                 } catch (e: SecurityException) {
                     Timber.e("Backup file not writable, removing from prefs.")
-                    jsonExportTask.removeBackupFileUri(backup.type)
+                    jsonExportTask.removeExportFileUri(export.type)
                     throw e
                 }
             }
