@@ -25,6 +25,7 @@ import com.battlelancer.seriesguide.shows.database.SgSeason2Helper
 import com.battlelancer.seriesguide.shows.database.SgShow2Helper
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.util.Errors
+import com.battlelancer.seriesguide.util.TextTools
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
 import com.google.gson.stream.JsonWriter
@@ -98,7 +99,7 @@ class JsonExportTask(
      * (openFileDescriptor throws FileNotFoundException).
      */
     @VisibleForTesting
-    var testBackupFile: File? = null
+    var testExportFile: File? = null
 
     /**
      * Wraps [run] so it can be called from Java code.
@@ -139,8 +140,8 @@ class JsonExportTask(
             }
 
             var result = SUCCESS
-            if (type == null || type == BACKUP_SHOWS) {
-                result = exportData(coroutineScope, BACKUP_SHOWS)
+            if (type == null || type == EXPORT_SHOWS) {
+                result = exportData(coroutineScope, EXPORT_SHOWS)
                 if (result != SUCCESS) {
                     return result
                 }
@@ -149,8 +150,8 @@ class JsonExportTask(
                 }
             }
 
-            if (type == null || type == BACKUP_LISTS) {
-                result = exportData(coroutineScope, BACKUP_LISTS)
+            if (type == null || type == EXPORT_LISTS) {
+                result = exportData(coroutineScope, EXPORT_LISTS)
                 if (result != SUCCESS) {
                     return result
                 }
@@ -159,8 +160,8 @@ class JsonExportTask(
                 }
             }
 
-            if (type == null || type == BACKUP_MOVIES) {
-                result = exportData(coroutineScope, BACKUP_MOVIES)
+            if (type == null || type == EXPORT_MOVIES) {
+                result = exportData(coroutineScope, EXPORT_MOVIES)
             }
 
             result
@@ -175,26 +176,32 @@ class JsonExportTask(
 
     private fun onPostExecute(result: Int) {
         if (!isAutoBackupMode) {
-            val messageId: Int
+            val message: String
             val showIndefinite: Boolean
             when (result) {
                 SUCCESS -> {
-                    messageId = R.string.backup_success
+                    message = context.getString(R.string.status_successful)
                     showIndefinite = false
                 }
+
                 ERROR_FILE_ACCESS -> {
-                    messageId = R.string.backup_failed_file_access
+                    message = TextTools.dotSeparate(
+                        context,
+                        R.string.status_failure,
+                        R.string.status_failed_file_access
+                    )
                     showIndefinite = true
                 }
+
                 else -> {
-                    messageId = R.string.backup_failed
+                    message = context.getString(R.string.status_failure)
                     showIndefinite = true
                 }
             }
             EventBus.getDefault()
                 .post(
                     LiberationResultEvent(
-                        context.getString(messageId), errorCause, showIndefinite
+                        context, message, errorCause, showIndefinite
                     )
                 )
         } else {
@@ -202,22 +209,22 @@ class JsonExportTask(
         }
     }
 
-    private suspend fun exportData(coroutineScope: CoroutineScope, @BackupType type: Int): Int {
+    private suspend fun exportData(coroutineScope: CoroutineScope, @ExportType type: Int): Int {
         // try to export all data
         try {
-            val testBackupFile = testBackupFile
+            val testExportFile = testExportFile
             var pfd: ParcelFileDescriptor? = null
-            val out = if (testBackupFile == null) {
-                // ensure the user has selected a backup file
-                val backupFileUri = getDataBackupFile(type)
+            val out = if (testExportFile == null) {
+                // ensure the user has selected a file
+                val exportFileUri = getExportFileUri(type)
                     ?: return ERROR_FILE_ACCESS
 
-                pfd = context.contentResolver.openFileDescriptor(backupFileUri, "w")
+                pfd = context.contentResolver.openFileDescriptor(exportFileUri, "w")
                     ?: return ERROR_FILE_ACCESS
 
                 FileOutputStream(pfd.fileDescriptor)
             } else {
-                FileOutputStream(testBackupFile)
+                FileOutputStream(testExportFile)
             }
 
             // Even though using streams and FileOutputStream does not append by
@@ -227,13 +234,15 @@ class JsonExportTask(
             out.channel.truncate(0)
 
             when (type) {
-                BACKUP_SHOWS -> {
+                EXPORT_SHOWS -> {
                     writeJsonStreamShows(coroutineScope, out)
                 }
-                BACKUP_LISTS -> {
+
+                EXPORT_LISTS -> {
                     writeJsonStreamLists(coroutineScope, out)
                 }
-                BACKUP_MOVIES -> {
+
+                EXPORT_MOVIES -> {
                     writeJsonStreamMovies(coroutineScope, out)
                 }
             }
@@ -241,27 +250,27 @@ class JsonExportTask(
             // let the document provider know we're done.
             pfd?.close()
         } catch (e: FileNotFoundException) {
-            Timber.e(e, "Backup file not found.")
-            removeBackupFileUri(type)
+            Timber.e(e, "File not found.")
+            removeExportFileUri(type)
             errorCause = e.message
             return ERROR_FILE_ACCESS
         } catch (e: IOException) {
-            Timber.e(e, "Could not access backup file.")
-            removeBackupFileUri(type)
+            Timber.e(e, "Failed to write to file.")
+            removeExportFileUri(type)
             errorCause = e.message
             return ERROR_FILE_ACCESS
         } catch (e: SecurityException) {
-            Timber.e(e, "Could not access backup file.")
-            removeBackupFileUri(type)
+            Timber.e(e, "No permission to access file.")
+            removeExportFileUri(type)
             errorCause = e.message
             return ERROR_FILE_ACCESS
         } catch (e: JsonParseException) {
-            Timber.e(e, "JSON export failed.")
+            Timber.e(e, "Failed to create JSON export.")
             errorCause = e.message
             return ERROR
         } catch (e: Exception) {
             // Only report unexpected errors.
-            Errors.logAndReport("Backup failed.", e)
+            Errors.logAndReport("Export failed unexpectedly.", e)
             errorCause = e.message
             return ERROR
         }
@@ -269,11 +278,11 @@ class JsonExportTask(
         return SUCCESS
     }
 
-    fun getDataBackupFile(@BackupType type: Int): Uri? {
+    fun getExportFileUri(@ExportType type: Int): Uri? {
         return BackupSettings.getExportFileUri(context, type, isAutoBackupMode)
     }
 
-    fun removeBackupFileUri(@BackupType type: Int) {
+    fun removeExportFileUri(@ExportType type: Int) {
         BackupSettings.storeExportFileUri(context, type, null, isAutoBackupMode)
     }
 
@@ -513,9 +522,9 @@ class JsonExportTask(
         const val EXPORT_JSON_FILE_LISTS = "seriesguide-lists-backup.json"
         const val EXPORT_JSON_FILE_MOVIES = "seriesguide-movies-backup.json"
 
-        const val BACKUP_SHOWS = 1
-        const val BACKUP_LISTS = 2
-        const val BACKUP_MOVIES = 3
+        const val EXPORT_SHOWS = 1
+        const val EXPORT_LISTS = 2
+        const val EXPORT_MOVIES = 3
 
         const val SUCCESS = 1
         private const val ERROR_FILE_ACCESS = 0
@@ -527,8 +536,14 @@ class JsonExportTask(
     }
 
     @Retention(AnnotationRetention.SOURCE)
-    @IntDef(BACKUP_SHOWS, BACKUP_LISTS, BACKUP_MOVIES)
-    annotation class BackupType
+    @IntDef(EXPORT_SHOWS, EXPORT_LISTS, EXPORT_MOVIES)
+    annotation class ExportType
+
+    sealed class Export(val name: String, @ExportType val type: Int) {
+        object Shows : Export("seriesguide-shows", EXPORT_SHOWS)
+        object Lists : Export("seriesguide-lists", EXPORT_LISTS)
+        object Movies : Export("seriesguide-movies", EXPORT_MOVIES)
+    }
 
     /**
      * Show status used when exporting data.

@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2014-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.dataliberation
 
@@ -7,10 +7,15 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.provider.OpenableColumns
 import androidx.activity.result.contract.ActivityResultContract
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Export
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport
 import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 object DataLiberationTools {
 
@@ -113,5 +118,46 @@ object DataLiberationTools {
             return intent?.data
         }
 
+    }
+
+    fun createExportFileTimestamp(): String {
+        return SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.US).format(Date())
+    }
+
+    fun createExportFileName(
+        export: Export,
+        timestamp: String = createExportFileTimestamp()
+    ): String {
+        return "${export.name}-$timestamp.json"
+    }
+
+    fun Uri.getFileNameFromUriOrLastPathSegment(context: Context): String? {
+        // For the external storage documents provider, return the last path segment, it should
+        // contain the file path and be more helpful.
+        // content://com.android.externalstorage.documents/document/primary%3ADocuments%2Fseriesguide-shows-backup.json
+        val isExternalStorage = authority == "com.android.externalstorage.documents"
+        if (isExternalStorage) {
+            return "$lastPathSegment"
+        }
+
+        // For all other providers return the authority and file name, or if not available last part
+        // of the URI.
+        val authority = authority ?: return null
+        val fileName = getFileName(context) ?: lastPathSegment ?: return null
+        return "$authority $fileName"
+    }
+
+    private fun Uri.getFileName(context: Context): String? {
+        val cursor = context.contentResolver
+            .query(this, null, null, null, null)
+        cursor?.use {
+            if (it.moveToFirst()) {
+                val nameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                if (nameIndex != -1) {
+                    return it.getString(nameIndex)
+                }
+            }
+        }
+        return null
     }
 }

@@ -1,12 +1,12 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2020-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.dataliberation
 
 import android.content.Context
 import android.os.Environment
-import com.battlelancer.seriesguide.dataliberation.AutoBackupTask.Backup
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask.BackupType
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Export
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ExportType
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -30,14 +30,14 @@ object AutoBackupTools {
 
     fun deleteOldBackups(context: Context) {
         Timber.i("Deleting old backups.")
-        deleteOldBackups(Backup.Shows, context)
-        deleteOldBackups(Backup.Lists, context)
-        deleteOldBackups(Backup.Movies, context)
+        deleteOldBackups(Export.Shows, context)
+        deleteOldBackups(Export.Lists, context)
+        deleteOldBackups(Export.Movies, context)
     }
 
-    private fun deleteOldBackups(backup: Backup, context: Context) {
+    private fun deleteOldBackups(export: Export, context: Context) {
         val backups = try {
-            getAllBackupsNewestFirst(backup, context)
+            getAllBackupsNewestFirst(export, context)
         } catch (e: IOException) {
             Timber.e(e, "Unable to delete old backups")
             return
@@ -57,19 +57,19 @@ object AutoBackupTools {
      * Only checks if an auto backup file for shows is available, likely others are then, too.
      */
     fun isAutoBackupMaybeAvailable(context: Context): Boolean {
-        return getLatestBackupOrNull(JsonExportTask.BACKUP_SHOWS, context) != null
+        return getLatestBackupOrNull(JsonExportTask.EXPORT_SHOWS, context) != null
     }
 
     @JvmStatic
-    fun getLatestBackupOrNull(@BackupType type: Int, context: Context): BackupFile? {
-        val backup = when (type) {
-            Backup.Shows.type -> Backup.Shows
-            Backup.Lists.type -> Backup.Lists
-            Backup.Movies.type -> Backup.Movies
+    fun getLatestBackupOrNull(@ExportType type: Int, context: Context): BackupFile? {
+        val export = when (type) {
+            Export.Shows.type -> Export.Shows
+            Export.Lists.type -> Export.Lists
+            Export.Movies.type -> Export.Movies
             else -> throw IllegalArgumentException("Unknown backup type $type")
         }
         try {
-            getAllBackupsNewestFirst(backup, context)
+            getAllBackupsNewestFirst(export, context)
                 .let { return if (it.isNotEmpty()) it[0] else null }
         } catch (e: IOException) {
             Timber.e(e, "Unable to get latest backup.")
@@ -80,12 +80,12 @@ object AutoBackupTools {
     data class BackupFile(val file: File, val timestamp: Long)
 
     @Throws(IOException::class)
-    private fun getAllBackupsNewestFirst(backup: Backup, context: Context): List<BackupFile> {
+    private fun getAllBackupsNewestFirst(export: Export, context: Context): List<BackupFile> {
         val backupDirectory = getBackupDirectory(context)
         val files = backupDirectory.listFiles()
 
         val backups = files?.mapNotNull { file ->
-            if (file.isFile && file.name.startsWith(backup.name)) {
+            if (file.isFile && file.name.startsWith(export.name)) {
                 getBackupTimestamp(file)
                     ?.let { return@mapNotNull BackupFile(file, it) }
             }

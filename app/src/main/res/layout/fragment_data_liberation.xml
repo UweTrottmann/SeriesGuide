@@ -19,7 +19,7 @@
                 android:id="@+id/textViewDataLibLabelBackup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/backup_button"
+                android:text="@string/title_export"
                 android:textAppearance="@style/TextAppearance.SeriesGuide.Headline6"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -33,128 +33,104 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewDataLibLabelBackup" />
+                app:layout_constraintTop_toBottomOf="@id/textViewDataLibLabelBackup" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/textViewDataLibShows"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/shows"
                 android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/checkBoxDataLibFullDump" />
+                app:layout_constraintTop_toBottomOf="@id/checkBoxDataLibFullDump" />
 
             <Button
-                android:id="@+id/buttonDataLibShowsExportFile"
+                android:id="@+id/buttonDataLibShowsExport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/action_select_file"
+                android:text="@string/action_export"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
+                app:layout_constraintTop_toBottomOf="@id/textViewDataLibShows" />
 
             <TextView
-                android:id="@+id/textViewDataLibShowsExportFile"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/buttonDataLibShowsExportFile"
-                tools:text="content://some.path.on.storage/sg-shows-export/some.path.on.storage/sg-shows-export.json" />
-
-            <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/textViewDataLibLists"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/lists"
                 android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewDataLibShowsExportFile" />
+                app:layout_constraintTop_toBottomOf="@id/buttonDataLibShowsExport" />
 
             <Button
-                android:id="@+id/buttonDataLibListsExportFile"
+                android:id="@+id/buttonDataLibListsExport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@string/action_select_file"
+                android:text="@string/action_export"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+                app:layout_constraintTop_toBottomOf="@id/textViewDataLibLists" />
 
             <TextView
-                android:id="@+id/textViewDataLibListsExportFile"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/buttonDataLibListsExportFile"
-                tools:text="some path" />
-
-            <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/textViewDataLibMovies"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/movies"
                 android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewDataLibListsExportFile" />
+                app:layout_constraintTop_toBottomOf="@id/buttonDataLibListsExport" />
 
             <Button
-                android:id="@+id/buttonDataLibMoviesExportFile"
+                android:id="@+id/buttonDataLibMoviesExport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@string/action_select_file"
+                android:text="@string/action_export"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-            <TextView
-                android:id="@+id/textViewDataLibMoviesExportFile"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/buttonDataLibMoviesExportFile"
-                tools:text="content://some.path.on.storage/sg-movies-export.json" />
+                app:layout_constraintTop_toBottomOf="@id/textViewDataLibMovies" />
 
             <TextView
                 android:id="@+id/textViewDataLibLabelImport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="@string/import_button"
+                android:layout_marginTop="32dp"
+                android:text="@string/title_import"
                 android:textAppearance="@style/TextAppearance.SeriesGuide.Headline6"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewDataLibMoviesExportFile" />
+                app:layout_constraintTop_toBottomOf="@id/buttonDataLibMoviesExport" />
+
+            <Button
+                android:id="@+id/buttonDataLibImportDocs"
+                style="@style/Widget.SeriesGuide.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/action_view_import_documentation"
+                app:icon="@drawable/ic_open_in_new_control_24dp"
+                app:iconGravity="end"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewDataLibLabelImport" />
 
             <CheckBox
                 android:id="@+id/checkBoxDataLibShows"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:text="@string/shows"
                 android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewDataLibLabelImport" />
+                app:layout_constraintTop_toBottomOf="@+id/buttonDataLibImportDocs" />
 
             <Button
                 android:id="@+id/buttonDataLibShowsImportFile"
+                style="@style/Widget.SeriesGuide.Button.Outlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_padding"
                 android:text="@string/action_select_file"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/checkBoxDataLibShows" />
@@ -163,9 +139,8 @@
                 android:id="@+id/textViewDataLibShowsImportFile"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
+                android:layout_marginStart="@dimen/larger_padding"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Dim"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/buttonDataLibShowsImportFile"
@@ -185,8 +160,10 @@
 
             <Button
                 android:id="@+id/buttonDataLibListsImportFile"
+                style="@style/Widget.SeriesGuide.Button.Outlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_padding"
                 android:text="@string/action_select_file"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/checkBoxDataLibLists" />
@@ -195,9 +172,8 @@
                 android:id="@+id/textViewDataLibListsImportFile"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
+                android:layout_marginStart="@dimen/larger_padding"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Dim"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/buttonDataLibListsImportFile"
@@ -217,8 +193,10 @@
 
             <Button
                 android:id="@+id/buttonDataLibMoviesImportFile"
+                style="@style/Widget.SeriesGuide.Button.Outlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_padding"
                 android:text="@string/action_select_file"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/checkBoxDataLibMovies" />
@@ -227,9 +205,8 @@
                 android:id="@+id/textViewDataLibMoviesImportFile"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
+                android:layout_marginStart="@dimen/larger_padding"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Dim"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/buttonDataLibMoviesImportFile"
@@ -245,7 +222,31 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewDataLibMoviesImportFile" />
+                app:layout_constraintTop_toBottomOf="@id/textViewDataLibMoviesImportFile" />
+
+            <TextView
+                android:id="@+id/textViewDataLibImportCloudWarning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/import_cloud_warning"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold.Error"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewDataLibImportWarning" />
+
+            <TextView
+                android:id="@+id/textViewDataLibImportCloudWarningDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/import_cloud_warning_details"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Error"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewDataLibImportCloudWarning" />
 
             <Button
                 android:id="@+id/buttonDataLibImport"
@@ -257,7 +258,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewDataLibImportWarning" />
+                app:layout_constraintTop_toBottomOf="@id/textViewDataLibImportCloudWarningDetails" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

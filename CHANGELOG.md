@@ -10,6 +10,13 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2025.2
 
+### Next release
+
+* 🔧 Backup: rename to "Export" and "Import", move them and Auto Backup up to More screen.
+* 🔧 Import: display names of selected files, select for import after selecting a file.
+* 🔧 Auto Backup: display names of selected files.
+* 🔧 Export: add timestamp to file names.
+
 ### 2025.2.2 - 2025-05-22 🧪
 
 * 🔨 Shows: correctly display initial tab indicator if there is an active show filter.
