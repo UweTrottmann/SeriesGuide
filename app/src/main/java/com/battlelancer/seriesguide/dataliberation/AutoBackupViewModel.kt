@@ -46,13 +46,13 @@ class AutoBackupViewModel(application: Application) : AndroidViewModel(applicati
 
     fun updateAvailableBackupData() = viewModelScope.launch(Dispatchers.IO) {
         val backupShows = AutoBackupTools.getLatestBackupOrNull(
-            JsonExportTask.BACKUP_SHOWS, getApplication()
+            JsonExportTask.EXPORT_SHOWS, getApplication()
         )
         val backupLists = AutoBackupTools.getLatestBackupOrNull(
-            JsonExportTask.BACKUP_LISTS, getApplication()
+            JsonExportTask.EXPORT_LISTS, getApplication()
         )
         val backupMovies = AutoBackupTools.getLatestBackupOrNull(
-            JsonExportTask.BACKUP_MOVIES, getApplication()
+            JsonExportTask.EXPORT_MOVIES, getApplication()
         )
 
         // All three files required.
@@ -89,15 +89,15 @@ class AutoBackupViewModel(application: Application) : AndroidViewModel(applicati
             } else {
                 val showsFileUri = BackupSettings.getExportFileUri(
                     context,
-                    JsonExportTask.BACKUP_SHOWS, true
+                    JsonExportTask.EXPORT_SHOWS, true
                 )
                 val listsFileUri = BackupSettings.getExportFileUri(
                     context,
-                    JsonExportTask.BACKUP_LISTS, true
+                    JsonExportTask.EXPORT_LISTS, true
                 )
                 val moviesFileUri = BackupSettings.getExportFileUri(
                     context,
-                    JsonExportTask.BACKUP_MOVIES, true
+                    JsonExportTask.EXPORT_MOVIES, true
                 )
 
                 copiesFiles.value = CopiesFiles(

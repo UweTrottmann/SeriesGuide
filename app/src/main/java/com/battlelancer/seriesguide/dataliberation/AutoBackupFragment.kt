@@ -203,17 +203,17 @@ class AutoBackupFragment : Fragment() {
 
     private val createShowExportFileResult =
         registerForActivityResult(DataLiberationTools.CreateExportFileContract()) { uri ->
-            storeBackupFile(JsonExportTask.BACKUP_SHOWS, uri)
+            storeBackupFile(JsonExportTask.EXPORT_SHOWS, uri)
         }
 
     private val createListsExportFileResult =
         registerForActivityResult(DataLiberationTools.CreateExportFileContract()) { uri ->
-            storeBackupFile(JsonExportTask.BACKUP_LISTS, uri)
+            storeBackupFile(JsonExportTask.EXPORT_LISTS, uri)
         }
 
     private val createMovieExportFileResult =
         registerForActivityResult(DataLiberationTools.CreateExportFileContract()) { uri ->
-            storeBackupFile(JsonExportTask.BACKUP_MOVIES, uri)
+            storeBackupFile(JsonExportTask.EXPORT_MOVIES, uri)
         }
 
     private fun storeBackupFile(type: Int, uri: Uri?) {

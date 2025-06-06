@@ -155,11 +155,11 @@ public class BackupSettings {
     }
 
     /**
-     * Store or remove (by setting it {@code null}) the URI to a backup file.
+     * Store or remove (by setting it {@code null}) the URI to an export file.
      */
     static void storeExportFileUri(
             Context context,
-            @JsonExportTask.BackupType int type,
+            @JsonExportTask.ExportType int type,
             @Nullable Uri uri,
             boolean isAutoBackup
     ) {
@@ -178,7 +178,7 @@ public class BackupSettings {
      */
     static void storeImportFileUri(
             Context context,
-            @JsonExportTask.BackupType int type,
+            @JsonExportTask.ExportType int type,
             @NonNull Uri uri
     ) {
         String key = getImportFileKey(type);
@@ -192,7 +192,7 @@ public class BackupSettings {
     @Nullable
     static Uri getExportFileUri(
             Context context,
-            @JsonExportTask.BackupType int type,
+            @JsonExportTask.ExportType int type,
             boolean isAutoBackup
     ) {
         String key = isAutoBackup
@@ -213,7 +213,7 @@ public class BackupSettings {
     @Nullable
     static Uri getImportFileUriOrExportFileUri(
             Context context,
-            @JsonExportTask.BackupType int type
+            @JsonExportTask.ExportType int type
     ) {
         String key = getImportFileKey(type);
 
@@ -226,39 +226,39 @@ public class BackupSettings {
         return Uri.parse(uriString);
     }
 
-    private static String getAutoBackupFileKey(@JsonExportTask.BackupType int type) {
+    private static String getAutoBackupFileKey(@JsonExportTask.ExportType int type) {
         switch (type) {
-            case JsonExportTask.BACKUP_SHOWS:
+            case JsonExportTask.EXPORT_SHOWS:
                 return KEY_AUTOBACKUP_SHOWS_EXPORT_URI;
-            case JsonExportTask.BACKUP_LISTS:
+            case JsonExportTask.EXPORT_LISTS:
                 return KEY_AUTOBACKUP_LISTS_EXPORT_URI;
-            case JsonExportTask.BACKUP_MOVIES:
+            case JsonExportTask.EXPORT_MOVIES:
                 return KEY_AUTOBACKUP_MOVIES_EXPORT_URI;
             default:
                 throw new IllegalArgumentException("Unknown backup type " + type);
         }
     }
 
-    private static String getExportFileKey(@JsonExportTask.BackupType int type) {
+    private static String getExportFileKey(@JsonExportTask.ExportType int type) {
         switch (type) {
-            case JsonExportTask.BACKUP_SHOWS:
+            case JsonExportTask.EXPORT_SHOWS:
                 return KEY_SHOWS_EXPORT_URI;
-            case JsonExportTask.BACKUP_LISTS:
+            case JsonExportTask.EXPORT_LISTS:
                 return KEY_LISTS_EXPORT_URI;
-            case JsonExportTask.BACKUP_MOVIES:
+            case JsonExportTask.EXPORT_MOVIES:
                 return KEY_MOVIES_EXPORT_URI;
             default:
                 throw new IllegalArgumentException("Unknown backup type " + type);
         }
     }
 
-    private static String getImportFileKey(@JsonExportTask.BackupType int type) {
+    private static String getImportFileKey(@JsonExportTask.ExportType int type) {
         switch (type) {
-            case JsonExportTask.BACKUP_SHOWS:
+            case JsonExportTask.EXPORT_SHOWS:
                 return KEY_SHOWS_IMPORT_URI;
-            case JsonExportTask.BACKUP_LISTS:
+            case JsonExportTask.EXPORT_LISTS:
                 return KEY_LISTS_IMPORT_URI;
-            case JsonExportTask.BACKUP_MOVIES:
+            case JsonExportTask.EXPORT_MOVIES:
                 return KEY_MOVIES_IMPORT_URI;
             default:
                 throw new IllegalArgumentException("Unknown backup type " + type);

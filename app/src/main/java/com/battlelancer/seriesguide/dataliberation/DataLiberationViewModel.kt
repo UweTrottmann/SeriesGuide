@@ -47,15 +47,15 @@ class DataLiberationViewModel(application: Application) : AndroidViewModel(appli
             val context = getApplication<Application>()
             val showsFileUri = BackupSettings.getImportFileUriOrExportFileUri(
                 context,
-                JsonExportTask.BACKUP_SHOWS
+                JsonExportTask.EXPORT_SHOWS
             )
             val listsFileUri = BackupSettings.getImportFileUriOrExportFileUri(
                 context,
-                JsonExportTask.BACKUP_LISTS
+                JsonExportTask.EXPORT_LISTS
             )
             val moviesFileUri = BackupSettings.getImportFileUriOrExportFileUri(
                 context,
-                JsonExportTask.BACKUP_MOVIES
+                JsonExportTask.EXPORT_MOVIES
             )
 
             importFiles.value = ImportFiles(

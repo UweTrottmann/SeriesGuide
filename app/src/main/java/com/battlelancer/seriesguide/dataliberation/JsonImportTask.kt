@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2013-2024 Uwe Trottmann
+// Copyright 2013-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.dataliberation
 
@@ -15,7 +15,7 @@ import com.battlelancer.seriesguide.dataliberation.DataLiberationFragment.Libera
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgEpisodeForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgSeasonForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgShowForImport
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask.BackupType
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ExportType
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ListItemTypesExport
 import com.battlelancer.seriesguide.dataliberation.model.List
 import com.battlelancer.seriesguide.dataliberation.model.Movie
@@ -136,7 +136,7 @@ class JsonImportTask(
 
         var result: Int
         if (isImportShows) {
-            result = importData(JsonExportTask.BACKUP_SHOWS)
+            result = importData(JsonExportTask.EXPORT_SHOWS)
             if (result != SUCCESS) {
                 return result
             }
@@ -146,7 +146,7 @@ class JsonImportTask(
         }
 
         if (isImportLists) {
-            result = importData(JsonExportTask.BACKUP_LISTS)
+            result = importData(JsonExportTask.EXPORT_LISTS)
             if (result != SUCCESS) {
                 return result
             }
@@ -156,7 +156,7 @@ class JsonImportTask(
         }
 
         if (isImportMovies) {
-            result = importData(JsonExportTask.BACKUP_MOVIES)
+            result = importData(JsonExportTask.EXPORT_MOVIES)
             if (result != SUCCESS) {
                 return result
             }
@@ -204,7 +204,7 @@ class JsonImportTask(
         )
     }
 
-    private fun importData(@BackupType type: Int): Int {
+    private fun importData(@ExportType type: Int): Int {
         if (!isImportingAutoBackup) {
             val testBackupFile = testBackupFile
             var pfd: ParcelFileDescriptor? = null
@@ -313,14 +313,14 @@ class JsonImportTask(
         return SUCCESS
     }
 
-    private fun getDataBackupFile(@BackupType type: Int): Uri? {
+    private fun getDataBackupFile(@ExportType type: Int): Uri? {
         return BackupSettings.getImportFileUriOrExportFileUri(context, type)
     }
 
-    private fun clearExistingData(@BackupType type: Int): Boolean {
+    private fun clearExistingData(@ExportType type: Int): Boolean {
         val batch = ArrayList<ContentProviderOperation>()
         when (type) {
-            JsonExportTask.BACKUP_SHOWS -> {
+            JsonExportTask.EXPORT_SHOWS -> {
                 database.runInTransaction {
                     // delete episodes and seasons first to prevent violating foreign key constraints
                     sgEpisode2Helper.deleteAllEpisodes()
@@ -328,7 +328,7 @@ class JsonImportTask(
                     sgShow2Helper.deleteAllShows()
                 }
             }
-            JsonExportTask.BACKUP_LISTS -> {
+            JsonExportTask.EXPORT_LISTS -> {
                 // delete list items before lists to prevent violating foreign key constraints
                 batch.add(
                     ContentProviderOperation.newDelete(ListItems.CONTENT_URI).build()
@@ -338,7 +338,7 @@ class JsonImportTask(
                         .build()
                 )
             }
-            JsonExportTask.BACKUP_MOVIES -> {
+            JsonExportTask.EXPORT_MOVIES -> {
                 batch.add(
                     ContentProviderOperation.newDelete(SeriesGuideContract.Movies.CONTENT_URI)
                         .build()
@@ -356,7 +356,7 @@ class JsonImportTask(
     }
 
     @Throws(JsonParseException::class, IOException::class, IllegalArgumentException::class)
-    private fun importFromJson(@BackupType type: Int, inputStream: FileInputStream) {
+    private fun importFromJson(@ExportType type: Int, inputStream: FileInputStream) {
         if (inputStream.channel.size() == 0L) {
             Timber.i("Backup file is empty, nothing to import.")
             inputStream.close()
@@ -367,19 +367,19 @@ class JsonImportTask(
         val reader = JsonReader(InputStreamReader(inputStream, "UTF-8"))
         reader.beginArray()
         when (type) {
-            JsonExportTask.BACKUP_SHOWS -> {
+            JsonExportTask.EXPORT_SHOWS -> {
                 while (reader.hasNext()) {
                     val show = gson.fromJson<Show>(reader, Show::class.java)
                     addShowToDatabase(show)
                 }
             }
-            JsonExportTask.BACKUP_LISTS -> {
+            JsonExportTask.EXPORT_LISTS -> {
                 while (reader.hasNext()) {
                     val list = gson.fromJson<List>(reader, List::class.java)
                     addListToDatabase(list)
                 }
             }
-            JsonExportTask.BACKUP_MOVIES -> {
+            JsonExportTask.EXPORT_MOVIES -> {
                 while (reader.hasNext()) {
                     val movie = gson.fromJson<Movie>(reader, Movie::class.java)
                     context.contentResolver.insert(
