@@ -18,6 +18,7 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.databinding.FragmentDataLiberationBinding
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools.CreateExportFileContract
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools.SelectImportFileContract
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Export
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.OnTaskProgressListener
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
@@ -65,7 +66,7 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
         // File select buttons
         binding.buttonDataLibShowsExport.setOnClickListener {
             createShowExportFileResult.tryLaunch(
-                JsonExportTask.EXPORT_JSON_FILE_SHOWS,
+                DataLiberationTools.createExportFileName(Export.Shows),
                 requireContext()
             )
         }
@@ -75,7 +76,7 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
 
         binding.buttonDataLibListsExport.setOnClickListener {
             createListsExportFileResult.tryLaunch(
-                JsonExportTask.EXPORT_JSON_FILE_LISTS,
+                DataLiberationTools.createExportFileName(Export.Lists),
                 requireContext()
             )
         }
@@ -85,7 +86,7 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
 
         binding.buttonDataLibMoviesExport.setOnClickListener {
             createMovieExportFileResult.tryLaunch(
-                JsonExportTask.EXPORT_JSON_FILE_MOVIES,
+                DataLiberationTools.createExportFileName(Export.Movies),
                 requireContext()
             )
         }
