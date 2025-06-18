@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2019-2024 Uwe Trottmann
+// Copyright 2019-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.billing
 
 import android.annotation.SuppressLint
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -24,7 +24,6 @@ import com.battlelancer.seriesguide.ui.BaseActivity
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.WebTools
-import com.google.android.material.snackbar.Snackbar
 import com.uwetrottmann.seriesguide.billing.BillingViewModel
 import com.uwetrottmann.seriesguide.billing.BillingViewModelFactory
 import com.uwetrottmann.seriesguide.billing.SafeAugmentedProductDetails
@@ -165,20 +164,6 @@ class BillingActivity : BaseActivity() {
         private const val PLAY_MANAGE_SUBS_ONE =
             "$PLAY_MANAGE_SUBS_ALL?package=${BuildConfig.APPLICATION_ID}&sku="
 
-        /**
-         * Displays a [Snackbar] that the subscription has expired. Its action opens this activity.
-         */
-        @JvmStatic
-        fun showExpiredNotification(activity: Activity, parentView: View) {
-            val snackbar = Snackbar.make(
-                parentView,
-                R.string.subscription_expired_details,
-                Snackbar.LENGTH_INDEFINITE
-            )
-            snackbar.setAction(R.string.billing_action_manage_subscriptions) {
-                activity.startActivity(Intent(activity, BillingActivity::class.java))
-            }
-            snackbar.show()
-        }
+        fun intent(context: Context) = Intent(context, BillingActivity::class.java)
     }
 }

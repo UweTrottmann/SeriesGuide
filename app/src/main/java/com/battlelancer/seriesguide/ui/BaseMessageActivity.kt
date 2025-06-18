@@ -5,6 +5,7 @@ package com.battlelancer.seriesguide.ui
 
 import android.content.Context
 import android.view.View
+import androidx.annotation.StringRes
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.jobs.FlagJob
 import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceActiveEvent
@@ -79,8 +80,8 @@ abstract class BaseMessageActivity : BaseActivity() {
     fun onServiceCompletedEvent(event: ServiceCompletedEvent) {
         if (event.confirmationText != null) {
             // show a confirmation/error text
-            val snackbarCompleted = Snackbar.make(
-                snackbarParentView, event.confirmationText,
+            val snackbarCompleted = makeSnackbar(
+                event.confirmationText,
                 if (event.isSuccessful) Snackbar.LENGTH_SHORT else Snackbar.LENGTH_LONG
             )
             // replaces any previous snackbar, including the indefinite progress one
@@ -91,10 +92,18 @@ abstract class BaseMessageActivity : BaseActivity() {
     }
 
     /**
-     * Return a view to pass to [Snackbar.make], ideally a CoordinatorLayout.
+     * Return a view to pass to [Snackbar.make] in [makeSnackbar], ideally a CoordinatorLayout.
      */
     open val snackbarParentView: View
         get() = findViewById(android.R.id.content)
+
+    fun makeSnackbar(@StringRes message: Int, length: Int): Snackbar {
+        return makeSnackbar(getString(message), length)
+    }
+
+    open fun makeSnackbar(message: String, length: Int): Snackbar {
+        return Snackbar.make(snackbarParentView, message, length)
+    }
 
     private fun handleServiceActiveEvent(event: ServiceActiveEvent?) {
         val currentSnackbar = snackbarProgress
@@ -104,10 +113,8 @@ abstract class BaseMessageActivity : BaseActivity() {
                 currentSnackbar.duration = BaseTransientBottomBar.LENGTH_INDEFINITE
                 currentSnackbar
             } else {
-                Snackbar.make(
-                    snackbarParentView,
-                    event.getStatusMessage(this), Snackbar.LENGTH_INDEFINITE
-                ).also { this.snackbarProgress = it }
+                makeSnackbar(event.getStatusMessage(this), Snackbar.LENGTH_INDEFINITE)
+                    .also { this.snackbarProgress = it }
             }
             newSnackbar.show()
         } else currentSnackbar?.dismiss()

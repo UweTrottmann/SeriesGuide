@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2013-2024 Uwe Trottmann
+// Copyright 2013-2025 Uwe Trottmann
 // Copyright 2013 Andrew Neal
 
 package com.battlelancer.seriesguide.shows.overview
@@ -255,12 +255,9 @@ class ShowFragment() : Fragment() {
     }
 
     private fun showNotificationsNotAllowedMessage() {
-        (activity as BaseMessageActivity?)?.snackbarParentView
-            ?.let {
-                Snackbar
-                    .make(it, R.string.notifications_allow_reason, Snackbar.LENGTH_LONG)
-                    .show()
-            }
+        (activity as BaseMessageActivity?)
+            ?.makeSnackbar(R.string.notifications_allow_reason, Snackbar.LENGTH_LONG)
+            ?.show()
     }
 
     private val requestNotificationPermissionLauncher =
