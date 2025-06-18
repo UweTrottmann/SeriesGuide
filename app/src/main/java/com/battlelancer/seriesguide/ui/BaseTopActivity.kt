@@ -13,6 +13,8 @@ import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.annotation.IdRes
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.SgApp.Companion.getServicesComponent
@@ -214,6 +216,27 @@ abstract class BaseTopActivity : BaseMessageActivity() {
         if (snackbar != null && snackbar.isShown) {
             snackbar.dismiss()
         }
+    }
+
+    /**
+     * Note: when using the [snackbarParentView] of this activity the Snackbar is not aligned to the
+     * bottom of the screen (due to the bottom navigation bar). So using
+     * [doNotInsetForNavigationBarOrIme] on it.
+     */
+    override fun makeSnackbar(message: String, length: Int): Snackbar {
+        return super.makeSnackbar(message, length)
+            .doNotInsetForNavigationBarOrIme()
+    }
+
+    /**
+     * Prevent the Snackbar from adding bottom margin for the navigation bar (or an input method)
+     * when it is not aligned to the bottom of the screen.
+     *
+     * https://github.com/material-components/material-components-android/issues/3446
+     */
+    private fun Snackbar.doNotInsetForNavigationBarOrIme(): Snackbar {
+        ViewCompat.setOnApplyWindowInsetsListener(view) { _, _ -> WindowInsetsCompat.CONSUMED }
+        return this
     }
 
     override fun onLastAutoBackupFailed() {

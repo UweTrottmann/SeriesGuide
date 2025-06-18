@@ -15,6 +15,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 * 🔧 Diagnostics: debug log can be turned on without restarting the app.
 * 🔧 Diagnostics: instead of sharing it, the debug log file can be saved to a custom location. This
   allows to view and share it in any way that is desired.
+* 🔨 Properly align status messages to the bottom navigation bar.
 
 ### 2025.2.2 - 2025-05-22 🧪
 
