@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2013-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.ui
 
@@ -71,12 +71,12 @@ abstract class BaseMessageActivity : BaseActivity() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventEpisodeTask(event: ServiceActiveEvent?) {
+    fun onServiceActiveEvent(event: ServiceActiveEvent?) {
         handleServiceActiveEvent(event)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventEpisodeTask(event: ServiceCompletedEvent) {
+    fun onServiceCompletedEvent(event: ServiceCompletedEvent) {
         if (event.confirmationText != null) {
             // show a confirmation/error text
             val snackbarCompleted = Snackbar.make(
