@@ -38,7 +38,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.asCoroutineDispatcher
-import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.EventBusException
@@ -176,9 +175,6 @@ class SgApp : Application() {
         if (AppSettings.isUserDebugModeEnabled(this)) {
             // debug logging
             val debugLogBuffer = DebugLogBuffer.getInstance(this)
-            coroutineScope.launch(Dispatchers.IO) {
-                debugLogBuffer.cleanUp()
-            }
             Timber.plant(debugLogBuffer.timberTree())
             // detailed logcat logging
             Timber.plant(Timber.DebugTree())

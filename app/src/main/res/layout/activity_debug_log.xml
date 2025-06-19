@@ -19,7 +19,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewDebugLogs"
+            android:id="@+id/recyclerViewDebugLog"
             style="@style/Widget.SeriesGuide.RecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -29,6 +29,21 @@
             android:paddingEnd="@dimen/grid_item_margin_horizontal"
             android:paddingBottom="@dimen/default_padding"
             tools:listitem="@layout/item_debug_log" />
+
+        <FrameLayout
+            android:id="@+id/frameLayoutDebugLogProgress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/sgColorBackgroundDim">
+
+            <ProgressBar
+                android:id="@+id/progressBarDebugLog"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+        </FrameLayout>
 
     </FrameLayout>
 

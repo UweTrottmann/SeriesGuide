@@ -5,18 +5,21 @@ package com.battlelancer.seriesguide.diagnostics
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.net.Uri
+import android.os.Build
+import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.diagnostics.DebugLogBuffer.Companion.BUFFER_SIZE
+import com.battlelancer.seriesguide.util.PackageTools
+import com.battlelancer.seriesguide.util.TimeTools
+import org.threeten.bp.Instant
+import org.threeten.bp.ZoneOffset
+import org.threeten.bp.format.DateTimeFormatter
 import timber.log.Timber
 import timber.log.Timber.DebugTree
-import java.io.File
-import java.io.FileWriter
-import java.io.IOException
-import java.text.DateFormat
-import java.text.SimpleDateFormat
 import java.util.ArrayDeque
-import java.util.Calendar
 import java.util.Deque
 import java.util.Locale
+
 
 /**
  * Keeps any log sent through [Timber] up to [BUFFER_SIZE] in memory.
@@ -29,8 +32,6 @@ class DebugLogBuffer(context: Context) {
         BUFFER_SIZE + 1
     )
 
-    private var onLogListener: OnLogListener? = null
-
     fun timberTree(): Timber.Tree {
         return object : DebugTree() {
             override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
@@ -39,15 +40,13 @@ class DebugLogBuffer(context: Context) {
                         priority,
                         tag,
                         message,
-                        LOG_DATE_PATTERN.format(Calendar.getInstance().time)
+                        Instant.now()
+                            .atZone(TimeTools.safeSystemDefaultZoneId())
+                            .format(LOG_DATE_PATTERN)
                     )
                 )
             }
         }
-    }
-
-    fun setOnLogListener(onLogListener: OnLogListener?) {
-        this.onLogListener = onLogListener
     }
 
     @Synchronized
@@ -57,105 +56,78 @@ class DebugLogBuffer(context: Context) {
         if (entries.size > BUFFER_SIZE) {
             entries.removeFirst()
         }
-
-        onLog(entry)
     }
 
-    fun bufferedLogs(): List<DebugLogEntry> {
+    fun logBufferSnapshot(): List<DebugLogEntry> {
         return ArrayList(entries)
     }
 
     /**
-     * Save the current logs to disk.
+     * Save the current logs to the given file [uri].
      */
-    fun save(listener: OnSaveLogListener) {
-        val dir = logDir
-
-        if (dir == null) {
-            listener.onError(
-                "Can't save logs. External storage is not mounted. " +
-                        "Check android.permission.WRITE_EXTERNAL_STORAGE permission"
-            )
-            return
-        }
-
-        var fileWriter: FileWriter? = null
-
+    fun save(uri: Uri, listener: OnSaveLogListener) {
         try {
-            val output = File(dir, logFileName)
-            fileWriter = FileWriter(output, true)
+            context.contentResolver.openOutputStream(uri)?.use {
+                it.write(systemInfo())
+                it.write("\n\n".toByteArray())
 
-            val entries = bufferedLogs()
-            for (entry in entries) {
-                fileWriter.write(entry.prettyPrint() + "\n")
-            }
-
-            listener.onSave(output)
-        } catch (e: IOException) {
-            listener.onError(e.message)
-            e.printStackTrace()
-        } finally {
-            if (fileWriter != null) {
-                try {
-                    fileWriter.close()
-                } catch (e: IOException) {
-                    listener.onError(e.message)
-                    e.printStackTrace()
+                val entries = logBufferSnapshot()
+                for (entry in entries) {
+                    it.write(entry.prettyPrint().toByteArray())
+                    it.write("\n".toByteArray())
                 }
             }
+            listener.onSuccess()
+        } catch (e: Exception) {
+            Timber.e(e, "Failed to write log file")
+            listener.onError()
         }
     }
 
-    // TODO
-    fun cleanUp() {
-        val dir = logDir
-        if (dir != null) {
-            val files = dir.listFiles()
-            if (files != null) {
-                for (file in files) {
-                    if (file.name.endsWith(LOG_FILE_END)) {
-                        file.delete()
-                    }
-                }
-            }
-        }
+    private fun systemInfo(): ByteArray {
+        val time = Instant.now()
+            .atZone(ZoneOffset.UTC)
+            .format(DateTimeFormatter.ISO_OFFSET_DATE_TIME)
+
+        return """
+        Time          : $time
+        Version       : ${PackageTools.getVersionString(context)}
+        Package       : ${BuildConfig.APPLICATION_ID}
+        Manufacturer  : ${Build.MANUFACTURER}
+        Model         : ${Build.MODEL}
+        Product       : ${Build.PRODUCT}
+        Android       : ${Build.VERSION.RELEASE}, API ${Build.VERSION.SDK_INT} (${Build.VERSION.INCREMENTAL}, ${Build.DISPLAY})
+        Locale        : ${Locale.getDefault()}
+        """.trimIndent().toByteArray()
     }
 
-    private val logDir: File?
-        get() = context.getExternalFilesDir(null)
-
-    private fun onLog(entry: DebugLogEntry) {
-        if (onLogListener != null) {
-            onLogListener!!.onLog(entry)
-        }
-    }
-
-    private val logFileName: String
+    val logFileName: String
         get() {
-            val pattern = "%s%s"
-            val currentDate = FILENAME_DATE.format(Calendar.getInstance().time)
+            val pattern = "seriesguide-log-%s%s"
+            // Note: as this is user visible, use the device time zone
+            val currentDate = Instant.now()
+                .atZone(TimeTools.safeSystemDefaultZoneId())
+                .format(FILENAME_PATTERN)
 
             return String.format(pattern, currentDate, LOG_FILE_END)
         }
 
     interface OnSaveLogListener {
-        fun onSave(file: File?)
+        fun onSuccess()
 
-        fun onError(message: String?)
-    }
-
-    interface OnLogListener {
-        fun onLog(logEntry: DebugLogEntry?)
+        fun onError()
     }
 
     companion object {
 
         private const val BUFFER_SIZE = 200
 
-        private val FILENAME_DATE: DateFormat = SimpleDateFormat("yyyy-MM-dd HHmm a", Locale.US)
-        private val LOG_DATE_PATTERN: DateFormat = SimpleDateFormat("MM-dd HH:mm:ss.S", Locale.US)
+        private val FILENAME_PATTERN = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss", Locale.US)
+        private val LOG_DATE_PATTERN = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS", Locale.US)
 
-        private const val LOG_FILE_END = ".log"
+        // When using the 'text/plain' MIME type, the Android Storage Access Framework appends the
+        // '.txt' file extension regardless of which one is used, so use '.txt'.
+        private const val LOG_FILE_END = ".txt"
 
         @SuppressLint("StaticFieldLeak") // Using application context
         private var sInstance: DebugLogBuffer? = null
