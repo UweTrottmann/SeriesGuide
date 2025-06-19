@@ -197,6 +197,7 @@
                 <category android:name="android.intent.category.NOTIFICATION_PREFERENCES" />
             </intent-filter>
         </activity>
+        <activity android:name=".diagnostics.DebugLogActivity" />
         <activity
             android:name="com.battlelancer.seriesguide.extensions.ExtensionsConfigurationActivity"
             android:exported="true"

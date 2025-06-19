@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Copyright 2025 Uwe Trottmann -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/textViewItemDebugLogLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/sg_debuglog_debug"
+        android:gravity="center"
+        android:minWidth="20dp"
+        android:textColor="@color/sg_white"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        tools:text="E" />
+
+    <TextView
+        android:id="@+id/textViewItemDebugLogTag"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@id/textViewItemDebugLogLevel"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:textColor="?android:attr/textColorSecondary"
+        android:textSize="11sp"
+        tools:text="06-19 08:30:23.2 SomeLogTag" />
+
+    <TextView
+        android:id="@+id/textViewItemDebugLogMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewItemDebugLogTag"
+        android:layout_marginStart="2dp"
+        android:padding="4dp"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textStyle="bold"
+        tools:text="Log message" />
+
+</RelativeLayout>

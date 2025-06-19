@@ -15,7 +15,7 @@ class DebugLogEntry(
         return String.format("%18s %18s %s %s", timeStamp, tag, displayLevel(), message)
     }
 
-    private fun displayLevel(): String {
+    fun displayLevel(): String {
         return when (level) {
             Log.VERBOSE -> "V"
             Log.DEBUG -> "D"

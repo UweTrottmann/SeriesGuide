@@ -5,12 +5,14 @@ package com.battlelancer.seriesguide.preferences
 
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.lifecycle.lifecycleScope
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.battlelancer.seriesguide.databinding.FragmentDebugViewBinding
+import com.battlelancer.seriesguide.diagnostics.DebugLogActivity
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.AppSettings
@@ -31,7 +33,7 @@ class DebugViewFragment : AppCompatDialogFragment() {
         val binding = FragmentDebugViewBinding.inflate(layoutInflater)
 
         binding.buttonDebugViewDisplayLogs.setOnClickListener {
-            // TODO
+            startActivity(Intent(requireContext(), DebugLogActivity::class.java))
         }
 
         binding.buttonDebugViewTestNotification1.setOnClickListener {
