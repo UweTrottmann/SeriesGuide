@@ -13,6 +13,7 @@ import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
 import androidx.annotation.RequiresApi
+import com.battlelancer.seriesguide.diagnostics.DebugLogBuffer
 import com.battlelancer.seriesguide.modules.AppModule
 import com.battlelancer.seriesguide.modules.DaggerServicesComponent
 import com.battlelancer.seriesguide.modules.HttpClientModule
@@ -33,7 +34,6 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
 import com.uwetrottmann.androidutils.AndroidUtils
-import io.palaima.debugdrawer.timber.data.LumberYard
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -174,12 +174,12 @@ class SgApp : Application() {
         Errors.getReporter()?.setCrashlyticsCollectionEnabled(isSendErrors)
 
         if (AppSettings.isUserDebugModeEnabled(this)) {
-            // debug drawer logging
-            val lumberYard = LumberYard.getInstance(this)
+            // debug logging
+            val debugLogBuffer = DebugLogBuffer.getInstance(this)
             coroutineScope.launch(Dispatchers.IO) {
-                lumberYard.cleanUp()
+                debugLogBuffer.cleanUp()
             }
-            Timber.plant(lumberYard.tree())
+            Timber.plant(debugLogBuffer.timberTree())
             // detailed logcat logging
             Timber.plant(Timber.DebugTree())
         }
