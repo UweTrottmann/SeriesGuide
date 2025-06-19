@@ -1,12 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Copyright 2016-2025 Uwe Trottmann -->
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollViewDebugView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/colorSurface">
+    tools:ignore="HardcodedText">
 
-    <io.palaima.debugdrawer.view.DebugView
-        android:id="@+id/debugView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutDebugView"
+        style="@style/Page.Centered"
+        android:layout_height="wrap_content">
 
+        <Button
+            android:id="@+id/buttonDebugViewDisplayLogs"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Show logs"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewDebugViewHeaderActions"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_padding"
+            android:text="Debug Actions"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Headline6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonDebugViewDisplayLogs" />
+
+        <Button
+            android:id="@+id/buttonDebugViewTestNotification1"
+            style="@style/Widget.SeriesGuide.Button.Outlined"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_padding"
+            android:text="Show test notification (1)"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewDebugViewHeaderActions" />
+
+        <Button
+            android:id="@+id/buttonDebugViewTestNotification3"
+            style="@style/Widget.SeriesGuide.Button.Outlined"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Show test notification (3)"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonDebugViewTestNotification1" />
+
+        <Button
+            android:id="@+id/buttonDebugViewTriggerJobProcessing"
+            style="@style/Widget.SeriesGuide.Button.Outlined"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_padding"
+            android:text="Schedule job processing"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonDebugViewTestNotification3" />
+
+        <Button
+            android:id="@+id/buttonDebugViewDemoMode"
+            style="@style/Widget.SeriesGuide.Button.Outlined"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_padding"
+            android:text="Toggle demo mode"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonDebugViewTriggerJobProcessing" />
+
+        <Button
+            android:id="@+id/buttonDebugViewTraktClearRefreshToken"
+            style="@style/Widget.SeriesGuide.Button.Outlined"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_padding"
+            android:text="Clear Trakt refresh token"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonDebugViewDemoMode" />
+
+        <Button
+            android:id="@+id/buttonDebugViewTraktInvalidateAccessToken"
+            style="@style/Widget.SeriesGuide.Button.Outlined"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Invalidate Trakt access token"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonDebugViewTraktClearRefreshToken" />
+
+        <Button
+            android:id="@+id/buttonDebugViewTraktInvalidateRefreshToken"
+            style="@style/Widget.SeriesGuide.Button.Outlined"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Invalidate Trakt refresh token"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonDebugViewTraktInvalidateAccessToken" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
