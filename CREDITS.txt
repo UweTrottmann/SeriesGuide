@@ -68,9 +68,6 @@ dagger 2 (https://github.com/google/dagger)
 Copyright 2012 Square, Inc.
 Copyright 2012 Google, Inc.
 
-DebugDrawer (https://github.com/palaima/DebugDrawer)
-Copyright 2016 Mantas Palaima
-
 drag-sort-listview (https://github.com/bauerca/drag-sort-listview)
 Copyright 2012 Carl Bauer
 

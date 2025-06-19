@@ -2,7 +2,6 @@
 
 [versions]
 androidx-lifecycle = "2.8.7" # https://developer.android.com/jetpack/androidx/releases/lifecycle
-debugdrawer = "0.9.0" # https://github.com/lenguyenthanh/DebugDrawer
 eventbus = "3.3.1"
 google-api-client = "2.6.0" # https://github.com/googleapis/google-api-java-client/releases
 retrofit2 = "2.11.0" # https://github.com/square/retrofit/blob/master/CHANGELOG.md
@@ -62,11 +61,6 @@ billing = "com.android.billingclient:billing-ktx:6.0.1" # https://developer.andr
 # https://github.com/google/dagger/releases
 dagger = "com.google.dagger:dagger:2.56.2"
 dagger-compiler = "com.google.dagger:dagger-compiler:2.56.2"
-debugdrawer-actions = { module = "com.github.lenguyenthanh.debugdrawer:debugdrawer-actions", version.ref = "debugdrawer" }
-debugdrawer-base = { module = "com.github.lenguyenthanh.debugdrawer:debugdrawer-base", version.ref = "debugdrawer" }
-debugdrawer-commons = { module = "com.github.lenguyenthanh.debugdrawer:debugdrawer-commons", version.ref = "debugdrawer" }
-debugdrawer-timber = { module = "com.github.lenguyenthanh.debugdrawer:debugdrawer-timber", version.ref = "debugdrawer" }
-debugdrawer-view = { module = "com.github.lenguyenthanh.debugdrawer:debugdrawer-view", version.ref = "debugdrawer" }
 findbugs-jsr305 = "com.google.code.findbugs:jsr305:3.0.2"
 # https://firebase.google.com/support/release-notes/android
 firebase-crashlytics = "com.google.firebase:firebase-crashlytics:19.0.1"
