@@ -39,6 +39,47 @@ The methods are named based on what is clicked.
 
 Example: `onMoreOptionsClick`.
 
+### RecyclerView
+
+Use the following pattern for `ViewHolder` classes:
+
+```kotlin
+class LinkViewHolder(
+    private val binding: ItemDiscoverLinkBinding,
+    itemClickListener: ItemClickListener
+) : RecyclerView.ViewHolder(binding.root) {
+
+    interface ItemClickListener {
+        fun onItemClick()
+    }
+    
+    init {
+        binding.button.setOnClickListener {
+            itemClickListener.onItemClick()
+        }
+    }
+
+    fun bindTo(text: String) {
+        binding.textView.text = text
+    }
+
+    companion object {
+        fun inflate(parent: ViewGroup, itemClickListener: ItemClickListener) =
+            LinkViewHolder(
+                ItemDiscoverLinkBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                ),
+                itemClickListener
+            )
+    }
+}
+```
+
+- Keeps the view binding class imports inside the `ViewHolder` class.
+- Keeps binding logic inside the `ViewHolder` class.
+
 ### SharedPreferences and settings
 
 SharedPreferences should be edited by a dedicated settings class. Other code should get and set 
