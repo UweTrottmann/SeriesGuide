@@ -12,6 +12,7 @@ import com.battlelancer.seriesguide.diagnostics.DebugLogBuffer.Companion.BUFFER_
 import com.battlelancer.seriesguide.util.PackageTools
 import com.battlelancer.seriesguide.util.TimeTools
 import org.threeten.bp.Instant
+import org.threeten.bp.ZoneId
 import org.threeten.bp.ZoneOffset
 import org.threeten.bp.format.DateTimeFormatter
 import timber.log.Timber
@@ -33,17 +34,34 @@ class DebugLogBuffer(context: Context) {
     )
 
     private val timberTree = object : DebugTree() {
+
+        private val timeZone = safeSystemDefaultZoneId()
+
         override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+            // Warning: code here should not do any Timber log calls,
+            // it will cause infinite recursion.
             addEntry(
                 DebugLogEntry(
                     priority,
                     tag,
                     message,
                     Instant.now()
-                        .atZone(TimeTools.safeSystemDefaultZoneId())
+                        .atZone(timeZone)
                         .format(LOG_DATE_PATTERN)
                 )
             )
+        }
+    }
+
+    /**
+     * ZoneId.systemDefault may fail if the ID returned by the system does not exist in the time
+     * zone data included in the current threetenbp version (time zones get renamed and added).
+     */
+    private fun safeSystemDefaultZoneId(): ZoneId {
+        return try {
+            ZoneId.systemDefault()
+        } catch (e: Exception) {
+            ZoneOffset.UTC
         }
     }
 
@@ -53,6 +71,7 @@ class DebugLogBuffer(context: Context) {
     fun enable() {
         if (!Timber.forest().contains(timberTree)) {
             Timber.plant(timberTree)
+            Timber.i("Turned debug log ON")
         }
     }
 
@@ -62,6 +81,7 @@ class DebugLogBuffer(context: Context) {
     fun disable() {
         if (Timber.forest().contains(timberTree)) {
             Timber.uproot(timberTree)
+            Timber.i("Turned debug log OFF")
         }
     }
 

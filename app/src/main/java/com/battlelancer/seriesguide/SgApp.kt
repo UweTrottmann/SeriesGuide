@@ -129,10 +129,12 @@ class SgApp : Application() {
             enableStrictMode()
         }
 
+        // Logging uses time APIs
+        AndroidThreeTen.init(this)
+
         // set up logging first so crashes during initialization are caught
         initializeLogging()
 
-        AndroidThreeTen.init(this)
         initializeEventBus()
         if (AndroidUtils.isAtLeastOreo) {
             initializeNotificationChannels()
@@ -166,20 +168,21 @@ class SgApp : Application() {
     }
 
     private fun initializeLogging() {
+        // Enable logging before any Timber log calls
+        if (BuildConfig.DEBUG) {
+            // logcat logging
+            Timber.plant(Timber.DebugTree())
+        }
+        if (AppSettings.isUserDebugModeEnabled(this)) {
+            // debug log
+            DebugLogBuffer.getInstance(this).enable()
+        }
+
         // Note: Firebase Crashlytics is automatically initialized through its content provider.
         // Pass current enabled state to Crashlytics (e.g. in case app was restored from backup).
         val isSendErrors = AppSettings.isSendErrorReports(this)
-        Timber.d("Turning error reporting %s", if (isSendErrors) "ON" else "OFF")
+        Timber.i("Turning error reporting %s", if (isSendErrors) "ON" else "OFF")
         Errors.getReporter()?.setCrashlyticsCollectionEnabled(isSendErrors)
-
-        if (AppSettings.isUserDebugModeEnabled(this)) {
-            // debug logging
-            DebugLogBuffer.getInstance(this).enable()
-        }
-        if (BuildConfig.DEBUG) {
-            // detailed logcat logging
-            Timber.plant(Timber.DebugTree())
-        }
         // crash and error reporting
         Timber.plant(AnalyticsTree())
     }
