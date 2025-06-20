@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2011-2024 Uwe Trottmann
+// Copyright 2011-2025 Uwe Trottmann
 // Copyright 2013 Andrew Neal
 
 package com.battlelancer.seriesguide
@@ -176,6 +176,8 @@ class SgApp : Application() {
             // debug logging
             val debugLogBuffer = DebugLogBuffer.getInstance(this)
             Timber.plant(debugLogBuffer.timberTree())
+        }
+        if (BuildConfig.DEBUG) {
             // detailed logcat logging
             Timber.plant(Timber.DebugTree())
         }

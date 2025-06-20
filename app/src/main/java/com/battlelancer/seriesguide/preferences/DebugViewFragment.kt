@@ -5,7 +5,6 @@ package com.battlelancer.seriesguide.preferences
 
 
 import android.app.Dialog
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialogFragment
@@ -33,7 +32,7 @@ class DebugViewFragment : AppCompatDialogFragment() {
         val binding = FragmentDebugViewBinding.inflate(layoutInflater)
 
         binding.buttonDebugViewDisplayLogs.setOnClickListener {
-            startActivity(Intent(requireContext(), DebugLogActivity::class.java))
+            startActivity(DebugLogActivity.intent(requireContext()))
         }
 
         binding.buttonDebugViewTestNotification1.setOnClickListener {

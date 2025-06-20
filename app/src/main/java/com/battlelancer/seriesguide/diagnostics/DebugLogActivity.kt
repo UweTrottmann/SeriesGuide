@@ -147,4 +147,8 @@ class DebugLogActivity : BaseThemeActivity() {
         model.updateDebugLogEntries()
     }
 
+    companion object {
+        fun intent(context: Context) = Intent(context, DebugLogActivity::class.java)
+    }
+
 }
