@@ -47,21 +47,17 @@ class DebugLogActivityViewModel(application: Application) : AndroidViewModel(app
             debugLogBuffer
                 .save(uri, object : DebugLogBuffer.OnSaveLogListener {
                     override fun onSuccess() {
-                        uiState.update {
-                            it.copy(
-                                isSaving = false,
-                                userMessage = getApplication<Application>().getString(R.string.status_saving_file_success)
-                            )
-                        }
+                        uiState.value = DebugLogUiState(
+                            isSaving = false,
+                            userMessage = getApplication<Application>().getString(R.string.status_saving_file_success)
+                        )
                     }
 
                     override fun onError() {
-                        uiState.update {
-                            it.copy(
-                                isSaving = false,
-                                userMessage = getApplication<Application>().getString(R.string.status_saving_file_failed)
-                            )
-                        }
+                        uiState.value = DebugLogUiState(
+                            isSaving = false,
+                            userMessage = getApplication<Application>().getString(R.string.status_saving_file_failed)
+                        )
                     }
                 })
         }
