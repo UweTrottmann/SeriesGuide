@@ -32,20 +32,36 @@ class DebugLogBuffer(context: Context) {
         BUFFER_SIZE + 1
     )
 
-    fun timberTree(): Timber.Tree {
-        return object : DebugTree() {
-            override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
-                addEntry(
-                    DebugLogEntry(
-                        priority,
-                        tag,
-                        message,
-                        Instant.now()
-                            .atZone(TimeTools.safeSystemDefaultZoneId())
-                            .format(LOG_DATE_PATTERN)
-                    )
+    private val timberTree = object : DebugTree() {
+        override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+            addEntry(
+                DebugLogEntry(
+                    priority,
+                    tag,
+                    message,
+                    Instant.now()
+                        .atZone(TimeTools.safeSystemDefaultZoneId())
+                        .format(LOG_DATE_PATTERN)
                 )
-            }
+            )
+        }
+    }
+
+    /**
+     * Plants this [timberTree].
+     */
+    fun enable() {
+        if (!Timber.forest().contains(timberTree)) {
+            Timber.plant(timberTree)
+        }
+    }
+
+    /**
+     * Uproots this [timberTree].
+     */
+    fun disable() {
+        if (Timber.forest().contains(timberTree)) {
+            Timber.uproot(timberTree)
         }
     }
 

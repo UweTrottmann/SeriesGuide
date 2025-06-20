@@ -13,7 +13,6 @@ import android.os.Bundle
 import android.os.Vibrator
 import android.provider.Settings
 import android.text.TextUtils
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.edit
@@ -26,6 +25,7 @@ import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
+import com.battlelancer.seriesguide.diagnostics.DebugLogBuffer
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.AppSettings
@@ -372,12 +372,6 @@ class SgPreferencesFragment : BasePreferencesFragment(),
             Utils.tryStartActivityForResult(this, intent, REQUEST_CODE_RINGTONE)
             return true
         }
-        if (AppSettings.KEY_USER_DEBUG_MODE_ENBALED == key) {
-            Toast.makeText(
-                context, R.string.pref_user_debug_mode_note, Toast.LENGTH_LONG
-            ).show()
-            return false // Let the pref handle the click (and change its value).
-        }
         return super.onPreferenceTreeClick(preference)
     }
 
@@ -452,6 +446,17 @@ class SgPreferencesFragment : BasePreferencesFragment(),
             if (AppSettings.KEY_SEND_ERROR_REPORTS == key) {
                 val switchPref = pref as SwitchPreferenceCompat
                 AppSettings.setSendErrorReports(switchPref.context, switchPref.isChecked, false)
+            }
+
+            // Enable or disable debug log
+            if (AppSettings.KEY_USER_DEBUG_MODE_ENBALED == key) {
+                val switchPref = pref as SwitchPreferenceCompat
+                val debugLogBuffer = DebugLogBuffer.getInstance(requireContext())
+                if (switchPref.isChecked) {
+                    debugLogBuffer.enable()
+                } else {
+                    debugLogBuffer.disable()
+                }
             }
         }
 

@@ -174,8 +174,7 @@ class SgApp : Application() {
 
         if (AppSettings.isUserDebugModeEnabled(this)) {
             // debug logging
-            val debugLogBuffer = DebugLogBuffer.getInstance(this)
-            Timber.plant(debugLogBuffer.timberTree())
+            DebugLogBuffer.getInstance(this).enable()
         }
         if (BuildConfig.DEBUG) {
             // detailed logcat logging
