@@ -471,7 +471,6 @@
     <string name="theme_app_dark">Темна</string>
     <string name="theme_app_light">Світла</string>
     <!-- Other advanced settings -->
-    <string name="pref_other">Інші</string>
     <string name="pref_autoupdatesummary">Автоматично синхронізування та оновлення даних SeriesGuide</string>
     <string name="backup">Бекап/Відновлення</string>
     <string name="backup_summary">Резервна копія або відновлення ваших серіалів</string>

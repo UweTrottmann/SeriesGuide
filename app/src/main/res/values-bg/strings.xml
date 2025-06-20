@@ -443,7 +443,6 @@
     <string name="theme_app_dark">Тъмна</string>
     <string name="theme_app_light">Светла</string>
     <!-- Other advanced settings -->
-    <string name="pref_other">Други</string>
     <string name="pref_autoupdatesummary">Автоматично синхронизиране и актуализиране данните на SeriesGuide</string>
     <string name="backup">Архивиране/Възстановяване</string>
     <string name="backup_summary">Архивиране или възстановяване на вашите сериали</string>

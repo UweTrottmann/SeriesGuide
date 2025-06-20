@@ -429,7 +429,6 @@
     <string name="theme_app_dark">深色</string>
     <string name="theme_app_light">淺色</string>
     <!-- Other advanced settings -->
-    <string name="pref_other">其他</string>
     <string name="pref_autoupdatesummary">自動同步和更新 SeriesGuide 資料</string>
     <string name="backup">備份/還原</string>
     <string name="backup_summary">備份或還原你的影集</string>

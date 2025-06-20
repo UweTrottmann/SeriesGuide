@@ -457,7 +457,6 @@
     <string name="theme_app_dark">Tamna</string>
     <string name="theme_app_light">Svijetla</string>
     <!-- Other advanced settings -->
-    <string name="pref_other">Ostalo</string>
     <string name="pref_autoupdatesummary">Automatski sinkronizirajte i ažurirajte SeriesGuide podatke</string>
     <string name="backup">Sigurnosno kopiranje/vraćanje</string>
     <string name="backup_summary">Napravi sigurnosnu kopiju ili obnovi svoje serije</string>
