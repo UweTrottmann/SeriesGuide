@@ -1,0 +1,82 @@
+[
+    {
+        "tmdb_id": 68421,
+        "tvdb_id": 332331,
+        "imdb_id": "tt2261227",
+        "trakt_id": 122265,
+
+        "title": "Altered Carbon",
+        "overview": "A description of this show.",
+
+        "language": "en-US",
+
+        "first_aired": "2018-02-02T08:00:00Z",
+        "release_time": 2000,
+        "release_weekday": 4,
+        "release_timezone": "America/New_York",
+        "country": "us",
+
+        "custom_release_time": 400,
+        "custom_release_day_offset": 0,
+        "custom_release_timezone": "America/New_York",
+
+        "poster": "/95IsiH4p5937YXQHaOS2W2dWYOG.jpg",
+        "content_rating": "MA",
+        "status": "canceled",
+        "runtime": 50,
+        "genres": "Sci-Fi \u0026 Fantasy|Drama",
+        "network": "Netflix",
+
+        "rating_tmdb": 7.395,
+        "rating_tmdb_votes": 1095,
+        "rating": 7.774462758189026,
+        "rating_votes": 4793,
+        "rating_user": 9,
+
+        "favorite": false,
+        "notify": true,
+        "hidden": false,
+
+        "last_watched_ms": 1614593199175,
+
+        "user_note": "Note text",
+        "user_note_trakt_id": 123,
+
+        "seasons": [
+            {
+                "season": 1,
+                "tmdb_id": "61343",
+                "tvdb_id": 1234,
+                "episodes": [
+                    {
+                        "tmdb_id": 991306,
+                        "tvdb_id": 1401623,
+                        "episode": 1,
+                        "title": "Out of the Past",
+                        "first_aired": 1517558400000,
+
+                        "watched": true,
+                        "plays": 1,
+                        "skipped": false,
+                        "collected": false,
+
+                        "episode_dvd": 1.0,
+                        "overview": "An episode description",
+                        "image": "/2Kp2SNMcJBExFBaThMXbWzr4JTn.jpg",
+                        "writers": "Scott Peters|Kenneth Johnson",
+                        "gueststars": "Alan Tudyk|Stefan Arngrim",
+                        "directors": "Terrence O\u0027Hara|Alan Tudyk",
+
+                        "rating_tmdb": 8.1,
+                        "rating_tmdb_votes": 11,
+
+                        "rating": 5.88608,
+                        "rating_votes": 79,
+                        "rating_user": 8
+                    }
+                ]
+            }
+        ]
+
+    }
+]

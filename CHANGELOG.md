@@ -20,6 +20,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 * 🔧 Diagnostics: instead of sharing it, the debug log file can be saved to a custom location. This
   allows to view and share it in any way that is desired.
 * 🔨 Properly align status messages to the bottom navigation bar.
+* 🔨 Shows: when updating, also update season number of episodes (useful when importing minimal
+  data).
 
 ### 2025.2.2 - 2025-05-22 🧪
 

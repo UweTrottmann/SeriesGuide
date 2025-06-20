@@ -1,92 +1,165 @@
-# Backup JSON schema
+# Export and import data: Expected JSON format
 
-_SeriesGuide can [export and import your data](http://seriesgui.de/help#backup) using JSON text files. Their schema is documented here._
+_SeriesGuide can [export and import your data](https://www.seriesgui.de/help/how-to/backup/backup)
+using JSON text files._
 
-The actual exported JSON is written without indents and comments to save space and increase performance. The following representation is for documentation purposes only.
+The expected format and values are documented here.
 
-When importing, not all but a few required values need to be present. SeriesGuide will in most cases fill in missing values on the next update.
+To see an example file, export your data from SeriesGuide. Note that unlike the examples below the
+exported JSON is written without indents to save space and increase performance. Use a text editor
+or other tool to format it for easier reading.
+
+When importing, not all but a few required values need to be present. In most cases, SeriesGuide 
+will fill in the missing values when data is next updated.
 
 ## Shows
 
-Based on the
+The JSON is structured like this (see the classes, they document each property):
 
-- [Show](/app/src/main/java/com/battlelancer/seriesguide/dataliberation/model/Show.java)
-- [Season](/app/src/main/java/com/battlelancer/seriesguide/dataliberation/model/Season.java)
-- [Episode](/app/src/main/java/com/battlelancer/seriesguide/dataliberation/model/Episode.java)
+- array of [Show](/app/src/main/java/com/battlelancer/seriesguide/dataliberation/model/Show.java)
+  - contains a `seasons` array of [Season](/app/src/main/java/com/battlelancer/seriesguide/dataliberation/model/Season.java)
+    - contains an `episodes` array of [Episode](/app/src/main/java/com/battlelancer/seriesguide/dataliberation/model/Episode.java)
 
-classes.
+The `language` value should be one of the TMDB language codes SeriesGuide supports, like `en-US` 
+(see `content_languages` in [donottranslate.xml](/app/src/main/res/values/donottranslate.xml)). Or a 
+two-letter language code (like `en`) that can be mapped to one of the supported codes.
+
+[shows-export-example.json](shows-export-example.json)
 
 ```json
 [
     {
-        "content_rating": "MA",
-        "country": "us", // two letter ISO 3166-1 alpha-2 country code
-        "favorite": true,
-        "first_aired": "2018-02-02T08:00:00Z", // ISO 8601 datetime string
-        "hidden": false,
+        "tmdb_id": 68421,
+        "tvdb_id": 332331,
         "imdb_id": "tt2261227",
-        "language": "en",
-        "last_watched_ms": 1614593199175,
+        "trakt_id": 122265,
+
+        "title": "Altered Carbon",
+        "overview": "A description of this show.",
+
+        "language": "en-US",
+
+        "first_aired": "2018-02-02T08:00:00Z",
+        "release_time": 2000,
+        "release_weekday": 4,
+        "release_timezone": "America/New_York",
+        "country": "us",
+        
+        "custom_release_time": 400,
+        "custom_release_day_offset": 0,
+        "custom_release_timezone": "America/New_York",
+
+        "poster": "/95IsiH4p5937YXQHaOS2W2dWYOG.jpg",
+        "content_rating": "MA",
+        "status": "canceled",
+        "runtime": 50,
+        "genres": "Sci-Fi \u0026 Fantasy|Drama",
         "network": "Netflix",
+
+        "rating_tmdb": 7.395,
+        "rating_tmdb_votes": 1095,
+        "rating": 7.774462758189026,
+        "rating_votes": 4793,
+        "rating_user": 9,
+      
+        "favorite": false,
         "notify": true,
-        "poster": "/95IsiH4p5937YXQHaOS2W2dWYOG.jpg", // TMDb poster path
-        "rating": 9.5, // 0.0 to 10.0
-        "rating_user": 10, // 0, 1 to 10
-        "rating_votes": 100,
-        "release_time": 300, // Encoded 24 hour local time (hhmm)
-        "release_timezone": "America/New_York", // tz database name (Olson)
-        "release_weekday": 4, // Local release week day (1-7, 0 if daily, -1 if unknown)
-        "runtime": 50, // in minutes
+        "hidden": false,
+
+        "last_watched_ms": 1614593199175,
+
+        "user_note": "Note text",
+        "user_note_trakt_id": 123,
+
         "seasons": [
             {
+                "season": 1,
+                "tmdb_id": "61343",
+                "tvdb_id": 1234,
                 "episodes": [
                     {
-                        "collected": false,
+                        "tmdb_id": 991306,
+                        "tvdb_id": 1401623,
                         "episode": 1,
-                        "first_aired": 1517558400000, // ms
-                        "imdb_id": "",
+                        "title": "Out of the Past",
+                        "first_aired": 1517558400000,
+                        
+                        "watched": true,
                         "plays": 1,
                         "skipped": false,
-                        "title": "Out of the Past",
-                        "tmdb_id": 1401623,
-                        "watched": true
+                        "collected": false,
+                        
+                        "episode_dvd": 1.0,
+                        "overview": "An episode description",
+                        "image": "/2Kp2SNMcJBExFBaThMXbWzr4JTn.jpg",
+                        "writers": "Scott Peters|Kenneth Johnson",
+                        "gueststars": "Alan Tudyk|Stefan Arngrim",
+                        "directors": "Terrence O\u0027Hara|Alan Tudyk",
+                        
+                        "rating_tmdb": 8.1,
+                        "rating_tmdb_votes": 11,
+                        
+                        "rating": 5.88608,
+                        "rating_votes": 79,
+                        "rating_user": 8
                     }
-                ],
-                "season": 1,
-                "tmdb_id": "81447"
+                ]
             }
-        ],
-        "status": "canceled", // see JsonExportTask.ShowStatusExport
-        "title": "Altered Carbon",
-        "tmdb_id": 68421, // required, or set linked tvdb_id
-        "trakt_id": 122265,
-        "tvdb_id": 332331 // if tmdb_id not set, used to look it up
+        ]
+
     }
 ]
 ```
 
+When importing from another app or data source a minimal amount of values can be enough, here is an
+example:
+
+[shows-import-minimal.json](shows-import-minimal.json)
+
+```json
+[
+    {
+        "tmdb_id": 68421,
+        "language": "de-DE",
+        "seasons": [
+            {
+                "tmdb_id": "81447",
+                "episodes": [
+                    {
+                        "tmdb_id": 1401623,
+                        "watched": true
+                    }
+                ]
+            }
+        ]
+    }
+]
+```
+
+While the `language` is technically not required, it's easier to set it in the JSON than changing it
+for each show after importing.
+
 ## Lists
 
-Based on the
+The JSON is structured like this (see the classes, they document each property):
 
-- [List](/app/src/main/java/com/battlelancer/seriesguide/dataliberation/model/List.java)
-- [ListItem](/app/src/main/java/com/battlelancer/seriesguide/dataliberation/model/ListItem.java)
+- array of [List](/app/src/main/java/com/battlelancer/seriesguide/dataliberation/model/List.java)
+  - contains an `items` array of [ListItem](/app/src/main/java/com/battlelancer/seriesguide/dataliberation/model/ListItem.java)
 
-classes.
+Note: `type` values of `episode`, `season` and `show` are legacy values and are only displayed if
+`externalId` matches a TVDB ID in the SeriesGuide library. So this does not work for new shows added
+to the library.
 
 ```json
 [
     {
         "items": [
             {
-                "externalId": "62425", // TMDB ID
+                "externalId": "62425",
                 "list_item_id": "62425-4-firstlist",
-                "tvdb_id": 0, // unused
+                "tvdb_id": 0,
                 "type": "tmdb-show"
             },
-            // type episode, season and show are legacy items, 
-            // are only displayed if externalId matches a TVDB ID in SeriesGuide library,
-            // so does not work for new shows added to library
             {
                 "externalId": "5443955",
                 "list_item_id": "5443955-3-firstlist",
@@ -106,32 +179,36 @@ classes.
                 "type": "show"
             }
         ],
-        "list_id": "firstlist",
+        "list_id": "First%20list",
         "name": "First list",
-        "order": 2
+        "order": 0
     }
 ]
 ```
 
 ## Movies
 
-Based on the [Movie](/app/src/main/java/com/battlelancer/seriesguide/dataliberation/model/Movie.java) class.
+The JSON is an array of [Movie](/app/src/main/java/com/battlelancer/seriesguide/dataliberation/model/Movie.java)
+(see the class, it documents each property).
 
 ```json
 [
     {
+        "tmdb_id": 19913,
         "imdb_id": "tt1022603",
-        "in_collection": false,
-        "in_watchlist": false,
-        "last_updated_ms": 1619620588554,
-        "overview": "Some text.",
-        "plays": 1,
-        "poster": "/f9mbM0YMLpYemcWx6o2WeiYQLDP.jpg", // TMDB poster path
+        
+        "title": "(500) Days of Summer",
         "released_utc_ms": 1256162400000,
         "runtime_min": 95,
-        "title": "(500) Days of Summer",
-        "tmdb_id": 19913,
-        "watched": true
+        "poster": "/f9mbM0YMLpYemcWx6o2WeiYQLDP.jpg",
+        "overview": "A description of this movie.",
+        
+        "in_collection": false,
+        "in_watchlist": false,
+        "watched": true,
+        "plays": 1,
+        
+        "last_updated_ms": 1619620588554
     }
 ]
 ```

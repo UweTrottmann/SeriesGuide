@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2019-2024 Uwe Trottmann
+// Copyright 2019-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.tools
 
@@ -421,6 +421,7 @@ class AddUpdateShowTools @Inject constructor(
                         overview = overviewOrNull,
                         number = tmdbEpisode.episode_number ?: 0,
                         order = tmdbEpisode.episode_number ?: 0,
+                        season = seasonNumber,
                         directors = TextTools.buildPipeSeparatedString(directors),
                         guestStars = TextTools.buildPipeSeparatedString(guestStars),
                         writers = TextTools.buildPipeSeparatedString(writers),

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2021-2024 Uwe Trottmann
+// Copyright 2021-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.database
 
@@ -849,6 +849,7 @@ data class SgEpisode2Update(
     @ColumnInfo(name = TITLE) val title: String?,
     @ColumnInfo(name = OVERVIEW) val overview: String?,
     @ColumnInfo(name = NUMBER) val number: Int,
+    @ColumnInfo(name = SEASON) val season: Int,
     @ColumnInfo(name = ORDER) val order: Int,
     @ColumnInfo(name = DIRECTORS) val directors: String?,
     @ColumnInfo(name = GUESTSTARS) val guestStars: String?,
