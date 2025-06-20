@@ -17,6 +17,13 @@ doSomething(avoidWork = true)
 doSomething(true)
 ```
 
+### Application dependency injection
+
+Existing code is using Dagger and a [ServicesComponent](/app/src/main/java/com/battlelancer/seriesguide/modules/ServicesComponent.kt).
+
+New code should avoid relying on Dagger (and its annotation processor) and use the 
+[SgAppContainer](/app/src/main/java/com/battlelancer/seriesguide/SgAppContainer.kt) instead.
+
 ### Room database
 
 The `@Entity` data classes should use nullable types for all columns (besides the ID). Validation,

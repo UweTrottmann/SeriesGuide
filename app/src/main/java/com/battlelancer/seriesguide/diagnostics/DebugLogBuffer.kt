@@ -3,7 +3,6 @@
 
 package com.battlelancer.seriesguide.diagnostics
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.os.Build
@@ -164,16 +163,5 @@ class DebugLogBuffer(context: Context) {
         // When using the 'text/plain' MIME type, the Android Storage Access Framework appends the
         // '.txt' file extension regardless of which one is used, so use '.txt'.
         private const val LOG_FILE_END = ".txt"
-
-        @SuppressLint("StaticFieldLeak") // Using application context
-        private var sInstance: DebugLogBuffer? = null
-
-        fun getInstance(context: Context): DebugLogBuffer {
-            if (sInstance == null) {
-                sInstance = DebugLogBuffer(context)
-            }
-
-            return sInstance!!
-        }
     }
 }

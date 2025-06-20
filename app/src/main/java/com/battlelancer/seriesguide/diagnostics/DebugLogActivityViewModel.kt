@@ -8,6 +8,7 @@ import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.SgApp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -23,9 +24,11 @@ class DebugLogActivityViewModel(application: Application) : AndroidViewModel(app
     val uiState = MutableStateFlow(DebugLogUiState())
     val logEntries = MutableStateFlow(emptyList<DebugLogEntry>())
 
+    private val debugLogBuffer = getApplication<SgApp>().appContainer.debugLogBuffer
+
     fun updateDebugLogEntries() {
         viewModelScope.launch(Dispatchers.Default) {
-            logEntries.value = DebugLogBuffer.getInstance(getApplication()).logBufferSnapshot()
+            logEntries.value = debugLogBuffer.logBufferSnapshot()
         }
     }
 
@@ -41,7 +44,7 @@ class DebugLogActivityViewModel(application: Application) : AndroidViewModel(app
         }
 
         viewModelScope.launch(Dispatchers.IO) {
-            DebugLogBuffer.getInstance(getApplication())
+            debugLogBuffer
                 .save(uri, object : DebugLogBuffer.OnSaveLogListener {
                     override fun onSuccess() {
                         uiState.update {

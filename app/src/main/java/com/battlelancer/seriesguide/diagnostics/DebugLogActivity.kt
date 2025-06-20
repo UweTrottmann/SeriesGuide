@@ -22,6 +22,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ActivityDebugLogBinding
+import com.battlelancer.seriesguide.getSgAppContainer
 import com.battlelancer.seriesguide.ui.BaseThemeActivity
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.tryLaunch
@@ -111,7 +112,7 @@ class DebugLogActivity : BaseThemeActivity() {
     fun createDebugLogFile() {
         // Note: instead of saving the file in internal app storage and sharing it, let the user
         // save the file and decide how to send it (via email, forum, ...).
-        createDebugFileCallback.tryLaunch(DebugLogBuffer.getInstance(this).logFileName, this)
+        createDebugFileCallback.tryLaunch(getSgAppContainer().debugLogBuffer.logFileName, this)
     }
 
     /**

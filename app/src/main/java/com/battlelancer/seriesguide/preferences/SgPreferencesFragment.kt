@@ -25,7 +25,7 @@ import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
-import com.battlelancer.seriesguide.diagnostics.DebugLogBuffer
+import com.battlelancer.seriesguide.getSgAppContainer
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.AppSettings
@@ -451,7 +451,7 @@ class SgPreferencesFragment : BasePreferencesFragment(),
             // Enable or disable debug log
             if (AppSettings.KEY_USER_DEBUG_MODE_ENBALED == key) {
                 val switchPref = pref as SwitchPreferenceCompat
-                val debugLogBuffer = DebugLogBuffer.getInstance(requireContext())
+                val debugLogBuffer = requireActivity().getSgAppContainer().debugLogBuffer
                 if (switchPref.isChecked) {
                     debugLogBuffer.enable()
                 } else {

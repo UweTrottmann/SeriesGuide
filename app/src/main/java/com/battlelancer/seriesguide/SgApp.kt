@@ -4,6 +4,7 @@
 
 package com.battlelancer.seriesguide
 
+import android.app.Activity
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -13,7 +14,6 @@ import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
 import androidx.annotation.RequiresApi
-import com.battlelancer.seriesguide.diagnostics.DebugLogBuffer
 import com.battlelancer.seriesguide.modules.AppModule
 import com.battlelancer.seriesguide.modules.DaggerServicesComponent
 import com.battlelancer.seriesguide.modules.HttpClientModule
@@ -49,6 +49,8 @@ import java.util.concurrent.Executors
  * Initializes logging and services.
  */
 class SgApp : Application() {
+
+    lateinit var appContainer: SgAppContainer
 
     companion object {
 
@@ -132,6 +134,8 @@ class SgApp : Application() {
         // Logging uses time APIs
         AndroidThreeTen.init(this)
 
+        appContainer = SgAppContainer(this)
+
         // set up logging first so crashes during initialization are caught
         initializeLogging()
 
@@ -175,7 +179,7 @@ class SgApp : Application() {
         }
         if (AppSettings.isUserDebugModeEnabled(this)) {
             // debug log
-            DebugLogBuffer.getInstance(this).enable()
+            appContainer.debugLogBuffer.enable()
         }
 
         // Note: Firebase Crashlytics is automatically initialized through its content provider.
@@ -289,4 +293,12 @@ class SgApp : Application() {
             StrictMode.setVmPolicy(build())
         }
     }
+}
+
+fun Application.getSgAppContainer(): SgAppContainer {
+    return (this as SgApp).appContainer
+}
+
+fun Activity.getSgAppContainer(): SgAppContainer {
+    return (application as SgApp).appContainer
 }
