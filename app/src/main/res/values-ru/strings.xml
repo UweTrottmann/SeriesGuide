@@ -472,8 +472,6 @@
     <string name="theme_app_light">Светлая</string>
     <!-- Other advanced settings -->
     <string name="pref_autoupdatesummary">Автоматически синхронизировать и обновлять данные SeriesGuide</string>
-    <string name="backup">Резервное копирование/восстановление</string>
-    <string name="backup_summary">Резервное копирование или восстановление ваших сериалов</string>
     <string name="pref_number">Числовой формат серий</string>
     <string name="pref_offset">Ручное смещение времени</string>
     <string name="pref_offsetsummary">Смещение времени эфира на %d часов</string>
@@ -481,13 +479,6 @@
     <string name="clear_cache_summary">Удалить все кэшированные изображения с Вашего устройства</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Вкл. описания, детали, рейтинги</string>
-    <string name="backup_failed_file_access">Не могу сделать резервную копию. Файл резервной копии не найден или к нему нет доступа.</string>
-    <string name="backup_success">Резервное копирование прошло успешно.</string>
-    <string name="backup_failed">Не удалось выполнить резервное копирование.</string>
-    <string name="import_failed_nosd">Не удается восстановить резервную копию. Папка резервного копирования не доступна.</string>
-    <string name="import_failed_nofile">Нет читаемого файла резервной копии.</string>
-    <string name="import_success">Резервная копия успешно восстановлена</string>
-    <string name="import_failed">Восстановление резервной копии не удалось.</string>
     <string name="backup_button">Резервное копирование</string>
     <string name="import_button">Восстановление</string>
     <string name="import_warning">Я понимаю, что мои текущие сериалы, списки и фильмы будут заменены!</string>

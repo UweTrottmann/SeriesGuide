@@ -430,8 +430,6 @@
     <string name="theme_app_light">ライト</string>
     <!-- Other advanced settings -->
     <string name="pref_autoupdatesummary">SeriesGuide データを自動的に同期および更新します</string>
-    <string name="backup">バックアップ/復元</string>
-    <string name="backup_summary">番組をバックアップまたは復元します</string>
     <string name="pref_number">表示形式</string>
     <string name="pref_offset">手動の時間オフセット</string>
     <string name="pref_offsetsummary">放映時間を %d 時間オフセットします</string>
@@ -439,13 +437,6 @@
     <string name="clear_cache_summary">お使いのデバイスからキャッシュされた画像をすべて削除します</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">説明、詳細、評価を含める</string>
-    <string name="backup_failed_file_access">バックアップできません。バックアップ ファイルが見つからないか、アクセスできません。</string>
-    <string name="backup_success">正常にバックアップされました。</string>
-    <string name="backup_failed">バックアップに失敗しました。</string>
-    <string name="import_failed_nosd">バックアップを復元できません。バックアップ フォルダーが利用できません。</string>
-    <string name="import_failed_nofile">読み取り可能なバックアップ ファイルがありません。</string>
-    <string name="import_success">バックアップが正常に復元されました。</string>
-    <string name="import_failed">バックアップの復元に失敗しました。</string>
     <string name="backup_button">バックアップを作成</string>
     <string name="import_button">バックアップを復元</string>
     <string name="import_warning">あなたの現在の番組、リスト、映画がバックアップで置き換えられます</string>

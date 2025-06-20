@@ -444,8 +444,6 @@
     <string name="theme_app_light">Világos</string>
     <!-- Other advanced settings -->
     <string name="pref_autoupdatesummary">SeriesGuide adatok automatikus szinkronizálása és frissítése</string>
-    <string name="backup">Biztonsági Mentés/Visszaállítás</string>
-    <string name="backup_summary">A sorozatokról biztonsági mentés készítése vagy annak visszaállítása</string>
     <string name="pref_number">Számozás formátuma</string>
     <string name="pref_offset">Időeltolás</string>
     <string name="pref_offsetsummary">Vetítési időhöz képest időeltolás %d órával</string>
@@ -453,13 +451,6 @@
     <string name="clear_cache_summary">Az összes tárolt kép törlése az eszközről</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Tartalmazza a leírásokat, részleteket, értékeléseket</string>
-    <string name="backup_failed_file_access">Nem sikerült a mentés. A biztonsági mentés fájl nem található vagy nem hozzáférhető.</string>
-    <string name="backup_success">A mentés sikerült.</string>
-    <string name="backup_failed">A biztonsági mentés nem sikerült.</string>
-    <string name="import_failed_nosd">Nem lehet visszaállítani. A mentési mappa nem elérhető.</string>
-    <string name="import_failed_nofile">Nincs beolvasható biztonsági mentés.</string>
-    <string name="import_success">Adatok visszaállítása sikerült.</string>
-    <string name="import_failed">Adatok visszaállítása nem sikerült.</string>
     <string name="backup_button">Biztonsági Mentés</string>
     <string name="import_button">Visszaállítás</string>
     <string name="import_warning">Megértettem, hogy az aktuális sorozataim, listáim és filmjeim lecserélésre kerülnek!</string>

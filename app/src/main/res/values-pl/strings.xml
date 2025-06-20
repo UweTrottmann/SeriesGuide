@@ -472,8 +472,6 @@
     <string name="theme_app_light">Jasny</string>
     <!-- Other advanced settings -->
     <string name="pref_autoupdatesummary">Automatycznie synchronizuje i aktualizuje dane SeriesGuide</string>
-    <string name="backup">Kopia zapasowa</string>
-    <string name="backup_summary">Utwórz/Przywróć kopię bazy seriali</string>
     <string name="pref_number">Format numeracji</string>
     <string name="pref_offset">Ręczne przesunięcie czasu</string>
     <string name="pref_offsetsummary">Przesuń czas emisji o %d godzin</string>
@@ -481,13 +479,6 @@
     <string name="clear_cache_summary">Usuwa wszystkie buforowane obrazy z urządzenia</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Uwzględnij opisy, szczegóły, oceny</string>
-    <string name="backup_failed_file_access">Nie można utworzyć kopii zapasowej. Nie można odnaleźć lub uzyskać dostępu do pliku kopii.</string>
-    <string name="backup_success">Archiwizacja zakończona.</string>
-    <string name="backup_failed">Archiwizacja nieudana.</string>
-    <string name="import_failed_nosd">Nie można przywrócić kopii zapasowej. Folder kopii nie jest dostępny.</string>
-    <string name="import_failed_nofile">Brak odczytywalnego pliku archiwum.</string>
-    <string name="import_success">Zakończono przywracanie.</string>
-    <string name="import_failed">Przywracanie nie powiodło się.</string>
     <string name="backup_button">Kontynuuj</string>
     <string name="import_button">Przywróć</string>
     <string name="import_warning">Rozumiem, że moje seriale, listy i filmy zostaną zastąpione!</string>

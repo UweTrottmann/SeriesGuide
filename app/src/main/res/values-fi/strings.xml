@@ -444,8 +444,6 @@
     <string name="theme_app_light">Vaalea</string>
     <!-- Other advanced settings -->
     <string name="pref_autoupdatesummary">Synkronoi ja päivitä sisältö automaattisesti</string>
-    <string name="backup">Varmuuskopioi/Palauta</string>
-    <string name="backup_summary">Varmuuskopioi tai palauta ohjelmasi</string>
     <string name="pref_number">Lukumuoto</string>
     <string name="pref_offset">Manuaalinen ajansiirto</string>
     <string name="pref_offsetsummary">Siirrä lähetysaikoja %d tunnilla</string>
@@ -453,13 +451,6 @@
     <string name="clear_cache_summary">Poista välimuistissa olevat kuvat ja verkkovastaukset menemällä tallennustilan asetuksiin</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Sisällytä kuvaukset, tiedot, arvosanat</string>
-    <string name="backup_failed_file_access">Varmuuskopiointi epäonnistui. Varmuuskopiotiedostoa ei löydy tai sitä ei voi käyttää.</string>
-    <string name="backup_success">Varmuuskopiointi onnistui.</string>
-    <string name="backup_failed">Varmuuskopiointi epäonnistui.</string>
-    <string name="import_failed_nosd">Varmuuskopion palautus epäonnistui. Varmuuskopiokansio ei ole saatavilla.</string>
-    <string name="import_failed_nofile">Luettavaa varmuuskopiotiedostoa ei ole</string>
-    <string name="import_success">Varmuuskopio palautettu onnistuneesti.</string>
-    <string name="import_failed">Varmuuskopion palauttaminen epäonnistui.</string>
     <string name="backup_button">Luo varmuuskopio</string>
     <string name="import_button">Palauta varmuuskopio</string>
     <string name="import_warning">Nykyiset ohjelmasi, listasi ja elokuvasi korvataan varmuuskopioilla</string>

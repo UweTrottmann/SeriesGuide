@@ -44,7 +44,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/autobackup_details"
-                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Error"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -102,6 +102,7 @@
                     android:id="@+id/textViewAutoBackupShows"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_padding"
                     android:layout_marginTop="@dimen/default_padding"
                     android:text="@string/shows"
                     android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold"
@@ -110,19 +111,22 @@
 
                 <Button
                     android:id="@+id/buttonAutoBackupShowsExportFile"
+                    style="@style/Widget.SeriesGuide.Button.Outlined"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_padding"
                     android:layout_marginTop="8dp"
                     android:text="@string/action_select_file"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupShows" />
 
+                <!-- Note: text appearance is set in code -->
                 <TextView
                     android:id="@+id/textViewAutoBackupShowsExportFile"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
+                    android:layout_marginStart="@dimen/large_padding"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Dim"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/buttonAutoBackupShowsExportFile"
@@ -132,6 +136,7 @@
                     android:id="@+id/textViewAutoBackupLists"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_padding"
                     android:layout_marginTop="@dimen/large_padding"
                     android:text="@string/lists"
                     android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold"
@@ -140,19 +145,22 @@
 
                 <Button
                     android:id="@+id/buttonAutoBackupListsExportFile"
+                    style="@style/Widget.SeriesGuide.Button.Outlined"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_padding"
                     android:layout_marginTop="8dp"
                     android:text="@string/action_select_file"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupLists" />
 
+                <!-- Note: text appearance is set in code -->
                 <TextView
                     android:id="@+id/textViewAutoBackupListsExportFile"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
+                    android:layout_marginStart="@dimen/larger_padding"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Dim"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/buttonAutoBackupListsExportFile"
@@ -162,6 +170,7 @@
                     android:id="@+id/textViewAutoBackupMovies"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_padding"
                     android:layout_marginTop="@dimen/large_padding"
                     android:text="@string/movies"
                     android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold"
@@ -170,19 +179,22 @@
 
                 <Button
                     android:id="@+id/buttonAutoBackupMoviesExportFile"
+                    style="@style/Widget.SeriesGuide.Button.Outlined"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_padding"
                     android:layout_marginTop="8dp"
                     android:text="@string/action_select_file"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupMovies" />
 
+                <!-- Note: text appearance is set in code -->
                 <TextView
                     android:id="@+id/textViewAutoBackupMoviesExportFile"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
+                    android:layout_marginStart="@dimen/larger_padding"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Dim"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/buttonAutoBackupMoviesExportFile"
@@ -237,6 +249,30 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupLastTime" />
 
+                <TextView
+                    android:id="@+id/textViewAutoBackupImportCloudWarning"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/import_cloud_warning"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold.Error"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupImportWarning" />
+
+                <TextView
+                    android:id="@+id/textViewAutoBackupImportCloudWarningDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/import_cloud_warning_details"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Error"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupImportCloudWarning" />
+
                 <Button
                     android:id="@+id/buttonAutoBackupImport"
                     android:layout_width="wrap_content"
@@ -246,7 +282,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupImportWarning" />
+                    app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupImportCloudWarningDetails" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

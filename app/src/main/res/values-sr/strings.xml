@@ -458,8 +458,6 @@
     <string name="theme_app_light">Светло</string>
     <!-- Other advanced settings -->
     <string name="pref_autoupdatesummary">Аутоматски синхронизујте и ажурирајте садржај</string>
-    <string name="backup">Архивирање/ повраћај архиве</string>
-    <string name="backup_summary">Архивирај или врати архивиране серије</string>
     <string name="pref_number">Облик нумерисања</string>
     <string name="pref_offset">Ручно подеси временску разлику</string>
     <string name="pref_offsetsummary">Разлика у емитовању је %d сати</string>
@@ -467,13 +465,6 @@
     <string name="clear_cache_summary">Уклони све слике у кеш меморији вашег уређаја</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Укључите описе, детаље, оцене</string>
-    <string name="backup_failed_file_access">Није могуће архивирати. Датотека за архивирање се не може пронаћи/приступити.</string>
-    <string name="backup_success">Архивирање успешно.</string>
-    <string name="backup_failed">Архивирање неуспешно.</string>
-    <string name="import_failed_nosd">Враћање архиве неуспешно. Потребна фасцикла за ту радњу није доступна.</string>
-    <string name="import_failed_nofile">Не постоји читљива датотека за повраћај података.</string>
-    <string name="import_success">Архивирање успешно враћено.</string>
-    <string name="import_failed">Враћање архиве неуспешно.</string>
     <string name="backup_button">Архивирај</string>
     <string name="import_button">Поврати архивирану ставку</string>
     <string name="import_warning">Ваше тренутне серије, листе или филмови биће замењени архивом</string>

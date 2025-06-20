@@ -500,8 +500,6 @@
     <string name="theme_app_light">فاتح</string>
     <!-- Other advanced settings -->
     <string name="pref_autoupdatesummary">مزامنة وتحديث بيانات SeriesGuide تلقائيا</string>
-    <string name="backup">النسخ الإحتياطي / الإستعادة</string>
-    <string name="backup_summary">لعمل نسخ احتياطي للمسلسلات، القوائم والأفلام أو استعادتها</string>
     <string name="pref_number">تنسيق الأرقام</string>
     <string name="pref_offset">تغيير وقت العرض بشكل يدوي</string>
     <string name="pref_offsetsummary">بدء وقت العرض قبل %d ساعات</string>
@@ -509,13 +507,6 @@
     <string name="clear_cache_summary">إزالة جميع الصور المخزنة مؤقتاً من الجهاز</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">يتضمن الأوصاف، و التفاصيل، و التقييمات</string>
-    <string name="backup_failed_file_access">لايمكن عمل نسخ إحتياطي، ملف النسخة الإحتياطي لايمكن إجاده أو لا يمكن الوصل إليه.</string>
-    <string name="backup_success">لقد نجحت عملية النسخ الإحتياطي.</string>
-    <string name="backup_failed">فشل النسخ الاحتياطي.</string>
-    <string name="import_failed_nosd">لايمكن إستعادة النسخ الإحتياطي، مجلد النسخ الإحتياطي غير متوفر.</string>
-    <string name="import_failed_nofile">لا يوجد ملف نسخ إحتياطي للقراءة.</string>
-    <string name="import_success">تم إستعادة النسخ الإحتياطي بنجاح.</string>
-    <string name="import_failed">فشل في إستعادة النسخ الإحتياطي.</string>
     <string name="backup_button">نسخ احتياطي</string>
     <string name="import_button">استعادة</string>
     <string name="import_warning">أنا أفهم أن المسلسلات الحالية، القوائم والأفلام سوف تستبدل!</string>

@@ -458,8 +458,6 @@
     <string name="theme_app_light">Svijetla</string>
     <!-- Other advanced settings -->
     <string name="pref_autoupdatesummary">Automatski sinkronizirajte i ažurirajte SeriesGuide podatke</string>
-    <string name="backup">Sigurnosno kopiranje/vraćanje</string>
-    <string name="backup_summary">Napravi sigurnosnu kopiju ili obnovi svoje serije</string>
     <string name="pref_number">Format broja</string>
     <string name="pref_offset">Ručno podešavanje vremenske razlike</string>
     <string name="pref_offsetsummary">Razlika u emitiranju %d sati</string>
@@ -467,13 +465,6 @@
     <string name="clear_cache_summary">Uklonite sve slike iz predmemorije vašeg uređaja</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Uključi opise, detalje i ocjene</string>
-    <string name="backup_failed_file_access">Nije moguće stvoriti sigur. kopiju. Datoteka sigur. kopije nije pronađena ili je nedostupna.</string>
-    <string name="backup_success">Sigurnosna kopija uspjela.</string>
-    <string name="backup_failed">Sigurnosna kopija nije uspjela.</string>
-    <string name="import_failed_nosd">Nije moguće vratiti sigur. kopiju. Mapa sigurnosne kopije nije dostupna.</string>
-    <string name="import_failed_nofile">Nema učitljive sigurnosne kopije.</string>
-    <string name="import_success">Sigurnosna kopija uspješno vraćena.</string>
-    <string name="import_failed">Vraćanje sigurnosne kopije nije uspjelo.</string>
     <string name="backup_button">Stvori sigurnosnu kopiju</string>
     <string name="import_button">Obnovi</string>
     <string name="import_warning">Razumijem da će moje trenutačne serije i popisi biti zamijenjeni!</string>

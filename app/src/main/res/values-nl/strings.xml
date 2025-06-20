@@ -444,8 +444,6 @@
     <string name="theme_app_light">Licht</string>
     <!-- Other advanced settings -->
     <string name="pref_autoupdatesummary">Automatisch data synchroniseren en bijwerken</string>
-    <string name="backup">Back-up maken/herstellen</string>
-    <string name="backup_summary">Back-up van series maken/herstellen</string>
     <string name="pref_number">Nummer opmaak</string>
     <string name="pref_offset">Handmatige aanpassing tijdzone</string>
     <string name="pref_offsetsummary">Pas uitzendtijd aan met %d uren</string>
@@ -453,13 +451,6 @@
     <string name="clear_cache_summary">Alle gebufferde afbeeldingen van het apparaat verwijderen</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Inclusief beschrijvingen, details en beoordelingen</string>
-    <string name="backup_failed_file_access">Kan geen back-up maken. Een back-upbestand kon niet gevonden of geopend worden.</string>
-    <string name="backup_success">Maken back-up succesvol.</string>
-    <string name="backup_failed">Maken back-up mislukt.</string>
-    <string name="import_failed_nosd">Back-up herstellen niet mogelijk. De back-upmap is niet beschikbaar.</string>
-    <string name="import_failed_nofile">Er is geen leesbaar back-upbestand</string>
-    <string name="import_success">Back-up met succes hersteld.</string>
-    <string name="import_failed">Herstellen van de back-up mislukt.</string>
     <string name="backup_button">Back-up maken</string>
     <string name="import_button">Herstellen</string>
     <string name="import_warning">Uw huidige series, lijsten en films worden vervangen door de back-up</string>

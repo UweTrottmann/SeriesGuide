@@ -430,8 +430,6 @@
     <string name="theme_app_light">สว่าง</string>
     <!-- Other advanced settings -->
     <string name="pref_autoupdatesummary">ซิงค์และอัปเดตข้อมูล SeriesGuide อัตโนมัติ</string>
-    <string name="backup">สำรอง/กู้คืน</string>
-    <string name="backup_summary">สำรองหรือกู้คืนซีรีส์ของคุณ</string>
     <string name="pref_number">รูปแบบตัวเลข</string>
     <string name="pref_offset">ชดเชยเวลาด้วยตนเอง</string>
     <string name="pref_offsetsummary">ชดเชยเวลาออกอากาศ %d ชั่วโมง</string>
@@ -439,13 +437,6 @@
     <string name="clear_cache_summary">ลบแคชรูปภาพทั้งหมดออกจากอุปกรณ์ของคุณ</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">รวมคำอธิบาย, รายละเอียด, คะแนน</string>
-    <string name="backup_failed_file_access">ไม่สามารถสำรองข้อมูล ไม่พบหรือไม่สามารถเข้าถึงไฟล์สำรอง</string>
-    <string name="backup_success">สำรองข้อมูลเรียบร้อยแล้ว</string>
-    <string name="backup_failed">สำรองข้อมูลล้มเหลว</string>
-    <string name="import_failed_nosd">ไม่สามารถกู้คืนการสำรองข้อมูล โฟลเดอร์สำรองข้อมูลไม่สามารถใช้งานได้</string>
-    <string name="import_failed_nofile">ไม่มีไฟล์สำรองที่อ่านได้</string>
-    <string name="import_success">กู้คืนการสำรองข้อมูลเรียบร้อยแล้ว</string>
-    <string name="import_failed">กู้คืนการสำรองข้อมูลล้มเหลว</string>
     <string name="backup_button">สร้างข้อมูลสำรอง</string>
     <string name="import_button">กู้คืนการสำรองข้อมูล</string>
     <string name="import_warning">ฉันเข้าใจว่าซีรีส์, รายการ และภาพยนตร์ปัจจุบันของฉันจะถูกแทนที่!</string>

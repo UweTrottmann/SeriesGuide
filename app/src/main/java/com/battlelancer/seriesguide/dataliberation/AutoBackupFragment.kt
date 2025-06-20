@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2013-2024 Uwe Trottmann
+// Copyright 2013-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.dataliberation
 
@@ -11,14 +11,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.TextView
+import androidx.core.view.isGone
 import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.databinding.FragmentAutoBackupBinding
 import com.battlelancer.seriesguide.dataliberation.DataLiberationFragment.LiberationResultEvent
 import com.battlelancer.seriesguide.util.TaskManager
+import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.tryLaunch
 import kotlinx.coroutines.launch
@@ -74,7 +77,7 @@ class AutoBackupFragment : Fragment() {
         binding.checkBoxAutoBackupCreateCopy
             .setOnCheckedChangeListener { buttonView: CompoundButton, isChecked: Boolean ->
                 BackupSettings.setCreateCopyOfAutoBackup(buttonView.context, isChecked)
-                updateFileViews()
+                viewModel.updateCopiesFileNames()
             }
 
         binding.buttonAutoBackupShowsExportFile.setOnClickListener {
@@ -96,8 +99,21 @@ class AutoBackupFragment : Fragment() {
             )
         }
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.copiesFiles.collect {
+                binding.textViewAutoBackupShowsExportFile
+                    .setFilenameOrPlaceholder(it.fileNameShows, it.placeholderText)
+                binding.textViewAutoBackupListsExportFile
+                    .setFilenameOrPlaceholder(it.fileNameLists, it.placeholderText)
+                binding.textViewAutoBackupMoviesExportFile
+                    .setFilenameOrPlaceholder(it.fileNameMovies, it.placeholderText)
+
+                binding.groupUserFiles.isGone = !it.visible
+            }
+        }
+
         binding.groupState.visibility = View.GONE
-        updateFileViews()
+        viewModel.updateCopiesFileNames()
         setProgressLock(false) // Also disables import button if backup availability unknown.
 
         // restore UI state
@@ -122,15 +138,17 @@ class AutoBackupFragment : Fragment() {
                         binding.imageViewBackupStatus
                             .setImageResource(R.drawable.ic_cancel_red_24dp)
                         binding.textViewBackupStatus.text =
-                            getString(R.string.backup_failed) + " " + errorOrNull
+                            TextTools.dotSeparate(getString(R.string.status_failure), errorOrNull)
                     }
+
                     isBackupAvailableForImport -> {
                         binding.groupState.visibility = View.VISIBLE
 
                         binding.imageViewBackupStatus
                             .setImageResource(R.drawable.ic_check_circle_green_24dp)
-                        binding.textViewBackupStatus.setText(R.string.backup_success)
+                        binding.textViewBackupStatus.setText(R.string.status_successful)
                     }
+
                     else -> {
                         // No error + no backup files.
                         binding.groupState.visibility = View.GONE
@@ -171,7 +189,8 @@ class AutoBackupFragment : Fragment() {
             return
         }
         viewModel.updateAvailableBackupData()
-        updateFileViews()
+        // Note: backup may remove a copy file URI
+        viewModel.updateCopiesFileNames()
         setProgressLock(false)
     }
 
@@ -184,24 +203,24 @@ class AutoBackupFragment : Fragment() {
 
     private val createShowExportFileResult =
         registerForActivityResult(DataLiberationTools.CreateExportFileContract()) { uri ->
-            storeBackupFile(JsonExportTask.BACKUP_SHOWS, uri)
+            storeBackupFile(JsonExportTask.EXPORT_SHOWS, uri)
         }
 
     private val createListsExportFileResult =
         registerForActivityResult(DataLiberationTools.CreateExportFileContract()) { uri ->
-            storeBackupFile(JsonExportTask.BACKUP_LISTS, uri)
+            storeBackupFile(JsonExportTask.EXPORT_LISTS, uri)
         }
 
     private val createMovieExportFileResult =
         registerForActivityResult(DataLiberationTools.CreateExportFileContract()) { uri ->
-            storeBackupFile(JsonExportTask.BACKUP_MOVIES, uri)
+            storeBackupFile(JsonExportTask.EXPORT_MOVIES, uri)
         }
 
     private fun storeBackupFile(type: Int, uri: Uri?) {
         if (uri == null) return
         DataLiberationTools.tryToPersistUri(requireContext(), uri)
         BackupSettings.storeExportFileUri(requireContext(), type, uri, true)
-        updateFileViews()
+        viewModel.updateCopiesFileNames()
     }
 
     private fun setContainerSettingsVisible(visible: Boolean) {
@@ -224,40 +243,15 @@ class AutoBackupFragment : Fragment() {
         binding.buttonAutoBackupMoviesExportFile.isEnabled = !isLocked
     }
 
-    private fun updateFileViews() {
-        val binding = binding ?: return
-        if (BackupSettings.isCreateCopyOfAutoBackup(context)) {
-            setUriOrPlaceholder(
-                binding.textViewAutoBackupShowsExportFile,
-                BackupSettings.getExportFileUri(
-                    context, JsonExportTask.BACKUP_SHOWS, true
-                )
-            )
-            setUriOrPlaceholder(
-                binding.textViewAutoBackupListsExportFile,
-                BackupSettings.getExportFileUri(
-                    context, JsonExportTask.BACKUP_LISTS, true
-                )
-            )
-            setUriOrPlaceholder(
-                binding.textViewAutoBackupMoviesExportFile,
-                BackupSettings.getExportFileUri(
-                    context, JsonExportTask.BACKUP_MOVIES, true
-                )
-            )
-            binding.groupUserFiles.visibility = View.VISIBLE
-        } else {
-            binding.groupUserFiles.visibility = View.GONE
-        }
-    }
-
-    private fun setUriOrPlaceholder(textView: TextView, uri: Uri?) {
-        textView.text = uri?.toString() ?: getString(R.string.no_file_selected)
+    private fun TextView.setFilenameOrPlaceholder(fileName: String?, placeholder: String) {
+        text = fileName ?: placeholder
         TextViewCompat.setTextAppearance(
-            textView,
-            if (uri == null) {
+            this,
+            if (fileName == null) {
                 R.style.TextAppearance_SeriesGuide_Body2_Error
-            } else R.style.TextAppearance_SeriesGuide_Body2_Dim
+            } else {
+                R.style.TextAppearance_SeriesGuide_Body2_Dim
+            }
         )
     }
 

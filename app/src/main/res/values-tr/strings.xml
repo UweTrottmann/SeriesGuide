@@ -444,8 +444,6 @@
     <string name="theme_app_light">Aydınlık</string>
     <!-- Other advanced settings -->
     <string name="pref_autoupdatesummary">İçeriği otomatik olarak senkronize et ve güncelle</string>
-    <string name="backup">Yedekle/Geri Yükle</string>
-    <string name="backup_summary">Dizilerinizi, listelerinizi ve filmlerinizi yedekleyin veya geri yükleyin</string>
     <string name="pref_number">Sayı biçimi</string>
     <string name="pref_offset">El ile saat farkı</string>
     <string name="pref_offsetsummary">Yayınlanma süresini %d saat ötele</string>
@@ -453,13 +451,6 @@
     <string name="clear_cache_summary">Tüm resim önbelleğini cihazınızdan silin</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Açıklamalar, ayrıntılar ve puanlar dahil</string>
-    <string name="backup_failed_file_access">Yedekleme başarısız. Bir yedek dosyası bulunamadı ya da dosyaya erişilemedi.</string>
-    <string name="backup_success">Yedekleme başarılı.</string>
-    <string name="backup_failed">Yedekleme başarısız oldu.</string>
-    <string name="import_failed_nosd">Geri yüklenemiyor. Yedek klasörüne erişilemiyor.</string>
-    <string name="import_failed_nofile">Okunabilir yedekleme dosyası bulunamadı.</string>
-    <string name="import_success">Yedek başarıyla geri yüklendi.</string>
-    <string name="import_failed">Yedek geri yükleme başarısız oldu.</string>
     <string name="backup_button">Yedekle</string>
     <string name="import_button">Geri Yükle</string>
     <string name="import_warning">Mevcut dizileriniz, listeleriniz ve filmleriniz silinerek, yedek ile değiştirilecek</string>

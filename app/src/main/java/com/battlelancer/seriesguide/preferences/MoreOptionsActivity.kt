@@ -16,6 +16,8 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.CloudSetupActivity
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.databinding.ActivityMoreOptionsBinding
+import com.battlelancer.seriesguide.dataliberation.BackupSettings
+import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
 import com.battlelancer.seriesguide.diagnostics.DebugLogActivity
 import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.sync.SyncProgress
@@ -63,14 +65,23 @@ class MoreOptionsActivity : BaseTopActivity() {
 
         binding.syncStatus.isGone = true
 
+        // Accounts and auto backup
         binding.containerCloud.setOnClickListener {
             startActivity(Intent(this, CloudSetupActivity::class.java))
         }
         binding.containerTrakt.setOnClickListener {
             startActivity(Intent(this, ConnectTraktActivity::class.java))
         }
+        binding.containerAutoBackup.setOnClickListener {
+            startActivity(DataLiberationActivity.intentToShowAutoBackup(this))
+        }
+
+        // Other items
         binding.buttonSupportTheApp.setOnClickListener {
             startActivity(Utils.getBillingActivityIntent(this))
+        }
+        binding.buttonMoreBackupRestore.setOnClickListener {
+            startActivity(DataLiberationActivity.intent(this))
         }
         binding.buttonSettings.setOnClickListener {
             startActivity(Intent(this, SeriesGuidePreferences::class.java))
@@ -119,6 +130,11 @@ class MoreOptionsActivity : BaseTopActivity() {
             } else {
                 setText(R.string.connect_trakt)
             }
+        }
+        binding.textViewMoreAutoBackupStatus.apply {
+            BackupSettings.isAutoBackupEnabled(context)
+                .let { if (it) R.string.status_turned_on else R.string.action_turn_on }
+                .let { setText(it) }
         }
 
         // Update supporter status.

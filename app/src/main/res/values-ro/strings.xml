@@ -458,8 +458,6 @@
     <string name="theme_app_light">Light</string>
     <!-- Other advanced settings -->
     <string name="pref_autoupdatesummary">Sincronizează automat și actualizează datele de pe SeriesGuide</string>
-    <string name="backup">Arhivare/Restaurare</string>
-    <string name="backup_summary">Arhivează sau restaurează emisiunile</string>
     <string name="pref_number">Format număr</string>
     <string name="pref_offset">Compensare manuală a timpului</string>
     <string name="pref_offsetsummary">Compensare timp de difuzare cu %d ore</string>
@@ -467,13 +465,6 @@
     <string name="clear_cache_summary">Șterge toate imaginile din cache de pe acest dispozitiv</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Include descrieri, detalii, note</string>
-    <string name="backup_failed_file_access">Backup-ul nu poate fi efectuat. Un fișier de backup nu poate fi localizat sau accesat.</string>
-    <string name="backup_success">Arhivare reușită.</string>
-    <string name="backup_failed">Arhivare eșuată.</string>
-    <string name="import_failed_nosd">Nu se poate restaura arhiva. Fișierul de arhivare nu este disponibil.</string>
-    <string name="import_failed_nofile">Nu există o arhivă care să poată fi citită.</string>
-    <string name="import_success">Arhiva a fost restaurată cu succes.</string>
-    <string name="import_failed">Restaurarea arhivei a eșuat.</string>
     <string name="backup_button">Arhivare</string>
     <string name="import_button">Restaurează</string>
     <string name="import_warning">Sunt de acord ca serialele, listele și filmele să fie înlocuite!</string>

@@ -444,8 +444,6 @@
     <string name="theme_app_light">Clair</string>
     <!-- Other advanced settings -->
     <string name="pref_autoupdatesummary">Synchroniser automatiquement et mettre à jour les données de SeriesGuide</string>
-    <string name="backup">Sauvegarde/Restauration</string>
-    <string name="backup_summary">Sauvegarder ou restaurer vos séries</string>
     <string name="pref_number">Format de nombre</string>
     <string name="pref_offset">Décalage horaire manuel</string>
     <string name="pref_offsetsummary">Décalage de %d heures</string>
@@ -453,13 +451,6 @@
     <string name="clear_cache_summary">Supprimer toutes les images en cache sur votre périphérique</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Inclure les descriptions, informations, notes</string>
-    <string name="backup_failed_file_access">Impossible de sauvegarder. Un fichier de sauvegarde ne peut pas être trouvé ou consulté.</string>
-    <string name="backup_success">Sauvegarde réussie.</string>
-    <string name="backup_failed">Sauvegarde échouée.</string>
-    <string name="import_failed_nosd">Restauration impossible. Le répertoire de sauvegarde est indisponible.</string>
-    <string name="import_failed_nofile">Il n\'y a aucun fichier de sauvegarde lisible.</string>
-    <string name="import_success">Restauration réussie.</string>
-    <string name="import_failed">Restauration échouée.</string>
     <string name="backup_button">Sauvegarder</string>
     <string name="import_button">Restaurer</string>
     <string name="import_warning">Je comprends que mes séries, listes et films actuels seront remplacés !</string>

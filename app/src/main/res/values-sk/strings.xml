@@ -472,8 +472,6 @@
     <string name="theme_app_light">Svetlá</string>
     <!-- Other advanced settings -->
     <string name="pref_autoupdatesummary">Automaticky synchronizovať a aktualizovať SeriesGuide dáta</string>
-    <string name="backup">Zálohovanie / obnovenie</string>
-    <string name="backup_summary">Zálohovanie alebo obnovenie vašich seriálov</string>
     <string name="pref_number">Formát číslovania</string>
     <string name="pref_offset">Manuálny časový posun</string>
     <string name="pref_offsetsummary">Posunúť časy vysielania o %d hodín</string>
@@ -481,13 +479,6 @@
     <string name="clear_cache_summary">Odstrániť všetky obrázky stiahnuté do zariadenia</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Zahrnúť popisy, podrobnosti, hodnotenia</string>
-    <string name="backup_failed_file_access">Nie je možné zálohovať. Záložný súbor nie je možné nájsť alebo k nemu nie je prístup.</string>
-    <string name="backup_success">Zálohovanie úspešné.</string>
-    <string name="backup_failed">Zálohovanie zlyhalo.</string>
-    <string name="import_failed_nosd">Nie je možné obnoviť zálohu. Priečinok zálohy nie je dostupný.</string>
-    <string name="import_failed_nofile">Nie je čitateľný záložný súbor.</string>
-    <string name="import_success">Obnova zo zálohy úspešná.</string>
-    <string name="import_failed">Obnova zo zálohy zlyhala.</string>
     <string name="backup_button">Zálohovať</string>
     <string name="import_button">Obnoviť</string>
     <string name="import_warning">Rozumiem, moje aktuálne seriály, zoznamy a filmy budú nahradené zálohou!</string>

@@ -430,8 +430,6 @@
     <string name="theme_app_light">Terang</string>
     <!-- Other advanced settings -->
     <string name="pref_autoupdatesummary">Secara otomatis melakukan sinkronisasi dan memperbarui data SeriesGuide</string>
-    <string name="backup">Cadangkan/Pulihkan</string>
-    <string name="backup_summary">Cadangkan atau pulihkan acara anda</string>
     <string name="pref_number">Format nomor</string>
     <string name="pref_offset">Seimbangkan waktu secara manual</string>
     <string name="pref_offsetsummary">Seimbangkan waktu rilis selama %d jam</string>
@@ -439,13 +437,6 @@
     <string name="clear_cache_summary">Hapus semua cache gambar dari perangkat Anda</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Termasuk deskripsi, rincian, peringkat</string>
-    <string name="backup_failed_file_access">Tidak dapat mencadangkan. File cadangan tidak dapat ditemukan atau diakses.</string>
-    <string name="backup_success">Pencadangan Berhasil.</string>
-    <string name="backup_failed">Pencadangan Gagal.</string>
-    <string name="import_failed_nosd">Tidak dapat memulihkan cadangan. Folder cadangan tidak tersedia.</string>
-    <string name="import_failed_nofile">Tidak ada file cadangan yang dapat dibaca.</string>
-    <string name="import_success">Cadangan berhasil dipulihkan.</string>
-    <string name="import_failed">Memulihkan cadangan gagal.</string>
     <string name="backup_button">Buat cadangan</string>
     <string name="import_button">Pulihkan cadangan</string>
     <string name="import_warning">Saya mengerti acara, daftar dan film saya saat ini akan diganti!</string>

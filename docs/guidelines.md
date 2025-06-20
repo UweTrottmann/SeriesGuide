@@ -122,7 +122,8 @@ for example `ic_event_control_24dp.xml`.
 Load vector drawables [using compat loading](https://medium.com/androiddevelopers/using-vector-assets-in-android-apps-4318fd662eb9)
 so they work (tinting) and do not crash (gradients) on all supported releases:
 
-- `Button`: use `ViewTools.setVectorDrawableTop`, ... (uses `AppCompatResources.getDrawable()`)
+- `Button`: use `ViewTools.setVectorDrawableTop`, ... (uses `AppCompatResources.getDrawable()`) or
+  `app:icon`
 - `ImageView`, `ImageButton`: use `app:srcCompat`
 - `TextView`: use `app:drawableStartCompat`, `app:drawableTopCompat`, ...
 - **Optionally** if the drawable is just a color
