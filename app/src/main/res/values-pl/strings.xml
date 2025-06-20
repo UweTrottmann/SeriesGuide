@@ -471,7 +471,6 @@
     <string name="theme_app_dark">Ciemny</string>
     <string name="theme_app_light">Jasny</string>
     <!-- Other advanced settings -->
-    <string name="pref_other">Inne</string>
     <string name="pref_autoupdatesummary">Automatycznie synchronizuje i aktualizuje dane SeriesGuide</string>
     <string name="backup">Kopia zapasowa</string>
     <string name="backup_summary">Utwórz/Przywróć kopię bazy seriali</string>

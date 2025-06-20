@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2013-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.settings
 
@@ -88,8 +88,8 @@ object AppSettings {
     }
 
     /**
-     * Returns if user-visible debug components should be enabled
-     * (e.g. logging to logcat, debug views). Always true for debug builds.
+     * Returns if debug components for users, which might have a performance impact, should be
+     * enabled (for ex. debug log). Always true for debug builds.
      */
     fun isUserDebugModeEnabled(context: Context): Boolean {
         return BuildConfig.DEBUG || PreferenceManager.getDefaultSharedPreferences(context)

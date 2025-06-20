@@ -443,7 +443,6 @@
     <string name="theme_app_dark">Malhela</string>
     <string name="theme_app_light">Hela</string>
     <!-- Other advanced settings -->
-    <string name="pref_other">Aliaj</string>
     <string name="pref_autoupdatesummary">Automatically sync and update content</string>
     <string name="backup">Savkopii/Restaŭri</string>
     <string name="backup_summary">Back up or restore your shows, lists and movies</string>

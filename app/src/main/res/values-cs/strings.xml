@@ -471,7 +471,6 @@
     <string name="theme_app_dark">Tmavý</string>
     <string name="theme_app_light">Světlý</string>
     <!-- Other advanced settings -->
-    <string name="pref_other">Ostatní</string>
     <string name="pref_autoupdatesummary">Automaticky synchronizovat a aktualizovat obsah</string>
     <string name="backup">Zálohování/obnovení</string>
     <string name="backup_summary">Zálohování a obnovení Vašich pořadů</string>

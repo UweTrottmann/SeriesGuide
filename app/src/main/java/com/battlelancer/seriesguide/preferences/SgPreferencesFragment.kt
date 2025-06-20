@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2019-2024 Uwe Trottmann
+// Copyright 2019-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.preferences
 
@@ -13,7 +13,6 @@ import android.os.Bundle
 import android.os.Vibrator
 import android.provider.Settings
 import android.text.TextUtils
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.edit
@@ -26,6 +25,7 @@ import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
+import com.battlelancer.seriesguide.getSgAppContainer
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.AppSettings
@@ -60,10 +60,12 @@ class SgPreferencesFragment : BasePreferencesFragment(),
                 setPreferencesFromResource(R.xml.settings_root, rootKey)
                 setupRootSettings()
             }
+
             KEY_SCREEN_BASIC -> {
                 setPreferencesFromResource(R.xml.settings_basic, rootKey)
                 setupBasicSettings()
             }
+
             KEY_SCREEN_NOTIFICATIONS -> {
                 setPreferencesFromResource(R.xml.settings_notifications, rootKey)
                 setupNotificationSettings()
@@ -317,6 +319,7 @@ class SgPreferencesFragment : BasePreferencesFragment(),
                 startActivity(DataLiberationActivity.intentToShowAutoBackup(requireActivity()))
                 return true
             }
+
             LINK_KEY_DATALIBERATION -> {
                 startActivity(Intent(activity, DataLiberationActivity::class.java))
                 return true
@@ -369,12 +372,6 @@ class SgPreferencesFragment : BasePreferencesFragment(),
             Utils.tryStartActivityForResult(this, intent, REQUEST_CODE_RINGTONE)
             return true
         }
-        if (AppSettings.KEY_USER_DEBUG_MODE_ENBALED == key) {
-            Toast.makeText(
-                context, R.string.pref_user_debug_mode_note, Toast.LENGTH_LONG
-            ).show()
-            return false // Let the pref handle the click (and change its value).
-        }
         return super.onPreferenceTreeClick(preference)
     }
 
@@ -408,6 +405,7 @@ class SgPreferencesFragment : BasePreferencesFragment(),
         if (key == null) {
             return // Preferences were cleared, do nothing.
         }
+
         val pref: Preference? = findPreference(key)
         if (pref != null) {
             BackupManager(pref.context).dataChanged()
@@ -426,15 +424,39 @@ class SgPreferencesFragment : BasePreferencesFragment(),
             if (NotificationSettings.KEY_THRESHOLD == key) {
                 updateThresholdSummary(pref)
             }
+            if (StreamingSearch.KEY_SETTING_REGION == key) {
+                updateStreamSearchServiceSummary(pref)
+            }
+
+            // Demonstrate vibration pattern used by SeriesGuide
             if (NotificationSettings.KEY_VIBRATE == key
                 && NotificationSettings.isNotificationVibrating(pref.context)) {
-                // demonstrate vibration pattern used by SeriesGuide
                 val vibrator = requireActivity().getSystemService<Vibrator>()
                 @Suppress("DEPRECATION") // Not visible on O+, no need to use new API.
                 vibrator?.vibrate(NotificationService.VIBRATION_PATTERN, -1)
             }
-            if (StreamingSearch.KEY_SETTING_REGION == key) {
-                updateStreamSearchServiceSummary(pref)
+
+            // Toggle auto-update on SyncAdapter
+            if (UpdateSettings.KEY_AUTOUPDATE == key) {
+                val autoUpdatePref = pref as SwitchPreferenceCompat
+                SgSyncAdapter.setSyncAutomatically(requireContext(), autoUpdatePref.isChecked)
+            }
+
+            // Change error reports setting
+            if (AppSettings.KEY_SEND_ERROR_REPORTS == key) {
+                val switchPref = pref as SwitchPreferenceCompat
+                AppSettings.setSendErrorReports(switchPref.context, switchPref.isChecked, false)
+            }
+
+            // Enable or disable debug log
+            if (AppSettings.KEY_USER_DEBUG_MODE_ENBALED == key) {
+                val switchPref = pref as SwitchPreferenceCompat
+                val debugLogBuffer = requireActivity().getSgAppContainer().debugLogBuffer
+                if (switchPref.isChecked) {
+                    debugLogBuffer.enable()
+                } else {
+                    debugLogBuffer.disable()
+                }
             }
         }
 
@@ -461,21 +483,6 @@ class SgPreferencesFragment : BasePreferencesFragment(),
                 SgRoomDatabase.getInstance(requireContext()).sgEpisode2Helper()
                     .resetLastUpdatedForAll()
             }.start()
-        }
-
-        // Toggle auto-update on SyncAdapter
-        if (UpdateSettings.KEY_AUTOUPDATE == key) {
-            if (pref != null) {
-                val autoUpdatePref = pref as SwitchPreferenceCompat
-                SgSyncAdapter.setSyncAutomatically(requireContext(), autoUpdatePref.isChecked)
-            }
-        }
-
-        if (AppSettings.KEY_SEND_ERROR_REPORTS == key) {
-            pref?.also {
-                val switchPref = pref as SwitchPreferenceCompat
-                AppSettings.setSendErrorReports(switchPref.context, switchPref.isChecked, false)
-            }
         }
     }
 

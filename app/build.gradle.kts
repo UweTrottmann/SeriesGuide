@@ -257,12 +257,6 @@ dependencies {
         exclude(group = "org.threeten", module = "threetenbp") // using ThreeTenABP instead
     }
 
-    implementation(libs.debugdrawer.base)
-    implementation(libs.debugdrawer.view)
-    implementation(libs.debugdrawer.commons)
-    implementation(libs.debugdrawer.actions)
-    implementation(libs.debugdrawer.timber)
-
     // Note: can not use Firebase BOM as firebase-ui-auth has not updated in a while
     // Crashlytics
     implementation(libs.firebase.crashlytics)

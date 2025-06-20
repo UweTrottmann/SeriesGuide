@@ -17,6 +17,13 @@ doSomething(avoidWork = true)
 doSomething(true)
 ```
 
+### Application dependency injection
+
+Existing code is using Dagger and a [ServicesComponent](/app/src/main/java/com/battlelancer/seriesguide/modules/ServicesComponent.kt).
+
+New code should avoid relying on Dagger (and its annotation processor) and use the 
+[SgAppContainer](/app/src/main/java/com/battlelancer/seriesguide/SgAppContainer.kt) instead.
+
 ### Room database
 
 The `@Entity` data classes should use nullable types for all columns (besides the ID). Validation,
@@ -38,6 +45,47 @@ Example: `ItemClickListener`
 The methods are named based on what is clicked.
 
 Example: `onMoreOptionsClick`.
+
+### RecyclerView
+
+Use the following pattern for `ViewHolder` classes:
+
+```kotlin
+class LinkViewHolder(
+    private val binding: ItemDiscoverLinkBinding,
+    itemClickListener: ItemClickListener
+) : RecyclerView.ViewHolder(binding.root) {
+
+    interface ItemClickListener {
+        fun onItemClick()
+    }
+    
+    init {
+        binding.button.setOnClickListener {
+            itemClickListener.onItemClick()
+        }
+    }
+
+    fun bindTo(text: String) {
+        binding.textView.text = text
+    }
+
+    companion object {
+        fun inflate(parent: ViewGroup, itemClickListener: ItemClickListener) =
+            LinkViewHolder(
+                ItemDiscoverLinkBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                ),
+                itemClickListener
+            )
+    }
+}
+```
+
+- Keeps the view binding class imports inside the `ViewHolder` class.
+- Keeps binding logic inside the `ViewHolder` class.
 
 ### SharedPreferences and settings
 

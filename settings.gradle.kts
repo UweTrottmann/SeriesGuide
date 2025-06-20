@@ -1,6 +1,3 @@
-// SPDX-License-Identifier: Apache-2.0
-// Copyright 2024 Uwe Trottmann
-
 pluginManagement {
     repositories {
         gradlePluginPortal()
@@ -22,7 +19,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        // For debugdrawer.
+        // For com.github.chrisbanes:PhotoView
         maven { url = uri("https://jitpack.io") }
     }
 }

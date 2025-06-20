@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2011-2024 Uwe Trottmann
+// Copyright 2011-2025 Uwe Trottmann
 // Copyright 2013 Andrew Neal
 
 package com.battlelancer.seriesguide
 
+import android.app.Activity
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -33,12 +34,10 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
 import com.uwetrottmann.androidutils.AndroidUtils
-import io.palaima.debugdrawer.timber.data.LumberYard
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.asCoroutineDispatcher
-import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.EventBusException
@@ -50,6 +49,8 @@ import java.util.concurrent.Executors
  * Initializes logging and services.
  */
 class SgApp : Application() {
+
+    lateinit var appContainer: SgAppContainer
 
     companion object {
 
@@ -130,10 +131,14 @@ class SgApp : Application() {
             enableStrictMode()
         }
 
+        // Logging uses time APIs
+        AndroidThreeTen.init(this)
+
+        appContainer = SgAppContainer(this)
+
         // set up logging first so crashes during initialization are caught
         initializeLogging()
 
-        AndroidThreeTen.init(this)
         initializeEventBus()
         if (AndroidUtils.isAtLeastOreo) {
             initializeNotificationChannels()
@@ -167,22 +172,21 @@ class SgApp : Application() {
     }
 
     private fun initializeLogging() {
+        // Enable logging before any Timber log calls
+        if (BuildConfig.DEBUG) {
+            // logcat logging
+            Timber.plant(Timber.DebugTree())
+        }
+        if (AppSettings.isUserDebugModeEnabled(this)) {
+            // debug log
+            appContainer.debugLogBuffer.enable()
+        }
+
         // Note: Firebase Crashlytics is automatically initialized through its content provider.
         // Pass current enabled state to Crashlytics (e.g. in case app was restored from backup).
         val isSendErrors = AppSettings.isSendErrorReports(this)
-        Timber.d("Turning error reporting %s", if (isSendErrors) "ON" else "OFF")
+        Timber.i("Turning error reporting %s", if (isSendErrors) "ON" else "OFF")
         Errors.getReporter()?.setCrashlyticsCollectionEnabled(isSendErrors)
-
-        if (AppSettings.isUserDebugModeEnabled(this)) {
-            // debug drawer logging
-            val lumberYard = LumberYard.getInstance(this)
-            coroutineScope.launch(Dispatchers.IO) {
-                lumberYard.cleanUp()
-            }
-            Timber.plant(lumberYard.tree())
-            // detailed logcat logging
-            Timber.plant(Timber.DebugTree())
-        }
         // crash and error reporting
         Timber.plant(AnalyticsTree())
     }
@@ -289,4 +293,12 @@ class SgApp : Application() {
             StrictMode.setVmPolicy(build())
         }
     }
+}
+
+fun Application.getSgAppContainer(): SgAppContainer {
+    return (this as SgApp).appContainer
+}
+
+fun Activity.getSgAppContainer(): SgAppContainer {
+    return (application as SgApp).appContainer
 }

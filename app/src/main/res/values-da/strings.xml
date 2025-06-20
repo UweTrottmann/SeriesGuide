@@ -443,7 +443,6 @@
     <string name="theme_app_dark">Mørk</string>
     <string name="theme_app_light">Lys</string>
     <!-- Other advanced settings -->
-    <string name="pref_other">Øvrige</string>
     <string name="pref_autoupdatesummary">Synkronisér og opdatér SeriesGuide-data automatisk</string>
     <string name="backup">Sikkerhedskopier/Gendan</string>
     <string name="backup_summary">Sikkerhedskopier eller gendan dine serier</string>

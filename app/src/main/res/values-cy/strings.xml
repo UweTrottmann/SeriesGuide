@@ -499,7 +499,6 @@
     <string name="theme_app_dark">Tywyll</string>
     <string name="theme_app_light">Golau</string>
     <!-- Other advanced settings -->
-    <string name="pref_other">Arall</string>
     <string name="pref_autoupdatesummary">Cysoni a diweddaru cynnwys yn awtomatig</string>
     <string name="backup">Gwneud copi wrth gefn / Adfer</string>
     <string name="backup_summary">Gwneud copi wrth gefn neu adfer eich sioeau, rhestrau a ffilmiau</string>

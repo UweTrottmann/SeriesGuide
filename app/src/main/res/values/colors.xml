@@ -82,4 +82,11 @@
     <color name="sg_ripple_material_dark">#33ffffff</color>
     <color name="sg_ripple_material_light">#1f000000</color>
 
+    <!-- Debug log -->
+    <color name="sg_debuglog_debug">#2196F3</color>
+    <color name="sg_debuglog_info">#8BC34A</color>
+    <color name="sg_debuglog_warn">#FFC107</color>
+    <color name="sg_debuglog_error">#F44336</color>
+    <color name="sg_debuglog_unknown">#9C27B0</color>
+
 </resources>

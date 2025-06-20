@@ -443,7 +443,6 @@
     <string name="theme_app_dark">Donker</string>
     <string name="theme_app_light">Licht</string>
     <!-- Other advanced settings -->
-    <string name="pref_other">Andere</string>
     <string name="pref_autoupdatesummary">Automatisch data synchroniseren en bijwerken</string>
     <string name="backup">Back-up maken/herstellen</string>
     <string name="backup_summary">Back-up van series maken/herstellen</string>

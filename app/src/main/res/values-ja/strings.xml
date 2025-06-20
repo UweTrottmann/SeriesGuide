@@ -429,7 +429,6 @@
     <string name="theme_app_dark">ダーク</string>
     <string name="theme_app_light">ライト</string>
     <!-- Other advanced settings -->
-    <string name="pref_other">その他</string>
     <string name="pref_autoupdatesummary">SeriesGuide データを自動的に同期および更新します</string>
     <string name="backup">バックアップ/復元</string>
     <string name="backup_summary">番組をバックアップまたは復元します</string>

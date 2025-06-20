@@ -443,7 +443,6 @@
     <string name="theme_app_dark">Karanlık</string>
     <string name="theme_app_light">Aydınlık</string>
     <!-- Other advanced settings -->
-    <string name="pref_other">Diğer</string>
     <string name="pref_autoupdatesummary">İçeriği otomatik olarak senkronize et ve güncelle</string>
     <string name="backup">Yedekle/Geri Yükle</string>
     <string name="backup_summary">Dizilerinizi, listelerinizi ve filmlerinizi yedekleyin veya geri yükleyin</string>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Copyright 2025 Uwe Trottmann -->
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayoutDebugLog"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/top_app_bar_elevating" />
+
+    <FrameLayout
+        android:id="@+id/containerDebugLogScrolling"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewDebugLog"
+            style="@style/Widget.SeriesGuide.RecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingStart="@dimen/grid_item_margin_horizontal"
+            android:paddingTop="@dimen/default_padding"
+            android:paddingEnd="@dimen/grid_item_margin_horizontal"
+            android:paddingBottom="@dimen/default_padding"
+            tools:listitem="@layout/item_debug_log" />
+
+        <FrameLayout
+            android:id="@+id/frameLayoutDebugLogProgress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/sgColorBackgroundDim">
+
+            <ProgressBar
+                android:id="@+id/progressBarDebugLog"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+        </FrameLayout>
+
+    </FrameLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

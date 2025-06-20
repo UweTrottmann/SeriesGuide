@@ -76,17 +76,6 @@
             android:exported="true"
             tools:ignore="ExportedContentProvider" />
 
-        <!-- File sharing content provider -->
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_provider_paths" />
-        </provider>
-
         <!-- Launch activity -->
         <activity
             android:name="com.battlelancer.seriesguide.ui.ShowsActivity"
@@ -197,6 +186,7 @@
                 <category android:name="android.intent.category.NOTIFICATION_PREFERENCES" />
             </intent-filter>
         </activity>
+        <activity android:name=".diagnostics.DebugLogActivity" />
         <activity
             android:name="com.battlelancer.seriesguide.extensions.ExtensionsConfigurationActivity"
             android:exported="true"

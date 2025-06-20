@@ -481,7 +481,7 @@
     <string name="theme_app_light">Light</string>
 
     <!-- Other advanced settings -->
-    <string name="pref_other">Other</string>
+    <string name="pref_category_diagnostics">Diagnostics</string>
     <string name="pref_autoupdatesummary">Automatically sync and update content</string>
     <string name="backup">Backup/Restore</string>
     <string name="backup_summary">Back up or restore your shows, lists and movies</string>
@@ -611,5 +611,10 @@
 
     <!-- Support -->
     <string name="support_the_dev">Support the developer?</string>
+
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Debug log</string>
+    <string name="status_saving_file_success">File saved</string>
+    <string name="status_saving_file_failed">Failed to save file</string>
 
 </resources>
