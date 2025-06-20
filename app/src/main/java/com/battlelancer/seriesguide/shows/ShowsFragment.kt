@@ -302,12 +302,9 @@ class ShowsFragment : Fragment() {
             if (isGranted) {
                 adapter.refreshFirstRunHeader()
             } else {
-                (activity as BaseMessageActivity?)?.snackbarParentView
-                    ?.let {
-                        Snackbar
-                            .make(it, R.string.notifications_allow_reason, Snackbar.LENGTH_LONG)
-                            .show()
-                    }
+                (activity as BaseMessageActivity?)
+                    ?.makeSnackbar(R.string.notifications_allow_reason, Snackbar.LENGTH_LONG)
+                    ?.show()
             }
         }
 

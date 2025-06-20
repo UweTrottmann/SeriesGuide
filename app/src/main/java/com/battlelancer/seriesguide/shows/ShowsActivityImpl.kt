@@ -76,7 +76,7 @@ open class ShowsActivityImpl : BaseTopActivity() {
 
         if (AppUpgrade(applicationContext).upgradeIfNewVersion()) {
             // Let the user know the app has updated.
-            Snackbar.make(snackbarParentView, R.string.updated, Snackbar.LENGTH_LONG)
+            makeSnackbar(R.string.updated, Snackbar.LENGTH_LONG)
                 .setAction(R.string.updated_what_is_new) {
                     WebTools.openInApp(
                         this@ShowsActivityImpl,
@@ -269,8 +269,14 @@ open class ShowsActivityImpl : BaseTopActivity() {
                 .get(BillingViewModel::class.java)
         billingViewModel.entitlementRevokedEvent
             .observe(this) {
-                // Note: sometimes sub is not really expired, only billing API not returning purchase.
-                BillingActivity.showExpiredNotification(this, snackbarParentView)
+                // Note: sometimes sub is not really expired, only billing API not returning
+                // purchase. Assume that opening BillingActivity through the action of the message
+                // will also help resolve the issue.
+                makeSnackbar(R.string.subscription_expired_details, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(R.string.billing_action_manage_subscriptions) {
+                        startActivity(BillingActivity.intent(this))
+                    }
+                    .show()
             }
     }
 
