@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2011-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.appwidget
 
@@ -23,9 +23,9 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.WidgetSettings
 import com.battlelancer.seriesguide.settings.WidgetSettings.WidgetTheme
 import com.battlelancer.seriesguide.shows.ShowsActivityImpl
-import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
+import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.util.PendingIntentCompat
 import timber.log.Timber
 import java.util.Random
@@ -64,6 +64,9 @@ class ListWidgetProvider : AppWidgetProvider() {
                 return
 
             }
+            // Keep using existing adapter-based APIs as long as possible,
+            // the new widget API only allows a fixed set of pre-built items.
+            @Suppress("DEPRECATION")
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.list_view)
             scheduleWidgetUpdate(context)
         } else if (ACTION_CLICK_ITEM == intent.action) {
@@ -221,6 +224,9 @@ class ListWidgetProvider : AppWidgetProvider() {
 
             // Build widget views.
             val rv = RemoteViews(context.packageName, layoutResId).also {
+                // Keep using existing adapter-based APIs as long as possible,
+                // the new widget API only allows a fixed set of pre-built items.
+                @Suppress("DEPRECATION")
                 it.setRemoteAdapter(R.id.list_view, intent)
                 // The empty view is displayed when the collection has no items. It
                 // should be a sibling of the collection view.
