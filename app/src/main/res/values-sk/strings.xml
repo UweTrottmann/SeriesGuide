@@ -40,6 +40,7 @@
     <string name="action_select_region">Vybrať región</string>
     <string name="action_reset">Resetovať</string>
     <string name="action_save">Uložiť</string>
+    <string name="action_turn_on">Turn on</string>
     <!-- Search -->
     <string name="clear_search_history">Vymazať históriu vyhľadávania</string>
     <string name="search_hint">Hľadať epizódy</string>
@@ -58,6 +59,7 @@
     <string name="api_failed">Zlyhanie: %s</string>
     <string name="copy_to_clipboard">Skopírované do schránky</string>
     <string name="not_migrated">Seriál nebol migrovaný na TMDB. Niektoré akcie vrátane Trakt a Cloud synchronizácie nemusia fungovať. Vyhľadajte prípadnú náhradu a tento seriál odstráňte. Klepnutím zobrazíte podrobnosti.</string>
+    <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">Zdieľať</string>
     <string name="share_show">Zdieľať seriál</string>
@@ -101,7 +103,7 @@
     <string name="show_status_in_production">V produkcii</string>
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">Zrušené</string>
-    <string name="no_translation">Na %2$s nie je dostupný žiadny popis v %1$s.</string>
+    <string name="no_translation">No details in %1$s available, consider adding them at %2$s. Or try to change the language.</string>
     <string name="no_spoilers">Niektoré detaily sú skryté aby sa zabránilo prezradeniu deja. Pre ich zobrazenie prejdite do nastavení.</string>
     <string name="format_source">Zdroj: %s</string>
     <string name="last_updated">Naposledy aktualizované</string>
@@ -471,23 +473,34 @@
     <string name="theme_app_dark">Tmavá</string>
     <string name="theme_app_light">Svetlá</string>
     <!-- Other advanced settings -->
+    <string name="pref_category_diagnostics">Diagnostics</string>
     <string name="pref_autoupdatesummary">Automaticky synchronizovať a aktualizovať SeriesGuide dáta</string>
     <string name="pref_number">Formát číslovania</string>
     <string name="pref_offset">Manuálny časový posun</string>
     <string name="pref_offsetsummary">Posunúť časy vysielania o %d hodín</string>
     <string name="clear_cache">Vymazať vyrovnávaciu pamäť obrázkov</string>
     <string name="clear_cache_summary">Odstrániť všetky obrázky stiahnuté do zariadenia</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Export and import</string>
+    <string name="title_export">Export</string>
+    <string name="title_import">Import</string>
+    <string name="action_export">Export to file</string>
     <string name="backup_full_dump">Zahrnúť popisy, podrobnosti, hodnotenia</string>
-    <string name="backup_button">Zálohovať</string>
+    <string name="status_successful">Successful</string>
+    <string name="status_failure">Failed</string>
+    <string name="status_failed_file_access">Can not find or access file</string>
     <string name="import_button">Obnoviť</string>
+    <string name="action_view_import_documentation">View expected format</string>
     <string name="import_warning">Rozumiem, moje aktuálne seriály, zoznamy a filmy budú nahradené zálohou!</string>
+    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
+    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
     <string name="no_file_selected">Nebol vybratý žiadny súbor</string>
     <string name="action_select_file">Vyberte súbor</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatické zálohovanie</string>
     <string name="pref_autobackupsummary">Týždenné zálohovanie vašich seriálov, zoznamov a filmov</string>
     <string name="autobackup_details">Tieto zálohy nie sú k dispozícii, ak je aplikácia nainštalovaná znova, pokiaľ nie je pre toto zariadenie zapnuté zálohovanie údajov aplikácie (Android 6+). Vytvorte kópie, aby ste ich zachovali inak.</string>
+    <string name="backup_button">Zálohovať</string>
     <string name="last_auto_backup">Posledná automatická záloha: %s</string>
     <string name="restore_auto_backup">Obnoviť automatickú zálohu</string>
     <string name="autobackup_failed">Posledná automatická záloha zlyhala</string>
@@ -579,4 +592,8 @@
     <string name="feedback_action_nothanks">Nie, ďakujem</string>
     <!-- Support -->
     <string name="support_the_dev">Podporiť vývojára?</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Debug log</string>
+    <string name="status_saving_file_success">File saved</string>
+    <string name="status_saving_file_failed">Failed to save file</string>
 </resources>

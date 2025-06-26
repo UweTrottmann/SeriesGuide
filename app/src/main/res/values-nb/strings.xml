@@ -40,6 +40,7 @@
     <string name="action_select_region">Velg region</string>
     <string name="action_reset">Reset</string>
     <string name="action_save">Save</string>
+    <string name="action_turn_on">Turn on</string>
     <!-- Search -->
     <string name="clear_search_history">Tøm søkelogg</string>
     <string name="search_hint">Søk episoder</string>
@@ -58,6 +59,7 @@
     <string name="api_failed">Mislyktes: %s</string>
     <string name="copy_to_clipboard">Kopiert til utklippstavlen</string>
     <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">Del</string>
     <string name="share_show">Del serie</string>
@@ -99,7 +101,7 @@
     <string name="show_status_in_production">I produksjon</string>
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">Kansellert</string>
-    <string name="no_translation">Det er ingen beskrivelse oversatt til %1$s på %2$s.</string>
+    <string name="no_translation">No details in %1$s available, consider adding them at %2$s. Or try to change the language.</string>
     <string name="no_spoilers">Noen detaljer er skjult for å unngå spoilere. Gå til Innstillinger for å deaktivere dette.</string>
     <string name="format_source">Kilde: %s</string>
     <string name="last_updated">Last updated</string>
@@ -443,23 +445,34 @@
     <string name="theme_app_dark">Mørk</string>
     <string name="theme_app_light">Lys</string>
     <!-- Other advanced settings -->
+    <string name="pref_category_diagnostics">Diagnostics</string>
     <string name="pref_autoupdatesummary">Synkroniser automatisk og oppdater SeriesGuide data</string>
     <string name="pref_number">Nummerering</string>
     <string name="pref_offset">Manuell tidsforskyvning</string>
     <string name="pref_offsetsummary">Tidsforskjell på %d timer</string>
     <string name="clear_cache">Tøm hurtiglageret</string>
     <string name="clear_cache_summary">Fjern alle hurtiglagrede bilder fra enheten</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Export and import</string>
+    <string name="title_export">Export</string>
+    <string name="title_import">Import</string>
+    <string name="action_export">Export to file</string>
     <string name="backup_full_dump">Inkluderer beskrivelser, detaljer og vurderinger</string>
-    <string name="backup_button">Opprett sikkerhetskopi</string>
+    <string name="status_successful">Successful</string>
+    <string name="status_failure">Failed</string>
+    <string name="status_failed_file_access">Can not find or access file</string>
     <string name="import_button">Gjenopprett</string>
+    <string name="action_view_import_documentation">View expected format</string>
     <string name="import_warning">Jeg forstår at mine valgte serier, lister og filmer vil bli erstattet.</string>
+    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
+    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
     <string name="no_file_selected">Ingen fil valgt</string>
     <string name="action_select_file">Velg fil</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatisk sikkerhetskopiering</string>
     <string name="pref_autobackupsummary">Ukentlig sikkerhetskopiering av dine serier, lister og filmer</string>
     <string name="autobackup_details">Disse sikkerhetskopiene er utilgjengelige hvis appen blir installert på nytt. Opprett kopier for å bevare dem.</string>
+    <string name="backup_button">Opprett sikkerhetskopi</string>
     <string name="last_auto_backup">Siste automatiske sikkerhetskopiering: %s</string>
     <string name="restore_auto_backup">Gjenopprett fra automatisk sikkerhetskopiering</string>
     <string name="autobackup_failed">Den siste automatiske sikkerhetskopieringen mislyktes</string>
@@ -551,4 +564,8 @@
     <string name="feedback_action_nothanks">Nei takk</string>
     <!-- Support -->
     <string name="support_the_dev">Støtt apputvikleren?</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Debug log</string>
+    <string name="status_saving_file_success">File saved</string>
+    <string name="status_saving_file_failed">Failed to save file</string>
 </resources>

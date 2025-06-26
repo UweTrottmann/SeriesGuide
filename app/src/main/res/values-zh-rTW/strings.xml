@@ -40,6 +40,7 @@
     <string name="action_select_region">選擇地區</string>
     <string name="action_reset">Reset</string>
     <string name="action_save">Save</string>
+    <string name="action_turn_on">Turn on</string>
     <!-- Search -->
     <string name="clear_search_history">清除搜尋記錄</string>
     <string name="search_hint">搜尋集數</string>
@@ -58,6 +59,7 @@
     <string name="api_failed">失敗：%s</string>
     <string name="copy_to_clipboard">已複製到剪貼簿</string>
     <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">分享</string>
     <string name="share_show">分享節目</string>
@@ -98,7 +100,7 @@
     <string name="show_status_in_production">製作中</string>
     <string name="show_status_pilot">試播集</string>
     <string name="show_status_canceled">已取消</string>
-    <string name="no_translation">%2$s沒有%1$s的翻譯說明。</string>
+    <string name="no_translation">No details in %1$s available, consider adding them at %2$s. Or try to change the language.</string>
     <string name="no_spoilers">一些細節已隱藏起來避免劇透，可前往設定關閉此功能。</string>
     <string name="format_source">來源：%s</string>
     <string name="last_updated">最後更新</string>
@@ -429,23 +431,34 @@
     <string name="theme_app_dark">深色</string>
     <string name="theme_app_light">淺色</string>
     <!-- Other advanced settings -->
+    <string name="pref_category_diagnostics">Diagnostics</string>
     <string name="pref_autoupdatesummary">自動同步和更新 SeriesGuide 資料</string>
     <string name="pref_number">數字格式</string>
     <string name="pref_offset">手動時間換算</string>
     <string name="pref_offsetsummary">%d 小時的時差</string>
     <string name="clear_cache">清除圖片暫存檔</string>
     <string name="clear_cache_summary">從您的設備中刪除所有暫存的圖片</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Export and import</string>
+    <string name="title_export">Export</string>
+    <string name="title_import">Import</string>
+    <string name="action_export">Export to file</string>
     <string name="backup_full_dump">包括劇情簡介、詳細資訊、評分</string>
-    <string name="backup_button">備份</string>
+    <string name="status_successful">Successful</string>
+    <string name="status_failure">Failed</string>
+    <string name="status_failed_file_access">Can not find or access file</string>
     <string name="import_button">還原</string>
+    <string name="action_view_import_documentation">View expected format</string>
     <string name="import_warning">我明白我目前的節目，及其他清單和電影將會被取代 ！</string>
+    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
+    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
     <string name="no_file_selected">沒有選擇檔案</string>
     <string name="action_select_file">選擇檔案</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">自動備份</string>
     <string name="pref_autobackupsummary">每週備份你的節目，清單和電影</string>
     <string name="autobackup_details">These backups are unavailable if the app is installed again. Create copies to preserve them otherwise.</string>
+    <string name="backup_button">備份</string>
     <string name="last_auto_backup">剩餘自動備份︰ %s</string>
     <string name="restore_auto_backup">還原自動備份</string>
     <string name="autobackup_failed">The last auto backup has failed</string>
@@ -537,4 +550,8 @@
     <string name="feedback_action_nothanks">不了，謝謝</string>
     <!-- Support -->
     <string name="support_the_dev">支持一下開發者？</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Debug log</string>
+    <string name="status_saving_file_success">File saved</string>
+    <string name="status_saving_file_failed">Failed to save file</string>
 </resources>

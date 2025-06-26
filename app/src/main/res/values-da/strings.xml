@@ -33,13 +33,14 @@
     <string name="add_to_homescreen">Tilføj til startskærmen</string>
     <string name="action_open">Åbn</string>
     <string name="sync_manually">Synkronisér manuelt</string>
-    <string name="sync_and_update">Synkronisér og opdatér</string>
-    <string name="sync_and_download_all">Synkronisér og opdatér alle</string>
+    <string name="sync_and_update">Synkronisér &amp; Opdatér</string>
+    <string name="sync_and_download_all">Synkronisér &amp; Download alle</string>
     <string name="action_stream">Stream eller køb</string>
     <string name="action_stream_settings">Stream- eller købsindstillinger</string>
     <string name="action_select_region">Vælg region</string>
     <string name="action_reset">Nulstil</string>
     <string name="action_save">Gem</string>
+    <string name="action_turn_on">Slå til</string>
     <!-- Search -->
     <string name="clear_search_history">Ryd søgehistorik</string>
     <string name="search_hint">Søg episoder</string>
@@ -58,18 +59,19 @@
     <string name="api_failed">Mislykkedes: %s</string>
     <string name="copy_to_clipboard">Kopieret til udklipsholder</string>
     <string name="not_migrated">Serie ikke migreret til TMDB-data. Visse handlinger, herunder synkronisering med Trakt og skyen, fungerer muligvis ikke. Prøv at søge efter en erstatning, og fjern denne serie. Tryk for at få vist flere oplysninger.</string>
+    <string name="status_turned_on">Slået til</string>
     <!-- Sharing -->
     <string name="share">Del</string>
     <string name="share_show">Del serie</string>
     <string name="share_episode">Del episode</string>
     <string name="share_movie">Del film</string>
-    <string name="addtocalendar">Føj til kalender</string>
+    <string name="addtocalendar">Opret begivenhed</string>
     <string name="addtocalendar_failed">Kan ikke oprette en kalenderbegivenhed.</string>
     <!-- Comments -->
     <string name="comments">Kommentarer</string>
     <string name="shout_hint">Skriv en kommentar (engelsk, 5+ ord)</string>
-    <string name="shout_invalid">Din kommentar overholder ikke reglerne!</string>
-    <string name="action_post">Opret indlæg</string>
+    <string name="shout_invalid">DIn kommentar følger ikke reglerne!</string>
+    <string name="action_post">Post</string>
     <string name="action_edit_comment">Redigér</string>
     <string name="action_delete_comment">Slet</string>
     <string name="confirmation_delete_comment">Slet denne kommentar?</string>
@@ -88,19 +90,19 @@
     <string name="episode_dvdnumber">DVD-episode</string>
     <string name="original_release">Oprindelig udgivelse</string>
     <string name="show_genres">Genrer</string>
-    <string name="show_contentrating">Bedømmelse</string>
+    <string name="show_contentrating">Indholdsklassifikation</string>
     <string name="show_release_times">Udgivelsestider</string>
     <string name="episode_directors">Instruktører</string>
-    <string name="episode_gueststars">Gæsteskuespillere</string>
-    <string name="episode_writers">Manuskriptforfattere</string>
+    <string name="episode_gueststars">Gæstestjerner</string>
+    <string name="episode_writers">Forfattere</string>
     <string name="show_isalive">Fortsætter</string>
     <string name="show_isnotalive">Afsluttet</string>
     <string name="show_isUpcoming">Kommende</string>
-    <string name="show_status_in_production">Under indspilning</string>
-    <string name="show_status_pilot">Pilot-episode</string>
+    <string name="show_status_in_production">I produktion</string>
+    <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">Annulleret</string>
-    <string name="no_translation">Der er ingen beskrivelse oversat til %1$s tilgængelig på %2$s.</string>
-    <string name="no_spoilers">Visse detaljer er skjult for at undgå spoilers. Du kan slå dette fra under Indstillinger.</string>
+    <string name="no_translation">Ingen detaljer i %1$s tilgængelige, overvej at tilføje dem på %2$s. Eller prøv at ændre sproget.</string>
+    <string name="no_spoilers">Visse detaljer er skjult for at undgå spoilers. For at slå dette fra, gå til Indstillinger.</string>
     <string name="format_source">Kilde: %s</string>
     <string name="last_updated">Senest opdateret</string>
     <string name="custom_release_time_edit">Rediger udgivelsestidspunkt</string>
@@ -252,7 +254,7 @@
     <string name="list_remove">Fjern liste</string>
     <string name="list_manage">Administrer liste</string>
     <string name="ack_list_renamed">Liste omdøbt</string>
-    <string name="ack_list_removed">Liste fjernet</string>
+    <string name="ack_list_removed">Liste slettet</string>
     <string name="list_item_manage">Administrer lister</string>
     <string name="ack_list_item_manage">Lister opdateret</string>
     <string name="list_item_remove">Fjern fra liste</string>
@@ -411,7 +413,7 @@
     <string name="privacy_policy">Fortrolighedspolitik</string>
     <string name="licence_themoviedb">Dette produkt benytter TMDB API\'en, men er ikke godkendt eller certificeret af TMDB.</string>
     <string name="licence_trakt">Denne app benytter data og billeder fra Trakt.</string>
-    <string name="about_open_source">SeriesGuide er udviklet ved hjælp af open source-software.</string>
+    <string name="about_open_source">SeriesGuide er lavet ved hjælp af open source software.</string>
     <string name="licences_and_credits">Licenser og tilkendegivelser</string>
     <!-- Sort -->
     <string name="sort">Sortér efter</string>
@@ -443,23 +445,34 @@
     <string name="theme_app_dark">Mørk</string>
     <string name="theme_app_light">Lys</string>
     <!-- Other advanced settings -->
+    <string name="pref_category_diagnostics">Diagnostik</string>
     <string name="pref_autoupdatesummary">Synkronisér og opdatér SeriesGuide-data automatisk</string>
     <string name="pref_number">Talformat</string>
     <string name="pref_offset">Manuel tidsforskydning</string>
     <string name="pref_offsetsummary">Forskyd sendetidspunkter med %d timer</string>
     <string name="clear_cache">Ryd billed-cache</string>
     <string name="clear_cache_summary">Gå til Lagringsindstillinger for at fjerne cachelagrede billeder og netværkssvar</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Eksport og import</string>
+    <string name="title_export">Eksport</string>
+    <string name="title_import">Import</string>
+    <string name="action_export">Eksportér til fil</string>
     <string name="backup_full_dump">Inkluder beskrivelser, detaljer og bedømmelser</string>
-    <string name="backup_button">Opret sikkerhedskopi</string>
+    <string name="status_successful">Succesfuld</string>
+    <string name="status_failure">Mislykket</string>
+    <string name="status_failed_file_access">Kan ikke finde eller tilgå fil</string>
     <string name="import_button">Gendan sikkerhedskopi</string>
+    <string name="action_view_import_documentation">Vis forventet format</string>
     <string name="import_warning">Jeg forstår, at mine nuværende serier, lister og film vil blive erstattet!</string>
+    <string name="import_cloud_warning">Anbefales ikke, når du bruger SeriesGuide Cloud eller Trakt</string>
+    <string name="import_cloud_warning_details">Synkronisering med Cloud eller Trakt kan overskrive importerede data. Med SeriesGuide Cloud kan du slette din konto, før du importerer data, og derefter oprette den efterfølgende for kun at uploade de importerede data.</string>
     <string name="no_file_selected">Ingen fil valgt</string>
     <string name="action_select_file">Vælg fil</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatisk sikkerhedskopiering</string>
     <string name="pref_autobackupsummary">Ugentlig sikkerhedskopiering af dine serier, lister og film.</string>
     <string name="autobackup_details">Disse sikkerhedskopier er ikke tilgængelige, hvis appen bliver installeret igen, medmindre sikkerhedskopiering af appdata er slået til for denne enhed (Android 6+). Ellers skal du oprette kopier for at beholde dem.</string>
+    <string name="backup_button">Opret sikkerhedskopi</string>
     <string name="last_auto_backup">Seneste auto-sikkerhedskopiering: %s</string>
     <string name="restore_auto_backup">Gendan auto-sikkerhedskopi</string>
     <string name="autobackup_failed">Fejl ved seneste sikkerhedskopiering</string>
@@ -506,7 +519,7 @@
     <string name="widget_background_75">75 %</string>
     <string name="widget_background_opaque">Uigennemsigtig</string>
     <!-- Google In-App Billing -->
-    <string name="onlyx">Kun for brugere, som har doneret</string>
+    <string name="onlyx">Kun for støtterer</string>
     <string name="action_upgrade">Oplås alle funktioner</string>
     <string name="billing_action_subscribe">Abonnér</string>
     <string name="billing_action_manage_subscriptions">Administrer abonnementer</string>
@@ -551,4 +564,8 @@
     <string name="feedback_action_nothanks">Nej tak</string>
     <!-- Support -->
     <string name="support_the_dev">Støt udvikleren?</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Fejlretningslog</string>
+    <string name="status_saving_file_success">Fil gemt</string>
+    <string name="status_saving_file_failed">Kunne ikke gemme fil</string>
 </resources>

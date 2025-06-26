@@ -40,6 +40,7 @@
     <string name="action_select_region">Избор на регион</string>
     <string name="action_reset">Нулиране</string>
     <string name="action_save">Запис</string>
+    <string name="action_turn_on">Turn on</string>
     <!-- Search -->
     <string name="clear_search_history">Изчисти историята на търсене</string>
     <string name="search_hint">Търсене на епизоди</string>
@@ -58,6 +59,7 @@
     <string name="api_failed">Грешно: %s</string>
     <string name="copy_to_clipboard">Копирано в клипборда</string>
     <string name="not_migrated">Сериалът не е мигриран в TMDB. Някои действия, като синхронизация с Trakt и Cloud може да не работят. Опитайте се да премахнете сериала и да го потъсите и добавите отново. Кликни за подробности.</string>
+    <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">Сподели</string>
     <string name="share_show">Сподели ТВ предаване</string>
@@ -99,7 +101,7 @@
     <string name="show_status_in_production">В процес на производство</string>
     <string name="show_status_pilot">Пилотен</string>
     <string name="show_status_canceled">Прекратен</string>
-    <string name="no_translation">Няма описание преведено на %1$s възможно на %2$s.</string>
+    <string name="no_translation">No details in %1$s available, consider adding them at %2$s. Or try to change the language.</string>
     <string name="no_spoilers">Някои детайли са скрити, за да се избегнат спойлерите. За да изключите това отидете в настройки.</string>
     <string name="format_source">Източник: %s</string>
     <string name="last_updated">Последно обновено</string>
@@ -443,23 +445,34 @@
     <string name="theme_app_dark">Тъмна</string>
     <string name="theme_app_light">Светла</string>
     <!-- Other advanced settings -->
+    <string name="pref_category_diagnostics">Diagnostics</string>
     <string name="pref_autoupdatesummary">Автоматично синхронизиране и актуализиране данните на SeriesGuide</string>
     <string name="pref_number">Формат на числата</string>
     <string name="pref_offset">Ръчна смяна време</string>
     <string name="pref_offsetsummary">Преместване на часовете за излъчване с %d часа</string>
     <string name="clear_cache">Изчисти кеша на изображенията</string>
     <string name="clear_cache_summary">Премахнете всички кеширани снимки от вашето устройство</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Export and import</string>
+    <string name="title_export">Export</string>
+    <string name="title_import">Import</string>
+    <string name="action_export">Export to file</string>
     <string name="backup_full_dump">Включва описания, детайли, рейтинги</string>
-    <string name="backup_button">Създаване на архив</string>
+    <string name="status_successful">Successful</string>
+    <string name="status_failure">Failed</string>
+    <string name="status_failed_file_access">Can not find or access file</string>
     <string name="import_button">Възстанови архив</string>
+    <string name="action_view_import_documentation">View expected format</string>
     <string name="import_warning">Разбирам моите текущи предавания, списъци и филми ще бъдат заменени!</string>
+    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
+    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
     <string name="no_file_selected">Няма избран файл</string>
     <string name="action_select_file">Избор на файл</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Автоматично създаване на резервно копие</string>
     <string name="pref_autobackupsummary">Седмичен архив на вашите предавания, списъци и филми</string>
     <string name="autobackup_details">Ако преинсталирате приложението, копията ще бъдат изтрити. Преди това направете допълнително копие.</string>
+    <string name="backup_button">Създаване на архив</string>
     <string name="last_auto_backup">Последно автоматично архивиране: %s</string>
     <string name="restore_auto_backup">Възстанови автоматично архивиране</string>
     <string name="autobackup_failed">Създаването на автоматично копие беше неуспешно.</string>
@@ -551,4 +564,8 @@
     <string name="feedback_action_nothanks">Не, благодаря</string>
     <!-- Support -->
     <string name="support_the_dev">Подкрепете разработчика</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Debug log</string>
+    <string name="status_saving_file_success">File saved</string>
+    <string name="status_saving_file_failed">Failed to save file</string>
 </resources>

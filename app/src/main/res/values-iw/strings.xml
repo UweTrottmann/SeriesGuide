@@ -40,6 +40,7 @@
     <string name="action_select_region">Select region</string>
     <string name="action_reset">Reset</string>
     <string name="action_save">Save</string>
+    <string name="action_turn_on">Turn on</string>
     <!-- Search -->
     <string name="clear_search_history">נקה את היסטוריית החיפוש</string>
     <string name="search_hint">חפש פרקים</string>
@@ -58,6 +59,7 @@
     <string name="api_failed">נכשל: %s</string>
     <string name="copy_to_clipboard">הועתק</string>
     <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">שתף</string>
     <string name="share_show">שתף סדרה</string>
@@ -101,7 +103,7 @@
     <string name="show_status_in_production">In Production</string>
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">בוטל</string>
-    <string name="no_translation">אין תיאור זמין המתורגם ל%1$s ב-%2$s.</string>
+    <string name="no_translation">No details in %1$s available, consider adding them at %2$s. Or try to change the language.</string>
     <string name="no_spoilers">פרטים מסוימים מוסתרים כדי למנוע ספוילרים. כדי לבטל את זה עבור להגדרות.</string>
     <string name="format_source">מקור: %s</string>
     <string name="last_updated">Last updated</string>
@@ -471,23 +473,34 @@
     <string name="theme_app_dark">כהה</string>
     <string name="theme_app_light">בהיר</string>
     <!-- Other advanced settings -->
+    <string name="pref_category_diagnostics">Diagnostics</string>
     <string name="pref_autoupdatesummary">בצע סנכרון אוטומטי ועדכן נתונים של SeriesGuide</string>
     <string name="pref_number">תבנית מספרים</string>
     <string name="pref_offset">סטיית שעה ידנית</string>
     <string name="pref_offsetsummary">הסט זמני שידור ב- %d שעות</string>
     <string name="clear_cache">נקה מטמוני תמונות</string>
     <string name="clear_cache_summary">הסר את כל מטמוני התמונות ממכשירך</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Export and import</string>
+    <string name="title_export">Export</string>
+    <string name="title_import">Import</string>
+    <string name="action_export">Export to file</string>
     <string name="backup_full_dump">כוללים תיאורים, פרטים, דירוגים</string>
-    <string name="backup_button">גיבוי</string>
+    <string name="status_successful">Successful</string>
+    <string name="status_failure">Failed</string>
+    <string name="status_failed_file_access">Can not find or access file</string>
     <string name="import_button">שחזר</string>
+    <string name="action_view_import_documentation">View expected format</string>
     <string name="import_warning">אני מבין שהסדרות, רשימות והסרטים הנוכחיים שלי יוחלפו!</string>
+    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
+    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
     <string name="no_file_selected">לא נבחר קובץ</string>
     <string name="action_select_file">בחר קובץ</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">גיבוי אוטומטי</string>
     <string name="pref_autobackupsummary">גיבוי שבועי של הסדרות, רשימות והסרטים שלך</string>
     <string name="autobackup_details">גיבויים אלה אינם זמינים אם האפליקציה מותקנת שוב אלא אם האופצייה לגיבוי המכשיר פועלת (אנדרויד 6+), אחרת יש ליצור עותקים כדי שישמרו.</string>
+    <string name="backup_button">גיבוי</string>
     <string name="last_auto_backup">גיבוי אוטומטי אחרון: %s</string>
     <string name="restore_auto_backup">שחזור גיבוי אוטומטי</string>
     <string name="autobackup_failed">הגיבוי האוטומטי האחרון נכשל</string>
@@ -579,4 +592,8 @@
     <string name="feedback_action_nothanks">לא, תודה</string>
     <!-- Support -->
     <string name="support_the_dev">Support the developer?</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Debug log</string>
+    <string name="status_saving_file_success">File saved</string>
+    <string name="status_saving_file_failed">Failed to save file</string>
 </resources>

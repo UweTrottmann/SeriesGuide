@@ -9,7 +9,7 @@
     <string name="search">검색</string>
     <string name="preferences">설정</string>
     <string name="help">도움말</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">이 Android 버전에서는 더 이상 SeriesGuide의 업데이트가 제공되지 않습니다.</string>
     <!-- Media items -->
     <string name="show_details">상세내용</string>
     <string name="episode">에피소드</string>
@@ -20,7 +20,7 @@
     <string name="specialseason">스페셜 에피소드</string>
     <string name="ratings">평점</string>
     <!-- Descriptions -->
-    <string name="navigate_up">Navigate up</string>
+    <string name="navigate_up">뒤로 가기</string>
     <string name="description_overview">개요</string>
     <string name="description_poster">포스터 보기</string>
     <string name="description_image">에피소드 이미지</string>
@@ -36,17 +36,18 @@
     <string name="sync_and_update">동기화하고 업데이트</string>
     <string name="sync_and_download_all">동기화하고 모두 다운로드</string>
     <string name="action_stream">스트리밍 or 구매</string>
-    <string name="action_stream_settings">Stream or purchase settings</string>
+    <string name="action_stream_settings">스트리밍 또는 구매 설정</string>
     <string name="action_select_region">국가 선택</string>
     <string name="action_reset">재설정</string>
-    <string name="action_save">Save</string>
+    <string name="action_save">저장</string>
+    <string name="action_turn_on">Turn on</string>
     <!-- Search -->
     <string name="clear_search_history">검색 기록 삭제</string>
     <string name="search_hint">에피소드 검색</string>
     <string name="empty_no_results">결과가 없습니다.</string>
     <!-- Status messages -->
     <string name="updated">최신 버전으로 업데이트되었습니다.</string>
-    <string name="updated_what_is_new">What\'s new</string>
+    <string name="updated_what_is_new">새로운 기능</string>
     <string name="norating">없음</string>
     <string name="unknown">알 수 없음</string>
     <string name="offline">네트워크에 연결한 후 다시 시도해주세요.</string>
@@ -57,7 +58,8 @@
     <string name="api_error_generic">%s와 통신할 수 없습니다. 잠시 후 다시 시도해주세요.</string>
     <string name="api_failed">%s 실패</string>
     <string name="copy_to_clipboard">클립보드에 복사됨</string>
-    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="not_migrated">이 프로그램은 TMDB 데이터로 이전되지 않았습니다. Trakt 및 클라우드 동기화와 같은 일부 기능이 작동하지 않을 수 있습니다. 대체 프로그램을 검색한 후 이 프로그램을 삭제하는 것이 좋습니다. 자세한 내용을 보려면 탭하세요.</string>
+    <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">공유</string>
     <string name="share_show">프로그램 공유</string>
@@ -70,10 +72,10 @@
     <string name="shout_hint">코멘트를 입력 (영어, 5글자 이상)</string>
     <string name="shout_invalid">규칙에 어긋납니다!</string>
     <string name="action_post">게시</string>
-    <string name="action_edit_comment">Edit</string>
-    <string name="action_delete_comment">Delete</string>
-    <string name="confirmation_delete_comment">Delete this comment?</string>
-    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
+    <string name="action_edit_comment">편집</string>
+    <string name="action_delete_comment">삭제</string>
+    <string name="confirmation_delete_comment">댓글 삭제</string>
+    <string name="error_delete_comment">댓글을 삭제할 수 없습니다. 너무 오래되었거나 답글이 달려 있습니다.</string>
     <string name="isspoiler">스포일러 경고!</string>
     <string name="no_shouts">첫 댓글의 주인공이 되세요!</string>
     <string name="refresh">새로 고침</string>
@@ -95,26 +97,26 @@
     <string name="show_isalive">방영중</string>
     <string name="show_isnotalive">종영</string>
     <string name="show_isUpcoming">방영 예정</string>
-    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_in_production">제작중</string>
     <string name="show_status_pilot">파일럿</string>
     <string name="show_status_canceled">취소됨</string>
-    <string name="no_translation">%2$s에 %1$s로 번역한 설명이 없습니다.</string>
+    <string name="no_translation">%1$s로 된 정보가 없습니다. %2$s에 정보를 추가하거나 언어를 변경해 보세요.</string>
     <string name="no_spoilers">일부 내용은 스포일러를 방지하기 위해 숨겨진 상태입니다. 설정에서 이를 해제할 수 있습니다.</string>
     <string name="format_source">소스: %s</string>
     <string name="last_updated">최근 업데이트됨</string>
-    <string name="custom_release_time_edit">Edit release time</string>
-    <string name="custom_release_time_earlier">earlier</string>
-    <string name="custom_release_time_later">later</string>
+    <string name="custom_release_time_edit">방영 시간 수정</string>
+    <string name="custom_release_time_earlier">이전</string>
+    <string name="custom_release_time_later">이후</string>
     <!-- Date and Time -->
     <string name="today">오늘</string>
     <string name="now">지금</string>
-    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
-    <string name="runtime_minutes_format">%d min</string>
+    <string name="runtime_hours_minutes_format">%1$d시간 %2$d분</string>
+    <string name="runtime_minutes_format">%d분</string>
     <!-- Flagging -->
     <string name="mark_all">모두 시청 완료</string>
     <string name="unmark_all">한 편도 안 본 것으로 설정</string>
-    <string name="action_watched_up_to">Watched up to here</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="action_watched_up_to">여기까지 시청함</string>
+    <string name="confirmation_watched_up_to">여기까지의 모든 에피소드를 시청 완료로 설정할까요?</string>
     <string name="collect_all">수집 완료</string>
     <string name="uncollect_all">수집할 내용 없음</string>
     <string name="action_skip">건너뛰기</string>
@@ -124,13 +126,13 @@
     <string name="action_watched">시청함</string>
     <string name="action_unwatched">시청하지 않음</string>
     <string name="state_watched">시청한 목록</string>
-    <string name="state_watched_multiple_format">Watched (%d)</string>
-    <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_watched_multiple_format">시청완료 (%d)</string>
+    <string name="state_skipped">건너뛰기</string>
+    <string name="state_in_collection">컬렉션에 있음</string>
+    <string name="state_on_watchlist">관심 목록에 있음</string>
     <string name="state_favorite">즐겨찾기</string>
     <!-- Shows -->
-    <string name="title_shows_added">Added</string>
+    <string name="title_shows_added">추가됨</string>
     <string name="confirm_delete">%s을(를) 제거 하시겠습니까?</string>
     <string name="delete_error">프로그램을 제거하지 못했습니다. 나중에 다시 시도해주세요.</string>
     <string name="delete_show">삭제</string>
@@ -146,31 +148,31 @@
     <string name="hidden">숨김 완료</string>
     <string name="unhidden">표시 완료</string>
     <string name="action_shows_add">프로그램 추가</string>
-    <string name="action_filter_and_sort">Filter and sort</string>
-    <string name="title_filter_general">General</string>
+    <string name="action_filter_and_sort">필터 및 정렬</string>
+    <string name="title_filter_general">일반</string>
     <string name="empty_filter">모든 필터 제거</string>
     <string name="action_shows_filter_favorites">즐겨찾기</string>
     <string name="action_shows_filter_unwatched">미시청</string>
     <string name="action_shows_filter_upcoming">방영 예정</string>
     <string name="action_shows_filter_hidden">숨긴 항목</string>
-    <string name="state_shows_filter_disabled">Disabled</string>
-    <string name="state_shows_filter_included">Included</string>
-    <string name="state_shows_filter_excluded">Excluded</string>
-    <string name="action_shows_make_all_visible">Make all hidden visible</string>
-    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
+    <string name="state_shows_filter_disabled">비활성화</string>
+    <string name="state_shows_filter_included">포함</string>
+    <string name="state_shows_filter_excluded">제외</string>
+    <string name="action_shows_make_all_visible">모든 숨김 항목 표시</string>
+    <string name="description_make_all_visible_format">숨긴 프로그램(%s)을 다시 모두 표시하시겠습니까?</string>
     <string name="action_shows_sort_title">제목</string>
     <string name="action_shows_sort_latest_episode">최근 에피소드</string>
     <string name="action_shows_sort_oldest_episode">오래된 에피소드</string>
     <string name="action_shows_sort_last_watched">최근 시청</string>
     <string name="action_shows_sort_remaining">남은 에피소드</string>
-    <string name="action_shows_sort_status">Status</string>
+    <string name="action_shows_sort_status">상태</string>
     <string name="action_shows_sort_favorites">즐겨찾기 먼저 표시</string>
     <string name="context_updateshow">업데이트</string>
     <string name="context_marknext">다음 에피소드 시청 완료</string>
-    <string name="action_episodes_switch_view">Switch view</string>
-    <string name="next_to_watch">Next to watch</string>
-    <string name="title_notes">Notes</string>
-    <string name="action_edit_note">Edit note</string>
+    <string name="action_episodes_switch_view">보기 전환</string>
+    <string name="next_to_watch">다음 에피소드</string>
+    <string name="title_notes">메모</string>
+    <string name="action_edit_note">메모 수정</string>
     <!-- History -->
     <string name="user_stream">기록</string>
     <string name="recently_watched">최근 시청 항목</string>
@@ -186,7 +188,7 @@
     <string name="calendar_settings">캘린더 설정</string>
     <string name="only_favorites">즐겨찾기한 프로그램만 보이기</string>
     <string name="calendar_only_collected">수집한 에피소드만 보이기</string>
-    <string name="calendar_only_premieres">Only premieres</string>
+    <string name="calendar_only_premieres">첫 방송만 보이기</string>
     <string name="pref_infinite_scrolling">무한 캘린더</string>
     <!-- Updating -->
     <string name="update_scheduled">업데이트 중&#8230;</string>
@@ -204,20 +206,20 @@
         <item quantity="other">%d편 남음</item>
     </plurals>
     <plurals name="remaining_of_total_episodes_plural">
-        <item quantity="other">%1$d of %2$d remaining</item>
+        <item quantity="other">총 %2$d화 중 %1$d화 남음</item>
     </plurals>
     <plurals name="skipped_episodes_plural">
-        <item quantity="other">%d skipped</item>
+        <item quantity="other">%d 건너뜀</item>
     </plurals>
     <plurals name="collected_episodes_plural">
-        <item quantity="other">%d in collection</item>
+        <item quantity="other">%d 수집됨</item>
     </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">검색할 프로그램을 입력하세요</string>
     <string name="add_empty">검색 결과가 없습니다.</string>
     <string name="empty_show_search">프로그램 목록에서 찾을 수 없습니다</string>
     <string name="action_try_again">재시도</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">아직 TMDB에 존재하지 않는 프로그램입니다. 나중에 다시 시도하세요.</string>
     <string name="add_all">모두 추가</string>
     <string name="add_multiple">모든 프로그램이 곧 목록에 표시됩니다.</string>
     <string name="add_started">%s이(가) 프로그램 리스트에 곧 나타납니다.</string>
@@ -228,31 +230,31 @@
     <string name="shows_collection">컬렉션</string>
     <string name="watchlist">관심목록</string>
     <!-- Similar shows -->
-    <string name="action_similar">Similar</string>
-    <string name="title_similar_shows">Similar shows</string>
+    <string name="action_similar">비슷한</string>
+    <string name="title_similar_shows">비슷한 쇼</string>
     <!-- Discover -->
     <string name="title_discover">찾기</string>
     <string name="title_popular">인기 항목</string>
-    <string name="action_filter">Filter</string>
-    <string name="filter_year">Year</string>
-    <string name="filter_year_current">Current year</string>
-    <string name="filter_language">Language</string>
+    <string name="action_filter">필터</string>
+    <string name="filter_year">년</string>
+    <string name="filter_year_current">올해</string>
+    <string name="filter_language">언어</string>
     <!-- Lists -->
     <string name="first_list">첫번째 목록</string>
     <string name="list_add">목록 추가</string>
-    <string name="ack_list_added">List added</string>
+    <string name="ack_list_added">목록에 추가됨</string>
     <string name="list_title_hint">목록의 이름을 적으세요</string>
     <string name="list_remove">목록 제거</string>
     <string name="list_manage">목록 관리</string>
-    <string name="ack_list_renamed">List renamed</string>
-    <string name="ack_list_removed">List deleted</string>
+    <string name="ack_list_renamed">목록 이름이 변경됨</string>
+    <string name="ack_list_removed">목록이 삭제됨</string>
     <string name="list_item_manage">목록 관리</string>
-    <string name="ack_list_item_manage">Lists updated</string>
+    <string name="ack_list_item_manage">목록이 업데이트됨</string>
     <string name="list_item_remove">목록에서 제거</string>
-    <string name="ack_list_item_removed">Removed from list</string>
-    <string name="list_empty">You can add shows to this list</string>
+    <string name="ack_list_item_removed">목록에서 삭제됨</string>
+    <string name="list_empty">이 목록에 프로그램을 추가할 수 있습니다</string>
     <string name="action_lists_reorder">목록 재정렬</string>
-    <string name="ack_lists_reordered">Lists reordered</string>
+    <string name="ack_lists_reordered">목록이 재정렬됨</string>
     <string name="error_name_already_exists">이 이름을 가진 목록이 이미 존재합니다</string>
     <!-- Movies -->
     <string name="title_digital_releases">디지털 출시</string>
@@ -273,17 +275,17 @@
     <string name="movie_crew">제작진</string>
     <string name="action_movies_sort_title">제목</string>
     <string name="action_movies_sort_release">개봉일</string>
-    <string name="title_similar_movies">Similar movies</string>
-    <string name="title_release_dates">Release dates</string>
-    <string name="error_movie_not_found">Movie removed from TMDB. Remove it from lists, set it not watched. Using Trakt? On their website, search for its TMDB ID and remove it from history and lists.</string>
+    <string name="title_similar_movies">비슷한 영화</string>
+    <string name="title_release_dates">개봉일</string>
+    <string name="error_movie_not_found">영화가 TMDB에서 삭제되었습니다. 목록에서 제거하고 시청 상태를 \'안 봄\'으로 설정하세요. Trakt를 사용 중이신가요? Trakt 웹사이트에서 TMDB ID로 검색한 후 기록과 목록에서 제거하세요.</string>
     <!-- Statistics -->
     <string name="statistics_failed">통계를 계산할 수 없습니다.</string>
-    <string name="shows_finished">%s finished watching</string>
+    <string name="shows_finished">%s 시청 완료</string>
     <string name="shows_with_next">다음 에피소드 %s편</string>
     <string name="shows_continuing">%s 방영 중</string>
     <string name="episodes_watched">%s 시청함</string>
     <string name="movies_on_watchlist">관심목록 %s편</string>
-    <string name="stats_in_collection_format">%d in collection</string>
+    <string name="stats_in_collection_format">%d 수집됨</string>
     <string name="movies_watched_format">%s 시청함</string>
     <plurals name="days_plural">
         <item quantity="other">%d일</item>
@@ -306,16 +308,16 @@
     <string name="hexagon_signin">로그인</string>
     <string name="hexagon_signout">로그아웃</string>
     <string name="hexagon_setup_incomplete">SeriesGuide Cloud 설정이 완료되지 않았습니다.</string>
-    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
+    <string name="hexagon_setup_fail_auth">이 계정에는 등록된 이메일 주소가 없습니다</string>
     <string name="hexagon_remove_account">계정 삭제</string>
     <string name="hexagon_remove_account_success">계정이 삭제되었습니다</string>
     <string name="hexagon_remove_account_failure">계정을 제거할 수 없습니다</string>
     <string name="hexagon_remove_account_confirmation">계정을 삭제하면 SeriesGuide Cloud에서 모든 프로그램과 영화가 제거됩니다.</string>
     <string name="hexagon_api_queued">SeriesGuide Cloud로 전송합니다.</string>
     <string name="hexagon_signed_out">SeriesGuide Cloud에서 로그아웃함</string>
-    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
-    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
-    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
+    <string name="hexagon_signin_fail_format">로그인 오류(%s)</string>
+    <string name="hexagon_signin_google_only">이메일 주소는 Google 로그인이 필요합니다</string>
+    <string name="hexagon_signin_choose">Google 로그인을 지원하지 않는 다른 기기에서 SeriesGuide를 사용하는 경우, 로그인할 이메일을 선택하세요.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">trakt에 전송하고 있습니다.</string>
     <string name="checkin_success_trakt">%s을(를) trakt에 체크인하였습니다.</string>
@@ -323,29 +325,29 @@
     <string name="traktcheckin_cancel">덮어쓰기</string>
     <string name="traktcheckin_inprogress">이미 다른 에피소드 또는 영화에 체크인하였습니다. 이전 체크인을 취소하거나 %s 기다렸다가 다시 시도하세요.</string>
     <string name="traktcheckin_wait">기다리겠습니다</string>
-    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
+    <string name="trakt_error_account_locked">Trakt 계정이 잠겼습니다. Trakt 고객 지원팀에 문의하세요.</string>
     <string name="trakt_error_credentials">오류가 있습니다. trakt 계정을 확인하고 재시도해주세요.</string>
     <string name="trakt_error_not_exists">아직 trakt에 정보가 없습니다. 나중에 다시 시도하세요.</string>
     <string name="trakt_notice_not_exists">아직 trakt에서 추적할 수 없습니다.</string>
-    <string name="trakt_error_limit_exceeded_add">Can\'t add, Trakt account limit reached.</string>
-    <string name="trakt_error_limit_exceeded_upload">Can\'t upload, Trakt account limit reached.</string>
+    <string name="trakt_error_limit_exceeded_add">추가할 수 없습니다. Trakt 계정의 한도에 도달했습니다.</string>
+    <string name="trakt_error_limit_exceeded_upload">업로드할 수 없습니다. Trakt 계정의 한도에 도달했습니다.</string>
     <!-- Connect trakt -->
-    <string name="trakt_required">To use this, connect to Trakt</string>
+    <string name="trakt_required">이 기능을 사용하려면 Trakt에 연결하세요</string>
     <string name="connect_trakt">trakt에 연결하기</string>
     <string name="trakt_reconnect">SeriesGuide를 trakt에 연결</string>
     <string name="trakt_reconnect_details">trakt 아이디/비밀번호를 확인하세요</string>
     <string name="waitplease">잠시만 기다려주십시오</string>
     <string name="connect">연결</string>
     <string name="disconnect">연결 해제</string>
-    <string name="show_library">Add shows from Trakt</string>
+    <string name="show_library">Trakt에서 프로그램 추가</string>
     <string name="about_trakt">Trakt는 여러분이 시청한 TV 프로그램과 영화를 개록해줍니다.</string>
-    <string name="support_trakt">Support Trakt with VIP</string>
-    <string name="action_trakt_view_limits">View account limits</string>
+    <string name="support_trakt">VIP 회원이 되어 Trakt를 지원</string>
+    <string name="action_trakt_view_limits">사용 제한 확인</string>
     <!-- trakt ratings -->
     <string name="action_rate">평가</string>
-    <string name="ack_rated">Rating sent</string>
+    <string name="ack_rated">평가 완료</string>
     <string name="your_rating">당신의 평가</string>
-    <string name="action_remove_rating">Remove rating</string>
+    <string name="action_remove_rating">평가 삭제</string>
     <string name="love">킹왕짱!</string>
     <string name="hate">쓰레기 :(</string>
     <string name="rating2">끔찍해</string>
@@ -366,9 +368,9 @@
     <string name="pref_quick_checkin">빠른 체크인</string>
     <string name="pref_quick_checkin_summary">체크인 메세지 묻지 않기</string>
     <!-- Help -->
-    <string name="feedback">Send email</string>
+    <string name="feedback">이메일 보내기</string>
     <!-- Settings -->
-    <string name="action_translate">Translate this app</string>
+    <string name="action_translate">앱 번역 참여</string>
     <string name="prefs_category_advanced">고급</string>
     <string name="prefs_category_about">정보</string>
     <string name="pref_onlyfuture">방영된 에피소드 보이지 않기</string>
@@ -383,7 +385,7 @@
     <string name="pref_language_fallback">기타 언어</string>
     <string name="pref_updatewifionly">와이파이를 이용하여 이미지 다운받기</string>
     <string name="pref_updatewifionlysummary">데이터 과금을 막기 위해 모바일 네트워크를 통해 다운로드하지 않음</string>
-    <string name="pref_error_reports">Report errors to app developer</string>
+    <string name="pref_error_reports">문제 발생 시 개발자에게 보고</string>
     <plurals name="days_before_plural">
         <item quantity="other">%d일 전</item>
     </plurals>
@@ -394,9 +396,9 @@
         <item quantity="other">%d분 전</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">Privacy Policy</string>
+    <string name="privacy_policy">개인정보 취급방침</string>
     <string name="licence_themoviedb">이 프로그램은 TMDB API 를 사용하지만 TMDB에서 승인하거나 인증한 공식 앱이 아닙니다.</string>
-    <string name="licence_trakt">This app uses data and images by Trakt.</string>
+    <string name="licence_trakt">이 앱은 Trakt의 데이터와 이미지를 사용합니다.</string>
     <string name="about_open_source">SeriesGuide는 오픈소스 소프트웨어를 활용합니다.</string>
     <string name="licences_and_credits">라이센스 및 크레딧</string>
     <!-- Sort -->
@@ -418,40 +420,51 @@
     <string name="upcoming_upto_one_week">1주</string>
     <string name="upcoming_upto_two_weeks">2주</string>
     <string name="upcoming_upto_one_month">한달</string>
-    <string name="upcoming_all">all</string>
+    <string name="upcoming_all">모두</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">모양</string>
     <string name="pref_theme">테마</string>
-    <string name="pref_dynamic_colors">Use system colors</string>
+    <string name="pref_dynamic_colors">시스템 색상 사용</string>
     <!-- Themes -->
-    <string name="theme_app_follow_system">Use system default</string>
-    <string name="theme_app_auto_battery">Set by Battery Saver</string>
-    <string name="theme_app_dark">Dark</string>
-    <string name="theme_app_light">Light</string>
+    <string name="theme_app_follow_system">시스템 설정 사용</string>
+    <string name="theme_app_auto_battery">배터리 절약모드 설정</string>
+    <string name="theme_app_dark">다크</string>
+    <string name="theme_app_light">라이트</string>
     <!-- Other advanced settings -->
+    <string name="pref_category_diagnostics">Diagnostics</string>
     <string name="pref_autoupdatesummary">자동으로 콘텐츠 동기화 및 업데이트</string>
     <string name="pref_number">에피소드 표시 형식</string>
     <string name="pref_offset">시차 수동 설정</string>
     <string name="pref_offsetsummary">방영 시간을 %d시간 시차 변경하여 나타냅니다</string>
     <string name="clear_cache">이미지 캐쉬 삭제</string>
     <string name="clear_cache_summary">디바이스에 있는 모든 캐쉬된 이미지를 제거합니다</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Export and import</string>
+    <string name="title_export">Export</string>
+    <string name="title_import">Import</string>
+    <string name="action_export">Export to file</string>
     <string name="backup_full_dump">설명, 세부 정보, 평가 내용 등이 포함됩니다.</string>
-    <string name="backup_button">백업</string>
+    <string name="status_successful">Successful</string>
+    <string name="status_failure">Failed</string>
+    <string name="status_failed_file_access">Can not find or access file</string>
     <string name="import_button">복원</string>
+    <string name="action_view_import_documentation">View expected format</string>
     <string name="import_warning">현재 앱에 저장한 프로그램 목록이 교체됩니다</string>
+    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
+    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
     <string name="no_file_selected">선택된 파일을 찾을 수 없습니다.</string>
     <string name="action_select_file">파일 선택</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">자동 백업</string>
     <string name="pref_autobackupsummary">매주 프로그램, 목록, 영화를 백업합니다.</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again. Create copies to preserve them otherwise.</string>
+    <string name="autobackup_details">앱을 다시 설치하면 이 백업들을 사용할 수 없습니다. 보존하려면 복사본을 만드세요.</string>
+    <string name="backup_button">백업</string>
     <string name="last_auto_backup">최근 자동 백업: %s</string>
     <string name="restore_auto_backup">자동 백업 복원</string>
-    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_failed">마지막 자동 백업이 실패했습니다</string>
     <string name="autobackup_files_missing">자동백업을 하기 위해서 유효한 백업파일을 선택하세요.</string>
-    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
-    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
+    <string name="autobackup_create_user_copy">백업 후 복사본 생성</string>
+    <string name="autobackup_restore_available">자동 백업을 통해 복원이 가능할 수 있습니다.</string>
     <!-- Welcome dialog -->
     <string name="get_started">시작하기</string>
     <string name="dismiss">취소</string>
@@ -460,31 +473,31 @@
     <string name="upcoming_display">방영 예정인 프로그램을 표시하려면 선택하세요</string>
     <string name="pref_notifications">알림</string>
     <string name="pref_notificationssummary">새로운 에피소드를 알려줍니다.</string>
-    <string name="pref_notifications_settings">Notification settings</string>
-    <string name="pref_notifications_settings_summary">Configure if and how notifications appear</string>
+    <string name="pref_notifications_settings">알림 설정</string>
+    <string name="pref_notifications_settings_summary">알림 표시 여부 및 방식 설정</string>
     <string name="pref_ringtone">벨소리</string>
     <string name="pref_vibrate">진동</string>
     <string name="pref_vibratesummary">알림 시 진동</string>
     <string name="pref_notifications_treshold">알람시기</string>
     <string name="pref_notifications_select_shows">프로그램 선택</string>
     <string name="pref_notifications_select_shows_summary">알림 설정된 프로그램 수: %d개</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
+    <string name="pref_notifications_hidden">숨겨진 프로그램 제외</string>
+    <string name="pref_notifications_hidden_summary">알림이 활성화되어 있어도, 숨긴 프로그램에 대해서는 알림을 보내지 않습니다</string>
     <string name="pref_notification_channel_errors">오류</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_next_episodes_only">다음에 시청할 에피소드에만 해당</string>
+    <string name="pref_notifications_next_episodes_only_summary">새 에피소드가 시청할 다음 회차일 경우에만 알림</string>
     <string name="pref_notifications_battery_settings">배터리 설정</string>
-    <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
-    <string name="notifications_allow">Allow notifications</string>
-    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them</string>
-    <string name="precise_notifications_allow">Allow on-time notifications</string>
-    <string name="precise_notifications_allow_reason">To receive notifications on time, go to Settings and allow setting reminders</string>
+    <string name="pref_notifications_battery_settings_summary">신뢰할 수 있는 알림을 위해 배터리 설정에서 배터리 최적화를 해제하세요</string>
+    <string name="notifications_allow">알림 허용하기</string>
+    <string name="notifications_allow_reason">에피소드 및 오류 알림을 받으려면 설정에서 알림을 허용하세요</string>
+    <string name="precise_notifications_allow">정시 알림 허용</string>
+    <string name="precise_notifications_allow_reason">알림을 제시간에 받으려면 설정에서 알림 및 알림 허용을 활성화하세요</string>
     <!-- List Widget -->
     <string name="hide_watched">시청한 에피소드 숨기기</string>
     <string name="pref_widget_opacity">위젯 배경</string>
     <string name="pref_widget_type">위젯 형태</string>
-    <string name="pref_large_font">Use large font</string>
-    <string name="pref_hide_watch_button">Hide watch button</string>
+    <string name="pref_large_font">큰 글씨 사용</string>
+    <string name="pref_hide_watch_button">시청 버튼 숨기기</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">투명</string>
     <string name="widget_background_25">25%</string>
@@ -496,13 +509,13 @@
     <string name="action_upgrade">모든 기능 사용하기</string>
     <string name="billing_action_subscribe">구독</string>
     <string name="billing_action_manage_subscriptions">구독 관리</string>
-    <string name="billing_duration_format">%1$s/year</string>
-    <string name="billing_free_trial">Free trial</string>
-    <string name="billing_sub_description">Try for 30 days, cancel any time.</string>
-    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
+    <string name="billing_duration_format">%1$s/년</string>
+    <string name="billing_free_trial">무료 체험</string>
+    <string name="billing_sub_description">30 일 동안 사용해 보고, 언제든지 취소할 수 있습니다.</string>
+    <string name="upgrade_description">모든 구독은 모든 기능을 이용할 수 있게 하며 향후 업데이트를 지원합니다. 이 앱을 사용하는 데 구독이 필요하지 않습니다.</string>
     <string name="upgrade_success">SeriesGuide를 지원해주셔서 감사합니다! 모든 기능을 사용할 수 있습니다.</string>
-    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
-    <string name="billing_learn_more">More info and help</string>
+    <string name="billing_unlock_detected">X Pass 앱이 감지되었습니다. 향후 업데이트 지원을 위해 구독할 수 있습니다.</string>
+    <string name="billing_learn_more">도움말</string>
     <string name="subscription_expired_details">X 추가기능 구독 기간이 만료되었습니다.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Amazon 계정으로 로그인</string>
@@ -513,7 +526,7 @@
     <string name="action_extensions_configure">확장프로그램 커스터마이즈</string>
     <string name="action_extensions_add">확장프로그램 추가</string>
     <string name="action_extensions_search">더 많은 확장프로그램 획득</string>
-    <string name="action_extensions_develop">Develop an extension</string>
+    <string name="action_extensions_develop">확장 기능 개발하기</string>
     <string name="action_extension_remove">삭제</string>
     <string name="extension_amazon">아마존 검색</string>
     <string name="description_extension_amazon">로컬 아마존 사이트 검색</string>
@@ -536,5 +549,9 @@
     <string name="feedback_action_ok">네</string>
     <string name="feedback_action_nothanks">아니오</string>
     <!-- Support -->
-    <string name="support_the_dev">Support the developer?</string>
+    <string name="support_the_dev">개발자 후원하기</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Debug log</string>
+    <string name="status_saving_file_success">File saved</string>
+    <string name="status_saving_file_failed">Failed to save file</string>
 </resources>

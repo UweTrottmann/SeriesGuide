@@ -40,6 +40,7 @@
     <string name="action_select_region">Elekti regionon</string>
     <string name="action_reset">Reset</string>
     <string name="action_save">Save</string>
+    <string name="action_turn_on">Turn on</string>
     <!-- Search -->
     <string name="clear_search_history">Viŝi serĉhistorion</string>
     <string name="search_hint">Serĉi epizodojn</string>
@@ -53,11 +54,12 @@
     <string name="app_not_available">Neniu aplikaĵo por pritrakti ĉi tiun</string>
     <string name="people_empty">Ĉu neniu estas ĉi tie?! Tuŝi por reprovi.</string>
     <string name="database_error">Ne povis modifi datumon</string>
-    <string name="reinstall_info">Try to create a backup in Settings, re-install and restore</string>
+    <string name="reinstall_info">Try to export your data, re-install and restore</string>
     <string name="api_error_generic">Could not talk to %s. Try again later.</string>
     <string name="api_failed">Malsukcesis: %s</string>
     <string name="copy_to_clipboard">Kopita al tondejo</string>
     <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">Konigi</string>
     <string name="share_show">Konigi televidaĵon</string>
@@ -99,7 +101,7 @@
     <string name="show_status_in_production">En farado</string>
     <string name="show_status_pilot">Piloto</string>
     <string name="show_status_canceled">Nuligita</string>
-    <string name="no_translation">Ne estas priskribo tradukita al %1$s disponebla je %2$s.</string>
+    <string name="no_translation">No details in %1$s available, consider adding them at %2$s. Or try to change the language.</string>
     <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
     <string name="format_source">Fonto: %s</string>
     <string name="last_updated">Last updated</string>
@@ -443,23 +445,34 @@
     <string name="theme_app_dark">Malhela</string>
     <string name="theme_app_light">Hela</string>
     <!-- Other advanced settings -->
+    <string name="pref_category_diagnostics">Diagnostics</string>
     <string name="pref_autoupdatesummary">Automatically sync and update content</string>
     <string name="pref_number">Numera formato</string>
     <string name="pref_offset">Manual time offset</string>
     <string name="pref_offsetsummary">Offset air times by %d hours</string>
     <string name="clear_cache">Viŝi tempmemoron</string>
     <string name="clear_cache_summary">Go to storage settings to remove cached images and network responses</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Export and import</string>
+    <string name="title_export">Export</string>
+    <string name="title_import">Import</string>
+    <string name="action_export">Export to file</string>
     <string name="backup_full_dump">Include descriptions, details, ratings</string>
-    <string name="backup_button">Krei savkopion</string>
+    <string name="status_successful">Successful</string>
+    <string name="status_failure">Failed</string>
+    <string name="status_failed_file_access">Can not find or access file</string>
     <string name="import_button">Restaŭri savkopion</string>
+    <string name="action_view_import_documentation">View expected format</string>
     <string name="import_warning">La savkopio anstataŭigis viajn aktualajn televidaĵojn, listojn aŭ filmojn.</string>
+    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
+    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
     <string name="no_file_selected">Neniu dosiero elektita</string>
     <string name="action_select_file">Elekti dosieron</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Aŭtomata savkopio</string>
     <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies to device storage.</string>
     <string name="autobackup_details">These backups are unavailable if the app is installed again. Create copies to preserve them otherwise.</string>
+    <string name="backup_button">Krei savkopion</string>
     <string name="last_auto_backup">Lasta aŭtomata savkopio: %s</string>
     <string name="restore_auto_backup">Restaŭri aŭtomatan savkopion</string>
     <string name="autobackup_failed">La lasta aŭtomata savkopio fiaskis</string>
@@ -551,4 +564,8 @@
     <string name="feedback_action_nothanks">Ne, dankon</string>
     <!-- Support -->
     <string name="support_the_dev">Ĉu volas subteni la programiston?</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Debug log</string>
+    <string name="status_saving_file_success">File saved</string>
+    <string name="status_saving_file_failed">Failed to save file</string>
 </resources>

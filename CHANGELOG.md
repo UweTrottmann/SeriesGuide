@@ -22,6 +22,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 * 🔨 Properly align status messages to the bottom navigation bar.
 * 🔨 Shows: when updating, also update season number of episodes (useful when importing minimal
   data).
+* 📝 Import latest user interface translations.
 
 ### 2025.2.2 - 2025-05-22 🧪
 

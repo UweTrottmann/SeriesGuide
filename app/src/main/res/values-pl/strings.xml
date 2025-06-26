@@ -40,6 +40,7 @@
     <string name="action_select_region">Wybierz region</string>
     <string name="action_reset">Przywróć</string>
     <string name="action_save">Zapisz</string>
+    <string name="action_turn_on">Turn on</string>
     <!-- Search -->
     <string name="clear_search_history">Wyczyść historię wyszukiwania</string>
     <string name="search_hint">Szukaj odcinków</string>
@@ -58,6 +59,7 @@
     <string name="api_failed">Błąd: %s</string>
     <string name="copy_to_clipboard">Skopiowano do schowka</string>
     <string name="not_migrated">Serial nie został zmigrowany na dane TMDB. Niektóre akcje, takie jak Trakt i synchronizacja z chmurą mogą nie działać. Zalecamy wyszukanie serialu z bazy TMDB i usunięcie tego serialu. Naciśnij, aby wyświetlić szczegóły.</string>
+    <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">Udostępnij</string>
     <string name="share_show">Współdziel serial</string>
@@ -101,7 +103,7 @@
     <string name="show_status_in_production">W produkcji</string>
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">Anulowany</string>
-    <string name="no_translation">Brak opisu w języku %1$s dostępnego w %2$s.</string>
+    <string name="no_translation">Brak dostępnych szczegółów w %1$s , rozważ dodanie ich do %2$s. Albo spróbuj zmienić język.</string>
     <string name="no_spoilers">Niektóre informacje zostały ukryte, aby zapobiec spoilerowaniu. W celu wyłączenia tej funkcji wejdź do ustawień.</string>
     <string name="format_source">Źródło: %s</string>
     <string name="last_updated">Zaktualizowano</string>
@@ -471,23 +473,34 @@
     <string name="theme_app_dark">Ciemny</string>
     <string name="theme_app_light">Jasny</string>
     <!-- Other advanced settings -->
+    <string name="pref_category_diagnostics">Diagnostics</string>
     <string name="pref_autoupdatesummary">Automatycznie synchronizuje i aktualizuje dane SeriesGuide</string>
     <string name="pref_number">Format numeracji</string>
     <string name="pref_offset">Ręczne przesunięcie czasu</string>
     <string name="pref_offsetsummary">Przesuń czas emisji o %d godzin</string>
     <string name="clear_cache">Usuń bufor obrazów</string>
     <string name="clear_cache_summary">Usuwa wszystkie buforowane obrazy z urządzenia</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Export and import</string>
+    <string name="title_export">Export</string>
+    <string name="title_import">Import</string>
+    <string name="action_export">Export to file</string>
     <string name="backup_full_dump">Uwzględnij opisy, szczegóły, oceny</string>
-    <string name="backup_button">Kontynuuj</string>
+    <string name="status_successful">Successful</string>
+    <string name="status_failure">Failed</string>
+    <string name="status_failed_file_access">Can not find or access file</string>
     <string name="import_button">Przywróć</string>
+    <string name="action_view_import_documentation">View expected format</string>
     <string name="import_warning">Rozumiem, że moje seriale, listy i filmy zostaną zastąpione!</string>
+    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
+    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
     <string name="no_file_selected">Nie wybrano pliku</string>
     <string name="action_select_file">Wybierz plik</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatyczna kopia zapasowa</string>
     <string name="pref_autobackupsummary">Tworzy co tydzień kopię zapasową seriali, list i filmów</string>
     <string name="autobackup_details">Te kopie zapasowe są niedostępne po reinstalacji aplikacji do czasu włączenia tworzenia kopii zapasowych aplikacji dla tego urządzenia (Android 6+). Utwórz kopie, aby je zachować w pozostałych przypadkach.</string>
+    <string name="backup_button">Kontynuuj</string>
     <string name="last_auto_backup">Ostatnia kopia zapasowa: %s</string>
     <string name="restore_auto_backup">Przywróć kopię zapasową</string>
     <string name="autobackup_failed">Ostatnia automatyczna kopia zapasowa nie powiodła się</string>
@@ -579,4 +592,8 @@
     <string name="feedback_action_nothanks">Nie, dziękuję</string>
     <!-- Support -->
     <string name="support_the_dev">Czy wesprzesz dewelopera?</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Debug log</string>
+    <string name="status_saving_file_success">File saved</string>
+    <string name="status_saving_file_failed">Failed to save file</string>
 </resources>

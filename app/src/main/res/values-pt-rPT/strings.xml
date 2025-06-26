@@ -40,6 +40,7 @@
     <string name="action_select_region">Selecionar região</string>
     <string name="action_reset">Reiniciar</string>
     <string name="action_save">Guardar</string>
+    <string name="action_turn_on">Ligar</string>
     <!-- Search -->
     <string name="clear_search_history">Limpar histórico de pesquisa</string>
     <string name="search_hint">Procurar episódios</string>
@@ -58,6 +59,7 @@
     <string name="api_failed">Falhou: %s</string>
     <string name="copy_to_clipboard">Copiado para a área de transferência</string>
     <string name="not_migrated">Os dados TMDB sobre a série não foram migrados. Algumas ações tais como sincronização do Trakt e da Cloud podem não estar a funcionar. Procura se existe uma entrada alternativa para esta série e remove a entrada atual. Toca para ver mais detalhes.</string>
+    <string name="status_turned_on">Ligado</string>
     <!-- Sharing -->
     <string name="share">Partilhar</string>
     <string name="share_show">Partilhar série</string>
@@ -99,7 +101,7 @@
     <string name="show_status_in_production">Em Produção</string>
     <string name="show_status_pilot">Piloto</string>
     <string name="show_status_canceled">Cancelada</string>
-    <string name="no_translation">Não existe nenhuma descrição traduzida para %1$s disponível em %2$s.</string>
+    <string name="no_translation">Não existem detalhes disponíveis em %1$s, considera a possibilidade de os adicionar em %2$s. Ou tenta mudar o idioma.</string>
     <string name="no_spoilers">Alguns detalhes estão ocultos para evitar spoilers. Para desativar esta opção, vá às definições.</string>
     <string name="format_source">Fonte: %s</string>
     <string name="last_updated">Última atualização</string>
@@ -443,23 +445,34 @@
     <string name="theme_app_dark">Escuro</string>
     <string name="theme_app_light">Claro</string>
     <!-- Other advanced settings -->
+    <string name="pref_category_diagnostics">Diagnósticos</string>
     <string name="pref_autoupdatesummary">Sincroniza e atualiza automaticamente os dados do SeriesGuide</string>
     <string name="pref_number">Formato numérico</string>
     <string name="pref_offset">Acerto manual do fuso horário</string>
     <string name="pref_offsetsummary">Ajustar o fuso horário da exibição em %d horas</string>
     <string name="clear_cache">Limpar cache</string>
     <string name="clear_cache_summary">Remove todas as imagens em cache do teu dispositivo</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Exportar e importar</string>
+    <string name="title_export">Exportar</string>
+    <string name="title_import">Importar</string>
+    <string name="action_export">Exportar para ficheiro</string>
     <string name="backup_full_dump">Incluir as descrições, os detalhes e as classificações</string>
-    <string name="backup_button">Criar cópia de segurança</string>
+    <string name="status_successful">Com sucesso.</string>
+    <string name="status_failure">Falhou</string>
+    <string name="status_failed_file_access">Não consegues encontrar ou aceder ao ficheiro</string>
     <string name="import_button">Restaurar cópia de segurança</string>
+    <string name="action_view_import_documentation">Ver formato previsto</string>
     <string name="import_warning">Estou ciente que as minhas listas, séries e filmes serão substituídos!</string>
+    <string name="import_cloud_warning">Não recomendado quando utilizas o SeriesGuide Cloud ou o Trakt</string>
+    <string name="import_cloud_warning_details">A sincronização com o Cloud ou o Trakt pode sobrescrever os dados importados. Com o SeriesGuide Cloud, podes eliminar a tua conta antes de importares os dados, e depois recriá-la para carregar apenas os dados importados.</string>
     <string name="no_file_selected">Nenhum ficheiro selecionado</string>
     <string name="action_select_file">Selecionar ficheiro</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Cópia de segurança automática</string>
     <string name="pref_autobackupsummary">Faz uma cópia de segurança semanal das tuas listas, séries e filmes</string>
     <string name="autobackup_details">Essas cópias de segurança não estarão disponíveis se a aplicação for reinstalada novamente, a menos que a cópia de segurança da aplicação esteja ativada para este dispositivo (Android 6+). Caso contrário, crie cópias para preservá-las.</string>
+    <string name="backup_button">Criar cópia de segurança</string>
     <string name="last_auto_backup">Última cópia de segurança automática: %s</string>
     <string name="restore_auto_backup">Restaurar cópia de segurança automática</string>
     <string name="autobackup_failed">A última cópia de segurança automática não foi efectuada com sucesso</string>
@@ -551,4 +564,8 @@
     <string name="feedback_action_nothanks">Não, obrigado</string>
     <!-- Support -->
     <string name="support_the_dev">Apoiar o desenvolvedor?</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Registo de depuração</string>
+    <string name="status_saving_file_success">Ficheiro guardado</string>
+    <string name="status_saving_file_failed">Falha ao guardar o ficheiro</string>
 </resources>

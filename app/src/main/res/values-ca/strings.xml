@@ -40,6 +40,7 @@
     <string name="action_select_region">Selecciona la regió</string>
     <string name="action_reset">Restablir</string>
     <string name="action_save">Desar</string>
+    <string name="action_turn_on">Turn on</string>
     <!-- Search -->
     <string name="clear_search_history">Esborra l\'historial</string>
     <string name="search_hint">Cerca episodis</string>
@@ -58,6 +59,7 @@
     <string name="api_failed">Ha fallat: %s</string>
     <string name="copy_to_clipboard">copiat al porta-retalls</string>
     <string name="not_migrated">La sèrie no s\'ha migrat a TMDB. Algunes accions, incloses Trakt i Cloud sync podrien no funcionar. Busca un reemplaçament i esborra aquesta sèrie. Prem per veure detalls.</string>
+    <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">Comparteix</string>
     <string name="share_show">Comparteix la serie</string>
@@ -99,7 +101,7 @@
     <string name="show_status_in_production">En producció</string>
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">Cancel·lat</string>
-    <string name="no_translation">No hi ha cap descripció traduïda al %1$s disponible a %2$s.</string>
+    <string name="no_translation">No hi ha detalls en %1$s disponibles, pensa en afegir-lo a %2$s. O prova de canviar l\'idioma.</string>
     <string name="no_spoilers">Alguns detalls estan amagats per evitar spoilers. Per desactivar aquesta opció aneu a Configuració.</string>
     <string name="format_source">Font: %s</string>
     <string name="last_updated">Darrera actualització</string>
@@ -443,23 +445,34 @@
     <string name="theme_app_dark">Fosc</string>
     <string name="theme_app_light">Clar</string>
     <!-- Other advanced settings -->
+    <string name="pref_category_diagnostics">Diagnostics</string>
     <string name="pref_autoupdatesummary">Sincronitzar i actualitzar les dades de SeriesGuide automàticament</string>
     <string name="pref_number">Format del número</string>
     <string name="pref_offset">Compensació horària manual</string>
     <string name="pref_offsetsummary">Les hores d\'estrena tenen un desfasament de %d hores</string>
     <string name="clear_cache">Buida la memòria cau d\'imatges</string>
     <string name="clear_cache_summary">Elimina totes les imatges que SeriesGuide hagi baixat i que encara siguin al dispositiu</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Export and import</string>
+    <string name="title_export">Export</string>
+    <string name="title_import">Import</string>
+    <string name="action_export">Export to file</string>
     <string name="backup_full_dump">Incloure descripcions, detalls, valoracions</string>
-    <string name="backup_button">Crea còpia de seguretat</string>
+    <string name="status_successful">Successful</string>
+    <string name="status_failure">Failed</string>
+    <string name="status_failed_file_access">Can not find or access file</string>
     <string name="import_button">Restaura</string>
+    <string name="action_view_import_documentation">View expected format</string>
     <string name="import_warning">Entenc que les meves sèries, llistes i pel·lícules actuals seran reemplaçades</string>
+    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
+    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
     <string name="no_file_selected">Cap arxiu seleccionat</string>
     <string name="action_select_file">Seleccionar arxiu</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Còpies de seguretat automàtiques</string>
     <string name="pref_autobackupsummary">Còpia de seguretat setmanal de les teves sèries, llistes i pel·lícules</string>
     <string name="autobackup_details">Aquestes còpies de seguretat seran inaccessibles si l\'app s\'instal·la de nou. Creeu còpies per preservar-les d\'una altra manera.</string>
+    <string name="backup_button">Crea còpia de seguretat</string>
     <string name="last_auto_backup">Darrera còpia de seguretat automàtica: %s</string>
     <string name="restore_auto_backup">Restaura la còpia de seguretat automàtica</string>
     <string name="autobackup_failed">Ha fallat l\'última còpia de seguretat automàtica</string>
@@ -551,4 +564,8 @@
     <string name="feedback_action_nothanks">No, gràcies</string>
     <!-- Support -->
     <string name="support_the_dev">Donar suport a l´autor</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Debug log</string>
+    <string name="status_saving_file_success">File saved</string>
+    <string name="status_saving_file_failed">Failed to save file</string>
 </resources>

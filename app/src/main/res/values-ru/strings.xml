@@ -40,6 +40,7 @@
     <string name="action_select_region">Выберите регион</string>
     <string name="action_reset">Сброс</string>
     <string name="action_save">Сохранить</string>
+    <string name="action_turn_on">Включить</string>
     <!-- Search -->
     <string name="clear_search_history">Очистить историю поиска</string>
     <string name="search_hint">Поиск эпизодов</string>
@@ -58,6 +59,7 @@
     <string name="api_failed">Не удалось: %s</string>
     <string name="copy_to_clipboard">Скопировано в буфер обмена</string>
     <string name="not_migrated">Сериал не смигрирован в TMDB. Некоторые действия, включая Trakt и Cloud синхронизацию, могут не работать. Рекомендуется поиск для замены и удаление этого сериала. Нажмите для просмотра деталей.</string>
+    <string name="status_turned_on">Включено</string>
     <!-- Sharing -->
     <string name="share">Отправить</string>
     <string name="share_show">Поделиться сериалом</string>
@@ -101,7 +103,7 @@
     <string name="show_status_in_production">В производстве</string>
     <string name="show_status_pilot">Пилот</string>
     <string name="show_status_canceled">Отменён</string>
-    <string name="no_translation">Перевод описания на %1$s недоступно для %2$s.</string>
+    <string name="no_translation">Нет доступных данных в %1$s, рассмотрите возможность добавления их в %2$s. Или попробуйте изменить язык.</string>
     <string name="no_spoilers">Некоторые детали скрыты, чтобы предотвратить спойлеры. Чтобы отключить эту функцию, перейдите в Настройки.</string>
     <string name="format_source">Источник: %s</string>
     <string name="last_updated">Последнее обновление</string>
@@ -471,23 +473,34 @@
     <string name="theme_app_dark">Тёмная</string>
     <string name="theme_app_light">Светлая</string>
     <!-- Other advanced settings -->
+    <string name="pref_category_diagnostics">Диагностика</string>
     <string name="pref_autoupdatesummary">Автоматически синхронизировать и обновлять данные SeriesGuide</string>
     <string name="pref_number">Числовой формат серий</string>
     <string name="pref_offset">Ручное смещение времени</string>
     <string name="pref_offsetsummary">Смещение времени эфира на %d часов</string>
     <string name="clear_cache">Очистить кэш изображений</string>
     <string name="clear_cache_summary">Удалить все кэшированные изображения с Вашего устройства</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Экспорт и импорт</string>
+    <string name="title_export">Экспорт</string>
+    <string name="title_import">Импорт</string>
+    <string name="action_export">Экспорт в файл</string>
     <string name="backup_full_dump">Вкл. описания, детали, рейтинги</string>
-    <string name="backup_button">Резервное копирование</string>
+    <string name="status_successful">Успешно</string>
+    <string name="status_failure">Не удалось</string>
+    <string name="status_failed_file_access">Не удалось найти или получить доступ к файлу</string>
     <string name="import_button">Восстановление</string>
+    <string name="action_view_import_documentation">Просмотр ожидаемого формата</string>
     <string name="import_warning">Я понимаю, что мои текущие сериалы, списки и фильмы будут заменены!</string>
+    <string name="import_cloud_warning">Не рекомендуется использовать SeriesGuide Cloud или Trakt</string>
+    <string name="import_cloud_warning_details">Синхронизация с Cloud или Trakt может перезаписать импортированные данные. С помощью SeriesGuide Cloud вы можете удалить учетную запись перед импортом данных, а затем повторно создать её только для загрузки импортированных данных.</string>
     <string name="no_file_selected">Файл не выбран</string>
     <string name="action_select_file">Выбрать файл</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Автоматическое резервное копирование</string>
     <string name="pref_autobackupsummary">Еженедельное резервное копирование ваших сериалов, списков и фильмов</string>
     <string name="autobackup_details">Эти резервные копии будут недоступны, если приложение будет повторно установлено. В таком случае, для сохранения данных, создавайте копии.</string>
+    <string name="backup_button">Резервное копирование</string>
     <string name="last_auto_backup">Последнее автоматическое резервное копирование: %s</string>
     <string name="restore_auto_backup">Восстановить автоматическую резервную копию</string>
     <string name="autobackup_failed">Последний автоматический бэкап не удался</string>
@@ -579,4 +592,8 @@
     <string name="feedback_action_nothanks">Нет, спасибо</string>
     <!-- Support -->
     <string name="support_the_dev">Поддержать разработчика?</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Debug log</string>
+    <string name="status_saving_file_success">Файл сохранен</string>
+    <string name="status_saving_file_failed">Не удалось сохранить файл</string>
 </resources>

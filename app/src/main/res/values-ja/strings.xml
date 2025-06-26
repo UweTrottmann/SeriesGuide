@@ -40,6 +40,7 @@
     <string name="action_select_region">エリアの選択</string>
     <string name="action_reset">Reset</string>
     <string name="action_save">Save</string>
+    <string name="action_turn_on">Turn on</string>
     <!-- Search -->
     <string name="clear_search_history">検索履歴を削除</string>
     <string name="search_hint">エピソードを検索</string>
@@ -58,6 +59,7 @@
     <string name="api_failed">失敗しました： %s</string>
     <string name="copy_to_clipboard">クリップボードにコピーしました</string>
     <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">共有</string>
     <string name="share_show">番組を共有</string>
@@ -98,7 +100,7 @@
     <string name="show_status_in_production">生産中</string>
     <string name="show_status_pilot">パイロット</string>
     <string name="show_status_canceled">Canceled</string>
-    <string name="no_translation">%2$s に %1$s で利用できる説明がありません。</string>
+    <string name="no_translation">No details in %1$s available, consider adding them at %2$s. Or try to change the language.</string>
     <string name="no_spoilers">一部の詳細を非表示にして、ネタバレを防ぎます。これを無効にするには設定に移動します。</string>
     <string name="format_source">ソース: %s</string>
     <string name="last_updated">Last updated</string>
@@ -429,23 +431,34 @@
     <string name="theme_app_dark">ダーク</string>
     <string name="theme_app_light">ライト</string>
     <!-- Other advanced settings -->
+    <string name="pref_category_diagnostics">Diagnostics</string>
     <string name="pref_autoupdatesummary">SeriesGuide データを自動的に同期および更新します</string>
     <string name="pref_number">表示形式</string>
     <string name="pref_offset">手動の時間オフセット</string>
     <string name="pref_offsetsummary">放映時間を %d 時間オフセットします</string>
     <string name="clear_cache">画像キャッシュをクリア</string>
     <string name="clear_cache_summary">お使いのデバイスからキャッシュされた画像をすべて削除します</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Export and import</string>
+    <string name="title_export">Export</string>
+    <string name="title_import">Import</string>
+    <string name="action_export">Export to file</string>
     <string name="backup_full_dump">説明、詳細、評価を含める</string>
-    <string name="backup_button">バックアップを作成</string>
+    <string name="status_successful">Successful</string>
+    <string name="status_failure">Failed</string>
+    <string name="status_failed_file_access">Can not find or access file</string>
     <string name="import_button">バックアップを復元</string>
+    <string name="action_view_import_documentation">View expected format</string>
     <string name="import_warning">あなたの現在の番組、リスト、映画がバックアップで置き換えられます</string>
+    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
+    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
     <string name="no_file_selected">ファイルが選択されていません</string>
     <string name="action_select_file">ファイルを選択</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">自動バックアップ</string>
     <string name="pref_autobackupsummary">番組、リスト、映画を毎週バックアップ</string>
     <string name="autobackup_details">このデバイス (Android 6以降) は、アプリデータのバックアップがオンになっていない限り、アプリを再度インストールした場合は、これらのバックアップは利用できません。 それ以外の場合、保存するにはコピーを作成してください。</string>
+    <string name="backup_button">バックアップを作成</string>
     <string name="last_auto_backup">最終の自動バックアップ: %s</string>
     <string name="restore_auto_backup">自動バックアップを復元</string>
     <string name="autobackup_failed">前回の自動バックアップが失敗しました</string>
@@ -537,4 +550,8 @@
     <string name="feedback_action_nothanks">いいえ、結構です</string>
     <!-- Support -->
     <string name="support_the_dev">Support the developer?</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Debug log</string>
+    <string name="status_saving_file_success">File saved</string>
+    <string name="status_saving_file_failed">Failed to save file</string>
 </resources>

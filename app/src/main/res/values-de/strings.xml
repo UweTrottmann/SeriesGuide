@@ -40,6 +40,7 @@
     <string name="action_select_region">Region auswählen</string>
     <string name="action_reset">Zurücksetzen</string>
     <string name="action_save">Speichern</string>
+    <string name="action_turn_on">Einschalten</string>
     <!-- Search -->
     <string name="clear_search_history">Suchverlauf löschen</string>
     <string name="search_hint">Suche Folgen</string>
@@ -53,11 +54,12 @@
     <string name="app_not_available">Keine App verfügbar um dies auszuführen</string>
     <string name="people_empty">Niemand hier?! Tippen Sie um es erneut zu versuchen.</string>
     <string name="database_error">Daten konnten nicht geändert werden</string>
-    <string name="reinstall_info">Versuchen Sie ein Backup in den Einstellungen, dann Neu-Installation und Wiederherstellung</string>
+    <string name="reinstall_info">Versuchen Sie Ihre Daten zu exportieren, neu zu installieren und wiederherzustellen</string>
     <string name="api_error_generic">Konnte %s nicht erreichen. Versuchen Sie es später erneut.</string>
     <string name="api_failed">Gescheitert: %s</string>
     <string name="copy_to_clipboard">In Zwischenablage kopiert</string>
     <string name="not_migrated">Serie nicht zu TMDB-Daten migriert. Einige Funktionen inkl. Trakt- und Cloud-Sync funktionieren wsl. nicht. Evtl. nach einem Ersatz suchen und diese Serie entfernen. Tippen um Details anzuzeigen.</string>
+    <string name="status_turned_on">Eingeschaltet</string>
     <!-- Sharing -->
     <string name="share">Teilen</string>
     <string name="share_show">Serie teilen</string>
@@ -443,23 +445,34 @@
     <string name="theme_app_dark">Dunkel</string>
     <string name="theme_app_light">Hell</string>
     <!-- Other advanced settings -->
+    <string name="pref_category_diagnostics">Diagnose</string>
     <string name="pref_autoupdatesummary">Automatisch synchronisieren und Inhalte aktualisieren</string>
     <string name="pref_number">Zahlenformat</string>
     <string name="pref_offset">Manuelle Zeit-Verschiebung</string>
     <string name="pref_offsetsummary">Sendezeit um %d Stunden verschieben</string>
     <string name="clear_cache">Cache leeren</string>
     <string name="clear_cache_summary">Zu Speicher-Einstellungen gehen um zwischengesp. Bilder und Netzwerk-Antworten zu löschen</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Exportieren und Importieren</string>
+    <string name="title_export">Exportieren</string>
+    <string name="title_import">Importieren</string>
+    <string name="action_export">In Datei exportieren</string>
     <string name="backup_full_dump">Beschreibungen, Details, Bewertungen einschließen</string>
-    <string name="backup_button">Sicherung erstellen</string>
-    <string name="import_button">Sicherung wiederherstellen</string>
-    <string name="import_warning">Ihre aktuellen Serien, Listen oder Filme werden durch die Sicherung ersetzt</string>
+    <string name="status_successful">Erfolgreich</string>
+    <string name="status_failure">Fehlgeschlagen</string>
+    <string name="status_failed_file_access">Kann Datei nicht finden oder darauf zugreifen</string>
+    <string name="import_button">Daten importieren</string>
+    <string name="action_view_import_documentation">Erwartetes Format anzeigen</string>
+    <string name="import_warning">Ihre aktuellen Serien, Listen oder Filme werden durch die importierten Daten ersetzt</string>
+    <string name="import_cloud_warning">Nicht empfohlen, wenn SeriesGuide Cloud oder Trakt verwendet wird</string>
+    <string name="import_cloud_warning_details">Synchronisieren mit Cloud oder Trakt kann importierte Daten überschreiben. Mit SeriesGuide Cloud können Sie Ihr Konto vor dem Importieren von Daten löschen und anschließend neu anlegen, um nur die importierten Daten hochzuladen.</string>
     <string name="no_file_selected">Keine Datei ausgewählt</string>
     <string name="action_select_file">Datei auswählen</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatische Sicherung</string>
     <string name="pref_autobackupsummary">Wöchentliche Sicherung Ihrer Serien, Listen und Filme im Gerätespeicher.</string>
     <string name="autobackup_details">Diese Sicherungen sind nicht verfügbar, wenn die App neu installiert wird. Erstellen Sie Kopien, um sie anderweitig aufzubewahren.</string>
+    <string name="backup_button">Sicherung erstellen</string>
     <string name="last_auto_backup">Letzte Auto-Sicherung: %s</string>
     <string name="restore_auto_backup">Auto-Sicherung wiederherstellen</string>
     <string name="autobackup_failed">Die letzte automatische Sicherung ist fehlgeschlagen</string>
@@ -551,4 +564,8 @@
     <string name="feedback_action_nothanks">Nein, danke</string>
     <!-- Support -->
     <string name="support_the_dev">Den Entwickler unterstützen?</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Debug-Protokoll</string>
+    <string name="status_saving_file_success">Datei gespeichert</string>
+    <string name="status_saving_file_failed">Speichern der Datei fehlgeschlagen</string>
 </resources>

@@ -40,6 +40,7 @@
     <string name="action_select_region">Dewis rhanbarth</string>
     <string name="action_reset">Reset</string>
     <string name="action_save">Save</string>
+    <string name="action_turn_on">Turn on</string>
     <!-- Search -->
     <string name="clear_search_history">Hanes chwilio clir</string>
     <string name="search_hint">Chwilio penodau</string>
@@ -58,6 +59,7 @@
     <string name="api_failed">Wedi methu: %s</string>
     <string name="copy_to_clipboard">Copi i\'r clipfwrdd</string>
     <string name="not_migrated">Rhaglen heb ei symud i ddata TMDB. Efallai na fydd rhai gweithredoedd gan gynnwys Trakt a Cloud sync yn gweithio. Efallai chwiliwch am un arall a chael gwared ar y sioe hon. Tapiwch i weld y manylion.</string>
+    <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">Rhannu</string>
     <string name="share_show">Sioe rhannu</string>
@@ -103,7 +105,7 @@
     <string name="show_status_in_production">Mewn Cynhyrchu</string>
     <string name="show_status_pilot">Peilot Teledu</string>
     <string name="show_status_canceled">Wedi\'i ganslo</string>
-    <string name="no_translation">Nid oes disgrifiad wedi\'i gyfieithu i%1$s ar gael ar %2$s.</string>
+    <string name="no_translation">No details in %1$s available, consider adding them at %2$s. Or try to change the language.</string>
     <string name="no_spoilers">Mae rhai manylion wedi\'u cuddio i atal anrheithwyr. I ddiffodd hyn ewch i Gosodiadau.</string>
     <string name="format_source">Ffynhonnell: %s</string>
     <string name="last_updated">Diweddarwyd diwethaf</string>
@@ -499,23 +501,34 @@
     <string name="theme_app_dark">Tywyll</string>
     <string name="theme_app_light">Golau</string>
     <!-- Other advanced settings -->
+    <string name="pref_category_diagnostics">Diagnostics</string>
     <string name="pref_autoupdatesummary">Cysoni a diweddaru cynnwys yn awtomatig</string>
     <string name="pref_number">Fformat rhif</string>
     <string name="pref_offset">Gwrthbwyso amser â llaw</string>
     <string name="pref_offsetsummary">Gwrthbwyso amseroedd aer %d awr</string>
     <string name="clear_cache">Cache clir</string>
     <string name="clear_cache_summary">Ewch i leoliadau storio i gael gwared ar ddelweddau wedi\'u storio ac ymatebion rhwydwaith</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Export and import</string>
+    <string name="title_export">Export</string>
+    <string name="title_import">Import</string>
+    <string name="action_export">Export to file</string>
     <string name="backup_full_dump">Cynhwyswch ddisgrifiadau, manylion, graddfeydd</string>
-    <string name="backup_button">Creu copi wrth gefn</string>
+    <string name="status_successful">Successful</string>
+    <string name="status_failure">Failed</string>
+    <string name="status_failed_file_access">Can not find or access file</string>
     <string name="import_button">Adfer copi wrth gefn</string>
+    <string name="action_view_import_documentation">View expected format</string>
     <string name="import_warning">Bydd y copi wrth gefn yn disodli\'ch sioeau, rhestrau neu ffilmiau cyfredol</string>
+    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
+    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
     <string name="no_file_selected">Dim ffeil wedi\'i dewis</string>
     <string name="action_select_file">Dewiswch ffeil</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Gwneud copi wrth gefn awtomatig</string>
     <string name="pref_autobackupsummary">Gwneud copi wrth gefn wythnosol o\'ch sioeau, rhestrau a ffilmiau i storio dyfeisiau.</string>
     <string name="autobackup_details">Nid yw\'r copïau wrth gefn hyn ar gael os yw\'r app wedi\'i osod eto. Creu copïau i\'w cadw fel arall.</string>
+    <string name="backup_button">Creu copi wrth gefn</string>
     <string name="last_auto_backup">Gwneud copi wrth gefn awtomatig diwethaf:%s</string>
     <string name="restore_auto_backup">Adfer copi wrth gefn awtomatig</string>
     <string name="autobackup_failed">Mae\'r copi wrth gefn awtomatig olaf wedi methu</string>
@@ -607,4 +620,8 @@
     <string name="feedback_action_nothanks">Dim diolch</string>
     <!-- Support -->
     <string name="support_the_dev">Cefnogi\'r datblygwr?</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Debug log</string>
+    <string name="status_saving_file_success">File saved</string>
+    <string name="status_saving_file_failed">Failed to save file</string>
 </resources>

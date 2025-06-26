@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Main Menu -->
-    <string name="shows">سریالها</string>
-    <string name="lists">فهرست‌ها</string>
+    <string name="shows">نمایش‌ها</string>
+    <string name="lists">سیاهه‌ها</string>
     <string name="movies">فیلم‌ها</string>
     <string name="statistics">آمار</string>
     <string name="navigation_more">بیش‌تر</string>
     <string name="search">جستجو</string>
     <string name="preferences">تنظیمات</string>
     <string name="help">راه‌نما</string>
-    <string name="no_more_updates">SeriesGuide بیشتر برای این نسخه از آندروید به روز رسانی را دریافت خواهید کرد.</string>
+    <string name="no_more_updates">سریزگاید دیگر برای این نگارش از اندروید به‌روز رسانی نخواهد گرفت.</string>
     <!-- Media items -->
     <string name="show_details">جزییات</string>
     <string name="episode">قسمت</string>
@@ -36,10 +36,11 @@
     <string name="sync_and_update">هم‌گام سازی و به‌روز رسانی</string>
     <string name="sync_and_download_all">هم‌گام سازی و بارگیری همه</string>
     <string name="action_stream">پخش یا خرید</string>
-    <string name="action_stream_settings">Stream or purchase settings</string>
+    <string name="action_stream_settings">تنظمیات پخش یا خرید</string>
     <string name="action_select_region">گزینش ناحیه</string>
     <string name="action_reset">بازنشانی</string>
-    <string name="action_save">Save</string>
+    <string name="action_save">ذخیره</string>
+    <string name="action_turn_on">Turn on</string>
     <!-- Search -->
     <string name="clear_search_history">پاک‌سازی تاریخچهٔ جست‌وجو</string>
     <string name="search_hint">جست‌وجوی قسمت‌ها</string>
@@ -58,6 +59,7 @@
     <string name="api_failed">%s انجام نشد</string>
     <string name="copy_to_clipboard">کپی شد</string>
     <string name="not_migrated">نمایش به TMDB مهاجرت داده نشده. ممکن است برخی کنش‌ها شامل هم‌گام سازی ابری و ترکت کار نکنند. برای جایگزین جست‌وجو کرده و این نمایش را حذف کنید. برای جزییات بیش‌تر بزنید.</string>
+    <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">هم‌رسانی</string>
     <string name="share_show">هم‌رسانی نمایش</string>
@@ -99,7 +101,7 @@
     <string name="show_status_in_production">در حال تولید</string>
     <string name="show_status_pilot">پایلوت</string>
     <string name="show_status_canceled">لغو شده</string>
-    <string name="no_translation">هیج توضیحی برای %2$s به %1$s وجود ندارد.</string>
+    <string name="no_translation">جزییاتی در %1$s موجود نیست. می‌توانید در %2$s بیفزاییدش یا زبان را تغییر دهید.</string>
     <string name="no_spoilers">به‌منظور جلوگیری از لو رفتن، برخی جزئیات نهفته‌اند. برای خاموش کردن این ویژگی به تنظیمات بروید.</string>
     <string name="format_source">منبع: %s</string>
     <string name="last_updated">آخرین به‌روز رسانی</string>
@@ -147,8 +149,8 @@
     <string name="hidden">به پنهان منتقل شد</string>
     <string name="unhidden">اثر نمایشی دوباره قابل مشاهده است</string>
     <string name="action_shows_add">افزودن اثر نمایشی</string>
-    <string name="action_filter_and_sort">Filter and sort</string>
-    <string name="title_filter_general">General</string>
+    <string name="action_filter_and_sort">پالایش و چینش</string>
+    <string name="title_filter_general">عمومی</string>
     <string name="empty_filter">حذف همه فیلترها</string>
     <string name="action_shows_filter_favorites">برگزیده‌ها</string>
     <string name="action_shows_filter_unwatched">تماشا نشده</string>
@@ -170,8 +172,8 @@
     <string name="context_marknext">قسمت بعدی تماشا شد</string>
     <string name="action_episodes_switch_view">تعویض نما</string>
     <string name="next_to_watch">برنامهٔ بعدی</string>
-    <string name="title_notes">Notes</string>
-    <string name="action_edit_note">Edit note</string>
+    <string name="title_notes">یادداشت‌ها</string>
+    <string name="action_edit_note">ویرایش یادداشت</string>
     <!-- History -->
     <string name="user_stream">تاریخچه</string>
     <string name="recently_watched">به‌تازگی تماشا شده</string>
@@ -209,15 +211,15 @@
     </plurals>
     <plurals name="remaining_of_total_episodes_plural">
         <item quantity="one">%1$d از %2$d مانده</item>
-        <item quantity="other">%1$d of %2$d remaining</item>
+        <item quantity="other">%1$d از %2$d مانده</item>
     </plurals>
     <plurals name="skipped_episodes_plural">
-        <item quantity="one">%d تا رد شد</item>
-        <item quantity="other">%d skipped</item>
+        <item quantity="one">%d قسمت رد شد</item>
+        <item quantity="other">%d تا رد شد</item>
     </plurals>
     <plurals name="collected_episodes_plural">
-        <item quantity="one">%d تا در مجموعه</item>
-        <item quantity="other">%d in collection</item>
+        <item quantity="one">%d قسمت در مجموعه</item>
+        <item quantity="other">%d تا در مجموعه</item>
     </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">نام یک اثر نمایشی را بنویسید</string>
@@ -240,7 +242,7 @@
     <!-- Discover -->
     <string name="title_discover">کشف</string>
     <string name="title_popular">محبوب</string>
-    <string name="action_filter">Filter</string>
+    <string name="action_filter">پالایه</string>
     <string name="filter_year">سال</string>
     <string name="filter_year_current">امسال</string>
     <string name="filter_language">زبان</string>
@@ -281,8 +283,8 @@
     <string name="action_movies_sort_title">عنوان</string>
     <string name="action_movies_sort_release">تاریخ انتشار</string>
     <string name="title_similar_movies">فیلم‌های مشابه</string>
-    <string name="title_release_dates">Release dates</string>
-    <string name="error_movie_not_found">Movie removed from TMDB. Remove it from lists, set it not watched. Using Trakt? On their website, search for its TMDB ID and remove it from history and lists.</string>
+    <string name="title_release_dates">تاریخ‌های انتشار</string>
+    <string name="error_movie_not_found">فیلم از TMDB برداشته شد.ه. از سیاهه‌ها برش دارید و به عنوان دیده نشده تنظیمش کنید. از ترکت استفاده می‌کنید؟ روی پایگاه وبش به دنبال شناسهٔ TMDBاش گشته و از تاریخچه و سیاهه‌ها برش دارید.</string>
     <!-- Statistics -->
     <string name="statistics_failed">نمی‌توان آمار را محاسبه کرد.</string>
     <string name="shows_finished">%s تماشا پایان یافته</string>
@@ -337,8 +339,8 @@
     <string name="trakt_error_credentials">اشتباهی رخ داد. اطلاعات کاربری trakt خود را بررسی کنید و دوباره امتحان کنید.</string>
     <string name="trakt_error_not_exists">(هنوز) روی trakt موجود نیست. بعداً دوباره تلاش کنید.</string>
     <string name="trakt_notice_not_exists">(هنوز) نمی‌توان با trakt ردیابی کرد.</string>
-    <string name="trakt_error_limit_exceeded_add">Can\'t add, Trakt account limit reached.</string>
-    <string name="trakt_error_limit_exceeded_upload">Can\'t upload, Trakt account limit reached.</string>
+    <string name="trakt_error_limit_exceeded_add">نمی‌توان افزود. به کران حساب ترکت رسیده.</string>
+    <string name="trakt_error_limit_exceeded_upload">نمی‌توان بار گذاشت. به کران حساب ترکت رسیده.</string>
     <!-- Connect trakt -->
     <string name="trakt_required">وصل شدن به ترکت برای استفاده</string>
     <string name="connect_trakt">اتصال به ترکت</string>
@@ -350,7 +352,7 @@
     <string name="show_library">افزودن نمایش‌ها از ترکت</string>
     <string name="about_trakt">Trakt کمک می‌کند تا حساب نمایش‌های تلویزیونی و فیلم‌هایی که می‌بینید را داشته باشید.</string>
     <string name="support_trakt">پشتیبانی از ترکت با وی‌آی‌پی</string>
-    <string name="action_trakt_view_limits">View account limits</string>
+    <string name="action_trakt_view_limits">دیدن محدودیت‌های حساب</string>
     <!-- trakt ratings -->
     <string name="action_rate">نمره</string>
     <string name="ack_rated">رتبه فرستاده شد</string>
@@ -443,23 +445,34 @@
     <string name="theme_app_dark">تاریک</string>
     <string name="theme_app_light">روشن</string>
     <!-- Other advanced settings -->
+    <string name="pref_category_diagnostics">Diagnostics</string>
     <string name="pref_autoupdatesummary">به‌روز رسانی و همگام سازی خودکار محتوا</string>
     <string name="pref_number">قالب شماره</string>
     <string name="pref_offset">جابه‌جایی زمان دستی</string>
     <string name="pref_offsetsummary">جابه‌جا کردن زمان پخش به اندازهٔ %d ساعت</string>
     <string name="clear_cache">پاک سازی تصاویر ذخیره شده از حافظه دستگاه</string>
     <string name="clear_cache_summary">حذف همه تصاویر ذخیره شده از حافظه دستگاه شما</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Export and import</string>
+    <string name="title_export">Export</string>
+    <string name="title_import">Import</string>
+    <string name="action_export">Export to file</string>
     <string name="backup_full_dump">دربرگیری توضیحات، جزییات و رتبه‌ها</string>
-    <string name="backup_button">ایجاد پشتیبان</string>
+    <string name="status_successful">Successful</string>
+    <string name="status_failure">Failed</string>
+    <string name="status_failed_file_access">Can not find or access file</string>
     <string name="import_button">بازگردانی پشتیبان</string>
+    <string name="action_view_import_documentation">View expected format</string>
     <string name="import_warning">فهمیدم که نمایش‌ها، فهرست‌ها و فیلم‌های جاریم تعویض خواهند شد!</string>
+    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
+    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
     <string name="no_file_selected">هیچ پرونده‌ای گزیده نشده</string>
     <string name="action_select_file">گزینش پرونده</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">پشتیبان‌گیری خودکار</string>
     <string name="pref_autobackupsummary">پشتیبان گرفتن هفتگی از نمایش‌ها، فهرست‌ها و فیلم‌هایتان</string>
     <string name="autobackup_details">این پشتیبان‌ها در صورت نصب دوبارهٔ کاره در دسترس نیستند. مگر این که پشتیبان‌گیری از داده‌های کاره برای این افزاره روشن باشد (اندروید ۶+). در غیر این صورت، برای نگه داشتنشان، از آن‌ها رونوشت بگیرید.</string>
+    <string name="backup_button">ایجاد پشتیبان</string>
     <string name="last_auto_backup">آخرین پشتیبان خودکار: %s</string>
     <string name="restore_auto_backup">بازگردانی پشتیبان خودکار</string>
     <string name="autobackup_failed">آخرین پشتیبان خودکار شکست خورد</string>
@@ -551,4 +564,8 @@
     <string name="feedback_action_nothanks">نه، ممنون</string>
     <!-- Support -->
     <string name="support_the_dev">حمایت از توسعه‌دهنده؟</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Debug log</string>
+    <string name="status_saving_file_success">File saved</string>
+    <string name="status_saving_file_failed">Failed to save file</string>
 </resources>

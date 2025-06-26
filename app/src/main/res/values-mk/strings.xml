@@ -40,6 +40,7 @@
     <string name="action_select_region">Select region</string>
     <string name="action_reset">Reset</string>
     <string name="action_save">Save</string>
+    <string name="action_turn_on">Turn on</string>
     <!-- Search -->
     <string name="clear_search_history">Избриши историја на пребарување</string>
     <string name="search_hint">Пребарај епизоди</string>
@@ -53,11 +54,12 @@
     <string name="app_not_available">Нема апликација што може да го поддржи ова</string>
     <string name="people_empty">Никој не е тука? Пробајте повторно.</string>
     <string name="database_error">Не е возможно да ги променити податоците.</string>
-    <string name="reinstall_info">Try to create a backup in Settings, re-install and restore</string>
+    <string name="reinstall_info">Try to export your data, re-install and restore</string>
     <string name="api_error_generic">Неможе да се конектира со %s. Пробајте подоцна.</string>
     <string name="api_failed">Грешни: %s</string>
     <string name="copy_to_clipboard">Копирај во кликборд</string>
     <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">Сподели</string>
     <string name="share_show">Сподели серија</string>
@@ -443,23 +445,34 @@
     <string name="theme_app_dark">Dark</string>
     <string name="theme_app_light">Light</string>
     <!-- Other advanced settings -->
+    <string name="pref_category_diagnostics">Diagnostics</string>
     <string name="pref_autoupdatesummary">Автоматиско синхронизирање и абдејтирање опции</string>
     <string name="pref_number">Формат бројки</string>
     <string name="pref_offset">Рачен временски опсег</string>
     <string name="pref_offsetsummary">Опсег на временски %d саати</string>
     <string name="clear_cache">Избриши кеширани слики</string>
     <string name="clear_cache_summary">Избриши ги сите кеширани слики од вашиот уред</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Export and import</string>
+    <string name="title_export">Export</string>
+    <string name="title_import">Import</string>
+    <string name="action_export">Export to file</string>
     <string name="backup_full_dump">Include descriptions, details, ratings</string>
-    <string name="backup_button">Архивирај</string>
+    <string name="status_successful">Successful</string>
+    <string name="status_failure">Failed</string>
+    <string name="status_failed_file_access">Can not find or access file</string>
     <string name="import_button">Restore backup</string>
-    <string name="import_warning">Your current shows, lists or movies will be replaced by the backup</string>
+    <string name="action_view_import_documentation">View expected format</string>
+    <string name="import_warning">Your current shows, lists or movies will be replaced by the imported data</string>
+    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
+    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
     <string name="no_file_selected">нема одбрано датотека</string>
     <string name="action_select_file">Изберете дадотека</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Автoмaтски бекaп</string>
     <string name="pref_autobackupsummary">Неделни бекупи од вашите серии, листи и филмови</string>
     <string name="autobackup_details">These backups are unavailable if the app is installed again. Create copies to preserve them otherwise.</string>
+    <string name="backup_button">Архивирај</string>
     <string name="last_auto_backup">Последен автоматски Backup: %s</string>
     <string name="restore_auto_backup">Обнови автоматски Backup</string>
     <string name="autobackup_failed">The last auto backup has failed</string>
@@ -551,4 +564,8 @@
     <string name="feedback_action_nothanks">Не, благодарам</string>
     <!-- Support -->
     <string name="support_the_dev">Support the developer?</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Debug log</string>
+    <string name="status_saving_file_success">File saved</string>
+    <string name="status_saving_file_failed">Failed to save file</string>
 </resources>

@@ -40,6 +40,7 @@
     <string name="action_select_region">Pilih wilayah</string>
     <string name="action_reset">Reset</string>
     <string name="action_save">Save</string>
+    <string name="action_turn_on">Turn on</string>
     <!-- Search -->
     <string name="clear_search_history">Bersihkan riwayat pencarian</string>
     <string name="search_hint">Cari episode</string>
@@ -58,6 +59,7 @@
     <string name="api_failed">Gagal: %s</string>
     <string name="copy_to_clipboard">Disalin ke clipboard</string>
     <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">Bagikan</string>
     <string name="share_show">Bagikan acara</string>
@@ -98,7 +100,7 @@
     <string name="show_status_in_production">Dalam Produksi</string>
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">Dibatalkan</string>
-    <string name="no_translation">Tidak ada deskripsi yang diterjemahkan ke %1$s tersedia di %2$s.</string>
+    <string name="no_translation">No details in %1$s available, consider adding them at %2$s. Or try to change the language.</string>
     <string name="no_spoilers">Beberapa detail telah disembunyikan untuk mencegah bocoran. Untuk menonaktikan ini pergi ke pengaturan.</string>
     <string name="format_source">Sumber: %s</string>
     <string name="last_updated">Last updated</string>
@@ -429,23 +431,34 @@
     <string name="theme_app_dark">Gelap</string>
     <string name="theme_app_light">Terang</string>
     <!-- Other advanced settings -->
+    <string name="pref_category_diagnostics">Diagnostics</string>
     <string name="pref_autoupdatesummary">Secara otomatis melakukan sinkronisasi dan memperbarui data SeriesGuide</string>
     <string name="pref_number">Format nomor</string>
     <string name="pref_offset">Seimbangkan waktu secara manual</string>
     <string name="pref_offsetsummary">Seimbangkan waktu rilis selama %d jam</string>
     <string name="clear_cache">Bersihkan caches gambar</string>
     <string name="clear_cache_summary">Hapus semua cache gambar dari perangkat Anda</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Export and import</string>
+    <string name="title_export">Export</string>
+    <string name="title_import">Import</string>
+    <string name="action_export">Export to file</string>
     <string name="backup_full_dump">Termasuk deskripsi, rincian, peringkat</string>
-    <string name="backup_button">Buat cadangan</string>
+    <string name="status_successful">Successful</string>
+    <string name="status_failure">Failed</string>
+    <string name="status_failed_file_access">Can not find or access file</string>
     <string name="import_button">Pulihkan cadangan</string>
+    <string name="action_view_import_documentation">View expected format</string>
     <string name="import_warning">Saya mengerti acara, daftar dan film saya saat ini akan diganti!</string>
+    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
+    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
     <string name="no_file_selected">Tidak ada file terpilih</string>
     <string name="action_select_file">Pilih file</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Cadangkan otomatis</string>
     <string name="pref_autobackupsummary">Cadangkan mingguan acara, daftar dan film anda</string>
     <string name="autobackup_details">Cadangan ini tidak tersedia jika aplikasi diinstall lagi. Buat salinan jika ingin mengamankannya</string>
+    <string name="backup_button">Buat cadangan</string>
     <string name="last_auto_backup">Pencadangan Otomatis Terakhir: %s</string>
     <string name="restore_auto_backup">Pulihkan Cadangan Otomatis</string>
     <string name="autobackup_failed">Cadangan otomatis sebelumnya telah gagal</string>
@@ -537,4 +550,8 @@
     <string name="feedback_action_nothanks">Tidak, terima kasih</string>
     <!-- Support -->
     <string name="support_the_dev">Dukung pengembang?</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Debug log</string>
+    <string name="status_saving_file_success">File saved</string>
+    <string name="status_saving_file_failed">Failed to save file</string>
 </resources>

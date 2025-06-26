@@ -40,6 +40,7 @@
     <string name="action_select_region">حدد المنطقة</string>
     <string name="action_reset">Reset</string>
     <string name="action_save">Save</string>
+    <string name="action_turn_on">Turn on</string>
     <!-- Search -->
     <string name="clear_search_history">إزالة تاريخ البحث</string>
     <string name="search_hint">البحث عن الحلقات</string>
@@ -58,6 +59,7 @@
     <string name="api_failed">فشل: %s</string>
     <string name="copy_to_clipboard">تم النسخ إلى الحافظة</string>
     <string name="not_migrated">المسلسل غير مُضاف إلى بيانات TMDB. بعض الإجراءات تشمل Trakt ومزامنة السحابة قد لا تعمل. ربما عليك البحث عن بديل وإزالة هذا المسلسل. انقر لعرض التفاصيل.</string>
+    <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">مشاركة</string>
     <string name="share_show">مشاركة المسلسل</string>
@@ -103,7 +105,7 @@
     <string name="show_status_in_production">قيد الإنتاج</string>
     <string name="show_status_pilot">طيار</string>
     <string name="show_status_canceled">ملغى</string>
-    <string name="no_translation">لا يوجد وصف باللغة %1$s متاحة على موقع %2$s.</string>
+    <string name="no_translation">No details in %1$s available, consider adding them at %2$s. Or try to change the language.</string>
     <string name="no_spoilers">يتم إخفاء بعض التفاصيل لمنع الحرق. لإيقاف هذا انتقل إلى الإعدادات.</string>
     <string name="format_source">المصدر: %s</string>
     <string name="last_updated">آخر تحديث</string>
@@ -499,23 +501,34 @@
     <string name="theme_app_dark">داكن</string>
     <string name="theme_app_light">فاتح</string>
     <!-- Other advanced settings -->
+    <string name="pref_category_diagnostics">Diagnostics</string>
     <string name="pref_autoupdatesummary">مزامنة وتحديث بيانات SeriesGuide تلقائيا</string>
     <string name="pref_number">تنسيق الأرقام</string>
     <string name="pref_offset">تغيير وقت العرض بشكل يدوي</string>
     <string name="pref_offsetsummary">بدء وقت العرض قبل %d ساعات</string>
     <string name="clear_cache">تنظيف ذاكرة التخزين المؤقتة للصور</string>
     <string name="clear_cache_summary">إزالة جميع الصور المخزنة مؤقتاً من الجهاز</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Export and import</string>
+    <string name="title_export">Export</string>
+    <string name="title_import">Import</string>
+    <string name="action_export">Export to file</string>
     <string name="backup_full_dump">يتضمن الأوصاف، و التفاصيل، و التقييمات</string>
-    <string name="backup_button">نسخ احتياطي</string>
+    <string name="status_successful">Successful</string>
+    <string name="status_failure">Failed</string>
+    <string name="status_failed_file_access">Can not find or access file</string>
     <string name="import_button">استعادة</string>
+    <string name="action_view_import_documentation">View expected format</string>
     <string name="import_warning">أنا أفهم أن المسلسلات الحالية، القوائم والأفلام سوف تستبدل!</string>
+    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
+    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
     <string name="no_file_selected">لم يتم إختيار أي ملف</string>
     <string name="action_select_file">حدد ملف</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">نسخ احتياطي تلقائي</string>
     <string name="pref_autobackupsummary">نسخ إحتياطي أسبوعي للمسلسلات، القوائم والأفلام</string>
     <string name="autobackup_details">هذه النسخ الإحتياطية غير متوفرة إذا تم تثبيت التطبيق مرة أخرى ما لم يتم تشغيل النسخ الإحتياطي لبيانات التطبيق لهذا الجهاز (أندرويد 6+). بالتالي قم بإنشاء نسخ للحفاظ عليها.</string>
+    <string name="backup_button">نسخ احتياطي</string>
     <string name="last_auto_backup">آخر عملية نسخ تلقائية: %s</string>
     <string name="restore_auto_backup">استعادة النسخ الاحتياطي التلقائي</string>
     <string name="autobackup_failed">تم فشل آخر عملية للنسخ الإحتياطي التلقائي</string>
@@ -607,4 +620,8 @@
     <string name="feedback_action_nothanks">لا، شكرا</string>
     <!-- Support -->
     <string name="support_the_dev">دعم المطور؟</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Debug log</string>
+    <string name="status_saving_file_success">File saved</string>
+    <string name="status_saving_file_failed">Failed to save file</string>
 </resources>

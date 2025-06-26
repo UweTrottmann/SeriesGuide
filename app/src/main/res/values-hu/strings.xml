@@ -40,6 +40,7 @@
     <string name="action_select_region">Válassz régiót</string>
     <string name="action_reset">Visszaállítás</string>
     <string name="action_save">Save</string>
+    <string name="action_turn_on">Turn on</string>
     <!-- Search -->
     <string name="clear_search_history">Keresési előzmények törlése</string>
     <string name="search_hint">Epizódok keresése</string>
@@ -58,6 +59,7 @@
     <string name="api_failed">Meghiúsult: %s</string>
     <string name="copy_to_clipboard">Vágólapra másolva</string>
     <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">Megosztás</string>
     <string name="share_show">Műsor megosztása</string>
@@ -99,7 +101,7 @@
     <string name="show_status_in_production">Gyártás alatt</string>
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">Törölve</string>
-    <string name="no_translation">Nincs leírás %1$s nyelven a %2$s adatbázisban.</string>
+    <string name="no_translation">No details in %1$s available, consider adding them at %2$s. Or try to change the language.</string>
     <string name="no_spoilers">Néhány részlet elrejtésre kerül a spoilerek megakadályozása miatt. A kikapcsoláshoz menj a Beállításokba.</string>
     <string name="format_source">Forrás: %s</string>
     <string name="last_updated">Utoljára frissítve</string>
@@ -443,23 +445,34 @@
     <string name="theme_app_dark">Sötét</string>
     <string name="theme_app_light">Világos</string>
     <!-- Other advanced settings -->
+    <string name="pref_category_diagnostics">Diagnostics</string>
     <string name="pref_autoupdatesummary">SeriesGuide adatok automatikus szinkronizálása és frissítése</string>
     <string name="pref_number">Számozás formátuma</string>
     <string name="pref_offset">Időeltolás</string>
     <string name="pref_offsetsummary">Vetítési időhöz képest időeltolás %d órával</string>
     <string name="clear_cache">Képtároló törlése</string>
     <string name="clear_cache_summary">Az összes tárolt kép törlése az eszközről</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Export and import</string>
+    <string name="title_export">Export</string>
+    <string name="title_import">Import</string>
+    <string name="action_export">Export to file</string>
     <string name="backup_full_dump">Tartalmazza a leírásokat, részleteket, értékeléseket</string>
-    <string name="backup_button">Biztonsági Mentés</string>
+    <string name="status_successful">Successful</string>
+    <string name="status_failure">Failed</string>
+    <string name="status_failed_file_access">Can not find or access file</string>
     <string name="import_button">Visszaállítás</string>
+    <string name="action_view_import_documentation">View expected format</string>
     <string name="import_warning">Megértettem, hogy az aktuális sorozataim, listáim és filmjeim lecserélésre kerülnek!</string>
+    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
+    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
     <string name="no_file_selected">Nincs fájl kijelölve</string>
     <string name="action_select_file">Fájl kiválasztása</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatikus biztonsági másolat</string>
     <string name="pref_autobackupsummary">Heti biztonsági másolat készítése a sorozatokról, listákról és filmekről</string>
     <string name="autobackup_details">Ezek a biztonsági mentések nem elérhetőek ha az app újra telepítve van. Készíts másolatokat hogy biztosan megőrizve legyenek.</string>
+    <string name="backup_button">Biztonsági Mentés</string>
     <string name="last_auto_backup">Utolsó automata mentés: %s</string>
     <string name="restore_auto_backup">Automatikus mentés visszaállítása</string>
     <string name="autobackup_failed">A legutóbbi automatikus mentés nem sikerült</string>
@@ -551,4 +564,8 @@
     <string name="feedback_action_nothanks">Köszönöm, nem</string>
     <!-- Support -->
     <string name="support_the_dev">Támogatod a fejlesztőt?</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Debug log</string>
+    <string name="status_saving_file_success">File saved</string>
+    <string name="status_saving_file_failed">Failed to save file</string>
 </resources>

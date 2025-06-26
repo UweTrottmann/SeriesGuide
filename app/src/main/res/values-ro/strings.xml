@@ -40,6 +40,7 @@
     <string name="action_select_region">Select region</string>
     <string name="action_reset">Reset</string>
     <string name="action_save">Save</string>
+    <string name="action_turn_on">Turn on</string>
     <!-- Search -->
     <string name="clear_search_history">Ștergere istoric căutare</string>
     <string name="search_hint">Căutaţi episoade</string>
@@ -58,6 +59,7 @@
     <string name="api_failed">Eroare: %s</string>
     <string name="copy_to_clipboard">Copiat în clipboard</string>
     <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">Distribuie</string>
     <string name="share_show">Distribuie emisiunea</string>
@@ -100,7 +102,7 @@
     <string name="show_status_in_production">In Production</string>
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">Canceled</string>
-    <string name="no_translation">Nu există nici o traducere în %1$s disponibilă pe %2$s.</string>
+    <string name="no_translation">No details in %1$s available, consider adding them at %2$s. Or try to change the language.</string>
     <string name="no_spoilers">Unele detalii sunt ascunse pentru a evita spoilere. Pentru a nu folosi aceasta protecție mergeți în Setări.</string>
     <string name="format_source">Sursa: %s</string>
     <string name="last_updated">Last updated</string>
@@ -457,23 +459,34 @@
     <string name="theme_app_dark">Dark</string>
     <string name="theme_app_light">Light</string>
     <!-- Other advanced settings -->
+    <string name="pref_category_diagnostics">Diagnostics</string>
     <string name="pref_autoupdatesummary">Sincronizează automat și actualizează datele de pe SeriesGuide</string>
     <string name="pref_number">Format număr</string>
     <string name="pref_offset">Compensare manuală a timpului</string>
     <string name="pref_offsetsummary">Compensare timp de difuzare cu %d ore</string>
     <string name="clear_cache">Șterge imaginile din cache</string>
     <string name="clear_cache_summary">Șterge toate imaginile din cache de pe acest dispozitiv</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Export and import</string>
+    <string name="title_export">Export</string>
+    <string name="title_import">Import</string>
+    <string name="action_export">Export to file</string>
     <string name="backup_full_dump">Include descrieri, detalii, note</string>
-    <string name="backup_button">Arhivare</string>
+    <string name="status_successful">Successful</string>
+    <string name="status_failure">Failed</string>
+    <string name="status_failed_file_access">Can not find or access file</string>
     <string name="import_button">Restaurează</string>
+    <string name="action_view_import_documentation">View expected format</string>
     <string name="import_warning">Sunt de acord ca serialele, listele și filmele să fie înlocuite!</string>
+    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
+    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
     <string name="no_file_selected">Niciun fișier selectat</string>
     <string name="action_select_file">Selectează fișierul</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Backup automat</string>
     <string name="pref_autobackupsummary">Backup săptămânal al serialelor, listelor si filmelor</string>
     <string name="autobackup_details">These backups are unavailable if the app is installed again. Create copies to preserve them otherwise.</string>
+    <string name="backup_button">Arhivare</string>
     <string name="last_auto_backup">Ultimul backup automat: %s</string>
     <string name="restore_auto_backup">Restaurare arhivă automat</string>
     <string name="autobackup_failed">The last auto backup has failed</string>
@@ -565,4 +578,8 @@
     <string name="feedback_action_nothanks">Nu, mulțumesc</string>
     <!-- Support -->
     <string name="support_the_dev">Support the developer?</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Debug log</string>
+    <string name="status_saving_file_success">File saved</string>
+    <string name="status_saving_file_failed">Failed to save file</string>
 </resources>

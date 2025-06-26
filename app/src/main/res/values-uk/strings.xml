@@ -40,6 +40,7 @@
     <string name="action_select_region">Виберіть регіон</string>
     <string name="action_reset">Скинути</string>
     <string name="action_save">Зберегти</string>
+    <string name="action_turn_on">Увімкнути</string>
     <!-- Search -->
     <string name="clear_search_history">Очистити історію пошуку</string>
     <string name="search_hint">Пошук серій</string>
@@ -58,6 +59,7 @@
     <string name="api_failed">Не вдалося: %s</string>
     <string name="copy_to_clipboard">Скопійовано до буфера обміну</string>
     <string name="not_migrated">Показати дані, що не перенесені до TMDB. Деякі функції, як-от синхронізація з Trakt та Cloud може не працювати. Можливо, пошукайте замінник або виділіть цей серіал чи фільм натомість. Натисніть, щоб ознайомитись із подробицями.</string>
+    <string name="status_turned_on">Увімкнено</string>
     <!-- Sharing -->
     <string name="share">Поділитись</string>
     <string name="share_show">Поділитись серіалом</string>
@@ -101,7 +103,7 @@
     <string name="show_status_in_production">У виробництві</string>
     <string name="show_status_pilot">Пілот</string>
     <string name="show_status_canceled">Скасовано</string>
-    <string name="no_translation">Переклад опису з %1$s недоступний для %2$s.</string>
+    <string name="no_translation">Відомості у %1$s відсутні, розгляньте можливість їх додавання у %2$s. Або спробуйте змінити мову.</string>
     <string name="no_spoilers">Деякі деталі приховані для запобігання спойлерам. Щоб вимкнути це використовуйте Налаштування.</string>
     <string name="format_source">Джерело: %s</string>
     <string name="last_updated">Востаннє оновлено</string>
@@ -471,23 +473,34 @@
     <string name="theme_app_dark">Темна</string>
     <string name="theme_app_light">Світла</string>
     <!-- Other advanced settings -->
+    <string name="pref_category_diagnostics">Діагностика</string>
     <string name="pref_autoupdatesummary">Автоматично синхронізування та оновлення даних SeriesGuide</string>
     <string name="pref_number">Формат цифр</string>
     <string name="pref_offset">Зсув часу вручну</string>
     <string name="pref_offsetsummary">Зсув ефірного часу на %d годин</string>
     <string name="clear_cache">Очистити кеш зображень</string>
     <string name="clear_cache_summary">Видалити всі кешовані зображення з пристрою</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Експорт та імпорт</string>
+    <string name="title_export">Експортувати</string>
+    <string name="title_import">Імпортувати</string>
+    <string name="action_export">Експортувати до файлу</string>
     <string name="backup_full_dump">Включити описи, деталі, рейтинги</string>
-    <string name="backup_button">Бекап</string>
+    <string name="status_successful">Вдало</string>
+    <string name="status_failure">Невдало</string>
+    <string name="status_failed_file_access">Не вдалося знайти або отримати доступ до файлу</string>
     <string name="import_button">Відновити</string>
+    <string name="action_view_import_documentation">Переглянути очікуваний формат</string>
     <string name="import_warning">Я розумію, що мої поточні серіали, списки та фільми будуть замінені!</string>
+    <string name="import_cloud_warning">Не рекомендується за використання SeriesGuide Cloud або Trakt</string>
+    <string name="import_cloud_warning_details">Синхронізація з Cloud або Trakt може перезаписати імпортовані дані. З SeriesGuide Cloud, ви можете видалити свій обліковий запис перед імпортом даних, потім повторно створити його знову лише для вивантаження імпортованих даних.</string>
     <string name="no_file_selected">Не вибрано жодного файлу</string>
     <string name="action_select_file">Виберіть файл</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Автоматичне резервне копіювання</string>
     <string name="pref_autobackupsummary">Щотижневе резервне копіювання ваших серіалів, списків та фільмів</string>
     <string name="autobackup_details">Ці резервні копії будуть недоступні, якщо додаток буде повторно інстальований, хіба що для цього пристрою буде ввімкнуто резервне копіювання даних додатку (Андроїд 6 та вище).  В такому випадку, для збереження даних, створюйте їх копії.</string>
+    <string name="backup_button">Бекап</string>
     <string name="last_auto_backup">Останній авто Бекап: %s</string>
     <string name="restore_auto_backup">Відновити з авто Бекапу</string>
     <string name="autobackup_failed">Останній бекап не вдався.</string>
@@ -579,4 +592,8 @@
     <string name="feedback_action_nothanks">Ні, дякую</string>
     <!-- Support -->
     <string name="support_the_dev">Бажаєте підтримати розробника?</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Журнал налагодження</string>
+    <string name="status_saving_file_success">Файл збережено</string>
+    <string name="status_saving_file_failed">Не вдалося зберегти файл</string>
 </resources>

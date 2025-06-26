@@ -40,6 +40,7 @@
     <string name="action_select_region">Vyberte region</string>
     <string name="action_reset">Obnovit</string>
     <string name="action_save">Save</string>
+    <string name="action_turn_on">Turn on</string>
     <!-- Search -->
     <string name="clear_search_history">Vymazat historii vyhledávání</string>
     <string name="search_hint">Hledat epizody</string>
@@ -58,6 +59,7 @@
     <string name="api_failed">Chyba: %s</string>
     <string name="copy_to_clipboard">Zkopírováno do schránky</string>
     <string name="not_migrated">Seriál není migrovaný na TMDB. Některé akce včetně Trakt a Cloud synchronizace nemusí fungovat. Vyhledejte případně náhradu a odstraňte tento seriál. Klepnutím zobrazíte podrobnosti.</string>
+    <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">Sdílet</string>
     <string name="share_show">Sdílet seriál</string>
@@ -101,7 +103,7 @@
     <string name="show_status_in_production">V produkci</string>
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">Zrušeno</string>
-    <string name="no_translation">Pro jazyk %1$s není na %2$s dostupný žádný popis.</string>
+    <string name="no_translation">No details in %1$s available, consider adding them at %2$s. Or try to change the language.</string>
     <string name="no_spoilers">Některé detaily jsou skryty, aby se zabránilo spoilerům. Toto můžete vypnout v nastavení.</string>
     <string name="format_source">Zdroj: %s</string>
     <string name="last_updated">Poslední aktualizace</string>
@@ -471,23 +473,34 @@
     <string name="theme_app_dark">Tmavý</string>
     <string name="theme_app_light">Světlý</string>
     <!-- Other advanced settings -->
+    <string name="pref_category_diagnostics">Diagnostics</string>
     <string name="pref_autoupdatesummary">Automaticky synchronizovat a aktualizovat obsah</string>
     <string name="pref_number">Formát číslování</string>
     <string name="pref_offset">Ruční časový posun</string>
     <string name="pref_offsetsummary">Posunout vysílací čas o %d hodin</string>
     <string name="clear_cache">Vymazat mezipaměť</string>
     <string name="clear_cache_summary">Přejděte do nastavení úložiště pro odstranění obrázků z mezipaměti a síťových odpovědí</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Export and import</string>
+    <string name="title_export">Export</string>
+    <string name="title_import">Import</string>
+    <string name="action_export">Export to file</string>
     <string name="backup_full_dump">Zahrnout popisy, detaily, hodnocení</string>
-    <string name="backup_button">Zálohovat</string>
+    <string name="status_successful">Successful</string>
+    <string name="status_failure">Failed</string>
+    <string name="status_failed_file_access">Can not find or access file</string>
     <string name="import_button">Obnovit</string>
+    <string name="action_view_import_documentation">View expected format</string>
     <string name="import_warning">Vaše aktuální seriály, seznamy nebo filmy budou nahrazeny zálohou</string>
+    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
+    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
     <string name="no_file_selected">Nebyl vybrán žádný soubor</string>
     <string name="action_select_file">Vybrat soubor</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatická záloha</string>
     <string name="pref_autobackupsummary">Týdenní zálohování seriálů, seznamů a filmů do úložiště zařízení.</string>
     <string name="autobackup_details">Tyto zálohy nebudou dostupné v případě, že bude aplikace znovu nainstalována. Vytvořte kopie, abyste je uchovali jiným způsobem.</string>
+    <string name="backup_button">Zálohovat</string>
     <string name="last_auto_backup">Poslední automatická záloha: %s</string>
     <string name="restore_auto_backup">Obnovení automatické zálohy</string>
     <string name="autobackup_failed">Poslední automatická záloha selhala</string>
@@ -579,4 +592,8 @@
     <string name="feedback_action_nothanks">Ne, děkuji</string>
     <!-- Support -->
     <string name="support_the_dev">Podpoříte vývojáře?</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Debug log</string>
+    <string name="status_saving_file_success">File saved</string>
+    <string name="status_saving_file_failed">Failed to save file</string>
 </resources>

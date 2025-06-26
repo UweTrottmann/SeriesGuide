@@ -40,6 +40,7 @@
     <string name="action_select_region">选择地区</string>
     <string name="action_reset">重置</string>
     <string name="action_save">Save</string>
+    <string name="action_turn_on">Turn on</string>
     <!-- Search -->
     <string name="clear_search_history">清除搜索记录</string>
     <string name="search_hint">搜索剧集</string>
@@ -58,6 +59,7 @@
     <string name="api_failed">失败：%s</string>
     <string name="copy_to_clipboard">已复制到剪贴板</string>
     <string name="not_migrated">节目数据未迁移至 TMDB，某些操作包括与 Trakt 和 SeriesGuide Cloud 同步可能无法正常使用。点按即可查看详情。</string>
+    <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">分享</string>
     <string name="share_show">分享此节目</string>
@@ -98,7 +100,7 @@
     <string name="show_status_in_production">制作中</string>
     <string name="show_status_pilot">试播集</string>
     <string name="show_status_canceled">已取消</string>
-    <string name="no_translation">%2$s 上没有%1$s的剧情简介。</string>
+    <string name="no_translation">No details in %1$s available, consider adding them at %2$s. Or try to change the language.</string>
     <string name="no_spoilers">已隐藏部分详细信息来防止剧透。可在设置中关闭此功能。</string>
     <string name="format_source">来源：%s</string>
     <string name="last_updated">最后更新</string>
@@ -429,23 +431,34 @@
     <string name="theme_app_dark">深色</string>
     <string name="theme_app_light">浅色</string>
     <!-- Other advanced settings -->
+    <string name="pref_category_diagnostics">Diagnostics</string>
     <string name="pref_autoupdatesummary">自动同步并更新 SeriesGuide 数据</string>
     <string name="pref_number">编号格式</string>
     <string name="pref_offset">手动偏移播出时间</string>
     <string name="pref_offsetsummary">使显示时间与原播出时间相差 %d 小时</string>
     <string name="clear_cache">清除缓存</string>
     <string name="clear_cache_summary">转到应用存储设置清除缓存的图片和网络响应</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Export and import</string>
+    <string name="title_export">Export</string>
+    <string name="title_import">Import</string>
+    <string name="action_export">Export to file</string>
     <string name="backup_full_dump">包括剧情简介、详细信息、评分</string>
-    <string name="backup_button">创建备份</string>
+    <string name="status_successful">Successful</string>
+    <string name="status_failure">Failed</string>
+    <string name="status_failed_file_access">Can not find or access file</string>
     <string name="import_button">恢复备份</string>
+    <string name="action_view_import_documentation">View expected format</string>
     <string name="import_warning">我已了解备份将替换当前所有节目、列表和电影数据</string>
+    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
+    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
     <string name="no_file_selected">没有选择的文件</string>
     <string name="action_select_file">选择文件</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">自动备份</string>
     <string name="pref_autobackupsummary">每周将您的节目、列表和电影数据备份到设备存储空间。</string>
     <string name="autobackup_details">重新安装应用后，将失去这些备份。如果不希望重新安装应用后失去这些备份，可通过创建副本来保存它们。</string>
+    <string name="backup_button">创建备份</string>
     <string name="last_auto_backup">上次自动备份时间：%s</string>
     <string name="restore_auto_backup">从自动备份恢复</string>
     <string name="autobackup_failed">最后一次自动备份失败</string>
@@ -537,4 +550,8 @@
     <string name="feedback_action_nothanks">不，谢谢</string>
     <!-- Support -->
     <string name="support_the_dev">支持一下开发者？</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Debug log</string>
+    <string name="status_saving_file_success">File saved</string>
+    <string name="status_saving_file_failed">Failed to save file</string>
 </resources>
