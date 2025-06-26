@@ -10,7 +10,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2025.2
 
-### Next release
+### 2025.2.3 - 2025-06-26 🧪
 
 * 🔧 Backup: rename to "Export" and "Import", move them and Auto Backup up to More screen.
 * 🔧 Import: display names of selected files, select for import after selecting a file.
