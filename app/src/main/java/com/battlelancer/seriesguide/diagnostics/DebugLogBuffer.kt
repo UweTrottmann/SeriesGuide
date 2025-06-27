@@ -103,13 +103,20 @@ class DebugLogBuffer(context: Context) {
     fun save(uri: Uri, listener: OnSaveLogListener) {
         try {
             context.contentResolver.openOutputStream(uri)?.use {
+                val separator = System.lineSeparator().toByteArray()
+
                 it.write(systemInfo())
-                it.write("\n\n".toByteArray())
+                it.write(separator)
+                it.write(separator)
+
+                it.write(logcat())
+                it.write(separator)
+                it.write(separator)
 
                 val entries = logBufferSnapshot()
                 for (entry in entries) {
                     it.write(entry.prettyPrint().toByteArray())
-                    it.write("\n".toByteArray())
+                    it.write(separator)
                 }
             }
             listener.onSuccess()
@@ -134,6 +141,30 @@ class DebugLogBuffer(context: Context) {
         Android       : ${Build.VERSION.RELEASE}, API ${Build.VERSION.SDK_INT} (${Build.VERSION.INCREMENTAL}, ${Build.DISPLAY})
         Locale        : ${Locale.getDefault()}
         """.trimIndent().toByteArray()
+    }
+
+    private fun logcat(): ByteArray {
+        try {
+            // logcat output is limited by default, so reading everything should be OK regarding
+            // memory consumption. Also command exits after running, so no need to destroy process.
+            // -d            Dump the log and then exit (don't block).
+            val process = Runtime.getRuntime().exec("logcat -d")
+            val bufferedReader = process.inputStream.reader().buffered()
+            val log = StringBuilder()
+            val separator = System.lineSeparator()
+
+            var line: String?
+            while ((bufferedReader.readLine().also { line = it }) != null) {
+                log.append(line)
+                log.append(separator)
+            }
+
+            return log.toString().toByteArray()
+        } catch (e: Exception) {
+            val message = "Failed to get logcat output"
+            Timber.e(e, message)
+            return message.toByteArray()
+        }
     }
 
     val logFileName: String
