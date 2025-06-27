@@ -151,8 +151,14 @@ object DataLiberationTools {
     }
 
     private fun Uri.getFileName(context: Context): String? {
-        val cursor = context.contentResolver
-            .query(this, null, null, null, null)
+        val cursor = try {
+            context.contentResolver
+                .query(this, null, null, null, null)
+        } catch (e: Exception) {
+            // Permission to access or the URI itself may have expired
+            Timber.w(e, "Failed to get file name")
+            null
+        }
         cursor?.use {
             if (it.moveToFirst()) {
                 val nameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
