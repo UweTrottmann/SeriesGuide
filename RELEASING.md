@@ -20,7 +20,7 @@
 - Commit and push
 
   ```shell
-  git commit --all --message "Prepare version 2025.2.3 (21250203)"
+  git commit --all --message "Prepare version 2025.2.4 (21250204)"
   git push --set-upstream origin release-2025.2
   ```
 
@@ -42,8 +42,8 @@
 - Tag release commit
   
   ```shell
-  git tag v2025.2.3
-  git push origin v2025.2.3
+  git tag v2025.2.4
+  git push origin v2025.2.4
   git checkout dev
   git merge release-2025.2
   git push origin dev

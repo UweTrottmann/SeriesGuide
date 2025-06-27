@@ -10,7 +10,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2025.2
 
-### Next release
+### 2025.2.4 - 2025-06-27 🧪
 
 * 🔨 Import and Auto Backup: do not crash if reading file name fails.
 * 🔧 Debug log: include system log (logcat) in log file.
