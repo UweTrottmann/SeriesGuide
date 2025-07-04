@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2011-2024 Uwe Trottmann
+// Copyright 2011-2025 Uwe Trottmann
 // Copyright 2013 Andrew Neal
 
 package com.battlelancer.seriesguide.shows.overview
@@ -69,12 +69,12 @@ import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.TimeTools
-import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.WebTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.battlelancer.seriesguide.util.safeShow
 import com.battlelancer.seriesguide.util.startActivityWithAnimation
+import com.battlelancer.seriesguide.util.tryStartActivity
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.Job
@@ -751,8 +751,7 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
                 }
 
                 override fun onFeedback() {
-                    if (Utils.tryStartActivity(
-                            requireContext(),
+                    if (requireActivity().tryStartActivity(
                             MoreOptionsActivity.getFeedbackEmailIntent(requireContext()),
                             true
                         )) {

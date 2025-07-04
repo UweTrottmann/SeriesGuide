@@ -98,7 +98,7 @@ object ShareUtils {
         intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime)
         intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime)
 
-        if (!Utils.tryStartActivity(context, intent, false)) {
+        if (!context.tryStartActivity(intent, false)) {
             Toast.makeText(
                 context,
                 context.getString(R.string.addtocalendar_failed),
@@ -124,7 +124,7 @@ object ShareUtils {
                 eventTimeMs + TimeUnit.DAYS.toMillis(1)
             )
 
-        if (!Utils.tryStartActivity(context, intent, false)) {
+        if (!context.tryStartActivity(intent, false)) {
             Toast.makeText(
                 context,
                 context.getString(R.string.addtocalendar_failed),

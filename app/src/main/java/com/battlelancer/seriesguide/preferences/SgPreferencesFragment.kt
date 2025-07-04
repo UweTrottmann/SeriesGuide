@@ -44,8 +44,8 @@ import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
-import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.safeShow
+import com.battlelancer.seriesguide.util.tryStartActivity
 import com.google.android.material.color.DynamicColors
 import com.uwetrottmann.androidutils.AndroidUtils
 import org.greenrobot.eventbus.EventBus
@@ -81,10 +81,10 @@ class SgPreferencesFragment : BasePreferencesFragment(),
             // try to open app info where user can clear app cache folders
             var intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
             intent.data = Uri.parse("package:" + requireActivity().packageName)
-            if (!Utils.tryStartActivity(activity, intent, false)) {
+            if (!requireActivity().tryStartActivity(intent, false)) {
                 // try to open all apps view if detail view not available
                 intent = Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS)
-                Utils.tryStartActivity(activity, intent, true)
+                requireActivity().tryStartActivity(intent, true)
             }
 
             true
@@ -157,10 +157,10 @@ class SgPreferencesFragment : BasePreferencesFragment(),
             // Try to open app info where user can configure battery settings.
             var intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                 .setData(Uri.parse("package:" + requireActivity().packageName))
-            if (!Utils.tryStartActivity(activity, intent, false)) {
+            if (!requireActivity().tryStartActivity(intent, false)) {
                 // Open all apps view if detail view not available.
                 intent = Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS)
-                Utils.tryStartActivity(activity, intent, true)
+                requireActivity().tryStartActivity(intent, true)
             }
             true
         }
@@ -168,8 +168,7 @@ class SgPreferencesFragment : BasePreferencesFragment(),
             // Note: the preference is only shown on Android 12+.
             if (AndroidUtils.isAtLeastS) {
                 // Try to open the exact alarm settings.
-                Utils.tryStartActivity(
-                    activity,
+                requireActivity().tryStartActivity(
                     NotificationSettings.buildRequestExactAlarmSettingsIntent(requireContext()),
                     true
                 )
@@ -205,7 +204,7 @@ class SgPreferencesFragment : BasePreferencesFragment(),
                     val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
                         .putExtra(Settings.EXTRA_APP_PACKAGE, requireActivity().packageName)
                     // At least NVIDIA Shield (8.0.0) can not handle this, so guard.
-                    Utils.tryStartActivity(activity, intent, true)
+                    requireActivity().tryStartActivity(intent, true)
                     true
                 }
             } else {

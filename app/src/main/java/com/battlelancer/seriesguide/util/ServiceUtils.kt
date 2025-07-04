@@ -1,6 +1,6 @@
-// Copyright 2013-2016, 2018, 2019, 2021, 2023 Uwe Trottmann
-// Copyright 2013 Andrew Neal
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2013-2025 Uwe Trottmann
+// Copyright 2013 Andrew Neal
 
 package com.battlelancer.seriesguide.util
 
@@ -67,7 +67,7 @@ object ServiceUtils {
             Intent.FLAG_ACTIVITY_NEW_DOCUMENT
         )
 
-        if (!Utils.tryStartActivity(context, intent, false)) {
+        if (!context.tryStartActivity(intent, false)) {
             // If the app is not available, open website instead.
             WebTools.openInApp(context, imdbLink(imdbId))
         }
@@ -167,7 +167,7 @@ object ServiceUtils {
      * @param query The search query
      */
     fun performWebSearch(context: Context, query: String) {
-        Utils.openNewDocument(context, buildWebSearchIntent(query))
+        context.openNewDocument(buildWebSearchIntent(query))
     }
 
     /**

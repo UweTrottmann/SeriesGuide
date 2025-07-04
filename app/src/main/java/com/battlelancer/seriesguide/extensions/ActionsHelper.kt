@@ -10,8 +10,8 @@ import android.widget.Button
 import androidx.appcompat.widget.TooltipCompat
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.api.Action
-import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.startActivityWithAnimation
+import com.battlelancer.seriesguide.util.tryStartActivity
 import timber.log.Timber
 
 object ActionsHelper {
@@ -45,7 +45,7 @@ object ActionsHelper {
             if (viewIntent != null) {
                 viewIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
                 actionView.setOnClickListener { v ->
-                    Utils.tryStartActivity(v.context, viewIntent, true)
+                    v.context.tryStartActivity(viewIntent, true)
                 }
             }
 

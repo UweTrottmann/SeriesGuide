@@ -29,8 +29,8 @@ import com.battlelancer.seriesguide.api.SeriesGuideExtension
 import com.battlelancer.seriesguide.databinding.FragmentExtensionsConfigurationBinding
 import com.battlelancer.seriesguide.util.PackageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
-import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.WebTools
+import com.battlelancer.seriesguide.util.tryStartActivity
 import com.uwetrottmann.seriesguide.widgets.dragsortview.DragSortController
 import com.uwetrottmann.seriesguide.widgets.dragsortview.DragSortListView
 import timber.log.Timber
@@ -224,8 +224,7 @@ class ExtensionsConfigurationFragment : Fragment() {
             val itemId = item.itemId
             if (itemId == R.id.menu_action_extension_settings) {
                 // launch settings activity
-                Utils.tryStartActivity(
-                    requireContext(),
+                requireContext().tryStartActivity(
                     Intent()
                         .setComponent(settingsActivity)
                         .putExtra(SeriesGuideExtension.EXTRA_FROM_SERIESGUIDE_SETTINGS, true),
