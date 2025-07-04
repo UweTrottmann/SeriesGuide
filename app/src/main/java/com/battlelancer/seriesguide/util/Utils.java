@@ -44,20 +44,6 @@ public class Utils {
     }
 
     /**
-     * Checks for an available network connection.
-     */
-    public static boolean isNotConnected(Context context) {
-        boolean isConnected = AndroidUtils.isNetworkConnected(context);
-
-        // display offline toast
-        if (!isConnected) {
-            Toast.makeText(context, R.string.offline, Toast.LENGTH_LONG).show();
-        }
-
-        return !isConnected;
-    }
-
-    /**
      * Calls {@link Context#startActivity(Intent)} with the given {@link Intent}. Returns false if
      * no activity found to handle it. Can show an error toast on failure.
      *

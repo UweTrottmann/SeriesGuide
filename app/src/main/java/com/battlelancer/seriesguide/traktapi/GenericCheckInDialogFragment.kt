@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2013-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.traktapi
 
@@ -7,6 +7,7 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.withStarted
@@ -14,8 +15,8 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.DialogCheckinBinding
 import com.battlelancer.seriesguide.traktapi.TraktTask.TraktActionCompleteEvent
 import com.battlelancer.seriesguide.traktapi.TraktTask.TraktCheckInBlockedEvent
-import com.battlelancer.seriesguide.util.Utils
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.uwetrottmann.androidutils.AndroidUtils
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -122,8 +123,9 @@ abstract class GenericCheckInDialogFragment : AppCompatDialogFragment() {
         setProgressLock(true)
 
         // connected?
-        if (Utils.isNotConnected(requireContext())) {
+        if (!AndroidUtils.isNetworkConnected(requireContext())) {
             // no? abort
+            Toast.makeText(context, R.string.offline, Toast.LENGTH_LONG).show()
             setProgressLock(false)
             return
         }
