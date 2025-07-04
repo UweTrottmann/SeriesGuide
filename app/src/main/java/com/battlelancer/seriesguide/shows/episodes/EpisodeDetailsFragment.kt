@@ -649,16 +649,15 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
     }
 
     private fun shareEpisode() {
-        if (episodeTitle == null) {
-            return
-        }
+        val title = episodeTitle
+            ?: return
         val showOrNull = show
         val episodeOrNull = episode
         if (showOrNull?.tmdbId != null && episodeOrNull != null) {
             ShareUtils.shareEpisode(
                 requireActivity(), showOrNull.tmdbId,
                 episodeOrNull.season, episodeOrNull.number, showOrNull.title,
-                episodeTitle
+                title
             )
         }
     }

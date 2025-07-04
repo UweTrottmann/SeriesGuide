@@ -578,7 +578,7 @@ class ShowFragment() : Fragment() {
 
     private fun shareShow() {
         show?.also {
-            ShareUtils.shareShow(activity, it.tmdbId ?: 0, it.title)
+            ShareUtils.shareShow(requireActivity(), it.tmdbId ?: 0, it.title)
         }
     }
 

@@ -290,7 +290,7 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
         }
         // add calendar event
         ShareUtils.suggestCalendarEvent(
-            activity,
+            requireContext(),
             currentShow.title,
             TextTools.getNextEpisodeString(
                 requireContext(), currentEpisode.season,
@@ -352,9 +352,9 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
     private fun shareEpisode() {
         val currentShow = model.show.value ?: return
         runIfHasEpisode { episode ->
-            if (currentShow.tmdbId != null) {
+            if (currentShow.tmdbId != null && episode.title != null) {
                 ShareUtils.shareEpisode(
-                    activity, currentShow.tmdbId, episode.season,
+                    requireActivity(), currentShow.tmdbId, episode.season,
                     episode.number, currentShow.title, episode.title
                 )
             }

@@ -156,7 +156,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             buttonMovieShare.setOnClickListener {
                 movieDetails?.tmdbMovie()
                     ?.title
-                    ?.let { ShareUtils.shareMovie(activity, tmdbId, it) }
+                    ?.let { ShareUtils.shareMovie(requireActivity(), tmdbId, it) }
             }
             buttonMovieCalendar.setOnClickListener {
                 movieDetails?.tmdbMovie()?.also {
