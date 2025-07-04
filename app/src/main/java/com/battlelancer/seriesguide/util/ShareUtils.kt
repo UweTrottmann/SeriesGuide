@@ -65,7 +65,7 @@ object ShareUtils {
         message: String,
         @StringRes titleResId: Int
     ) {
-        val ib = ShareCompat.IntentBuilder.from(activity)
+        val ib = ShareCompat.IntentBuilder(activity)
         ib.setText(message)
         ib.setChooserTitle(titleResId)
         ib.setType("text/plain")
