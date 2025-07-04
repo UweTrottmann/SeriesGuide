@@ -22,7 +22,6 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.ui.BaseActivity
 import com.battlelancer.seriesguide.util.ThemeUtils
-import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.WebTools
 import com.uwetrottmann.seriesguide.billing.BillingViewModel
 import com.uwetrottmann.seriesguide.billing.BillingViewModelFactory
@@ -80,7 +79,7 @@ class BillingActivity : BaseActivity() {
             }
         }
         // Only use subscription state if unlock app is not installed.
-        if (Utils.hasXpass(this)) {
+        if (BillingTools.hasUnlockKey(this)) {
             setWaitMode(false)
             updateViewStates(hasUpgrade = true, unlockAppDetected = true)
         } else {
@@ -142,7 +141,7 @@ class BillingActivity : BaseActivity() {
         super.onStart()
 
         // Check if user has installed key app.
-        if (Utils.hasXpass(this)) {
+        if (BillingTools.hasUnlockKey(this)) {
             updateViewStates(hasUpgrade = true, unlockAppDetected = true)
         }
     }

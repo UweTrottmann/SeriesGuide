@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2013-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.appwidget
 
@@ -21,9 +21,9 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceGroup
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.settings.WidgetSettings
 import com.battlelancer.seriesguide.ui.BasePreferencesFragment
-import com.battlelancer.seriesguide.util.Utils
 
 /**
  * Shows settings fragment for a specific app widget, hosted inside a [ListWidgetPreferenceActivity]
@@ -158,10 +158,10 @@ class ListWidgetPreferenceFragment : BasePreferencesFragment() {
         bindPreferenceSummaryToValue(themePref)
 
         // Disable saving some prefs not available for non-supporters.
-        if (!Utils.hasAccessToX(requireContext())) {
+        if (!BillingTools.hasAccessToPaidFeatures(requireContext())) {
             val onDisablePreferenceChangeListener =
                 Preference.OnPreferenceChangeListener { _: Preference?, _: Any? ->
-                    Utils.advertiseSubscription(requireContext())
+                    BillingTools.advertiseSubscription(requireContext())
                     false
                 }
             typePref.apply {

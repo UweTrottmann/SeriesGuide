@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2021-2024 Uwe Trottmann
+// Copyright 2021-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.overview
 
@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
+import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
@@ -20,7 +21,6 @@ import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.RatingsTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
-import com.battlelancer.seriesguide.util.Utils
 import com.github.michaelbull.result.onSuccess
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -149,7 +149,7 @@ class ShowViewModel(application: Application) : AndroidViewModel(application) {
     /**
      * This currently does not auto-update, it maybe should at some point (add global LiveData).
      */
-    val hasAccessToX = MutableLiveData<Boolean>()
+    val hasAllFeatures = MutableLiveData<Boolean>()
 
     init {
         updateUserStatus()
@@ -161,10 +161,10 @@ class ShowViewModel(application: Application) : AndroidViewModel(application) {
 
     fun updateUserStatus() {
         viewModelScope.launch(Dispatchers.IO) {
-            val currentState = hasAccessToX.value
-            val newState = Utils.hasAccessToX(getApplication())
+            val currentState = hasAllFeatures.value
+            val newState = BillingTools.hasAccessToPaidFeatures(getApplication())
             if (currentState != newState) {
-                hasAccessToX.postValue(newState)
+                hasAllFeatures.postValue(newState)
             }
         }
     }

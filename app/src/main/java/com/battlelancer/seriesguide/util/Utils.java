@@ -11,15 +11,9 @@ import android.util.Log;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.billing.BillingActivity;
-import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
-import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.billing.localdb.GoldStatus;
-import com.uwetrottmann.seriesguide.billing.localdb.LocalBillingDb;
 
 /**
  * Various generic helper methods that do not fit other tool categories.
@@ -28,52 +22,6 @@ public class Utils {
 
     private Utils() {
         // prevent instantiation
-    }
-
-    /**
-     * Returns if the user should get access to paid features.
-     */
-    public static boolean hasAccessToX(Context context) {
-        // debug builds, installed X Pass key or subscription unlock all features
-        if (PackageTools.isAmazonVersion()) {
-            // Amazon version only supports all access as in-app purchase, so skip key check
-            return AdvancedSettings.getLastSupporterState(context);
-        } else {
-            if (hasXpass(context)) {
-                return true;
-            } else {
-                GoldStatus goldStatus = LocalBillingDb.getInstance(context).entitlementsDao()
-                        .getGoldStatus();
-                return goldStatus != null && goldStatus.getEntitled();
-            }
-        }
-    }
-
-    /**
-     * Returns if X pass is installed and a purchase check with Google Play is not necessary to
-     * determine access to paid features.
-     */
-    public static boolean hasXpass(Context context) {
-        // dev builds and the SeriesGuide X key app are not handled through the Play store
-        return BuildConfig.DEBUG || PackageTools.hasUnlockKeyInstalled(context);
-    }
-
-    /**
-     * Launches {@link com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity} or
-     * {@link BillingActivity} and notifies that something is only available with the subscription.
-     */
-    public static void advertiseSubscription(Context context) {
-        Toast.makeText(context, R.string.onlyx, Toast.LENGTH_SHORT).show();
-        context.startActivity(getBillingActivityIntent(context));
-    }
-
-    @NonNull
-    public static Intent getBillingActivityIntent(Context context) {
-        if (PackageTools.isAmazonVersion()) {
-            return new Intent(context, AmazonBillingActivity.class);
-        } else {
-            return new Intent(context, BillingActivity.class);
-        }
     }
 
     /**

@@ -8,6 +8,7 @@ import android.content.SharedPreferences
 import android.text.format.DateUtils
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
+import com.battlelancer.seriesguide.billing.BillingTools
 
 /**
  * Tools to periodically ask users to support the developer of this app.
@@ -27,7 +28,7 @@ object SupportTheDev {
 
         val lastDismissed = prefs.getLong(PREF_SUPPORT_DEV_LAST_DISMISSED, 0)
 
-        if (Utils.hasAccessToX(context)) {
+        if (BillingTools.hasAccessToPaidFeatures(context)) {
             // Reset to ask again after access expired
             if (lastDismissed != 0L) {
                 prefs.saveLastDismissed(0)

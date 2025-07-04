@@ -25,6 +25,7 @@ import androidx.preference.PreferenceManager
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
@@ -43,7 +44,6 @@ import com.battlelancer.seriesguide.util.ImageTools.tmdbOrTvdbPosterUrl
 import com.battlelancer.seriesguide.util.PendingIntentCompat
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
-import com.battlelancer.seriesguide.util.Utils
 import com.uwetrottmann.androidutils.AndroidUtils
 import org.threeten.bp.Instant
 import timber.log.Timber
@@ -95,7 +95,8 @@ class NotificationService(context: Context) {
         Timber.d("Waking up...")
 
         // remove notification service wake-up alarm if notifications are disabled or not unlocked
-        if (!NotificationSettings.isNotificationsEnabled(context) || !Utils.hasAccessToX(context)) {
+        if (!NotificationSettings.isNotificationsEnabled(context)
+            || !BillingTools.hasAccessToPaidFeatures(context)) {
             Timber.d("Notifications disabled, removing wake-up alarm")
             val am = context.getSystemService<AlarmManager>()
             am?.cancel(wakeUpPendingIntent)

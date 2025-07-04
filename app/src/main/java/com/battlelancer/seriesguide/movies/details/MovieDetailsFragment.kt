@@ -29,6 +29,7 @@ import androidx.loader.content.Loader
 import androidx.palette.graphics.Palette
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
+import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.comments.TraktCommentsActivity
 import com.battlelancer.seriesguide.databinding.FragmentMovieBinding
 import com.battlelancer.seriesguide.extensions.ActionsHelper
@@ -62,7 +63,6 @@ import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.TimeTools
-import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.WebTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
@@ -600,10 +600,10 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     ) : PopupMenu.OnMenuItemClickListener {
         override fun onMenuItemClick(item: MenuItem): Boolean {
             when (item.itemId) {
-                R.id.watched_popup_menu_watch_again -> if (Utils.hasAccessToX(context)) {
+                R.id.watched_popup_menu_watch_again -> if (BillingTools.hasAccessToPaidFeatures(context)) {
                     MovieTools.watchedMovie(context, movieTmdbId, plays, inWatchlist)
                 } else {
-                    Utils.advertiseSubscription(context)
+                    BillingTools.advertiseSubscription(context)
                 }
 
                 R.id.watched_popup_menu_set_not_watched -> MovieTools.unwatchedMovie(

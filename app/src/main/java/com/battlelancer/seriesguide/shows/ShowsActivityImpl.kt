@@ -14,6 +14,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.api.Intents
 import com.battlelancer.seriesguide.billing.BillingActivity
+import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.billing.amazon.AmazonHelper
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
@@ -31,7 +32,6 @@ import com.battlelancer.seriesguide.util.AppUpgrade
 import com.battlelancer.seriesguide.util.PackageTools
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ThemeUtils
-import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.WebTools
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
@@ -260,7 +260,7 @@ open class ShowsActivityImpl : BaseTopActivity() {
     }
 
     private fun checkGooglePlayPurchase() {
-        if (Utils.hasXpass(this)) {
+        if (BillingTools.hasUnlockKey(this)) {
             return
         }
         // Automatically starts checking all access status.

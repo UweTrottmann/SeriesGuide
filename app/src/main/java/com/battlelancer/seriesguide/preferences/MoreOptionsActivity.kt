@@ -15,6 +15,7 @@ import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.CloudSetupActivity
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
+import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.databinding.ActivityMoreOptionsBinding
 import com.battlelancer.seriesguide.dataliberation.BackupSettings
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
@@ -27,7 +28,6 @@ import com.battlelancer.seriesguide.ui.BaseTopActivity
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.util.PackageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
-import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.WebTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnClick
@@ -78,7 +78,7 @@ class MoreOptionsActivity : BaseTopActivity() {
 
         // Other items
         binding.buttonSupportTheApp.setOnClickListener {
-            startActivity(Utils.getBillingActivityIntent(this))
+            startActivity(BillingTools.getBillingActivityIntent(this))
         }
         binding.buttonMoreBackupRestore.setOnClickListener {
             startActivity(DataLiberationActivity.intent(this))
@@ -138,7 +138,7 @@ class MoreOptionsActivity : BaseTopActivity() {
         }
 
         // Update supporter status.
-        binding.textViewThankYouSupporters.isGone = !Utils.hasAccessToX(this)
+        binding.textViewThankYouSupporters.isGone = !BillingTools.hasAccessToPaidFeatures(this)
 
         // Show debug log button if debug mode is on.
         binding.buttonDebugLog.isGone = !AppSettings.isUserDebugModeEnabled(this)

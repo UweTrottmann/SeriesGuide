@@ -6,8 +6,8 @@ package com.battlelancer.seriesguide.backend.settings
 import android.content.Context
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
+import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.util.Utils
 
 object HexagonSettings {
 
@@ -38,7 +38,8 @@ object HexagonSettings {
      * If Cloud is enabled and Cloud specific actions should be performed or UI be shown.
      */
     fun isEnabled(context: Context): Boolean =
-        Utils.hasAccessToX(context) && PreferenceManager.getDefaultSharedPreferences(context)
+        BillingTools.hasAccessToPaidFeatures(context)
+                && PreferenceManager.getDefaultSharedPreferences(context)
             .getBoolean(KEY_ENABLED, false)
 
     /**

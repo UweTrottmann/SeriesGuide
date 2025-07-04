@@ -19,6 +19,7 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.SgApp.Companion.getServicesComponent
 import com.battlelancer.seriesguide.backend.CloudSetupActivity
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
+import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.dataliberation.BackupSettings
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
 import com.battlelancer.seriesguide.preferences.MoreOptionsActivity
@@ -26,7 +27,6 @@ import com.battlelancer.seriesguide.stats.StatsActivity
 import com.battlelancer.seriesguide.sync.AccountUtils
 import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.util.SupportTheDev
-import com.battlelancer.seriesguide.util.Utils
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
@@ -178,7 +178,7 @@ abstract class BaseTopActivity : BaseMessageActivity() {
 
     override fun onStart() {
         super.onStart()
-        if (Utils.hasAccessToX(this) && HexagonSettings.shouldValidateAccount(this)) {
+        if (BillingTools.hasAccessToPaidFeatures(this) && HexagonSettings.shouldValidateAccount(this)) {
             onShowCloudAccountWarning()
         }
         if (SupportTheDev.shouldAsk(this)) {
@@ -340,7 +340,7 @@ abstract class BaseTopActivity : BaseMessageActivity() {
                 SupportTheDev.saveDismissedRightNow(snackbar.context)
             }
         }).setAction(R.string.billing_action_subscribe) {
-            startActivity(Utils.getBillingActivityIntent(this))
+            startActivity(BillingTools.getBillingActivityIntent(this))
         }
         newSnackbar.show()
         this.snackbar = newSnackbar

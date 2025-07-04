@@ -24,6 +24,7 @@ import androidx.preference.SwitchPreferenceCompat
 import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
+import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.getSgAppContainer
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
@@ -119,11 +120,11 @@ class SgPreferencesFragment : BasePreferencesFragment(),
     }
 
     private fun updateRootSettings() {
-        val hasAccessToX = Utils.hasAccessToX(activity)
+        val hasAllFeatures = BillingTools.hasAccessToPaidFeatures(requireContext())
 
         // notifications link
         findPreference<Preference>(KEY_SCREEN_NOTIFICATIONS)!!.apply {
-            if (hasAccessToX && NotificationSettings.isNotificationsEnabled(requireContext())) {
+            if (hasAllFeatures && NotificationSettings.isNotificationsEnabled(requireContext())) {
                 summary = NotificationSettings.getLatestToIncludeTresholdValue(requireContext())
             } else {
                 setSummary(R.string.pref_notificationssummary)
@@ -179,8 +180,8 @@ class SgPreferencesFragment : BasePreferencesFragment(),
         updateThresholdSummary(findPreference(NotificationSettings.KEY_THRESHOLD)!!)
         updateSelectionSummary(findPreference(NotificationSettings.KEY_SELECTION)!!)
 
-        val isSupporter = Utils.hasAccessToX(requireContext())
-        if (isSupporter) {
+        val hasAllFeatures = BillingTools.hasAccessToPaidFeatures(requireContext())
+        if (hasAllFeatures) {
             // Disable advanced notification settings if notifications are disabled.
             enableAdvancedNotificationSettings(
                 NotificationSettings.isNotificationsEnabled(requireContext())
@@ -192,7 +193,7 @@ class SgPreferencesFragment : BasePreferencesFragment(),
         if (AndroidUtils.isAtLeastOreo) {
             // Android 8+: use system settings to manage notifications.
             val channelsPref: Preference = findPreference(NotificationSettings.KEY_CHANNELS)!!
-            if (isSupporter) {
+            if (hasAllFeatures) {
                 if (NotificationSettings.areNotificationsAllowed(requireContext())) {
                     channelsPref.setSummary(R.string.pref_notifications_settings_summary)
                 } else {
@@ -208,14 +209,14 @@ class SgPreferencesFragment : BasePreferencesFragment(),
             } else {
                 channelsPref.setSummary(R.string.onlyx)
                 channelsPref.setOnPreferenceClickListener {
-                    Utils.advertiseSubscription(requireContext())
+                    BillingTools.advertiseSubscription(requireContext())
                     true
                 }
             }
         } else {
             val enabledPref: SwitchPreferenceCompat =
                 findPreference(NotificationSettings.KEY_ENABLED)!!
-            if (isSupporter) {
+            if (hasAllFeatures) {
                 enabledPref.setSummary(R.string.pref_notificationssummary)
                 enabledPref.setOnPreferenceChangeListener { _, newValue ->
                     val isChecked = newValue as Boolean
@@ -227,7 +228,7 @@ class SgPreferencesFragment : BasePreferencesFragment(),
             } else {
                 enabledPref.setSummary(R.string.onlyx)
                 enabledPref.setOnPreferenceChangeListener { _, _ ->
-                    Utils.advertiseSubscription(requireContext())
+                    BillingTools.advertiseSubscription(requireContext())
                     // prevent value from getting saved
                     false
                 }

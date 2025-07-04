@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2013-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.settings
 
@@ -61,8 +61,8 @@ object NotificationSettings {
      * On Android 8+, returns if notifications are enabled in system settings.
      * On older versions, checks if the app preference is true.
      *
-     * Note that even if enabled, check [com.battlelancer.seriesguide.util.Utils.hasAccessToX] if
-     * the user is eligible to receive convenience notifications (for new episodes).
+     * Note that even if enabled, check [com.battlelancer.seriesguide.billing.BillingTools.hasAccessToPaidFeatures]
+     * if the user is eligible to receive convenience notifications (for new episodes).
      */
     fun isNotificationsEnabled(context: Context): Boolean {
         return if (AndroidUtils.isAtLeastOreo) {

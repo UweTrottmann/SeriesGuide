@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2018-2024 Uwe Trottmann
+// Copyright 2018-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.episodes
 
@@ -20,11 +20,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.databinding.FragmentEpisodesBinding
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
 import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
 import com.battlelancer.seriesguide.util.ThemeUtils
-import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.safeShow
 
 /**
@@ -199,8 +199,8 @@ class EpisodesFragment : Fragment() {
                         val itemId = item.itemId
                         if (itemId == R.id.watched_popup_menu_watch_again) {
                             // Multiple plays are for supporters only.
-                            if (!Utils.hasAccessToX(requireContext())) {
-                                Utils.advertiseSubscription(requireContext())
+                            if (!BillingTools.hasAccessToPaidFeatures(requireContext())) {
+                                BillingTools.advertiseSubscription(requireContext())
                             } else {
                                 onFlagEpisodeWatched(episodeId, true)
                             }
