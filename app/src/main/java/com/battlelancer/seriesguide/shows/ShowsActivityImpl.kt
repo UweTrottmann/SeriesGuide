@@ -28,6 +28,7 @@ import com.battlelancer.seriesguide.ui.BaseTopActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.TabStripAdapter
 import com.battlelancer.seriesguide.util.AppUpgrade
+import com.battlelancer.seriesguide.util.PackageTools
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
@@ -101,7 +102,7 @@ open class ShowsActivityImpl : BaseTopActivity() {
         setInitialTab(intent.extras)
 
         // query for in-app purchases
-        if (Utils.isAmazonVersion()) {
+        if (PackageTools.isAmazonVersion()) {
             // setup Amazon IAP
             AmazonHelper.create(this)
             AmazonHelper.iapManager.register()
@@ -299,7 +300,7 @@ open class ShowsActivityImpl : BaseTopActivity() {
         // prefs might have changed, update menus
         invalidateOptionsMenu()
 
-        if (Utils.isAmazonVersion()) {
+        if (PackageTools.isAmazonVersion()) {
             // update Amazon IAP
             AmazonHelper.iapManager.activate()
             AmazonHelper.iapManager.requestUserDataAndPurchaseUpdates()
@@ -313,7 +314,7 @@ open class ShowsActivityImpl : BaseTopActivity() {
     override fun onPause() {
         super.onPause()
 
-        if (Utils.isAmazonVersion()) {
+        if (PackageTools.isAmazonVersion()) {
             // pause Amazon IAP
             AmazonHelper.iapManager.deactivate()
         }

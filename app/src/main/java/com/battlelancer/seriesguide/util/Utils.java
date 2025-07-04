@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2011-2024 Uwe Trottmann
+// Copyright 2011-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.util;
 
@@ -35,7 +35,7 @@ public class Utils {
      */
     public static boolean hasAccessToX(Context context) {
         // debug builds, installed X Pass key or subscription unlock all features
-        if (isAmazonVersion()) {
+        if (PackageTools.isAmazonVersion()) {
             // Amazon version only supports all access as in-app purchase, so skip key check
             return AdvancedSettings.getLastSupporterState(context);
         } else {
@@ -67,17 +67,9 @@ public class Utils {
         context.startActivity(getBillingActivityIntent(context));
     }
 
-    /**
-     * Check if this is a build for the Amazon app store.
-     */
-    public static boolean isAmazonVersion() {
-        //noinspection ConstantConditions Changes depending on flavor build.
-        return "amazon".equals(BuildConfig.FLAVOR);
-    }
-
     @NonNull
     public static Intent getBillingActivityIntent(Context context) {
-        if (Utils.isAmazonVersion()) {
+        if (PackageTools.isAmazonVersion()) {
             return new Intent(context, AmazonBillingActivity.class);
         } else {
             return new Intent(context, BillingActivity.class);

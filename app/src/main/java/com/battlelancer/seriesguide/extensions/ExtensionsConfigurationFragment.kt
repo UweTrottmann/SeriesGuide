@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2014-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.extensions
 
@@ -27,6 +27,7 @@ import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.api.SeriesGuideExtension
 import com.battlelancer.seriesguide.databinding.FragmentExtensionsConfigurationBinding
+import com.battlelancer.seriesguide.util.PackageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.WebTools
@@ -255,7 +256,7 @@ class ExtensionsConfigurationFragment : Fragment() {
             menu.add(Menu.NONE, i + 2, Menu.NONE, extension.label)
         }
         // no third-party extensions supported on Amazon app store for now
-        if (!Utils.isAmazonVersion()) {
+        if (!PackageTools.isAmazonVersion()) {
             // link to get more extensions
             menu.add(Menu.NONE, 0, Menu.NONE, R.string.action_extensions_search)
         }
