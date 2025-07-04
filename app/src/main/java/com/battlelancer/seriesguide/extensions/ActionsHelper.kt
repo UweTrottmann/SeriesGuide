@@ -1,72 +1,66 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2014-2025 Uwe Trottmann
 
-package com.battlelancer.seriesguide.extensions;
+package com.battlelancer.seriesguide.extensions
 
-import android.app.ActivityOptions;
-import android.content.Intent;
-import android.content.res.Resources;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
-import android.widget.Button;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.TooltipCompat;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.api.Action;
-import com.battlelancer.seriesguide.util.Utils;
-import java.util.List;
-import timber.log.Timber;
+import android.content.Intent
+import android.content.res.Resources
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.widget.Button
+import androidx.appcompat.widget.TooltipCompat
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.api.Action
+import com.battlelancer.seriesguide.util.Utils
+import com.battlelancer.seriesguide.util.startActivityWithAnimation
+import timber.log.Timber
 
-public class ActionsHelper {
+object ActionsHelper {
 
     /**
-     * Replaces all child views of the given {@link android.view.ViewGroup} with a {@link
-     * android.widget.Button} per action plus one linking to {@link com.battlelancer.seriesguide.extensions.ExtensionsConfigurationActivity}.
-     * Sets up {@link android.view.View.OnClickListener} if {@link com.battlelancer.seriesguide.api.Action#getViewIntent()}
-     * of an  {@link com.battlelancer.seriesguide.api.Action} is not null.
+     * Replaces all child views of the given [android.view.ViewGroup] with a [android.widget.Button]
+     * per action plus one linking to [com.battlelancer.seriesguide.extensions.ExtensionsConfigurationActivity].
+     * Sets up [android.view.View.OnClickListener] if [com.battlelancer.seriesguide.api.Action.getViewIntent]
+     * of an [com.battlelancer.seriesguide.api.Action] is not null.
      */
-    public static void populateActions(@NonNull LayoutInflater layoutInflater,
-            @NonNull Resources.Theme theme, @Nullable ViewGroup actionsContainer,
-            @Nullable List<Action> data) {
+    fun populateActions(
+        layoutInflater: LayoutInflater,
+        theme: Resources.Theme,
+        actionsContainer: ViewGroup?,
+        data: List<Action>?
+    ) {
         if (actionsContainer == null) {
-            // nothing we can do, view is already gone
-            Timber.d("populateActions: action view container gone, aborting");
-            return;
+            // nothing to do, view is already gone
+            Timber.d("populateActions: action view container gone, aborting")
+            return
         }
-        actionsContainer.removeAllViews();
+        actionsContainer.removeAllViews()
 
         // add a view per action
-        if (data != null) {
-            for (Action action : data) {
-                Button actionView = (Button) layoutInflater.inflate(R.layout.item_action,
-                        actionsContainer, false);
-                actionView.setText(action.getTitle());
+        data?.forEach { action ->
+            val actionView = layoutInflater.inflate(R.layout.item_action, actionsContainer, false) as Button
+            actionView.text = action.title
 
-                TooltipCompat.setTooltipText(actionView, action.getTitle());
+            TooltipCompat.setTooltipText(actionView, action.title)
 
-                final Intent viewIntent = action.getViewIntent();
-                if (viewIntent != null) {
-                    viewIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
-                    actionView.setOnClickListener(
-                            v -> Utils.tryStartActivity(v.getContext(), viewIntent, true));
+            val viewIntent = action.viewIntent
+            if (viewIntent != null) {
+                viewIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
+                actionView.setOnClickListener { v ->
+                    Utils.tryStartActivity(v.context, viewIntent, true)
                 }
-
-                actionsContainer.addView(actionView);
             }
+
+            actionsContainer.addView(actionView)
         }
 
         // link to extensions configuration
-        Button configureView = (Button) layoutInflater.inflate(R.layout.item_action_add,
-                actionsContainer, false);
-        configureView.setText(R.string.action_extensions_configure);
-        configureView.setOnClickListener(v -> {
-            Intent intent = new Intent(v.getContext(), ExtensionsConfigurationActivity.class);
-            v.getContext()
-                    .startActivity(intent,
-                            ActivityOptions.makeScaleUpAnimation(v, 0, 0, v.getWidth(),
-                                    v.getHeight()).toBundle());
-        });
-        actionsContainer.addView(configureView);
+        val configureView = layoutInflater.inflate(R.layout.item_action_add, actionsContainer, false) as Button
+        configureView.setText(R.string.action_extensions_configure)
+        configureView.setOnClickListener { v ->
+            val intent = Intent(v.context, ExtensionsConfigurationActivity::class.java)
+            v.context.startActivityWithAnimation(intent, v)
+        }
+        actionsContainer.addView(configureView)
     }
 }
