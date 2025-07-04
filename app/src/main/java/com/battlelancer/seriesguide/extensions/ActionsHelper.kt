@@ -4,7 +4,6 @@
 package com.battlelancer.seriesguide.extensions
 
 import android.content.Intent
-import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
@@ -25,7 +24,6 @@ object ActionsHelper {
      */
     fun populateActions(
         layoutInflater: LayoutInflater,
-        theme: Resources.Theme,
         actionsContainer: ViewGroup?,
         data: List<Action>?
     ) {

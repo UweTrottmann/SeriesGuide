@@ -791,7 +791,7 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
                 }
                 ActionsHelper.populateActions(
                     requireActivity().layoutInflater,
-                    requireActivity().theme, binding.includeServices.containerEpisodeActions, data
+                    binding.includeServices.containerEpisodeActions, data
                 )
             }
 
@@ -799,7 +799,7 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
                 val binding = binding ?: return
                 ActionsHelper.populateActions(
                     requireActivity().layoutInflater,
-                    requireActivity().theme, binding.includeServices.containerEpisodeActions, null
+                    binding.includeServices.containerEpisodeActions, null
                 )
             }
         }

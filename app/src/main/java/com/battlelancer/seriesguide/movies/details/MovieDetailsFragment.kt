@@ -719,7 +719,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         Timber.d("loadMovieActions: received %s actions for %s", actions.size, tmdbId)
         requireActivity().run {
             ActionsHelper.populateActions(
-                layoutInflater, theme, binding.containerMovieActions, actions
+                layoutInflater, binding.containerMovieActions, actions
             )
         }
     }

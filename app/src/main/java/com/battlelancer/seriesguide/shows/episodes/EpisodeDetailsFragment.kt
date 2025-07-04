@@ -732,8 +732,7 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
                 bindingActions?.let {
                     ActionsHelper.populateActions(
                         requireActivity().layoutInflater,
-                        requireActivity().theme, it.containerEpisodeActions,
-                        data
+                        it.containerEpisodeActions, data
                     )
                 }
             }
