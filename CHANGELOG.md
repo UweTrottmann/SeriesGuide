@@ -10,6 +10,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2025.2
 
+* 🔨 Properly align status messages to the bottom navigation bar if using button navigation.
+
 ### 2025.2.4 - 2025-06-27 🧪
 
 * 🔨 Import and Auto Backup: do not crash if reading file name fails.

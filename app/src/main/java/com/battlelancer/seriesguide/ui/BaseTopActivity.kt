@@ -14,7 +14,6 @@ import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.annotation.IdRes
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.SgApp.Companion.getServicesComponent
@@ -235,7 +234,9 @@ abstract class BaseTopActivity : BaseMessageActivity() {
      * https://github.com/material-components/material-components-android/issues/3446
      */
     private fun Snackbar.doNotInsetForNavigationBarOrIme(): Snackbar {
-        ViewCompat.setOnApplyWindowInsetsListener(view) { _, _ -> WindowInsetsCompat.CONSUMED }
+        // Note: do not consume insets as the bottom navigation bar needs them when using
+        // button navigation.
+        ViewCompat.setOnApplyWindowInsetsListener(view) { _, insets -> insets }
         return this
     }
 
