@@ -1,5 +1,5 @@
-// Copyright 2019, 2020, 2021, 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2025 Uwe Trottmann
 
 package com.uwetrottmann.seriesguide.billing
 
@@ -13,6 +13,7 @@ import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.PendingPurchasesParams
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
@@ -57,7 +58,10 @@ class BillingRepository private constructor(
      */
     private val playStoreBillingClient: BillingClient by lazy {
         BillingClient.newBuilder(applicationContext)
-            .enablePendingPurchases()  // Not used for subscriptions.
+            .enablePendingPurchases(
+                // For now not supporting it (prepaid plans) for subscriptions
+                PendingPurchasesParams.newBuilder().enableOneTimeProducts().build()
+            )
             .setListener(purchasesUpdatedListener)
             .build()
     }
@@ -231,6 +235,7 @@ class BillingRepository private constructor(
                         BillingClient.BillingResponseCode.OK -> {
                             activateSubStatus(purchase)
                         }
+
                         else -> {
                             "acknowledgeNonConsumablePurchasesAsync failed. ${billingResult.responseCode}: ${billingResult.debugMessage}".let {
                                 Timber.e(it)
@@ -258,6 +263,7 @@ class BillingRepository private constructor(
                     SeriesGuideSku.X_SUB_ALL_ACCESS,
                     SeriesGuideSku.X_SUB_SUPPORTER,
                     SeriesGuideSku.X_SUB_SPONSOR -> true
+
                     else -> false
                 }
             }
@@ -275,6 +281,7 @@ class BillingRepository private constructor(
                 val purchasedProduct = when (supportedProductOrNull) {
                     SeriesGuideSku.X_SUB_SUPPORTER,
                     SeriesGuideSku.X_SUB_SPONSOR -> supportedProductOrNull
+
                     else -> {
                         // Map purchase state of the deprecated subscriptions and in-app purchase
                         // to the base tier subscription. This will allow upgrades.
@@ -360,6 +367,7 @@ class BillingRepository private constructor(
                     }
                 }
             }
+
             else -> {
                 "querySkuDetailsAsync failed. ${billingResult.responseCode}: ${billingResult.debugMessage}".let {
                     Timber.e(it)
@@ -482,6 +490,7 @@ class BillingRepository private constructor(
                     }
                 }
             }
+
             BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> {
                 // item already owned? call queryPurchasesAsync to verify and process all such items
                 Timber.d(billingResult.debugMessage)
@@ -489,9 +498,11 @@ class BillingRepository private constructor(
                     queryPurchasesAsync()
                 }
             }
+
             BillingClient.BillingResponseCode.USER_CANCELED -> {
                 Timber.i("onPurchasesUpdated: User canceled the purchase.")
             }
+
             else -> {
                 "onPurchasesUpdated failed. ${billingResult.responseCode}: ${billingResult.debugMessage}".let {
                     Timber.e(it)
@@ -517,6 +528,7 @@ class BillingRepository private constructor(
                         queryPurchasesAsync()
                     }
                 }
+
                 else -> {
                     Timber.d(billingResult.debugMessage)
                     errorEvent.postValue("${billingResult.responseCode}: ${billingResult.debugMessage}")
