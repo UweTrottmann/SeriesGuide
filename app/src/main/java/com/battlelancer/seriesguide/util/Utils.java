@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import com.battlelancer.seriesguide.R;
 
 /**
@@ -50,30 +49,6 @@ public class Utils {
         }
 
         return handled;
-    }
-
-    /**
-     * Similar to {@link #tryStartActivity(Context, Intent, boolean)}, but starting an activity for
-     * a result.
-     */
-    public static void tryStartActivityForResult(Fragment fragment, Intent intent,
-            int requestCode) {
-        Context context = fragment.getContext();
-
-        // Note: Android docs suggest to use resolveActivity,
-        // but won't work on Android 11+ due to package visibility changes.
-        // https://developer.android.com/about/versions/11/privacy/package-visibility
-        boolean handled;
-        try {
-            fragment.startActivityForResult(intent, requestCode);
-            handled = true;
-        } catch (ActivityNotFoundException ignored) {
-            handled = false;
-        }
-
-        if (!handled) {
-            Toast.makeText(context, R.string.app_not_available, Toast.LENGTH_LONG).show();
-        }
     }
 
     /**

@@ -4,6 +4,7 @@
 package com.battlelancer.seriesguide.preferences
 
 import android.app.backup.BackupManager
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -13,6 +14,7 @@ import android.os.Bundle
 import android.os.Vibrator
 import android.provider.Settings
 import android.text.TextUtils
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.edit
@@ -356,7 +358,17 @@ class SgPreferencesFragment : BasePreferencesFragment(),
                 if (TextUtils.isEmpty(existingValue)) null else Uri.parse(existingValue)
             )
 
-            Utils.tryStartActivityForResult(this, intent, REQUEST_CODE_RINGTONE)
+            // Note: Android docs suggest to use resolveActivity,
+            // but won't work on Android 11+ due to package visibility changes.
+            // https://developer.android.com/about/versions/11/privacy/package-visibility
+            try {
+                // Ringtone pref is only available before Android 8 (O), no need to migrate this
+                @Suppress("DEPRECATION")
+                startActivityForResult(intent, REQUEST_CODE_RINGTONE)
+            } catch (ignored: ActivityNotFoundException) {
+                Toast.makeText(context, R.string.app_not_available, Toast.LENGTH_LONG).show()
+            }
+
             return true
         }
         return super.onPreferenceTreeClick(preference)
