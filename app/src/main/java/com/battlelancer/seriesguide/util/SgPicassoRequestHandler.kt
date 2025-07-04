@@ -86,7 +86,7 @@ class SgPicassoRequestHandler(
         // BitmapHunter forces the network policy to OFFLINE
         // https://github.com/square/picasso/issues/2038
         // until fixed, re-set the network policy here also (like ServiceUtils.loadWithPicasso)
-        val networkPolicy = if (Utils.isAllowedLargeDataConnection(context)) {
+        val networkPolicy = if (ImageTools.isAllowedLargeDataConnection(context)) {
             0 // no policy
         } else {
             // avoid the network, hit the cache immediately + accept stale images.

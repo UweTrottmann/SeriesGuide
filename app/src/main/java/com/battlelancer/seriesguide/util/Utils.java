@@ -12,8 +12,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.settings.UpdateSettings;
-import com.uwetrottmann.androidutils.AndroidUtils;
 
 /**
  * Various generic helper methods that do not fit other tool categories.
@@ -22,25 +20,6 @@ public class Utils {
 
     private Utils() {
         // prevent instantiation
-    }
-
-    /**
-     * Returns false if there is an active, but metered connection and the user did not approve it
-     * for large data downloads (e.g. images).
-     */
-    static boolean isAllowedLargeDataConnection(Context context) {
-        boolean isConnected;
-        boolean largeDataOverWifiOnly = UpdateSettings.isLargeDataOverWifiOnly(context);
-
-        // check connection state
-        if (largeDataOverWifiOnly) {
-            // only allow large data downloads over non-metered connections
-            isConnected = AndroidUtils.isUnmeteredNetworkConnected(context);
-        } else {
-            isConnected = AndroidUtils.isNetworkConnected(context);
-        }
-
-        return isConnected;
     }
 
     /**
