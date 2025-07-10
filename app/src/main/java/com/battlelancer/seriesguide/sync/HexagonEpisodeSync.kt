@@ -154,7 +154,12 @@ class HexagonEpisodeSync(
      * @return Whether the download was successful and all changes were applied to the database.
      */
     fun downloadFlags(showId: Long, showTmdbId: Int, showTvdbId: Int?): Boolean {
-        Timber.d("downloadFlags: for show %s", showId)
+        Timber.d(
+            "downloadFlags: for show %s (TMDB ID %s, TVDB ID %s)",
+            showId,
+            showTmdbId,
+            showTvdbId
+        )
 
         var result = downloadFlagsByTmdbId(showId, showTmdbId)
         if (result.noData && showTvdbId != null) {
@@ -184,6 +189,7 @@ class HexagonEpisodeSync(
         companion object {
             @JvmField
             val FAILED = DownloadFlagsResult(success = false, noData = false, lastWatchedMs = null)
+
             @JvmField
             val NO_DATA = DownloadFlagsResult(success = true, noData = true, lastWatchedMs = null)
         }
