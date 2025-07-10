@@ -406,7 +406,7 @@ class HexagonEpisodeSync(
      * Get latest updatedAt value of all watched or skipped [episodes] or the given
      * [latestUpdatedAtCurrent].
      */
-    private fun getLatestUpdatedAt(
+    fun getLatestUpdatedAt(
         latestUpdatedAtCurrent: Long?,
         episodes: List<SgCloudEpisode>
     ): Long? {
