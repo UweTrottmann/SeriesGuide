@@ -10,6 +10,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.tools.AddShowTask.OnShowAddedEvent
 import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowResult
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync
@@ -142,7 +143,13 @@ class AddShowTask(
         }
 
         val services = SgApp.getServicesComponent(context)
-        val hexagonEpisodeSync = HexagonEpisodeSync(context, services.hexagonTools())
+        val database = SgRoomDatabase.getInstance(context)
+        val hexagonEpisodeSync = HexagonEpisodeSync(
+            context,
+            services.hexagonTools(),
+            database.sgEpisode2Helper(),
+            database.sgShow2Helper()
+        )
         val showTools = services.addUpdateShowTools()
 
         var result: Int

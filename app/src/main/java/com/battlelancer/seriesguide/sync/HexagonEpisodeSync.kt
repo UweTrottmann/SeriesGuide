@@ -7,9 +7,10 @@ import android.content.Context
 import android.text.TextUtils
 import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
-import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgEpisode2CollectedUpdateByNumber
+import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper
 import com.battlelancer.seriesguide.shows.database.SgEpisode2WatchedUpdateByNumber
+import com.battlelancer.seriesguide.shows.database.SgShow2Helper
 import com.battlelancer.seriesguide.shows.database.ShowLastWatchedInfo
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.util.Errors.Companion.logAndReportHexagon
@@ -23,7 +24,9 @@ import java.io.IOException
 
 class HexagonEpisodeSync(
     private val context: Context,
-    private val hexagonTools: HexagonTools
+    private val hexagonTools: HexagonTools,
+    private val dbEpisodeHelper: SgEpisode2Helper,
+    private val dbShowHelper: SgShow2Helper
 ) {
     /**
      * Downloads all episodes changed since the last time this was called and applies changes to
@@ -31,7 +34,6 @@ class HexagonEpisodeSync(
      */
     fun downloadChangedFlags(tmdbIdsToShowIds: Map<Int, Long>): Boolean {
         val currentTime = System.currentTimeMillis()
-        val database = SgRoomDatabase.getInstance(context)
         val lastSyncTime = DateTime(HexagonSettings.getLastEpisodesSyncTime(context))
         Timber.d("downloadChangedFlags: since %s", lastSyncTime)
 
@@ -108,18 +110,16 @@ class HexagonEpisodeSync(
             }
 
             // execute database update
-            database.sgEpisode2Helper()
-                .updateWatchedAndCollectedByNumber(watchedUpdate, collectedUpdate)
+            dbEpisodeHelper.updateWatchedAndCollectedByNumber(watchedUpdate, collectedUpdate)
         }
 
         if (showIdsToLastWatched.isNotEmpty()) {
             // Note: it is possible that this overwrites a more recently watched episode,
             // however, the next sync should contain this episode and restore it.
-            database.sgShow2Helper()
-                .updateLastWatchedMsIfLaterAndLastWatchedEpisodeId(
-                    showIdsToLastWatched,
-                    database.sgEpisode2Helper()
-                )
+            dbShowHelper.updateLastWatchedMsIfLaterAndLastWatchedEpisodeId(
+                showIdsToLastWatched,
+                dbEpisodeHelper
+            )
         }
 
         HexagonSettings.setLastEpisodesSyncTime(context, currentTime)
@@ -150,14 +150,12 @@ class HexagonEpisodeSync(
             result = downloadFlagsByTvdbId(showId, showTvdbId)
             if (result.success) {
                 // If had to use legacy show data, schedule episode upload (using TMDB IDs).
-                SgRoomDatabase.getInstance(context).sgShow2Helper()
-                    .setHexagonMergeNotCompleted(showId)
+                dbShowHelper.setHexagonMergeNotCompleted(showId)
             }
         }
 
         result.lastWatchedMs?.let {
-            SgRoomDatabase.getInstance(context).sgShow2Helper()
-                .updateLastWatchedMsIfLater(showId, it)
+            dbShowHelper.updateLastWatchedMsIfLater(showId, it)
         }
 
         return result.success
@@ -343,8 +341,7 @@ class HexagonEpisodeSync(
         }
 
         // execute database update
-        SgRoomDatabase.getInstance(context).sgEpisode2Helper()
-            .updateWatchedAndCollectedByNumber(watchedUpdate, collectedUpdate)
+        dbEpisodeHelper.updateWatchedAndCollectedByNumber(watchedUpdate, collectedUpdate)
     }
 
     private fun buildWatchedUpdate(
@@ -420,9 +417,7 @@ class HexagonEpisodeSync(
      */
     fun uploadFlags(showId: Long, showTmdbId: Int): Boolean {
         // query for watched, skipped or collected episodes
-        val episodesForSync = SgRoomDatabase.getInstance(context)
-            .sgEpisode2Helper()
-            .getEpisodesForHexagonSync(showId)
+        val episodesForSync = dbEpisodeHelper.getEpisodesForHexagonSync(showId)
         if (episodesForSync.isEmpty()) {
             Timber.d("uploadFlags: uploading none for show %d", showId)
             return true
