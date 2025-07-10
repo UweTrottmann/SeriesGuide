@@ -80,20 +80,13 @@ class HexagonEpisodeSync(
                 break
             }
 
-            // build batch of episode flag updates
-            val watchedUpdate = ArrayList<SgEpisode2WatchedUpdateByNumber>()
-            val collectedUpdate = ArrayList<SgEpisode2CollectedUpdateByNumber>()
+            // Record the latest last watched time and episode ID for a show by taking the one with
+            // the latest updatedAt time.
             for (episode in episodes) {
                 val showTmdbId: Int = episode.showTmdbId
                 val showId = tmdbIdsToShowIds[showTmdbId]
-                    ?: continue  // ignore, show not added on this device
+                    ?: continue // ignore, show not added in this library
 
-                buildWatchedUpdate(showId, episode)
-                    ?.let { watchedUpdate.add(it) }
-                buildCollectedUpdate(showId, episode)
-                    ?.let { collectedUpdate.add(it) }
-
-                // Record the latest last watched time and episode ID for a show
                 val watchedFlag: Int? = episode.watchedFlag
                 if (watchedFlag != null) {
                     if (!EpisodeTools.isUnwatched(watchedFlag)) {
@@ -109,8 +102,7 @@ class HexagonEpisodeSync(
                 }
             }
 
-            // execute database update
-            dbEpisodeHelper.updateWatchedAndCollectedByNumber(watchedUpdate, collectedUpdate)
+            buildAndApplyEpisodeUpdatesFromCloud(episodes, tmdbIdsToShowIds)
         }
 
         if (showIdsToLastWatched.isNotEmpty()) {
@@ -316,6 +308,30 @@ class HexagonEpisodeSync(
             .setUpdatedAt(updatedAt)
     }
 
+    fun buildAndApplyEpisodeUpdatesFromCloud(
+        episodes: List<SgCloudEpisode>,
+        tmdbIdsToShowIds: Map<Int, Long>
+    ) {
+        val watchedUpdate = ArrayList<SgEpisode2WatchedUpdateByNumber>()
+        val collectedUpdate = ArrayList<SgEpisode2CollectedUpdateByNumber>()
+        for (episode in episodes) {
+            val showTmdbId: Int = episode.showTmdbId
+            val showId = tmdbIdsToShowIds[showTmdbId]
+                ?: continue // ignore, show not added to this library
+
+            episode.watchedFlag
+                ?.let { buildWatchedUpdate(showId, episode, it) }
+                ?.let { watchedUpdate.add(it) }
+
+            episode.isInCollection
+                ?.let { buildCollectedUpdate(showId, episode, it) }
+                ?.let { collectedUpdate.add(it) }
+        }
+
+        // execute database update
+        dbEpisodeHelper.updateWatchedAndCollectedByNumber(watchedUpdate, collectedUpdate)
+    }
+
     /**
      * Note: skips updating watched flag for unwatched episodes and in collection state for
      * episodes not in collection.
@@ -324,20 +340,25 @@ class HexagonEpisodeSync(
         val watchedUpdate = ArrayList<SgEpisode2WatchedUpdateByNumber>()
         val collectedUpdate = ArrayList<SgEpisode2CollectedUpdateByNumber>()
         for (episode in episodes) {
-            // Optimization: episodes of an added show are all unwatched by default, no need to
+            // Optimization: episodes of a newly added show are all unwatched by default, no need to
             // update them as unwatched.
-            val watchedFlag: Int? = episode.watchedFlag
-            if (watchedFlag != null && !EpisodeTools.isUnwatched(watchedFlag)) {
-                buildWatchedUpdate(showId, episode)
-                    ?.let { watchedUpdate.add(it) }
-            }
-            // Optimization: episodes of an added show are all not in the collection by default, no
-            // need to update them as not in collection.
-            val inCollection: Boolean? = episode.isInCollection
-            if (inCollection != null && inCollection) {
-                buildCollectedUpdate(showId, episode)
-                    ?.let { collectedUpdate.add(it) }
-            }
+            episode.watchedFlag
+                ?.let {
+                    if (!EpisodeTools.isUnwatched(it)) {
+                        buildWatchedUpdate(showId, episode, it)
+                    } else null
+                }
+                ?.let { watchedUpdate.add(it) }
+
+            // Optimization: episodes of a newly added show are all not in the collection by
+            // default, no need to update them as not in collection.
+            episode.isInCollection
+                ?.let {
+                    if (it) {
+                        buildCollectedUpdate(showId, episode, it)
+                    } else null
+                }
+                ?.let { collectedUpdate.add(it) }
         }
 
         // execute database update
@@ -346,11 +367,9 @@ class HexagonEpisodeSync(
 
     private fun buildWatchedUpdate(
         showId: Long,
-        cloudEpisode: SgCloudEpisode
-    ): SgEpisode2WatchedUpdateByNumber? {
-        val watchedFlag: Int = cloudEpisode.watchedFlag
-            ?: return null // skip if episode has no watched flag
-
+        cloudEpisode: SgCloudEpisode,
+        watchedFlag: Int
+    ): SgEpisode2WatchedUpdateByNumber {
         val plays = if (EpisodeTools.isWatched(watchedFlag)) {
             // Note: plays may be null for legacy data. Protect against invalid data.
             val playsOrNull: Int? = cloudEpisode.plays
@@ -374,18 +393,14 @@ class HexagonEpisodeSync(
 
     private fun buildCollectedUpdate(
         showId: Long,
-        cloudEpisode: SgCloudEpisode
-    ): SgEpisode2CollectedUpdateByNumber? {
-        val inCollection: Boolean = cloudEpisode.isInCollection
-            ?: return null
-
-        return SgEpisode2CollectedUpdateByNumber(
-            showId = showId,
-            episodeNumber = cloudEpisode.episodeNumber,
-            seasonNumber = cloudEpisode.seasonNumber,
-            collected = inCollection
-        )
-    }
+        cloudEpisode: SgCloudEpisode,
+        inCollection: Boolean
+    ) = SgEpisode2CollectedUpdateByNumber(
+        showId = showId,
+        episodeNumber = cloudEpisode.episodeNumber,
+        seasonNumber = cloudEpisode.seasonNumber,
+        collected = inCollection
+    )
 
     /**
      * Get latest updatedAt value of all watched or skipped [episodes] or the given
