@@ -12,6 +12,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ### Next release
 
+* 🔧 App icon: remove shadow, increase background gradient to match style of many other apps.
 * 🔨 Properly align status messages to the bottom navigation bar if using button navigation.
 
 ### 2025.2.4 - 2025-06-27 🧪
