@@ -2,5 +2,6 @@
 <resources>
 
     <item name="ic_launcher" type="mipmap">@mipmap/ic_app</item>
+    <item name="ic_launcher_round" type="mipmap">@mipmap/ic_app_round</item>
 
 </resources>

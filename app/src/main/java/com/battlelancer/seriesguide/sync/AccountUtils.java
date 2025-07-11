@@ -9,14 +9,12 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Bundle;
 import com.battlelancer.seriesguide.BuildConfig;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import timber.log.Timber;
 
 public class AccountUtils {
-
-
-    private static final String ACCOUNT_NAME = "SeriesGuide Sync";
 
     private static final String ACCOUNT_TYPE = BuildConfig.APPLICATION_ID;
 
@@ -28,7 +26,7 @@ public class AccountUtils {
 
         // try to create a new account
         AccountManager manager = AccountManager.get(context);
-        Account account = new Account(ACCOUNT_NAME, ACCOUNT_TYPE);
+        Account account = new Account(context.getString(R.string.app_name), ACCOUNT_TYPE);
 
         boolean isNewAccountAdded;
         try {

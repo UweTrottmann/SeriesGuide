@@ -20,7 +20,7 @@
             android:layout_marginRight="@dimen/default_padding"
             android:layout_marginTop="@dimen/default_padding"
             android:contentDescription="@null"
-            tools:src="@mipmap/ic_app" />
+            tools:src="@mipmap/ic_launcher" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageViewSettings"
