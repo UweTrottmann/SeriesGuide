@@ -40,7 +40,7 @@
     <string name="action_select_region">Valitse alue</string>
     <string name="action_reset">Nollaa</string>
     <string name="action_save">Tallenna</string>
-    <string name="action_turn_on">Turn on</string>
+    <string name="action_turn_on">Ota käyttöön</string>
     <!-- Search -->
     <string name="clear_search_history">Tyhjennä hakuhistoria</string>
     <string name="search_hint">Hae jaksoja</string>
@@ -59,7 +59,7 @@
     <string name="api_failed">Epäonnistui: %s</string>
     <string name="copy_to_clipboard">Kopioitu leikepöydälle</string>
     <string name="not_migrated">Sarjaa ei ole siirretty TMDB:hen. Jotkut toiminnot, kuten Trakt- ja Cloud-synkronointi, eivät välttämättä toimi. Suosittelemme, että teet uuden haun ja poistat tämän sarjan. Napauta nähdäksesi tiedot.</string>
-    <string name="status_turned_on">Turned on</string>
+    <string name="status_turned_on">Käytössä</string>
     <!-- Sharing -->
     <string name="share">Jaa</string>
     <string name="share_show">Jaa ohjelma</string>
@@ -445,7 +445,7 @@
     <string name="theme_app_dark">Tumma</string>
     <string name="theme_app_light">Vaalea</string>
     <!-- Other advanced settings -->
-    <string name="pref_category_diagnostics">Diagnostics</string>
+    <string name="pref_category_diagnostics">Diagnostiikka</string>
     <string name="pref_autoupdatesummary">Synkronoi ja päivitä sisältö automaattisesti</string>
     <string name="pref_number">Lukumuoto</string>
     <string name="pref_offset">Manuaalinen ajansiirto</string>
@@ -453,19 +453,19 @@
     <string name="clear_cache">Tyhjennä välimuisti</string>
     <string name="clear_cache_summary">Poista välimuistissa olevat kuvat ja verkkovastaukset menemällä tallennustilan asetuksiin</string>
     <!-- Export and Import -->
-    <string name="title_export_import">Export and import</string>
-    <string name="title_export">Export</string>
-    <string name="title_import">Import</string>
-    <string name="action_export">Export to file</string>
+    <string name="title_export_import">Vie ja tuo</string>
+    <string name="title_export">Vienti</string>
+    <string name="title_import">Tuonti</string>
+    <string name="action_export">Vie tiedostoon</string>
     <string name="backup_full_dump">Sisällytä kuvaukset, tiedot, arvosanat</string>
-    <string name="status_successful">Successful</string>
-    <string name="status_failure">Failed</string>
-    <string name="status_failed_file_access">Can not find or access file</string>
+    <string name="status_successful">Onnistui</string>
+    <string name="status_failure">Epäonnistui</string>
+    <string name="status_failed_file_access">Tiedostoa ei löydy tai sitä ei voi avata</string>
     <string name="import_button">Palauta varmuuskopio</string>
-    <string name="action_view_import_documentation">View expected format</string>
+    <string name="action_view_import_documentation">Näytä vaadittu muoto</string>
     <string name="import_warning">Nykyiset ohjelmasi, listasi ja elokuvasi korvataan varmuuskopioilla</string>
-    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
-    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
+    <string name="import_cloud_warning">Vältä tätä, jos käytät SeriesGuide Cloudia tai Traktia</string>
+    <string name="import_cloud_warning_details">Synkronointi Cloudin tai Traktin kanssa voi korvata tuodut tiedot. Jos käytät SeriesGuide Cloudia, voit poistaa tilisi ennen tietojen tuomista ja luoda sen uudelleen myöhemmin ladataksesi vain tuodut tiedot.</string>
     <string name="no_file_selected">Tiedostoa ei ole valittu</string>
     <string name="action_select_file">Valitse tiedosto</string>
     <!-- Auto backup -->
@@ -565,7 +565,7 @@
     <!-- Support -->
     <string name="support_the_dev">Haluatko tukea kehittäjää?</string>
     <!-- Diagnostics -->
-    <string name="title_debug_log">Debug log</string>
-    <string name="status_saving_file_success">File saved</string>
-    <string name="status_saving_file_failed">Failed to save file</string>
+    <string name="title_debug_log">Virheenkorjausloki</string>
+    <string name="status_saving_file_success">Tiedosto tallennettu</string>
+    <string name="status_saving_file_failed">Tiedoston tallennus epäonnistui</string>
 </resources>

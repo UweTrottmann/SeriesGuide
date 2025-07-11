@@ -40,7 +40,7 @@
     <string name="action_select_region">Seleziona regione</string>
     <string name="action_reset">Reimposta</string>
     <string name="action_save">Salva</string>
-    <string name="action_turn_on">Turn on</string>
+    <string name="action_turn_on">Attiva</string>
     <!-- Search -->
     <string name="clear_search_history">Cancella la cronologia di ricerca</string>
     <string name="search_hint">Cerca episodi</string>
@@ -59,7 +59,7 @@
     <string name="api_failed">Fallito: %s</string>
     <string name="copy_to_clipboard">Copiato negli appunti</string>
     <string name="not_migrated">Serie non migrata a TMDB. Alcune azioni, come la sincronizzazione Trakt e Cloud, potrebbero non funzionare. Si consiglia di effettuare una nuova ricerca ed eliminare questa serie. Tocca per vedere i dettagli.</string>
-    <string name="status_turned_on">Turned on</string>
+    <string name="status_turned_on">Attivato</string>
     <!-- Sharing -->
     <string name="share">Condividi</string>
     <string name="share_show">Condividi la serie</string>
@@ -445,7 +445,7 @@
     <string name="theme_app_dark">Scuro</string>
     <string name="theme_app_light">Chiaro</string>
     <!-- Other advanced settings -->
-    <string name="pref_category_diagnostics">Diagnostics</string>
+    <string name="pref_category_diagnostics">Diagnostica</string>
     <string name="pref_autoupdatesummary">Sincronizza e aggiorna automaticamente i dati di SeriesGuide</string>
     <string name="pref_number">Formato numerico</string>
     <string name="pref_offset">Fuso orario manuale</string>
@@ -453,19 +453,19 @@
     <string name="clear_cache">Rimuovi le immagini nella cache</string>
     <string name="clear_cache_summary">Rimuovi tutte le immagini memorizzate nella cache dal tuo dispositivo</string>
     <!-- Export and Import -->
-    <string name="title_export_import">Export and import</string>
-    <string name="title_export">Export</string>
-    <string name="title_import">Import</string>
-    <string name="action_export">Export to file</string>
+    <string name="title_export_import">Esporta e importa</string>
+    <string name="title_export">Esporta</string>
+    <string name="title_import">Importa</string>
+    <string name="action_export">Esporta su file</string>
     <string name="backup_full_dump">Include descrizioni, dettagli e valutazioni</string>
-    <string name="status_successful">Successful</string>
-    <string name="status_failure">Failed</string>
-    <string name="status_failed_file_access">Can not find or access file</string>
+    <string name="status_successful">Riuscito</string>
+    <string name="status_failure">Fallito</string>
+    <string name="status_failed_file_access">Impossibile trovare o accedere al file</string>
     <string name="import_button">Ripristina</string>
-    <string name="action_view_import_documentation">View expected format</string>
+    <string name="action_view_import_documentation">Visualizza il formato previsto</string>
     <string name="import_warning">Le mie serie attuali, liste e film verranno sostituiti!</string>
-    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
-    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
+    <string name="import_cloud_warning">Non consigliato quando si utilizza SeriesGuide Cloud o Trakt</string>
+    <string name="import_cloud_warning_details">La sincronizzazione con Cloud o Trakt potrebbe sovrascrivere i dati importati. Con SeriesGuide Cloud, puoi eliminare il tuo account prima di importare i dati, quindi ricrearlo in seguito per caricare solo i dati importati.</string>
     <string name="no_file_selected">Nessun file selezionato</string>
     <string name="action_select_file">Seleziona file</string>
     <!-- Auto backup -->
@@ -565,7 +565,7 @@
     <!-- Support -->
     <string name="support_the_dev">Vuoi supportare lo sviluppatore?</string>
     <!-- Diagnostics -->
-    <string name="title_debug_log">Debug log</string>
-    <string name="status_saving_file_success">File saved</string>
-    <string name="status_saving_file_failed">Failed to save file</string>
+    <string name="title_debug_log">Log di debug</string>
+    <string name="status_saving_file_success">File salvato</string>
+    <string name="status_saving_file_failed">Impossibile salvare il file</string>
 </resources>

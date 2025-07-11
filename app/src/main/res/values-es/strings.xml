@@ -40,7 +40,7 @@
     <string name="action_select_region">Seleccionar región</string>
     <string name="action_reset">Restablecer</string>
     <string name="action_save">Guardar</string>
-    <string name="action_turn_on">Turn on</string>
+    <string name="action_turn_on">Activar</string>
     <!-- Search -->
     <string name="clear_search_history">Limpiar historial de búsqueda</string>
     <string name="search_hint">Buscar episodios</string>
@@ -59,7 +59,7 @@
     <string name="api_failed">Error: %s</string>
     <string name="copy_to_clipboard">Copiado al portapapeles</string>
     <string name="not_migrated">Serie no migrada a datos de TMDB. Algunas acciones incluyendo sincronización con Trakt y con la nube podrían no funcionar. Tal vez busque un reemplazo y elimine esta serie. Toque para ver los detalles.</string>
-    <string name="status_turned_on">Turned on</string>
+    <string name="status_turned_on">Activado</string>
     <!-- Sharing -->
     <string name="share">Compartir</string>
     <string name="share_show">Compartir serie</string>

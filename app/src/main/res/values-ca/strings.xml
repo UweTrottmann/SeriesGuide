@@ -40,7 +40,7 @@
     <string name="action_select_region">Selecciona la regió</string>
     <string name="action_reset">Restablir</string>
     <string name="action_save">Desar</string>
-    <string name="action_turn_on">Turn on</string>
+    <string name="action_turn_on">Activar</string>
     <!-- Search -->
     <string name="clear_search_history">Esborra l\'historial</string>
     <string name="search_hint">Cerca episodis</string>
@@ -59,7 +59,7 @@
     <string name="api_failed">Ha fallat: %s</string>
     <string name="copy_to_clipboard">copiat al porta-retalls</string>
     <string name="not_migrated">La sèrie no s\'ha migrat a TMDB. Algunes accions, incloses Trakt i Cloud sync podrien no funcionar. Busca un reemplaçament i esborra aquesta sèrie. Prem per veure detalls.</string>
-    <string name="status_turned_on">Turned on</string>
+    <string name="status_turned_on">Activat</string>
     <!-- Sharing -->
     <string name="share">Comparteix</string>
     <string name="share_show">Comparteix la serie</string>
@@ -445,7 +445,7 @@
     <string name="theme_app_dark">Fosc</string>
     <string name="theme_app_light">Clar</string>
     <!-- Other advanced settings -->
-    <string name="pref_category_diagnostics">Diagnostics</string>
+    <string name="pref_category_diagnostics">Diagnòstic</string>
     <string name="pref_autoupdatesummary">Sincronitzar i actualitzar les dades de SeriesGuide automàticament</string>
     <string name="pref_number">Format del número</string>
     <string name="pref_offset">Compensació horària manual</string>
@@ -453,19 +453,19 @@
     <string name="clear_cache">Buida la memòria cau d\'imatges</string>
     <string name="clear_cache_summary">Elimina totes les imatges que SeriesGuide hagi baixat i que encara siguin al dispositiu</string>
     <!-- Export and Import -->
-    <string name="title_export_import">Export and import</string>
-    <string name="title_export">Export</string>
-    <string name="title_import">Import</string>
-    <string name="action_export">Export to file</string>
+    <string name="title_export_import">Exportar i importar</string>
+    <string name="title_export">Exportar</string>
+    <string name="title_import">Importar</string>
+    <string name="action_export">Exportar a fitxer</string>
     <string name="backup_full_dump">Incloure descripcions, detalls, valoracions</string>
-    <string name="status_successful">Successful</string>
-    <string name="status_failure">Failed</string>
-    <string name="status_failed_file_access">Can not find or access file</string>
+    <string name="status_successful">Amb èxit</string>
+    <string name="status_failure">Ha fallat</string>
+    <string name="status_failed_file_access">No es pot trobar ni accedir al fitxer</string>
     <string name="import_button">Restaura</string>
-    <string name="action_view_import_documentation">View expected format</string>
+    <string name="action_view_import_documentation">Mostra el format esperat</string>
     <string name="import_warning">Entenc que les meves sèries, llistes i pel·lícules actuals seran reemplaçades</string>
-    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
-    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
+    <string name="import_cloud_warning">No es recomana quan s\'utilitza SeriesGuide Cloud o Trakt</string>
+    <string name="import_cloud_warning_details">La sincronització amb Cloud o Trakt pot sobreescriure les dades importades. Amb SeriesGuide Cloud, pots eliminar el teu compte abans d\'importar dades i després tornar-lo a crear per només carregar les dades importades.</string>
     <string name="no_file_selected">Cap arxiu seleccionat</string>
     <string name="action_select_file">Seleccionar arxiu</string>
     <!-- Auto backup -->
@@ -565,7 +565,7 @@
     <!-- Support -->
     <string name="support_the_dev">Donar suport a l´autor</string>
     <!-- Diagnostics -->
-    <string name="title_debug_log">Debug log</string>
-    <string name="status_saving_file_success">File saved</string>
-    <string name="status_saving_file_failed">Failed to save file</string>
+    <string name="title_debug_log">Registre de depuració</string>
+    <string name="status_saving_file_success">S\'ha desat el fitxer</string>
+    <string name="status_saving_file_failed">No ha pogut desar el fitxer</string>
 </resources>

@@ -40,7 +40,7 @@
     <string name="action_select_region">국가 선택</string>
     <string name="action_reset">재설정</string>
     <string name="action_save">저장</string>
-    <string name="action_turn_on">Turn on</string>
+    <string name="action_turn_on">꺼짐</string>
     <!-- Search -->
     <string name="clear_search_history">검색 기록 삭제</string>
     <string name="search_hint">에피소드 검색</string>
@@ -59,7 +59,7 @@
     <string name="api_failed">%s 실패</string>
     <string name="copy_to_clipboard">클립보드에 복사됨</string>
     <string name="not_migrated">이 프로그램은 TMDB 데이터로 이전되지 않았습니다. Trakt 및 클라우드 동기화와 같은 일부 기능이 작동하지 않을 수 있습니다. 대체 프로그램을 검색한 후 이 프로그램을 삭제하는 것이 좋습니다. 자세한 내용을 보려면 탭하세요.</string>
-    <string name="status_turned_on">Turned on</string>
+    <string name="status_turned_on">켜짐</string>
     <!-- Sharing -->
     <string name="share">공유</string>
     <string name="share_show">프로그램 공유</string>
@@ -236,7 +236,7 @@
     <string name="title_discover">찾기</string>
     <string name="title_popular">인기 항목</string>
     <string name="action_filter">필터</string>
-    <string name="filter_year">년</string>
+    <string name="filter_year">연도</string>
     <string name="filter_year_current">올해</string>
     <string name="filter_language">언어</string>
     <!-- Lists -->
@@ -303,7 +303,7 @@
     <string name="feature_comments">댓글 작성</string>
     <string name="feature_sync">동기화</string>
     <!-- Hexagon -->
-    <string name="hexagon_description">Series Guide Cloud를 사용하면 TV 프로그램, 목록, 영화를 백업하고 동기화할 수 있습니다.</string>
+    <string name="hexagon_description">SeriesGuide Cloud를 사용하면 TV 프로그램, 목록, 영화를 백업하고 동기화할 수 있습니다.</string>
     <string name="hexagon_warning_trakt">SeriesGuide Cloud에 로그인하면 trakt 기능 중 일부를 사용할 수 없습니다.</string>
     <string name="hexagon_signin">로그인</string>
     <string name="hexagon_signout">로그아웃</string>
@@ -339,8 +339,8 @@
     <string name="waitplease">잠시만 기다려주십시오</string>
     <string name="connect">연결</string>
     <string name="disconnect">연결 해제</string>
-    <string name="show_library">Trakt에서 프로그램 추가</string>
-    <string name="about_trakt">Trakt는 여러분이 시청한 TV 프로그램과 영화를 개록해줍니다.</string>
+    <string name="show_library">Trakt으로부터 프로그램 추가</string>
+    <string name="about_trakt">Trakt는 시청 중인 TV 프로그램과 영화를 기록하는 데 도움을 줍니다.</string>
     <string name="support_trakt">VIP 회원이 되어 Trakt를 지원</string>
     <string name="action_trakt_view_limits">사용 제한 확인</string>
     <!-- trakt ratings -->
@@ -403,7 +403,7 @@
     <string name="licences_and_credits">라이센스 및 크레딧</string>
     <!-- Sort -->
     <string name="sort">정렬 기준</string>
-    <string name="action_sort_ignore_articles">무시하기</string>
+    <string name="action_sort_ignore_articles">관사 제외</string>
     <!-- Sort orders -->
     <string name="sort_order_latest_first">최근 방영 순</string>
     <string name="sort_order_oldest_first">오래된 것부터</string>
@@ -431,7 +431,7 @@
     <string name="theme_app_dark">다크</string>
     <string name="theme_app_light">라이트</string>
     <!-- Other advanced settings -->
-    <string name="pref_category_diagnostics">Diagnostics</string>
+    <string name="pref_category_diagnostics">진단</string>
     <string name="pref_autoupdatesummary">자동으로 콘텐츠 동기화 및 업데이트</string>
     <string name="pref_number">에피소드 표시 형식</string>
     <string name="pref_offset">시차 수동 설정</string>
@@ -439,19 +439,19 @@
     <string name="clear_cache">이미지 캐쉬 삭제</string>
     <string name="clear_cache_summary">디바이스에 있는 모든 캐쉬된 이미지를 제거합니다</string>
     <!-- Export and Import -->
-    <string name="title_export_import">Export and import</string>
-    <string name="title_export">Export</string>
-    <string name="title_import">Import</string>
-    <string name="action_export">Export to file</string>
+    <string name="title_export_import">내보내기와 가져오기</string>
+    <string name="title_export">내보내기</string>
+    <string name="title_import">가져오기</string>
+    <string name="action_export">파일로 내보내기</string>
     <string name="backup_full_dump">설명, 세부 정보, 평가 내용 등이 포함됩니다.</string>
-    <string name="status_successful">Successful</string>
-    <string name="status_failure">Failed</string>
-    <string name="status_failed_file_access">Can not find or access file</string>
+    <string name="status_successful">성공</string>
+    <string name="status_failure">실패</string>
+    <string name="status_failed_file_access">파일을 찾을 수 없거나 접근할 수 없습니다</string>
     <string name="import_button">복원</string>
-    <string name="action_view_import_documentation">View expected format</string>
+    <string name="action_view_import_documentation">예제 보기</string>
     <string name="import_warning">현재 앱에 저장한 프로그램 목록이 교체됩니다</string>
-    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
-    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
+    <string name="import_cloud_warning">SeriesGuide Cloud나 Trakt를 사용할 때는 추천하지 않습니다</string>
+    <string name="import_cloud_warning_details">Cloud 또는 Trakt와 동기화하면 가져온 데이터가 덮어쓰여질 수 있습니다. SeriesGuide Cloud의 경우, 데이터를 가져오기 전에 계정을 삭제한 다음, 가져온 데이터만 업로드하기 위해 나중에 계정을 다시 만들 수 있습니다.</string>
     <string name="no_file_selected">선택된 파일을 찾을 수 없습니다.</string>
     <string name="action_select_file">파일 선택</string>
     <!-- Auto backup -->
@@ -551,7 +551,7 @@
     <!-- Support -->
     <string name="support_the_dev">개발자 후원하기</string>
     <!-- Diagnostics -->
-    <string name="title_debug_log">Debug log</string>
-    <string name="status_saving_file_success">File saved</string>
-    <string name="status_saving_file_failed">Failed to save file</string>
+    <string name="title_debug_log">디버그 로그</string>
+    <string name="status_saving_file_success">파일 저장됨</string>
+    <string name="status_saving_file_failed">파일 저장 실패</string>
 </resources>
