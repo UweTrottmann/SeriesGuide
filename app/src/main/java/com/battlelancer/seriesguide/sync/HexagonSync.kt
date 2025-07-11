@@ -77,12 +77,15 @@ class HexagonSync(
     }
 
     private fun syncEpisodes(tmdbIdsToShowIds: Map<Int, Long>): Boolean {
-        val helper = SgRoomDatabase.getInstance(context).sgShow2Helper()
-        val showsToMerge = helper.getHexagonMergeNotCompleted()
+        val database = SgRoomDatabase.getInstance(context)
+        val dbShowHelper = database.sgShow2Helper()
+        val showsToMerge = dbShowHelper.getHexagonMergeNotCompleted()
 
         // try merging episodes for them
         var mergeSuccessful = true
-        val episodeSync = HexagonEpisodeSync(context, hexagonTools)
+
+        val dbEpisodeHelper = database.sgEpisode2Helper()
+        val episodeSync = HexagonEpisodeSync(context, hexagonTools, dbEpisodeHelper, dbShowHelper)
         for (show in showsToMerge) {
             // abort if connection is lost
             if (!AndroidUtils.isNetworkConnected(context)) {
@@ -103,7 +106,7 @@ class HexagonSync(
             success = episodeSync.uploadFlags(show.id, showTmdbId)
             if (success) {
                 // set merge as completed
-                helper.setHexagonMergeCompleted(show.id)
+                dbShowHelper.setHexagonMergeCompleted(show.id)
             } else {
                 mergeSuccessful = false
             }

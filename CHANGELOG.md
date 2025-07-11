@@ -12,6 +12,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ### Next release
 
+* 🔨 Cloud: correctly download skipped episodes when adding a previously removed show again.
 * 🔧 App icon: remove shadow, increase background gradient to match style of many other apps.
 * 🔨 Properly align status messages to the bottom navigation bar if using button navigation.
 

@@ -552,25 +552,26 @@ interface SgEpisode2Helper {
     )
 
     @Transaction
-    fun updateWatchedAndCollectedByNumber(episodes: List<SgEpisode2UpdateByNumber>) {
-        for (episode in episodes) {
-            if (episode.watched != null && episode.plays != null) {
-                updateWatchedByNumber(
-                    episode.showId,
-                    episode.seasonNumber,
-                    episode.episodeNumber,
-                    episode.watched,
-                    episode.plays
-                )
-            }
-            if (episode.collected != null) {
-                updateCollectedByNumber(
-                    episode.showId,
-                    episode.seasonNumber,
-                    episode.episodeNumber,
-                    episode.collected
-                )
-            }
+    fun updateWatchedAndCollectedByNumber(
+        watched: List<SgEpisode2WatchedUpdateByNumber>,
+        collected: List<SgEpisode2CollectedUpdateByNumber>
+    ) {
+        for (episode in watched) {
+            updateWatchedByNumber(
+                episode.showId,
+                episode.seasonNumber,
+                episode.episodeNumber,
+                episode.watched,
+                episode.plays
+            )
+        }
+        for (episode in collected) {
+            updateCollectedByNumber(
+                episode.showId,
+                episode.seasonNumber,
+                episode.episodeNumber,
+                episode.collected
+            )
         }
     }
 
@@ -876,11 +877,17 @@ data class SgEpisode2TmdbIdUpdate(
     @ColumnInfo(name = TMDB_ID) val tmdbId: Int
 )
 
-data class SgEpisode2UpdateByNumber(
+data class SgEpisode2WatchedUpdateByNumber(
     val showId: Long,
     val episodeNumber: Int,
     val seasonNumber: Int,
-    val watched: Int?,
-    val plays: Int?,
-    val collected: Boolean?
+    val watched: Int,
+    val plays: Int
+)
+
+data class SgEpisode2CollectedUpdateByNumber(
+    val showId: Long,
+    val episodeNumber: Int,
+    val seasonNumber: Int,
+    val collected: Boolean
 )
