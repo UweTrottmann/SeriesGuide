@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2014-2024 Uwe Trottmann
+// Copyright 2014-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.billing.amazon
 
@@ -67,7 +67,7 @@ class AmazonBillingActivity : BaseActivity() {
 
         ViewTools.openUriOnClick(
             binding.textViewAmazonBillingMoreInfo,
-            getString(R.string.url_whypay)
+            getString(R.string.url_billing_info_and_help)
         )
         binding.progressBarAmazonBilling.visibility = View.VISIBLE
     }

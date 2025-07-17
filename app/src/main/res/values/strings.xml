@@ -612,8 +612,9 @@
     <string name="feedback_action_ok">OK, sure</string>
     <string name="feedback_action_nothanks">No, thanks</string>
 
-    <!-- Support -->
+    <!-- Support the dev -->
     <string name="support_the_dev">Support the developer?</string>
+    <string name="support_the_dev_other_ways">Other ways to support</string>
 
     <!-- Diagnostics -->
     <string name="title_debug_log">Debug log</string>

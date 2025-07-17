@@ -132,8 +132,11 @@ class BillingActivity : BaseActivity() {
             }
         }
 
-        findViewById<View>(R.id.textViewBillingMoreInfo).setOnClickListener {
-            WebTools.openInCustomTab(this, getString(R.string.url_whypay))
+        findViewById<View>(R.id.buttonBillingMoreOptions).setOnClickListener {
+            WebTools.openInCustomTab(this, getString(R.string.url_support_the_dev))
+        }
+        findViewById<View>(R.id.buttonBillingMoreInfo).setOnClickListener {
+            WebTools.openInCustomTab(this, getString(R.string.url_billing_info_and_help))
         }
     }
 
