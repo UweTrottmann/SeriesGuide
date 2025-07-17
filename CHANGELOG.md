@@ -10,7 +10,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2025.2
 
-### Next release
+### 2025.2.5 - 2025-07-17 🧪
 
 * 🔨 Cloud: correctly download skipped episodes when adding a previously removed show again.
 * 🔧 App icon: remove shadow, increase background gradient to match style of many other apps.
