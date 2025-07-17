@@ -562,8 +562,9 @@
     <string name="feedback_question_feedback">Mitteilen, was ich verbessern kann?</string>
     <string name="feedback_action_ok">OK, gern</string>
     <string name="feedback_action_nothanks">Nein, danke</string>
-    <!-- Support -->
+    <!-- Support the dev -->
     <string name="support_the_dev">Den Entwickler unterstützen?</string>
+    <string name="support_the_dev_other_ways">Andere Wege zu unterstützen</string>
     <!-- Diagnostics -->
     <string name="title_debug_log">Debug-Protokoll</string>
     <string name="status_saving_file_success">Datei gespeichert</string>

@@ -548,8 +548,9 @@
     <string name="feedback_question_feedback">告诉我如何改进？</string>
     <string name="feedback_action_ok">好的</string>
     <string name="feedback_action_nothanks">不，谢谢</string>
-    <!-- Support -->
+    <!-- Support the dev -->
     <string name="support_the_dev">支持一下开发者？</string>
+    <string name="support_the_dev_other_ways">Other ways to support</string>
     <!-- Diagnostics -->
     <string name="title_debug_log">Debug log</string>
     <string name="status_saving_file_success">File saved</string>

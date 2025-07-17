@@ -576,8 +576,9 @@
     <string name="feedback_question_feedback">Recite mi kako da to poboljšam?</string>
     <string name="feedback_action_ok">OK, naravno</string>
     <string name="feedback_action_nothanks">Ne, hvala</string>
-    <!-- Support -->
+    <!-- Support the dev -->
     <string name="support_the_dev">Podržite programera?</string>
+    <string name="support_the_dev_other_ways">Other ways to support</string>
     <!-- Diagnostics -->
     <string name="title_debug_log">Izveštaj o greškama</string>
     <string name="status_saving_file_success">Datoteka je sačuvana</string>

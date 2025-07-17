@@ -562,8 +562,9 @@
     <string name="feedback_question_feedback">Ĉu volas diri min kiel plibonigi ĝin?</string>
     <string name="feedback_action_ok">Bone, ja</string>
     <string name="feedback_action_nothanks">Ne, dankon</string>
-    <!-- Support -->
+    <!-- Support the dev -->
     <string name="support_the_dev">Ĉu volas subteni la programiston?</string>
+    <string name="support_the_dev_other_ways">Other ways to support</string>
     <!-- Diagnostics -->
     <string name="title_debug_log">Debug log</string>
     <string name="status_saving_file_success">File saved</string>

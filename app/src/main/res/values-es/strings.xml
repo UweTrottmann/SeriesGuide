@@ -563,8 +563,9 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="feedback_question_feedback">¿Me dirías como mejorarlo?</string>
     <string name="feedback_action_ok">OK, seguro</string>
     <string name="feedback_action_nothanks">No, gracias</string>
-    <!-- Support -->
+    <!-- Support the dev -->
     <string name="support_the_dev">¿Ayudar al desarrollador?</string>
+    <string name="support_the_dev_other_ways">Other ways to support</string>
     <!-- Diagnostics -->
     <string name="title_debug_log">Registro de depuración (log)</string>
     <string name="status_saving_file_success">Archivo guardado</string>
