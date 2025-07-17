@@ -72,10 +72,15 @@
                     android:text="@string/billing_unlock_detected"
                     android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold.Accent" />
 
+                <!--
+                overScrollMode="never": always matches height to display all items, so disable
+                overscroll effect.
+                -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewBilling"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:overScrollMode="never"
                     tools:itemCount="3"
                     tools:listitem="@layout/item_inventory" />
 
