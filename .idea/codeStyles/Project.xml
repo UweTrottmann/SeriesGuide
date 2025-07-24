@@ -33,6 +33,7 @@
       <option name="NAMES_COUNT_TO_USE_IMPORT_ON_DEMAND" value="999" />
       <option name="IMPORT_LAYOUT_TABLE">
         <value>
+          <package name="" withSubpackages="true" static="false" module="true" />
           <package name="" withSubpackages="true" static="true" />
           <emptyLine />
           <package name="" withSubpackages="true" static="false" />
@@ -75,6 +76,9 @@
     </codeStyleSettings>
     <codeStyleSettings language="JSON">
       <option name="KEEP_BLANK_LINES_IN_CODE" value="1" />
+      <indentOptions>
+        <option name="INDENT_SIZE" value="4" />
+      </indentOptions>
     </codeStyleSettings>
     <codeStyleSettings language="XML">
       <indentOptions>

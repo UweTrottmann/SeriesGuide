@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2011-2024 Uwe Trottmann
+// Copyright 2011-2025 Uwe Trottmann
 // Copyright 2013 Andrew Neal
 
 package com.battlelancer.seriesguide.shows.overview
@@ -69,12 +69,12 @@ import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.TimeTools
-import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.WebTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.battlelancer.seriesguide.util.safeShow
 import com.battlelancer.seriesguide.util.startActivityWithAnimation
+import com.battlelancer.seriesguide.util.tryStartActivity
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.Job
@@ -290,7 +290,7 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
         }
         // add calendar event
         ShareUtils.suggestCalendarEvent(
-            activity,
+            requireContext(),
             currentShow.title,
             TextTools.getNextEpisodeString(
                 requireContext(), currentEpisode.season,
@@ -352,9 +352,9 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
     private fun shareEpisode() {
         val currentShow = model.show.value ?: return
         runIfHasEpisode { episode ->
-            if (currentShow.tmdbId != null) {
+            if (currentShow.tmdbId != null && episode.title != null) {
                 ShareUtils.shareEpisode(
-                    activity, currentShow.tmdbId, episode.season,
+                    requireActivity(), currentShow.tmdbId, episode.season,
                     episode.number, currentShow.title, episode.title
                 )
             }
@@ -751,8 +751,7 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
                 }
 
                 override fun onFeedback() {
-                    if (Utils.tryStartActivity(
-                            requireContext(),
+                    if (requireActivity().tryStartActivity(
                             MoreOptionsActivity.getFeedbackEmailIntent(requireContext()),
                             true
                         )) {
@@ -791,7 +790,7 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
                 }
                 ActionsHelper.populateActions(
                     requireActivity().layoutInflater,
-                    requireActivity().theme, binding.includeServices.containerEpisodeActions, data
+                    binding.includeServices.containerEpisodeActions, data
                 )
             }
 
@@ -799,7 +798,7 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
                 val binding = binding ?: return
                 ActionsHelper.populateActions(
                     requireActivity().layoutInflater,
-                    requireActivity().theme, binding.includeServices.containerEpisodeActions, null
+                    binding.includeServices.containerEpisodeActions, null
                 )
             }
         }

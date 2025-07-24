@@ -76,17 +76,6 @@
             android:exported="true"
             tools:ignore="ExportedContentProvider" />
 
-        <!-- File sharing content provider -->
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_provider_paths" />
-        </provider>
-
         <!-- Launch activity -->
         <activity
             android:name="com.battlelancer.seriesguide.ui.ShowsActivity"
@@ -197,15 +186,14 @@
                 <category android:name="android.intent.category.NOTIFICATION_PREFERENCES" />
             </intent-filter>
         </activity>
+        <activity android:name=".diagnostics.DebugLogActivity" />
         <activity
             android:name="com.battlelancer.seriesguide.extensions.ExtensionsConfigurationActivity"
             android:exported="true"
             android:label="@string/action_extensions_configure" />
 
         <!-- Import and Export -->
-        <activity
-            android:name="com.battlelancer.seriesguide.dataliberation.DataLiberationActivity"
-            android:label="@string/backup" />
+        <activity android:name="com.battlelancer.seriesguide.dataliberation.DataLiberationActivity" />
 
         <!-- trakt -->
         <activity
@@ -295,11 +283,14 @@
             android:name="com.battlelancer.seriesguide.extensions.AmazonExtensionReceiver"
             android:description="@string/description_extension_amazon"
             android:exported="false"
-            android:icon="@mipmap/ic_app"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/extension_amazon"
             tools:ignore="ExportedReceiver">
             <intent-filter>
                 <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
+                <!-- Android 15 safer intents: explicitly declare subscribe and update events are supported. -->
+                <action android:name="com.battlelancer.seriesguide.api.action.SUBSCRIBE" />
+                <action android:name="com.battlelancer.seriesguide.api.action.UPDATE" />
             </intent-filter>
             <meta-data
                 android:name="settingsActivity"
@@ -314,11 +305,14 @@
             android:name="com.battlelancer.seriesguide.extensions.YouTubeExtensionReceiver"
             android:description="@string/description_extension_youtube"
             android:exported="false"
-            android:icon="@mipmap/ic_app"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/extension_youtube"
             tools:ignore="ExportedReceiver">
             <intent-filter>
                 <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
+                <!-- Android 15 safer intents: explicitly declare subscribe and update events are supported. -->
+                <action android:name="com.battlelancer.seriesguide.api.action.SUBSCRIBE" />
+                <action android:name="com.battlelancer.seriesguide.api.action.UPDATE" />
             </intent-filter>
         </receiver>
         <service
@@ -330,11 +324,14 @@
             android:name="com.battlelancer.seriesguide.extensions.VodsterExtensionReceiver"
             android:description="@string/extension_vodster_description"
             android:exported="false"
-            android:icon="@mipmap/ic_app"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/extension_vodster"
             tools:ignore="ExportedReceiver">
             <intent-filter>
                 <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
+                <!-- Android 15 safer intents: explicitly declare subscribe and update events are supported. -->
+                <action android:name="com.battlelancer.seriesguide.api.action.SUBSCRIBE" />
+                <action android:name="com.battlelancer.seriesguide.api.action.UPDATE" />
             </intent-filter>
         </receiver>
         <service
@@ -346,11 +343,14 @@
             android:name="com.battlelancer.seriesguide.extensions.WebSearchExtensionReceiver"
             android:description="@string/description_extension_web_search"
             android:exported="false"
-            android:icon="@mipmap/ic_app"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/web_search"
             tools:ignore="ExportedReceiver">
             <intent-filter>
                 <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
+                <!-- Android 15 safer intents: explicitly declare subscribe and update events are supported. -->
+                <action android:name="com.battlelancer.seriesguide.api.action.SUBSCRIBE" />
+                <action android:name="com.battlelancer.seriesguide.api.action.UPDATE" />
             </intent-filter>
         </receiver>
         <service

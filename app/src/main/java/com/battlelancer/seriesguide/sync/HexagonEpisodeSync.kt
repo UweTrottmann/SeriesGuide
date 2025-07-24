@@ -1,18 +1,17 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2017-2024 Uwe Trottmann
+// Copyright 2017-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.sync
 
 import android.content.Context
 import android.text.TextUtils
-import androidx.core.util.Pair
-import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
-import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.shows.database.SgEpisode2UpdateByNumber
+import com.battlelancer.seriesguide.shows.database.SgEpisode2CollectedUpdateByNumber
+import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper
+import com.battlelancer.seriesguide.shows.database.SgEpisode2WatchedUpdateByNumber
+import com.battlelancer.seriesguide.shows.database.SgShow2Helper
 import com.battlelancer.seriesguide.shows.database.ShowLastWatchedInfo
-import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.util.Errors.Companion.logAndReportHexagon
 import com.google.api.client.util.DateTime
@@ -25,7 +24,9 @@ import java.io.IOException
 
 class HexagonEpisodeSync(
     private val context: Context,
-    private val hexagonTools: HexagonTools
+    private val hexagonTools: HexagonTools,
+    private val dbEpisodeHelper: SgEpisode2Helper,
+    private val dbShowHelper: SgShow2Helper
 ) {
     /**
      * Downloads all episodes changed since the last time this was called and applies changes to
@@ -33,7 +34,6 @@ class HexagonEpisodeSync(
      */
     fun downloadChangedFlags(tmdbIdsToShowIds: Map<Int, Long>): Boolean {
         val currentTime = System.currentTimeMillis()
-        val database = SgRoomDatabase.getInstance(context)
         val lastSyncTime = DateTime(HexagonSettings.getLastEpisodesSyncTime(context))
         Timber.d("downloadChangedFlags: since %s", lastSyncTime)
 
@@ -80,29 +80,15 @@ class HexagonEpisodeSync(
                 break
             }
 
-            // build batch of episode flag updates
-            val batch = ArrayList<SgEpisode2UpdateByNumber>()
+            // Record the latest last watched time and episode ID for a show by taking the one with
+            // the latest updatedAt time.
             for (episode in episodes) {
-                val showTmdbId = episode.showTmdbId
+                val showTmdbId: Int = episode.showTmdbId
                 val showId = tmdbIdsToShowIds[showTmdbId]
-                    ?: continue  // ignore, show not added on this device
+                    ?: continue // ignore, show not added in this library
 
-                val watchedFlag = episode.watchedFlag
-                var playsOrNull: Int? = null
+                val watchedFlag: Int? = episode.watchedFlag
                 if (watchedFlag != null) {
-                    playsOrNull = if (watchedFlag == EpisodeFlags.WATCHED) {
-                        // Watched.
-                        // Note: plays may be null for legacy data. Protect against invalid data.
-                        if (episode.plays != null && episode.plays >= 1) {
-                            episode.plays
-                        } else {
-                            1
-                        }
-                    } else {
-                        0 // Skipped or not watched.
-                    }
-
-                    // record the latest last watched time and episode ID for a show
                     if (!EpisodeTools.isUnwatched(watchedFlag)) {
                         val lastWatchedInfo = showIdsToLastWatched[showId]
                         // episodes returned in reverse chronological order, so just get the first time
@@ -114,37 +100,21 @@ class HexagonEpisodeSync(
                         }
                     }
                 }
-
-                batch.add(
-                    SgEpisode2UpdateByNumber(
-                        showId,
-                        episode.episodeNumber,
-                        episode.seasonNumber,
-                        watchedFlag,
-                        playsOrNull,
-                        episode.isInCollection
-                    )
-                )
             }
 
-            // execute database update
-            database.sgEpisode2Helper().updateWatchedAndCollectedByNumber(batch)
+            buildAndApplyEpisodeUpdatesFromCloud(episodes, tmdbIdsToShowIds)
         }
 
         if (showIdsToLastWatched.isNotEmpty()) {
             // Note: it is possible that this overwrites a more recently watched episode,
             // however, the next sync should contain this episode and restore it.
-            database.sgShow2Helper()
-                .updateLastWatchedMsIfLaterAndLastWatchedEpisodeId(
-                    showIdsToLastWatched,
-                    database.sgEpisode2Helper()
-                )
+            dbShowHelper.updateLastWatchedMsIfLaterAndLastWatchedEpisodeId(
+                showIdsToLastWatched,
+                dbEpisodeHelper
+            )
         }
 
-        // store new last sync time
-        PreferenceManager.getDefaultSharedPreferences(context).edit()
-            .putLong(HexagonSettings.KEY_LAST_SYNC_EPISODES, currentTime)
-            .apply()
+        HexagonSettings.setLastEpisodesSyncTime(context, currentTime)
 
         return true
     }
@@ -158,7 +128,12 @@ class HexagonEpisodeSync(
      * @return Whether the download was successful and all changes were applied to the database.
      */
     fun downloadFlags(showId: Long, showTmdbId: Int, showTvdbId: Int?): Boolean {
-        Timber.d("downloadFlags: for show %s", showId)
+        Timber.d(
+            "downloadFlags: for show %s (TMDB ID %s, TVDB ID %s)",
+            showId,
+            showTmdbId,
+            showTvdbId
+        )
 
         var result = downloadFlagsByTmdbId(showId, showTmdbId)
         if (result.noData && showTvdbId != null) {
@@ -167,14 +142,12 @@ class HexagonEpisodeSync(
             result = downloadFlagsByTvdbId(showId, showTvdbId)
             if (result.success) {
                 // If had to use legacy show data, schedule episode upload (using TMDB IDs).
-                SgRoomDatabase.getInstance(context).sgShow2Helper()
-                    .setHexagonMergeNotCompleted(showId)
+                dbShowHelper.setHexagonMergeNotCompleted(showId)
             }
         }
 
         result.lastWatchedMs?.let {
-            SgRoomDatabase.getInstance(context).sgShow2Helper()
-                .updateLastWatchedMsIfLater(showId, it)
+            dbShowHelper.updateLastWatchedMsIfLater(showId, it)
         }
 
         return result.success
@@ -188,6 +161,7 @@ class HexagonEpisodeSync(
         companion object {
             @JvmField
             val FAILED = DownloadFlagsResult(success = false, noData = false, lastWatchedMs = null)
+
             @JvmField
             val NO_DATA = DownloadFlagsResult(success = true, noData = true, lastWatchedMs = null)
         }
@@ -252,35 +226,17 @@ class HexagonEpisodeSync(
             }
             onFirstPage = false
 
-            // build batch of episode flag updates
-            val batch = ArrayList<SgEpisode2UpdateByNumber>()
-            for (episode in episodes) {
-                val update = buildSgEpisodeUpdate(
-                    episode.watchedFlag,
-                    episode.plays,
-                    episode.isInCollection,
-                    episode.updatedAt,
-                    episode.episodeNumber,
-                    episode.seasonNumber,
-                    showId,
-                    lastWatchedMs
-                )
-                if (update != null) {
-                    batch.add(update.first)
-                    lastWatchedMs = update.second
-                }
-            }
+            // Record last watched time by taking latest updatedAt of all watched/skipped episodes
+            lastWatchedMs = getLatestUpdatedAt(lastWatchedMs, episodes)
 
-            // execute database update
-            SgRoomDatabase.getInstance(context).sgEpisode2Helper()
-                .updateWatchedAndCollectedByNumber(batch)
+            buildAndApplyEpisodeValuesFromCloud(showId, episodes)
         }
 
         return DownloadFlagsResult(success = true, noData = false, lastWatchedMs = lastWatchedMs)
     }
 
     private fun downloadFlagsByTvdbId(showId: Long, showTvdbId: Int): DownloadFlagsResult {
-        var episodes: List<Episode>?
+        var legacyEpisodes: List<Episode>?
         var hasMoreEpisodes = true
         var cursor: String? = null
 
@@ -309,7 +265,7 @@ class HexagonEpisodeSync(
                 val response = request.execute()
                     ?: return DownloadFlagsResult.FAILED
 
-                episodes = response.episodes
+                legacyEpisodes = response.episodes
 
                 // check for more items
                 if (response.cursor != null) {
@@ -326,88 +282,147 @@ class HexagonEpisodeSync(
                 return DownloadFlagsResult.FAILED
             }
 
-            if (episodes.isNullOrEmpty()) {
+            if (legacyEpisodes.isNullOrEmpty()) {
                 break // no (more) updates to apply
             }
 
-            // build batch of episode flag updates
-            val batch = ArrayList<SgEpisode2UpdateByNumber>()
-            for (episode in episodes) {
-                val update = buildSgEpisodeUpdate(
-                    episode.watchedFlag,
-                    episode.plays,
-                    episode.isInCollection,
-                    episode.updatedAt,
-                    episode.episodeNumber,
-                    episode.seasonNumber,
-                    showId,
-                    lastWatchedMs
-                )
-                if (update != null) {
-                    batch.add(update.first)
-                    lastWatchedMs = update.second
-                }
-            }
+            val episodes = legacyEpisodes.map { it.toCloudEpisode() }
 
-            // execute database update
-            SgRoomDatabase.getInstance(context).sgEpisode2Helper()
-                .updateWatchedAndCollectedByNumber(batch)
+            // Record last watched time by taking latest updatedAt of all watched/skipped episodes
+            lastWatchedMs = getLatestUpdatedAt(lastWatchedMs, episodes)
+
+            buildAndApplyEpisodeValuesFromCloud(showId, episodes)
         }
 
         return DownloadFlagsResult(success = true, noData = false, lastWatchedMs = lastWatchedMs)
     }
 
-    private fun buildSgEpisodeUpdate(
-        watchedFlag: Int?,
-        plays: Int?,
-        isInCollection: Boolean?,
-        updatedAt: DateTime?,
-        episodeNumber: Int,
-        seasonNumber: Int,
+    private fun Episode.toCloudEpisode(): SgCloudEpisode {
+        return SgCloudEpisode()
+            .setEpisodeNumber(episodeNumber)
+            .setSeasonNumber(seasonNumber)
+            .setWatchedFlag(watchedFlag)
+            .setPlays(plays)
+            .setIsInCollection(isInCollection)
+            .setCreatedAt(createdAt)
+            .setUpdatedAt(updatedAt)
+    }
+
+    fun buildAndApplyEpisodeUpdatesFromCloud(
+        episodes: List<SgCloudEpisode>,
+        tmdbIdsToShowIds: Map<Int, Long>
+    ) {
+        val watchedUpdate = ArrayList<SgEpisode2WatchedUpdateByNumber>()
+        val collectedUpdate = ArrayList<SgEpisode2CollectedUpdateByNumber>()
+        for (episode in episodes) {
+            val showTmdbId: Int = episode.showTmdbId
+            val showId = tmdbIdsToShowIds[showTmdbId]
+                ?: continue // ignore, show not added to this library
+
+            episode.watchedFlag
+                ?.let { buildWatchedUpdate(showId, episode, it) }
+                ?.let { watchedUpdate.add(it) }
+
+            episode.isInCollection
+                ?.let { buildCollectedUpdate(showId, episode, it) }
+                ?.let { collectedUpdate.add(it) }
+        }
+
+        // execute database update
+        dbEpisodeHelper.updateWatchedAndCollectedByNumber(watchedUpdate, collectedUpdate)
+    }
+
+    /**
+     * Note: skips updating watched flag for unwatched episodes and in collection state for
+     * episodes not in collection.
+     */
+    fun buildAndApplyEpisodeValuesFromCloud(showId: Long, episodes: List<SgCloudEpisode>) {
+        val watchedUpdate = ArrayList<SgEpisode2WatchedUpdateByNumber>()
+        val collectedUpdate = ArrayList<SgEpisode2CollectedUpdateByNumber>()
+        for (episode in episodes) {
+            // Optimization: episodes of a newly added show are all unwatched by default, no need to
+            // update them as unwatched.
+            episode.watchedFlag
+                ?.let {
+                    if (!EpisodeTools.isUnwatched(it)) {
+                        buildWatchedUpdate(showId, episode, it)
+                    } else null
+                }
+                ?.let { watchedUpdate.add(it) }
+
+            // Optimization: episodes of a newly added show are all not in the collection by
+            // default, no need to update them as not in collection.
+            episode.isInCollection
+                ?.let {
+                    if (it) {
+                        buildCollectedUpdate(showId, episode, it)
+                    } else null
+                }
+                ?.let { collectedUpdate.add(it) }
+        }
+
+        // execute database update
+        dbEpisodeHelper.updateWatchedAndCollectedByNumber(watchedUpdate, collectedUpdate)
+    }
+
+    private fun buildWatchedUpdate(
         showId: Long,
-        lastWatchedMs: Long?
-    ): Pair<SgEpisode2UpdateByNumber, Long?>? {
-        var lastWatchedMsUpdated = lastWatchedMs
-        var watchedFlagOrNull: Int? = null
-        var playsOrNull: Int? = null
-        if (watchedFlag != null && watchedFlag != EpisodeFlags.UNWATCHED) {
-            // Watched or skipped.
-            watchedFlagOrNull = watchedFlag
-            if (watchedFlag == EpisodeFlags.WATCHED) {
-                // Note: plays may be null for legacy data. Protect against invalid data.
-                playsOrNull = if (plays != null && plays >= 1) {
-                    plays
-                } else {
-                    1
-                }
+        cloudEpisode: SgCloudEpisode,
+        watchedFlag: Int
+    ): SgEpisode2WatchedUpdateByNumber {
+        val plays = if (EpisodeTools.isWatched(watchedFlag)) {
+            // Note: plays may be null for legacy data. Protect against invalid data.
+            val playsOrNull: Int? = cloudEpisode.plays
+            if (playsOrNull != null && playsOrNull >= 1) {
+                playsOrNull
+            } else {
+                1
             }
-            // record last watched time by taking latest updatedAt of watched/skipped
-            if (updatedAt != null) {
-                val lastWatchedMsNew = updatedAt.value
-                if (lastWatchedMsUpdated == null || lastWatchedMsUpdated < lastWatchedMsNew) {
-                    lastWatchedMsUpdated = lastWatchedMsNew
-                }
-            }
+        } else {
+            0 // Skipped or not watched
         }
 
-        val inCollection = isInCollection != null && isInCollection
-
-        if (watchedFlag == null && !inCollection) {
-            // skip if episode has no watched flag and is not in collection
-            return null
-        }
-
-        return Pair(
-            SgEpisode2UpdateByNumber(
-                showId,
-                episodeNumber,
-                seasonNumber,
-                watchedFlagOrNull,
-                playsOrNull,
-                isInCollection
-            ),
-            lastWatchedMsUpdated
+        return SgEpisode2WatchedUpdateByNumber(
+            showId = showId,
+            episodeNumber = cloudEpisode.episodeNumber,
+            seasonNumber = cloudEpisode.seasonNumber,
+            watched = watchedFlag,
+            plays = plays
         )
+    }
+
+    private fun buildCollectedUpdate(
+        showId: Long,
+        cloudEpisode: SgCloudEpisode,
+        inCollection: Boolean
+    ) = SgEpisode2CollectedUpdateByNumber(
+        showId = showId,
+        episodeNumber = cloudEpisode.episodeNumber,
+        seasonNumber = cloudEpisode.seasonNumber,
+        collected = inCollection
+    )
+
+    /**
+     * Get latest updatedAt value of all watched or skipped [episodes] or the given
+     * [latestUpdatedAtCurrent].
+     */
+    fun getLatestUpdatedAt(
+        latestUpdatedAtCurrent: Long?,
+        episodes: List<SgCloudEpisode>
+    ): Long? {
+        var latestUpdatedAt = latestUpdatedAtCurrent
+        for (episode in episodes) {
+            val updatedAt = episode.updatedAt?.value ?: continue
+            val watchedFlag = episode.watchedFlag ?: continue
+
+            // Only check watched or skipped
+            if (EpisodeTools.isUnwatched(watchedFlag)) continue
+
+            if (latestUpdatedAt == null || latestUpdatedAt < updatedAt) {
+                latestUpdatedAt = updatedAt
+            }
+        }
+        return latestUpdatedAt
     }
 
     /**
@@ -417,9 +432,7 @@ class HexagonEpisodeSync(
      */
     fun uploadFlags(showId: Long, showTmdbId: Int): Boolean {
         // query for watched, skipped or collected episodes
-        val episodesForSync = SgRoomDatabase.getInstance(context)
-            .sgEpisode2Helper()
-            .getEpisodesForHexagonSync(showId)
+        val episodesForSync = dbEpisodeHelper.getEpisodesForHexagonSync(showId)
         if (episodesForSync.isEmpty()) {
             Timber.d("uploadFlags: uploading none for show %d", showId)
             return true

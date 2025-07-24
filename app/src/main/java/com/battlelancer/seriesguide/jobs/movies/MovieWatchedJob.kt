@@ -18,7 +18,7 @@ class MovieWatchedJob(
     if (isWatched) currentPlays + 1 else 0
 ) {
 
-    override fun applyDatabaseUpdate(context: Context, movieTmdbId: Int): Boolean {
+    override suspend fun applyDatabaseUpdate(context: Context, movieTmdbId: Int): Boolean {
         return if (isWatched) {
             val movieTools = SgApp.getServicesComponent(context).movieTools()
             movieTools.addToList(movieTmdbId, MovieTools.Lists.WATCHED)

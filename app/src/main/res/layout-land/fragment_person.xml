@@ -1,3 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Copyright 2014-2025 Uwe Trottmann -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -64,7 +69,7 @@
 
             <TextView
                 android:id="@+id/textViewPersonBiographyHeader"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/large_padding"
                 android:layout_marginEnd="@dimen/keyline"
@@ -75,12 +80,22 @@
             <TextView
                 android:id="@+id/textViewPersonBiography"
                 style="@style/Widget.SeriesGuide.TextView.Body"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/large_padding"
                 android:layout_marginEnd="@dimen/keyline"
                 android:textAppearance="@style/TextAppearance.SeriesGuide.Body1"
                 tools:text="Kiefer Sutherland  (born 21 December 1966) is a British-Canadian actor" />
+
+            <TextView
+                android:id="@+id/textViewPersonHeaderMoreInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/large_padding"
+                android:layout_marginTop="@dimen/large_padding"
+                android:layout_marginEnd="@dimen/keyline"
+                android:text="@string/more_information"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Headline6" />
 
             <Button
                 android:id="@+id/buttonPersonTmdbLink"
@@ -89,7 +104,7 @@
                 android:layout_height="48dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/tmdb"
-                app:icon="@drawable/ic_link_black_24dp"
+                app:icon="@drawable/ic_open_in_new_control_24dp"
                 app:iconGravity="start" />
 
             <Button

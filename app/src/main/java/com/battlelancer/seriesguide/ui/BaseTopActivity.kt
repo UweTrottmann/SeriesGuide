@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2012-2024 Uwe Trottmann
+// Copyright 2012-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.ui
 
@@ -13,11 +13,13 @@ import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.annotation.IdRes
+import androidx.core.view.ViewCompat
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.SgApp.Companion.getServicesComponent
 import com.battlelancer.seriesguide.backend.CloudSetupActivity
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
+import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.dataliberation.BackupSettings
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
 import com.battlelancer.seriesguide.preferences.MoreOptionsActivity
@@ -25,8 +27,6 @@ import com.battlelancer.seriesguide.stats.StatsActivity
 import com.battlelancer.seriesguide.sync.AccountUtils
 import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.util.SupportTheDev
-import com.battlelancer.seriesguide.util.SupportTheDev.buildSnackbar
-import com.battlelancer.seriesguide.util.Utils
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
@@ -37,6 +37,8 @@ import timber.log.Timber
  *
  * They should also override [snackbarParentView] and supply a CoordinatorLayout.
  * It is used to show snack bars for important warnings (e.g. auto backup failed, Cloud signed out).
+ * They also should use [makeSnackbar] to create one to ensure it is properly shown above the
+ * bottom navigation bar.
  *
  * Also provides support for an optional sync progress bar (see [setupSyncProgressBar]).
  */
@@ -176,7 +178,7 @@ abstract class BaseTopActivity : BaseMessageActivity() {
 
     override fun onStart() {
         super.onStart()
-        if (Utils.hasAccessToX(this) && HexagonSettings.shouldValidateAccount(this)) {
+        if (BillingTools.hasAccessToPaidFeatures(this) && HexagonSettings.shouldValidateAccount(this)) {
             onShowCloudAccountWarning()
         }
         if (SupportTheDev.shouldAsk(this)) {
@@ -215,17 +217,36 @@ abstract class BaseTopActivity : BaseMessageActivity() {
         }
     }
 
+    /**
+     * Note: when using the [snackbarParentView] of this activity the Snackbar is not aligned to the
+     * bottom of the screen (due to the bottom navigation bar). So using
+     * [doNotInsetForNavigationBarOrIme] on it.
+     */
+    override fun makeSnackbar(message: String, length: Int): Snackbar {
+        return super.makeSnackbar(message, length)
+            .doNotInsetForNavigationBarOrIme()
+    }
+
+    /**
+     * Prevent the Snackbar from adding bottom margin for the navigation bar (or an input method)
+     * when it is not aligned to the bottom of the screen.
+     *
+     * https://github.com/material-components/material-components-android/issues/3446
+     */
+    private fun Snackbar.doNotInsetForNavigationBarOrIme(): Snackbar {
+        // Note: do not consume insets as the bottom navigation bar needs them when using
+        // button navigation.
+        ViewCompat.setOnApplyWindowInsetsListener(view) { _, insets -> insets }
+        return this
+    }
+
     override fun onLastAutoBackupFailed() {
         val snackbar = snackbar
         if (snackbar != null && snackbar.isShown) {
             Timber.d("NOT showing auto backup failed message: existing snackbar.")
             return
         }
-        val newSnackbar = Snackbar.make(
-            snackbarParentView,
-            R.string.autobackup_failed,
-            Snackbar.LENGTH_INDEFINITE
-        )
+        val newSnackbar = makeSnackbar(R.string.autobackup_failed, Snackbar.LENGTH_INDEFINITE)
 
         // Manually increase max lines.
         val textView = newSnackbar.view
@@ -259,8 +280,7 @@ abstract class BaseTopActivity : BaseMessageActivity() {
             Timber.d("NOT showing backup files warning: existing snackbar.")
             return
         }
-        val newSnackbar = Snackbar.make(
-            snackbarParentView,
+        val newSnackbar = makeSnackbar(
             R.string.autobackup_files_missing,
             Snackbar.LENGTH_INDEFINITE
         )
@@ -285,11 +305,10 @@ abstract class BaseTopActivity : BaseMessageActivity() {
             Timber.d("NOT showing Cloud account warning: existing snackbar.")
             return
         }
-        val newSnackbar = Snackbar
-            .make(
-                snackbarParentView, R.string.hexagon_signed_out,
-                Snackbar.LENGTH_INDEFINITE
-            )
+        val newSnackbar = makeSnackbar(
+            R.string.hexagon_signed_out,
+            Snackbar.LENGTH_INDEFINITE
+        )
         newSnackbar.addCallback(object : Snackbar.Callback() {
             override fun onDismissed(snackbar: Snackbar, event: Int) {
                 if (event == DISMISS_EVENT_SWIPE) {
@@ -312,7 +331,17 @@ abstract class BaseTopActivity : BaseMessageActivity() {
             Timber.d("NOT asking for support: existing snackbar.")
             return
         }
-        val newSnackbar = buildSnackbar(this, snackbarParentView)
+        val newSnackbar = makeSnackbar(
+            R.string.support_the_dev,
+            SupportTheDev.SUPPORT_MESSAGE_DURATION_MILLISECONDS
+        ).addCallback(object : Snackbar.Callback() {
+            override fun onDismissed(snackbar: Snackbar, event: Int) {
+                // Always do not show again after user has seen it once
+                SupportTheDev.saveDismissedRightNow(snackbar.context)
+            }
+        }).setAction(R.string.billing_action_subscribe) {
+            startActivity(BillingTools.getBillingActivityIntent(this))
+        }
         newSnackbar.show()
         this.snackbar = newSnackbar
     }

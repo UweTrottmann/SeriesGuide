@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2020, 2022-2024 Uwe Trottmann
+// Copyright 2020-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies
 
@@ -8,11 +8,11 @@ import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.widget.PopupMenu
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.movies.database.SgMovieFlags
 import com.battlelancer.seriesguide.movies.details.MovieDetailsActivity
 import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.startActivityWithAnimation
 
 open class MovieClickListenerImpl(val context: Context) : MovieClickListener {
@@ -47,8 +47,8 @@ open class MovieClickListenerImpl(val context: Context) : MovieClickListener {
             return@setOnMenuItemClickListener when (item.itemId) {
                 R.id.menu_action_movies_set_watched -> {
                     // Multiple plays only for supporters.
-                    if (movieFlags.watched && !Utils.hasAccessToX(context)) {
-                        Utils.advertiseSubscription(context)
+                    if (movieFlags.watched && !BillingTools.hasAccessToPaidFeatures(context)) {
+                        BillingTools.advertiseSubscription(context)
                         return@setOnMenuItemClickListener true
                     }
 

@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2019-2024 Uwe Trottmann
+// Copyright 2019-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.preferences
 
 import android.app.backup.BackupManager
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -25,7 +26,8 @@ import androidx.preference.SwitchPreferenceCompat
 import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
-import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
+import com.battlelancer.seriesguide.billing.BillingTools
+import com.battlelancer.seriesguide.getSgAppContainer
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.AppSettings
@@ -42,8 +44,8 @@ import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
-import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.safeShow
+import com.battlelancer.seriesguide.util.tryStartActivity
 import com.google.android.material.color.DynamicColors
 import com.uwetrottmann.androidutils.AndroidUtils
 import org.greenrobot.eventbus.EventBus
@@ -60,10 +62,12 @@ class SgPreferencesFragment : BasePreferencesFragment(),
                 setPreferencesFromResource(R.xml.settings_root, rootKey)
                 setupRootSettings()
             }
+
             KEY_SCREEN_BASIC -> {
                 setPreferencesFromResource(R.xml.settings_basic, rootKey)
                 setupBasicSettings()
             }
+
             KEY_SCREEN_NOTIFICATIONS -> {
                 setPreferencesFromResource(R.xml.settings_notifications, rootKey)
                 setupNotificationSettings()
@@ -77,10 +81,10 @@ class SgPreferencesFragment : BasePreferencesFragment(),
             // try to open app info where user can clear app cache folders
             var intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
             intent.data = Uri.parse("package:" + requireActivity().packageName)
-            if (!Utils.tryStartActivity(activity, intent, false)) {
+            if (!requireActivity().tryStartActivity(intent, false)) {
                 // try to open all apps view if detail view not available
                 intent = Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS)
-                Utils.tryStartActivity(activity, intent, true)
+                requireActivity().tryStartActivity(intent, true)
             }
 
             true
@@ -118,11 +122,11 @@ class SgPreferencesFragment : BasePreferencesFragment(),
     }
 
     private fun updateRootSettings() {
-        val hasAccessToX = Utils.hasAccessToX(activity)
+        val hasAllFeatures = BillingTools.hasAccessToPaidFeatures(requireContext())
 
         // notifications link
         findPreference<Preference>(KEY_SCREEN_NOTIFICATIONS)!!.apply {
-            if (hasAccessToX && NotificationSettings.isNotificationsEnabled(requireContext())) {
+            if (hasAllFeatures && NotificationSettings.isNotificationsEnabled(requireContext())) {
                 summary = NotificationSettings.getLatestToIncludeTresholdValue(requireContext())
             } else {
                 setSummary(R.string.pref_notificationssummary)
@@ -153,10 +157,10 @@ class SgPreferencesFragment : BasePreferencesFragment(),
             // Try to open app info where user can configure battery settings.
             var intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                 .setData(Uri.parse("package:" + requireActivity().packageName))
-            if (!Utils.tryStartActivity(activity, intent, false)) {
+            if (!requireActivity().tryStartActivity(intent, false)) {
                 // Open all apps view if detail view not available.
                 intent = Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS)
-                Utils.tryStartActivity(activity, intent, true)
+                requireActivity().tryStartActivity(intent, true)
             }
             true
         }
@@ -164,8 +168,7 @@ class SgPreferencesFragment : BasePreferencesFragment(),
             // Note: the preference is only shown on Android 12+.
             if (AndroidUtils.isAtLeastS) {
                 // Try to open the exact alarm settings.
-                Utils.tryStartActivity(
-                    activity,
+                requireActivity().tryStartActivity(
                     NotificationSettings.buildRequestExactAlarmSettingsIntent(requireContext()),
                     true
                 )
@@ -178,8 +181,8 @@ class SgPreferencesFragment : BasePreferencesFragment(),
         updateThresholdSummary(findPreference(NotificationSettings.KEY_THRESHOLD)!!)
         updateSelectionSummary(findPreference(NotificationSettings.KEY_SELECTION)!!)
 
-        val isSupporter = Utils.hasAccessToX(requireContext())
-        if (isSupporter) {
+        val hasAllFeatures = BillingTools.hasAccessToPaidFeatures(requireContext())
+        if (hasAllFeatures) {
             // Disable advanced notification settings if notifications are disabled.
             enableAdvancedNotificationSettings(
                 NotificationSettings.isNotificationsEnabled(requireContext())
@@ -191,7 +194,7 @@ class SgPreferencesFragment : BasePreferencesFragment(),
         if (AndroidUtils.isAtLeastOreo) {
             // Android 8+: use system settings to manage notifications.
             val channelsPref: Preference = findPreference(NotificationSettings.KEY_CHANNELS)!!
-            if (isSupporter) {
+            if (hasAllFeatures) {
                 if (NotificationSettings.areNotificationsAllowed(requireContext())) {
                     channelsPref.setSummary(R.string.pref_notifications_settings_summary)
                 } else {
@@ -201,20 +204,20 @@ class SgPreferencesFragment : BasePreferencesFragment(),
                     val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
                         .putExtra(Settings.EXTRA_APP_PACKAGE, requireActivity().packageName)
                     // At least NVIDIA Shield (8.0.0) can not handle this, so guard.
-                    Utils.tryStartActivity(activity, intent, true)
+                    requireActivity().tryStartActivity(intent, true)
                     true
                 }
             } else {
                 channelsPref.setSummary(R.string.onlyx)
                 channelsPref.setOnPreferenceClickListener {
-                    Utils.advertiseSubscription(requireContext())
+                    BillingTools.advertiseSubscription(requireContext())
                     true
                 }
             }
         } else {
             val enabledPref: SwitchPreferenceCompat =
                 findPreference(NotificationSettings.KEY_ENABLED)!!
-            if (isSupporter) {
+            if (hasAllFeatures) {
                 enabledPref.setSummary(R.string.pref_notificationssummary)
                 enabledPref.setOnPreferenceChangeListener { _, newValue ->
                     val isChecked = newValue as Boolean
@@ -226,7 +229,7 @@ class SgPreferencesFragment : BasePreferencesFragment(),
             } else {
                 enabledPref.setSummary(R.string.onlyx)
                 enabledPref.setOnPreferenceChangeListener { _, _ ->
-                    Utils.advertiseSubscription(requireContext())
+                    BillingTools.advertiseSubscription(requireContext())
                     // prevent value from getting saved
                     false
                 }
@@ -311,18 +314,6 @@ class SgPreferencesFragment : BasePreferencesFragment(),
             return true
         }
 
-        // links
-        when (key) {
-            LINK_KEY_AUTOBACKUP -> {
-                startActivity(DataLiberationActivity.intentToShowAutoBackup(requireActivity()))
-                return true
-            }
-            LINK_KEY_DATALIBERATION -> {
-                startActivity(Intent(activity, DataLiberationActivity::class.java))
-                return true
-            }
-        }// fall through
-
         // settings
         val supportFragmentManager = (activity as AppCompatActivity)
             .supportFragmentManager
@@ -366,14 +357,18 @@ class SgPreferencesFragment : BasePreferencesFragment(),
                 if (TextUtils.isEmpty(existingValue)) null else Uri.parse(existingValue)
             )
 
-            Utils.tryStartActivityForResult(this, intent, REQUEST_CODE_RINGTONE)
+            // Note: Android docs suggest to use resolveActivity,
+            // but won't work on Android 11+ due to package visibility changes.
+            // https://developer.android.com/about/versions/11/privacy/package-visibility
+            try {
+                // Ringtone pref is only available before Android 8 (O), no need to migrate this
+                @Suppress("DEPRECATION")
+                startActivityForResult(intent, REQUEST_CODE_RINGTONE)
+            } catch (ignored: ActivityNotFoundException) {
+                Toast.makeText(context, R.string.app_not_available, Toast.LENGTH_LONG).show()
+            }
+
             return true
-        }
-        if (AppSettings.KEY_USER_DEBUG_MODE_ENBALED == key) {
-            Toast.makeText(
-                context, R.string.pref_user_debug_mode_note, Toast.LENGTH_LONG
-            ).show()
-            return false // Let the pref handle the click (and change its value).
         }
         return super.onPreferenceTreeClick(preference)
     }
@@ -408,6 +403,7 @@ class SgPreferencesFragment : BasePreferencesFragment(),
         if (key == null) {
             return // Preferences were cleared, do nothing.
         }
+
         val pref: Preference? = findPreference(key)
         if (pref != null) {
             BackupManager(pref.context).dataChanged()
@@ -426,15 +422,39 @@ class SgPreferencesFragment : BasePreferencesFragment(),
             if (NotificationSettings.KEY_THRESHOLD == key) {
                 updateThresholdSummary(pref)
             }
+            if (StreamingSearch.KEY_SETTING_REGION == key) {
+                updateStreamSearchServiceSummary(pref)
+            }
+
+            // Demonstrate vibration pattern used by SeriesGuide
             if (NotificationSettings.KEY_VIBRATE == key
                 && NotificationSettings.isNotificationVibrating(pref.context)) {
-                // demonstrate vibration pattern used by SeriesGuide
                 val vibrator = requireActivity().getSystemService<Vibrator>()
                 @Suppress("DEPRECATION") // Not visible on O+, no need to use new API.
                 vibrator?.vibrate(NotificationService.VIBRATION_PATTERN, -1)
             }
-            if (StreamingSearch.KEY_SETTING_REGION == key) {
-                updateStreamSearchServiceSummary(pref)
+
+            // Toggle auto-update on SyncAdapter
+            if (UpdateSettings.KEY_AUTOUPDATE == key) {
+                val autoUpdatePref = pref as SwitchPreferenceCompat
+                SgSyncAdapter.setSyncAutomatically(requireContext(), autoUpdatePref.isChecked)
+            }
+
+            // Change error reports setting
+            if (AppSettings.KEY_SEND_ERROR_REPORTS == key) {
+                val switchPref = pref as SwitchPreferenceCompat
+                AppSettings.setSendErrorReports(switchPref.context, switchPref.isChecked, false)
+            }
+
+            // Enable or disable debug log
+            if (AppSettings.KEY_USER_DEBUG_MODE_ENBALED == key) {
+                val switchPref = pref as SwitchPreferenceCompat
+                val debugLogBuffer = requireActivity().getSgAppContainer().debugLogBuffer
+                if (switchPref.isChecked) {
+                    debugLogBuffer.enable()
+                } else {
+                    debugLogBuffer.disable()
+                }
             }
         }
 
@@ -461,21 +481,6 @@ class SgPreferencesFragment : BasePreferencesFragment(),
                 SgRoomDatabase.getInstance(requireContext()).sgEpisode2Helper()
                     .resetLastUpdatedForAll()
             }.start()
-        }
-
-        // Toggle auto-update on SyncAdapter
-        if (UpdateSettings.KEY_AUTOUPDATE == key) {
-            if (pref != null) {
-                val autoUpdatePref = pref as SwitchPreferenceCompat
-                SgSyncAdapter.setSyncAutomatically(requireContext(), autoUpdatePref.isChecked)
-            }
-        }
-
-        if (AppSettings.KEY_SEND_ERROR_REPORTS == key) {
-            pref?.also {
-                val switchPref = pref as SwitchPreferenceCompat
-                AppSettings.setSendErrorReports(switchPref.context, switchPref.isChecked, false)
-            }
         }
     }
 
@@ -562,11 +567,6 @@ class SgPreferencesFragment : BasePreferencesFragment(),
             "com.battlelancer.seriesguide.notifications.battery"
         private const val KEY_PRECISE_NOTIFICATION_SETTINGS =
             "com.battlelancer.seriesguide.notifications.notifications.precise"
-
-        // links
-        private const val LINK_BASE_KEY = "com.battlelancer.seriesguide.settings."
-        private const val LINK_KEY_AUTOBACKUP = LINK_BASE_KEY + "autobackup"
-        private const val LINK_KEY_DATALIBERATION = LINK_BASE_KEY + "dataliberation"
 
         private const val KEY_SCREEN_BASIC = "screen_basic"
         private const val KEY_SCREEN_NOTIFICATIONS = "screen_notifications"

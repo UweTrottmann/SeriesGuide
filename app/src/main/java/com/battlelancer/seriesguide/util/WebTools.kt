@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2023-2024 Uwe Trottmann
+// Copyright 2023-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.util
 
@@ -18,7 +18,7 @@ object WebTools {
      * Otherwise automatically falls back to opening a full browser.
      *
      * Returns false (and shows an error toast) if there is no app available to handle the view
-     * intent, see [Utils.tryStartActivity].
+     * intent, see [tryStartActivity].
      *
      * See also [openInApp].
      */
@@ -40,7 +40,7 @@ object WebTools {
             .setDefaultColorSchemeParams(defaultParams)
             .build().intent
             .apply { data = Uri.parse(url) }
-        return Utils.tryStartActivity(context, customTabsIntent, true)
+        return context.tryStartActivity(customTabsIntent, true)
     }
 
     /**
@@ -48,13 +48,12 @@ object WebTools {
      * is installed.
      *
      * Returns false (and shows an error toast) if there is no app available to handle the view
-     * intent, see [Utils.tryStartActivity].
+     * intent, see [tryStartActivity].
      *
      * See also [openInCustomTab].
      */
     fun openInApp(context: Context, url: String): Boolean {
-        return Utils.tryStartActivity(
-            context,
+        return context.tryStartActivity(
             Intent(Intent.ACTION_VIEW, Uri.parse(url)),
             true
         )

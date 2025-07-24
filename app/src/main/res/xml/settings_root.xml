@@ -29,24 +29,6 @@
 
     <PreferenceCategory
         app:iconSpaceReserved="false"
-        app:title="@string/backup">
-
-        <Preference
-            app:iconSpaceReserved="false"
-            app:key="com.battlelancer.seriesguide.settings.autobackup"
-            app:summary="@string/pref_autobackupsummary"
-            app:title="@string/pref_autobackup" />
-
-        <Preference
-            app:iconSpaceReserved="false"
-            app:key="com.battlelancer.seriesguide.settings.dataliberation"
-            app:summary="@string/backup_summary"
-            app:title="@string/backup" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
         app:title="@string/pref_appearance">
 
         <ListPreference
@@ -75,7 +57,7 @@
 
     <PreferenceCategory
         app:iconSpaceReserved="false"
-        app:title="@string/pref_other">
+        app:title="@string/pref_category_diagnostics">
 
         <Preference
             app:iconSpaceReserved="false"
@@ -83,26 +65,19 @@
             app:summary="@string/clear_cache_summary"
             app:title="@string/clear_cache" />
 
+        <!-- AppSettings -->
         <SwitchPreferenceCompat
             app:defaultValue="True"
             app:iconSpaceReserved="false"
             app:key="com.battlelancer.seriesguide.sendErrorReports"
             app:title="@string/pref_error_reports" />
 
-    </PreferenceCategory>
-
-    <!-- Danger Zone - not translated -->
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
-        app:title="@string/pref_category_danger">
-
         <!-- AppSettings -->
         <SwitchPreferenceCompat
             app:defaultValue="False"
             app:iconSpaceReserved="false"
             app:key="com.battlelancer.seriesguide.userDebugModeEnabled"
-            app:summary="@string/pref_user_debug_mode_summary"
-            app:title="@string/pref_user_debug_mode" />
+            app:title="@string/title_debug_log" />
 
     </PreferenceCategory>
 

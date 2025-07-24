@@ -19,6 +19,7 @@
     <string name="season_number">Сезон %d</string>
     <string name="specialseason">Специални епизоди</string>
     <string name="ratings">Рейтинги</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Назад</string>
     <string name="description_overview">Общ преглед</string>
@@ -39,7 +40,8 @@
     <string name="action_stream_settings">Настройки за стрийм или поръчка</string>
     <string name="action_select_region">Избор на регион</string>
     <string name="action_reset">Нулиране</string>
-    <string name="action_save">Save</string>
+    <string name="action_save">Запис</string>
+    <string name="action_turn_on">Turn on</string>
     <!-- Search -->
     <string name="clear_search_history">Изчисти историята на търсене</string>
     <string name="search_hint">Търсене на епизоди</string>
@@ -58,6 +60,7 @@
     <string name="api_failed">Грешно: %s</string>
     <string name="copy_to_clipboard">Копирано в клипборда</string>
     <string name="not_migrated">Сериалът не е мигриран в TMDB. Някои действия, като синхронизация с Trakt и Cloud може да не работят. Опитайте се да премахнете сериала и да го потъсите и добавите отново. Кликни за подробности.</string>
+    <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">Сподели</string>
     <string name="share_show">Сподели ТВ предаване</string>
@@ -65,7 +68,6 @@
     <string name="share_movie">Сподели филм</string>
     <string name="addtocalendar">Добавяне в календара</string>
     <string name="addtocalendar_failed">Не може да създаде календарно събитие.</string>
-    <string name="links">Интернет връзки</string>
     <!-- Comments -->
     <string name="comments">Коментари</string>
     <string name="shout_hint">Въведете коментар (английски, 5 + думи)</string>
@@ -100,8 +102,7 @@
     <string name="show_status_in_production">В процес на производство</string>
     <string name="show_status_pilot">Пилотен</string>
     <string name="show_status_canceled">Прекратен</string>
-    <string name="no_translation">Няма описание преведено на %1$s възможно на %2$s.</string>
-    <string name="no_translation_title">Не е преведено</string>
+    <string name="no_translation">No details in %1$s available, consider adding them at %2$s. Or try to change the language.</string>
     <string name="no_spoilers">Някои детайли са скрити, за да се избегнат спойлерите. За да изключите това отидете в настройки.</string>
     <string name="format_source">Източник: %s</string>
     <string name="last_updated">Последно обновено</string>
@@ -149,8 +150,8 @@
     <string name="hidden">Скрито ТВ предаване</string>
     <string name="unhidden">Показано ТВ предаване</string>
     <string name="action_shows_add">Добавяне на тв предаване</string>
-    <string name="action_filter_and_sort">Filter and sort</string>
-    <string name="title_filter_general">General</string>
+    <string name="action_filter_and_sort">Филтриране и сортиране</string>
+    <string name="title_filter_general">Общи</string>
     <string name="empty_filter">Премахни всички филтри</string>
     <string name="action_shows_filter_favorites">Любими</string>
     <string name="action_shows_filter_unwatched">Негледани</string>
@@ -172,8 +173,8 @@
     <string name="context_marknext">Гледан следващ епизод</string>
     <string name="action_episodes_switch_view">Промени изгледа</string>
     <string name="next_to_watch">Следващ за гледане</string>
-    <string name="title_notes">Notes</string>
-    <string name="action_edit_note">Edit note</string>
+    <string name="title_notes">Бележки</string>
+    <string name="action_edit_note">Промяна на бележка</string>
     <!-- History -->
     <string name="user_stream">История</string>
     <string name="recently_watched">Наскоро гледан/и</string>
@@ -242,7 +243,7 @@
     <!-- Discover -->
     <string name="title_discover">Открийте</string>
     <string name="title_popular">Популярни</string>
-    <string name="action_filter">Filter</string>
+    <string name="action_filter">Филтри</string>
     <string name="filter_year">Година</string>
     <string name="filter_year_current">Текуща година</string>
     <string name="filter_language">Език</string>
@@ -283,7 +284,8 @@
     <string name="action_movies_sort_title">Заглавие</string>
     <string name="action_movies_sort_release">Дата на издаване</string>
     <string name="title_similar_movies">Подобни филми</string>
-    <string name="title_release_dates">Release dates</string>
+    <string name="title_release_dates">Дати на излизане</string>
+    <string name="error_movie_not_found">Movie removed from TMDB. Remove it from lists, set it not watched. Using Trakt? On their website, search for its TMDB ID and remove it from history and lists.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Не може да се изчисли статистиката.</string>
     <string name="shows_finished">%s изгледани и приключени</string>
@@ -338,8 +340,8 @@
     <string name="trakt_error_credentials">Нещо се обърка. Проверете идентификационните си данни и опитайте отново.</string>
     <string name="trakt_error_not_exists">Няма (все още) в trakt. Опитайте отново по-късно.</string>
     <string name="trakt_notice_not_exists">Не може (все още) да се проследи от trakt.</string>
-    <string name="trakt_error_limit_exceeded_add">Can\'t add, Trakt account limit reached.</string>
-    <string name="trakt_error_limit_exceeded_upload">Can\'t upload, Trakt account limit reached.</string>
+    <string name="trakt_error_limit_exceeded_add">Не може да бъде добавено, достигнат лимит в Trakt.</string>
+    <string name="trakt_error_limit_exceeded_upload">Не може да бъде качено, достигнат лимит в Trakt.</string>
     <!-- Connect trakt -->
     <string name="trakt_required">Необходимо е свързване с Trakt</string>
     <string name="connect_trakt">Свържете се с trakt</string>
@@ -350,8 +352,7 @@
     <string name="disconnect">Прекъсване на връзката</string>
     <string name="show_library">Добавяне на сериали от Trakt</string>
     <string name="about_trakt">Trakt записва какви сериали и филми гледате.</string>
-    <string name="support_trakt">Подкрепете Trakt с ВИП</string>
-    <string name="action_trakt_view_limits">View account limits</string>
+    <string name="action_trakt_view_limits">Проверете лимитите</string>
     <!-- trakt ratings -->
     <string name="action_rate">Оцени</string>
     <string name="ack_rated">Рейтингът е изпратен</string>
@@ -444,33 +445,34 @@
     <string name="theme_app_dark">Тъмна</string>
     <string name="theme_app_light">Светла</string>
     <!-- Other advanced settings -->
-    <string name="pref_other">Други</string>
+    <string name="pref_category_diagnostics">Diagnostics</string>
     <string name="pref_autoupdatesummary">Автоматично синхронизиране и актуализиране данните на SeriesGuide</string>
-    <string name="backup">Архивиране/Възстановяване</string>
-    <string name="backup_summary">Архивиране или възстановяване на вашите сериали</string>
     <string name="pref_number">Формат на числата</string>
     <string name="pref_offset">Ръчна смяна време</string>
     <string name="pref_offsetsummary">Преместване на часовете за излъчване с %d часа</string>
     <string name="clear_cache">Изчисти кеша на изображенията</string>
     <string name="clear_cache_summary">Премахнете всички кеширани снимки от вашето устройство</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Export and import</string>
+    <string name="title_export">Export</string>
+    <string name="title_import">Import</string>
+    <string name="action_export">Export to file</string>
     <string name="backup_full_dump">Включва описания, детайли, рейтинги</string>
-    <string name="backup_failed_file_access">Не може да се архивира. Архивения файл не може да бъде намерен или е не достъпен.</string>
-    <string name="backup_success">Архивирането приключи успешно.</string>
-    <string name="backup_failed">Архивирането не беше успешно.</string>
-    <string name="import_failed_nosd">Не може да се възстанови архив. Папката за архивиране не е налична.</string>
-    <string name="import_failed_nofile">Няма архивен файл.</string>
-    <string name="import_success">Архивирането беше успешно възстановено.</string>
-    <string name="import_failed">Възстановяването на архива се провали.</string>
-    <string name="backup_button">Създаване на архив</string>
+    <string name="status_successful">Successful</string>
+    <string name="status_failure">Failed</string>
+    <string name="status_failed_file_access">Can not find or access file</string>
     <string name="import_button">Възстанови архив</string>
+    <string name="action_view_import_documentation">View expected format</string>
     <string name="import_warning">Разбирам моите текущи предавания, списъци и филми ще бъдат заменени!</string>
+    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
+    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
     <string name="no_file_selected">Няма избран файл</string>
     <string name="action_select_file">Избор на файл</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Автоматично създаване на резервно копие</string>
     <string name="pref_autobackupsummary">Седмичен архив на вашите предавания, списъци и филми</string>
     <string name="autobackup_details">Ако преинсталирате приложението, копията ще бъдат изтрити. Преди това направете допълнително копие.</string>
+    <string name="backup_button">Създаване на архив</string>
     <string name="last_auto_backup">Последно автоматично архивиране: %s</string>
     <string name="restore_auto_backup">Възстанови автоматично архивиране</string>
     <string name="autobackup_failed">Създаването на автоматично копие беше неуспешно.</string>
@@ -560,6 +562,11 @@
     <string name="feedback_question_feedback">Кажете ми как да го подобрим?</string>
     <string name="feedback_action_ok">Да, разбира се</string>
     <string name="feedback_action_nothanks">Не, благодаря</string>
-    <!-- Support -->
+    <!-- Support the dev -->
     <string name="support_the_dev">Подкрепете разработчика</string>
+    <string name="support_the_dev_other_ways">Other ways to support</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Debug log</string>
+    <string name="status_saving_file_success">File saved</string>
+    <string name="status_saving_file_failed">Failed to save file</string>
 </resources>

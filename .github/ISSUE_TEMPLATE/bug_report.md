@@ -1,33 +1,25 @@
 ---
-name: Bug report
-about: Report if something isn't working.
+name: Report an error
+about: For example if the app is crashing or does not work as expected
 title: ''
 labels: bug
 assignees: ''
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+TODO Add a clear and concise description in English of what the error is.
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+If it makes sense, please also
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+- explain what you expect to happen
+- provide a screenshot to help explain
+- provide the exact steps to reproduce the error
+- create and include debug logs, see https://www.seriesgui.de/help/other/debug
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+### Device details
 
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
+TODO Add details below
 
-**Additional context**
-Add any other context about the problem here.
+- Device: [for example Galaxy S21 Ultra]
+- Android version: [for example 14]
+- SeriesGuide version: [for example 2025.1.1]

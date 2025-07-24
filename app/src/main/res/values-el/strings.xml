@@ -19,6 +19,7 @@
     <string name="season_number">Κύκλος %d</string>
     <string name="specialseason">Ειδικά Επεισόδια</string>
     <string name="ratings">Βαθμολογίες</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Πλοήγηση προς τα επάνω</string>
     <string name="description_overview">Επισκόπηση</string>
@@ -40,6 +41,7 @@
     <string name="action_select_region">Επιλογή περιοχής</string>
     <string name="action_reset">Επαναφορά</string>
     <string name="action_save">Αποθήκευση</string>
+    <string name="action_turn_on">Ενεργοποίηση</string>
     <!-- Search -->
     <string name="clear_search_history">Εκκαθάριση ιστορικού αναζήτησης</string>
     <string name="search_hint">Αναζήτηση επεισοδίων</string>
@@ -58,6 +60,7 @@
     <string name="api_failed">Αποτυχία: %s</string>
     <string name="copy_to_clipboard">Αντιγράφηκε στο πρόχειρο</string>
     <string name="not_migrated">Η σειρά δεν έχει μεταφερθεί στα δεδομένα του TMDB. Ορισμένες ενέργειες, όπως ο συγχρονισμός με το Trakt και το cloud, ενδέχεται να μη λειτουργούν. Μπορείτε να αναζητήσετε μια αντικατάσταση και να αφαιρέσετε αυτήν τη σειρά. Πατήστε για να δείτε λεπτομέρειες.</string>
+    <string name="status_turned_on">Ενεργό</string>
     <!-- Sharing -->
     <string name="share">Μοίρασε</string>
     <string name="share_show">Κοινοποίηση σειράς</string>
@@ -65,7 +68,6 @@
     <string name="share_movie">Κοινοποίηση ταινίας</string>
     <string name="addtocalendar">Προσθήκη στο ημερολόγιο</string>
     <string name="addtocalendar_failed">Δεν είναι δυνατόν να δημιουργηθεί γεγονός ημερολογίου.</string>
-    <string name="links">Σύνδεσμοι</string>
     <!-- Comments -->
     <string name="comments">Σχόλια</string>
     <string name="shout_hint">Πληκτρολογίστε ένα σχόλιο (Αγγλικά, 5+ λέξεις)</string>
@@ -100,8 +102,7 @@
     <string name="show_status_in_production">Στην Παραγωγή</string>
     <string name="show_status_pilot">Πιλότος</string>
     <string name="show_status_canceled">Ακυρώθηκε</string>
-    <string name="no_translation">Δεν υπάρχει περιγραφή μεταφρασμένη στα %1$s διαθέσιμη στο %2$s.</string>
-    <string name="no_translation_title">Χωρίς μετάφραση</string>
+    <string name="no_translation">Δεν διατίθενται λεπτομέρειες στα %1$s, μπορείτε να τις προσθέσετε στο %2$s. Ή δοκιμάστε να αλλάξετε τη γλώσσα.</string>
     <string name="no_spoilers">Κάποιες λεπτομέρειες είναι μη ορατές ώστε να μην αποκαλυφθούν πληροφορίες για την υπόθεση. Για να το απενεργοποιήσετε πηγαίνετε στις Ρυθμίσεις.</string>
     <string name="format_source">Πηγή: %s</string>
     <string name="last_updated">Τελευταία ενημέρωση</string>
@@ -284,6 +285,7 @@
     <string name="action_movies_sort_release">Ημερομηνία προβολής</string>
     <string name="title_similar_movies">Παρόμοιες ταινίες</string>
     <string name="title_release_dates">Ημερομηνίες κυκλοφορίας</string>
+    <string name="error_movie_not_found">Η ταινία αφαιρέθηκε από το TMDB. Αφαιρέστε την από τις λίστες, ορίστε την ως μη προβεβλημένη. Χρησιμοποιείτε το Trakt; Στον ιστότοπό του, αναζητήστε το αναγνωριστικό TMDB της και αφαιρέστε την από το ιστορικό και τις λίστες.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Δε μπορέσαμε να υπολογίσουμε στατιστικά.</string>
     <string name="shows_finished">%s τελείωσε την προβολή</string>
@@ -350,7 +352,6 @@
     <string name="disconnect">Αποσύνδεση</string>
     <string name="show_library">Προσθήκη σειρών από Trakt</string>
     <string name="about_trakt">Το Trakt βοηθά να καταγράψετε τα τηλεοπτικά προγράμματα και τις ταινίες που βλέπετε.</string>
-    <string name="support_trakt">Υποστήριξη Trakt με VIP</string>
     <string name="action_trakt_view_limits">Προβολή ορίων λογαριασμού</string>
     <!-- trakt ratings -->
     <string name="action_rate">Αξιολόγηση</string>
@@ -444,33 +445,34 @@
     <string name="theme_app_dark">Σκοτεινό</string>
     <string name="theme_app_light">Φωτεινό</string>
     <!-- Other advanced settings -->
-    <string name="pref_other">Άλλα</string>
+    <string name="pref_category_diagnostics">Διαγνωστικά</string>
     <string name="pref_autoupdatesummary">Αυτόματος συγχρονισμός και ενημέρωση περιεχομένου</string>
-    <string name="backup">Δημιουργία αντιγράφου ασφαλείας/Επαναφορά</string>
-    <string name="backup_summary">Δημιουργία αντιγράφου ασφαλείας ή επαναφορά των σειρών</string>
     <string name="pref_number">Μορφή των αριθμών</string>
     <string name="pref_offset">Χειροκίνητη χρονική μετατόπιση</string>
     <string name="pref_offsetsummary">Μετατόπιση ωρών προβολής κατα %d ώρες</string>
     <string name="clear_cache">Καθαρισμός προσωρινής μνήμης εικόνων</string>
     <string name="clear_cache_summary">Αφαιρέστε όλες τις προσωρινά αποθηκευμένες εικόνες από τη συσκευή σας</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Εξαγωγή και εισαγωγή</string>
+    <string name="title_export">Εξαγωγή</string>
+    <string name="title_import">Εισαγωγή</string>
+    <string name="action_export">Εξαγωγή σε αρχείο</string>
     <string name="backup_full_dump">Να περιλαμβάνονται περιγραφές, λεπτομέρειες και αξιολογήσεις</string>
-    <string name="backup_failed_file_access">Αδυναμία λήψης αντιγράφου ασφαλείας. Δεν μπορεί να βρεθεί ή να προσπελαστεί ένα αρχείο αντιγράφου ασφαλείας.</string>
-    <string name="backup_success">Επιτυχής δημιουργία αντιγράφου ασφαλείας.</string>
-    <string name="backup_failed">Απέτυχε η δημιουργία αντιγράφου ασφαλείας.</string>
-    <string name="import_failed_nosd">Αδυναμία επαναφοράς αντιγράφου ασφαλείας. Ο φάκελος αντιγράφων ασφαλείας δεν είναι διαθέσιμος.</string>
-    <string name="import_failed_nofile">Δεν υπάρχει κανένα αναγνώσιμο αρχείο αντιγράφου ασφαλείας.</string>
-    <string name="import_success">Επιτυχής επαναφορά αντιγράφου ασφαλείας.</string>
-    <string name="import_failed">Αποτυχία επαναφοράς του αντιγράφου ασφαλείας.</string>
-    <string name="backup_button">Δημιουργία αντιγράφων ασφαλείας</string>
+    <string name="status_successful">Επιτυχής</string>
+    <string name="status_failure">Αποτυχία</string>
+    <string name="status_failed_file_access">Αδυναμία εύρεσης ή προσπέλασης αρχείου</string>
     <string name="import_button">Επαναφορά</string>
+    <string name="action_view_import_documentation">Προβολή αναμενόμενης μορφής</string>
     <string name="import_warning">Οι τρέχουσες σειρές, λίστες και ταινίες θα αντικατασταθούν από το αντίγραφο ασφαλείας</string>
+    <string name="import_cloud_warning">Δεν προτείνεται κατά τη χρήση του SeriesGuide Cloud ή του Trakt</string>
+    <string name="import_cloud_warning_details">Ο συγχρονισμός με το Cloud ή το Trakt ενδέχεται να αντικαταστήσει τα εισαχθέντα δεδομένα. Με το SeriesGuide Cloud, μπορείτε να διαγράψετε τον λογαριασμό σας πριν από την εισαγωγή των δεδομένων και έπειτα να τον δημιουργήσετε ξανά για να γίνει μεταφόρτωση μόνο των εισαχθέντων δεδομένων.</string>
     <string name="no_file_selected">Δεν επιλέχθηκε αρχείο</string>
     <string name="action_select_file">Επιλογή αρχείου</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Αυτόματο αντίγραφο ασφαλείας</string>
     <string name="pref_autobackupsummary">Εβδομαδιαίο αντίγραφο ασφαλείας των σειρών, λιστών και ταινιών σας</string>
     <string name="autobackup_details">Αυτά τα αντίγραφα ασφαλείας δεν είναι διαθέσιμα αν η εφαρμογή εγκατασταθεί ξανά, εκτός αν τα αντίγραφα ασφαλείας των δεδομένων της εφαρμογής είναι ενεργά για αυτή τη συσκευή (Android 6+). Αλλιώς κάντε αντίγραφά τους για να τα διατηρήσετε.  </string>
+    <string name="backup_button">Δημιουργία αντιγράφων ασφαλείας</string>
     <string name="last_auto_backup">Τελευταίο αυτόματο αντίγραφο ασφαλείας: %s</string>
     <string name="restore_auto_backup">Επαναφορά αντιγράφου ασφαλείας στο αυτόματο</string>
     <string name="autobackup_failed">Το τελευταίο αυτόματο αντίγραφο ασφαλείας απέτυχε</string>
@@ -560,6 +562,11 @@
     <string name="feedback_question_feedback">Θα μου πείτε πώς να το βελτιώσω;</string>
     <string name="feedback_action_ok">Εντάξει</string>
     <string name="feedback_action_nothanks">Όχι, ευχαριστώ</string>
-    <!-- Support -->
+    <!-- Support the dev -->
     <string name="support_the_dev">Υποστήριξη της ανάπτυξης;</string>
+    <string name="support_the_dev_other_ways">Other ways to support</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Αρχείο εντοπισμού σφαλμάτων</string>
+    <string name="status_saving_file_success">Το αρχείο αποθηκεύτηκε</string>
+    <string name="status_saving_file_failed">Αποτυχία αποθήκευσης αρχείου</string>
 </resources>

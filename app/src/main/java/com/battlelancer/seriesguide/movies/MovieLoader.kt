@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2020-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies
 
@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase.Companion.getInstanc
 import com.uwetrottmann.androidutils.GenericSimpleLoader
 import com.uwetrottmann.tmdb2.entities.Movie
 import com.uwetrottmann.trakt5.entities.Ratings
+import kotlinx.coroutines.runBlocking
 
 /**
  * Tries to load current movie details from trakt and TMDb, if failing tries to fall back to local
@@ -24,7 +25,10 @@ internal class MovieLoader(
     override fun loadInBackground(): MovieDetails {
         // try loading from trakt and tmdb, this might return a cached response
         val movieTools = getServicesComponent(context).movieTools()
-        val details = movieTools.getMovieDetails(tmdbId, true)
+        // No need to handle InterruptedException as ModernAsyncTask does (see its constructor)
+        val details = runBlocking {
+            movieTools.getMovieDetailsWithDefaults(tmdbId, true).movieDetails
+        }
 
         // Update local database (no-op if movie not in database).
         movieTools.updateMovie(details, tmdbId)
@@ -45,10 +49,10 @@ internal class MovieLoader(
 
         // set local state for watched, collected and watchlist status
         // assumption: local db has the truth for these
-        details.isInCollection = dbMovieOrNull.inCollection
-        details.isInWatchlist = dbMovieOrNull.inWatchlist
-        details.isWatched = dbMovieOrNull.watched
-        details.plays = dbMovieOrNull.plays
+        details.isInCollection = dbMovieOrNull.inCollectionOrDefault
+        details.isInWatchlist = dbMovieOrNull.inWatchlistOrDefault
+        details.isWatched = dbMovieOrNull.watchedOrDefault
+        details.plays = dbMovieOrNull.playsOrDefault
         // also use local state of user rating
         details.userRating = dbMovieOrNull.ratingUser ?: 0
         details.lastUpdatedMillis = dbMovieOrNull.lastUpdated ?: 0

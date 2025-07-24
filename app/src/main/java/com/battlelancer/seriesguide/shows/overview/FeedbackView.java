@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2016-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.overview;
 
@@ -16,7 +16,7 @@ import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.PackageTools;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -126,7 +126,7 @@ public class FeedbackView extends FrameLayout {
         if (question != Question.ENJOY) {
             if (question == Question.RATE) {
                 questionTextView.setText(
-                        Utils.isAmazonVersion() ? R.string.feedback_question_rate_amazon
+                        PackageTools.isAmazonVersion() ? R.string.feedback_question_rate_amazon
                                 : R.string.feedback_question_rate_google);
             } else if (question == Question.FEEDBACK) {
                 questionTextView.setText(R.string.feedback_question_feedback);

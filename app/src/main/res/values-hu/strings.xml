@@ -19,6 +19,7 @@
     <string name="season_number">Évad %d</string>
     <string name="specialseason">Extra epizódok</string>
     <string name="ratings">Értékelések</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Tartalom</string>
@@ -40,6 +41,7 @@
     <string name="action_select_region">Válassz régiót</string>
     <string name="action_reset">Visszaállítás</string>
     <string name="action_save">Save</string>
+    <string name="action_turn_on">Turn on</string>
     <!-- Search -->
     <string name="clear_search_history">Keresési előzmények törlése</string>
     <string name="search_hint">Epizódok keresése</string>
@@ -58,6 +60,7 @@
     <string name="api_failed">Meghiúsult: %s</string>
     <string name="copy_to_clipboard">Vágólapra másolva</string>
     <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">Megosztás</string>
     <string name="share_show">Műsor megosztása</string>
@@ -65,7 +68,6 @@
     <string name="share_movie">Film megosztása</string>
     <string name="addtocalendar">Hozzáadás naptárhoz</string>
     <string name="addtocalendar_failed">Nem sikerült az esemény létrehozása.</string>
-    <string name="links">Linkek</string>
     <!-- Comments -->
     <string name="comments">Hozzászólások</string>
     <string name="shout_hint">Írj megjegyzést (angolul, 5+ szóval)</string>
@@ -100,8 +102,7 @@
     <string name="show_status_in_production">Gyártás alatt</string>
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">Törölve</string>
-    <string name="no_translation">Nincs leírás %1$s nyelven a %2$s adatbázisban.</string>
-    <string name="no_translation_title">Nincs lefordítva</string>
+    <string name="no_translation">No details in %1$s available, consider adding them at %2$s. Or try to change the language.</string>
     <string name="no_spoilers">Néhány részlet elrejtésre kerül a spoilerek megakadályozása miatt. A kikapcsoláshoz menj a Beállításokba.</string>
     <string name="format_source">Forrás: %s</string>
     <string name="last_updated">Utoljára frissítve</string>
@@ -284,6 +285,7 @@
     <string name="action_movies_sort_release">Első adás</string>
     <string name="title_similar_movies">Hasonló filmek</string>
     <string name="title_release_dates">Release dates</string>
+    <string name="error_movie_not_found">Movie removed from TMDB. Remove it from lists, set it not watched. Using Trakt? On their website, search for its TMDB ID and remove it from history and lists.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Nem sikerült kiszámítani a statisztikát.</string>
     <string name="shows_finished">%s teljesen megnézve</string>
@@ -350,7 +352,6 @@
     <string name="disconnect">Megszakítás</string>
     <string name="show_library">Sorozatok hozzáadása innen: Trakt</string>
     <string name="about_trakt">A Trakt segít nyilvántartani a nézett sorozatokat és filmeket.</string>
-    <string name="support_trakt">Trakt támogatása VIP vásárlással</string>
     <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">Értékelj</string>
@@ -444,33 +445,34 @@
     <string name="theme_app_dark">Sötét</string>
     <string name="theme_app_light">Világos</string>
     <!-- Other advanced settings -->
-    <string name="pref_other">Egyéb</string>
+    <string name="pref_category_diagnostics">Diagnostics</string>
     <string name="pref_autoupdatesummary">SeriesGuide adatok automatikus szinkronizálása és frissítése</string>
-    <string name="backup">Biztonsági Mentés/Visszaállítás</string>
-    <string name="backup_summary">A sorozatokról biztonsági mentés készítése vagy annak visszaállítása</string>
     <string name="pref_number">Számozás formátuma</string>
     <string name="pref_offset">Időeltolás</string>
     <string name="pref_offsetsummary">Vetítési időhöz képest időeltolás %d órával</string>
     <string name="clear_cache">Képtároló törlése</string>
     <string name="clear_cache_summary">Az összes tárolt kép törlése az eszközről</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Export and import</string>
+    <string name="title_export">Export</string>
+    <string name="title_import">Import</string>
+    <string name="action_export">Export to file</string>
     <string name="backup_full_dump">Tartalmazza a leírásokat, részleteket, értékeléseket</string>
-    <string name="backup_failed_file_access">Nem sikerült a mentés. A biztonsági mentés fájl nem található vagy nem hozzáférhető.</string>
-    <string name="backup_success">A mentés sikerült.</string>
-    <string name="backup_failed">A biztonsági mentés nem sikerült.</string>
-    <string name="import_failed_nosd">Nem lehet visszaállítani. A mentési mappa nem elérhető.</string>
-    <string name="import_failed_nofile">Nincs beolvasható biztonsági mentés.</string>
-    <string name="import_success">Adatok visszaállítása sikerült.</string>
-    <string name="import_failed">Adatok visszaállítása nem sikerült.</string>
-    <string name="backup_button">Biztonsági Mentés</string>
+    <string name="status_successful">Successful</string>
+    <string name="status_failure">Failed</string>
+    <string name="status_failed_file_access">Can not find or access file</string>
     <string name="import_button">Visszaállítás</string>
+    <string name="action_view_import_documentation">View expected format</string>
     <string name="import_warning">Megértettem, hogy az aktuális sorozataim, listáim és filmjeim lecserélésre kerülnek!</string>
+    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
+    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
     <string name="no_file_selected">Nincs fájl kijelölve</string>
     <string name="action_select_file">Fájl kiválasztása</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatikus biztonsági másolat</string>
     <string name="pref_autobackupsummary">Heti biztonsági másolat készítése a sorozatokról, listákról és filmekről</string>
     <string name="autobackup_details">Ezek a biztonsági mentések nem elérhetőek ha az app újra telepítve van. Készíts másolatokat hogy biztosan megőrizve legyenek.</string>
+    <string name="backup_button">Biztonsági Mentés</string>
     <string name="last_auto_backup">Utolsó automata mentés: %s</string>
     <string name="restore_auto_backup">Automatikus mentés visszaállítása</string>
     <string name="autobackup_failed">A legutóbbi automatikus mentés nem sikerült</string>
@@ -560,6 +562,11 @@
     <string name="feedback_question_feedback">Mondd el, hogyan javítanád.</string>
     <string name="feedback_action_ok">Ok, miért ne</string>
     <string name="feedback_action_nothanks">Köszönöm, nem</string>
-    <!-- Support -->
+    <!-- Support the dev -->
     <string name="support_the_dev">Támogatod a fejlesztőt?</string>
+    <string name="support_the_dev_other_ways">Other ways to support</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Debug log</string>
+    <string name="status_saving_file_success">File saved</string>
+    <string name="status_saving_file_failed">Failed to save file</string>
 </resources>

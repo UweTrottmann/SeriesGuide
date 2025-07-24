@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2011-2024 Uwe Trottmann
+// Copyright 2011-2025 Uwe Trottmann
 // Copyright 2013 Andrew Neal
 
 package com.battlelancer.seriesguide.shows.episodes
@@ -25,6 +25,7 @@ import androidx.loader.content.Loader
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.api.Action
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
+import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.comments.TraktCommentsActivity
 import com.battlelancer.seriesguide.databinding.ButtonsEpisodeBinding
 import com.battlelancer.seriesguide.databinding.ButtonsEpisodeMoreBinding
@@ -61,7 +62,6 @@ import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.TimeTools
-import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.battlelancer.seriesguide.util.safeShow
@@ -262,8 +262,8 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
             val itemId = item.itemId
             if (itemId == R.id.watched_popup_menu_watch_again) {
                 // Multiple plays are for supporters only.
-                if (!Utils.hasAccessToX(requireContext())) {
-                    Utils.advertiseSubscription(requireContext())
+                if (!BillingTools.hasAccessToPaidFeatures(requireContext())) {
+                    BillingTools.advertiseSubscription(requireContext())
                 } else {
                     changeEpisodeFlag(EpisodeFlags.WATCHED)
                 }
@@ -649,16 +649,15 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
     }
 
     private fun shareEpisode() {
-        if (episodeTitle == null) {
-            return
-        }
+        val title = episodeTitle
+            ?: return
         val showOrNull = show
         val episodeOrNull = episode
         if (showOrNull?.tmdbId != null && episodeOrNull != null) {
             ShareUtils.shareEpisode(
                 requireActivity(), showOrNull.tmdbId,
                 episodeOrNull.season, episodeOrNull.number, showOrNull.title,
-                episodeTitle
+                title
             )
         }
     }
@@ -733,8 +732,7 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
                 bindingActions?.let {
                     ActionsHelper.populateActions(
                         requireActivity().layoutInflater,
-                        requireActivity().theme, it.containerEpisodeActions,
-                        data
+                        it.containerEpisodeActions, data
                     )
                 }
             }

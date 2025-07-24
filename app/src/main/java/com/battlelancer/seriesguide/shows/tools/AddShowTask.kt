@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2011-2024 Uwe Trottmann
+// Copyright 2011-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.tools
 
@@ -10,6 +10,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.tools.AddShowTask.OnShowAddedEvent
 import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowResult
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync
@@ -142,7 +143,13 @@ class AddShowTask(
         }
 
         val services = SgApp.getServicesComponent(context)
-        val hexagonEpisodeSync = HexagonEpisodeSync(context, services.hexagonTools())
+        val database = SgRoomDatabase.getInstance(context)
+        val hexagonEpisodeSync = HexagonEpisodeSync(
+            context,
+            services.hexagonTools(),
+            database.sgEpisode2Helper(),
+            database.sgShow2Helper()
+        )
         val showTools = services.addUpdateShowTools()
 
         var result: Int
@@ -210,7 +217,7 @@ class AddShowTask(
 
         // When merging shows down from Hexagon, set success flag
         if (isMergingShows && !failedMergingShows) {
-            HexagonSettings.setHasMergedShows(context, true)
+            HexagonSettings.setHasMergedShows(context)
         }
 
         if (addedAtLeastOneShow) {

@@ -19,6 +19,7 @@
     <string name="season_number">பருவம் %d</string>
     <string name="specialseason">சிறப்பு Episodes</string>
     <string name="ratings">மதிப்பீடு</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Navigate up</string>
     <string name="description_overview">மேற்பார்வை</string>
@@ -40,6 +41,7 @@
     <string name="action_select_region">Select region</string>
     <string name="action_reset">Reset</string>
     <string name="action_save">Save</string>
+    <string name="action_turn_on">Turn on</string>
     <!-- Search -->
     <string name="clear_search_history">தேடல் வரலாற்றை நீக்கு</string>
     <string name="search_hint">தேடல் episodes</string>
@@ -53,11 +55,12 @@
     <string name="app_not_available">No app available to handle this</string>
     <string name="people_empty">யாரும் இங்கே?! மீண்டும் முயற்சிக்க தொடர்பு.</string>
     <string name="database_error">தரவு மாற்ற முடியவில்லை.</string>
-    <string name="reinstall_info">Try to create a backup in Settings, re-install and restore</string>
+    <string name="reinstall_info">Try to export your data, re-install and restore</string>
     <string name="api_error_generic">Could not talk to %s. Try again later.</string>
     <string name="api_failed">Failed: %s</string>
     <string name="copy_to_clipboard">Copied to clipboard</string>
     <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">பகிர்</string>
     <string name="share_show">பங்கு காண்பி</string>
@@ -65,7 +68,6 @@
     <string name="share_movie">பங்கு திரைப்படம்</string>
     <string name="addtocalendar">நாட்காட்டியில் சேர்</string>
     <string name="addtocalendar_failed">ஒரு காலண்டர் நிகழ்வு உருவாக்க முடியும்.</string>
-    <string name="links">இணைப்புகள்</string>
     <!-- Comments -->
     <string name="comments">கருத்துகள்</string>
     <string name="shout_hint">ஒரு கருத்து (ஆங்கிலம், 5 + சொற்கள்) தட்டச்சு செய்யவும்</string>
@@ -100,8 +102,7 @@
     <string name="show_status_in_production">In Production</string>
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">Canceled</string>
-    <string name="no_translation">%1$s at %2$s கிடைக்கப்பெறும் மொழிபெயர்க்க விளக்கம் உள்ளது.</string>
-    <string name="no_translation_title">இல்லை மொழிபெயர்க்க</string>
+    <string name="no_translation">No details in %1$s available, consider adding them at %2$s. Or try to change the language.</string>
     <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
     <string name="format_source">Source: %s</string>
     <string name="last_updated">Last updated</string>
@@ -284,6 +285,7 @@
     <string name="action_movies_sort_release">வெளியீட்டு தேதி</string>
     <string name="title_similar_movies">Similar movies</string>
     <string name="title_release_dates">Release dates</string>
+    <string name="error_movie_not_found">Movie removed from TMDB. Remove it from lists, set it not watched. Using Trakt? On their website, search for its TMDB ID and remove it from history and lists.</string>
     <!-- Statistics -->
     <string name="statistics_failed">புள்ளிவிவரம் கணக்கிட முடியவில்லை.</string>
     <string name="shows_finished">%s finished watching</string>
@@ -350,7 +352,6 @@
     <string name="disconnect">துண்டி</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt டிவி என்ன காண்பிக்கும் பதிவேட்டை வைத்திருக்க உதவுகிறது மற்றும் திரைப்படங்கள் நீங்கள் வருவதாக.</string>
-    <string name="support_trakt">Support Trakt with VIP</string>
     <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">விகிதம்</string>
@@ -444,33 +445,34 @@
     <string name="theme_app_dark">Dark</string>
     <string name="theme_app_light">Light</string>
     <!-- Other advanced settings -->
-    <string name="pref_other">மற்ற</string>
+    <string name="pref_category_diagnostics">Diagnostics</string>
     <string name="pref_autoupdatesummary">Automatically sync and update content</string>
-    <string name="backup">மறுபிரதி/மீட்டெடுத்தல்</string>
-    <string name="backup_summary">மறுபிரதி எடு அல்லது மீட்டெடு உங்கள் காட்சிகள்</string>
     <string name="pref_number">எண் வடிவமைப்பு</string>
     <string name="pref_offset">கைமுறை நேரம் ஆப்செட்</string>
     <string name="pref_offsetsummary">%d மணிநேரத்தில் ஏர் முறை சரியீடு</string>
     <string name="clear_cache">தெளிவான உருவம் இடைமாற்றுகள்</string>
     <string name="clear_cache_summary">உங்கள் சாதனத்தில் இருந்து அனைத்து தேக்கக படிமங்களை அகற்று</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Export and import</string>
+    <string name="title_export">Export</string>
+    <string name="title_import">Import</string>
+    <string name="action_export">Export to file</string>
     <string name="backup_full_dump">Include descriptions, details, ratings</string>
-    <string name="backup_failed_file_access">மறுபிரதி எடு முடியாது. மறுபிரதி கோப்பு அல்ல கண்டறியப்பட்ட அல்லது இயலும் அணுக.</string>
-    <string name="backup_success">மறுபிரதி வெற்றிகரமாக.</string>
-    <string name="backup_failed">மறுபிரதி செயலிழந்தது.</string>
-    <string name="import_failed_nosd">மறுபிரதி மீட்டெடுக்க முடியாது. மறுபிரதி கோப்புறை கிடைக்கப்பெறவில்லை.</string>
-    <string name="import_failed_nofile">எந்த படிக்கக்கூடியதாக மறுபிரதி கோப்பு உள்ளது.</string>
-    <string name="import_success">மறுபிரதி வெற்றிகரமாக மீட்டெடுக்கப்பட்டது.</string>
-    <string name="import_failed">மறுபிரதி மீட்டெடுத்தல் செயலிழந்தது.</string>
-    <string name="backup_button">மறுபிரதி உருவாக்கு</string>
+    <string name="status_successful">Successful</string>
+    <string name="status_failure">Failed</string>
+    <string name="status_failed_file_access">Can not find or access file</string>
     <string name="import_button">மீட்டெடுக்க மறுபிரதி</string>
+    <string name="action_view_import_documentation">View expected format</string>
     <string name="import_warning">நான் எனது தற்போதைய காட்சிகள் புரிந்துகொள்ள, பட்டியல்கள் மற்றும் படங்கள் மாற்றப்படும்!</string>
+    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
+    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
     <string name="no_file_selected">தேர்ந்தெடுத்த கோப்பு இல்லை</string>
     <string name="action_select_file">கோப்பு தேர்ந்தெடு</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">தானியங்கு மறுபிரதி</string>
     <string name="pref_autobackupsummary">உங்கள் காட்சிகள், பட்டியல்கள் மற்றும் திரைப்படங்கள் வார மறுபிரதி</string>
     <string name="autobackup_details">These backups are unavailable if the app is installed again. Create copies to preserve them otherwise.</string>
+    <string name="backup_button">மறுபிரதி உருவாக்கு</string>
     <string name="last_auto_backup">கடைசி தானியங்கு மறுபிரதி: %s</string>
     <string name="restore_auto_backup">தானியங்கு மறுபிரதி மீட்டெடு</string>
     <string name="autobackup_failed">The last auto backup has failed</string>
@@ -560,6 +562,11 @@
     <string name="feedback_question_feedback">எனக்கு அதை மேம்படுத்துவது எப்படி என்பதை கூறுங்கள்?</string>
     <string name="feedback_action_ok">சரி, நிச்சயமாக</string>
     <string name="feedback_action_nothanks">இல்லை, நன்றி</string>
-    <!-- Support -->
+    <!-- Support the dev -->
     <string name="support_the_dev">Support the developer?</string>
+    <string name="support_the_dev_other_ways">Other ways to support</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Debug log</string>
+    <string name="status_saving_file_success">File saved</string>
+    <string name="status_saving_file_failed">Failed to save file</string>
 </resources>

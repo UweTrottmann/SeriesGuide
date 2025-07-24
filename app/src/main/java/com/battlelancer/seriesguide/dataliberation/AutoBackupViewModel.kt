@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2020-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.dataliberation
 
@@ -8,14 +8,27 @@ import android.text.format.DateUtils
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.dataliberation.DataLiberationTools.getFileNameFromUriOrLastPathSegment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 /**
  * View model that checks for available backup files.
  */
 class AutoBackupViewModel(application: Application) : AndroidViewModel(application) {
+
+    data class CopiesFiles(
+        val fileNameShows: String?,
+        val fileNameLists: String?,
+        val fileNameMovies: String?,
+        val placeholderText: String,
+        val visible: Boolean
+    )
+
+    val copiesFiles = MutableStateFlow(CopiesFiles("", "", "", "", visible = false))
 
     /**
      * Try to keep the import task around on config changes
@@ -33,13 +46,13 @@ class AutoBackupViewModel(application: Application) : AndroidViewModel(applicati
 
     fun updateAvailableBackupData() = viewModelScope.launch(Dispatchers.IO) {
         val backupShows = AutoBackupTools.getLatestBackupOrNull(
-            JsonExportTask.BACKUP_SHOWS, getApplication()
+            JsonExportTask.EXPORT_SHOWS, getApplication()
         )
         val backupLists = AutoBackupTools.getLatestBackupOrNull(
-            JsonExportTask.BACKUP_LISTS, getApplication()
+            JsonExportTask.EXPORT_LISTS, getApplication()
         )
         val backupMovies = AutoBackupTools.getLatestBackupOrNull(
-            JsonExportTask.BACKUP_MOVIES, getApplication()
+            JsonExportTask.EXPORT_MOVIES, getApplication()
         )
 
         // All three files required.
@@ -64,6 +77,38 @@ class AutoBackupViewModel(application: Application) : AndroidViewModel(applicati
         )
 
         availableBackupLiveData.postValue(availableBackupTimeString.toString())
+    }
+
+    fun updateCopiesFileNames() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val context = getApplication<Application>()
+
+            val visible = BackupSettings.isCreateCopyOfAutoBackup(context)
+            if (!visible) {
+                copiesFiles.value = CopiesFiles(null, null, null, "", visible = false)
+            } else {
+                val showsFileUri = BackupSettings.getExportFileUri(
+                    context,
+                    JsonExportTask.EXPORT_SHOWS, true
+                )
+                val listsFileUri = BackupSettings.getExportFileUri(
+                    context,
+                    JsonExportTask.EXPORT_LISTS, true
+                )
+                val moviesFileUri = BackupSettings.getExportFileUri(
+                    context,
+                    JsonExportTask.EXPORT_MOVIES, true
+                )
+
+                copiesFiles.value = CopiesFiles(
+                    fileNameShows = showsFileUri?.getFileNameFromUriOrLastPathSegment(context),
+                    fileNameLists = listsFileUri?.getFileNameFromUriOrLastPathSegment(context),
+                    fileNameMovies = moviesFileUri?.getFileNameFromUriOrLastPathSegment(context),
+                    placeholderText = context.getString(R.string.no_file_selected),
+                    visible = true
+                )
+            }
+        }
     }
 
     override fun onCleared() {

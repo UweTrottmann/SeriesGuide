@@ -1,0 +1,17 @@
+[
+    {
+        "tmdb_id": 68421,
+        "language": "de-DE",
+        "seasons": [
+            {
+                "tmdb_id": "81447",
+                "episodes": [
+                    {
+                        "tmdb_id": 1401623,
+                        "watched": true
+                    }
+                ]
+            }
+        ]
+    }
+]

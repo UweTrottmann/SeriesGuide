@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2019-2024 Uwe Trottmann
+// Copyright 2019-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies.details
 
@@ -9,8 +9,6 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -20,19 +18,18 @@ import androidx.appcompat.widget.TooltipCompat
 import androidx.collection.SparseArrayCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
-import androidx.core.view.MenuProvider
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
 import androidx.palette.graphics.Palette
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
+import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.comments.TraktCommentsActivity
 import com.battlelancer.seriesguide.databinding.FragmentMovieBinding
 import com.battlelancer.seriesguide.extensions.ActionsHelper
@@ -66,7 +63,6 @@ import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.TimeTools
-import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.WebTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
@@ -160,7 +156,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             buttonMovieShare.setOnClickListener {
                 movieDetails?.tmdbMovie()
                     ?.title
-                    ?.let { ShareUtils.shareMovie(activity, tmdbId, it) }
+                    ?.let { ShareUtils.shareMovie(requireActivity(), tmdbId, it) }
             }
             buttonMovieCalendar.setOnClickListener {
                 movieDetails?.tmdbMovie()?.also {
@@ -238,12 +234,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                 watchInfo, true
             )
         }
-
-        requireActivity().addMenuProvider(
-            optionsMenuProvider,
-            viewLifecycleOwner,
-            Lifecycle.State.RESUMED
-        )
     }
 
     private fun setupViews() {
@@ -293,57 +283,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         _binding = null
     }
 
-    private val optionsMenuProvider = object : MenuProvider {
-        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-            movieDetails?.let {
-                menuInflater.inflate(R.menu.movie_details_menu, menu)
-
-                // enable/disable actions
-                val hasTitle = !it.tmdbMovie()?.title.isNullOrEmpty()
-                menu.findItem(R.id.menu_open_metacritic).apply {
-                    isEnabled = hasTitle
-                    isVisible = hasTitle
-                }
-
-                val isEnableImdb = !it.tmdbMovie()?.imdb_id.isNullOrEmpty()
-                menu.findItem(R.id.menu_open_imdb).apply {
-                    isEnabled = isEnableImdb
-                    isVisible = isEnableImdb
-                }
-            }
-        }
-
-        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-            return when (menuItem.itemId) {
-                R.id.menu_open_imdb -> {
-                    movieDetails?.tmdbMovie()
-                        ?.let { ServiceUtils.openImdb(it.imdb_id, activity) }
-                    true
-                }
-
-                R.id.menu_open_metacritic -> {
-                    // Metacritic only has English titles, so using the original title is the best bet.
-                    val titleOrNull = movieDetails?.tmdbMovie()
-                        ?.let { it.original_title ?: it.title }
-                    titleOrNull?.let { Metacritic.searchForMovie(requireContext(), it) }
-                    true
-                }
-
-                R.id.menu_open_tmdb -> {
-                    WebTools.openInApp(requireContext(), TmdbTools.buildMovieUrl(tmdbId))
-                    true
-                }
-
-                R.id.menu_open_trakt -> {
-                    WebTools.openInApp(requireContext(), TraktTools.buildMovieUrl(tmdbId))
-                    true
-                }
-
-                else -> false
-            }
-        }
-    }
-
     private fun populateMovieViews() {
         val movieDetails = this.movieDetails ?: return
         /*
@@ -359,7 +298,23 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         movieTitle = tmdbMovie.title
         binding.textViewMovieTitle.text = tmdbMovie.title
-        requireActivity().title = tmdbMovie.title
+
+        val releaseDate = tmdbMovie.release_date
+        val releaseDateAndLength = TextTools.dotSeparate(
+            releaseDate?.let { TimeTools.formatToLocalDate(context, it) },
+            tmdbMovie.runtime?.let { TimeTools.formatToHoursAndMinutes(resources, it) }
+        )
+
+        // Use movie title, release date and length in app bar (shown when scrolling)
+        // Set activity title for accessibility tools
+        (requireActivity() as AppCompatActivity).apply {
+            title = tmdbMovie.title
+            supportActionBar?.let {
+                it.title = tmdbMovie.title
+                it.subtitle = releaseDateAndLength
+            }
+        }
+
         binding.textViewMovieDescription.text = TextTools.textWithTmdbSource(
             binding.textViewMovieDescription.context,
             tmdbMovie.overview
@@ -367,21 +322,13 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         binding.containerMovieButtons.buttonMovieShare.isEnabled = movieTitle != null
 
-        // release date and runtime: "July 17, 2009 | 95 min"
-        val releaseAndRuntime = StringBuilder()
-        val releaseDate = tmdbMovie.release_date
-        releaseDate?.let {
-            releaseAndRuntime.append(TimeTools.formatToLocalDate(context, it))
-            releaseAndRuntime.append(" | ")
-        }
+        // release date and runtime: "July 17, 2009 · 1 h 5 min"
+        binding.textViewMovieDate.text = releaseDateAndLength
+
         // hide create event button if release date is yesterday or older
         binding.containerMovieButtons.buttonMovieCalendar.isGone =
             releaseDate == null || Instant.ofEpochMilli(releaseDate.time)
                 .isBefore(ZonedDateTime.now().minusDays(1).toInstant())
-        tmdbMovie.runtime?.let {
-            releaseAndRuntime.append(TimeTools.formatToHoursAndMinutes(resources, it))
-        }
-        binding.textViewMovieDate.text = releaseAndRuntime.toString()
 
         // hide check-in if not connected to trakt or hexagon is enabled
         val isConnectedToTrakt = TraktCredentials.get(requireContext()).hasCredentials()
@@ -417,7 +364,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                         }
                         .show()
                 } else {
-                    MovieTools.watchedMovie(context, tmdbId, plays, inWatchlist)
+                    MovieTools.watchedMovie(requireContext(), tmdbId, plays, inWatchlist)
                 }
             }
         }
@@ -440,9 +387,9 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             )
             it.setOnClickListener {
                 if (inCollection) {
-                    MovieTools.removeFromCollection(context, tmdbId)
+                    MovieTools.removeFromCollection(requireContext(), tmdbId)
                 } else {
-                    MovieTools.addToCollection(context, tmdbId)
+                    MovieTools.addToCollection(requireContext(), tmdbId)
                 }
             }
         }
@@ -464,14 +411,14 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             )
             it.setOnClickListener {
                 if (inWatchlist) {
-                    MovieTools.removeFromWatchlist(context, tmdbId)
+                    MovieTools.removeFromWatchlist(requireContext(), tmdbId)
                 } else {
-                    MovieTools.addToWatchlist(context, tmdbId)
+                    MovieTools.addToWatchlist(requireContext(), tmdbId)
                 }
             }
         }
 
-        // trakt comments link
+        // Comments
         binding.containerMovieButtons.buttonMovieComments.apply {
             setOnClickListener { v ->
                 val tmdbId = tmdbId
@@ -479,6 +426,19 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                     val i = TraktCommentsActivity.intentMovie(requireContext(), movieTitle, tmdbId)
                     requireActivity().startActivityWithAnimation(i, v)
                 }
+            }
+        }
+
+        // Metacritic search
+        binding.containerMovieButtons.buttonMovieMetacritic.apply {
+            // Metacritic only has English titles so mostly English speaking users will use it,
+            // so its likely the original language of the movie is English.
+            val titleOrNull = if (tmdbMovie.original_language == "en") {
+                tmdbMovie.original_title
+            } else tmdbMovie.title
+            isGone = titleOrNull.isNullOrEmpty()
+            setOnClickListener {
+                titleOrNull?.let { Metacritic.searchForMovie(requireContext(), it) }
             }
         }
 
@@ -542,6 +502,21 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         ViewTools.setValueOrPlaceholder(
             binding.textViewMovieGenres, TmdbTools.buildGenresString(tmdbMovie.genres)
         )
+
+        // links
+        binding.containerMovieBottom.buttonMovieTmdb.setOnClickListener {
+            WebTools.openInApp(requireContext(), TmdbTools.buildMovieUrl(tmdbId))
+        }
+        binding.containerMovieBottom.buttonMovieTrakt.setOnClickListener {
+            WebTools.openInApp(requireContext(), TraktTools.buildMovieUrl(tmdbId))
+        }
+        binding.containerMovieBottom.buttonMovieImdb.apply {
+            val imdbId = tmdbMovie.imdb_id
+            isGone = imdbId.isNullOrEmpty()
+            setOnClickListener {
+                imdbId?.let { ServiceUtils.openImdb(it, requireContext()) }
+            }
+        }
 
         // When this movie was last updated by this app
         binding.labelMovieLastUpdated.isGone = false
@@ -625,10 +600,10 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     ) : PopupMenu.OnMenuItemClickListener {
         override fun onMenuItemClick(item: MenuItem): Boolean {
             when (item.itemId) {
-                R.id.watched_popup_menu_watch_again -> if (Utils.hasAccessToX(context)) {
+                R.id.watched_popup_menu_watch_again -> if (BillingTools.hasAccessToPaidFeatures(context)) {
                     MovieTools.watchedMovie(context, movieTmdbId, plays, inWatchlist)
                 } else {
-                    Utils.advertiseSubscription(context)
+                    BillingTools.advertiseSubscription(context)
                 }
 
                 R.id.watched_popup_menu_set_not_watched -> MovieTools.unwatchedMovie(
@@ -683,7 +658,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEvent(event: MovieTools.MovieChangedEvent) {
+    fun onEvent(event: MovieChangedEvent) {
         if (event.movieTmdbId != tmdbId) {
             return
         }
@@ -744,7 +719,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         Timber.d("loadMovieActions: received %s actions for %s", actions.size, tmdbId)
         requireActivity().run {
             ActionsHelper.populateActions(
-                layoutInflater, theme, binding.containerMovieActions, actions
+                layoutInflater, binding.containerMovieActions, actions
             )
         }
     }
@@ -910,4 +885,9 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             }
         }
     }
+
+    /**
+     * Post to make [MovieDetailsFragment] update movie details.
+     */
+    class MovieChangedEvent(var movieTmdbId: Int)
 }

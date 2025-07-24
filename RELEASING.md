@@ -3,7 +3,7 @@
 - If it does not exist, create a release branch. If it exists, merge latest changes.
 
   ```shell
-  git checkout -b release-2025.1
+  git checkout -b release-2025.2
   # or
   git merge dev
   ```
@@ -20,8 +20,8 @@
 - Commit and push
 
   ```shell
-  git commit --all --message "Prepare version 2025.1.1 (21250102)"
-  git push --set-upstream origin release-2025.1
+  git commit --all --message "Prepare version 2025.2.6 (21250207)"
+  git push --set-upstream origin release-2025.2
   ```
 
 - If it does not exist, [create a merge request](https://github.com/UweTrottmann/SeriesGuide/compare/main...) against `main`
@@ -34,38 +34,41 @@
 
 ### Alpha
 
-- Prepare store release notes (English only)
 - Publish to alpha channel
 - Test update on test device
     
 ### Beta
 
-- Tag release
+- Tag release commit
   
   ```shell
-  git tag v2025.1.1
-  git push origin v2025.1.1
+  git tag v2025.2.6
+  git push origin v2025.2.6
+  git checkout dev
+  git merge release-2025.2
+  git push origin dev
   ```
 
 - Promote to beta channel
+- Create or update preview release post on forum
 
 ### Production
 
-- Prepare store release notes
+- `bundleAmazonRelease`
 - Merge release pull request to `main`
+- Download universal APK from Play Store
+- [Create GitHub release](https://github.com/UweTrottmann/SeriesGuide/releases/new)
+  - title like `SeriesGuide 2025.2.6`
+  - get release notes from [`CHANGELOG.md`](/CHANGELOG.md)
+  - attach APK
+- Prepare release post on forum
+- Promote to production
+- Publish to Amazon App Store
+- Publish release post on forum, post on Mastodon
+- Test Amazon update on test device
 - Merge changes to dev branch
 
   ```shell
-  git checkout main
-  git pull
   git checkout dev
-  git merge main
+  git merge --no-ff release-2025.2
   ```
-
-- Promote to production
-- Download universal APK from Play Store and attach to GitHub tag
-
-## Amazon App Store (production only)
-
-- `bundleAmazonRelease`
-- Test update on test device

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2019-2024 Uwe Trottmann
+// Copyright 2019-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows
 
@@ -10,18 +10,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.core.content.edit
 import androidx.core.view.isGone
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.preference.PreferenceManager
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
 import com.battlelancer.seriesguide.databinding.DialogShowsDistillationBinding
 import com.battlelancer.seriesguide.settings.AdvancedSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
-import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowFilter
+import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowFilters
+import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowSortOrder
 import com.battlelancer.seriesguide.streaming.SgWatchProvider
 import com.battlelancer.seriesguide.streaming.StreamingSearchInfoDialog
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
@@ -29,9 +31,11 @@ import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.safeShow
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import kotlinx.coroutines.launch
 
 class ShowsDistillationFragment : AppCompatDialogFragment() {
 
+    private val activityModel: ShowsActivityViewModel by activityViewModels()
     private val model: ShowsDistillationViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,8 +53,8 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
 
         val binding = DialogShowsDistillationBinding.inflate(inflater, container, false)
 
-        val initialShowFilter = ShowFilter.fromSettings(requireContext())
-        val initialShowSortOrder = SortShowsView.ShowSortOrder.fromSettings(requireContext())
+        val initialShowFilters = ShowFilters.fromSettings(requireContext())
+        val initialShowSortOrder = ShowSortOrder.fromSettings(requireContext())
 
         binding.apply {
             filterShowsView.isGone = false
@@ -75,7 +79,7 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
 
             filterShowsView.apply {
                 setInitialFilter(
-                    initialShowFilter,
+                    initialShowFilters,
                     DisplaySettings.isNoReleasedEpisodes(context)
                 )
                 setFilterListener(filterListener)
@@ -102,14 +106,45 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
                 setInitialSort(initialShowSortOrder)
                 setSortOrderListener(sortOrderListener)
             }
+
+            // Display tab icon with indicator if general filter is active
+            lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    activityModel.showsDistillationSettings.showFilters.collect {
+                        tabLayoutShowsDistillation.setFilterIsActiveIcon(0, it.isAnyFilterEnabled())
+                    }
+                }
+            }
+
+            // Display tab icon with indicator if filtering by watch provider
+            lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    model.watchProvidersFlow.collect { watchProviders ->
+                        val isFiltering =
+                            ShowsDistillationViewModel.isFilteringByWatchProviders(watchProviders)
+                        tabLayoutShowsDistillation.setFilterIsActiveIcon(1, isFiltering)
+                    }
+                }
+            }
         }
 
         return binding.root
     }
 
+    private fun TabLayout.setFilterIsActiveIcon(index: Int, isFiltering: Boolean) {
+        getTabAt(index)!!
+            .setIcon(
+                if (isFiltering) {
+                    R.drawable.ic_filter_selected_white_24dp
+                } else {
+                    R.drawable.ic_filter_white_24dp
+                }
+            )
+    }
+
     private val filterListener = object : FilterShowsView.FilterListener {
-        override fun onFilterUpdate(filter: ShowFilter) {
-            ShowsDistillationSettings.saveFilter(requireContext(), filter)
+        override fun onFilterUpdate(filters: ShowFilters) {
+            activityModel.showsDistillationSettings.saveFilters(filters)
         }
 
         override fun onConfigureUpcomingRangeClick() {
@@ -152,29 +187,9 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
     }
 
     private val sortOrderListener = object : SortShowsView.SortOrderListener {
-        override fun onSortOrderUpdate(showSortOrder: SortShowsView.ShowSortOrder) {
-            // save new sort order to preferences
-            PreferenceManager.getDefaultSharedPreferences(requireContext()).edit {
-                putInt(ShowsDistillationSettings.KEY_SORT_ORDER, showSortOrder.sortOrderId)
-                putBoolean(
-                    ShowsDistillationSettings.KEY_SORT_FAVORITES_FIRST,
-                    showSortOrder.isSortFavoritesFirst
-                )
-                putBoolean(
-                    DisplaySettings.KEY_SORT_IGNORE_ARTICLE,
-                    showSortOrder.isSortIgnoreArticles
-                )
-            }
-
-            // broadcast new sort order
-            ShowsDistillationSettings.sortOrder.value = showSortOrder
-
-            if (showSortOrder.changedIgnoreArticles) {
-                // refresh all list widgets
-                ListWidgetProvider.notifyDataChanged(context!!)
-            }
+        override fun onSortOrderUpdate(showSortOrder: ShowSortOrder) {
+            activityModel.showsDistillationSettings.saveSortOrder(showSortOrder)
         }
-
     }
 
     companion object {

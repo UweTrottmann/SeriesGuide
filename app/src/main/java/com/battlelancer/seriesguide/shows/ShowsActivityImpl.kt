@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2011-2024 Uwe Trottmann
+// Copyright 2011-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows
 
@@ -14,6 +14,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.api.Intents
 import com.battlelancer.seriesguide.billing.BillingActivity
+import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.billing.amazon.AmazonHelper
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
@@ -23,18 +24,16 @@ import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.shows.history.ShowsHistoryFragment
 import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment
 import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverFragment
-import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverPagingActivity
 import com.battlelancer.seriesguide.sync.AccountUtils
 import com.battlelancer.seriesguide.ui.BaseTopActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.TabStripAdapter
 import com.battlelancer.seriesguide.util.AppUpgrade
+import com.battlelancer.seriesguide.util.PackageTools
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ThemeUtils
-import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.WebTools
 import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.uwetrottmann.seriesguide.billing.BillingViewModel
 import com.uwetrottmann.seriesguide.billing.BillingViewModelFactory
@@ -78,7 +77,7 @@ open class ShowsActivityImpl : BaseTopActivity() {
 
         if (AppUpgrade(applicationContext).upgradeIfNewVersion()) {
             // Let the user know the app has updated.
-            Snackbar.make(snackbarParentView, R.string.updated, Snackbar.LENGTH_LONG)
+            makeSnackbar(R.string.updated, Snackbar.LENGTH_LONG)
                 .setAction(R.string.updated_what_is_new) {
                     WebTools.openInApp(
                         this@ShowsActivityImpl,
@@ -103,7 +102,7 @@ open class ShowsActivityImpl : BaseTopActivity() {
         setInitialTab(intent.extras)
 
         // query for in-app purchases
-        if (Utils.isAmazonVersion()) {
+        if (PackageTools.isAmazonVersion()) {
             // setup Amazon IAP
             AmazonHelper.create(this)
             AmazonHelper.iapManager.register()
@@ -187,12 +186,6 @@ open class ShowsActivityImpl : BaseTopActivity() {
     }
 
     private fun setupViews() {
-        // setup floating action button
-        val floatingActionButton = findViewById<FloatingActionButton>(R.id.buttonShowsFloating)
-        floatingActionButton.setOnClickListener {
-            startActivity(ShowsDiscoverPagingActivity.intentSearch(this))
-        }
-
         viewPager = findViewById(R.id.viewPagerTabs)
         val tabs = findViewById<SlidingTabLayout>(R.id.sgTabLayout)
         tabs.setOnTabClickListener { position: Int ->
@@ -204,7 +197,6 @@ open class ShowsActivityImpl : BaseTopActivity() {
         tabs.setOnPageChangeListener(
             ShowsPageChangeListener(
                 findViewById(R.id.sgAppBarLayout),
-                floatingActionButton,
                 viewModel
             )
         )
@@ -268,7 +260,7 @@ open class ShowsActivityImpl : BaseTopActivity() {
     }
 
     private fun checkGooglePlayPurchase() {
-        if (Utils.hasXpass(this)) {
+        if (BillingTools.hasUnlockKey(this)) {
             return
         }
         // Automatically starts checking all access status.
@@ -278,8 +270,14 @@ open class ShowsActivityImpl : BaseTopActivity() {
                 .get(BillingViewModel::class.java)
         billingViewModel.entitlementRevokedEvent
             .observe(this) {
-                // Note: sometimes sub is not really expired, only billing API not returning purchase.
-                BillingActivity.showExpiredNotification(this, snackbarParentView)
+                // Note: sometimes sub is not really expired, only billing API not returning
+                // purchase. Assume that opening BillingActivity through the action of the message
+                // will also help resolve the issue.
+                makeSnackbar(R.string.subscription_expired_details, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(R.string.billing_action_manage_subscriptions) {
+                        startActivity(BillingActivity.intent(this))
+                    }
+                    .show()
             }
     }
 
@@ -302,7 +300,7 @@ open class ShowsActivityImpl : BaseTopActivity() {
         // prefs might have changed, update menus
         invalidateOptionsMenu()
 
-        if (Utils.isAmazonVersion()) {
+        if (PackageTools.isAmazonVersion()) {
             // update Amazon IAP
             AmazonHelper.iapManager.activate()
             AmazonHelper.iapManager.requestUserDataAndPurchaseUpdates()
@@ -316,7 +314,7 @@ open class ShowsActivityImpl : BaseTopActivity() {
     override fun onPause() {
         super.onPause()
 
-        if (Utils.isAmazonVersion()) {
+        if (PackageTools.isAmazonVersion()) {
             // pause Amazon IAP
             AmazonHelper.iapManager.deactivate()
         }
@@ -329,14 +327,11 @@ open class ShowsActivityImpl : BaseTopActivity() {
         get() = findViewById(R.id.coordinatorLayoutShows)
 
     /**
-     * Page change listener which
-     * - sets the scroll view of the current visible tab as the lift on scroll target view of the
-     *   app bar and
-     * - hides the floating action button for all but the discover tab.
+     * Page change listener which sets the scroll view of the current visible tab as the lift on
+     * scroll target view of the app bar.
      */
     class ShowsPageChangeListener(
         private val appBarLayout: AppBarLayout,
-        private val floatingActionButton: FloatingActionButton,
         private val viewModel: ShowsActivityViewModel
     ) : ViewPager2.OnPageChangeCallback() {
         override fun onPageScrollStateChanged(arg0: Int) {}
@@ -356,12 +351,6 @@ open class ShowsActivityImpl : BaseTopActivity() {
                 else -> throw IllegalArgumentException("Unexpected page position")
             }
             appBarLayout.liftOnScrollTargetViewId = liftOnScrollTarget
-
-            if (position == Tab.DISCOVER.index) {
-                floatingActionButton.show()
-            } else {
-                floatingActionButton.hide()
-            }
         }
     }
 

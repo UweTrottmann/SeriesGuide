@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2024 Uwe Trottmann
+// Copyright 2024-2025 Uwe Trottmann
+
+@file:Suppress("DEPRECATION") // Ignore warning that AsyncTask should not be used for new code
 
 package com.battlelancer.seriesguide.shows.search.discover
 

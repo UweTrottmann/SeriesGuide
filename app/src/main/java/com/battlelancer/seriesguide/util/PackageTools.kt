@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2023-2024 Uwe Trottmann
+// Copyright 2023-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.util
 
@@ -17,6 +17,15 @@ import timber.log.Timber
  * Helpers that work with [PackageManager].
  */
 object PackageTools {
+
+    private const val FLAVOR_AMAZON = "amazon"
+
+    /**
+     * Check if this is a build for the Amazon app store.
+     */
+    @JvmStatic
+    @Suppress("SimplifyBooleanWithConstants", "KotlinConstantConditions")
+    fun isAmazonVersion(): Boolean = FLAVOR_AMAZON == BuildConfig.FLAVOR
 
     fun getAppPackage(context: Context): PackageInfo {
         return context.packageManager.getPackageInfoCompat(context.packageName, 0)

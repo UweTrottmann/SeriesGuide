@@ -40,9 +40,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:layout_marginBottom="@dimen/default_padding"
                     android:text="@string/upgrade_description"
                     android:textAppearance="@style/TextAppearance.SeriesGuide.Body2" />
+
+                <Button
+                    android:id="@+id/buttonBillingMoreOptions"
+                    style="@style/Widget.SeriesGuide.Button.Outlined"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_padding"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/support_the_dev_other_ways" />
 
                 <TextView
                     android:id="@+id/textViewBillingExisting"
@@ -64,10 +72,15 @@
                     android:text="@string/billing_unlock_detected"
                     android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold.Accent" />
 
+                <!--
+                overScrollMode="never": always matches height to display all items, so disable
+                overscroll effect.
+                -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewBilling"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:overScrollMode="never"
                     tools:itemCount="3"
                     tools:listitem="@layout/item_inventory" />
 
@@ -93,7 +106,7 @@
 
                 <Button
                     android:id="@+id/buttonBillingManageSubscription"
-                    style="@style/Widget.SeriesGuide.Button"
+                    style="@style/Widget.SeriesGuide.Button.Outlined"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -101,7 +114,7 @@
                     android:text="@string/billing_action_manage_subscriptions" />
 
                 <Button
-                    android:id="@+id/textViewBillingMoreInfo"
+                    android:id="@+id/buttonBillingMoreInfo"
                     style="@style/Widget.SeriesGuide.Button.Outlined"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

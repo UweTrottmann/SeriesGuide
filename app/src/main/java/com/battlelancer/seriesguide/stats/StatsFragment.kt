@@ -364,6 +364,10 @@ class StatsFragment : Fragment() {
 
         statsString.append(movieStats)
 
-        ShareUtils.startShareIntentChooser(activity, statsString.toString(), R.string.share)
+        ShareUtils.startShareIntentChooser(
+            requireActivity(),
+            statsString.toString(),
+            R.string.share
+        )
     }
 }

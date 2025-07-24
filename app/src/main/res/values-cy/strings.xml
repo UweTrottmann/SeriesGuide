@@ -19,6 +19,7 @@
     <string name="season_number">Tymor %d</string>
     <string name="specialseason">Episodau Arbennig</string>
     <string name="ratings">Sgoriau</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Trosolwg</string>
@@ -40,6 +41,7 @@
     <string name="action_select_region">Dewis rhanbarth</string>
     <string name="action_reset">Reset</string>
     <string name="action_save">Save</string>
+    <string name="action_turn_on">Turn on</string>
     <!-- Search -->
     <string name="clear_search_history">Hanes chwilio clir</string>
     <string name="search_hint">Chwilio penodau</string>
@@ -58,6 +60,7 @@
     <string name="api_failed">Wedi methu: %s</string>
     <string name="copy_to_clipboard">Copi i\'r clipfwrdd</string>
     <string name="not_migrated">Rhaglen heb ei symud i ddata TMDB. Efallai na fydd rhai gweithredoedd gan gynnwys Trakt a Cloud sync yn gweithio. Efallai chwiliwch am un arall a chael gwared ar y sioe hon. Tapiwch i weld y manylion.</string>
+    <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">Rhannu</string>
     <string name="share_show">Sioe rhannu</string>
@@ -65,7 +68,6 @@
     <string name="share_movie">Rhannu ffilm</string>
     <string name="addtocalendar">Ychwanegu at y calendr</string>
     <string name="addtocalendar_failed">Methu creu digwyddiad calendr</string>
-    <string name="links">Dolenni</string>
     <!-- Comments -->
     <string name="comments">Sylwadau</string>
     <string name="shout_hint">Teipiwch sylw (Saesneg, 5+ gair)</string>
@@ -104,8 +106,7 @@
     <string name="show_status_in_production">Mewn Cynhyrchu</string>
     <string name="show_status_pilot">Peilot Teledu</string>
     <string name="show_status_canceled">Wedi\'i ganslo</string>
-    <string name="no_translation">Nid oes disgrifiad wedi\'i gyfieithu i%1$s ar gael ar %2$s.</string>
-    <string name="no_translation_title">Heb ei gyfieithu</string>
+    <string name="no_translation">No details in %1$s available, consider adding them at %2$s. Or try to change the language.</string>
     <string name="no_spoilers">Mae rhai manylion wedi\'u cuddio i atal anrheithwyr. I ddiffodd hyn ewch i Gosodiadau.</string>
     <string name="format_source">Ffynhonnell: %s</string>
     <string name="last_updated">Diweddarwyd diwethaf</string>
@@ -312,6 +313,7 @@
     <string name="action_movies_sort_release">Dyddiad rhyddhau</string>
     <string name="title_similar_movies">Similar movies</string>
     <string name="title_release_dates">Release dates</string>
+    <string name="error_movie_not_found">Movie removed from TMDB. Remove it from lists, set it not watched. Using Trakt? On their website, search for its TMDB ID and remove it from history and lists.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Methu cyfrifo ystadegau</string>
     <string name="shows_finished">%s gorffen gwylio</string>
@@ -390,7 +392,6 @@
     <string name="disconnect">Datgysylltwch</string>
     <string name="show_library">Ychwanegu rhaglenni o Trakt</string>
     <string name="about_trakt">Mae Trakt yn helpu i gadw cofnod o\'r rhaglenni teledu a\'r ffilmiau rydych chi\'n eu gwylio.</string>
-    <string name="support_trakt">Support Trakt with VIP</string>
     <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">Cyfradd</string>
@@ -500,33 +501,34 @@
     <string name="theme_app_dark">Tywyll</string>
     <string name="theme_app_light">Golau</string>
     <!-- Other advanced settings -->
-    <string name="pref_other">Arall</string>
+    <string name="pref_category_diagnostics">Diagnostics</string>
     <string name="pref_autoupdatesummary">Cysoni a diweddaru cynnwys yn awtomatig</string>
-    <string name="backup">Gwneud copi wrth gefn / Adfer</string>
-    <string name="backup_summary">Gwneud copi wrth gefn neu adfer eich sioeau, rhestrau a ffilmiau</string>
     <string name="pref_number">Fformat rhif</string>
     <string name="pref_offset">Gwrthbwyso amser â llaw</string>
     <string name="pref_offsetsummary">Gwrthbwyso amseroedd aer %d awr</string>
     <string name="clear_cache">Cache clir</string>
     <string name="clear_cache_summary">Ewch i leoliadau storio i gael gwared ar ddelweddau wedi\'u storio ac ymatebion rhwydwaith</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Export and import</string>
+    <string name="title_export">Export</string>
+    <string name="title_import">Import</string>
+    <string name="action_export">Export to file</string>
     <string name="backup_full_dump">Cynhwyswch ddisgrifiadau, manylion, graddfeydd</string>
-    <string name="backup_failed_file_access">Methu gwneud copi wrth gefn. Ni ellir dod o hyd i ffeil wrth gefn na\'i chyrchu.</string>
-    <string name="backup_success">Gwneud copi wrth gefn yn llwyddiannus</string>
-    <string name="backup_failed">Methodd y copi wrth gefn</string>
-    <string name="import_failed_nosd">Methu adfer copi wrth gefn. Nid yw\'r ffolder wrth gefn ar gael.</string>
-    <string name="import_failed_nofile">Nid oes ffeil wrth gefn ddarllenadwy</string>
-    <string name="import_success">Adfer y copi wrth gefn yn llwyddiannus</string>
-    <string name="import_failed">Methodd adfer y copi wrth gefn</string>
-    <string name="backup_button">Creu copi wrth gefn</string>
+    <string name="status_successful">Successful</string>
+    <string name="status_failure">Failed</string>
+    <string name="status_failed_file_access">Can not find or access file</string>
     <string name="import_button">Adfer copi wrth gefn</string>
+    <string name="action_view_import_documentation">View expected format</string>
     <string name="import_warning">Bydd y copi wrth gefn yn disodli\'ch sioeau, rhestrau neu ffilmiau cyfredol</string>
+    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
+    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
     <string name="no_file_selected">Dim ffeil wedi\'i dewis</string>
     <string name="action_select_file">Dewiswch ffeil</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Gwneud copi wrth gefn awtomatig</string>
     <string name="pref_autobackupsummary">Gwneud copi wrth gefn wythnosol o\'ch sioeau, rhestrau a ffilmiau i storio dyfeisiau.</string>
     <string name="autobackup_details">Nid yw\'r copïau wrth gefn hyn ar gael os yw\'r app wedi\'i osod eto. Creu copïau i\'w cadw fel arall.</string>
+    <string name="backup_button">Creu copi wrth gefn</string>
     <string name="last_auto_backup">Gwneud copi wrth gefn awtomatig diwethaf:%s</string>
     <string name="restore_auto_backup">Adfer copi wrth gefn awtomatig</string>
     <string name="autobackup_failed">Mae\'r copi wrth gefn awtomatig olaf wedi methu</string>
@@ -616,6 +618,11 @@
     <string name="feedback_question_feedback">Dywedwch wrthyf sut i\'w wella?</string>
     <string name="feedback_action_ok">Iawn, yn sicr</string>
     <string name="feedback_action_nothanks">Dim diolch</string>
-    <!-- Support -->
+    <!-- Support the dev -->
     <string name="support_the_dev">Cefnogi\'r datblygwr?</string>
+    <string name="support_the_dev_other_ways">Other ways to support</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Debug log</string>
+    <string name="status_saving_file_success">File saved</string>
+    <string name="status_saving_file_failed">Failed to save file</string>
 </resources>

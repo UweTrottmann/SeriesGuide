@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2021-2024 Uwe Trottmann
+// Copyright 2021-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.util
 
@@ -10,9 +10,11 @@ import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.settings.TmdbSettings
+import com.battlelancer.seriesguide.settings.UpdateSettings
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.RequestCreator
+import com.uwetrottmann.androidutils.AndroidUtils
 import timber.log.Timber
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
@@ -31,10 +33,28 @@ object ImageTools {
         get() = BuildConfig.IMAGE_CACHE_SECRET
 
     /**
+     * Returns false if there is an active, but metered connection and the user did not approve it
+     * for large data downloads (e.g. images).
+     */
+    fun isAllowedLargeDataConnection(context: Context): Boolean {
+        val largeDataOverWifiOnly = UpdateSettings.isLargeDataOverWifiOnly(context)
+
+        // check connection state
+        val isConnected = if (largeDataOverWifiOnly) {
+            // only allow large data downloads over non-metered connections
+            AndroidUtils.isUnmeteredNetworkConnected(context)
+        } else {
+            AndroidUtils.isNetworkConnected(context)
+        }
+
+        return isConnected
+    }
+
+    /**
      * Build Picasso [com.squareup.picasso.RequestCreator] which respects user requirement of
      * only loading images over WiFi.
      *
-     * If [Utils.isAllowedLargeDataConnection] is false, will set [com.squareup.picasso.NetworkPolicy.OFFLINE]
+     * If [isAllowedLargeDataConnection] is false, will set [com.squareup.picasso.NetworkPolicy.OFFLINE]
      * (which will set [okhttp3.CacheControl.FORCE_CACHE] on requests) to skip the network and
      * accept stale images.
      *
@@ -43,7 +63,7 @@ object ImageTools {
     @JvmStatic
     fun loadWithPicasso(context: Context, path: String?): RequestCreator {
         val requestCreator = Picasso.get().load(path)
-        if (!Utils.isAllowedLargeDataConnection(context.applicationContext)) {
+        if (!isAllowedLargeDataConnection(context.applicationContext)) {
             // avoid the network, hit the cache immediately + accept stale images.
             requestCreator.networkPolicy(NetworkPolicy.OFFLINE)
         }

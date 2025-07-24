@@ -19,6 +19,7 @@
     <string name="season_number">Sezona %d</string>
     <string name="specialseason">Posebne epizode</string>
     <string name="ratings">Ocjene</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Pregled</string>
@@ -40,6 +41,7 @@
     <string name="action_select_region">Select region</string>
     <string name="action_reset">Reset</string>
     <string name="action_save">Save</string>
+    <string name="action_turn_on">Turn on</string>
     <!-- Search -->
     <string name="clear_search_history">Očisti povijest pretraživanja</string>
     <string name="search_hint">Pretraži epizode</string>
@@ -58,6 +60,7 @@
     <string name="api_failed">Nije uspjelo: %s</string>
     <string name="copy_to_clipboard">Kopirano u međuspremnik</string>
     <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">Podijeli</string>
     <string name="share_show">Podijeli seriju</string>
@@ -65,7 +68,6 @@
     <string name="share_movie">Podijelite film</string>
     <string name="addtocalendar">Dodaj u kalendar</string>
     <string name="addtocalendar_failed">Ne mogu stvoriti događaj u kalendaru.</string>
-    <string name="links">Poveznice</string>
     <!-- Comments -->
     <string name="comments">Komentari</string>
     <string name="shout_hint">Upišite komentar (engleski, 5 + riječi)</string>
@@ -101,8 +103,7 @@
     <string name="show_status_in_production">In Production</string>
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">Canceled</string>
-    <string name="no_translation">Nema prevedenog opisa za %1$s dostupnoh na %2$s.</string>
-    <string name="no_translation_title">Nije prevedeno</string>
+    <string name="no_translation">No details in %1$s available, consider adding them at %2$s. Or try to change the language.</string>
     <string name="no_spoilers">Neki detalji su skriveni kako bi se spriječili spojleri. Ovo možete isključiti u postavkama.</string>
     <string name="format_source">Izvor: %s</string>
     <string name="last_updated">Last updated</string>
@@ -291,6 +292,7 @@
     <string name="action_movies_sort_release">Datum emitiranja</string>
     <string name="title_similar_movies">Similar movies</string>
     <string name="title_release_dates">Release dates</string>
+    <string name="error_movie_not_found">Movie removed from TMDB. Remove it from lists, set it not watched. Using Trakt? On their website, search for its TMDB ID and remove it from history and lists.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Nije moguće izračunati statistike.</string>
     <string name="shows_finished">%s finished watching</string>
@@ -360,7 +362,6 @@
     <string name="disconnect">Odspoji</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt vam pomaže pratiti koje serije i filmove gledate.</string>
-    <string name="support_trakt">Support Trakt with VIP</string>
     <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">Ocijeni</string>
@@ -458,33 +459,34 @@
     <string name="theme_app_dark">Tamna</string>
     <string name="theme_app_light">Svijetla</string>
     <!-- Other advanced settings -->
-    <string name="pref_other">Ostalo</string>
+    <string name="pref_category_diagnostics">Diagnostics</string>
     <string name="pref_autoupdatesummary">Automatski sinkronizirajte i ažurirajte SeriesGuide podatke</string>
-    <string name="backup">Sigurnosno kopiranje/vraćanje</string>
-    <string name="backup_summary">Napravi sigurnosnu kopiju ili obnovi svoje serije</string>
     <string name="pref_number">Format broja</string>
     <string name="pref_offset">Ručno podešavanje vremenske razlike</string>
     <string name="pref_offsetsummary">Razlika u emitiranju %d sati</string>
     <string name="clear_cache">Očisti predmemoriju slika</string>
     <string name="clear_cache_summary">Uklonite sve slike iz predmemorije vašeg uređaja</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Export and import</string>
+    <string name="title_export">Export</string>
+    <string name="title_import">Import</string>
+    <string name="action_export">Export to file</string>
     <string name="backup_full_dump">Uključi opise, detalje i ocjene</string>
-    <string name="backup_failed_file_access">Nije moguće stvoriti sigur. kopiju. Datoteka sigur. kopije nije pronađena ili je nedostupna.</string>
-    <string name="backup_success">Sigurnosna kopija uspjela.</string>
-    <string name="backup_failed">Sigurnosna kopija nije uspjela.</string>
-    <string name="import_failed_nosd">Nije moguće vratiti sigur. kopiju. Mapa sigurnosne kopije nije dostupna.</string>
-    <string name="import_failed_nofile">Nema učitljive sigurnosne kopije.</string>
-    <string name="import_success">Sigurnosna kopija uspješno vraćena.</string>
-    <string name="import_failed">Vraćanje sigurnosne kopije nije uspjelo.</string>
-    <string name="backup_button">Stvori sigurnosnu kopiju</string>
+    <string name="status_successful">Successful</string>
+    <string name="status_failure">Failed</string>
+    <string name="status_failed_file_access">Can not find or access file</string>
     <string name="import_button">Obnovi</string>
+    <string name="action_view_import_documentation">View expected format</string>
     <string name="import_warning">Razumijem da će moje trenutačne serije i popisi biti zamijenjeni!</string>
+    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
+    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
     <string name="no_file_selected">Nije odabrana niti jedna datoteka</string>
     <string name="action_select_file">Odaberi datoteku</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatska sigurnosna kopija</string>
     <string name="pref_autobackupsummary">Tjedno sigurnosno kopiranje vaših serija, popisa i filmova</string>
     <string name="autobackup_details">Ove sigurnosne kopije su nedostupne ako se aplikacija ponovo instalira, osim ako je sigurnosna kopija aplikacije uključena za ovaj uređaj (Android 6+). Uprotivnom napravite kopije kako bi ste ih sačuvali.</string>
+    <string name="backup_button">Stvori sigurnosnu kopiju</string>
     <string name="last_auto_backup">Posljednja automatska Sigurnosna kopija: %s</string>
     <string name="restore_auto_backup">Vrati automatsku sigurnosnu kopiju</string>
     <string name="autobackup_failed">Zadnja automatska sigurnosna kopija je neuspješna.</string>
@@ -574,6 +576,11 @@
     <string name="feedback_question_feedback">Recite mi kako poboljšati?</string>
     <string name="feedback_action_ok">U redu, naravno</string>
     <string name="feedback_action_nothanks">Ne, hvala</string>
-    <!-- Support -->
+    <!-- Support the dev -->
     <string name="support_the_dev">Support the developer?</string>
+    <string name="support_the_dev_other_ways">Other ways to support</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Debug log</string>
+    <string name="status_saving_file_success">File saved</string>
+    <string name="status_saving_file_failed">Failed to save file</string>
 </resources>

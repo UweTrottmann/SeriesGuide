@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2020-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide
 
@@ -34,18 +34,16 @@ class SgBackupAgent : BackupAgentHelper() {
         PreferenceManager.getDefaultSharedPreferences(applicationContext).edit {
             // First run view is useful on re-installing: has important settings, first actions.
             putBoolean(FirstRunView.PREF_KEY_FIRSTRUN, false)
-
-            // Disable Hexagon. Re-enabling will reset any previous sync state.
-            // Note: silent sign-in might work on re-installs. But explicitly requiring to turn on
-            // Hexagon again, e.g. to allow restoring backup before.
-            putBoolean(HexagonSettings.KEY_ENABLED, false)
-            putBoolean(HexagonSettings.KEY_SHOULD_VALIDATE_ACCOUNT, false)
-
-            // Note: Trakt stores access token using account system.
-            // That should not get backed up and restored. On re-connecting will reset sync state.
-            // So nothing to do here.
         }
 
+        // Disable Hexagon. Re-enabling will reset any previous sync state.
+        // Note: silent sign-in might work on re-installs. But explicitly requiring to turn on
+        // Hexagon again, e.g. to allow deleting account and restoring backup before.
+        HexagonSettings.setDisabled(applicationContext)
+
+        // Note: the Trakt access token is stored using the account system.
+        // That should not get backed up and restored. On re-connecting will reset sync state.
+        // So nothing to do here.
     }
 
 }

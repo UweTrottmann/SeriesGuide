@@ -1,19 +1,17 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.preferences
 
 
+import android.app.Dialog
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialogFragment
-import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import androidx.sqlite.db.SimpleSQLiteQuery
-import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.FragmentDebugViewBinding
+import com.battlelancer.seriesguide.diagnostics.DebugLogActivity
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.AppSettings
@@ -21,53 +19,39 @@ import com.battlelancer.seriesguide.shows.database.SgEpisode2WithShow
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktOAuthSettings
-import io.palaima.debugdrawer.actions.ActionsModule
-import io.palaima.debugdrawer.actions.ButtonAction
-import io.palaima.debugdrawer.commons.DeviceModule
-import io.palaima.debugdrawer.timber.TimberModule
-import io.palaima.debugdrawer.view.DebugView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 /**
- * Displays a [DebugView]. Notably allows to display and share logs.
+ * Displays debug actions. Notably allows to display and share logs.
  */
 class DebugViewFragment : AppCompatDialogFragment() {
 
-    private lateinit var debugView: DebugView
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val binding = FragmentDebugViewBinding.inflate(layoutInflater)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // LogAdapter is hard-coded to white background, so always use a light theme.
-        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Theme_SeriesGuide_Light)
-    }
+        binding.buttonDebugViewDisplayLogs.setOnClickListener {
+            startActivity(DebugLogActivity.intent(requireContext()))
+        }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val view = inflater.inflate(R.layout.fragment_debug_view, container, false)
-
-        debugView = view.findViewById(R.id.debugView)
-        debugView.background = null // for whatever reason uses windowBackground by default
-
-        val showTestNotification1 = ButtonAction("Show test notification (1)") {
+        binding.buttonDebugViewTestNotification1.setOnClickListener {
             showTestNotification(1)
         }
 
-        val showTestNotification3 = ButtonAction("Show test notification (3)") {
+        binding.buttonDebugViewTestNotification3.setOnClickListener {
             showTestNotification(3)
         }
 
-        val buttonClearTraktRefreshToken = ButtonAction("Clear trakt refresh token") {
+        binding.buttonDebugViewTraktClearRefreshToken.setOnClickListener {
             TraktOAuthSettings.storeRefreshData(requireContext(), "", 3600 /* 1 hour */)
         }
 
-        val buttonInvalidateTraktAccessToken = ButtonAction("Invalidate trakt access token") {
+        binding.buttonDebugViewTraktInvalidateAccessToken.setOnClickListener {
             TraktCredentials.get(requireContext()).storeAccessToken("invalid-token")
         }
 
-        val buttonInvalidateTraktRefreshToken = ButtonAction("Invalidate trakt refresh token") {
+        binding.buttonDebugViewTraktInvalidateRefreshToken.setOnClickListener {
             TraktOAuthSettings.storeRefreshData(
                 requireContext(),
                 "invalid-token",
@@ -75,43 +59,21 @@ class DebugViewFragment : AppCompatDialogFragment() {
             )
         }
 
-        val buttonTriggerJobProcessor = ButtonAction("Schedule job processing") {
+        binding.buttonDebugViewTriggerJobProcessing.setOnClickListener {
             SgSyncAdapter.requestSyncJobsImmediate(requireContext())
         }
 
-        val buttonDemoMode = ButtonAction("Toggle demo mode") {
+        binding.buttonDebugViewDemoMode.setOnClickListener {
             toggleDemoMode()
         }
 
-        debugView.modules(
-            ActionsModule(
-                "Notifications",
-                showTestNotification1,
-                showTestNotification3
-            ),
-            ActionsModule(
-                "Trakt",
-                buttonClearTraktRefreshToken,
-                buttonInvalidateTraktAccessToken,
-                buttonInvalidateTraktRefreshToken
-            ),
-            ActionsModule(
-                "Jobs",
-                buttonTriggerJobProcessor
-            ),
-            ActionsModule(
-                "Demo mode",
-                buttonDemoMode
-            ),
-            TimberModule("${requireContext().packageName}.fileprovider"),
-            DeviceModule()
-        )
-
-        return view
+        return MaterialAlertDialogBuilder(requireContext())
+            .setView(binding.getRoot())
+            .create()
     }
 
     private fun showTestNotification(episodeCount: Int) {
-        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+        lifecycleScope.launch(Dispatchers.IO) {
             // To use different episodes for one vs. multiple just use OFFSET
             val query = ("${SgEpisode2WithShow.SELECT} LIMIT $episodeCount OFFSET $episodeCount")
             val episodes = SgRoomDatabase.getInstance(requireContext()).sgEpisode2Helper()

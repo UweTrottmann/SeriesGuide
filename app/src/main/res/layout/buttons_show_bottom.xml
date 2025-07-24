@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- SPDX-License-Identifier: Apache-2.0 -->
-<!-- Copyright 2014-2021, 2023 Uwe Trottmann -->
+<!-- Copyright 2014-2025 Uwe Trottmann -->
 
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -14,10 +14,24 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp">
 
+        <TextView
+            android:id="@+id/labelShowButtonsBottom"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginEnd="@dimen/default_padding"
+            android:text="@string/more_information"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.constraintlayout.helper.widget.Flow
             android:id="@+id/flowButtonsShowBottomLinks"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginTop="@dimen/inline_padding"
             app:constraint_referenced_ids="buttonShowTmdb,buttonShowTrakt,buttonShowImdb"
             app:flow_horizontalBias="0"
             app:flow_horizontalGap="4dp"
@@ -26,7 +40,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/labelShowButtonsBottom" />
 
         <Button
             android:id="@+id/buttonShowTmdb"
@@ -34,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tmdb"
-            app:icon="@drawable/ic_link_black_24dp"
+            app:icon="@drawable/ic_open_in_new_control_24dp"
             app:iconGravity="start" />
 
         <Button
@@ -43,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/trakt"
-            app:icon="@drawable/ic_link_black_24dp"
+            app:icon="@drawable/ic_open_in_new_control_24dp"
             app:iconGravity="start" />
 
         <Button
@@ -52,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/imdb"
-            app:icon="@drawable/ic_link_black_24dp"
+            app:icon="@drawable/ic_open_in_new_control_24dp"
             app:iconGravity="start" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

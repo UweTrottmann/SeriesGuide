@@ -19,6 +19,7 @@
     <string name="season_number">Sezon %d</string>
     <string name="specialseason">Özel Bölümler</string>
     <string name="ratings">Puanlar</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Geri git</string>
     <string name="description_overview">Genel Bakış</string>
@@ -40,6 +41,7 @@
     <string name="action_select_region">Bölge seçin</string>
     <string name="action_reset">Sıfırla</string>
     <string name="action_save">Kaydet</string>
+    <string name="action_turn_on">Turn on</string>
     <!-- Search -->
     <string name="clear_search_history">Arama geçmişini temizle</string>
     <string name="search_hint">Bölüm ara</string>
@@ -58,6 +60,7 @@
     <string name="api_failed">%s başarısız oldu</string>
     <string name="copy_to_clipboard">Panoya kopyalandı</string>
     <string name="not_migrated">Bu dizi TMDB datasına geçirilmedi. Trakt ve Bulut senkronu dahil bazı işlevler çalışmayabilir. Bu dizinin yerine ya başka dizi koyun yada kaldırın. Detaylar için dokunun.</string>
+    <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">Paylaş</string>
     <string name="share_show">Diziyi paylaş</string>
@@ -65,7 +68,6 @@
     <string name="share_movie">Filmi paylaş</string>
     <string name="addtocalendar">Takvime ekle</string>
     <string name="addtocalendar_failed">Takvim etkinliği oluşturulamıyor.</string>
-    <string name="links">Bağlantılar</string>
     <!-- Comments -->
     <string name="comments">Yorumlar</string>
     <string name="shout_hint">Bir yorum yaz (Ingilizce, 5+ kelime)</string>
@@ -100,8 +102,7 @@
     <string name="show_status_in_production">Yapım Aşamasında</string>
     <string name="show_status_pilot">Pilot Bölüm</string>
     <string name="show_status_canceled">İptal Edildi</string>
-    <string name="no_translation">%2$s\'de, %1$s diline çevrilmiş hiçbir açıklama bulunmuyor.</string>
-    <string name="no_translation_title">Çevrilmedi</string>
+    <string name="no_translation">No details in %1$s available, consider adding them at %2$s. Or try to change the language.</string>
     <string name="no_spoilers">Bazı detaylar spoiler önlemek için gizli kalır. Bunu kapatmak için ayarlara gidiniz.</string>
     <string name="format_source">Kaynak: %s</string>
     <string name="last_updated">Son Güncelleme</string>
@@ -284,6 +285,7 @@
     <string name="action_movies_sort_release">Yayın tarihi</string>
     <string name="title_similar_movies">Benzer filmler</string>
     <string name="title_release_dates">Yayın tarihleri</string>
+    <string name="error_movie_not_found">Movie removed from TMDB. Remove it from lists, set it not watched. Using Trakt? On their website, search for its TMDB ID and remove it from history and lists.</string>
     <!-- Statistics -->
     <string name="statistics_failed">İstatistik hesaplanamadı.</string>
     <string name="shows_finished">%s izlendi</string>
@@ -350,7 +352,6 @@
     <string name="disconnect">Bağlantıyı Kes</string>
     <string name="show_library">Trakt\'tan dizileri ekle</string>
     <string name="about_trakt">Trakt, izlediğiniz dizi ve filmlerin kaydını tutmanıza yardımcı olur.</string>
-    <string name="support_trakt">Trakt\'ı VIP olarak destekle</string>
     <string name="action_trakt_view_limits">Hesap sınırlarını görüntüle</string>
     <!-- trakt ratings -->
     <string name="action_rate">Puan ver</string>
@@ -444,33 +445,34 @@
     <string name="theme_app_dark">Karanlık</string>
     <string name="theme_app_light">Aydınlık</string>
     <!-- Other advanced settings -->
-    <string name="pref_other">Diğer</string>
+    <string name="pref_category_diagnostics">Diagnostics</string>
     <string name="pref_autoupdatesummary">İçeriği otomatik olarak senkronize et ve güncelle</string>
-    <string name="backup">Yedekle/Geri Yükle</string>
-    <string name="backup_summary">Dizilerinizi, listelerinizi ve filmlerinizi yedekleyin veya geri yükleyin</string>
     <string name="pref_number">Sayı biçimi</string>
     <string name="pref_offset">El ile saat farkı</string>
     <string name="pref_offsetsummary">Yayınlanma süresini %d saat ötele</string>
     <string name="clear_cache">Resim önbelleğini temizle</string>
     <string name="clear_cache_summary">Tüm resim önbelleğini cihazınızdan silin</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Export and import</string>
+    <string name="title_export">Export</string>
+    <string name="title_import">Import</string>
+    <string name="action_export">Export to file</string>
     <string name="backup_full_dump">Açıklamalar, ayrıntılar ve puanlar dahil</string>
-    <string name="backup_failed_file_access">Yedekleme başarısız. Bir yedek dosyası bulunamadı ya da dosyaya erişilemedi.</string>
-    <string name="backup_success">Yedekleme başarılı.</string>
-    <string name="backup_failed">Yedekleme başarısız oldu.</string>
-    <string name="import_failed_nosd">Geri yüklenemiyor. Yedek klasörüne erişilemiyor.</string>
-    <string name="import_failed_nofile">Okunabilir yedekleme dosyası bulunamadı.</string>
-    <string name="import_success">Yedek başarıyla geri yüklendi.</string>
-    <string name="import_failed">Yedek geri yükleme başarısız oldu.</string>
-    <string name="backup_button">Yedekle</string>
+    <string name="status_successful">Successful</string>
+    <string name="status_failure">Failed</string>
+    <string name="status_failed_file_access">Can not find or access file</string>
     <string name="import_button">Geri Yükle</string>
+    <string name="action_view_import_documentation">View expected format</string>
     <string name="import_warning">Mevcut dizileriniz, listeleriniz ve filmleriniz silinerek, yedek ile değiştirilecek</string>
+    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
+    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
     <string name="no_file_selected">Seçilmiş dosya yok</string>
     <string name="action_select_file">Dosya seçin</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Otomatik Yedekle</string>
     <string name="pref_autobackupsummary">Dizileriniz, listeleriniz ve filmleriniz cihazın depolama alanına haftalık olarak yedeklenir.</string>
     <string name="autobackup_details">Uygulama yeniden yüklenirse bu yedekler kullanılamaz. Yedeklerin kopyasını oluşturarak onları koruyabilirsiniz.</string>
+    <string name="backup_button">Yedekle</string>
     <string name="last_auto_backup">Son Otomatik Yedek: %s</string>
     <string name="restore_auto_backup">Otomatik Yedeklemeyi Geri Yükle</string>
     <string name="autobackup_failed">Son otomatik yedekleme başarısız oldu</string>
@@ -560,6 +562,11 @@
     <string name="feedback_question_feedback">Nasıl geliştirileceğini göster?</string>
     <string name="feedback_action_ok">TAMAM, tabi ki</string>
     <string name="feedback_action_nothanks">Hayır, teşekkürler</string>
-    <!-- Support -->
+    <!-- Support the dev -->
     <string name="support_the_dev">Geliştiriciyi destekle!</string>
+    <string name="support_the_dev_other_ways">Other ways to support</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Debug log</string>
+    <string name="status_saving_file_success">File saved</string>
+    <string name="status_saving_file_failed">Failed to save file</string>
 </resources>

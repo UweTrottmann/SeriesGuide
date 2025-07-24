@@ -1,16 +1,17 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2019-2024 Uwe Trottmann
+// Copyright 2019-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.billing
 
 import android.annotation.SuppressLint
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -22,9 +23,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.ui.BaseActivity
 import com.battlelancer.seriesguide.util.ThemeUtils
-import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.WebTools
-import com.google.android.material.snackbar.Snackbar
 import com.uwetrottmann.seriesguide.billing.BillingViewModel
 import com.uwetrottmann.seriesguide.billing.BillingViewModelFactory
 import com.uwetrottmann.seriesguide.billing.SafeAugmentedProductDetails
@@ -38,6 +37,7 @@ class BillingActivity : BaseActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: SkuDetailsAdapter
     private lateinit var buttonManageSubs: Button
+    private lateinit var buttonOtherWaysToSupport: Button
     private lateinit var textViewHasUpgrade: View
     private lateinit var textViewBillingUnlockDetected: View
     private lateinit var textViewBillingError: TextView
@@ -72,16 +72,20 @@ class BillingActivity : BaseActivity() {
                     }
                 }
             }
-        billingViewModel.errorEvent.observe(this) { message ->
-            message?.let {
+        billingViewModel.errorEvent.observe(this) { error ->
+            error?.debugMessage?.let {
                 textViewBillingError.apply {
-                    text = "${getString(R.string.subscription_unavailable)} ($message)"
-                    isGone = false
+                    text = "${getString(R.string.subscription_unavailable)} ($it)"
+                    isVisible = true
                 }
+            }
+            // Only display the other ways to support button if Play Billing is not available
+            if (error?.isUnavailable == true) {
+                buttonOtherWaysToSupport.isVisible = true
             }
         }
         // Only use subscription state if unlock app is not installed.
-        if (Utils.hasXpass(this)) {
+        if (BillingTools.hasUnlockKey(this)) {
             setWaitMode(false)
             updateViewStates(hasUpgrade = true, unlockAppDetected = true)
         } else {
@@ -134,8 +138,14 @@ class BillingActivity : BaseActivity() {
             }
         }
 
-        findViewById<View>(R.id.textViewBillingMoreInfo).setOnClickListener {
-            WebTools.openInCustomTab(this, getString(R.string.url_whypay))
+        buttonOtherWaysToSupport = findViewById<Button>(R.id.buttonBillingMoreOptions).also {
+            it.setOnClickListener {
+                WebTools.openInApp(this, getString(R.string.url_support_the_dev))
+            }
+            it.isGone = true
+        }
+        findViewById<View>(R.id.buttonBillingMoreInfo).setOnClickListener {
+            WebTools.openInCustomTab(this, getString(R.string.url_billing_info_and_help))
         }
     }
 
@@ -143,7 +153,7 @@ class BillingActivity : BaseActivity() {
         super.onStart()
 
         // Check if user has installed key app.
-        if (Utils.hasXpass(this)) {
+        if (BillingTools.hasUnlockKey(this)) {
             updateViewStates(hasUpgrade = true, unlockAppDetected = true)
         }
     }
@@ -165,20 +175,6 @@ class BillingActivity : BaseActivity() {
         private const val PLAY_MANAGE_SUBS_ONE =
             "$PLAY_MANAGE_SUBS_ALL?package=${BuildConfig.APPLICATION_ID}&sku="
 
-        /**
-         * Displays a [Snackbar] that the subscription has expired. Its action opens this activity.
-         */
-        @JvmStatic
-        fun showExpiredNotification(activity: Activity, parentView: View) {
-            val snackbar = Snackbar.make(
-                parentView,
-                R.string.subscription_expired_details,
-                Snackbar.LENGTH_INDEFINITE
-            )
-            snackbar.setAction(R.string.billing_action_manage_subscriptions) {
-                activity.startActivity(Intent(activity, BillingActivity::class.java))
-            }
-            snackbar.show()
-        }
+        fun intent(context: Context) = Intent(context, BillingActivity::class.java)
     }
 }

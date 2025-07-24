@@ -19,6 +19,7 @@
     <string name="season_number">Säsong %d</string>
     <string name="specialseason">Specialavsnitt</string>
     <string name="ratings">Betyg</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Navigera uppåt</string>
     <string name="description_overview">Översikt</string>
@@ -40,6 +41,7 @@
     <string name="action_select_region">Välj region</string>
     <string name="action_reset">Återställ</string>
     <string name="action_save">Spara</string>
+    <string name="action_turn_on">Slå på</string>
     <!-- Search -->
     <string name="clear_search_history">Rensa sökhistorik</string>
     <string name="search_hint">Sök avsnitt</string>
@@ -58,6 +60,7 @@
     <string name="api_failed">Misslyckades: %s</string>
     <string name="copy_to_clipboard">Kopierat till urklipp</string>
     <string name="not_migrated">Serien är inte migrerad till TMDB-data. Vissa åtgärder inkl. Trakt och Cloud sync kanske inte fungerar. Prova att söka efter en ersättare och ta bort denna serie. Tryck för att visa detaljer.</string>
+    <string name="status_turned_on">Påslagen</string>
     <!-- Sharing -->
     <string name="share">Dela</string>
     <string name="share_show">Dela serie</string>
@@ -65,7 +68,6 @@
     <string name="share_movie">Dela film</string>
     <string name="addtocalendar">Lägg till i kalendern</string>
     <string name="addtocalendar_failed">Kan inte lägga till i kalendern.</string>
-    <string name="links">Länkar</string>
     <!-- Comments -->
     <string name="comments">Kommentarer</string>
     <string name="shout_hint">Skriv en kommentar (engelska, 5+ ord)</string>
@@ -100,8 +102,7 @@
     <string name="show_status_in_production">Under produktion</string>
     <string name="show_status_pilot">Pilotavsnitt</string>
     <string name="show_status_canceled">Nedlagd</string>
-    <string name="no_translation">Det finns ingen beskrivning översatt till %1$s tillgänglig på %2$s.</string>
-    <string name="no_translation_title">Ej översatt</string>
+    <string name="no_translation">Inga detaljer på %1$s tillgängliga, överväg att lägga till dem på %2$s. Eller försök att ändra språket.</string>
     <string name="no_spoilers">Vissa detaljer är dolda för att undvika spoilers. För att stänga av detta, gå till inställningar.</string>
     <string name="format_source">Källa: %s</string>
     <string name="last_updated">Senast uppdaterad</string>
@@ -284,6 +285,7 @@
     <string name="action_movies_sort_release">Utgivningsdatum</string>
     <string name="title_similar_movies">Liknande filmer</string>
     <string name="title_release_dates">Premiärdatum</string>
+    <string name="error_movie_not_found">Film borttagen från TMDB. Ta bort den från listor, ställ in den som ej sedd. Använder Trakt? På deras webbplats, sök efter dess TMDB ID och ta bort den från historia och listor.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Gick inte att beräkna statistik.</string>
     <string name="shows_finished">%s färdigtittade</string>
@@ -350,7 +352,6 @@
     <string name="disconnect">Koppla ner</string>
     <string name="show_library">Lägg till serier från Trakt</string>
     <string name="about_trakt">Trakt hjälper till att hålla ett register över vilka TV-serier och filmer du ser på.</string>
-    <string name="support_trakt">Stöd Trakt med VIP</string>
     <string name="action_trakt_view_limits">Visa kontogränser</string>
     <!-- trakt ratings -->
     <string name="action_rate">Betygsätt</string>
@@ -444,33 +445,34 @@
     <string name="theme_app_dark">Mörk</string>
     <string name="theme_app_light">Ljust</string>
     <!-- Other advanced settings -->
-    <string name="pref_other">Övrigt</string>
+    <string name="pref_category_diagnostics">Diagnostik</string>
     <string name="pref_autoupdatesummary">Automatiskt synkronisera och uppdatera SeriesGuide-data</string>
-    <string name="backup">Säkerhetskopiera/återställ</string>
-    <string name="backup_summary">Säkerhetskopiera eller återställ dina serier</string>
     <string name="pref_number">Nummerformat</string>
     <string name="pref_offset">Manuell tidsskillnad</string>
     <string name="pref_offsetsummary">Förskjut sändningstiden med %d timmar</string>
     <string name="clear_cache">Töm bildcache</string>
     <string name="clear_cache_summary">Ta bort alla cachade bilder från enheten</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Exportera och importera</string>
+    <string name="title_export">Exportera</string>
+    <string name="title_import">Importera</string>
+    <string name="action_export">Exportera till fil</string>
     <string name="backup_full_dump">Inkludera beskrivningar, detaljer, betyg</string>
-    <string name="backup_failed_file_access">Kan inte säkerhetskopiera. En fil för säkerhetskopiering kan inte hittas eller öppnas.</string>
-    <string name="backup_success">Säkerhetskopieringen lyckades.</string>
-    <string name="backup_failed">Säkerhetskopieringen misslyckades.</string>
-    <string name="import_failed_nosd">Kan inte återställa säkerhetskopian. Mappen är inte tillgänglig.</string>
-    <string name="import_failed_nofile">Det finns ingen läsbar backupfil.</string>
-    <string name="import_success">Säkerhetskopian återställdes.</string>
-    <string name="import_failed">Återställning av säkerhetskopian misslyckades.</string>
-    <string name="backup_button">Säkerhetskopiera</string>
+    <string name="status_successful">Lyckades</string>
+    <string name="status_failure">Misslyckades</string>
+    <string name="status_failed_file_access">Kan inte hitta eller komma åt fil</string>
     <string name="import_button">Återställ säkerhetskopia</string>
+    <string name="action_view_import_documentation">Visa förväntat format</string>
     <string name="import_warning">Jag förstår att mina nuvarande serier, listor och filmer kommer ersättas!</string>
+    <string name="import_cloud_warning">Rekommenderas inte vid användning av SeriesGuide Cloud eller Trakt</string>
+    <string name="import_cloud_warning_details">Synkronisering med Cloud eller Trakt kan skriva över importerade data. Med SeriesGuide Cloud kan du ta bort ditt konto innan du importerar data, och sedan återskapa det efteråt för att bara ladda upp importerade data.</string>
     <string name="no_file_selected">Ingen fil vald</string>
     <string name="action_select_file">Välj fil</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatisk säkerhetskopiering</string>
     <string name="pref_autobackupsummary">Veckovis säkerhetskopiering av dina serier, listor och filmer</string>
     <string name="autobackup_details">Dessa säkerhetskopior är inte tillgängliga om appen är installerad igen såvida inte app-säkerhetskopiering är påslagen för den här enheten (Android 6+). Skapa kopior för att bevara dem annars.</string>
+    <string name="backup_button">Säkerhetskopiera</string>
     <string name="last_auto_backup">Senaste automatiska säkerhetskopia: %s</string>
     <string name="restore_auto_backup">Återställ automatisk säkerhetskopia</string>
     <string name="autobackup_failed">Den senaste automatiska säkerhetskopieringen misslyckades</string>
@@ -560,6 +562,11 @@
     <string name="feedback_question_feedback">Berätta för mig hur man kan förbättra det?</string>
     <string name="feedback_action_ok">OK, visst</string>
     <string name="feedback_action_nothanks">Nej tack</string>
-    <!-- Support -->
+    <!-- Support the dev -->
     <string name="support_the_dev">Stödja utvecklaren?</string>
+    <string name="support_the_dev_other_ways">Other ways to support</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Felsökningslogg</string>
+    <string name="status_saving_file_success">Fil sparad.</string>
+    <string name="status_saving_file_failed">Misslyckades med att spara fil</string>
 </resources>

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2019-2024 Uwe Trottmann
+// Copyright 2019-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.backend
 
@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
+import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.databinding.FragmentCloudSetupBinding
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.sync.SyncProgress
@@ -23,7 +24,6 @@ import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.ThemeUtils
-import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.safeShow
 import com.firebase.ui.auth.AuthMethodPickerLayout
 import com.firebase.ui.auth.AuthUI
@@ -74,15 +74,15 @@ class CloudSetupFragment : Fragment() {
         binding!!.apply {
             ThemeUtils.applyBottomPaddingForNavigationBar(scrollViewCloud)
             buttonCloudSignIn.apply {
-                if (!Utils.hasAccessToX(activity)) {
+                if (!BillingTools.hasAccessToPaidFeatures(requireContext())) {
                     (buttonCloudSignIn as MaterialButton).setIconResource(R.drawable.ic_awesome_black_24dp)
                 }
                 setOnClickListener {
                     // restrict access to supporters
-                    if (Utils.hasAccessToX(activity)) {
+                    if (BillingTools.hasAccessToPaidFeatures(requireContext())) {
                         startHexagonSetup()
                     } else {
-                        Utils.advertiseSubscription(activity)
+                        BillingTools.advertiseSubscription(requireContext())
                     }
                 }
             }
@@ -167,7 +167,7 @@ class CloudSetupFragment : Fragment() {
         } else {
             signInAccount = null
             errorIfNull?.let {
-                HexagonSettings.shouldValidateAccount(requireContext(), true)
+                HexagonSettings.setShouldValidateAccount(requireContext(), true)
                 showSnackbar(getString(R.string.hexagon_signin_fail_format, it))
             }
         }
@@ -175,7 +175,7 @@ class CloudSetupFragment : Fragment() {
         setProgressVisible(false)
         updateViews()
 
-        if (signedIn && Utils.hasAccessToX(requireContext())) {
+        if (signedIn && BillingTools.hasAccessToPaidFeatures(requireContext())) {
             if (!HexagonSettings.isEnabled(requireContext())
                 || HexagonSettings.shouldValidateAccount(requireContext())) {
                 Timber.i("Auto-start Cloud setup.")

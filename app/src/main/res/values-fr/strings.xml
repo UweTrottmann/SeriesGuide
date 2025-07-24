@@ -19,6 +19,7 @@
     <string name="season_number">Saison %d</string>
     <string name="specialseason">Épisodes Spéciaux</string>
     <string name="ratings">Notes</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Retour</string>
     <string name="description_overview">Aperçu</string>
@@ -40,6 +41,7 @@
     <string name="action_select_region">Sélectionner une région</string>
     <string name="action_reset">Réinitialiser</string>
     <string name="action_save">Enregistrer</string>
+    <string name="action_turn_on">Turn on</string>
     <!-- Search -->
     <string name="clear_search_history">Effacer l\'historique de recherche</string>
     <string name="search_hint">Recherche d\'épisodes</string>
@@ -58,6 +60,7 @@
     <string name="api_failed">Échec : %s</string>
     <string name="copy_to_clipboard">Copié dans le presse-papiers</string>
     <string name="not_migrated">Affichage non migré vers les données de TMDB. Certaines actions, y compris la synchronisation Trakt et Cloud, pourraient ne pas fonctionner. Peut-être chercher un remplacement et supprimer cet affichage. Appuyez pour afficher les détails.</string>
+    <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">Partager</string>
     <string name="share_show">Partager la série</string>
@@ -65,7 +68,6 @@
     <string name="share_movie">Partager ce film</string>
     <string name="addtocalendar">Ajouter à l\'agenda</string>
     <string name="addtocalendar_failed">Impossible de créer un évènement sur l\'agenda.</string>
-    <string name="links">Liens</string>
     <!-- Comments -->
     <string name="comments">Commentaires</string>
     <string name="shout_hint">Entrez un commentaire (en anglais, plus de 5 mots)</string>
@@ -100,8 +102,7 @@
     <string name="show_status_in_production">En cours de production</string>
     <string name="show_status_pilot">Pilote</string>
     <string name="show_status_canceled">Annulé</string>
-    <string name="no_translation">La traduction en %1$s n\'est pas disponible sur %2$s.</string>
-    <string name="no_translation_title">Non traduit</string>
+    <string name="no_translation">Aucun détail disponible dans %1$s, pensez à les ajouter à %2$s. Ou essayez de changer la langue.</string>
     <string name="no_spoilers">Certains détails sont masqués afin d’éviter les spoilers. Pour modifier ceci allez dans paramètres.</string>
     <string name="format_source">Source : %s</string>
     <string name="last_updated">Dernière mise à jour</string>
@@ -284,6 +285,7 @@
     <string name="action_movies_sort_release">Date de parution</string>
     <string name="title_similar_movies">Films similaires</string>
     <string name="title_release_dates">Dates de sortie</string>
+    <string name="error_movie_not_found">Film retiré de la TMDB. Supprimez-le des listes, marquez le comme non regardé. Vous utilisez Trakt ? Sur leur site web, recherchez son identifiant TMDB et supprimez-le de l\'historique et des listes.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Impossible de calculer les statistiques.</string>
     <string name="shows_finished">%s visionnées en entier</string>
@@ -350,7 +352,6 @@
     <string name="disconnect">Se déconnecter</string>
     <string name="show_library">Ajouter des séries de Trakt</string>
     <string name="about_trakt">Trakt vous permet de garder une trace des séries et films que vous regardez.</string>
-    <string name="support_trakt">Soutenir Trakt en devenant VIP</string>
     <string name="action_trakt_view_limits">Voir les limites du compte</string>
     <!-- trakt ratings -->
     <string name="action_rate">Noter</string>
@@ -444,33 +445,34 @@
     <string name="theme_app_dark">Sombre</string>
     <string name="theme_app_light">Clair</string>
     <!-- Other advanced settings -->
-    <string name="pref_other">Autres</string>
+    <string name="pref_category_diagnostics">Diagnostics</string>
     <string name="pref_autoupdatesummary">Synchroniser automatiquement et mettre à jour les données de SeriesGuide</string>
-    <string name="backup">Sauvegarde/Restauration</string>
-    <string name="backup_summary">Sauvegarder ou restaurer vos séries</string>
     <string name="pref_number">Format de nombre</string>
     <string name="pref_offset">Décalage horaire manuel</string>
     <string name="pref_offsetsummary">Décalage de %d heures</string>
     <string name="clear_cache">Vider le cache d\'images</string>
     <string name="clear_cache_summary">Supprimer toutes les images en cache sur votre périphérique</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Export and import</string>
+    <string name="title_export">Export</string>
+    <string name="title_import">Import</string>
+    <string name="action_export">Export to file</string>
     <string name="backup_full_dump">Inclure les descriptions, informations, notes</string>
-    <string name="backup_failed_file_access">Impossible de sauvegarder. Un fichier de sauvegarde ne peut pas être trouvé ou consulté.</string>
-    <string name="backup_success">Sauvegarde réussie.</string>
-    <string name="backup_failed">Sauvegarde échouée.</string>
-    <string name="import_failed_nosd">Restauration impossible. Le répertoire de sauvegarde est indisponible.</string>
-    <string name="import_failed_nofile">Il n\'y a aucun fichier de sauvegarde lisible.</string>
-    <string name="import_success">Restauration réussie.</string>
-    <string name="import_failed">Restauration échouée.</string>
-    <string name="backup_button">Sauvegarder</string>
+    <string name="status_successful">Successful</string>
+    <string name="status_failure">Failed</string>
+    <string name="status_failed_file_access">Can not find or access file</string>
     <string name="import_button">Restaurer</string>
+    <string name="action_view_import_documentation">View expected format</string>
     <string name="import_warning">Je comprends que mes séries, listes et films actuels seront remplacés !</string>
+    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
+    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
     <string name="no_file_selected">Aucun fichier sélectionné</string>
     <string name="action_select_file">Choisir un fichier</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Sauvegarde automatique</string>
     <string name="pref_autobackupsummary">Sauvegarde hebdomadaire de vos émissions, vos listes et vos films</string>
     <string name="autobackup_details">Ces sauvegardes ne sont pas disponibles si l\'application est réinstallée sauf si la sauvegarde des données de l\'application est activée pour cet appareil (Android 6+). Créez des copies pour les préserver.</string>
+    <string name="backup_button">Sauvegarder</string>
     <string name="last_auto_backup">Dernière sauvegarde auto : %s</string>
     <string name="restore_auto_backup">Restaurer la sauvegarde automatique</string>
     <string name="autobackup_failed">La dernière sauvegarde automatique a échoué</string>
@@ -560,6 +562,11 @@
     <string name="feedback_question_feedback">Dites-moi comment l’améliorer ?</string>
     <string name="feedback_action_ok">OK, bien sûr</string>
     <string name="feedback_action_nothanks">Non, merci</string>
-    <!-- Support -->
+    <!-- Support the dev -->
     <string name="support_the_dev">Soutenir le développeur ?</string>
+    <string name="support_the_dev_other_ways">Autres manières de soutenir</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Debug log</string>
+    <string name="status_saving_file_success">File saved</string>
+    <string name="status_saving_file_failed">Failed to save file</string>
 </resources>

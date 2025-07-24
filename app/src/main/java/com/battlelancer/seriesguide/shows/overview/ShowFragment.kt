@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2013-2024 Uwe Trottmann
+// Copyright 2013-2025 Uwe Trottmann
 // Copyright 2013 Andrew Neal
 
 package com.battlelancer.seriesguide.shows.overview
@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.comments.TraktCommentsActivity
 import com.battlelancer.seriesguide.databinding.LayoutRatingsBinding
 import com.battlelancer.seriesguide.notifications.NotificationService
@@ -48,7 +49,6 @@ import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.ShortcutCreator
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
-import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.battlelancer.seriesguide.util.safeShow
@@ -225,10 +225,10 @@ class ShowFragment() : Fragment() {
         model.showForUi.observe(viewLifecycleOwner) {
             if (it != null) {
                 show = it.show
-                populateShow(it, model.hasAccessToX.value)
+                populateShow(it, model.hasAllFeatures.value)
             }
         }
-        model.hasAccessToX.observe(viewLifecycleOwner) {
+        model.hasAllFeatures.observe(viewLifecycleOwner) {
             populateShow(model.showForUi.value, it)
         }
         model.credits.observe(viewLifecycleOwner) { credits ->
@@ -255,19 +255,16 @@ class ShowFragment() : Fragment() {
     }
 
     private fun showNotificationsNotAllowedMessage() {
-        (activity as BaseMessageActivity?)?.snackbarParentView
-            ?.let {
-                Snackbar
-                    .make(it, R.string.notifications_allow_reason, Snackbar.LENGTH_LONG)
-                    .show()
-            }
+        (activity as BaseMessageActivity?)
+            ?.makeSnackbar(R.string.notifications_allow_reason, Snackbar.LENGTH_LONG)
+            ?.show()
     }
 
     private val requestNotificationPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {
                 // Re-bind show views to update notification button state.
-                populateShow(model.showForUi.value, model.hasAccessToX.value)
+                populateShow(model.showForUi.value, model.hasAllFeatures.value)
             } else {
                 showNotificationsNotAllowedMessage()
             }
@@ -282,8 +279,8 @@ class ShowFragment() : Fragment() {
             }
         }
 
-    private fun populateShow(showForUi: ShowViewModel.ShowForUi?, hasAccessToX: Boolean?) {
-        if (showForUi == null || hasAccessToX == null) return
+    private fun populateShow(showForUi: ShowViewModel.ShowForUi?, hasAllFeatures: Boolean?) {
+        if (showForUi == null || hasAllFeatures == null) return
         val binding = binding ?: return
         val show = showForUi.show
 
@@ -321,7 +318,7 @@ class ShowFragment() : Fragment() {
 
         // Notifications button, always show as disabled if user is not a sub.
         val areNotificationsAllowed = NotificationSettings.areNotificationsAllowed(requireContext())
-        val notify = show.notify && hasAccessToX && areNotificationsAllowed
+        val notify = show.notify && hasAllFeatures && areNotificationsAllowed
         binding.buttonNotify.apply {
             contentDescription = getString(
                 if (notify) {
@@ -332,7 +329,7 @@ class ShowFragment() : Fragment() {
             )
             TooltipCompat.setTooltipText(this, contentDescription)
             setIconResource(
-                if (!hasAccessToX) {
+                if (!hasAllFeatures) {
                     R.drawable.ic_awesome_black_24dp
                 } else if (notify) {
                     R.drawable.ic_notifications_active_black_24dp
@@ -342,8 +339,8 @@ class ShowFragment() : Fragment() {
             )
             isEnabled = true
             setOnClickListener { v ->
-                if (!hasAccessToX) {
-                    Utils.advertiseSubscription(activity)
+                if (!hasAllFeatures) {
+                    BillingTools.advertiseSubscription(requireContext())
                 } else if (!areNotificationsAllowed) {
                     if (AndroidUtils.isAtLeastTiramisu) {
                         requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
@@ -466,8 +463,8 @@ class ShowFragment() : Fragment() {
 
         // shortcut button
         binding.buttonShortcut.apply {
-            setIconResource(if (hasAccessToX) R.drawable.ic_add_to_home_screen_black_24dp else R.drawable.ic_awesome_black_24dp)
-            setOnClickListener { createShortcut(hasAccessToX) }
+            setIconResource(if (hasAllFeatures) R.drawable.ic_add_to_home_screen_black_24dp else R.drawable.ic_awesome_black_24dp)
+            setOnClickListener { createShortcut(hasAllFeatures) }
         }
 
         // web search button
@@ -560,9 +557,9 @@ class ShowFragment() : Fragment() {
         changeShowLanguage(event.selectedLanguageCode)
     }
 
-    private fun createShortcut(hasAccessToX: Boolean) {
-        if (!hasAccessToX) {
-            Utils.advertiseSubscription(activity)
+    private fun createShortcut(hasAllFeatures: Boolean) {
+        if (!hasAllFeatures) {
+            BillingTools.advertiseSubscription(requireContext())
             return
         }
 
@@ -581,7 +578,7 @@ class ShowFragment() : Fragment() {
 
     private fun shareShow() {
         show?.also {
-            ShareUtils.shareShow(activity, it.tmdbId ?: 0, it.title)
+            ShareUtils.shareShow(requireActivity(), it.tmdbId ?: 0, it.title)
         }
     }
 

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2012-2024 Uwe Trottmann
+// Copyright 2012-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.lists
 
@@ -34,25 +34,30 @@ class AddListDialogFragment : AppCompatDialogFragment() {
         editTextName.addTextChangedListener(
             ListNameTextWatcher(
                 requireContext(),
-                binding.textInputLayoutListManageListName, binding.buttonPositive, null
+                binding.textInputLayoutListManageListName, binding.buttonDialogAddListAdd, null
             )
         )
 
         // buttons
-        binding.buttonNegative.setText(android.R.string.cancel)
-        binding.buttonNegative.setOnClickListener { dismiss() }
-        binding.buttonPositive.setText(R.string.list_add)
-        binding.buttonPositive.setOnClickListener {
-            val editText = this.binding?.textInputLayoutListManageListName?.editText
-                ?: return@setOnClickListener
-
-            // add list
-            val listName = editText.text.toString().trim()
-            ListsTools.addList(requireContext(), listName)
-
-            dismiss()
+        binding.buttonDialogAddListCancel.apply {
+            setText(android.R.string.cancel)
+            setOnClickListener { dismiss() }
         }
-        binding.buttonPositive.isEnabled = false
+        binding.buttonDialogAddListAdd.apply {
+            setText(R.string.list_add)
+            setOnClickListener {
+                val editText = this@AddListDialogFragment.binding
+                    ?.textInputLayoutListManageListName?.editText
+                    ?: return@setOnClickListener
+
+                // add list
+                val listName = editText.text.toString().trim()
+                ListsTools.addList(requireContext(), listName)
+
+                dismiss()
+            }
+            isEnabled = false
+        }
 
         return MaterialAlertDialogBuilder(requireContext())
             .setView(binding.getRoot())

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Copyright 2025 Uwe Trottmann -->
+
+<!--
+Wrap in FrameLayout to apply margins in this file
+(can not use merge tag because parent is a RelativeLayout)
+-->
+<!-- Note: MergeRootFrame warning only appears in Lint report. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayoutMovieButtonsBottom"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:ignore="MergeRootFrame"
+    tools:showIn="@layout/fragment_movie">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutMovieButtonsBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_padding"
+        android:layout_marginTop="@dimen/large_padding"
+        android:layout_marginEnd="@dimen/default_padding">
+
+        <TextView
+            android:id="@+id/labelMovieButtonsBottom"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginEnd="@dimen/default_padding"
+            android:text="@string/more_information"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/flowMovieButtonsBottom"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginTop="@dimen/inline_padding"
+            app:constraint_referenced_ids="buttonMovieTmdb,buttonMovieTrakt,buttonMovieImdb"
+            app:flow_horizontalBias="0"
+            app:flow_horizontalGap="4dp"
+            app:flow_horizontalStyle="packed"
+            app:flow_wrapMode="chain"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/labelMovieButtonsBottom" />
+
+        <Button
+            android:id="@+id/buttonMovieTmdb"
+            style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tmdb"
+            app:icon="@drawable/ic_open_in_new_control_24dp"
+            app:iconGravity="start" />
+
+        <Button
+            android:id="@+id/buttonMovieTrakt"
+            style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/trakt"
+            app:icon="@drawable/ic_open_in_new_control_24dp"
+            app:iconGravity="start" />
+
+        <Button
+            android:id="@+id/buttonMovieImdb"
+            style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/imdb"
+            app:icon="@drawable/ic_open_in_new_control_24dp"
+            app:iconGravity="start" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

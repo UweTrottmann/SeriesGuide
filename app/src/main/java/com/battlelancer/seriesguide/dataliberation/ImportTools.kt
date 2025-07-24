@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2021-2024 Uwe Trottmann
+// Copyright 2021-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.dataliberation
 
@@ -17,7 +17,6 @@ import kotlin.math.absoluteValue
 
 object ImportTools {
 
-    @JvmStatic
     fun Show.toSgShowForImport(): SgShow2 {
         return SgShow2(
             tmdbId = tmdb_id,
@@ -64,7 +63,7 @@ object ImportTools {
         return SgSeason2(
             showId = showId,
             tmdbId = tmdb_id,
-            tvdbId = tvdbId,
+            tvdbId = tvdb_id,
             numberOrNull = season,
             order = season,
             name = null
@@ -77,16 +76,16 @@ object ImportTools {
             showId = showId,
             seasonId = seasonId,
             tmdbId = tmdb_id,
-            tvdbId = tvdbId,
+            tvdbId = tvdb_id,
             title = title ?: "",
             overview = overview,
             number = episode,
-            absoluteNumber = episodeAbsolute,
-            dvdNumber = episodeDvd,
+            absoluteNumber = episode_absolute,
+            dvdNumber = episode_dvd,
             order = episode,
             season = seasonNumber,
             image = image ?: "",
-            firstReleasedMs = firstAired,
+            firstReleasedMs = first_aired,
             directors = directors ?: "",
             guestStars = gueststars ?: "",
             writers = writers ?: "",

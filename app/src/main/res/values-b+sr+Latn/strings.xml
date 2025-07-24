@@ -19,6 +19,7 @@
     <string name="season_number">Sezona %d</string>
     <string name="specialseason">Specijalne epizode</string>
     <string name="ratings">Ocene</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Kretanje nagore</string>
     <string name="description_overview">Pregled</string>
@@ -40,6 +41,7 @@
     <string name="action_select_region">Izaberite region</string>
     <string name="action_reset">Resetuj</string>
     <string name="action_save">Sačuvaj</string>
+    <string name="action_turn_on">Uključi</string>
     <!-- Search -->
     <string name="clear_search_history">Obriši istoriju pretrage</string>
     <string name="search_hint">Pretraži epizode</string>
@@ -58,6 +60,7 @@
     <string name="api_failed">Neuspešno: %s</string>
     <string name="copy_to_clipboard">Kopirano u klipbord</string>
     <string name="not_migrated">Serija nije migrirana u TMDB podatke. Neke akcije uklj. Trakt i Cloud sinhronizacija možda neće raditi. Možda potražite zamenu i uklonite ovu emisiju. Dodirnite da vidite detalje.</string>
+    <string name="status_turned_on">Uključeno</string>
     <!-- Sharing -->
     <string name="share">Podeli</string>
     <string name="share_show">Podeli seriju</string>
@@ -65,7 +68,6 @@
     <string name="share_movie">Podeli film</string>
     <string name="addtocalendar">Dodaj u kalendar</string>
     <string name="addtocalendar_failed">Nije moguće napraviti događaj u kalendaru</string>
-    <string name="links">Linkovi</string>
     <!-- Comments -->
     <string name="comments">Komentari</string>
     <string name="shout_hint">Unesite komentar (engleski, 5+ reči)</string>
@@ -101,8 +103,7 @@
     <string name="show_status_in_production">U proizvodnji</string>
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">Otkazano</string>
-    <string name="no_translation">Nema opisa prevedenog na %1$s dostupnog na %2$s.</string>
-    <string name="no_translation_title">Nije prevedeno</string>
+    <string name="no_translation">Nema dostupnih detalja u %1$s, razmislite o tome da ih dodate na %2$s. Ili pokušajte da promenite jezik.</string>
     <string name="no_spoilers">Neki detalji su skriveni da bi se sprečili spojleri. Da biste ovo isključili, idite na Podešavanja.</string>
     <string name="format_source">Izvor: %s</string>
     <string name="last_updated">Poslednje ažuriranje</string>
@@ -291,6 +292,7 @@
     <string name="action_movies_sort_release">Datum emitovanja</string>
     <string name="title_similar_movies">Slični filmovi</string>
     <string name="title_release_dates">Datumi emitovanja</string>
+    <string name="error_movie_not_found">Film je uklonjen iz TMDB-a. Uklonite ga sa lista, postavite da se ne gleda. Koristite Trakt? Na njihovoj veb lokaciji potražite njegov TMDB ID i uklonite ga iz istorije i lista.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Nije moguće izračunati statistiku</string>
     <string name="shows_finished">%s završio gledanje</string>
@@ -360,7 +362,6 @@
     <string name="disconnect">Prekini vezu</string>
     <string name="show_library">Dodajte serije sa Trakta</string>
     <string name="about_trakt">Trakt pomaže da se vodi evidencija o TV serijama i filmovima koje gledate.</string>
-    <string name="support_trakt">Podrži Trakt sa VIP</string>
     <string name="action_trakt_view_limits">Pogledajte ograničenja naloga</string>
     <!-- trakt ratings -->
     <string name="action_rate">Ocenite</string>
@@ -458,33 +459,34 @@
     <string name="theme_app_dark">Tamna</string>
     <string name="theme_app_light">Svetlo</string>
     <!-- Other advanced settings -->
-    <string name="pref_other">Ostalo</string>
+    <string name="pref_category_diagnostics">Dijagnostika</string>
     <string name="pref_autoupdatesummary">Automatski sinhronizujte i ažurirajte sadržaj</string>
-    <string name="backup">Arhiviranje/Povratak</string>
-    <string name="backup_summary">Napravite rezervnu kopiju ili vratite svoje serije, liste i filmove</string>
     <string name="pref_number">Format broja</string>
     <string name="pref_offset">Ručno podešavanje vremena</string>
     <string name="pref_offsetsummary">Pomeranje vremena emitovanja za %d sati</string>
     <string name="clear_cache">Izbriši keš memoriju</string>
     <string name="clear_cache_summary">Idite na podešavanja skladištenja da biste uklonili keširane slike i mrežne odgovore</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Izvoz i uvoz</string>
+    <string name="title_export">Izvoz</string>
+    <string name="title_import">Uvoz</string>
+    <string name="action_export">Izvezi u datoteku</string>
     <string name="backup_full_dump">Uključuje opise, detalje, ocene</string>
-    <string name="backup_failed_file_access">Nije moguće napraviti rezervnu kopiju. Datoteka rezervne kopije se ne može pronaći ili pristupiti.</string>
-    <string name="backup_success">Rezervna kopija uspešna</string>
-    <string name="backup_failed">Rezervna kopija neuspešna</string>
-    <string name="import_failed_nosd">Nije moguće vratiti rezervnu kopiju. Fascikla rezervne kopije nije dostupna.</string>
-    <string name="import_failed_nofile">Nema čitljive rezervne kopije</string>
-    <string name="import_success">Rezervna kopija je uspešno vraćena</string>
-    <string name="import_failed">Vraćanje rezervne kopije nije uspelo</string>
-    <string name="backup_button">Napravite rezervnu kopiju</string>
+    <string name="status_successful">Uspešno</string>
+    <string name="status_failure">Nije uspelo</string>
+    <string name="status_failed_file_access">Ne mogu da pronađem ili pristupim datoteci</string>
     <string name="import_button">Povratiti rezervnu kopiju</string>
+    <string name="action_view_import_documentation">Pogledajte očekivani format</string>
     <string name="import_warning">Vaše trenutne serije, liste ili filmovi biće zamenjeni rezervnom kopijom</string>
+    <string name="import_cloud_warning">Ne preporučuje se kada se koristi SeriesGuide Cloud ili Trakt</string>
+    <string name="import_cloud_warning_details">Sinhronizacija sa Cloud-om ili Trakt-om može prebrisati uvezene podatke. Sa SeriesGuide Cloud-om, možete obrisati svoj nalog pre uvoza podataka, a zatim ga ponovo kreirati kasnije da biste otpremili samo uvezene podatke.</string>
     <string name="no_file_selected">Nijedna datoteka nije odabrana</string>
     <string name="action_select_file">Izaberite datoteku</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatska rezervna kopija</string>
     <string name="pref_autobackupsummary">Nedeljna rezervna kopija serija, lista i filmova u skladištu uređaja.</string>
     <string name="autobackup_details">Ove rezervne kopije nisu dostupne ako se aplikacija ponovo instalira. Napravite kopije da biste ih inače sačuvali.</string>
+    <string name="backup_button">Napravite rezervnu kopiju</string>
     <string name="last_auto_backup">Poslednja automatska rezervna kopija: %s</string>
     <string name="restore_auto_backup">Vrati automatsku rezervnu kopiju</string>
     <string name="autobackup_failed">Poslednja automatska rezervna kopija nije uspela</string>
@@ -574,6 +576,11 @@
     <string name="feedback_question_feedback">Recite mi kako da to poboljšam?</string>
     <string name="feedback_action_ok">OK, naravno</string>
     <string name="feedback_action_nothanks">Ne, hvala</string>
-    <!-- Support -->
+    <!-- Support the dev -->
     <string name="support_the_dev">Podržite programera?</string>
+    <string name="support_the_dev_other_ways">Other ways to support</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Izveštaj o greškama</string>
+    <string name="status_saving_file_success">Datoteka je sačuvana</string>
+    <string name="status_saving_file_failed">Čuvanje datoteke nije uspelo</string>
 </resources>

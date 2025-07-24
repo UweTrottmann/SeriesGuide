@@ -19,6 +19,7 @@
     <string name="season_number">Сезона %d</string>
     <string name="specialseason">Специјалне епизоде</string>
     <string name="ratings">Оцене</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Кретање нагоре</string>
     <string name="description_overview">Преглед</string>
@@ -40,6 +41,7 @@
     <string name="action_select_region">Одабери регион</string>
     <string name="action_reset">Ресетуј</string>
     <string name="action_save">Сачувај</string>
+    <string name="action_turn_on">Укључи</string>
     <!-- Search -->
     <string name="clear_search_history">Обриши историју претраге</string>
     <string name="search_hint">Тражи епизоде</string>
@@ -58,6 +60,7 @@
     <string name="api_failed">Неуспело %s</string>
     <string name="copy_to_clipboard">Копирано у клипбоард</string>
     <string name="not_migrated">Серија није пребачена у TMDB. Неке акције као Trakt/Cloud синхронизација могу да не раде. Можда потражите замену и уклоните ову емисију. Додирните за детаље.</string>
+    <string name="status_turned_on">Укључено</string>
     <!-- Sharing -->
     <string name="share">Подели</string>
     <string name="share_show">Подели серију</string>
@@ -65,7 +68,6 @@
     <string name="share_movie">Подели филм</string>
     <string name="addtocalendar">Додај у календар</string>
     <string name="addtocalendar_failed">Креирање овог догађаја у календару није успело.</string>
-    <string name="links">Линкови</string>
     <!-- Comments -->
     <string name="comments">Коментари</string>
     <string name="shout_hint">Упишите коментар (на енглеском са више од 5 речи)</string>
@@ -101,8 +103,7 @@
     <string name="show_status_in_production">У производњи</string>
     <string name="show_status_pilot">Пилот</string>
     <string name="show_status_canceled">Отказано</string>
-    <string name="no_translation">Не постоји опис преведен на %1$s који је доступан на %2$s.</string>
-    <string name="no_translation_title">Није преведено</string>
+    <string name="no_translation">Нема доступних детаља у %1$s, размислите о томе да их додате на %2$s. Или покушајте да промените језик.</string>
     <string name="no_spoilers">Неки детаљи су скривени да би се спречили спојлери. Да бисте ово искључили, идите на Подешавања.</string>
     <string name="format_source">Извор %s</string>
     <string name="last_updated">Последње ажурирање</string>
@@ -291,6 +292,7 @@
     <string name="action_movies_sort_release">Датум емитовања</string>
     <string name="title_similar_movies">Слични филмови</string>
     <string name="title_release_dates">Датуми емитовања</string>
+    <string name="error_movie_not_found">Филм је уклоњен из ТМДБ-а. Уклоните га са листа, поставите да се не гледа. Користите Тракт? На њиховој веб локацији потражите његов ТМДБ ИД и уклоните га из историје и листа.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Nije bilo moguće obraditi statistiku</string>
     <string name="shows_finished">%s завршио гледање</string>
@@ -360,7 +362,6 @@
     <string name="disconnect">Прекини везу</string>
     <string name="show_library">Додајте емисије из Trakt</string>
     <string name="about_trakt">Trakt води евиденцију серија и филмова које гледате.</string>
-    <string name="support_trakt">Подржите Trakt са VIP</string>
     <string name="action_trakt_view_limits">Погледајте ограничења налога</string>
     <!-- trakt ratings -->
     <string name="action_rate">Оцени</string>
@@ -458,33 +459,34 @@
     <string name="theme_app_dark">Тамно</string>
     <string name="theme_app_light">Светло</string>
     <!-- Other advanced settings -->
-    <string name="pref_other">Остало</string>
+    <string name="pref_category_diagnostics">Дијагностика</string>
     <string name="pref_autoupdatesummary">Аутоматски синхронизујте и ажурирајте садржај</string>
-    <string name="backup">Архивирање/ повраћај архиве</string>
-    <string name="backup_summary">Архивирај или врати архивиране серије</string>
     <string name="pref_number">Облик нумерисања</string>
     <string name="pref_offset">Ручно подеси временску разлику</string>
     <string name="pref_offsetsummary">Разлика у емитовању је %d сати</string>
     <string name="clear_cache">Обриши слике из кеш меморије</string>
     <string name="clear_cache_summary">Уклони све слике у кеш меморији вашег уређаја</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Извоз и увоз</string>
+    <string name="title_export">Извези</string>
+    <string name="title_import">Увези</string>
+    <string name="action_export">Извези у датотеку</string>
     <string name="backup_full_dump">Укључите описе, детаље, оцене</string>
-    <string name="backup_failed_file_access">Није могуће архивирати. Датотека за архивирање се не може пронаћи/приступити.</string>
-    <string name="backup_success">Архивирање успешно.</string>
-    <string name="backup_failed">Архивирање неуспешно.</string>
-    <string name="import_failed_nosd">Враћање архиве неуспешно. Потребна фасцикла за ту радњу није доступна.</string>
-    <string name="import_failed_nofile">Не постоји читљива датотека за повраћај података.</string>
-    <string name="import_success">Архивирање успешно враћено.</string>
-    <string name="import_failed">Враћање архиве неуспешно.</string>
-    <string name="backup_button">Архивирај</string>
+    <string name="status_successful">Успешно</string>
+    <string name="status_failure">Неуспешно</string>
+    <string name="status_failed_file_access">Не могу да пронађем или приступим датотеци</string>
     <string name="import_button">Поврати архивирану ставку</string>
+    <string name="action_view_import_documentation">Погледајте очекивани формат</string>
     <string name="import_warning">Ваше тренутне серије, листе или филмови биће замењени архивом</string>
+    <string name="import_cloud_warning">Не препоручује се када се користи SeriesGuide Cloud или Trakt</string>
+    <string name="import_cloud_warning_details">Синхронизација са Cloud-ом или Trakt-ом може пребрисати увезене податке. Са SeriesGuide Cloud-ом, можете обрисати свој налог пре увоза података, а затим га поново креирати касније да бисте отпремили само увезене податке.</string>
     <string name="no_file_selected">Нема одабраних фајлова</string>
     <string name="action_select_file">Изаберите фајл</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Ауто архивирање</string>
     <string name="pref_autobackupsummary">Недељна архива серија, листа и филмова у складишту уређаја.</string>
     <string name="autobackup_details">Ове архиве нису доступне ако се апликација поново инсталира. Направите копије да бисте их иначе сачували.</string>
+    <string name="backup_button">Архивирај</string>
     <string name="last_auto_backup">Задње аутоматско архивирање: %s</string>
     <string name="restore_auto_backup">Поврати податке</string>
     <string name="autobackup_failed">Последње аутоматско архивирање није успело</string>
@@ -574,6 +576,11 @@
     <string name="feedback_question_feedback">Реци ми како да то побољшам?</string>
     <string name="feedback_action_ok">Да, наравно</string>
     <string name="feedback_action_nothanks">Не, хвала</string>
-    <!-- Support -->
+    <!-- Support the dev -->
     <string name="support_the_dev">Подржите програмера?</string>
+    <string name="support_the_dev_other_ways">Other ways to support</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Извештај о грешкама</string>
+    <string name="status_saving_file_success">Датотека је сачувана</string>
+    <string name="status_saving_file_failed">Чување датотеке није успело</string>
 </resources>

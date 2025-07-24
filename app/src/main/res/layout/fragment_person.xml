@@ -1,3 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Copyright 2014-2025 Uwe Trottmann -->
+
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -45,7 +50,6 @@
                 android:id="@+id/textViewPersonName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/containerPersonHeadshot"
                 android:layout_marginStart="@dimen/keyline"
                 android:layout_marginEnd="@dimen/keyline"
                 android:layout_marginBottom="8dp"
@@ -65,7 +69,6 @@
                 android:id="@+id/textViewPersonBiographyHeader"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/containerPersonHeadshot"
                 android:layout_marginStart="@dimen/keyline"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="@dimen/keyline"
@@ -89,6 +92,19 @@
                 app:layout_constraintTop_toBottomOf="@+id/textViewPersonBiographyHeader"
                 tools:text="Kiefer Sutherland  (born 21 December 1966) is a British-Canadian actor" />
 
+            <TextView
+                android:id="@+id/textViewPersonHeaderMoreInfo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/keyline"
+                android:layout_marginTop="@dimen/large_padding"
+                android:layout_marginEnd="@dimen/keyline"
+                android:text="@string/more_information"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Headline6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewPersonBiography" />
+
             <Button
                 android:id="@+id/buttonPersonTmdbLink"
                 style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
@@ -96,11 +112,11 @@
                 android:layout_height="48dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/tmdb"
-                app:icon="@drawable/ic_link_black_24dp"
+                app:icon="@drawable/ic_open_in_new_control_24dp"
                 app:iconGravity="start"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewPersonBiography" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewPersonHeaderMoreInfo" />
 
             <Button
                 android:id="@+id/buttonPersonWebSearch"

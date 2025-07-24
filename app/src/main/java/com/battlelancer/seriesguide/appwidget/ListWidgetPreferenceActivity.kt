@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2012-2024 Uwe Trottmann
+// Copyright 2012-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.appwidget
 
@@ -67,6 +67,9 @@ class ListWidgetPreferenceActivity : BaseThemeActivity() {
         // Note: broken for API 25 Google stock launcher, work around by delaying notify.
         // https://code.google.com/p/android/issues/detail?id=228575
         val runnable = Runnable {
+            // Keep using existing adapter-based APIs as long as possible,
+            // the new widget API only allows a fixed set of pre-built items.
+            @Suppress("DEPRECATION")
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view)
         }
         Handler(Looper.getMainLooper()).postDelayed(runnable, 300)

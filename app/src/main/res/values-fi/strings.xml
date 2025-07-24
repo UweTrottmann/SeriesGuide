@@ -19,6 +19,7 @@
     <string name="season_number">Kausi %d</string>
     <string name="specialseason">Erikoisjaksot</string>
     <string name="ratings">Arvosanat</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Siirry ylös</string>
     <string name="description_overview">Yleiskatsaus</string>
@@ -40,6 +41,7 @@
     <string name="action_select_region">Valitse alue</string>
     <string name="action_reset">Nollaa</string>
     <string name="action_save">Tallenna</string>
+    <string name="action_turn_on">Ota käyttöön</string>
     <!-- Search -->
     <string name="clear_search_history">Tyhjennä hakuhistoria</string>
     <string name="search_hint">Hae jaksoja</string>
@@ -58,6 +60,7 @@
     <string name="api_failed">Epäonnistui: %s</string>
     <string name="copy_to_clipboard">Kopioitu leikepöydälle</string>
     <string name="not_migrated">Sarjaa ei ole siirretty TMDB:hen. Jotkut toiminnot, kuten Trakt- ja Cloud-synkronointi, eivät välttämättä toimi. Suosittelemme, että teet uuden haun ja poistat tämän sarjan. Napauta nähdäksesi tiedot.</string>
+    <string name="status_turned_on">Käytössä</string>
     <!-- Sharing -->
     <string name="share">Jaa</string>
     <string name="share_show">Jaa ohjelma</string>
@@ -65,7 +68,6 @@
     <string name="share_movie">Jaa elokuva</string>
     <string name="addtocalendar">Lisää kalenteriin</string>
     <string name="addtocalendar_failed">Kalenteritapahtumaa ei voi luoda</string>
-    <string name="links">Linkit</string>
     <!-- Comments -->
     <string name="comments">Kommentit</string>
     <string name="shout_hint">Kirjoita kommentti (englanniksi, 5+ sanaa)</string>
@@ -100,8 +102,7 @@
     <string name="show_status_in_production">Tuotannossa</string>
     <string name="show_status_pilot">Pilotti</string>
     <string name="show_status_canceled">Peruttu</string>
-    <string name="no_translation">Kuvausta ei ole saatavilla kielellä %1$s palvelussa %2$s.</string>
-    <string name="no_translation_title">Ei käännetty</string>
+    <string name="no_translation">Tietoja ei ole saatavilla kielellä %1$s, harkitse niiden lisäämistä palveluun %2$s. Tai yritä vaihtaa kieltä.</string>
     <string name="no_spoilers">Osa tiedoista on piilotettu juonipaljastuksien varalta. Voit poistaa tämän käytöstä asetuksista.</string>
     <string name="format_source">Lähde: %s</string>
     <string name="last_updated">Viimeksi päivitetty</string>
@@ -284,6 +285,7 @@
     <string name="action_movies_sort_release">Julkaisupäivä</string>
     <string name="title_similar_movies">Samankaltaisia elokuvia</string>
     <string name="title_release_dates">Julkaisupäivät</string>
+    <string name="error_movie_not_found">Elokuva poistettu TMDB:stä. Poista se listoilta ja aseta se ei-katsotuksi. Käytätkö Traktia? Hae elokuvan TMDB ID:tä heidän verkkosivustoiltaan ja poista se historiasta ja listoilta.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Tilastojen laskeminen ei onnistunut.</string>
     <string name="shows_finished">%s katsottu loppuun</string>
@@ -350,7 +352,6 @@
     <string name="disconnect">Katkaise yhteys</string>
     <string name="show_library">Lisää ohjelmat Traktista</string>
     <string name="about_trakt">Trakt auttaa sinua pysymään kärryillä katsomistasi ohjelmista ja elokuvista.</string>
-    <string name="support_trakt">Tue Traktia VIP-tilauksella</string>
     <string name="action_trakt_view_limits">Näytä tilin rajat</string>
     <!-- trakt ratings -->
     <string name="action_rate">Arvostele</string>
@@ -444,33 +445,34 @@
     <string name="theme_app_dark">Tumma</string>
     <string name="theme_app_light">Vaalea</string>
     <!-- Other advanced settings -->
-    <string name="pref_other">Muu</string>
+    <string name="pref_category_diagnostics">Diagnostiikka</string>
     <string name="pref_autoupdatesummary">Synkronoi ja päivitä sisältö automaattisesti</string>
-    <string name="backup">Varmuuskopioi/Palauta</string>
-    <string name="backup_summary">Varmuuskopioi tai palauta ohjelmasi</string>
     <string name="pref_number">Lukumuoto</string>
     <string name="pref_offset">Manuaalinen ajansiirto</string>
     <string name="pref_offsetsummary">Siirrä lähetysaikoja %d tunnilla</string>
     <string name="clear_cache">Tyhjennä välimuisti</string>
     <string name="clear_cache_summary">Poista välimuistissa olevat kuvat ja verkkovastaukset menemällä tallennustilan asetuksiin</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Vie ja tuo</string>
+    <string name="title_export">Vienti</string>
+    <string name="title_import">Tuonti</string>
+    <string name="action_export">Vie tiedostoon</string>
     <string name="backup_full_dump">Sisällytä kuvaukset, tiedot, arvosanat</string>
-    <string name="backup_failed_file_access">Varmuuskopiointi epäonnistui. Varmuuskopiotiedostoa ei löydy tai sitä ei voi käyttää.</string>
-    <string name="backup_success">Varmuuskopiointi onnistui.</string>
-    <string name="backup_failed">Varmuuskopiointi epäonnistui.</string>
-    <string name="import_failed_nosd">Varmuuskopion palautus epäonnistui. Varmuuskopiokansio ei ole saatavilla.</string>
-    <string name="import_failed_nofile">Luettavaa varmuuskopiotiedostoa ei ole</string>
-    <string name="import_success">Varmuuskopio palautettu onnistuneesti.</string>
-    <string name="import_failed">Varmuuskopion palauttaminen epäonnistui.</string>
-    <string name="backup_button">Luo varmuuskopio</string>
+    <string name="status_successful">Onnistui</string>
+    <string name="status_failure">Epäonnistui</string>
+    <string name="status_failed_file_access">Tiedostoa ei löydy tai sitä ei voi avata</string>
     <string name="import_button">Palauta varmuuskopio</string>
+    <string name="action_view_import_documentation">Näytä vaadittu muoto</string>
     <string name="import_warning">Nykyiset ohjelmasi, listasi ja elokuvasi korvataan varmuuskopioilla</string>
+    <string name="import_cloud_warning">Vältä tätä, jos käytät SeriesGuide Cloudia tai Traktia</string>
+    <string name="import_cloud_warning_details">Synkronointi Cloudin tai Traktin kanssa voi korvata tuodut tiedot. Jos käytät SeriesGuide Cloudia, voit poistaa tilisi ennen tietojen tuomista ja luoda sen uudelleen myöhemmin ladataksesi vain tuodut tiedot.</string>
     <string name="no_file_selected">Tiedostoa ei ole valittu</string>
     <string name="action_select_file">Valitse tiedosto</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Automaattinen varmuuskopiointi</string>
     <string name="pref_autobackupsummary">Viikoittainen varmuuskopio ohjelmistasi, listoistasi ja elokuvistasi</string>
     <string name="autobackup_details">Nämä varmuuskopiot eivät ole käytettävissä, jos sovellus asennetaan uudelleen, ellei sovelluksen tietojen varmuuskopiointia ole otettu käyttöön tällä laitteella (Android 6+). Luo kopioita säilyttääksesi ne muuten.</string>
+    <string name="backup_button">Luo varmuuskopio</string>
     <string name="last_auto_backup">Viimeisin automaattinen varmuuskopiointi: %s</string>
     <string name="restore_auto_backup">Palauta automaattinen varmuuskopio</string>
     <string name="autobackup_failed">Viimeisin automaattinen varmuuskopiointi epäonnistui</string>
@@ -479,7 +481,7 @@
     <string name="autobackup_restore_available">Automaattinen varmuuskopio saattaa olla käytettävissä palautusta varten.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Aloita</string>
-    <string name="dismiss">Hylkää</string>
+    <string name="dismiss">Peruuta</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">%s uutta jaksoa</string>
     <string name="upcoming_display">Valitse näyttääksesi tulevat ohjelmat</string>
@@ -560,6 +562,11 @@
     <string name="feedback_question_feedback">Kerro minulle miten sitä voisi parantaa?</string>
     <string name="feedback_action_ok">Ok, toki</string>
     <string name="feedback_action_nothanks">Ei kiitos</string>
-    <!-- Support -->
+    <!-- Support the dev -->
     <string name="support_the_dev">Haluatko tukea kehittäjää?</string>
+    <string name="support_the_dev_other_ways">Other ways to support</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Virheenkorjausloki</string>
+    <string name="status_saving_file_success">Tiedosto tallennettu</string>
+    <string name="status_saving_file_failed">Tiedoston tallennus epäonnistui</string>
 </resources>

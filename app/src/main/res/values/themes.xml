@@ -73,6 +73,9 @@
         <item name="sgColorStatusBarOverlay">@color/sg_black_87</item>
         <item name="sgColorOutlineLighter">@color/sg_color_outline_dark</item>
 
+        <!-- Other custom attributes -->
+        <item name="sgButtonDialogPrimary">@style/Widget.SeriesGuide.Button.Dialog.Primary</item>
+
         <!-- dialogTheme is used by AppCompatDialogFragment. -->
         <item name="dialogTheme">@style/ThemeOverlay.Material3.Dialog</item>
         <item name="preferenceTheme">@style/ThemeOverlay.SeriesGuide.Preference</item>
@@ -151,6 +154,9 @@
         <item name="sgColorShadow">@color/sg_black_7</item>
         <item name="sgColorStatusBarOverlay">@color/sg_white_87</item>
         <item name="sgColorOutlineLighter">@color/sg_color_outline_light</item>
+
+        <!-- Other custom attributes -->
+        <item name="sgButtonDialogPrimary">@style/Widget.SeriesGuide.Button.Dialog.Primary</item>
 
         <!-- dialogTheme is used by AppCompatDialogFragment. -->
         <item name="dialogTheme">@style/ThemeOverlay.Material3.Dialog</item>

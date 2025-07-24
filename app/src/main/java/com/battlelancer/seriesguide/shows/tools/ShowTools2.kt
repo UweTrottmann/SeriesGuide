@@ -18,10 +18,10 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.sync.HexagonShowSync
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
-import com.battlelancer.seriesguide.traktapi.TraktTools2
-import com.battlelancer.seriesguide.traktapi.TraktTools2.TraktErrorResponse
-import com.battlelancer.seriesguide.traktapi.TraktTools2.TraktNonNullResponse
-import com.battlelancer.seriesguide.traktapi.TraktTools2.TraktResponse
+import com.battlelancer.seriesguide.traktapi.TraktTools4
+import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktErrorResponse
+import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse
+import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktResponse
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow
 import dagger.Lazy
@@ -545,6 +545,7 @@ class ShowTools2 @Inject constructor(
         if (sendToTrakt) {
             result = withContext(Dispatchers.Default) {
                 val trakt = SgApp.getServicesComponent(context).trakt()
+                val traktNotes = trakt.notes()
                 if (noteText.isEmpty()) {
                     // Delete note
                     if (noteTraktId == null) {
@@ -554,8 +555,8 @@ class ShowTools2 @Inject constructor(
                         saveToDatabase = isCloudEnabled
                         return@withContext StoreUserNoteResult(noteText, null, "")
                     }
-                    val response = TraktTools2.awaitAndHandleAuthError(context) {
-                        TraktTools2.deleteNote(trakt, noteTraktId)
+                    val response = trakt.awaitAndHandleAuthError {
+                        TraktTools4.deleteNote(traktNotes, noteTraktId)
                     }
                     return@withContext when (response) {
                         is TraktResponse.Success -> {
@@ -583,8 +584,8 @@ class ShowTools2 @Inject constructor(
                     }
                 } else {
                     // Add or update note
-                    val response = TraktTools2.awaitAndHandleAuthErrorNonNull(context) {
-                        TraktTools2.saveNoteForShow(trakt.notes(), showTmdbId, noteText)
+                    val response = trakt.awaitAndHandleAuthErrorNonNull {
+                        TraktTools4.saveNoteForShow(traktNotes, showTmdbId, noteText)
                     }
                     return@withContext when (response) {
                         is TraktNonNullResponse.Success -> {

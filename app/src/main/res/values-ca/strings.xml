@@ -19,6 +19,7 @@
     <string name="season_number">Temporada %d</string>
     <string name="specialseason">Episodis especials</string>
     <string name="ratings">Valoracions</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Torna enrere</string>
     <string name="description_overview">Visió general</string>
@@ -40,6 +41,7 @@
     <string name="action_select_region">Selecciona la regió</string>
     <string name="action_reset">Restablir</string>
     <string name="action_save">Desar</string>
+    <string name="action_turn_on">Activar</string>
     <!-- Search -->
     <string name="clear_search_history">Esborra l\'historial</string>
     <string name="search_hint">Cerca episodis</string>
@@ -58,6 +60,7 @@
     <string name="api_failed">Ha fallat: %s</string>
     <string name="copy_to_clipboard">copiat al porta-retalls</string>
     <string name="not_migrated">La sèrie no s\'ha migrat a TMDB. Algunes accions, incloses Trakt i Cloud sync podrien no funcionar. Busca un reemplaçament i esborra aquesta sèrie. Prem per veure detalls.</string>
+    <string name="status_turned_on">Activat</string>
     <!-- Sharing -->
     <string name="share">Comparteix</string>
     <string name="share_show">Comparteix la serie</string>
@@ -65,7 +68,6 @@
     <string name="share_movie">Comparteix la pel·lícula</string>
     <string name="addtocalendar">Afegeix al calendari</string>
     <string name="addtocalendar_failed">No es pot crear l\'esdeveniment.</string>
-    <string name="links">Enllaços</string>
     <!-- Comments -->
     <string name="comments">Comentaris</string>
     <string name="shout_hint">Escriu un comentari (anglès, 5+ paraules)</string>
@@ -100,8 +102,7 @@
     <string name="show_status_in_production">En producció</string>
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">Cancel·lat</string>
-    <string name="no_translation">No hi ha cap descripció traduïda al %1$s disponible a %2$s.</string>
-    <string name="no_translation_title">No traduït</string>
+    <string name="no_translation">No hi ha detalls en %1$s disponibles, pensa en afegir-lo a %2$s. O prova de canviar l\'idioma.</string>
     <string name="no_spoilers">Alguns detalls estan amagats per evitar spoilers. Per desactivar aquesta opció aneu a Configuració.</string>
     <string name="format_source">Font: %s</string>
     <string name="last_updated">Darrera actualització</string>
@@ -284,6 +285,7 @@
     <string name="action_movies_sort_release">Data de llançament</string>
     <string name="title_similar_movies">Pel·lícules similars</string>
     <string name="title_release_dates">Dates de llançament</string>
+    <string name="error_movie_not_found">Pel·lícula eliminada de TMDB. Esborra-la de les llistes, posa-la com a no vista. Fas servir Trakt? Al seu web, cerca pel seu TMDB ID i esborra\'l de l\'historial i de les llistes.</string>
     <!-- Statistics -->
     <string name="statistics_failed">No s\'han pogut calcular les estadístiques.</string>
     <string name="shows_finished">%s acabat de veure</string>
@@ -350,7 +352,6 @@
     <string name="disconnect">Desconnecta</string>
     <string name="show_library">Afegir sèries de Trakt</string>
     <string name="about_trakt">La plataforma Trakt us ajuda a controlar les sèries i pel·lícules que esteu veient.</string>
-    <string name="support_trakt">Ajuda a Trakt amb VIP</string>
     <string name="action_trakt_view_limits">Veure els límits del compte</string>
     <!-- trakt ratings -->
     <string name="action_rate">Puntua</string>
@@ -444,33 +445,34 @@
     <string name="theme_app_dark">Fosc</string>
     <string name="theme_app_light">Clar</string>
     <!-- Other advanced settings -->
-    <string name="pref_other">Altres</string>
+    <string name="pref_category_diagnostics">Diagnòstic</string>
     <string name="pref_autoupdatesummary">Sincronitzar i actualitzar les dades de SeriesGuide automàticament</string>
-    <string name="backup">Còpies de seguretat/Restaura</string>
-    <string name="backup_summary">Creeu una còpia de seguretat de les vostres sèries o restaureu-ne alguna d\'existent</string>
     <string name="pref_number">Format del número</string>
     <string name="pref_offset">Compensació horària manual</string>
     <string name="pref_offsetsummary">Les hores d\'estrena tenen un desfasament de %d hores</string>
     <string name="clear_cache">Buida la memòria cau d\'imatges</string>
     <string name="clear_cache_summary">Elimina totes les imatges que SeriesGuide hagi baixat i que encara siguin al dispositiu</string>
-    <!-- Backup and Restore -->
+    <!-- Export and Import -->
+    <string name="title_export_import">Exportar i importar</string>
+    <string name="title_export">Exportar</string>
+    <string name="title_import">Importar</string>
+    <string name="action_export">Exportar a fitxer</string>
     <string name="backup_full_dump">Incloure descripcions, detalls, valoracions</string>
-    <string name="backup_failed_file_access">No es pot fer còpia de seguretat. No es pot trobar o accedir un arxiu de còpia de seguretat.</string>
-    <string name="backup_success">S\'ha realitzat la còpia de seguretat.</string>
-    <string name="backup_failed">Ha fallat la còpia de seguretat.</string>
-    <string name="import_failed_nosd">No es pot restaurar la còpia de seguretat. La carpeta de còpia de seguretat no està disponible.</string>
-    <string name="import_failed_nofile">No hi ha cap còpia de seguretat que es pugui llegir.</string>
-    <string name="import_success">La còpia de seguretat s\'ha restaurat correctament.</string>
-    <string name="import_failed">La còpia de seguretat no s\'ha pogut restaurar.</string>
-    <string name="backup_button">Crea còpia de seguretat</string>
+    <string name="status_successful">Amb èxit</string>
+    <string name="status_failure">Ha fallat</string>
+    <string name="status_failed_file_access">No es pot trobar ni accedir al fitxer</string>
     <string name="import_button">Restaura</string>
+    <string name="action_view_import_documentation">Mostra el format esperat</string>
     <string name="import_warning">Entenc que les meves sèries, llistes i pel·lícules actuals seran reemplaçades</string>
+    <string name="import_cloud_warning">No es recomana quan s\'utilitza SeriesGuide Cloud o Trakt</string>
+    <string name="import_cloud_warning_details">La sincronització amb Cloud o Trakt pot sobreescriure les dades importades. Amb SeriesGuide Cloud, pots eliminar el teu compte abans d\'importar dades i després tornar-lo a crear per només carregar les dades importades.</string>
     <string name="no_file_selected">Cap arxiu seleccionat</string>
     <string name="action_select_file">Seleccionar arxiu</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Còpies de seguretat automàtiques</string>
     <string name="pref_autobackupsummary">Còpia de seguretat setmanal de les teves sèries, llistes i pel·lícules</string>
     <string name="autobackup_details">Aquestes còpies de seguretat seran inaccessibles si l\'app s\'instal·la de nou. Creeu còpies per preservar-les d\'una altra manera.</string>
+    <string name="backup_button">Crea còpia de seguretat</string>
     <string name="last_auto_backup">Darrera còpia de seguretat automàtica: %s</string>
     <string name="restore_auto_backup">Restaura la còpia de seguretat automàtica</string>
     <string name="autobackup_failed">Ha fallat l\'última còpia de seguretat automàtica</string>
@@ -560,6 +562,11 @@
     <string name="feedback_question_feedback">Digues-me com millorar-ho?</string>
     <string name="feedback_action_ok">OK, d\'acord</string>
     <string name="feedback_action_nothanks">No, gràcies</string>
-    <!-- Support -->
+    <!-- Support the dev -->
     <string name="support_the_dev">Donar suport a l´autor</string>
+    <string name="support_the_dev_other_ways">Altres maneres d\'ajudar</string>
+    <!-- Diagnostics -->
+    <string name="title_debug_log">Registre de depuració</string>
+    <string name="status_saving_file_success">S\'ha desat el fitxer</string>
+    <string name="status_saving_file_failed">No ha pogut desar el fitxer</string>
 </resources>

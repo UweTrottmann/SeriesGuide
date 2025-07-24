@@ -64,6 +64,7 @@
     </style>
 
     <style name="TextAppearance.SeriesGuide.Headline5" parent="TextAppearance.Material3.HeadlineSmall" />
+    <style name="TextAppearance.SeriesGuide.TitleLarge" parent="TextAppearance.Material3.TitleLarge" />
     <style name="TextAppearance.SeriesGuide.Headline6" parent="TextAppearance.Material3.TitleMedium" />
     <style name="TextAppearance.SeriesGuide.Headline6.Dim">
         <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
@@ -138,6 +139,14 @@
 
     <style name="Widget.SeriesGuide.Button.Borderless" parent="Widget.Material3.Button.TextButton">
         <item name="android:maxLines">2</item>
+    </style>
+
+    <style name="Widget.SeriesGuide.Button.Dialog.Primary" parent="Widget.Material3.Button.TextButton.Dialog">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.SeriesGuide.Button.Dialog.Primary</item>
+    </style>
+    <style name="ThemeOverlay.SeriesGuide.Button.Dialog.Primary" parent="">
+        <item name="colorOnContainer">?attr/colorOnPrimary</item>
+        <item name="colorContainer">?attr/colorPrimary</item>
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless.Default">
