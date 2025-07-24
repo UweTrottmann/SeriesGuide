@@ -25,10 +25,24 @@ Wrap in FrameLayout to apply margins in this file
         android:layout_marginTop="@dimen/large_padding"
         android:layout_marginEnd="@dimen/default_padding">
 
+        <TextView
+            android:id="@+id/labelMovieButtonsBottom"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginEnd="@dimen/default_padding"
+            android:text="@string/more_information"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.constraintlayout.helper.widget.Flow
             android:id="@+id/flowMovieButtonsBottom"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginTop="@dimen/inline_padding"
             app:constraint_referenced_ids="buttonMovieTmdb,buttonMovieTrakt,buttonMovieImdb"
             app:flow_horizontalBias="0"
             app:flow_horizontalGap="4dp"
@@ -37,7 +51,7 @@ Wrap in FrameLayout to apply margins in this file
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/labelMovieButtonsBottom" />
 
         <Button
             android:id="@+id/buttonMovieTmdb"
