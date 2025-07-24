@@ -1,47 +1,47 @@
 ---
 layout: help
-title: "Backup or restore your data using files"
+title: "Export or import your data using files"
 ---
 
-<p><span class="emoji">🚨</span> <strong>Not recommended when using SeriesGuide 
-Cloud or Trakt.</strong> Syncing with Cloud or Trakt may overwrite any restored 
-backup. With SeriesGuide Cloud, you can delete your account before restoring the
-backup, then re-create it afterwards to upload only the restored data.</p>
+<h3>Export</h3>
 
-<p><strong>To backup your shows, lists and movies:</strong></p>
+<p>To export your shows, lists and movies:</p>
 
 <ol>
-  <li>In the bottom bar, tap <strong>More</strong> <span class="material-symbols-outlined" aria-hidden="true">menu</span>
-  > <strong>Settings</strong>.</li>
-  <li>Tap <strong>Backup/Restore</strong>.</li>
-  <li>Look for the <strong>Create backup</strong> section.</li>
-  <li>Tap <strong>Select file</strong> for either shows, lists or movies to create a backup.</li>
+  <li>In the bottom bar, tap <strong>More</strong> > <strong>Export and Import</strong>.</li>
+  <li>Tap <strong>Export to file</strong> for either shows, lists or movies.</li>
 </ol>
 
-<p><strong>To restore your shows, lists and movies:</strong></p>
+<p>This will create so called JSON files. This uses a human and machine readable 
+  syntax. <a href="{{ site.data.links.json }}">The format is documented.</a></p>
+
+<p><span class="emoji">💡</span> You can use a 
+<a href="https://play.google.com/store/search?q=file+manager&amp;c=apps">file 
+manager</a> app to view or copy the created files.</p>
+
+<h3>Import</h3>
+
+<p><span class="emoji">⚠️</span> <strong>Not recommended when using SeriesGuide 
+Cloud or Trakt.</strong> Syncing with Cloud or Trakt may overwrite imported 
+data. With SeriesGuide Cloud, you can delete your account before importing data,
+then re-create it afterwards to only upload the imported data.</p>
+
+<p>To import your shows, lists and movies:</p>
 
 <ol>
-  <li>In the bottom bar, tap <strong>More</strong> <span class="material-symbols-outlined" aria-hidden="true">menu</span>
-  > <strong>Settings</strong>.</li>
-  <li>Tap <strong>Backup/Restore</strong>.</li>
-  <li>Look for the <strong>Restore backup</strong> section.</li>
+  <li>In the bottom bar, tap <strong>More</strong> > <strong>Export and Import</strong>.</li>
+  <li>Look for the <strong>Import</strong> section.</li>
   <li>Tap <strong>Select file</strong> for each type of data you want to restore
-  and select the matching backup file.</li>
+  and select a matching file.</li>
   <li>Tick the check box next to each type you want to restore.</li>
-  <li>Tap <strong>Restore backup</strong>.</li>
+  <li>Tap <strong>Import data</strong>.</li>
 </ol>
 
-<p>To restore your backup <strong>on another device</strong>, first transfer the
+<p>To import your data <strong>on another device</strong>, first transfer the
 created files to it. For example save the files to online storage, send yourself
 an email with the files attached or plug your device into a computer to access
 its storage.</p>
 
-<p><span class="badge badge-info">Note</span> You can use a 
-<a href="https://play.google.com/store/search?q=file+manager&amp;c=apps">file 
-manager</a> app to view or copy the backup files.</p>
-
 <p><span class="badge badge-info">Note</span> You can import data from another
-source as long as it uses the <a href="{{ site.data.links.json }}">JSON schema
-that SeriesGuide expects</a>. Add some shows, lists or movies and create a
-backup, then just open the created JSON file to see an example with actual 
-data.</p>
+source as long as it uses the <a href="{{ site.data.links.json }}">format
+that SeriesGuide expects</a>.</p>
