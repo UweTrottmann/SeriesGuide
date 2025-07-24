@@ -19,6 +19,7 @@
     <string name="season_number">Сезона %d</string>
     <string name="specialseason">Специјални епизоди</string>
     <string name="ratings">Оцени</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Преглед</string>
@@ -351,7 +352,6 @@
     <string name="disconnect">Исклучи</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt помага да води евиденција кој ТВ емисии и филмови вие гледате.</string>
-    <string name="support_trakt">Support Trakt with VIP</string>
     <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">Оцени</string>

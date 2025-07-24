@@ -19,6 +19,7 @@
     <string name="season_number">Séria %d</string>
     <string name="specialseason">Bonusové epizódy</string>
     <string name="ratings">Hodnotenia</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Prejsť hore</string>
     <string name="description_overview">Prehľad</string>
@@ -371,7 +372,6 @@
     <string name="disconnect">Odpojiť</string>
     <string name="show_library">Pridať seriály z Trakt</string>
     <string name="about_trakt">V Trakt zaznamenávate, ktoré seriály a filmy sledujete.</string>
-    <string name="support_trakt">Podporte Trakt s VIP</string>
     <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">Hodnotiť</string>

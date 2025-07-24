@@ -19,6 +19,7 @@
     <string name="season_number">Évad %d</string>
     <string name="specialseason">Extra epizódok</string>
     <string name="ratings">Értékelések</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Tartalom</string>
@@ -351,7 +352,6 @@
     <string name="disconnect">Megszakítás</string>
     <string name="show_library">Sorozatok hozzáadása innen: Trakt</string>
     <string name="about_trakt">A Trakt segít nyilvántartani a nézett sorozatokat és filmeket.</string>
-    <string name="support_trakt">Trakt támogatása VIP vásárlással</string>
     <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">Értékelj</string>

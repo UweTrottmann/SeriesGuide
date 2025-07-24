@@ -19,6 +19,7 @@
     <string name="season_number">Κύκλος %d</string>
     <string name="specialseason">Ειδικά Επεισόδια</string>
     <string name="ratings">Βαθμολογίες</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Πλοήγηση προς τα επάνω</string>
     <string name="description_overview">Επισκόπηση</string>
@@ -351,7 +352,6 @@
     <string name="disconnect">Αποσύνδεση</string>
     <string name="show_library">Προσθήκη σειρών από Trakt</string>
     <string name="about_trakt">Το Trakt βοηθά να καταγράψετε τα τηλεοπτικά προγράμματα και τις ταινίες που βλέπετε.</string>
-    <string name="support_trakt">Υποστήριξη Trakt με VIP</string>
     <string name="action_trakt_view_limits">Προβολή ορίων λογαριασμού</string>
     <!-- trakt ratings -->
     <string name="action_rate">Αξιολόγηση</string>

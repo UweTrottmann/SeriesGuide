@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- SPDX-License-Identifier: Apache-2.0 -->
-<!-- Copyright 2014-2021, 2023 Uwe Trottmann -->
+<!-- Copyright 2014-2025 Uwe Trottmann -->
 
 <!-- Need to define root ID in include tag or view binding breaks. -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -11,10 +11,21 @@
     android:layout_height="wrap_content"
     tools:showIn="@layout/buttons_services">
 
+    <TextView
+        android:id="@+id/labelButtonsEpisodeBottom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/more_information"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.constraintlayout.helper.widget.Flow
         android:id="@+id/flowButtonsEpisodeMoreLinks"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/inline_padding"
         app:constraint_referenced_ids="buttonEpisodeTmdb,buttonEpisodeTrakt,buttonEpisodeImdb"
         app:flow_horizontalBias="0"
         app:flow_horizontalGap="4dp"
@@ -23,7 +34,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/labelButtonsEpisodeBottom" />
 
     <Button
         android:id="@+id/buttonEpisodeTmdb"

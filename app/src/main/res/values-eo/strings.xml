@@ -19,6 +19,7 @@
     <string name="season_number">%d-a sezono</string>
     <string name="specialseason">Specialaj Epizodoj</string>
     <string name="ratings">Taksoj</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Priskribo</string>
@@ -350,8 +351,7 @@
     <string name="connect">Konekti</string>
     <string name="disconnect">Malkonekti</string>
     <string name="show_library">Add shows from Trakt</string>
-    <string name="about_trakt">Trakt helps keep a record of what TV shows and movies you are watching.</string>
-    <string name="support_trakt">Support Trakt with VIP</string>
+    <string name="about_trakt">Trakt is a third-party service that helps keep a record of what TV shows and movies you are watching.</string>
     <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">Taksi</string>

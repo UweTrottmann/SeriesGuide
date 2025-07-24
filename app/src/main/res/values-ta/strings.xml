@@ -19,6 +19,7 @@
     <string name="season_number">பருவம் %d</string>
     <string name="specialseason">சிறப்பு Episodes</string>
     <string name="ratings">மதிப்பீடு</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Navigate up</string>
     <string name="description_overview">மேற்பார்வை</string>
@@ -351,7 +352,6 @@
     <string name="disconnect">துண்டி</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt டிவி என்ன காண்பிக்கும் பதிவேட்டை வைத்திருக்க உதவுகிறது மற்றும் திரைப்படங்கள் நீங்கள் வருவதாக.</string>
-    <string name="support_trakt">Support Trakt with VIP</string>
     <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">விகிதம்</string>

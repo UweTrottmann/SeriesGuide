@@ -19,6 +19,7 @@
     <string name="season_number">Сезон %d</string>
     <string name="specialseason">Спец. епізоди</string>
     <string name="ratings">Рейтинги</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Перейти назад</string>
     <string name="description_overview">Огляд</string>
@@ -371,7 +372,6 @@
     <string name="disconnect">Від\'єднатись</string>
     <string name="show_library">Додати серіали чи фільми з Trakt</string>
     <string name="about_trakt">Trakt допомагає зберігати запис про те які телесеріали та фільми ви дивитеся.</string>
-    <string name="support_trakt">Підтримати Trakt з VIP</string>
     <string name="action_trakt_view_limits">Переглянути обмеження облікового запису</string>
     <!-- trakt ratings -->
     <string name="action_rate">Рейтинг</string>

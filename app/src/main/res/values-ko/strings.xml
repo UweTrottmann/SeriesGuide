@@ -19,6 +19,7 @@
     <string name="season_number">시즌 %d</string>
     <string name="specialseason">스페셜 에피소드</string>
     <string name="ratings">평점</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">뒤로 가기</string>
     <string name="description_overview">개요</string>
@@ -341,7 +342,6 @@
     <string name="disconnect">연결 해제</string>
     <string name="show_library">Trakt으로부터 프로그램 추가</string>
     <string name="about_trakt">Trakt는 시청 중인 TV 프로그램과 영화를 기록하는 데 도움을 줍니다.</string>
-    <string name="support_trakt">VIP 회원이 되어 Trakt를 지원</string>
     <string name="action_trakt_view_limits">사용 제한 확인</string>
     <!-- trakt ratings -->
     <string name="action_rate">평가</string>

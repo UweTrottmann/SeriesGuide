@@ -19,6 +19,7 @@
     <string name="season_number">Saison %d</string>
     <string name="specialseason">Épisodes Spéciaux</string>
     <string name="ratings">Notes</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Retour</string>
     <string name="description_overview">Aperçu</string>
@@ -351,7 +352,6 @@
     <string name="disconnect">Se déconnecter</string>
     <string name="show_library">Ajouter des séries de Trakt</string>
     <string name="about_trakt">Trakt vous permet de garder une trace des séries et films que vous regardez.</string>
-    <string name="support_trakt">Soutenir Trakt en devenant VIP</string>
     <string name="action_trakt_view_limits">Voir les limites du compte</string>
     <!-- trakt ratings -->
     <string name="action_rate">Noter</string>

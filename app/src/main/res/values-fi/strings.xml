@@ -19,6 +19,7 @@
     <string name="season_number">Kausi %d</string>
     <string name="specialseason">Erikoisjaksot</string>
     <string name="ratings">Arvosanat</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Siirry ylös</string>
     <string name="description_overview">Yleiskatsaus</string>
@@ -351,7 +352,6 @@
     <string name="disconnect">Katkaise yhteys</string>
     <string name="show_library">Lisää ohjelmat Traktista</string>
     <string name="about_trakt">Trakt auttaa sinua pysymään kärryillä katsomistasi ohjelmista ja elokuvista.</string>
-    <string name="support_trakt">Tue Traktia VIP-tilauksella</string>
     <string name="action_trakt_view_limits">Näytä tilin rajat</string>
     <!-- trakt ratings -->
     <string name="action_rate">Arvostele</string>

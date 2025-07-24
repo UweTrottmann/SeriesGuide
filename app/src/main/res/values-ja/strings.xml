@@ -19,6 +19,7 @@
     <string name="season_number">シーズン %d</string>
     <string name="specialseason">特別編</string>
     <string name="ratings">評価</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Navigate up</string>
     <string name="description_overview">概要</string>
@@ -341,7 +342,6 @@
     <string name="disconnect">切断</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt は、あなたが観ているテレビ番組や映画を記録するのに役立ちます。</string>
-    <string name="support_trakt">Support Trakt with VIP</string>
     <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">作品を評価</string>

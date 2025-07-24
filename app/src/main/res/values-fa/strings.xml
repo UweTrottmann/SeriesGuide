@@ -19,6 +19,7 @@
     <string name="season_number">فصل %d</string>
     <string name="specialseason">قسمت‌های ویژه</string>
     <string name="ratings">Ratings</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">بالا روی</string>
     <string name="description_overview">بررسی اجمالی</string>
@@ -351,7 +352,6 @@
     <string name="disconnect">قطع کردن</string>
     <string name="show_library">افزودن نمایش‌ها از ترکت</string>
     <string name="about_trakt">Trakt کمک می‌کند تا حساب نمایش‌های تلویزیونی و فیلم‌هایی که می‌بینید را داشته باشید.</string>
-    <string name="support_trakt">پشتیبانی از ترکت با وی‌آی‌پی</string>
     <string name="action_trakt_view_limits">دیدن محدودیت‌های حساب</string>
     <!-- trakt ratings -->
     <string name="action_rate">نمره</string>

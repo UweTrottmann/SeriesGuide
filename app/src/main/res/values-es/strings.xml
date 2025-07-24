@@ -19,6 +19,7 @@
     <string name="season_number">Temporada %d</string>
     <string name="specialseason">Episodios especiales</string>
     <string name="ratings">Valoraciones</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Desplazarse hacia arriba</string>
     <string name="description_overview">Sinopsis</string>
@@ -352,7 +353,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="disconnect">Desconectar</string>
     <string name="show_library">Añadir series de Trakt</string>
     <string name="about_trakt">Trakt ayuda a mantener un registro de los programas de televisión y películas que estás viendo.</string>
-    <string name="support_trakt">Ayuda a Trakt con VIP</string>
     <string name="action_trakt_view_limits">Ver límites de la cuenta</string>
     <!-- trakt ratings -->
     <string name="action_rate">Calificar</string>
