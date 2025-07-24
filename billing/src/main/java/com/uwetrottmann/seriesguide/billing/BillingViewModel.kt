@@ -1,5 +1,5 @@
-// Copyright 2019, 2020, 2021, 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2025 Uwe Trottmann
 
 package com.uwetrottmann.seriesguide.billing
 
@@ -29,7 +29,7 @@ class BillingViewModel(
      */
     val availableProducts: Flow<List<SafeAugmentedProductDetails>>
     val entitlementRevokedEvent: LiveData<Void>
-    val errorEvent: LiveData<String>
+    val errorEvent: LiveData<BillingRepository.BillingError>
 
     private val repository: BillingRepository =
         BillingRepository.getInstance(application, coroutineScope)

@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -36,6 +37,7 @@ class BillingActivity : BaseActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: SkuDetailsAdapter
     private lateinit var buttonManageSubs: Button
+    private lateinit var buttonOtherWaysToSupport: Button
     private lateinit var textViewHasUpgrade: View
     private lateinit var textViewBillingUnlockDetected: View
     private lateinit var textViewBillingError: TextView
@@ -70,12 +72,16 @@ class BillingActivity : BaseActivity() {
                     }
                 }
             }
-        billingViewModel.errorEvent.observe(this) { message ->
-            message?.let {
+        billingViewModel.errorEvent.observe(this) { error ->
+            error?.debugMessage?.let {
                 textViewBillingError.apply {
-                    text = "${getString(R.string.subscription_unavailable)} ($message)"
-                    isGone = false
+                    text = "${getString(R.string.subscription_unavailable)} ($it)"
+                    isVisible = true
                 }
+            }
+            // Only display the other ways to support button if Play Billing is not available
+            if (error?.isUnavailable == true) {
+                buttonOtherWaysToSupport.isVisible = true
             }
         }
         // Only use subscription state if unlock app is not installed.
@@ -132,8 +138,11 @@ class BillingActivity : BaseActivity() {
             }
         }
 
-        findViewById<View>(R.id.buttonBillingMoreOptions).setOnClickListener {
-            WebTools.openInCustomTab(this, getString(R.string.url_support_the_dev))
+        buttonOtherWaysToSupport = findViewById<Button>(R.id.buttonBillingMoreOptions).also {
+            it.setOnClickListener {
+                WebTools.openInApp(this, getString(R.string.url_support_the_dev))
+            }
+            it.isGone = true
         }
         findViewById<View>(R.id.buttonBillingMoreInfo).setOnClickListener {
             WebTools.openInCustomTab(this, getString(R.string.url_billing_info_and_help))

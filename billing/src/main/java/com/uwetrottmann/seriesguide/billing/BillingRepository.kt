@@ -10,6 +10,7 @@ import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
+import com.android.billingclient.api.BillingClient.BillingResponseCode
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.BillingResult
@@ -107,8 +108,19 @@ class BillingRepository private constructor(
     /** Triggered when the entitlement was revoked. Use only with one observer at a time. */
     val entitlementRevokedEvent = SingleLiveEvent<Void>()
 
+    data class BillingError(
+        val debugMessage: String,
+        /**
+         * Only `true` if connecting to the billing service failed with
+         * [BillingResponseCode.BILLING_UNAVAILABLE] or the subscription feature is indicated as
+         * not available (but at least currently subscriptions are supported in every region where
+         * Play Billing is supported).
+         */
+        val isUnavailable: Boolean = true
+    )
+
     /** Triggered if there was an error. Contains an error message to display. */
-    val errorEvent = SingleLiveEvent<String>()
+    val errorEvent = SingleLiveEvent<BillingError>()
 
     fun startDataSourceConnections() {
         Timber.d("startDataSourceConnections")
@@ -232,14 +244,14 @@ class BillingRepository private constructor(
                     .build()
                 playStoreBillingClient.acknowledgePurchase(params) { billingResult ->
                     when (billingResult.responseCode) {
-                        BillingClient.BillingResponseCode.OK -> {
+                        BillingResponseCode.OK -> {
                             activateSubStatus(purchase)
                         }
 
                         else -> {
                             "acknowledgeNonConsumablePurchasesAsync failed. ${billingResult.responseCode}: ${billingResult.debugMessage}".let {
                                 Timber.e(it)
-                                errorEvent.postValue(it)
+                                errorEvent.postValue(BillingError(it))
                             }
                         }
                     }
@@ -350,7 +362,7 @@ class BillingRepository private constructor(
 
         val (billingResult, availableProducts) = playStoreBillingClient.queryProductDetails(params)
         when (billingResult.responseCode) {
-            BillingClient.BillingResponseCode.OK -> {
+            BillingResponseCode.OK -> {
                 if (!availableProducts.isNullOrEmpty()) {
                     // Update in the background to avoid blocking the main thread.
                     coroutineScope.launch(Dispatchers.IO) {
@@ -371,7 +383,7 @@ class BillingRepository private constructor(
             else -> {
                 "querySkuDetailsAsync failed. ${billingResult.responseCode}: ${billingResult.debugMessage}".let {
                     Timber.e(it)
-                    errorEvent.postValue(it)
+                    errorEvent.postValue(BillingError(it))
                 }
             }
         }
@@ -464,11 +476,11 @@ class BillingRepository private constructor(
             playStoreBillingClient.isFeatureSupported(BillingClient.FeatureType.SUBSCRIPTIONS)
         var succeeded = false
         when (billingResult.responseCode) {
-            BillingClient.BillingResponseCode.OK -> succeeded = true
+            BillingResponseCode.OK -> succeeded = true
             else -> {
                 "isSubscriptionSupported failed. ${billingResult.responseCode}: ${billingResult.debugMessage}".let {
                     Timber.e(it)
-                    errorEvent.postValue(it)
+                    errorEvent.postValue(BillingError(it, isUnavailable = true))
                 }
             }
         }
@@ -483,7 +495,7 @@ class BillingRepository private constructor(
          * the items that were just now purchased or billed.
          */
         when (billingResult.responseCode) {
-            BillingClient.BillingResponseCode.OK -> {
+            BillingResponseCode.OK -> {
                 purchases?.also {
                     coroutineScope.launch {
                         processPurchases(it.toSet())
@@ -491,7 +503,7 @@ class BillingRepository private constructor(
                 }
             }
 
-            BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> {
+            BillingResponseCode.ITEM_ALREADY_OWNED -> {
                 // item already owned? call queryPurchasesAsync to verify and process all such items
                 Timber.d(billingResult.debugMessage)
                 coroutineScope.launch {
@@ -499,14 +511,14 @@ class BillingRepository private constructor(
                 }
             }
 
-            BillingClient.BillingResponseCode.USER_CANCELED -> {
+            BillingResponseCode.USER_CANCELED -> {
                 Timber.i("onPurchasesUpdated: User canceled the purchase.")
             }
 
             else -> {
                 "onPurchasesUpdated failed. ${billingResult.responseCode}: ${billingResult.debugMessage}".let {
                     Timber.e(it)
-                    errorEvent.postValue(it)
+                    errorEvent.postValue(BillingError(it))
                 }
             }
         }
@@ -521,7 +533,7 @@ class BillingRepository private constructor(
         override fun onBillingSetupFinished(billingResult: BillingResult) {
             reconnectBackOffSeconds = RECONNECT_BACK_OFF_DEFAULT_SECONDS
             when (billingResult.responseCode) {
-                BillingClient.BillingResponseCode.OK -> {
+                BillingResponseCode.OK -> {
                     Timber.d("onBillingSetupFinished successfully")
                     coroutineScope.launch {
                         queryProductDetailsAsync()
@@ -531,7 +543,11 @@ class BillingRepository private constructor(
 
                 else -> {
                     Timber.d(billingResult.debugMessage)
-                    errorEvent.postValue("${billingResult.responseCode}: ${billingResult.debugMessage}")
+                    val debugMessage =
+                        "${billingResult.responseCode}: ${billingResult.debugMessage}"
+                    val isUnavailable =
+                        billingResult.responseCode == BillingResponseCode.BILLING_UNAVAILABLE
+                    errorEvent.postValue(BillingError(debugMessage, isUnavailable))
                 }
             }
         }
