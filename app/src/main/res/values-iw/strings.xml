@@ -19,6 +19,7 @@
     <string name="season_number">עונה %d</string>
     <string name="specialseason">פרקים מיוחדים</string>
     <string name="ratings">דירוגים</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Navigate up</string>
     <string name="description_overview">תקציר</string>

@@ -19,6 +19,7 @@
     <string name="season_number">Sezon %d</string>
     <string name="specialseason">Odcinki specjalne</string>
     <string name="ratings">Oceny</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Przejdź do góry</string>
     <string name="description_overview">Opis</string>

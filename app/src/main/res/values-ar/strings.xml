@@ -19,6 +19,7 @@
     <string name="season_number">الموسم %d</string>
     <string name="specialseason">حلقات خاصة</string>
     <string name="ratings">التقييم</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Navigate up</string>
     <string name="description_overview">نظرة عامة</string>

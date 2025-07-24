@@ -19,6 +19,7 @@
     <string name="season_number">Évad %d</string>
     <string name="specialseason">Extra epizódok</string>
     <string name="ratings">Értékelések</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Tartalom</string>

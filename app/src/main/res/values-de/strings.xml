@@ -19,6 +19,7 @@
     <string name="season_number">Staffel %d</string>
     <string name="specialseason">Specials</string>
     <string name="ratings">Bewertungen</string>
+    <string name="more_information">Weitere Informationen</string>
     <!-- Descriptions -->
     <string name="navigate_up">Nach oben</string>
     <string name="description_overview">Übersicht</string>

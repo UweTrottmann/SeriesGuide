@@ -21,6 +21,7 @@
     <string name="season_number">Season %d</string>
     <string name="specialseason">Special Episodes</string>
     <string name="ratings">Ratings</string>
+    <string name="more_information">More information</string>
 
     <!-- Descriptions -->
     <string name="navigate_up">Navigate up</string>

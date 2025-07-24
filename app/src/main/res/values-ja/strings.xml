@@ -19,6 +19,7 @@
     <string name="season_number">シーズン %d</string>
     <string name="specialseason">特別編</string>
     <string name="ratings">評価</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Navigate up</string>
     <string name="description_overview">概要</string>

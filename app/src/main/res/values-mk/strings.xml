@@ -19,6 +19,7 @@
     <string name="season_number">Сезона %d</string>
     <string name="specialseason">Специјални епизоди</string>
     <string name="ratings">Оцени</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Преглед</string>

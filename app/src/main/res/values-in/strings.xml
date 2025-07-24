@@ -19,6 +19,7 @@
     <string name="season_number">Musim %d</string>
     <string name="specialseason">Episode Khusus</string>
     <string name="ratings">Peringkat</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Tinjauan</string>

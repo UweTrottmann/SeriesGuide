@@ -19,6 +19,7 @@
     <string name="season_number">ซีซั่น %d</string>
     <string name="specialseason">ตอนพิเศษ</string>
     <string name="ratings">คะแนน</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Navigate up</string>
     <string name="description_overview">ภาพรวม</string>

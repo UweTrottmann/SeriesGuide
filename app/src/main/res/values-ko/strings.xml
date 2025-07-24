@@ -19,6 +19,7 @@
     <string name="season_number">시즌 %d</string>
     <string name="specialseason">스페셜 에피소드</string>
     <string name="ratings">평점</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">뒤로 가기</string>
     <string name="description_overview">개요</string>

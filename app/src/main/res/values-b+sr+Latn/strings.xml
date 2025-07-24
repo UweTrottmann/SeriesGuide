@@ -19,6 +19,7 @@
     <string name="season_number">Sezona %d</string>
     <string name="specialseason">Specijalne epizode</string>
     <string name="ratings">Ocene</string>
+    <string name="more_information">More information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Kretanje nagore</string>
     <string name="description_overview">Pregled</string>
