@@ -10,6 +10,21 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2025.2
 
+* 🔧 Movie details: adjust buttons to be more similar to episodes, other minor improvements.
+* 🔧 Discover: for consistency with movies, move search button back to app bar.
+* 🔧 Backup: rename to "Export" and "Import", moved up to More screen, improvements to display, file
+  naming and documentation.
+* 🔧 Auto Backup: moved up to More screen.
+* 🔧 Diagnostics: debug log can be turned on without restarting the app, saved to a file.
+* 📝 2025.2 will be the last release available on devices running Android 5.0 and 5.1.
+* 📝 Removed the unsupported release for devices running Android 4 from Google Play, it is no longer
+  working properly.
+
+### 2025.2.6 - 2025-07-24
+
+* 🔧 Show, episode and movie details: add a "More information" header to external detail page links.
+* 📝 Import latest user interface translations.
+
 ### 2025.2.5 - 2025-07-17 🧪
 
 * 🔨 Cloud: correctly download skipped episodes when adding a previously removed show again.
