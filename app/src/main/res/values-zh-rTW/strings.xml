@@ -341,7 +341,6 @@
     <string name="disconnect">中斷連接</string>
     <string name="show_library">從 Trakt 中新增節目</string>
     <string name="about_trakt">Trakt 能幫你紀錄看了哪些電視節目和電影。</string>
-    <string name="support_trakt">加入 VIP 支持 Trakt</string>
     <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">評分</string>

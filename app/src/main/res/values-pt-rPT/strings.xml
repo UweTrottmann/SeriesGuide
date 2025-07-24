@@ -351,7 +351,6 @@
     <string name="disconnect">Desconectar</string>
     <string name="show_library">Adicionar séries do Trakt</string>
     <string name="about_trakt">O Trakt ajuda-te a manter um registo das séries de televisão e dos filmes que vês.</string>
-    <string name="support_trakt">Apoia o Trakt tornando-te VIP</string>
     <string name="action_trakt_view_limits">Ver limites da conta</string>
     <!-- trakt ratings -->
     <string name="action_rate">Classificar</string>

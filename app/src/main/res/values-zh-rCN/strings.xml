@@ -341,7 +341,6 @@
     <string name="disconnect">断开</string>
     <string name="show_library">从 Trakt 中添加节目</string>
     <string name="about_trakt">Trakt 可帮您记录看过的电影和电视节目。</string>
-    <string name="support_trakt">购买 VIP 支持 Trakt</string>
     <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">评分</string>

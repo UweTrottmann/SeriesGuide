@@ -351,7 +351,6 @@
     <string name="disconnect">Прекъсване на връзката</string>
     <string name="show_library">Добавяне на сериали от Trakt</string>
     <string name="about_trakt">Trakt записва какви сериали и филми гледате.</string>
-    <string name="support_trakt">Подкрепете Trakt с ВИП</string>
     <string name="action_trakt_view_limits">Проверете лимитите</string>
     <!-- trakt ratings -->
     <string name="action_rate">Оцени</string>

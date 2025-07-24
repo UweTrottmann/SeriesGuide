@@ -351,7 +351,6 @@
     <string name="disconnect">Katkaise yhteys</string>
     <string name="show_library">Lisää ohjelmat Traktista</string>
     <string name="about_trakt">Trakt auttaa sinua pysymään kärryillä katsomistasi ohjelmista ja elokuvista.</string>
-    <string name="support_trakt">Tue Traktia VIP-tilauksella</string>
     <string name="action_trakt_view_limits">Näytä tilin rajat</string>
     <!-- trakt ratings -->
     <string name="action_rate">Arvostele</string>

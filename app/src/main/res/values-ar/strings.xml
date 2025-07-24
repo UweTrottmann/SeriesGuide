@@ -391,7 +391,6 @@
     <string name="disconnect">قطع الاتصال</string>
     <string name="show_library">إضافة مسلسلات من Trakt</string>
     <string name="about_trakt">يساعدك Trakt على حفظ ما تشاهده من أفلام ومسلسلات.</string>
-    <string name="support_trakt">ادعم Trakt بالـVIP</string>
     <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">قيم</string>

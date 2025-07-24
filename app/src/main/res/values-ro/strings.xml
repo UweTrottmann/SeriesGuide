@@ -361,7 +361,6 @@
     <string name="disconnect">Deconectează-te</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt ajută la păstrarea unei evidenţe a emisiunilor TV şi a filmelor la care te uiţi.</string>
-    <string name="support_trakt">Support Trakt with VIP</string>
     <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">Evaluare</string>
