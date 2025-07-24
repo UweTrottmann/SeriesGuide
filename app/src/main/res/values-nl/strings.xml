@@ -564,7 +564,7 @@
     <string name="feedback_action_nothanks">Nee, bedankt</string>
     <!-- Support the dev -->
     <string name="support_the_dev">De ontwikkelaar steunen?</string>
-    <string name="support_the_dev_other_ways">Other ways to support</string>
+    <string name="support_the_dev_other_ways">Andere manieren om te ondersteunen</string>
     <!-- Diagnostics -->
     <string name="title_debug_log">Logboek foutopsporing</string>
     <string name="status_saving_file_success">Bestand opgeslagen</string>

@@ -564,7 +564,7 @@
     <string name="feedback_action_nothanks">No, gràcies</string>
     <!-- Support the dev -->
     <string name="support_the_dev">Donar suport a l´autor</string>
-    <string name="support_the_dev_other_ways">Other ways to support</string>
+    <string name="support_the_dev_other_ways">Altres maneres d\'ajudar</string>
     <!-- Diagnostics -->
     <string name="title_debug_log">Registre de depuració</string>
     <string name="status_saving_file_success">S\'ha desat el fitxer</string>
