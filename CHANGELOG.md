@@ -23,6 +23,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 ### 2025.2.7 - 2025-07-31
 
 * 🔧 To comply with Google Play policies, remove links to third-party websites when needed.
+* 🔧 Stream and purchase: display available providers inside the app.
 * 📝 Import latest user interface translations.
 
 ### 2025.2.6 - 2025-07-24

@@ -236,7 +236,8 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         model.watchProvider.observe(viewLifecycleOwner) { watchInfo ->
             StreamingSearch.configureButton(
                 binding.containerMovieButtons.buttonMovieStreamingSearch,
-                watchInfo, true
+                watchInfo,
+                requireActivity().getSgAppContainer().preventExternalLinks
             )
         }
     }

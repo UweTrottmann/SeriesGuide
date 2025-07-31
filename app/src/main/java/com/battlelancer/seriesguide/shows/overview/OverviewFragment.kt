@@ -34,6 +34,7 @@ import com.battlelancer.seriesguide.extensions.ActionsHelper
 import com.battlelancer.seriesguide.extensions.EpisodeActionsContract
 import com.battlelancer.seriesguide.extensions.EpisodeActionsLoader
 import com.battlelancer.seriesguide.extensions.ExtensionManager.EpisodeActionReceivedEvent
+import com.battlelancer.seriesguide.getSgAppContainer
 import com.battlelancer.seriesguide.preferences.MoreOptionsActivity
 import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.settings.AppSettings.setAskedForFeedback
@@ -245,7 +246,8 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
                 this.binding?.let {
                     StreamingSearch.configureButton(
                         it.includeButtons.buttonEpisodeStreamingSearch,
-                        watchInfo, replaceButtonText = true
+                        watchInfo,
+                        requireActivity().getSgAppContainer().preventExternalLinks
                     )
                 }
             }

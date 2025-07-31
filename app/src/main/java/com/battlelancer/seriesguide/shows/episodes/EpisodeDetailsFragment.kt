@@ -36,6 +36,7 @@ import com.battlelancer.seriesguide.extensions.ActionsHelper
 import com.battlelancer.seriesguide.extensions.EpisodeActionsContract
 import com.battlelancer.seriesguide.extensions.EpisodeActionsLoader
 import com.battlelancer.seriesguide.extensions.ExtensionManager.EpisodeActionReceivedEvent
+import com.battlelancer.seriesguide.getSgAppContainer
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.DisplaySettings.isDisplayExactDate
 import com.battlelancer.seriesguide.shows.database.SgEpisode2
@@ -201,7 +202,8 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
             if (watchInfo != null && b != null) {
                 StreamingSearch.configureButton(
                     b.includeButtons.buttonEpisodeStreamingSearch,
-                    watchInfo, replaceButtonText = true
+                    watchInfo,
+                    requireActivity().getSgAppContainer().preventExternalLinks
                 )
             }
         }
