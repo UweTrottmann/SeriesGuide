@@ -19,7 +19,7 @@
     <string name="season_number">Temporada %d</string>
     <string name="specialseason">Episódios Especiais</string>
     <string name="ratings">Classificações</string>
-    <string name="more_information">More information</string>
+    <string name="more_information">Mais informações</string>
     <!-- Descriptions -->
     <string name="navigate_up">Voltar</string>
     <string name="description_overview">Resumo</string>
@@ -41,7 +41,7 @@
     <string name="action_select_region">Selecionar região</string>
     <string name="action_reset">Redefinir</string>
     <string name="action_save">Salvar</string>
-    <string name="action_turn_on">Turn on</string>
+    <string name="action_turn_on">Ativar</string>
     <!-- Search -->
     <string name="clear_search_history">Limpar histórico de pesquisa</string>
     <string name="search_hint">Pesquisar episódios</string>
@@ -60,7 +60,7 @@
     <string name="api_failed">Falhou: %s</string>
     <string name="copy_to_clipboard">Copiado para a área de transferência</string>
     <string name="not_migrated">Os dados TMDB sobre a série não foram migrados. Algumas ações tais como sincronização do Trakt e da Cloud podem não estar a funcionar. Procure se existe uma entrada alternativa para esta série e remova a entrada atual. Toque para ver mais detalhes.</string>
-    <string name="status_turned_on">Turned on</string>
+    <string name="status_turned_on">Ativado</string>
     <!-- Sharing -->
     <string name="share">Compartilhar</string>
     <string name="share_show">Compartilhar série</string>
@@ -445,7 +445,7 @@
     <string name="theme_app_dark">Escuro</string>
     <string name="theme_app_light">Claro</string>
     <!-- Other advanced settings -->
-    <string name="pref_category_diagnostics">Diagnostics</string>
+    <string name="pref_category_diagnostics">Diagnósticos</string>
     <string name="pref_autoupdatesummary">Sincronizar e atualizar os dados automaticamente</string>
     <string name="pref_number">Formato de número</string>
     <string name="pref_offset">Deslocamento de tempo manual</string>
@@ -453,19 +453,19 @@
     <string name="clear_cache">Apagar cache de imagens</string>
     <string name="clear_cache_summary">Remover todas as imagens em cache do seu dispositivo</string>
     <!-- Export and Import -->
-    <string name="title_export_import">Export and import</string>
-    <string name="title_export">Export</string>
-    <string name="title_import">Import</string>
-    <string name="action_export">Export to file</string>
+    <string name="title_export_import">Exportar e importar</string>
+    <string name="title_export">Exportar</string>
+    <string name="title_import">Importar</string>
+    <string name="action_export">Exportar pro arquivo</string>
     <string name="backup_full_dump">Incluir descrições, detalhes, avaliações</string>
-    <string name="status_successful">Successful</string>
-    <string name="status_failure">Failed</string>
-    <string name="status_failed_file_access">Can not find or access file</string>
+    <string name="status_successful">Concluído</string>
+    <string name="status_failure">Falhou</string>
+    <string name="status_failed_file_access">Não foi possível encontrar ou acessar o arquivo</string>
     <string name="import_button">Restaurar</string>
-    <string name="action_view_import_documentation">View expected format</string>
+    <string name="action_view_import_documentation">Ver formato esperado</string>
     <string name="import_warning">Suas séries, listas ou filmes atuais serão substituídos pelo backup</string>
-    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
-    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
+    <string name="import_cloud_warning">Não recomendado durante a utilização do SeriesGuide Cloud ou Trakt</string>
+    <string name="import_cloud_warning_details">Sincronizar com o Cloud ou Trakt pode substituir dados importados. Com o SeriesGuide Cloud, você pode excluir sua conta antes de importar dados, e depois recriá-la para carregar apenas os dados importados.</string>
     <string name="no_file_selected">Nenhum arquivo selecionado</string>
     <string name="action_select_file">Selecionar arquivo</string>
     <!-- Auto backup -->
@@ -566,7 +566,7 @@
     <string name="support_the_dev">Apoie o desenvolvedor</string>
     <string name="support_the_dev_other_ways">Outras formas de apoio</string>
     <!-- Diagnostics -->
-    <string name="title_debug_log">Debug log</string>
-    <string name="status_saving_file_success">File saved</string>
-    <string name="status_saving_file_failed">Failed to save file</string>
+    <string name="title_debug_log">Log de depuração</string>
+    <string name="status_saving_file_success">Arquivo salvo</string>
+    <string name="status_saving_file_failed">Falhar ao salvar arquivo</string>
 </resources>

@@ -19,7 +19,7 @@
     <string name="season_number">시즌 %d</string>
     <string name="specialseason">스페셜 에피소드</string>
     <string name="ratings">평점</string>
-    <string name="more_information">More information</string>
+    <string name="more_information">추가 정보</string>
     <!-- Descriptions -->
     <string name="navigate_up">뒤로 가기</string>
     <string name="description_overview">개요</string>
@@ -550,7 +550,7 @@
     <string name="feedback_action_nothanks">아니오</string>
     <!-- Support the dev -->
     <string name="support_the_dev">개발자 후원하기</string>
-    <string name="support_the_dev_other_ways">Other ways to support</string>
+    <string name="support_the_dev_other_ways">다른 후원 방안</string>
     <!-- Diagnostics -->
     <string name="title_debug_log">디버그 로그</string>
     <string name="status_saving_file_success">파일 저장됨</string>
