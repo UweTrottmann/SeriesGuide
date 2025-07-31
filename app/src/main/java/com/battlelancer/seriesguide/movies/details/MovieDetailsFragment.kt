@@ -35,6 +35,7 @@ import com.battlelancer.seriesguide.databinding.FragmentMovieBinding
 import com.battlelancer.seriesguide.extensions.ActionsHelper
 import com.battlelancer.seriesguide.extensions.ExtensionManager
 import com.battlelancer.seriesguide.extensions.MovieActionsContract
+import com.battlelancer.seriesguide.getSgAppContainer
 import com.battlelancer.seriesguide.movies.MovieLoader
 import com.battlelancer.seriesguide.movies.MovieLocalizationDialogFragment
 import com.battlelancer.seriesguide.movies.MoviesSettings
@@ -198,6 +199,10 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         )
         binding.buttonMovieLanguage.setOnClickListener {
             MovieLocalizationDialogFragment.show(parentFragmentManager)
+        }
+
+        if (requireActivity().getSgAppContainer().preventExternalLinks) {
+            binding.containerMovieBottom.root.isGone = true
         }
 
         // cast and crew

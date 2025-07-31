@@ -537,4 +537,37 @@
         <item>amazon.it</item>
     </string-array>
 
+    <string-array name="eea_regions">
+        <item>AT</item> <!-- Austria -->
+        <item>BE</item> <!-- Belgium -->
+        <item>BG</item> <!-- Bulgaria -->
+        <item>CY</item> <!-- Cyprus -->
+        <item>CZ</item> <!-- Czechia -->
+        <item>DE</item> <!-- Germany -->
+        <item>DK</item> <!-- Denmark -->
+        <item>EE</item> <!-- Estonia -->
+        <item>ES</item> <!-- Spain -->
+        <item>FI</item> <!-- Finland -->
+        <item>FR</item> <!-- France -->
+        <item>GR</item> <!-- Greece -->
+        <item>HR</item> <!-- Croatia -->
+        <item>HU</item> <!-- Hungary -->
+        <item>IE</item> <!-- Ireland -->
+        <item>IS</item> <!-- Iceland -->
+        <item>IT</item> <!-- Italy -->
+        <item>LI</item> <!-- Liechtenstein -->
+        <item>LT</item> <!-- Lithuania -->
+        <item>LU</item> <!-- Luxembourg -->
+        <item>LV</item> <!-- Latvia -->
+        <item>MT</item> <!-- Malta -->
+        <item>NL</item> <!-- Netherlands -->
+        <item>NO</item> <!-- Norway -->
+        <item>PL</item> <!-- Poland -->
+        <item>PT</item> <!-- Portugal -->
+        <item>RO</item> <!-- Romania -->
+        <item>SE</item> <!-- Sweden -->
+        <item>SI</item> <!-- Slovenia -->
+        <item>SK</item> <!-- Slovakia -->
+    </string-array>
+
 </resources>

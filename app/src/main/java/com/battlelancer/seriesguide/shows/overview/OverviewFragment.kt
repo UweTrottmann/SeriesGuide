@@ -206,6 +206,10 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
             // Ratings
             includeRatings.initialize { onButtonRateClick() }
 
+            if (requireActivity().getSgAppContainer().preventExternalLinks) {
+                binding.includeServices.includeMore.root.isGone = true
+            }
+
             // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
             textViewEpisodeDescription.copyTextToClipboardOnLongClick()
             textGuestStars.copyTextToClipboardOnLongClick()
@@ -575,33 +579,36 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
             binding.textViewEpisodeDescription.context, overview
         )
 
-        // TMDb buttons
-        val showTmdbId = show.tmdbId
-        if (showTmdbId != null) {
-            val tmdbUrl = TmdbTools.buildEpisodeUrl(showTmdbId, episode.season, episode.number)
-            binding.includeRatings.ratingViewTmdb.setLink(requireContext(), tmdbUrl)
-            ViewTools.openUrlOnClickAndCopyOnLongPress(
-                binding.includeServices.includeMore.buttonEpisodeTmdb,
-                tmdbUrl
+        val externalLinksAllowed = !requireActivity().getSgAppContainer().preventExternalLinks
+        if (externalLinksAllowed) {
+            // TMDb buttons
+            val showTmdbId = show.tmdbId
+            if (showTmdbId != null) {
+                val tmdbUrl = TmdbTools.buildEpisodeUrl(showTmdbId, episode.season, episode.number)
+                binding.includeRatings.ratingViewTmdb.setLink(requireContext(), tmdbUrl)
+                ViewTools.openUrlOnClickAndCopyOnLongPress(
+                    binding.includeServices.includeMore.buttonEpisodeTmdb,
+                    tmdbUrl
+                )
+            }
+
+            // Trakt buttons
+            if (episode.tmdbId != null) {
+                val traktUrl = TraktTools.buildEpisodeUrl(episode.tmdbId)
+                binding.includeRatings.ratingViewTrakt.setLink(requireContext(), traktUrl)
+                ViewTools.openUrlOnClickAndCopyOnLongPress(
+                    binding.includeServices.includeMore.buttonEpisodeTrakt,
+                    traktUrl
+                )
+            }
+
+            // IMDb button
+            ServiceUtils.configureImdbButton(
+                binding.includeServices.includeMore.buttonEpisodeImdb,
+                lifecycleScope, requireContext(),
+                model.show.value, episode
             )
         }
-
-        // Trakt buttons
-        if (episode.tmdbId != null) {
-            val traktUrl = TraktTools.buildEpisodeUrl(episode.tmdbId)
-            binding.includeRatings.ratingViewTrakt.setLink(requireContext(), traktUrl)
-            ViewTools.openUrlOnClickAndCopyOnLongPress(
-                binding.includeServices.includeMore.buttonEpisodeTrakt,
-                traktUrl
-            )
-        }
-
-        // IMDb button
-        ServiceUtils.configureImdbButton(
-            binding.includeServices.includeMore.buttonEpisodeImdb,
-            lifecycleScope, requireContext(),
-            model.show.value, episode
-        )
     }
 
     override fun loadEpisodeActions() {

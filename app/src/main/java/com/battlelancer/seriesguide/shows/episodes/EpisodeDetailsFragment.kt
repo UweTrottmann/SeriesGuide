@@ -94,7 +94,7 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
     private var binding: LayoutEpisodeBinding? = null
     private var bindingButtons: ButtonsEpisodeBinding? = null
     private var bindingActions: ButtonsServicesBinding? = null
-    private var bindingBottom: ButtonsEpisodeMoreBinding? = null
+    private var bindingButtonsMoreInfo: ButtonsEpisodeMoreBinding? = null
 
     private val model by viewModels<EpisodeDetailsViewModel> {
         EpisodeDetailsViewModelFactory(episodeId, requireActivity().application)
@@ -118,7 +118,7 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
         binding = bindingRoot.includeEpisode.also { binding ->
             bindingButtons = binding.includeButtons
             bindingActions = binding.includeServices.also {
-                bindingBottom = it.includeMore
+                bindingButtonsMoreInfo = it.includeMore
             }
         }
         return bindingRoot.root
@@ -157,6 +157,10 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
                 buttonEpisodeStreamingSearchInfo,
                 parentFragmentManager
             )
+        }
+
+        if (requireActivity().getSgAppContainer().preventExternalLinks) {
+            bindingButtonsMoreInfo!!.root.isGone = true
         }
 
         // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
@@ -231,7 +235,7 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
         binding = null
         bindingButtons = null
         bindingActions = null
-        bindingBottom = null
+        bindingButtonsMoreInfo = null
     }
 
     override fun onDestroy() {
@@ -607,7 +611,9 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
 
     private fun updateSecondaryButtons(episode: SgEpisode2, show: SgShow2) {
         val bindingRatings = binding?.includeRatings ?: return
-        val bindingBottom = bindingBottom ?: return
+        val bindingBottom = bindingButtonsMoreInfo ?: return
+
+        if (requireActivity().getSgAppContainer().preventExternalLinks) return
 
         // Trakt buttons
         if (episode.tmdbId != null) {
