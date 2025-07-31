@@ -36,8 +36,6 @@
     <string name="sync_manually">Manuel senkronizasyon</string>
     <string name="sync_and_update">Senkronize Et &amp; Güncelle</string>
     <string name="sync_and_download_all">Senkronize Et &amp; Tümünü İndir</string>
-    <string name="action_stream">Online izle veya satın al</string>
-    <string name="action_stream_settings">İzleme veya satın alma ayarları</string>
     <string name="action_select_region">Bölge seçin</string>
     <string name="action_reset">Sıfırla</string>
     <string name="action_save">Kaydet</string>
@@ -541,7 +539,6 @@
     <string name="action_extensions_search">Daha fazla eklenti edin</string>
     <string name="action_extensions_develop">Bir uzantı geliştir</string>
     <string name="action_extension_remove">Kaldır</string>
-    <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">YouTube\'da ara</string>
     <string name="description_extension_youtube">YouTube\'da videoları ara</string>
     <string name="description_extension_web_search">Web siteleri ve resimlerde ara</string>
@@ -563,4 +560,12 @@
     <string name="title_debug_log">Debug log</string>
     <string name="status_saving_file_success">File saved</string>
     <string name="status_saving_file_failed">Failed to save file</string>
+    <!-- Streaming info -->
+    <string name="action_stream">Online izle veya satın al</string>
+    <string name="action_stream_settings">İzleme veya satın alma ayarları</string>
+    <string name="title_stream_subscription">Subscription</string>
+    <string name="title_stream_free">Free</string>
+    <string name="title_stream_with_ads">With ads</string>
+    <string name="title_stream_buy">Purchase</string>
+    <string name="title_stream_rent">Rental</string>
 </resources>

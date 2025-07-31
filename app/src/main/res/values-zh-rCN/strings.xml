@@ -36,8 +36,6 @@
     <string name="sync_manually">手动同步</string>
     <string name="sync_and_update">同步并更新</string>
     <string name="sync_and_download_all">同步并全部重新下载</string>
-    <string name="action_stream">流媒体播放或购买</string>
-    <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">选择地区</string>
     <string name="action_reset">重置</string>
     <string name="action_save">Save</string>
@@ -527,7 +525,6 @@
     <string name="action_extensions_search">获取更多扩展</string>
     <string name="action_extensions_develop">开发扩展</string>
     <string name="action_extension_remove">移除</string>
-    <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">YouTube 搜索</string>
     <string name="description_extension_youtube">在 YouTube 上搜索视频</string>
     <string name="description_extension_web_search">搜索相关网站或图片</string>
@@ -549,4 +546,12 @@
     <string name="title_debug_log">Debug log</string>
     <string name="status_saving_file_success">File saved</string>
     <string name="status_saving_file_failed">Failed to save file</string>
+    <!-- Streaming info -->
+    <string name="action_stream">流媒体播放或购买</string>
+    <string name="action_stream_settings">Stream or purchase settings</string>
+    <string name="title_stream_subscription">Subscription</string>
+    <string name="title_stream_free">Free</string>
+    <string name="title_stream_with_ads">With ads</string>
+    <string name="title_stream_buy">Purchase</string>
+    <string name="title_stream_rent">Rental</string>
 </resources>

@@ -36,8 +36,6 @@
     <string name="sync_manually">Синхронизујте ручно</string>
     <string name="sync_and_update">Синхронизуј &amp; Унапреди</string>
     <string name="sync_and_download_all">Синхронизуј &amp; Скини све</string>
-    <string name="action_stream">Стримуј или купи</string>
-    <string name="action_stream_settings">Подешавања о стримовању или куповини</string>
     <string name="action_select_region">Одабери регион</string>
     <string name="action_reset">Ресетуј</string>
     <string name="action_save">Сачувај</string>
@@ -555,7 +553,6 @@
     <string name="action_extensions_search">Набави још додатака</string>
     <string name="action_extensions_develop">Развијте проширење</string>
     <string name="action_extension_remove">Уклони</string>
-    <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">Претрага YouTube-а</string>
     <string name="description_extension_youtube">Потражи видео на YouTube-у</string>
     <string name="description_extension_web_search">Потражи сајтове и слике</string>
@@ -577,4 +574,12 @@
     <string name="title_debug_log">Извештај о грешкама</string>
     <string name="status_saving_file_success">Датотека је сачувана</string>
     <string name="status_saving_file_failed">Чување датотеке није успело</string>
+    <!-- Streaming info -->
+    <string name="action_stream">Стримуј или купи</string>
+    <string name="action_stream_settings">Подешавања о стримовању или куповини</string>
+    <string name="title_stream_subscription">Subscription</string>
+    <string name="title_stream_free">Free</string>
+    <string name="title_stream_with_ads">With ads</string>
+    <string name="title_stream_buy">Purchase</string>
+    <string name="title_stream_rent">Rental</string>
 </resources>

@@ -36,8 +36,6 @@
     <string name="sync_manually">Synkronisera manuellt</string>
     <string name="sync_and_update">Synkronisera &amp; Uppdatera</string>
     <string name="sync_and_download_all">Synkronisera &amp; Ladda ner alla</string>
-    <string name="action_stream">Streama eller köp</string>
-    <string name="action_stream_settings">Stream- eller köpinställningar</string>
     <string name="action_select_region">Välj region</string>
     <string name="action_reset">Återställ</string>
     <string name="action_save">Spara</string>
@@ -541,7 +539,6 @@
     <string name="action_extensions_search">Skaffa fler tillägg</string>
     <string name="action_extensions_develop">Utveckla ett tillägg</string>
     <string name="action_extension_remove">Ta bort</string>
-    <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">YouTube sökning</string>
     <string name="description_extension_youtube">Sök på YouTube för videos</string>
     <string name="description_extension_web_search">Sök efter webbplatser och bilder</string>
@@ -563,4 +560,12 @@
     <string name="title_debug_log">Felsökningslogg</string>
     <string name="status_saving_file_success">Fil sparad.</string>
     <string name="status_saving_file_failed">Misslyckades med att spara fil</string>
+    <!-- Streaming info -->
+    <string name="action_stream">Streama eller köp</string>
+    <string name="action_stream_settings">Stream- eller köpinställningar</string>
+    <string name="title_stream_subscription">Subscription</string>
+    <string name="title_stream_free">Free</string>
+    <string name="title_stream_with_ads">With ads</string>
+    <string name="title_stream_buy">Purchase</string>
+    <string name="title_stream_rent">Rental</string>
 </resources>

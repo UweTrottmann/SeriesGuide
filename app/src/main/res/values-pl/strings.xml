@@ -36,8 +36,6 @@
     <string name="sync_manually">Synchronizuj ręcznie</string>
     <string name="sync_and_update">Synchronizuj i aktualizuj</string>
     <string name="sync_and_download_all">Synchronizuj i pobierz wszystko</string>
-    <string name="action_stream">Kup lub strumieniuj</string>
-    <string name="action_stream_settings">Opcje kupowania i strumieniowania</string>
     <string name="action_select_region">Wybierz region</string>
     <string name="action_reset">Przywróć</string>
     <string name="action_save">Zapisz</string>
@@ -569,7 +567,6 @@
     <string name="action_extensions_search">Pobierz więcej rozszerzeń</string>
     <string name="action_extensions_develop">Jak utworzyć rozszerzenie?</string>
     <string name="action_extension_remove">Usuń</string>
-    <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">Szukaj w YouTube</string>
     <string name="description_extension_youtube">Szukaj filmów na YouTube</string>
     <string name="description_extension_web_search">Szukaj stron internetowych i obrazów</string>
@@ -591,4 +588,12 @@
     <string name="title_debug_log">Debug log</string>
     <string name="status_saving_file_success">File saved</string>
     <string name="status_saving_file_failed">Failed to save file</string>
+    <!-- Streaming info -->
+    <string name="action_stream">Kup lub strumieniuj</string>
+    <string name="action_stream_settings">Opcje kupowania i strumieniowania</string>
+    <string name="title_stream_subscription">Subscription</string>
+    <string name="title_stream_free">Free</string>
+    <string name="title_stream_with_ads">With ads</string>
+    <string name="title_stream_buy">Purchase</string>
+    <string name="title_stream_rent">Rental</string>
 </resources>

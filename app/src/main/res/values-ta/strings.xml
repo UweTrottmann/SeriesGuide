@@ -36,8 +36,6 @@
     <string name="sync_manually">கைமுறையாக ஒத்திசை</string>
     <string name="sync_and_update">ஒத்திசை &amp; புதுப்பி</string>
     <string name="sync_and_download_all">Sync &amp; Download all</string>
-    <string name="action_stream">Stream or purchase</string>
-    <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">Select region</string>
     <string name="action_reset">Reset</string>
     <string name="action_save">Save</string>
@@ -541,7 +539,6 @@
     <string name="action_extensions_search">மேலும் நீட்டிப்புகள் பெற</string>
     <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">நீக்கு</string>
-    <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">YouTube தேடல்</string>
     <string name="description_extension_youtube">YouTube-வீடியோக்களை தேடல்</string>
     <string name="description_extension_web_search">வலைத்தளங்கள் மற்றும் படிமங்கள் தேடவும்</string>
@@ -563,4 +560,12 @@
     <string name="title_debug_log">Debug log</string>
     <string name="status_saving_file_success">File saved</string>
     <string name="status_saving_file_failed">Failed to save file</string>
+    <!-- Streaming info -->
+    <string name="action_stream">Stream or purchase</string>
+    <string name="action_stream_settings">Stream or purchase settings</string>
+    <string name="title_stream_subscription">Subscription</string>
+    <string name="title_stream_free">Free</string>
+    <string name="title_stream_with_ads">With ads</string>
+    <string name="title_stream_buy">Purchase</string>
+    <string name="title_stream_rent">Rental</string>
 </resources>

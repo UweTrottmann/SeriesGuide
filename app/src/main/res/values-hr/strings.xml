@@ -36,8 +36,6 @@
     <string name="sync_manually">Ručno sinkroniziraj</string>
     <string name="sync_and_update">Sinkroniziranje i ažuriranje</string>
     <string name="sync_and_download_all">Sinkroniziraj i sve preuzmi</string>
-    <string name="action_stream">Strujaj ili kupi</string>
-    <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">Select region</string>
     <string name="action_reset">Reset</string>
     <string name="action_save">Save</string>
@@ -555,7 +553,6 @@
     <string name="action_extensions_search">Nabavi više proširenja</string>
     <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Izbriši</string>
-    <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">Pretraži YouTube</string>
     <string name="description_extension_youtube">Pretraga YouTube videa</string>
     <string name="description_extension_web_search">Traži za web stranice i slike</string>
@@ -577,4 +574,12 @@
     <string name="title_debug_log">Debug log</string>
     <string name="status_saving_file_success">File saved</string>
     <string name="status_saving_file_failed">Failed to save file</string>
+    <!-- Streaming info -->
+    <string name="action_stream">Strujaj ili kupi</string>
+    <string name="action_stream_settings">Stream or purchase settings</string>
+    <string name="title_stream_subscription">Subscription</string>
+    <string name="title_stream_free">Free</string>
+    <string name="title_stream_with_ads">With ads</string>
+    <string name="title_stream_buy">Purchase</string>
+    <string name="title_stream_rent">Rental</string>
 </resources>

@@ -36,8 +36,6 @@
     <string name="sync_manually">수동으로 동기화</string>
     <string name="sync_and_update">동기화하고 업데이트</string>
     <string name="sync_and_download_all">동기화하고 모두 다운로드</string>
-    <string name="action_stream">스트리밍 or 구매</string>
-    <string name="action_stream_settings">스트리밍 또는 구매 설정</string>
     <string name="action_select_region">국가 선택</string>
     <string name="action_reset">재설정</string>
     <string name="action_save">저장</string>
@@ -527,7 +525,6 @@
     <string name="action_extensions_search">더 많은 확장프로그램 획득</string>
     <string name="action_extensions_develop">확장 기능 개발하기</string>
     <string name="action_extension_remove">삭제</string>
-    <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">YouTube 검색</string>
     <string name="description_extension_youtube">YouTube에서 비디오 검색</string>
     <string name="description_extension_web_search">웹사이트와 이미지에 대한 검색</string>
@@ -549,4 +546,12 @@
     <string name="title_debug_log">디버그 로그</string>
     <string name="status_saving_file_success">파일 저장됨</string>
     <string name="status_saving_file_failed">파일 저장 실패</string>
+    <!-- Streaming info -->
+    <string name="action_stream">스트리밍 or 구매</string>
+    <string name="action_stream_settings">스트리밍 또는 구매 설정</string>
+    <string name="title_stream_subscription">Subscription</string>
+    <string name="title_stream_free">Free</string>
+    <string name="title_stream_with_ads">With ads</string>
+    <string name="title_stream_buy">Purchase</string>
+    <string name="title_stream_rent">Rental</string>
 </resources>

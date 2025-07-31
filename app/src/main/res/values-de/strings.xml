@@ -36,8 +36,6 @@
     <string name="sync_manually">Manuell synchronisieren</string>
     <string name="sync_and_update">Synch. &amp; Aktualisieren</string>
     <string name="sync_and_download_all">Synch. &amp; Alles herunterladen</string>
-    <string name="action_stream">Streamen oder Kaufen</string>
-    <string name="action_stream_settings">Streamen oder Kaufen Einstellungen</string>
     <string name="action_select_region">Region auswählen</string>
     <string name="action_reset">Zurücksetzen</string>
     <string name="action_save">Speichern</string>
@@ -541,7 +539,6 @@
     <string name="action_extensions_search">Mehr Erweiterungen</string>
     <string name="action_extensions_develop">Erweiterung entwickeln</string>
     <string name="action_extension_remove">Entfernen</string>
-    <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">YouTube-Suche</string>
     <string name="description_extension_youtube">YouTube nach Videos durchsuchen</string>
     <string name="description_extension_web_search">Nach Webseiten und Bildern suchen</string>
@@ -563,4 +560,12 @@
     <string name="title_debug_log">Debug-Protokoll</string>
     <string name="status_saving_file_success">Datei gespeichert</string>
     <string name="status_saving_file_failed">Speichern der Datei fehlgeschlagen</string>
+    <!-- Streaming info -->
+    <string name="action_stream">Streamen oder Kaufen</string>
+    <string name="action_stream_settings">Streamen oder Kaufen Einstellungen</string>
+    <string name="title_stream_subscription">Abonnement</string>
+    <string name="title_stream_free">Kostenlos</string>
+    <string name="title_stream_with_ads">Mit Werbung</string>
+    <string name="title_stream_buy">Kauf</string>
+    <string name="title_stream_rent">Verleih</string>
 </resources>

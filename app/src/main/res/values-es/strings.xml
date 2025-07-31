@@ -36,8 +36,6 @@
     <string name="sync_manually">Sincronizar manualmente</string>
     <string name="sync_and_update">Sincronizar &amp; Actualizar</string>
     <string name="sync_and_download_all">Sincronizar &amp; Descargar todo</string>
-    <string name="action_stream">Ver en línea o comprar</string>
-    <string name="action_stream_settings">Configuración de ver en línea o compra</string>
     <string name="action_select_region">Seleccionar región</string>
     <string name="action_reset">Restablecer</string>
     <string name="action_save">Guardar</string>
@@ -542,7 +540,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="action_extensions_search">Obtén más extensiones</string>
     <string name="action_extensions_develop">Desarrollar una extensión</string>
     <string name="action_extension_remove">Eliminar</string>
-    <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">Búsqueda en YouTube</string>
     <string name="description_extension_youtube">Buscar vídeos en YouTube</string>
     <string name="description_extension_web_search">Buscar imágenes y sitios web</string>
@@ -564,4 +561,12 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="title_debug_log">Registro de depuración (log)</string>
     <string name="status_saving_file_success">Archivo guardado</string>
     <string name="status_saving_file_failed">Error al guardar archivo</string>
+    <!-- Streaming info -->
+    <string name="action_stream">Ver en línea o comprar</string>
+    <string name="action_stream_settings">Configuración de ver en línea o compra</string>
+    <string name="title_stream_subscription">Subscription</string>
+    <string name="title_stream_free">Free</string>
+    <string name="title_stream_with_ads">With ads</string>
+    <string name="title_stream_buy">Purchase</string>
+    <string name="title_stream_rent">Rental</string>
 </resources>

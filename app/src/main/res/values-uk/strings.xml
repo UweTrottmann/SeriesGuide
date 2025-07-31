@@ -36,8 +36,6 @@
     <string name="sync_manually">Синхронізовувати вручну</string>
     <string name="sync_and_update">Синхронізація та Оновлення</string>
     <string name="sync_and_download_all">Синхронізація&amp; Завантажити все</string>
-    <string name="action_stream">Переглянути або замовити</string>
-    <string name="action_stream_settings">Налаштування трансляції або купівлі</string>
     <string name="action_select_region">Виберіть регіон</string>
     <string name="action_reset">Скинути</string>
     <string name="action_save">Зберегти</string>
@@ -569,7 +567,6 @@
     <string name="action_extensions_search">Отримати більше розширеннь</string>
     <string name="action_extensions_develop">Розробити розширення</string>
     <string name="action_extension_remove">Видалити</string>
-    <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">Пошук YouTube</string>
     <string name="description_extension_youtube">Шукати у  YouTube відео</string>
     <string name="description_extension_web_search">Шукати вебсайти та зображення</string>
@@ -591,4 +588,12 @@
     <string name="title_debug_log">Журнал налагодження</string>
     <string name="status_saving_file_success">Файл збережено</string>
     <string name="status_saving_file_failed">Не вдалося зберегти файл</string>
+    <!-- Streaming info -->
+    <string name="action_stream">Переглянути або замовити</string>
+    <string name="action_stream_settings">Налаштування трансляції або купівлі</string>
+    <string name="title_stream_subscription">Subscription</string>
+    <string name="title_stream_free">Free</string>
+    <string name="title_stream_with_ads">With ads</string>
+    <string name="title_stream_buy">Purchase</string>
+    <string name="title_stream_rent">Rental</string>
 </resources>

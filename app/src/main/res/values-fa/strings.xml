@@ -36,8 +36,6 @@
     <string name="sync_manually">هم‌گام سازی دستی</string>
     <string name="sync_and_update">هم‌گام سازی و به‌روز رسانی</string>
     <string name="sync_and_download_all">هم‌گام سازی و بارگیری همه</string>
-    <string name="action_stream">پخش یا خرید</string>
-    <string name="action_stream_settings">تنظمیات پخش یا خرید</string>
     <string name="action_select_region">گزینش ناحیه</string>
     <string name="action_reset">بازنشانی</string>
     <string name="action_save">ذخیره</string>
@@ -541,7 +539,6 @@
     <string name="action_extensions_search">گرفتن افزونه‌های بیش‌تر</string>
     <string name="action_extensions_develop">توسعهٔ افزونه</string>
     <string name="action_extension_remove">حدف</string>
-    <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">جست‌وجوی یوتوب</string>
     <string name="description_extension_youtube">جست‌وجو در یوتوب برای ویدیوها</string>
     <string name="description_extension_web_search">جست‌وجو برای پایگاه‌های وب و تصویرها</string>
@@ -563,4 +560,12 @@
     <string name="title_debug_log">Debug log</string>
     <string name="status_saving_file_success">File saved</string>
     <string name="status_saving_file_failed">Failed to save file</string>
+    <!-- Streaming info -->
+    <string name="action_stream">پخش یا خرید</string>
+    <string name="action_stream_settings">تنظمیات پخش یا خرید</string>
+    <string name="title_stream_subscription">Subscription</string>
+    <string name="title_stream_free">Free</string>
+    <string name="title_stream_with_ads">With ads</string>
+    <string name="title_stream_buy">Purchase</string>
+    <string name="title_stream_rent">Rental</string>
 </resources>

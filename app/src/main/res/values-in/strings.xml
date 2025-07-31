@@ -36,8 +36,6 @@
     <string name="sync_manually">Sync Manual</string>
     <string name="sync_and_update">Sync &amp; Perbarui</string>
     <string name="sync_and_download_all">Sync &amp; unduh semua</string>
-    <string name="action_stream">Tonton atau beli</string>
-    <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">Pilih wilayah</string>
     <string name="action_reset">Reset</string>
     <string name="action_save">Save</string>
@@ -527,7 +525,6 @@
     <string name="action_extensions_search">Dapatkan ekstensi lainnya</string>
     <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Hapus</string>
-    <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">Penelusuran YouTube</string>
     <string name="description_extension_youtube">Cari video di YouTube</string>
     <string name="description_extension_web_search">Cari situs web dan gambar</string>
@@ -549,4 +546,12 @@
     <string name="title_debug_log">Debug log</string>
     <string name="status_saving_file_success">File saved</string>
     <string name="status_saving_file_failed">Failed to save file</string>
+    <!-- Streaming info -->
+    <string name="action_stream">Tonton atau beli</string>
+    <string name="action_stream_settings">Stream or purchase settings</string>
+    <string name="title_stream_subscription">Subscription</string>
+    <string name="title_stream_free">Free</string>
+    <string name="title_stream_with_ads">With ads</string>
+    <string name="title_stream_buy">Purchase</string>
+    <string name="title_stream_rent">Rental</string>
 </resources>

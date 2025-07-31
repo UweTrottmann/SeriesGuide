@@ -36,8 +36,6 @@
     <string name="sync_manually">Synchronizovat ručně</string>
     <string name="sync_and_update">Synchronizuj &amp; Aktualizuj</string>
     <string name="sync_and_download_all">Synchronizuj &amp; Stáhni vše</string>
-    <string name="action_stream">Streamování nebo nákup</string>
-    <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">Vyberte region</string>
     <string name="action_reset">Obnovit</string>
     <string name="action_save">Save</string>
@@ -569,7 +567,6 @@
     <string name="action_extensions_search">Získat další rozšíření</string>
     <string name="action_extensions_develop">Vytvořit rozšíření</string>
     <string name="action_extension_remove">Odstranit</string>
-    <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">Vyhledat na Youtube</string>
     <string name="description_extension_youtube">Vyhledá videa na Youtube</string>
     <string name="description_extension_web_search">Vyhledá odkazy na stránky a obrázky</string>
@@ -591,4 +588,12 @@
     <string name="title_debug_log">Debug log</string>
     <string name="status_saving_file_success">File saved</string>
     <string name="status_saving_file_failed">Failed to save file</string>
+    <!-- Streaming info -->
+    <string name="action_stream">Streamování nebo nákup</string>
+    <string name="action_stream_settings">Stream or purchase settings</string>
+    <string name="title_stream_subscription">Subscription</string>
+    <string name="title_stream_free">Free</string>
+    <string name="title_stream_with_ads">With ads</string>
+    <string name="title_stream_buy">Purchase</string>
+    <string name="title_stream_rent">Rental</string>
 </resources>
