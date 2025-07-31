@@ -9,9 +9,9 @@
     <string name="trakt">Trakt</string>
     <string name="ontrakt">(Trakt)</string>
     <string name="metacritic">Metacritic</string>
-    <string name="powered_by_trakt">powered by Trakt</string>
-    <string name="powered_by_tmdb">powered by TMDB</string>
-    <string name="powered_by_justwatch">powered by JustWatch</string>
+    <string name="powered_by_trakt">Data by Trakt</string>
+    <string name="powered_by_tmdb">Data by TMDB</string>
+    <string name="powered_by_justwatch">Data by JustWatch</string>
     <string name="placeholder_rating">--</string>
     <string name="rating_number_text_format">%1$d - %2$s</string>
     <string name="not_available">n/a</string>
