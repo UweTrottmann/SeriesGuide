@@ -55,7 +55,6 @@ class SgApp : Application() {
     companion object {
 
         const val JOB_ID_EXTENSION_AMAZON = 1001
-        const val JOB_ID_EXTENSION_VODSTER = 1003
         const val JOB_ID_EXTENSION_WEBSEARCH = 1004
         const val JOB_ID_EXTENSION_YOUTUBE = 1005
         const val JOB_ID_EXTENSION_ACTIONS_SERVICE = 1006
