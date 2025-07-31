@@ -280,28 +280,6 @@
 
         <!-- Built-in SeriesGuide extensions -->
         <receiver
-            android:name="com.battlelancer.seriesguide.extensions.AmazonExtensionReceiver"
-            android:description="@string/description_extension_amazon"
-            android:exported="false"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/extension_amazon"
-            tools:ignore="ExportedReceiver">
-            <intent-filter>
-                <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
-                <!-- Android 15 safer intents: explicitly declare subscribe and update events are supported. -->
-                <action android:name="com.battlelancer.seriesguide.api.action.SUBSCRIBE" />
-                <action android:name="com.battlelancer.seriesguide.api.action.UPDATE" />
-            </intent-filter>
-            <meta-data
-                android:name="settingsActivity"
-                android:value="com.battlelancer.seriesguide.extensions.ExtensionsConfigurationActivity" />
-        </receiver>
-        <service
-            android:name="com.battlelancer.seriesguide.extensions.AmazonExtension"
-            android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-
-        <receiver
             android:name="com.battlelancer.seriesguide.extensions.YouTubeExtensionReceiver"
             android:description="@string/description_extension_youtube"
             android:exported="false"

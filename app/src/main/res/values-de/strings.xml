@@ -541,9 +541,6 @@
     <string name="action_extensions_search">Mehr Erweiterungen</string>
     <string name="action_extensions_develop">Erweiterung entwickeln</string>
     <string name="action_extension_remove">Entfernen</string>
-    <string name="extension_amazon">Amazon-Suche</string>
-    <string name="description_extension_amazon">Suchen Sie auf Ihrer lokalen Amazon-Seite</string>
-    <string name="pref_amazon_domain">Amazon-Seite</string>
     <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">YouTube-Suche</string>
     <string name="description_extension_youtube">YouTube nach Videos durchsuchen</string>

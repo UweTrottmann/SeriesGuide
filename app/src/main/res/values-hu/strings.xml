@@ -541,9 +541,6 @@
     <string name="action_extensions_search">További bővítmények</string>
     <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Törlés</string>
-    <string name="extension_amazon">Keresés az Amazonon</string>
-    <string name="description_extension_amazon">Keresés az Amazon helyi oldalán</string>
-    <string name="pref_amazon_domain">Amazon oldala</string>
     <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">YouTube-keresés</string>
     <string name="description_extension_youtube">Keresés YouTube videók között</string>

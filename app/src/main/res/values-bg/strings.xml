@@ -541,9 +541,6 @@
     <string name="action_extensions_search">Вземи още разширения</string>
     <string name="action_extensions_develop">Разработване на разширение</string>
     <string name="action_extension_remove">Премахване</string>
-    <string name="extension_amazon">Търсене в Amazon</string>
-    <string name="description_extension_amazon">Търси във вашия локален Amazon сайт</string>
-    <string name="pref_amazon_domain">Amazon сайт</string>
     <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">Търсене в YouTube</string>
     <string name="description_extension_youtube">Търси видеа в Youtube</string>

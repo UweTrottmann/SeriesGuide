@@ -555,9 +555,6 @@
     <string name="action_extensions_search">Optineți mai multe extensii</string>
     <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Ștergeți</string>
-    <string name="extension_amazon">Căutare pe Amazon</string>
-    <string name="description_extension_amazon">Căutați pe site-ul local Amazon</string>
-    <string name="pref_amazon_domain">Site-ul Amazon</string>
     <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">Căutați pe YouTube</string>
     <string name="description_extension_youtube">Căutați videoclipuri pe YouTube</string>

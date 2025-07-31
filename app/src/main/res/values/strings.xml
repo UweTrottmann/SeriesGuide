@@ -586,9 +586,6 @@
     <string name="action_extensions_search">Get more extensions</string>
     <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Remove</string>
-    <string name="extension_amazon">Amazon search</string>
-    <string name="description_extension_amazon">Search your local Amazon site</string>
-    <string name="pref_amazon_domain">Amazon site</string>
     <string name="extension_youtube">YouTube search</string>
     <string name="description_extension_youtube">Search YouTube for videos</string>
     <string name="description_extension_web_search">Search for websites and images</string>

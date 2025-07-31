@@ -541,9 +541,6 @@
     <string name="action_extensions_search">Skaffa fler tillägg</string>
     <string name="action_extensions_develop">Utveckla ett tillägg</string>
     <string name="action_extension_remove">Ta bort</string>
-    <string name="extension_amazon">Amazon sökning</string>
-    <string name="description_extension_amazon">Sök på din lokala Amazon\'s webbplats</string>
-    <string name="pref_amazon_domain">Amazon\'s webbplats</string>
     <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">YouTube sökning</string>
     <string name="description_extension_youtube">Sök på YouTube för videos</string>

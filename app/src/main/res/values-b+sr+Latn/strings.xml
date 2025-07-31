@@ -555,9 +555,6 @@
     <string name="action_extensions_search">Nabavite još ekstenzija</string>
     <string name="action_extensions_develop">Razvijte ekstenziju</string>
     <string name="action_extension_remove">Ukloni</string>
-    <string name="extension_amazon">Pretraga na Amazon-u</string>
-    <string name="description_extension_amazon">Pretražite svoj lokalni Amazon sajt</string>
-    <string name="pref_amazon_domain">Amazon sajt</string>
     <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">YouTube pretraga</string>
     <string name="description_extension_youtube">Pretražite video snimke na YouTube</string>

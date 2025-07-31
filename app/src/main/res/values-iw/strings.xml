@@ -569,9 +569,6 @@
     <string name="action_extensions_search">חפש תוספים נוספים</string>
     <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">הסר</string>
-    <string name="extension_amazon">חפש באמזון</string>
-    <string name="description_extension_amazon">חפש באתר אמזון המקומי שלך</string>
-    <string name="pref_amazon_domain">אתר אמזון</string>
     <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">חפש בYouTube</string>
     <string name="description_extension_youtube">חפש את הוידיאו בYouTube</string>

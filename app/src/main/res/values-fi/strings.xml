@@ -541,9 +541,6 @@
     <string name="action_extensions_search">Hanki lisää laajennuksia</string>
     <string name="action_extensions_develop">Kehitä laajennus</string>
     <string name="action_extension_remove">Poista</string>
-    <string name="extension_amazon">Amazon-haku</string>
-    <string name="description_extension_amazon">Etsi paikalliselta Amazon-sivustoltasi</string>
-    <string name="pref_amazon_domain">Amazon-sivusto</string>
     <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">YouTube-haku</string>
     <string name="description_extension_youtube">Etsi videoita YouTubesta</string>

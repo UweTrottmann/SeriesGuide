@@ -541,9 +541,6 @@
     <string name="action_extensions_search">Meer extensies zoeken</string>
     <string name="action_extensions_develop">Een uitbreiding ontwikkelen</string>
     <string name="action_extension_remove">Verwijderen</string>
-    <string name="extension_amazon">Zoeken op Amazon</string>
-    <string name="description_extension_amazon">Zoek op uw lokale Amazon-site</string>
-    <string name="pref_amazon_domain">Amazon-site</string>
     <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">Zoeken op YouTube</string>
     <string name="description_extension_youtube">Zoek op YouTube naar video\'s</string>

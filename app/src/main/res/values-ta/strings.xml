@@ -541,9 +541,6 @@
     <string name="action_extensions_search">மேலும் நீட்டிப்புகள் பெற</string>
     <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">நீக்கு</string>
-    <string name="extension_amazon">Amazon தேடல்</string>
-    <string name="description_extension_amazon">உங்கள் உள்ளூர் Amazon தளத்தை தேடு</string>
-    <string name="pref_amazon_domain">Amazon தளத்தை</string>
     <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">YouTube தேடல்</string>
     <string name="description_extension_youtube">YouTube-வீடியோக்களை தேடல்</string>

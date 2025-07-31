@@ -5,7 +5,6 @@ package com.battlelancer.seriesguide.extensions
 
 import android.os.Bundle
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.api.SeriesGuideExtension
 import com.battlelancer.seriesguide.ui.BaseActivity
 import com.battlelancer.seriesguide.ui.SinglePaneActivity
 import com.battlelancer.seriesguide.util.commitReorderingAllowed
@@ -25,14 +24,7 @@ class ExtensionsConfigurationActivity : BaseActivity() {
         setupActionBar()
 
         if (savedInstanceState == null) {
-            val f = if (
-                intent.hasExtra(SeriesGuideExtension.EXTRA_FROM_SERIESGUIDE_SETTINGS)
-            ) {
-                // Launch Amazon extension settings instead.
-                AmazonConfigurationFragment()
-            } else {
-                ExtensionsConfigurationFragment()
-            }
+            val f = ExtensionsConfigurationFragment()
             supportFragmentManager.commitReorderingAllowed {
                 add(R.id.content_frame, f)
             }

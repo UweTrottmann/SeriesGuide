@@ -541,9 +541,6 @@
     <string name="action_extensions_search">Hent flere udvidelser</string>
     <string name="action_extensions_develop">Udvikl en udvidelse</string>
     <string name="action_extension_remove">Fjern</string>
-    <string name="extension_amazon">Amazon-søgning</string>
-    <string name="description_extension_amazon">Søg på dit lokale Amazon-websted</string>
-    <string name="pref_amazon_domain">Amazon-websted</string>
     <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">YouTube-søgning</string>
     <string name="description_extension_youtube">Søg efter videoer på YouTube</string>

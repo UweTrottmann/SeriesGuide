@@ -527,9 +527,6 @@
     <string name="action_extensions_search">รับส่วนเสริมเพิ่มเติม</string>
     <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">ลบ</string>
-    <string name="extension_amazon">ค้นหาใน Amazon</string>
-    <string name="description_extension_amazon">ค้นหาในเว็บไซต์ Amazon ท้องถิ่นของคุณ</string>
-    <string name="pref_amazon_domain">เว็บไซต์ Amazon</string>
     <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">ค้นหาใน YouTube</string>
     <string name="description_extension_youtube">ค้นหาวิดีโอใน YouTube</string>

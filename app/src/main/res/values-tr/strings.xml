@@ -541,9 +541,6 @@
     <string name="action_extensions_search">Daha fazla eklenti edin</string>
     <string name="action_extensions_develop">Bir uzantı geliştir</string>
     <string name="action_extension_remove">Kaldır</string>
-    <string name="extension_amazon">Amazon\'da ara</string>
-    <string name="description_extension_amazon">Yerel Amazon sitesinde arama yap</string>
-    <string name="pref_amazon_domain">Amazon Web Sitesi</string>
     <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">YouTube\'da ara</string>
     <string name="description_extension_youtube">YouTube\'da videoları ara</string>

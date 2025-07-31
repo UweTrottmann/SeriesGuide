@@ -527,9 +527,6 @@
     <string name="action_extensions_search">さらに拡張機能を入手</string>
     <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">削除</string>
-    <string name="extension_amazon">Amazon 検索</string>
-    <string name="description_extension_amazon">ローカルの Amazon サイトを検索します</string>
-    <string name="pref_amazon_domain">Amazon サイト</string>
     <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">YouTube 検索</string>
     <string name="description_extension_youtube">YouTube のビデオを検索します</string>

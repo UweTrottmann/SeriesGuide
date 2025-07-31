@@ -569,9 +569,6 @@
     <string name="action_extensions_search">Získať viac rozšírení</string>
     <string name="action_extensions_develop">Vyvinúť rozšírenie</string>
     <string name="action_extension_remove">Odstrániť</string>
-    <string name="extension_amazon">Hľadať na Amazon</string>
-    <string name="description_extension_amazon">Hľadať na Amazone</string>
-    <string name="pref_amazon_domain">Amazon</string>
     <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">Hľadať na YouTube</string>
     <string name="description_extension_youtube">Hľadať videá na YouTube</string>

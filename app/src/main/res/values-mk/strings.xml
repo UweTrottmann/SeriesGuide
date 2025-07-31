@@ -541,9 +541,6 @@
     <string name="action_extensions_search">Земи повеќе екстензии</string>
     <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Избриши</string>
-    <string name="extension_amazon">Amazon search</string>
-    <string name="description_extension_amazon">Пребарај локален Amazon сајт</string>
-    <string name="pref_amazon_domain">Amazon</string>
     <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">YouTube search</string>
     <string name="description_extension_youtube">Пребарај YouTube за видеа</string>

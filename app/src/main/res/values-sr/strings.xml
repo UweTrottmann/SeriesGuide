@@ -555,9 +555,6 @@
     <string name="action_extensions_search">Набави још додатака</string>
     <string name="action_extensions_develop">Развијте проширење</string>
     <string name="action_extension_remove">Уклони</string>
-    <string name="extension_amazon">Претрага на Amazon-у</string>
-    <string name="description_extension_amazon">Претражи локални Аmazon сајт</string>
-    <string name="pref_amazon_domain">Amazon</string>
     <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">Претрага YouTube-а</string>
     <string name="description_extension_youtube">Потражи видео на YouTube-у</string>

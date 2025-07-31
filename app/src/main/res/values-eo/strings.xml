@@ -541,9 +541,6 @@
     <string name="action_extensions_search">Akiri pli da aldonaĵoj</string>
     <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Forigi</string>
-    <string name="extension_amazon">Serĉi je Amazon</string>
-    <string name="description_extension_amazon">Traserĉi vian lokalan Amazonan retejon.</string>
-    <string name="pref_amazon_domain">Amazon -a retejo</string>
     <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">Jutuba serĉo</string>
     <string name="description_extension_youtube">Serĉi Jutubon por filmetoj</string>

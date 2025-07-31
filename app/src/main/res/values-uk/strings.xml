@@ -569,9 +569,6 @@
     <string name="action_extensions_search">Отримати більше розширеннь</string>
     <string name="action_extensions_develop">Розробити розширення</string>
     <string name="action_extension_remove">Видалити</string>
-    <string name="extension_amazon">Пошук Amazon</string>
-    <string name="description_extension_amazon">Пошук в локальній версії сайту Amazon</string>
-    <string name="pref_amazon_domain">Сайт Amazon</string>
     <!-- description_extension_google_play is unused in the amazon flavor -->
     <string name="extension_youtube">Пошук YouTube</string>
     <string name="description_extension_youtube">Шукати у  YouTube відео</string>
