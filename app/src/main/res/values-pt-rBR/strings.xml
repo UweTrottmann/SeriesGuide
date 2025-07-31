@@ -352,7 +352,6 @@
     <string name="disconnect">Desconectar</string>
     <string name="show_library">Adicionar séries do Trakt</string>
     <string name="about_trakt">Trakt ajuda a manter um registro dos programas de TV e filmes você está assistindo.</string>
-    <string name="action_trakt_view_limits">Ver limites de conta</string>
     <!-- trakt ratings -->
     <string name="action_rate">Avaliar</string>
     <string name="ack_rated">Avaliação enviada</string>

@@ -372,7 +372,6 @@
     <string name="disconnect">Odpojit</string>
     <string name="show_library">Přidat seriály z Trakt</string>
     <string name="about_trakt">Trakt pomáhá uchovávat záznamy o televizních seriálech a filmech, které sledujete.</string>
-    <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">Ohodnotit</string>
     <string name="ack_rated">Hodnocení odesláno</string>

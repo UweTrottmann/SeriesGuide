@@ -379,7 +379,6 @@
     <string name="disconnect">Disconnect</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt is a third-party service that helps keep a record of what TV shows and movies you are watching.</string>
-    <string name="action_trakt_view_limits">View account limits</string>
 
     <!-- trakt ratings -->
     <string name="action_rate">Rate</string>

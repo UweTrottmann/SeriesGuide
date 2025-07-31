@@ -342,7 +342,6 @@
     <string name="disconnect">Putuskan</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt membantu menyimpan catatan acara TV dan film apa yang anda tonton.</string>
-    <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">Beri nilai</string>
     <string name="ack_rated">Rating sent</string>

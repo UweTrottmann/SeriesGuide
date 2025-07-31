@@ -39,10 +39,7 @@
     <string name="url_release_notes">https://discuss.seriesgui.de/c/announcements</string>
     <string name="url_translations">https://www.seriesgui.de/help/fix/translation</string>
     <string name="url_tmdb_migration">https://discuss.seriesgui.de/t/tmdb-migration-issues-and-questions/1158</string>
-    <string name="url_trakt">https://trakt.tv</string>
-    <string name="url_trakt_short">trakt.tv</string>
     <string name="url_trakt_delete_account">https://trakt.tv/settings</string>
-    <string name="url_trakt_account_limits">https://trakt.tv/settings/advanced</string>
     <string name="url_extensions_develop">https://seriesgui.de/api</string>
     <string name="url_import_documentation">https://github.com/UweTrottmann/SeriesGuide/blob/main/docs/backup-json-schema.md</string>
 

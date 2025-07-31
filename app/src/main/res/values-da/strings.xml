@@ -352,7 +352,6 @@
     <string name="disconnect">Afbryd</string>
     <string name="show_library">Tilføj serier fra Trakt</string>
     <string name="about_trakt">Trakt hjælper dig med at holde styr på dine TV-serier.</string>
-    <string name="action_trakt_view_limits">Se kontobegrænsninger</string>
     <!-- trakt ratings -->
     <string name="action_rate">Bedøm</string>
     <string name="ack_rated">Bedømmelse sendt</string>

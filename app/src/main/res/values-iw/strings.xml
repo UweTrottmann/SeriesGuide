@@ -372,7 +372,6 @@
     <string name="disconnect">התנתק</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt מסייעת לשמור רשימה של אילו תוכניות טלוויזיה וסרטים אתה צופה.</string>
-    <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">דרג</string>
     <string name="ack_rated">Rating sent</string>

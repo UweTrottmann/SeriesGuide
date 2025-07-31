@@ -352,7 +352,6 @@
     <string name="disconnect">Disconnetti</string>
     <string name="show_library">Aggiungi serie da Trakt</string>
     <string name="about_trakt">Trakt ti aiuta a tenere traccia delle serie TV e dei film che guardi.</string>
-    <string name="action_trakt_view_limits">Visualizza limiti account</string>
     <!-- trakt ratings -->
     <string name="action_rate">Vota</string>
     <string name="ack_rated">Valutazione inviata</string>

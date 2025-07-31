@@ -352,7 +352,6 @@
     <string name="disconnect">Trennen</string>
     <string name="show_library">Serien von Trakt hinzufügen</string>
     <string name="about_trakt">Trakt ist ein Drittanbieter-Dienst, der hilft TV-Sendungen und Filme zu speichern, die Sie angesehen haben.</string>
-    <string name="action_trakt_view_limits">Kontolimits anzeigen</string>
     <!-- trakt ratings -->
     <string name="action_rate">Bewerten</string>
     <string name="ack_rated">Bewertung übermittelt</string>
