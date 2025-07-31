@@ -558,9 +558,7 @@
     <string name="extension_amazon">Претрага на Amazon-у</string>
     <string name="description_extension_amazon">Претражи локални Аmazon сајт</string>
     <string name="pref_amazon_domain">Amazon</string>
-    <string name="extension_google_play">Претрага Google продавнице</string>
     <!-- description_extension_google_play is unused in the amazon flavor -->
-    <string name="description_extension_google_play" tools:ignore="UnusedResources">Претражи Google продавницу</string>
     <string name="extension_youtube">Претрага YouTube-а</string>
     <string name="description_extension_youtube">Потражи видео на YouTube-у</string>
     <string name="description_extension_web_search">Потражи сајтове и слике</string>

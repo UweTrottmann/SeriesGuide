@@ -52,7 +52,6 @@
     <!-- Google Play links -->
     <string name="url_store_page">https://play.google.com/store/apps/details?id=com.battlelancer.seriesguide</string>
     <string name="url_extensions_search">https://play.google.com/store/search?q=SeriesGuide%20Extension&amp;c=apps</string>
-    <string name="url_movies_search">https://play.google.com/store/search?q=%s&amp;c=movies</string>
 
     <!-- German only extension -->
     <string name="extension_vodster">vodster.de Suche</string>

@@ -572,9 +572,7 @@
     <string name="extension_amazon">Поиск Amazon</string>
     <string name="description_extension_amazon">Поиск в локальной версии Amazon</string>
     <string name="pref_amazon_domain">Сайт Amazon</string>
-    <string name="extension_google_play">Поиск Google Play</string>
     <!-- description_extension_google_play is unused in the amazon flavor -->
-    <string name="description_extension_google_play" tools:ignore="UnusedResources">Поиск Google Play store</string>
     <string name="extension_youtube">Поиск YouTube</string>
     <string name="description_extension_youtube">Поиск YouTube для видео</string>
     <string name="description_extension_web_search">Поиск веб-сайтов и изображений</string>
