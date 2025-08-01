@@ -54,9 +54,6 @@ class SgApp : Application() {
 
     companion object {
 
-        const val JOB_ID_EXTENSION_AMAZON = 1001
-        const val JOB_ID_EXTENSION_GOOGLE_PLAY = 1002
-        const val JOB_ID_EXTENSION_VODSTER = 1003
         const val JOB_ID_EXTENSION_WEBSEARCH = 1004
         const val JOB_ID_EXTENSION_YOUTUBE = 1005
         const val JOB_ID_EXTENSION_ACTIONS_SERVICE = 1006
@@ -91,6 +88,8 @@ class SgApp : Application() {
         const val RELEASE_VERSION_2024_3_5 = 21240305
 
         const val RELEASE_VERSION_2025_1_1 = 21250102
+
+        const val RELEASE_VERSION_2025_2_6 = 21250207
 
         /**
          * The content authority used to identify the SeriesGuide [android.content.ContentProvider].

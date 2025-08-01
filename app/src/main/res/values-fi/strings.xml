@@ -19,7 +19,7 @@
     <string name="season_number">Kausi %d</string>
     <string name="specialseason">Erikoisjaksot</string>
     <string name="ratings">Arvosanat</string>
-    <string name="more_information">More information</string>
+    <string name="more_information">Lisätietoja</string>
     <!-- Descriptions -->
     <string name="navigate_up">Siirry ylös</string>
     <string name="description_overview">Yleiskatsaus</string>
@@ -36,8 +36,6 @@
     <string name="sync_manually">Synkronoi manuaalisesti</string>
     <string name="sync_and_update">Synkronoi ja päivitä</string>
     <string name="sync_and_download_all">Synkronoi ja lataa kaikki</string>
-    <string name="action_stream">Suoratoista tai osta</string>
-    <string name="action_stream_settings">Suoratoisto- tai ostoasetukset</string>
     <string name="action_select_region">Valitse alue</string>
     <string name="action_reset">Nollaa</string>
     <string name="action_save">Tallenna</string>
@@ -352,7 +350,6 @@
     <string name="disconnect">Katkaise yhteys</string>
     <string name="show_library">Lisää ohjelmat Traktista</string>
     <string name="about_trakt">Trakt auttaa sinua pysymään kärryillä katsomistasi ohjelmista ja elokuvista.</string>
-    <string name="action_trakt_view_limits">Näytä tilin rajat</string>
     <!-- trakt ratings -->
     <string name="action_rate">Arvostele</string>
     <string name="ack_rated">Arvosana lähetettiin</string>
@@ -542,12 +539,6 @@
     <string name="action_extensions_search">Hanki lisää laajennuksia</string>
     <string name="action_extensions_develop">Kehitä laajennus</string>
     <string name="action_extension_remove">Poista</string>
-    <string name="extension_amazon">Amazon-haku</string>
-    <string name="description_extension_amazon">Etsi paikalliselta Amazon-sivustoltasi</string>
-    <string name="pref_amazon_domain">Amazon-sivusto</string>
-    <string name="extension_google_play">Google Play -haku</string>
-    <!-- description_extension_google_play is unused in the amazon flavor -->
-    <string name="description_extension_google_play" tools:ignore="UnusedResources">Etsi Google Play Kaupasta</string>
     <string name="extension_youtube">YouTube-haku</string>
     <string name="description_extension_youtube">Etsi videoita YouTubesta</string>
     <string name="description_extension_web_search">Etsi verkkosivustoja ja kuvia</string>
@@ -564,9 +555,17 @@
     <string name="feedback_action_nothanks">Ei kiitos</string>
     <!-- Support the dev -->
     <string name="support_the_dev">Haluatko tukea kehittäjää?</string>
-    <string name="support_the_dev_other_ways">Other ways to support</string>
+    <string name="support_the_dev_other_ways">Muita tapoja tukea</string>
     <!-- Diagnostics -->
     <string name="title_debug_log">Virheenkorjausloki</string>
     <string name="status_saving_file_success">Tiedosto tallennettu</string>
     <string name="status_saving_file_failed">Tiedoston tallennus epäonnistui</string>
+    <!-- Streaming info -->
+    <string name="action_stream">Suoratoista tai osta</string>
+    <string name="action_stream_settings">Suoratoisto- tai ostoasetukset</string>
+    <string name="title_stream_subscription">Subscription</string>
+    <string name="title_stream_free">Free</string>
+    <string name="title_stream_with_ads">With ads</string>
+    <string name="title_stream_buy">Purchase</string>
+    <string name="title_stream_rent">Rental</string>
 </resources>

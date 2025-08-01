@@ -36,8 +36,6 @@
     <string name="sync_manually">قم بالمزامنة يدوياً</string>
     <string name="sync_and_update">المزامنة &amp; والتحديث</string>
     <string name="sync_and_download_all">المزامنة &amp; وتحميل كل البيانات</string>
-    <string name="action_stream">بث أو شراء</string>
-    <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">حدد المنطقة</string>
     <string name="action_reset">Reset</string>
     <string name="action_save">Save</string>
@@ -392,7 +390,6 @@
     <string name="disconnect">قطع الاتصال</string>
     <string name="show_library">إضافة مسلسلات من Trakt</string>
     <string name="about_trakt">يساعدك Trakt على حفظ ما تشاهده من أفلام ومسلسلات.</string>
-    <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">قيم</string>
     <string name="ack_rated">Rating sent</string>
@@ -598,12 +595,6 @@
     <string name="action_extensions_search">المزيد من الإضافات</string>
     <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">إزالة</string>
-    <string name="extension_amazon">البحث في أمازون</string>
-    <string name="description_extension_amazon">البحث المحلي بواسطة موقع أمازون</string>
-    <string name="pref_amazon_domain">موقع أمازون</string>
-    <string name="extension_google_play">البحث في متجر قوقل</string>
-    <!-- description_extension_google_play is unused in the amazon flavor -->
-    <string name="description_extension_google_play" tools:ignore="UnusedResources">البحث في متجر قوقل</string>
     <string name="extension_youtube">البحث في اليوتيوب</string>
     <string name="description_extension_youtube">بحث اليوتيوب لمقاطع الفيديو</string>
     <string name="description_extension_web_search">البحث عن المواقع و الصور</string>
@@ -625,4 +616,12 @@
     <string name="title_debug_log">Debug log</string>
     <string name="status_saving_file_success">File saved</string>
     <string name="status_saving_file_failed">Failed to save file</string>
+    <!-- Streaming info -->
+    <string name="action_stream">بث أو شراء</string>
+    <string name="action_stream_settings">Stream or purchase settings</string>
+    <string name="title_stream_subscription">Subscription</string>
+    <string name="title_stream_free">Free</string>
+    <string name="title_stream_with_ads">With ads</string>
+    <string name="title_stream_buy">Purchase</string>
+    <string name="title_stream_rent">Rental</string>
 </resources>

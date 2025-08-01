@@ -19,7 +19,7 @@
     <string name="season_number">Temporada %d</string>
     <string name="specialseason">Episodis especials</string>
     <string name="ratings">Valoracions</string>
-    <string name="more_information">More information</string>
+    <string name="more_information">Més informació</string>
     <!-- Descriptions -->
     <string name="navigate_up">Torna enrere</string>
     <string name="description_overview">Visió general</string>
@@ -36,8 +36,6 @@
     <string name="sync_manually">Sincronitza manualment</string>
     <string name="sync_and_update">Sincronització i actualització</string>
     <string name="sync_and_download_all">Sincronitza i descarrega tot</string>
-    <string name="action_stream">Veure en línia o comprar</string>
-    <string name="action_stream_settings">Veure en línia o configuració de la compra</string>
     <string name="action_select_region">Selecciona la regió</string>
     <string name="action_reset">Restablir</string>
     <string name="action_save">Desar</string>
@@ -352,7 +350,6 @@
     <string name="disconnect">Desconnecta</string>
     <string name="show_library">Afegir sèries de Trakt</string>
     <string name="about_trakt">La plataforma Trakt us ajuda a controlar les sèries i pel·lícules que esteu veient.</string>
-    <string name="action_trakt_view_limits">Veure els límits del compte</string>
     <!-- trakt ratings -->
     <string name="action_rate">Puntua</string>
     <string name="ack_rated">Valoració enviada</string>
@@ -542,12 +539,6 @@
     <string name="action_extensions_search">Obtén més extensions</string>
     <string name="action_extensions_develop">Desenvolupa una extensió</string>
     <string name="action_extension_remove">Elimina</string>
-    <string name="extension_amazon">Cerca a Amazon</string>
-    <string name="description_extension_amazon">Cerqueu al vostre Amazon local</string>
-    <string name="pref_amazon_domain">Web Amazon</string>
-    <string name="extension_google_play">Cerca a Google Play</string>
-    <!-- description_extension_google_play is unused in the amazon flavor -->
-    <string name="description_extension_google_play" tools:ignore="UnusedResources">Cerca a Google Play Store</string>
     <string name="extension_youtube">Cerca a YouTube</string>
     <string name="description_extension_youtube">Cerca vídeos a YouTube</string>
     <string name="description_extension_web_search">Cerca llocs web i imatges</string>
@@ -569,4 +560,12 @@
     <string name="title_debug_log">Registre de depuració</string>
     <string name="status_saving_file_success">S\'ha desat el fitxer</string>
     <string name="status_saving_file_failed">No ha pogut desar el fitxer</string>
+    <!-- Streaming info -->
+    <string name="action_stream">Veure en línia o comprar</string>
+    <string name="action_stream_settings">Veure en línia o configuració de la compra</string>
+    <string name="title_stream_subscription">Subscription</string>
+    <string name="title_stream_free">Free</string>
+    <string name="title_stream_with_ads">With ads</string>
+    <string name="title_stream_buy">Purchase</string>
+    <string name="title_stream_rent">Rental</string>
 </resources>

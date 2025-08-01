@@ -9,9 +9,9 @@
     <string name="trakt">Trakt</string>
     <string name="ontrakt">(Trakt)</string>
     <string name="metacritic">Metacritic</string>
-    <string name="powered_by_trakt">powered by Trakt</string>
-    <string name="powered_by_tmdb">powered by TMDB</string>
-    <string name="powered_by_justwatch">powered by JustWatch</string>
+    <string name="powered_by_trakt">Data by Trakt</string>
+    <string name="powered_by_tmdb">Data by TMDB</string>
+    <string name="powered_by_justwatch">Data by JustWatch</string>
     <string name="placeholder_rating">--</string>
     <string name="rating_number_text_format">%1$d - %2$s</string>
     <string name="not_available">n/a</string>
@@ -39,10 +39,7 @@
     <string name="url_release_notes">https://discuss.seriesgui.de/c/announcements</string>
     <string name="url_translations">https://www.seriesgui.de/help/fix/translation</string>
     <string name="url_tmdb_migration">https://discuss.seriesgui.de/t/tmdb-migration-issues-and-questions/1158</string>
-    <string name="url_trakt">https://trakt.tv</string>
-    <string name="url_trakt_short">trakt.tv</string>
     <string name="url_trakt_delete_account">https://trakt.tv/settings</string>
-    <string name="url_trakt_account_limits">https://trakt.tv/settings/advanced</string>
     <string name="url_extensions_develop">https://seriesgui.de/api</string>
     <string name="url_import_documentation">https://github.com/UweTrottmann/SeriesGuide/blob/main/docs/backup-json-schema.md</string>
 
@@ -55,11 +52,6 @@
     <!-- Google Play links -->
     <string name="url_store_page">https://play.google.com/store/apps/details?id=com.battlelancer.seriesguide</string>
     <string name="url_extensions_search">https://play.google.com/store/search?q=SeriesGuide%20Extension&amp;c=apps</string>
-    <string name="url_movies_search">https://play.google.com/store/search?q=%s&amp;c=movies</string>
-
-    <!-- German only extension -->
-    <string name="extension_vodster">vodster.de Suche</string>
-    <string name="extension_vodster_description">Deutsche Video-on-Demand und Streaming Suche</string>
 
     <!-- Internal -->
     <string name="menu_action_extensions_enable_debug">[Debug] Enable extensions</string>
@@ -538,6 +530,39 @@
         <item>amazon.fr</item>
         <item>amazon.in</item>
         <item>amazon.it</item>
+    </string-array>
+
+    <string-array name="eea_regions">
+        <item>AT</item> <!-- Austria -->
+        <item>BE</item> <!-- Belgium -->
+        <item>BG</item> <!-- Bulgaria -->
+        <item>CY</item> <!-- Cyprus -->
+        <item>CZ</item> <!-- Czechia -->
+        <item>DE</item> <!-- Germany -->
+        <item>DK</item> <!-- Denmark -->
+        <item>EE</item> <!-- Estonia -->
+        <item>ES</item> <!-- Spain -->
+        <item>FI</item> <!-- Finland -->
+        <item>FR</item> <!-- France -->
+        <item>GR</item> <!-- Greece -->
+        <item>HR</item> <!-- Croatia -->
+        <item>HU</item> <!-- Hungary -->
+        <item>IE</item> <!-- Ireland -->
+        <item>IS</item> <!-- Iceland -->
+        <item>IT</item> <!-- Italy -->
+        <item>LI</item> <!-- Liechtenstein -->
+        <item>LT</item> <!-- Lithuania -->
+        <item>LU</item> <!-- Luxembourg -->
+        <item>LV</item> <!-- Latvia -->
+        <item>MT</item> <!-- Malta -->
+        <item>NL</item> <!-- Netherlands -->
+        <item>NO</item> <!-- Norway -->
+        <item>PL</item> <!-- Poland -->
+        <item>PT</item> <!-- Portugal -->
+        <item>RO</item> <!-- Romania -->
+        <item>SE</item> <!-- Sweden -->
+        <item>SI</item> <!-- Slovenia -->
+        <item>SK</item> <!-- Slovakia -->
     </string-array>
 
 </resources>

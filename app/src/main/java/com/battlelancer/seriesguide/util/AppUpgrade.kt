@@ -14,6 +14,7 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.traktapi.TraktSettings
+import com.uwetrottmann.androidutils.AndroidUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -120,6 +121,13 @@ class AppUpgrade(
             // downloads recently changed movies, reset its movie sync state so they are all
             // downloaded again, adding any missing movies to the database.
             HexagonSettings.resetLastMoviesSyncTime(context)
+        }
+
+        if (lastVersion <= SgApp.RELEASE_VERSION_2025_2_6) {
+            // The Amazon extension was removed, delete its settings file if there is one
+            if (AndroidUtils.isNougatOrHigher) {
+                context.deleteSharedPreferences("extension_amazon")
+            }
         }
     }
 

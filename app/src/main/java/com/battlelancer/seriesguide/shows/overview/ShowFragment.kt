@@ -26,6 +26,7 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.comments.TraktCommentsActivity
 import com.battlelancer.seriesguide.databinding.LayoutRatingsBinding
+import com.battlelancer.seriesguide.getSgAppContainer
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.people.Credits
 import com.battlelancer.seriesguide.people.PeopleListHelper
@@ -106,8 +107,9 @@ class ShowFragment() : Fragment() {
         val buttonLanguage: Button
         val buttonTrailer: Button
         val buttonSimilar: Button
-        val buttonImdb: Button
         val buttonShowMetacritic: Button
+        val buttonsMoreInformation: ViewGroup
+        val buttonImdb: Button
         val buttonTmdb: Button
         val buttonTrakt: Button
         val buttonWebSearch: Button
@@ -144,8 +146,9 @@ class ShowFragment() : Fragment() {
             buttonLanguage = view.findViewById(R.id.buttonShowLanguage)
             buttonTrailer = view.findViewById(R.id.buttonShowTrailer)
             buttonSimilar = view.findViewById(R.id.buttonShowSimilar)
-            buttonImdb = view.findViewById(R.id.buttonShowImdb)
             buttonShowMetacritic = view.findViewById(R.id.buttonShowMetacritic)
+            buttonsMoreInformation = view.findViewById(R.id.constraintLayoutShowButtonsBottom)
+            buttonImdb = view.findViewById(R.id.buttonShowImdb)
             buttonTmdb = view.findViewById(R.id.buttonShowTmdb)
             buttonTrakt = view.findViewById(R.id.buttonShowTrakt)
             buttonWebSearch = view.findViewById(R.id.buttonShowWebSearch)
@@ -208,6 +211,10 @@ class ShowFragment() : Fragment() {
 
         // share button
         binding.buttonShare.setOnClickListener { shareShow() }
+
+        if (requireActivity().getSgAppContainer().preventExternalLinks) {
+            binding.buttonsMoreInformation.isGone = true
+        }
 
         setCastVisibility(binding, false)
         setCrewVisibility(binding, false)
@@ -442,19 +449,22 @@ class ShowFragment() : Fragment() {
             }
         }
 
-        // IMDb button
-        ServiceUtils.setUpImdbButton(show.imdbId, binding.buttonImdb)
+        val externalLinksAllowed = !requireActivity().getSgAppContainer().preventExternalLinks
+        if (externalLinksAllowed) {
+            // IMDb button
+            ServiceUtils.setUpImdbButton(show.imdbId, binding.buttonImdb)
 
-        show.tmdbId?.also {
-            // TMDB buttons
-            val tmdbUrl = TmdbTools.buildShowUrl(it)
-            binding.ratingContainer.ratingViewTmdb.setLink(requireContext(), tmdbUrl)
-            ViewTools.openUrlOnClickAndCopyOnLongPress(binding.buttonTmdb, tmdbUrl)
+            show.tmdbId?.also {
+                // TMDB buttons
+                val tmdbUrl = TmdbTools.buildShowUrl(it)
+                binding.ratingContainer.ratingViewTmdb.setLink(requireContext(), tmdbUrl)
+                ViewTools.openUrlOnClickAndCopyOnLongPress(binding.buttonTmdb, tmdbUrl)
 
-            // Trakt buttons
-            val traktUrl = TraktTools.buildShowUrl(it)
-            binding.ratingContainer.ratingViewTrakt.setLink(requireContext(), traktUrl)
-            ViewTools.openUrlOnClickAndCopyOnLongPress(binding.buttonTrakt, traktUrl)
+                // Trakt buttons
+                val traktUrl = TraktTools.buildShowUrl(it)
+                binding.ratingContainer.ratingViewTrakt.setLink(requireContext(), traktUrl)
+                ViewTools.openUrlOnClickAndCopyOnLongPress(binding.buttonTrakt, traktUrl)
+            }
         }
 
         binding.buttonShowMetacritic.setOnClickListener {

@@ -52,14 +52,6 @@ class ConnectTraktCredentialsFragment : Fragment() {
             )
         }
         ViewTools.openUrlOnClickAndCopyOnLongPress(
-            binding.buttonTraktAccountLimits,
-            getString(R.string.url_trakt_account_limits)
-        )
-        ViewTools.openUrlOnClickAndCopyOnLongPress(
-            binding.buttonTraktWebsite,
-            getString(R.string.url_trakt)
-        )
-        ViewTools.openUrlOnClickAndCopyOnLongPress(
             binding.buttonTraktDeleteAccount,
             getString(R.string.url_trakt_delete_account)
         )
@@ -106,7 +98,6 @@ class ConnectTraktCredentialsFragment : Fragment() {
         }
         setAccountButtonState(!hasCredentials)
         binding.buttonTraktLibrary.isGone = !hasCredentials
-        binding.buttonTraktAccountLimits.isGone = !hasCredentials
     }
 
     private fun connect() {

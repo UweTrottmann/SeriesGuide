@@ -36,8 +36,6 @@
     <string name="sync_manually">Sinhronizujte ručno</string>
     <string name="sync_and_update">Sinhronizuj &amp; Ažuriraj</string>
     <string name="sync_and_download_all">Sinhronizuj &amp; Preuzmite sve</string>
-    <string name="action_stream">Strimujte ili kupite</string>
-    <string name="action_stream_settings">Podešavanja strimovanja ili kupovine</string>
     <string name="action_select_region">Izaberite region</string>
     <string name="action_reset">Resetuj</string>
     <string name="action_save">Sačuvaj</string>
@@ -362,7 +360,6 @@
     <string name="disconnect">Prekini vezu</string>
     <string name="show_library">Dodajte serije sa Trakta</string>
     <string name="about_trakt">Trakt pomaže da se vodi evidencija o TV serijama i filmovima koje gledate.</string>
-    <string name="action_trakt_view_limits">Pogledajte ograničenja naloga</string>
     <!-- trakt ratings -->
     <string name="action_rate">Ocenite</string>
     <string name="ack_rated">Ocena poslata</string>
@@ -556,12 +553,6 @@
     <string name="action_extensions_search">Nabavite još ekstenzija</string>
     <string name="action_extensions_develop">Razvijte ekstenziju</string>
     <string name="action_extension_remove">Ukloni</string>
-    <string name="extension_amazon">Pretraga na Amazon-u</string>
-    <string name="description_extension_amazon">Pretražite svoj lokalni Amazon sajt</string>
-    <string name="pref_amazon_domain">Amazon sajt</string>
-    <string name="extension_google_play">Pretraga Google prodavnice</string>
-    <!-- description_extension_google_play is unused in the amazon flavor -->
-    <string name="description_extension_google_play" tools:ignore="UnusedResources">Pretraži Google prodavnicu</string>
     <string name="extension_youtube">YouTube pretraga</string>
     <string name="description_extension_youtube">Pretražite video snimke na YouTube</string>
     <string name="description_extension_web_search">Potražite veb stranice i slike</string>
@@ -583,4 +574,12 @@
     <string name="title_debug_log">Izveštaj o greškama</string>
     <string name="status_saving_file_success">Datoteka je sačuvana</string>
     <string name="status_saving_file_failed">Čuvanje datoteke nije uspelo</string>
+    <!-- Streaming info -->
+    <string name="action_stream">Strimujte ili kupite</string>
+    <string name="action_stream_settings">Podešavanja strimovanja ili kupovine</string>
+    <string name="title_stream_subscription">Subscription</string>
+    <string name="title_stream_free">Free</string>
+    <string name="title_stream_with_ads">With ads</string>
+    <string name="title_stream_buy">Purchase</string>
+    <string name="title_stream_rent">Rental</string>
 </resources>

@@ -19,6 +19,7 @@ import timber.log.Timber
 object PackageTools {
 
     private const val FLAVOR_AMAZON = "amazon"
+    private const val PACKAGE_NAME_PLAY_STORE = "com.android.vending"
 
     /**
      * Check if this is a build for the Amazon app store.
@@ -97,6 +98,38 @@ object PackageTools {
         }
         return false
     }
+
+    fun wasInstalledByPlayStore(context: Context): Boolean {
+        return getInstallerPackageName(context) == PACKAGE_NAME_PLAY_STORE
+    }
+
+    private fun getInstallerPackageName(context: Context): String {
+        val packageName = context.packageName
+        val packageManager = context.packageManager
+        return try {
+            if (AndroidUtils.isAtLeastR) {
+                packageManager.getInstallSourceInfo(packageName).installingPackageName
+            } else {
+                @Suppress("DEPRECATION")
+                packageManager.getInstallerPackageName(packageName)
+            } ?: ""
+        } catch (e: Exception) {
+            Timber.e(e, "Failed to get installer package name")
+            ""
+        }.also { Timber.d("installingPackageName = '%s'", it) }
+    }
+
+    fun isDeviceInEEA(context: Context): Boolean {
+        @Suppress("DEPRECATION")
+        val region = context.resources.configuration.locale.country
+        return if (region.isEmpty()) {
+            false
+        } else {
+            val eeaRegions = context.resources.getStringArray(R.array.eea_regions)
+            eeaRegions.contains(region)
+        }.also { Timber.d("region = '%s', isEEA = %s", region, it) }
+    }
+
 }
 
 private fun PackageManager.getPackageInfoCompat(packageName: String, flags: Int): PackageInfo {

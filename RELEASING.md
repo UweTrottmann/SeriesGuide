@@ -20,7 +20,7 @@
 - Commit and push
 
   ```shell
-  git commit --all --message "Prepare version 2025.2.6 (21250207)"
+  git commit --all --message "Prepare version 2025.2.7 (21250209)"
   git push --set-upstream origin release-2025.2
   ```
 
@@ -42,8 +42,8 @@
 - Tag release commit
   
   ```shell
-  git tag v2025.2.6
-  git push origin v2025.2.6
+  git tag v2025.2.7
+  git push origin v2025.2.7
   git checkout dev
   git merge release-2025.2
   git push origin dev
@@ -58,7 +58,7 @@
 - Merge release pull request to `main`
 - Download universal APK from Play Store
 - [Create GitHub release](https://github.com/UweTrottmann/SeriesGuide/releases/new)
-  - title like `SeriesGuide 2025.2.6`
+  - title like `SeriesGuide 2025.2.7`
   - get release notes from [`CHANGELOG.md`](/CHANGELOG.md)
   - attach APK
 - Prepare release post on forum
