@@ -19,7 +19,7 @@
     <string name="season_number">Sezon %d</string>
     <string name="specialseason">Odcinki specjalne</string>
     <string name="ratings">Oceny</string>
-    <string name="more_information">More information</string>
+    <string name="more_information">Więcej informacji</string>
     <!-- Descriptions -->
     <string name="navigate_up">Przejdź do góry</string>
     <string name="description_overview">Opis</string>
@@ -36,8 +36,6 @@
     <string name="sync_manually">Synchronizuj ręcznie</string>
     <string name="sync_and_update">Synchronizuj i aktualizuj</string>
     <string name="sync_and_download_all">Synchronizuj i pobierz wszystko</string>
-    <string name="action_stream">Kup lub strumieniuj</string>
-    <string name="action_stream_settings">Opcje kupowania i strumieniowania</string>
     <string name="action_select_region">Wybierz region</string>
     <string name="action_reset">Przywróć</string>
     <string name="action_save">Zapisz</string>
@@ -372,7 +370,6 @@
     <string name="disconnect">Rozłącz</string>
     <string name="show_library">Dodaj seriale z Trakt</string>
     <string name="about_trakt">Trakt pomaga zarządzać jakie seriale i filmy oglądasz.</string>
-    <string name="action_trakt_view_limits">Wyświetl limity konta</string>
     <!-- trakt ratings -->
     <string name="action_rate">Oceń</string>
     <string name="ack_rated">Ocena wysłana</string>
@@ -570,12 +567,6 @@
     <string name="action_extensions_search">Pobierz więcej rozszerzeń</string>
     <string name="action_extensions_develop">Jak utworzyć rozszerzenie?</string>
     <string name="action_extension_remove">Usuń</string>
-    <string name="extension_amazon">Wyszukiwanie na Amazon</string>
-    <string name="description_extension_amazon">Szukaj na lokalnej witrynie Amazon</string>
-    <string name="pref_amazon_domain">Amazon</string>
-    <string name="extension_google_play">Szukaj w Google Play</string>
-    <!-- description_extension_google_play is unused in the amazon flavor -->
-    <string name="description_extension_google_play" tools:ignore="UnusedResources">Szukaj w sklepie Google Play</string>
     <string name="extension_youtube">Szukaj w YouTube</string>
     <string name="description_extension_youtube">Szukaj filmów na YouTube</string>
     <string name="description_extension_web_search">Szukaj stron internetowych i obrazów</string>
@@ -597,4 +588,12 @@
     <string name="title_debug_log">Debug log</string>
     <string name="status_saving_file_success">File saved</string>
     <string name="status_saving_file_failed">Failed to save file</string>
+    <!-- Streaming info -->
+    <string name="action_stream">Kup lub strumieniuj</string>
+    <string name="action_stream_settings">Opcje kupowania i strumieniowania</string>
+    <string name="title_stream_subscription">Subscription</string>
+    <string name="title_stream_free">Free</string>
+    <string name="title_stream_with_ads">With ads</string>
+    <string name="title_stream_buy">Purchase</string>
+    <string name="title_stream_rent">Rental</string>
 </resources>

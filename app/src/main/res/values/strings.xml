@@ -40,8 +40,6 @@
     <string name="sync_manually">Sync manually</string>
     <string name="sync_and_update">Sync &amp; Update</string>
     <string name="sync_and_download_all">Sync &amp; Download all</string>
-    <string name="action_stream">Stream or purchase</string>
-    <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">Select region</string>
     <string name="action_reset">Reset</string>
     <string name="action_save">Save</string>
@@ -379,7 +377,6 @@
     <string name="disconnect">Disconnect</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt is a third-party service that helps keep a record of what TV shows and movies you are watching.</string>
-    <string name="action_trakt_view_limits">View account limits</string>
 
     <!-- trakt ratings -->
     <string name="action_rate">Rate</string>
@@ -589,12 +586,6 @@
     <string name="action_extensions_search">Get more extensions</string>
     <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Remove</string>
-    <string name="extension_amazon">Amazon search</string>
-    <string name="description_extension_amazon">Search your local Amazon site</string>
-    <string name="pref_amazon_domain">Amazon site</string>
-    <string name="extension_google_play">Google Play search</string>
-    <!-- description_extension_google_play is unused in the amazon flavor -->
-    <string name="description_extension_google_play" tools:ignore="UnusedResources">Search the Google Play Store</string>
     <string name="extension_youtube">YouTube search</string>
     <string name="description_extension_youtube">Search YouTube for videos</string>
     <string name="description_extension_web_search">Search for websites and images</string>
@@ -620,5 +611,14 @@
     <string name="title_debug_log">Debug log</string>
     <string name="status_saving_file_success">File saved</string>
     <string name="status_saving_file_failed">Failed to save file</string>
+
+    <!-- Streaming info -->
+    <string name="action_stream">Stream or purchase</string>
+    <string name="action_stream_settings">Stream or purchase settings</string>
+    <string name="title_stream_subscription">Subscription</string>
+    <string name="title_stream_free">Free</string>
+    <string name="title_stream_with_ads">With ads</string>
+    <string name="title_stream_buy">Purchase</string>
+    <string name="title_stream_rent">Rental</string>
 
 </resources>

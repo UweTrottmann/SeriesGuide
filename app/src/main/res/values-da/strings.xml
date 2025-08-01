@@ -19,7 +19,7 @@
     <string name="season_number">Sæson %d</string>
     <string name="specialseason">Særlige episoder</string>
     <string name="ratings">Bedømmelser</string>
-    <string name="more_information">More information</string>
+    <string name="more_information">Yderligere information</string>
     <!-- Descriptions -->
     <string name="navigate_up">Naviger op</string>
     <string name="description_overview">Oversigt</string>
@@ -36,8 +36,6 @@
     <string name="sync_manually">Synkronisér manuelt</string>
     <string name="sync_and_update">Synkronisér &amp; Opdatér</string>
     <string name="sync_and_download_all">Synkronisér &amp; Download alle</string>
-    <string name="action_stream">Stream eller køb</string>
-    <string name="action_stream_settings">Stream- eller købsindstillinger</string>
     <string name="action_select_region">Vælg region</string>
     <string name="action_reset">Nulstil</string>
     <string name="action_save">Gem</string>
@@ -352,7 +350,6 @@
     <string name="disconnect">Afbryd</string>
     <string name="show_library">Tilføj serier fra Trakt</string>
     <string name="about_trakt">Trakt hjælper dig med at holde styr på dine TV-serier.</string>
-    <string name="action_trakt_view_limits">Se kontobegrænsninger</string>
     <!-- trakt ratings -->
     <string name="action_rate">Bedøm</string>
     <string name="ack_rated">Bedømmelse sendt</string>
@@ -542,12 +539,6 @@
     <string name="action_extensions_search">Hent flere udvidelser</string>
     <string name="action_extensions_develop">Udvikl en udvidelse</string>
     <string name="action_extension_remove">Fjern</string>
-    <string name="extension_amazon">Amazon-søgning</string>
-    <string name="description_extension_amazon">Søg på dit lokale Amazon-websted</string>
-    <string name="pref_amazon_domain">Amazon-websted</string>
-    <string name="extension_google_play">Google Play-søgning</string>
-    <!-- description_extension_google_play is unused in the amazon flavor -->
-    <string name="description_extension_google_play" tools:ignore="UnusedResources">Søg på Google Play</string>
     <string name="extension_youtube">YouTube-søgning</string>
     <string name="description_extension_youtube">Søg efter videoer på YouTube</string>
     <string name="description_extension_web_search">Søg efter hjemmesider og billeder</string>
@@ -569,4 +560,12 @@
     <string name="title_debug_log">Fejlretningslog</string>
     <string name="status_saving_file_success">Fil gemt</string>
     <string name="status_saving_file_failed">Kunne ikke gemme fil</string>
+    <!-- Streaming info -->
+    <string name="action_stream">Stream eller køb</string>
+    <string name="action_stream_settings">Stream- eller købsindstillinger</string>
+    <string name="title_stream_subscription">Subscription</string>
+    <string name="title_stream_free">Free</string>
+    <string name="title_stream_with_ads">With ads</string>
+    <string name="title_stream_buy">Purchase</string>
+    <string name="title_stream_rent">Rental</string>
 </resources>

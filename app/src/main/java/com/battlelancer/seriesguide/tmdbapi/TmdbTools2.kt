@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2019-2024 Uwe Trottmann
+// Copyright 2019-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.tmdbapi
 
@@ -372,12 +372,26 @@ class TmdbTools2 {
 
     data class WatchInfo(
         val url: String?,
-        val provider: WatchProviders.WatchProvider?,
-        val countMore: Int
+        val topProvider: String?,
+        val countMore: Int,
+        val subscription: List<String>,
+        val free: List<String>,
+        val withAds: List<String>,
+        val buy: List<String>
     )
 
-    fun getTopWatchProvider(providers: WatchProviders.CountryInfo?): WatchInfo {
-        if (providers == null) return WatchInfo(null, null, 0)
+    fun buildWatchInfo(providers: WatchProviders.CountryInfo?): WatchInfo {
+        if (providers == null) {
+            return WatchInfo(
+                url = null,
+                topProvider = null,
+                countMore = 0,
+                subscription = emptyList(),
+                free = emptyList(),
+                withAds = emptyList(),
+                buy = emptyList()
+            )
+        }
         val topProvider = providers.flatrate.minByOrNull { it.display_priority }
             ?: providers.free.minByOrNull { it.display_priority }
             ?: providers.ads.minByOrNull { it.display_priority }
@@ -386,8 +400,19 @@ class TmdbTools2 {
                 providers.free.size +
                 providers.ads.size +
                 providers.buy.size
-        return WatchInfo(providers.link, topProvider, (count - 1).coerceAtLeast(0))
+        return WatchInfo(
+            url = providers.link,
+            topProvider = topProvider?.provider_name,
+            countMore = (count - 1).coerceAtLeast(0),
+            subscription = providers.flatrate.toSortedNames(),
+            free = providers.free.toSortedNames(),
+            withAds = providers.ads.toSortedNames(),
+            buy = providers.buy.toSortedNames(),
+        )
     }
+
+    private fun List<WatchProviders.WatchProvider>.toSortedNames(): List<String> =
+        mapNotNull { it.provider_name }.sortedBy { it.lowercase() }
 
     suspend fun getWatchProvidersForShow(
         showTmdbId: Int,

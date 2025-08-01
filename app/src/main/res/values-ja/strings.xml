@@ -36,8 +36,6 @@
     <string name="sync_manually">手動で同期</string>
     <string name="sync_and_update">同期して更新</string>
     <string name="sync_and_download_all">すべて同期してダウンロード</string>
-    <string name="action_stream">ストリーミング・購入</string>
-    <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">エリアの選択</string>
     <string name="action_reset">Reset</string>
     <string name="action_save">Save</string>
@@ -342,7 +340,6 @@
     <string name="disconnect">切断</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt は、あなたが観ているテレビ番組や映画を記録するのに役立ちます。</string>
-    <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">作品を評価</string>
     <string name="ack_rated">Rating sent</string>
@@ -528,12 +525,6 @@
     <string name="action_extensions_search">さらに拡張機能を入手</string>
     <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">削除</string>
-    <string name="extension_amazon">Amazon 検索</string>
-    <string name="description_extension_amazon">ローカルの Amazon サイトを検索します</string>
-    <string name="pref_amazon_domain">Amazon サイト</string>
-    <string name="extension_google_play">Google Play 検索</string>
-    <!-- description_extension_google_play is unused in the amazon flavor -->
-    <string name="description_extension_google_play" tools:ignore="UnusedResources">Google Play ストアを検索します</string>
     <string name="extension_youtube">YouTube 検索</string>
     <string name="description_extension_youtube">YouTube のビデオを検索します</string>
     <string name="description_extension_web_search">ウェブサイトや画像の検索</string>
@@ -555,4 +546,12 @@
     <string name="title_debug_log">Debug log</string>
     <string name="status_saving_file_success">File saved</string>
     <string name="status_saving_file_failed">Failed to save file</string>
+    <!-- Streaming info -->
+    <string name="action_stream">ストリーミング・購入</string>
+    <string name="action_stream_settings">Stream or purchase settings</string>
+    <string name="title_stream_subscription">Subscription</string>
+    <string name="title_stream_free">Free</string>
+    <string name="title_stream_with_ads">With ads</string>
+    <string name="title_stream_buy">Purchase</string>
+    <string name="title_stream_rent">Rental</string>
 </resources>

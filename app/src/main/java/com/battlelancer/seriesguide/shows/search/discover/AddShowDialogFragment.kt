@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2019-2024 Uwe Trottmann
+// Copyright 2019-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.search.discover
 
@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.DialogAddshowBinding
+import com.battlelancer.seriesguide.getSgAppContainer
 import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsFragment
 import com.battlelancer.seriesguide.shows.tools.AddShowTask
@@ -154,7 +155,11 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
             }
             model.watchProvider.observe(this) { watchInfo ->
                 this.binding?.buttonAddStreamingSearch?.let {
-                    StreamingSearch.configureButton(it, watchInfo, true)
+                    StreamingSearch.configureButton(
+                        it,
+                        watchInfo,
+                        requireActivity().getSgAppContainer().preventExternalLinks
+                    )
                 }
             }
         }

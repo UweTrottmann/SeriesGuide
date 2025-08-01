@@ -36,8 +36,6 @@
     <string name="sync_manually">Manuális szinkronizálás</string>
     <string name="sync_and_update">Szinkronizálás &amp; Frissítés</string>
     <string name="sync_and_download_all">Szinkronizálás &amp; Összes letöltése</string>
-    <string name="action_stream">Streamelés vagy vásárlás</string>
-    <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">Válassz régiót</string>
     <string name="action_reset">Visszaállítás</string>
     <string name="action_save">Save</string>
@@ -352,7 +350,6 @@
     <string name="disconnect">Megszakítás</string>
     <string name="show_library">Sorozatok hozzáadása innen: Trakt</string>
     <string name="about_trakt">A Trakt segít nyilvántartani a nézett sorozatokat és filmeket.</string>
-    <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">Értékelj</string>
     <string name="ack_rated">Rating sent</string>
@@ -542,12 +539,6 @@
     <string name="action_extensions_search">További bővítmények</string>
     <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Törlés</string>
-    <string name="extension_amazon">Keresés az Amazonon</string>
-    <string name="description_extension_amazon">Keresés az Amazon helyi oldalán</string>
-    <string name="pref_amazon_domain">Amazon oldala</string>
-    <string name="extension_google_play">Google Play keresés</string>
-    <!-- description_extension_google_play is unused in the amazon flavor -->
-    <string name="description_extension_google_play" tools:ignore="UnusedResources">Keresés a Google Play Áruházban</string>
     <string name="extension_youtube">YouTube-keresés</string>
     <string name="description_extension_youtube">Keresés YouTube videók között</string>
     <string name="description_extension_web_search">Weboldalak és képek keresése</string>
@@ -569,4 +560,12 @@
     <string name="title_debug_log">Debug log</string>
     <string name="status_saving_file_success">File saved</string>
     <string name="status_saving_file_failed">Failed to save file</string>
+    <!-- Streaming info -->
+    <string name="action_stream">Streamelés vagy vásárlás</string>
+    <string name="action_stream_settings">Stream or purchase settings</string>
+    <string name="title_stream_subscription">Subscription</string>
+    <string name="title_stream_free">Free</string>
+    <string name="title_stream_with_ads">With ads</string>
+    <string name="title_stream_buy">Purchase</string>
+    <string name="title_stream_rent">Rental</string>
 </resources>

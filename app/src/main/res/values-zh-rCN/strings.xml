@@ -36,8 +36,6 @@
     <string name="sync_manually">手动同步</string>
     <string name="sync_and_update">同步并更新</string>
     <string name="sync_and_download_all">同步并全部重新下载</string>
-    <string name="action_stream">流媒体播放或购买</string>
-    <string name="action_stream_settings">Stream or purchase settings</string>
     <string name="action_select_region">选择地区</string>
     <string name="action_reset">重置</string>
     <string name="action_save">Save</string>
@@ -342,7 +340,6 @@
     <string name="disconnect">断开</string>
     <string name="show_library">从 Trakt 中添加节目</string>
     <string name="about_trakt">Trakt 可帮您记录看过的电影和电视节目。</string>
-    <string name="action_trakt_view_limits">View account limits</string>
     <!-- trakt ratings -->
     <string name="action_rate">评分</string>
     <string name="ack_rated">评分已发送</string>
@@ -528,12 +525,6 @@
     <string name="action_extensions_search">获取更多扩展</string>
     <string name="action_extensions_develop">开发扩展</string>
     <string name="action_extension_remove">移除</string>
-    <string name="extension_amazon">亚马逊搜索</string>
-    <string name="description_extension_amazon">在本地 Amazon 中搜索</string>
-    <string name="pref_amazon_domain">偏好的 Amazon 站点</string>
-    <string name="extension_google_play">Google Play 搜索</string>
-    <!-- description_extension_google_play is unused in the amazon flavor -->
-    <string name="description_extension_google_play" tools:ignore="UnusedResources">在 Google Play 商店中搜索</string>
     <string name="extension_youtube">YouTube 搜索</string>
     <string name="description_extension_youtube">在 YouTube 上搜索视频</string>
     <string name="description_extension_web_search">搜索相关网站或图片</string>
@@ -555,4 +546,12 @@
     <string name="title_debug_log">Debug log</string>
     <string name="status_saving_file_success">File saved</string>
     <string name="status_saving_file_failed">Failed to save file</string>
+    <!-- Streaming info -->
+    <string name="action_stream">流媒体播放或购买</string>
+    <string name="action_stream_settings">Stream or purchase settings</string>
+    <string name="title_stream_subscription">Subscription</string>
+    <string name="title_stream_free">Free</string>
+    <string name="title_stream_with_ads">With ads</string>
+    <string name="title_stream_buy">Purchase</string>
+    <string name="title_stream_rent">Rental</string>
 </resources>

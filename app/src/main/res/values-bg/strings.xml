@@ -36,8 +36,6 @@
     <string name="sync_manually">Само ръчна синхронизация</string>
     <string name="sync_and_update">Синхронизиране &amp; актуализация</string>
     <string name="sync_and_download_all">Синхронизиране &amp; Изтегли всички</string>
-    <string name="action_stream">Стрийм или закупи</string>
-    <string name="action_stream_settings">Настройки за стрийм или поръчка</string>
     <string name="action_select_region">Избор на регион</string>
     <string name="action_reset">Нулиране</string>
     <string name="action_save">Запис</string>
@@ -352,7 +350,6 @@
     <string name="disconnect">Прекъсване на връзката</string>
     <string name="show_library">Добавяне на сериали от Trakt</string>
     <string name="about_trakt">Trakt записва какви сериали и филми гледате.</string>
-    <string name="action_trakt_view_limits">Проверете лимитите</string>
     <!-- trakt ratings -->
     <string name="action_rate">Оцени</string>
     <string name="ack_rated">Рейтингът е изпратен</string>
@@ -542,12 +539,6 @@
     <string name="action_extensions_search">Вземи още разширения</string>
     <string name="action_extensions_develop">Разработване на разширение</string>
     <string name="action_extension_remove">Премахване</string>
-    <string name="extension_amazon">Търсене в Amazon</string>
-    <string name="description_extension_amazon">Търси във вашия локален Amazon сайт</string>
-    <string name="pref_amazon_domain">Amazon сайт</string>
-    <string name="extension_google_play">Търсене в Google Play</string>
-    <!-- description_extension_google_play is unused in the amazon flavor -->
-    <string name="description_extension_google_play" tools:ignore="UnusedResources">Търси в Google Play Store</string>
     <string name="extension_youtube">Търсене в YouTube</string>
     <string name="description_extension_youtube">Търси видеа в Youtube</string>
     <string name="description_extension_web_search">Търси за уебсайтове и снимки</string>
@@ -569,4 +560,12 @@
     <string name="title_debug_log">Debug log</string>
     <string name="status_saving_file_success">File saved</string>
     <string name="status_saving_file_failed">Failed to save file</string>
+    <!-- Streaming info -->
+    <string name="action_stream">Стрийм или закупи</string>
+    <string name="action_stream_settings">Настройки за стрийм или поръчка</string>
+    <string name="title_stream_subscription">Subscription</string>
+    <string name="title_stream_free">Free</string>
+    <string name="title_stream_with_ads">With ads</string>
+    <string name="title_stream_buy">Purchase</string>
+    <string name="title_stream_rent">Rental</string>
 </resources>

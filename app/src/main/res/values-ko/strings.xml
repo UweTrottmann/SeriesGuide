@@ -19,7 +19,7 @@
     <string name="season_number">시즌 %d</string>
     <string name="specialseason">스페셜 에피소드</string>
     <string name="ratings">평점</string>
-    <string name="more_information">More information</string>
+    <string name="more_information">추가 정보</string>
     <!-- Descriptions -->
     <string name="navigate_up">뒤로 가기</string>
     <string name="description_overview">개요</string>
@@ -36,8 +36,6 @@
     <string name="sync_manually">수동으로 동기화</string>
     <string name="sync_and_update">동기화하고 업데이트</string>
     <string name="sync_and_download_all">동기화하고 모두 다운로드</string>
-    <string name="action_stream">스트리밍 or 구매</string>
-    <string name="action_stream_settings">스트리밍 또는 구매 설정</string>
     <string name="action_select_region">국가 선택</string>
     <string name="action_reset">재설정</string>
     <string name="action_save">저장</string>
@@ -342,7 +340,6 @@
     <string name="disconnect">연결 해제</string>
     <string name="show_library">Trakt으로부터 프로그램 추가</string>
     <string name="about_trakt">Trakt는 시청 중인 TV 프로그램과 영화를 기록하는 데 도움을 줍니다.</string>
-    <string name="action_trakt_view_limits">사용 제한 확인</string>
     <!-- trakt ratings -->
     <string name="action_rate">평가</string>
     <string name="ack_rated">평가 완료</string>
@@ -528,12 +525,6 @@
     <string name="action_extensions_search">더 많은 확장프로그램 획득</string>
     <string name="action_extensions_develop">확장 기능 개발하기</string>
     <string name="action_extension_remove">삭제</string>
-    <string name="extension_amazon">아마존 검색</string>
-    <string name="description_extension_amazon">로컬 아마존 사이트 검색</string>
-    <string name="pref_amazon_domain">아마존 사이트</string>
-    <string name="extension_google_play">구글 플레이 검색</string>
-    <!-- description_extension_google_play is unused in the amazon flavor -->
-    <string name="description_extension_google_play" tools:ignore="UnusedResources">구글 플레이 스토어 검색</string>
     <string name="extension_youtube">YouTube 검색</string>
     <string name="description_extension_youtube">YouTube에서 비디오 검색</string>
     <string name="description_extension_web_search">웹사이트와 이미지에 대한 검색</string>
@@ -550,9 +541,17 @@
     <string name="feedback_action_nothanks">아니오</string>
     <!-- Support the dev -->
     <string name="support_the_dev">개발자 후원하기</string>
-    <string name="support_the_dev_other_ways">Other ways to support</string>
+    <string name="support_the_dev_other_ways">다른 후원 방안</string>
     <!-- Diagnostics -->
     <string name="title_debug_log">디버그 로그</string>
     <string name="status_saving_file_success">파일 저장됨</string>
     <string name="status_saving_file_failed">파일 저장 실패</string>
+    <!-- Streaming info -->
+    <string name="action_stream">스트리밍 or 구매</string>
+    <string name="action_stream_settings">스트리밍 또는 구매 설정</string>
+    <string name="title_stream_subscription">Subscription</string>
+    <string name="title_stream_free">Free</string>
+    <string name="title_stream_with_ads">With ads</string>
+    <string name="title_stream_buy">Purchase</string>
+    <string name="title_stream_rent">Rental</string>
 </resources>

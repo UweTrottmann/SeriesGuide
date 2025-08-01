@@ -5,29 +5,12 @@
     <!-- Google Play in-app billing -->
     <uses-permission android:name="com.android.vending.BILLING" />
 
-    <application tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+    <application tools:ignore="AllowBackup,GoogleAppIndexingWarning,MissingApplicationIcon">
 
         <!-- Android Backup key for com.battlelancer.seriesguide application ID -->
         <meta-data
             android:name="com.google.android.backup.api_key"
             android:value="${androidBackupKey}" />
-
-        <!-- Built-in SeriesGuide extensions (Google Play version only) -->
-        <receiver
-            android:name="com.battlelancer.seriesguide.extensions.GooglePlayExtensionReceiver"
-            android:description="@string/description_extension_google_play"
-            android:exported="false"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/extension_google_play"
-            tools:ignore="ExportedReceiver">
-            <intent-filter>
-                <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
-            </intent-filter>
-        </receiver>
-        <service
-            android:name="com.battlelancer.seriesguide.extensions.GooglePlayExtension"
-            android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
 
     </application>
 

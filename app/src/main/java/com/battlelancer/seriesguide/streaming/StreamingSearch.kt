@@ -1,14 +1,20 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2018-2024 Uwe Trottmann
+// Copyright 2018-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.streaming
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.text.SpannableStringBuilder
+import android.text.SpannedString
+import android.text.style.TextAppearanceSpan
 import android.view.View
 import android.widget.Button
+import androidx.annotation.StringRes
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.content.edit
+import androidx.core.text.buildSpannedString
+import androidx.core.text.inSpans
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
@@ -23,7 +29,8 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
-import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.util.WebTools
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.uwetrottmann.tmdb2.entities.WatchProviders
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -211,7 +218,7 @@ object StreamingSearch {
                             context
                         )
                     }
-                    emit(tmdbTools.getTopWatchProvider(providers))
+                    emit(tmdbTools.buildWatchInfo(providers))
                 }
             }
         }
@@ -233,34 +240,74 @@ object StreamingSearch {
      * watch provider info.
      */
     @SuppressLint("SetTextI18n")
-    @JvmStatic
     fun configureButton(
         button: Button,
         watchInfo: TmdbTools2.WatchInfo,
-        replaceButtonText: Boolean = false
+        hideExternalLink: Boolean
     ) {
-        val context = button.context
-        val urlOrNull = watchInfo.url
-        if (urlOrNull != null) {
-            button.isEnabled = true
-            ViewTools.openUriOnClick(button, watchInfo.url)
-        } else {
-            button.isEnabled = false
-        }
-        val providerOrNull = watchInfo.provider
-        return if (providerOrNull != null) {
+        val topProviderOrNull = watchInfo.topProvider
+        return if (topProviderOrNull != null) {
+            val context = button.context
             val moreText = if (watchInfo.countMore > 0) {
                 " + " + NumberFormat.getIntegerInstance().format(watchInfo.countMore)
             } else ""
-            val providerText = (providerOrNull.provider_name ?: "") + moreText
-            if (replaceButtonText) {
-                button.text = providerText
-            } else {
-                button.text = context.getString(R.string.action_stream) +
-                        "\n" + providerText
+            val providerText = topProviderOrNull + moreText
+            button.text = providerText
+            button.setOnClickListener {
+                showWatchProviderInfoDialog(context, watchInfo, hideExternalLink)
             }
+            button.isEnabled = true
         } else {
             button.setText(R.string.action_stream)
+            button.isEnabled = false
+        }
+    }
+
+    private fun showWatchProviderInfoDialog(
+        context: Context,
+        watchInfo: TmdbTools2.WatchInfo,
+        hideExternalLink: Boolean
+    ) {
+        val builder = MaterialAlertDialogBuilder(context)
+            .setTitle(R.string.action_stream)
+            .setMessage(watchInfo.toSpannedString(context))
+            .setPositiveButton(R.string.dismiss, null /* Just dismiss */)
+        if (!hideExternalLink && !watchInfo.url.isNullOrEmpty()) {
+            builder.setNeutralButton(R.string.more_information) { _, _ ->
+                WebTools.openInApp(context, watchInfo.url)
+            }
+        }
+        builder.show()
+    }
+
+    private fun TmdbTools2.WatchInfo.toSpannedString(context: Context): SpannedString {
+        return buildSpannedString {
+            addWatchProvidersSection(context, subscription, R.string.title_stream_subscription)
+            addWatchProvidersSection(context, free, R.string.title_stream_free)
+            addWatchProvidersSection(context, withAds, R.string.title_stream_with_ads)
+            addWatchProvidersSection(context, buy, R.string.title_stream_buy)
+            inSpans(TextAppearanceSpan(context, R.style.TextAppearance_SeriesGuide_Caption)) {
+                appendLine()
+                append(context.getString(R.string.powered_by_justwatch))
+            }
+        }
+    }
+
+    private fun SpannableStringBuilder.addWatchProvidersSection(
+        context: Context,
+        providers: List<String>,
+        @StringRes titleRes: Int
+    ) {
+        if (providers.isNotEmpty()) {
+            if (isNotEmpty()) appendLine()
+            inSpans(TextAppearanceSpan(context, R.style.TextAppearance_SeriesGuide_Headline6)) {
+                appendLine(context.getString(titleRes))
+            }
+            inSpans(TextAppearanceSpan(context, R.style.TextAppearance_SeriesGuide_Body1)) {
+                providers.forEach {
+                    appendLine(it)
+                }
+            }
         }
     }
 

@@ -4,14 +4,12 @@
 
 package com.battlelancer.seriesguide.util
 
-import android.annotation.SuppressLint
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.view.View
 import androidx.core.net.toUri
-import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgEpisode2
@@ -121,21 +119,6 @@ object ServiceUtils {
                 }
             }
         }
-    }
-
-    /**
-     * Returns a view [android.content.Intent] for a search of Google Play's movies category
-     * (includes TV shows).
-     */
-    @SuppressLint("StringFormatInvalid")
-    fun buildGooglePlayIntent(title: String, context: Context): Intent {
-        val intent = Intent(Intent.ACTION_VIEW)
-        val playStoreQuery = String.format(
-            context.getString(R.string.url_movies_search),
-            Uri.encode(title)
-        )
-        intent.data = Uri.parse(playStoreQuery)
-        return intent
     }
 
     /**
