@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.history
 
@@ -52,7 +52,7 @@ abstract class StreamFragment : Fragment() {
         ThemeUtils.applyBottomPaddingForNavigationBar(binding.recyclerViewStream)
         ThemeUtils.applyBottomMarginForNavigationBar(binding.floatingActionButtonStream)
 
-        ViewTools.openUriOnClick(binding.floatingActionButtonStream, TRAKT_HISTORY_URL)
+        ViewTools.openUriOnClick(binding.floatingActionButtonStream, getString(R.string.url_trakt_history))
 
         binding.swipeRefreshLayoutStream.apply {
             setSwipeableChildren(R.id.scrollViewStream, R.id.recyclerViewStream)
@@ -170,8 +170,6 @@ abstract class StreamFragment : Fragment() {
     }
 
     companion object {
-        private const val TRAKT_HISTORY_URL = "https://trakt.tv/users/me/history/"
-
         val liftOnScrollTargetViewId = R.id.recyclerViewStream
     }
 }
