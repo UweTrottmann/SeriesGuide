@@ -21,6 +21,7 @@ class SgAppContainer(context: Context) {
         val isDeviceInEEA = PackageTools.isDeviceInEEA(context)
         (installedByPlay && !isDeviceInEEA)
             .also { Timber.d("preventExternalLinks = %s", it) }
+            .let { if (BuildConfig.DEBUG) true else it }
     }
 
 }

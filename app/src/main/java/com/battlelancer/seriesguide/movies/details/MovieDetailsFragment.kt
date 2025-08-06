@@ -178,12 +178,16 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                 parentFragmentManager
             )
         }
+
         // ratings
+        val preventExternalLinks = requireActivity().getSgAppContainer().preventExternalLinks
         binding.containerRatings.apply {
             root.isGone = true // to animate in later
             initialize { rateMovie() }
-            ratingViewTmdb.setLink(requireContext(), TmdbTools.buildMovieUrl(tmdbId))
-            ratingViewTrakt.setLink(requireContext(), TraktTools.buildMovieUrl(tmdbId))
+            if (!preventExternalLinks) {
+                ratingViewTmdb.setLink(requireContext(), TmdbTools.buildMovieUrl(tmdbId))
+                ratingViewTrakt.setLink(requireContext(), TraktTools.buildMovieUrl(tmdbId))
+            }
         }
 
         // language button
@@ -196,7 +200,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             MovieLocalizationDialogFragment.show(parentFragmentManager)
         }
 
-        if (requireActivity().getSgAppContainer().preventExternalLinks) {
+        if (preventExternalLinks) {
             binding.containerMovieBottom.root.isGone = true
         }
 
