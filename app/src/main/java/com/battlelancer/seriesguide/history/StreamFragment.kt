@@ -24,6 +24,7 @@ import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.util.ViewTools.openUriOnClick
 import com.uwetrottmann.androidutils.AndroidUtils
 
 /**
@@ -52,7 +53,7 @@ abstract class StreamFragment : Fragment() {
         ThemeUtils.applyBottomPaddingForNavigationBar(binding.recyclerViewStream)
         ThemeUtils.applyBottomMarginForNavigationBar(binding.floatingActionButtonStream)
 
-        ViewTools.openUriOnClick(binding.floatingActionButtonStream, getString(R.string.url_trakt_history))
+        binding.floatingActionButtonStream.openUriOnClick(getString(R.string.url_trakt_history))
 
         binding.swipeRefreshLayoutStream.apply {
             setSwipeableChildren(R.id.scrollViewStream, R.id.recyclerViewStream)

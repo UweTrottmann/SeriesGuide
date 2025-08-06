@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2024 Uwe Trottmann
+// Copyright 2024-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.util
 
@@ -12,6 +12,7 @@ import com.battlelancer.seriesguide.databinding.LayoutRatingsBinding
 import com.battlelancer.seriesguide.shows.database.SgEpisode2
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.widgets.RatingView
+import com.battlelancer.seriesguide.util.ViewTools.openUriOnClick
 import com.uwetrottmann.androidutils.AndroidUtils
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -50,9 +51,7 @@ object RatingsTools {
 
     fun RatingView.setLink(context: Context, url: String) {
         isFocusable = true
-        setOnClickListener {
-            WebTools.openInApp(context, url)
-        }
+        openUriOnClick(url)
         setBackgroundResource(
             ThemeUtils.resolveAttributeToResourceId(
                 context.theme,

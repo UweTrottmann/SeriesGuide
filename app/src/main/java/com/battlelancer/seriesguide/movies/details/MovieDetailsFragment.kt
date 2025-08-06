@@ -65,7 +65,7 @@ import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.ViewTools
-import com.battlelancer.seriesguide.util.WebTools
+import com.battlelancer.seriesguide.util.ViewTools.openUriOnClick
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.battlelancer.seriesguide.util.startActivityWithAnimation
 import com.squareup.picasso.Callback
@@ -134,10 +134,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                 isEnabled = false
             }
             // release dates button
-            ViewTools.openUriOnClick(
-                buttonMovieReleaseDates,
-                TmdbTools.buildMovieReleaseDatesUrl(tmdbId)
-            )
+            buttonMovieReleaseDates.openUriOnClick(TmdbTools.buildMovieReleaseDatesUrl(tmdbId))
             // similar movies button
             buttonMovieSimilar.setOnClickListener {
                 movieDetails?.tmdbMovie()
@@ -508,12 +505,8 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         )
 
         // links
-        binding.containerMovieBottom.buttonMovieTmdb.setOnClickListener {
-            WebTools.openInApp(requireContext(), TmdbTools.buildMovieUrl(tmdbId))
-        }
-        binding.containerMovieBottom.buttonMovieTrakt.setOnClickListener {
-            WebTools.openInApp(requireContext(), TraktTools.buildMovieUrl(tmdbId))
-        }
+        binding.containerMovieBottom.buttonMovieTmdb.openUriOnClick(TmdbTools.buildMovieUrl(tmdbId))
+        binding.containerMovieBottom.buttonMovieTrakt.openUriOnClick(TraktTools.buildMovieUrl(tmdbId))
         binding.containerMovieBottom.buttonMovieImdb.apply {
             val imdbId = tmdbMovie.imdb_id
             isGone = imdbId.isNullOrEmpty()

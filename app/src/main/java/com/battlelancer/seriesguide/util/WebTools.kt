@@ -27,7 +27,7 @@ object WebTools {
      *
      * See also [openInApp].
      */
-    fun openInCustomTab(context: Context, url: String): Boolean {
+    fun openInCustomTab(context: Context, uri: String): Boolean {
         val darkParams = CustomTabColorSchemeParams.Builder()
             .setToolbarColor(
                 ContextCompat.getColor(context, R.color.md_theme_dark_surfaceContainer)
@@ -44,7 +44,7 @@ object WebTools {
             .setColorSchemeParams(CustomTabsIntent.COLOR_SCHEME_DARK, darkParams)
             .setDefaultColorSchemeParams(defaultParams)
             .build().intent
-            .apply { data = Uri.parse(url) }
+            .apply { data = Uri.parse(uri) }
         return context.tryStartActivity(customTabsIntent, true)
     }
 
@@ -57,9 +57,9 @@ object WebTools {
      *
      * See also [openInCustomTab].
      */
-    fun openInApp(context: Context, url: String): Boolean {
+    fun openInApp(context: Context, uri: String): Boolean {
         return context.tryStartActivity(
-            Intent(Intent.ACTION_VIEW, Uri.parse(url)),
+            Intent(Intent.ACTION_VIEW, Uri.parse(uri)),
             true
         )
     }

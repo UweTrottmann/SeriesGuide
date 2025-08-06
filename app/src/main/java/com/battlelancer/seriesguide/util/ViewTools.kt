@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2021-2024 Uwe Trottmann
+// Copyright 2021-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.util
 
@@ -19,6 +19,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.util.ViewTools.openUriOnClick
 import java.text.NumberFormat
 
 object ViewTools {
@@ -151,26 +152,26 @@ object ViewTools {
     }
 
     /**
-     * Opens URL in external app, see [WebTools.openInApp].
+     * Sets a [View.OnClickListener] that opens the [uri] using [WebTools.openInApp].
      */
-    fun openUriOnClick(button: View?, uri: String?) {
-        button?.setOnClickListener { v: View ->
+    fun View.openUriOnClick(uri: String?) {
+        setOnClickListener { v: View ->
             if (uri != null) WebTools.openInApp(v.context, uri)
         }
     }
 
     /**
-     * Opens URL in external app, see [WebTools.openInApp].
+     * Like [openUriOnClick], but also calls [copyTextToClipboardOnLongClick] with the [uri].
      */
-    fun openUrlOnClickAndCopyOnLongPress(button: View, uri: String) {
-        openUriOnClick(button, uri)
-        button.copyTextToClipboardOnLongClick(uri)
+    fun openUrlOnClickAndCopyOnLongPress(view: View, uri: String) {
+        view.openUriOnClick(uri)
+        view.copyTextToClipboardOnLongClick(uri)
     }
 
     fun configureNotMigratedWarning(view: View, notMigrated: Boolean) {
         view.visibility = if (notMigrated) View.VISIBLE else View.GONE
         if (notMigrated) {
-            openUriOnClick(view, view.context.getString(R.string.url_tmdb_migration))
+            view.openUriOnClick(view.context.getString(R.string.url_tmdb_migration))
         }
     }
 
