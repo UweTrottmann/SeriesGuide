@@ -10,12 +10,17 @@ import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.util.WebTools.openInApp
+import com.battlelancer.seriesguide.util.WebTools.openInCustomTab
 
 object WebTools {
 
     /**
      * Opens in a Custom Tab if a supporting browser is installed.
      * Otherwise automatically falls back to opening a full browser.
+     *
+     * Only use if absolutely necessary. Custom Tabs often have limited features: no ability to
+     * auto-translate, to bookmark, or others.
      *
      * Returns false (and shows an error toast) if there is no app available to handle the view
      * intent, see [tryStartActivity].

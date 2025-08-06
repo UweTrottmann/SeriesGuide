@@ -29,7 +29,6 @@ import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.util.PackageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
-import com.battlelancer.seriesguide.util.WebTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnClick
 import com.battlelancer.seriesguide.util.safeShow
 import com.uwetrottmann.androidutils.AndroidUtils
@@ -86,9 +85,7 @@ class MoreOptionsActivity : BaseTopActivity() {
         binding.buttonSettings.setOnClickListener {
             startActivity(Intent(this, SeriesGuidePreferences::class.java))
         }
-        binding.buttonHelp.setOnClickListener {
-            WebTools.openInCustomTab(this, getString(R.string.help_url))
-        }
+        ViewTools.openUriOnClick(binding.buttonHelp, getString(R.string.help_url))
         ViewTools.openUriOnClick(binding.buttonCommunity, getString(R.string.url_community))
         binding.buttonFeedback.setOnClickListener {
             startActivity(getFeedbackEmailIntent(this))
