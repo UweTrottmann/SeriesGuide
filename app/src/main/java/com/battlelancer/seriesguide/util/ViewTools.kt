@@ -163,9 +163,9 @@ object ViewTools {
     /**
      * Like [openUriOnClick], but also calls [copyTextToClipboardOnLongClick] with the [uri].
      */
-    fun openUrlOnClickAndCopyOnLongPress(view: View, uri: String) {
-        view.openUriOnClick(uri)
-        view.copyTextToClipboardOnLongClick(uri)
+    fun View.openUrlOnClickAndCopyOnLongPress(uri: String) {
+        openUriOnClick(uri)
+        copyTextToClipboardOnLongClick(uri)
     }
 
     fun configureNotMigratedWarning(view: View, notMigrated: Boolean) {
