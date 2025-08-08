@@ -8,6 +8,10 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
 
+## Next version
+
+* 🔧 Movies: display rental options in Stream and purchase dialog.
+
 ## Version 2025.2
 
 * 🔧 Movie details: adjust buttons to be more similar to episodes, other minor improvements.
