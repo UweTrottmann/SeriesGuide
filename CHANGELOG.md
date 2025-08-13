@@ -23,6 +23,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 ### 2025.2.8 - 2025-08-13
 
 * 🔧 Movies: display rental options in stream and purchase dialog.
+* 🔨 Movies: when viewing a collection the navigation bar no longer overlaps content on Android 10
+  or older.
 * 📝 Import latest user interface translations.
 
 ### 2025.2.7 - 2025-07-31

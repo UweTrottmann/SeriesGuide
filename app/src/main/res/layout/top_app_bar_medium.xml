@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!--
+Warning: add this after other sibling views when possible so nav bar insets work properly for them
+prior to Android 11 (R). CollapsingToolbarLayout consumes system window insets (see
+onWindowInsetChanged) and, prior to Android 11 (R) and due to a platform bug, its modified insets
+are passed on to sibling views (see notes on android.view.View.sBrokenInsetsDispatch).
+-->
+
 <!-- This top app bar allows longer titles and elevates if content scrolls behind it,
  but stays otherwise in place. -->
 <!-- Note: collapsing (setting layout_scrollFlags) breaks insets. -->
