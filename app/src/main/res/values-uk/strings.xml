@@ -591,9 +591,9 @@
     <!-- Streaming info -->
     <string name="action_stream">Переглянути або замовити</string>
     <string name="action_stream_settings">Налаштування трансляції або купівлі</string>
-    <string name="title_stream_subscription">Subscription</string>
-    <string name="title_stream_free">Free</string>
-    <string name="title_stream_with_ads">With ads</string>
-    <string name="title_stream_buy">Purchase</string>
-    <string name="title_stream_rent">Rental</string>
+    <string name="title_stream_subscription">Підписка</string>
+    <string name="title_stream_free">Безплатно</string>
+    <string name="title_stream_with_ads">З рекламою</string>
+    <string name="title_stream_buy">Придбано</string>
+    <string name="title_stream_rent">Прокат</string>
 </resources>

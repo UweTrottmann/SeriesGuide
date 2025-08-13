@@ -563,9 +563,9 @@
     <!-- Streaming info -->
     <string name="action_stream">Veure en línia o comprar</string>
     <string name="action_stream_settings">Veure en línia o configuració de la compra</string>
-    <string name="title_stream_subscription">Subscription</string>
-    <string name="title_stream_free">Free</string>
-    <string name="title_stream_with_ads">With ads</string>
-    <string name="title_stream_buy">Purchase</string>
-    <string name="title_stream_rent">Rental</string>
+    <string name="title_stream_subscription">Subscripció</string>
+    <string name="title_stream_free">Gratuït</string>
+    <string name="title_stream_with_ads">Amb anuncis</string>
+    <string name="title_stream_buy">Comprar</string>
+    <string name="title_stream_rent">Lloguer</string>
 </resources>

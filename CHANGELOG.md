@@ -11,6 +11,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 ## Next version
 
 * 🔧 Movies: display rental options in Stream and purchase dialog.
+* 📝 Import latest user interface translations.
 
 ## Version 2025.2
 

@@ -19,7 +19,7 @@
     <string name="season_number">Sezona %d</string>
     <string name="specialseason">Specijalne epizode</string>
     <string name="ratings">Ocene</string>
-    <string name="more_information">More information</string>
+    <string name="more_information">Više informacija</string>
     <!-- Descriptions -->
     <string name="navigate_up">Kretanje nagore</string>
     <string name="description_overview">Pregled</string>
@@ -569,7 +569,7 @@
     <string name="feedback_action_nothanks">Ne, hvala</string>
     <!-- Support the dev -->
     <string name="support_the_dev">Podržite programera?</string>
-    <string name="support_the_dev_other_ways">Other ways to support</string>
+    <string name="support_the_dev_other_ways">Drugi načini da podržite</string>
     <!-- Diagnostics -->
     <string name="title_debug_log">Izveštaj o greškama</string>
     <string name="status_saving_file_success">Datoteka je sačuvana</string>
@@ -577,9 +577,9 @@
     <!-- Streaming info -->
     <string name="action_stream">Strimujte ili kupite</string>
     <string name="action_stream_settings">Podešavanja strimovanja ili kupovine</string>
-    <string name="title_stream_subscription">Subscription</string>
-    <string name="title_stream_free">Free</string>
-    <string name="title_stream_with_ads">With ads</string>
-    <string name="title_stream_buy">Purchase</string>
-    <string name="title_stream_rent">Rental</string>
+    <string name="title_stream_subscription">Pretplata</string>
+    <string name="title_stream_free">Besplatno</string>
+    <string name="title_stream_with_ads">Sa reklamama</string>
+    <string name="title_stream_buy">Kupi</string>
+    <string name="title_stream_rent">Iznajmljivanje</string>
 </resources>
