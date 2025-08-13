@@ -51,6 +51,7 @@ import com.battlelancer.seriesguide.util.ShortcutCreator
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.util.ViewTools.openUrlOnClickAndCopyOnLongPress
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.battlelancer.seriesguide.util.safeShow
 import com.battlelancer.seriesguide.util.startActivityWithAnimation
@@ -458,12 +459,12 @@ class ShowFragment() : Fragment() {
                 // TMDB buttons
                 val tmdbUrl = TmdbTools.buildShowUrl(it)
                 binding.ratingContainer.ratingViewTmdb.setLink(requireContext(), tmdbUrl)
-                ViewTools.openUrlOnClickAndCopyOnLongPress(binding.buttonTmdb, tmdbUrl)
+                binding.buttonTmdb.openUrlOnClickAndCopyOnLongPress(tmdbUrl)
 
                 // Trakt buttons
                 val traktUrl = TraktTools.buildShowUrl(it)
                 binding.ratingContainer.ratingViewTrakt.setLink(requireContext(), traktUrl)
-                ViewTools.openUrlOnClickAndCopyOnLongPress(binding.buttonTrakt, traktUrl)
+                binding.buttonTrakt.openUrlOnClickAndCopyOnLongPress(traktUrl)
             }
         }
 

@@ -28,8 +28,7 @@ import com.battlelancer.seriesguide.ui.BaseTopActivity
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.util.PackageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
-import com.battlelancer.seriesguide.util.ViewTools
-import com.battlelancer.seriesguide.util.WebTools
+import com.battlelancer.seriesguide.util.ViewTools.openUriOnClick
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnClick
 import com.battlelancer.seriesguide.util.safeShow
 import com.uwetrottmann.androidutils.AndroidUtils
@@ -86,14 +85,12 @@ class MoreOptionsActivity : BaseTopActivity() {
         binding.buttonSettings.setOnClickListener {
             startActivity(Intent(this, SeriesGuidePreferences::class.java))
         }
-        binding.buttonHelp.setOnClickListener {
-            WebTools.openInCustomTab(this, getString(R.string.help_url))
-        }
-        ViewTools.openUriOnClick(binding.buttonCommunity, getString(R.string.url_community))
+        binding.buttonHelp.openUriOnClick(getString(R.string.help_url))
+        binding.buttonCommunity.openUriOnClick(getString(R.string.url_community))
         binding.buttonFeedback.setOnClickListener {
             startActivity(getFeedbackEmailIntent(this))
         }
-        ViewTools.openUriOnClick(binding.buttonTranslations, getString(R.string.url_translations))
+        binding.buttonTranslations.openUriOnClick(getString(R.string.url_translations))
         binding.buttonDebugLog.setOnClickListener {
             startActivity(DebugLogActivity.intent(this))
         }
@@ -103,9 +100,7 @@ class MoreOptionsActivity : BaseTopActivity() {
             }
             isGone = !BuildConfig.DEBUG
         }
-        binding.buttonMoreWhatsNew.setOnClickListener {
-            WebTools.openInApp(this, getString(R.string.url_release_notes))
-        }
+        binding.buttonMoreWhatsNew.openUriOnClick(getString(R.string.url_release_notes))
         binding.buttonMoreAbout.setOnClickListener {
             startActivity(Intent(this, AboutActivity::class.java))
         }
