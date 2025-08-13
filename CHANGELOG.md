@@ -8,11 +8,6 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
 
-## Next version
-
-* 🔧 Movies: display rental options in Stream and purchase dialog.
-* 📝 Import latest user interface translations.
-
 ## Version 2025.2
 
 * 🔧 Movie details: adjust buttons to be more similar to episodes, other minor improvements.
@@ -24,6 +19,11 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 * 📝 2025.2 will be the last release available on devices running Android 5.0 and 5.1.
 * 📝 Removed the unsupported release for devices running Android 4 from Google Play, it is no longer
   working properly.
+
+### 2025.2.8 - 2025-08-13
+
+* 🔧 Movies: display rental options in stream and purchase dialog.
+* 📝 Import latest user interface translations.
 
 ### 2025.2.7 - 2025-07-31
 
