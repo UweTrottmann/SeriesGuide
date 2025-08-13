@@ -4,14 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/sgAppBarLayout"
-        layout="@layout/top_app_bar_medium" />
-
     <FrameLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <!--
+    Add as last child so correct insets are delivered to views inside the FrameLayout prior to
+    Android 11 (R). See top_app_bar_medium.xml for details.
+    -->
+    <include
+        android:id="@+id/sgAppBarLayout"
+        layout="@layout/top_app_bar_medium" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
