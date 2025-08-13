@@ -15,7 +15,7 @@ import com.battlelancer.seriesguide.billing.amazon.AmazonIapManager.AmazonIapPro
 import com.battlelancer.seriesguide.databinding.ActivityAmazonBillingBinding
 import com.battlelancer.seriesguide.ui.BaseActivity
 import com.battlelancer.seriesguide.util.ThemeUtils
-import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.util.ViewTools.openUriOnClick
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
@@ -65,10 +65,7 @@ class AmazonBillingActivity : BaseActivity() {
         binding.buttonAmazonBillingSubscribe.isEnabled = false
         binding.buttonAmazonBillingSubscribe.setOnClickListener { subscribe() }
 
-        ViewTools.openUriOnClick(
-            binding.textViewAmazonBillingMoreInfo,
-            getString(R.string.url_billing_info_and_help)
-        )
+        binding.textViewAmazonBillingMoreInfo.openUriOnClick(getString(R.string.url_billing_info_and_help))
         binding.progressBarAmazonBilling.visibility = View.VISIBLE
     }
 
