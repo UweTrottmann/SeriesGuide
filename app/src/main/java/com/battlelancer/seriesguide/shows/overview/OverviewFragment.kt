@@ -62,6 +62,7 @@ import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceActiveEvent
 import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceCompletedEvent
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.LanguageTools
+import com.battlelancer.seriesguide.util.PackageTools
 import com.battlelancer.seriesguide.util.RatingsTools.initialize
 import com.battlelancer.seriesguide.util.RatingsTools.setLink
 import com.battlelancer.seriesguide.util.RatingsTools.setValuesFor
@@ -661,7 +662,8 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
                 ImageTools.buildEpisodeImageUrl(imagePath, requireContext())
             )
                 .error(R.drawable.ic_photo_gray_24dp)
-                .into(imageView,
+                .into(
+                    imageView,
                     object : Callback {
                         override fun onSuccess() {
                             imageView.scaleType = ImageView.ScaleType.CENTER_CROP
@@ -750,10 +752,12 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
             feedbackView = it
             it.setCallback(object : FeedbackView.Callback {
                 override fun onRate() {
-                    if (WebTools.openInApp(
-                            requireContext(),
-                            getString(R.string.url_store_page)
-                        )) {
+                    val urlRes = if (PackageTools.isAmazonVersion()) {
+                        R.string.url_amazon_listing
+                    } else {
+                        R.string.url_play_listing
+                    }
+                    if (WebTools.openInApp(requireContext(), getString(urlRes))) {
                         hideFeedbackView()
                     }
                 }
