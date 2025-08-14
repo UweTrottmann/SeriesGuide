@@ -283,6 +283,9 @@ class BillingRepository private constructor(
             if (supportedProductOrNull != null) {
                 val isSub = supportedProductOrNull != SeriesGuideSku.X_PASS_IN_APP
 
+                // FIXME Depending on if subscription or X upgrade are processed last, GoldStatus
+                //  has or hasn't subscription flag and SKU to link to manage. Should create
+                //  separate state for X upgrade.
                 val subStatus =
                     GoldStatus(true, isSub, supportedProductOrNull, purchase.purchaseToken)
                 insertSubStatus(subStatus)
