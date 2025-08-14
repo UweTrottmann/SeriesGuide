@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Copyright 2012-2025 Uwe Trottmann -->
+
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- ####################################### -->
@@ -6,6 +10,16 @@
     <!-- ####################################### -->
 
     <style name="Theme.SeriesGuide.DayNight" parent="Theme.SeriesGuide.Light" />
+
+    <!--
+    Opts an activity out of enforced edge-to-edge display on Android 15+.
+    https://medium.com/androiddevelopers/insets-handling-tips-for-android-15s-edge-to-edge-enforcement-872774e8839b
+    WARNING This will stop working once targeting Android 16 (SDK 36).
+    https://developer.android.com/about/versions/16/behavior-changes-16#edge-to-edge
+    -->
+    <style name="Theme.SeriesGuide.DayNight.OptOutEdgeToEdge">
+        <!-- Only configured on API-level 35 (Android 15) or higher, see values-v35/themes.xml -->
+    </style>
 
     <style name="Theme.BaseSeriesGuide.Dark" parent="Theme.Material3.Dark.NoActionBar">
 

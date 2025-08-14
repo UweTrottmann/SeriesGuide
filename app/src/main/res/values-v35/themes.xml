@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Copyright 2025 Uwe Trottmann -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- See notes in values/themes.xml -->
+    <style name="Theme.SeriesGuide.DayNight.OptOutEdgeToEdge">
+        <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
+    </style>
+
+</resources>
