@@ -64,6 +64,7 @@ import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.util.ViewTools.openUrlOnClickAndCopyOnLongPress
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.battlelancer.seriesguide.util.safeShow
 import com.battlelancer.seriesguide.util.startActivityWithAnimation
@@ -621,7 +622,7 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
         if (episode.tmdbId != null) {
             val traktUrl = TraktTools.buildEpisodeUrl(episode.tmdbId)
             bindingRatings.ratingViewTrakt.setLink(requireContext(), traktUrl)
-            ViewTools.openUrlOnClickAndCopyOnLongPress(bindingBottom.buttonEpisodeTrakt, traktUrl)
+            bindingBottom.buttonEpisodeTrakt.openUrlOnClickAndCopyOnLongPress(traktUrl)
         }
 
         // TMDB buttons
@@ -629,7 +630,7 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
             val tmdbUrl =
                 TmdbTools.buildEpisodeUrl(show.tmdbId, episode.season, episode.number)
             bindingRatings.ratingViewTmdb.setLink(requireContext(), tmdbUrl)
-            ViewTools.openUrlOnClickAndCopyOnLongPress(bindingBottom.buttonEpisodeTmdb, tmdbUrl)
+            bindingBottom.buttonEpisodeTmdb.openUrlOnClickAndCopyOnLongPress(tmdbUrl)
         }
 
         // IMDb

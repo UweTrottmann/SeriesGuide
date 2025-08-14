@@ -17,7 +17,7 @@ import com.battlelancer.seriesguide.shows.ShowsActivityImpl
 import com.battlelancer.seriesguide.sync.SyncProgress.SyncEvent
 import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.util.ThemeUtils
-import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.util.ViewTools.openUriOnClick
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -51,10 +51,7 @@ class ConnectTraktCredentialsFragment : Fragment() {
                 ShowsActivity.newIntent(requireContext(), ShowsActivityImpl.Tab.DISCOVER.index)
             )
         }
-        ViewTools.openUrlOnClickAndCopyOnLongPress(
-            binding.buttonTraktDeleteAccount,
-            getString(R.string.url_trakt_delete_account)
-        )
+        binding.buttonTraktDeleteAccount.openUriOnClick(getString(R.string.url_trakt_delete_account))
 
         binding.syncStatusTrakt.visibility = View.GONE
 

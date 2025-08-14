@@ -20,6 +20,14 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 * 📝 Removed the unsupported release for devices running Android 4 from Google Play, it is no longer
   working properly.
 
+### 2025.2.8 - 2025-08-14
+
+* 🔧 Movies: display rental options in stream and purchase dialog.
+* 🔨 Movies: when viewing a collection the navigation bar no longer overlaps content on Android 10
+  or older and the top app bar collapses when scrolling.
+* 🔨 Cloud: sign in screens are no longer cut off on Android 15 and newer.
+* 📝 Import latest user interface translations.
+
 ### 2025.2.7 - 2025-07-31
 
 * 🔧 To comply with Google Play policies, remove links to third-party websites when needed.

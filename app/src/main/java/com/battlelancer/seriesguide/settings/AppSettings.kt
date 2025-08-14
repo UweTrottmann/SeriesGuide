@@ -24,7 +24,7 @@ object AppSettings {
     const val KEY_HAS_SEEN_NAV_DRAWER = "hasSeenNavDrawer"
     const val KEY_ASKED_FOR_FEEDBACK = "askedForFeedback"
     const val KEY_SEND_ERROR_REPORTS = "com.battlelancer.seriesguide.sendErrorReports"
-    const val KEY_USER_DEBUG_MODE_ENBALED = "com.battlelancer.seriesguide.userDebugModeEnabled"
+    const val KEY_USER_DEBUG_MODE_ENABLED = "com.battlelancer.seriesguide.userDebugModeEnabled"
     const val KEY_DEMO_MODE_ENABLED = "com.uwetrottmann.seriesguide.demoMode"
 
     /**
@@ -93,7 +93,7 @@ object AppSettings {
      */
     fun isUserDebugModeEnabled(context: Context): Boolean {
         return BuildConfig.DEBUG || PreferenceManager.getDefaultSharedPreferences(context)
-            .getBoolean(KEY_USER_DEBUG_MODE_ENBALED, false)
+            .getBoolean(KEY_USER_DEBUG_MODE_ENABLED, false)
     }
 
     fun setDemoModeState(context: Context, isEnabled: Boolean) {

@@ -591,9 +591,9 @@
     <!-- Streaming info -->
     <string name="action_stream">Kup lub strumieniuj</string>
     <string name="action_stream_settings">Opcje kupowania i strumieniowania</string>
-    <string name="title_stream_subscription">Subscription</string>
-    <string name="title_stream_free">Free</string>
-    <string name="title_stream_with_ads">With ads</string>
-    <string name="title_stream_buy">Purchase</string>
-    <string name="title_stream_rent">Rental</string>
+    <string name="title_stream_subscription">Subskrypcja</string>
+    <string name="title_stream_free">Za darmo</string>
+    <string name="title_stream_with_ads">Z reklamami</string>
+    <string name="title_stream_buy">Kupno</string>
+    <string name="title_stream_rent">Wynajem</string>
 </resources>

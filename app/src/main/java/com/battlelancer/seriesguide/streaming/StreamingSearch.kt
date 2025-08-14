@@ -236,8 +236,7 @@ object StreamingSearch {
     }
 
     /**
-     * Set [replaceButtonText] to instead of appending on a new line replace button text with
-     * watch provider info.
+     * Set [hideExternalLink] to not display a link to TMDB with direct links to providers.
      */
     @SuppressLint("SetTextI18n")
     fun configureButton(
@@ -282,9 +281,11 @@ object StreamingSearch {
 
     private fun TmdbTools2.WatchInfo.toSpannedString(context: Context): SpannedString {
         return buildSpannedString {
+            // Display "cheapest" options first
             addWatchProvidersSection(context, subscription, R.string.title_stream_subscription)
             addWatchProvidersSection(context, free, R.string.title_stream_free)
             addWatchProvidersSection(context, withAds, R.string.title_stream_with_ads)
+            addWatchProvidersSection(context, rent, R.string.title_stream_rent)
             addWatchProvidersSection(context, buy, R.string.title_stream_buy)
             inSpans(TextAppearanceSpan(context, R.style.TextAppearance_SeriesGuide_Caption)) {
                 appendLine()

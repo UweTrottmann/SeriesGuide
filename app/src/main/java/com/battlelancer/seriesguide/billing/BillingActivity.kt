@@ -23,6 +23,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.ui.BaseActivity
 import com.battlelancer.seriesguide.util.ThemeUtils
+import com.battlelancer.seriesguide.util.ViewTools.openUriOnClick
 import com.battlelancer.seriesguide.util.WebTools
 import com.uwetrottmann.seriesguide.billing.BillingViewModel
 import com.uwetrottmann.seriesguide.billing.BillingViewModelFactory
@@ -139,14 +140,10 @@ class BillingActivity : BaseActivity() {
         }
 
         buttonOtherWaysToSupport = findViewById<Button>(R.id.buttonBillingMoreOptions).also {
-            it.setOnClickListener {
-                WebTools.openInApp(this, getString(R.string.url_support_the_dev))
-            }
+            it.openUriOnClick(getString(R.string.url_support_the_dev))
             it.isGone = true
         }
-        findViewById<View>(R.id.buttonBillingMoreInfo).setOnClickListener {
-            WebTools.openInCustomTab(this, getString(R.string.url_billing_info_and_help))
-        }
+        findViewById<View>(R.id.buttonBillingMoreInfo).openUriOnClick(getString(R.string.url_billing_info_and_help))
     }
 
     override fun onStart() {

@@ -562,10 +562,10 @@
     <string name="status_saving_file_failed">Impossibile salvare il file</string>
     <!-- Streaming info -->
     <string name="action_stream">Streaming o acquisto</string>
-    <string name="action_stream_settings">Streaming o impostazioni acquisto</string>
-    <string name="title_stream_subscription">Subscription</string>
-    <string name="title_stream_free">Free</string>
-    <string name="title_stream_with_ads">With ads</string>
-    <string name="title_stream_buy">Purchase</string>
-    <string name="title_stream_rent">Rental</string>
+    <string name="action_stream_settings">Impostazioni streaming o acquisto</string>
+    <string name="title_stream_subscription">Abbonamento</string>
+    <string name="title_stream_free">Gratuito</string>
+    <string name="title_stream_with_ads">Con annunci</string>
+    <string name="title_stream_buy">Acquista</string>
+    <string name="title_stream_rent">Noleggia</string>
 </resources>

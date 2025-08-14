@@ -377,7 +377,8 @@ class TmdbTools2 {
         val subscription: List<String>,
         val free: List<String>,
         val withAds: List<String>,
-        val buy: List<String>
+        val buy: List<String>,
+        val rent: List<String>
     )
 
     fun buildWatchInfo(providers: WatchProviders.CountryInfo?): WatchInfo {
@@ -389,17 +390,20 @@ class TmdbTools2 {
                 subscription = emptyList(),
                 free = emptyList(),
                 withAds = emptyList(),
-                buy = emptyList()
+                buy = emptyList(),
+                rent = emptyList()
             )
         }
         val topProvider = providers.flatrate.minByOrNull { it.display_priority }
             ?: providers.free.minByOrNull { it.display_priority }
             ?: providers.ads.minByOrNull { it.display_priority }
             ?: providers.buy.minByOrNull { it.display_priority }
+            ?: providers.rent.minByOrNull { it.display_priority }
         val count = providers.flatrate.size +
                 providers.free.size +
                 providers.ads.size +
-                providers.buy.size
+                providers.buy.size +
+                providers.rent.size
         return WatchInfo(
             url = providers.link,
             topProvider = topProvider?.provider_name,
@@ -408,6 +412,7 @@ class TmdbTools2 {
             free = providers.free.toSortedNames(),
             withAds = providers.ads.toSortedNames(),
             buy = providers.buy.toSortedNames(),
+            rent = providers.rent.toSortedNames()
         )
     }
 

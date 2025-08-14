@@ -102,7 +102,7 @@ class SgPreferencesFragment : BasePreferencesFragment(),
         }
 
         if (BuildConfig.DEBUG) {
-            findPreference<SwitchPreferenceCompat>(AppSettings.KEY_USER_DEBUG_MODE_ENBALED)!!.apply {
+            findPreference<SwitchPreferenceCompat>(AppSettings.KEY_USER_DEBUG_MODE_ENABLED)!!.apply {
                 isEnabled = false
                 isChecked = true
             }
@@ -447,7 +447,7 @@ class SgPreferencesFragment : BasePreferencesFragment(),
             }
 
             // Enable or disable debug log
-            if (AppSettings.KEY_USER_DEBUG_MODE_ENBALED == key) {
+            if (AppSettings.KEY_USER_DEBUG_MODE_ENABLED == key) {
                 val switchPref = pref as SwitchPreferenceCompat
                 val debugLogBuffer = requireActivity().getSgAppContainer().debugLogBuffer
                 if (switchPref.isChecked) {

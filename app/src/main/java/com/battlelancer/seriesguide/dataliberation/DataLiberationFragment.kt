@@ -22,7 +22,7 @@ import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Export
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.OnTaskProgressListener
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
-import com.battlelancer.seriesguide.util.WebTools
+import com.battlelancer.seriesguide.util.ViewTools.openUriOnClick
 import com.battlelancer.seriesguide.util.tryLaunch
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
@@ -94,9 +94,7 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
             selectMoviesImportFileResult.tryLaunch(null, requireContext())
         }
 
-        binding.buttonDataLibImportDocs.setOnClickListener {
-            WebTools.openInApp(requireContext(), getString(R.string.url_import_documentation))
-        }
+        binding.buttonDataLibImportDocs.openUriOnClick(getString(R.string.url_import_documentation))
 
         viewLifecycleOwner.lifecycleScope.launch {
             model.importFiles.collect {
