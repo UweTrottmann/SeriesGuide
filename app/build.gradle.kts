@@ -266,9 +266,9 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.play.services.auth)
 
-    // Amazon flavor specific
+    // Amazon Billing
     // Note: requires to add AppstoreAuthenticationKey.pem into amazon/assets.
-    "amazonImplementation"(libs.amazon.appstore.sdk)
+    implementation(libs.amazon.appstore.sdk)
 
     // Instrumented unit tests
     androidTestImplementation(libs.androidx.annotation)
