@@ -14,6 +14,7 @@ import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
 import androidx.annotation.RequiresApi
+import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.modules.AppModule
 import com.battlelancer.seriesguide.modules.DaggerServicesComponent
 import com.battlelancer.seriesguide.modules.HttpClientModule
@@ -149,6 +150,9 @@ class SgApp : Application() {
         // Update security provider before building HTTP client (for Picasso and in HttpClientModule).
         initializeSecurityProvider()
         initializePicasso()
+
+        // Initialize unlock state
+        BillingTools.updateUnlockStateAsync(this)
     }
 
     /**

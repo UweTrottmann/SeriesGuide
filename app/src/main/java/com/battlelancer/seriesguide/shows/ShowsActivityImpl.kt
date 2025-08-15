@@ -14,7 +14,6 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.api.Intents
 import com.battlelancer.seriesguide.billing.BillingActivity
-import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.billing.amazon.AmazonHelper
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
@@ -260,9 +259,6 @@ open class ShowsActivityImpl : BaseTopActivity() {
     }
 
     private fun checkGooglePlayPurchase() {
-        if (BillingTools.hasUnlockKey(this)) {
-            return
-        }
         // Automatically starts checking all access status.
         // Ends connection if activity is finished (and was not ended elsewhere already).
         billingViewModel =

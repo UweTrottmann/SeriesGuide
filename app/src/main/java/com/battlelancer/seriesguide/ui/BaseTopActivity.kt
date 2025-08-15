@@ -25,7 +25,6 @@ import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
 import com.battlelancer.seriesguide.preferences.MoreOptionsActivity
 import com.battlelancer.seriesguide.stats.StatsActivity
 import com.battlelancer.seriesguide.sync.AccountUtils
-import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.util.SupportTheDev
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
@@ -178,6 +177,13 @@ abstract class BaseTopActivity : BaseMessageActivity() {
 
     override fun onStart() {
         super.onStart()
+
+        // Users might have installed X Pass and as there is no trigger for this event
+        // manually check whenever returning to a top-level activity. As a side-effect don't have
+        // to trigger an update when any billing provider detects a change in its unlock status
+        // (which also avoids having to throttle updating the unlock state).
+        BillingTools.updateUnlockStateAsync(this)
+
         if (BillingTools.hasAccessToPaidFeatures(this) && HexagonSettings.shouldValidateAccount(this)) {
             onShowCloudAccountWarning()
         }
