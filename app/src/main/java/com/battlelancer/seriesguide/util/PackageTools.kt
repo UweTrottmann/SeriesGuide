@@ -62,7 +62,7 @@ object PackageTools {
     }
 
     /**
-     * Returns if the user has a valid copy of X Pass installed.
+     * Returns if the user has a valid copy of the X Pass app installed.
      */
     @JvmStatic
     fun hasUnlockKeyInstalled(context: Context): Boolean {
