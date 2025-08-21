@@ -51,6 +51,7 @@ object BillingTools {
     }
 
     private fun updateUnlockState(context: Context) {
+        // TODO Log all states for all billing methods and X pass detection
         // Debug builds, installed X Pass key or subscription unlock all features
         val newUnlockState = if (PackageTools.isAmazonVersion()) {
             // Amazon version only supports all access as in-app purchase, so skip key check
