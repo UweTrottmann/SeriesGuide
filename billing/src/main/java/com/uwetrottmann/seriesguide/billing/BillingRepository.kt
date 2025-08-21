@@ -103,7 +103,7 @@ class BillingRepository private constructor(
         if (!::localCacheBillingClient.isInitialized) {
             localCacheBillingClient = LocalBillingDb.getInstance(applicationContext)
         }
-        localCacheBillingClient.entitlementsDao().getPlayUnlockStateLiveData()
+        localCacheBillingClient.unlockStateHelper().getPlayUnlockStateLiveData()
     }
 
     /** Triggered when the entitlement was revoked. Use only with one observer at a time. */
@@ -319,7 +319,7 @@ class BillingRepository private constructor(
         coroutineScope.launch(Dispatchers.IO) {
             // Save if existing entitlement is getting revoked.
             val wasEntitled =
-                localCacheBillingClient.entitlementsDao().getPlayUnlockState()?.entitled ?: false
+                localCacheBillingClient.unlockStateHelper().getPlayUnlockState()?.entitled ?: false
 
             val unlockState = PlayUnlockState(false, isSub = true, sku = null, purchaseToken = null)
             insertUnlockState(unlockState)
@@ -343,7 +343,7 @@ class BillingRepository private constructor(
 
     @WorkerThread
     private suspend fun insertUnlockState(unlockState: PlayUnlockState) = withContext(Dispatchers.IO) {
-        localCacheBillingClient.entitlementsDao().insert(unlockState)
+        localCacheBillingClient.unlockStateHelper().insert(unlockState)
     }
 
     /**
@@ -424,7 +424,7 @@ class BillingRepository private constructor(
         }
 
         // Check if this is a subscription up- or downgrade.
-        val unlockStateOrNull = localCacheBillingClient.entitlementsDao().getPlayUnlockState()
+        val unlockStateOrNull = localCacheBillingClient.unlockStateHelper().getPlayUnlockState()
         val oldSubProductId = unlockStateOrNull?.let { if (it.isSub) it.sku else null }
         val oldPurchaseToken = unlockStateOrNull?.purchaseToken
 

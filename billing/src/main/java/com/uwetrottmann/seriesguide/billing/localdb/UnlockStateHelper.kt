@@ -11,7 +11,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 @Dao
-interface EntitlementsDao {
+interface UnlockStateHelper {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(playUnlockState: PlayUnlockState)

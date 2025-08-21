@@ -63,7 +63,7 @@ object BillingTools {
             } else {
                 // TODO Auto-expire after 1 year if not updated by Play Billing (for ex. when user
                 //  plans to switch billing provider after changing installer source)
-                val playUnlockState = LocalBillingDb.getInstance(context).entitlementsDao()
+                val playUnlockState = LocalBillingDb.getInstance(context).unlockStateHelper()
                     .getPlayUnlockState()
                 playUnlockState != null && playUnlockState.entitled
             }
