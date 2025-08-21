@@ -43,6 +43,14 @@ android {
 
 }
 
+kapt {
+    arguments {
+        // Export schema just in case the database ever needs to be built manually
+        // (like when migrating away from Room).
+        arg("room.schemaLocation", "$projectDir/schemas")
+    }
+}
+
 dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)

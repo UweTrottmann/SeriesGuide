@@ -16,8 +16,7 @@ import androidx.room.TypeConverters
         CachedPurchase::class,
         PlayUnlockState::class
     ],
-    version = LocalBillingDb.VERSION_3,
-    exportSchema = false
+    version = LocalBillingDb.VERSION_3
 )
 @TypeConverters(PurchaseTypeConverter::class)
 abstract class LocalBillingDb : RoomDatabase() {
