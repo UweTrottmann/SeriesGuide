@@ -14,7 +14,7 @@ import androidx.room.TypeConverters
 @Database(
     entities = [
         CachedPurchase::class,
-        GoldStatus::class
+        PlayUnlockState::class
     ],
     version = LocalBillingDb.VERSION_3,
     exportSchema = false

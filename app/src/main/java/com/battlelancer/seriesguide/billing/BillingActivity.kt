@@ -92,12 +92,12 @@ class BillingActivity : BaseActivity() {
             updateViewStates(hasUpgrade = true, unlockAppDetected = true)
         } else {
             setWaitMode(true)
-            billingViewModel.subStatusLiveData.observe(this) { goldStatus ->
+            billingViewModel.playUnlockStateLiveData.observe(this) { playUnlockState ->
                 setWaitMode(false)
-                updateViewStates(goldStatus != null && goldStatus.entitled, false)
+                updateViewStates(playUnlockState != null && playUnlockState.entitled, false)
                 manageSubscriptionUrl =
-                    if (goldStatus?.isSub == true && goldStatus.sku != null) {
-                        PLAY_MANAGE_SUBS_ONE + goldStatus.sku
+                    if (playUnlockState?.isSub == true && playUnlockState.sku != null) {
+                        PLAY_MANAGE_SUBS_ONE + playUnlockState.sku
                     } else {
                         PLAY_MANAGE_SUBS_ALL
                     }
