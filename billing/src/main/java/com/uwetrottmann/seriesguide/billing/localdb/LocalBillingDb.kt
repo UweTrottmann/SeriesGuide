@@ -21,7 +21,7 @@ import androidx.room.TypeConverters
 @TypeConverters(PurchaseTypeConverter::class)
 abstract class LocalBillingDb : RoomDatabase() {
     abstract fun purchaseDao(): PurchaseDao
-    abstract fun entitlementsDao(): EntitlementsDao
+    abstract fun unlockStateHelper(): UnlockStateHelper
 
     companion object {
         @Volatile
