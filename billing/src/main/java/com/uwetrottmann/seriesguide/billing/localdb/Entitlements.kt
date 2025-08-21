@@ -17,6 +17,25 @@ abstract class Entitlement {
     var id: Int = 1
 }
 
+@Entity(tableName = "unlock_state")
+data class UnlockState(
+    /**
+     * Whether all features should be unlocked because there is an X pass install, active
+     * subscription, one-time purchase from any billing method.
+     */
+    val isUnlockAll: Boolean = false,
+    /**
+     * The last time (in milliseconds) all features were unlocked. Use to give a grace period, for
+     * ex. in case a billing provider is temporarily unavailable.
+     */
+    val lastUnlockedAllMs: Long = 0L,
+    /**
+     * If the user should be notified upon app launch that access to all features has expired, for
+     * ex. when a subscription has expired or X Pass was uninstalled.
+     */
+    val notifyUnlockAllExpired: Boolean = false
+) : Entitlement()
+
 /**
  * Stores unlock state obtained via a subscription or one-time purchase using Play Billing.
  */

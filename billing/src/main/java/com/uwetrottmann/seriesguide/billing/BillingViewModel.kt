@@ -16,6 +16,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 
+/**
+ * Helps fetch current purchases and available products from Play billing provider.
+ */
 class BillingViewModel(
     application: Application,
     coroutineScope: CoroutineScope

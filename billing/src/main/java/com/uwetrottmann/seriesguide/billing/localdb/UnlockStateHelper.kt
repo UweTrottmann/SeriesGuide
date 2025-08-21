@@ -14,6 +14,12 @@ import androidx.room.Query
 interface UnlockStateHelper {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(unlockState: UnlockState)
+
+    @Query("SELECT * FROM unlock_state LIMIT 1")
+    fun getUnlockState(): UnlockState?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(playUnlockState: PlayUnlockState)
 
     @Query("SELECT * FROM gold_status LIMIT 1")
