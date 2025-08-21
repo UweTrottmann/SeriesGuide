@@ -129,6 +129,8 @@ class AppUpgrade(
                 context.deleteSharedPreferences("extension_amazon")
             }
         }
+
+        // TODO Migrate Amazon supporter state?
     }
 
     /**
