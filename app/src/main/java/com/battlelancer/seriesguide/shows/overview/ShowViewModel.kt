@@ -146,6 +146,7 @@ class ShowViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    // TODO Observe global unlock state instead
     /**
      * This currently does not auto-update, it maybe should at some point (add global LiveData).
      */
