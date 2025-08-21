@@ -30,6 +30,7 @@ object BillingTools {
     private val unlockStateInitialized = CountDownLatch(1)
     private val unlockState = MutableStateFlow(false)
 
+    // TODO Remove unused context parameter
     /**
      * Returns if the user should get access to paid features.
      *
