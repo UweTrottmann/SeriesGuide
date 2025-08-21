@@ -1,6 +1,7 @@
-// Copyright (C) 2018 Google Inc. All Rights Reserved.
-// Copyright 2019, 2020, 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright (C) 2018 Google Inc. All Rights Reserved.
+// Copyright 2019-2025 Uwe Trottmann
+
 package com.uwetrottmann.seriesguide.billing.localdb
 
 
@@ -15,7 +16,7 @@ import androidx.room.TypeConverters
         CachedPurchase::class,
         GoldStatus::class
     ],
-    version = 3,
+    version = LocalBillingDb.VERSION_3,
     exportSchema = false
 )
 @TypeConverters(PurchaseTypeConverter::class)
@@ -27,6 +28,21 @@ abstract class LocalBillingDb : RoomDatabase() {
         @Volatile
         private var INSTANCE: LocalBillingDb? = null
         private const val DATABASE_NAME = "purchase_db"
+
+        /**
+         * Original version.
+         */
+        const val VERSION_1 = 1
+
+        /**
+         * Store subscription purchase token for up/downgrades.
+         */
+        const val VERSION_2 = 2
+
+        /**
+         * Drop AugmentedSkuDetails table, stored in a StateFlow instead.
+         */
+        const val VERSION_3 = 3
 
         @JvmStatic
         fun getInstance(context: Context): LocalBillingDb =
