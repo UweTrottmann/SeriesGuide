@@ -22,8 +22,8 @@ import com.android.billingclient.api.QueryPurchasesParams
 import com.android.billingclient.api.queryProductDetails
 import com.android.billingclient.api.queryPurchasesAsync
 import com.uwetrottmann.seriesguide.billing.localdb.Entitlement
-import com.uwetrottmann.seriesguide.billing.localdb.GoldStatus
 import com.uwetrottmann.seriesguide.billing.localdb.LocalBillingDb
+import com.uwetrottmann.seriesguide.billing.localdb.PlayUnlockState
 import com.uwetrottmann.seriesguide.common.SingleLiveEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -92,17 +92,18 @@ class BillingRepository private constructor(
     val productDetails: StateFlow<List<AugmentedProductDetails>> = _productDetails
 
     /**
-     * Tracks whether this user is entitled to gold status. This call returns data from the app's
-     * own local DB; this way if Play and the secure server are unavailable, users still have
-     * access to features they purchased.  Normally this would be a good place to update the local
-     * cache to make sure it's always up-to-date. However, onBillingSetupFinished already called
-     * queryPurchasesAsync for you; so no need.
+     * Tracks whether this user is entitled to unlock all features based on a subscription or
+     * one-time purchase using Play Billing. The state is cached in a local database so if Play and
+     * the secure server are unavailable, the user still has access to features they purchased.
+     *
+     * Normally this would be a good place to update the local cache to make sure it's always
+     * up-to-date. However, onBillingSetupFinished already calls queryPurchasesAsync.
      */
-    val goldStatusLiveData: LiveData<GoldStatus> by lazy {
+    val playUnlockStateLiveData: LiveData<PlayUnlockState> by lazy {
         if (!::localCacheBillingClient.isInitialized) {
             localCacheBillingClient = LocalBillingDb.getInstance(applicationContext)
         }
-        localCacheBillingClient.entitlementsDao().getGoldStatusLiveData()
+        localCacheBillingClient.entitlementsDao().getPlayUnlockStateLiveData()
     }
 
     /** Triggered when the entitlement was revoked. Use only with one observer at a time. */
@@ -283,9 +284,9 @@ class BillingRepository private constructor(
             if (supportedProductOrNull != null) {
                 val isSub = supportedProductOrNull != SeriesGuideSku.X_PASS_IN_APP
 
-                val subStatus =
-                    GoldStatus(true, isSub, supportedProductOrNull, purchase.purchaseToken)
-                insertSubStatus(subStatus)
+                val unlockState =
+                    PlayUnlockState(true, isSub, supportedProductOrNull, purchase.purchaseToken)
+                insertUnlockState(unlockState)
 
                 // A user must only have one active subscription.
                 // Prevent re-purchase of active one (or the equivalent tier for legacy products),
@@ -318,10 +319,10 @@ class BillingRepository private constructor(
         coroutineScope.launch(Dispatchers.IO) {
             // Save if existing entitlement is getting revoked.
             val wasEntitled =
-                localCacheBillingClient.entitlementsDao().getGoldStatus()?.entitled ?: false
+                localCacheBillingClient.entitlementsDao().getPlayUnlockState()?.entitled ?: false
 
-            val subStatus = GoldStatus(false, isSub = true, sku = null, purchaseToken = null)
-            insertSubStatus(subStatus)
+            val unlockState = PlayUnlockState(false, isSub = true, sku = null, purchaseToken = null)
+            insertUnlockState(unlockState)
 
             // Enable all available subscriptions.
             enableAllProductsForPurchase()
@@ -341,8 +342,8 @@ class BillingRepository private constructor(
     }
 
     @WorkerThread
-    private suspend fun insertSubStatus(entitlement: Entitlement) = withContext(Dispatchers.IO) {
-        localCacheBillingClient.entitlementsDao().insert(entitlement)
+    private suspend fun insertUnlockState(unlockState: PlayUnlockState) = withContext(Dispatchers.IO) {
+        localCacheBillingClient.entitlementsDao().insert(unlockState)
     }
 
     /**
@@ -423,9 +424,9 @@ class BillingRepository private constructor(
         }
 
         // Check if this is a subscription up- or downgrade.
-        val subStatusOrNull = localCacheBillingClient.entitlementsDao().getGoldStatus()
-        val oldSubProductId = subStatusOrNull?.let { if (it.isSub) it.sku else null }
-        val oldPurchaseToken = subStatusOrNull?.purchaseToken
+        val unlockStateOrNull = localCacheBillingClient.entitlementsDao().getPlayUnlockState()
+        val oldSubProductId = unlockStateOrNull?.let { if (it.isSub) it.sku else null }
+        val oldPurchaseToken = unlockStateOrNull?.purchaseToken
 
         val purchaseParams = BillingFlowParams.newBuilder().apply {
             setProductDetailsParamsList(

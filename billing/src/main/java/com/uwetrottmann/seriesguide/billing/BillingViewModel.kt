@@ -9,7 +9,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.uwetrottmann.seriesguide.billing.localdb.GoldStatus
+import com.uwetrottmann.seriesguide.billing.localdb.PlayUnlockState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -21,7 +21,7 @@ class BillingViewModel(
     coroutineScope: CoroutineScope
 ) : AndroidViewModel(application) {
 
-    val subStatusLiveData: LiveData<GoldStatus>
+    val playUnlockStateLiveData: LiveData<PlayUnlockState>
 
     /**
      * A list of supported products filtered to only contain those
@@ -36,7 +36,7 @@ class BillingViewModel(
 
     init {
         repository.startDataSourceConnections()
-        subStatusLiveData = repository.goldStatusLiveData
+        playUnlockStateLiveData = repository.playUnlockStateLiveData
         availableProducts = repository.productDetails
             .map { products ->
                 products.mapNotNull { product ->

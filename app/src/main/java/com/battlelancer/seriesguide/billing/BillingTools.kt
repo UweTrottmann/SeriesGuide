@@ -63,9 +63,9 @@ object BillingTools {
             } else {
                 // TODO Auto-expire after 1 year if not updated by Play Billing (for ex. when user
                 //  plans to switch billing provider after changing installer source)
-                val goldStatus = LocalBillingDb.getInstance(context).entitlementsDao()
-                    .getGoldStatus()
-                goldStatus != null && goldStatus.entitled
+                val playUnlockState = LocalBillingDb.getInstance(context).entitlementsDao()
+                    .getPlayUnlockState()
+                playUnlockState != null && playUnlockState.entitled
             }
         }
         Timber.i(
