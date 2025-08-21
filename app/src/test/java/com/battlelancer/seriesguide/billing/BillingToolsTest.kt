@@ -9,6 +9,7 @@ import org.junit.Test
 import org.threeten.bp.Clock
 import org.threeten.bp.Instant
 import org.threeten.bp.ZoneOffset
+import org.threeten.bp.temporal.ChronoUnit
 
 class BillingToolsTest {
 
@@ -16,13 +17,15 @@ class BillingToolsTest {
     fun unlockStateChanges() {
         val testClock = Clock.fixed(Instant.now(), ZoneOffset.UTC)
 
-        // TODO Test lastUnlockedAllMs and notifyUnlockAllExpired cases if used
+        // TODO Test lastUnlockedAllMs cases if used
 
         // default -> unlocked
         BillingTools.getNewUnlockState(testClock, UnlockState(), isUnlockAll = true)
             .also {
                 assertThat(it.isUnlockAll).isTrue()
-                assertThat(it.lastUnlockedAllMs).isEqualTo(testClock.millis())
+                assertThat(Instant.ofEpochMilli(it.lastUnlockedAllMs)).isEqualTo(
+                    testClock.instant().truncatedTo(ChronoUnit.DAYS)
+                )
                 assertThat(it.notifyUnlockAllExpired).isFalse()
             }
 

@@ -184,6 +184,11 @@ abstract class BaseTopActivity : BaseMessageActivity() {
         // (which also avoids having to throttle updating the unlock state).
         BillingTools.updateUnlockStateAsync(this)
 
+        // Display important notifications, most important first as others will not display if there
+        // already is a notification.
+        if (BillingTools.isNotifyUnlockAllExpired()) {
+            notifyAboutExpiredUnlockState()
+        }
         if (BillingTools.hasAccessToPaidFeatures() && HexagonSettings.shouldValidateAccount(this)) {
             onShowCloudAccountWarning()
         }
@@ -244,6 +249,29 @@ abstract class BaseTopActivity : BaseMessageActivity() {
         // button navigation.
         ViewCompat.setOnApplyWindowInsetsListener(view) { _, insets -> insets }
         return this
+    }
+
+    fun notifyAboutExpiredUnlockState() {
+        val snackbar = snackbar
+        if (snackbar != null && snackbar.isShown) {
+            Timber.d("NOT showing unlock state expired message: existing snackbar.")
+            return
+        }
+        this.snackbar =
+            makeSnackbar(R.string.subscription_expired_details, Snackbar.LENGTH_INDEFINITE)
+                .addCallback(object : Snackbar.Callback() {
+                    override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                        // Only stop notifying after the user has interacted with the notification
+                        // so it's certain it was seen.
+                        if (event == DISMISS_EVENT_ACTION || event == DISMISS_EVENT_SWIPE) {
+                            BillingTools.setNotifiedAboutExpiredUnlockState(this@BaseTopActivity)
+                        }
+                    }
+                })
+                .setAction(R.string.action_check) {
+                    startActivity(BillingTools.getBillingActivityIntent(this@BaseTopActivity))
+                }
+                .also { it.show() }
     }
 
     override fun onLastAutoBackupFailed() {

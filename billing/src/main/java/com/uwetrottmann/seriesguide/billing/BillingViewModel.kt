@@ -31,6 +31,7 @@ class BillingViewModel(
      * that are available on Google Play.
      */
     val availableProducts: Flow<List<SafeAugmentedProductDetails>>
+    // TODO Remove
     val entitlementRevokedEvent: LiveData<Void>
     val errorEvent: LiveData<BillingRepository.BillingError>
 
