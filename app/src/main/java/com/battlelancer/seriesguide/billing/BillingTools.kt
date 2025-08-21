@@ -19,16 +19,20 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import org.threeten.bp.Clock
 import org.threeten.bp.Instant
+import org.threeten.bp.temporal.ChronoUnit
 import timber.log.Timber
 import java.util.concurrent.CountDownLatch
 
 // TODO Instead of a global singleton, this should be a member of SgAppContainer
 object BillingTools {
 
+    private val DEBUG = BuildConfig.DEBUG
+//    private val DEBUG = false
+
     // At most 1 coroutine at a time should update the unlock state
     private val unlockStateUpdateDispatcher = Dispatchers.Default.limitedParallelism(1)
     private val unlockStateInitialized = CountDownLatch(1)
-    private val unlockState = MutableStateFlow(false)
+    private val unlockState = MutableStateFlow(UnlockState())
 
     // TODO Remove unused context parameter
     /**
@@ -45,7 +49,7 @@ object BillingTools {
             return false
         }
 
-        return unlockState.value
+        return unlockState.value.isUnlockAll
     }
 
     fun updateUnlockStateAsync(context: Context) {
@@ -55,8 +59,6 @@ object BillingTools {
     }
 
     private fun updateUnlockState(context: Context) {
-        val unlockStateHelper = LocalBillingDb.getInstance(context).unlockStateHelper()
-
         // TODO Log all states for all billing methods and X pass detection
         // Debug builds, installed X Pass key or subscription unlock all features
         val isUnlockAll = if (PackageTools.isAmazonVersion()) {
@@ -68,22 +70,16 @@ object BillingTools {
             } else {
                 // TODO Auto-expire after 1 year if not updated by Play Billing (for ex. when user
                 //  plans to switch billing provider after changing installer source)
-                val playUnlockState = unlockStateHelper.getPlayUnlockState()
+                val playUnlockState = LocalBillingDb.getInstance(context).unlockStateHelper()
+                    .getPlayUnlockState()
                 playUnlockState != null && playUnlockState.entitled
             }
         }
 
-        val oldUnlockState = unlockStateHelper.getUnlockState() ?: UnlockState()
+        updateUnlockState(context) { oldUnlockState ->
+            getNewUnlockState(Clock.systemUTC(), oldUnlockState, isUnlockAll)
+        }
 
-        unlockStateHelper.insert(getNewUnlockState(Clock.systemUTC(), oldUnlockState, isUnlockAll))
-
-        Timber.i(
-            "updateUnlockState: unlockState=%s, newUnlockState=%s%s",
-            unlockState.value,
-            isUnlockAll,
-            if (BuildConfig.DEBUG) " (debug mode: overridden to true)" else ""
-        )
-        unlockState.value = if (BuildConfig.DEBUG) true else isUnlockAll
         unlockStateInitialized.countDown()
     }
 
@@ -109,12 +105,46 @@ object BillingTools {
         return UnlockState(
             isUnlockAll = isUnlockAll,
             lastUnlockedAllMs = if (isUnlockAll) {
-                Instant.now(clock).toEpochMilli()
+                // Clamp to midnight UTC to avoid frequent updates
+                Instant.now(clock).truncatedTo(ChronoUnit.DAYS).toEpochMilli()
             } else {
                 oldUnlockState.lastUnlockedAllMs
             },
             notifyUnlockAllExpired = notifyUnlockAllExpired
         )
+    }
+
+    fun isNotifyUnlockAllExpired(): Boolean {
+        return unlockState.value.notifyUnlockAllExpired
+    }
+
+    fun setNotifiedAboutExpiredUnlockState(context: Context) {
+        SgApp.coroutineScope.launch(unlockStateUpdateDispatcher) {
+            Timber.i("setNotifiedAboutExpiredUnlockState")
+            updateUnlockState(context) { oldUnlockState ->
+                oldUnlockState.copy(notifyUnlockAllExpired = false)
+            }
+        }
+    }
+
+    private fun updateUnlockState(context: Context, transform: (UnlockState) -> UnlockState) {
+        val unlockStateHelper = LocalBillingDb.getInstance(context).unlockStateHelper()
+
+        val oldUnlockState = unlockStateHelper.getUnlockStateOrDefault()
+        val newUnlockState = transform(oldUnlockState)
+
+        // Only insert if changed (to avoid log spam and unnecessary database writes)
+        if (oldUnlockState != newUnlockState) {
+            Timber.i(
+                "updateUnlockState: %s -> %s%s",
+                oldUnlockState,
+                newUnlockState,
+                if (DEBUG) " (debug mode: isUnlockAll overridden to true)" else ""
+            )
+            unlockStateHelper.insert(newUnlockState)
+        }
+        // Always update Flow to make sure it's initialized
+        unlockState.value = if (DEBUG) newUnlockState.copy(isUnlockAll = true) else newUnlockState
     }
 
     /**

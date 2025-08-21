@@ -5,7 +5,6 @@ package com.battlelancer.seriesguide.billing.amazon;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import androidx.annotation.NonNull;
 import com.amazon.device.iap.PurchasingService;
 import com.amazon.device.iap.model.FulfillmentResult;
@@ -150,9 +149,8 @@ public class AmazonIapManager implements AmazonIapManagerInterface {
     }
 
     /**
-     * Checks if the current user has an active subscription or pass purchase. If the purchase of
-     * the user is not valid any longer {@link com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity}
-     * is launched.
+     * Updates {@link AdvancedSettings#getLastSupporterState(Context)} depending on if the current
+     * user has an active subscription or pass purchase.
      *
      * <p>If user or purchase data could not be fetched, keeps the last subscription state.
      */
@@ -173,14 +171,7 @@ public class AmazonIapManager implements AmazonIapManagerInterface {
         }
 
         // update state
-        boolean isSupporterOld = AdvancedSettings.getLastSupporterState(activity);
         AdvancedSettings.setSupporterState(activity, isSupporter);
-
-        // notify if purchase has expired
-        if (isSupporterOld && !isSupporter) {
-            activity.startActivity(new Intent(activity, AmazonBillingActivity.class));
-            activity.finish();
-        }
     }
 
     /**

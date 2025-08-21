@@ -13,7 +13,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.api.Intents
-import com.battlelancer.seriesguide.billing.BillingActivity
 import com.battlelancer.seriesguide.billing.amazon.AmazonHelper
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
@@ -264,17 +263,6 @@ open class ShowsActivityImpl : BaseTopActivity() {
         billingViewModel =
             ViewModelProvider(this, BillingViewModelFactory(application, SgApp.coroutineScope))
                 .get(BillingViewModel::class.java)
-        billingViewModel.entitlementRevokedEvent
-            .observe(this) {
-                // Note: sometimes sub is not really expired, only billing API not returning
-                // purchase. Assume that opening BillingActivity through the action of the message
-                // will also help resolve the issue.
-                makeSnackbar(R.string.subscription_expired_details, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(R.string.billing_action_manage_subscriptions) {
-                        startActivity(BillingActivity.intent(this))
-                    }
-                    .show()
-            }
     }
 
     override fun onNewIntent(intent: Intent) {

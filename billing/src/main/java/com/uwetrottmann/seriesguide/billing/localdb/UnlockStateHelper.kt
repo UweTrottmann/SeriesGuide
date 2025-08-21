@@ -19,6 +19,8 @@ interface UnlockStateHelper {
     @Query("SELECT * FROM unlock_state LIMIT 1")
     fun getUnlockState(): UnlockState?
 
+    fun getUnlockStateOrDefault() = getUnlockState() ?: UnlockState()
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(playUnlockState: PlayUnlockState)
 
