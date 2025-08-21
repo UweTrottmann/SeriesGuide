@@ -13,9 +13,12 @@ import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity
 import com.battlelancer.seriesguide.settings.AdvancedSettings
 import com.battlelancer.seriesguide.util.PackageTools
 import com.uwetrottmann.seriesguide.billing.localdb.LocalBillingDb
+import com.uwetrottmann.seriesguide.billing.localdb.UnlockState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import org.threeten.bp.Clock
+import org.threeten.bp.Instant
 import timber.log.Timber
 import java.util.concurrent.CountDownLatch
 
@@ -53,8 +56,10 @@ object BillingTools {
     }
 
     private fun updateUnlockState(context: Context) {
+        val unlockStateHelper = LocalBillingDb.getInstance(context).unlockStateHelper()
+
         // Debug builds, installed X Pass key or subscription unlock all features
-        val newUnlockState = if (PackageTools.isAmazonVersion()) {
+        val isUnlockAll = if (PackageTools.isAmazonVersion()) {
             // Amazon version only supports all access as in-app purchase, so skip key check
             AdvancedSettings.getLastSupporterState(context)
         } else {
@@ -63,19 +68,53 @@ object BillingTools {
             } else {
                 // TODO Auto-expire after 1 year if not updated by Play Billing (for ex. when user
                 //  plans to switch billing provider after changing installer source)
-                val playUnlockState = LocalBillingDb.getInstance(context).unlockStateHelper()
-                    .getPlayUnlockState()
+                val playUnlockState = unlockStateHelper.getPlayUnlockState()
                 playUnlockState != null && playUnlockState.entitled
             }
         }
+
+        val oldUnlockState = unlockStateHelper.getUnlockState() ?: UnlockState()
+
+        unlockStateHelper.insert(getNewUnlockState(Clock.systemUTC(), oldUnlockState, isUnlockAll))
+
         Timber.i(
             "updateUnlockState: unlockState=%s, newUnlockState=%s%s",
             unlockState.value,
-            newUnlockState,
+            isUnlockAll,
             if (BuildConfig.DEBUG) " (debug mode: overridden to true)" else ""
         )
-        unlockState.value = if (BuildConfig.DEBUG) true else newUnlockState
+        unlockState.value = if (BuildConfig.DEBUG) true else isUnlockAll
         unlockStateInitialized.countDown()
+    }
+
+    fun getNewUnlockState(
+        clock: Clock,
+        oldUnlockState: UnlockState,
+        isUnlockAll: Boolean
+    ): UnlockState {
+        // TODO Grace period? But likely notify already and support purchasing?
+//        val lastUnlockedInstant = Instant.ofEpochMilli(oldUnlockState.lastUnlockedAllMs)
+//        val aDayAgo = now.minus(24, ChronoUnit.HOURS)
+//        if (lastUnlockedInstant.isBefore(aDayAgo)) {
+//            true
+//        } else {
+//            false
+//        }
+
+        // Only change if unlock state changes
+        val notifyUnlockAllExpired = if (isUnlockAll != oldUnlockState.isUnlockAll) {
+            !isUnlockAll
+        } else oldUnlockState.notifyUnlockAllExpired
+
+        return UnlockState(
+            isUnlockAll = isUnlockAll,
+            lastUnlockedAllMs = if (isUnlockAll) {
+                Instant.now(clock).toEpochMilli()
+            } else {
+                oldUnlockState.lastUnlockedAllMs
+            },
+            notifyUnlockAllExpired = notifyUnlockAllExpired
+        )
     }
 
     /**

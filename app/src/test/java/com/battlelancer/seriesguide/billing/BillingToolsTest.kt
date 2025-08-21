@@ -1,0 +1,95 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2025 Uwe Trottmann
+
+package com.battlelancer.seriesguide.billing
+
+import com.google.common.truth.Truth.assertThat
+import com.uwetrottmann.seriesguide.billing.localdb.UnlockState
+import org.junit.Test
+import org.threeten.bp.Clock
+import org.threeten.bp.Instant
+import org.threeten.bp.ZoneOffset
+
+class BillingToolsTest {
+
+    @Test
+    fun unlockStateChanges() {
+        val testClock = Clock.fixed(Instant.now(), ZoneOffset.UTC)
+
+        // TODO Test lastUnlockedAllMs and notifyUnlockAllExpired cases if used
+
+        // default -> unlocked
+        BillingTools.getNewUnlockState(testClock, UnlockState(), isUnlockAll = true)
+            .also {
+                assertThat(it.isUnlockAll).isTrue()
+                assertThat(it.lastUnlockedAllMs).isEqualTo(testClock.millis())
+                assertThat(it.notifyUnlockAllExpired).isFalse()
+            }
+
+        // default -> not unlocked
+        BillingTools.getNewUnlockState(testClock, UnlockState(), isUnlockAll = false)
+            .also {
+                assertThat(it.isUnlockAll).isFalse()
+                assertThat(it.notifyUnlockAllExpired).isFalse()
+            }
+
+        // unlocked -> not unlocked: notifies
+        BillingTools.getNewUnlockState(
+            testClock,
+            UnlockState(isUnlockAll = true),
+            isUnlockAll = false
+        ).also {
+            assertThat(it.isUnlockAll).isFalse()
+            assertThat(it.notifyUnlockAllExpired).isTrue()
+        }
+
+        // not unlocked -> unlocked: clears notify flag
+        BillingTools.getNewUnlockState(
+            testClock,
+            UnlockState(notifyUnlockAllExpired = true),
+            isUnlockAll = true
+        ).also {
+            assertThat(it.isUnlockAll).isTrue()
+            assertThat(it.notifyUnlockAllExpired).isFalse()
+        }
+
+        // notify flag not changed if unlock state remains
+        // locked + false
+        BillingTools.getNewUnlockState(
+            testClock,
+            UnlockState(),
+            isUnlockAll = false
+        ).also {
+            assertThat(it.isUnlockAll).isFalse()
+            assertThat(it.notifyUnlockAllExpired).isFalse()
+        }
+        // locked + true
+        BillingTools.getNewUnlockState(
+            testClock,
+            UnlockState(notifyUnlockAllExpired = true),
+            isUnlockAll = false
+        ).also {
+            assertThat(it.isUnlockAll).isFalse()
+            assertThat(it.notifyUnlockAllExpired).isTrue()
+        }
+        // unlocked + true
+        BillingTools.getNewUnlockState(
+            testClock,
+            UnlockState(isUnlockAll = true, notifyUnlockAllExpired = true),
+            isUnlockAll = true
+        ).also {
+            assertThat(it.isUnlockAll).isTrue()
+            assertThat(it.notifyUnlockAllExpired).isTrue()
+        }
+        // unlocked + false
+        BillingTools.getNewUnlockState(
+            testClock,
+            UnlockState(isUnlockAll = true),
+            isUnlockAll = true
+        ).also {
+            assertThat(it.isUnlockAll).isTrue()
+            assertThat(it.notifyUnlockAllExpired).isFalse()
+        }
+    }
+
+}
