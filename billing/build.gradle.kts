@@ -58,6 +58,9 @@ dependencies {
     // Google Play Billing
     api(libs.billing)
 
+    // Galaxy Store Billing
+    api(files("libs/samsung-iap-6.4.0.aar"))
+
     // ViewModel and LiveData
     implementation(libs.androidx.lifecycle.livedata)
     implementation(libs.androidx.lifecycle.viewmodel)
