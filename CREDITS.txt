@@ -111,6 +111,9 @@ Copyright 2011, 2012 Chris Banes
 retrofit (https://github.com/square/retrofit)
 Copyright 2013 Square, Inc.
 
+Samsung In-App Purchase SDK (https://developer.samsung.com/iap)
+Copyright Samsung Electronics Co., Ltd.
+
 threetenabp (https://github.com/JakeWharton/ThreeTenABP)
 Copyright (C) 2015 Jake Wharton
 

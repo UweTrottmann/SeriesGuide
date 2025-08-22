@@ -27,6 +27,9 @@
     <!-- Android 13: to request notification permission. -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
+    <!-- Galaxy Billing -->
+    <uses-permission android:name="com.samsung.android.iap.permission.BILLING"/>
+
     <uses-feature
         android:name="android.hardware.touchscreen"
         android:required="false" />
