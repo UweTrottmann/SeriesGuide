@@ -110,6 +110,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/buttonDebugViewTraktInvalidateAccessToken" />
 
+        <Button
+            android:id="@+id/buttonDebugViewPlayUnlockTrue"
+            style="@style/Widget.SeriesGuide.Button.Outlined"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_padding"
+            android:text="PlayUnlockState true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonDebugViewTraktInvalidateRefreshToken" />
+
+        <Button
+            android:id="@+id/buttonDebugViewPlayUnlockFalse"
+            style="@style/Widget.SeriesGuide.Button.Outlined"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="PlayUnlockState false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonDebugViewPlayUnlockTrue" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

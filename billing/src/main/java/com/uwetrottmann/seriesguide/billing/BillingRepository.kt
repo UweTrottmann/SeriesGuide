@@ -589,7 +589,7 @@ class BillingRepository private constructor(
             }
     }
 
-    private object SeriesGuideSku {
+    object SeriesGuideSku {
         // The SKU product ids as set in the Developer Console
         const val X_PASS_IN_APP = "x_upgrade"
 
