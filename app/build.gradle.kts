@@ -287,6 +287,8 @@ dependencies {
     // Amazon Billing
     // Note: requires to add AppstoreAuthenticationKey.pem into amazon/assets.
     implementation(libs.amazon.appstore.sdk)
+    // Galaxy Billing
+    implementation(files("libs/samsung-iap-6.5.0.aar"))
     // Play Billing
     implementation(libs.billing)
 
