@@ -20,6 +20,12 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 * 📝 Removed the unsupported release for devices running Android 4 from Google Play, it is no longer
   working properly.
 
+### 2025.2.9 - 2025-08-28
+
+* 🔨 Make crashes when scrolling upcoming and recent tabs less likely.
+* 📝 Import latest user interface translations. Significant updates to Hebrew thanks to yonatando!
+  (Still no proper right-to-left support though.)
+
 ### 2025.2.8 - 2025-08-14
 
 * 🔧 Movies: display rental options in stream and purchase dialog.

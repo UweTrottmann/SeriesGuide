@@ -549,9 +549,9 @@
     <!-- Streaming info -->
     <string name="action_stream">스트리밍 or 구매</string>
     <string name="action_stream_settings">스트리밍 또는 구매 설정</string>
-    <string name="title_stream_subscription">Subscription</string>
-    <string name="title_stream_free">Free</string>
-    <string name="title_stream_with_ads">With ads</string>
-    <string name="title_stream_buy">Purchase</string>
-    <string name="title_stream_rent">Rental</string>
+    <string name="title_stream_subscription">구독</string>
+    <string name="title_stream_free">무료</string>
+    <string name="title_stream_with_ads">광고가 포함된</string>
+    <string name="title_stream_buy">구매</string>
+    <string name="title_stream_rent">대여</string>
 </resources>
