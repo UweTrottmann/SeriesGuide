@@ -3,8 +3,8 @@
 
 package com.battlelancer.seriesguide.billing
 
+import com.battlelancer.seriesguide.billing.localdb.UnlockState
 import com.google.common.truth.Truth.assertThat
-import com.uwetrottmann.seriesguide.billing.localdb.UnlockState
 import org.junit.Test
 import org.threeten.bp.Clock
 import org.threeten.bp.Instant

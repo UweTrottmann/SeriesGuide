@@ -24,7 +24,7 @@ import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.widgets.EmptyView
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
-import com.uwetrottmann.seriesguide.common.SingleLiveEvent
+import com.battlelancer.seriesguide.common.SingleLiveEvent
 import com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout
 
 class SimilarShowsFragment : BaseAddShowsFragment() {

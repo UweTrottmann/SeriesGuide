@@ -12,7 +12,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.billing.BillingRepository
 import com.battlelancer.seriesguide.billing.BillingTools
+import com.battlelancer.seriesguide.billing.localdb.LocalBillingDb
+import com.battlelancer.seriesguide.billing.localdb.PlayUnlockState
 import com.battlelancer.seriesguide.databinding.FragmentDebugViewBinding
 import com.battlelancer.seriesguide.diagnostics.DebugLogActivity
 import com.battlelancer.seriesguide.notifications.NotificationService
@@ -23,9 +26,6 @@ import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktOAuthSettings
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.uwetrottmann.seriesguide.billing.BillingRepository
-import com.uwetrottmann.seriesguide.billing.localdb.LocalBillingDb
-import com.uwetrottmann.seriesguide.billing.localdb.PlayUnlockState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright 2019-2025 Uwe Trottmann
 
-package com.uwetrottmann.seriesguide.billing
+package com.battlelancer.seriesguide.billing
 
 import android.app.Activity
 import android.app.Application
@@ -9,7 +9,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.uwetrottmann.seriesguide.billing.localdb.PlayUnlockState
+import com.battlelancer.seriesguide.billing.localdb.PlayUnlockState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

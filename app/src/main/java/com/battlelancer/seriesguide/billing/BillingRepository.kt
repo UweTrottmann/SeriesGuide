@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright 2019-2025 Uwe Trottmann
 
-package com.uwetrottmann.seriesguide.billing
+package com.battlelancer.seriesguide.billing
 
 import android.app.Activity
 import android.app.Application
@@ -21,10 +21,11 @@ import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryPurchasesParams
 import com.android.billingclient.api.queryProductDetails
 import com.android.billingclient.api.queryPurchasesAsync
-import com.uwetrottmann.seriesguide.billing.localdb.Entitlement
-import com.uwetrottmann.seriesguide.billing.localdb.LocalBillingDb
-import com.uwetrottmann.seriesguide.billing.localdb.PlayUnlockState
-import com.uwetrottmann.seriesguide.common.SingleLiveEvent
+import com.battlelancer.seriesguide.BuildConfig
+import com.battlelancer.seriesguide.billing.localdb.Entitlement
+import com.battlelancer.seriesguide.billing.localdb.LocalBillingDb
+import com.battlelancer.seriesguide.billing.localdb.PlayUnlockState
+import com.battlelancer.seriesguide.common.SingleLiveEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -36,6 +37,12 @@ import kotlinx.coroutines.withContext
 import timber.log.Timber
 import kotlin.math.max
 
+/**
+ * ## Play Billing
+ *
+ * * https://developer.android.com/google/play/billing/integrate
+ * * https://github.com/googlesamples/android-play-billing
+ */
 class BillingRepository private constructor(
     private val applicationContext: Context,
     private val coroutineScope: CoroutineScope

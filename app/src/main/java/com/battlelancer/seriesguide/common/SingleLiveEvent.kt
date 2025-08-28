@@ -1,8 +1,8 @@
-// Copyright 2017 Google Inc.
-// Copyright 2019, 2021 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2017 Google Inc.
+// Copyright 2019-2025 Uwe Trottmann
 
-package com.uwetrottmann.seriesguide.common
+package com.battlelancer.seriesguide.common
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner

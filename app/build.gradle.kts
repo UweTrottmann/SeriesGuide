@@ -47,6 +47,8 @@ android {
 
         // Prevent plugin from generating PNGs, use compat loading instead https://developer.android.com/studio/write/vector-asset-studio#sloption
         vectorDrawables.useSupportLibrary = true
+
+        // Use AndroidX test runner
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "TMDB_API_KEY", propertyOrEmpty("SG_TMDB_API_KEY"))
@@ -54,6 +56,11 @@ android {
         buildConfigField("String", "TRAKT_CLIENT_SECRET", propertyOrEmpty("SG_TRAKT_CLIENT_SECRET"))
         buildConfigField("String", "IMAGE_CACHE_URL", propertyOrNull("SG_IMAGE_CACHE_URL"))
         buildConfigField("String", "IMAGE_CACHE_SECRET", propertyOrEmpty("SG_IMAGE_CACHE_SECRET"))
+        // Play Billing
+        buildConfigField("String", "IAP_KEY_A", propertyOrEmpty("SG_IAP_KEY_A"))
+        buildConfigField("String", "IAP_KEY_B", propertyOrEmpty("SG_IAP_KEY_B"))
+        buildConfigField("String", "IAP_KEY_C", propertyOrEmpty("SG_IAP_KEY_C"))
+        buildConfigField("String", "IAP_KEY_D", propertyOrEmpty("SG_IAP_KEY_D"))
 
         // Note: do not exclude languages from libraries that the app doesn't have, e.g. Firebase Auth.
         // They still might be helpful to users, e.g. for regional dialects.
@@ -170,6 +177,8 @@ android {
 kapt {
     arguments {
         arg("eventBusIndex", "com.battlelancer.seriesguide.SgEventBusIndex")
+        // Export schema for testing and in case the database ever needs to be built manually
+        // (like when migrating away from Room).
         arg("room.schemaLocation", "$projectDir/schemas")
     }
 }
@@ -188,7 +197,6 @@ dependencies {
 
     implementation(project(":api"))
     implementation(project(":backend"))
-    implementation(project(":billing"))
     implementation(project(":widgets"))
 
     implementation(libs.androidx.core.ktx)
@@ -275,6 +283,8 @@ dependencies {
     // Amazon Billing
     // Note: requires to add AppstoreAuthenticationKey.pem into amazon/assets.
     implementation(libs.amazon.appstore.sdk)
+    // Play Billing
+    implementation(libs.billing)
 
     // Instrumented unit tests
     androidTestImplementation(libs.androidx.annotation)

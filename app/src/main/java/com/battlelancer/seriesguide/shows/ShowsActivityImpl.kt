@@ -13,6 +13,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.api.Intents
+import com.battlelancer.seriesguide.billing.BillingViewModel
+import com.battlelancer.seriesguide.billing.BillingViewModelFactory
 import com.battlelancer.seriesguide.billing.amazon.AmazonHelper
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
@@ -33,8 +35,6 @@ import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.WebTools
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
-import com.uwetrottmann.seriesguide.billing.BillingViewModel
-import com.uwetrottmann.seriesguide.billing.BillingViewModelFactory
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
 import kotlinx.coroutines.launch
 

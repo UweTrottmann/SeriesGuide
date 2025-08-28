@@ -2,7 +2,7 @@
 // Copyright (C) 2018 Google Inc. All Rights Reserved.
 // Copyright 2019-2025 Uwe Trottmann
 
-package com.uwetrottmann.seriesguide.billing.localdb
+package com.battlelancer.seriesguide.billing.localdb
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

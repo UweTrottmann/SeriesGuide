@@ -1,7 +1,8 @@
-// Copyright (C) 2018 Google Inc. All Rights Reserved.
-// Copyright 2019, 2021, 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
-package com.uwetrottmann.seriesguide.billing.localdb
+// Copyright (C) 2018 Google Inc. All Rights Reserved.
+// Copyright 2019-2025 Uwe Trottmann
+
+package com.battlelancer.seriesguide.billing.localdb
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

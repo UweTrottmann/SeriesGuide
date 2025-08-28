@@ -26,9 +26,6 @@ import com.battlelancer.seriesguide.util.PackageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools.openUriOnClick
 import com.battlelancer.seriesguide.util.WebTools
-import com.uwetrottmann.seriesguide.billing.BillingViewModel
-import com.uwetrottmann.seriesguide.billing.BillingViewModelFactory
-import com.uwetrottmann.seriesguide.billing.SafeAugmentedProductDetails
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 

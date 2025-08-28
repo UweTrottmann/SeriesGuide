@@ -10,10 +10,10 @@ import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity
+import com.battlelancer.seriesguide.billing.localdb.LocalBillingDb
+import com.battlelancer.seriesguide.billing.localdb.UnlockState
 import com.battlelancer.seriesguide.settings.AdvancedSettings
 import com.battlelancer.seriesguide.util.PackageTools
-import com.uwetrottmann.seriesguide.billing.localdb.LocalBillingDb
-import com.uwetrottmann.seriesguide.billing.localdb.UnlockState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
