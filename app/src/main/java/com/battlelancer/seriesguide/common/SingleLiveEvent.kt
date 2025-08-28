@@ -23,6 +23,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  *
  * Note that only one observer is going to be notified of changes.
  */
+@Deprecated(message = "Don't use in new code. Instead use a StateFlow and re-set its value after handling it")
 class SingleLiveEvent<T> : MutableLiveData<T>() {
 
     private val pending = AtomicBoolean(false)

@@ -125,6 +125,7 @@ class BillingRepository private constructor(
     )
 
     /** Triggered if there was an error. Contains an error message to display. */
+    @Suppress("DEPRECATION")
     val errorEvent = SingleLiveEvent<BillingError>()
 
     fun startDataSourceConnections() {
