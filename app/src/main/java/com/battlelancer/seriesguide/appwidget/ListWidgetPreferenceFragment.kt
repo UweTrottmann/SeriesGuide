@@ -158,7 +158,7 @@ class ListWidgetPreferenceFragment : BasePreferencesFragment() {
         bindPreferenceSummaryToValue(themePref)
 
         // Disable saving some prefs not available for non-supporters.
-        if (!BillingTools.hasAccessToPaidFeatures(requireContext())) {
+        if (!BillingTools.hasAccessToPaidFeatures()) {
             val onDisablePreferenceChangeListener =
                 Preference.OnPreferenceChangeListener { _: Preference?, _: Any? ->
                     BillingTools.advertiseSubscription(requireContext())

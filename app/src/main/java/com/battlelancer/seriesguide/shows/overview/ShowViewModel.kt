@@ -162,7 +162,7 @@ class ShowViewModel(application: Application) : AndroidViewModel(application) {
     fun updateUserStatus() {
         viewModelScope.launch(Dispatchers.IO) {
             val currentState = hasAllFeatures.value
-            val newState = BillingTools.hasAccessToPaidFeatures(getApplication())
+            val newState = BillingTools.hasAccessToPaidFeatures()
             if (currentState != newState) {
                 hasAllFeatures.postValue(newState)
             }

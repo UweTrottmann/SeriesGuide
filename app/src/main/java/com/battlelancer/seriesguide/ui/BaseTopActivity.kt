@@ -184,7 +184,7 @@ abstract class BaseTopActivity : BaseMessageActivity() {
         // (which also avoids having to throttle updating the unlock state).
         BillingTools.updateUnlockStateAsync(this)
 
-        if (BillingTools.hasAccessToPaidFeatures(this) && HexagonSettings.shouldValidateAccount(this)) {
+        if (BillingTools.hasAccessToPaidFeatures() && HexagonSettings.shouldValidateAccount(this)) {
             onShowCloudAccountWarning()
         }
         if (SupportTheDev.shouldAsk(this)) {

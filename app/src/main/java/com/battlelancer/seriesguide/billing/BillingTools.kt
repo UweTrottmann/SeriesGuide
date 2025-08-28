@@ -34,7 +34,7 @@ object BillingTools {
      *
      * Note: this method will block until the unlock state is initialized.
      */
-    fun hasAccessToPaidFeatures(context: Context): Boolean {
+    fun hasAccessToPaidFeatures(): Boolean {
         try {
             unlockStateInitialized.await()
         } catch (_: InterruptedException) {

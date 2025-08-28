@@ -96,7 +96,7 @@ class NotificationService(context: Context) {
 
         // remove notification service wake-up alarm if notifications are disabled or not unlocked
         if (!NotificationSettings.isNotificationsEnabled(context)
-            || !BillingTools.hasAccessToPaidFeatures(context)) {
+            || !BillingTools.hasAccessToPaidFeatures()) {
             Timber.d("Notifications disabled, removing wake-up alarm")
             val am = context.getSystemService<AlarmManager>()
             am?.cancel(wakeUpPendingIntent)
