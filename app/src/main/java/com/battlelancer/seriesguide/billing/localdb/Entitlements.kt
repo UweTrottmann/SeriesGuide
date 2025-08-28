@@ -4,20 +4,21 @@
 
 package com.battlelancer.seriesguide.billing.localdb
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 /**
- * Normally this would just be an interface. But since each of the entitlements only has
- * one item/row and so primary key is fixed, we can put the primary key here and so make
- * the class abstract.
- **/
+ * Each entitlement table only has one item/row, so use a fixed primary key.
+ */
 abstract class Entitlement {
     @PrimaryKey
     var id: Int = 1
 }
 
-@Entity(tableName = "unlock_state")
+/**
+ * Null-safe variant of the database entity [UnlockStateDb].
+ */
 data class UnlockState(
     /**
      * Whether all features should be unlocked because there is an X pass install, active
@@ -34,6 +35,32 @@ data class UnlockState(
      * ex. when a subscription has expired or X Pass was uninstalled.
      */
     val notifyUnlockAllExpired: Boolean = false
+) {
+    fun mapToDb(): UnlockStateDb {
+        return UnlockStateDb(isUnlockAll, lastUnlockedAllMs, notifyUnlockAllExpired)
+    }
+
+    companion object {
+        fun from(unlockStateDb: UnlockStateDb?): UnlockState {
+            val default = UnlockState()
+            return if (unlockStateDb == null) {
+                default
+            } else {
+                UnlockState(
+                    unlockStateDb.isUnlockAll ?: default.isUnlockAll,
+                    unlockStateDb.lastUnlockedAllMs ?: default.lastUnlockedAllMs,
+                    unlockStateDb.notifyUnlockAllExpired ?: default.notifyUnlockAllExpired
+                )
+            }
+        }
+    }
+}
+
+@Entity(tableName = "unlock_state")
+data class UnlockStateDb(
+    @ColumnInfo(name = "is_unlock_all") val isUnlockAll: Boolean?,
+    @ColumnInfo(name = "last_unlocked_all_ms") val lastUnlockedAllMs: Long?,
+    @ColumnInfo(name = "notify_unlock_all_expired") val notifyUnlockAllExpired: Boolean?
 ) : Entitlement()
 
 /**

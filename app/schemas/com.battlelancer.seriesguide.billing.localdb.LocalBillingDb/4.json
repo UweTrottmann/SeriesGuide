@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 4,
-    "identityHash": "3b23d15ddb8ebd0716f31c4b636372bd",
+    "identityHash": "fb39cf86189aa4cc37b6fa30eb716eb4",
     "entities": [
       {
         "tableName": "purchase_table",
@@ -70,25 +70,22 @@
       },
       {
         "tableName": "unlock_state",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`isUnlockAll` INTEGER NOT NULL, `lastUnlockedAllMs` INTEGER NOT NULL, `notifyUnlockAllExpired` INTEGER NOT NULL, `id` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`is_unlock_all` INTEGER, `last_unlocked_all_ms` INTEGER, `notify_unlock_all_expired` INTEGER, `id` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "isUnlockAll",
-            "columnName": "isUnlockAll",
-            "affinity": "INTEGER",
-            "notNull": true
+            "columnName": "is_unlock_all",
+            "affinity": "INTEGER"
           },
           {
             "fieldPath": "lastUnlockedAllMs",
-            "columnName": "lastUnlockedAllMs",
-            "affinity": "INTEGER",
-            "notNull": true
+            "columnName": "last_unlocked_all_ms",
+            "affinity": "INTEGER"
           },
           {
             "fieldPath": "notifyUnlockAllExpired",
-            "columnName": "notifyUnlockAllExpired",
-            "affinity": "INTEGER",
-            "notNull": true
+            "columnName": "notify_unlock_all_expired",
+            "affinity": "INTEGER"
           },
           {
             "fieldPath": "id",
@@ -107,7 +104,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3b23d15ddb8ebd0716f31c4b636372bd')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fb39cf86189aa4cc37b6fa30eb716eb4')"
     ]
   }
 }

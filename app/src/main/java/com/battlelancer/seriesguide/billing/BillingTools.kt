@@ -130,7 +130,7 @@ object BillingTools {
     private fun updateUnlockState(context: Context, transform: (UnlockState) -> UnlockState) {
         val unlockStateHelper = LocalBillingDb.getInstance(context).unlockStateHelper()
 
-        val oldUnlockState = unlockStateHelper.getUnlockStateOrDefault()
+        val oldUnlockState = unlockStateHelper.getUnlockState()
         val newUnlockState = transform(oldUnlockState)
 
         // Only insert if changed (to avoid log spam and unnecessary database writes)

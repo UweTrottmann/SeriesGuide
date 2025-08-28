@@ -18,7 +18,7 @@ import timber.log.Timber
     entities = [
         CachedPurchase::class,
         PlayUnlockState::class,
-        UnlockState::class
+        UnlockStateDb::class
     ],
     version = LocalBillingDb.VERSION_4
 )
@@ -75,7 +75,7 @@ abstract class LocalBillingDb : RoomDatabase() {
                 Timber.d("Migrating database from $VERSION_3 to $VERSION_4")
 
                 // Create new table, copied from exported schema JSON
-                db.execSQL("CREATE TABLE IF NOT EXISTS `unlock_state` (`isUnlockAll` INTEGER NOT NULL, `lastUnlockedAllMs` INTEGER NOT NULL, `notifyUnlockAllExpired` INTEGER NOT NULL, `id` INTEGER NOT NULL, PRIMARY KEY(`id`))")
+                db.execSQL("CREATE TABLE IF NOT EXISTS `unlock_state` (`is_unlock_all` INTEGER, `last_unlocked_all_ms` INTEGER, `notify_unlock_all_expired` INTEGER, `id` INTEGER NOT NULL, PRIMARY KEY(`id`))")
             }
         }
     }
