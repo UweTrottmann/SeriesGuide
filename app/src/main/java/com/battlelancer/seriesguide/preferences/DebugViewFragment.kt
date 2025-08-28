@@ -95,7 +95,7 @@ class DebugViewFragment : AppCompatDialogFragment() {
                 Timber.i("insertPlayUnlockState: isEntitled=%s", isEntitled)
                 LocalBillingDb.getInstance(context).unlockStateHelper()
                     .insert(
-                        PlayUnlockState(
+                        PlayUnlockState.withLastUpdatedNow(
                             entitled = isEntitled,
                             isSub = true,
                             sku = BillingRepository.SeriesGuideSku.X_SUB_SUPPORTER,

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 4,
-    "identityHash": "fb39cf86189aa4cc37b6fa30eb716eb4",
+    "identityHash": "7bc9d35abf83fb6f9ea59e5fad2966b1",
     "entities": [
       {
         "tableName": "purchase_table",
@@ -30,7 +30,7 @@
       },
       {
         "tableName": "gold_status",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`entitled` INTEGER NOT NULL, `isSub` INTEGER NOT NULL, `sku` TEXT, `purchaseToken` TEXT, `id` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`entitled` INTEGER NOT NULL, `isSub` INTEGER NOT NULL, `sku` TEXT, `purchaseToken` TEXT, `last_updated_ms` INTEGER, `id` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "entitled",
@@ -53,6 +53,11 @@
             "fieldPath": "purchaseToken",
             "columnName": "purchaseToken",
             "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lastUpdatedMs",
+            "columnName": "last_updated_ms",
+            "affinity": "INTEGER"
           },
           {
             "fieldPath": "id",
@@ -104,7 +109,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fb39cf86189aa4cc37b6fa30eb716eb4')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7bc9d35abf83fb6f9ea59e5fad2966b1')"
     ]
   }
 }

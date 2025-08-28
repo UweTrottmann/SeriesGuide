@@ -7,6 +7,7 @@ package com.battlelancer.seriesguide.billing.localdb
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import org.threeten.bp.Instant
 
 /**
  * Each entitlement table only has one item/row, so use a fixed primary key.
@@ -71,6 +72,24 @@ data class PlayUnlockState(
     val entitled: Boolean,
     val isSub: Boolean,
     val sku: String?,
-    val purchaseToken: String?
-) : Entitlement()
+    val purchaseToken: String?,
+    @ColumnInfo(name = "last_updated_ms") val lastUpdatedMs: Long?
+) : Entitlement() {
+
+    companion object {
+        fun withLastUpdatedNow(
+            entitled: Boolean,
+            isSub: Boolean,
+            sku: String?,
+            purchaseToken: String?
+        ) = PlayUnlockState(entitled, isSub, sku, purchaseToken, Instant.now().toEpochMilli())
+
+        fun revoked() = withLastUpdatedNow(
+            entitled = false,
+            isSub = true,
+            sku = null,
+            purchaseToken = null
+        )
+    }
+}
 

@@ -48,7 +48,7 @@ abstract class LocalBillingDb : RoomDatabase() {
         const val VERSION_3 = 3
 
         /**
-         * Add table for global unlock state.
+         * Add table for global unlock state, add last updated column to Play unlock state.
          */
         const val VERSION_4 = 4
 
@@ -72,10 +72,13 @@ abstract class LocalBillingDb : RoomDatabase() {
         val MIGRATION_3_4: Migration = object :
             Migration(VERSION_3, VERSION_4) {
             override fun migrate(db: SupportSQLiteDatabase) {
-                Timber.d("Migrating database from $VERSION_3 to $VERSION_4")
+                Timber.d("Migrating database from version $VERSION_3 to $VERSION_4")
 
-                // Create new table, copied from exported schema JSON
+                // Create new unlock_state table, copied from exported schema JSON
                 db.execSQL("CREATE TABLE IF NOT EXISTS `unlock_state` (`is_unlock_all` INTEGER, `last_unlocked_all_ms` INTEGER, `notify_unlock_all_expired` INTEGER, `id` INTEGER NOT NULL, PRIMARY KEY(`id`))")
+
+                // Add new last_updated_ms column to gold_status table
+                db.execSQL("ALTER TABLE `gold_status` ADD COLUMN `last_updated_ms` INTEGER")
             }
         }
     }

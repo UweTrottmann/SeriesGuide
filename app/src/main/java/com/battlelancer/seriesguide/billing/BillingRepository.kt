@@ -290,7 +290,12 @@ class BillingRepository private constructor(
                 val isSub = supportedProductOrNull != SeriesGuideSku.X_PASS_IN_APP
 
                 val unlockState =
-                    PlayUnlockState(true, isSub, supportedProductOrNull, purchase.purchaseToken)
+                    PlayUnlockState.withLastUpdatedNow(
+                        true,
+                        isSub,
+                        supportedProductOrNull,
+                        purchase.purchaseToken
+                    )
                 insertUnlockState(unlockState)
 
                 // A user must only have one active subscription.
@@ -322,8 +327,7 @@ class BillingRepository private constructor(
 
     private fun revokeSubStatus() =
         coroutineScope.launch(Dispatchers.IO) {
-            val unlockState = PlayUnlockState(false, isSub = true, sku = null, purchaseToken = null)
-            insertUnlockState(unlockState)
+            insertUnlockState(PlayUnlockState.revoked())
 
             // Enable all available subscriptions.
             enableAllProductsForPurchase()
