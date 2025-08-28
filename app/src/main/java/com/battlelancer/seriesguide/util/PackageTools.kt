@@ -19,6 +19,8 @@ import timber.log.Timber
 object PackageTools {
 
     private const val FLAVOR_AMAZON = "amazon"
+    private const val PACKAGE_NAME_PASS = "com.battlelancer.seriesguide.x"
+    private const val SIGNATURE_HASH_PASS = 528716598
     private const val PACKAGE_NAME_PLAY_STORE = "com.android.vending"
 
     /**
@@ -62,37 +64,25 @@ object PackageTools {
     }
 
     /**
-     * Returns if the user has a valid copy of the X Pass app installed.
+     * Returns if the X Pass app is installed.
      */
     fun hasUnlockKeyInstalled(context: Context): Boolean {
         try {
-            // Get our signing key
-            val manager = context.packageManager
-            @SuppressLint("PackageManagerGetSignatures") val appInfoSeriesGuide = manager
-                .getPackageInfoCompat(
-                    context.applicationContext.packageName,
+            // Get signing info from unlock app (if it's installed, otherwise throws)
+            @SuppressLint("PackageManagerGetSignatures") val passPackageInfo =
+                context.packageManager.getPackageInfoCompat(
+                    PACKAGE_NAME_PASS,
                     PackageManager.GET_SIGNATURES
                 )
-
-            // Try to find the X signing key
-            @SuppressLint("PackageManagerGetSignatures") val appInfoSeriesGuideX = manager
-                .getPackageInfoCompat(
-                    "com.battlelancer.seriesguide.x",
-                    PackageManager.GET_SIGNATURES
-                )
-            val sgSignatures = appInfoSeriesGuide.signatures
-            val xSignatures = appInfoSeriesGuideX.signatures
-            if (sgSignatures != null && xSignatures != null
-                && sgSignatures.size == xSignatures.size) {
-                for (i in sgSignatures.indices) {
-                    if (sgSignatures[i].toCharsString() != xSignatures[i].toCharsString()) {
-                        return false // a signature does not match
-                    }
+            val passSignatures = passPackageInfo.signatures
+            if (passSignatures != null) {
+                for (signature in passSignatures) {
+                    // One of the signatures needs to match the expected one
+                    if (signature.hashCode() == SIGNATURE_HASH_PASS) return true
                 }
-                return true
             }
         } catch (_: PackageManager.NameNotFoundException) {
-            // Expected exception that occurs if the package is not present.
+            // Expected exception that occurs if the pass app is not installed
         }
         return false
     }
