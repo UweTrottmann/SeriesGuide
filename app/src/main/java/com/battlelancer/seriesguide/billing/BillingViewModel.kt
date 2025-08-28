@@ -31,8 +31,6 @@ class BillingViewModel(
      * that are available on Google Play.
      */
     val availableProducts: Flow<List<SafeAugmentedProductDetails>>
-    // TODO Remove
-    val entitlementRevokedEvent: LiveData<Void>
     val errorEvent: LiveData<BillingRepository.BillingError>
 
     private val repository: BillingRepository =
@@ -60,7 +58,6 @@ class BillingViewModel(
                 }
             }
             .flowOn(Dispatchers.IO)
-        entitlementRevokedEvent = repository.entitlementRevokedEvent
         errorEvent = repository.errorEvent
     }
 

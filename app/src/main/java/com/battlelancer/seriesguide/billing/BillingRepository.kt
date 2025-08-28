@@ -113,9 +113,6 @@ class BillingRepository private constructor(
         localCacheBillingClient.unlockStateHelper().getPlayUnlockStateLiveData()
     }
 
-    /** Triggered when the entitlement was revoked. Use only with one observer at a time. */
-    val entitlementRevokedEvent = SingleLiveEvent<Void>()
-
     data class BillingError(
         val debugMessage: String,
         /**
@@ -324,22 +321,11 @@ class BillingRepository private constructor(
 
     private fun revokeSubStatus() =
         coroutineScope.launch(Dispatchers.IO) {
-            // Save if existing entitlement is getting revoked.
-            val wasEntitled =
-                localCacheBillingClient.unlockStateHelper().getPlayUnlockState()?.entitled ?: false
-
             val unlockState = PlayUnlockState(false, isSub = true, sku = null, purchaseToken = null)
             insertUnlockState(unlockState)
 
             // Enable all available subscriptions.
             enableAllProductsForPurchase()
-
-            // Notify if existing entitlement was revoked.
-            if (wasEntitled) {
-                withContext(Dispatchers.Main) {
-                    entitlementRevokedEvent.call()
-                }
-            }
         }
 
     private fun enableAllProductsForPurchase() {
@@ -349,9 +335,10 @@ class BillingRepository private constructor(
     }
 
     @WorkerThread
-    private suspend fun insertUnlockState(unlockState: PlayUnlockState) = withContext(Dispatchers.IO) {
-        localCacheBillingClient.unlockStateHelper().insert(unlockState)
-    }
+    private suspend fun insertUnlockState(unlockState: PlayUnlockState) =
+        withContext(Dispatchers.IO) {
+            localCacheBillingClient.unlockStateHelper().insert(unlockState)
+        }
 
     /**
      * Requests product details from Google Play and updates the associated [productDetails].
