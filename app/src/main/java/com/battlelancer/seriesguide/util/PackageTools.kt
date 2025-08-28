@@ -3,7 +3,6 @@
 
 package com.battlelancer.seriesguide.util
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
@@ -69,14 +68,19 @@ object PackageTools {
     fun hasUnlockKeyInstalled(context: Context): Boolean {
         try {
             // Get signing info from unlock app (if it's installed, otherwise throws)
-            @SuppressLint("PackageManagerGetSignatures") val passPackageInfo =
+            if (AndroidUtils.isAtLeastPie) {
+                context.packageManager.getPackageInfoCompat(
+                    PACKAGE_NAME_PASS,
+                    PackageManager.GET_SIGNING_CERTIFICATES
+                ).signingInfo?.signingCertificateHistory
+            } else {
+                @Suppress("DEPRECATION")
                 context.packageManager.getPackageInfoCompat(
                     PACKAGE_NAME_PASS,
                     PackageManager.GET_SIGNATURES
-                )
-            val passSignatures = passPackageInfo.signatures
-            if (passSignatures != null) {
-                for (signature in passSignatures) {
+                ).signatures
+            }?.let {
+                for (signature in it) {
                     // One of the signatures needs to match the expected one
                     if (signature.hashCode() == SIGNATURE_HASH_PASS) return true
                 }
