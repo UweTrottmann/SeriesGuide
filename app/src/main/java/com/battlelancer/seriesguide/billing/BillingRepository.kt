@@ -19,6 +19,7 @@ import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryPurchasesParams
+import com.android.billingclient.api.acknowledgePurchase
 import com.android.billingclient.api.queryProductDetails
 import com.android.billingclient.api.queryPurchasesAsync
 import com.battlelancer.seriesguide.BuildConfig
@@ -238,7 +239,7 @@ class BillingRepository private constructor(
      * users within a few days of the transaction. Therefore you have to implement
      * [BillingClient.acknowledgePurchase] inside your app.
      */
-    private fun acknowledgeNonConsumablePurchasesAsync(nonConsumables: List<Purchase>) {
+    private suspend fun acknowledgeNonConsumablePurchasesAsync(nonConsumables: List<Purchase>) {
         nonConsumables.forEach { purchase ->
             if (purchase.isAcknowledged) {
                 // Already acknowledged, immediately grant entitlement.
@@ -248,17 +249,16 @@ class BillingRepository private constructor(
                 val params = AcknowledgePurchaseParams.newBuilder()
                     .setPurchaseToken(purchase.purchaseToken)
                     .build()
-                playStoreBillingClient.acknowledgePurchase(params) { billingResult ->
-                    when (billingResult.responseCode) {
-                        BillingResponseCode.OK -> {
-                            activateSubStatus(purchase)
-                        }
+                val billingResult = playStoreBillingClient.acknowledgePurchase(params)
+                when (billingResult.responseCode) {
+                    BillingResponseCode.OK -> {
+                        activateSubStatus(purchase)
+                    }
 
-                        else -> {
-                            "acknowledgeNonConsumablePurchasesAsync failed. ${billingResult.responseCode}: ${billingResult.debugMessage}".let {
-                                Timber.e(it)
-                                errorEvent.postValue(BillingError(it))
-                            }
+                    else -> {
+                        "Acknowledging purchase failed. ${billingResult.responseCode}: ${billingResult.debugMessage}".let {
+                            Timber.e(it)
+                            errorEvent.postValue(BillingError(it))
                         }
                     }
                 }
