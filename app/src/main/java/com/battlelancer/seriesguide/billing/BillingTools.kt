@@ -60,20 +60,25 @@ object BillingTools {
     }
 
     private fun updateUnlockState(context: Context) {
-        // Debug builds, installed X Pass key or subscription unlock all features
+        val amazonUnlockState = AdvancedSettings.getLastSupporterState(context)
+        val passUnlockState = PackageTools.hasUnlockKeyInstalled(context)
+        // TODO Auto-expire after 1 year if not updated by Play Billing (for ex. when user
+        //  plans to switch billing provider after changing installer source)
+        val playUnlockStateDb = LocalBillingDb.getInstance(context).unlockStateHelper()
+            .getPlayUnlockState()
+        val playUnlockState = playUnlockStateDb != null && playUnlockStateDb.entitled
+        Timber.i(
+            "updateUnlockState: pass=%s, amazon=%s, play=%s",
+            passUnlockState,
+            amazonUnlockState,
+            playUnlockState
+        )
+
         val isUnlockAll = if (PackageTools.isAmazonVersion()) {
-            // Amazon version only supports all access as in-app purchase, so skip key check
-            AdvancedSettings.getLastSupporterState(context)
+            // Amazon version only supports unlocking with in-app purchase, so skip key check
+            amazonUnlockState
         } else {
-            if (PackageTools.hasUnlockKeyInstalled(context)) {
-                true
-            } else {
-                // TODO Auto-expire after 1 year if not updated by Play Billing (for ex. when user
-                //  plans to switch billing provider after changing installer source)
-                val playUnlockState = LocalBillingDb.getInstance(context).unlockStateHelper()
-                    .getPlayUnlockState()
-                playUnlockState != null && playUnlockState.entitled
-            }
+            passUnlockState || playUnlockState
         }
 
         updateUnlockState(context) { oldUnlockState ->

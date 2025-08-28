@@ -64,7 +64,6 @@ object PackageTools {
     /**
      * Returns if the user has a valid copy of the X Pass app installed.
      */
-    @JvmStatic
     fun hasUnlockKeyInstalled(context: Context): Boolean {
         try {
             // Get our signing key
@@ -92,9 +91,8 @@ object PackageTools {
                 }
                 return true
             }
-        } catch (e: PackageManager.NameNotFoundException) {
+        } catch (_: PackageManager.NameNotFoundException) {
             // Expected exception that occurs if the package is not present.
-            Timber.d("X Pass not found.")
         }
         return false
     }
