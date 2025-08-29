@@ -42,7 +42,12 @@ import kotlin.math.max
  * ## Play Billing
  *
  * * https://developer.android.com/google/play/billing/integrate
+ * * https://developer.android.com/google/play/billing/errors
+ * * https://developer.android.com/reference/com/android/billingclient/classes
  * * https://github.com/googlesamples/android-play-billing
+ *
+ * To test the legacy one-time purchase use a gift code on the test account, refund and revoke it
+ * using the Play Console web interface.
  */
 class BillingRepository private constructor(
     private val applicationContext: Context,
@@ -197,6 +202,11 @@ class BillingRepository private constructor(
         processPurchases(purchasesResult)
     }
 
+    /**
+     * Note: if this is called by [purchasesUpdatedListener] [purchasesResult] only contains the
+     * updated (typically just made) purchase. As currently only subscriptions are sold it can be
+     * assumed it will be a subscription.
+     */
     private suspend fun processPurchases(purchasesResult: Set<Purchase>) =
         withContext(Dispatchers.IO) {
             Timber.d("processPurchases called")
@@ -214,12 +224,8 @@ class BillingRepository private constructor(
             val validPurchases = validPurchasesSet.toList()
             Timber.d("processPurchases valid purchases $validPurchases")
             /*
-              As is being done in this sample, for extra reliability you may store the
-              receipts/purchases to a your own remote/local database for until after you
-              disburse entitlements. That way if the Google Play Billing library fails at any
-              given point, you can independently verify whether entitlements were accurately
-              disbursed. In this sample, the receipts are then removed upon entitlement
-              disbursement.
+              To be able to verify purchases are properly processed, they are stored in a local
+              database until they have been processed.
              */
             val testing = localCacheBillingClient.purchaseDao().getPurchases()
             Timber.d("processPurchases purchases in the db ${testing.size}")
@@ -230,32 +236,36 @@ class BillingRepository private constructor(
                 revokeSubStatus()
             } else {
                 localCacheBillingClient.purchaseDao().insert(validPurchases)
-                acknowledgeNonConsumablePurchasesAsync(validPurchases)
+                acknowledgeNonConsumablePurchases(validPurchases)
             }
         }
 
     /**
-     * If you do not acknowledge a purchase, the Google Play Store will provide a refund to the
-     * users within a few days of the transaction. Therefore you have to implement
-     * [BillingClient.acknowledgePurchase] inside your app.
+     * If needed, acknowledges purchases (so Play will not refund it within a few days of the
+     * transaction) and for all purchases where the [Purchase.isAcknowledged] calls
+     * [processAckedPurchases].
      */
-    private suspend fun acknowledgeNonConsumablePurchasesAsync(nonConsumables: List<Purchase>) {
-        nonConsumables.forEach { purchase ->
+    private suspend fun acknowledgeNonConsumablePurchases(purchasesToAck: List<Purchase>) {
+        val ackedPurchases = mutableListOf<Purchase>()
+
+        purchasesToAck.forEach { purchase ->
             if (purchase.isAcknowledged) {
-                // Already acknowledged, immediately grant entitlement.
-                activateSubStatus(purchase)
+                ackedPurchases.add(purchase)
             } else {
-                // Acknowledge purchase.
+                // Acknowledge purchase
                 val params = AcknowledgePurchaseParams.newBuilder()
                     .setPurchaseToken(purchase.purchaseToken)
                     .build()
                 val billingResult = playStoreBillingClient.acknowledgePurchase(params)
                 when (billingResult.responseCode) {
                     BillingResponseCode.OK -> {
-                        activateSubStatus(purchase)
+                        Timber.i("Acknowledged purchase %s", purchase)
+                        ackedPurchases.add(purchase)
                     }
 
                     else -> {
+                        // As currently the user can only make a single purchase at a time, this
+                        // should never overwrite an existing ack fail.
                         "Acknowledging purchase failed. ${billingResult.responseCode}: ${billingResult.debugMessage}".let {
                             Timber.e(it)
                             errorEvent.postValue(BillingError(it))
@@ -264,66 +274,100 @@ class BillingRepository private constructor(
                 }
             }
         }
+
+        processAckedPurchases(ackedPurchases)
     }
 
     /**
-     * This is the final step, where purchases/receipts are converted to sub status.
+     * Calls [unlockWith] for the first purchase with a supported product (SKU), preferably a
+     * subscription (to display the active/purchasable state and enable up- and downgrades in the
+     * UI).
+     *
+     * It's also quite sure that a subscription purchase is preferred if this is called through
+     * [purchasesUpdatedListener] with only a new purchase (unlike through [queryPurchasesAsync]
+     * which would pass all purchases) as a new purchase should currently only be a subscription.
+     *
+     * Also removes purchase receipts for all [ackedPurchases] once done.
      */
-    private fun activateSubStatus(purchase: Purchase) =
-        coroutineScope.launch(Dispatchers.IO) {
-            // Find a product id that grants sub status.
-            val supportedProductOrNull = purchase.products.find {
-                when (it) {
-                    SeriesGuideSku.X_PASS_IN_APP,
-                    SeriesGuideSku.X_SUB_LEGACY,
-                    SeriesGuideSku.X_SUB_2014_02,
-                    SeriesGuideSku.X_SUB_2016_05,
-                    SeriesGuideSku.X_SUB_ALL_ACCESS,
-                    SeriesGuideSku.X_SUB_SUPPORTER,
-                    SeriesGuideSku.X_SUB_SPONSOR -> true
-
-                    else -> false
-                }
+    private suspend fun processAckedPurchases(ackedPurchases: List<Purchase>) {
+        val subscriptionPurchase = ackedPurchases
+            .firstNotNullOfOrNull { purchase ->
+                purchase.products
+                    .find { SeriesGuideSku.supportedSubscriptionSkus.contains(it) }
+                    ?.let { Pair(purchase, it) }
             }
-
-            if (supportedProductOrNull != null) {
-                val isSub = supportedProductOrNull != SeriesGuideSku.X_PASS_IN_APP
-
-                val unlockState =
-                    PlayUnlockState.withLastUpdatedNow(
-                        true,
-                        isSub,
-                        supportedProductOrNull,
-                        purchase.purchaseToken
-                    )
-                insertUnlockState(unlockState)
-
-                // A user must only have one active subscription.
-                // Prevent re-purchase of active one (or the equivalent tier for legacy products),
-                // but allow up/downgrade to others.
-                val purchasedProduct = when (supportedProductOrNull) {
-                    SeriesGuideSku.X_SUB_SUPPORTER,
-                    SeriesGuideSku.X_SUB_SPONSOR -> supportedProductOrNull
-
-                    else -> {
-                        // Map purchase state of the deprecated subscriptions and in-app purchase
-                        // to the base tier subscription. This will allow upgrades.
-                        SeriesGuideSku.X_SUB_ALL_ACCESS
-                    }
+        if (subscriptionPurchase != null) {
+            unlockWith(
+                purchase = subscriptionPurchase.first,
+                product = subscriptionPurchase.second,
+                isSub = true
+            )
+        } else {
+            // If there is no subscription purchase, take the first non-subscription SKU
+            val oneTimePurchase = ackedPurchases
+                .firstNotNullOfOrNull { purchase ->
+                    purchase.products
+                        .find { SeriesGuideSku.supportedOneTimePurchaseSkus.contains(it) }
+                        ?.let { Pair(purchase, it) }
                 }
-                _productDetails.update { productDetails ->
-                    productDetails.map {
-                        it.copy(canPurchase = it.productId != purchasedProduct)
-                    }
-                }
+            if (oneTimePurchase != null) {
+                unlockWith(
+                    purchase = oneTimePurchase.first,
+                    product = oneTimePurchase.second,
+                    isSub = false
+                )
             } else {
-                Timber.e("No supported product found: ${purchase.products}")
+                // No purchase with a supported product found (this is currently unexpected),
+                // enable purchase of all products.
+                Timber.e("No supported product found")
                 enableAllProductsForPurchase()
             }
+        }
 
-            // Entitlement processed, remove receipt.
+        // Remove receipts for (acknowledged and processed) purchases
+        ackedPurchases.forEach { purchase ->
             localCacheBillingClient.purchaseDao().delete(purchase)
         }
+    }
+
+    /**
+     * Sets unlock state to unlocked and adds purchase info, updates [_productDetails] with
+     * what can be purchased.
+     */
+    private suspend fun unlockWith(purchase: Purchase, product: String, isSub: Boolean) {
+        val unlockState = PlayUnlockState.withLastUpdatedNow(
+            true,
+            isSub,
+            product,
+            purchase.purchaseToken
+        )
+        insertUnlockState(unlockState)
+
+        if (isSub) {
+            // A user must only have one active subscription.
+            // Prevent re-purchase of active one (or the equivalent tier for legacy products),
+            // but allow up/downgrade to others.
+            val purchasedProduct = when (product) {
+                SeriesGuideSku.X_SUB_SUPPORTER,
+                SeriesGuideSku.X_SUB_SPONSOR -> product
+
+                else -> {
+                    // Also map purchase state of deprecated subscriptions to the base tier
+                    // subscription. This will allow upgrades.
+                    SeriesGuideSku.X_SUB_ALL_ACCESS
+                }
+            }
+            _productDetails.update { productDetails ->
+                productDetails.map {
+                    it.copy(canPurchase = it.productId != purchasedProduct)
+                }
+            }
+        } else {
+            // If the user only has a one-time purchase, enable purchasing of a subscription to help
+            // support future updates.
+            enableAllProductsForPurchase()
+        }
+    }
 
     private fun revokeSubStatus() =
         coroutineScope.launch(Dispatchers.IO) {
@@ -599,6 +643,7 @@ class BillingRepository private constructor(
         const val X_SUB_SUPPORTER = "sub_supporter"
         const val X_SUB_SPONSOR = "sub_sponsor"
 
+        // Only to test display of trial, should never be purchased
         const val SUB_TEST = "sub_test"
 
         val SUBS_SKUS_FOR_PURCHASE = if (BuildConfig.DEBUG) {
@@ -615,6 +660,18 @@ class BillingRepository private constructor(
                 X_SUB_SPONSOR
             )
         }
+
+        val supportedSubscriptionSkus = listOf(
+            X_SUB_LEGACY,
+            X_SUB_2014_02,
+            X_SUB_2016_05,
+            X_SUB_ALL_ACCESS,
+            X_SUB_SUPPORTER,
+            X_SUB_SPONSOR
+        )
+        val supportedOneTimePurchaseSkus = listOf(
+            X_PASS_IN_APP
+        )
     }
 
 }
