@@ -35,6 +35,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.threeten.bp.Duration
+import org.threeten.bp.Instant
 import timber.log.Timber
 import kotlin.math.max
 
@@ -314,8 +316,8 @@ class BillingRepository private constructor(
                     isSub = false
                 )
             } else {
-                // No purchase with a supported product found
-                insertUnlockState(PlayUnlockState.revoked())
+                Timber.i("Revoking unlock, no purchase with a supported product found")
+                revokeUnlock()
                 enableAllProductsForPurchase()
             }
         }
@@ -331,6 +333,7 @@ class BillingRepository private constructor(
      * what can be purchased.
      */
     private suspend fun unlockWith(purchase: Purchase, product: String, isSub: Boolean) {
+        Timber.i("Unlocking (isSub=%s, product=%s, purchase=%s)", isSub, product, purchase)
         val unlockState = PlayUnlockState.withLastUpdatedNow(
             true,
             isSub,
@@ -371,6 +374,35 @@ class BillingRepository private constructor(
         _productDetails.update { currentProducts ->
             currentProducts.map { it.copy(canPurchase = true) }
         }
+    }
+
+    /**
+     * If unlock state is unlocked and it could not be updated for a year (current period of all
+     * subscriptions), revokes unlock state.
+     *
+     * This is for cases when purchasing using Play, but then Play becomes unavailable (possibly
+     * when updating the app from another source). This will honor the past purchase but eventually
+     * enable a purchase using another billing method.
+     */
+    private suspend fun revokeUnlockStateIfLastUpdatedLongAgo() {
+        val playUnlockState = localCacheBillingClient.unlockStateHelper().getPlayUnlockState()
+        if (playUnlockState == null || !playUnlockState.entitled) {
+            return
+        }
+        // lastUpdatedMs may be null and trigger a revoke if unlock state wasn't updated since
+        // lastUpdatedMs was introduced. However, this should be unlikely as the state here is
+        // unlocked, indicating Play Billing should be available. In which case this is never
+        // called.
+        val lastUpdated = Instant.ofEpochMilli(playUnlockState.lastUpdatedMs ?: 0)
+        val oneYearAgo = Instant.now().minus(REVOKE_NOT_UPDATED_AFTER_DURATION)
+        if (lastUpdated.isBefore(oneYearAgo)) {
+            Timber.i("Revoking unlock, purchase state was last updated %s", lastUpdated)
+            revokeUnlock()
+        }
+    }
+
+    private suspend fun revokeUnlock() {
+        insertUnlockState(PlayUnlockState.revoked())
     }
 
     @WorkerThread
@@ -582,6 +614,11 @@ class BillingRepository private constructor(
                     val isUnavailable =
                         billingResult.responseCode == BillingResponseCode.BILLING_UNAVAILABLE
                     errorEvent.postValue(BillingError(debugMessage, isUnavailable))
+                    if (isUnavailable) {
+                        coroutineScope.launch {
+                            revokeUnlockStateIfLastUpdatedLongAgo()
+                        }
+                    }
                 }
             }
         }
@@ -614,6 +651,7 @@ class BillingRepository private constructor(
 
         private const val RECONNECT_BACK_OFF_DEFAULT_SECONDS = 1
         private const val RECONNECT_BACK_OFF_MAX_SECONDS = 15 * 60 // 15 minutes
+        private val REVOKE_NOT_UPDATED_AFTER_DURATION = Duration.ofDays(365)
 
         fun getInstance(context: Context, coroutineScope: CoroutineScope): BillingRepository =
             INSTANCE ?: synchronized(this) {

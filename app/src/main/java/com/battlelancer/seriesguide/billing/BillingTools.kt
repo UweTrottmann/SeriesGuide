@@ -62,8 +62,6 @@ object BillingTools {
     private fun updateUnlockState(context: Context) {
         val amazonUnlockState = AdvancedSettings.getLastSupporterState(context)
         val passUnlockState = PackageTools.hasUnlockKeyInstalled(context)
-        // TODO Auto-expire after 1 year if not updated by Play Billing (for ex. when user
-        //  plans to switch billing provider after changing installer source)
         val playUnlockStateDb = LocalBillingDb.getInstance(context).unlockStateHelper()
             .getPlayUnlockState()
         val playUnlockState = playUnlockStateDb != null && playUnlockStateDb.entitled
