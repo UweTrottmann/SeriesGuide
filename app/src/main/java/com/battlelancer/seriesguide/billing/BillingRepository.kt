@@ -342,6 +342,8 @@ class BillingRepository private constructor(
             purchase.purchaseToken
         )
         insertUnlockState(unlockState)
+        // Pass unlocked state on as soon as possible
+        BillingTools.updateUnlockStateAsync(applicationContext)
 
         if (isSub) {
             // A user must only have one active subscription.
