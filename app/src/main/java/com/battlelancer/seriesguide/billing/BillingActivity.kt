@@ -86,12 +86,15 @@ class BillingActivity : BaseActivity() {
         // Only use subscription state if unlock app is not installed.
         if (PackageTools.hasUnlockKeyInstalled(this)) {
             setWaitMode(false)
-            updateViewStates(hasUpgrade = true, unlockAppDetected = true)
+            updateUnlockedNotice(isUnlocked = true, unlockPassDetected = true)
         } else {
             setWaitMode(true)
             billingViewModel.playUnlockStateLiveData.observe(this) { playUnlockState ->
                 setWaitMode(false)
-                updateViewStates(playUnlockState != null && playUnlockState.entitled, false)
+                updateUnlockedNotice(
+                    isUnlocked = playUnlockState?.entitled == true,
+                    unlockPassDetected = playUnlockState?.isSub == false
+                )
                 manageSubscriptionUrl =
                     if (playUnlockState?.isSub == true && playUnlockState.sku != null) {
                         PLAY_MANAGE_SUBS_ONE + playUnlockState.sku
@@ -149,13 +152,13 @@ class BillingActivity : BaseActivity() {
 
         // Check if user has installed key app.
         if (PackageTools.hasUnlockKeyInstalled(this)) {
-            updateViewStates(hasUpgrade = true, unlockAppDetected = true)
+            updateUnlockedNotice(isUnlocked = true, unlockPassDetected = true)
         }
     }
 
-    private fun updateViewStates(hasUpgrade: Boolean, unlockAppDetected: Boolean) {
-        textViewHasUpgrade.isGone = !hasUpgrade
-        textViewBillingUnlockDetected.isGone = !unlockAppDetected
+    private fun updateUnlockedNotice(isUnlocked: Boolean, unlockPassDetected: Boolean) {
+        textViewHasUpgrade.isGone = !isUnlocked
+        textViewBillingUnlockDetected.isGone = !unlockPassDetected
     }
 
     private fun setWaitMode(isActive: Boolean) {
