@@ -203,17 +203,17 @@ class BillingRepository private constructor(
     }
 
     /**
-     * Note: if this is called by [purchasesUpdatedListener] [purchasesResult] only contains the
-     * updated (typically just made) purchase. As currently only subscriptions are sold it can be
-     * assumed it will be a subscription.
+     * Verifies purchases and passes valid ones to [acknowledgeNonConsumablePurchases].
+     *
+     * Assumes [allPurchases] has all purchases for a user, not just updated ones. See
+     * [acknowledgeNonConsumablePurchases] for details.
      */
-    private suspend fun processPurchases(purchasesResult: Set<Purchase>) =
+    private suspend fun processPurchases(allPurchases: Set<Purchase>) =
         withContext(Dispatchers.IO) {
-            Timber.d("processPurchases called")
-            val validPurchasesSet = HashSet<Purchase>(purchasesResult.size)
-            Timber.d("processPurchases newBatch content $purchasesResult")
+            val validPurchasesSet = HashSet<Purchase>(allPurchases.size)
+            Timber.d("processPurchases called with %s", allPurchases)
 
-            purchasesResult.forEach { purchase ->
+            allPurchases.forEach { purchase ->
                 if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
                     if (isSignatureValid(purchase)) {
                         validPurchasesSet.add(purchase)
@@ -222,11 +222,10 @@ class BillingRepository private constructor(
             }
 
             val validPurchases = validPurchasesSet.toList()
-            Timber.d("processPurchases valid purchases $validPurchases")
-            /*
-              To be able to verify purchases are properly processed, they are stored in a local
-              database until they have been processed.
-             */
+            Timber.d("processPurchases valid purchases %s", validPurchases)
+
+            // To be able to verify purchases are properly processed, they are stored in a local
+            // database until they have been processed.
             val testing = localCacheBillingClient.purchaseDao().getPurchases()
             Timber.d("processPurchases purchases in the db ${testing.size}")
 
@@ -238,13 +237,17 @@ class BillingRepository private constructor(
 
     /**
      * If needed, acknowledges purchases (so Play will not refund it within a few days of the
-     * transaction) and for all purchases where the [Purchase.isAcknowledged] calls
-     * [processAckedPurchases].
+     * transaction) and for all purchases where the [Purchase.isAcknowledged] (or an empty list if
+     * there aren't any) calls [processAckedPurchases].
+     *
+     * Assumes all purchases for the user are passed. Otherwise, if only passing a new purchase and
+     * acking it fails, unlock state gets revoked even if there might be a purchase that can be used
+     * to unlock.
      */
-    private suspend fun acknowledgeNonConsumablePurchases(purchasesToAck: List<Purchase>) {
+    private suspend fun acknowledgeNonConsumablePurchases(allPurchases: List<Purchase>) {
         val ackedPurchases = mutableListOf<Purchase>()
 
-        purchasesToAck.forEach { purchase ->
+        allPurchases.forEach { purchase ->
             if (purchase.isAcknowledged) {
                 ackedPurchases.add(purchase)
             } else {
@@ -280,10 +283,6 @@ class BillingRepository private constructor(
      * UI).
      *
      * If there isn't a supported product, revokes unlock state and [enableAllProductsForPurchase].
-     *
-     * It's also quite sure that a subscription purchase is preferred if this is called through
-     * [purchasesUpdatedListener] with only a new purchase (unlike through [queryPurchasesAsync]
-     * which would pass all purchases) as a new purchase should currently only be a subscription.
      *
      * Also removes purchase receipts for all [ackedPurchases] once done.
      */
@@ -531,15 +530,15 @@ class BillingRepository private constructor(
          */
         when (billingResult.responseCode) {
             BillingResponseCode.OK -> {
-                purchases?.also {
-                    coroutineScope.launch {
-                        processPurchases(it.toSet())
-                    }
+                // Just get all purchases to avoid unlock state getting revoked if ack for an
+                // updated purchase fails, but there is an existing one that can be used to unlock.
+                coroutineScope.launch {
+                    queryPurchasesAsync()
                 }
             }
 
             BillingResponseCode.ITEM_ALREADY_OWNED -> {
-                // item already owned? call queryPurchasesAsync to verify and process all such items
+                // Get all purchases to refresh can purchase and unlock state
                 Timber.d(billingResult.debugMessage)
                 coroutineScope.launch {
                     queryPurchasesAsync()
@@ -551,7 +550,7 @@ class BillingRepository private constructor(
             }
 
             else -> {
-                "onPurchasesUpdated failed. ${billingResult.responseCode}: ${billingResult.debugMessage}".let {
+                "Processing updated purchases failed. ${billingResult.responseCode}: ${billingResult.debugMessage}".let {
                     Timber.e(it)
                     errorEvent.postValue(BillingError(it))
                 }
