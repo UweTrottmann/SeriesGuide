@@ -230,14 +230,10 @@ class BillingRepository private constructor(
             val testing = localCacheBillingClient.purchaseDao().getPurchases()
             Timber.d("processPurchases purchases in the db ${testing.size}")
 
-            if (validPurchases.isEmpty()) {
-                // This should only happen after querying all purchases.
-                // When called from PurchasesUpdatedListener there should always be one.
-                revokeSubStatus()
-            } else {
-                localCacheBillingClient.purchaseDao().insert(validPurchases)
-                acknowledgeNonConsumablePurchases(validPurchases)
-            }
+            // Note: the following are safe to call with an empty list. Can't decide if unlock state
+            // should be revoked here because it depends on if a purchase has a supported product.
+            localCacheBillingClient.purchaseDao().insert(validPurchases)
+            acknowledgeNonConsumablePurchases(validPurchases)
         }
 
     /**
@@ -283,6 +279,8 @@ class BillingRepository private constructor(
      * subscription (to display the active/purchasable state and enable up- and downgrades in the
      * UI).
      *
+     * If there isn't a supported product, revokes unlock state and [enableAllProductsForPurchase].
+     *
      * It's also quite sure that a subscription purchase is preferred if this is called through
      * [purchasesUpdatedListener] with only a new purchase (unlike through [queryPurchasesAsync]
      * which would pass all purchases) as a new purchase should currently only be a subscription.
@@ -317,9 +315,8 @@ class BillingRepository private constructor(
                     isSub = false
                 )
             } else {
-                // No purchase with a supported product found (this is currently unexpected),
-                // enable purchase of all products.
-                Timber.e("No supported product found")
+                // No purchase with a supported product found
+                insertUnlockState(PlayUnlockState.revoked())
                 enableAllProductsForPurchase()
             }
         }
@@ -370,14 +367,6 @@ class BillingRepository private constructor(
             enableAllProductsForPurchase()
         }
     }
-
-    private fun revokeSubStatus() =
-        coroutineScope.launch(Dispatchers.IO) {
-            insertUnlockState(PlayUnlockState.revoked())
-
-            // Enable all available subscriptions.
-            enableAllProductsForPurchase()
-        }
 
     private fun enableAllProductsForPurchase() {
         _productDetails.update { currentProducts ->
