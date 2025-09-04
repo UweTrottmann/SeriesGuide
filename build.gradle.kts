@@ -24,9 +24,9 @@ buildscript {
     // YYYY.<release-of-year>.<build> - like 2024.1.0
     // - allows to more easily judge how old a release is
     // - allows multiple releases per month (though currently unlikely)
-    val sgVersionName by extra("2025.2.9")
+    val sgVersionName by extra("2025.2.10")
     // version 21yyrrbb -> min SDK 21, year yy, release rr, build bb
-    val sgVersionCode by extra(21250212)
+    val sgVersionCode by extra(21250213)
 
     val isCiBuild by extra { System.getenv("CI") == "true" }
 

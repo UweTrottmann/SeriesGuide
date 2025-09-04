@@ -22,7 +22,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ### 2025.2.10 - 2025-09-04
 
-* 🔨 Scrolling upcoming and recent tabs should no longer result in a crash in rare circumstances.
+* 🔨 Scrolling upcoming and recent tabs should now actually no longer result in a crash in rare
+  circumstances.
 
 ### 2025.2.9 - 2025-08-28
 
