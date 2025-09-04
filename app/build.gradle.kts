@@ -175,6 +175,12 @@ kapt {
 }
 
 dependencies {
+    constraints {
+        // androidx.room:room-paging-android pulls in a paging-common 3.3 version (but does not
+        // appear to require it), so force a 3.2 version (see notes on the paging dependency).
+        implementation(libs.androidx.paging.common)
+    }
+
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 

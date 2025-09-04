@@ -20,6 +20,10 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 * 📝 Removed the unsupported release for devices running Android 4 from Google Play, it is no longer
   working properly.
 
+### 2025.2.10 - 2025-09-04
+
+* 🔨 Scrolling upcoming and recent tabs should no longer result in a crash in rare circumstances.
+
 ### 2025.2.9 - 2025-08-28
 
 * 🔨 Make crashes when scrolling upcoming and recent tabs less likely.
