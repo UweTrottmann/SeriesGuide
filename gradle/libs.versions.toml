@@ -32,7 +32,8 @@ androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmode
 # https://developer.android.com/jetpack/androidx/releases/paging
 # 3.3.6 may still crash when the data is refreshed while scrolling ("Inconsistency detected.")
 # https://issuetracker.google.com/issues/409809768
-androidx-paging = "androidx.paging:paging-runtime:3.3.6"
+androidx-paging = { module = "androidx.paging:paging-runtime", version.strictly = "3.2.1" }
+androidx-paging-common = { module = "androidx.paging:paging-common", version.strictly = "3.2.1" }
 androidx-palette = "androidx.palette:palette-ktx:1.0.0"
 # https://developer.android.com/jetpack/androidx/releases/preference
 androidx-preference = "androidx.preference:preference-ktx:1.2.1"
