@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2020-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.appwidget
 
@@ -16,16 +16,16 @@ import androidx.sqlite.db.SimpleSQLiteQuery
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
-import com.battlelancer.seriesguide.shows.database.SgEpisode2WithShow
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.shows.database.SgShow2ForLists
 import com.battlelancer.seriesguide.settings.AdvancedSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.WidgetSettings
 import com.battlelancer.seriesguide.settings.WidgetSettings.WidgetTheme
+import com.battlelancer.seriesguide.shows.ShowsDistillationSettings
+import com.battlelancer.seriesguide.shows.database.SgEpisode2WithShow
+import com.battlelancer.seriesguide.shows.database.SgShow2ForLists
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
-import com.battlelancer.seriesguide.shows.ShowsDistillationSettings
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
@@ -60,7 +60,7 @@ class ListWidgetRemoteViewsFactory(
 
     @SuppressLint("Recycle") // Cursor close check broken for Kotlin.
     private fun onQueryForData() {
-        Timber.d("onQueryForData: %d", appWidgetId)
+        Timber.d("onQueryForData for appWidgetId=%d", appWidgetId)
 
         // Clear any existing data.
         shows.clear()
@@ -125,9 +125,8 @@ class ListWidgetRemoteViewsFactory(
             isOnlyCollected = WidgetSettings.isOnlyCollectedEpisodes(context, appWidgetId),
             isOnlyPremieres = WidgetSettings.isOnlyPremieres(context, appWidgetId)
         )
-        // In addition limit results for widget to reduce memory consumption.
         val results = SgRoomDatabase.getInstance(context).sgEpisode2Helper()
-            .getEpisodesWithShow(SimpleSQLiteQuery("$query LIMIT 100"))
+            .getEpisodesWithShow(SimpleSQLiteQuery("$query LIMIT $WIDGET_ITEMS_LIMIT"))
         episodesWithShow.addAll(results)
     }
 
@@ -342,4 +341,10 @@ class ListWidgetRemoteViewsFactory(
     // being done here, so you don't need to worry about locking up the widget.
     override fun onDataSetChanged() = onQueryForData()
 
+    companion object {
+        /**
+         * Limit the number of widget items to reduce memory consumption and improve performance.
+         */
+        private const val WIDGET_ITEMS_LIMIT = 100
+    }
 }
