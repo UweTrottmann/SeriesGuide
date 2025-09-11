@@ -113,41 +113,9 @@ class ListWidgetProvider : AppWidgetProvider() {
     ) {
         for (appWidgetId in appWidgetIds) {
             updateWidget(context, appWidgetManager, appWidgetId)
-
-            // On Android 16, how the system updates collection widgets has significantly changed.
-            // Notably AppWidgetManager.updateAppWidget(int, RemoteViews) will also update
-            // RemoteViews of the collection items (as usual through RemoteViewsFactory#getViewAt),
-            // and for *all* of them, not just visible ones.
-            //
-            // Also, when using AppWidgetManager.notifyAppWidgetViewDataChanged(int, int) to update
-            // just the collection items, any bitmaps aren't updated (but this is likely a bug). For
-            // example when marking an episode watched, the show posters for all items stay the
-            // same.
-            //
-            // So on Android 16+ don't call notifyAppWidgetViewDataChanged to avoid updating
-            // collection items twice and to avoid the bitmaps not updating bug.
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
-                // Update RemoteViews of collection items
-                // Keep using existing adapter-based APIs as long as possible,
-                // the new widget API only allows a fixed set of pre-built items.
-                @Suppress("DEPRECATION")
-                appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view)
-            }
+            updateWidgetCollectionItems(appWidgetManager, appWidgetId)
         }
         scheduleWidgetsUpdateAlarm(context)
-    }
-
-    /**
-     * Update the [RemoteViews] of the given widget. Note that this does not update the collection
-     * items prior to Android 16.
-     */
-    private fun updateWidget(
-        context: Context,
-        appWidgetManager: AppWidgetManager,
-        appWidgetId: Int
-    ) {
-        val rv = buildRemoteViews(context, appWidgetManager, appWidgetId)
-        appWidgetManager.updateAppWidget(appWidgetId, rv)
     }
 
     private fun scheduleWidgetsUpdateAlarm(context: Context) {
@@ -209,7 +177,45 @@ class ListWidgetProvider : AppWidgetProvider() {
             context.applicationContext.sendBroadcast(buildDataChangedIntent(context))
         }
 
-        fun buildRemoteViews(
+        /**
+         * Update the [RemoteViews] of the given widget. Note that this does not update the
+         * collection items prior to Android 16.
+         */
+        fun updateWidget(
+            context: Context,
+            appWidgetManager: AppWidgetManager,
+            appWidgetId: Int
+        ) {
+            val rv = buildRemoteViews(context, appWidgetManager, appWidgetId)
+            appWidgetManager.updateAppWidget(appWidgetId, rv)
+        }
+
+        fun updateWidgetCollectionItems(
+            appWidgetManager: AppWidgetManager,
+            appWidgetId: Int
+        ) {
+            // On Android 16, how the system updates collection widgets has significantly changed.
+            // Notably AppWidgetManager.updateAppWidget(int, RemoteViews) will also update
+            // RemoteViews of the collection items (as usual through RemoteViewsFactory#getViewAt),
+            // and for *all* of them, not just visible ones.
+            //
+            // Also, when using AppWidgetManager.notifyAppWidgetViewDataChanged(int, int) to update
+            // just the collection items, any bitmaps aren't updated (but this is likely a bug). For
+            // example when marking an episode watched and its item is replaced with new data, the
+            // show poster bitmap isn't replaced.
+            //
+            // So on Android 16+ don't call notifyAppWidgetViewDataChanged to avoid updating
+            // collection items twice and to avoid the bitmaps not updating bug.
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+                // Update RemoteViews of collection items
+                // Keep using existing adapter-based APIs as long as possible,
+                // the new widget API only allows a fixed set of pre-built items.
+                @Suppress("DEPRECATION")
+                appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view)
+            }
+        }
+
+        private fun buildRemoteViews(
             context: Context,
             appWidgetManager: AppWidgetManager,
             appWidgetId: Int
