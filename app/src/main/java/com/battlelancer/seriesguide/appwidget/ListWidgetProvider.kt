@@ -62,26 +62,10 @@ class ListWidgetProvider : AppWidgetProvider() {
             ) ?: return
             if (appWidgetIds.isEmpty()) {
                 return
-
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA) {
-                // On Android 16, how the system updates widgets has significantly changed. For
-                // one, it calls RemoteViewsFactory#getViewAt for *all* items. Also updating the
-                // bitmap of an item no longer works when only updating the collection of a widget
-                // through notifyAppWidgetViewDataChanged. For example, when marking an episode
-                // watched the poster of the changed widget item does not change.
-                // As an alternative on Android 16, just rebuild the RemoteViews. Due to the changed
-                // behavior, this will also refresh RemoteViews for all items. So there is no need
-                // to call notifyAppWidgetViewDataChanged afterward. Also the scroll position is
-                // kept. So there should be no difference in usability.
-                onUpdate(context, appWidgetManager, appWidgetIds)
-            } else {
-                // Keep using existing adapter-based APIs as long as possible,
-                // the new widget API only allows a fixed set of pre-built items.
-                @Suppress("DEPRECATION")
-                appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.list_view)
-                scheduleWidgetUpdate(context)
-            }
+            // Just rebuild all RemoteViews, not just those of collection items. The scroll position
+            // is kept, so usability should also be fine.
+            onUpdate(context, appWidgetManager, appWidgetIds)
         } else if (ACTION_CLICK_ITEM == intent.action) {
             if (intent.extras?.containsKey(EXTRA_EPISODE_FLAG) == true) {
                 // Change watched flag
@@ -127,14 +111,46 @@ class ListWidgetProvider : AppWidgetProvider() {
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray
     ) {
-        // Update all added list widgets.
         for (appWidgetId in appWidgetIds) {
-            onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, null)
+            updateWidget(context, appWidgetManager, appWidgetId)
+
+            // On Android 16, how the system updates collection widgets has significantly changed.
+            // Notably AppWidgetManager.updateAppWidget(int, RemoteViews) will also update
+            // RemoteViews of the collection items (as usual through RemoteViewsFactory#getViewAt),
+            // and for *all* of them, not just visible ones.
+            //
+            // Also, when using AppWidgetManager.notifyAppWidgetViewDataChanged(int, int) to update
+            // just the collection items, any bitmaps aren't updated (but this is likely a bug). For
+            // example when marking an episode watched, the show posters for all items stay the
+            // same.
+            //
+            // So on Android 16+ don't call notifyAppWidgetViewDataChanged to avoid updating
+            // collection items twice and to avoid the bitmaps not updating bug.
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+                // Update RemoteViews of collection items
+                // Keep using existing adapter-based APIs as long as possible,
+                // the new widget API only allows a fixed set of pre-built items.
+                @Suppress("DEPRECATION")
+                appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view)
+            }
         }
-        scheduleWidgetUpdate(context)
+        scheduleWidgetsUpdateAlarm(context)
     }
 
-    private fun scheduleWidgetUpdate(context: Context) {
+    /**
+     * Update the [RemoteViews] of the given widget. Note that this does not update the collection
+     * items prior to Android 16.
+     */
+    private fun updateWidget(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetId: Int
+    ) {
+        val rv = buildRemoteViews(context, appWidgetManager, appWidgetId)
+        appWidgetManager.updateAppWidget(appWidgetId, rv)
+    }
+
+    private fun scheduleWidgetsUpdateAlarm(context: Context) {
         // Set an alarm to update widgets every x mins if the device is awake.
         // Use one-shot alarm as repeating alarms get batched while the device is asleep
         // and are then *all* delivered.
@@ -156,8 +172,8 @@ class ListWidgetProvider : AppWidgetProvider() {
         appWidgetId: Int,
         newOptions: Bundle?
     ) {
-        val rv = buildRemoteViews(context, appWidgetManager, appWidgetId)
-        appWidgetManager.updateAppWidget(appWidgetId, rv)
+        Timber.i("onAppWidgetOptionsChanged")
+        updateWidget(context, appWidgetManager, appWidgetId)
     }
 
     private fun buildDataChangedPendingIntent(context: Context): PendingIntent {
@@ -223,9 +239,11 @@ class ListWidgetProvider : AppWidgetProvider() {
                 WidgetTheme.DARK -> {
                     if (isCompactLayout) R.layout.appwidget_compact_dark else R.layout.appwidget_dark
                 }
+
                 WidgetTheme.LIGHT -> {
                     if (isCompactLayout) R.layout.appwidget_compact_light else R.layout.appwidget_light
                 }
+
                 WidgetTheme.SYSTEM -> {
                     if (isCompactLayout) R.layout.appwidget_compact_day_night else R.layout.appwidget_day_night
                 }
@@ -272,11 +290,13 @@ class ListWidgetProvider : AppWidgetProvider() {
                     titleResId = R.string.shows
                     emptyResId = R.string.no_nextepisode
                 }
+
                 WidgetSettings.Type.RECENT -> {
                     showsTabIndex = ShowsActivityImpl.Tab.RECENT.index
                     titleResId = R.string.recent
                     emptyResId = R.string.norecent
                 }
+
                 else -> {
                     // Upcoming is the default.
                     showsTabIndex = ShowsActivityImpl.Tab.UPCOMING.index
