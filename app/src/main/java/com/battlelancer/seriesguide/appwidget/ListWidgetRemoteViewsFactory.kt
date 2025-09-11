@@ -13,6 +13,7 @@ import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import androidx.core.os.bundleOf
 import androidx.sqlite.db.SimpleSQLiteQuery
+import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
@@ -159,6 +160,9 @@ class ListWidgetRemoteViewsFactory(
     }
 
     override fun getViewAt(position: Int): RemoteViews {
+        if (BuildConfig.DEBUG) {
+            Timber.d("getViewAt position=%d", position)
+        }
         // Build a remote views collection item.
         val rv = RemoteViews(context.packageName, getRowLayoutResId())
 
