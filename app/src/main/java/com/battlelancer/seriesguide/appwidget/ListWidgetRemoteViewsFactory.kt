@@ -7,6 +7,7 @@ import android.annotation.SuppressLint
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.text.format.DateUtils
 import android.view.View
 import android.widget.RemoteViews
@@ -353,10 +354,12 @@ class ListWidgetRemoteViewsFactory(
          * Limit the number of widget items to reduce memory consumption and improve performance.
          *
          * On Android 16, the system calls [RemoteViewsService.RemoteViewsFactory.getViewAt] for
-         * *all* items. Worst case this will then download and process bitmaps for all items.
-         * So maybe have to reduce this number for Android 16 if performance issues or even crashes
-         * are reported.
+         * *all* items even when just [AppWidgetManager.updateAppWidget] is called. So pick a much
+         * smaller number to reduce lag, for example after marking an episode on the widget watched.
+         * But still large enough so a widget at full height on a portrait tablet screen has some
+         * items to scroll.
          */
-        private const val WIDGET_ITEMS_LIMIT = 100
+        private val WIDGET_ITEMS_LIMIT =
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.VANILLA_ICE_CREAM) 100 else 25
     }
 }

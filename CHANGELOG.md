@@ -23,6 +23,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 ### Next release
 
 * 🔨 On Android 16, when the widget updates, display the correct poster for items.
+* 🔧 On Android 16, display at most 25 items on the widget to improve performance.
 * 🔧 For widgets, also limit the number of displayed items when using the type "shows" to improve
   performance.
 
