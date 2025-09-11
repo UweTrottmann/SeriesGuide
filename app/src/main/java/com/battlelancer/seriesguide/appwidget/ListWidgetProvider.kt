@@ -64,11 +64,24 @@ class ListWidgetProvider : AppWidgetProvider() {
                 return
 
             }
-            // Keep using existing adapter-based APIs as long as possible,
-            // the new widget API only allows a fixed set of pre-built items.
-            @Suppress("DEPRECATION")
-            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.list_view)
-            scheduleWidgetUpdate(context)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA) {
+                // On Android 16, how the system updates widgets has significantly changed. For
+                // one, it calls RemoteViewsFactory#getViewAt for *all* items. Also updating the
+                // bitmap of an item no longer works when only updating the collection of a widget
+                // through notifyAppWidgetViewDataChanged. For example, when marking an episode
+                // watched the poster of the changed widget item does not change.
+                // As an alternative on Android 16, just rebuild the RemoteViews. Due to the changed
+                // behavior, this will also refresh RemoteViews for all items. So there is no need
+                // to call notifyAppWidgetViewDataChanged afterward. Also the scroll position is
+                // kept. So there should be no difference in usability.
+                onUpdate(context, appWidgetManager, appWidgetIds)
+            } else {
+                // Keep using existing adapter-based APIs as long as possible,
+                // the new widget API only allows a fixed set of pre-built items.
+                @Suppress("DEPRECATION")
+                appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.list_view)
+                scheduleWidgetUpdate(context)
+            }
         } else if (ACTION_CLICK_ITEM == intent.action) {
             if (intent.extras?.containsKey(EXTRA_EPISODE_FLAG) == true) {
                 // Change watched flag
