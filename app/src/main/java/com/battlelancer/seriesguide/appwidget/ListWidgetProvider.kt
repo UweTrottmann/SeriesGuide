@@ -178,8 +178,10 @@ class ListWidgetProvider : AppWidgetProvider() {
         }
 
         /**
-         * Update the [RemoteViews] of the given widget. Note that this does not update the
-         * collection items prior to Android 16.
+         * Update the [RemoteViews] of the given widget.
+         *
+         * Note that since Android 16 this also updates the collection items. And also immediately,
+         * not just when returning to the home screen.
          */
         fun updateWidget(
             context: Context,
@@ -198,6 +200,8 @@ class ListWidgetProvider : AppWidgetProvider() {
             // Notably AppWidgetManager.updateAppWidget(int, RemoteViews) will also update
             // RemoteViews of the collection items (as usual through RemoteViewsFactory#getViewAt),
             // and for *all* of them, not just visible ones.
+            //
+            // It also updates them each time, not just when returning to the home screen.
             //
             // Also, when using AppWidgetManager.notifyAppWidgetViewDataChanged(int, int) to update
             // just the collection items, any bitmaps aren't updated (but this is likely a bug). For
