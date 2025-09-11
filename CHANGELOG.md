@@ -23,6 +23,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 ### Next release
 
 * 🔨 On Android 16, when the widget updates, display the correct poster for items.
+* 🔧 For widgets, also limit the number of displayed items when using the type "shows" to improve
+  performance.
 
 ### 2025.2.10 - 2025-09-04
 

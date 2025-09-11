@@ -104,7 +104,10 @@ class ListWidgetRemoteViewsFactory(
                 )
 
                 // Run query
-                val query = "SELECT * FROM ${Tables.SG_SHOW} WHERE $selection ORDER BY $orderClause"
+                val query = "SELECT * FROM ${Tables.SG_SHOW}" +
+                        " WHERE $selection" +
+                        " ORDER BY $orderClause" +
+                        " LIMIT $WIDGET_ITEMS_LIMIT"
                 val results = SgRoomDatabase.getInstance(context).sgShow2Helper()
                     .getShows(SimpleSQLiteQuery(query))
                 shows.addAll(results)
@@ -344,6 +347,11 @@ class ListWidgetRemoteViewsFactory(
     companion object {
         /**
          * Limit the number of widget items to reduce memory consumption and improve performance.
+         *
+         * On Android 16, the system calls [RemoteViewsService.RemoteViewsFactory.getViewAt] for
+         * *all* items. Worst case this will then download and process bitmaps for all items.
+         * So maybe have to reduce this number for Android 16 if performance issues or even crashes
+         * are reported.
          */
         private const val WIDGET_ITEMS_LIMIT = 100
     }
