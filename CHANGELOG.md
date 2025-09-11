@@ -20,7 +20,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 * 📝 Removed the unsupported release for devices running Android 4 from Google Play, it is no longer
   working properly.
 
-### Next release
+### 2025.2.11 - 2025-09-11
 
 * 🔨 On Android 16, when the widget updates, display the correct poster for items.
 * 🔧 On Android 16, display at most 25 items on the widget to improve performance.
