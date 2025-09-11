@@ -62,13 +62,10 @@ class ListWidgetProvider : AppWidgetProvider() {
             ) ?: return
             if (appWidgetIds.isEmpty()) {
                 return
-
             }
-            // Keep using existing adapter-based APIs as long as possible,
-            // the new widget API only allows a fixed set of pre-built items.
-            @Suppress("DEPRECATION")
-            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.list_view)
-            scheduleWidgetUpdate(context)
+            // Just rebuild all RemoteViews, not just those of collection items. The scroll position
+            // is kept, so usability should also be fine.
+            onUpdate(context, appWidgetManager, appWidgetIds)
         } else if (ACTION_CLICK_ITEM == intent.action) {
             if (intent.extras?.containsKey(EXTRA_EPISODE_FLAG) == true) {
                 // Change watched flag
@@ -114,14 +111,14 @@ class ListWidgetProvider : AppWidgetProvider() {
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray
     ) {
-        // Update all added list widgets.
         for (appWidgetId in appWidgetIds) {
-            onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, null)
+            updateWidget(context, appWidgetManager, appWidgetId)
+            updateWidgetCollectionItems(appWidgetManager, appWidgetId)
         }
-        scheduleWidgetUpdate(context)
+        scheduleWidgetsUpdateAlarm(context)
     }
 
-    private fun scheduleWidgetUpdate(context: Context) {
+    private fun scheduleWidgetsUpdateAlarm(context: Context) {
         // Set an alarm to update widgets every x mins if the device is awake.
         // Use one-shot alarm as repeating alarms get batched while the device is asleep
         // and are then *all* delivered.
@@ -143,8 +140,8 @@ class ListWidgetProvider : AppWidgetProvider() {
         appWidgetId: Int,
         newOptions: Bundle?
     ) {
-        val rv = buildRemoteViews(context, appWidgetManager, appWidgetId)
-        appWidgetManager.updateAppWidget(appWidgetId, rv)
+        Timber.i("onAppWidgetOptionsChanged")
+        updateWidget(context, appWidgetManager, appWidgetId)
     }
 
     private fun buildDataChangedPendingIntent(context: Context): PendingIntent {
@@ -180,7 +177,49 @@ class ListWidgetProvider : AppWidgetProvider() {
             context.applicationContext.sendBroadcast(buildDataChangedIntent(context))
         }
 
-        fun buildRemoteViews(
+        /**
+         * Update the [RemoteViews] of the given widget.
+         *
+         * Note that since Android 16 this also updates the collection items. And also immediately,
+         * not just when returning to the home screen.
+         */
+        fun updateWidget(
+            context: Context,
+            appWidgetManager: AppWidgetManager,
+            appWidgetId: Int
+        ) {
+            val rv = buildRemoteViews(context, appWidgetManager, appWidgetId)
+            appWidgetManager.updateAppWidget(appWidgetId, rv)
+        }
+
+        fun updateWidgetCollectionItems(
+            appWidgetManager: AppWidgetManager,
+            appWidgetId: Int
+        ) {
+            // On Android 16, how the system updates collection widgets has significantly changed.
+            // Notably AppWidgetManager.updateAppWidget(int, RemoteViews) will also update
+            // RemoteViews of the collection items (as usual through RemoteViewsFactory#getViewAt),
+            // and for *all* of them, not just visible ones.
+            //
+            // It also updates them each time, not just when returning to the home screen.
+            //
+            // Also, when using AppWidgetManager.notifyAppWidgetViewDataChanged(int, int) to update
+            // just the collection items, any bitmaps aren't updated (but this is likely a bug). For
+            // example when marking an episode watched and its item is replaced with new data, the
+            // show poster bitmap isn't replaced.
+            //
+            // So on Android 16+ don't call notifyAppWidgetViewDataChanged to avoid updating
+            // collection items twice and to avoid the bitmaps not updating bug.
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+                // Update RemoteViews of collection items
+                // Keep using existing adapter-based APIs as long as possible,
+                // the new widget API only allows a fixed set of pre-built items.
+                @Suppress("DEPRECATION")
+                appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view)
+            }
+        }
+
+        private fun buildRemoteViews(
             context: Context,
             appWidgetManager: AppWidgetManager,
             appWidgetId: Int
@@ -210,9 +249,11 @@ class ListWidgetProvider : AppWidgetProvider() {
                 WidgetTheme.DARK -> {
                     if (isCompactLayout) R.layout.appwidget_compact_dark else R.layout.appwidget_dark
                 }
+
                 WidgetTheme.LIGHT -> {
                     if (isCompactLayout) R.layout.appwidget_compact_light else R.layout.appwidget_light
                 }
+
                 WidgetTheme.SYSTEM -> {
                     if (isCompactLayout) R.layout.appwidget_compact_day_night else R.layout.appwidget_day_night
                 }
@@ -259,11 +300,13 @@ class ListWidgetProvider : AppWidgetProvider() {
                     titleResId = R.string.shows
                     emptyResId = R.string.no_nextepisode
                 }
+
                 WidgetSettings.Type.RECENT -> {
                     showsTabIndex = ShowsActivityImpl.Tab.RECENT.index
                     titleResId = R.string.recent
                     emptyResId = R.string.norecent
                 }
+
                 else -> {
                     // Upcoming is the default.
                     showsTabIndex = ShowsActivityImpl.Tab.UPCOMING.index

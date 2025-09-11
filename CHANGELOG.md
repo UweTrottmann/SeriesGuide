@@ -20,6 +20,13 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 * 📝 Removed the unsupported release for devices running Android 4 from Google Play, it is no longer
   working properly.
 
+### 2025.2.11 - 2025-09-11
+
+* 🔨 On Android 16, when the widget updates, display the correct poster for items.
+* 🔧 On Android 16, display at most 25 items on the widget to improve performance.
+* 🔧 For widgets, also limit the number of displayed items when using the type "shows" to improve
+  performance.
+
 ### 2025.2.10 - 2025-09-04
 
 * 🔨 Scrolling upcoming and recent tabs should now actually no longer result in a crash in rare
