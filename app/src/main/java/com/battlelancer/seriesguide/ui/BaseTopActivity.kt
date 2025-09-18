@@ -178,10 +178,8 @@ abstract class BaseTopActivity : BaseMessageActivity() {
     override fun onStart() {
         super.onStart()
 
-        // Users might have installed X Pass and as there is no trigger for this event
-        // manually check whenever returning to a top-level activity. As a side-effect don't have
-        // to trigger an update when any billing provider detects a change in its unlock status
-        // (which also avoids having to throttle updating the unlock state).
+        // Users might have installed the unlock app and as there is no trigger for this event
+        // manually check whenever returning to a top-level activity.
         BillingTools.updateUnlockStateAsync(this)
 
         // Display important notifications, most important first as others will not display if there

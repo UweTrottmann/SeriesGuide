@@ -55,6 +55,9 @@ object BillingTools {
         return unlockState.value.isUnlockAll
     }
 
+    /**
+     * Note that unlock state will only be updated if it has changed.
+     */
     fun updateUnlockStateAsync(context: Context) {
         SgApp.coroutineScope.launch(unlockStateUpdateDispatcher) {
             updateUnlockState(context)
