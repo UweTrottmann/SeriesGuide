@@ -50,6 +50,12 @@ import kotlin.math.max
  *
  * To test the legacy one-time purchase use a gift code on the test account, refund and revoke it
  * using the Play Console web interface.
+ *
+ * To test trial available state in the UI, there is a test subscription.
+ *
+ * To test response codes (and also trial state), can use Play Billing Lab app. Make sure to
+ * uncomment relevant tags in AndroidManifest.xml.
+ * https://developer.android.com/google/play/billing/test-response-codes
  */
 class BillingRepository private constructor(
     private val applicationContext: Context,

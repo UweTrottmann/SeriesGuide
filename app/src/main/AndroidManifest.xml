@@ -69,6 +69,15 @@
             android:name="com.samsung.android.sdk.multiwindow.enable"
             android:value="true" />
 
+        <!-- Play Billing Lab -->
+        <!-- Only enable to test with Play Billing Lab app, see notes on BillingRepository -->
+<!--        <meta-data-->
+<!--            android:name="com.google.android.play.largest_release_audience.NONPRODUCTION"-->
+<!--            android:value="" />-->
+<!--        <meta-data-->
+<!--            android:name="com.google.android.play.billingclient.enableBillingOverridesTesting"-->
+<!--            android:value="true" />-->
+
         <!-- Database content provider -->
         <provider
             android:name="com.battlelancer.seriesguide.provider.SeriesGuideProvider"
