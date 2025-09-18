@@ -16,6 +16,7 @@ import com.battlelancer.seriesguide.settings.AdvancedSettings
 import com.battlelancer.seriesguide.util.PackageTools
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.threeten.bp.Clock
 import org.threeten.bp.Instant
@@ -35,6 +36,7 @@ object BillingTools {
     private val unlockStateUpdateDispatcher = Dispatchers.Default.limitedParallelism(1)
     private val unlockStateInitialized = CountDownLatch(1)
     private val unlockState = MutableStateFlow(UnlockState())
+    val unlockStateReadOnly = unlockState.asStateFlow()
 
     /**
      * Returns if the user should get access to paid features.
