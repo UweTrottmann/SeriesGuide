@@ -60,17 +60,12 @@ class ListWidgetPreferenceActivity : BaseThemeActivity() {
      */
     fun updateWidget() {
         val appWidgetManager = AppWidgetManager.getInstance(this)
-        val views = ListWidgetProvider
-            .buildRemoteViews(this, appWidgetManager, appWidgetId)
-        appWidgetManager.updateAppWidget(appWidgetId, views)
+        ListWidgetProvider.updateWidget(this, appWidgetManager, appWidgetId)
 
         // Note: broken for API 25 Google stock launcher, work around by delaying notify.
         // https://code.google.com/p/android/issues/detail?id=228575
         val runnable = Runnable {
-            // Keep using existing adapter-based APIs as long as possible,
-            // the new widget API only allows a fixed set of pre-built items.
-            @Suppress("DEPRECATION")
-            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view)
+            ListWidgetProvider.updateWidgetCollectionItems(appWidgetManager, appWidgetId)
         }
         Handler(Looper.getMainLooper()).postDelayed(runnable, 300)
 

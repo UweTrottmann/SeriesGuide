@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2020-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.appwidget
 
@@ -7,25 +7,27 @@ import android.annotation.SuppressLint
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.text.format.DateUtils
 import android.view.View
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import androidx.core.os.bundleOf
 import androidx.sqlite.db.SimpleSQLiteQuery
+import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
-import com.battlelancer.seriesguide.shows.database.SgEpisode2WithShow
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.shows.database.SgShow2ForLists
 import com.battlelancer.seriesguide.settings.AdvancedSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.WidgetSettings
 import com.battlelancer.seriesguide.settings.WidgetSettings.WidgetTheme
+import com.battlelancer.seriesguide.shows.ShowsDistillationSettings
+import com.battlelancer.seriesguide.shows.database.SgEpisode2WithShow
+import com.battlelancer.seriesguide.shows.database.SgShow2ForLists
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
-import com.battlelancer.seriesguide.shows.ShowsDistillationSettings
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
@@ -60,7 +62,7 @@ class ListWidgetRemoteViewsFactory(
 
     @SuppressLint("Recycle") // Cursor close check broken for Kotlin.
     private fun onQueryForData() {
-        Timber.d("onQueryForData: %d", appWidgetId)
+        Timber.d("onQueryForData for appWidgetId=%d", appWidgetId)
 
         // Clear any existing data.
         shows.clear()
@@ -104,7 +106,10 @@ class ListWidgetRemoteViewsFactory(
                 )
 
                 // Run query
-                val query = "SELECT * FROM ${Tables.SG_SHOW} WHERE $selection ORDER BY $orderClause"
+                val query = "SELECT * FROM ${Tables.SG_SHOW}" +
+                        " WHERE $selection" +
+                        " ORDER BY $orderClause" +
+                        " LIMIT $WIDGET_ITEMS_LIMIT"
                 val results = SgRoomDatabase.getInstance(context).sgShow2Helper()
                     .getShows(SimpleSQLiteQuery(query))
                 shows.addAll(results)
@@ -125,9 +130,8 @@ class ListWidgetRemoteViewsFactory(
             isOnlyCollected = WidgetSettings.isOnlyCollectedEpisodes(context, appWidgetId),
             isOnlyPremieres = WidgetSettings.isOnlyPremieres(context, appWidgetId)
         )
-        // In addition limit results for widget to reduce memory consumption.
         val results = SgRoomDatabase.getInstance(context).sgEpisode2Helper()
-            .getEpisodesWithShow(SimpleSQLiteQuery("$query LIMIT 100"))
+            .getEpisodesWithShow(SimpleSQLiteQuery("$query LIMIT $WIDGET_ITEMS_LIMIT"))
         episodesWithShow.addAll(results)
     }
 
@@ -157,6 +161,9 @@ class ListWidgetRemoteViewsFactory(
     }
 
     override fun getViewAt(position: Int): RemoteViews {
+        if (BuildConfig.DEBUG) {
+            Timber.d("getViewAt position=%d", position)
+        }
         // Build a remote views collection item.
         val rv = RemoteViews(context.packageName, getRowLayoutResId())
 
@@ -342,4 +349,17 @@ class ListWidgetRemoteViewsFactory(
     // being done here, so you don't need to worry about locking up the widget.
     override fun onDataSetChanged() = onQueryForData()
 
+    companion object {
+        /**
+         * Limit the number of widget items to reduce memory consumption and improve performance.
+         *
+         * On Android 16, the system calls [RemoteViewsService.RemoteViewsFactory.getViewAt] for
+         * *all* items even when just [AppWidgetManager.updateAppWidget] is called. So pick a much
+         * smaller number to reduce lag, for example after marking an episode on the widget watched.
+         * But still large enough so a widget at full height on a portrait tablet screen has some
+         * items to scroll.
+         */
+        private val WIDGET_ITEMS_LIMIT =
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.VANILLA_ICE_CREAM) 100 else 25
+    }
 }
