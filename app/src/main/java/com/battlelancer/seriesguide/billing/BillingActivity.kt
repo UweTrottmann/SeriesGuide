@@ -22,7 +22,6 @@ import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.ui.BaseActivity
-import com.battlelancer.seriesguide.util.PackageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools.openUriOnClick
 import com.battlelancer.seriesguide.util.WebTools
@@ -83,24 +82,24 @@ class BillingActivity : BaseActivity() {
                 buttonOtherWaysToSupport.isVisible = true
             }
         }
-        // Only use subscription state if unlock app is not installed.
-        if (PackageTools.hasUnlockKeyInstalled(this)) {
-            setWaitMode(false)
-            updateUnlockedNotice(isUnlocked = true, unlockPassDetected = true)
-        } else {
-            setWaitMode(true)
-            billingViewModel.playUnlockStateLiveData.observe(this) { playUnlockState ->
-                setWaitMode(false)
-                updateUnlockedNotice(
-                    isUnlocked = playUnlockState?.entitled == true,
-                    unlockPassDetected = playUnlockState?.isSub == false
-                )
-                manageSubscriptionUrl =
-                    if (playUnlockState?.isSub == true && playUnlockState.sku != null) {
-                        PLAY_MANAGE_SUBS_ONE + playUnlockState.sku
-                    } else {
-                        PLAY_MANAGE_SUBS_ALL
-                    }
+        setWaitMode(true)
+        lifecycleScope.launch {
+            // Only update while/once views are visible
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                billingViewModel.augmentedUnlockState.collect {
+                    setWaitMode(false)
+                    updateUnlockedNotice(
+                        isUnlocked = it.unlockState.isUnlockAll,
+                        unlockPassDetected = it.hasAllAccessPass
+                    )
+                    val playUnlockState = it.playUnlockState
+                    manageSubscriptionUrl =
+                        if (playUnlockState?.isSub == true && playUnlockState.sku != null) {
+                            PLAY_MANAGE_SUBS_ONE + playUnlockState.sku
+                        } else {
+                            PLAY_MANAGE_SUBS_ALL
+                        }
+                }
             }
         }
     }
@@ -150,10 +149,12 @@ class BillingActivity : BaseActivity() {
     override fun onStart() {
         super.onStart()
 
-        // Check if user has installed key app.
-        if (PackageTools.hasUnlockKeyInstalled(this)) {
-            updateUnlockedNotice(isUnlocked = true, unlockPassDetected = true)
-        }
+        // Users might have installed X Pass and as there is no trigger for this event and the
+        // trigger in BaseTopActivity is not called here, manually check whenever this activity
+        // becomes visible (again).
+        // It is also fine to call this in addition to BillingRepository on updates to Play unlock
+        // state as a new unlock state will only be emitted if it has changed.
+        BillingTools.updateUnlockStateAsync(this)
     }
 
     private fun updateUnlockedNotice(isUnlocked: Boolean, unlockPassDetected: Boolean) {

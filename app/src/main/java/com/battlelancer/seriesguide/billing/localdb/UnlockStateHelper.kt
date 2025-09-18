@@ -4,11 +4,11 @@
 
 package com.battlelancer.seriesguide.billing.localdb
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UnlockStateHelper {
@@ -32,6 +32,6 @@ interface UnlockStateHelper {
     fun getPlayUnlockState(): PlayUnlockState?
 
     @Query("SELECT * FROM gold_status LIMIT 1")
-    fun getPlayUnlockStateLiveData(): LiveData<PlayUnlockState>
+    fun createPlayUnlockStateFlow(): Flow<PlayUnlockState?>
 
 }

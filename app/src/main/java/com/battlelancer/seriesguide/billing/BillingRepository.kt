@@ -7,7 +7,6 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import androidx.annotation.WorkerThread
-import androidx.lifecycle.LiveData
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClient.BillingResponseCode
@@ -30,6 +29,7 @@ import com.battlelancer.seriesguide.common.SingleLiveEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -111,21 +111,6 @@ class BillingRepository private constructor(
      * See [AugmentedProductDetails].
      */
     val productDetails: StateFlow<List<AugmentedProductDetails>> = _productDetails
-
-    /**
-     * Tracks whether this user is entitled to unlock all features based on a subscription or
-     * one-time purchase using Play Billing. The state is cached in a local database so if Play and
-     * the secure server are unavailable, the user still has access to features they purchased.
-     *
-     * Normally this would be a good place to update the local cache to make sure it's always
-     * up-to-date. However, onBillingSetupFinished already calls queryPurchasesAsync.
-     */
-    val playUnlockStateLiveData: LiveData<PlayUnlockState> by lazy {
-        if (!::localCacheBillingClient.isInitialized) {
-            localCacheBillingClient = LocalBillingDb.getInstance(applicationContext)
-        }
-        localCacheBillingClient.unlockStateHelper().getPlayUnlockStateLiveData()
-    }
 
     data class BillingError(
         val debugMessage: String,
@@ -416,6 +401,13 @@ class BillingRepository private constructor(
         withContext(Dispatchers.IO) {
             localCacheBillingClient.unlockStateHelper().insert(unlockState)
         }
+
+    /**
+     * State may be null if there is no active purchase.
+     */
+    fun createUnlockStateFlow(): Flow<PlayUnlockState?> {
+        return localCacheBillingClient.unlockStateHelper().createPlayUnlockStateFlow()
+    }
 
     /**
      * Requests product details from Google Play and updates the associated [productDetails].

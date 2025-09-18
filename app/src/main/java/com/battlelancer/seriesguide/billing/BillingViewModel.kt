@@ -9,12 +9,18 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.billing.localdb.PlayUnlockState
+import com.battlelancer.seriesguide.billing.localdb.UnlockState
+import com.battlelancer.seriesguide.util.PackageTools
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.shareIn
 
 /**
  * Helps fetch current purchases and available products from Play billing provider.
@@ -24,7 +30,16 @@ class BillingViewModel(
     coroutineScope: CoroutineScope
 ) : AndroidViewModel(application) {
 
-    val playUnlockStateLiveData: LiveData<PlayUnlockState>
+    data class AugmentedUnlockState(
+        val unlockState: UnlockState,
+        /**
+         * May be `null` if there is no active purchase.
+         */
+        val playUnlockState: PlayUnlockState?,
+        val hasAllAccessPass: Boolean
+    )
+
+    val augmentedUnlockState: Flow<AugmentedUnlockState>
 
     /**
      * A list of supported products filtered to only contain those
@@ -38,7 +53,25 @@ class BillingViewModel(
 
     init {
         repository.startDataSourceConnections()
-        playUnlockStateLiveData = repository.playUnlockStateLiveData
+
+        augmentedUnlockState = combine(
+            BillingTools.unlockStateReadOnly,
+            repository.createUnlockStateFlow()
+        ) { unlockState, playUnlockState ->
+            // Note: this will not show the all access in-app pass if the user also has a sub
+            val hasAllAccessPass =
+                (playUnlockState?.entitled == true && !playUnlockState.isSub)
+                        || PackageTools.hasUnlockKeyInstalled(getApplication())
+            AugmentedUnlockState(
+                unlockState,
+                playUnlockState,
+                hasAllAccessPass
+            )
+        }
+            // Share to avoid re-creating on config change;
+            // no StateFlow as UI doesn't need initial value, it will display a wait indicator.
+            .shareIn(viewModelScope, SharingStarted.Lazily, replay = 1)
+
         availableProducts = repository.productDetails
             .map { products ->
                 products.mapNotNull { product ->
