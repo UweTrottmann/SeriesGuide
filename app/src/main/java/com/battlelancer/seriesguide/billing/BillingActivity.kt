@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.ui.BaseActivity
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools.openUriOnClick
@@ -59,7 +58,7 @@ class BillingActivity : BaseActivity() {
         billingViewModel =
             ViewModelProvider(
                 this,
-                BillingViewModelFactory(application, SgApp.coroutineScope)
+                BillingViewModelFactory(application)
             )[BillingViewModel::class.java].also { model ->
                 lifecycleScope.launch {
                     // Only update while views are shown.

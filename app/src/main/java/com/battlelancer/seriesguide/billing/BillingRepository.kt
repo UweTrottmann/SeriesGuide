@@ -22,7 +22,6 @@ import com.android.billingclient.api.acknowledgePurchase
 import com.android.billingclient.api.queryProductDetails
 import com.android.billingclient.api.queryPurchasesAsync
 import com.battlelancer.seriesguide.BuildConfig
-import com.battlelancer.seriesguide.billing.BillingRepository.Companion.getInstance
 import com.battlelancer.seriesguide.billing.localdb.Entitlement
 import com.battlelancer.seriesguide.billing.localdb.LocalBillingDb
 import com.battlelancer.seriesguide.billing.localdb.PlayUnlockState
@@ -42,7 +41,7 @@ import timber.log.Timber
 import kotlin.math.max
 
 /**
- * A singleton ([getInstance]) to manage billing.
+ * A singleton ([com.battlelancer.seriesguide.SgAppContainer.billingRepository]) to manage billing.
  *
  * ## Play Billing
  *
@@ -60,7 +59,7 @@ import kotlin.math.max
  * uncomment relevant tags in AndroidManifest.xml.
  * https://developer.android.com/google/play/billing/test-response-codes
  */
-class BillingRepository private constructor(
+class BillingRepository(
     private val applicationContext: Context,
     private val coroutineScope: CoroutineScope
 ) {
@@ -657,18 +656,9 @@ class BillingRepository private constructor(
     }
 
     companion object {
-        @Volatile
-        private var INSTANCE: BillingRepository? = null
-
         private const val RECONNECT_BACK_OFF_DEFAULT_SECONDS = 1
         private const val RECONNECT_BACK_OFF_MAX_SECONDS = 15 * 60 // 15 minutes
         private val REVOKE_NOT_UPDATED_AFTER_DURATION = Duration.ofDays(365)
-
-        fun getInstance(context: Context, coroutineScope: CoroutineScope): BillingRepository =
-            INSTANCE ?: synchronized(this) {
-                INSTANCE ?: BillingRepository(context.applicationContext, coroutineScope)
-                    .also { INSTANCE = it }
-            }
     }
 
     object SeriesGuideSku {

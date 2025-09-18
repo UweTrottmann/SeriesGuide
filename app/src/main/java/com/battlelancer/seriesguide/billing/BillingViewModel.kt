@@ -12,8 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.billing.localdb.PlayUnlockState
 import com.battlelancer.seriesguide.billing.localdb.UnlockState
+import com.battlelancer.seriesguide.getSgAppContainer
 import com.battlelancer.seriesguide.util.PackageTools
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -25,10 +25,7 @@ import kotlinx.coroutines.flow.shareIn
 /**
  * Helps fetch current purchases and available products from Play billing provider.
  */
-class BillingViewModel(
-    application: Application,
-    coroutineScope: CoroutineScope
-) : AndroidViewModel(application) {
+class BillingViewModel(application: Application) : AndroidViewModel(application) {
 
     data class AugmentedUnlockState(
         val unlockState: UnlockState,
@@ -48,8 +45,7 @@ class BillingViewModel(
     val availableProducts: Flow<List<SafeAugmentedProductDetails>>
     val errorEvent: LiveData<BillingRepository.BillingError>
 
-    private val repository: BillingRepository =
-        BillingRepository.getInstance(application, coroutineScope)
+    private val repository: BillingRepository = application.getSgAppContainer().billingRepository
 
     init {
         // As this was already called on app launch in SgApp.onCreate,
@@ -103,13 +99,12 @@ class BillingViewModel(
 }
 
 class BillingViewModelFactory(
-    private val application: Application,
-    private val coroutineScope: CoroutineScope
+    private val application: Application
 ) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return BillingViewModel(application, coroutineScope) as T
+        return BillingViewModel(application) as T
     }
 
 }

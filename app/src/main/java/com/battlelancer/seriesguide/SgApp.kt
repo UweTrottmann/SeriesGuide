@@ -14,7 +14,6 @@ import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
 import androidx.annotation.RequiresApi
-import com.battlelancer.seriesguide.billing.BillingRepository
 import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.modules.AppModule
 import com.battlelancer.seriesguide.modules.DaggerServicesComponent
@@ -137,7 +136,7 @@ class SgApp : Application() {
         // Logging uses time APIs
         AndroidThreeTen.init(this)
 
-        appContainer = SgAppContainer(this)
+        appContainer = SgAppContainer(this, coroutineScope)
 
         // set up logging first so crashes during initialization are caught
         initializeLogging()
@@ -164,8 +163,7 @@ class SgApp : Application() {
             coroutineScope.launch {
                 // Automatically starts updating Play unlock state if billing provider is available.
                 // Note: keeping the connection alive for the lifetime of the app process.
-                BillingRepository.getInstance(this@SgApp, coroutineScope)
-                    .startAndConnectToBillingService()
+                appContainer.billingRepository.startAndConnectToBillingService()
             }
         }
     }
