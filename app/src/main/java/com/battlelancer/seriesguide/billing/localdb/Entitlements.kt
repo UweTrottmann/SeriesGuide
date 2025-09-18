@@ -41,6 +41,15 @@ data class UnlockState(
         return UnlockStateDb(isUnlockAll, lastUnlockedAllMs, notifyUnlockAllExpired)
     }
 
+    override fun toString(): String {
+        // Make timestamp easier to read in log output
+        val lastUnlockedAll = if (lastUnlockedAllMs != 0L) {
+            Instant.ofEpochMilli(lastUnlockedAllMs).toString()
+        } else "never"
+        return "UnlockState(isUnlockAll=$isUnlockAll, lastUnlockedAll=$lastUnlockedAll, notifyUnlockAllExpired=$notifyUnlockAllExpired)"
+    }
+
+
     companion object {
         fun from(unlockStateDb: UnlockStateDb?): UnlockState {
             val default = UnlockState()
