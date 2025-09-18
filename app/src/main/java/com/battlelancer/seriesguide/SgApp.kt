@@ -14,6 +14,7 @@ import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
 import androidx.annotation.RequiresApi
+import com.battlelancer.seriesguide.billing.BillingRepository
 import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.modules.AppModule
 import com.battlelancer.seriesguide.modules.DaggerServicesComponent
@@ -26,6 +27,7 @@ import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.util.Errors
+import com.battlelancer.seriesguide.util.PackageTools
 import com.battlelancer.seriesguide.util.SgPicassoRequestHandler
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
@@ -39,6 +41,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.EventBusException
@@ -153,6 +156,18 @@ class SgApp : Application() {
 
         // Initialize unlock state
         BillingTools.updateUnlockStateAsync(this)
+
+        // Update Play in-app purchases, run async as it initializes a database. Not running for
+        // Amazon build, it uses a different package name. Note that Amazon purchase updates are
+        // handled in ShowsActivityImpl by AmazonHelper.
+        if (!PackageTools.isAmazonVersion()) {
+            coroutineScope.launch {
+                // Automatically starts updating Play unlock state if billing provider is available.
+                // Note: keeping the connection alive for the lifetime of the app process.
+                BillingRepository.getInstance(this@SgApp, coroutineScope)
+                    .startAndConnectToBillingService()
+            }
+        }
     }
 
     /**

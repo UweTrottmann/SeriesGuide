@@ -52,7 +52,9 @@ class BillingViewModel(
         BillingRepository.getInstance(application, coroutineScope)
 
     init {
-        repository.startDataSourceConnections()
+        // As this was already called on app launch in SgApp.onCreate,
+        // this should typically just trigger updating of purchases.
+        repository.startAndConnectToBillingService()
 
         augmentedUnlockState = combine(
             BillingTools.unlockStateReadOnly,

@@ -7,14 +7,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.api.Intents
-import com.battlelancer.seriesguide.billing.BillingViewModel
-import com.battlelancer.seriesguide.billing.BillingViewModelFactory
 import com.battlelancer.seriesguide.billing.amazon.AmazonHelper
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
@@ -48,7 +44,6 @@ open class ShowsActivityImpl : BaseTopActivity() {
     private lateinit var viewPager: ViewPager2
 
     private val viewModel: ShowsActivityViewModel by viewModels()
-    private lateinit var billingViewModel: BillingViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,14 +94,10 @@ open class ShowsActivityImpl : BaseTopActivity() {
         setupSyncProgressBar(R.id.sgProgressBar)
         setInitialTab(intent.extras)
 
-        // query for in-app purchases
+        // For Amazon build initialize IapManager instance
         if (PackageTools.isAmazonVersion()) {
-            // setup Amazon IAP
             AmazonHelper.create(this)
             AmazonHelper.iapManager.register()
-        } else {
-            // setup Google IAP
-            checkGooglePlayPurchase()
         }
     }
 
@@ -255,14 +246,6 @@ open class ShowsActivityImpl : BaseTopActivity() {
         }
 
         viewModel.setInitialTab(tabIndex)
-    }
-
-    private fun checkGooglePlayPurchase() {
-        // Automatically starts checking all access status.
-        // Ends connection if activity is finished (and was not ended elsewhere already).
-        billingViewModel =
-            ViewModelProvider(this, BillingViewModelFactory(application, SgApp.coroutineScope))
-                .get(BillingViewModel::class.java)
     }
 
     override fun onNewIntent(intent: Intent) {

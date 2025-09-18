@@ -22,6 +22,7 @@ import com.android.billingclient.api.acknowledgePurchase
 import com.android.billingclient.api.queryProductDetails
 import com.android.billingclient.api.queryPurchasesAsync
 import com.battlelancer.seriesguide.BuildConfig
+import com.battlelancer.seriesguide.billing.BillingRepository.Companion.getInstance
 import com.battlelancer.seriesguide.billing.localdb.Entitlement
 import com.battlelancer.seriesguide.billing.localdb.LocalBillingDb
 import com.battlelancer.seriesguide.billing.localdb.PlayUnlockState
@@ -41,6 +42,8 @@ import timber.log.Timber
 import kotlin.math.max
 
 /**
+ * A singleton ([getInstance]) to manage billing.
+ *
  * ## Play Billing
  *
  * * https://developer.android.com/google/play/billing/integrate
@@ -127,8 +130,16 @@ class BillingRepository private constructor(
     @Suppress("DEPRECATION")
     val errorEvent = SingleLiveEvent<BillingError>()
 
-    fun startDataSourceConnections() {
-        Timber.d("startDataSourceConnections")
+    /**
+     * Initializes this and, if not connected, starts to asynchronously connect to the billing
+     * service.
+
+     * Once connected, product details and current purchases are updated (see
+     * [billingClientStateListener]. If already connected, immediately (and just) updates current
+     * purchases.
+     */
+    fun startAndConnectToBillingService() {
+        Timber.d("startAndConnectToBillingService")
         localCacheBillingClient = LocalBillingDb.getInstance(applicationContext)
         if (!connectToPlayBillingService()) {
             // Already connected, so trigger purchases query directly.
@@ -139,8 +150,9 @@ class BillingRepository private constructor(
     }
 
     private fun connectToPlayBillingService(): Boolean {
-        Timber.d("connectToPlayBillingService")
-        if (!playStoreBillingClient.isReady) {
+        val isReady = playStoreBillingClient.isReady
+        Timber.d("connectToPlayBillingService isReady=%s", isReady)
+        if (!isReady) {
             playStoreBillingClient.startConnection(billingClientStateListener)
             return true
         }
