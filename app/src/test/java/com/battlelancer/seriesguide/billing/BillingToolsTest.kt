@@ -17,8 +17,6 @@ class BillingToolsTest {
     fun unlockStateChanges() {
         val testClock = Clock.fixed(Instant.now(), ZoneOffset.UTC)
 
-        // TODO Test lastUnlockedAllMs cases if used
-
         // default -> unlocked
         BillingTools.getNewUnlockState(testClock, UnlockState(), isUnlockAll = true)
             .also {

@@ -96,15 +96,6 @@ object BillingTools {
         oldUnlockState: UnlockState,
         isUnlockAll: Boolean
     ): UnlockState {
-        // TODO Grace period? But likely notify already and support purchasing?
-//        val lastUnlockedInstant = Instant.ofEpochMilli(oldUnlockState.lastUnlockedAllMs)
-//        val aDayAgo = now.minus(24, ChronoUnit.HOURS)
-//        if (lastUnlockedInstant.isBefore(aDayAgo)) {
-//            true
-//        } else {
-//            false
-//        }
-
         // Only change if unlock state changes
         val notifyUnlockAllExpired = if (isUnlockAll != oldUnlockState.isUnlockAll) {
             !isUnlockAll

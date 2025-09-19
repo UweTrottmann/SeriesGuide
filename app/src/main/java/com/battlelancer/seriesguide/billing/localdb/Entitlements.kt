@@ -27,8 +27,7 @@ data class UnlockState(
      */
     val isUnlockAll: Boolean = false,
     /**
-     * The last time (in milliseconds) all features were unlocked. Use to give a grace period, for
-     * ex. in case a billing provider is temporarily unavailable.
+     * The last time (in milliseconds) all features were unlocked.
      */
     val lastUnlockedAllMs: Long = 0L,
     /**
