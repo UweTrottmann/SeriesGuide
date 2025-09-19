@@ -112,6 +112,34 @@ class ListWidgetProvider : AppWidgetProvider() {
         appWidgetIds: IntArray
     ) {
         for (appWidgetId in appWidgetIds) {
+            // On Android 16, how the system updates collection widgets has significantly changed
+            // (and as a result been broken).
+            //
+            // First, AppWidgetManager.updateAppWidget(int, RemoteViews) also updates RemoteViews
+            // of the collection items (as usual through RemoteViewsFactory#getViewAt) which usually
+            // shouldn't happen unless AppWidgetManager.notifyAppWidgetViewDataChanged(int, int) is
+            // called.
+            //
+            // Also, it calls getViewAt for *all* items, not just the visible ones.
+            //
+            // Also, it updates items immediately, not just once when returning to the home screen.
+            //
+            // Second, when using AppWidgetManager.notifyAppWidgetViewDataChanged(int, int) to
+            // update the collection items, any bitmaps aren't updated. For example when marking an
+            // episode watched and its item is replaced with new data, the show poster bitmap isn't
+            // replaced with the new bitmap.
+            //
+            // However, this only applies to Google's version of Android. Samsung's version of
+            // Android had and still has a custom implementation that updates widgets. Their
+            // implementation seems not affected by these issues.
+            //
+            // So on all platforms and devices, just always (regardless if the widget is added or
+            // only updated) call updateAppWidget followed by notifyAppWidgetViewDataChanged.
+            // On versions prior Android 16 and Samsung's version of Android 16 everything should
+            // work as expected.
+            // On Google's version of Android 16, items will be loaded twice. This reduces
+            // responsiveness of the widget, but at least will display the correct bitmaps. Until
+            // they hopefully fix their implementation.
             updateWidget(context, appWidgetManager, appWidgetId)
             updateWidgetCollectionItems(appWidgetManager, appWidgetId)
         }
@@ -196,27 +224,12 @@ class ListWidgetProvider : AppWidgetProvider() {
             appWidgetManager: AppWidgetManager,
             appWidgetId: Int
         ) {
-            // On Android 16, how the system updates collection widgets has significantly changed.
-            // Notably AppWidgetManager.updateAppWidget(int, RemoteViews) will also update
-            // RemoteViews of the collection items (as usual through RemoteViewsFactory#getViewAt),
-            // and for *all* of them, not just visible ones.
-            //
-            // It also updates them each time, not just when returning to the home screen.
-            //
-            // Also, when using AppWidgetManager.notifyAppWidgetViewDataChanged(int, int) to update
-            // just the collection items, any bitmaps aren't updated (but this is likely a bug). For
-            // example when marking an episode watched and its item is replaced with new data, the
-            // show poster bitmap isn't replaced.
-            //
-            // So on Android 16+ don't call notifyAppWidgetViewDataChanged to avoid updating
-            // collection items twice and to avoid the bitmaps not updating bug.
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
-                // Update RemoteViews of collection items
-                // Keep using existing adapter-based APIs as long as possible,
-                // the new widget API only allows a fixed set of pre-built items.
-                @Suppress("DEPRECATION")
-                appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view)
-            }
+
+            // Update RemoteViews of collection items
+            // Keep using existing adapter-based APIs as long as possible,
+            // the new widget API only allows a fixed set of pre-built items.
+            @Suppress("DEPRECATION")
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view)
         }
 
         private fun buildRemoteViews(
