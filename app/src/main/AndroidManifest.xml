@@ -31,7 +31,7 @@
         android:name="android.hardware.touchscreen"
         android:required="false" />
 
-    <!-- On Android 11 (SDK 30), allow SeriesGuide to see apps providing extensions and the X Pass app. -->
+    <!-- On Android 11 (SDK 30), allow SeriesGuide to see apps providing extensions and the unlock app. -->
     <!-- https://developer.android.com/training/package-visibility -->
     <queries>
         <intent>

@@ -148,8 +148,8 @@ class BillingActivity : BaseActivity() {
     override fun onStart() {
         super.onStart()
 
-        // Users might have installed X Pass and as there is no trigger for this event and the
-        // trigger in BaseTopActivity is not called here, manually check whenever this activity
+        // Users might have installed the unlock app and as there is no trigger for this event and
+        // the trigger in BaseTopActivity is not called here, manually check whenever this activity
         // becomes visible (again).
         // It is also fine to call this in addition to BillingRepository on updates to Play unlock
         // state as a new unlock state will only be emitted if it has changed.

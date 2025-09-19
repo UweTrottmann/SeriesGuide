@@ -63,7 +63,7 @@ object PackageTools {
     }
 
     /**
-     * Returns if the X Pass app is installed.
+     * Returns if the unlock app is installed.
      */
     fun hasUnlockKeyInstalled(context: Context): Boolean {
         try {

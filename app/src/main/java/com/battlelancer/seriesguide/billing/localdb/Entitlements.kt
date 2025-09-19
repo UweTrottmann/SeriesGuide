@@ -22,7 +22,7 @@ abstract class Entitlement {
  */
 data class UnlockState(
     /**
-     * Whether all features should be unlocked because there is an X pass install, active
+     * Whether all features should be unlocked because there is an the unlock app install, active
      * subscription, one-time purchase from any billing method.
      */
     val isUnlockAll: Boolean = false,
@@ -31,8 +31,8 @@ data class UnlockState(
      */
     val lastUnlockedAllMs: Long = 0L,
     /**
-     * If the user should be notified upon app launch that access to all features has expired, for
-     * ex. when a subscription has expired or X Pass was uninstalled.
+     * If the user should be notified that access to all features has expired, for
+     * ex. when a subscription has expired or the unlock app was uninstalled.
      */
     val notifyUnlockAllExpired: Boolean = false
 ) {
