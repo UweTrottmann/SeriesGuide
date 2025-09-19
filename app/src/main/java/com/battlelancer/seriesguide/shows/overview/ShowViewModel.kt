@@ -23,6 +23,7 @@ import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.github.michaelbull.result.onSuccess
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -147,26 +148,21 @@ class ShowViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     /**
-     * This currently does not auto-update, it maybe should at some point (add global LiveData).
+     * Observe unlock state. This is useful if a user is advertised the subscription, purchases it
+     * and comes back to the screen using this to find features unlocked.
      */
-    val hasAllFeatures = MutableLiveData<Boolean>()
+    val hasAllFeatures = MutableStateFlow(BillingTools.unlockStateReadOnly.value.isUnlockAll)
 
     init {
-        updateUserStatus()
+        viewModelScope.launch {
+            BillingTools.unlockStateReadOnly.collect {
+                hasAllFeatures.value = it.isUnlockAll
+            }
+        }
     }
 
     fun setShowId(showId: Long) {
         this.showId.value = showId
-    }
-
-    fun updateUserStatus() {
-        viewModelScope.launch(Dispatchers.IO) {
-            val currentState = hasAllFeatures.value
-            val newState = BillingTools.hasAccessToPaidFeatures(getApplication())
-            if (currentState != newState) {
-                hasAllFeatures.postValue(newState)
-            }
-        }
     }
 
 }

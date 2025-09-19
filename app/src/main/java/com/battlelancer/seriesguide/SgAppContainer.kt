@@ -4,11 +4,13 @@
 package com.battlelancer.seriesguide
 
 import android.content.Context
+import com.battlelancer.seriesguide.billing.BillingRepository
 import com.battlelancer.seriesguide.diagnostics.DebugLogBuffer
 import com.battlelancer.seriesguide.util.PackageTools
+import kotlinx.coroutines.CoroutineScope
 import timber.log.Timber
 
-class SgAppContainer(context: Context) {
+class SgAppContainer(context: Context, coroutineScope: CoroutineScope) {
 
     val debugLogBuffer by lazy { DebugLogBuffer(context) }
 
@@ -24,4 +26,7 @@ class SgAppContainer(context: Context) {
 //            .let { if (BuildConfig.DEBUG) true else it }
     }
 
+    val billingRepository by lazy {
+        BillingRepository(context, coroutineScope)
+    }
 }

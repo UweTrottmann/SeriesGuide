@@ -199,7 +199,7 @@ class EpisodesFragment : Fragment() {
                         val itemId = item.itemId
                         if (itemId == R.id.watched_popup_menu_watch_again) {
                             // Multiple plays are for supporters only.
-                            if (!BillingTools.hasAccessToPaidFeatures(requireContext())) {
+                            if (!BillingTools.hasAccessToPaidFeatures()) {
                                 BillingTools.advertiseSubscription(requireContext())
                             } else {
                                 onFlagEpisodeWatched(episodeId, true)

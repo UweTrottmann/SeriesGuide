@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.billing
 
@@ -12,7 +12,6 @@ import androidx.core.view.isGone
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
-import com.uwetrottmann.seriesguide.billing.SafeAugmentedProductDetails
 
 /**
  * This is a [SafeAugmentedProductDetails] adapter base class to show available products.

@@ -1,8 +1,8 @@
-// Copyright 2017 Google Inc.
-// Copyright 2019, 2021 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2017 Google Inc.
+// Copyright 2019-2025 Uwe Trottmann
 
-package com.uwetrottmann.seriesguide.common
+package com.battlelancer.seriesguide.common
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner
@@ -23,6 +23,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  *
  * Note that only one observer is going to be notified of changes.
  */
+@Deprecated(message = "Don't use in new code. Instead use a StateFlow and re-set its value after handling it")
 class SingleLiveEvent<T> : MutableLiveData<T>() {
 
     private val pending = AtomicBoolean(false)

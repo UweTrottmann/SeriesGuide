@@ -1,7 +1,7 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2023-2025 Uwe Trottmann
 
-package com.uwetrottmann.seriesguide.billing
+package com.battlelancer.seriesguide.billing
 
 import com.android.billingclient.api.ProductDetails
 

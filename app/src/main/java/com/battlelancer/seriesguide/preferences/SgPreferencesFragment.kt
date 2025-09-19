@@ -122,7 +122,7 @@ class SgPreferencesFragment : BasePreferencesFragment(),
     }
 
     private fun updateRootSettings() {
-        val hasAllFeatures = BillingTools.hasAccessToPaidFeatures(requireContext())
+        val hasAllFeatures = BillingTools.hasAccessToPaidFeatures()
 
         // notifications link
         findPreference<Preference>(KEY_SCREEN_NOTIFICATIONS)!!.apply {
@@ -181,7 +181,7 @@ class SgPreferencesFragment : BasePreferencesFragment(),
         updateThresholdSummary(findPreference(NotificationSettings.KEY_THRESHOLD)!!)
         updateSelectionSummary(findPreference(NotificationSettings.KEY_SELECTION)!!)
 
-        val hasAllFeatures = BillingTools.hasAccessToPaidFeatures(requireContext())
+        val hasAllFeatures = BillingTools.hasAccessToPaidFeatures()
         if (hasAllFeatures) {
             // Disable advanced notification settings if notifications are disabled.
             enableAdvancedNotificationSettings(
