@@ -353,11 +353,13 @@ class ListWidgetRemoteViewsFactory(
         /**
          * Limit the number of widget items to reduce memory consumption and improve performance.
          *
-         * On Android 16, the system calls [RemoteViewsService.RemoteViewsFactory.getViewAt] for
-         * *all* items even when just [AppWidgetManager.updateAppWidget] is called. So pick a much
-         * smaller number to reduce lag, for example after marking an episode on the widget watched.
-         * But still large enough so a widget at full height on a portrait tablet screen has some
-         * items to scroll.
+         * On Google's Android 16, the system calls [RemoteViewsService.RemoteViewsFactory.getViewAt]
+         * for *all* items even when just [AppWidgetManager.updateAppWidget] is called. So pick a
+         * much smaller number to reduce lag, for example after marking an episode on the widget
+         * watched. But still large enough so a widget at full height on a portrait tablet screen
+         * has some items to scroll.
+         *
+         * See [ListWidgetProvider.onUpdate] for details.
          */
         private val WIDGET_ITEMS_LIMIT =
             if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.VANILLA_ICE_CREAM) 100 else 25
