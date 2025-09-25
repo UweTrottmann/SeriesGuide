@@ -169,6 +169,58 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/featureStatusCloudSyncLists" />
 
+        <com.battlelancer.seriesguide.ui.widgets.FeatureStatusView
+            android:id="@+id/featureStatusCloudHistory"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            app:featureDescription="@string/feature_history"
+            app:featureSupported="false"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/featureStatusCloudSyncMovies" />
+
+        <com.battlelancer.seriesguide.ui.widgets.FeatureStatusView
+            android:id="@+id/featureStatusCloudCheckIn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:featureDescription="@string/checkin"
+            app:featureSupported="false"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/featureStatusCloudHistory" />
+
+        <com.battlelancer.seriesguide.ui.widgets.FeatureStatusView
+            android:id="@+id/featureStatusCloudRate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:featureDescription="@string/action_rate"
+            app:featureSupported="false"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/featureStatusCloudCheckIn" />
+
+        <com.battlelancer.seriesguide.ui.widgets.FeatureStatusView
+            android:id="@+id/featureStatusCloudComment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:featureDescription="@string/feature_comments"
+            app:featureSupported="false"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/featureStatusCloudRate" />
+
         <Button
             android:id="@+id/textViewCloudWarnings"
             style="@style/Widget.SeriesGuide.Button.Borderless.Error"
