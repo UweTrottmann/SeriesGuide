@@ -122,7 +122,6 @@ object ViewTools {
         }
     }
 
-    @JvmStatic
     fun setSwipeRefreshLayoutColors(
         theme: Resources.Theme,
         swipeRefreshLayout: SwipeRefreshLayout
