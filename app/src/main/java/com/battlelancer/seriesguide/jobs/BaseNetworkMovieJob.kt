@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2020-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.jobs
 
@@ -9,11 +9,10 @@ import android.content.Intent
 import androidx.core.app.TaskStackBuilder
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.jobs.episodes.JobAction
+import com.battlelancer.seriesguide.movies.details.MovieDetailsActivity
 import com.battlelancer.seriesguide.provider.SgRoomDatabase.Companion.getInstance
 import com.battlelancer.seriesguide.ui.MoviesActivity
 import com.battlelancer.seriesguide.ui.ShowsActivity
-import com.battlelancer.seriesguide.movies.details.MovieDetailsActivity
-import com.battlelancer.seriesguide.util.PendingIntentCompat
 
 abstract class BaseNetworkMovieJob(
     action: JobAction,
@@ -46,7 +45,7 @@ abstract class BaseNetworkMovieJob(
             .addNextIntent(MovieDetailsActivity.intentMovie(context, jobInfo.movieTmdbId()))
             .getPendingIntent(
                 0,
-                PendingIntentCompat.flagImmutable or PendingIntent.FLAG_UPDATE_CURRENT
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
             )!!
     }
 }

@@ -21,7 +21,6 @@ import com.battlelancer.seriesguide.settings.NotificationSettings
 import com.battlelancer.seriesguide.sync.AccountUtils
 import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.util.Errors
-import com.battlelancer.seriesguide.util.PendingIntentCompat
 import com.uwetrottmann.trakt5.TraktV2
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
@@ -92,7 +91,7 @@ class TraktCredentials private constructor(context: Context) {
             .addNextIntent(Intent(context, ConnectTraktActivity::class.java))
             .getPendingIntent(
                 0,
-                PendingIntentCompat.flagImmutable or PendingIntent.FLAG_UPDATE_CURRENT
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
             )
         nb.setContentIntent(intent)
         nb.setAutoCancel(true)
