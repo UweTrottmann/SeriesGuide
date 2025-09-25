@@ -22,8 +22,8 @@ androidx-collection = "androidx.collection:collection:1.4.5"
 androidx-constraintlayout = "androidx.constraintlayout:constraintlayout:2.2.0" # https://developer.android.com/jetpack/androidx/releases/constraintlayout
 androidx-coordinatorlayout = "androidx.coordinatorlayout:coordinatorlayout:1.2.0" # https://developer.android.com/jetpack/androidx/releases/coordinatorlayout
 # https://developer.android.com/jetpack/androidx/releases/core
-androidx-core = "androidx.core:core:1.15.0"
-androidx-core-ktx = "androidx.core:core-ktx:1.15.0"
+androidx-core = "androidx.core:core:1.17.0"
+androidx-core-ktx = "androidx.core:core-ktx:1.17.0"
 # https://developer.android.com/jetpack/androidx/releases/fragment
 androidx-fragment = "androidx.fragment:fragment-ktx:1.8.5"
 androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "androidx-lifecycle" }
