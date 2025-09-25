@@ -295,7 +295,7 @@ abstract class BaseTopActivity : BaseMessageActivity() {
                     }
                 }
             })
-            .setAction(R.string.preferences) {
+            .setAction(R.string.action_check) {
                 startActivity(
                     DataLiberationActivity.intentToShowAutoBackup(
                         this
@@ -322,7 +322,7 @@ abstract class BaseTopActivity : BaseMessageActivity() {
             .findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
         textView.maxLines = 5
 
-        newSnackbar.setAction(R.string.preferences) {
+        newSnackbar.setAction(R.string.action_check) {
             startActivity(
                 DataLiberationActivity.intentToShowAutoBackup(this)
             )
