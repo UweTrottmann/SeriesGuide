@@ -12,7 +12,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 * 🔧 Upcoming/Recent: rename "Infinite calendar" option to the more applicable "Unlimited days".
 * 🔧 Widget: note general item limit in configuration screen, rename "Infinite calendar" option to
-  the more applicable "Unlimited days".
+  the more applicable "Unlimited days", move hide watch button option to appearance category.
 
 ## Version 2025.2
 

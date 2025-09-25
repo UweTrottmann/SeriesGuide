@@ -134,7 +134,6 @@ class ListWidgetPreferenceFragment : BasePreferencesFragment() {
             addPreference(onlyCollectedPref)
             addPreference(hideWatchedPreference)
             addPreference(isInfinitePref)
-            addPreference(isHideWatchedButtonPref)
             addPreference(
                 Preference(requireContext()).also {
                     it.isPersistent = false
@@ -150,6 +149,7 @@ class ListWidgetPreferenceFragment : BasePreferencesFragment() {
             appearanceCategory.apply {
                 addPreference(themePref)
                 addPreference(backgroundPref)
+                addPreference(isHideWatchedButtonPref)
                 addPreference(isLargeFontPref)
             }
         }
