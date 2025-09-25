@@ -350,7 +350,7 @@ abstract class BaseTopActivity : BaseMessageActivity() {
                     hexagonTools.removeAccountAndSetDisabled()
                 }
             }
-        }).setAction(R.string.hexagon_signin) {
+        }).setAction(R.string.action_check) {
             // forward to cloud setup which can help fix the account issue
             startActivity(Intent(this@BaseTopActivity, CloudSetupActivity::class.java))
         }.show()
