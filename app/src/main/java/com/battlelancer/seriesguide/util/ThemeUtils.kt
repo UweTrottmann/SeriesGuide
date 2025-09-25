@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2015-2024 Uwe Trottmann
+// Copyright 2015-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.util
 
@@ -33,6 +33,8 @@ import androidx.core.view.updateLayoutParams
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
+import com.battlelancer.seriesguide.util.ThemeUtils.applyBottomPaddingForNavigationBar
+import com.battlelancer.seriesguide.util.ThemeUtils.configureForEdgeToEdge
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.MaterialColors
@@ -138,10 +140,16 @@ object ThemeUtils {
             MaterialColors.getColor(window.context, android.R.attr.colorBackground, Color.BLACK)
         val isLightBackground = MaterialColors.isColorLight(colorBackground)
 
-        val statusBarColor = getStatusBarColor(window.context)
+        val statusBarColor = Color.TRANSPARENT
         val navigationBarColor = getNavigationBarColor(window.context)
 
+        // Note: on Android 15 these values are supposedly ignored (because apps are drawn
+        // edge-to-edge by default), but keep setting them anyway because currently opting out for
+        // the Cloud sign-in screens and in case manufacturers other than Google deviate from this
+        // behavior.
+        @Suppress("DEPRECATION")
         window.statusBarColor = statusBarColor
+        @Suppress("DEPRECATION")
         window.navigationBarColor = navigationBarColor
 
         // For transparent status bars (M+), check if the background has a light color;
@@ -160,18 +168,6 @@ object ThemeUtils {
         WindowCompat.getInsetsController(window, window.decorView).run {
             isAppearanceLightStatusBars = isLightStatusBar
             isAppearanceLightNavigationBars = isLightNavigationBar
-        }
-    }
-
-    private fun getStatusBarColor(context: Context): Int {
-        return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            // A light status bar is only supported on M+.
-            // Use a translucent black status bar instead.
-            @Suppress("DEPRECATION") val opaqueStatusBarColor: Int =
-                MaterialColors.getColor(context, android.R.attr.statusBarColor, Color.BLACK)
-            ColorUtils.setAlphaComponent(opaqueStatusBarColor, EDGE_TO_EDGE_BAR_ALPHA)
-        } else {
-            Color.TRANSPARENT
         }
     }
 
