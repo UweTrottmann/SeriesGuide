@@ -138,11 +138,13 @@ class ListWidgetPreferenceFragment : BasePreferencesFragment() {
                 Preference(requireContext()).also {
                     it.isPersistent = false
                     it.isSelectable = false
+                    it.isIconSpaceReserved = false
                     it.setSummary(R.string.description_widget_unlimited_days)
                 }
             )
             val appearanceCategory = PreferenceCategory(requireContext()).apply {
                 setTitle(R.string.pref_appearance)
+                isIconSpaceReserved = false
             }
             // Need to add to screen first so added prefs can get unique IDs.
             addPreference(appearanceCategory)
@@ -224,6 +226,7 @@ class ListWidgetPreferenceFragment : BasePreferencesFragment() {
             it.key = key
             it.setTitle(titleRes)
             it.setDefaultValue(defaultValue)
+            it.isIconSpaceReserved = false
         }
     }
 
@@ -242,6 +245,7 @@ class ListWidgetPreferenceFragment : BasePreferencesFragment() {
             it.setDefaultValue(defaultValue)
             it.positiveButtonText = null
             it.negativeButtonText = null
+            it.isIconSpaceReserved = false
         }
     }
 
