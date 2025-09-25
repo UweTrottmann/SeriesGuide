@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Copyright 2019-2025 Uwe Trottmann -->
+
 <resources>
 
     <style name="Theme.BaseSeriesGuide.Dark" parent="Theme.Material3.Dark.NoActionBar">
 
         <!-- All customizations that are SPECIFIC to API-level 27 go here. -->
 
-        <!-- Not used in most of the app since drawing edge-to-edge. -->
-        <!-- Copy from v23\themes.xml -->
+        <!-- Not used in most of the app since drawing edge-to-edge (see ThemeUtils). -->
+        <!-- Copy from values\themes.xml -->
         <item name="android:statusBarColor">@color/md_theme_dark_surfaceContainer</item>
         <!-- Note: nav bar color needs to be opaque! -->
         <item name="android:navigationBarColor">@color/md_theme_dark_surfaceContainer</item>
@@ -17,8 +21,8 @@
 
         <!-- All customizations that are SPECIFIC to API-level 27 go here. -->
 
-        <!-- Not used in most of the app since drawing edge-to-edge. -->
-        <!-- Copy from v23\themes.xml -->
+        <!-- Not used in most of the app since drawing edge-to-edge (see ThemeUtils). -->
+        <!-- Copy from values\themes.xml -->
         <item name="android:statusBarColor">@color/md_theme_light_surfaceContainer</item>
         <item name="android:windowLightStatusBar">true</item>
         <!-- Note: nav bar color needs to be opaque! -->
