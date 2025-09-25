@@ -341,7 +341,7 @@ class ListWidgetProvider : AppWidgetProvider() {
                 .addNextIntent(appLaunchIntent)
                 .getPendingIntent(
                     appWidgetId,
-                    PendingIntentCompat.flagImmutable or PendingIntent.FLAG_UPDATE_CURRENT
+                    PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
                 ).let {
                     rv.setOnClickPendingIntent(R.id.widget_title, it)
                 }
@@ -377,7 +377,7 @@ class ListWidgetProvider : AppWidgetProvider() {
                             context,
                             appWidgetId,
                             it,
-                            PendingIntentCompat.flagImmutable or PendingIntent.FLAG_UPDATE_CURRENT
+                            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
                         )
                     )
                 }
