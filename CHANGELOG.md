@@ -8,6 +8,12 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
 
+## Version 2025.3
+
+* 🔧 Upcoming/Recent: rename "Infinite calendar" option to the more applicable "Unlimited days".
+* 🔧 Widget: note general item limit in configuration screen, rename "Infinite calendar" option to
+  the more applicable "Unlimited days".
+
 ## Version 2025.2
 
 * 🔧 Movie details: adjust buttons to be more similar to episodes, other minor improvements.

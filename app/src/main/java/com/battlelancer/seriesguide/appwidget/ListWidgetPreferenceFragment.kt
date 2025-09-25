@@ -135,6 +135,13 @@ class ListWidgetPreferenceFragment : BasePreferencesFragment() {
             addPreference(hideWatchedPreference)
             addPreference(isInfinitePref)
             addPreference(isHideWatchedButtonPref)
+            addPreference(
+                Preference(requireContext()).also {
+                    it.isPersistent = false
+                    it.isSelectable = false
+                    it.setSummary(R.string.description_widget_unlimited_days)
+                }
+            )
             val appearanceCategory = PreferenceCategory(requireContext()).apply {
                 setTitle(R.string.pref_appearance)
             }

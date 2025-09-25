@@ -204,7 +204,7 @@
     <string name="only_favorites">Only favorite shows</string>
     <string name="calendar_only_collected">Only collected episodes</string>
     <string name="calendar_only_premieres">Only premieres</string>
-    <string name="pref_infinite_scrolling">Infinite calendar</string>
+    <string name="pref_infinite_scrolling">Unlimited days</string>
 
     <!-- Updating -->
     <string name="update_scheduled">Updating…</string>
@@ -553,6 +553,7 @@
     <string name="pref_widget_type">Widget type</string>
     <string name="pref_large_font">Use large font</string>
     <string name="pref_hide_watch_button">Hide watch button</string>
+    <string name="description_widget_unlimited_days">Note that the number of items is limited to save resources</string>
 
     <!-- Widget background options -->
     <string name="widget_background_transparent">Transparent</string>
