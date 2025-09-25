@@ -1,7 +1,19 @@
 # Legacy versions
 
-**These versions are no longer officially supported.** Yet, they may continue to (partially) work if
+**These releases are no longer officially supported.** Yet, they may continue to (partially) work if
 you really need them to.
+
+## Android 5.0, 5.1
+
+**Latest version:** 2025.2.12 (2025-09-25)
+
+**Available on Google Play:** yes
+
+**Supported:** no (since September 2025)
+
+**Status:** everything is known to work.
+
+[Get the APK](https://github.com/UweTrottmann/SeriesGuide/releases/tag/v2025.2.12)
 
 ## Android 4.4, 4.3, 4.2, 4.1
 
