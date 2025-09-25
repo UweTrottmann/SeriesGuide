@@ -39,6 +39,16 @@
                 android:layout_marginTop="@dimen/large_padding"
                 android:animateLayoutChanges="true">
 
+                <TextView
+                    android:id="@+id/textViewAutoBackupLastTime"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/last_auto_backup"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <ImageView
                     android:id="@+id/imageViewBackupStatus"
                     android:layout_width="24dp"
@@ -59,7 +69,7 @@
                     android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageViewBackupStatus"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupLastTime"
                     tools:text="AutoBackupException: something has gone terribly wrong" />
 
                 <androidx.constraintlayout.widget.Group
@@ -227,7 +237,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textViewAutoBackupLastTime"
+                    android:id="@+id/textViewAutoBackupRestoreLastTime"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_padding"
@@ -247,7 +257,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupLastTime" />
+                    app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupRestoreLastTime" />
 
                 <TextView
                     android:id="@+id/textViewAutoBackupImportCloudWarning"
