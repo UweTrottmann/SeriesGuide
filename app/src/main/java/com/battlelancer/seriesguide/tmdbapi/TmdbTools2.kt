@@ -394,11 +394,13 @@ class TmdbTools2 {
                 rent = emptyList()
             )
         }
-        val topProvider = providers.flatrate.minByOrNull { it.display_priority }
-            ?: providers.free.minByOrNull { it.display_priority }
-            ?: providers.ads.minByOrNull { it.display_priority }
-            ?: providers.buy.minByOrNull { it.display_priority }
-            ?: providers.rent.minByOrNull { it.display_priority }
+        // Technically display_priority can be null, so default to largest value as lowest value is
+        // highest priority.
+        val topProvider = providers.flatrate.minByOrNull { it.display_priority ?: Int.MAX_VALUE }
+            ?: providers.free.minByOrNull { it.display_priority ?: Int.MAX_VALUE }
+            ?: providers.ads.minByOrNull { it.display_priority ?: Int.MAX_VALUE }
+            ?: providers.buy.minByOrNull { it.display_priority ?: Int.MAX_VALUE }
+            ?: providers.rent.minByOrNull { it.display_priority ?: Int.MAX_VALUE }
         val count = providers.flatrate.size +
                 providers.free.size +
                 providers.ads.size +
