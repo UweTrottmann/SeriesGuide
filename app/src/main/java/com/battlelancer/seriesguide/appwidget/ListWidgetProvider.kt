@@ -26,6 +26,7 @@ import com.battlelancer.seriesguide.shows.ShowsActivityImpl
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.ui.ShowsActivity
+import com.battlelancer.seriesguide.util.AndroidTools
 import com.battlelancer.seriesguide.util.PendingIntentCompat
 import timber.log.Timber
 import java.util.Random
@@ -194,7 +195,7 @@ class ListWidgetProvider : AppWidgetProvider() {
         private const val DIP_THRESHOLD_COMPACT_LAYOUT = 80
 
         private val USE_NONCE_WORKAROUND =
-            Build.VERSION.SDK_INT == Build.VERSION_CODES.O && "Huawei" == Build.MANUFACTURER
+            Build.VERSION.SDK_INT == Build.VERSION_CODES.O && AndroidTools.isManufacturerHuawei
         private val random = Random()
 
         /**
