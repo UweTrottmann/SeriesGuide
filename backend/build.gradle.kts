@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
@@ -10,6 +12,12 @@ val sgMinSdk: Int by rootProject.extra
 tasks.withType(JavaCompile::class.java).configureEach {
     // Suppress JDK 21 warning about deprecated, but not yet removed, source and target value 8 support
     options.compilerArgs.add("-Xlint:-options")
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_1_8
+    }
 }
 
 android {
@@ -27,10 +35,6 @@ android {
         encoding = "UTF-8"
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
     }
 
     packaging {
