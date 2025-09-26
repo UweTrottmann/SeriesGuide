@@ -8,5 +8,6 @@ import android.os.Build
 object AndroidTools {
 
     val isManufacturerHuawei = "Huawei".equals(Build.MANUFACTURER, ignoreCase = true)
+    val isManufacturerSamsung = "Samsung".equals(Build.MANUFACTURER, ignoreCase = true)
 
 }
