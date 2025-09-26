@@ -18,4 +18,6 @@
     <issue id="TrustAllX509TrustManager">
         <ignore regexp="google-http-client"/>
     </issue>
+    <!-- Avoid spamming lint output, there is no need to use these, it's just convenience -->
+    <issue id="UseKtx" severity="ignore" />
 </lint>
