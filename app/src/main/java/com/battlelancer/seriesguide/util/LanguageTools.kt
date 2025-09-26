@@ -4,6 +4,7 @@
 package com.battlelancer.seriesguide.util
 
 import android.content.Context
+import android.os.Build
 import android.text.TextUtils
 import androidx.annotation.ArrayRes
 import com.battlelancer.seriesguide.R
@@ -17,13 +18,22 @@ object LanguageTools {
 
     const val LANGUAGE_EN = "en-US"
 
+    private fun localeCompat(languageCode: String, regionCode: String): Locale {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA) {
+            Locale.of(languageCode, regionCode)
+        } else {
+            @Suppress("DEPRECATION")
+            Locale(languageCode, regionCode)
+        }
+    }
+
     /**
      * Maps a [Locale] language code to its localized [Locale.getDisplayName].
      *
      * For example "en" is mapped to "English" if the UI is displayed in English.
      */
     fun getDisplayNameForLanguageCode(languageCode: String): String {
-        return Locale(languageCode, "").displayName
+        return localeCompat(languageCode, "").displayName
     }
 
     /**
@@ -32,7 +42,7 @@ object LanguageTools {
      * For example "US" is mapped to "United States" if the UI is displayed in English.
      */
     fun getDisplayNameForRegionCode(regionCode: String): String {
-        return Locale("", regionCode).displayCountry
+        return localeCompat("", regionCode).displayCountry
     }
 
     /**
@@ -77,7 +87,7 @@ object LanguageTools {
         val languageCodes = context.resources.getStringArray(languageCodesRes)
         for (i in languageCodes.indices) {
             if (languageCodes[i] == languageCode) {
-                return buildLanguageDisplayName(languageCode!!)
+                return buildLanguageDisplayName(languageCode)
             }
         }
 
@@ -136,9 +146,12 @@ object LanguageTools {
             "nl-BE", "nl-NL",
             "pt-PT", "pt-BR",
             "zh-CN", "zh-HK", "zh-SG", "zh-TW" -> {
-                Locale(languageCode.substring(0, 2), languageCode.substring(3, 5))
-                    .displayName
+                localeCompat(
+                    languageCode = languageCode.substring(0, 2),
+                    regionCode = languageCode.substring(3, 5)
+                ).displayName
             }
+
             else -> {
                 getDisplayNameForLanguageCode(languageCode.substring(0, 2))
             }
