@@ -28,6 +28,7 @@ import com.battlelancer.seriesguide.shows.database.SgEpisode2WithShow
 import com.battlelancer.seriesguide.shows.database.SgShow2ForLists
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
+import com.battlelancer.seriesguide.util.AndroidTools
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
@@ -114,6 +115,7 @@ class ListWidgetRemoteViewsFactory(
                     .getShows(SimpleSQLiteQuery(query))
                 shows.addAll(results)
             }
+
             WidgetSettings.Type.RECENT -> getUpcomingElseRecentEpisodes(false)
             WidgetSettings.Type.UPCOMING -> getUpcomingElseRecentEpisodes(true)
             else -> throw UnsupportedOperationException("Widget type not supported")
@@ -283,6 +285,7 @@ class ListWidgetRemoteViewsFactory(
                 val date = TimeTools.formatToLocalDateShort(context, actualRelease)
                 "$day $date"
             }
+
             else -> {
                 // "Fri 2 days ago"
                 TimeTools.formatToLocalDayAndRelativeTime(context, actualRelease)
@@ -359,9 +362,13 @@ class ListWidgetRemoteViewsFactory(
          * watched. But still large enough so a widget at full height on a portrait tablet screen
          * has some items to scroll.
          *
+         * Keep the regular limit for Samsung devices, they appear to continue to use their custom
+         * widget update implementation that is not affected by this issue.
+         *
          * See [ListWidgetProvider.onUpdate] for details.
          */
         private val WIDGET_ITEMS_LIMIT =
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.VANILLA_ICE_CREAM) 100 else 25
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.VANILLA_ICE_CREAM
+                || AndroidTools.isManufacturerSamsung) 100 else 25
     }
 }
