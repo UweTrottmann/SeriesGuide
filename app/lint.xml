@@ -12,6 +12,7 @@
     <!-- Not supplying drawable-hdpi, drawable-mdpi PNGs: only used in notifications. -->
     <issue id="IconMissingDensityFolder" severity="ignore" />
     <!-- Avoid spamming lint output, using Gradle versions plugin and in-IDE warnings instead. -->
+    <issue id="AndroidGradlePluginVersion" severity="ignore" />
     <issue id="GradleDependency" severity="ignore" />
     <issue id="NewerVersionAvailable" severity="ignore" />
     <!-- Google HTTP client has SslUtils.trustAllSSLContext which is not used by SeriesGuide -->
