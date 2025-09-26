@@ -29,6 +29,7 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
+import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.WebTools
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.uwetrottmann.tmdb2.entities.WatchProviders
@@ -39,7 +40,6 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.NumberFormat
-import java.util.Locale
 import kotlin.coroutines.CoroutineContext
 
 object StreamingSearch {
@@ -336,11 +336,6 @@ object StreamingSearch {
         }
     }
 
-    @JvmStatic
-    fun getServiceDisplayName(service: String): String {
-        return Locale("", service).displayCountry
-    }
-
     fun setRegion(context: Context, region: String) {
         PreferenceManager.getDefaultSharedPreferences(context).edit {
             putString(KEY_SETTING_REGION, region)
@@ -363,7 +358,7 @@ object StreamingSearch {
     fun getCurrentRegionOrSelectString(context: Context): String {
         return when (val serviceOrEmptyOrNull = getCurrentRegionOrNull(context)) {
             null -> context.getString(R.string.action_select_region)
-            else -> getServiceDisplayName(serviceOrEmptyOrNull)
+            else -> LanguageTools.getDisplayNameForRegionCode(serviceOrEmptyOrNull)
         }
     }
 

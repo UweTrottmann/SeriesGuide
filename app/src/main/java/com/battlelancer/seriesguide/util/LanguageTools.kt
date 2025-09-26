@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2015-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.util
 
@@ -7,6 +7,7 @@ import android.content.Context
 import android.text.TextUtils
 import androidx.annotation.ArrayRes
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.util.LanguageTools.LANGUAGE_EN
 import java.util.Locale
 
 /**
@@ -15,6 +16,24 @@ import java.util.Locale
 object LanguageTools {
 
     const val LANGUAGE_EN = "en-US"
+
+    /**
+     * Maps a [Locale] language code to its localized [Locale.getDisplayName].
+     *
+     * For example "en" is mapped to "English" if the UI is displayed in English.
+     */
+    fun getDisplayNameForLanguageCode(languageCode: String): String {
+        return Locale(languageCode, "").displayName
+    }
+
+    /**
+     * Maps a [Locale] region code to its localized [Locale.getDisplayCountry].
+     *
+     * For example "US" is mapped to "United States" if the UI is displayed in English.
+     */
+    fun getDisplayNameForRegionCode(regionCode: String): String {
+        return Locale("", regionCode).displayCountry
+    }
 
     /**
      * Returns the string representation of the given two letter ISO 639-1 language code
@@ -121,8 +140,7 @@ object LanguageTools {
                     .displayName
             }
             else -> {
-                Locale(languageCode.substring(0, 2), "")
-                    .displayName
+                getDisplayNameForLanguageCode(languageCode.substring(0, 2))
             }
         }
     }

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2014-2019, 2021-2024 Uwe Trottmann
+// Copyright 2014-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.util
 
@@ -15,6 +15,23 @@ import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.shows.database.SgEpisode2
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.database.SgShow2ForLists
+import com.battlelancer.seriesguide.util.TimeTools.ISO3166_1_UNITED_STATES
+import com.battlelancer.seriesguide.util.TimeTools.RELEASE_WEEKDAY_UNKNOWN
+import com.battlelancer.seriesguide.util.TimeTools.TIMEZONE_ID_US_ARIZONA
+import com.battlelancer.seriesguide.util.TimeTools.TIMEZONE_ID_US_EASTERN
+import com.battlelancer.seriesguide.util.TimeTools.TIMEZONE_ID_US_MOUNTAIN
+import com.battlelancer.seriesguide.util.TimeTools.TIMEZONE_ID_US_PACIFIC
+import com.battlelancer.seriesguide.util.TimeTools.applyUnitedStatesCorrections
+import com.battlelancer.seriesguide.util.TimeTools.applyUserOffset
+import com.battlelancer.seriesguide.util.TimeTools.atDeviceZone
+import com.battlelancer.seriesguide.util.TimeTools.formatToLocalDate
+import com.battlelancer.seriesguide.util.TimeTools.formatToLocalDateShort
+import com.battlelancer.seriesguide.util.TimeTools.formatWithDeviceZoneToDayAndTime
+import com.battlelancer.seriesguide.util.TimeTools.getDateTimeZone
+import com.battlelancer.seriesguide.util.TimeTools.getReleaseDateTime
+import com.battlelancer.seriesguide.util.TimeTools.getShowReleaseDateTimeCustomOrNull
+import com.battlelancer.seriesguide.util.TimeTools.getShowReleaseTime
+import com.battlelancer.seriesguide.util.TimeTools.handleHourPastMidnight
 import org.threeten.bp.Clock
 import org.threeten.bp.DateTimeException
 import org.threeten.bp.DayOfWeek
@@ -590,7 +607,7 @@ object TimeTools {
         if (releaseCountry == null || releaseCountry.isEmpty()) {
             return context.getString(R.string.unknown)
         }
-        val country = Locale("", releaseCountry).getDisplayCountry(Locale.getDefault())
+        val country = LanguageTools.getDisplayNameForRegionCode(releaseCountry)
         return if (TextUtils.isEmpty(country)) {
             context.getString(R.string.unknown)
         } else country
