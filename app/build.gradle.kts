@@ -34,6 +34,9 @@ kotlin {
         // Using experimental flatMapLatest for Paging 3
         // Using experimental Material 3 compose APIs
         freeCompilerArgs.add("-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi,androidx.compose.material3.ExperimentalMaterial3Api")
+        // Opt-in to constructor parameter annotations also applying to properties
+        // https://youtrack.jetbrains.com/issue/KT-73255
+        freeCompilerArgs.add("-Xannotation-default-target=param-property")
     }
 }
 
