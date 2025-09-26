@@ -40,6 +40,7 @@
     <string name="action_reset">Nollaa</string>
     <string name="action_save">Tallenna</string>
     <string name="action_turn_on">Ota käyttöön</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
     <!-- Search -->
     <string name="clear_search_history">Tyhjennä hakuhistoria</string>
     <string name="search_hint">Hae jaksoja</string>
@@ -509,6 +510,7 @@
     <string name="pref_widget_type">Widgetin tyyppi</string>
     <string name="pref_large_font">Käytä suurta kirjasinta</string>
     <string name="pref_hide_watch_button">Piilota katsottu-painike</string>
+    <string name="description_widget_limited_items">Note that the number of items is always limited to save resources</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Läpinäkyvä</string>
     <string name="widget_background_25">25 %</string>
@@ -563,9 +565,9 @@
     <!-- Streaming info -->
     <string name="action_stream">Suoratoista tai osta</string>
     <string name="action_stream_settings">Suoratoisto- tai ostoasetukset</string>
-    <string name="title_stream_subscription">Subscription</string>
-    <string name="title_stream_free">Free</string>
-    <string name="title_stream_with_ads">With ads</string>
-    <string name="title_stream_buy">Purchase</string>
-    <string name="title_stream_rent">Rental</string>
+    <string name="title_stream_subscription">Tilaus</string>
+    <string name="title_stream_free">Ilmainen</string>
+    <string name="title_stream_with_ads">Mainoksilla</string>
+    <string name="title_stream_buy">Ostos</string>
+    <string name="title_stream_rent">Vuokraus</string>
 </resources>

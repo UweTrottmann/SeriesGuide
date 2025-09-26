@@ -40,6 +40,7 @@
     <string name="action_reset">Restablecer</string>
     <string name="action_save">Guardar</string>
     <string name="action_turn_on">Activar</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
     <!-- Search -->
     <string name="clear_search_history">Limpiar historial de búsqueda</string>
     <string name="search_hint">Buscar episodios</string>
@@ -510,6 +511,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="pref_widget_type">Tipo de widget</string>
     <string name="pref_large_font">Usar tamaño de texto grande</string>
     <string name="pref_hide_watch_button">Ocultar botón de «Visto»</string>
+    <string name="description_widget_limited_items">Note that the number of items is always limited to save resources</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Transparente</string>
     <string name="widget_background_25">25%</string>
@@ -564,9 +566,9 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <!-- Streaming info -->
     <string name="action_stream">Ver en línea o comprar</string>
     <string name="action_stream_settings">Configuración de ver en línea o compra</string>
-    <string name="title_stream_subscription">Subscription</string>
-    <string name="title_stream_free">Free</string>
-    <string name="title_stream_with_ads">With ads</string>
-    <string name="title_stream_buy">Purchase</string>
-    <string name="title_stream_rent">Rental</string>
+    <string name="title_stream_subscription">Suscripción</string>
+    <string name="title_stream_free">Gratis</string>
+    <string name="title_stream_with_ads">Con anuncios</string>
+    <string name="title_stream_buy">Comprar</string>
+    <string name="title_stream_rent">Alquilar</string>
 </resources>
