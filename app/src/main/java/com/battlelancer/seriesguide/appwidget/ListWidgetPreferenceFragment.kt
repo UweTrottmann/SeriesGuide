@@ -139,7 +139,7 @@ class ListWidgetPreferenceFragment : BasePreferencesFragment() {
                     it.isPersistent = false
                     it.isSelectable = false
                     it.isIconSpaceReserved = false
-                    it.setSummary(R.string.description_widget_unlimited_days)
+                    it.setSummary(R.string.description_widget_limited_items)
                 }
             )
             val appearanceCategory = PreferenceCategory(requireContext()).apply {
