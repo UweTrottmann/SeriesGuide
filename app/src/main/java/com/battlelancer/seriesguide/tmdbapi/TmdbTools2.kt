@@ -404,8 +404,13 @@ class TmdbTools2 {
                 providers.ads.size +
                 providers.buy.size +
                 providers.rent.size
+        // For season-level watch provider info TMDB returns a link to a season-specific website
+        // that doesn't exist. So remove the /season/<number> part of the URL to end up with the
+        // existing show-level page. For example:
+        // https://www.themoviedb.org/tv/10283-archer/season/14/watch?locale=DE ->
+        // https://www.themoviedb.org/tv/10283-archer/watch?locale=DE
         return WatchInfo(
-            url = providers.link,
+            url = providers.link?.replace(WATCH_PROVIDER_SEASON_PATH_REGEX, ""),
             topProvider = topProvider?.provider_name,
             countMore = (count - 1).coerceAtLeast(0),
             subscription = providers.flatrate.toSortedNames(),
@@ -429,6 +434,20 @@ class TmdbTools2 {
             .watchProviders(showTmdbId)
             .awaitResponse("providers show")
             ?.results?.get(region)
+    }
+
+    suspend fun getWatchProvidersForSeason(
+        tmdb: Tmdb,
+        showTmdbId: Int,
+        seasonNumber: Int,
+        region: String
+    ): WatchInfo {
+        return tmdb
+            .tvSeasonsService()
+            .watchProviders(showTmdbId, seasonNumber)
+            .awaitResponse("providers season")
+            ?.results?.get(region)
+            .let { buildWatchInfo(it) }
     }
 
     suspend fun getWatchProvidersForMovie(
@@ -466,6 +485,7 @@ class TmdbTools2 {
     }
 
     companion object {
+        val WATCH_PROVIDER_SEASON_PATH_REGEX = "/season/[0-9]+".toRegex()
         // In UI, crew is currently not grouped by department, but for easier scanning sort by it,
         // then job (description).
         private val byDepartmentJobAndName: Comparator<SgPerson> =

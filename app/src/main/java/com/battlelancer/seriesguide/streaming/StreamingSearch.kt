@@ -33,6 +33,9 @@ import com.battlelancer.seriesguide.util.WebTools
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.uwetrottmann.tmdb2.entities.WatchProviders
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.NumberFormat
@@ -42,6 +45,12 @@ import kotlin.coroutines.CoroutineContext
 object StreamingSearch {
 
     val regionLiveData = MutableLiveData<String?>()
+    // Use a shared instead of a state flow to avoid having to set an initial value
+    private val _regionCode = MutableSharedFlow<String>(
+        replay = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
+    val regionCode = _regionCode.distinctUntilChanged()
 
     data class WatchInfo(val tmdbId: Int?, val region: String?)
 
@@ -182,7 +191,11 @@ object StreamingSearch {
     )
 
     fun initRegionLiveData(context: Context) {
-        regionLiveData.value = getCurrentRegionOrNull(context)
+        val regionOrNull = getCurrentRegionOrNull(context)
+        regionLiveData.value = regionOrNull
+        if (regionOrNull != null) {
+            _regionCode.tryEmit(regionOrNull)
+        }
     }
 
     fun getWatchInfoMediator(tmdbId: LiveData<Int>): MediatorLiveData<WatchInfo> {
@@ -333,6 +346,7 @@ object StreamingSearch {
             putString(KEY_SETTING_REGION, region)
         }
         regionLiveData.postValue(region)
+        _regionCode.tryEmit(region)
         // In case changed in quick succession, do not run in parallel to avoid breaking diff
         SgApp.coroutineScope.launch(SgApp.SINGLE) {
             // Update providers for new region

@@ -1,27 +1,20 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.overview
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.switchMap
-import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.streaming.StreamingSearch
+import com.battlelancer.seriesguide.shows.SeasonWatchInfoViewModel
 
 class OverviewViewModel(
     showId: Long,
     application: Application
-) : AndroidViewModel(application) {
-
-    init {
-        // Set original value for region.
-        StreamingSearch.initRegionLiveData(application)
-    }
+) : SeasonWatchInfoViewModel(application) {
 
     val show by lazy {
         SgRoomDatabase.getInstance(application).sgShow2Helper().getShowLiveData(showId)
@@ -33,24 +26,8 @@ class OverviewViewModel(
         }
     }
 
-    private val showTmdbId = MutableLiveData<Int>()
-    private val watchInfoMediator = StreamingSearch.getWatchInfoMediator(showTmdbId)
-    val watchProvider by lazy {
-        StreamingSearch.getWatchProviderLiveData(
-            watchInfoMediator,
-            viewModelScope.coroutineContext,
-            getApplication()
-        )
-    }
-
     fun setEpisodeId(episodeId: Long) {
         this.episodeId.value = episodeId
-    }
-
-    fun setShowTmdbId(showTmdbId: Int?) {
-        if (showTmdbId != null) {
-            this.showTmdbId.value = showTmdbId
-        }
     }
 
 }
