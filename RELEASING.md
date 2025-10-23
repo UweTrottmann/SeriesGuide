@@ -3,7 +3,7 @@
 - If it does not exist, create a release branch. If it exists, merge latest changes.
 
   ```shell
-  git checkout -b release-2025.2
+  git checkout -b release-2025.3
   # or
   git merge dev
   ```
@@ -20,8 +20,8 @@
 - Commit and push
 
   ```shell
-  git commit --all --message "Prepare version 2025.2.9 (21250212)"
-  git push --set-upstream origin release-2025.2
+  git commit --all --message "Prepare version 2025.3.0 (23250300)"
+  git push --set-upstream origin release-2025.3
   ```
 
 - If it does not exist, [create a merge request](https://github.com/UweTrottmann/SeriesGuide/compare/main...) against `main`
