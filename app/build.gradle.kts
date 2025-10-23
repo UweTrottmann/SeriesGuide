@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -25,6 +26,27 @@ val sgVersionName: String by rootProject.extra
 tasks.withType(JavaCompile::class.java).configureEach {
     // Suppress JDK 21 warning about deprecated, but not yet removed, source and target value 8 support
     options.compilerArgs.add("-Xlint:-options")
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_1_8
+        // Using experimental flatMapLatest for Paging 3
+        // Using experimental Material 3 compose APIs
+        freeCompilerArgs.add("-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi,androidx.compose.material3.ExperimentalMaterial3Api")
+        // Opt-in to constructor parameter annotations also applying to properties
+        // https://youtrack.jetbrains.com/issue/KT-73255
+        freeCompilerArgs.add("-Xannotation-default-target=param-property")
+    }
+}
+
+kapt {
+    arguments {
+        arg("eventBusIndex", "com.battlelancer.seriesguide.SgEventBusIndex")
+        // Export schema for testing and in case the database ever needs to be built manually
+        // (like when migrating away from Room).
+        arg("room.schemaLocation", "$projectDir/schemas")
+    }
 }
 
 android {
@@ -77,14 +99,6 @@ android {
         encoding = "UTF-8"
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
-        // Using experimental flatMapLatest for Paging 3
-        // Using experimental Material 3 compose APIs
-        freeCompilerArgs =
-            freeCompilerArgs + "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi,androidx.compose.material3.ExperimentalMaterial3Api"
     }
 
     lint {
@@ -170,16 +184,6 @@ android {
             // https://github.com/Kotlin/kotlinx.coroutines?tab=readme-ov-file#avoiding-including-the-debug-infrastructure-in-the-resulting-apk
             excludes += "DebugProbesKt.bin"
         }
-    }
-}
-
-// Note: android.javaCompileOptions.annotationProcessorOptions does not seem to work with Kotlin 1.5.20
-kapt {
-    arguments {
-        arg("eventBusIndex", "com.battlelancer.seriesguide.SgEventBusIndex")
-        // Export schema for testing and in case the database ever needs to be built manually
-        // (like when migrating away from Room).
-        arg("room.schemaLocation", "$projectDir/schemas")
     }
 }
 
