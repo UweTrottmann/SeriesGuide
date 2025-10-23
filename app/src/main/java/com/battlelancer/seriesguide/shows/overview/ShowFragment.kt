@@ -20,7 +20,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -82,7 +82,9 @@ class ShowFragment() : Fragment() {
     private var show: SgShow2? = null
     private var languageCode: String? = null
 
-    val model: ShowViewModel by viewModels()
+    // Cache the ViewModel in the activity (use activityViewModels instead of viewModels) as
+    // OverviewActivityImpl may destroy fragments when switching layouts.
+    val model: ShowViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

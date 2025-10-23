@@ -20,7 +20,7 @@ import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
@@ -103,7 +103,9 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
 
     private val handler = Handler(Looper.getMainLooper())
     private var ratingFetchJob: Job? = null
-    private val model: OverviewViewModel by viewModels {
+    // Cache the ViewModel in the activity (use activityViewModels instead of viewModels) as
+    // OverviewActivityImpl may destroy fragments when switching layouts.
+    private val model: OverviewViewModel by activityViewModels {
         OverviewViewModelFactory(showId, requireActivity().application)
     }
 
