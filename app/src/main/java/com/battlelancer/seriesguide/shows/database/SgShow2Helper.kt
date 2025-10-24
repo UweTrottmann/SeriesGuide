@@ -50,8 +50,20 @@ interface SgShow2Helper {
     @Query("SELECT _id FROM sg_show")
     fun getShowIdsLong(): List<Long>
 
-    @Query("SELECT _id, series_lastupdate FROM sg_show")
-    fun getShowsUpdateInfo(): List<SgShow2UpdateInfo>
+    /**
+     * Returns IDs of shows that haven't been updated since [lastUpdatedBeforeTimeInMs],
+     * except for ended shows, which are only returned if not updated since
+     * [endedLastUpdatedBeforeTimeInMs].
+     */
+    @Query(
+        "SELECT _id FROM sg_show WHERE" +
+                " (series_status != ${ShowStatus.ENDED} AND series_lastupdate < :lastUpdatedBeforeTimeInMs)" +
+                " OR (series_status = ${ShowStatus.ENDED} AND series_lastupdate < :endedLastUpdatedBeforeTimeInMs)"
+    )
+    fun getShowsUpdateInfo(
+        lastUpdatedBeforeTimeInMs: Long,
+        endedLastUpdatedBeforeTimeInMs: Long
+    ): List<Long>
 
     @Query("SELECT _id FROM sg_show WHERE series_tmdb_id=:tmdbId")
     fun getShowIdByTmdbId(tmdbId: Int): Long

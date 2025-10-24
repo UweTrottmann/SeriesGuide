@@ -76,5 +76,57 @@ class ShowSyncTest {
             SyncProgress()
         )
     }
+
+    @Test
+    fun getShowsToDeltaUpdate() {
+        val currentTime = System.currentTimeMillis()
+
+        val showSync = ShowSync(SyncOptions.SyncType.DELTA, 0)
+
+        val showHelper = SgRoomDatabase
+            .getInstance(ApplicationProvider.getApplicationContext())
+            .sgShow2Helper()
+
+        val returningToUpdate = showHelper.insertShow(
+            ShowTestHelper.showToInsert().copy(
+                status = ShowStatus.RETURNING,
+                lastUpdatedMs = currentTime - ShowSync.UPDATE_THRESHOLD_MS - 1
+            )
+        )
+        showHelper.insertShow(
+            ShowTestHelper.showToInsert().copy(
+                status = ShowStatus.RETURNING,
+                lastUpdatedMs = currentTime
+            )
+        )
+        val endedToUpdate = showHelper.insertShow(
+            ShowTestHelper.showToInsert().copy(
+                status = ShowStatus.ENDED,
+                lastUpdatedMs = currentTime - ShowSync.UPDATE_THRESHOLD_ENDED_MS - 1
+            )
+        )
+        // Should exclude ended show that only exceeds regular threshold
+        showHelper.insertShow(
+            ShowTestHelper.showToInsert().copy(
+                status = ShowStatus.ENDED,
+                lastUpdatedMs = currentTime - ShowSync.UPDATE_THRESHOLD_MS - 1
+            )
+        )
+        showHelper.insertShow(
+            ShowTestHelper.showToInsert().copy(
+                status = ShowStatus.ENDED,
+                lastUpdatedMs = currentTime
+            )
+        )
+
+        val showsToUpdate = showSync.getShowsToDeltaUpdate(showHelper, currentTime)
+
+        assertThat(showsToUpdate).containsExactlyElementsIn(
+            listOf(
+                returningToUpdate,
+                endedToUpdate
+            )
+        )
+    }
 }
 

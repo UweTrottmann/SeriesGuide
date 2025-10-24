@@ -15,6 +15,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
   the more applicable "Unlimited days", move hide watch button option to appearance category.
 * 🔧 On Android 16 on Samsung devices, increase the limit of widget items back to 100.
 * 🔧 Shows: only display stream and purchase options specific to the season of a displayed episode.
+* 🔧 Shows: update ended shows less often (90+ days) to speed up updating of large libraries and 
+  reduce load on TMDB.
 
 ## Version 2025.2
 

@@ -1,15 +1,13 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2022-2025 Uwe Trottmann
+// Copyright 2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.tools
 
-import com.battlelancer.seriesguide.shows.database.SgEpisode2
-import com.battlelancer.seriesguide.shows.database.SgSeason2
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.TimeTools
 
-// Note there is a copy of this in the test source set
+// Note there is a copy of this in the androidTest source set
 object ShowTestHelper {
 
     fun showToInsert() =
@@ -45,44 +43,6 @@ object ShowTestHelper {
             lastUpdatedMs = System.currentTimeMillis(), // now
             userNote = null,
             userNoteTraktId = null
-        )
-
-    fun seasonToInsert(
-        showId: Long,
-        number: Int
-    ) =
-        SgSeason2(
-            showId = showId,
-            tmdbId = "1",
-            numberOrNull = number,
-            order = number,
-            name = "Season $number"
-        )
-
-    fun SgSeason2.episodeToInsert(
-        seasonId: Long,
-        number: Int,
-        releaseDateTimeMs: Long
-    ) =
-        SgEpisode2(
-            showId = showId,
-            seasonId = seasonId,
-            tmdbId = 1,
-            title = "Episode $number",
-            overview = "Episode $number description",
-            number = number,
-            order = number,
-            season = this.number,
-            image = "episode_image.jpg",
-            firstReleasedMs = releaseDateTimeMs,
-            directors = "directors",
-            guestStars = "guest stars",
-            writers = "writers",
-            ratingTmdb = null,
-            ratingTmdbVotes = null,
-            ratingTrakt = null,
-            ratingTraktVotes = null,
-            ratingUser = null
         )
 
 }
