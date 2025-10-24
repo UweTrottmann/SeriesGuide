@@ -40,6 +40,7 @@
     <string name="action_reset">Visszaállítás</string>
     <string name="action_save">Save</string>
     <string name="action_turn_on">Turn on</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
     <!-- Search -->
     <string name="clear_search_history">Keresési előzmények törlése</string>
     <string name="search_hint">Epizódok keresése</string>
@@ -189,7 +190,7 @@
     <string name="only_favorites">Csak kedvenc sorozatok</string>
     <string name="calendar_only_collected">Csak begyűjtött epizódok</string>
     <string name="calendar_only_premieres">Csak premierek</string>
-    <string name="pref_infinite_scrolling">Végtelen naptár</string>
+    <string name="pref_infinite_scrolling">Unlimited days</string>
     <!-- Updating -->
     <string name="update_scheduled">Frissítés&#8230;</string>
     <string name="update_no_connection">Frissítéshez csatlakozz az internetre.</string>
@@ -468,12 +469,12 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatikus biztonsági másolat</string>
     <string name="pref_autobackupsummary">Heti biztonsági másolat készítése a sorozatokról, listákról és filmekről</string>
-    <string name="autobackup_details">Ezek a biztonsági mentések nem elérhetőek ha az app újra telepítve van. Készíts másolatokat hogy biztosan megőrizve legyenek.</string>
+    <string name="autobackup_details">These backups are deleted if the app is uninstalled. You can choose to create copies in another location below that can be restored using the import tool.</string>
     <string name="backup_button">Biztonsági Mentés</string>
     <string name="last_auto_backup">Utolsó automata mentés: %s</string>
     <string name="restore_auto_backup">Automatikus mentés visszaállítása</string>
-    <string name="autobackup_failed">A legutóbbi automatikus mentés nem sikerült</string>
-    <string name="autobackup_files_missing">Az automatikus biztonsági másolat használatához válassz érvényes biztonsági másolat fájlokat.</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">A legutóbbi automatikus mentés nem sikerült</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">A file to store the copy of an auto-backup is missing</string>
     <string name="autobackup_create_user_copy">Másolat létrehozása minden biztonsági mentés után</string>
     <string name="autobackup_restore_available">Előfordulhat, hogy automatikus biztonsági mentés áll rendelkezésre a visszaállításhoz.</string>
     <!-- Welcome dialog -->
@@ -509,6 +510,7 @@
     <string name="pref_widget_type">Widget típus</string>
     <string name="pref_large_font">Nagy betűméret</string>
     <string name="pref_hide_watch_button">Megtekintés gomb elrejtése</string>
+    <string name="description_widget_limited_items">Note that the number of items is always limited to save resources</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Átlátszó</string>
     <string name="widget_background_25">25%</string>
@@ -525,9 +527,9 @@
     <string name="billing_sub_description">Próbáld ki 30 napig ingyen, bármikor visszavonható.</string>
     <string name="upgrade_description">Minden előfizetés feloldja az összes funkciót és támogatja a jövőbeli frissítéseket. Az alkalmazás használatához előfizetés nem szükséges.</string>
     <string name="upgrade_success">Köszönöm a támogatást. Most már hozzáférsz az összes funkcióhoz.</string>
-    <string name="billing_unlock_detected">X Pass alkalmazás felismerve. Feliratkozás szükséges lehet a jövőbeni frissítések támogatásához.</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">All Access Pass detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">Továbi információk és segítség</string>
-    <string name="subscription_expired_details">Lejárt a SeriesGuide előfizetésed.</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">Access to all features expired</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Jelentkezz be az Amazon fiókodba!</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">Az előfizetés jelenleg nem érhető el.</string>

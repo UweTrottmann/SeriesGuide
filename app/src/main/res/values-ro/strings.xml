@@ -40,6 +40,7 @@
     <string name="action_reset">Reset</string>
     <string name="action_save">Save</string>
     <string name="action_turn_on">Turn on</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
     <!-- Search -->
     <string name="clear_search_history">Ștergere istoric căutare</string>
     <string name="search_hint">Căutaţi episoade</string>
@@ -190,7 +191,7 @@
     <string name="only_favorites">Doar emisiunile preferate</string>
     <string name="calendar_only_collected">Doar episoadele colecționate</string>
     <string name="calendar_only_premieres">Only premieres</string>
-    <string name="pref_infinite_scrolling">Calendar infinit</string>
+    <string name="pref_infinite_scrolling">Unlimited days</string>
     <!-- Updating -->
     <string name="update_scheduled">Actualizare&#8230;</string>
     <string name="update_no_connection">Pentru a actualiza conectați-vă la internet.</string>
@@ -482,12 +483,12 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Backup automat</string>
     <string name="pref_autobackupsummary">Backup săptămânal al serialelor, listelor si filmelor</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again. Create copies to preserve them otherwise.</string>
+    <string name="autobackup_details">These backups are deleted if the app is uninstalled. You can choose to create copies in another location below that can be restored using the import tool.</string>
     <string name="backup_button">Arhivare</string>
     <string name="last_auto_backup">Ultimul backup automat: %s</string>
     <string name="restore_auto_backup">Restaurare arhivă automat</string>
-    <string name="autobackup_failed">The last auto backup has failed</string>
-    <string name="autobackup_files_missing">Pentru backup automat, selectează fișiere de backup valabile.</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">The last auto backup has failed</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">A file to store the copy of an auto-backup is missing</string>
     <string name="autobackup_create_user_copy">Create a copy after each backup</string>
     <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
@@ -523,6 +524,7 @@
     <string name="pref_widget_type">Tip de widget</string>
     <string name="pref_large_font">Use large font</string>
     <string name="pref_hide_watch_button">Hide watch button</string>
+    <string name="description_widget_limited_items">Note that the number of items is always limited to save resources</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Transparent</string>
     <string name="widget_background_25">25%</string>
@@ -539,9 +541,9 @@
     <string name="billing_sub_description">Try for 30 days, cancel any time.</string>
     <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Mulțumim pentru suportul SeriesGuide! Ai access la toate opțiunile.</string>
-    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">All Access Pass detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">More info and help</string>
-    <string name="subscription_expired_details">Abonamentul la opțiunile X a expirat.</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">Access to all features expired</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Conectează-te în contul Amazon!</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">Abonamentul nu este disponibil momentan.</string>

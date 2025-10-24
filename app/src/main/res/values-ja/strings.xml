@@ -40,6 +40,7 @@
     <string name="action_reset">Reset</string>
     <string name="action_save">Save</string>
     <string name="action_turn_on">Turn on</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
     <!-- Search -->
     <string name="clear_search_history">検索履歴を削除</string>
     <string name="search_hint">エピソードを検索</string>
@@ -188,7 +189,7 @@
     <string name="only_favorites">お気に入りの番組のみ</string>
     <string name="calendar_only_collected">コレクション済のエピソードのみ</string>
     <string name="calendar_only_premieres">プレミアのみ</string>
-    <string name="pref_infinite_scrolling">無限のカレンダー</string>
+    <string name="pref_infinite_scrolling">Unlimited days</string>
     <!-- Updating -->
     <string name="update_scheduled">更新中&#8230;</string>
     <string name="update_no_connection">更新するために、インターネットに接続してください。</string>
@@ -454,12 +455,12 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">自動バックアップ</string>
     <string name="pref_autobackupsummary">番組、リスト、映画を毎週バックアップ</string>
-    <string name="autobackup_details">このデバイス (Android 6以降) は、アプリデータのバックアップがオンになっていない限り、アプリを再度インストールした場合は、これらのバックアップは利用できません。 それ以外の場合、保存するにはコピーを作成してください。</string>
+    <string name="autobackup_details">These backups are deleted if the app is uninstalled. You can choose to create copies in another location below that can be restored using the import tool.</string>
     <string name="backup_button">バックアップを作成</string>
     <string name="last_auto_backup">最終の自動バックアップ: %s</string>
     <string name="restore_auto_backup">自動バックアップを復元</string>
-    <string name="autobackup_failed">前回の自動バックアップが失敗しました</string>
-    <string name="autobackup_files_missing">自動バックアップを使用するため、有効なバックアップ ファイルを選択してください。</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">前回の自動バックアップが失敗しました</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">A file to store the copy of an auto-backup is missing</string>
     <string name="autobackup_create_user_copy">各バックアップ後にコピーを作成する</string>
     <string name="autobackup_restore_available">自動バックアップが復元に利用可能な場合があります。</string>
     <!-- Welcome dialog -->
@@ -495,6 +496,7 @@
     <string name="pref_widget_type">ウィジェットのタイプ</string>
     <string name="pref_large_font">大きいフォントを使用する</string>
     <string name="pref_hide_watch_button">Hide watch button</string>
+    <string name="description_widget_limited_items">Note that the number of items is always limited to save resources</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">透明</string>
     <string name="widget_background_25">25%</string>
@@ -511,9 +513,9 @@
     <string name="billing_sub_description">無料で30日間お試しください。いつでもキャンセルできます</string>
     <string name="upgrade_description">サブスクリプションで、すべての機能がロック解除され、将来のアップデートをサポートします。サブスクリプションはこのアプリを使用する上で必須ではありません。</string>
     <string name="upgrade_success">SeriesGuide のサポートをありがとうございます! すべての機能にアクセスすることができます。</string>
-    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">All Access Pass detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">詳細情報とヘルプ</string>
-    <string name="subscription_expired_details">SeriesGuide サブスクリプションの有効期限が切れています。</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">Access to all features expired</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Amazon アカウントにサインイン!</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">サブスクリプションは現在利用できません。</string>

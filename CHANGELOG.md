@@ -17,6 +17,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 * 🔧 Shows: only display stream and purchase options specific to the season of a displayed episode.
 * 🔧 Shows: update ended shows less often (90+ days) to speed up updating of large libraries and 
   reduce load on TMDB.
+* 📝 Import latest user interface translations.
 
 ## Version 2025.2
 

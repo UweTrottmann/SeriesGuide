@@ -40,6 +40,7 @@
     <string name="action_reset">Reset</string>
     <string name="action_save">Save</string>
     <string name="action_turn_on">Turn on</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
     <!-- Search -->
     <string name="clear_search_history">ล้างประวัติการค้นหา</string>
     <string name="search_hint">ค้นหาตอน</string>
@@ -188,7 +189,7 @@
     <string name="only_favorites">เฉพาะซีรีส์ที่ชื่นชอบ</string>
     <string name="calendar_only_collected">เฉพาะตอนที่เก็บไว้</string>
     <string name="calendar_only_premieres">เฉพาะรอบปฐมทัศน์</string>
-    <string name="pref_infinite_scrolling">ปฏิทินไม่สิ้นสุด</string>
+    <string name="pref_infinite_scrolling">Unlimited days</string>
     <!-- Updating -->
     <string name="update_scheduled">กำลังอัปเดต&#8230;</string>
     <string name="update_no_connection">ในการอัปเดต เชื่อมต่ออินเทอร์เน็ต</string>
@@ -454,12 +455,12 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">สำรองอัตโนมัติ</string>
     <string name="pref_autobackupsummary">สำรองข้อมูลซีรีส์, รายการ และภาพยนตร์รายสัปดาห์</string>
-    <string name="autobackup_details">ข้อมูลที่สำรองนี้จะไม่สามารถใช้งานได้หากแอปถูกติดตั้งใหม่ ยกเว้นหากเปิดใช้งานการสำรองข้อมูลแอปในอุปกรณ์นี้ (Android 6+) สร้างสำเนาเพื่อเก็บข้อมูลไว้อีกที</string>
+    <string name="autobackup_details">These backups are deleted if the app is uninstalled. You can choose to create copies in another location below that can be restored using the import tool.</string>
     <string name="backup_button">สร้างข้อมูลสำรอง</string>
     <string name="last_auto_backup">สำรองข้อมูลอัตโนมัติล่าสุด: %s</string>
     <string name="restore_auto_backup">กู้คืนการสำรองข้อมูลอัตโนมัติ</string>
-    <string name="autobackup_failed">การสำรองข้อมูลอัตโนมัตฺล่าสุดล้มเหลว</string>
-    <string name="autobackup_files_missing">ในการใช้การสำรองข้อมูลอัตโนมัติ, เลือกไฟล์สำรองที่ถูกต้อง</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">การสำรองข้อมูลอัตโนมัตฺล่าสุดล้มเหลว</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">A file to store the copy of an auto-backup is missing</string>
     <string name="autobackup_create_user_copy">สร้างสำเนาของทุกการสำรองข้อมูล</string>
     <string name="autobackup_restore_available">ข้อมูลที่สำรองไว้อัตโนมัติอาจพร้อมให้คืนค่า</string>
     <!-- Welcome dialog -->
@@ -495,6 +496,7 @@
     <string name="pref_widget_type">ชนิดวิตเจ็ต</string>
     <string name="pref_large_font">ใช้อักษรขนาดใหญ่ขึ้น</string>
     <string name="pref_hide_watch_button">ซ่อนปุ่มดู</string>
+    <string name="description_widget_limited_items">Note that the number of items is always limited to save resources</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">โปร่งใส</string>
     <string name="widget_background_25">25%</string>
@@ -511,9 +513,9 @@
     <string name="billing_sub_description">ลองใช้ฟรี 30 วัน ยกเลิกได้ทุกเมื่อ</string>
     <string name="upgrade_description">ทุกการสมัครสมาชิกจะปลดล็อกทุกคุณสมบัติและช่วยสนับสนุนอัปเดตในอนาคต ไม่จำเป็นต้องสมัครสมาชิกเพื่อใช้งานแอปนี้</string>
     <string name="upgrade_success">ขอบคุณสำหรับการสนับสนุน SeriesGuide! คุณสามารถเข้าถึงคุณสมบัติทั้งหมดได้แล้ว</string>
-    <string name="billing_unlock_detected">ตรวจพบแอป X Pass คุณยังคงสามารถสมัครสมาชิกเพื่อสนับสนุนการอัปเดตในอนาคต</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">All Access Pass detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">ข้อมูลเพิ่มเติมและช่วยเหลือ</string>
-    <string name="subscription_expired_details">การสมัครสมาชิก SeriesGuide ของคุณหมดอายุแล้ว</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">Access to all features expired</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">เข้าสู่ระบบบัญชี Amazon ของคุณ!</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">การสมัครสมาชิกไม่สามารถใช้ได้</string>

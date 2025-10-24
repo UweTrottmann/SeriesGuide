@@ -40,6 +40,7 @@
     <string name="action_reset">Resetuj</string>
     <string name="action_save">Sačuvaj</string>
     <string name="action_turn_on">Uključi</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Proveri</string>
     <!-- Search -->
     <string name="clear_search_history">Obriši istoriju pretrage</string>
     <string name="search_hint">Pretraži epizode</string>
@@ -190,7 +191,7 @@
     <string name="only_favorites">Samo omiljene serije</string>
     <string name="calendar_only_collected">Samo prikupljene epizode</string>
     <string name="calendar_only_premieres">Samo premijere</string>
-    <string name="pref_infinite_scrolling">Beskonačan kalendar</string>
+    <string name="pref_infinite_scrolling">Neograničeni dani</string>
     <!-- Updating -->
     <string name="update_scheduled">Ažuriranje&#8230;</string>
     <string name="update_no_connection">Za ažuriranje povežite se na internet</string>
@@ -482,12 +483,12 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatska rezervna kopija</string>
     <string name="pref_autobackupsummary">Nedeljna rezervna kopija serija, lista i filmova u skladištu uređaja.</string>
-    <string name="autobackup_details">Ove rezervne kopije nisu dostupne ako se aplikacija ponovo instalira. Napravite kopije da biste ih inače sačuvali.</string>
+    <string name="autobackup_details">Ove rezervne kopije se brišu ako se aplikacija deinstalira. Možete da izaberete da napravite kopije na drugoj lokaciji ispod koje se mogu vratiti pomoću alatke za uvoz.</string>
     <string name="backup_button">Napravite rezervnu kopiju</string>
     <string name="last_auto_backup">Poslednja automatska rezervna kopija: %s</string>
     <string name="restore_auto_backup">Vrati automatsku rezervnu kopiju</string>
-    <string name="autobackup_failed">Poslednja automatska rezervna kopija nije uspela</string>
-    <string name="autobackup_files_missing">Da biste koristili automatsku rezervnu kopiju, izaberite važeće datoteke rezervnih kopija</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">Poslednja automatska rezervna kopija nije uspela</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">Nedostaje datoteka koja se koristi za automatske rezervne kopije</string>
     <string name="autobackup_create_user_copy">Napravite kopiju nakon svake rezervne kopije</string>
     <string name="autobackup_restore_available">Možda će biti dostupna automatska rezervna kopija za vraćanje.</string>
     <!-- Welcome dialog -->
@@ -523,6 +524,7 @@
     <string name="pref_widget_type">Tip vidžeta</string>
     <string name="pref_large_font">Koristite veliki font</string>
     <string name="pref_hide_watch_button">Sakrij dugme gledam</string>
+    <string name="description_widget_limited_items">Imajte na umu da je broj predmeta uvek ograničen radi uštede resursa</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Providno</string>
     <string name="widget_background_25">25%</string>
@@ -539,9 +541,9 @@
     <string name="billing_sub_description">Pokušajte 30 dana, otkažite bilo kada.</string>
     <string name="upgrade_description">Svaka pretplata otključava sve funkcije i podržava buduća ažuriranja. Za korišćenje ove aplikacije nije potrebna pretplata.</string>
     <string name="upgrade_success">Hvala što podržavate SeriesGuide! Imate pristup svim funkcijama.</string>
-    <string name="billing_unlock_detected">Otkrivena je aplikacija X Pass. I dalje se možete pretplatiti na podršku za buduća ažuriranja.</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">Detektovana je propusnica za potpuni pristup. I dalje možete da se pretplatite da biste podržali buduća ažuriranja.</string>
     <string name="billing_learn_more">Više informacija i pomoć</string>
-    <string name="subscription_expired_details">Vaša pretplata na SeriesGuide je istekla</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">Pristup svim funkcijama je istekao</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Prijavite se na svoj Amazon nalog</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">Pretplata trenutno nije dostupna</string>

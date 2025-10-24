@@ -40,6 +40,7 @@
     <string name="action_reset">Нулиране</string>
     <string name="action_save">Запис</string>
     <string name="action_turn_on">Turn on</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
     <!-- Search -->
     <string name="clear_search_history">Изчисти историята на търсене</string>
     <string name="search_hint">Търсене на епизоди</string>
@@ -189,7 +190,7 @@
     <string name="only_favorites">Само Любими сериали</string>
     <string name="calendar_only_collected">Само притежавани епизоди</string>
     <string name="calendar_only_premieres">Само премиери</string>
-    <string name="pref_infinite_scrolling">Безкраен календар</string>
+    <string name="pref_infinite_scrolling">Unlimited days</string>
     <!-- Updating -->
     <string name="update_scheduled">Обновяване&#8230;</string>
     <string name="update_no_connection">За актуализация се свържете към интернет.</string>
@@ -468,12 +469,12 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Автоматично създаване на резервно копие</string>
     <string name="pref_autobackupsummary">Седмичен архив на вашите предавания, списъци и филми</string>
-    <string name="autobackup_details">Ако преинсталирате приложението, копията ще бъдат изтрити. Преди това направете допълнително копие.</string>
+    <string name="autobackup_details">These backups are deleted if the app is uninstalled. You can choose to create copies in another location below that can be restored using the import tool.</string>
     <string name="backup_button">Създаване на архив</string>
     <string name="last_auto_backup">Последно автоматично архивиране: %s</string>
     <string name="restore_auto_backup">Възстанови автоматично архивиране</string>
-    <string name="autobackup_failed">Създаването на автоматично копие беше неуспешно.</string>
-    <string name="autobackup_files_missing">За да използвате автоматично архивиране, изберете валиден архивн файл.</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">Създаването на автоматично копие беше неуспешно.</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">A file to store the copy of an auto-backup is missing</string>
     <string name="autobackup_create_user_copy">Създавай копие всеки път</string>
     <string name="autobackup_restore_available">Налично е автоматично създадено резервно копие.</string>
     <!-- Welcome dialog -->
@@ -509,6 +510,7 @@
     <string name="pref_widget_type">Вид на уиджета</string>
     <string name="pref_large_font">Използвай едър шрифт</string>
     <string name="pref_hide_watch_button">Скрий бутона Гледай</string>
+    <string name="description_widget_limited_items">Note that the number of items is always limited to save resources</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Прозрачно</string>
     <string name="widget_background_25">25%</string>
@@ -525,9 +527,9 @@
     <string name="billing_sub_description">Пробвайте за 30 дни, откажете се по всяко време.</string>
     <string name="upgrade_description">Всички абонаменти дават достъп до всички функции и бъдещи добавки. Не се изисква абонамент, за да ползвате приложението.</string>
     <string name="upgrade_success">Благодаря, че подкрепихте SeriesGuide! Имате достъп до всички фунцкии.</string>
-    <string name="billing_unlock_detected">Имате приложението X Pass. Все пак можете да се абонирате, за да ни подкрепите.</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">All Access Pass detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">Информация и помощ</string>
-    <string name="subscription_expired_details">Вашият абонамент за X функциите е изтекъл.</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">Access to all features expired</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Влезте в профила си в Amazon!</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">Абонаментът не е наличен.</string>

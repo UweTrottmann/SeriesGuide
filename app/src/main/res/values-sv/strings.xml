@@ -40,6 +40,7 @@
     <string name="action_reset">Återställ</string>
     <string name="action_save">Spara</string>
     <string name="action_turn_on">Slå på</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
     <!-- Search -->
     <string name="clear_search_history">Rensa sökhistorik</string>
     <string name="search_hint">Sök avsnitt</string>
@@ -189,7 +190,7 @@
     <string name="only_favorites">Endast favoritserier</string>
     <string name="calendar_only_collected">Endast avsnitt i samling</string>
     <string name="calendar_only_premieres">Endast premiärer</string>
-    <string name="pref_infinite_scrolling">Ändlös kalender</string>
+    <string name="pref_infinite_scrolling">Unlimited days</string>
     <!-- Updating -->
     <string name="update_scheduled">Uppdaterar&#8230;</string>
     <string name="update_no_connection">För att uppdatera anslut till internet.</string>
@@ -468,12 +469,12 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatisk säkerhetskopiering</string>
     <string name="pref_autobackupsummary">Veckovis säkerhetskopiering av dina serier, listor och filmer</string>
-    <string name="autobackup_details">Dessa säkerhetskopior är inte tillgängliga om appen är installerad igen såvida inte app-säkerhetskopiering är påslagen för den här enheten (Android 6+). Skapa kopior för att bevara dem annars.</string>
+    <string name="autobackup_details">These backups are deleted if the app is uninstalled. You can choose to create copies in another location below that can be restored using the import tool.</string>
     <string name="backup_button">Säkerhetskopiera</string>
     <string name="last_auto_backup">Senaste automatiska säkerhetskopia: %s</string>
     <string name="restore_auto_backup">Återställ automatisk säkerhetskopia</string>
-    <string name="autobackup_failed">Den senaste automatiska säkerhetskopieringen misslyckades</string>
-    <string name="autobackup_files_missing">För att använda automatisk säkerhetskopiering, välj giltiga filer för säkerhetskopiering.</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">Den senaste automatiska säkerhetskopieringen misslyckades</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">A file to store the copy of an auto-backup is missing</string>
     <string name="autobackup_create_user_copy">Skapa en kopia efter varje säkerhetskopia</string>
     <string name="autobackup_restore_available">En automatisk säkerhetskopiering kan vara tillgänglig att återställa från.</string>
     <!-- Welcome dialog -->
@@ -509,6 +510,7 @@
     <string name="pref_widget_type">Widgettyp</string>
     <string name="pref_large_font">Använd stort teckensnitt</string>
     <string name="pref_hide_watch_button">Dölj Titta-knappen</string>
+    <string name="description_widget_limited_items">Note that the number of items is always limited to save resources</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Transparent</string>
     <string name="widget_background_25">25%</string>
@@ -525,9 +527,9 @@
     <string name="billing_sub_description">Prova 30 dagar gratis, avbryt när som helst.</string>
     <string name="upgrade_description">Varje prenumeration låser upp alla funktioner och stöder framtida uppdateringar. En prenumeration krävs inte för att använda den här appen.</string>
     <string name="upgrade_success">Tack för att du stödjer SeriesGuide! Du har tillgång till alla funktioner.</string>
-    <string name="billing_unlock_detected">X Pass-app upptäckt. Du kan fortfarande prenumerera för att stödja framtida uppdateringar.</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">All Access Pass detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">Mer info och hjälp</string>
-    <string name="subscription_expired_details">Dina X-funktioners prenumeration har gått ut.</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">Access to all features expired</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Logga in med ditt Amazon-konto!</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">Prenumerationen är för tillfället otillgänglig.</string>

@@ -19,7 +19,7 @@
     <string name="season_number">Temporada %d</string>
     <string name="specialseason">Episódios Especiais</string>
     <string name="ratings">Classificações</string>
-    <string name="more_information">More information</string>
+    <string name="more_information">Mais informações</string>
     <!-- Descriptions -->
     <string name="navigate_up">Retroceder</string>
     <string name="description_overview">Visão geral</string>
@@ -40,6 +40,7 @@
     <string name="action_reset">Reiniciar</string>
     <string name="action_save">Guardar</string>
     <string name="action_turn_on">Ligar</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Verificar</string>
     <!-- Search -->
     <string name="clear_search_history">Limpar histórico de pesquisa</string>
     <string name="search_hint">Procurar episódios</string>
@@ -189,7 +190,7 @@
     <string name="only_favorites">Apenas séries favoritas</string>
     <string name="calendar_only_collected">Apenas episódios que possuo</string>
     <string name="calendar_only_premieres">Apenas estreias</string>
-    <string name="pref_infinite_scrolling">Calendário infinito</string>
+    <string name="pref_infinite_scrolling">Dias ilimitados</string>
     <!-- Updating -->
     <string name="update_scheduled">A Atualizar&#8230;</string>
     <string name="update_no_connection">Para atualizar liga-te à Internet.</string>
@@ -468,12 +469,12 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Cópia de segurança automática</string>
     <string name="pref_autobackupsummary">Faz uma cópia de segurança semanal das tuas listas, séries e filmes</string>
-    <string name="autobackup_details">Essas cópias de segurança não estarão disponíveis se a aplicação for reinstalada novamente, a menos que a cópia de segurança da aplicação esteja ativada para este dispositivo (Android 6+). Caso contrário, crie cópias para preservá-las.</string>
+    <string name="autobackup_details">Estas cópias de segurança são eliminadas se a aplicação for desinstalada. Podes optar por criar cópias noutro local abaixo, que podem ser restauradas através da ferramenta de importação.</string>
     <string name="backup_button">Criar cópia de segurança</string>
     <string name="last_auto_backup">Última cópia de segurança automática: %s</string>
     <string name="restore_auto_backup">Restaurar cópia de segurança automática</string>
-    <string name="autobackup_failed">A última cópia de segurança automática não foi efectuada com sucesso</string>
-    <string name="autobackup_files_missing">Para usar a cópia de segurança automática, seleciona ficheiros de cópias de segurança válidos.</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">A última cópia de segurança automática não foi efectuada com sucesso</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">Falta um ficheiro utilizado para as cópias de segurança automáticas</string>
     <string name="autobackup_create_user_copy">Cria uma cópia após cada cópia de segurança</string>
     <string name="autobackup_restore_available">Uma cópia de segurança automática pode estar disponível para ser restaurada.</string>
     <!-- Welcome dialog -->
@@ -509,6 +510,7 @@
     <string name="pref_widget_type">Tipo de widget</string>
     <string name="pref_large_font">Usar fonte grande</string>
     <string name="pref_hide_watch_button">Ocultar botão de \"Visto\"</string>
+    <string name="description_widget_limited_items">Nota que o número de itens é sempre limitado para poupar recursos</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Transparente</string>
     <string name="widget_background_25">25%</string>
@@ -525,9 +527,9 @@
     <string name="billing_sub_description">Experimenta gratuitamente durante 30 dias, cancela a qualquer momento.</string>
     <string name="upgrade_description">Cada subscrição desbloqueia todas as funcionalidades e suporta atualizações futuras. Não é necessário subscrever para usar a aplicação.</string>
     <string name="upgrade_success">Obrigado por apoiares o SeriesGuide! Tens agora acesso a todas as funcionalidades.</string>
-    <string name="billing_unlock_detected">A app X Pass foi detetada. Podes voltar a subscrever para suportar futuras atualizações.</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">Passe de Acesso Total detetado. Ainda assim, podes subscrever para apoiar futuras atualizações.</string>
     <string name="billing_learn_more">Mais Informações e Ajuda</string>
-    <string name="subscription_expired_details">A tua subscrição no SeriesGuide expirou.</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">O acesso a todas as funcionalidades expirou</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Entra na tua conta Amazon!</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">De momento, a subscrição não está disponível.</string>
@@ -555,7 +557,7 @@
     <string name="feedback_action_nothanks">Não, obrigado</string>
     <!-- Support the dev -->
     <string name="support_the_dev">Apoiar o desenvolvedor?</string>
-    <string name="support_the_dev_other_ways">Other ways to support</string>
+    <string name="support_the_dev_other_ways">Outras formas de apoiar</string>
     <!-- Diagnostics -->
     <string name="title_debug_log">Registo de depuração</string>
     <string name="status_saving_file_success">Ficheiro guardado</string>
@@ -563,9 +565,9 @@
     <!-- Streaming info -->
     <string name="action_stream">Comprar ou ver em streaming</string>
     <string name="action_stream_settings">Definições de streaming ou compra</string>
-    <string name="title_stream_subscription">Subscription</string>
-    <string name="title_stream_free">Free</string>
-    <string name="title_stream_with_ads">With ads</string>
-    <string name="title_stream_buy">Purchase</string>
-    <string name="title_stream_rent">Rental</string>
+    <string name="title_stream_subscription">Subscrição</string>
+    <string name="title_stream_free">Gratuito</string>
+    <string name="title_stream_with_ads">Com anúncios</string>
+    <string name="title_stream_buy">Comprar</string>
+    <string name="title_stream_rent">Alugar</string>
 </resources>

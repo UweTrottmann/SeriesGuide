@@ -40,6 +40,7 @@
     <string name="action_reset">Ресетуј</string>
     <string name="action_save">Сачувај</string>
     <string name="action_turn_on">Укључи</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Провери</string>
     <!-- Search -->
     <string name="clear_search_history">Обриши историју претраге</string>
     <string name="search_hint">Тражи епизоде</string>
@@ -190,7 +191,7 @@
     <string name="only_favorites">Само омиљене серије</string>
     <string name="calendar_only_collected">Само прикупљене епизоде</string>
     <string name="calendar_only_premieres">Само премијере</string>
-    <string name="pref_infinite_scrolling">Календар</string>
+    <string name="pref_infinite_scrolling">Неограничени дани</string>
     <!-- Updating -->
     <string name="update_scheduled">Ажурирање&#8230;</string>
     <string name="update_no_connection">Да би сте освежили повежите се на интернет.</string>
@@ -482,12 +483,12 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Ауто архивирање</string>
     <string name="pref_autobackupsummary">Недељна архива серија, листа и филмова у складишту уређаја.</string>
-    <string name="autobackup_details">Ове архиве нису доступне ако се апликација поново инсталира. Направите копије да бисте их иначе сачували.</string>
+    <string name="autobackup_details">Ове резервне копије се бришу ако се апликација деинсталира. Можете да изаберете да направите копије на другој локацији испод које се могу вратити помоћу алатке за увоз.</string>
     <string name="backup_button">Архивирај</string>
     <string name="last_auto_backup">Задње аутоматско архивирање: %s</string>
     <string name="restore_auto_backup">Поврати податке</string>
-    <string name="autobackup_failed">Последње аутоматско архивирање није успело</string>
-    <string name="autobackup_files_missing">Да бисте користили аутоматско архивирање, изаберите важеће датотеке архиве</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">Последње аутоматско архивирање није успело</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">Недостаје датотека која се користи за аутоматске резервне копије</string>
     <string name="autobackup_create_user_copy">Направите копију након сваке архиве</string>
     <string name="autobackup_restore_available">Можда ће бити доступна аутоматска архива за враћање.</string>
     <!-- Welcome dialog -->
@@ -523,6 +524,7 @@
     <string name="pref_widget_type">Тип виџета</string>
     <string name="pref_large_font">Користите велики фонт</string>
     <string name="pref_hide_watch_button">Сакриј дугме „Гледам“</string>
+    <string name="description_widget_limited_items">Имајте на уму да је број предмета увек ограничен ради уштеде ресурса</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Провидно</string>
     <string name="widget_background_25">25%</string>
@@ -539,9 +541,9 @@
     <string name="billing_sub_description">Покушајте 30 дана, откажите било када.</string>
     <string name="upgrade_description">Свака претплата откључава све функције и подржава будућа ажурирања. За коришћење ове апликације није потребна претплата.</string>
     <string name="upgrade_success">Хвала што сте подржали SeriesGuide! Омогућен вам је приступ свим опцијама.</string>
-    <string name="billing_unlock_detected">X Pass апликације је нађена. И даље се можете претплатити за подршку будућа ажурирања.</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">Детектована је пропусница за потпуни приступ. И даље можете да се претплатите да бисте подржали будућа ажурирања.</string>
     <string name="billing_learn_more">Више информација и помоћи</string>
-    <string name="subscription_expired_details">Ваша претплата за Х опције је истекла.</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">Приступ свим функцијама је истекао</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Пријави се на свој Amazon налог!</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">Претплата тренутно није могућа.</string>

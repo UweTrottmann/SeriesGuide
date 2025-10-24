@@ -40,6 +40,7 @@
     <string name="action_reset">Reset</string>
     <string name="action_save">Save</string>
     <string name="action_turn_on">Turn on</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
     <!-- Search -->
     <string name="clear_search_history">Viŝi serĉhistorion</string>
     <string name="search_hint">Serĉi epizodojn</string>
@@ -189,7 +190,7 @@
     <string name="only_favorites">Nur plej ŝatataj televidaĵoj</string>
     <string name="calendar_only_collected">Nur kolektitaj epizodoj</string>
     <string name="calendar_only_premieres">Nur unuaĵoj</string>
-    <string name="pref_infinite_scrolling">Infinita kalendaro</string>
+    <string name="pref_infinite_scrolling">Unlimited days</string>
     <!-- Updating -->
     <string name="update_scheduled">Ĝisdatigas&#8230;</string>
     <string name="update_no_connection">Por ĝisdatigi konekti al la interreto</string>
@@ -468,12 +469,12 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Aŭtomata savkopio</string>
     <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies to device storage.</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again. Create copies to preserve them otherwise.</string>
+    <string name="autobackup_details">These backups are deleted if the app is uninstalled. You can choose to create copies in another location below that can be restored using the import tool.</string>
     <string name="backup_button">Krei savkopion</string>
     <string name="last_auto_backup">Lasta aŭtomata savkopio: %s</string>
     <string name="restore_auto_backup">Restaŭri aŭtomatan savkopion</string>
-    <string name="autobackup_failed">La lasta aŭtomata savkopio fiaskis</string>
-    <string name="autobackup_files_missing">Por uzi aŭtomatan savkopion, elekti validaj dosierojn de savkopio</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">La lasta aŭtomata savkopio fiaskis</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">A file to store the copy of an auto-backup is missing</string>
     <string name="autobackup_create_user_copy">Krei kopion poste ĉiu savkopio</string>
     <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
@@ -509,6 +510,7 @@
     <string name="pref_widget_type">Fenestraĵa speco</string>
     <string name="pref_large_font">Uzi grandan tiparon</string>
     <string name="pref_hide_watch_button">Hide watch button</string>
+    <string name="description_widget_limited_items">Note that the number of items is always limited to save resources</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Travidebla</string>
     <string name="widget_background_25">25%</string>
@@ -525,9 +527,9 @@
     <string name="billing_sub_description">Try for 30 days, cancel any time.</string>
     <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Dankon por subteni SeriesGuide! Vi havas atingon por ĉiuj funkcioj.</string>
-    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">All Access Pass detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">Pli da informo kaj helpo</string>
-    <string name="subscription_expired_details">Via SeriesGuide abono ĵus finiĝis.</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">Access to all features expired</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Ensaluti al via Amazona konto</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">La abono nuntempe nedisponeblas</string>
