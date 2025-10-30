@@ -12,6 +12,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.uwetrottmann.androidutils.AndroidUtils
 import timber.log.Timber
+import java.util.Locale
 
 /**
  * Helpers that work with [PackageManager].
@@ -119,15 +120,30 @@ object PackageTools {
         }.also { Timber.d("installingPackageName = '%s'", it) }
     }
 
-    fun isDeviceInEEA(context: Context): Boolean {
-        @Suppress("DEPRECATION")
-        val region = context.resources.configuration.locale.country
-        return if (region.isEmpty()) {
+    @JvmInline
+    value class DeviceRegion(val code: String)
+
+    fun getDeviceRegion(context: Context): DeviceRegion {
+        val region = if (AndroidUtils.isNougatOrHigher) {
+            context.resources.configuration.locales[0].country
+        } else {
+            @Suppress("DEPRECATION")
+            context.resources.configuration.locale.country
+        }
+        return DeviceRegion(region)
+    }
+
+    fun DeviceRegion.isEuropeanEconomicArea(context: Context): Boolean {
+        return if (code.isEmpty()) {
             false
         } else {
             val eeaRegions = context.resources.getStringArray(R.array.eea_regions)
-            eeaRegions.contains(region)
-        }.also { Timber.d("region = '%s', isEEA = %s", region, it) }
+            eeaRegions.contains(code)
+        }
+    }
+
+    fun DeviceRegion.isUnitedStates() : Boolean {
+        return code == Locale.US.country
     }
 
 }
