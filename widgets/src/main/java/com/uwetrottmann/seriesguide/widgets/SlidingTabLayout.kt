@@ -1,110 +1,93 @@
-// Copyright (C) 2013 The Android Open Source Project
-// Copyright 2014, 2016-2019, 2021, 2022 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2014-2025 Uwe Trottmann
+// Copyright 2013 The Android Open Source Project
 
-package com.uwetrottmann.seriesguide.widgets;
+package com.uwetrottmann.seriesguide.widgets
 
-import android.content.Context;
-import android.graphics.Typeface;
-import android.util.AttributeSet;
-import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.HorizontalScrollView;
-import android.widget.TextView;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
+import android.content.Context
+import android.graphics.Typeface
+import android.util.AttributeSet
+import android.util.TypedValue
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.HorizontalScrollView
+import android.widget.TextView
+import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 
 /**
  * To be used with ViewPager to provide a tab indicator component which give constant feedback as to
  * the user's scroll progress.
- * <p/>
- * To use the component, simply add it to your view hierarchy. Then in your activity or fragment call {@link
- * #setViewPager2(ViewPager2, TabTitleSupplier)} providing it the ViewPager this layout is being
- * used for.
- * <p/>
+ *
+ * To use the component, simply add it to your view hierarchy. Then in your activity or fragment call
+ * [setViewPager2] providing it the ViewPager this layout is being used for.
+ *
  * The colors can be customized in two ways. The first and simplest is to provide an array of colors
- * via {@link #setSelectedIndicatorColors(int...)}. The alternative is via the {@link
- * SlidingTabLayout.TabColorizer} interface which provides you
+ * via [setSelectedIndicatorColors]. The alternative is via the [TabColorizer] interface which provides you
  * complete control over which color is used for any individual position.
- * <p/>
- * The views used as tabs can be customized by calling {@link #setCustomTabView(int, int)},
+ *
+ * The views used as tabs can be customized by calling [setCustomTabView],
  * providing the layout ID of your custom layout.
  */
-public class SlidingTabLayout extends HorizontalScrollView {
+class SlidingTabLayout @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0
+) : HorizontalScrollView(context, attrs, defStyle) {
 
-    public interface OnTabClickListener {
-        void onTabClick(int position);
+    fun interface OnTabClickListener {
+        fun onTabClick(position: Int)
     }
 
     /**
-     * Allows complete control over the colors drawn in the tab layout. Set with {@link
-     * #setCustomTabColorizer(SlidingTabLayout.TabColorizer)}.
+     * Allows complete control over the colors drawn in the tab layout. Set with
+     * [setCustomTabColorizer].
      */
-    public interface TabColorizer {
-
+    interface TabColorizer {
         /**
-         * @return return the color of the indicator used when {@code position} is selected.
+         * @return The color of the indicator used when [position] is selected.
          */
-        int getIndicatorColor(int position);
+        fun getIndicatorColor(position: Int): Int
     }
 
-    public interface TabTitleSupplier {
-        String getTabTitle(int position);
+    fun interface TabTitleSupplier {
+        fun getTabTitle(position: Int): String
     }
 
-    private static final int TITLE_OFFSET_DIPS = 24;
-    private static final int TAB_VIEW_PADDING_DIPS = 16;
-    private static final int TAB_VIEW_TEXT_SIZE_SP = 12;
+    private var titleOffset: Int
 
-    private int titleOffset;
+    private var tabViewLayoutId = 0
+    private var tabViewTextViewId = 0
 
-    private int tabViewLayoutId;
-    private int tabViewTextViewId;
+    private var viewPager: ViewPager? = null
+    private var viewPagerPageChangeListener: ViewPager2.OnPageChangeCallback? = null
+    private var viewPager2: ViewPager2? = null
 
-    private ViewPager viewPager;
-    private ViewPager2.OnPageChangeCallback viewPagerPageChangeListener;
-    private ViewPager2 viewPager2;
+    private var onTabClickListener: OnTabClickListener? = null
 
-    private OnTabClickListener onTabClickListener;
+    private val tabStrip: SlidingTabStrip
 
-    private final SlidingTabStrip tabStrip;
-
-    public SlidingTabLayout(Context context) {
-        this(context, null);
-    }
-
-    public SlidingTabLayout(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public SlidingTabLayout(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-
+    init {
         // Disable the Scroll Bar
-        setHorizontalScrollBarEnabled(false);
+        isHorizontalScrollBarEnabled = false
         // Make sure that the Tab Strips fills this View
-        setFillViewport(true);
+        isFillViewport = true
 
-        titleOffset = (int) (TITLE_OFFSET_DIPS * getResources().getDisplayMetrics().density);
+        titleOffset = (TITLE_OFFSET_DIPS * resources.displayMetrics.density).toInt()
 
-        tabStrip = new SlidingTabStrip(context);
-        addView(tabStrip, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        tabStrip = SlidingTabStrip(context)
+        addView(tabStrip, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
     }
 
     /**
-     * Set the custom {@link SlidingTabLayout.TabColorizer} to
-     * be used.
+     * Set the custom [TabColorizer] to be used.
      *
-     * If you only require simple custmisation then you can use
-     * {@link #setSelectedIndicatorColors(int...)} to achieve
-     * similar effects.
+     * If you only require simple customisation then you can use
+     * [setSelectedIndicatorColors] to achieve similar effects.
      */
-    public void setCustomTabColorizer(TabColorizer tabColorizer) {
-        tabStrip.setCustomTabColorizer(tabColorizer);
+    fun setCustomTabColorizer(tabColorizer: TabColorizer?) {
+        tabStrip.setCustomTabColorizer(tabColorizer)
     }
 
     /**
@@ -112,62 +95,63 @@ public class SlidingTabLayout extends HorizontalScrollView {
      * circular array. Providing one color will mean that all tabs are indicated with the same
      * color.
      */
-    public void setSelectedIndicatorColors(int... colors) {
-        tabStrip.setSelectedIndicatorColors(colors);
+    fun setSelectedIndicatorColors(vararg colors: Int) {
+        tabStrip.setSelectedIndicatorColors(*colors)
     }
 
     /**
      * Whether to draw an underline below all tabs.
      */
-    public void setDisplayUnderline(boolean displayUnderline) {
-        tabStrip.setDisplayUnderline(displayUnderline);
+    fun setDisplayUnderline(displayUnderline: Boolean) {
+        tabStrip.setDisplayUnderline(displayUnderline)
     }
 
     /**
      * Sets the color to be used as an underline below all tabs.
      */
-    public void setUnderlineColor(int color) {
-        tabStrip.setUnderlineColor(color);
+    fun setUnderlineColor(color: Int) {
+        tabStrip.setUnderlineColor(color)
     }
 
     /**
      * Set a page change listener to observe page changes.
      *
-     * @see ViewPager2#registerOnPageChangeCallback(ViewPager2.OnPageChangeCallback)
+     * @see ViewPager2.registerOnPageChangeCallback
      */
-    public void setOnPageChangeListener(ViewPager2.OnPageChangeCallback listener) {
-        viewPagerPageChangeListener = listener;
+    fun setOnPageChangeListener(listener: ViewPager2.OnPageChangeCallback?) {
+        viewPagerPageChangeListener = listener
     }
 
     /**
-     * Set the {@link SlidingTabLayout.OnTabClickListener}.
+     * Set the [OnTabClickListener].
      */
-    public void setOnTabClickListener(OnTabClickListener listener) {
-        onTabClickListener = listener;
+    fun setOnTabClickListener(listener: OnTabClickListener?) {
+        onTabClickListener = listener
     }
 
     /**
      * Set the custom layout to be inflated for the tab views.
      *
      * @param layoutResId Layout id to be inflated
-     * @param textViewId id of the {@link android.widget.TextView} in the inflated view
+     * @param textViewId id of the [android.widget.TextView] in the inflated view
      */
-    public void setCustomTabView(int layoutResId, int textViewId) {
-        tabViewLayoutId = layoutResId;
-        tabViewTextViewId = textViewId;
+    fun setCustomTabView(layoutResId: Int, textViewId: Int) {
+        tabViewLayoutId = layoutResId
+        tabViewTextViewId = textViewId
     }
 
     /**
      * Sets the associated view pager. Note that the assumption here is that the pager content
      * (number of tabs and tab titles) does not change after this call has been made.
      */
-    public void setViewPager(ViewPager viewPager) {
-        tabStrip.removeAllViews();
+    fun setViewPager(viewPager: ViewPager?) {
+        tabStrip.removeAllViews()
 
-        this.viewPager = viewPager;
+        this.viewPager = viewPager
         if (viewPager != null) {
-            viewPager.setOnPageChangeListener(new InternalViewPagerListener());
-            populateTabStrip();
+            @Suppress("DEPRECATION")
+            viewPager.setOnPageChangeListener(InternalViewPagerListener())
+            populateTabStrip()
         }
     }
 
@@ -175,195 +159,187 @@ public class SlidingTabLayout extends HorizontalScrollView {
      * Sets the associated view pager. Note that the assumption here is that the pager content
      * (number of tabs and tab titles) does not change after this call has been made.
      */
-    public void setViewPager2(ViewPager2 viewPager, TabTitleSupplier tabTitleSupplier) {
-        tabStrip.removeAllViews();
+    fun setViewPager2(viewPager: ViewPager2?, tabTitleSupplier: TabTitleSupplier) {
+        tabStrip.removeAllViews()
 
-        this.viewPager2 = viewPager;
-        if (viewPager2 != null) {
-            viewPager2.registerOnPageChangeCallback(new InternalViewPagerListener());
-            populateTabStrip2(tabTitleSupplier);
+        this.viewPager2 = viewPager
+        if (viewPager != null) {
+            viewPager.registerOnPageChangeCallback(InternalViewPagerListener())
+            populateTabStrip2(tabTitleSupplier)
         }
     }
 
     /**
      * Create a default view to be used for tabs. This is called if a custom tab view is not set
-     * via
-     * {@link #setCustomTabView(int, int)}.
+     * via [setCustomTabView].
      */
-    protected TextView createDefaultTabView(Context context) {
-        TextView textView = new TextView(context);
-        textView.setGravity(Gravity.CENTER);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, TAB_VIEW_TEXT_SIZE_SP);
-        textView.setTypeface(Typeface.DEFAULT_BOLD);
+    private fun createDefaultTabView(context: Context): TextView {
+        val textView = TextView(context)
+        textView.gravity = Gravity.CENTER
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, TAB_VIEW_TEXT_SIZE_SP.toFloat())
+        textView.typeface = Typeface.DEFAULT_BOLD
 
         // If we're running on Honeycomb or newer, then we can use the Theme's
         // selectableItemBackground to ensure that the View has a pressed state
-        TypedValue outValue = new TypedValue();
-        getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground,
-                outValue, true);
-        textView.setBackgroundResource(outValue.resourceId);
+        val outValue = TypedValue()
+        context.theme.resolveAttribute(android.R.attr.selectableItemBackground, outValue, true)
+        textView.setBackgroundResource(outValue.resourceId)
 
         // If we're running on ICS or newer, enable all-caps to match the Action Bar tab style
-        textView.setAllCaps(true);
+        textView.isAllCaps = true
 
-        int padding = (int) (TAB_VIEW_PADDING_DIPS * getResources().getDisplayMetrics().density);
-        textView.setPadding(padding, padding, padding, padding);
+        val padding = (TAB_VIEW_PADDING_DIPS * resources.displayMetrics.density).toInt()
+        textView.setPadding(padding, padding, padding, padding)
 
-        return textView;
+        return textView
     }
 
-    private void populateTabStrip() {
-        final PagerAdapter adapter = viewPager.getAdapter();
-        if (adapter == null) return;
-        populateTabStrip(adapter.getCount(), position -> {
-            CharSequence titleOrNull = adapter.getPageTitle(position);
-            return titleOrNull == null ? "" : titleOrNull.toString();
-        });
+    private fun populateTabStrip() {
+        val adapter = viewPager?.adapter ?: return
+        populateTabStrip(adapter.count) { position ->
+            val titleOrNull = adapter.getPageTitle(position)
+            titleOrNull?.toString() ?: ""
+        }
     }
 
-    private void populateTabStrip2(TabTitleSupplier tabTitleSupplier) {
-        @SuppressWarnings("rawtypes")
-        final RecyclerView.Adapter adapter = viewPager2.getAdapter();
-        if (adapter == null) return;
-        populateTabStrip(adapter.getItemCount(), tabTitleSupplier);
+    private fun populateTabStrip2(tabTitleSupplier: TabTitleSupplier) {
+        val adapter = viewPager2?.adapter ?: return
+        populateTabStrip(adapter.itemCount, tabTitleSupplier)
     }
 
-    private void populateTabStrip(int itemCount, TabTitleSupplier tabTitleSupplier) {
-        final OnClickListener tabClickListener = new TabClickListener();
+    private fun populateTabStrip(itemCount: Int, tabTitleSupplier: TabTitleSupplier) {
+        val tabClickListener = TabClickListener()
 
-        for (int i = 0; i < itemCount; i++) {
-            View tabView = null;
-            TextView tabTitleView = null;
+        for (i in 0 until itemCount) {
+            var tabView: View? = null
+            var tabTitleView: TextView? = null
 
             if (tabViewLayoutId != 0) {
                 // If there is a custom tab view layout id set, try and inflate it
-                tabView = LayoutInflater.from(getContext()).inflate(tabViewLayoutId, tabStrip,
-                        false);
-                tabTitleView = tabView.findViewById(tabViewTextViewId);
+                tabView = LayoutInflater.from(context).inflate(tabViewLayoutId, tabStrip, false)
+                tabTitleView = tabView.findViewById(tabViewTextViewId)
             }
 
             if (tabView == null) {
-                tabView = createDefaultTabView(getContext());
+                tabView = createDefaultTabView(context)
             }
 
-            if (tabTitleView == null && tabView instanceof TextView) {
-                tabTitleView = (TextView) tabView;
+            if (tabTitleView == null && tabView is TextView) {
+                tabTitleView = tabView
             }
 
             if (tabTitleView == null) {
-                throw new IllegalArgumentException("tabTitleView == null");
+                throw IllegalArgumentException("tabTitleView == null")
             }
-            tabTitleView.setText(tabTitleSupplier.getTabTitle(i));
-            tabView.setOnClickListener(tabClickListener);
+            tabTitleView.text = tabTitleSupplier.getTabTitle(i)
+            tabView.setOnClickListener(tabClickListener)
 
-            tabStrip.addView(tabView);
+            tabStrip.addView(tabView)
         }
     }
 
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
 
-        if (viewPager != null) {
-            scrollToTab(viewPager.getCurrentItem(), 0);
+        viewPager?.let {
+            scrollToTab(it.currentItem, 0)
         }
-        if (viewPager2 != null) {
-            scrollToTab(viewPager2.getCurrentItem(), 0);
+        viewPager2?.let {
+            scrollToTab(it.currentItem, 0)
         }
     }
 
-    private void scrollToTab(int tabIndex, int positionOffset) {
-        final int tabStripChildCount = tabStrip.getChildCount();
+    private fun scrollToTab(tabIndex: Int, positionOffset: Int) {
+        val tabStripChildCount = tabStrip.childCount
         if (tabStripChildCount == 0 || tabIndex < 0 || tabIndex >= tabStripChildCount) {
-            return;
+            return
         }
 
-        View selectedChild = tabStrip.getChildAt(tabIndex);
+        val selectedChild = tabStrip.getChildAt(tabIndex)
         if (selectedChild != null) {
-            int targetScrollX = selectedChild.getLeft() + positionOffset;
+            var targetScrollX = selectedChild.left + positionOffset
 
             if (tabIndex > 0 || positionOffset > 0) {
                 // If we're not at the first child and are mid-scroll, make sure we obey the offset
-                targetScrollX -= titleOffset;
+                targetScrollX -= titleOffset
             }
 
-            scrollTo(targetScrollX, 0);
+            scrollTo(targetScrollX, 0)
         }
 
         // Update selected tab view once scrolling has stopped.
         if (positionOffset == 0) {
-            for (int i = 0; i < tabStripChildCount; i++) {
-                View child = tabStrip.getChildAt(i);
-                child.setSelected(i == tabIndex);
-                child.setActivated(i == tabIndex);
+            for (i in 0 until tabStripChildCount) {
+                val child = tabStrip.getChildAt(i)
+                child.isSelected = i == tabIndex
+                child.isActivated = i == tabIndex
             }
         }
     }
 
-    private class InternalViewPagerListener extends ViewPager2.OnPageChangeCallback
-            implements ViewPager.OnPageChangeListener {
-        private int scrollState;
+    private inner class InternalViewPagerListener : ViewPager2.OnPageChangeCallback(),
+        ViewPager.OnPageChangeListener {
+        private var scrollState = 0
 
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            int tabStripChildCount = tabStrip.getChildCount();
+        override fun onPageScrolled(
+            position: Int,
+            positionOffset: Float,
+            positionOffsetPixels: Int
+        ) {
+            val tabStripChildCount = tabStrip.childCount
             if ((tabStripChildCount == 0) || (position < 0) || (position >= tabStripChildCount)) {
-                return;
+                return
             }
 
-            tabStrip.onViewPagerPageChanged(position, positionOffset);
+            tabStrip.onViewPagerPageChanged(position, positionOffset)
 
-            View selectedTitle = tabStrip.getChildAt(position);
-            int extraOffset = (selectedTitle != null)
-                    ? (int) (positionOffset * selectedTitle.getWidth())
-                    : 0;
-            scrollToTab(position, extraOffset);
-
-            if (viewPagerPageChangeListener != null) {
-                viewPagerPageChangeListener.onPageScrolled(position, positionOffset,
-                        positionOffsetPixels);
+            val selectedTitle = tabStrip.getChildAt(position)
+            val extraOffset = if (selectedTitle != null) {
+                (positionOffset * selectedTitle.width).toInt()
+            } else {
+                0
             }
+            scrollToTab(position, extraOffset)
+
+            viewPagerPageChangeListener?.onPageScrolled(
+                position,
+                positionOffset,
+                positionOffsetPixels
+            )
         }
 
-        @Override
-        public void onPageScrollStateChanged(int state) {
-            scrollState = state;
+        override fun onPageScrollStateChanged(state: Int) {
+            scrollState = state
 
-            if (viewPagerPageChangeListener != null) {
-                viewPagerPageChangeListener.onPageScrollStateChanged(state);
-            }
+            viewPagerPageChangeListener?.onPageScrollStateChanged(state)
         }
 
-        @Override
-        public void onPageSelected(int position) {
+        override fun onPageSelected(position: Int) {
             if (scrollState == ViewPager.SCROLL_STATE_IDLE) {
-                tabStrip.onViewPagerPageChanged(position, 0f);
-                scrollToTab(position, 0);
+                tabStrip.onViewPagerPageChanged(position, 0f)
+                scrollToTab(position, 0)
             }
 
-            if (viewPagerPageChangeListener != null) {
-                viewPagerPageChangeListener.onPageSelected(position);
-            }
+            viewPagerPageChangeListener?.onPageSelected(position)
         }
     }
 
-    private class TabClickListener implements OnClickListener {
-        @Override
-        public void onClick(View v) {
-            for (int i = 0; i < tabStrip.getChildCount(); i++) {
+    private inner class TabClickListener : OnClickListener {
+        override fun onClick(v: View) {
+            for (i in 0 until tabStrip.childCount) {
                 if (v == tabStrip.getChildAt(i)) {
-                    if (onTabClickListener != null) {
-                        onTabClickListener.onTabClick(i);
-                    }
-                    if (viewPager != null) {
-                        viewPager.setCurrentItem(i);
-                    }
-                    if (viewPager2 != null) {
-                        viewPager2.setCurrentItem(i);
-                    }
-                    return;
+                    onTabClickListener?.onTabClick(i)
+                    viewPager?.currentItem = i
+                    viewPager2?.currentItem = i
+                    return
                 }
             }
         }
+    }
+
+    companion object {
+        private const val TITLE_OFFSET_DIPS = 24
+        private const val TAB_VIEW_PADDING_DIPS = 16
+        private const val TAB_VIEW_TEXT_SIZE_SP = 12
     }
 }
