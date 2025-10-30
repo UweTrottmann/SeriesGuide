@@ -20,6 +20,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 * 📝 Removed the unsupported release for devices running Android 4 from Google Play, it is no longer
   working properly.
 
+### 2025.2.13 - 2025-10-30
+
 ### 2025.2.12 - 2025-09-19
 
 * 🔨 On Android 16 on Samsung devices, correctly update the widget on changes.
