@@ -122,9 +122,10 @@ class AutoBackupFragment : Fragment() {
         }
         viewModel.availableBackupLiveData
             .observe(viewLifecycleOwner, { availableBackupTimeString: String? ->
-                val lastBackupTimeString = availableBackupTimeString ?: "n/a"
-                binding.textViewAutoBackupLastTime.text =
-                    getString(R.string.last_auto_backup, lastBackupTimeString)
+                val lastBackupTimeString =
+                    getString(R.string.last_auto_backup, availableBackupTimeString ?: "n/a")
+                binding.textViewAutoBackupLastTime.text = lastBackupTimeString
+                binding.textViewAutoBackupRestoreLastTime.text = lastBackupTimeString
 
                 isBackupAvailableForImport = availableBackupTimeString != null
                 updateImportButtonState()

@@ -40,6 +40,7 @@
     <string name="action_reset">Restablir</string>
     <string name="action_save">Desar</string>
     <string name="action_turn_on">Activar</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Comprovar</string>
     <!-- Search -->
     <string name="clear_search_history">Esborra l\'historial</string>
     <string name="search_hint">Cerca episodis</string>
@@ -189,7 +190,7 @@
     <string name="only_favorites">Només sèries preferides</string>
     <string name="calendar_only_collected">Només els episodis col·leccionats</string>
     <string name="calendar_only_premieres">Només estrenes</string>
-    <string name="pref_infinite_scrolling">Calendari infinit</string>
+    <string name="pref_infinite_scrolling">Dies il·limitats</string>
     <!-- Updating -->
     <string name="update_scheduled">S\'està actualitzant&#8230;</string>
     <string name="update_no_connection">Connecteu-vos a internet per actualitzar.</string>
@@ -468,12 +469,12 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Còpies de seguretat automàtiques</string>
     <string name="pref_autobackupsummary">Còpia de seguretat setmanal de les teves sèries, llistes i pel·lícules</string>
-    <string name="autobackup_details">Aquestes còpies de seguretat seran inaccessibles si l\'app s\'instal·la de nou. Creeu còpies per preservar-les d\'una altra manera.</string>
+    <string name="autobackup_details">Aquestes còpies de seguretat són esborrades si l\'app és desinstal·lada. Pots escollir crear còpies en una altra ubicació a sota que es poden restaurar amb l\'eina d\'importació.</string>
     <string name="backup_button">Crea còpia de seguretat</string>
     <string name="last_auto_backup">Darrera còpia de seguretat automàtica: %s</string>
     <string name="restore_auto_backup">Restaura la còpia de seguretat automàtica</string>
-    <string name="autobackup_failed">Ha fallat l\'última còpia de seguretat automàtica</string>
-    <string name="autobackup_files_missing">Per utilitzar la còpia de seguretat automàtica, selecciona arxius de còpia de seguretat vàlids.</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">Ha fallat l\'última còpia de seguretat automàtica</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">Falta un fitxer utilitzat per a còpies de seguretat automàtiques.</string>
     <string name="autobackup_create_user_copy">Creeu una còpia després de cada còpia de seguretat</string>
     <string name="autobackup_restore_available">Per restaurar pot estar disponible una còpia de seguretat automàtica</string>
     <!-- Welcome dialog -->
@@ -509,6 +510,7 @@
     <string name="pref_widget_type">Tipus de widget</string>
     <string name="pref_large_font">Utilitzar font gran</string>
     <string name="pref_hide_watch_button">Amagar el botó de visualitzar</string>
+    <string name="description_widget_limited_items">Tingueu en compte que el nombre d\'elements sempre està limitat per estalviar recursos.</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Transparent</string>
     <string name="widget_background_25">25%</string>
@@ -525,9 +527,9 @@
     <string name="billing_sub_description">Prova 30 dies gratuïtament, cancel·la en qualsevol moment</string>
     <string name="upgrade_description">Cada subscripció allibera totes les característiques i ajuda a futures actualitzacions. No és necessita cap subscripció per fer servir aquesta aplicació.</string>
     <string name="upgrade_success">Gràcies per donar support a SeriesGuide! Tens accés a totes les opcions.</string>
-    <string name="billing_unlock_detected">Aplicació X Pass detectada. Encara hauries de subscriure\'t per ajudar a futures actualitzacions.</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">S\'ha detectat el Passi d\'Accés Total. Encara podeu subscriure-us per rebre futures actualitzacions.</string>
     <string name="billing_learn_more">Més informació i ajuda</string>
-    <string name="subscription_expired_details">La subscripció a les característiques X ha caducat.</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">L\'accés a totes les funcions ha caducat</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Inicia sessió al teu compte Amazon!</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">La subscripció no està disponible actualment.</string>

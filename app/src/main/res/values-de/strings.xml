@@ -40,6 +40,7 @@
     <string name="action_reset">Zurücksetzen</string>
     <string name="action_save">Speichern</string>
     <string name="action_turn_on">Einschalten</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Überprüfen</string>
     <!-- Search -->
     <string name="clear_search_history">Suchverlauf löschen</string>
     <string name="search_hint">Suche Folgen</string>
@@ -189,7 +190,7 @@
     <string name="only_favorites">Nur Serien-Favoriten</string>
     <string name="calendar_only_collected">Nur gesammelte Folgen</string>
     <string name="calendar_only_premieres">Nur Premieren</string>
-    <string name="pref_infinite_scrolling">Endloser Kalender</string>
+    <string name="pref_infinite_scrolling">Unbegrenzte Tage</string>
     <!-- Updating -->
     <string name="update_scheduled">Aktualisiert&#8230;</string>
     <string name="update_no_connection">Zum Aktualisieren mit dem Internet verbinden</string>
@@ -468,12 +469,12 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatische Sicherung</string>
     <string name="pref_autobackupsummary">Wöchentliche Sicherung Ihrer Serien, Listen und Filme im Gerätespeicher.</string>
-    <string name="autobackup_details">Diese Sicherungen sind nicht verfügbar, wenn die App neu installiert wird. Erstellen Sie Kopien, um sie anderweitig aufzubewahren.</string>
+    <string name="autobackup_details">Diese Sicherungen werden gelöscht, wenn die App deinstalliert wird. Sie können unten entscheiden, ob Kopien an einem anderen Ort erstellt werden sollen, die mit der Importfunktion wiederhergestellt werden können.</string>
     <string name="backup_button">Sicherung erstellen</string>
     <string name="last_auto_backup">Letzte Auto-Sicherung: %s</string>
     <string name="restore_auto_backup">Auto-Sicherung wiederherstellen</string>
-    <string name="autobackup_failed">Die letzte automatische Sicherung ist fehlgeschlagen</string>
-    <string name="autobackup_files_missing">Um die automatische Sicherung zu verwenden, wählen Sie gültige Sicherungsdateien</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">Die letzte automatische Sicherung ist fehlgeschlagen</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">Eine Datei um die Kopie einer automat. Sicherung zu speichern fehlt</string>
     <string name="autobackup_create_user_copy">Eine Kopie nach jeder Sicherung erstellen</string>
     <string name="autobackup_restore_available">Eine automatische Sicherung könnte zum Wiederherstellen verfügbar sein.</string>
     <!-- Welcome dialog -->
@@ -509,6 +510,7 @@
     <string name="pref_widget_type">Widget-Typ</string>
     <string name="pref_large_font">Große Schrift verwenden</string>
     <string name="pref_hide_watch_button">Angesehen-Schaltfl. ausblenden</string>
+    <string name="description_widget_limited_items">Beachten Sie, dass die Anzahl der Elemente immer begrenzt ist, um Ressourcen zu sparen</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Transparent</string>
     <string name="widget_background_25">25%</string>
@@ -525,9 +527,9 @@
     <string name="billing_sub_description">30 Tage testen, jederzeit kündigen.</string>
     <string name="upgrade_description">Jedes Abo schaltet alle Funktionen frei und unterstützt zukünftige Updates. Ein Abo wird nicht benötigt um diese App zu nutzen.</string>
     <string name="upgrade_success">Danke für die Unterstützung von SeriesGuide! Sie haben Zugriff auf alle Funktionen.</string>
-    <string name="billing_unlock_detected">X Pass App erkannt. Sie können trotzdem abonnieren um zukünftige Updates zu unterstützen.</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">All Access Pass erkannt. Sie könnten trotzdem ein Abo abschließen um zukünftige Updates zu unterstützen.</string>
     <string name="billing_learn_more">Mehr Infos und Hilfe</string>
-    <string name="subscription_expired_details">Ihr SeriesGuide Abonnement ist abgelaufen</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">Zugriff auf alle Funktionen verfallen</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Melden Sie sich bei Ihrem Amazon-Konto an</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">Das Abonnement ist derzeit nicht verfügbar</string>

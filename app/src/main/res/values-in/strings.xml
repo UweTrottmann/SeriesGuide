@@ -40,6 +40,7 @@
     <string name="action_reset">Reset</string>
     <string name="action_save">Save</string>
     <string name="action_turn_on">Turn on</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
     <!-- Search -->
     <string name="clear_search_history">Bersihkan riwayat pencarian</string>
     <string name="search_hint">Cari episode</string>
@@ -188,7 +189,7 @@
     <string name="only_favorites">Hanya acara favorit</string>
     <string name="calendar_only_collected">Hanya episode yang terkumpul</string>
     <string name="calendar_only_premieres">Pemutaran perdana saja</string>
-    <string name="pref_infinite_scrolling">Kalender tidak terbatas</string>
+    <string name="pref_infinite_scrolling">Unlimited days</string>
     <!-- Updating -->
     <string name="update_scheduled">Memperbarui&#8230;</string>
     <string name="update_no_connection">Untuk memperbarui sambungkan ke internet.</string>
@@ -454,12 +455,12 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Cadangkan otomatis</string>
     <string name="pref_autobackupsummary">Cadangkan mingguan acara, daftar dan film anda</string>
-    <string name="autobackup_details">Cadangan ini tidak tersedia jika aplikasi diinstall lagi. Buat salinan jika ingin mengamankannya</string>
+    <string name="autobackup_details">These backups are deleted if the app is uninstalled. You can choose to create copies in another location below that can be restored using the import tool.</string>
     <string name="backup_button">Buat cadangan</string>
     <string name="last_auto_backup">Pencadangan Otomatis Terakhir: %s</string>
     <string name="restore_auto_backup">Pulihkan Cadangan Otomatis</string>
-    <string name="autobackup_failed">Cadangan otomatis sebelumnya telah gagal</string>
-    <string name="autobackup_files_missing">Untuk menggunakan cadangan otomatis, pilih file cadangan yang benar.</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">Cadangan otomatis sebelumnya telah gagal</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">A file to store the copy of an auto-backup is missing</string>
     <string name="autobackup_create_user_copy">Buat sebuah salinan setelah setiap cadangan</string>
     <string name="autobackup_restore_available">Cadangan otomatis mungkin tersedia untuk dipulihkan.</string>
     <!-- Welcome dialog -->
@@ -495,6 +496,7 @@
     <string name="pref_widget_type">Jenis widget</string>
     <string name="pref_large_font">Gunakan font besar</string>
     <string name="pref_hide_watch_button">Hide watch button</string>
+    <string name="description_widget_limited_items">Note that the number of items is always limited to save resources</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Tembus pandang</string>
     <string name="widget_background_25">25%</string>
@@ -511,9 +513,9 @@
     <string name="billing_sub_description">Coba gratis 30 hari, batalkan kapan saja.</string>
     <string name="upgrade_description">Setiap langganan membuka semua fitur dan mendukung pembaruan yang akan datang. tidak perlu langganan untuk menggunakan aplikasi ini.</string>
     <string name="upgrade_success">Terima kasih telah mendukung SeriesGuide! Anda memiliki akses ke semua fitur.</string>
-    <string name="billing_unlock_detected">Aplikasi X Pass terdeteksi. Anda masih dapat berlangganan untuk mendukung pembaruan di masa mendatang.</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">All Access Pass detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">Info lebih lanjut dan bantuan</string>
-    <string name="subscription_expired_details">Langganan SeriesGuide anda telah berakhir.</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">Access to all features expired</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Masuk ke akun Amazon Anda!</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">Langganan saat ini tidak tersedia.</string>

@@ -133,7 +133,7 @@ class MoreOptionsActivity : BaseTopActivity() {
         }
 
         // Update supporter status.
-        binding.textViewThankYouSupporters.isGone = !BillingTools.hasAccessToPaidFeatures(this)
+        binding.textViewThankYouSupporters.isGone = !BillingTools.hasAccessToPaidFeatures()
 
         // Show debug log button if debug mode is on.
         binding.buttonDebugLog.isGone = !AppSettings.isUserDebugModeEnabled(this)

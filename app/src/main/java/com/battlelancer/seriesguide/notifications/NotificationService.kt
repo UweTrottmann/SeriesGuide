@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2012-2023 Uwe Trottmann
+// Copyright 2012-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.notifications
 
@@ -26,6 +26,7 @@ import androidx.sqlite.db.SimpleSQLiteQuery
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.billing.BillingTools
+import com.battlelancer.seriesguide.notifications.NotificationService.Companion.ORDER
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
@@ -96,7 +97,7 @@ class NotificationService(context: Context) {
 
         // remove notification service wake-up alarm if notifications are disabled or not unlocked
         if (!NotificationSettings.isNotificationsEnabled(context)
-            || !BillingTools.hasAccessToPaidFeatures(context)) {
+            || !BillingTools.hasAccessToPaidFeatures()) {
             Timber.d("Notifications disabled, removing wake-up alarm")
             val am = context.getSystemService<AlarmManager>()
             am?.cancel(wakeUpPendingIntent)
@@ -456,7 +457,7 @@ class NotificationService(context: Context) {
                     REQUEST_CODE_SINGLE_EPISODE,
                     // Use FLAG_UPDATE_CURRENT so intent of a previous notification for this episode
                     // is updated, but continues to work.
-                    PendingIntentCompat.flagImmutable or PendingIntent.FLAG_UPDATE_CURRENT
+                    PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
                 )!!
         )
 
@@ -473,7 +474,7 @@ class NotificationService(context: Context) {
             checkInActionIntent,
             // Use FLAG_UPDATE_CURRENT so intent of a previous notification for this episode
             // is updated, but continues to work.
-            PendingIntentCompat.flagImmutable or PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
         // icon only shown on Wear and 4.1 (API 16) to 6.0 (API 23)
         // note: Wear and Galaxy Watch devices do typically not support vector icons
@@ -495,7 +496,7 @@ class NotificationService(context: Context) {
             setWatchedIntent,
             // Use FLAG_UPDATE_CURRENT so intent of a previous notification for this episode
             // is updated, but continues to work.
-            PendingIntentCompat.flagImmutable or PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
         // icon only shown on Wear and 4.1 (API 16) to 6.0 (API 23)
         // note: Wear and Galaxy Watch devices do typically not support vector icons
@@ -547,7 +548,7 @@ class NotificationService(context: Context) {
                     REQUEST_CODE_MULTIPLE_EPISODES,
                     // Use FLAG_UPDATE_CURRENT so intent of a previous summary notification
                     // is updated, but continues to work.
-                    PendingIntentCompat.flagImmutable or PendingIntent.FLAG_UPDATE_CURRENT
+                    PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
                 )!!
         )
         nb.setDeleteIntent(createDeleteIntent(latestAirtime))
@@ -622,7 +623,7 @@ class NotificationService(context: Context) {
             deleteIntent,
             // Use FLAG_UPDATE_CURRENT in case another notification with the same latest time is
             // posted so its intent is not cancelled, but just updated.
-            PendingIntentCompat.flagImmutable or PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
     }
 

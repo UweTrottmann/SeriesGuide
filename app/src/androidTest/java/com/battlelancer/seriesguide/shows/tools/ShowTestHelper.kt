@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2022-2024 Uwe Trottmann
+// Copyright 2022-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.tools
 
@@ -9,10 +9,11 @@ import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.TimeTools
 
+// Note there is a copy of this in the test source set
 object ShowTestHelper {
 
-    fun showToInsert(): SgShow2 {
-        return SgShow2(
+    fun showToInsert() =
+        SgShow2(
             tmdbId = 5159,
             tvdbId = null,
             traktId = null,
@@ -45,20 +46,25 @@ object ShowTestHelper {
             userNote = null,
             userNoteTraktId = null
         )
-    }
 
-    fun seasonToInsert(showId: Long, number: Int): SgSeason2 {
-        return SgSeason2(
+    fun seasonToInsert(
+        showId: Long,
+        number: Int
+    ) =
+        SgSeason2(
             showId = showId,
             tmdbId = "1",
             numberOrNull = number,
             order = number,
             name = "Season $number"
         )
-    }
 
-    fun SgSeason2.episodeToInsert(seasonId: Long, number: Int, releaseDateTimeMs: Long): SgEpisode2 {
-        return SgEpisode2(
+    fun SgSeason2.episodeToInsert(
+        seasonId: Long,
+        number: Int,
+        releaseDateTimeMs: Long
+    ) =
+        SgEpisode2(
             showId = showId,
             seasonId = seasonId,
             tmdbId = 1,
@@ -78,6 +84,5 @@ object ShowTestHelper {
             ratingTraktVotes = null,
             ratingUser = null
         )
-    }
 
 }

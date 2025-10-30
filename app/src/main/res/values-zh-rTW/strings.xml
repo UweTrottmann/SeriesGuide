@@ -40,6 +40,7 @@
     <string name="action_reset">Reset</string>
     <string name="action_save">Save</string>
     <string name="action_turn_on">Turn on</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
     <!-- Search -->
     <string name="clear_search_history">清除搜尋記錄</string>
     <string name="search_hint">搜尋集數</string>
@@ -188,7 +189,7 @@
     <string name="only_favorites">僅顯示最喜愛的節目</string>
     <string name="calendar_only_collected">僅顯示已收藏節目</string>
     <string name="calendar_only_premieres">Only premieres</string>
-    <string name="pref_infinite_scrolling">萬年曆</string>
+    <string name="pref_infinite_scrolling">Unlimited days</string>
     <!-- Updating -->
     <string name="update_scheduled">更新中......</string>
     <string name="update_no_connection">如需更新，請連接網路</string>
@@ -454,12 +455,12 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">自動備份</string>
     <string name="pref_autobackupsummary">每週備份你的節目，清單和電影</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again. Create copies to preserve them otherwise.</string>
+    <string name="autobackup_details">These backups are deleted if the app is uninstalled. You can choose to create copies in another location below that can be restored using the import tool.</string>
     <string name="backup_button">備份</string>
     <string name="last_auto_backup">剩餘自動備份︰ %s</string>
     <string name="restore_auto_backup">還原自動備份</string>
-    <string name="autobackup_failed">The last auto backup has failed</string>
-    <string name="autobackup_files_missing">為了備份，請選擇一可用備份資料夾。</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">The last auto backup has failed</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">A file to store the copy of an auto-backup is missing</string>
     <string name="autobackup_create_user_copy">Create a copy after each backup</string>
     <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
@@ -495,6 +496,7 @@
     <string name="pref_widget_type">小工具類型</string>
     <string name="pref_large_font">使用大的字型</string>
     <string name="pref_hide_watch_button">隱藏觀看按鈕</string>
+    <string name="description_widget_limited_items">Note that the number of items is always limited to save resources</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">透明度</string>
     <string name="widget_background_25">25%</string>
@@ -511,9 +513,9 @@
     <string name="billing_sub_description">免費試用 30 天，隨時取消。</string>
     <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">謝謝贊助SeriesGuide ！您可以使用的所有功能。</string>
-    <string name="billing_unlock_detected">已檢測到 X Pass App。您仍可以通過訂閱來支援未來的更新。</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">All Access Pass detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">更多信息和幫助</string>
-    <string name="subscription_expired_details">您的 SeriesGuide 訂閱已過期。</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">Access to all features expired</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">登入你的 Amazon 帳戶</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">目前不可訂閱。</string>

@@ -232,8 +232,14 @@
         <item name="android:maxEms">20</item>
     </style>
 
+    <!--
+    Note: With maxLines ellipsis text is cut off or ellipsis character is not shown.
+    Fixed in later versions of Android, but there maxLines cuts off text on the word level.
+    The maximum amount of chars is only shown with deprecated singleLine.
+    But singleLine causes layout issues, so for now using lines/maxLines.
+    -->
     <style name="Widget.SeriesGuide.TextView.SingleLine">
-        <item name="android:singleLine">true</item>
+        <item name="android:lines">1</item>
     </style>
 
     <!-- Preferences theme overlay to use new switch style, taken from Material Components Catalog example. -->
@@ -291,8 +297,8 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">48dp</item>
         <item name="android:gravity">center</item>
-        <item name="android:paddingLeft">@dimen/tab_padding_horizontal</item>
-        <item name="android:paddingRight">@dimen/tab_padding_horizontal</item>
+        <item name="android:paddingLeft">@dimen/sg_sliding_tab_strip_indicator_padding_horizontal</item>
+        <item name="android:paddingRight">@dimen/sg_sliding_tab_strip_indicator_padding_horizontal</item>
         <item name="android:textAppearance">@style/TextAppearance.SeriesGuide.Tab</item>
         <item name="android:theme">@style/ThemeOverLay.SeriesGuide.PrimaryAsColorOnSurface</item>
     </style>

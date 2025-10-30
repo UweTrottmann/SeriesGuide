@@ -40,6 +40,7 @@
     <string name="action_reset">Obnovit</string>
     <string name="action_save">Save</string>
     <string name="action_turn_on">Turn on</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
     <!-- Search -->
     <string name="clear_search_history">Vymazat historii vyhledávání</string>
     <string name="search_hint">Hledat epizody</string>
@@ -191,7 +192,7 @@
     <string name="only_favorites">Pouze oblíbené seriály</string>
     <string name="calendar_only_collected">Pouze epizody ve sbírce</string>
     <string name="calendar_only_premieres">Pouze premiéry</string>
-    <string name="pref_infinite_scrolling">Nekonečný kalendář</string>
+    <string name="pref_infinite_scrolling">Unlimited days</string>
     <!-- Updating -->
     <string name="update_scheduled">Probíhá aktualizace&#8230;</string>
     <string name="update_no_connection">Pro aktualizaci se připojte k internetu.</string>
@@ -496,12 +497,12 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatická záloha</string>
     <string name="pref_autobackupsummary">Týdenní zálohování seriálů, seznamů a filmů do úložiště zařízení.</string>
-    <string name="autobackup_details">Tyto zálohy nebudou dostupné v případě, že bude aplikace znovu nainstalována. Vytvořte kopie, abyste je uchovali jiným způsobem.</string>
+    <string name="autobackup_details">These backups are deleted if the app is uninstalled. You can choose to create copies in another location below that can be restored using the import tool.</string>
     <string name="backup_button">Zálohovat</string>
     <string name="last_auto_backup">Poslední automatická záloha: %s</string>
     <string name="restore_auto_backup">Obnovení automatické zálohy</string>
-    <string name="autobackup_failed">Poslední automatická záloha selhala</string>
-    <string name="autobackup_files_missing">Pro použití automatického zálohování vyberte platné soubory zálohy</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">Poslední automatická záloha selhala</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">A file to store the copy of an auto-backup is missing</string>
     <string name="autobackup_create_user_copy">Vytvořit kopii po každé záloze</string>
     <string name="autobackup_restore_available">Automatická záloha může být k dispozici pro obnovení.</string>
     <!-- Welcome dialog -->
@@ -537,6 +538,7 @@
     <string name="pref_widget_type">Typ widgetu</string>
     <string name="pref_large_font">Použít velké písmo</string>
     <string name="pref_hide_watch_button">Skrýt tlačítko \"Zhlédnout\"</string>
+    <string name="description_widget_limited_items">Note that the number of items is always limited to save resources</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Průhledné</string>
     <string name="widget_background_25">25%</string>
@@ -553,9 +555,9 @@
     <string name="billing_sub_description">Vyzkoušejte na 30 dní zdarma, kdykoliv můžete zrušit.</string>
     <string name="upgrade_description">Každé předplatné odemyká všechny funkce a podporuje budoucí aktualizace. Ale k používání této aplikace není zapotřebí mít předplatné.</string>
     <string name="upgrade_success">Díky za podpoření SeriesGuide! Nyní máte přístup ke všem funkcím.</string>
-    <string name="billing_unlock_detected">X Pass aplikace byla detekována. Stále se můžete přihlásit k odběru dalších aktualizací.</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">All Access Pass detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">Další informace / pomoc</string>
-    <string name="subscription_expired_details">Vaše zakoupení rozšířených funkcí vypršelo.</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">Access to all features expired</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Přihlaste se ke svému účtu Amazon</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">Odběr momentálně není k dispozici.</string>

@@ -40,6 +40,7 @@
     <string name="action_reset">Sıfırla</string>
     <string name="action_save">Kaydet</string>
     <string name="action_turn_on">Turn on</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
     <!-- Search -->
     <string name="clear_search_history">Arama geçmişini temizle</string>
     <string name="search_hint">Bölüm ara</string>
@@ -189,7 +190,7 @@
     <string name="only_favorites">Sadece favori diziler</string>
     <string name="calendar_only_collected">Sadece koleksiyonlanmış bölümler</string>
     <string name="calendar_only_premieres">Sadece ön gösterimler</string>
-    <string name="pref_infinite_scrolling">Sonsuz takvim</string>
+    <string name="pref_infinite_scrolling">Unlimited days</string>
     <!-- Updating -->
     <string name="update_scheduled">Güncelleniyor&#8230;</string>
     <string name="update_no_connection">Güncelleme amacıyla internete bağlayın.</string>
@@ -468,12 +469,12 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Otomatik Yedekle</string>
     <string name="pref_autobackupsummary">Dizileriniz, listeleriniz ve filmleriniz cihazın depolama alanına haftalık olarak yedeklenir.</string>
-    <string name="autobackup_details">Uygulama yeniden yüklenirse bu yedekler kullanılamaz. Yedeklerin kopyasını oluşturarak onları koruyabilirsiniz.</string>
+    <string name="autobackup_details">These backups are deleted if the app is uninstalled. You can choose to create copies in another location below that can be restored using the import tool.</string>
     <string name="backup_button">Yedekle</string>
     <string name="last_auto_backup">Son Otomatik Yedek: %s</string>
     <string name="restore_auto_backup">Otomatik Yedeklemeyi Geri Yükle</string>
-    <string name="autobackup_failed">Son otomatik yedekleme başarısız oldu</string>
-    <string name="autobackup_files_missing">Otomatik yedeklemeyi kullanmak için geçerli yedekleme dosyalarını seçin.</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">Son otomatik yedekleme başarısız oldu</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">A file to store the copy of an auto-backup is missing</string>
     <string name="autobackup_create_user_copy">Her yedekleme sonrasında kopya oluştur</string>
     <string name="autobackup_restore_available">Geri yükleme için bir yedek mevcut olabilir.</string>
     <!-- Welcome dialog -->
@@ -509,6 +510,7 @@
     <string name="pref_widget_type">Widget tipi</string>
     <string name="pref_large_font">Büyük Yazı Tipi Kullan</string>
     <string name="pref_hide_watch_button">İzlendi düğmesini gizle</string>
+    <string name="description_widget_limited_items">Note that the number of items is always limited to save resources</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Saydam</string>
     <string name="widget_background_25">25%</string>
@@ -525,9 +527,9 @@
     <string name="billing_sub_description">30 gün ücretsiz dene, istediğin zaman iptal et</string>
     <string name="upgrade_description">Her abonelik, tüm özelliklerin kilidini açar ve gelecekteki güncellemeleri destekler. Bu uygulamayı kullanmak için herhangi bir abonelik gerekli değildir.</string>
     <string name="upgrade_success">SeriesGuide\'ı desteklediğiniz için teşekkür ederiz! Tüm özelliklere erişebilirsiniz.</string>
-    <string name="billing_unlock_detected">X Pass uygulaması tespit edildi. Gelecekteki güncellemeleri desteklemek için yine de abone olabilirsiniz.</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">All Access Pass detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">Daha fazla bilgi ve yardım</string>
-    <string name="subscription_expired_details">SeriesGuide aboneliğinizin süresi doldu</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">Access to all features expired</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Amazon hesabınızda oturum açın!</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">Abonelik şu anda kullanılabilir değil.</string>

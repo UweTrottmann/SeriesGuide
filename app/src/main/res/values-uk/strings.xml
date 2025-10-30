@@ -40,6 +40,7 @@
     <string name="action_reset">Скинути</string>
     <string name="action_save">Зберегти</string>
     <string name="action_turn_on">Увімкнути</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Перевірити</string>
     <!-- Search -->
     <string name="clear_search_history">Очистити історію пошуку</string>
     <string name="search_hint">Пошук серій</string>
@@ -191,7 +192,7 @@
     <string name="only_favorites">Лише улюблені серіали</string>
     <string name="calendar_only_collected">Тільки обрані серії</string>
     <string name="calendar_only_premieres">Лише прем\'єри</string>
-    <string name="pref_infinite_scrolling">Вічний календар</string>
+    <string name="pref_infinite_scrolling">Необмежена кількість днів</string>
     <!-- Updating -->
     <string name="update_scheduled">Оновлюється&#8230;</string>
     <string name="update_no_connection">Для оновлення, з\'єднайтесь з інтернетом.</string>
@@ -496,12 +497,12 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Автоматичне резервне копіювання</string>
     <string name="pref_autobackupsummary">Щотижневе резервне копіювання ваших серіалів, списків та фільмів</string>
-    <string name="autobackup_details">Ці резервні копії будуть недоступні, якщо додаток буде повторно інстальований, хіба що для цього пристрою буде ввімкнуто резервне копіювання даних додатку (Андроїд 6 та вище).  В такому випадку, для збереження даних, створюйте їх копії.</string>
+    <string name="autobackup_details">Ці резервні копії видаляються, якщо додаток видалено. Ви можете створити копії в іншому місці, які згодом можна буде відновити за допомогою інструменту імпорту.</string>
     <string name="backup_button">Бекап</string>
     <string name="last_auto_backup">Останній авто Бекап: %s</string>
     <string name="restore_auto_backup">Відновити з авто Бекапу</string>
-    <string name="autobackup_failed">Останній бекап не вдався.</string>
-    <string name="autobackup_files_missing">Щоб використати автоматичну резервну копію, виберіть дійсні файли бекапу.</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">Останній бекап не вдався.</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">Відсутній файл, який використовується для автоматичного створення резервних копій</string>
     <string name="autobackup_create_user_copy">Створити копію після кожного бекапу.</string>
     <string name="autobackup_restore_available">Авторезервування може бути доступне для відновлення.</string>
     <!-- Welcome dialog -->
@@ -537,6 +538,7 @@
     <string name="pref_widget_type">Тип віджета</string>
     <string name="pref_large_font">Використовувати великий шрифт</string>
     <string name="pref_hide_watch_button">Приховати кнопку \"дивитися\"</string>
+    <string name="description_widget_limited_items">Зверніть увагу, що кількість елементів обмежується з метою економії ресурсів</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Прозорий</string>
     <string name="widget_background_25">25%</string>
@@ -553,9 +555,9 @@
     <string name="billing_sub_description">Спробуйте 30 днів безкоштовно, скасуйте у будь-який час.</string>
     <string name="upgrade_description">Кожна підписка розблоковує всі функції та підтримує майбутні оновлення. Підписка не обов\'язкова для використання цього додатка.</string>
     <string name="upgrade_success">Дякую за підтримку SeriesGuide! Тепер ви маєте доступ до всіх функцій.</string>
-    <string name="billing_unlock_detected">Виявлено додаток X Pass. Ви все ще можете підписатися на підтримку майбутніх оновлень.</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">Виявлено All Access Pass. Ви все ще можете підписатися, щоб підтримувати майбутні оновлення.</string>
     <string name="billing_learn_more">Додаткова інформація та допомога</string>
-    <string name="subscription_expired_details">Підписка функцій X минула.</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">Доступ до всіх функцій минув</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Увійдіть у ваш Amazon аккаунт!</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">Підписка тимчасово не доступна.</string>

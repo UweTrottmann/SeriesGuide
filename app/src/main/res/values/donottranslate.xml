@@ -51,8 +51,11 @@
     <string name="trakt_terms">Trakt terms</string>
 
     <!-- Google Play links -->
-    <string name="url_store_page">https://play.google.com/store/apps/details?id=com.battlelancer.seriesguide</string>
-    <string name="url_extensions_search">https://play.google.com/store/search?q=SeriesGuide%20Extension&amp;c=apps</string>
+    <string name="url_play_listing">https://play.google.com/store/apps/details?id=com.battlelancer.seriesguide</string>
+    <string name="url_play_extensions_search">https://play.google.com/store/search?q=SeriesGuide%20Extension&amp;c=apps</string>
+
+    <!-- Amazon Appstore links -->
+    <string name="url_amazon_listing">http://www.amazon.com/gp/mas/dl/android?p=com.uwetrottmann.seriesguide.amzn</string>
 
     <!-- Internal -->
     <string name="menu_action_extensions_enable_debug">[Debug] Enable extensions</string>

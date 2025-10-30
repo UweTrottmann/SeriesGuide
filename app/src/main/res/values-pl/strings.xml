@@ -40,6 +40,7 @@
     <string name="action_reset">Przywróć</string>
     <string name="action_save">Zapisz</string>
     <string name="action_turn_on">Turn on</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Sprawdź</string>
     <!-- Search -->
     <string name="clear_search_history">Wyczyść historię wyszukiwania</string>
     <string name="search_hint">Szukaj odcinków</string>
@@ -191,7 +192,7 @@
     <string name="only_favorites">Tylko ulubione seriale</string>
     <string name="calendar_only_collected">Tylko odcinki w kolekcji</string>
     <string name="calendar_only_premieres">Tylko premierowe</string>
-    <string name="pref_infinite_scrolling">Cały kalendarz</string>
+    <string name="pref_infinite_scrolling">Nieograniczona ilość dni</string>
     <!-- Updating -->
     <string name="update_scheduled">Aktualizowanie&#8230;</string>
     <string name="update_no_connection">Do aktualizacji należy połączyć się z Internetem.</string>
@@ -496,12 +497,12 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatyczna kopia zapasowa</string>
     <string name="pref_autobackupsummary">Tworzy co tydzień kopię zapasową seriali, list i filmów</string>
-    <string name="autobackup_details">Te kopie zapasowe są niedostępne po reinstalacji aplikacji do czasu włączenia tworzenia kopii zapasowych aplikacji dla tego urządzenia (Android 6+). Utwórz kopie, aby je zachować w pozostałych przypadkach.</string>
+    <string name="autobackup_details">Te kopie zapasowe zostaną usunięte, jeśli aplikacja zostanie odinstalowana. Można utworzyć kopię zapasową w innej lokalizacji, którą może być przywrócona za pomocą narzędzia do importu.</string>
     <string name="backup_button">Kontynuuj</string>
     <string name="last_auto_backup">Ostatnia kopia zapasowa: %s</string>
     <string name="restore_auto_backup">Przywróć kopię zapasową</string>
-    <string name="autobackup_failed">Ostatnia automatyczna kopia zapasowa nie powiodła się</string>
-    <string name="autobackup_files_missing">Aby użyć automatycznego tworzenia kopii zapasowych, wybierz prawidłowe pliki kopii zapasowych.</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">Ostatnia automatyczna kopia zapasowa nie powiodła się</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">Brakuje pliku używanego do automatycznej kopii zapasowej</string>
     <string name="autobackup_create_user_copy">Utwórz kopię po każdej kopii zapasowej</string>
     <string name="autobackup_restore_available">Możliwe, że jest dostępna automatyczna kopia zapasowa danych.</string>
     <!-- Welcome dialog -->
@@ -537,6 +538,7 @@
     <string name="pref_widget_type">Typ widżetu</string>
     <string name="pref_large_font">Użyj dużej czcionki</string>
     <string name="pref_hide_watch_button">Ukryj przycisk \"obejrzany\"</string>
+    <string name="description_widget_limited_items">Pamiętaj, że liczba elementów jest zawsze ograniczona w celu oszczędzania zasobów</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Przezroczysty</string>
     <string name="widget_background_25">25%</string>
@@ -553,9 +555,9 @@
     <string name="billing_sub_description">Wypróbuj przez 30 dni. Anuluj w dowolnym momencie.</string>
     <string name="upgrade_description">Każda subskrypcja odblokowuje wszystkie funkcje i wspiera kolejne aktualizacje. Subskrypcja nie jest wymagana do korzystania z tej aplikacji.</string>
     <string name="upgrade_success">Dziękujemy za wsparcie SeriesGuide! Masz dostęp do wszystkich funkcji.</string>
-    <string name="billing_unlock_detected">Wykryto aplikację X Pass. Nadal możesz subskrybować w celu wsparcia przyszłych aktualizacji.</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">Wykryto przepustkę All Access. Nadal możesz zasubskrybować, aby wspierać przyszłe aktualizacje.</string>
     <string name="billing_learn_more">Więcej informacji i pomoc</string>
-    <string name="subscription_expired_details">Twoje funkcję X wygasły.</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">Wygasł dostęp do wszystkich funkcji</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Zaloguj się do konta Amazon!</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">Subskrypcja jest czasowo niedostępna.</string>

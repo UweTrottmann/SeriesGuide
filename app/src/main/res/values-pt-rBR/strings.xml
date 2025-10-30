@@ -40,6 +40,7 @@
     <string name="action_reset">Redefinir</string>
     <string name="action_save">Salvar</string>
     <string name="action_turn_on">Ativar</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Verificar</string>
     <!-- Search -->
     <string name="clear_search_history">Limpar histórico de pesquisa</string>
     <string name="search_hint">Pesquisar episódios</string>
@@ -189,7 +190,7 @@
     <string name="only_favorites">Somente séries favoritas</string>
     <string name="calendar_only_collected">Somente episódios colecionados</string>
     <string name="calendar_only_premieres">Somente estreias</string>
-    <string name="pref_infinite_scrolling">Calendário infinito</string>
+    <string name="pref_infinite_scrolling">Dias ilimitados</string>
     <!-- Updating -->
     <string name="update_scheduled">Atualizando&#8230;</string>
     <string name="update_no_connection">Para atualizar, conecte-se à Internet.</string>
@@ -468,12 +469,12 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Backup Automático</string>
     <string name="pref_autobackupsummary">Backup semanal de suas séries, listas e filmes</string>
-    <string name="autobackup_details">Esses backups não estarão disponíveis se o app for reinstalado, a menos que o backup de dados de aplicativo esteja ativo no dispositivo (Android 6+). Caso contrário, crie cópias para preservá-lo.</string>
+    <string name="autobackup_details">Esses backups são excluídos se o aplicativo for desinstalado. Você pode criar cópias em outro local abaixo que podem ser restauradas usando a ferramenta de importação.</string>
     <string name="backup_button">Backup</string>
     <string name="last_auto_backup">Último backup automático: %s</string>
     <string name="restore_auto_backup">Restaurar backup automático</string>
-    <string name="autobackup_failed">Falha no último backup automático</string>
-    <string name="autobackup_files_missing">Para usar o backup automático, selecione os arquivos de backup válidos.</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">Falha no último backup automático</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">Um arquivo usado para cópias de segurança automática está faltando</string>
     <string name="autobackup_create_user_copy">Crie uma cópia após cada backup</string>
     <string name="autobackup_restore_available">Um backup automático pode estar disponível para restauração.</string>
     <!-- Welcome dialog -->
@@ -509,6 +510,7 @@
     <string name="pref_widget_type">Tipo de widget</string>
     <string name="pref_large_font">Usar fonte grande</string>
     <string name="pref_hide_watch_button">Ocultar botão de assistido</string>
+    <string name="description_widget_limited_items">Note que o número de itens é sempre limitado para economizar recursos</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Transparente</string>
     <string name="widget_background_25">25%</string>
@@ -525,9 +527,9 @@
     <string name="billing_sub_description">Teste grátis por 30 dias, cancele a qualquer momento</string>
     <string name="upgrade_description">Toda assinatura desbloqueia os recursos e apoia atualizações futuras. Uma assinatura não é necessária para usar o aplicativo.</string>
     <string name="upgrade_success">Obrigado por apoiar o SeriesGuide! Você agora tem acesso a todos os recursos.</string>
-    <string name="billing_unlock_detected">X Pass detectado. Você ainda pode se inscrever para apoiar atualizações futuras.</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">All Access Pass detectado. Você ainda pode se inscrever para apoiar futuras atualizações.</string>
     <string name="billing_learn_more">Mais informações e ajuda</string>
-    <string name="subscription_expired_details">Sua assinatura do SeriesGuide expirou</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">O acesso a todos os recursos expirou</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Entre com sua conta da Amazon!</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">A assinatura não está disponível no momento</string>

@@ -28,7 +28,7 @@ object SupportTheDev {
 
         val lastDismissed = prefs.getLong(PREF_SUPPORT_DEV_LAST_DISMISSED, 0)
 
-        if (BillingTools.hasAccessToPaidFeatures(context)) {
+        if (BillingTools.hasAccessToPaidFeatures()) {
             // Reset to ask again after access expired
             if (lastDismissed != 0L) {
                 prefs.saveLastDismissed(0)

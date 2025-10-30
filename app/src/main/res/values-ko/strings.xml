@@ -40,6 +40,7 @@
     <string name="action_reset">재설정</string>
     <string name="action_save">저장</string>
     <string name="action_turn_on">꺼짐</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">확인</string>
     <!-- Search -->
     <string name="clear_search_history">검색 기록 삭제</string>
     <string name="search_hint">에피소드 검색</string>
@@ -188,7 +189,7 @@
     <string name="only_favorites">즐겨찾기한 프로그램만 보이기</string>
     <string name="calendar_only_collected">수집한 에피소드만 보이기</string>
     <string name="calendar_only_premieres">첫 방송만 보이기</string>
-    <string name="pref_infinite_scrolling">무한 캘린더</string>
+    <string name="pref_infinite_scrolling">전체 기간</string>
     <!-- Updating -->
     <string name="update_scheduled">업데이트 중&#8230;</string>
     <string name="update_no_connection">업데이트를 하려면 인터넷에 연결하세요.</string>
@@ -454,12 +455,12 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">자동 백업</string>
     <string name="pref_autobackupsummary">매주 프로그램, 목록, 영화를 백업합니다.</string>
-    <string name="autobackup_details">앱을 다시 설치하면 이 백업들을 사용할 수 없습니다. 보존하려면 복사본을 만드세요.</string>
+    <string name="autobackup_details">이 백업은 앱을 제거하면 삭제됩니다. 아래에서 다른 위치에 복사본을 만들도록 선택할 수 있으며, 이는 가져오기 도구를 사용하여 복원할 수 있습니다.</string>
     <string name="backup_button">백업</string>
     <string name="last_auto_backup">최근 자동 백업: %s</string>
     <string name="restore_auto_backup">자동 백업 복원</string>
-    <string name="autobackup_failed">마지막 자동 백업이 실패했습니다</string>
-    <string name="autobackup_files_missing">자동백업을 하기 위해서 유효한 백업파일을 선택하세요.</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">마지막 자동 백업이 실패했습니다</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">자동 백업 복사본에 사용되는 파일이 누락되었습니다</string>
     <string name="autobackup_create_user_copy">백업 후 복사본 생성</string>
     <string name="autobackup_restore_available">자동 백업을 통해 복원이 가능할 수 있습니다.</string>
     <!-- Welcome dialog -->
@@ -495,6 +496,7 @@
     <string name="pref_widget_type">위젯 형태</string>
     <string name="pref_large_font">큰 글씨 사용</string>
     <string name="pref_hide_watch_button">시청 버튼 숨기기</string>
+    <string name="description_widget_limited_items">항목 수는 리소스 절약을 위해 항상 제한됩니다</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">투명</string>
     <string name="widget_background_25">25%</string>
@@ -511,9 +513,9 @@
     <string name="billing_sub_description">30 일 동안 사용해 보고, 언제든지 취소할 수 있습니다.</string>
     <string name="upgrade_description">모든 구독은 모든 기능을 이용할 수 있게 하며 향후 업데이트를 지원합니다. 이 앱을 사용하는 데 구독이 필요하지 않습니다.</string>
     <string name="upgrade_success">SeriesGuide를 지원해주셔서 감사합니다! 모든 기능을 사용할 수 있습니다.</string>
-    <string name="billing_unlock_detected">X Pass 앱이 감지되었습니다. 향후 업데이트 지원을 위해 구독할 수 있습니다.</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">올 액세스 패스가 감지되었습니다. 향후 업데이트를 지원하기 위해 여전히 구독할 수 있습니다.</string>
     <string name="billing_learn_more">도움말</string>
-    <string name="subscription_expired_details">X 추가기능 구독 기간이 만료되었습니다.</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">모든 기능에 대한 액세스가 만료되었습니다</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Amazon 계정으로 로그인</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">구독을 현재 사용할 수 없습니다.</string>

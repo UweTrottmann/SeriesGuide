@@ -80,6 +80,5 @@
     <dimen name="max_width_text_size_body">400dp</dimen>
     <dimen name="dialog_min_width">300dp</dimen>
     <dimen name="empty_view_width">250dp</dimen>
-    <dimen name="tab_padding_horizontal">12dp</dimen>
 
 </resources>

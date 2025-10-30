@@ -15,8 +15,8 @@ plugins {
 }
 
 buildscript {
-    val sgCompileSdk by extra(35) // Android 15 (VANILLA_ICE_CREAM)
-    val sgMinSdk by extra(21) // Android 5 (L)
+    val sgCompileSdk by extra(36) // Android 16 (BAKLAVA)
+    val sgMinSdk by extra(23) // Android 6 (M)
     // WARNING Can not increase to 36 (Android 16) until Theme.SeriesGuide.DayNight.OptOutEdgeToEdge
     // is no longer used as windowOptOutEdgeToEdgeEnforcement will be ignored (see notes on theme).
     val sgTargetSdk by extra(35) // Android 15 (VANILLA_ICE_CREAM)
@@ -24,9 +24,9 @@ buildscript {
     // YYYY.<release-of-year>.<build> - like 2024.1.0
     // - allows to more easily judge how old a release is
     // - allows multiple releases per month (though currently unlikely)
-    val sgVersionName by extra("2025.2.12")
-    // version 21yyrrbb -> min SDK 21, year yy, release rr, build bb
-    val sgVersionCode by extra(21250215)
+    val sgVersionName by extra("2025.3.1")
+    // version 23yyrrbb -> min SDK 23, year yy, release rr, build bb
+    val sgVersionCode by extra(23250301)
 
     val isCiBuild by extra { System.getenv("CI") == "true" }
 

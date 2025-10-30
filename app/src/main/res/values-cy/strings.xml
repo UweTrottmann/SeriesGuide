@@ -40,6 +40,7 @@
     <string name="action_reset">Reset</string>
     <string name="action_save">Save</string>
     <string name="action_turn_on">Turn on</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
     <!-- Search -->
     <string name="clear_search_history">Hanes chwilio clir</string>
     <string name="search_hint">Chwilio penodau</string>
@@ -193,7 +194,7 @@
     <string name="only_favorites">Dim ond hoff sioeau</string>
     <string name="calendar_only_collected">Dim ond penodau a gasglwyd</string>
     <string name="calendar_only_premieres">Dim ond premieres</string>
-    <string name="pref_infinite_scrolling">Calendr anfeidrol</string>
+    <string name="pref_infinite_scrolling">Unlimited days</string>
     <!-- Updating -->
     <string name="update_scheduled">Diweddaru&#8230;</string>
     <string name="update_no_connection">I ddiweddaru, cysylltu â\'r rhyngrwyd</string>
@@ -524,12 +525,12 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Gwneud copi wrth gefn awtomatig</string>
     <string name="pref_autobackupsummary">Gwneud copi wrth gefn wythnosol o\'ch sioeau, rhestrau a ffilmiau i storio dyfeisiau.</string>
-    <string name="autobackup_details">Nid yw\'r copïau wrth gefn hyn ar gael os yw\'r app wedi\'i osod eto. Creu copïau i\'w cadw fel arall.</string>
+    <string name="autobackup_details">These backups are deleted if the app is uninstalled. You can choose to create copies in another location below that can be restored using the import tool.</string>
     <string name="backup_button">Creu copi wrth gefn</string>
     <string name="last_auto_backup">Gwneud copi wrth gefn awtomatig diwethaf:%s</string>
     <string name="restore_auto_backup">Adfer copi wrth gefn awtomatig</string>
-    <string name="autobackup_failed">Mae\'r copi wrth gefn awtomatig olaf wedi methu</string>
-    <string name="autobackup_files_missing">I ddefnyddio copi wrth gefn awtomatig, dewiswch ffeiliau wrth gefn dilys</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">Mae\'r copi wrth gefn awtomatig olaf wedi methu</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">A file to store the copy of an auto-backup is missing</string>
     <string name="autobackup_create_user_copy">Creu copi ar ôl pob copi wrth gefn</string>
     <string name="autobackup_restore_available">Efallai y bydd copi wrth gefn awtomatig ar gael i adfer ohono.</string>
     <!-- Welcome dialog -->
@@ -565,6 +566,7 @@
     <string name="pref_widget_type">Math o widget</string>
     <string name="pref_large_font">Defnyddiwch ffont mawr</string>
     <string name="pref_hide_watch_button">Cuddio botwm gwylio</string>
+    <string name="description_widget_limited_items">Note that the number of items is always limited to save resources</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Tryloyw</string>
     <string name="widget_background_25">25%</string>
@@ -581,9 +583,9 @@
     <string name="billing_sub_description">Rhowch gynnig ar 30 diwrnod am ddim, canslo unrhyw amser.</string>
     <string name="upgrade_description">Mae pob tanysgrifiad yn datgloi pob nodwedd ac yn cefnogi diweddariadau yn y dyfodol. Nid oes angen tanysgrifiad i ddefnyddio\'r app hon.</string>
     <string name="upgrade_success">Diolch am gefnogi SeriesGuide! Mae gennych fynediad i\'r holl nodweddion.</string>
-    <string name="billing_unlock_detected">Canfod ap X Pass. Efallai y byddwch chi\'n dal i danysgrifio i gefnogi diweddariadau yn y dyfodol.</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">All Access Pass detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">Mwy o wybodaeth a help</string>
-    <string name="subscription_expired_details">Mae eich tanysgrifiad SeriesGuide wedi dod i ben</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">Access to all features expired</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Mewngofnodi i\'ch cyfrif Amazon</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">Nid yw\'r tanysgrifiad ar gael ar hyn o bryd</string>

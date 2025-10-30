@@ -601,7 +601,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     ) : PopupMenu.OnMenuItemClickListener {
         override fun onMenuItemClick(item: MenuItem): Boolean {
             when (item.itemId) {
-                R.id.watched_popup_menu_watch_again -> if (BillingTools.hasAccessToPaidFeatures(context)) {
+                R.id.watched_popup_menu_watch_again -> if (BillingTools.hasAccessToPaidFeatures()) {
                     MovieTools.watchedMovie(context, movieTmdbId, plays, inWatchlist)
                 } else {
                     BillingTools.advertiseSubscription(context)

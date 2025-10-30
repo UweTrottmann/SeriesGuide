@@ -8,6 +8,29 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
 
+## Version 2025.3
+
+### 2025.3.1 - 2025-10-30 🧪
+
+* 🔧 Thanks to a United States court ordered injunction in the Google Play Antitrust case coming 
+  into effect, again display links to TMDB, Trakt and other external websites if your device region
+  is set to "United States". Note that links remain displayed for devices set to a region in the
+  European Economic Area. For all other regions, Google Play Payments policy continues to disallow
+  this.
+* 🔧 Make active tab indicator rounded to better fit with other rounded user interface elements.
+
+### 2025.3.0 - 2025-10-24 🧪
+
+* 📝 Require Android 6.0 or higher.
+* 🔧 Upcoming/Recent: rename "Infinite calendar" option to the more applicable "Unlimited days".
+* 🔧 Widget: note general item limit in configuration screen, rename "Infinite calendar" option to
+  the more applicable "Unlimited days", move hide watch button option to appearance category.
+* 🔧 On Android 16 on Samsung devices, increase the limit of widget items back to 100.
+* 🔧 Shows: only display stream and purchase options specific to the season of a displayed episode.
+* 🔧 Shows: update ended shows less often (90+ days) to speed up updating of large libraries and 
+  reduce load on TMDB.
+* 📝 Import latest user interface translations.
+
 ## Version 2025.2
 
 * 🔧 Movie details: adjust buttons to be more similar to episodes, other minor improvements.

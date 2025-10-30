@@ -40,6 +40,7 @@
     <string name="action_reset">Restablecer</string>
     <string name="action_save">Guardar</string>
     <string name="action_turn_on">Activar</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Verificar</string>
     <!-- Search -->
     <string name="clear_search_history">Limpiar historial de búsqueda</string>
     <string name="search_hint">Buscar episodios</string>
@@ -189,7 +190,7 @@
     <string name="only_favorites">Solo series favoritas</string>
     <string name="calendar_only_collected">Solo episodios coleccionados</string>
     <string name="calendar_only_premieres">Solo estrenos</string>
-    <string name="pref_infinite_scrolling">Calendario infinito</string>
+    <string name="pref_infinite_scrolling">Días ilimitados</string>
     <!-- Updating -->
     <string name="update_scheduled">Actualizando&#8230;</string>
     <string name="update_no_connection">Para actualizar conéctese a internet.</string>
@@ -469,12 +470,12 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Copia de seguridad automática</string>
     <string name="pref_autobackupsummary">Copia de seguridad semanal de tus series, listas y películas</string>
-    <string name="autobackup_details">Estas copias de seguridad no están disponibles si la aplicación se instala de nuevo a menos que la copia de seguridad de datos de la aplicación esté activada para este dispositivo (Android 6+). Crea copias para conservarlas de otro modo.</string>
+    <string name="autobackup_details">Estas copias de seguridad se eliminan si la aplicación es desinstalada. Puede elegir crear copias en otra ubicación que se pueden restaurar usando la herramienta de importación.</string>
     <string name="backup_button">Respaldo</string>
     <string name="last_auto_backup">Última copia de seguridad automática: %s</string>
     <string name="restore_auto_backup">Restaurar la copia de seguridad automática</string>
-    <string name="autobackup_failed">La última copia de seguridad automática ha fallado</string>
-    <string name="autobackup_files_missing">Para utilizar la copia de seguridad automática, seleccione archivos de copia de seguridad válidos.</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">La última copia de seguridad automática ha fallado</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">Falta un archivo usado para copias de seguridad automáticas</string>
     <string name="autobackup_create_user_copy">Crear una copia después de cada copia de seguridad</string>
     <string name="autobackup_restore_available">Una copia de seguridad automática podría estar disponible para restaurar.</string>
     <!-- Welcome dialog -->
@@ -510,6 +511,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="pref_widget_type">Tipo de widget</string>
     <string name="pref_large_font">Usar tamaño de texto grande</string>
     <string name="pref_hide_watch_button">Ocultar botón de «Visto»</string>
+    <string name="description_widget_limited_items">Tenga en cuenta que el número de elementos siempre está limitado para ahorrar recursos</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Transparente</string>
     <string name="widget_background_25">25%</string>
@@ -526,9 +528,9 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="billing_sub_description">Pruebe 30 días gratis. Cancela cuando quieras.</string>
     <string name="upgrade_description">Cada suscripción desbloquea todas las funciones y soporta actualizaciones futuras. No se requiere una suscripción para usar esta aplicación.</string>
     <string name="upgrade_success">Gracias por apoyar a SeriesGuide! Tienes acceso a todas las funciones.</string>
-    <string name="billing_unlock_detected">Aplicación X Pass detectada. Aún puedes suscribirte para ayudar con futuras actualizaciones.</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">Se ha detectado el \"Acceso a todo\". Aun así puedes suscribirte para apoyar futuras actualizaciones.</string>
     <string name="billing_learn_more">Más información y ayuda.</string>
-    <string name="subscription_expired_details">Tu suscripción a las características X ha caducado.</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">El acceso a todas las características ha caducado</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Inicia sesión en tu cuenta de Amazon!</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">La suscripción no está disponible actualmente.</string>
@@ -564,9 +566,9 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <!-- Streaming info -->
     <string name="action_stream">Ver en línea o comprar</string>
     <string name="action_stream_settings">Configuración de ver en línea o compra</string>
-    <string name="title_stream_subscription">Subscription</string>
-    <string name="title_stream_free">Free</string>
-    <string name="title_stream_with_ads">With ads</string>
-    <string name="title_stream_buy">Purchase</string>
-    <string name="title_stream_rent">Rental</string>
+    <string name="title_stream_subscription">Suscripción</string>
+    <string name="title_stream_free">Gratis</string>
+    <string name="title_stream_with_ads">Con anuncios</string>
+    <string name="title_stream_buy">Comprar</string>
+    <string name="title_stream_rent">Alquilar</string>
 </resources>

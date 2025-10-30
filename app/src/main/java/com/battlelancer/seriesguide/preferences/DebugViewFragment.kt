@@ -10,6 +10,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.lifecycle.lifecycleScope
 import androidx.sqlite.db.SimpleSQLiteQuery
+import com.battlelancer.seriesguide.BuildConfig
+import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.billing.BillingRepository
+import com.battlelancer.seriesguide.billing.BillingTools
+import com.battlelancer.seriesguide.billing.localdb.LocalBillingDb
+import com.battlelancer.seriesguide.billing.localdb.PlayUnlockState
 import com.battlelancer.seriesguide.databinding.FragmentDebugViewBinding
 import com.battlelancer.seriesguide.diagnostics.DebugLogActivity
 import com.battlelancer.seriesguide.notifications.NotificationService
@@ -22,6 +28,7 @@ import com.battlelancer.seriesguide.traktapi.TraktOAuthSettings
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 /**
  * Displays debug actions. Notably allows to display and share logs.
@@ -67,9 +74,37 @@ class DebugViewFragment : AppCompatDialogFragment() {
             toggleDemoMode()
         }
 
+        binding.buttonDebugViewPlayUnlockTrue.setOnClickListener {
+            insertPlayUnlockState(true)
+        }
+
+        binding.buttonDebugViewPlayUnlockFalse.setOnClickListener {
+            insertPlayUnlockState(false)
+        }
+
         return MaterialAlertDialogBuilder(requireContext())
             .setView(binding.getRoot())
             .create()
+    }
+
+    private fun insertPlayUnlockState(isEntitled: Boolean) {
+        if (BuildConfig.DEBUG) {
+            // Coroutine might run after the Context of this is destroyed
+            val context = requireContext().applicationContext
+            SgApp.coroutineScope.launch {
+                Timber.i("insertPlayUnlockState: isEntitled=%s", isEntitled)
+                LocalBillingDb.getInstance(context).unlockStateHelper()
+                    .insert(
+                        PlayUnlockState.withLastUpdatedNow(
+                            entitled = isEntitled,
+                            isSub = true,
+                            sku = BillingRepository.SeriesGuideSku.X_SUB_SUPPORTER,
+                            purchaseToken = null
+                        )
+                    )
+                BillingTools.updateUnlockStateAsync(context)
+            }
+        }
     }
 
     private fun showTestNotification(episodeCount: Int) {

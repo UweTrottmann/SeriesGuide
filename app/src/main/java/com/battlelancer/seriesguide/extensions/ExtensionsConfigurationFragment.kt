@@ -265,7 +265,7 @@ class ExtensionsConfigurationFragment : Fragment() {
                 // special item: search for more extensions
                 WebTools.openInApp(
                     requireContext(),
-                    getString(R.string.url_extensions_search)
+                    getString(R.string.url_play_extensions_search)
                 )
                 return@setOnMenuItemClickListener true
             }

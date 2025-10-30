@@ -40,6 +40,7 @@
     <string name="action_reset">بازنشانی</string>
     <string name="action_save">ذخیره</string>
     <string name="action_turn_on">روشن کردن</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
     <!-- Search -->
     <string name="clear_search_history">پاک‌سازی تاریخچهٔ جست‌وجو</string>
     <string name="search_hint">جست‌وجوی قسمت‌ها</string>
@@ -189,7 +190,7 @@
     <string name="only_favorites">تنها نمایش های مورد علاقه</string>
     <string name="calendar_only_collected">فقط قسمت‌های ذخیره‌شده</string>
     <string name="calendar_only_premieres">فقط آغازین‌ها</string>
-    <string name="pref_infinite_scrolling">تقویم بی‌پایان</string>
+    <string name="pref_infinite_scrolling">Unlimited days</string>
     <!-- Updating -->
     <string name="update_scheduled">به‌روز رسانی&#8230;</string>
     <string name="update_no_connection">برای به‌روز رسانی، به اینترنت وصل شوید.</string>
@@ -468,12 +469,12 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">پشتیبان‌گیری خودکار</string>
     <string name="pref_autobackupsummary">پشتیبان گرفتن هفتگی از نمایش‌ها، فهرست‌ها و فیلم‌هایتان</string>
-    <string name="autobackup_details">این پشتیبان‌ها در صورت نصب دوبارهٔ کاره در دسترس نیستند. مگر این که پشتیبان‌گیری از داده‌های کاره برای این افزاره روشن باشد (اندروید ۶+). در غیر این صورت، برای نگه داشتنشان، از آن‌ها رونوشت بگیرید.</string>
+    <string name="autobackup_details">These backups are deleted if the app is uninstalled. You can choose to create copies in another location below that can be restored using the import tool.</string>
     <string name="backup_button">ایجاد پشتیبان</string>
     <string name="last_auto_backup">آخرین پشتیبان خودکار: %s</string>
     <string name="restore_auto_backup">بازگردانی پشتیبان خودکار</string>
-    <string name="autobackup_failed">آخرین پشتیبان خودکار شکست خورد</string>
-    <string name="autobackup_files_missing">برای استفاده از پشتیبان گیری خودکار، پرونده‌های پشتیبان معتبر را برگزینید.</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">آخرین پشتیبان خودکار شکست خورد</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">A file to store the copy of an auto-backup is missing</string>
     <string name="autobackup_create_user_copy">ایجاد یک رونوشت پس از هر پشتیبان</string>
     <string name="autobackup_restore_available">ممکن است یک پشیبان خودکار برای بازگردانی موجود باشد.</string>
     <!-- Welcome dialog -->
@@ -509,6 +510,7 @@
     <string name="pref_widget_type">نوع ابزارک</string>
     <string name="pref_large_font">استفاده از خط درشت</string>
     <string name="pref_hide_watch_button">نهفتن دکمهٔ نمایش</string>
+    <string name="description_widget_limited_items">Note that the number of items is always limited to save resources</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">شفّاف</string>
     <string name="widget_background_25">۲۵٪</string>
@@ -525,9 +527,9 @@
     <string name="billing_sub_description">۳۰ روز به رایگان آزموده و هر زمان لغو کنید.</string>
     <string name="upgrade_description">هر اشتراکی، همهٔ ویژگی‌ها را گشوده و از به‌روز رسانی‌های آتی پشیبانی می‌کند. برای استفاده از این کاره نیازی به اشتراک نیست.</string>
     <string name="upgrade_success">تشکّر برای حمایت از سریزگاید! شما به تمام ویژگی‌ها دسترسی دارید.</string>
-    <string name="billing_unlock_detected">کارهٔ X Pass پیدا شد. برای پشتیبانی از به‌روز رسانی‌های آینده باید همچنان مشترک شوید.</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">All Access Pass detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">اطّلاعات بیش‌تر و راهنمایی</string>
-    <string name="subscription_expired_details">اشتراک سریزگایدتان به پایان رسیده است.</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">Access to all features expired</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">به حساب آمازونتان وارد شوید!</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">در حال حاضر اشتراک موجود نیست.</string>

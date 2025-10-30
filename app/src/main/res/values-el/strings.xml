@@ -40,6 +40,7 @@
     <string name="action_reset">Επαναφορά</string>
     <string name="action_save">Αποθήκευση</string>
     <string name="action_turn_on">Ενεργοποίηση</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
     <!-- Search -->
     <string name="clear_search_history">Εκκαθάριση ιστορικού αναζήτησης</string>
     <string name="search_hint">Αναζήτηση επεισοδίων</string>
@@ -189,7 +190,7 @@
     <string name="only_favorites">Μόνο αγαπημένες σειρές</string>
     <string name="calendar_only_collected">Μόνο επεισόδια από την συλλογή</string>
     <string name="calendar_only_premieres">Μόνο πρεμιέρες</string>
-    <string name="pref_infinite_scrolling">Απεριόριστο ημερολόγιο</string>
+    <string name="pref_infinite_scrolling">Unlimited days</string>
     <!-- Updating -->
     <string name="update_scheduled">Ενημέρωση&#8230;</string>
     <string name="update_no_connection">Για ενημέρωση συνδεθείτε στο internet.</string>
@@ -468,12 +469,12 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Αυτόματο αντίγραφο ασφαλείας</string>
     <string name="pref_autobackupsummary">Εβδομαδιαίο αντίγραφο ασφαλείας των σειρών, λιστών και ταινιών σας</string>
-    <string name="autobackup_details">Αυτά τα αντίγραφα ασφαλείας δεν είναι διαθέσιμα αν η εφαρμογή εγκατασταθεί ξανά, εκτός αν τα αντίγραφα ασφαλείας των δεδομένων της εφαρμογής είναι ενεργά για αυτή τη συσκευή (Android 6+). Αλλιώς κάντε αντίγραφά τους για να τα διατηρήσετε.  </string>
+    <string name="autobackup_details">These backups are deleted if the app is uninstalled. You can choose to create copies in another location below that can be restored using the import tool.</string>
     <string name="backup_button">Δημιουργία αντιγράφων ασφαλείας</string>
     <string name="last_auto_backup">Τελευταίο αυτόματο αντίγραφο ασφαλείας: %s</string>
     <string name="restore_auto_backup">Επαναφορά αντιγράφου ασφαλείας στο αυτόματο</string>
-    <string name="autobackup_failed">Το τελευταίο αυτόματο αντίγραφο ασφαλείας απέτυχε</string>
-    <string name="autobackup_files_missing">Για τη χρήση της αυτόματης λήψης αντιγράφων ασφαλείας, επιλέξτε έγκυρα αρχεία αντιγράφων ασφαλείας</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">Το τελευταίο αυτόματο αντίγραφο ασφαλείας απέτυχε</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">A file to store the copy of an auto-backup is missing</string>
     <string name="autobackup_create_user_copy">Δημιουργία αντιγράφου μετά από κάθε αντίγραφο ασφαλείας</string>
     <string name="autobackup_restore_available">Μπορεί να υπάρχει διαθέσιμο κάποιο αυτόματο αντίγραφο ασφαλείας για να κάνετε επαναφορά.</string>
     <!-- Welcome dialog -->
@@ -509,6 +510,7 @@
     <string name="pref_widget_type">τύπος Widget</string>
     <string name="pref_large_font">Χρήση μεγάλης γραμματοσειράς</string>
     <string name="pref_hide_watch_button">Απόκρυψη κουμπιού παρακολούθησης</string>
+    <string name="description_widget_limited_items">Note that the number of items is always limited to save resources</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Διαφανές</string>
     <string name="widget_background_25">25%</string>
@@ -525,9 +527,9 @@
     <string name="billing_sub_description">Δοκιμάστε δωρεάν για 30 ημέρες, ακυρώστε όποτε θέλετε. </string>
     <string name="upgrade_description">Κάθε συνδρομή ξεκλειδώνει όλες τις δυνατότητες και υποστηρίζει μελλοντικές ενημερώσεις. Η συνδρομή δεν είναι απαραίτητη γιατη χρήση της εφαρμογής.</string>
     <string name="upgrade_success">Ευχαριστούμε για την υποστήριξη του SeriesGuide! Έχετε πρόσβαση σε όλα τα χαρακτηριστικά.</string>
-    <string name="billing_unlock_detected">Η εφαρμογή X Pass εντοπίστηκε. Μπορείτε ακόμη να εγγραφείτε για να υποστηρίξετε μελλοντικές ενημερώσεις.</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">All Access Pass detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">Περισσότερες πληροφορίες και βοήθεια</string>
-    <string name="subscription_expired_details">Σας X συνδρομή σας έχει λήξει.</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">Access to all features expired</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Συνδεθείτε στο λογαριασμό σας Amazon!</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">Η συνδρομή επί του παρόντος δεν είναι διαθέσιμη.</string>

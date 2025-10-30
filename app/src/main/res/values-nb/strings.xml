@@ -40,6 +40,7 @@
     <string name="action_reset">Reset</string>
     <string name="action_save">Save</string>
     <string name="action_turn_on">Turn on</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
     <!-- Search -->
     <string name="clear_search_history">Tøm søkelogg</string>
     <string name="search_hint">Søk episoder</string>
@@ -189,7 +190,7 @@
     <string name="only_favorites">Bare favoritter</string>
     <string name="calendar_only_collected">Bare episoder i samling</string>
     <string name="calendar_only_premieres">Kun premierer</string>
-    <string name="pref_infinite_scrolling">Uendelig kalender</string>
+    <string name="pref_infinite_scrolling">Unlimited days</string>
     <!-- Updating -->
     <string name="update_scheduled">Oppdaterer&#8230;</string>
     <string name="update_no_connection">Koble til internett for å oppdatere.</string>
@@ -468,12 +469,12 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatisk sikkerhetskopiering</string>
     <string name="pref_autobackupsummary">Ukentlig sikkerhetskopiering av dine serier, lister og filmer</string>
-    <string name="autobackup_details">Disse sikkerhetskopiene er utilgjengelige hvis appen blir installert på nytt. Opprett kopier for å bevare dem.</string>
+    <string name="autobackup_details">These backups are deleted if the app is uninstalled. You can choose to create copies in another location below that can be restored using the import tool.</string>
     <string name="backup_button">Opprett sikkerhetskopi</string>
     <string name="last_auto_backup">Siste automatiske sikkerhetskopiering: %s</string>
     <string name="restore_auto_backup">Gjenopprett fra automatisk sikkerhetskopiering</string>
-    <string name="autobackup_failed">Den siste automatiske sikkerhetskopieringen mislyktes</string>
-    <string name="autobackup_files_missing">Bruke automatisk sikkerhetskopiering, må du velge gyldige sikkerhetskopifiler.</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">Den siste automatiske sikkerhetskopieringen mislyktes</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">A file to store the copy of an auto-backup is missing</string>
     <string name="autobackup_create_user_copy">Opprett en kopi etter hver sikkerhetskopi</string>
     <string name="autobackup_restore_available">En automatisk sikkerhetskopiering kan være tilgjengelig for å gjenopprette fra.</string>
     <!-- Welcome dialog -->
@@ -509,6 +510,7 @@
     <string name="pref_widget_type">Modultype</string>
     <string name="pref_large_font">Bruk stor skrift</string>
     <string name="pref_hide_watch_button">Hide watch button</string>
+    <string name="description_widget_limited_items">Note that the number of items is always limited to save resources</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Gjennomsiktig</string>
     <string name="widget_background_25">25%</string>
@@ -525,9 +527,9 @@
     <string name="billing_sub_description">Prøv 30 dager gratis, avbryt når som helst.</string>
     <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Takk for at du støtter SeriesGuide! Du har nå tilgang til alle funksjonene.</string>
-    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">All Access Pass detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">Mer informasjon og hjelp</string>
-    <string name="subscription_expired_details">X Pass-abonnementet har utløpt.</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">Access to all features expired</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Logg inn på din Amazon-konto!</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">Abonnementet er for øyeblikket ikke tilgjengelig.</string>

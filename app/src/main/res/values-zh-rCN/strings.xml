@@ -40,6 +40,7 @@
     <string name="action_reset">重置</string>
     <string name="action_save">Save</string>
     <string name="action_turn_on">Turn on</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
     <!-- Search -->
     <string name="clear_search_history">清除搜索记录</string>
     <string name="search_hint">搜索剧集</string>
@@ -188,7 +189,7 @@
     <string name="only_favorites">仅显示喜爱的节目</string>
     <string name="calendar_only_collected">仅显示已收藏剧集</string>
     <string name="calendar_only_premieres">仅显示首播剧集</string>
-    <string name="pref_infinite_scrolling">无限的日历</string>
+    <string name="pref_infinite_scrolling">Unlimited days</string>
     <!-- Updating -->
     <string name="update_scheduled">正在更新&#8230;</string>
     <string name="update_no_connection">如需更新，请连接到互联网</string>
@@ -454,12 +455,12 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">自动备份</string>
     <string name="pref_autobackupsummary">每周将您的节目、列表和电影数据备份到设备存储空间。</string>
-    <string name="autobackup_details">重新安装应用后，将失去这些备份。如果不希望重新安装应用后失去这些备份，可通过创建副本来保存它们。</string>
+    <string name="autobackup_details">These backups are deleted if the app is uninstalled. You can choose to create copies in another location below that can be restored using the import tool.</string>
     <string name="backup_button">创建备份</string>
     <string name="last_auto_backup">上次自动备份时间：%s</string>
     <string name="restore_auto_backup">从自动备份恢复</string>
-    <string name="autobackup_failed">最后一次自动备份失败</string>
-    <string name="autobackup_files_missing">要使用自动备份，请选择有效的备份文件</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">最后一次自动备份失败</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">A file to store the copy of an auto-backup is missing</string>
     <string name="autobackup_create_user_copy">每次备份后创建一个副本</string>
     <string name="autobackup_restore_available">可以从自动备份恢复。</string>
     <!-- Welcome dialog -->
@@ -495,6 +496,7 @@
     <string name="pref_widget_type">微件类型</string>
     <string name="pref_large_font">使用大字体</string>
     <string name="pref_hide_watch_button">隐藏观看按钮</string>
+    <string name="description_widget_limited_items">Note that the number of items is always limited to save resources</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">100%</string>
     <string name="widget_background_25">25%</string>
@@ -511,9 +513,9 @@
     <string name="billing_sub_description">免费试用 30 天，随时取消。</string>
     <string name="upgrade_description">每种订阅都能解锁所有功能并支持未来的更新。使用本应用无需订阅。</string>
     <string name="upgrade_success">感谢您对 SeriesGuide 的支持！您可以使用所有功能。</string>
-    <string name="billing_unlock_detected">已检测到 X Pass App。您仍可以通过订阅来支持未来的更新。</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">All Access Pass detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">更多信息与帮助</string>
-    <string name="subscription_expired_details">您的 SeriesGuide 订阅已过期</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">Access to all features expired</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">登录您的亚马逊帐户</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">目前无法获取订阅</string>

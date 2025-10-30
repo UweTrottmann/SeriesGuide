@@ -19,7 +19,7 @@
     <string name="season_number">Séria %d</string>
     <string name="specialseason">Bonusové epizódy</string>
     <string name="ratings">Hodnotenia</string>
-    <string name="more_information">More information</string>
+    <string name="more_information">Viac informácií</string>
     <!-- Descriptions -->
     <string name="navigate_up">Prejsť hore</string>
     <string name="description_overview">Prehľad</string>
@@ -39,7 +39,8 @@
     <string name="action_select_region">Vybrať región</string>
     <string name="action_reset">Resetovať</string>
     <string name="action_save">Uložiť</string>
-    <string name="action_turn_on">Turn on</string>
+    <string name="action_turn_on">Zapnúť</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Skontrolovať</string>
     <!-- Search -->
     <string name="clear_search_history">Vymazať históriu vyhľadávania</string>
     <string name="search_hint">Hľadať epizódy</string>
@@ -58,7 +59,7 @@
     <string name="api_failed">Zlyhanie: %s</string>
     <string name="copy_to_clipboard">Skopírované do schránky</string>
     <string name="not_migrated">Seriál nebol migrovaný na TMDB. Niektoré akcie vrátane Trakt a Cloud synchronizácie nemusia fungovať. Vyhľadajte prípadnú náhradu a tento seriál odstráňte. Klepnutím zobrazíte podrobnosti.</string>
-    <string name="status_turned_on">Turned on</string>
+    <string name="status_turned_on">Zapnutá</string>
     <!-- Sharing -->
     <string name="share">Zdieľať</string>
     <string name="share_show">Zdieľať seriál</string>
@@ -191,7 +192,7 @@
     <string name="only_favorites">Iba obľúbené seriály</string>
     <string name="calendar_only_collected">Iba epizódy v zbierke</string>
     <string name="calendar_only_premieres">Iba premiéry</string>
-    <string name="pref_infinite_scrolling">Nekonečný kalendár</string>
+    <string name="pref_infinite_scrolling">Unlimited days</string>
     <!-- Updating -->
     <string name="update_scheduled">Aktualizuje sa&#8230;</string>
     <string name="update_no_connection">Pre aktualizáciu sa pripojte k internetu.</string>
@@ -470,7 +471,7 @@
     <string name="theme_app_dark">Tmavá</string>
     <string name="theme_app_light">Svetlá</string>
     <!-- Other advanced settings -->
-    <string name="pref_category_diagnostics">Diagnostics</string>
+    <string name="pref_category_diagnostics">Diagnostika</string>
     <string name="pref_autoupdatesummary">Automaticky synchronizovať a aktualizovať SeriesGuide dáta</string>
     <string name="pref_number">Formát číslovania</string>
     <string name="pref_offset">Manuálny časový posun</string>
@@ -478,30 +479,30 @@
     <string name="clear_cache">Vymazať vyrovnávaciu pamäť obrázkov</string>
     <string name="clear_cache_summary">Odstrániť všetky obrázky stiahnuté do zariadenia</string>
     <!-- Export and Import -->
-    <string name="title_export_import">Export and import</string>
-    <string name="title_export">Export</string>
-    <string name="title_import">Import</string>
-    <string name="action_export">Export to file</string>
+    <string name="title_export_import">Export a import</string>
+    <string name="title_export">Exportovať</string>
+    <string name="title_import">Importovať</string>
+    <string name="action_export">Exportovať do súboru</string>
     <string name="backup_full_dump">Zahrnúť popisy, podrobnosti, hodnotenia</string>
-    <string name="status_successful">Successful</string>
-    <string name="status_failure">Failed</string>
-    <string name="status_failed_file_access">Can not find or access file</string>
+    <string name="status_successful">Úspešné</string>
+    <string name="status_failure">Neúspešné</string>
+    <string name="status_failed_file_access">Nie je možné nájsť alebo získať prístup k súboru</string>
     <string name="import_button">Obnoviť</string>
-    <string name="action_view_import_documentation">View expected format</string>
+    <string name="action_view_import_documentation">Zobraziť očakávaný formát</string>
     <string name="import_warning">Rozumiem, moje aktuálne seriály, zoznamy a filmy budú nahradené zálohou!</string>
-    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
-    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
+    <string name="import_cloud_warning">Neodporúča sa pri používaní SeriesGuide Cloud alebo Trakt</string>
+    <string name="import_cloud_warning_details">Synchronizácia s Cloud alebo Trakt môže prepísať importované dáta. So službou SeriesGuide Cloud môžete pred importom údajov odstrániť svoj účet a potom ho znova vytvoriť, aby ste nahrali iba importované údaje.</string>
     <string name="no_file_selected">Nebol vybratý žiadny súbor</string>
     <string name="action_select_file">Vyberte súbor</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatické zálohovanie</string>
     <string name="pref_autobackupsummary">Týždenné zálohovanie vašich seriálov, zoznamov a filmov</string>
-    <string name="autobackup_details">Tieto zálohy nie sú k dispozícii, ak je aplikácia nainštalovaná znova, pokiaľ nie je pre toto zariadenie zapnuté zálohovanie údajov aplikácie (Android 6+). Vytvorte kópie, aby ste ich zachovali inak.</string>
+    <string name="autobackup_details">Tieto zálohy sa vymažú, ak sa aplikácia odinštaluje. Nižšie si môžete vybrať vytvorenie kópií na inom mieste, ktoré je možné obnoviť pomocou nástroja na import.</string>
     <string name="backup_button">Zálohovať</string>
     <string name="last_auto_backup">Posledná automatická záloha: %s</string>
     <string name="restore_auto_backup">Obnoviť automatickú zálohu</string>
-    <string name="autobackup_failed">Posledná automatická záloha zlyhala</string>
-    <string name="autobackup_files_missing">Ak chcete použiť automatické zálohovanie, vyberte platné záložné súbory.</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">Posledná automatická záloha zlyhala</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">Chýba súbor používaný na automatické záložné kópie</string>
     <string name="autobackup_create_user_copy">Vytvoriť kópiu po každej zálohe</string>
     <string name="autobackup_restore_available">Môže byť dostupná automatická záloha pre obnovenie.</string>
     <!-- Welcome dialog -->
@@ -537,6 +538,7 @@
     <string name="pref_widget_type">Typ miniaplikácie</string>
     <string name="pref_large_font">Použiť veľké písmo</string>
     <string name="pref_hide_watch_button">Skryť tlačítko Pozerať</string>
+    <string name="description_widget_limited_items">Upozorňujeme, že počet položiek je vždy obmedzený, aby sa šetrili zdroje.</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Priehľadné</string>
     <string name="widget_background_25">25%</string>
@@ -553,9 +555,9 @@
     <string name="billing_sub_description">Vyskúšajte 30 dní zadarmo, kedykoľvek môžete zrušiť.</string>
     <string name="upgrade_description">Každé predplatné odomkne všetky funkcie a podporuje budúce aktualizácie. Na používanie tejto aplikácie sa nevyžaduje predplatné.</string>
     <string name="upgrade_success">Ďakujeme za podporu SeriesGuide! Máte prístup ku všetkým funkciám.</string>
-    <string name="billing_unlock_detected">X Pass aplikácia detekovaná. Stále sa môžete prihlásiť k odberu pre podporu budúcich aktualizácií.</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">All Access Pass detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">Viac info a pomoc</string>
-    <string name="subscription_expired_details">Vaše predplatné SeriesGuide vypršalo.</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">Prístup ku všetkým funkciám vypršal</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Prihláste sa do svojho účtu Amazon!</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">Predplatné momentálne nie je dostupné.</string>
@@ -583,17 +585,17 @@
     <string name="feedback_action_nothanks">Nie, ďakujem</string>
     <!-- Support the dev -->
     <string name="support_the_dev">Podporiť vývojára?</string>
-    <string name="support_the_dev_other_ways">Other ways to support</string>
+    <string name="support_the_dev_other_ways">Iné spôsoby podpory</string>
     <!-- Diagnostics -->
-    <string name="title_debug_log">Debug log</string>
-    <string name="status_saving_file_success">File saved</string>
-    <string name="status_saving_file_failed">Failed to save file</string>
+    <string name="title_debug_log">Denník ladenia</string>
+    <string name="status_saving_file_success">Súbor uložený</string>
+    <string name="status_saving_file_failed">Súbor sa nepodarilo uložiť</string>
     <!-- Streaming info -->
     <string name="action_stream">Streamovanie alebo zakúpenie</string>
     <string name="action_stream_settings">Nastavenia streamu alebo nákupu</string>
-    <string name="title_stream_subscription">Subscription</string>
-    <string name="title_stream_free">Free</string>
-    <string name="title_stream_with_ads">With ads</string>
-    <string name="title_stream_buy">Purchase</string>
-    <string name="title_stream_rent">Rental</string>
+    <string name="title_stream_subscription">Predplatné</string>
+    <string name="title_stream_free">Zdarma</string>
+    <string name="title_stream_with_ads">S reklamami</string>
+    <string name="title_stream_buy">Zakúpiť</string>
+    <string name="title_stream_rent">Požičovňa</string>
 </resources>

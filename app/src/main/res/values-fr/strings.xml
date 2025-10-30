@@ -39,7 +39,8 @@
     <string name="action_select_region">Sélectionner une région</string>
     <string name="action_reset">Réinitialiser</string>
     <string name="action_save">Enregistrer</string>
-    <string name="action_turn_on">Turn on</string>
+    <string name="action_turn_on">Activer</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Voir</string>
     <!-- Search -->
     <string name="clear_search_history">Effacer l\'historique de recherche</string>
     <string name="search_hint">Recherche d\'épisodes</string>
@@ -58,7 +59,7 @@
     <string name="api_failed">Échec : %s</string>
     <string name="copy_to_clipboard">Copié dans le presse-papiers</string>
     <string name="not_migrated">Affichage non migré vers les données de TMDB. Certaines actions, y compris la synchronisation Trakt et Cloud, pourraient ne pas fonctionner. Peut-être chercher un remplacement et supprimer cet affichage. Appuyez pour afficher les détails.</string>
-    <string name="status_turned_on">Turned on</string>
+    <string name="status_turned_on">Activé</string>
     <!-- Sharing -->
     <string name="share">Partager</string>
     <string name="share_show">Partager la série</string>
@@ -189,7 +190,7 @@
     <string name="only_favorites">Juste les séries préférées</string>
     <string name="calendar_only_collected">Seulement les épisodes collectées</string>
     <string name="calendar_only_premieres">Seulement les premières</string>
-    <string name="pref_infinite_scrolling">Calendrier infini</string>
+    <string name="pref_infinite_scrolling">Jours illimités</string>
     <!-- Updating -->
     <string name="update_scheduled">Mise à jour&#8230;</string>
     <string name="update_no_connection">Pour mettre à jour, connectez-vous à Internet.</string>
@@ -450,30 +451,30 @@
     <string name="clear_cache">Vider le cache d\'images</string>
     <string name="clear_cache_summary">Supprimer toutes les images en cache sur votre périphérique</string>
     <!-- Export and Import -->
-    <string name="title_export_import">Export and import</string>
-    <string name="title_export">Export</string>
-    <string name="title_import">Import</string>
-    <string name="action_export">Export to file</string>
+    <string name="title_export_import">Exporter et importer</string>
+    <string name="title_export">Exporter</string>
+    <string name="title_import">Importer</string>
+    <string name="action_export">Exporter vers un fichier</string>
     <string name="backup_full_dump">Inclure les descriptions, informations, notes</string>
-    <string name="status_successful">Successful</string>
-    <string name="status_failure">Failed</string>
-    <string name="status_failed_file_access">Can not find or access file</string>
+    <string name="status_successful">Réussi</string>
+    <string name="status_failure">Échoué</string>
+    <string name="status_failed_file_access">Impossible de trouver ou d\'accéder au fichier</string>
     <string name="import_button">Restaurer</string>
-    <string name="action_view_import_documentation">View expected format</string>
+    <string name="action_view_import_documentation">Voir le format attendu</string>
     <string name="import_warning">Je comprends que mes séries, listes et films actuels seront remplacés !</string>
-    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
-    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
+    <string name="import_cloud_warning">Non recommandé lors de l’utilisation de SeriesGuide Cloud ou de Trakt</string>
+    <string name="import_cloud_warning_details">La synchronisation avec Cloud ou Trakt peut écraser les données importées. Avec SeriesGuide Cloud, vous pouvez supprimer votre compte avant d’importer les données, puis le recréer ensuite pour ne télécharger que les données importées.</string>
     <string name="no_file_selected">Aucun fichier sélectionné</string>
     <string name="action_select_file">Choisir un fichier</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Sauvegarde automatique</string>
     <string name="pref_autobackupsummary">Sauvegarde hebdomadaire de vos émissions, vos listes et vos films</string>
-    <string name="autobackup_details">Ces sauvegardes ne sont pas disponibles si l\'application est réinstallée sauf si la sauvegarde des données de l\'application est activée pour cet appareil (Android 6+). Créez des copies pour les préserver.</string>
+    <string name="autobackup_details">Ces sauvegardes sont supprimées si l\'application est désinstallée. Vous pouvez choisir de créer des copies dans un autre emplacement ci-dessous qui peuvent être restaurées à l\'aide de l\'outil d\'importation.</string>
     <string name="backup_button">Sauvegarder</string>
     <string name="last_auto_backup">Dernière sauvegarde auto : %s</string>
     <string name="restore_auto_backup">Restaurer la sauvegarde automatique</string>
-    <string name="autobackup_failed">La dernière sauvegarde automatique a échoué</string>
-    <string name="autobackup_files_missing">Pour utiliser la sauvegarde automatique, sélectionnez un fichier de sauvegarde valides.</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">La dernière sauvegarde automatique a échoué</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">Un fichier de sauvegarde automatique est manquant</string>
     <string name="autobackup_create_user_copy">Créer une copie après chaque sauvegarde</string>
     <string name="autobackup_restore_available">Une sauvegarde automatique peut être disponible pour la restauration.</string>
     <!-- Welcome dialog -->
@@ -509,6 +510,7 @@
     <string name="pref_widget_type">Type du widget</string>
     <string name="pref_large_font">Agrandir le texte</string>
     <string name="pref_hide_watch_button">Masquer le bouton \"Vu\"</string>
+    <string name="description_widget_limited_items">Notez que le nombre d\'éléments est toujours limité pour économiser des ressources</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Transparent</string>
     <string name="widget_background_25">25 %</string>
@@ -525,9 +527,9 @@
     <string name="billing_sub_description">Essayez 30 jours gratuitement, annulez à tout moment.</string>
     <string name="upgrade_description">Chaque abonnement débloque toutes les fonctionnalités et prend en charge les mises à jour futures. Un abonnement n\'est pas nécessaire pour utiliser cette application.</string>
     <string name="upgrade_success">Merci de supporter SeriesGuide ! Vous avez maintenant accès à toutes les fonctionnalités.</string>
-    <string name="billing_unlock_detected">Application X Pass détectée. Vous pouvez toujours vous abonner pour soutenir les mises à jour à venir.</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">All Access Pass détectée. Vous pouvez toujours vous abonner pour soutenir les mises à jour à venir.</string>
     <string name="billing_learn_more">Plus d\'infos et d\'aide</string>
-    <string name="subscription_expired_details">Votre abonnement aux fonctionnalités X a expiré.</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">L\'accès à toutes les fonctionnalités a expiré</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Connectez-vous à votre compte Amazon !</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">L\'abonnement n\'est actuellement pas disponible.</string>
@@ -557,9 +559,9 @@
     <string name="support_the_dev">Soutenir le développeur ?</string>
     <string name="support_the_dev_other_ways">Autres manières de soutenir</string>
     <!-- Diagnostics -->
-    <string name="title_debug_log">Debug log</string>
-    <string name="status_saving_file_success">File saved</string>
-    <string name="status_saving_file_failed">Failed to save file</string>
+    <string name="title_debug_log">Journal de débogage</string>
+    <string name="status_saving_file_success">Fichier enregistré</string>
+    <string name="status_saving_file_failed">Échec de l\'enregistrement du fichier</string>
     <!-- Streaming info -->
     <string name="action_stream">Streaming ou achetez</string>
     <string name="action_stream_settings">Paramètres de streaming ou d\'achat</string>

@@ -4,9 +4,6 @@
     <!-- Screens with more than 720dp of available width. This would
     include 7" in landscape and 10" devices in portrait. -->
 
-    <!-- Tabs -->
-    <dimen name="tab_padding_horizontal">24dp</dimen>
-
     <!-- List widget -->
     <dimen name="widget_poster_width">36dp</dimen>
     <dimen name="widget_poster_width_large">37dp</dimen>

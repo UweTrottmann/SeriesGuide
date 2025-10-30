@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -27,6 +28,27 @@ tasks.withType(JavaCompile::class.java).configureEach {
     options.compilerArgs.add("-Xlint:-options")
 }
 
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_1_8
+        // Using experimental flatMapLatest for Paging 3
+        // Using experimental Material 3 compose APIs
+        freeCompilerArgs.add("-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi,androidx.compose.material3.ExperimentalMaterial3Api")
+        // Opt-in to constructor parameter annotations also applying to properties
+        // https://youtrack.jetbrains.com/issue/KT-73255
+        freeCompilerArgs.add("-Xannotation-default-target=param-property")
+    }
+}
+
+kapt {
+    arguments {
+        arg("eventBusIndex", "com.battlelancer.seriesguide.SgEventBusIndex")
+        // Export schema for testing and in case the database ever needs to be built manually
+        // (like when migrating away from Room).
+        arg("room.schemaLocation", "$projectDir/schemas")
+    }
+}
+
 android {
     namespace = "com.battlelancer.seriesguide"
     compileSdk = sgCompileSdk
@@ -47,6 +69,8 @@ android {
 
         // Prevent plugin from generating PNGs, use compat loading instead https://developer.android.com/studio/write/vector-asset-studio#sloption
         vectorDrawables.useSupportLibrary = true
+
+        // Use AndroidX test runner
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "TMDB_API_KEY", propertyOrEmpty("SG_TMDB_API_KEY"))
@@ -54,6 +78,11 @@ android {
         buildConfigField("String", "TRAKT_CLIENT_SECRET", propertyOrEmpty("SG_TRAKT_CLIENT_SECRET"))
         buildConfigField("String", "IMAGE_CACHE_URL", propertyOrNull("SG_IMAGE_CACHE_URL"))
         buildConfigField("String", "IMAGE_CACHE_SECRET", propertyOrEmpty("SG_IMAGE_CACHE_SECRET"))
+        // Play Billing
+        buildConfigField("String", "IAP_KEY_A", propertyOrEmpty("SG_IAP_KEY_A"))
+        buildConfigField("String", "IAP_KEY_B", propertyOrEmpty("SG_IAP_KEY_B"))
+        buildConfigField("String", "IAP_KEY_C", propertyOrEmpty("SG_IAP_KEY_C"))
+        buildConfigField("String", "IAP_KEY_D", propertyOrEmpty("SG_IAP_KEY_D"))
 
         // Note: do not exclude languages from libraries that the app doesn't have, e.g. Firebase Auth.
         // They still might be helpful to users, e.g. for regional dialects.
@@ -70,14 +99,6 @@ android {
         encoding = "UTF-8"
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
-        // Using experimental flatMapLatest for Paging 3
-        // Using experimental Material 3 compose APIs
-        freeCompilerArgs =
-            freeCompilerArgs + "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi,androidx.compose.material3.ExperimentalMaterial3Api"
     }
 
     lint {
@@ -166,14 +187,6 @@ android {
     }
 }
 
-// Note: android.javaCompileOptions.annotationProcessorOptions does not seem to work with Kotlin 1.5.20
-kapt {
-    arguments {
-        arg("eventBusIndex", "com.battlelancer.seriesguide.SgEventBusIndex")
-        arg("room.schemaLocation", "$projectDir/schemas")
-    }
-}
-
 dependencies {
     constraints {
         // androidx.room:room-paging-android pulls in a paging-common 3.3 version (but does not
@@ -188,7 +201,6 @@ dependencies {
 
     implementation(project(":api"))
     implementation(project(":backend"))
-    implementation(project(":billing"))
     implementation(project(":widgets"))
 
     implementation(libs.androidx.core.ktx)
@@ -272,9 +284,11 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.play.services.auth)
 
-    // Amazon flavor specific
+    // Amazon Billing
     // Note: requires to add AppstoreAuthenticationKey.pem into amazon/assets.
-    "amazonImplementation"(libs.amazon.appstore.sdk)
+    implementation(libs.amazon.appstore.sdk)
+    // Play Billing
+    implementation(libs.billing)
 
     // Instrumented unit tests
     androidTestImplementation(libs.androidx.annotation)

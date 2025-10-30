@@ -3,7 +3,6 @@
 
 package com.battlelancer.seriesguide.util
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
@@ -12,6 +11,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.uwetrottmann.androidutils.AndroidUtils
 import timber.log.Timber
+import java.util.Locale
 
 /**
  * Helpers that work with [PackageManager].
@@ -19,6 +19,8 @@ import timber.log.Timber
 object PackageTools {
 
     private const val FLAVOR_AMAZON = "amazon"
+    private const val PACKAGE_NAME_PASS = "com.battlelancer.seriesguide.x"
+    private const val SIGNATURE_HASH_PASS = 528716598
     private const val PACKAGE_NAME_PLAY_STORE = "com.android.vending"
 
     /**
@@ -62,39 +64,30 @@ object PackageTools {
     }
 
     /**
-     * Returns if the user has a valid copy of X Pass installed.
+     * Returns if the unlock app is installed.
      */
-    @JvmStatic
     fun hasUnlockKeyInstalled(context: Context): Boolean {
         try {
-            // Get our signing key
-            val manager = context.packageManager
-            @SuppressLint("PackageManagerGetSignatures") val appInfoSeriesGuide = manager
-                .getPackageInfoCompat(
-                    context.applicationContext.packageName,
+            // Get signing info from unlock app (if it's installed, otherwise throws)
+            if (AndroidUtils.isAtLeastPie) {
+                context.packageManager.getPackageInfoCompat(
+                    PACKAGE_NAME_PASS,
+                    PackageManager.GET_SIGNING_CERTIFICATES
+                ).signingInfo?.signingCertificateHistory
+            } else {
+                @Suppress("DEPRECATION")
+                context.packageManager.getPackageInfoCompat(
+                    PACKAGE_NAME_PASS,
                     PackageManager.GET_SIGNATURES
-                )
-
-            // Try to find the X signing key
-            @SuppressLint("PackageManagerGetSignatures") val appInfoSeriesGuideX = manager
-                .getPackageInfoCompat(
-                    "com.battlelancer.seriesguide.x",
-                    PackageManager.GET_SIGNATURES
-                )
-            val sgSignatures = appInfoSeriesGuide.signatures
-            val xSignatures = appInfoSeriesGuideX.signatures
-            if (sgSignatures != null && xSignatures != null
-                && sgSignatures.size == xSignatures.size) {
-                for (i in sgSignatures.indices) {
-                    if (sgSignatures[i].toCharsString() != xSignatures[i].toCharsString()) {
-                        return false // a signature does not match
-                    }
+                ).signatures
+            }?.let {
+                for (signature in it) {
+                    // One of the signatures needs to match the expected one
+                    if (signature.hashCode() == SIGNATURE_HASH_PASS) return true
                 }
-                return true
             }
-        } catch (e: PackageManager.NameNotFoundException) {
-            // Expected exception that occurs if the package is not present.
-            Timber.d("X Pass not found.")
+        } catch (_: PackageManager.NameNotFoundException) {
+            // Expected exception that occurs if the pass app is not installed
         }
         return false
     }
@@ -119,15 +112,30 @@ object PackageTools {
         }.also { Timber.d("installingPackageName = '%s'", it) }
     }
 
-    fun isDeviceInEEA(context: Context): Boolean {
-        @Suppress("DEPRECATION")
-        val region = context.resources.configuration.locale.country
-        return if (region.isEmpty()) {
+    @JvmInline
+    value class DeviceRegion(val code: String)
+
+    fun getDeviceRegion(context: Context): DeviceRegion {
+        val region = if (AndroidUtils.isNougatOrHigher) {
+            context.resources.configuration.locales[0].country
+        } else {
+            @Suppress("DEPRECATION")
+            context.resources.configuration.locale.country
+        }
+        return DeviceRegion(region)
+    }
+
+    fun DeviceRegion.isEuropeanEconomicArea(context: Context): Boolean {
+        return if (code.isEmpty()) {
             false
         } else {
             val eeaRegions = context.resources.getStringArray(R.array.eea_regions)
-            eeaRegions.contains(region)
-        }.also { Timber.d("region = '%s', isEEA = %s", region, it) }
+            eeaRegions.contains(code)
+        }
+    }
+
+    fun DeviceRegion.isUnitedStates() : Boolean {
+        return code == Locale.US.country
     }
 
 }

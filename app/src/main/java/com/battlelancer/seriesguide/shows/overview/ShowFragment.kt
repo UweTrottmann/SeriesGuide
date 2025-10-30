@@ -20,7 +20,10 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.billing.BillingTools
@@ -58,6 +61,7 @@ import com.battlelancer.seriesguide.util.startActivityWithAnimation
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.uwetrottmann.androidutils.AndroidUtils
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -78,7 +82,9 @@ class ShowFragment() : Fragment() {
     private var show: SgShow2? = null
     private var languageCode: String? = null
 
-    val model: ShowViewModel by viewModels()
+    // Cache the ViewModel in the activity (use activityViewModels instead of viewModels) as
+    // OverviewActivityImpl may destroy fragments when switching layouts.
+    val model: ShowViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -236,8 +242,13 @@ class ShowFragment() : Fragment() {
                 populateShow(it, model.hasAllFeatures.value)
             }
         }
-        model.hasAllFeatures.observe(viewLifecycleOwner) {
-            populateShow(model.showForUi.value, it)
+        viewLifecycleOwner.lifecycleScope.launch {
+            // Mirror LiveData.observe and only update once/while this is at least started
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                model.hasAllFeatures.collect {
+                    populateShow(model.showForUi.value, it)
+                }
+            }
         }
         model.credits.observe(viewLifecycleOwner) { credits ->
             populateCredits(credits)
@@ -248,7 +259,6 @@ class ShowFragment() : Fragment() {
         super.onStart()
 
         EventBus.getDefault().register(this)
-        model.updateUserStatus()
     }
 
     override fun onStop() {

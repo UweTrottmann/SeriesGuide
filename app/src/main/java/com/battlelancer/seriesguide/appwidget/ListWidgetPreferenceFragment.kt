@@ -134,15 +134,24 @@ class ListWidgetPreferenceFragment : BasePreferencesFragment() {
             addPreference(onlyCollectedPref)
             addPreference(hideWatchedPreference)
             addPreference(isInfinitePref)
-            addPreference(isHideWatchedButtonPref)
+            addPreference(
+                Preference(requireContext()).also {
+                    it.isPersistent = false
+                    it.isSelectable = false
+                    it.isIconSpaceReserved = false
+                    it.setSummary(R.string.description_widget_limited_items)
+                }
+            )
             val appearanceCategory = PreferenceCategory(requireContext()).apply {
                 setTitle(R.string.pref_appearance)
+                isIconSpaceReserved = false
             }
             // Need to add to screen first so added prefs can get unique IDs.
             addPreference(appearanceCategory)
             appearanceCategory.apply {
                 addPreference(themePref)
                 addPreference(backgroundPref)
+                addPreference(isHideWatchedButtonPref)
                 addPreference(isLargeFontPref)
             }
         }
@@ -158,7 +167,7 @@ class ListWidgetPreferenceFragment : BasePreferencesFragment() {
         bindPreferenceSummaryToValue(themePref)
 
         // Disable saving some prefs not available for non-supporters.
-        if (!BillingTools.hasAccessToPaidFeatures(requireContext())) {
+        if (!BillingTools.hasAccessToPaidFeatures()) {
             val onDisablePreferenceChangeListener =
                 Preference.OnPreferenceChangeListener { _: Preference?, _: Any? ->
                     BillingTools.advertiseSubscription(requireContext())
@@ -217,6 +226,7 @@ class ListWidgetPreferenceFragment : BasePreferencesFragment() {
             it.key = key
             it.setTitle(titleRes)
             it.setDefaultValue(defaultValue)
+            it.isIconSpaceReserved = false
         }
     }
 
@@ -235,6 +245,7 @@ class ListWidgetPreferenceFragment : BasePreferencesFragment() {
             it.setDefaultValue(defaultValue)
             it.positiveButtonText = null
             it.negativeButtonText = null
+            it.isIconSpaceReserved = false
         }
     }
 

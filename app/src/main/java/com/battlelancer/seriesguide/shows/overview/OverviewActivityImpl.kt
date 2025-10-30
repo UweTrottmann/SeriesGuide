@@ -132,7 +132,9 @@ open class OverviewActivityImpl : BaseMessageActivity() {
             // Bottom pad the card containing the overview fragment.
             ThemeUtils.applyBottomMarginForNavigationBar(findViewById(R.id.cardOverview))
 
-            // clear up left-over fragments from single-pane layout
+            // Clear up left-over fragments from single-pane layout. Note that fragments should make
+            // sure to cache their ViewModel in this activity (use activityViewModels instead of
+            // viewModels) to retain data.
             val isSwitchingLayouts = activeFragments.size != 0
             for (fragment in activeFragments) {
                 supportFragmentManager.commitReorderingAllowed {

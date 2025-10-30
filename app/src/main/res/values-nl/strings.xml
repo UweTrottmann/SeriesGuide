@@ -40,6 +40,7 @@
     <string name="action_reset">Herstellen</string>
     <string name="action_save">Opslaan</string>
     <string name="action_turn_on">Inschakelen</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Controleren</string>
     <!-- Search -->
     <string name="clear_search_history">Verwijder zoekgeschiedenis</string>
     <string name="search_hint">Afleveringen zoeken</string>
@@ -189,7 +190,7 @@
     <string name="only_favorites">Alleen favoriete series</string>
     <string name="calendar_only_collected">Enkel verzamelde afleveringen</string>
     <string name="calendar_only_premieres">Alleen premières</string>
-    <string name="pref_infinite_scrolling">Oneindige kalender</string>
+    <string name="pref_infinite_scrolling">Onbeperkte dagen</string>
     <!-- Updating -->
     <string name="update_scheduled">Bijwerken&#8230;</string>
     <string name="update_no_connection">Verbind met het internet om bij te werken.</string>
@@ -468,12 +469,12 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatische back-up</string>
     <string name="pref_autobackupsummary">Wekelijkse back-up van uw series, lijsten en films</string>
-    <string name="autobackup_details">Deze back-ups zijn niet beschikbaar als de app opnieuw wordt geïnstalleerd, tenzij gegevensback-up is ingeschakeld voor dit apparaat (Android 6+). Maak kopieën om ze anders te behouden.</string>
+    <string name="autobackup_details">Deze back-ups worden verwijderd als de app wordt gedeïnstalleerd. U kunt kopieën maken op een andere locatie hieronder die met behulp van de tool voor importeren hersteld kunnen worden.</string>
     <string name="backup_button">Back-up maken</string>
     <string name="last_auto_backup">Laatste auto back-up: %s</string>
     <string name="restore_auto_backup">Auto back-up terugzetten</string>
-    <string name="autobackup_failed">De laatste automatische back-up is mislukt</string>
-    <string name="autobackup_files_missing">Selecteer geldige back-upbestanden om automatisch te back-uppen</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">De laatste automatische back-up is mislukt</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">Een bestand dat gebruikt wordt voor automatische back-upkopieën ontbreekt</string>
     <string name="autobackup_create_user_copy">Maak een kopie na elke back-up</string>
     <string name="autobackup_restore_available">Er kan een automatische back-up beschikbaar zijn om vanuit te herstellen.</string>
     <!-- Welcome dialog -->
@@ -509,6 +510,7 @@
     <string name="pref_widget_type">Widget type</string>
     <string name="pref_large_font">Groot lettertype gebruiken</string>
     <string name="pref_hide_watch_button">Bekijkenknop verbergen</string>
+    <string name="description_widget_limited_items">Merk op dat het aantal items altijd beperkt is om middelen te besparen</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Transparantie</string>
     <string name="widget_background_25">25%</string>
@@ -525,9 +527,9 @@
     <string name="billing_sub_description">30 dagen gratis proberen, annuleren op elk moment.</string>
     <string name="upgrade_description">Elk abonnement ontgrendelt alle functies en ondersteunt toekomstige updates. Een abonnement is niet vereist om deze app te gebruiken.</string>
     <string name="upgrade_success">Bedankt om SeriesGuide te steunen! U heeft toegang tot alle functies.</string>
-    <string name="billing_unlock_detected">X Pass-app gedetecteerd. U kunt zich nog steeds abonneren om toekomstige updates te ondersteunen.</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">Volledige toegangpas gedetecteerd. U kunt zich nog steeds abonneren op toekomstige updates.</string>
     <string name="billing_learn_more">Meer informatie en ondersteuning</string>
-    <string name="subscription_expired_details">Uw abonnement voor SeriesGuide is verlopen</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">Toegang tot alle functies verlopen</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Log in bij uw Amazon-account</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">Het abonnement is nu niet beschikbaar</string>
