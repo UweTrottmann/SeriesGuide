@@ -25,6 +25,7 @@ class SlidingTabStrip @JvmOverloads constructor(
 
     private val selectedIndicatorThickness: Int
     private val selectedIndicatorPaint: Paint
+    private val selectedIndicatorPaddingHorizontal: Int
 
     private var selectedPosition = 0
     private var selectionOffset = 0f
@@ -46,6 +47,9 @@ class SlidingTabStrip @JvmOverloads constructor(
         selectedIndicatorThickness = resources
             .getDimensionPixelSize(R.dimen.sg_sliding_tab_strip_indicator_size)
         selectedIndicatorPaint = Paint()
+
+        selectedIndicatorPaddingHorizontal = resources
+            .getDimensionPixelSize(R.dimen.sg_sliding_tab_strip_indicator_padding_horizontal)
     }
 
     fun setCustomTabColorizer(tabColorizer: SlidingTabLayout.TabColorizer?) {
@@ -120,33 +124,30 @@ class SlidingTabStrip @JvmOverloads constructor(
 
             // Draw a pill-shaped indicator (rectangle with rounded ends). If an underline is
             // displayed, draw the indicator above it.
+            val top: Float
+            val bottom: Float
+            val radius = selectedIndicatorThickness / 2f
             if (displayUnderline) {
-                val top = (height - selectedIndicatorThickness - underlineThickness).toFloat()
-                val bottom = (height - underlineThickness).toFloat()
-                val radius = selectedIndicatorThickness / 2f
-                canvas.drawRoundRect(
-                    left.toFloat(),
-                    top,
-                    right.toFloat(),
-                    bottom,
-                    radius,
-                    radius,
-                    selectedIndicatorPaint
-                )
+                top = (height - selectedIndicatorThickness - underlineThickness).toFloat()
+                bottom = (height - underlineThickness).toFloat()
             } else {
-                val top = (height - selectedIndicatorThickness).toFloat()
-                val bottom = height.toFloat()
-                val radius = selectedIndicatorThickness / 2f
-                canvas.drawRoundRect(
-                    left.toFloat(),
-                    top,
-                    right.toFloat(),
-                    bottom,
-                    radius,
-                    radius,
-                    selectedIndicatorPaint
-                )
+                top = (height - selectedIndicatorThickness).toFloat()
+                bottom = height.toFloat()
             }
+
+            // Apply horizontal padding to the indicator
+            val leftWithPadding = left + selectedIndicatorPaddingHorizontal
+            val rightWithPadding = right - selectedIndicatorPaddingHorizontal
+
+            canvas.drawRoundRect(
+                leftWithPadding.toFloat(),
+                top,
+                rightWithPadding.toFloat(),
+                bottom,
+                radius,
+                radius,
+                selectedIndicatorPaint
+            )
         }
     }
 

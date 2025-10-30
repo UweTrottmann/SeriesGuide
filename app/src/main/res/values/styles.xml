@@ -297,8 +297,8 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">48dp</item>
         <item name="android:gravity">center</item>
-        <item name="android:paddingLeft">@dimen/tab_padding_horizontal</item>
-        <item name="android:paddingRight">@dimen/tab_padding_horizontal</item>
+        <item name="android:paddingLeft">@dimen/sg_sliding_tab_strip_indicator_padding_horizontal</item>
+        <item name="android:paddingRight">@dimen/sg_sliding_tab_strip_indicator_padding_horizontal</item>
         <item name="android:textAppearance">@style/TextAppearance.SeriesGuide.Tab</item>
         <item name="android:theme">@style/ThemeOverLay.SeriesGuide.PrimaryAsColorOnSurface</item>
     </style>

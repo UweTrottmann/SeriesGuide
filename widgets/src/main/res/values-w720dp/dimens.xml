@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Copyright 2025 Uwe Trottmann -->
+
+<resources>
+
+    <!-- Screens with more than 720dp of available width. This would
+    include 7" in landscape and 10" devices in portrait. -->
+
+    <dimen name="sg_sliding_tab_strip_indicator_padding_horizontal">24dp</dimen>
+
+</resources>
+
