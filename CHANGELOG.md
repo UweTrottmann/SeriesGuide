@@ -20,6 +20,15 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 * 📝 Removed the unsupported release for devices running Android 4 from Google Play, it is no longer
   working properly.
 
+### 2025.2.13 - 2025-10-30
+
+* 🔧 Thanks to a United States court ordered injunction in the Google Play Antitrust case coming
+  into effect, again display links to TMDB, Trakt and other external websites if your device region
+  is set to "United States". Note that links remain displayed for devices set to a region in the
+  European Economic Area. For all other regions, Google Play Payments policy continues to disallow
+  this.
+* 🔧 On Android 16 on Samsung devices, increase the limit of widget items back to 100.
+
 ### 2025.2.12 - 2025-09-19
 
 * 🔨 On Android 16 on Samsung devices, correctly update the widget on changes.
