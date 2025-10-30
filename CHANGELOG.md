@@ -15,6 +15,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
   is set to "United States". Note that links remain displayed for devices set to a region in the
   European Economic Area. For all other regions, Google Play Payments policy continues to disallow
   this.
+* 🔧 Make active tab indicator rounded to better fit with other rounded user interface elements.
 
 ### 2025.3.0 - 2025-10-24 🧪
 

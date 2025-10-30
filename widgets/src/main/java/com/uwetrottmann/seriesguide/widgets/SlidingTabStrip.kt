@@ -118,20 +118,33 @@ class SlidingTabStrip @JvmOverloads constructor(
 
             selectedIndicatorPaint.color = color
 
+            // Draw a pill-shaped indicator (rectangle with rounded ends). If an underline is
+            // displayed, draw the indicator above it.
             if (displayUnderline) {
-                canvas.drawRect(
+                val top = (height - selectedIndicatorThickness - underlineThickness).toFloat()
+                val bottom = (height - underlineThickness).toFloat()
+                val radius = selectedIndicatorThickness / 2f
+                canvas.drawRoundRect(
                     left.toFloat(),
-                    (height - selectedIndicatorThickness - underlineThickness).toFloat(),
+                    top,
                     right.toFloat(),
-                    (height - underlineThickness).toFloat(),
+                    bottom,
+                    radius,
+                    radius,
                     selectedIndicatorPaint
                 )
             } else {
-                canvas.drawRect(
+                val top = (height - selectedIndicatorThickness).toFloat()
+                val bottom = height.toFloat()
+                val radius = selectedIndicatorThickness / 2f
+                canvas.drawRoundRect(
                     left.toFloat(),
-                    (height - selectedIndicatorThickness).toFloat(),
+                    top,
                     right.toFloat(),
-                    height.toFloat(), selectedIndicatorPaint
+                    bottom,
+                    radius,
+                    radius,
+                    selectedIndicatorPaint
                 )
             }
         }
@@ -153,17 +166,17 @@ class SlidingTabStrip @JvmOverloads constructor(
         private const val DEFAULT_SELECTED_INDICATOR_COLOR = 0xFF33B5E5.toInt()
         private const val DEFAULT_UNDERLINE_COLOR = 0x1A000000
 
-        /**
-         * Set the alpha value of the [color] to be the given [alpha] value.
-         */
-        private fun setColorAlpha(color: Int, alpha: Byte): Int {
-            return Color.argb(
-                alpha.toInt(),
-                Color.red(color),
-                Color.green(color),
-                Color.blue(color)
-            )
-        }
+//        /**
+//         * Set the alpha value of the [color] to be the given [alpha] value.
+//         */
+//        private fun setColorAlpha(color: Int, alpha: Byte): Int {
+//            return Color.argb(
+//                alpha.toInt(),
+//                Color.red(color),
+//                Color.green(color),
+//                Color.blue(color)
+//            )
+//        }
 
         /**
          * Blend [color1] and [color2] using the given ratio.
