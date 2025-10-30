@@ -16,6 +16,9 @@ class SlidingTabStrip @JvmOverloads constructor(
     attrs: AttributeSet? = null
 ) : LinearLayout(context, attrs) {
 
+    /**
+     * See [setDisplayUnderline].
+     */
     private var displayUnderline = false
     private val underlineThickness: Int
     private val underlinePaint: Paint
@@ -57,6 +60,9 @@ class SlidingTabStrip @JvmOverloads constructor(
         invalidate()
     }
 
+    /**
+     * Whether to draw an underline below all tabs.
+     */
     fun setDisplayUnderline(displayUnderline: Boolean) {
         this.displayUnderline = displayUnderline
         invalidate()
