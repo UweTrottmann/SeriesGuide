@@ -10,6 +10,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2025.3
 
+### 2025.3.1 - 2025-10-30 🧪
+
 * 🔧 Thanks to a United States court ordered injunction in the Google Play Antitrust case coming 
   into effect, again display links to TMDB, Trakt and other external websites if your device region
   is set to "United States". Note that links remain displayed for devices set to a region in the
