@@ -1,161 +1,176 @@
-// Copyright (C) 2013 The Android Open Source Project
-// Copyright 2014, 2017-2019, 2021 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2014-2025 Uwe Trottmann
+// Copyright 2013 The Android Open Source Project
 
-package com.uwetrottmann.seriesguide.widgets;
+package com.uwetrottmann.seriesguide.widgets
 
-import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.util.AttributeSet;
-import android.view.View;
-import android.widget.LinearLayout;
+import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.util.AttributeSet
+import android.widget.LinearLayout
 
-class SlidingTabStrip extends LinearLayout {
+class SlidingTabStrip @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null
+) : LinearLayout(context, attrs) {
 
-    private static final int DEFAULT_SELECTED_INDICATOR_COLOR = 0xFF33B5E5;
-    private static final int DEFAULT_UNDERLINE_COLOR = 0x1A000000;
+    private var displayUnderline = false
+    private val underlineThickness: Int
+    private val underlinePaint: Paint
 
-    private boolean displayUnderline;
-    private final int underlineThickness;
-    private final Paint underlinePaint;
+    private val selectedIndicatorThickness: Int
+    private val selectedIndicatorPaint: Paint
 
-    private final int selectedIndicatorThickness;
-    private final Paint selectedIndicatorPaint;
+    private var selectedPosition = 0
+    private var selectionOffset = 0f
 
-    private int selectedPosition;
-    private float selectionOffset;
+    private var tabColorizerCustom: SlidingTabLayout.TabColorizer? = null
+    private val tabColorizerDefault: SimpleTabColorizer
 
-    private SlidingTabLayout.TabColorizer tabColorizerCustom;
-    private final SimpleTabColorizer tabColorizerDefault;
+    init {
+        setWillNotDraw(false)
 
-    SlidingTabStrip(Context context) {
-        this(context, null);
+        tabColorizerDefault = SimpleTabColorizer()
+        tabColorizerDefault.setIndicatorColors(DEFAULT_SELECTED_INDICATOR_COLOR)
+
+        underlineThickness = resources
+            .getDimensionPixelSize(R.dimen.sg_sliding_tab_strip_underline_size)
+        underlinePaint = Paint()
+        underlinePaint.color = DEFAULT_UNDERLINE_COLOR
+
+        selectedIndicatorThickness = resources
+            .getDimensionPixelSize(R.dimen.sg_sliding_tab_strip_indicator_size)
+        selectedIndicatorPaint = Paint()
     }
 
-    SlidingTabStrip(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        setWillNotDraw(false);
-
-        tabColorizerDefault = new SimpleTabColorizer();
-        tabColorizerDefault.setIndicatorColors(DEFAULT_SELECTED_INDICATOR_COLOR);
-
-        underlineThickness = getResources()
-                .getDimensionPixelSize(R.dimen.sg_sliding_tab_strip_underline_size);
-        underlinePaint = new Paint();
-        underlinePaint.setColor(DEFAULT_UNDERLINE_COLOR);
-
-        selectedIndicatorThickness = getResources()
-                .getDimensionPixelSize(R.dimen.sg_sliding_tab_strip_indicator_size);
-        selectedIndicatorPaint = new Paint();
+    fun setCustomTabColorizer(tabColorizer: SlidingTabLayout.TabColorizer?) {
+        this.tabColorizerCustom = tabColorizer
+        invalidate()
     }
 
-    void setCustomTabColorizer(SlidingTabLayout.TabColorizer tabColorizer) {
-        this.tabColorizerCustom = tabColorizer;
-        invalidate();
-    }
-
-    void setSelectedIndicatorColors(int... colors) {
+    fun setSelectedIndicatorColors(vararg colors: Int) {
         // Make sure that the custom colorizer is removed
-        tabColorizerCustom = null;
-        tabColorizerDefault.setIndicatorColors(colors);
-        invalidate();
+        tabColorizerCustom = null
+        tabColorizerDefault.setIndicatorColors(*colors)
+        invalidate()
     }
 
-    void setDisplayUnderline(boolean displayUnderline) {
-        this.displayUnderline = displayUnderline;
-        invalidate();
+    fun setDisplayUnderline(displayUnderline: Boolean) {
+        this.displayUnderline = displayUnderline
+        invalidate()
     }
 
-    void setUnderlineColor(int color) {
-        underlinePaint.setColor(color);
-        invalidate();
+    fun setUnderlineColor(color: Int) {
+        underlinePaint.color = color
+        invalidate()
     }
 
-    void onViewPagerPageChanged(int position, float positionOffset) {
-        selectedPosition = position;
-        selectionOffset = positionOffset;
-        invalidate();
+    fun onViewPagerPageChanged(position: Int, positionOffset: Float) {
+        selectedPosition = position
+        selectionOffset = positionOffset
+        invalidate()
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        final int height = getHeight();
-        final int childCount = getChildCount();
-        final SlidingTabLayout.TabColorizer tabColorizer = tabColorizerCustom != null
-                ? tabColorizerCustom
-                : tabColorizerDefault;
+    override fun onDraw(canvas: Canvas) {
+        val height = height
+        val childCount = childCount
+        val tabColorizer = tabColorizerCustom ?: tabColorizerDefault
 
         if (displayUnderline) {
             // Colored underline below all tabs
-            canvas.drawRect(0, height - underlineThickness, getWidth(), height, underlinePaint);
+            canvas.drawRect(
+                0f,
+                (height - underlineThickness).toFloat(),
+                width.toFloat(),
+                height.toFloat(),
+                underlinePaint
+            )
         }
 
         // Colored underline below the current selection
         if (childCount > 0) {
-            View selectedTitle = getChildAt(selectedPosition);
-            int left = selectedTitle.getLeft();
-            int right = selectedTitle.getRight();
-            int color = tabColorizer.getIndicatorColor(selectedPosition);
+            val selectedTitle = getChildAt(selectedPosition)
+            var left = selectedTitle.left
+            var right = selectedTitle.right
+            var color = tabColorizer.getIndicatorColor(selectedPosition)
 
-            if (selectionOffset > 0f && selectedPosition < (getChildCount() - 1)) {
-                int nextColor = tabColorizer.getIndicatorColor(selectedPosition + 1);
+            if (selectionOffset > 0f && selectedPosition < childCount - 1) {
+                val nextColor = tabColorizer.getIndicatorColor(selectedPosition + 1)
                 if (color != nextColor) {
-                    color = blendColors(nextColor, color, selectionOffset);
+                    color = blendColors(nextColor, color, selectionOffset)
                 }
 
                 // Draw the selection partway between the tabs
-                View nextTitle = getChildAt(selectedPosition + 1);
-                left = (int) (selectionOffset * nextTitle.getLeft() +
-                        (1.0f - selectionOffset) * left);
-                right = (int) (selectionOffset * nextTitle.getRight() +
-                        (1.0f - selectionOffset) * right);
+                val nextTitle = getChildAt(selectedPosition + 1)
+                left = (selectionOffset * nextTitle.left +
+                        (1.0f - selectionOffset) * left).toInt()
+                right = (selectionOffset * nextTitle.right +
+                        (1.0f - selectionOffset) * right).toInt()
             }
 
-            selectedIndicatorPaint.setColor(color);
+            selectedIndicatorPaint.color = color
 
             if (displayUnderline) {
-                canvas.drawRect(left, height - selectedIndicatorThickness - underlineThickness,
-                        right, height - underlineThickness, selectedIndicatorPaint);
+                canvas.drawRect(
+                    left.toFloat(),
+                    (height - selectedIndicatorThickness - underlineThickness).toFloat(),
+                    right.toFloat(),
+                    (height - underlineThickness).toFloat(),
+                    selectedIndicatorPaint
+                )
             } else {
-                canvas.drawRect(left, height - selectedIndicatorThickness,
-                        right, height, selectedIndicatorPaint);
+                canvas.drawRect(
+                    left.toFloat(),
+                    (height - selectedIndicatorThickness).toFloat(),
+                    right.toFloat(),
+                    height.toFloat(), selectedIndicatorPaint
+                )
             }
         }
     }
 
-    /**
-     * Set the alpha value of the {@code color} to be the given {@code alpha} value.
-     */
-    private static int setColorAlpha(int color, byte alpha) {
-        return Color.argb(alpha, Color.red(color), Color.green(color), Color.blue(color));
-    }
+    private class SimpleTabColorizer : SlidingTabLayout.TabColorizer {
+        private var indicatorColors: IntArray = IntArray(0)
 
-    /**
-     * Blend {@code color1} and {@code color2} using the given ratio.
-     *
-     * @param ratio of which to blend. 1.0 will return {@code color1}, 0.5 will give an even blend,
-     *              0.0 will return {@code color2}.
-     */
-    private static int blendColors(int color1, int color2, float ratio) {
-        final float inverseRation = 1f - ratio;
-        float r = (Color.red(color1) * ratio) + (Color.red(color2) * inverseRation);
-        float g = (Color.green(color1) * ratio) + (Color.green(color2) * inverseRation);
-        float b = (Color.blue(color1) * ratio) + (Color.blue(color2) * inverseRation);
-        return Color.rgb((int) r, (int) g, (int) b);
-    }
-
-    private static class SimpleTabColorizer implements SlidingTabLayout.TabColorizer {
-        private int[] indicatorColors;
-
-        @Override
-        public final int getIndicatorColor(int position) {
-            return indicatorColors[position % indicatorColors.length];
+        override fun getIndicatorColor(position: Int): Int {
+            return indicatorColors[position % indicatorColors.size]
         }
 
-        void setIndicatorColors(int... colors) {
-            indicatorColors = colors;
+        fun setIndicatorColors(vararg colors: Int) {
+            indicatorColors = colors
+        }
+    }
+
+    companion object {
+        private const val DEFAULT_SELECTED_INDICATOR_COLOR = 0xFF33B5E5.toInt()
+        private const val DEFAULT_UNDERLINE_COLOR = 0x1A000000
+
+        /**
+         * Set the alpha value of the [color] to be the given [alpha] value.
+         */
+        private fun setColorAlpha(color: Int, alpha: Byte): Int {
+            return Color.argb(
+                alpha.toInt(),
+                Color.red(color),
+                Color.green(color),
+                Color.blue(color)
+            )
+        }
+
+        /**
+         * Blend [color1] and [color2] using the given ratio.
+         *
+         * @param ratio of which to blend. 1.0 will return [color1], 0.5 will give an even blend,
+         *              0.0 will return [color2].
+         */
+        private fun blendColors(color1: Int, color2: Int, ratio: Float): Int {
+            val inverseRation = 1f - ratio
+            val r = (Color.red(color1) * ratio) + (Color.red(color2) * inverseRation)
+            val g = (Color.green(color1) * ratio) + (Color.green(color2) * inverseRation)
+            val b = (Color.blue(color1) * ratio) + (Color.blue(color2) * inverseRation)
+            return Color.rgb(r.toInt(), g.toInt(), b.toInt())
         }
     }
 }
