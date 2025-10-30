@@ -12,6 +12,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ### 2025.3.0 - 2025-10-24 🧪
 
+* 📝 Require Android 6.0 or higher.
 * 🔧 Upcoming/Recent: rename "Infinite calendar" option to the more applicable "Unlimited days".
 * 🔧 Widget: note general item limit in configuration screen, rename "Infinite calendar" option to
   the more applicable "Unlimited days", move hide watch button option to appearance category.
