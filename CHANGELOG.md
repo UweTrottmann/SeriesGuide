@@ -11,6 +11,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 ## Version 2025.3
 
 * 🔧 If the screen is wide enough, display a more compact bottom navigation bar.
+* 🔧 Color the active item in the bottom navigation bar.
 
 ### 2025.3.1 - 2025-10-30 🧪
 

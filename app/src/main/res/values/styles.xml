@@ -317,6 +317,9 @@
     </style>
 
     <style name="Widget.SeriesGuide.BottomNavigationView" parent="Widget.SeriesGuide.BaseBottomNavigationView">
+        <!-- Color icon and text on selection -->
+        <item name="itemIconTint">@color/sg_navigation_bar_item_icon</item>
+        <item name="itemTextColor">@color/sg_navigation_bar_item_text</item>
         <!-- Reduce default min height and item padding to make the bar more compact -->
         <item name="android:minHeight">@dimen/sg_bottom_navigation_min_height</item>
         <item name="itemPaddingTop">8dp</item>
@@ -327,8 +330,6 @@
     <style name="ThemeOverlay.SeriesGuide.BottomNavigationView" parent="">
         <!-- Used for Widget.Material3.BottomNavigationView.ActiveIndicator color -->
         <item name="colorSecondaryContainer" tools:ignore="PrivateResource">?attr/colorPrimaryContainer</item>
-        <!-- Used for Widget.Material3.BottomNavigationView itemIconTint -->
-        <item name="colorOnSecondaryContainer" tools:ignore="PrivateResource">?attr/colorOnPrimaryContainer</item>
     </style>
 
     <!-- Dialogs -->
