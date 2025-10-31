@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Copyright 2011-2025 Uwe Trottmann -->
+
 <resources>
 
     <dimen name="inline_padding">4dp</dimen>
@@ -10,6 +14,13 @@
     <dimen name="keyline">16dp</dimen>
     <dimen name="keyline_minus_16">0dp</dimen>
     <dimen name="icon_large_size">40dp</dimen>
+
+    <!--
+    To get a less tall bar, also if displaying items horizontally, reduce min height. Note this
+    small value is only used when displaying items horizontally. When displaying items vertically
+    the bar will still be taller.
+    -->
+    <dimen name="sg_bottom_navigation_min_height">52dp</dimen>
 
     <!-- List widget -->
     <dimen name="widget_poster_width">27dp</dimen>
