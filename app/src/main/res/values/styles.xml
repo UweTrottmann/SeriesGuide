@@ -149,6 +149,14 @@
         <item name="colorContainer">?attr/colorPrimary</item>
     </style>
 
+    <style name="Widget.SeriesGuide.Button.Dialog.Error" parent="Widget.Material3.Button.TextButton.Dialog">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.SeriesGuide.Button.Dialog.Error</item>
+    </style>
+    <style name="ThemeOverlay.SeriesGuide.Button.Dialog.Error" parent="">
+        <item name="colorOnContainer">?attr/colorOnPrimary</item>
+        <item name="colorContainer">?attr/colorError</item>
+    </style>
+
     <style name="Widget.SeriesGuide.Button.Borderless.Default">
         <item name="android:textAllCaps">false</item>
         <item name="android:gravity">center_vertical|start</item>

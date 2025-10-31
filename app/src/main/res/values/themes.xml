@@ -93,6 +93,7 @@
 
         <!-- Other custom attributes -->
         <item name="sgButtonDialogPrimary">@style/Widget.SeriesGuide.Button.Dialog.Primary</item>
+        <item name="sgButtonDialogError">@style/Widget.SeriesGuide.Button.Dialog.Error</item>
 
         <!-- dialogTheme is used by AppCompatDialogFragment. -->
         <item name="dialogTheme">@style/ThemeOverlay.Material3.Dialog</item>
@@ -177,6 +178,7 @@
 
         <!-- Other custom attributes -->
         <item name="sgButtonDialogPrimary">@style/Widget.SeriesGuide.Button.Dialog.Primary</item>
+        <item name="sgButtonDialogError">@style/Widget.SeriesGuide.Button.Dialog.Error</item>
 
         <!-- dialogTheme is used by AppCompatDialogFragment. -->
         <item name="dialogTheme">@style/ThemeOverlay.Material3.Dialog</item>

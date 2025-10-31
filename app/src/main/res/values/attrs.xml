@@ -18,6 +18,7 @@
 
     <!-- Button styles -->
     <attr name="sgButtonDialogPrimary" format="reference" />
+    <attr name="sgButtonDialogError" format="reference" />
 
     <!-- Custom view attributes -->
     <declare-styleable name="EmptyView">
