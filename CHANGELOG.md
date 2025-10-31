@@ -10,6 +10,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2025.3
 
+* 🔧 If the screen is wide enough, display a more compact bottom navigation bar.
+
 ### 2025.3.1 - 2025-10-30 🧪
 
 * 🔧 Thanks to a United States court ordered injunction in the Google Play Antitrust case coming 

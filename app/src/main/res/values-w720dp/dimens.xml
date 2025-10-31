@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Copyright 2012-2025 Uwe Trottmann -->
+
 <resources>
 
-    <!-- Screens with more than 720dp of available width. This would
-    include 7" in landscape and 10" devices in portrait. -->
+    <!--
+    Screens with more than 720dp of available width. This would include
+    tall phones and 7" in landscape and 10" devices in portrait.
+    -->
 
     <!-- List widget -->
     <dimen name="widget_poster_width">36dp</dimen>

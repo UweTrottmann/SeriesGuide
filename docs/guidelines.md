@@ -97,6 +97,10 @@ of code that modifies settings.
 
 ## User interface
 
+Some relevant documentation:
+
+- https://developer.android.com/develop/ui/views/layout/responsive-adaptive-design-with-views
+
 ### Layout resources
 
 View IDs should be unique across the project to support refactoring using Android Studio.

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- SPDX-License-Identifier: Apache-2.0 -->
-<!-- Copyright 2011-2024 Uwe Trottmann -->
+<!-- Copyright 2011-2025 Uwe Trottmann -->
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 
@@ -304,7 +304,15 @@
     </style>
 
     <!-- BottomNavigationView -->
-    <style name="Widget.SeriesGuide.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+    <style name="Widget.SeriesGuide.BaseBottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <!-- Changed in w720dp/styles.xml -->
+    </style>
+
+    <style name="Widget.SeriesGuide.BottomNavigationView" parent="Widget.SeriesGuide.BaseBottomNavigationView">
+        <!-- Reduce default min height and item padding to make the bar more compact -->
+        <item name="android:minHeight">@dimen/sg_bottom_navigation_min_height</item>
+        <item name="itemPaddingTop">8dp</item>
+        <item name="itemPaddingBottom">8dp</item>
         <item name="materialThemeOverlay">@style/ThemeOverlay.SeriesGuide.BottomNavigationView</item>
     </style>
 
