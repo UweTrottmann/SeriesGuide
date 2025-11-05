@@ -12,6 +12,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 * 🔧 If the screen is wide enough, display a more compact bottom navigation bar.
 * 🔧 Color the active item in the bottom navigation bar.
+* 🔨 Correctly color the person placeholder symbol to match the current theme.
 
 ### 2025.3.1 - 2025-10-30 🧪
 

@@ -133,6 +133,9 @@ so they work (tinting) and do not crash (gradients) on all supported releases:
 - **Optionally** if the drawable is just a color
 - **Not** for app widget layouts as the system initializes them
 
+When using `Picasso`, make sure to not pass a drawable resource ID but a drawable loaded using
+`AppCompatResources.getDrawable()` instead. Otherwise the drawable will not be tinted correctly.
+
 ### Dialogs
 
 Using `AppCompatDialogFragment` and overriding `onCreateView` will use `dialogTheme` of the theme.

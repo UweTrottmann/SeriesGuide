@@ -14,10 +14,10 @@
         android:layout_height="@dimen/icon_large_size"
         android:layout_marginStart="16dp"
         android:contentDescription="@null"
-        android:src="@color/protection_dark"
         app:layout_constraintBottom_toBottomOf="@+id/textViewPersonDescription"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textViewPerson" />
+        app:layout_constraintTop_toTopOf="@+id/textViewPerson"
+        tools:src="@drawable/ic_account_circle_black_24dp" />
 
     <TextView
         android:id="@+id/textViewPerson"

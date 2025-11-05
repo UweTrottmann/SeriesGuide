@@ -527,14 +527,14 @@ class ShowFragment() : Fragment() {
 
     private fun populateCredits(credits: Credits?) {
         val binding = binding ?: return
-        val peopleListHelper = PeopleListHelper()
-        if (peopleListHelper.populateShowCast(requireContext(), binding.castContainer, credits)) {
+        val peopleListHelper = PeopleListHelper(requireContext())
+        if (peopleListHelper.populateShowCast(binding.castContainer, credits)) {
             setCastVisibility(binding, true)
         } else {
             setCastVisibility(binding, false)
         }
 
-        if (peopleListHelper.populateShowCrew(requireContext(), binding.crewContainer, credits)) {
+        if (peopleListHelper.populateShowCrew(binding.crewContainer, credits)) {
             setCrewVisibility(binding, true)
         } else {
             setCrewVisibility(binding, false)

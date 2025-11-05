@@ -617,10 +617,9 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     }
 
     private fun populateMovieCreditsViews(credits: Credits?) {
-        val peopleListHelper = PeopleListHelper()
+        val peopleListHelper = PeopleListHelper(requireContext())
         // cast members
         if (peopleListHelper.populateMovieCast(
-                requireContext(),
                 binding.moviePeople.containerCast,
                 credits
             )) {
@@ -631,7 +630,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // crew members
         if (peopleListHelper.populateMovieCrew(
-                requireContext(),
                 binding.moviePeople.containerCrew,
                 credits
             )) {
