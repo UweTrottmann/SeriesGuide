@@ -10,6 +10,11 @@
     tall phones and 7" in landscape and 10" devices in portrait.
     -->
 
+    <!--
+    To get a less tall bar if displaying items horizontally, reduce min height.
+    -->
+    <dimen name="sg_bottom_navigation_min_height">52dp</dimen>
+
     <!-- List widget -->
     <dimen name="widget_poster_width">36dp</dimen>
     <dimen name="widget_poster_width_large">37dp</dimen>

@@ -16,11 +16,10 @@
     <dimen name="icon_large_size">40dp</dimen>
 
     <!--
-    To get a less tall bar, also if displaying items horizontally, reduce min height. Note this
-    small value is only used when displaying items horizontally. When displaying items vertically
-    the bar will still be taller.
+    To get a less tall bar, reduce min height. This shouldn't be smaller than the height required
+    by the items, or the bar will resize.
     -->
-    <dimen name="sg_bottom_navigation_min_height">52dp</dimen>
+    <dimen name="sg_bottom_navigation_min_height">68dp</dimen>
 
     <!-- List widget -->
     <dimen name="widget_poster_width">27dp</dimen>
