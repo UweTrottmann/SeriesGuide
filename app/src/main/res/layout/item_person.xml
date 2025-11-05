@@ -8,16 +8,17 @@
     android:layout_height="wrap_content"
     android:background="?android:attr/activatedBackgroundIndicator">
 
+    <!-- Note: dimensions should match placeholder drawable, see notes in its file -->
     <ImageView
         android:id="@+id/imageViewPerson"
-        android:layout_width="@dimen/icon_large_size"
-        android:layout_height="@dimen/icon_large_size"
+        android:layout_width="@dimen/person_headshot_size"
+        android:layout_height="@dimen/person_headshot_size"
         android:layout_marginStart="16dp"
         android:contentDescription="@null"
         app:layout_constraintBottom_toBottomOf="@+id/textViewPersonDescription"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textViewPerson"
-        tools:src="@drawable/ic_account_circle_black_24dp" />
+        tools:src="@drawable/ic_person_placeholder" />
 
     <TextView
         android:id="@+id/textViewPerson"

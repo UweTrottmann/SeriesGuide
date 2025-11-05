@@ -13,7 +13,6 @@
 
     <dimen name="keyline">16dp</dimen>
     <dimen name="keyline_minus_16">0dp</dimen>
-    <dimen name="icon_large_size">40dp</dimen>
 
     <!--
     To get a less tall bar, reduce min height. This shouldn't be smaller than the height required

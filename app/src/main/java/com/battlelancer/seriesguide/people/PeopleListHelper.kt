@@ -28,9 +28,10 @@ class PeopleListHelper(
 ) {
 
     private val personImageTransform = CircleTransformation()
+
     // Preload the placeholder drawable to get a themed version
     private val placeholderDrawable =
-        AppCompatResources.getDrawable(context, R.drawable.ic_account_circle_black_24dp)!!
+        AppCompatResources.getDrawable(context, R.drawable.ic_person_placeholder)!!
 
     /**
      * @see populateCredits
@@ -179,6 +180,7 @@ class PeopleListHelper(
             context,
             TmdbTools.buildProfileImageUrl(context, profilePath, TmdbTools.ProfileImageSize.W185)
         )
+            // Note: dimensions should match placeholder drawable, see notes in its file
             .resizeDimen(R.dimen.person_headshot_size, R.dimen.person_headshot_size)
             .centerCrop()
             .transform(personImageTransform)

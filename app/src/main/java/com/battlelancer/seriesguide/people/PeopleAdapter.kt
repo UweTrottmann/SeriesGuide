@@ -75,6 +75,7 @@ internal class PeopleAdapter(context: Context) : ArrayAdapter<Person>(context, L
                         TmdbTools.ProfileImageSize.W185
                     )
                 )
+                    // Note: dimensions should match placeholder drawable, see notes in its file
                     .resizeDimen(R.dimen.person_headshot_size, R.dimen.person_headshot_size)
                     .centerCrop()
                     .transform(personImageTransform)
