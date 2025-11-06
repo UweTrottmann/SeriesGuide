@@ -142,6 +142,11 @@ Using `AppCompatDialogFragment` and overriding `onCreateView` will use `dialogTh
 
 If possible, use an alert dialog with a custom layout instead for improved sizing, easy adding of title and buttons.
 
+When it makes sense, use a colored button for the primary and especially destructive action:
+
+- `?attr/sgButtonDialogPrimary` and `?attr/sgButtonDialogError` for `Button`
+- `ThemeOverlay.SeriesGuide.Dialog.PrimaryButtonWarn` for `MaterialAlertDialogBuilder`
+
 ### Alert dialogs (recommended)
 
 Using `AppCompatDialogFragment` and overriding `onCreateDialog` with `MaterialAlertDialogBuilder`.
