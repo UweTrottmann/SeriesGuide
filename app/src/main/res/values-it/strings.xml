@@ -449,7 +449,7 @@
     <string name="pref_offset">Fuso orario manuale</string>
     <string name="pref_offsetsummary">Compensazione della messa onda di %d ore</string>
     <string name="clear_cache">Rimuovi le immagini nella cache</string>
-    <string name="clear_cache_summary">Rimuovi tutte le immagini memorizzate nella cache dal tuo dispositivo</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Rimuovi tutte le immagini memorizzate nella cache dal tuo dispositivo</string>
     <!-- Export and Import -->
     <string name="title_export_import">Esporta e importa</string>
     <string name="title_export">Esporta</string>

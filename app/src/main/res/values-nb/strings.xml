@@ -58,7 +58,7 @@
     <string name="api_error_generic">Klarte ikke å koble til %s. Prøv igjen senere.</string>
     <string name="api_failed">Mislyktes: %s</string>
     <string name="copy_to_clipboard">Kopiert til utklippstavlen</string>
-    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and delete this show. Tap to view details.</string>
     <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">Del</string>
@@ -73,7 +73,7 @@
     <string name="shout_invalid">Kommentaren din ble avslått, grunnet regelbrudd.</string>
     <string name="action_post">Innlegg</string>
     <string name="action_edit_comment">Edit</string>
-    <string name="action_delete_comment">Delete</string>
+    <string name="action_delete_comment">Fjern</string>
     <string name="confirmation_delete_comment">Delete this comment?</string>
     <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">Spoileradvarsel!</string>
@@ -355,7 +355,7 @@
     <string name="action_rate">Bedøm</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Din vurdering</string>
-    <string name="action_remove_rating">Remove rating</string>
+    <string name="action_remove_rating">Delete rating</string>
     <string name="love">Helt ninja!</string>
     <string name="hate">Svak saus :(</string>
     <string name="rating2">Forferdelig</string>
@@ -449,7 +449,7 @@
     <string name="pref_offset">Manuell tidsforskyvning</string>
     <string name="pref_offsetsummary">Tidsforskjell på %d timer</string>
     <string name="clear_cache">Tøm hurtiglageret</string>
-    <string name="clear_cache_summary">Fjern alle hurtiglagrede bilder fra enheten</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Fjern alle hurtiglagrede bilder fra enheten</string>
     <!-- Export and Import -->
     <string name="title_export_import">Export and import</string>
     <string name="title_export">Export</string>

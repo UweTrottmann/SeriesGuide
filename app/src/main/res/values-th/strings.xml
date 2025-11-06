@@ -73,7 +73,7 @@
     <string name="shout_invalid">ความคิดเห็นของคุณไม่ได้ทำตามกฏ!</string>
     <string name="action_post">โพสต์</string>
     <string name="action_edit_comment">Edit</string>
-    <string name="action_delete_comment">Delete</string>
+    <string name="action_delete_comment">ลบ</string>
     <string name="confirmation_delete_comment">Delete this comment?</string>
     <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">ระวังสปอยล์!</string>
@@ -345,7 +345,7 @@
     <string name="action_rate">ให้คะแนน</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">คะแนนของคุณ</string>
-    <string name="action_remove_rating">Remove rating</string>
+    <string name="action_remove_rating">Delete rating</string>
     <string name="love">สุดยอดไปเลย!</string>
     <string name="hate">แย่ที่สุด :(</string>
     <string name="rating2">แย่มาก</string>
@@ -435,7 +435,7 @@
     <string name="pref_offset">ชดเชยเวลาด้วยตนเอง</string>
     <string name="pref_offsetsummary">ชดเชยเวลาออกอากาศ %d ชั่วโมง</string>
     <string name="clear_cache">ลบแคชรูปภาพ</string>
-    <string name="clear_cache_summary">ลบแคชรูปภาพทั้งหมดออกจากอุปกรณ์ของคุณ</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">ลบแคชรูปภาพทั้งหมดออกจากอุปกรณ์ของคุณ</string>
     <!-- Export and Import -->
     <string name="title_export_import">Export and import</string>
     <string name="title_export">Export</string>

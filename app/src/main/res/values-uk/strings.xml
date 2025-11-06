@@ -477,7 +477,7 @@
     <string name="pref_offset">Зсув часу вручну</string>
     <string name="pref_offsetsummary">Зсув ефірного часу на %d годин</string>
     <string name="clear_cache">Очистити кеш зображень</string>
-    <string name="clear_cache_summary">Видалити всі кешовані зображення з пристрою</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Видалити всі кешовані зображення з пристрою</string>
     <!-- Export and Import -->
     <string name="title_export_import">Експорт та імпорт</string>
     <string name="title_export">Експортувати</string>

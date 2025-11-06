@@ -58,7 +58,7 @@
     <string name="api_error_generic">%s nedostupan. Pokušajte kasnije.</string>
     <string name="api_failed">Nije uspjelo: %s</string>
     <string name="copy_to_clipboard">Kopirano u međuspremnik</string>
-    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and delete this show. Tap to view details.</string>
     <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">Podijeli</string>
@@ -73,7 +73,7 @@
     <string name="shout_invalid">Vaš komentar ne slijedi pravila!</string>
     <string name="action_post">Objava</string>
     <string name="action_edit_comment">Edit</string>
-    <string name="action_delete_comment">Delete</string>
+    <string name="action_delete_comment">Izbriši</string>
     <string name="confirmation_delete_comment">Delete this comment?</string>
     <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">Pažnja! Spojler!</string>
@@ -365,7 +365,7 @@
     <string name="action_rate">Ocijeni</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Tvoja ocjena</string>
-    <string name="action_remove_rating">Remove rating</string>
+    <string name="action_remove_rating">Delete rating</string>
     <string name="love">Zakon!</string>
     <string name="hate">Jadno :(</string>
     <string name="rating2">Grozno</string>
@@ -463,7 +463,7 @@
     <string name="pref_offset">Ručno podešavanje vremenske razlike</string>
     <string name="pref_offsetsummary">Razlika u emitiranju %d sati</string>
     <string name="clear_cache">Očisti predmemoriju slika</string>
-    <string name="clear_cache_summary">Uklonite sve slike iz predmemorije vašeg uređaja</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Uklonite sve slike iz predmemorije vašeg uređaja</string>
     <!-- Export and Import -->
     <string name="title_export_import">Export and import</string>
     <string name="title_export">Export</string>

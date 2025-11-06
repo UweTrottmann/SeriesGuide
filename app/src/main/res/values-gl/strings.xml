@@ -58,7 +58,7 @@
     <string name="api_error_generic">Non se puido conectar con %s. Tenta máis tarde.</string>
     <string name="api_failed">Fallou: %s</string>
     <string name="copy_to_clipboard">Copiado para a área de transferencia</string>
-    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and delete this show. Tap to view details.</string>
     <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">Partillar</string>
@@ -73,7 +73,7 @@
     <string name="shout_invalid">O teu comentario non segue as regras!</string>
     <string name="action_post">Publicar</string>
     <string name="action_edit_comment">Edit</string>
-    <string name="action_delete_comment">Delete</string>
+    <string name="action_delete_comment">Eliminar</string>
     <string name="confirmation_delete_comment">Delete this comment?</string>
     <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">Alerta de spoiler!</string>
@@ -355,7 +355,7 @@
     <string name="action_rate">Votar</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">A súa puntuación</string>
-    <string name="action_remove_rating">Remove rating</string>
+    <string name="action_remove_rating">Delete rating</string>
     <string name="love">Totally ninja!</string>
     <string name="hate">Weak Sauce :(</string>
     <string name="rating2">Terrible</string>
@@ -449,7 +449,7 @@
     <string name="pref_offset">Axuste de hora manual</string>
     <string name="pref_offsetsummary">Axustar %d horas os tempos de emisión</string>
     <string name="clear_cache">Limpar caché de imaxes</string>
-    <string name="clear_cache_summary">Borrar todas as imaxes da caché do dispositivo</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Borrar todas as imaxes da caché do dispositivo</string>
     <!-- Export and Import -->
     <string name="title_export_import">Export and import</string>
     <string name="title_export">Export</string>

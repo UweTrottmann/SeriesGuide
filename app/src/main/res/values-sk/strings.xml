@@ -477,7 +477,7 @@
     <string name="pref_offset">Manuálny časový posun</string>
     <string name="pref_offsetsummary">Posunúť časy vysielania o %d hodín</string>
     <string name="clear_cache">Vymazať vyrovnávaciu pamäť obrázkov</string>
-    <string name="clear_cache_summary">Odstrániť všetky obrázky stiahnuté do zariadenia</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Odstrániť všetky obrázky stiahnuté do zariadenia</string>
     <!-- Export and Import -->
     <string name="title_export_import">Export a import</string>
     <string name="title_export">Exportovať</string>

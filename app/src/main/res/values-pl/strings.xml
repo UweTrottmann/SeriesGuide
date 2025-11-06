@@ -477,7 +477,7 @@
     <string name="pref_offset">Ręczne przesunięcie czasu</string>
     <string name="pref_offsetsummary">Przesuń czas emisji o %d godzin</string>
     <string name="clear_cache">Usuń bufor obrazów</string>
-    <string name="clear_cache_summary">Usuwa wszystkie buforowane obrazy z urządzenia</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Usuwa wszystkie buforowane obrazy z urządzenia</string>
     <!-- Export and Import -->
     <string name="title_export_import">Export and import</string>
     <string name="title_export">Export</string>

@@ -449,7 +449,7 @@
     <string name="pref_offset">Manuel tidsforskydning</string>
     <string name="pref_offsetsummary">Forskyd sendetidspunkter med %d timer</string>
     <string name="clear_cache">Ryd billed-cache</string>
-    <string name="clear_cache_summary">Gå til Lagringsindstillinger for at fjerne cachelagrede billeder og netværkssvar</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Gå til Lagringsindstillinger for at fjerne cachelagrede billeder og netværkssvar</string>
     <!-- Export and Import -->
     <string name="title_export_import">Eksport og import</string>
     <string name="title_export">Eksport</string>

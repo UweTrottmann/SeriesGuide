@@ -58,7 +58,7 @@
     <string name="api_error_generic">Could not talk to %s. Try again later.</string>
     <string name="api_failed">Malsukcesis: %s</string>
     <string name="copy_to_clipboard">Kopita al tondejo</string>
-    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and delete this show. Tap to view details.</string>
     <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">Konigi</string>
@@ -73,7 +73,7 @@
     <string name="shout_invalid">Via komento ne sekvas la regulojn!</string>
     <string name="action_post">Sendi</string>
     <string name="action_edit_comment">Edit</string>
-    <string name="action_delete_comment">Delete</string>
+    <string name="action_delete_comment">Forigi</string>
     <string name="confirmation_delete_comment">Delete this comment?</string>
     <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">Averto pri malkaŝo de intrigo!</string>
@@ -135,7 +135,7 @@
     <!-- Shows -->
     <string name="title_shows_added">Added</string>
     <string name="confirm_delete">Ĉu forigi %s?</string>
-    <string name="delete_error">Could not remove show. Try again later.</string>
+    <string name="delete_error">Could not delete show. Try again later.</string>
     <string name="delete_show">Forigi</string>
     <string name="no_nextepisode">neniu sekva epizodo trovita</string>
     <string name="context_favorite">Aldoni al plej ŝatataj</string>
@@ -355,7 +355,7 @@
     <string name="action_rate">Taksi</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Via takso</string>
-    <string name="action_remove_rating">Remove rating</string>
+    <string name="action_remove_rating">Delete rating</string>
     <string name="love">Imponega</string>
     <string name="hate">Perdis tempon :(</string>
     <string name="rating2">Terura</string>
@@ -449,7 +449,7 @@
     <string name="pref_offset">Manual time offset</string>
     <string name="pref_offsetsummary">Offset air times by %d hours</string>
     <string name="clear_cache">Viŝi tempmemoron</string>
-    <string name="clear_cache_summary">Go to storage settings to remove cached images and network responses</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Go to Storage settings to clear cache of images and server data</string>
     <!-- Export and Import -->
     <string name="title_export_import">Export and import</string>
     <string name="title_export">Export</string>

@@ -58,7 +58,7 @@
     <string name="api_error_generic">Неможе да се конектира со %s. Пробајте подоцна.</string>
     <string name="api_failed">Грешни: %s</string>
     <string name="copy_to_clipboard">Копирај во кликборд</string>
-    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and delete this show. Tap to view details.</string>
     <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">Сподели</string>
@@ -73,7 +73,7 @@
     <string name="shout_invalid">Вашиот коментар не е по правилата!</string>
     <string name="action_post">Објава</string>
     <string name="action_edit_comment">Edit</string>
-    <string name="action_delete_comment">Delete</string>
+    <string name="action_delete_comment">Избриши</string>
     <string name="confirmation_delete_comment">Delete this comment?</string>
     <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">Предупредување спојлер!</string>
@@ -355,7 +355,7 @@
     <string name="action_rate">Оцени</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Твоја оцена</string>
-    <string name="action_remove_rating">Remove rating</string>
+    <string name="action_remove_rating">Delete rating</string>
     <string name="love">Супер!</string>
     <string name="hate">Слаба работа :(</string>
     <string name="rating2">Ужасно</string>
@@ -449,7 +449,7 @@
     <string name="pref_offset">Рачен временски опсег</string>
     <string name="pref_offsetsummary">Опсег на временски %d саати</string>
     <string name="clear_cache">Избриши кеширани слики</string>
-    <string name="clear_cache_summary">Избриши ги сите кеширани слики од вашиот уред</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Избриши ги сите кеширани слики од вашиот уред</string>
     <!-- Export and Import -->
     <string name="title_export_import">Export and import</string>
     <string name="title_export">Export</string>

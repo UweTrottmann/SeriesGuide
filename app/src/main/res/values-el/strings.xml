@@ -449,7 +449,7 @@
     <string name="pref_offset">Χειροκίνητη χρονική μετατόπιση</string>
     <string name="pref_offsetsummary">Μετατόπιση ωρών προβολής κατα %d ώρες</string>
     <string name="clear_cache">Καθαρισμός προσωρινής μνήμης εικόνων</string>
-    <string name="clear_cache_summary">Αφαιρέστε όλες τις προσωρινά αποθηκευμένες εικόνες από τη συσκευή σας</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Αφαιρέστε όλες τις προσωρινά αποθηκευμένες εικόνες από τη συσκευή σας</string>
     <!-- Export and Import -->
     <string name="title_export_import">Εξαγωγή και εισαγωγή</string>
     <string name="title_export">Εξαγωγή</string>

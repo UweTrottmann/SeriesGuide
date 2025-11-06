@@ -449,7 +449,7 @@
     <string name="pref_offset">Décalage horaire manuel</string>
     <string name="pref_offsetsummary">Décalage de %d heures</string>
     <string name="clear_cache">Vider le cache d\'images</string>
-    <string name="clear_cache_summary">Supprimer toutes les images en cache sur votre périphérique</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Supprimer toutes les images en cache sur votre périphérique</string>
     <!-- Export and Import -->
     <string name="title_export_import">Exporter et importer</string>
     <string name="title_export">Exporter</string>

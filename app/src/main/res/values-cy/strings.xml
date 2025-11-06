@@ -73,7 +73,7 @@
     <string name="shout_invalid">Nid yw eich sylw yn dilyn y rheolau!</string>
     <string name="action_post">Post</string>
     <string name="action_edit_comment">Edit</string>
-    <string name="action_delete_comment">Delete</string>
+    <string name="action_delete_comment">Tynnu</string>
     <string name="confirmation_delete_comment">Delete this comment?</string>
     <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">Rhybuddiwr difetha!</string>
@@ -395,7 +395,7 @@
     <string name="action_rate">Cyfradd</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Eich sgôr</string>
-    <string name="action_remove_rating">Remove rating</string>
+    <string name="action_remove_rating">Delete rating</string>
     <string name="love">Hollol ninja!</string>
     <string name="hate">Saws Gwan :(</string>
     <string name="rating2">Ofnadwy</string>
@@ -505,7 +505,7 @@
     <string name="pref_offset">Gwrthbwyso amser â llaw</string>
     <string name="pref_offsetsummary">Gwrthbwyso amseroedd aer %d awr</string>
     <string name="clear_cache">Cache clir</string>
-    <string name="clear_cache_summary">Ewch i leoliadau storio i gael gwared ar ddelweddau wedi\'u storio ac ymatebion rhwydwaith</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Ewch i leoliadau storio i gael gwared ar ddelweddau wedi\'u storio ac ymatebion rhwydwaith</string>
     <!-- Export and Import -->
     <string name="title_export_import">Export and import</string>
     <string name="title_export">Export</string>

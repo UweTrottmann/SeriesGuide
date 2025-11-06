@@ -477,7 +477,7 @@
     <string name="pref_offset">סטיית שעה ידנית</string>
     <string name="pref_offsetsummary">הסט זמני שידור ב- %d שעות</string>
     <string name="clear_cache">נקה מטמוני תמונות</string>
-    <string name="clear_cache_summary">הסר את כל מטמוני התמונות ממכשירך</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">הסר את כל מטמוני התמונות ממכשירך</string>
     <!-- Export and Import -->
     <string name="title_export_import">ייצוא וייבוא</string>
     <string name="title_export">ייצוא</string>

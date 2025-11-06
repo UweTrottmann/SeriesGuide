@@ -58,7 +58,7 @@
     <string name="api_error_generic">Nu s-a putut comunica cu %s. Încercați mai tarziu.</string>
     <string name="api_failed">Eroare: %s</string>
     <string name="copy_to_clipboard">Copiat în clipboard</string>
-    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and delete this show. Tap to view details.</string>
     <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">Distribuie</string>
@@ -73,7 +73,7 @@
     <string name="shout_invalid">Comentariul tău nu respectă regulile!</string>
     <string name="action_post">Publică</string>
     <string name="action_edit_comment">Edit</string>
-    <string name="action_delete_comment">Delete</string>
+    <string name="action_delete_comment">Ștergeți</string>
     <string name="confirmation_delete_comment">Delete this comment?</string>
     <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">Spoiler alert!</string>
@@ -365,7 +365,7 @@
     <string name="action_rate">Evaluare</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Nota ta</string>
-    <string name="action_remove_rating">Remove rating</string>
+    <string name="action_remove_rating">Delete rating</string>
     <string name="love">Super tare!</string>
     <string name="hate">Slab :(</string>
     <string name="rating2">Teribil</string>
@@ -463,7 +463,7 @@
     <string name="pref_offset">Compensare manuală a timpului</string>
     <string name="pref_offsetsummary">Compensare timp de difuzare cu %d ore</string>
     <string name="clear_cache">Șterge imaginile din cache</string>
-    <string name="clear_cache_summary">Șterge toate imaginile din cache de pe acest dispozitiv</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Șterge toate imaginile din cache de pe acest dispozitiv</string>
     <!-- Export and Import -->
     <string name="title_export_import">Export and import</string>
     <string name="title_export">Export</string>

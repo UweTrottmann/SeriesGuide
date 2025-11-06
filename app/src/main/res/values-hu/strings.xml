@@ -58,7 +58,7 @@
     <string name="api_error_generic">Nincs kapcsolat ezzel: %s. Próbáld újra később.</string>
     <string name="api_failed">Meghiúsult: %s</string>
     <string name="copy_to_clipboard">Vágólapra másolva</string>
-    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and delete this show. Tap to view details.</string>
     <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">Megosztás</string>
@@ -73,7 +73,7 @@
     <string name="shout_invalid">A megjegyzésed nem szabályszerű!</string>
     <string name="action_post">Hozzászólás</string>
     <string name="action_edit_comment">Edit</string>
-    <string name="action_delete_comment">Delete</string>
+    <string name="action_delete_comment">Törlés</string>
     <string name="confirmation_delete_comment">Delete this comment?</string>
     <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">Spoiler veszély!</string>
@@ -355,7 +355,7 @@
     <string name="action_rate">Értékelj</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Saját értékelésed</string>
-    <string name="action_remove_rating">Remove rating</string>
+    <string name="action_remove_rating">Delete rating</string>
     <string name="love">Totally ninja!</string>
     <string name="hate">Gyenge eresztés :(</string>
     <string name="rating2">Szörnyű</string>
@@ -449,7 +449,7 @@
     <string name="pref_offset">Időeltolás</string>
     <string name="pref_offsetsummary">Vetítési időhöz képest időeltolás %d órával</string>
     <string name="clear_cache">Képtároló törlése</string>
-    <string name="clear_cache_summary">Az összes tárolt kép törlése az eszközről</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Az összes tárolt kép törlése az eszközről</string>
     <!-- Export and Import -->
     <string name="title_export_import">Export and import</string>
     <string name="title_export">Export</string>

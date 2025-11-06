@@ -449,7 +449,7 @@
     <string name="pref_offset">Manuell tidsskillnad</string>
     <string name="pref_offsetsummary">Förskjut sändningstiden med %d timmar</string>
     <string name="clear_cache">Töm bildcache</string>
-    <string name="clear_cache_summary">Ta bort alla cachade bilder från enheten</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Ta bort alla cachade bilder från enheten</string>
     <!-- Export and Import -->
     <string name="title_export_import">Exportera och importera</string>
     <string name="title_export">Exportera</string>

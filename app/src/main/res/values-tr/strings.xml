@@ -449,7 +449,7 @@
     <string name="pref_offset">El ile saat farkı</string>
     <string name="pref_offsetsummary">Yayınlanma süresini %d saat ötele</string>
     <string name="clear_cache">Resim önbelleğini temizle</string>
-    <string name="clear_cache_summary">Tüm resim önbelleğini cihazınızdan silin</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Tüm resim önbelleğini cihazınızdan silin</string>
     <!-- Export and Import -->
     <string name="title_export_import">Export and import</string>
     <string name="title_export">Export</string>

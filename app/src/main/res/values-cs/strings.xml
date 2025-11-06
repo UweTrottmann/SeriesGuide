@@ -477,7 +477,7 @@
     <string name="pref_offset">Ruční časový posun</string>
     <string name="pref_offsetsummary">Posunout vysílací čas o %d hodin</string>
     <string name="clear_cache">Vymazat mezipaměť</string>
-    <string name="clear_cache_summary">Přejděte do nastavení úložiště pro odstranění obrázků z mezipaměti a síťových odpovědí</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Přejděte do nastavení úložiště pro odstranění obrázků z mezipaměti a síťových odpovědí</string>
     <!-- Export and Import -->
     <string name="title_export_import">Export and import</string>
     <string name="title_export">Export</string>

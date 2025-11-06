@@ -449,7 +449,7 @@
     <string name="pref_offset">Handmatige aanpassing tijdzone</string>
     <string name="pref_offsetsummary">Pas uitzendtijd aan met %d uren</string>
     <string name="clear_cache">Afbeeldingenbuffer wissen</string>
-    <string name="clear_cache_summary">Alle gebufferde afbeeldingen van het apparaat verwijderen</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Alle gebufferde afbeeldingen van het apparaat verwijderen</string>
     <!-- Export and Import -->
     <string name="title_export_import">Exporteren en importeren</string>
     <string name="title_export">Exporteren</string>

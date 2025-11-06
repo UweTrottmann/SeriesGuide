@@ -58,7 +58,7 @@
     <string name="api_error_generic">Could not talk to %s. Try again later.</string>
     <string name="api_failed">Failed: %s</string>
     <string name="copy_to_clipboard">Copied to clipboard</string>
-    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and delete this show. Tap to view details.</string>
     <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">பகிர்</string>
@@ -73,7 +73,7 @@
     <string name="shout_invalid">உங்கள் கருத்துரை விதிகளை பின்பற்றவில்லை!</string>
     <string name="action_post">பதிவு</string>
     <string name="action_edit_comment">Edit</string>
-    <string name="action_delete_comment">Delete</string>
+    <string name="action_delete_comment">நீக்கு</string>
     <string name="confirmation_delete_comment">Delete this comment?</string>
     <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">Spoiler எச்சரிக்கை!</string>
@@ -355,7 +355,7 @@
     <string name="action_rate">விகிதம்</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">உங்கள் தரமதிப்பு</string>
-    <string name="action_remove_rating">Remove rating</string>
+    <string name="action_remove_rating">Delete rating</string>
     <string name="love">Ninja முற்றிலும்!</string>
     <string name="hate">நன்மைக்கான பாகு :(</string>
     <string name="rating2">உள்நாட்டு யுத்ததத்தின் பயங்கரமான</string>
@@ -449,7 +449,7 @@
     <string name="pref_offset">கைமுறை நேரம் ஆப்செட்</string>
     <string name="pref_offsetsummary">%d மணிநேரத்தில் ஏர் முறை சரியீடு</string>
     <string name="clear_cache">தெளிவான உருவம் இடைமாற்றுகள்</string>
-    <string name="clear_cache_summary">உங்கள் சாதனத்தில் இருந்து அனைத்து தேக்கக படிமங்களை அகற்று</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">உங்கள் சாதனத்தில் இருந்து அனைத்து தேக்கக படிமங்களை அகற்று</string>
     <!-- Export and Import -->
     <string name="title_export_import">Export and import</string>
     <string name="title_export">Export</string>

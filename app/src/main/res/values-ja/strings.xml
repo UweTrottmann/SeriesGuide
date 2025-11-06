@@ -58,7 +58,7 @@
     <string name="api_error_generic">%s と通信出来ませんでした。後でもう一度やり直してください。</string>
     <string name="api_failed">失敗しました： %s</string>
     <string name="copy_to_clipboard">クリップボードにコピーしました</string>
-    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and delete this show. Tap to view details.</string>
     <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">共有</string>
@@ -73,7 +73,7 @@
     <string name="shout_invalid">ルールに従ってコメントしてください！</string>
     <string name="action_post">投稿</string>
     <string name="action_edit_comment">Edit</string>
-    <string name="action_delete_comment">Delete</string>
+    <string name="action_delete_comment">削除</string>
     <string name="confirmation_delete_comment">Delete this comment?</string>
     <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">ネタバレ注意！</string>
@@ -345,7 +345,7 @@
     <string name="action_rate">作品を評価</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">あなたの評価</string>
-    <string name="action_remove_rating">Remove rating</string>
+    <string name="action_remove_rating">Delete rating</string>
     <string name="love">完全に忍者!</string>
     <string name="hate">つまらない :(</string>
     <string name="rating2">ひどい</string>
@@ -435,7 +435,7 @@
     <string name="pref_offset">手動の時間オフセット</string>
     <string name="pref_offsetsummary">放映時間を %d 時間オフセットします</string>
     <string name="clear_cache">画像キャッシュをクリア</string>
-    <string name="clear_cache_summary">お使いのデバイスからキャッシュされた画像をすべて削除します</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">お使いのデバイスからキャッシュされた画像をすべて削除します</string>
     <!-- Export and Import -->
     <string name="title_export_import">Export and import</string>
     <string name="title_export">Export</string>

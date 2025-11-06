@@ -449,7 +449,7 @@
     <string name="pref_offset">Deslocamento de tempo manual</string>
     <string name="pref_offsetsummary">Deslocar horário de exibição em %d horas</string>
     <string name="clear_cache">Apagar cache de imagens</string>
-    <string name="clear_cache_summary">Remover todas as imagens em cache do seu dispositivo</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Remover todas as imagens em cache do seu dispositivo</string>
     <!-- Export and Import -->
     <string name="title_export_import">Exportar e importar</string>
     <string name="title_export">Exportar</string>

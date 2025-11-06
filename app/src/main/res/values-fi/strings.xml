@@ -449,7 +449,7 @@
     <string name="pref_offset">Manuaalinen ajansiirto</string>
     <string name="pref_offsetsummary">Siirrä lähetysaikoja %d tunnilla</string>
     <string name="clear_cache">Tyhjennä välimuisti</string>
-    <string name="clear_cache_summary">Poista välimuistissa olevat kuvat ja verkkovastaukset menemällä tallennustilan asetuksiin</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Poista välimuistissa olevat kuvat ja verkkovastaukset menemällä tallennustilan asetuksiin</string>
     <!-- Export and Import -->
     <string name="title_export_import">Vie ja tuo</string>
     <string name="title_export">Vienti</string>

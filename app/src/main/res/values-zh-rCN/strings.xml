@@ -435,7 +435,7 @@
     <string name="pref_offset">手动偏移播出时间</string>
     <string name="pref_offsetsummary">使显示时间与原播出时间相差 %d 小时</string>
     <string name="clear_cache">清除缓存</string>
-    <string name="clear_cache_summary">转到应用存储设置清除缓存的图片和网络响应</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">转到应用存储设置清除缓存的图片和网络响应</string>
     <!-- Export and Import -->
     <string name="title_export_import">Export and import</string>
     <string name="title_export">Export</string>

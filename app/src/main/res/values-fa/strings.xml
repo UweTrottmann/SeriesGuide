@@ -449,7 +449,7 @@
     <string name="pref_offset">جابه‌جایی زمان دستی</string>
     <string name="pref_offsetsummary">جابه‌جا کردن زمان پخش به اندازهٔ %d ساعت</string>
     <string name="clear_cache">پاک سازی تصاویر ذخیره شده از حافظه دستگاه</string>
-    <string name="clear_cache_summary">حذف همه تصاویر ذخیره شده از حافظه دستگاه شما</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">حذف همه تصاویر ذخیره شده از حافظه دستگاه شما</string>
     <!-- Export and Import -->
     <string name="title_export_import">درون‌ریزی و برون‌ریزی</string>
     <string name="title_export">برون‌ریزی</string>

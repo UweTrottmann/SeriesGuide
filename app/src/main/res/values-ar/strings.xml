@@ -73,7 +73,7 @@
     <string name="shout_invalid">إن تعليقك مخالف للقواعد!</string>
     <string name="action_post">انشر</string>
     <string name="action_edit_comment">Edit</string>
-    <string name="action_delete_comment">Delete</string>
+    <string name="action_delete_comment">إزالة</string>
     <string name="confirmation_delete_comment">Delete this comment?</string>
     <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">تنبيه حرق!</string>
@@ -395,7 +395,7 @@
     <string name="action_rate">قيم</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">تقييمك</string>
-    <string name="action_remove_rating">Remove rating</string>
+    <string name="action_remove_rating">Delete rating</string>
     <string name="love">عظيم!</string>
     <string name="hate">لم يعجبني :(</string>
     <string name="rating2">سيء</string>
@@ -505,7 +505,7 @@
     <string name="pref_offset">تغيير وقت العرض بشكل يدوي</string>
     <string name="pref_offsetsummary">بدء وقت العرض قبل %d ساعات</string>
     <string name="clear_cache">تنظيف ذاكرة التخزين المؤقتة للصور</string>
-    <string name="clear_cache_summary">إزالة جميع الصور المخزنة مؤقتاً من الجهاز</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">إزالة جميع الصور المخزنة مؤقتاً من الجهاز</string>
     <!-- Export and Import -->
     <string name="title_export_import">Export and import</string>
     <string name="title_export">Export</string>

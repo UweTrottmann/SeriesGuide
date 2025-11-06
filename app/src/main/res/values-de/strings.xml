@@ -58,7 +58,7 @@
     <string name="api_error_generic">Konnte %s nicht erreichen. Versuchen Sie es später erneut.</string>
     <string name="api_failed">Gescheitert: %s</string>
     <string name="copy_to_clipboard">In Zwischenablage kopiert</string>
-    <string name="not_migrated">Serie nicht zu TMDB-Daten migriert. Einige Funktionen inkl. Trakt- und Cloud-Sync funktionieren wsl. nicht. Evtl. nach einem Ersatz suchen und diese Serie entfernen. Tippen um Details anzuzeigen.</string>
+    <string name="not_migrated">Serie nicht zu TMDB-Daten migriert. Einige Funktionen inkl. Trakt- und Cloud-Sync funktionieren wsl. nicht. Evtl. nach einem Ersatz suchen und diese Serie löschen. Tippen um Details anzuzeigen.</string>
     <string name="status_turned_on">Eingeschaltet</string>
     <!-- Sharing -->
     <string name="share">Teilen</string>
@@ -134,9 +134,9 @@
     <string name="state_favorite">Favorit</string>
     <!-- Shows -->
     <string name="title_shows_added">Hinzugefügt</string>
-    <string name="confirm_delete">%s entfernen?</string>
-    <string name="delete_error">Serie konnte nicht entfernt werden. Versuchen Sie es später erneut.</string>
-    <string name="delete_show">Entfernen</string>
+    <string name="confirm_delete">%s löschen?</string>
+    <string name="delete_error">Konnte Serie nicht löschen. Versuchen Sie es später erneut.</string>
+    <string name="delete_show">Löschen</string>
     <string name="no_nextepisode">keine weitere Folge gefunden</string>
     <string name="context_favorite">Zu Favoriten hinzufügen</string>
     <string name="context_unfavorite">Von Favoriten entfernen</string>
@@ -355,7 +355,7 @@
     <string name="action_rate">Bewerten</string>
     <string name="ack_rated">Bewertung übermittelt</string>
     <string name="your_rating">Ihre Bewertung</string>
-    <string name="action_remove_rating">Bewertung entfernen</string>
+    <string name="action_remove_rating">Bewertung löschen</string>
     <string name="love">Absolut top!</string>
     <string name="hate">Totaler Flop :(</string>
     <string name="rating2">Schrecklich</string>
@@ -449,7 +449,7 @@
     <string name="pref_offset">Manuelle Zeit-Verschiebung</string>
     <string name="pref_offsetsummary">Sendezeit um %d Stunden verschieben</string>
     <string name="clear_cache">Cache leeren</string>
-    <string name="clear_cache_summary">Zu Speicher-Einstellungen gehen um zwischengesp. Bilder und Netzwerk-Antworten zu löschen</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Zu Speicher-Einstellungen gehen um Cache von Bildern und Server-Daten zu leeren</string>
     <!-- Export and Import -->
     <string name="title_export_import">Exportieren und Importieren</string>
     <string name="title_export">Exportieren</string>

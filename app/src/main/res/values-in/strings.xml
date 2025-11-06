@@ -58,7 +58,7 @@
     <string name="api_error_generic">Tidak dapat bicara ke %s. Coba lagi nanti.</string>
     <string name="api_failed">Gagal: %s</string>
     <string name="copy_to_clipboard">Disalin ke clipboard</string>
-    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and delete this show. Tap to view details.</string>
     <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">Bagikan</string>
@@ -73,7 +73,7 @@
     <string name="shout_invalid">Komentarmu tidak mematuhi peraturan!</string>
     <string name="action_post">Posting</string>
     <string name="action_edit_comment">Edit</string>
-    <string name="action_delete_comment">Delete</string>
+    <string name="action_delete_comment">Hapus</string>
     <string name="confirmation_delete_comment">Delete this comment?</string>
     <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">Awas Bocoran!</string>
@@ -345,7 +345,7 @@
     <string name="action_rate">Beri nilai</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Nilai anda</string>
-    <string name="action_remove_rating">Remove rating</string>
+    <string name="action_remove_rating">Delete rating</string>
     <string name="love">Benar-benar ninja!</string>
     <string name="hate">Payah :(</string>
     <string name="rating2">Buruk</string>
@@ -435,7 +435,7 @@
     <string name="pref_offset">Seimbangkan waktu secara manual</string>
     <string name="pref_offsetsummary">Seimbangkan waktu rilis selama %d jam</string>
     <string name="clear_cache">Bersihkan caches gambar</string>
-    <string name="clear_cache_summary">Hapus semua cache gambar dari perangkat Anda</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Hapus semua cache gambar dari perangkat Anda</string>
     <!-- Export and Import -->
     <string name="title_export_import">Export and import</string>
     <string name="title_export">Export</string>
