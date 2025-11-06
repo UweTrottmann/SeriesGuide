@@ -64,7 +64,7 @@
     <string name="api_error_generic">Could not talk to %s. Try again later.</string>
     <string name="api_failed">Failed: %s</string>
     <string name="copy_to_clipboard">Copied to clipboard</string>
-    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and delete this show. Tap to view details.</string>
     <string name="status_turned_on">Turned on</string>
 
     <!-- Sharing -->
@@ -146,9 +146,9 @@
 
     <!-- Shows -->
     <string name="title_shows_added">Added</string>
-    <string name="confirm_delete">Remove %s?</string>
-    <string name="delete_error">Could not remove show. Try again later.</string>
-    <string name="delete_show">Remove</string>
+    <string name="confirm_delete">Delete %s?</string>
+    <string name="delete_error">Could not delete show. Try again later.</string>
+    <string name="delete_show">Delete</string>
     <string name="no_nextepisode">no next episode found</string>
     <string name="context_favorite">Add to favorites</string>
     <string name="context_unfavorite">Remove from favorites</string>
@@ -383,7 +383,7 @@
     <string name="action_rate">Rate</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Your rating</string>
-    <string name="action_remove_rating">Remove rating</string>
+    <string name="action_remove_rating">Delete rating</string>
     <string name="love">Totally ninja!</string>
     <string name="hate">Weak Sauce :(</string>
     <string name="rating2">Terrible</string>
@@ -487,7 +487,7 @@
     <string name="pref_offset">Manual time offset</string>
     <string name="pref_offsetsummary">Offset air times by %d hours</string>
     <string name="clear_cache">Clear cache</string>
-    <string name="clear_cache_summary">Go to storage settings to remove cached images and network responses</string>
+    <string name="clear_cache_summary">Go to storage settings to clear cached images and network responses</string>
 
     <!-- Export and Import -->
     <string name="title_export_import">Export and import</string>
