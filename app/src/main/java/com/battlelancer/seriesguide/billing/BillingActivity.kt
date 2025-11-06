@@ -49,6 +49,7 @@ class BillingActivity : BaseActivity() {
         ThemeUtils.configureForEdgeToEdge(findViewById(R.id.rootLayoutBilling))
         setupActionBar()
 
+        // TODO
         manageSubscriptionUrl = PLAY_MANAGE_SUBS_ALL
 
         setupViews()

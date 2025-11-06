@@ -10,6 +10,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.battlelancer.seriesguide.billing.galaxy.GalaxyBillingHelper
 import com.battlelancer.seriesguide.billing.localdb.PlayUnlockState
 import com.battlelancer.seriesguide.billing.localdb.UnlockState
 import com.battlelancer.seriesguide.getSgAppContainer
@@ -46,6 +47,7 @@ class BillingViewModel(application: Application) : AndroidViewModel(application)
     val errorEvent: LiveData<BillingRepository.BillingError>
 
     private val repository: BillingRepository = application.getSgAppContainer().billingRepository
+    private val galaxyBilling: GalaxyBillingHelper = application.getSgAppContainer().galaxyBilling
 
     init {
         // As this was already called on app launch in SgApp.onCreate,

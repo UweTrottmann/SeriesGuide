@@ -5,6 +5,7 @@ package com.battlelancer.seriesguide
 
 import android.content.Context
 import com.battlelancer.seriesguide.billing.BillingRepository
+import com.battlelancer.seriesguide.billing.galaxy.GalaxyBillingHelper
 import com.battlelancer.seriesguide.diagnostics.DebugLogBuffer
 import com.battlelancer.seriesguide.util.PackageTools
 import com.battlelancer.seriesguide.util.PackageTools.isEuropeanEconomicArea
@@ -41,5 +42,8 @@ class SgAppContainer(context: Context, coroutineScope: CoroutineScope) {
 
     val billingRepository by lazy {
         BillingRepository(context, coroutineScope)
+    }
+    val galaxyBilling by lazy {
+        GalaxyBillingHelper(context, coroutineScope)
     }
 }

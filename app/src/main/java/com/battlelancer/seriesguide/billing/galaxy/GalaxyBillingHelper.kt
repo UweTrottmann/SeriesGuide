@@ -10,20 +10,43 @@ import com.samsung.android.sdk.iap.lib.helper.IapHelper
 import com.samsung.android.sdk.iap.lib.listener.OnAcknowledgePurchasesListener
 import com.samsung.android.sdk.iap.lib.listener.OnChangeSubscriptionPlanListener
 import com.samsung.android.sdk.iap.lib.listener.OnConsumePurchasedItemsListener
-import com.samsung.android.sdk.iap.lib.listener.OnGetOwnedListListener
 import com.samsung.android.sdk.iap.lib.listener.OnPaymentListener
+import com.samsung.android.sdk.iap.lib.vo.ErrorVo
+import com.samsung.android.sdk.iap.lib.vo.OwnedProductVo
+import com.samsung.android.sdk.iap.lib.vo.ProductVo
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
-class GalaxyBillingHelper(private val context: Context) {
+/**
+ * https://developer.samsung.com/iap/programming-guide/iap-helper-programming.html
+ */
+class GalaxyBillingHelper(
+    private val context: Context,
+    private val coroutineScope: CoroutineScope
+) {
 
     val iapHelper = IapHelper.getInstance(context)
 
     init {
-
+        // Doesn't prohibit the error dialog shown when store is not available
+//        iapHelper.showErrorDialog = false
         if (BuildConfig.DEBUG) {
             iapHelper.setOperationMode(HelperDefine.OperationMode.OPERATION_MODE_TEST)
+        }
+    }
+
+    fun updateAvailableAndOwnedProducts() {
+        // TODO Don't call this if the store package is not available, otherwise
+        //  HelperUtil.isGalaxyStoreValid() will show a dialog.
+        coroutineScope.launch {
+            getProductDetails()
+            getOwnedList()
         }
     }
 
@@ -63,8 +86,61 @@ class GalaxyBillingHelper(private val context: Context) {
         iapHelper.acknowledgePurchases(purchaseId!!, callback)
     }
 
-    fun getOwnedList(itemType: String, callback: OnGetOwnedListListener) {
-        iapHelper.getOwnedList(itemType, callback)
+    private suspend fun getOwnedList() {
+        val (error, ownedProducts) = suspendCoroutine { continuation ->
+            // Returns true if the request was sent to server successfully and the result will be sent
+            // to OnGetOwnedListListener interface listener.
+            val sent = iapHelper.getOwnedList(IapHelper.PRODUCT_TYPE_ALL) { error, ownedProducts ->
+                continuation.resume(OwnedListResult(error, ownedProducts))
+            }
+            Timber.i("getOwnedList sent=$sent")
+        }
+        if (error.errorCode == IapHelper.IAP_ERROR_NONE) {
+            // TODO
+            if (ownedProducts.isEmpty()) {
+                Timber.i("No products owned")
+            } else {
+                ownedProducts.forEach { ownedProduct ->
+                    Timber.i(ownedProduct.dump())
+                }
+            }
+        } else {
+            // TODO
+            printErrorLog("getOwnedList", error)
+        }
+    }
+
+    data class OwnedListResult(
+        val error: ErrorVo,
+        val ownedProducts: ArrayList<OwnedProductVo>
+    )
+
+    private suspend fun getProductDetails() {
+        val (error, products) = suspendCoroutine { continuation ->
+            // _productIds: Empty string ("") that designates all in-app products or
+            // One or more unique in-app product ID values, comma delimited (for example, "coins,blocks,lives")
+            iapHelper.getProductsDetails(SUB_ALL_ACCESS) { error: ErrorVo, products ->
+                continuation.resume(ProductDetailsResult(error, products))
+            }
+        }
+        if (error.errorCode == IapHelper.IAP_ERROR_NONE) {
+            // TODO
+            products.forEach { productVo ->
+                Timber.i(productVo.dump())
+            }
+        } else {
+            // TODO
+            printErrorLog("getProductsDetails", error)
+        }
+    }
+
+    data class ProductDetailsResult(
+        val error: ErrorVo,
+        val products: ArrayList<ProductVo>
+    )
+
+    fun printErrorLog(tag: String, errorVO: ErrorVo) {
+        Timber.e("$tag failed (${errorVO.errorCode} ${errorVO.errorString} ${errorVO.errorDetailsString})")
     }
 
     private fun getObfuscatedString(originId: String): String {
@@ -82,6 +158,10 @@ class GalaxyBillingHelper(private val context: Context) {
             e.printStackTrace()
         }
         return ""
+    }
+
+    companion object {
+        const val SUB_ALL_ACCESS = "galaxy_sub_all_access"
     }
 
 }
