@@ -10,9 +10,13 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2025.3
 
+### 2025.3.2 - 2025-11-06 🧪
+
 * 🔧 If the screen is wide enough, display a more compact bottom navigation bar.
-* 🔧 Color the active item in the bottom navigation bar.
+* 🔧 Color the active item in the bottom navigation bar, make the bar more compact.
 * 🔨 Correctly color the person placeholder symbol to match the current theme.
+* 🔧 Use the term delete instead of remove for destructive changes, like deleting a show or list.
+* 🔧 Use a warning color for the delete show and list confirmation buttons.
 
 ### 2025.3.1 - 2025-10-30 🧪
 
