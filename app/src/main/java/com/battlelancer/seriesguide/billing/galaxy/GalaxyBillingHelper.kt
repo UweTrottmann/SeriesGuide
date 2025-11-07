@@ -5,6 +5,7 @@ package com.battlelancer.seriesguide.billing.galaxy
 
 import android.content.Context
 import com.battlelancer.seriesguide.BuildConfig
+import com.battlelancer.seriesguide.util.PackageTools
 import com.samsung.android.sdk.iap.lib.constants.HelperDefine
 import com.samsung.android.sdk.iap.lib.helper.IapHelper
 import com.samsung.android.sdk.iap.lib.listener.OnAcknowledgePurchasesListener
@@ -31,22 +32,26 @@ class GalaxyBillingHelper(
     private val coroutineScope: CoroutineScope
 ) {
 
-    val iapHelper = IapHelper.getInstance(context)
-
-    init {
-        // Doesn't prohibit the error dialog shown when store is not available
-//        iapHelper.showErrorDialog = false
-        if (BuildConfig.DEBUG) {
-            iapHelper.setOperationMode(HelperDefine.OperationMode.OPERATION_MODE_TEST)
-        }
+    private val iapHelper by lazy {
+        IapHelper.getInstance(context)
+            .apply {
+                if (BuildConfig.DEBUG) {
+                    setOperationMode(HelperDefine.OperationMode.OPERATION_MODE_TEST)
+                }
+            }
+            .also { Timber.i("IapHelper initialized") }
     }
 
     fun updateAvailableAndOwnedProducts() {
-        // TODO Don't call this if the store package is not available, otherwise
-        //  HelperUtil.isGalaxyStoreValid() will show a dialog.
         coroutineScope.launch {
-            getProductDetails()
-            getOwnedList()
+            // Don't call IapHelper methods if the store package is not installed, otherwise
+            // HelperUtil.isGalaxyStoreValid() will show an error dialog.
+            if (PackageTools.isGalaxyStoreInstalled(context)) {
+                getProductDetails()
+                getOwnedList()
+            } else {
+                Timber.i("Galaxy Store not installed, not checking for products")
+            }
         }
     }
 

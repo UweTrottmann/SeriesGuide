@@ -22,6 +22,7 @@ object PackageTools {
     private const val PACKAGE_NAME_PASS = "com.battlelancer.seriesguide.x"
     private const val SIGNATURE_HASH_PASS = 528716598
     private const val PACKAGE_NAME_PLAY_STORE = "com.android.vending"
+    private const val PACKAGE_NAME_GALAXY_STORE = "com.sec.android.app.samsungapps"
 
     /**
      * Check if this is a build for the Amazon app store.
@@ -110,6 +111,18 @@ object PackageTools {
             Timber.e(e, "Failed to get installer package name")
             ""
         }.also { Timber.d("installingPackageName = '%s'", it) }
+    }
+
+    fun isGalaxyStoreInstalled(context: Context): Boolean {
+        try {
+            context.packageManager.getPackageInfo(
+                PACKAGE_NAME_GALAXY_STORE,
+                PackageManager.GET_META_DATA
+            )
+            return true
+        } catch (_: PackageManager.NameNotFoundException) {
+            return false
+        }
     }
 
     @JvmInline

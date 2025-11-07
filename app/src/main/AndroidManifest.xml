@@ -41,6 +41,8 @@
             <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
         </intent>
         <package android:name="com.battlelancer.seriesguide.x" />
+        <!-- For GalaxyBillingHelper to check if Galaxy Store is installed -->
+        <package android:name="com.sec.android.app.samsungapps" />
     </queries>
 
     <!-- enableOnBackInvokedCallback: opt-in to predictive back gesture https://developer.android.com/guide/navigation/custom-back/predictive-back-gesture -->
