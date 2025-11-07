@@ -11,11 +11,6 @@ val sgCompileSdk: Int by rootProject.extra
 val sgMinSdk: Int by rootProject.extra
 val sgTargetSdk: Int by rootProject.extra
 
-tasks.withType(JavaCompile::class.java).configureEach {
-    // Suppress JDK 21 warning about deprecated, but not yet removed, source and target value 8 support
-    options.compilerArgs.add("-Xlint:-options")
-}
-
 android {
     namespace = "com.battlelancer.seriesguide.api"
     compileSdk = sgCompileSdk
@@ -26,8 +21,8 @@ android {
 
     compileOptions {
         encoding = "UTF-8"
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     lint {
