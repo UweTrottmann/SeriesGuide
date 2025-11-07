@@ -93,14 +93,24 @@ object PackageTools {
         return false
     }
 
-    fun wasInstalledByPlayStore(context: Context): Boolean {
-        return getInstallerPackageName(context) == PACKAGE_NAME_PLAY_STORE
+    sealed interface InstallingPackage {
+        val packageName: String
     }
 
-    private fun getInstallerPackageName(context: Context): String {
+    object InstalledByPlayStore : InstallingPackage {
+        override val packageName = PACKAGE_NAME_PLAY_STORE
+    }
+
+    object InstalledByGalaxyStore : InstallingPackage {
+        override val packageName = PACKAGE_NAME_GALAXY_STORE
+    }
+
+    class InstalledByOther(override val packageName: String) : InstallingPackage
+
+    fun getInstallingPackage(context: Context): InstallingPackage {
         val packageName = context.packageName
         val packageManager = context.packageManager
-        return try {
+        val installingPackage = try {
             if (AndroidUtils.isAtLeastR) {
                 packageManager.getInstallSourceInfo(packageName).installingPackageName
             } else {
@@ -110,7 +120,13 @@ object PackageTools {
         } catch (e: Exception) {
             Timber.e(e, "Failed to get installer package name")
             ""
-        }.also { Timber.d("installingPackageName = '%s'", it) }
+        }
+        Timber.d("installingPackageName = '%s'", installingPackage)
+        return when (installingPackage) {
+            PACKAGE_NAME_PLAY_STORE -> InstalledByPlayStore
+            PACKAGE_NAME_GALAXY_STORE -> InstalledByGalaxyStore
+            else -> InstalledByOther(installingPackage)
+        }
     }
 
     fun isGalaxyStoreInstalled(context: Context): Boolean {
