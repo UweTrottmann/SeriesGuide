@@ -163,7 +163,7 @@ class SgApp : Application() {
             coroutineScope.launch {
                 // Automatically starts updating Play unlock state if billing provider is available.
                 // Note: keeping the connection alive for the lifetime of the app process.
-                appContainer.billingRepository.startAndConnectToBillingService()
+                appContainer.playBilling.startAndConnectToBillingService()
                 appContainer.galaxyBilling.updateAvailableAndOwnedProducts()
             }
         }

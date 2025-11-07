@@ -46,17 +46,17 @@ class BillingViewModel(application: Application) : AndroidViewModel(application)
     val availableProducts: Flow<List<SafeAugmentedProductDetails>>
     val errorEvent: LiveData<BillingRepository.BillingError>
 
-    private val repository: BillingRepository = application.getSgAppContainer().billingRepository
+    private val playBilling: BillingRepository = application.getSgAppContainer().playBilling
     private val galaxyBilling: GalaxyBillingHelper = application.getSgAppContainer().galaxyBilling
 
     init {
         // As this was already called on app launch in SgApp.onCreate,
         // this should typically just trigger updating of purchases.
-        repository.startAndConnectToBillingService()
+        playBilling.startAndConnectToBillingService()
 
         augmentedUnlockState = combine(
             BillingTools.unlockStateReadOnly,
-            repository.createUnlockStateFlow()
+            playBilling.createUnlockStateFlow()
         ) { unlockState, playUnlockState ->
             // Note: this will not show the all access in-app pass if the user also has a sub
             val hasAllAccessPass =
@@ -72,7 +72,7 @@ class BillingViewModel(application: Application) : AndroidViewModel(application)
             // no StateFlow as UI doesn't need initial value, it will display a wait indicator.
             .shareIn(viewModelScope, SharingStarted.Lazily, replay = 1)
 
-        availableProducts = repository.productDetails
+        availableProducts = playBilling.productDetails
             .map { products ->
                 products.mapNotNull { product ->
                     if (product.productDetails != null) {
@@ -91,11 +91,11 @@ class BillingViewModel(application: Application) : AndroidViewModel(application)
                 }
             }
             .flowOn(Dispatchers.IO)
-        errorEvent = repository.errorEvent
+        errorEvent = playBilling.errorEvent
     }
 
     fun makePurchase(activity: Activity, productDetails: SafeAugmentedProductDetails) {
-        repository.launchBillingFlow(activity, productDetails)
+        playBilling.launchBillingFlow(activity, productDetails)
     }
 
 }

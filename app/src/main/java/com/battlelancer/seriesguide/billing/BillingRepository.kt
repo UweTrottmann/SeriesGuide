@@ -41,7 +41,7 @@ import timber.log.Timber
 import kotlin.math.max
 
 /**
- * A singleton ([com.battlelancer.seriesguide.SgAppContainer.billingRepository]) to manage billing.
+ * A singleton ([com.battlelancer.seriesguide.SgAppContainer.playBilling]) to manage billing.
  *
  * ## Play Billing
  *

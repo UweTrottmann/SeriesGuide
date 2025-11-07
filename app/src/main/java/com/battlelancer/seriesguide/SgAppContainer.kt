@@ -40,7 +40,7 @@ class SgAppContainer(context: Context, coroutineScope: CoroutineScope) {
 //            .let { if (BuildConfig.DEBUG) true else it }
     }
 
-    val billingRepository by lazy {
+    val playBilling by lazy {
         BillingRepository(context, coroutineScope)
     }
     val galaxyBilling by lazy {
