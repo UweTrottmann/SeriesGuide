@@ -134,7 +134,7 @@ object PackageTools {
         }
     }
 
-    fun DeviceRegion.isUnitedStates() : Boolean {
+    fun DeviceRegion.isUnitedStates(): Boolean {
         return code == Locale.US.country
     }
 
