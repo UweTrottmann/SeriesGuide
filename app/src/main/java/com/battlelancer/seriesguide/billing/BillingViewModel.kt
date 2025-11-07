@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
+import timber.log.Timber
 
 /**
  * Helps fetch current purchases and available products from Play billing provider.
@@ -38,6 +39,18 @@ class BillingViewModel(application: Application) : AndroidViewModel(application)
     )
 
     val augmentedUnlockState: Flow<AugmentedUnlockState>
+
+    enum class ProductsProvider {
+        PlayBilling,
+        GalaxyBilling
+    }
+
+    private val productsProvider = when (application.getSgAppContainer().installedBy) {
+        PackageTools.InstalledByGalaxyStore -> ProductsProvider.GalaxyBilling
+        // Default to Play, it's most likely to be available when installing manually or from other
+        // sources.
+        else -> ProductsProvider.PlayBilling
+    }.also { Timber.i("Using %s products provider", it) }
 
     /**
      * A list of supported products filtered to only contain those
@@ -72,30 +85,52 @@ class BillingViewModel(application: Application) : AndroidViewModel(application)
             // no StateFlow as UI doesn't need initial value, it will display a wait indicator.
             .shareIn(viewModelScope, SharingStarted.Lazily, replay = 1)
 
-        availableProducts = playBilling.productDetails
-            .map { products ->
-                products.mapNotNull { product ->
-                    if (product.productDetails != null) {
-                        val subscriptionOfferDetails =
-                            product.productDetails.subscriptionOfferDetails
-                        if (subscriptionOfferDetails != null) {
-                            return@mapNotNull SafeAugmentedProductDetails(
-                                product.productId,
-                                product.canPurchase,
-                                product.productDetails,
-                                subscriptionOfferDetails.flatMap { it.pricingPhases.pricingPhaseList }
-                            )
+        when (productsProvider) {
+            ProductsProvider.PlayBilling -> {
+                availableProducts = playBilling.productDetails
+                    .map { products ->
+                        products.mapNotNull { product ->
+                            if (product.productDetails != null) {
+                                val subscriptionOfferDetails =
+                                    product.productDetails.subscriptionOfferDetails
+                                if (subscriptionOfferDetails != null) {
+                                    return@mapNotNull SafeAugmentedProductDetails(
+                                        product.productId,
+                                        product.canPurchase,
+                                        product.productDetails,
+                                        subscriptionOfferDetails.flatMap { it.pricingPhases.pricingPhaseList }
+                                    )
+                                }
+                            }
+                            return@mapNotNull null
                         }
                     }
-                    return@mapNotNull null
-                }
+                    .flowOn(Dispatchers.IO)
+                errorEvent = playBilling.errorEvent
             }
-            .flowOn(Dispatchers.IO)
-        errorEvent = playBilling.errorEvent
+
+            ProductsProvider.GalaxyBilling -> {
+                // TODO
+                availableProducts = galaxyBilling.productDetails
+                errorEvent = playBilling.errorEvent
+            }
+        }
     }
 
     fun makePurchase(activity: Activity, productDetails: SafeAugmentedProductDetails) {
-        playBilling.launchBillingFlow(activity, productDetails)
+        when (productsProvider) {
+            ProductsProvider.PlayBilling -> {
+                playBilling.launchBillingFlow(activity, productDetails)
+            }
+
+            ProductsProvider.GalaxyBilling -> {
+                // TODO
+                //                galaxyBilling.purchaseItem(
+//                    productDetails.productId,
+//                    repository.galaxyPurchaseListener
+//                )
+            }
+        }
     }
 
 }

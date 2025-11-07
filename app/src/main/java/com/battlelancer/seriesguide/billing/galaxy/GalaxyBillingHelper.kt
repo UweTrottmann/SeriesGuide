@@ -5,6 +5,7 @@ package com.battlelancer.seriesguide.billing.galaxy
 
 import android.content.Context
 import com.battlelancer.seriesguide.BuildConfig
+import com.battlelancer.seriesguide.billing.SafeAugmentedProductDetails
 import com.battlelancer.seriesguide.util.PackageTools
 import com.samsung.android.sdk.iap.lib.constants.HelperDefine
 import com.samsung.android.sdk.iap.lib.helper.IapHelper
@@ -16,6 +17,8 @@ import com.samsung.android.sdk.iap.lib.vo.ErrorVo
 import com.samsung.android.sdk.iap.lib.vo.OwnedProductVo
 import com.samsung.android.sdk.iap.lib.vo.ProductVo
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.nio.charset.StandardCharsets
@@ -31,6 +34,9 @@ class GalaxyBillingHelper(
     private val context: Context,
     private val coroutineScope: CoroutineScope
 ) {
+
+    // TODO
+    val productDetails: Flow<List<SafeAugmentedProductDetails>> = MutableStateFlow(emptyList())
 
     private val iapHelper by lazy {
         IapHelper.getInstance(context)
