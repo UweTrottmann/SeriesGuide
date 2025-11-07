@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2023-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2023 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.util
 
@@ -21,6 +21,7 @@ object PackageTools {
     private const val FLAVOR_AMAZON = "amazon"
     private const val PACKAGE_NAME_PASS = "com.battlelancer.seriesguide.x"
     private const val SIGNATURE_HASH_PASS = 528716598
+    private const val PACKAGE_NAME_AMAZON_STORE = "com.amazon.venezia"
     private const val PACKAGE_NAME_PLAY_STORE = "com.android.vending"
 
     /**
@@ -92,14 +93,24 @@ object PackageTools {
         return false
     }
 
-    fun wasInstalledByPlayStore(context: Context): Boolean {
-        return getInstallerPackageName(context) == PACKAGE_NAME_PLAY_STORE
+    sealed interface InstallingPackage {
+        val packageName: String
     }
 
-    private fun getInstallerPackageName(context: Context): String {
+    object InstalledByAmazonStore : InstallingPackage {
+        override val packageName = PACKAGE_NAME_AMAZON_STORE
+    }
+
+    object InstalledByPlayStore : InstallingPackage {
+        override val packageName = PACKAGE_NAME_PLAY_STORE
+    }
+
+    class InstalledByOther(override val packageName: String) : InstallingPackage
+
+    fun getInstallingPackage(context: Context): InstallingPackage {
         val packageName = context.packageName
         val packageManager = context.packageManager
-        return try {
+        val installingPackage = try {
             if (AndroidUtils.isAtLeastR) {
                 packageManager.getInstallSourceInfo(packageName).installingPackageName
             } else {
@@ -109,7 +120,13 @@ object PackageTools {
         } catch (e: Exception) {
             Timber.e(e, "Failed to get installer package name")
             ""
-        }.also { Timber.d("installingPackageName = '%s'", it) }
+        }
+        Timber.d("installingPackageName = '%s'", installingPackage)
+        return when (installingPackage) {
+            PACKAGE_NAME_AMAZON_STORE -> InstalledByAmazonStore
+            PACKAGE_NAME_PLAY_STORE -> InstalledByPlayStore
+            else -> InstalledByOther(installingPackage)
+        }
     }
 
     @JvmInline
