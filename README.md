@@ -12,7 +12,7 @@ Android app to help you keep track of your favorite TV shows and movies.
 
 ## License
 
-Except where noted otherwise, this work by [Uwe Trottmann](https://uwetrottmann.com) is licensed
+Except where noted otherwise, this work by [Uwe Trottmann](https://www.uwetrottmann.com) is licensed
 under the Apache License 2.0, see [LICENSE.txt](LICENSE.txt).
 Each relevant file contains an [SPDX short-form identifier](https://spdx.dev/learn/handling-license-info/)
 at the first possible line with the `Apache-2.0` value.
