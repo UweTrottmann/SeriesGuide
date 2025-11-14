@@ -61,7 +61,7 @@
 
         <Preference
             app:iconSpaceReserved="false"
-            app:key="clearCache"
+            app:key="seriesguide.settings.link.clearcache"
             app:summary="@string/clear_cache_summary"
             app:title="@string/clear_cache" />
 
