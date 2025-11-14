@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2020-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2020 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.preferences
 
@@ -19,8 +19,6 @@ import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.databinding.ActivityMoreOptionsBinding
 import com.battlelancer.seriesguide.dataliberation.BackupSettings
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
-import com.battlelancer.seriesguide.diagnostics.DebugLogActivity
-import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.sync.SyncProgress
 import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
@@ -91,9 +89,6 @@ class MoreOptionsActivity : BaseTopActivity() {
             startActivity(getFeedbackEmailIntent(this))
         }
         binding.buttonTranslations.openUriOnClick(getString(R.string.url_translations))
-        binding.buttonDebugLog.setOnClickListener {
-            startActivity(DebugLogActivity.intent(this))
-        }
         binding.buttonDebugView.apply {
             setOnClickListener {
                 DebugViewFragment().safeShow(supportFragmentManager, "debugViewDialog")
@@ -134,9 +129,6 @@ class MoreOptionsActivity : BaseTopActivity() {
 
         // Update supporter status.
         binding.textViewThankYouSupporters.isGone = !BillingTools.hasAccessToPaidFeatures()
-
-        // Show debug log button if debug mode is on.
-        binding.buttonDebugLog.isGone = !AppSettings.isUserDebugModeEnabled(this)
     }
 
 

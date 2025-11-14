@@ -23,11 +23,10 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceManager
 import androidx.preference.SwitchPreferenceCompat
-import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
 import com.battlelancer.seriesguide.billing.BillingTools
-import com.battlelancer.seriesguide.getSgAppContainer
+import com.battlelancer.seriesguide.diagnostics.DebugLogActivity
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.AppSettings
@@ -101,11 +100,9 @@ class SgPreferencesFragment : BasePreferencesFragment(),
             }
         }
 
-        if (BuildConfig.DEBUG) {
-            findPreference<SwitchPreferenceCompat>(AppSettings.KEY_USER_DEBUG_MODE_ENABLED)!!.apply {
-                isEnabled = false
-                isChecked = true
-            }
+        findPreference<Preference>(KEY_LINK_DEBUG_LOG)!!.setOnPreferenceClickListener {
+            startActivity(DebugLogActivity.intent(requireActivity()))
+            true
         }
     }
 
@@ -445,17 +442,6 @@ class SgPreferencesFragment : BasePreferencesFragment(),
                 val switchPref = pref as SwitchPreferenceCompat
                 AppSettings.setSendErrorReports(switchPref.context, switchPref.isChecked, false)
             }
-
-            // Enable or disable debug log
-            if (AppSettings.KEY_USER_DEBUG_MODE_ENABLED == key) {
-                val switchPref = pref as SwitchPreferenceCompat
-                val debugLogBuffer = requireActivity().getSgAppContainer().debugLogBuffer
-                if (switchPref.isChecked) {
-                    debugLogBuffer.enable()
-                } else {
-                    debugLogBuffer.disable()
-                }
-            }
         }
 
         // pref changes that require the notification service to be reset
@@ -564,6 +550,7 @@ class SgPreferencesFragment : BasePreferencesFragment(),
 
         // Keys that are not actual preferences, but links
         private const val KEY_LINK_CLEAR_CACHE = "seriesguide.settings.link.clearcache"
+        private const val KEY_LINK_DEBUG_LOG = "seriesguide.settings.link.debuglog"
         private const val KEY_LINK_NOTIFICATION_SETTINGS =
             "seriesguide.settings.link.notifications"
         private const val KEY_LINK_BATTERY_SETTINGS =

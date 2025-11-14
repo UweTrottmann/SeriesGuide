@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2011-2025 Uwe Trottmann
-// Copyright 2013 Andrew Neal
+// SPDX-FileCopyrightText: Copyright © 2011 Uwe Trottmann <uwe@uwetrottmann.com>
+// SPDX-FileCopyrightText: Copyright © 2013 Andrew Neal
 
 package com.battlelancer.seriesguide
 
@@ -193,10 +193,8 @@ class SgApp : Application() {
             // logcat logging
             Timber.plant(Timber.DebugTree())
         }
-        if (AppSettings.isUserDebugModeEnabled(this)) {
-            // debug log
-            appContainer.debugLogBuffer.enable()
-        }
+        // Enable persistent debug log
+        appContainer.debugLogBuffer.enable()
 
         // Note: Firebase Crashlytics is automatically initialized through its content provider.
         // Pass current enabled state to Crashlytics (e.g. in case app was restored from backup).

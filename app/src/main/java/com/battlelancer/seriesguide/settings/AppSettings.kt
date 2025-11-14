@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2013-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2013 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.settings
 
@@ -17,15 +17,14 @@ object AppSettings {
 
     const val KEY_VERSION = "oldversioncode"
 
-    @Deprecated("")
-    const val KEY_GOOGLEANALYTICS = "enableGAnalytics"
-
-    @Deprecated("")
-    const val KEY_HAS_SEEN_NAV_DRAWER = "hasSeenNavDrawer"
     const val KEY_ASKED_FOR_FEEDBACK = "askedForFeedback"
     const val KEY_SEND_ERROR_REPORTS = "com.battlelancer.seriesguide.sendErrorReports"
-    const val KEY_USER_DEBUG_MODE_ENABLED = "com.battlelancer.seriesguide.userDebugModeEnabled"
     const val KEY_DEMO_MODE_ENABLED = "com.uwetrottmann.seriesguide.demoMode"
+
+    // Previously used keys, don't use them as preferences file might contain values for them
+//    const val KEY_GOOGLEANALYTICS = "enableGAnalytics"
+//    const val KEY_HAS_SEEN_NAV_DRAWER = "hasSeenNavDrawer"
+//    const val KEY_USER_DEBUG_MODE_ENABLED = "com.battlelancer.seriesguide.userDebugModeEnabled"
 
     /**
      * Returns the version code of the previously installed version. Is the current version on fresh
@@ -87,14 +86,15 @@ object AppSettings {
         Errors.getReporter()?.setCrashlyticsCollectionEnabled(isEnabled)
     }
 
+    // Currently not used, but leaving this here for future use.
     /**
      * Returns if debug components for users, which might have a performance impact, should be
      * enabled (for ex. debug log). Always true for debug builds.
      */
-    fun isUserDebugModeEnabled(context: Context): Boolean {
-        return BuildConfig.DEBUG || PreferenceManager.getDefaultSharedPreferences(context)
-            .getBoolean(KEY_USER_DEBUG_MODE_ENABLED, false)
-    }
+//    fun isUserDebugModeEnabled(context: Context): Boolean {
+//        return BuildConfig.DEBUG || PreferenceManager.getDefaultSharedPreferences(context)
+//            .getBoolean(KEY_USER_DEBUG_MODE_ENABLED, false)
+//    }
 
     fun setDemoModeState(context: Context, isEnabled: Boolean) {
         if (!BuildConfig.DEBUG) {

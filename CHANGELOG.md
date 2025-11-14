@@ -10,6 +10,10 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2025.3
 
+### Next release
+
+* 🔧 Debug log: change to always on, keep messages on app restarts and up to 3 days.
+
 ### 2025.3.2 - 2025-11-06 🧪
 
 * 🔧 If the screen is wide enough, display a more compact bottom navigation bar.
