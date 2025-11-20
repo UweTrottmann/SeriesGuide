@@ -354,10 +354,13 @@ public class FastScrollerDecoration extends RecyclerView.ItemDecoration implemen
             float scrollRatio = (float) offsetY / (verticalScrollRange - verticalScrollExtent);
             float scrollRatioClamped = Math.max(0.0f, Math.min(scrollRatio, 1.0f));
 
-            // The available range for the thumb center (accounting for thumb height and margins)
-            int minCenter = mMargin + mVerticalThumbHeight / 2;
-            int maxCenter = mRecyclerViewHeight - mMargin - mVerticalThumbHeight / 2;
-            int availableRange = maxCenter - minCenter;
+            // The available range for the thumb center (accounting for thumb height and margins).
+            // Exclude top and bottom padding as typically not clipping to padding so thumb might
+            // not be accessible if it's drawn behind a status or navigation bar.
+            int minCenter = mRecyclerView.getPaddingTop() + mMargin + mVerticalThumbHeight / 2;
+            int maxCenter = mRecyclerViewHeight - mRecyclerView.getPaddingBottom()
+                    - mMargin - mVerticalThumbHeight / 2;
+            int availableRange = Math.max(0, maxCenter - minCenter);
 
             // Distribute the thumb center position evenly across the available range
             mVerticalThumbCenterY = minCenter + (int) (availableRange * scrollRatioClamped);

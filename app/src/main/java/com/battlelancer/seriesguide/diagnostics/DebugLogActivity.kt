@@ -62,7 +62,7 @@ class DebugLogActivity : BaseThemeActivity() {
     }
 
     private fun initViews(binding: ActivityDebugLogBinding) {
-        ThemeUtils.applyBottomMarginForNavigationBar(binding.recyclerViewDebugLog)
+        ThemeUtils.applyBottomPaddingForNavigationBar(binding.recyclerViewDebugLog)
 
         val adapter = DebugLogAdapter()
         binding.recyclerViewDebugLog.adapter = adapter
