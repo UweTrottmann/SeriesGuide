@@ -92,6 +92,8 @@ androidx-room-testing = "androidx.room:room-testing:2.8.1"
 androidutils = "com.uwetrottmann.androidutils:androidutils:4.0.0"
 photoview = "com.github.chrisbanes:PhotoView:2.3.0"
 
+# https://developer.android.com/google/play/age-signals/release-notes
+play-agesignals = "com.google.android.play:age-signals:0.0.1-beta02"
 # https://developers.google.com/android/guides/releases
 # 21.0.0 removes Credentials API used by firebase-ui-auth
 play-services-auth = "com.google.android.gms:play-services-auth:20.7.0"

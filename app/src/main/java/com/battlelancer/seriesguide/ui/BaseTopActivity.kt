@@ -22,6 +22,7 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.dataliberation.BackupSettings
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
+import com.battlelancer.seriesguide.getSgAppContainer
 import com.battlelancer.seriesguide.preferences.MoreOptionsActivity
 import com.battlelancer.seriesguide.stats.StatsActivity
 import com.battlelancer.seriesguide.sync.AccountUtils
@@ -181,6 +182,8 @@ abstract class BaseTopActivity : BaseMessageActivity() {
         // Users might have installed the unlock app and as there is no trigger for this event
         // manually check whenever returning to a top-level activity.
         BillingTools.updateUnlockStateAsync(this)
+
+        getSgAppContainer().ageCheck.showDialogIfUserDoesNotPassAgeCheck(this)
 
         // Display important notifications, most important first as others will not display if there
         // already is a notification.

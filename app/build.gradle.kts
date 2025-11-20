@@ -285,6 +285,9 @@ dependencies {
     // Play Billing
     implementation(libs.billing)
 
+    // Play Age Signals
+    implementation(libs.play.agesignals)
+
     // Instrumented unit tests
     androidTestImplementation(libs.androidx.annotation)
     // Core library

@@ -7,6 +7,7 @@ import android.content.Context
 import com.battlelancer.seriesguide.billing.BillingRepository
 import com.battlelancer.seriesguide.diagnostics.DebugLogBuffer
 import com.battlelancer.seriesguide.diagnostics.DebugLogDatabase
+import com.battlelancer.seriesguide.util.AgeCheck
 import com.battlelancer.seriesguide.util.PackageTools
 import com.battlelancer.seriesguide.util.PackageTools.isEuropeanEconomicArea
 import com.battlelancer.seriesguide.util.PackageTools.isUnitedStates
@@ -52,6 +53,10 @@ class SgAppContainer(context: Context, coroutineScope: CoroutineScope) {
                 )
             }
 //            .let { if (BuildConfig.DEBUG) true else it }
+    }
+
+    val ageCheck by lazy {
+        AgeCheck(context)
     }
 
     val billingRepository by lazy {
