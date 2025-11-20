@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2019-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2019 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.backend
 
@@ -253,7 +253,7 @@ class CloudSetupFragment : Fragment() {
         val intent = AuthUI.getInstance()
             .createSignInIntentBuilder()
             .setAvailableProviders(hexagonTools.firebaseSignInProviders)
-            .setIsSmartLockEnabled(hexagonTools.isGoogleSignInAvailable)
+            .setCredentialManagerEnabled(hexagonTools.isGoogleSignInAvailable)
             // AuthUI is not compatible with edge-to-edge on Android 15 (target SDK 35),
             // so opt out its activities.
             // https://github.com/firebase/FirebaseUI-Android/issues/2177
