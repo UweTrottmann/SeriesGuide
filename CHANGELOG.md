@@ -10,7 +10,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2025.3
 
-### Next release
+### 2025.3.3 - 2025-11-20 🧪
 
 * 🔧 Debug log: change to always on, keep messages on app restarts and up to 3 days.
 * 🔧 Fast scroller: draw handle always within track, align with top and bottom most items.
