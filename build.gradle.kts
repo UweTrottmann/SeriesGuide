@@ -17,8 +17,6 @@ plugins {
 buildscript {
     val sgCompileSdk by extra(36) // Android 16 (BAKLAVA)
     val sgMinSdk by extra(23) // Android 6 (M)
-    // WARNING Can not increase to 36 (Android 16) until Theme.SeriesGuide.DayNight.OptOutEdgeToEdge
-    // is no longer used as windowOptOutEdgeToEdgeEnforcement will be ignored (see notes on theme).
     val sgTargetSdk by extra(35) // Android 15 (VANILLA_ICE_CREAM)
 
     // YYYY.<release-of-year>.<build> - like 2024.1.0
