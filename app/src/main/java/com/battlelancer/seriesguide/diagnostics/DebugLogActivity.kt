@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2025 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.diagnostics
 
@@ -24,6 +24,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ActivityDebugLogBinding
 import com.battlelancer.seriesguide.getSgAppContainer
 import com.battlelancer.seriesguide.ui.BaseThemeActivity
+import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.tryLaunch
 import kotlinx.coroutines.launch
@@ -61,11 +62,12 @@ class DebugLogActivity : BaseThemeActivity() {
     }
 
     private fun initViews(binding: ActivityDebugLogBinding) {
-        ThemeUtils.applyBottomPaddingForNavigationBar(binding.recyclerViewDebugLog)
+        ThemeUtils.applyBottomMarginForNavigationBar(binding.recyclerViewDebugLog)
 
         val adapter = DebugLogAdapter()
         binding.recyclerViewDebugLog.adapter = adapter
         binding.recyclerViewDebugLog.layoutManager = LinearLayoutManager(this)
+        SgFastScroller(this, binding.recyclerViewDebugLog)
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
