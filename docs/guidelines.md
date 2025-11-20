@@ -192,3 +192,15 @@ As it is a `LinearLayout`, [until this is fixed](https://github.com/material-com
 
 </com.google.android.material.textfield.TextInputLayout>
 ```
+
+## Dependencies
+
+To [inspect dependencies with Gradle](https://docs.gradle.org/current/userguide/viewing_debugging_dependencies.html) use
+
+```bash
+./gradlew :app:dependencies --configuration pureDebugCompileClasspath
+
+./gradlew :app:dependencyInsight --configuration pureDebugAndroidTestRuntimeClasspath --dependency kotlinx-serialization-core-jvm
+```
+
+When adding a new dependency, list it and its license in [credits](/CREDITS.txt).
