@@ -21,6 +21,7 @@ import com.battlelancer.seriesguide.databinding.FragmentCloudSetupBinding
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.sync.SyncProgress
 import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.safeShow
@@ -254,10 +255,7 @@ class CloudSetupFragment : Fragment() {
             .createSignInIntentBuilder()
             .setAvailableProviders(hexagonTools.firebaseSignInProviders)
             .setCredentialManagerEnabled(hexagonTools.isGoogleSignInAvailable)
-            // AuthUI is not compatible with edge-to-edge on Android 15 (target SDK 35),
-            // so opt out its activities.
-            // https://github.com/firebase/FirebaseUI-Android/issues/2177
-            .setTheme(R.style.Theme_SeriesGuide_DayNight_OptOutEdgeToEdge)
+            .setTheme(SeriesGuidePreferences.THEME)
             .setAuthMethodPickerLayout(authPickerLayout)
             .build()
 
