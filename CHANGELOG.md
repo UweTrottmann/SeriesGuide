@@ -13,6 +13,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 ### Next release
 
 * 🔧 Debug log: change to always on, keep messages on app restarts and up to 3 days.
+* 🔧 Fast scroller: draw handle always within track, align with top and bottom most items.
 * 📝 Import latest user interface translations.
 
 ### 2025.3.2 - 2025-11-06 🧪
