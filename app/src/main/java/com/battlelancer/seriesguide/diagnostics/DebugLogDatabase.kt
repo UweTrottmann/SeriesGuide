@@ -57,4 +57,17 @@ interface DebugLogHelper {
     @Query("DELETE FROM debug_log WHERE created_at < :timeInMs")
     suspend fun deleteOlderThan(timeInMs: Long)
 
+    /**
+     * Trim to at most 3000 rows. Typically 3 days of messages shouldn't exceed this.
+     */
+    @Query(
+        "DELETE FROM debug_log " +
+                "WHERE ROWID IN (" +
+                "SELECT ROWID " +
+                "FROM debug_log " +
+                "ORDER BY ROWID DESC " +
+                "LIMIT -1 OFFSET 3000" +
+                ")"
+    )
+    suspend fun trim()
 }

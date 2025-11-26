@@ -69,6 +69,13 @@ class DebugLogBuffer(
     private fun addEntry(priority: Int, tag: String?, message: String) {
         coroutineScope.launch(debugLogDatabaseDispatcher) {
             val currentTime = Instant.now().toEpochMilli()
+
+            // Delete before adding new data
+            dbHelper.deleteOlderThan(currentTime - LOG_MAX_AGE_MILLIS)
+            // To avoid the database growing too large if there are many messages for whatever
+            // reason, enforce a maximum number of rows.
+            dbHelper.trim()
+
             dbHelper.insert(
                 DbDebugLogEntry(
                     priority = priority,
@@ -77,7 +84,6 @@ class DebugLogBuffer(
                     createdAt = currentTime
                 )
             )
-            dbHelper.deleteOlderThan(currentTime - LOG_MAX_AGE_MILLIS)
         }
     }
 
