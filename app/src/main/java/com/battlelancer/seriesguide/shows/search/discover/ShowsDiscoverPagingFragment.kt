@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2018-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2018 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.shows.search.discover
 
@@ -47,7 +47,6 @@ import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import timber.log.Timber
 
 /**
  * Displays shows provided by a [ShowsDiscoverPagingViewModel], expects to be hosted
@@ -208,7 +207,7 @@ class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
             adapter.loadStateFlow
                 .distinctUntilChangedBy { it.refresh }
                 .collectLatest { loadStates ->
-                    Timber.d("loadStates=$loadStates")
+//                    Timber.d("loadStates=$loadStates")
                     val refresh = loadStates.refresh
                     binding.swipeRefreshLayoutShowsPopular.isRefreshing =
                         refresh is LoadState.Loading
