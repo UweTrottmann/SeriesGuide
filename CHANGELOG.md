@@ -10,7 +10,15 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2025.3
 
-### 2025.3.4 - 2025-11-27 🧪
+* 📝 Only for devices running Android 6.0 or higher.
+* 🔧 Shows: only display stream and purchase options for the season of a displayed episode.
+* 🔧 Navigation: on larger screens, display a wider, but flatter navigation bar.
+* 🔧 Upcoming/Recent: rename "Infinite calendar" option to the more applicable "Unlimited days".
+* 🔧 Shows: update ended shows less often to speed up updating of large libraries and reduce load on
+  TMDB.
+* 🔧 Diagnostics: debug log is always on, kept across app restarts to help diagnose more issues.
+
+### 2025.3.4 - 2025-11-27
 
 * 🔧 Debug log: as a safeguard introduce a limit for the number of messages.
 * 📝 Import latest user interface translations.
