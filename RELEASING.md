@@ -20,7 +20,7 @@
 - Commit and push
 
   ```shell
-  git commit --all --message "Prepare version 2025.3.3 (23250303)"
+  git commit --all --message "Prepare version 2025.3.4 (23250304)"
   git push --set-upstream origin release-2025.3
   ```
 
