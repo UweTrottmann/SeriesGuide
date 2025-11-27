@@ -13,6 +13,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 ### Next release
 
 * 🔧 Debug log: as a safeguard introduce a limit for the number of messages.
+* 📝 Import latest user interface translations.
 
 ### 2025.3.3 - 2025-11-20 🧪
 
