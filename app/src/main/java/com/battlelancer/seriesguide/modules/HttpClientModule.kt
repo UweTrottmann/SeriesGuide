@@ -49,6 +49,11 @@ open class HttpClientModule {
         }
         builder.addInterceptor(tmdbInterceptor)
         builder.addInterceptor(traktInterceptor)
+        // To diagnose issues, log network requests (headers only)
+//        builder.addNetworkInterceptor(
+//            HttpLoggingInterceptor()
+//                .apply { level = HttpLoggingInterceptor.Level.HEADERS }
+//        )
         builder.authenticator(authenticator)
         builder.cache(cache)
         builder.trustLetsEncryptAndroidNOrLower()
