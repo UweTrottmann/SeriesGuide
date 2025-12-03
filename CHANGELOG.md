@@ -20,6 +20,10 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 * 📝 Removed the unsupported release for devices running Android 4 from Google Play, it is no longer
   working properly.
 
+### Next Release
+
+* 🔧 Internal: When talking to servers, send app name and version.
+
 ### 2025.2.13 - 2025-10-30
 
 * 🔧 Thanks to a United States court ordered injunction in the Google Play Antitrust case coming
