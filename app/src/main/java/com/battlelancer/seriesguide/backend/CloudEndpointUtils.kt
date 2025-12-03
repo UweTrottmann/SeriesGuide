@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// SPDX-FileCopyrightText: Copyright © 2013 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.backend
 
@@ -65,7 +65,7 @@ object CloudEndpointUtils {
             builder.rootUrl = ROOT_URL_STAGING + PATH_API
         }
         // used for user agent
-        builder.applicationName = "SeriesGuide/" + PackageTools.getVersion(context)
+        builder.applicationName = PackageTools.getUserAgent(context)
 
         // only enable GZip when connecting to remote server
         val enableGZip = builder.rootUrl.startsWith("https:")
