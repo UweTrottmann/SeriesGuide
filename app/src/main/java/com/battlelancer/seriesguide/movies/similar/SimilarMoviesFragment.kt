@@ -14,7 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.movies.base.BaseMovieListAdapter
+import com.battlelancer.seriesguide.movies.BaseMovieListAdapter
 import com.battlelancer.seriesguide.movies.base.SearchMenuProvider
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.widgets.EmptyView

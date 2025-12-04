@@ -16,7 +16,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentShowsSimilarBinding
-import com.battlelancer.seriesguide.movies.base.BaseMovieListAdapter
+import com.battlelancer.seriesguide.movies.BaseMovieListAdapter
 import com.battlelancer.seriesguide.movies.base.SearchMenuProvider
 import com.battlelancer.seriesguide.movies.collection.MovieCollectionViewModel.MoviesListUiState
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
