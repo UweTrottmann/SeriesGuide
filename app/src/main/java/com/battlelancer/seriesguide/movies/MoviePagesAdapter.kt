@@ -3,6 +3,7 @@
 
 package com.battlelancer.seriesguide.movies
 
+import android.content.Context
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 
@@ -10,10 +11,12 @@ import androidx.paging.PagingDataAdapter
  * Binds pages of [UiMovie] to [MovieViewHolder].
  */
 class MoviePagesAdapter(
-    val itemClickListener: MovieClickListener
+    context: Context
 ) : PagingDataAdapter<UiMovie, MovieViewHolder>(
     UiMovie.DIFF_CALLBACK
 ) {
+
+    private val itemClickListener = MovieClickListenerImpl(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         return MovieViewHolder.inflate(parent, itemClickListener)

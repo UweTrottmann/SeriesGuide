@@ -51,7 +51,7 @@ abstract class MoviesBaseFragment : Fragment() {
 
         emptyView.setText(emptyViewTextResId)
 
-        adapter = MoviePagesAdapter(MovieClickListenerImpl(requireContext()))
+        adapter = MoviePagesAdapter(requireContext())
 
         recyclerView.also {
             it.setHasFixedSize(true)
