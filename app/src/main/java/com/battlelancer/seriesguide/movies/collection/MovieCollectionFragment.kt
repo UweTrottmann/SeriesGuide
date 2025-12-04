@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2024 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.movies.collection
 
@@ -16,7 +16,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentShowsSimilarBinding
-import com.battlelancer.seriesguide.movies.BaseMovieListAdapter
+import com.battlelancer.seriesguide.movies.MovieListAdapter
 import com.battlelancer.seriesguide.movies.base.SearchMenuProvider
 import com.battlelancer.seriesguide.movies.collection.MovieCollectionViewModel.MoviesListUiState
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
@@ -69,7 +69,7 @@ class MovieCollectionFragment : Fragment() {
         binding.swipeRefreshLayoutShowsSimilar.isRefreshing = true
         binding.emptyViewShowsSimilar.isGone = true
 
-        val adapter = BaseMovieListAdapter(requireContext())
+        val adapter = MovieListAdapter(requireContext())
         binding.recyclerViewShowsSimilar.also {
             it.setHasFixedSize(true)
             it.layoutManager =

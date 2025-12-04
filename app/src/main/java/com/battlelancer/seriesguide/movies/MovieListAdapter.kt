@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 /**
  * Binds a list of [UiMovie] to [MovieViewHolder].
  */
-class BaseMovieListAdapter(
+class MovieListAdapter(
     context: Context
 ) : ListAdapter<UiMovie, MovieViewHolder>(
     UiMovie.DIFF_CALLBACK
