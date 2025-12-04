@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2024 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.movies.collection
 
@@ -14,9 +14,10 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.movies.MoviesSettings
+import com.battlelancer.seriesguide.movies.UiMovie
+import com.battlelancer.seriesguide.movies.UiMovieBuilder
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.uwetrottmann.androidutils.AndroidUtils
-import com.uwetrottmann.tmdb2.entities.BaseMovie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -34,11 +35,12 @@ class MovieCollectionViewModel(
 ) : AndroidViewModel(application) {
 
     sealed class MoviesListUiState {
-        data class Success(val movies: List<BaseMovie>) : MoviesListUiState()
+        data class Success(val movies: List<UiMovie>) : MoviesListUiState()
         data class Error(val message: String) : MoviesListUiState()
     }
 
     private val tmdb = SgApp.getServicesComponent(application).tmdb()
+    private val uiMovieBuilder = UiMovieBuilder(application)
 
     private val moviesRefreshTrigger = Channel<Unit>(capacity = Channel.CONFLATED)
     val movies: Flow<MoviesListUiState> = flow {
@@ -59,9 +61,11 @@ class MovieCollectionViewModel(
                 }
                 emit(MoviesListUiState.Error(message))
             } else {
-                val parts = collection.parts
-                parts?.sortBy { it.release_date }
-                emit(MoviesListUiState.Success(parts ?: emptyList()))
+                val parts = collection.parts ?: mutableListOf()
+                parts.sortBy { it.release_date }
+                parts
+                    .map { baseMovie -> uiMovieBuilder.buildFrom(baseMovie) }
+                    .let { emit(MoviesListUiState.Success(it)) }
             }
         }
     }.flowOn(Dispatchers.IO)

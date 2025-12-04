@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2019-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2019 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.movies.similar
 
@@ -14,7 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.movies.base.BaseMovieListAdapter
+import com.battlelancer.seriesguide.movies.MovieListAdapter
 import com.battlelancer.seriesguide.movies.base.SearchMenuProvider
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.widgets.EmptyView
@@ -41,7 +41,7 @@ class SimilarMoviesFragment : Fragment() {
     private lateinit var emptyView: EmptyView
     private lateinit var recyclerView: RecyclerView
 
-    private lateinit var adapter: BaseMovieListAdapter
+    private lateinit var adapter: MovieListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,7 +91,7 @@ class SimilarMoviesFragment : Fragment() {
                 )
         }
 
-        adapter = BaseMovieListAdapter(requireContext())
+        adapter = MovieListAdapter(requireContext())
         recyclerView.adapter = adapter
 
         viewModel.resultLiveData.observe(viewLifecycleOwner) {

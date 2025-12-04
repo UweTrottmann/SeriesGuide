@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2019, 2021-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2019 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.movies
 
@@ -12,26 +12,31 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import androidx.paging.map
 import androidx.sqlite.db.SimpleSQLiteQuery
-import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 
 open class MoviesWatchedViewModel(application: Application) :
     AndroidViewModel(application) {
 
+    private val uiMovieBuilder = UiMovieBuilder(application)
+
     private val queryString = MutableLiveData<String>()
-    val items: Flow<PagingData<SgMovie>> = queryString.asFlow().flatMapLatest {
+    val items: Flow<PagingData<UiMovie>> = queryString.asFlow().flatMapLatest {
         Pager(
             PagingConfig(pageSize = 50)
         ) {
             SgRoomDatabase.getInstance(getApplication())
                 .movieHelper()
                 .getMovies(SimpleSQLiteQuery(it))
-        }.flow
+        }.flow.map { pagingData ->
+            pagingData.map { sgMovie -> uiMovieBuilder.buildFrom(sgMovie) }
+        }
     }.cachedIn(viewModelScope)
 
     init {
