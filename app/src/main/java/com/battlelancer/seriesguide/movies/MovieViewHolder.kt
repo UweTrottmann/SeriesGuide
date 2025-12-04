@@ -138,7 +138,7 @@ class UiMovieBuilder(context: Context) {
 
     private fun buildPosterUrl(posterPath: String?): String? {
         return if (!posterPath.isNullOrEmpty()) {
-            "$posterBaseUrl$posterPath"
+            ImageTools.buildImageCacheUrl("$posterBaseUrl$posterPath")
         } else null
     }
 }

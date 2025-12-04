@@ -197,17 +197,17 @@ object ImageTools {
     }
 
     /**
-     * [posterUrl] must not be empty.
+     * [imageUrl] must not be empty.
      */
-    private fun buildImageCacheUrl(posterUrl: String): String? {
+    fun buildImageCacheUrl(imageUrl: String): String? {
         @Suppress("SENSELESS_COMPARISON")
         if (BuildConfig.IMAGE_CACHE_URL == null) {
-            return posterUrl // no cache
+            return imageUrl // no cache
         }
 
-        val mac = encodeImageUrl(posterUrl)
+        val mac = encodeImageUrl(imageUrl)
         return if (mac != null) {
-            String.format("%s/s%s/%s", BuildConfig.IMAGE_CACHE_URL, mac, posterUrl)
+            String.format("%s/s%s/%s", BuildConfig.IMAGE_CACHE_URL, mac, imageUrl)
         } else {
             null
         }

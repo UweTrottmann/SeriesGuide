@@ -72,7 +72,10 @@ class SgPicassoRequestHandler(
             }
             if (posterPath != null) {
                 val imageUrl = TmdbTools.buildLargePosterUrl(context, posterPath)
-                return loadFromNetwork(imageUrl.toUri())
+                    .let { ImageTools.buildImageCacheUrl(it) }
+                if (imageUrl != null) {
+                    return loadFromNetwork(imageUrl.toUri())
+                }
             }
         }
 

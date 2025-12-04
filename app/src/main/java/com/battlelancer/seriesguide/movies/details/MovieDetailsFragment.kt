@@ -530,6 +530,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             binding.frameLayoutMoviePoster.isFocusable = false
         } else {
             val smallImageUrl = TmdbTools.buildLargePosterUrl(requireContext(), posterPath)
+                .let { ImageTools.buildImageCacheUrl(it) }
             ImageTools.loadWithPicasso(requireContext(), smallImageUrl)
                 .into(binding.imageViewMoviePoster, object : Callback.EmptyCallback() {
                     override fun onSuccess() {
@@ -572,17 +573,19 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                     }
                 })
             // click listener for high resolution poster
-            binding.frameLayoutMoviePoster.also {
-                it.isFocusable = true
-                it.setOnClickListener { view ->
-                    val largeImageUrl =
-                        TmdbTools.buildOriginalSizeImageUrl(requireContext(), posterPath)
-                    val intent = FullscreenImageActivity.intent(
-                        requireActivity(),
-                        smallImageUrl,
-                        largeImageUrl
-                    )
-                    requireActivity().startActivityWithAnimation(intent, view)
+            binding.frameLayoutMoviePoster.also { posterView ->
+                posterView.isFocusable = true
+                posterView.setOnClickListener { view ->
+                    TmdbTools.buildOriginalSizeImageUrl(requireContext(), posterPath)
+                        .let { ImageTools.buildImageCacheUrl(it) }
+                        .let {
+                            FullscreenImageActivity.intent(
+                                requireActivity(),
+                                smallImageUrl,
+                                it
+                            )
+                        }
+                        .let { requireActivity().startActivityWithAnimation(it, view) }
                 }
             }
         }
