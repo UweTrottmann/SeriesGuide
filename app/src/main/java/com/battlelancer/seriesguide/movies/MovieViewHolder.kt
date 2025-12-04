@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2019-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2019 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.movies
 
@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemMovieBinding
 import com.battlelancer.seriesguide.movies.database.SgMovie
+import com.battlelancer.seriesguide.movies.tools.MovieTools
+import com.battlelancer.seriesguide.settings.TmdbSettings
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ViewTools.setContextAndLongClickListener
 import com.squareup.picasso.Picasso
@@ -107,6 +109,30 @@ class MovieViewHolder(
         }
     }
 
+    fun bindTo(movie: UiMovie?) {
+        if (movie == null) {
+            movieTmdbId = -1
+            title.text = ""
+            date.text = ""
+            Picasso.get().cancelRequest(poster)
+            poster.setImageDrawable(null)
+        } else {
+            movieTmdbId = movie.tmdbId
+            title.text = movie.title
+            date.text = movie.date
+
+            // poster
+            // use fixed size so bitmaps can be re-used on config change
+            ImageTools.loadWithPicasso(
+                itemView.context.applicationContext,
+                movie.posterUrl
+            )
+                .resizeDimen(R.dimen.movie_poster_width, R.dimen.movie_poster_height)
+                .centerCrop()
+                .into(poster)
+        }
+    }
+
     companion object {
 
         val DIFF_CALLBACK_BASE_MOVIE = object : DiffUtil.ItemCallback<BaseMovie>() {
@@ -129,5 +155,46 @@ class MovieViewHolder(
             )
         }
 
+    }
+}
+
+data class UiMovie(
+    val tmdbId: Int,
+    val title: String,
+    val date: String,
+    val posterUrl: String?
+) {
+
+    companion object {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<UiMovie>() {
+            override fun areItemsTheSame(oldItem: UiMovie, newItem: UiMovie): Boolean =
+                oldItem.tmdbId == newItem.tmdbId
+
+            // Is a data class so equals compares all properties
+            override fun areContentsTheSame(oldItem: UiMovie, newItem: UiMovie): Boolean =
+                oldItem == newItem
+        }
+    }
+}
+
+/**
+ * Builds [UiMovie] instances, caches things like date format and poster base URL.
+ */
+class UiMovieBuilder(context: Context) {
+
+    private val dateFormatMovieReleaseDate = MovieTools.getMovieShortDateFormat()
+    private val posterBaseUrl = TmdbSettings.getPosterBaseUrl(context)
+
+    fun buildFrom(baseMovie: BaseMovie) = UiMovie(
+        baseMovie.id!!,
+        baseMovie.title.orEmpty(),
+        baseMovie.release_date?.let { dateFormatMovieReleaseDate.format(it) }.orEmpty(),
+        buildPosterUrl(baseMovie.poster_path)
+    )
+
+    private fun buildPosterUrl(posterPath: String?): String? {
+        return if (!posterPath.isNullOrEmpty()) {
+            "$posterBaseUrl$posterPath"
+        } else null
     }
 }

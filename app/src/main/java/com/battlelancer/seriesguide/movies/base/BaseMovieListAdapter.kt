@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2023-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2023 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.movies.base
 
@@ -8,21 +8,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.battlelancer.seriesguide.movies.MovieClickListenerImpl
 import com.battlelancer.seriesguide.movies.MovieViewHolder
-import com.battlelancer.seriesguide.movies.tools.MovieTools
-import com.battlelancer.seriesguide.settings.TmdbSettings
-import com.uwetrottmann.tmdb2.entities.BaseMovie
+import com.battlelancer.seriesguide.movies.UiMovie
 
 /**
- * Binds a list of [BaseMovie] to [MovieViewHolder].
+ * Binds a list of [UiMovie] to [MovieViewHolder].
  */
 class BaseMovieListAdapter(
-    private val context: Context,
-) : ListAdapter<BaseMovie, MovieViewHolder>(
-    MovieViewHolder.DIFF_CALLBACK_BASE_MOVIE
+    context: Context
+) : ListAdapter<UiMovie, MovieViewHolder>(
+    UiMovie.DIFF_CALLBACK
 ) {
 
-    private val dateFormatMovieReleaseDate = MovieTools.getMovieShortDateFormat()
-    private val posterBaseUrl = TmdbSettings.getPosterBaseUrl(context)
     private val itemClickListener = MovieClickListenerImpl(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -30,7 +26,7 @@ class BaseMovieListAdapter(
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.bindTo(getItem(position), context, dateFormatMovieReleaseDate, posterBaseUrl)
+        holder.bindTo(getItem(position))
     }
 
 }

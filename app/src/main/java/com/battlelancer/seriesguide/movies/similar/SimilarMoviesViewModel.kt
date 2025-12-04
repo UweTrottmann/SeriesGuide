@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2023-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2023 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.movies.similar
 
@@ -15,9 +15,10 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.movies.MoviesSettings
+import com.battlelancer.seriesguide.movies.UiMovie
+import com.battlelancer.seriesguide.movies.UiMovieBuilder
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
-import com.uwetrottmann.tmdb2.entities.BaseMovie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.awaitResponse
@@ -29,6 +30,8 @@ class SimilarMoviesViewModel(
     application: Application,
     movieTmdbId: Int
 ) : AndroidViewModel(application) {
+
+    private val uiMovieBuilder = UiMovieBuilder(application)
 
     val resultLiveData = MutableLiveData<Result>()
 
@@ -57,14 +60,14 @@ class SimilarMoviesViewModel(
                 return@launch
             }
 
-            val results = if (page?.results == null) {
+            val results = page?.results
+            if (results == null) {
                 postFailedResult()
                 return@launch
-            } else {
-                page.results
             }
-
-            postSuccessfulResult(results)
+            results
+                .map { baseMovie -> uiMovieBuilder.buildFrom(baseMovie) }
+                .let { postSuccessfulResult(it) }
         }
     }
 
@@ -78,7 +81,7 @@ class SimilarMoviesViewModel(
         resultLiveData.postValue(Result(message, null))
     }
 
-    private fun postSuccessfulResult(results: List<BaseMovie>) {
+    private fun postSuccessfulResult(results: List<UiMovie>) {
         resultLiveData.postValue(
             Result(
                 getApplication<Application>().getString(R.string.empty_no_results),
@@ -89,7 +92,7 @@ class SimilarMoviesViewModel(
 
     data class Result(
         val emptyMessage: String,
-        val results: List<BaseMovie>?
+        val results: List<UiMovie>?
     )
 
     companion object {
