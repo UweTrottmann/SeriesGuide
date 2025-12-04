@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2020-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2020 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.movies.search
 
@@ -12,20 +12,23 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import androidx.paging.map
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.movies.MoviesDiscoverLink
 import com.battlelancer.seriesguide.movies.MoviesSettings
 import com.battlelancer.seriesguide.movies.TmdbMoviesDataSource
+import com.battlelancer.seriesguide.movies.UiMovie
+import com.battlelancer.seriesguide.movies.UiMovieBuilder
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.streaming.SgWatchProvider
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.ui.dialogs.YearPickerDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.toActualYear
-import com.uwetrottmann.tmdb2.entities.BaseMovie
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 
 /**
  * Keeps state for [MoviesSearchActivity] and state sharing with [MoviesSearchFragment].
@@ -65,8 +68,9 @@ class MoviesSearchViewModel(
     }
 
     private val tmdb = SgApp.getServicesComponent(application).tmdb()
+    private val uiMovieBuilder = UiMovieBuilder(application)
 
-    val items: Flow<PagingData<BaseMovie>> = filters
+    val items: Flow<PagingData<UiMovie>> = filters
         .flatMapLatest {
             Pager(
                 // Note: currently TMDB page is 20 items, on phones around 9 are displayed at once.
@@ -87,7 +91,9 @@ class MoviesSearchViewModel(
                     watchProviderIds = it.watchProviderIds,
                     watchRegion = watchRegion
                 )
-            }.flow
+            }.flow.map { pagingData ->
+                pagingData.map { sgMovie -> uiMovieBuilder.buildFrom(sgMovie) }
+            }
         }
         .cachedIn(viewModelScope)
 
