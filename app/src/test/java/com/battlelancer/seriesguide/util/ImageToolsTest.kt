@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2021-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2021 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.util
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.battlelancer.seriesguide.EmptyTestApplication
-import com.battlelancer.seriesguide.settings.TmdbSettings
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -22,7 +22,7 @@ class ImageToolsTest {
     @Test
     fun posterUrl() {
         assertImageUrl(
-            TmdbSettings.POSTER_SIZE_SPEC_W154,
+            TmdbTools.POSTER_SIZE_SPEC_W154,
             tmdbUrlBuilder = { path ->
                 ImageTools.tmdbOrTvdbPosterUrl(path, context)
             },
@@ -38,7 +38,7 @@ class ImageToolsTest {
     @Test
     fun episodeImageUrl() {
         assertImageUrl(
-            TmdbSettings.BACKDROP_SMALL_SIZE_SPEC,
+            TmdbTools.BACKDROP_SMALL_SIZE_SPEC,
             tmdbUrlBuilder = { path ->
                 ImageTools.buildEpisodeImageUrl(path, context)
             },

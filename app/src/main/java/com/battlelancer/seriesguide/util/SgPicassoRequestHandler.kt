@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2017-2025 Uwe Trottmann
-// Copyright 2013 Square, Inc.
+// SPDX-FileCopyrightText: Copyright © 2013 Square, Inc.
+// SPDX-FileCopyrightText: Copyright © 2017 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.util
 
@@ -8,7 +8,7 @@ import android.content.Context
 import android.net.Uri
 import androidx.core.net.toUri
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.settings.TmdbSettings
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.squareup.picasso.Downloader
 import com.squareup.picasso.NetworkPolicy
@@ -71,9 +71,11 @@ class SgPicassoRequestHandler(
                 null // Do nothing
             }
             if (posterPath != null) {
-                val imageUrl = TmdbSettings.getImageBaseUrl(context) +
-                        TmdbSettings.POSTER_SIZE_SPEC_W342 + posterPath
-                return loadFromNetwork(imageUrl.toUri())
+                val imageUrl = TmdbTools.buildLargePosterUrl(context, posterPath)
+                    .let { ImageTools.buildImageCacheUrl(it) }
+                if (imageUrl != null) {
+                    return loadFromNetwork(imageUrl.toUri())
+                }
             }
         }
 

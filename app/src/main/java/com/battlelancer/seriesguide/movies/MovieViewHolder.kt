@@ -13,7 +13,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemMovieBinding
 import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.movies.tools.MovieTools
-import com.battlelancer.seriesguide.settings.TmdbSettings
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ViewTools.setContextAndLongClickListener
 import com.squareup.picasso.Picasso
@@ -114,7 +114,7 @@ data class UiMovie(
 class UiMovieBuilder(context: Context) {
 
     private val dateFormatMovieReleaseDate = MovieTools.getMovieShortDateFormat()
-    private val posterBaseUrl = TmdbSettings.getPosterBaseUrl(context)
+    private val posterBaseUrl = TmdbTools.getPosterBaseUrl(context)
 
     fun buildFrom(sgMovie: SgMovie): UiMovie {
         return UiMovie(
@@ -138,7 +138,7 @@ class UiMovieBuilder(context: Context) {
 
     private fun buildPosterUrl(posterPath: String?): String? {
         return if (!posterPath.isNullOrEmpty()) {
-            "$posterBaseUrl$posterPath"
+            ImageTools.buildImageCacheUrl("$posterBaseUrl$posterPath")
         } else null
     }
 }
