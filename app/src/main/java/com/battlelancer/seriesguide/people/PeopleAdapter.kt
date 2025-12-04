@@ -1,15 +1,17 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2014-2024 Uwe Trottmann
+// Copyright 2014-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.people
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.util.CircleTransformation
@@ -22,6 +24,8 @@ import com.squareup.picasso.Transformation
 internal class PeopleAdapter(context: Context) : ArrayAdapter<Person>(context, LAYOUT) {
 
     private val personImageTransform = CircleTransformation()
+    private val placeholderDrawable =
+        AppCompatResources.getDrawable(context, R.drawable.ic_account_circle_black_24dp)!!
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view: View
@@ -29,7 +33,7 @@ internal class PeopleAdapter(context: Context) : ArrayAdapter<Person>(context, L
         if (convertView == null) {
             view = LayoutInflater.from(parent.context)
                 .inflate(LAYOUT, parent, false)
-            viewHolder = ViewHolder(view)
+            viewHolder = ViewHolder(view, placeholderDrawable)
             view.tag = viewHolder
         } else {
             view = convertView
@@ -49,16 +53,13 @@ internal class PeopleAdapter(context: Context) : ArrayAdapter<Person>(context, L
         addAll(data)
     }
 
-    class ViewHolder(view: View) {
-        private val name: TextView
-        private val description: TextView
-        private val picture: ImageView
-
-        init {
-            name = view.findViewById(R.id.textViewPerson)
-            description = view.findViewById(R.id.textViewPersonDescription)
-            picture = view.findViewById(R.id.imageViewPerson)
-        }
+    class ViewHolder(
+        view: View,
+        private val placeholderDrawable: Drawable
+    ) {
+        private val name: TextView = view.findViewById(R.id.textViewPerson)
+        private val description: TextView = view.findViewById(R.id.textViewPersonDescription)
+        private val picture: ImageView = view.findViewById(R.id.imageViewPerson)
 
         fun bind(context: Context, personImageTransform: Transformation, person: Person?) {
             // name and description
@@ -74,11 +75,12 @@ internal class PeopleAdapter(context: Context) : ArrayAdapter<Person>(context, L
                         TmdbTools.ProfileImageSize.W185
                     )
                 )
+                    // Note: dimensions should match placeholder drawable, see notes in its file
                     .resizeDimen(R.dimen.person_headshot_size, R.dimen.person_headshot_size)
                     .centerCrop()
                     .transform(personImageTransform)
-                    .placeholder(R.drawable.ic_account_circle_black_24dp)
-                    .error(R.drawable.ic_account_circle_black_24dp)
+                    .placeholder(placeholderDrawable)
+                    .error(placeholderDrawable)
                     .into(picture)
             }
         }

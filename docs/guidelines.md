@@ -97,6 +97,10 @@ of code that modifies settings.
 
 ## User interface
 
+Some relevant documentation:
+
+- https://developer.android.com/develop/ui/views/layout/responsive-adaptive-design-with-views
+
 ### Layout resources
 
 View IDs should be unique across the project to support refactoring using Android Studio.
@@ -129,11 +133,19 @@ so they work (tinting) and do not crash (gradients) on all supported releases:
 - **Optionally** if the drawable is just a color
 - **Not** for app widget layouts as the system initializes them
 
+When using `Picasso`, make sure to not pass a drawable resource ID but a drawable loaded using
+`AppCompatResources.getDrawable()` instead. Otherwise the drawable will not be tinted correctly.
+
 ### Dialogs
 
 Using `AppCompatDialogFragment` and overriding `onCreateView` will use `dialogTheme` of the theme.
 
 If possible, use an alert dialog with a custom layout instead for improved sizing, easy adding of title and buttons.
+
+When it makes sense, use a colored button for the primary and especially destructive action:
+
+- `?attr/sgButtonDialogPrimary` and `?attr/sgButtonDialogError` for `Button`
+- `ThemeOverlay.SeriesGuide.Dialog.PrimaryButtonWarn` for `MaterialAlertDialogBuilder`
 
 ### Alert dialogs (recommended)
 

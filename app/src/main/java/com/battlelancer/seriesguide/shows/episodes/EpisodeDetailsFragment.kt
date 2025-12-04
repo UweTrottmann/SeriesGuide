@@ -18,8 +18,11 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
 import com.battlelancer.seriesguide.R
@@ -39,12 +42,12 @@ import com.battlelancer.seriesguide.extensions.ExtensionManager.EpisodeActionRec
 import com.battlelancer.seriesguide.getSgAppContainer
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.DisplaySettings.isDisplayExactDate
+import com.battlelancer.seriesguide.shows.SeasonWatchInfoViewModel
 import com.battlelancer.seriesguide.shows.database.SgEpisode2
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity.EpisodesLayoutType.SINGLE_PANE
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools
-import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
@@ -71,6 +74,7 @@ import com.battlelancer.seriesguide.util.startActivityWithAnimation
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -101,6 +105,8 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
     private val model by viewModels<EpisodeDetailsViewModel> {
         EpisodeDetailsViewModelFactory(episodeId, requireActivity().application)
     }
+    // Cache season-specific watch info in activity and re-use it across all episode fragments
+    private val sharedWatchInfoViewModel: SeasonWatchInfoViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -179,7 +185,7 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
         model.show.observe(viewLifecycleOwner) { show: SgShow2? ->
             if (show != null) {
                 if (show.tmdbId != null) {
-                    model.setShowTmdbId(show.tmdbId)
+                    sharedWatchInfoViewModel.setShowTmdbId(show.tmdbId)
                 }
                 val episode = model.episode.value
                 if (episode != null) {
@@ -193,19 +199,23 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
         model.episode.observe(viewLifecycleOwner) { sgEpisode2: SgEpisode2? ->
             if (sgEpisode2 != null) {
                 model.showId.postValue(sgEpisode2.showId)
+                sharedWatchInfoViewModel.setSeasonNumber(sgEpisode2.season)
             } else {
                 // no data to display
                 binding.root.visibility = View.GONE
             }
         }
-        model.watchProvider.observe(viewLifecycleOwner) { watchInfo: TmdbTools2.WatchInfo? ->
-            val b = this.binding
-            if (watchInfo != null && b != null) {
-                StreamingSearch.configureButton(
-                    b.includeButtons.buttonEpisodeStreamingSearch,
-                    watchInfo,
-                    requireActivity().getSgAppContainer().preventExternalLinks
-                )
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                sharedWatchInfoViewModel.seasonWatchInfo.collect { seasonWatchInfo ->
+                    this@EpisodeDetailsFragment.binding?.let {
+                        StreamingSearch.configureButton(
+                            it.includeButtons.buttonEpisodeStreamingSearch,
+                            seasonWatchInfo,
+                            requireActivity().getSgAppContainer().preventExternalLinks
+                        )
+                    }
+                }
             }
         }
     }
@@ -269,7 +279,7 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
             val itemId = item.itemId
             if (itemId == R.id.watched_popup_menu_watch_again) {
                 // Multiple plays are for supporters only.
-                if (!BillingTools.hasAccessToPaidFeatures(requireContext())) {
+                if (!BillingTools.hasAccessToPaidFeatures()) {
                     BillingTools.advertiseSubscription(requireContext())
                 } else {
                     changeEpisodeFlag(EpisodeFlags.WATCHED)

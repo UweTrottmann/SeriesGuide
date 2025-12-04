@@ -47,7 +47,7 @@
 
     <Preference
         app:iconSpaceReserved="false"
-        app:key="com.battlelancer.seriesguide.notifications.battery"
+        app:key="seriesguide.settings.link.notifications.battery"
         app:summary="@string/pref_notifications_battery_settings_summary"
         app:title="@string/pref_notifications_battery_settings" />
 

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2011-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2011 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.provider;
 
@@ -240,6 +240,8 @@ public class SeriesGuideContract {
          *
          * @deprecated Use {@link #NEXTAIRDATEMS} and format.
          */
+        @SuppressWarnings("DeprecatedIsStillUsed")
+        @Deprecated
         String NEXTAIRDATETEXT = "series_nextairdatetext";
 
         /**
@@ -258,6 +260,7 @@ public class SeriesGuideContract {
          * @deprecated Removed after tvtag (formerly GetGlue) shutdown end of 2014. Not added on new
          * installs.
          */
+        @Deprecated
         String GETGLUEID = "series_getglueid";
 
         /**
@@ -382,6 +385,7 @@ public class SeriesGuideContract {
          * @deprecated Previously first release date in text as given by TVDb.com. Not created on
          * new installs.
          */
+        @Deprecated
         String FIRSTAIRED = "epfirstaired";
 
         /**

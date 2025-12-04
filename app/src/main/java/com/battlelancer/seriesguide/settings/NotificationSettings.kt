@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2013-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2013 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.settings
 
@@ -37,9 +37,6 @@ object NotificationSettings {
 
     /** Just a link to a screen to select shows to notify about.  */
     const val KEY_SELECTION = "com.battlelancer.seriesguide.notifications.shows"
-
-    /** Only visible on O+. Link to system settings app to modify further notification settings.  */
-    const val KEY_CHANNELS = "com.battlelancer.seriesguide.notifications.channels"
 
     private const val KEY_LAST_CLEARED = "com.battlelancer.seriesguide.notifications.latestcleared"
     private const val KEY_LAST_NOTIFIED =

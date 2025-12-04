@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// SPDX-FileCopyrightText: Copyright © 2020 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.traktapi
 
@@ -14,7 +14,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 
 /**
  * Downloads Trakt ratings for an episode, stores them in the database.
@@ -54,7 +53,7 @@ object TraktRatingsFetcher {
             val lastUpdateMillis = lruCache[episodeId]
             // if the ratings were just updated, do nothing
             if (lastUpdateMillis != null && lastUpdateMillis > currentTimeMillis - MAXIMUM_AGE) {
-                Timber.d("Just loaded rating for %s, skip.", episodeId)
+//                Timber.d("Just loaded rating for %s, skip.", episodeId)
                 return@withContext
             }
         }
@@ -67,12 +66,12 @@ object TraktRatingsFetcher {
         val showTraktId = SgApp.getServicesComponent(context)
             .showTools().getShowTraktId(episode.showId)
         if (showTraktId == null) {
-            Timber.d("Show %s has no trakt id, skip.", episode.showId)
+//            Timber.d("Show %s has no trakt id, skip.", episode.showId)
             return@withContext
         }
 
         val showTraktIdString = showTraktId.toString()
-        Timber.d("Updating rating for episode $episodeId")
+//        Timber.d("Updating rating for episode $episodeId")
 
         val ratings = TraktTools2.getEpisodeRatings(
             context,

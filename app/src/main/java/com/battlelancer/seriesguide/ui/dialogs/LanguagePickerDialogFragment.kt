@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2024 Uwe Trottmann
+// Copyright 2024-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.ui.dialogs
 
@@ -8,9 +8,9 @@ import android.os.Bundle
 import androidx.annotation.ArrayRes
 import androidx.appcompat.app.AppCompatDialogFragment
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.util.LanguageTools
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.text.Collator
-import java.util.Locale
 
 /**
  * A dialog displaying a list of languages or none to choose from.
@@ -32,7 +32,7 @@ class LanguagePickerDialogFragment : AppCompatDialogFragment() {
             resources.getStringArray(requireArguments().getInt(ARG_RES_ID_LANGUAGE_CODES))
         val localizationItems = languageCodes.mapTo(ArrayList(languageCodes.size)) {
             // Codes are two-letter, so country-less
-            LocalizationItem(it, Locale(it, "").displayName)
+            LocalizationItem(it, LanguageTools.getDisplayNameForLanguageCode(it))
         }
 
         // Take the first top 5, sort the remaining by display name

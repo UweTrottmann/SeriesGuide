@@ -17,6 +17,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.common.SingleLiveEvent
 import com.battlelancer.seriesguide.shows.search.discover.BaseAddShowsFragment
 import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverPagingActivity
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
@@ -24,7 +25,6 @@ import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.widgets.EmptyView
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
-import com.uwetrottmann.seriesguide.common.SingleLiveEvent
 import com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout
 
 class SimilarShowsFragment : BaseAddShowsFragment() {
@@ -162,7 +162,7 @@ class SimilarShowsFragment : BaseAddShowsFragment() {
         private const val ARG_SHOW_TITLE = "ARG_SHOW_TITLE"
         private const val MENU_ITEM_SEARCH_ID = 1
 
-        @JvmStatic
+        @Suppress("DEPRECATION")
         val displaySimilarShowsEventLiveData = SingleLiveEvent<SimilarShowEvent>()
 
         fun newInstance(showTmdbId: Int, showTitle: String): SimilarShowsFragment {

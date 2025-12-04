@@ -8,6 +8,7 @@ import android.content.Context
 import android.text.format.DateUtils
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.shows.database.SgShow2Helper
 import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.UpdateResult.ApiErrorRetry
 import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.UpdateResult.ApiErrorStop
 import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.UpdateResult.DatabaseError
@@ -64,7 +65,10 @@ class ShowSync(
     ): UpdateResult? {
         hasUpdatedShows = false
 
-        val showsToUpdate = getShowsToUpdate(context, currentTime) ?: return null
+        val showsToUpdate = getShowsToUpdate(
+            SgRoomDatabase.getInstance(context).sgShow2Helper(),
+            currentTime
+        ) ?: return null
         Timber.d("Updating %d show(s)...", showsToUpdate.size)
 
         val showTools = SgApp.getServicesComponent(context).addUpdateShowTools()
@@ -178,7 +182,7 @@ class ShowSync(
     /**
      * Returns an array of show ids to update.
      */
-    private fun getShowsToUpdate(context: Context, currentTime: Long): List<Long>? {
+    private fun getShowsToUpdate(showHelper: SgShow2Helper, currentTime: Long): List<Long>? {
         return when (syncType) {
             SyncType.SINGLE -> {
                 val showId = singleShowId
@@ -191,10 +195,10 @@ class ShowSync(
 
             SyncType.FULL -> {
                 // get all show IDs for a full update
-                SgRoomDatabase.getInstance(context).sgShow2Helper().getShowIdsLong()
+                showHelper.getShowIdsLong()
             }
 
-            SyncType.DELTA -> getShowsToDeltaUpdate(context, currentTime)
+            SyncType.DELTA -> getShowsToDeltaUpdate(showHelper, currentTime)
             else -> throw IllegalArgumentException("Sync type $syncType is not supported.")
         }
     }
@@ -202,19 +206,13 @@ class ShowSync(
     /**
      * Return list of show IDs that have not been updated for a certain time.
      */
-    private fun getShowsToDeltaUpdate(context: Context, currentTime: Long): List<Long> {
-        // get existing show ids
-        val shows = SgRoomDatabase.getInstance(context)
-            .sgShow2Helper().getShowsUpdateInfo()
-
-        val updatableShowIds: MutableList<Long> = ArrayList()
-        for ((id, lastUpdatedTime) in shows) {
-            if (currentTime - lastUpdatedTime > UPDATE_THRESHOLD_MS) {
-                // add shows that are due for updating
-                updatableShowIds.add(id)
-            }
-        }
-        return updatableShowIds
+    fun getShowsToDeltaUpdate(showHelper: SgShow2Helper, currentTime: Long): List<Long> {
+        val updateIfLastUpdatedBeforeTimeInMs = currentTime - UPDATE_THRESHOLD_MS
+        val updateEndedIfLastUpdatedBeforeTimeInMs = currentTime - UPDATE_THRESHOLD_ENDED_MS
+        return showHelper.getShowsUpdateInfo(
+            updateIfLastUpdatedBeforeTimeInMs,
+            updateEndedIfLastUpdatedBeforeTimeInMs
+        )
     }
 
     val isSyncMultiple: Boolean = syncType == SyncType.DELTA || syncType == SyncType.FULL
@@ -224,9 +222,14 @@ class ShowSync(
     }
 
     companion object {
-        // Values based on the assumption that sync runs about every 24 hours
-        private const val UPDATE_THRESHOLD_MS = 6 * DateUtils.DAY_IN_MILLIS +
+        // Value based on the assumption that sync runs about every 24 hours, so make it 6,5 days
+        // to make it more likely an update happens on the 7th day.
+        const val UPDATE_THRESHOLD_MS = 6 * DateUtils.DAY_IN_MILLIS +
                 12 * DateUtils.HOUR_IN_MILLIS
+
+        // Ended shows are rarely changed, so update them less often. Also if users are actively
+        // opening them, they will still get updated earlier.
+        const val UPDATE_THRESHOLD_ENDED_MS = 90 * DateUtils.DAY_IN_MILLIS
 
         /**
          * Triggers an update for [showId] with showing an info toast.

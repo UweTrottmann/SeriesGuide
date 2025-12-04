@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2017-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies
 
@@ -20,7 +20,6 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.DialogLocalizationBinding
 import com.battlelancer.seriesguide.databinding.ItemDropdownBinding
 import com.battlelancer.seriesguide.movies.MovieLocalizationDialogFragment.LocalizationAdapter.LocalizationItem
-import com.battlelancer.seriesguide.movies.MovieLocalizationDialogFragment.LocalizationChangedEvent
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.safeShow
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -103,11 +102,10 @@ class MovieLocalizationDialogFragment : AppCompatDialogFragment() {
                 val items: MutableList<LocalizationItem> = ArrayList(regionCodes.size)
 
                 for (regionCode in regionCodes) {
-                    // example: "en-US"
                     items.add(
                         LocalizationItem(
                             regionCode,
-                            Locale("", regionCode).displayCountry
+                            LanguageTools.getDisplayNameForRegionCode(regionCode)
                         )
                     )
                 }
@@ -186,7 +184,8 @@ class MovieLocalizationDialogFragment : AppCompatDialogFragment() {
         binding.buttonLocalizationLanguage.text =
             LanguageTools.buildLanguageDisplayName(languageCode)
         val regionCode = MoviesSettings.getMoviesRegion(requireContext())
-        binding.buttonLocalizationRegion.text = Locale("", regionCode).displayCountry
+        binding.buttonLocalizationRegion.text =
+            LanguageTools.getDisplayNameForRegionCode(regionCode)
     }
 
     private fun setListVisible(listIsVisible: Boolean) {

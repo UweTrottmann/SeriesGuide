@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2019-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2019 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.preferences
 
@@ -23,11 +23,10 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceManager
 import androidx.preference.SwitchPreferenceCompat
-import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
 import com.battlelancer.seriesguide.billing.BillingTools
-import com.battlelancer.seriesguide.getSgAppContainer
+import com.battlelancer.seriesguide.diagnostics.DebugLogActivity
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.AppSettings
@@ -77,7 +76,7 @@ class SgPreferencesFragment : BasePreferencesFragment(),
 
     private fun setupRootSettings() {
         // Clear image cache
-        findPreference<Preference>(KEY_CLEAR_CACHE)!!.setOnPreferenceClickListener {
+        findPreference<Preference>(KEY_LINK_CLEAR_CACHE)!!.setOnPreferenceClickListener {
             // try to open app info where user can clear app cache folders
             var intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
             intent.data = Uri.parse("package:" + requireActivity().packageName)
@@ -101,11 +100,9 @@ class SgPreferencesFragment : BasePreferencesFragment(),
             }
         }
 
-        if (BuildConfig.DEBUG) {
-            findPreference<SwitchPreferenceCompat>(AppSettings.KEY_USER_DEBUG_MODE_ENABLED)!!.apply {
-                isEnabled = false
-                isChecked = true
-            }
+        findPreference<Preference>(KEY_LINK_DEBUG_LOG)!!.setOnPreferenceClickListener {
+            startActivity(DebugLogActivity.intent(requireActivity()))
+            true
         }
     }
 
@@ -122,7 +119,7 @@ class SgPreferencesFragment : BasePreferencesFragment(),
     }
 
     private fun updateRootSettings() {
-        val hasAllFeatures = BillingTools.hasAccessToPaidFeatures(requireContext())
+        val hasAllFeatures = BillingTools.hasAccessToPaidFeatures()
 
         // notifications link
         findPreference<Preference>(KEY_SCREEN_NOTIFICATIONS)!!.apply {
@@ -153,7 +150,7 @@ class SgPreferencesFragment : BasePreferencesFragment(),
     }
 
     private fun setupNotificationSettings() {
-        findPreference<Preference>(KEY_BATTERY_SETTINGS)?.setOnPreferenceClickListener {
+        findPreference<Preference>(KEY_LINK_BATTERY_SETTINGS)?.setOnPreferenceClickListener {
             // Try to open app info where user can configure battery settings.
             var intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                 .setData(Uri.parse("package:" + requireActivity().packageName))
@@ -164,7 +161,7 @@ class SgPreferencesFragment : BasePreferencesFragment(),
             }
             true
         }
-        findPreference<Preference>(KEY_PRECISE_NOTIFICATION_SETTINGS)?.setOnPreferenceClickListener {
+        findPreference<Preference>(KEY_LINK_PRECISE_NOTIFICATION_SETTINGS)?.setOnPreferenceClickListener {
             // Note: the preference is only shown on Android 12+.
             if (AndroidUtils.isAtLeastS) {
                 // Try to open the exact alarm settings.
@@ -181,7 +178,7 @@ class SgPreferencesFragment : BasePreferencesFragment(),
         updateThresholdSummary(findPreference(NotificationSettings.KEY_THRESHOLD)!!)
         updateSelectionSummary(findPreference(NotificationSettings.KEY_SELECTION)!!)
 
-        val hasAllFeatures = BillingTools.hasAccessToPaidFeatures(requireContext())
+        val hasAllFeatures = BillingTools.hasAccessToPaidFeatures()
         if (hasAllFeatures) {
             // Disable advanced notification settings if notifications are disabled.
             enableAdvancedNotificationSettings(
@@ -193,7 +190,7 @@ class SgPreferencesFragment : BasePreferencesFragment(),
 
         if (AndroidUtils.isAtLeastOreo) {
             // Android 8+: use system settings to manage notifications.
-            val channelsPref: Preference = findPreference(NotificationSettings.KEY_CHANNELS)!!
+            val channelsPref: Preference = findPreference(KEY_LINK_NOTIFICATION_SETTINGS)!!
             if (hasAllFeatures) {
                 if (NotificationSettings.areNotificationsAllowed(requireContext())) {
                     channelsPref.setSummary(R.string.pref_notifications_settings_summary)
@@ -445,17 +442,6 @@ class SgPreferencesFragment : BasePreferencesFragment(),
                 val switchPref = pref as SwitchPreferenceCompat
                 AppSettings.setSendErrorReports(switchPref.context, switchPref.isChecked, false)
             }
-
-            // Enable or disable debug log
-            if (AppSettings.KEY_USER_DEBUG_MODE_ENABLED == key) {
-                val switchPref = pref as SwitchPreferenceCompat
-                val debugLogBuffer = requireActivity().getSgAppContainer().debugLogBuffer
-                if (switchPref.isChecked) {
-                    debugLogBuffer.enable()
-                } else {
-                    debugLogBuffer.disable()
-                }
-            }
         }
 
         // pref changes that require the notification service to be reset
@@ -559,14 +545,18 @@ class SgPreferencesFragment : BasePreferencesFragment(),
     companion object {
 
         // Preference keys
-        private const val KEY_CLEAR_CACHE = "clearCache"
-
         //    public static final String KEY_SECURE = "com.battlelancer.seriesguide.secure";
         //    public static final String KEY_TAPE_INTERVAL = "com.battlelancer.seriesguide.tapeinterval";
-        private const val KEY_BATTERY_SETTINGS =
-            "com.battlelancer.seriesguide.notifications.battery"
-        private const val KEY_PRECISE_NOTIFICATION_SETTINGS =
-            "com.battlelancer.seriesguide.notifications.notifications.precise"
+
+        // Keys that are not actual preferences, but links
+        private const val KEY_LINK_CLEAR_CACHE = "seriesguide.settings.link.clearcache"
+        private const val KEY_LINK_DEBUG_LOG = "seriesguide.settings.link.debuglog"
+        private const val KEY_LINK_NOTIFICATION_SETTINGS =
+            "seriesguide.settings.link.notifications"
+        private const val KEY_LINK_BATTERY_SETTINGS =
+            "seriesguide.settings.link.notifications.battery"
+        private const val KEY_LINK_PRECISE_NOTIFICATION_SETTINGS =
+            "seriesguide.settings.link.notifications.precise"
 
         private const val KEY_SCREEN_BASIC = "screen_basic"
         private const val KEY_SCREEN_NOTIFICATIONS = "screen_notifications"

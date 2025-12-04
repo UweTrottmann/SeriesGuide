@@ -1,5 +1,6 @@
-// Copyright 2018 The Android Open Source Project
 // SPDX-License-Identifier: Apache-2.0
+// SPDX-FileCopyrightText: Copyright 2018 The Android Open Source Project
+// SPDX-FileCopyrightText: Copyright © 2019 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.ui.widgets;
 
@@ -280,8 +281,7 @@ public class FastScrollerDecoration extends RecyclerView.ItemDecoration implemen
         int left = viewWidth - mVerticalThumbWidth;
         int top = Math.max(0, mVerticalThumbCenterY - mVerticalThumbHeight / 2);
         mVerticalThumbDrawable.setBounds(0, 0, mVerticalThumbWidth, mVerticalThumbHeight);
-        mVerticalTrackDrawable
-            .setBounds(0, 0, mVerticalTrackWidth, mRecyclerViewHeight);
+        mVerticalTrackDrawable.setBounds(0, 0, mVerticalTrackWidth, mRecyclerViewHeight);
 
         if (isLayoutRTL()) {
             mVerticalTrackDrawable.draw(canvas);
@@ -323,9 +323,13 @@ public class FastScrollerDecoration extends RecyclerView.ItemDecoration implemen
      * @param offsetY The new scroll Y offset.
      */
     void updateScrollPosition(int offsetX, int offsetY) {
-        int verticalContentLength = mRecyclerView.computeVerticalScrollRange();
-        int verticalVisibleLength = mRecyclerViewHeight;
-        mNeedVerticalScrollbar = verticalContentLength - verticalVisibleLength > 0
+        // Estimated size of the whole list in arbitrary units based on visible item height
+        int verticalScrollRange = mRecyclerView.computeVerticalScrollRange();
+        // Size of vertically visible space in those same arbitrary units
+        int verticalScrollExtent = mRecyclerView.computeVerticalScrollExtent();
+        // Actual height of the view in pixels
+        int verticalVisibleLengthPx = mRecyclerViewHeight;
+        mNeedVerticalScrollbar = verticalScrollRange - verticalVisibleLengthPx > 0
             && mRecyclerViewHeight >= mScrollbarMinimumRange;
 
         int horizontalContentLength = mRecyclerView.computeHorizontalScrollRange();
@@ -341,12 +345,25 @@ public class FastScrollerDecoration extends RecyclerView.ItemDecoration implemen
         }
 
         if (mNeedVerticalScrollbar) {
-            float middleScreenPos = offsetY + verticalVisibleLength / 2.0f;
-            mVerticalThumbCenterY =
-                (int) ((verticalVisibleLength * middleScreenPos) / verticalContentLength);
-            int desiredThumbHeight = Math.min(verticalVisibleLength,
-                    (verticalVisibleLength * verticalVisibleLength) / verticalContentLength);
+            // Calculate thumb height first
+            int desiredThumbHeight = Math.min(verticalVisibleLengthPx,
+                    (verticalVisibleLengthPx * verticalVisibleLengthPx) / verticalScrollRange);
             mVerticalThumbHeight = Math.max(mMinimumThumbSize, desiredThumbHeight);
+
+            // Calculate center position within the available range for the thumb center
+            float scrollRatio = (float) offsetY / (verticalScrollRange - verticalScrollExtent);
+            float scrollRatioClamped = Math.max(0.0f, Math.min(scrollRatio, 1.0f));
+
+            // The available range for the thumb center (accounting for thumb height and margins).
+            // Exclude top and bottom padding as typically not clipping to padding so thumb might
+            // not be accessible if it's drawn behind a status or navigation bar.
+            int minCenter = mRecyclerView.getPaddingTop() + mMargin + mVerticalThumbHeight / 2;
+            int maxCenter = mRecyclerViewHeight - mRecyclerView.getPaddingBottom()
+                    - mMargin - mVerticalThumbHeight / 2;
+            int availableRange = Math.max(0, maxCenter - minCenter);
+
+            // Distribute the thumb center position evenly across the available range
+            mVerticalThumbCenterY = minCenter + (int) (availableRange * scrollRatioClamped);
         }
 
         if (mNeedHorizontalScrollbar) {

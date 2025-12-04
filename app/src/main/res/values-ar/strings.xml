@@ -40,6 +40,7 @@
     <string name="action_reset">Reset</string>
     <string name="action_save">Save</string>
     <string name="action_turn_on">Turn on</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
     <!-- Search -->
     <string name="clear_search_history">إزالة تاريخ البحث</string>
     <string name="search_hint">البحث عن الحلقات</string>
@@ -72,7 +73,7 @@
     <string name="shout_invalid">إن تعليقك مخالف للقواعد!</string>
     <string name="action_post">انشر</string>
     <string name="action_edit_comment">Edit</string>
-    <string name="action_delete_comment">Delete</string>
+    <string name="action_delete_comment">إزالة</string>
     <string name="confirmation_delete_comment">Delete this comment?</string>
     <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">تنبيه حرق!</string>
@@ -193,7 +194,7 @@
     <string name="only_favorites">فقط المسلسلات المفضلة</string>
     <string name="calendar_only_collected">الحلقات المجمعة فقط</string>
     <string name="calendar_only_premieres">العرض الأول فقط</string>
-    <string name="pref_infinite_scrolling">رزنامة النهائية</string>
+    <string name="pref_infinite_scrolling">Unlimited days</string>
     <!-- Updating -->
     <string name="update_scheduled">جار التحديث&#8230;</string>
     <string name="update_no_connection">ليتم التحديث اتصل بالإنترنت</string>
@@ -394,7 +395,7 @@
     <string name="action_rate">قيم</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">تقييمك</string>
-    <string name="action_remove_rating">Remove rating</string>
+    <string name="action_remove_rating">Delete rating</string>
     <string name="love">عظيم!</string>
     <string name="hate">لم يعجبني :(</string>
     <string name="rating2">سيء</string>
@@ -504,7 +505,7 @@
     <string name="pref_offset">تغيير وقت العرض بشكل يدوي</string>
     <string name="pref_offsetsummary">بدء وقت العرض قبل %d ساعات</string>
     <string name="clear_cache">تنظيف ذاكرة التخزين المؤقتة للصور</string>
-    <string name="clear_cache_summary">إزالة جميع الصور المخزنة مؤقتاً من الجهاز</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">إزالة جميع الصور المخزنة مؤقتاً من الجهاز</string>
     <!-- Export and Import -->
     <string name="title_export_import">Export and import</string>
     <string name="title_export">Export</string>
@@ -524,12 +525,12 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">نسخ احتياطي تلقائي</string>
     <string name="pref_autobackupsummary">نسخ إحتياطي أسبوعي للمسلسلات، القوائم والأفلام</string>
-    <string name="autobackup_details">هذه النسخ الإحتياطية غير متوفرة إذا تم تثبيت التطبيق مرة أخرى ما لم يتم تشغيل النسخ الإحتياطي لبيانات التطبيق لهذا الجهاز (أندرويد 6+). بالتالي قم بإنشاء نسخ للحفاظ عليها.</string>
+    <string name="autobackup_details">These backups are deleted if the app is uninstalled. You can choose to create copies in another location below that can be restored using the import tool.</string>
     <string name="backup_button">نسخ احتياطي</string>
     <string name="last_auto_backup">آخر عملية نسخ تلقائية: %s</string>
     <string name="restore_auto_backup">استعادة النسخ الاحتياطي التلقائي</string>
-    <string name="autobackup_failed">تم فشل آخر عملية للنسخ الإحتياطي التلقائي</string>
-    <string name="autobackup_files_missing">لإستخدام النسخ الإحتياطي التلقائي، حدد ملفات النسخ الإحتياطية الصالحة.</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">تم فشل آخر عملية للنسخ الإحتياطي التلقائي</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">A file to store the copy of an auto-backup is missing</string>
     <string name="autobackup_create_user_copy">أنشى نسخة بعد كل نسخة احتياطية</string>
     <string name="autobackup_restore_available">قد تكون النسخة الاحتياطية التلقائية متاحة للاستعادة منها.</string>
     <!-- Welcome dialog -->
@@ -565,6 +566,7 @@
     <string name="pref_widget_type">نوع القطعة العائمة</string>
     <string name="pref_large_font">استخدام الخط الكبير</string>
     <string name="pref_hide_watch_button">إخفاء زر المشهود</string>
+    <string name="description_widget_limited_items">Note that the number of items is always limited to save resources</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">شفافية</string>
     <string name="widget_background_25">25%</string>
@@ -581,9 +583,9 @@
     <string name="billing_sub_description">جرب 30 يوماً مجاناً، قم بإلغاء أي وقت.</string>
     <string name="upgrade_description">كل اشتراك يفتح جميع الميزات ويدعم التحديثات المستقبلية. ليس مطلوب الاشتراك لاستخدام هذا التطبيق.</string>
     <string name="upgrade_success">شكرا لك لدعم SeriesGuide! . لديك حق الوصول إلى كافة الميزات .</string>
-    <string name="billing_unlock_detected">تم اكتشاف تطبيق X Pass . يمكنك الاشتراك لدعم التحديثات المستقبلية.</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">All Access Pass detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">المزيد من المعلومات والمساعدة</string>
-    <string name="subscription_expired_details">انتهت مدة اشتراك في البرنامج المدفوع.</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">Access to all features expired</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">قم بتسجيل الدخول في حساب أمازون الخاص بك !</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">الإشتراك غير متوفر حاليا .</string>

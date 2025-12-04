@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2022-2024 Uwe Trottmann
+// Copyright 2022-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies
 
@@ -56,10 +56,9 @@ object MoviesSettings {
     }
 
     /**
-     * @return Two letter ISO-3166-1 region tag used by TMDB as preferred by the user. Or the
-     * default region of the device. Or as a last resort "US".
+     * @return [Locale] region tag used by TMDB as preferred by the user. Or the default region of
+     * the device. Or as a last resort "US".
      */
-    @JvmStatic
     fun getMoviesRegion(context: Context): String {
         var countryCode = PreferenceManager.getDefaultSharedPreferences(context)
             .getString(KEY_MOVIES_REGION, null)

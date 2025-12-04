@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Copyright 2011-2025 Uwe Trottmann -->
+
 <resources>
 
     <dimen name="inline_padding">4dp</dimen>
@@ -9,7 +13,12 @@
 
     <dimen name="keyline">16dp</dimen>
     <dimen name="keyline_minus_16">0dp</dimen>
-    <dimen name="icon_large_size">40dp</dimen>
+
+    <!--
+    To get a less tall bar, reduce min height. This shouldn't be smaller than the height required
+    by the items, or the bar will resize.
+    -->
+    <dimen name="sg_bottom_navigation_min_height">68dp</dimen>
 
     <!-- List widget -->
     <dimen name="widget_poster_width">27dp</dimen>
@@ -80,6 +89,5 @@
     <dimen name="max_width_text_size_body">400dp</dimen>
     <dimen name="dialog_min_width">300dp</dimen>
     <dimen name="empty_view_width">250dp</dimen>
-    <dimen name="tab_padding_horizontal">12dp</dimen>
 
 </resources>

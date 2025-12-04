@@ -47,7 +47,7 @@ open class MovieClickListenerImpl(val context: Context) : MovieClickListener {
             return@setOnMenuItemClickListener when (item.itemId) {
                 R.id.menu_action_movies_set_watched -> {
                     // Multiple plays only for supporters.
-                    if (movieFlags.watched && !BillingTools.hasAccessToPaidFeatures(context)) {
+                    if (movieFlags.watched && !BillingTools.hasAccessToPaidFeatures()) {
                         BillingTools.advertiseSubscription(context)
                         return@setOnMenuItemClickListener true
                     }

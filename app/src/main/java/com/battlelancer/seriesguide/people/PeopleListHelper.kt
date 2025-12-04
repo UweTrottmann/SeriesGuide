@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2014-2024 Uwe Trottmann
+// Copyright 2014-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.people
 
@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.people.PeopleActivity.PeopleType
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools
@@ -22,20 +23,24 @@ import timber.log.Timber
 /**
  * Helps load a fixed number of people into a static layout.
  */
-class PeopleListHelper {
+class PeopleListHelper(
+    private val context: Context
+) {
 
     private val personImageTransform = CircleTransformation()
+
+    // Preload the placeholder drawable to get a themed version
+    private val placeholderDrawable =
+        AppCompatResources.getDrawable(context, R.drawable.ic_person_placeholder)!!
 
     /**
      * @see populateCredits
      */
     fun populateShowCast(
-        context: Context,
         peopleContainer: ViewGroup?,
         credits: Credits?
     ): Boolean {
         return populateCredits(
-            context,
             peopleContainer,
             credits?.cast,
             credits?.tmdbId,
@@ -48,12 +53,10 @@ class PeopleListHelper {
      * @see populateCredits
      */
     fun populateShowCrew(
-        context: Context,
         peopleContainer: ViewGroup?,
         credits: Credits?
     ): Boolean {
         return populateCredits(
-            context,
             peopleContainer,
             credits?.crew,
             credits?.tmdbId,
@@ -66,12 +69,10 @@ class PeopleListHelper {
      * @see populateCredits
      */
     fun populateMovieCast(
-        context: Context,
         peopleContainer: ViewGroup?,
         credits: Credits?
     ): Boolean {
         return populateCredits(
-            context,
             peopleContainer,
             credits?.cast,
             credits?.tmdbId,
@@ -84,12 +85,10 @@ class PeopleListHelper {
      * @see populateCredits
      */
     fun populateMovieCrew(
-        context: Context,
         peopleContainer: ViewGroup?,
         credits: Credits?
     ): Boolean {
         return populateCredits(
-            context,
             peopleContainer,
             credits?.crew,
             credits?.tmdbId,
@@ -105,7 +104,6 @@ class PeopleListHelper {
      * @return `false` if no views were added to the [peopleContainer].
      */
     private fun populateCredits(
-        context: Context,
         peopleContainer: ViewGroup?,
         personList: List<Person>?,
         itemTmdbId: Int?,
@@ -130,7 +128,6 @@ class PeopleListHelper {
             }
 
             val personView = createPersonView(
-                context,
                 inflater,
                 peopleContainer,
                 person.name,
@@ -160,7 +157,6 @@ class PeopleListHelper {
     }
 
     private fun createPersonView(
-        context: Context,
         inflater: LayoutInflater,
         peopleContainer: ViewGroup,
         name: String,
@@ -184,11 +180,12 @@ class PeopleListHelper {
             context,
             TmdbTools.buildProfileImageUrl(context, profilePath, TmdbTools.ProfileImageSize.W185)
         )
+            // Note: dimensions should match placeholder drawable, see notes in its file
             .resizeDimen(R.dimen.person_headshot_size, R.dimen.person_headshot_size)
             .centerCrop()
             .transform(personImageTransform)
-            .placeholder(R.drawable.ic_account_circle_black_24dp)
-            .error(R.drawable.ic_account_circle_black_24dp)
+            .placeholder(placeholderDrawable)
+            .error(placeholderDrawable)
             .into(personView.findViewById<View>(R.id.imageViewPerson) as ImageView)
 
         personView.findViewById<TextView>(R.id.textViewPerson).text = name

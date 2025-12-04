@@ -20,14 +20,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.ui.BaseActivity
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools.openUriOnClick
 import com.battlelancer.seriesguide.util.WebTools
-import com.uwetrottmann.seriesguide.billing.BillingViewModel
-import com.uwetrottmann.seriesguide.billing.BillingViewModelFactory
-import com.uwetrottmann.seriesguide.billing.SafeAugmentedProductDetails
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -62,7 +58,7 @@ class BillingActivity : BaseActivity() {
         billingViewModel =
             ViewModelProvider(
                 this,
-                BillingViewModelFactory(application, SgApp.coroutineScope)
+                BillingViewModelFactory(application)
             )[BillingViewModel::class.java].also { model ->
                 lifecycleScope.launch {
                     // Only update while views are shown.
@@ -85,21 +81,24 @@ class BillingActivity : BaseActivity() {
                 buttonOtherWaysToSupport.isVisible = true
             }
         }
-        // Only use subscription state if unlock app is not installed.
-        if (BillingTools.hasUnlockKey(this)) {
-            setWaitMode(false)
-            updateViewStates(hasUpgrade = true, unlockAppDetected = true)
-        } else {
-            setWaitMode(true)
-            billingViewModel.subStatusLiveData.observe(this) { goldStatus ->
-                setWaitMode(false)
-                updateViewStates(goldStatus != null && goldStatus.entitled, false)
-                manageSubscriptionUrl =
-                    if (goldStatus?.isSub == true && goldStatus.sku != null) {
-                        PLAY_MANAGE_SUBS_ONE + goldStatus.sku
-                    } else {
-                        PLAY_MANAGE_SUBS_ALL
-                    }
+        setWaitMode(true)
+        lifecycleScope.launch {
+            // Only update while/once views are visible
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                billingViewModel.augmentedUnlockState.collect {
+                    setWaitMode(false)
+                    updateUnlockedNotice(
+                        isUnlocked = it.unlockState.isUnlockAll,
+                        unlockPassDetected = it.hasAllAccessPass
+                    )
+                    val playUnlockState = it.playUnlockState
+                    manageSubscriptionUrl =
+                        if (playUnlockState?.isSub == true && playUnlockState.sku != null) {
+                            PLAY_MANAGE_SUBS_ONE + playUnlockState.sku
+                        } else {
+                            PLAY_MANAGE_SUBS_ALL
+                        }
+                }
             }
         }
     }
@@ -149,15 +148,17 @@ class BillingActivity : BaseActivity() {
     override fun onStart() {
         super.onStart()
 
-        // Check if user has installed key app.
-        if (BillingTools.hasUnlockKey(this)) {
-            updateViewStates(hasUpgrade = true, unlockAppDetected = true)
-        }
+        // Users might have installed the unlock app and as there is no trigger for this event and
+        // the trigger in BaseTopActivity is not called here, manually check whenever this activity
+        // becomes visible (again).
+        // It is also fine to call this in addition to BillingRepository on updates to Play unlock
+        // state as a new unlock state will only be emitted if it has changed.
+        BillingTools.updateUnlockStateAsync(this)
     }
 
-    private fun updateViewStates(hasUpgrade: Boolean, unlockAppDetected: Boolean) {
-        textViewHasUpgrade.isGone = !hasUpgrade
-        textViewBillingUnlockDetected.isGone = !unlockAppDetected
+    private fun updateUnlockedNotice(isUnlocked: Boolean, unlockPassDetected: Boolean) {
+        textViewHasUpgrade.isGone = !isUnlocked
+        textViewBillingUnlockDetected.isGone = !unlockPassDetected
     }
 
     private fun setWaitMode(isActive: Boolean) {

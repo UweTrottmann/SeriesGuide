@@ -4,15 +4,28 @@
 package com.battlelancer.seriesguide
 
 import android.content.Context
+import com.battlelancer.seriesguide.billing.BillingRepository
 import com.battlelancer.seriesguide.diagnostics.DebugLogBuffer
+import com.battlelancer.seriesguide.diagnostics.DebugLogDatabase
 import com.battlelancer.seriesguide.util.PackageTools
 import com.battlelancer.seriesguide.util.PackageTools.isEuropeanEconomicArea
 import com.battlelancer.seriesguide.util.PackageTools.isUnitedStates
+import kotlinx.coroutines.CoroutineScope
 import timber.log.Timber
 
-class SgAppContainer(context: Context) {
+class SgAppContainer(context: Context, coroutineScope: CoroutineScope) {
 
-    val debugLogBuffer by lazy { DebugLogBuffer(context) }
+    private val debugLogDatabase by lazy {
+        DebugLogDatabase.build(context)
+    }
+
+    val debugLogBuffer by lazy {
+        DebugLogBuffer(
+            context,
+            debugLogDatabase.debugLogHelper(),
+            coroutineScope
+        )
+    }
 
     /**
      * If true, should not display links to third-party websites that in any way link to a website
@@ -37,4 +50,7 @@ class SgAppContainer(context: Context) {
 //            .let { if (BuildConfig.DEBUG) true else it }
     }
 
+    val billingRepository by lazy {
+        BillingRepository(context, coroutineScope)
+    }
 }

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2024 Uwe Trottmann
+// Copyright 2024-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.lists
 
@@ -33,7 +33,11 @@ class DeleteListDialogFragment : AppCompatDialogFragment() {
         // Explicitly make negative button cancel (non-destructive action) as the delete list button
         // is the negative action in the originating dialog; so accidentally pressing again in the
         // same region does not do the destructive action.
-        return MaterialAlertDialogBuilder(requireContext())
+        // Also use special theme overlay to use warning color for positive button.
+        return MaterialAlertDialogBuilder(
+            requireContext(),
+            R.style.ThemeOverlay_SeriesGuide_Dialog_PositiveButton_Warn
+        )
             .setTitle(requireContext().getString(R.string.confirm_delete, listTitle))
             .setNegativeButton(android.R.string.cancel) { _, _ ->
                 // just dismiss

@@ -73,12 +73,12 @@ class CloudSetupFragment : Fragment() {
         binding!!.apply {
             ThemeUtils.applyBottomPaddingForNavigationBar(scrollViewCloud)
             buttonCloudSignIn.apply {
-                if (!BillingTools.hasAccessToPaidFeatures(requireContext())) {
+                if (!BillingTools.hasAccessToPaidFeatures()) {
                     (buttonCloudSignIn as MaterialButton).setIconResource(R.drawable.ic_awesome_black_24dp)
                 }
                 setOnClickListener {
                     // restrict access to supporters
-                    if (BillingTools.hasAccessToPaidFeatures(requireContext())) {
+                    if (BillingTools.hasAccessToPaidFeatures()) {
                         startHexagonSetup()
                     } else {
                         BillingTools.advertiseSubscription(requireContext())
@@ -174,7 +174,7 @@ class CloudSetupFragment : Fragment() {
         setProgressVisible(false)
         updateViews()
 
-        if (signedIn && BillingTools.hasAccessToPaidFeatures(requireContext())) {
+        if (signedIn && BillingTools.hasAccessToPaidFeatures()) {
             if (!HexagonSettings.isEnabled(requireContext())
                 || HexagonSettings.shouldValidateAccount(requireContext())) {
                 Timber.i("Auto-start Cloud setup.")

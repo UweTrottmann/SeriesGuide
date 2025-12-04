@@ -40,6 +40,7 @@
     <string name="action_reset">Reset</string>
     <string name="action_save">Save</string>
     <string name="action_turn_on">Turn on</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
     <!-- Search -->
     <string name="clear_search_history">தேடல் வரலாற்றை நீக்கு</string>
     <string name="search_hint">தேடல் episodes</string>
@@ -57,7 +58,7 @@
     <string name="api_error_generic">Could not talk to %s. Try again later.</string>
     <string name="api_failed">Failed: %s</string>
     <string name="copy_to_clipboard">Copied to clipboard</string>
-    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and delete this show. Tap to view details.</string>
     <string name="status_turned_on">Turned on</string>
     <!-- Sharing -->
     <string name="share">பகிர்</string>
@@ -72,7 +73,7 @@
     <string name="shout_invalid">உங்கள் கருத்துரை விதிகளை பின்பற்றவில்லை!</string>
     <string name="action_post">பதிவு</string>
     <string name="action_edit_comment">Edit</string>
-    <string name="action_delete_comment">Delete</string>
+    <string name="action_delete_comment">நீக்கு</string>
     <string name="confirmation_delete_comment">Delete this comment?</string>
     <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">Spoiler எச்சரிக்கை!</string>
@@ -189,7 +190,7 @@
     <string name="only_favorites">பிடித்த காட்சிகள்</string>
     <string name="calendar_only_collected">Only collected episodes</string>
     <string name="calendar_only_premieres">Only premieres</string>
-    <string name="pref_infinite_scrolling">முடிவிலா காலண்டர்</string>
+    <string name="pref_infinite_scrolling">Unlimited days</string>
     <!-- Updating -->
     <string name="update_scheduled">புதுப்பித்தல்&#8230;</string>
     <string name="update_no_connection">செய்ய புதுப்பித்தல் இணையத்திற்கு இணைக்கவும்.</string>
@@ -354,7 +355,7 @@
     <string name="action_rate">விகிதம்</string>
     <string name="ack_rated">Rating sent</string>
     <string name="your_rating">உங்கள் தரமதிப்பு</string>
-    <string name="action_remove_rating">Remove rating</string>
+    <string name="action_remove_rating">Delete rating</string>
     <string name="love">Ninja முற்றிலும்!</string>
     <string name="hate">நன்மைக்கான பாகு :(</string>
     <string name="rating2">உள்நாட்டு யுத்ததத்தின் பயங்கரமான</string>
@@ -448,7 +449,7 @@
     <string name="pref_offset">கைமுறை நேரம் ஆப்செட்</string>
     <string name="pref_offsetsummary">%d மணிநேரத்தில் ஏர் முறை சரியீடு</string>
     <string name="clear_cache">தெளிவான உருவம் இடைமாற்றுகள்</string>
-    <string name="clear_cache_summary">உங்கள் சாதனத்தில் இருந்து அனைத்து தேக்கக படிமங்களை அகற்று</string>
+    <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">உங்கள் சாதனத்தில் இருந்து அனைத்து தேக்கக படிமங்களை அகற்று</string>
     <!-- Export and Import -->
     <string name="title_export_import">Export and import</string>
     <string name="title_export">Export</string>
@@ -468,12 +469,12 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">தானியங்கு மறுபிரதி</string>
     <string name="pref_autobackupsummary">உங்கள் காட்சிகள், பட்டியல்கள் மற்றும் திரைப்படங்கள் வார மறுபிரதி</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again. Create copies to preserve them otherwise.</string>
+    <string name="autobackup_details">These backups are deleted if the app is uninstalled. You can choose to create copies in another location below that can be restored using the import tool.</string>
     <string name="backup_button">மறுபிரதி உருவாக்கு</string>
     <string name="last_auto_backup">கடைசி தானியங்கு மறுபிரதி: %s</string>
     <string name="restore_auto_backup">தானியங்கு மறுபிரதி மீட்டெடு</string>
-    <string name="autobackup_failed">The last auto backup has failed</string>
-    <string name="autobackup_files_missing">தானியங்கு மறுபிரதி பயன்படுத்த, செல்லுபடியான மறுபிரதி கோப்புகளை தேர்ந்தெடுக்கவும்.</string>
+    <string name="autobackup_failed" comment="Brief error message shown for auto backup">The last auto backup has failed</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">A file to store the copy of an auto-backup is missing</string>
     <string name="autobackup_create_user_copy">Create a copy after each backup</string>
     <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
@@ -509,6 +510,7 @@
     <string name="pref_widget_type">விட்ஜெட் வகை</string>
     <string name="pref_large_font">Use large font</string>
     <string name="pref_hide_watch_button">Hide watch button</string>
+    <string name="description_widget_limited_items">Note that the number of items is always limited to save resources</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">வெளிப்படை</string>
     <string name="widget_background_25">25%</string>
@@ -525,9 +527,9 @@
     <string name="billing_sub_description">Try for 30 days, cancel any time.</string>
     <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">SeriesGuide ஆதரவு நன்றி! உங்களுக்கு எல்லா அம்சங்களையும் அனுமதி.</string>
-    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">All Access Pass detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">More info and help</string>
-    <string name="subscription_expired_details">உங்கள் SeriesGuide சந்தா காலாவதியாகிவிட்டது.</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">Access to all features expired</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">உங்கள் Amazon கணக்கு உள்!</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">இந்த சந்தா தற்போது இல்லை.</string>

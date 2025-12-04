@@ -6,7 +6,7 @@
     <!-- Summary set in code -->
     <Preference
         app:iconSpaceReserved="false"
-        app:key="com.battlelancer.seriesguide.notifications.channels"
+        app:key="seriesguide.settings.link.notifications"
         app:title="@string/pref_notifications_settings" />
 
     <Preference
@@ -35,13 +35,13 @@
 
     <Preference
         app:iconSpaceReserved="false"
-        app:key="com.battlelancer.seriesguide.notifications.notifications.precise"
+        app:key="seriesguide.settings.link.notifications.precise"
         app:summary="@string/precise_notifications_allow_reason"
         app:title="@string/precise_notifications_allow" />
 
     <Preference
         app:iconSpaceReserved="false"
-        app:key="com.battlelancer.seriesguide.notifications.battery"
+        app:key="seriesguide.settings.link.notifications.battery"
         app:summary="@string/pref_notifications_battery_settings_summary"
         app:title="@string/pref_notifications_battery_settings" />
 

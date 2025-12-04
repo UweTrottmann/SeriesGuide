@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// SPDX-FileCopyrightText: Copyright © 2014 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.extensions;
 
@@ -351,6 +351,7 @@ public class ExtensionManager {
     private synchronized void requestEpisodeAction(Context context, ComponentName extension,
             Episode episode) {
         Integer episodeIdentifier = episode.getTmdbId();
+        // Note: leaving this noisy message in to help extension developers
         Timber.d("requestAction: requesting from %s for %s", extension, episodeIdentifier);
         // prepare to receive actions for the given episode
         if (sEpisodeActionsCache.get(episodeIdentifier) == null) {

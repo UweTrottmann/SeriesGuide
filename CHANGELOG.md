@@ -8,6 +8,56 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
 
+## Version 2025.3
+
+* 📝 Only for devices running Android 6.0 or higher.
+* 🔧 Shows: only display stream and purchase options for the season of a displayed episode.
+* 🔧 Navigation: on larger screens, display a wider, but flatter navigation bar.
+* 🔧 Upcoming/Recent: rename "Infinite calendar" option to the more applicable "Unlimited days".
+* 🔧 Shows: update ended shows less often to speed up updating of large libraries and reduce load on
+  TMDB.
+* 🔧 Diagnostics: debug log is always on, kept across app restarts to help diagnose more issues.
+
+### 2025.3.4 - 2025-11-27
+
+* 🔧 Debug log: as a safeguard introduce a limit for the number of messages.
+* 📝 Import latest user interface translations.
+
+### 2025.3.3 - 2025-11-20 🧪
+
+* 🔧 Debug log: change to always on, keep messages on app restarts and up to 3 days.
+* 🔧 Fast scroller: draw handle always within track, align with top and bottom most items.
+* 📝 Import latest user interface translations.
+
+### 2025.3.2 - 2025-11-06 🧪
+
+* 🔧 If the screen is wide enough, display a more compact bottom navigation bar.
+* 🔧 Color the active item in the bottom navigation bar, make the bar more compact.
+* 🔨 Correctly color the person placeholder symbol to match the current theme.
+* 🔧 Use the term delete instead of remove for destructive changes, like deleting a show or list.
+* 🔧 Use a warning color for the delete show and list confirmation buttons.
+
+### 2025.3.1 - 2025-10-30 🧪
+
+* 🔧 Thanks to a United States court ordered injunction in the Google Play Antitrust case coming 
+  into effect, again display links to TMDB, Trakt and other external websites if your device region
+  is set to "United States". Note that links remain displayed for devices set to a region in the
+  European Economic Area. For all other regions, Google Play Payments policy continues to disallow
+  this.
+* 🔧 Make active tab indicator rounded to better fit with other rounded user interface elements.
+
+### 2025.3.0 - 2025-10-24 🧪
+
+* 📝 Require Android 6.0 or higher.
+* 🔧 Upcoming/Recent: rename "Infinite calendar" option to the more applicable "Unlimited days".
+* 🔧 Widget: note general item limit in configuration screen, rename "Infinite calendar" option to
+  the more applicable "Unlimited days", move hide watch button option to appearance category.
+* 🔧 On Android 16 on Samsung devices, increase the limit of widget items back to 100.
+* 🔧 Shows: only display stream and purchase options specific to the season of a displayed episode.
+* 🔧 Shows: update ended shows less often (90+ days) to speed up updating of large libraries and 
+  reduce load on TMDB.
+* 📝 Import latest user interface translations.
+
 ## Version 2025.2
 
 * 🔧 Movie details: adjust buttons to be more similar to episodes, other minor improvements.

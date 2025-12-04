@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2011-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2011 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.provider;
 
@@ -288,6 +288,7 @@ public class SeriesGuideDatabase {
         String LIST_ID = "REFERENCES " + Tables.LISTS + "(" + Lists.LIST_ID + ")";
     }
 
+    @SuppressWarnings("deprecation")
     @VisibleForTesting
     public static final String CREATE_SHOWS_TABLE = "CREATE TABLE " + Tables.SHOWS + " ("
 

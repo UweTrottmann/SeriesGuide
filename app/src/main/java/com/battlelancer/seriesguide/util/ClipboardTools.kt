@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2018, 2020, 2021, 2023, 2024 Uwe Trottmann
+// Copyright 2018-2025 Uwe Trottmann
 
 @file:JvmName("ClipboardTools")
 
@@ -42,15 +42,13 @@ private val onContextClickListener by lazy {
 }
 
 /**
- * Sets a long click listener and on Android 6 or newer a context click listener that enables
- * right clicks with a mouse.
+ * Sets a [View.OnLongClickListener] and a [View.OnContextClickListener] that enables right clicks
+ * with a mouse.
  */
 fun TextView.copyTextToClipboardOnLongClick() {
     // globally shared click listener instances
     setOnLongClickListener(onLongClickListener)
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        setOnContextClickListener(onContextClickListener)
-    }
+    setOnContextClickListener(onContextClickListener)
 }
 
 fun View.copyTextToClipboardOnLongClick(text: CharSequence) {

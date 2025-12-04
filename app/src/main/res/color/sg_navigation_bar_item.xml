@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Copyright 2025 Uwe Trottmann -->
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Active item -->
+    <item android:color="?attr/colorOnPrimaryContainer" android:state_checked="true" android:state_pressed="true" />
+    <item android:color="?attr/colorOnPrimaryContainer" android:state_checked="true" android:state_focused="true" />
+    <item android:color="?attr/colorOnPrimaryContainer" android:state_checked="true" android:state_hovered="true" />
+    <item android:color="?attr/colorOnPrimaryContainer" android:state_checked="true" />
+
+    <!-- Inactive item -->
+    <item android:color="?attr/colorOnSurface" android:state_pressed="true" />
+    <item android:color="?attr/colorOnSurface" android:state_focused="true" />
+    <item android:color="?attr/colorOnSurface" android:state_hovered="true" />
+    <item android:color="?attr/colorOnSurfaceVariant" />
+</selector>

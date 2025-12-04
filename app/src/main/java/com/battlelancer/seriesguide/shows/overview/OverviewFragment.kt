@@ -20,8 +20,10 @@ import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
 import com.battlelancer.seriesguide.R
@@ -52,7 +54,6 @@ import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.streaming.StreamingSearch.initButtons
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools
-import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
@@ -62,6 +63,7 @@ import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceActiveEvent
 import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceCompletedEvent
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.LanguageTools
+import com.battlelancer.seriesguide.util.PackageTools
 import com.battlelancer.seriesguide.util.RatingsTools.initialize
 import com.battlelancer.seriesguide.util.RatingsTools.setLink
 import com.battlelancer.seriesguide.util.RatingsTools.setValuesFor
@@ -80,6 +82,7 @@ import com.battlelancer.seriesguide.util.tryStartActivity
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -102,7 +105,9 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
 
     private val handler = Handler(Looper.getMainLooper())
     private var ratingFetchJob: Job? = null
-    private val model: OverviewViewModel by viewModels {
+    // Cache the ViewModel in the activity (use activityViewModels instead of viewModels) as
+    // OverviewActivityImpl may destroy fragments when switching layouts.
+    private val model: OverviewViewModel by activityViewModels {
         OverviewViewModelFactory(showId, requireActivity().application)
     }
 
@@ -233,23 +238,26 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
                 sgShow2.nextEpisode.toLong()
             } else -1
             model.setEpisodeId(episodeId)
-            model.setShowTmdbId(sgShow2.tmdbId)
+            sgShow2.tmdbId?.let { model.setShowTmdbId(it) }
         }
         model.episode.observe(viewLifecycleOwner) { sgEpisode2: SgEpisode2? ->
+            // Episode may be null if there is no next episode
             this.binding?.also {
                 maybeAddFeedbackView(it)
-                // May be null if there is no next episode.
                 updateEpisodeViews(it, sgEpisode2)
             }
+            sgEpisode2?.season?.let { model.setSeasonNumber(it) }
         }
-        model.watchProvider.observe(viewLifecycleOwner) { watchInfo: TmdbTools2.WatchInfo? ->
-            if (watchInfo != null) {
-                this.binding?.let {
-                    StreamingSearch.configureButton(
-                        it.includeButtons.buttonEpisodeStreamingSearch,
-                        watchInfo,
-                        requireActivity().getSgAppContainer().preventExternalLinks
-                    )
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                model.seasonWatchInfo.collect { seasonWatchInfo ->
+                    this@OverviewFragment.binding?.let {
+                        StreamingSearch.configureButton(
+                            it.includeButtons.buttonEpisodeStreamingSearch,
+                            seasonWatchInfo,
+                            requireActivity().getSgAppContainer().preventExternalLinks
+                        )
+                    }
                 }
             }
         }
@@ -661,7 +669,8 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
                 ImageTools.buildEpisodeImageUrl(imagePath, requireContext())
             )
                 .error(R.drawable.ic_photo_gray_24dp)
-                .into(imageView,
+                .into(
+                    imageView,
                     object : Callback {
                         override fun onSuccess() {
                             imageView.scaleType = ImageView.ScaleType.CENTER_CROP
@@ -750,10 +759,12 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
             feedbackView = it
             it.setCallback(object : FeedbackView.Callback {
                 override fun onRate() {
-                    if (WebTools.openInApp(
-                            requireContext(),
-                            getString(R.string.url_store_page)
-                        )) {
+                    val urlRes = if (PackageTools.isAmazonVersion()) {
+                        R.string.url_amazon_listing
+                    } else {
+                        R.string.url_play_listing
+                    }
+                    if (WebTools.openInApp(requireContext(), getString(urlRes))) {
                         hideFeedbackView()
                     }
                 }

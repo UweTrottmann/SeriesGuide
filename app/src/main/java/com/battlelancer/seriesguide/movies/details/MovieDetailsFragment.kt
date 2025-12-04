@@ -601,7 +601,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     ) : PopupMenu.OnMenuItemClickListener {
         override fun onMenuItemClick(item: MenuItem): Boolean {
             when (item.itemId) {
-                R.id.watched_popup_menu_watch_again -> if (BillingTools.hasAccessToPaidFeatures(context)) {
+                R.id.watched_popup_menu_watch_again -> if (BillingTools.hasAccessToPaidFeatures()) {
                     MovieTools.watchedMovie(context, movieTmdbId, plays, inWatchlist)
                 } else {
                     BillingTools.advertiseSubscription(context)
@@ -617,10 +617,9 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     }
 
     private fun populateMovieCreditsViews(credits: Credits?) {
-        val peopleListHelper = PeopleListHelper()
+        val peopleListHelper = PeopleListHelper(requireContext())
         // cast members
         if (peopleListHelper.populateMovieCast(
-                requireContext(),
                 binding.moviePeople.containerCast,
                 credits
             )) {
@@ -631,7 +630,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // crew members
         if (peopleListHelper.populateMovieCrew(
-                requireContext(),
                 binding.moviePeople.containerCrew,
                 credits
             )) {

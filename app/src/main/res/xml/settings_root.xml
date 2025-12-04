@@ -61,7 +61,7 @@
 
         <Preference
             app:iconSpaceReserved="false"
-            app:key="clearCache"
+            app:key="seriesguide.settings.link.clearcache"
             app:summary="@string/clear_cache_summary"
             app:title="@string/clear_cache" />
 
@@ -72,11 +72,9 @@
             app:key="com.battlelancer.seriesguide.sendErrorReports"
             app:title="@string/pref_error_reports" />
 
-        <!-- AppSettings -->
-        <SwitchPreferenceCompat
-            app:defaultValue="False"
+        <Preference
             app:iconSpaceReserved="false"
-            app:key="com.battlelancer.seriesguide.userDebugModeEnabled"
+            app:key="seriesguide.settings.link.debuglog"
             app:title="@string/title_debug_log" />
 
     </PreferenceCategory>

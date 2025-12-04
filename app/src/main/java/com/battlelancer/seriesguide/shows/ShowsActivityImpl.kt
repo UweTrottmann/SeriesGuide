@@ -7,14 +7,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.api.Intents
-import com.battlelancer.seriesguide.billing.BillingActivity
-import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.billing.amazon.AmazonHelper
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
@@ -35,8 +31,6 @@ import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.WebTools
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
-import com.uwetrottmann.seriesguide.billing.BillingViewModel
-import com.uwetrottmann.seriesguide.billing.BillingViewModelFactory
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
 import kotlinx.coroutines.launch
 
@@ -50,7 +44,6 @@ open class ShowsActivityImpl : BaseTopActivity() {
     private lateinit var viewPager: ViewPager2
 
     private val viewModel: ShowsActivityViewModel by viewModels()
-    private lateinit var billingViewModel: BillingViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,14 +94,10 @@ open class ShowsActivityImpl : BaseTopActivity() {
         setupSyncProgressBar(R.id.sgProgressBar)
         setInitialTab(intent.extras)
 
-        // query for in-app purchases
+        // For Amazon build initialize IapManager instance
         if (PackageTools.isAmazonVersion()) {
-            // setup Amazon IAP
             AmazonHelper.create(this)
             AmazonHelper.iapManager.register()
-        } else {
-            // setup Google IAP
-            checkGooglePlayPurchase()
         }
     }
 
@@ -257,28 +246,6 @@ open class ShowsActivityImpl : BaseTopActivity() {
         }
 
         viewModel.setInitialTab(tabIndex)
-    }
-
-    private fun checkGooglePlayPurchase() {
-        if (BillingTools.hasUnlockKey(this)) {
-            return
-        }
-        // Automatically starts checking all access status.
-        // Ends connection if activity is finished (and was not ended elsewhere already).
-        billingViewModel =
-            ViewModelProvider(this, BillingViewModelFactory(application, SgApp.coroutineScope))
-                .get(BillingViewModel::class.java)
-        billingViewModel.entitlementRevokedEvent
-            .observe(this) {
-                // Note: sometimes sub is not really expired, only billing API not returning
-                // purchase. Assume that opening BillingActivity through the action of the message
-                // will also help resolve the issue.
-                makeSnackbar(R.string.subscription_expired_details, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(R.string.billing_action_manage_subscriptions) {
-                        startActivity(BillingActivity.intent(this))
-                    }
-                    .show()
-            }
     }
 
     override fun onNewIntent(intent: Intent) {

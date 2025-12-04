@@ -37,7 +37,7 @@
         <androidx.constraintlayout.helper.widget.Flow
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="buttonDialogRemoveRemove,buttonDialogRemoveCancel"
+            app:constraint_referenced_ids="buttonDialogRemoveCancel,buttonDialogRemoveRemove"
             app:flow_horizontalBias="1"
             app:flow_horizontalStyle="packed"
             app:flow_wrapMode="chain"
@@ -47,18 +47,18 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/buttonDialogRemoveRemove"
+            android:id="@+id/buttonDialogRemoveCancel"
             style="?attr/buttonBarNegativeButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Button Negative With Long Text" />
+            tools:text="@android:string/cancel" />
 
         <Button
-            android:id="@+id/buttonDialogRemoveCancel"
-            style="?attr/sgButtonDialogPrimary"
+            android:id="@+id/buttonDialogRemoveRemove"
+            style="?attr/sgButtonDialogError"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Button Positive With Long Text" />
+            tools:text="@string/delete_show" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

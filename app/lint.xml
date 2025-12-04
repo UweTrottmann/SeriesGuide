@@ -11,10 +11,14 @@
     <issue id="Overdraw" severity="ignore" />
     <!-- Not supplying drawable-hdpi, drawable-mdpi PNGs: only used in notifications. -->
     <issue id="IconMissingDensityFolder" severity="ignore" />
-    <!-- Using Gradle versions plugin and in-IDE warnings instead -->
+    <!-- Avoid spamming lint output, using Gradle versions plugin and in-IDE warnings instead. -->
+    <issue id="AndroidGradlePluginVersion" severity="ignore" />
     <issue id="GradleDependency" severity="ignore" />
+    <issue id="NewerVersionAvailable" severity="ignore" />
     <!-- Google HTTP client has SslUtils.trustAllSSLContext which is not used by SeriesGuide -->
     <issue id="TrustAllX509TrustManager">
         <ignore regexp="google-http-client"/>
     </issue>
+    <!-- Avoid spamming lint output, there is no need to use these, it's just convenience -->
+    <issue id="UseKtx" severity="ignore" />
 </lint>

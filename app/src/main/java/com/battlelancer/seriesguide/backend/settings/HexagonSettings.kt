@@ -38,7 +38,7 @@ object HexagonSettings {
      * If Cloud is enabled and Cloud specific actions should be performed or UI be shown.
      */
     fun isEnabled(context: Context): Boolean =
-        BillingTools.hasAccessToPaidFeatures(context)
+        BillingTools.hasAccessToPaidFeatures()
                 && PreferenceManager.getDefaultSharedPreferences(context)
             .getBoolean(KEY_ENABLED, false)
 

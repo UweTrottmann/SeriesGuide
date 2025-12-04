@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2018-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.streaming
 
@@ -8,6 +8,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.FragmentManager
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.safeShow
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.text.Collator
@@ -27,7 +28,7 @@ class StreamingSearchConfigureDialog : AppCompatDialogFragment() {
 
         // Note use default locale collator so e.g. umlauts in German are sorted correctly.
         val regionItems = List(regions.size) { i ->
-            RegionItem(regions[i], StreamingSearch.getServiceDisplayName(regions[i]))
+            RegionItem(regions[i], LanguageTools.getDisplayNameForRegionCode(regions[i]))
         }.sortedWith(compareBy(Collator.getInstance()) { it.displayText })
 
         val currentSelection =

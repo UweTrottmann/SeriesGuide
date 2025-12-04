@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2018-2024 Uwe Trottmann
+// Copyright 2018-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.overview
 
@@ -16,7 +16,7 @@ import androidx.appcompat.widget.TooltipCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
@@ -48,7 +48,9 @@ class SeasonsFragment() : Fragment() {
 
     private var binding: FragmentSeasonsBinding? = null
     private lateinit var adapter: SeasonsAdapter
-    private val model by viewModels<SeasonsViewModel> {
+    // Cache the ViewModel in the activity (use activityViewModels instead of viewModels) as
+    // OverviewActivityImpl may destroy fragments when switching layouts.
+    private val model by activityViewModels<SeasonsViewModel> {
         SeasonsViewModelFactory(requireActivity().application, showId)
     }
 
