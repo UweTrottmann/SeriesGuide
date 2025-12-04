@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2017-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2017 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.movies
 
@@ -60,7 +60,6 @@ class MoviesDiscoverFragment : Fragment() {
         )
 
         adapter = MoviesDiscoverAdapter(
-            requireContext(),
             DiscoverItemClickListener(requireContext())
         )
 

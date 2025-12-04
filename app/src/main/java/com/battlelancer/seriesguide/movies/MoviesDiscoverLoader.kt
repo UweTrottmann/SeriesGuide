@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// SPDX-FileCopyrightText: Copyright © 2013 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.movies
 
@@ -10,7 +10,6 @@ import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.androidutils.GenericSimpleLoader
 import com.uwetrottmann.tmdb2.Tmdb
-import com.uwetrottmann.tmdb2.entities.BaseMovie
 import com.uwetrottmann.tmdb2.entities.DiscoverFilter
 import com.uwetrottmann.tmdb2.entities.TmdbDate
 import com.uwetrottmann.tmdb2.enumerations.ReleaseType
@@ -28,11 +27,12 @@ class MoviesDiscoverLoader(context: Context) :
 
     class Result(
         /** If loading failed, is null. Empty if no results.  */
-        var results: List<BaseMovie>?,
+        var results: List<UiMovie>?,
         var emptyText: String
     )
 
     private val tmdb: Tmdb = SgApp.getServicesComponent(context).tmdb()
+    private val uiMovieBuilder = UiMovieBuilder(context)
 
     private val dateNow: TmdbDate
         get() = TmdbDate(Date())
@@ -77,7 +77,10 @@ class MoviesDiscoverLoader(context: Context) :
         return if (response.isSuccessful) {
             // Filter null items (a few users affected).
             Result(
-                response.body()?.results?.filterNotNull(),
+                response.body()?.results
+                    ?.mapNotNull { baseMovie ->
+                        baseMovie?.let { uiMovieBuilder.buildFrom(it) }
+                    },
                 context.getString(R.string.empty_no_results)
             )
         } else {
