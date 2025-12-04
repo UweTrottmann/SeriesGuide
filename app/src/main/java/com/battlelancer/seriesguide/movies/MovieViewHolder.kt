@@ -53,33 +53,6 @@ class MovieViewHolder(
     }
 
     @SuppressLint("SetTextI18n")
-    fun bindTo(sgMovie: SgMovie?, dateFormatMovieReleaseDate: DateFormat, posterBaseUrl: String) {
-        if (sgMovie == null) {
-            movieTmdbId = -1
-            title.text = ""
-            date.text = ""
-            Picasso.get().cancelRequest(poster)
-            poster.setImageDrawable(null)
-        } else {
-            movieTmdbId = sgMovie.tmdbId
-            title.text = sgMovie.title
-            if (sgMovie.releasedMsOrDefault != Long.MAX_VALUE) {
-                date.text = dateFormatMovieReleaseDate.format(sgMovie.releasedMsOrDefault)
-            } else {
-                date.text = ""
-            }
-
-            // poster
-            // use fixed size so bitmaps can be re-used on config change
-            val context = itemView.context.applicationContext
-            ImageTools.loadWithPicasso(context, posterBaseUrl + sgMovie.poster)
-                .resizeDimen(R.dimen.movie_poster_width, R.dimen.movie_poster_height)
-                .centerCrop()
-                .into(poster)
-        }
-    }
-
-    @SuppressLint("SetTextI18n")
     fun bindTo(
         tmdbMovie: BaseMovie?,
         context: Context,
@@ -184,6 +157,19 @@ class UiMovieBuilder(context: Context) {
 
     private val dateFormatMovieReleaseDate = MovieTools.getMovieShortDateFormat()
     private val posterBaseUrl = TmdbSettings.getPosterBaseUrl(context)
+
+    fun buildFrom(sgMovie: SgMovie): UiMovie {
+        return UiMovie(
+            sgMovie.tmdbId,
+            sgMovie.title.orEmpty(),
+            if (sgMovie.releasedMsOrDefault != Long.MAX_VALUE) {
+                dateFormatMovieReleaseDate.format(sgMovie.releasedMsOrDefault)
+            } else {
+                ""
+            },
+            buildPosterUrl(sgMovie.poster)
+        )
+    }
 
     fun buildFrom(baseMovie: BaseMovie) = UiMovie(
         baseMovie.id!!,
