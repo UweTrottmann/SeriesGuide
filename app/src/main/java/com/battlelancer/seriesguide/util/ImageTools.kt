@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2021-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2021 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.util
 
@@ -9,8 +9,8 @@ import android.widget.ImageView
 import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.AppSettings
-import com.battlelancer.seriesguide.settings.TmdbSettings
 import com.battlelancer.seriesguide.settings.UpdateSettings
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.RequestCreator
@@ -106,7 +106,7 @@ object ImageTools {
                 pickDemoPosterUrl(nonNullImagePath)
             },
             tmdbSmallImageUrl = { nonNullImagePath ->
-                "${TmdbSettings.getPosterBaseUrl(context)}$nonNullImagePath"
+                "${TmdbTools.getPosterBaseUrl(context)}$nonNullImagePath"
             }
         )
     }
@@ -141,7 +141,7 @@ object ImageTools {
             imagePath, context, originalSize,
             demoUrl = { demoEpisodeImageUrl },
             tmdbSmallImageUrl = { nonNullImagePath ->
-                TmdbSettings.buildBackdropUrl(context, nonNullImagePath)
+                TmdbTools.buildBackdropUrl(context, nonNullImagePath)
             }
         )
     }
@@ -182,7 +182,7 @@ object ImageTools {
                     // TMDB images have no path at all, but always start with /.
                     // Use small size based on density, or original size (as large as possible).
                     if (originalSize) {
-                        TmdbSettings.getImageOriginalUrl(context, imagePath)
+                        TmdbTools.buildOriginalSizeImageUrl(context, imagePath)
                     } else {
                         tmdbSmallImageUrl(imagePath)
                     }

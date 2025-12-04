@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2019-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2013 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.movies.details
 
@@ -44,7 +44,6 @@ import com.battlelancer.seriesguide.movies.similar.SimilarMoviesActivity
 import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.people.Credits
 import com.battlelancer.seriesguide.people.PeopleListHelper
-import com.battlelancer.seriesguide.settings.TmdbSettings
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.traktapi.MovieCheckInDialogFragment
@@ -525,12 +524,12 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             TimeTools.formatToLocalDateAndTime(requireContext(), movieDetails.lastUpdatedMillis)
 
         // load poster, cache on external storage
-        if (tmdbMovie.poster_path.isNullOrEmpty()) {
+        val posterPath = tmdbMovie.poster_path
+        if (posterPath.isNullOrEmpty()) {
             binding.frameLayoutMoviePoster.isClickable = false
             binding.frameLayoutMoviePoster.isFocusable = false
         } else {
-            val smallImageUrl = (TmdbSettings.getImageBaseUrl(requireContext())
-                    + TmdbSettings.POSTER_SIZE_SPEC_W342 + tmdbMovie.poster_path)
+            val smallImageUrl = TmdbTools.buildLargePosterUrl(requireContext(), posterPath)
             ImageTools.loadWithPicasso(requireContext(), smallImageUrl)
                 .into(binding.imageViewMoviePoster, object : Callback.EmptyCallback() {
                     override fun onSuccess() {
@@ -576,9 +575,8 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             binding.frameLayoutMoviePoster.also {
                 it.isFocusable = true
                 it.setOnClickListener { view ->
-                    val posterPath = tmdbMovie.poster_path ?: return@setOnClickListener
                     val largeImageUrl =
-                        TmdbSettings.getImageOriginalUrl(requireContext(), posterPath)
+                        TmdbTools.buildOriginalSizeImageUrl(requireContext(), posterPath)
                     val intent = FullscreenImageActivity.intent(
                         requireActivity(),
                         smallImageUrl,
