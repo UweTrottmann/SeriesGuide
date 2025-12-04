@@ -60,8 +60,8 @@ object ImageTools {
      *
      * Always uses [context.getApplicationContext()][Context.getApplicationContext].
      */
-    @JvmStatic
     fun loadWithPicasso(context: Context, path: String?): RequestCreator {
+//        Timber.d("Loading image with Picasso: %s", path)
         val requestCreator = Picasso.get().load(path)
         if (!isAllowedLargeDataConnection(context.applicationContext)) {
             // avoid the network, hit the cache immediately + accept stale images.
