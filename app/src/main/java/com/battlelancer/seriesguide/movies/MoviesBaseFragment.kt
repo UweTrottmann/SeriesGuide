@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2019-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2019 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.movies
 
@@ -29,7 +29,7 @@ import org.greenrobot.eventbus.ThreadMode
  */
 abstract class MoviesBaseFragment : Fragment() {
 
-    private lateinit var adapter: MoviesAdapter
+    private lateinit var adapter: MoviePagesAdapter
 
     abstract val model: MoviesWatchedViewModel
 
@@ -51,7 +51,7 @@ abstract class MoviesBaseFragment : Fragment() {
 
         emptyView.setText(emptyViewTextResId)
 
-        adapter = MoviesAdapter(requireContext(), MovieClickListenerImpl(requireContext()))
+        adapter = MoviePagesAdapter(MovieClickListenerImpl(requireContext()))
 
         recyclerView.also {
             it.setHasFixedSize(true)

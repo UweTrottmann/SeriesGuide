@@ -9,7 +9,7 @@ import androidx.paging.PagingDataAdapter
 /**
  * Binds pages of [UiMovie] to [MovieViewHolder].
  */
-class MoviesAdapter(
+class MoviePagesAdapter(
     val itemClickListener: MovieClickListener
 ) : PagingDataAdapter<UiMovie, MovieViewHolder>(
     UiMovie.DIFF_CALLBACK
