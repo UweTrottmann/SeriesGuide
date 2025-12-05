@@ -169,6 +169,8 @@ androidx-test-runner = "androidx.test:runner:1.7.0"
 # https://github.com/UweTrottmann/SeriesGuide/pull/1137, https://github.com/google/ksp/issues/1079).
 kotlin = { id = "org.jetbrains.kotlin.android", version = "2.2.21" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version = "2.2.21" }
+# https://github.com/google/ksp/releases
+ksp = { id = "com.google.devtools.ksp", version = "2.3.11" }
 # https://developer.android.com/build/releases/gradle-plugin
 android = { id = "com.android.application", version = "9.3.1" }
 # https://github.com/gradle-nexus/publish-plugin/releases
