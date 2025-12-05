@@ -39,7 +39,7 @@
     <string name="action_select_region">Wybierz region</string>
     <string name="action_reset">Przywróć</string>
     <string name="action_save">Zapisz</string>
-    <string name="action_turn_on">Turn on</string>
+    <string name="action_turn_on">Włącz</string>
     <string name="action_check" comment="Action when an error is displayed the user should check upon.">Sprawdź</string>
     <!-- Search -->
     <string name="clear_search_history">Wyczyść historię wyszukiwania</string>
@@ -59,7 +59,7 @@
     <string name="api_failed">Błąd: %s</string>
     <string name="copy_to_clipboard">Skopiowano do schowka</string>
     <string name="not_migrated">Serial nie został zmigrowany na dane TMDB. Niektóre akcje, takie jak Trakt i synchronizacja z chmurą mogą nie działać. Zalecamy wyszukanie serialu z bazy TMDB i usunięcie tego serialu. Naciśnij, aby wyświetlić szczegóły.</string>
-    <string name="status_turned_on">Turned on</string>
+    <string name="status_turned_on">Włączona</string>
     <!-- Sharing -->
     <string name="share">Udostępnij</string>
     <string name="share_show">Współdziel serial</string>
@@ -471,7 +471,7 @@
     <string name="theme_app_dark">Ciemny</string>
     <string name="theme_app_light">Jasny</string>
     <!-- Other advanced settings -->
-    <string name="pref_category_diagnostics">Diagnostics</string>
+    <string name="pref_category_diagnostics">Diagnostyka</string>
     <string name="pref_autoupdatesummary">Automatycznie synchronizuje i aktualizuje dane SeriesGuide</string>
     <string name="pref_number">Format numeracji</string>
     <string name="pref_offset">Ręczne przesunięcie czasu</string>
@@ -479,19 +479,19 @@
     <string name="clear_cache">Usuń bufor obrazów</string>
     <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Usuwa wszystkie buforowane obrazy z urządzenia</string>
     <!-- Export and Import -->
-    <string name="title_export_import">Export and import</string>
-    <string name="title_export">Export</string>
+    <string name="title_export_import">Eksport i import</string>
+    <string name="title_export">Eksport</string>
     <string name="title_import">Import</string>
-    <string name="action_export">Export to file</string>
+    <string name="action_export">Eksportuj do pliku</string>
     <string name="backup_full_dump">Uwzględnij opisy, szczegóły, oceny</string>
-    <string name="status_successful">Successful</string>
-    <string name="status_failure">Failed</string>
-    <string name="status_failed_file_access">Can not find or access file</string>
+    <string name="status_successful">Zakończona</string>
+    <string name="status_failure">Błąd</string>
+    <string name="status_failed_file_access">Nie można odnaleźć albo uzyskać dostępu do pliku</string>
     <string name="import_button">Przywróć</string>
-    <string name="action_view_import_documentation">View expected format</string>
+    <string name="action_view_import_documentation">Pokaż oczekiwany format</string>
     <string name="import_warning">Rozumiem, że moje seriale, listy i filmy zostaną zastąpione!</string>
-    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
-    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
+    <string name="import_cloud_warning">Niezalecane podczas użycia SeriesGuide Cloud lub Trakt</string>
+    <string name="import_cloud_warning_details">Synchronizacja z Cloud albo Trakt może nadpisać zaimportowane dane. W SeriesGuide Cloud możesz usunąć swoje konto przed importowaniem danych, a następnie utworzyć je ponownie, aby wysłać do chmury tylko zaimportowane dane.</string>
     <string name="no_file_selected">Nie wybrano pliku</string>
     <string name="action_select_file">Wybierz plik</string>
     <!-- Auto backup -->
@@ -587,9 +587,9 @@
     <string name="support_the_dev">Czy wesprzesz dewelopera?</string>
     <string name="support_the_dev_other_ways">Inne sposoby wsparcia</string>
     <!-- Diagnostics -->
-    <string name="title_debug_log">Debug log</string>
-    <string name="status_saving_file_success">File saved</string>
-    <string name="status_saving_file_failed">Failed to save file</string>
+    <string name="title_debug_log">Dziennik debugowania</string>
+    <string name="status_saving_file_success">Plik zapisany</string>
+    <string name="status_saving_file_failed">Błąd zapisu do pliku</string>
     <!-- Streaming info -->
     <string name="action_stream">Kup lub strumieniuj</string>
     <string name="action_stream_settings">Opcje kupowania i strumieniowania</string>
