@@ -10,7 +10,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2026.1
 
-### Next Release
+### 2026.1.0 - 2025-12-05 🧪
 
 * 🔧 When doing network requests, send user agent that includes the app name and version.
 * 🔧 Update various internal components, including for UI and networking.
