@@ -192,3 +192,13 @@ As it is a `LinearLayout`, [until this is fixed](https://github.com/material-com
 
 </com.google.android.material.textfield.TextInputLayout>
 ```
+
+## Dependencies
+
+To inspect dependencies use
+
+```bash
+./gradlew :app:dependencies --configuration pureDebugCompileClasspath
+```
+
+When adding a new dependency, list it and its license in [credits](/CREDITS.txt).

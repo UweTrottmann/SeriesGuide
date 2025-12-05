@@ -93,14 +93,12 @@ androidutils = "com.uwetrottmann.androidutils:androidutils:4.0.0"
 photoview = "com.github.chrisbanes:PhotoView:2.3.0"
 
 # https://developers.google.com/android/guides/releases
-# 21.0.0 removes Credentials API used by firebase-ui-auth
-play-services-auth = "com.google.android.gms:play-services-auth:20.7.0"
+play-services-auth = "com.google.android.gms:play-services-auth:21.4.0"
 # https://firebase.google.com/support/release-notes/android
 firebase-crashlytics = "com.google.firebase:firebase-crashlytics:19.0.1"
-# 23.0.0 requires min SDK 23
-firebase-auth = "com.google.firebase:firebase-auth:22.3.1"
+firebase-auth = "com.google.firebase:firebase-auth:24.0.1"
 # https://github.com/firebase/FirebaseUI-Android/releases
-firebase-ui-auth = "com.firebaseui:firebase-ui-auth:8.0.2"
+firebase-ui-auth = "com.firebaseui:firebase-ui-auth:9.1.1"
 # https://github.com/googleapis/google-api-java-client/releases
 google-api-client = "com.google.api-client:google-api-client:2.6.0"
 google-api-client-android = "com.google.api-client:google-api-client-android:2.6.0"
