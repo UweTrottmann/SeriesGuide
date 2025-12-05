@@ -82,11 +82,11 @@ androidx-preference = "androidx.preference:preference-ktx:1.2.1"
 
 # Room
 # https://developer.android.com/jetpack/androidx/releases/room
-androidx-room-compiler = "androidx.room:room-compiler:2.8.1"
-androidx-room-ktx = "androidx.room:room-ktx:2.8.1"
-androidx-room-paging = "androidx.room:room-paging:2.8.1"
-androidx-room-runtime = "androidx.room:room-runtime:2.8.1"
-androidx-room-testing = "androidx.room:room-testing:2.8.1"
+androidx-room-compiler = "androidx.room:room-compiler:2.8.4"
+androidx-room-ktx = "androidx.room:room-ktx:2.8.4"
+androidx-room-paging = "androidx.room:room-paging:2.8.4"
+androidx-room-runtime = "androidx.room:room-runtime:2.8.4"
+androidx-room-testing = "androidx.room:room-testing:2.8.4"
 
 # https://github.com/UweTrottmann/AndroidUtils/releases
 androidutils = "com.uwetrottmann.androidutils:androidutils:4.0.0"
