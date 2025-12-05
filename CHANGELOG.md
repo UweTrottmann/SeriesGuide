@@ -21,6 +21,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 ### Next Release
 
 * 🔧 When doing network requests, send user agent that includes the app name and version.
+* 📝 Import latest user interface translations.
 
 ### 2025.3.4 - 2025-11-27
 
