@@ -116,13 +116,13 @@ google-http-client = "com.google.http-client:google-http-client-gson:1.44.2" # h
 # https://github.com/google/gson/blob/master/CHANGELOG.md
 gson = "com.google.code.gson:gson:2.11.0"
 # https://github.com/square/okhttp/blob/master/CHANGELOG.md
-okhttp = "com.squareup.okhttp3:okhttp:4.12.0"
-#okhttp-logging = "com.squareup.okhttp3:logging-interceptor:4.12.0"
-okhttp-tls = "com.squareup.okhttp3:okhttp-tls:4.12.0"
+okhttp = "com.squareup.okhttp3:okhttp:5.3.2"
+#okhttp-logging = "com.squareup.okhttp3:logging-interceptor:5.3.2"
+okhttp-tls = "com.squareup.okhttp3:okhttp-tls:5.3.2"
 picasso = "com.squareup.picasso:picasso:2.8" # https://github.com/square/picasso/releases
 # https://github.com/square/retrofit/blob/master/CHANGELOG.md
-retrofit2-gson = "com.squareup.retrofit2:converter-gson:2.11.0"
-retrofit2 = "com.squareup.retrofit2:retrofit:2.11.0"
+retrofit2-gson = "com.squareup.retrofit2:converter-gson:3.0.0"
+retrofit2 = "com.squareup.retrofit2:retrofit:3.0.0"
 tmdb-java = "com.uwetrottmann.tmdb2:tmdb-java:2.13.0" # https://github.com/UweTrottmann/tmdb-java/blob/main/CHANGELOG.md
 trakt-java = "com.uwetrottmann.trakt5:trakt-java:6.16.0" # https://github.com/UweTrottmann/trakt-java/blob/main/CHANGELOG.md
 
@@ -151,7 +151,9 @@ androidx-test-runner = "androidx.test:runner:1.7.0"
 
 [plugins]
 # https://developer.android.com/build/releases/gradle-plugin
-android = { id = "com.android.application", version = "8.11.2" }
+# Update to 8.12.0 to receive extended MANIFEST.MF exclusion rules (for okhttp 5) https://issuetracker.google.com/issues/379732901
+# Update to 8.13.1 to get latest bug fixes.
+android = { id = "com.android.application", version = "8.13.1" }
 # https://kotlinlang.org/docs/releases.html#release-details
 # When updating, must also update compose plugin.
 # Also look for compatible Gradle and Android Plugin versions:

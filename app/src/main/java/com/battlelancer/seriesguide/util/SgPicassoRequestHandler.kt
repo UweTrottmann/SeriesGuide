@@ -99,8 +99,8 @@ class SgPicassoRequestHandler(
         val response = downloader.load(downloaderRequest)
         val body = response.body
 
-        if (body == null || !response.isSuccessful) {
-            body?.close()
+        if (!response.isSuccessful) {
+            body.close()
             throw ResponseException(response.code)
         }
 
