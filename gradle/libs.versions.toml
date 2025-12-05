@@ -149,9 +149,9 @@ android = { id = "com.android.application", version = "8.11.2" }
 # Also look for compatible Gradle and Android Plugin versions:
 # https://kotlinlang.org/docs/gradle-configure-project.html#apply-the-plugin
 # Also coroutines version must be compatible.
-# 2.2.20 is compatible with Gradle 7.6.3–8.14 and AGP 7.3.1–8.11.1
-kotlin = { id = "org.jetbrains.kotlin.android", version = "2.2.20" }
-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version = "2.2.20" }
+# 2.2.21 is compatible with Gradle 7.6.3–8.14 and AGP 7.3.1–8.11.1
+kotlin = { id = "org.jetbrains.kotlin.android", version = "2.2.21" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version = "2.2.21" }
 # https://github.com/ben-manes/gradle-versions-plugin/releases
 versions = { id = "com.github.ben-manes.versions", version = "0.51.0" }
 # https://github.com/gradle-nexus/publish-plugin/releases
