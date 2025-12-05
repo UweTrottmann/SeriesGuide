@@ -21,6 +21,7 @@ plugins {
     id("seriesguide.android")
     kotlin("android")
     kotlin("kapt")
+    alias(libs.plugins.ksp)
     alias(libs.plugins.compose.compiler)
     // Firebase Authentication, Crashlytics
     alias(libs.plugins.google.services)
@@ -45,10 +46,13 @@ kotlin {
 kapt {
     arguments {
         arg("eventBusIndex", "com.battlelancer.seriesguide.SgEventBusIndex")
-        // Export schema for testing and in case the database ever needs to be built manually
-        // (like when migrating away from Room).
-        arg("room.schemaLocation", "$projectDir/schemas")
     }
+}
+
+ksp {
+    // Export schema for testing and in case the database ever needs to be built manually
+    // (like when migrating away from Room).
+    arg("room.schemaLocation", "$projectDir/schemas")
 }
 
 android {
@@ -250,12 +254,10 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     // Paging 3 Integration
     implementation(libs.androidx.room.paging)
-    // KSP appears deprecated. KSP 2 is still under development.
-    //noinspection KaptUsageInsteadOfKsp
-    kapt(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
 
     implementation(libs.dagger)
-    kapt(libs.dagger.compiler)
+    ksp(libs.dagger.compiler)
     implementation(libs.greenrobot.eventbus)
     kapt(libs.greenrobot.eventbus.processor)
 
@@ -321,7 +323,7 @@ dependencies {
     androidTestImplementation(libs.truth)
     implementation(libs.findbugs.jsr305)
     androidTestImplementation(libs.findbugs.jsr305)
-    kaptAndroidTest(libs.dagger.compiler)
+    kspAndroidTest(libs.dagger.compiler)
     androidTestImplementation(libs.androidx.room.testing)
 
     // Local unit tests

@@ -175,6 +175,8 @@ android-gradle-api = { module = "com.android.tools.build:gradle-api", version.re
 [plugins]
 kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+# https://github.com/google/ksp/releases
+ksp = { id = "com.google.devtools.ksp", version = "2.3.11" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 # https://github.com/gradle-nexus/publish-plugin/releases
