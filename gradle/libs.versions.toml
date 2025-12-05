@@ -40,6 +40,13 @@ androidx-activity = "androidx.activity:activity:1.11.0"
 androidx-activity-compose = "androidx.activity:activity-compose:1.11.0"
 # https://developer.android.com/jetpack/androidx/releases/fragment
 androidx-fragment = "androidx.fragment:fragment-ktx:1.8.5"
+# androidx.fragment depends on androidx.lifecycle:lifecycle-viewmodel-savedstate-android which
+# has a compile dependency on org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.7.3. This
+# overrides the runtime time dependency of androidx.room:room-migration on 1.8.1 causing
+# MigrationTest to fail because a method is missing in this older version.
+# So add a compile dependency on version 1.8.1 until lifecycle-viewmodel-savedstate-android depends
+# on at least 1.8.1.
+kotlinx-serialization-core = "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.8.1"
 # https://developer.android.com/jetpack/androidx/releases/appcompat
 androidx-appcompat = "androidx.appcompat:appcompat:1.7.0"
 
