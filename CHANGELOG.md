@@ -14,6 +14,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 * 🔧 When doing network requests, send user agent that includes the app name and version.
 * 🔧 Update various internal components, including for UI and networking.
+* 🔧 Download movie posters through the SeriesGuide image cache server.
 * 📝 Import latest user interface translations.
 
 ## Version 2025.3
