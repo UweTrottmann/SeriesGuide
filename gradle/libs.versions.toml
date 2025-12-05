@@ -114,7 +114,7 @@ google-api-client = "com.google.api-client:google-api-client:2.6.0"
 google-api-client-android = "com.google.api-client:google-api-client-android:2.6.0"
 google-http-client = "com.google.http-client:google-http-client-gson:1.44.2" # https://github.com/googleapis/google-http-java-client/releases
 # https://github.com/google/gson/blob/master/CHANGELOG.md
-gson = "com.google.code.gson:gson:2.11.0"
+gson = "com.google.code.gson:gson:2.13.2"
 # https://github.com/square/okhttp/blob/master/CHANGELOG.md
 okhttp = "com.squareup.okhttp3:okhttp:5.3.2"
 #okhttp-logging = "com.squareup.okhttp3:logging-interceptor:5.3.2"
