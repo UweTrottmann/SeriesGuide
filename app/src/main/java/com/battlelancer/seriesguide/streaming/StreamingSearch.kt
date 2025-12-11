@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2018-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2018 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.streaming
 
@@ -195,13 +195,6 @@ object StreamingSearch {
         regionLiveData.value = regionOrNull
         if (regionOrNull != null) {
             _regionCode.tryEmit(regionOrNull)
-        }
-    }
-
-    fun getWatchInfoMediator(tmdbId: LiveData<Int>): MediatorLiveData<WatchInfo> {
-        return MediatorLiveData<WatchInfo>().apply {
-            addSource(tmdbId) { value = WatchInfo(it, value?.region) }
-            addSource(regionLiveData) { value = WatchInfo(value?.tmdbId, it) }
         }
     }
 
