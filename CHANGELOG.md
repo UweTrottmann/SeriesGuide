@@ -12,9 +12,9 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ### 2026.1.0 - 2025-12-05 🧪
 
-* 🔧 When doing network requests, send user agent that includes the app name and version.
-* 🔧 Update various internal components, including for UI and networking.
-* 🔧 Download movie posters through the SeriesGuide image cache server.
+* 🔧 Internal: When doing network requests, send user agent that includes the app name and version.
+* 🔧 Internal: update various components, including for UI and networking.
+* 🔧 Download movie posters through the SeriesGuide image cache server to reduce load on TMDB.
 * 📝 Import latest user interface translations.
 
 ## Version 2025.3
