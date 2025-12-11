@@ -12,6 +12,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ### Next release
 
+* 🔨 Debug log: don't crash if entries can't be modified due to database corruption.
+
 ### 2026.1.0 - 2025-12-05 🧪
 
 * 🔧 Internal: When doing network requests, send user agent that includes the app name and version.
