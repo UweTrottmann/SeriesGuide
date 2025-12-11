@@ -1,14 +1,14 @@
 # Testing and building seriesgui.de
 
-This is a [GitHub Pages](https://help.github.com/categories/github-pages-basics/) website built with [Jekyll](https://jekyllrb.com/).
+This is a website built with [Jekyll](https://jekyllrb.com/) on [GitHub Actions](/.github/workflows/publish-website.yml) published using [GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-with-a-custom-github-actions-workflow).
 
-Note the special instructions for [GitHub Pages](https://jekyllrb.com/docs/github-pages/).
+Note the [special instructions from Jekyll for GitHub Pages](https://jekyllrb.com/docs/github-pages/).
 
 https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-jekyll
 
 [Liquid syntax](https://shopify.github.io/liquid/basics/introduction/)
 
-[Collections](https://jekyllrb.com/docs/collections/)
+[Collections](https://jekyllrb.com/docs/collections/) (used for help pages)
 
 ```bash
 # update gems
