@@ -33,6 +33,11 @@ to the database.
 Prefer to define table and column names using constants (like `@ColumnInfo(name = CONSTANT)`). 
 This makes them safer to re-use.
 
+There isn't a need to handle `android.database.sqlite.SQLiteDatabaseCorruptException`. If an 
+operation fails due to this, the app will crash. And when next started, Room will delete the corrupt
+database files (`androidx.room.RoomConnectionManager.SupportOpenHelperCallback` extends 
+`androidx.sqlite.db.SupportSQLiteOpenHelper.Callback` where in `onCorruption` the file is deleted).
+
 ### Click listeners
 
 The interface class is owned by the class that owns the views that trigger the click events, for
