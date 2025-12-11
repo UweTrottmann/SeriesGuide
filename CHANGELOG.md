@@ -18,6 +18,12 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
   TMDB.
 * 🔧 Diagnostics: debug log is always on, kept across app restarts to help diagnose more issues.
 
+### 2025.3.5 - 2025-12-11
+
+* 🔨 Debug log: don't crash if entries can't be modified due to database corruption.
+* 🔧 Internal: when doing network requests, send user agent that includes the app name and version.
+* 📝 Import latest user interface translations.
+
 ### 2025.3.4 - 2025-11-27
 
 * 🔧 Debug log: as a safeguard introduce a limit for the number of messages.

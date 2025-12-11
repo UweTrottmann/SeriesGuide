@@ -70,20 +70,27 @@ class DebugLogBuffer(
         coroutineScope.launch(debugLogDatabaseDispatcher) {
             val currentTime = Instant.now().toEpochMilli()
 
-            // Delete before adding new data
-            dbHelper.deleteOlderThan(currentTime - LOG_MAX_AGE_MILLIS)
-            // To avoid the database growing too large if there are many messages for whatever
-            // reason, enforce a maximum number of rows.
-            dbHelper.trim()
+            try {
+                // Delete before adding new data
+                dbHelper.deleteOlderThan(currentTime - LOG_MAX_AGE_MILLIS)
+                // To avoid the database growing too large if there are many messages for whatever
+                // reason, enforce a maximum number of rows.
+                dbHelper.trim()
 
-            dbHelper.insert(
-                DbDebugLogEntry(
-                    priority = priority,
-                    tag = tag,
-                    message = message,
-                    createdAt = currentTime
+                dbHelper.insert(
+                    DbDebugLogEntry(
+                        priority = priority,
+                        tag = tag,
+                        message = message,
+                        createdAt = currentTime
+                    )
                 )
-            )
+            } catch (e: Exception) {
+                // Disable first to avoid calling this again. It will be enabled again during
+                // initialization when the app is restarted.
+                disable()
+                Timber.e(e, "Trimming or saving debug log entry failed")
+            }
         }
     }
 

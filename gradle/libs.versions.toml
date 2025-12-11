@@ -109,6 +109,7 @@ google-http-client = "com.google.http-client:google-http-client-gson:1.44.2" # h
 gson = "com.google.code.gson:gson:2.11.0"
 # https://github.com/square/okhttp/blob/master/CHANGELOG.md
 okhttp = "com.squareup.okhttp3:okhttp:4.12.0"
+#okhttp-logging = "com.squareup.okhttp3:logging-interceptor:4.12.0"
 okhttp-tls = "com.squareup.okhttp3:okhttp-tls:4.12.0"
 picasso = "com.squareup.picasso:picasso:2.8" # https://github.com/square/picasso/releases
 # https://github.com/square/retrofit/blob/master/CHANGELOG.md
