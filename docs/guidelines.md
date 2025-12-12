@@ -38,6 +38,14 @@ operation fails due to this, the app will crash. And when next started, Room wil
 database files (`androidx.room.RoomConnectionManager.SupportOpenHelperCallback` extends 
 `androidx.sqlite.db.SupportSQLiteOpenHelper.Callback` where in `onCorruption` the file is deleted).
 
+### Lifecycle
+
+For fragments, use `viewLifecycleOwner` to tie to the lifecycle of the view.
+
+Note that dialog fragments don't have a `viewLifecycleOwner`.
+
+Obtain a coroutine scope with `lifecycleScope`.
+
 ### Click listeners
 
 The interface class is owned by the class that owns the views that trigger the click events, for
