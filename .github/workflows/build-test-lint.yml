@@ -38,7 +38,7 @@ jobs:
         run: ./gradlew :app:testPureDebugUnitTest
 
       - name: Test Report
-        uses: dorny/test-reporter@6e6a65b7a0bd2c9197df7d0ae36ac5cee784230c # v2.0.0
+        uses: dorny/test-reporter@fe45e9537387dac839af0d33ba56eed8e24189e8 # v2.3.0
         if: always() # also run if tests failed
         with:
           name: JUnit Report
