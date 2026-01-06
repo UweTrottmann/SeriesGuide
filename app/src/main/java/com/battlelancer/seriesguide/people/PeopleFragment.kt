@@ -12,6 +12,7 @@ import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.ProgressBar
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.battlelancer.seriesguide.R
@@ -22,7 +23,7 @@ import com.uwetrottmann.androidutils.AndroidUtils
 /**
  * A fragment loading and showing a list of cast or crew members.
  */
-class PeopleFragment : Fragment() {
+class PeopleFragment : Fragment(), PeopleAdapterHost {
 
     private lateinit var listView: ListView
     private lateinit var emptyView: EmptyView
@@ -80,7 +81,6 @@ class PeopleFragment : Fragment() {
             ListView.CHOICE_MODE_NONE
         }
 
-
         return rootView
     }
 
@@ -103,7 +103,10 @@ class PeopleFragment : Fragment() {
 
         emptyView.setButtonClickListener { refresh() }
 
-        adapter = PeopleAdapter(requireContext())
+        adapter = PeopleAdapter(
+            this,
+            AppCompatResources.getDrawable(requireContext(), R.drawable.ic_account_circle_black_24dp)
+        )
         listView.adapter = adapter
 
         model.credits.observe(viewLifecycleOwner) {
@@ -126,7 +129,6 @@ class PeopleFragment : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
-
         onShowPersonListener = sDummyListener
     }
 
@@ -181,6 +183,20 @@ class PeopleFragment : Fragment() {
             emptyView.setMessage(R.string.people_empty)
         }
         emptyView.setContentVisibility(View.VISIBLE)
+    }
+
+    fun search(query: String) {
+        adapter.filter(query)
+    }
+
+    override fun searchResultIsEmpty(isEmpty: Boolean) {
+        if (isEmpty) {
+            emptyView.setMessage(R.string.empty_no_results)
+            emptyView.setButtonGone(true)
+        } else {
+            emptyView.setButtonGone(false)
+            setEmptyMessage()
+        }
     }
 
     companion object {

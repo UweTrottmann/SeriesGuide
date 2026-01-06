@@ -5,7 +5,9 @@ package com.battlelancer.seriesguide.people
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ActivityPeopleBinding
 import com.battlelancer.seriesguide.people.PeopleFragment.OnShowPersonListener
@@ -103,6 +105,32 @@ class PeopleActivity : BaseActivity(), OnShowPersonListener {
                 if (peopleType == PeopleType.CAST) R.string.movie_cast else R.string.movie_crew
             )
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.people_menu, menu)
+
+        val peopleType = PeopleType.valueOf(
+            intent.getStringExtra(InitBundle.PEOPLE_TYPE)!!
+        )
+
+        val searchItem = menu.findItem(R.id.menu_search)
+        val searchView = searchItem.actionView as SearchView
+        searchView.queryHint = "${getString(R.string.search)} ${if (peopleType == PeopleType.CAST) getString(R.string.movie_cast) else getString(R.string.movie_crew)}"
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                val peopleFragment =
+                    supportFragmentManager.findFragmentById(R.id.containerPeople) as PeopleFragment
+                peopleFragment.search(newText)
+                return true
+            }
+        })
+
+        return super.onCreateOptionsMenu(menu)
     }
 
     override fun showPerson(tmdbId: Int) {
