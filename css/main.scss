@@ -22,11 +22,8 @@ $primary-light: #D1C4E9;
 
 $link-color:                        $primary;
 
-// Darker navbar link text
-$black:    #000 !default;
-$navbar-light-color:                rgba($black, .6) !default;
-$navbar-light-hover-color:          rgba($black, .8) !default;
-$navbar-light-active-color:         $black !default;
+// Slightly brighter navbar link text for better contrast with active color
+$navbar-light-color:                rgba(var(--bs-emphasis-color-rgb), .6) !default;
 
 // text
 // Changed to use system fonts.
