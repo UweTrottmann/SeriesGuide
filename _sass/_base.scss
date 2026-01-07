@@ -1,7 +1,9 @@
+/* For better accessbility, make all links bold. */
 a {
 font-weight:$font-weight-bold;
 }
 
+/* For better accessibility, add dashed outline on focused links. */
 a:focus {
   outline: 1px dashed;
 }
@@ -52,6 +54,7 @@ a:focus {
   --bs-list-group-item-padding-x: 1.25rem;
 }
 
+/* Make list group items text appear like normal text. */
 .list-group-item {
   font-weight:$font-weight-normal;
 }
@@ -70,6 +73,7 @@ a:focus {
   width:32px;
 }
 
+/* A pseudo-title style (visual only) for subtitles in help articles. */
 p.title {
 font-weight: bold;
 margin-top: 20px;
