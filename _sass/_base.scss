@@ -111,3 +111,11 @@ margin-bottom:50px;
 .sg-padded-list > dd {
   margin-bottom: 1.5rem;
 }
+
+// Custom outline button with more opaque color than secondary
+.btn-sg-emphasis {
+  --bs-btn-color: var(--bs-emphasis-color);
+  --bs-btn-border-color: var(--bs-emphasis-color);
+  --bs-btn-hover-color: var(--bs-body-bg);
+  --bs-btn-hover-bg: var(--bs-emphasis-color);
+}
