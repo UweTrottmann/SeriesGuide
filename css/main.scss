@@ -29,11 +29,6 @@ $navbar-light-active-color:         $black !default;
 $font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 $headings-font-weight: 400;
 
-// Spacing
-$spacers: (
-    8: 8rem
-);
-
 // Use smaller corner radius (like Bootstrap 5.1 and older)
 $border-radius:               .25rem !default;
 $border-radius-sm:            .2rem !default;
@@ -46,6 +41,13 @@ $border-radius-xxl:           1rem !default;
 @import "bootstrap/variables-dark";
 
 // 4. Include any default map overrides here
+
+// Spacing
+// https://getbootstrap.com/docs/5.3/utilities/spacing/#sass-maps
+$custom-spacers: (
+    8: 8rem
+);
+$spacers: map-merge($spacers, $custom-spacers);
 
 // 5. Include remainder of required parts
 @import "bootstrap/maps";
