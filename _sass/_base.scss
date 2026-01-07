@@ -39,15 +39,6 @@ a:focus {
   vertical-align: text-bottom; /* Align with existing text. */
 }
 
-/* fix anchor scroll offset */
-//span.anchor {
-//  margin-top: -54px; /* height of nav, in this case 54px */
-//  display: block;
-//  height: 54px; /* height of nav, in this case 54px */
-//  visibility: hidden;
-//  position: relative;
-//}
-
 .navbar-brand {
   font-weight:$font-weight-normal;
 }
