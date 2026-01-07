@@ -13,6 +13,10 @@
 // Copy and paste variables as needed, modify their values, and remove the !default flag.
 // https://getbootstrap.com/docs/5.3/customize/sass/#variable-defaults
 
+// Use light or dark theme depending on what browser requests (using a media query)
+// https://getbootstrap.com/docs/5.3/customize/color-modes/#building-with-sass
+$color-mode-type: media-query;
+
 $primary: #6545a0;
 $primary-light: #D1C4E9;
 
