@@ -4,9 +4,9 @@
   {% include head.html %}
 
 <body>
-  <nav class="navbar navbar-expand-sm navbar-light" role="navigation">
+  <nav class="navbar navbar-expand-sm" role="navigation">
     <div class="container justify-content-start">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <a class="navbar-brand ml-3 ml-md-0 mr-md-3" href="/">
@@ -16,20 +16,20 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item {% if "/whypay" == page.url %}active{% endif %}">
-            <a class="nav-link" href="/whypay">Support the app</a>
+          <li class="nav-item">
+            <a class="nav-link {% if "/whypay" == page.url %}active{% endif %}" href="/whypay">Support the app</a>
           </li>
   			  
-          <li class="nav-item {% if page.url contains "/help" %}active{% endif %}">
-            <a class="nav-link" href="/help">Help</a>
+          <li class="nav-item">
+            <a class="nav-link {% if page.url contains "/help" %}active{% endif %}" href="/help">Help</a>
           </li>
 
-  			  <li class="nav-item d-sm-none d-lg-block {% if "/privacy" == page.url %}active{% endif %}">
-            <a class="nav-link" href="/privacy">Privacy</a>
+  			  <li class="nav-item d-sm-none d-lg-block">
+            <a class="nav-link {% if "/privacy" == page.url %}active{% endif %}" href="/privacy">Privacy</a>
           </li>
 
-  			  <li class="nav-item d-sm-none d-lg-block {% if "/api/" == page.url %}active{% endif %}">
-            <a class="nav-link" href="/api">Extensions API</a>
+  			  <li class="nav-item d-sm-none d-lg-block">
+            <a class="nav-link {% if "/api/" == page.url %}active{% endif %}" href="/api">Extensions API</a>
           </li>
 
           <li class="nav-item d-sm-none d-lg-block">
@@ -37,14 +37,14 @@
           </li>
           
           <li class="nav-item dropdown d-none d-sm-block d-lg-none">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               More
             </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-              <a class="nav-link" href="/privacy">Privacy</a>
-              <a class="nav-link" href="/api">Extensions API</a>
-              <a class="nav-link" href="{{ site.data.links.community }}">Community</a>
-            </div>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="nav-link {% if "/privacy" == page.url %}active{% endif %}" href="/privacy">Privacy</a></li>
+              <li><a class="nav-link {% if "/api/" == page.url %}active{% endif %}" href="/api">Extensions API</a></li>
+              <li><a class="nav-link" href="{{ site.data.links.community }}">Community</a></li>
+            </ul>
           </li>
   			</ul>
       </div>
