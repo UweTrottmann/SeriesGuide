@@ -70,9 +70,15 @@ a:focus {
   font-weight:$font-weight-normal;
 }
 
+/* Make list action items color match default text color, use larger padding (like Bootstrap 4). */
+.list-group {
+  --bs-list-group-action-color: var(--bs-body-color);
+  --bs-list-group-item-padding-y: .75rem;
+  --bs-list-group-item-padding-x: 1.25rem;
+}
+
 .list-group-item {
-color:#212529;
-font-weight:$font-weight-normal;
+  font-weight:$font-weight-normal;
 }
 
 .img-hero {
