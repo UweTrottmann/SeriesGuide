@@ -43,6 +43,7 @@ $border-radius-xxl:           1rem !default;
 
 // Spacing
 // https://getbootstrap.com/docs/5.3/utilities/spacing/#sass-maps
+// Add custom level 8 spacer, only used as mt-lg-8 by opener on index page.
 $custom-spacers: (
     8: 8rem
 );
