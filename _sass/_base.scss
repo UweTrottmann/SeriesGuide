@@ -52,22 +52,14 @@ a:focus {
   font-weight:$font-weight-normal;
 }
 
-.navbar-nav > li > a {
-  font-weight:$font-weight-normal;
-}
-
-/* Use bold in addition to color for better visibility of active item. */
-.navbar-nav > li.active > a {
-  font-weight:500;
-}
-
 .navbar-toggler {
   /* Remove toggler outline if not focused. */
   border: none;
 }
 
-.dropdown-menu .nav-link {
-  font-weight:$font-weight-normal;
+/* Use bold in addition to color for better visibility of active item. */
+.nav-link.active {
+  font-weight:$font-weight-semibold;
 }
 
 /* Make list action items color match default text color, use larger padding (like Bootstrap 4). */
