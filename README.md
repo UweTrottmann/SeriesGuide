@@ -23,6 +23,8 @@ bundle exec jekyll serve
 
 ## Updating Bootstrap
 
+Current Bootstrap version: `4.5.3`
+
 [Download source of latest release](https://github.com/twbs/bootstrap/releases).
 
 - Clean `_sass\bootstrap` folder.
