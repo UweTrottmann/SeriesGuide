@@ -23,14 +23,15 @@ bundle exec jekyll serve
 
 ## Updating Bootstrap
 
-Current Bootstrap version: `4.5.3`
+Current Bootstrap version: `5.3.8`
 
 [Download source of latest release](https://github.com/twbs/bootstrap/releases).
 
 - Clean `_sass\bootstrap` folder.
 - From `scss` folder copy into `_sass\bootstrap`.
-- Check `css\main.scss` if updates are required (e.g. names in `_sass\bootstrap\bootstrap.scss` have changed).
+- Check `css\main.scss` if updates are required (e.g. names of components or variables have changed).
 - From `dist\js` folder copy `bootstrap.min.js` and `.map` into `javascripts`.
+- Follow [migration guide](https://getbootstrap.com/docs/5.3/migration/).
 
 ## Configuration
 
