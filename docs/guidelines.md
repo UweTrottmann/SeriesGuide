@@ -174,6 +174,12 @@ When using a custom layout via `setView()`:
 - its parents use `layout_width="match_parent"`, `layout_height="wrap_content"`, `minHeight="48dp"` (see `abc_alert_dialog_material.xml`)
 - its `customPanel` parent is resized to take only as much space as is available (see `AlertDialogLayout`)
 
+### OptionsMenu
+
+Register a `MenuProvider` using `ComponentActivity.addMenuProvider()` instead of overriding `onCreateOptionsMenu()`.
+
+An example is documented in the [androidx.activity Version 1.4.0-alpha01 release notes](https://developer.android.com/jetpack/androidx/releases/activity#1.4.0-alpha01).
+
 ### PopupMenu
 
 Use `androidx.appcompat.widget.PopupMenu` so Material 3 styles are correctly applied.
