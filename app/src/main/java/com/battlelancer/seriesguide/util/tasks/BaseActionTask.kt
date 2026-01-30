@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2015-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2015 Uwe Trottmann <uwe@uwetrottmann.com>
 
 @file:Suppress("DEPRECATION") // Ignore warning that AsyncTask should not be used for new code
 
@@ -103,9 +103,9 @@ abstract class BaseActionTask(context: Context) : AsyncTask<Void?, Void?, Int?>(
                     action, response,
                     SgTrakt.checkForTraktError(trakt, response)
                 )
-                return if (SgTrakt.isRateLimitExceeded(response) || SgTrakt.isServerError(response)) {
+                return if (TraktV2.isRateLimitExceeded(response) || TraktV2.isServerError(response)) {
                     ERROR_TRAKT_API_SERVER
-                } else if (SgTrakt.isAccountLimitExceeded(response)) {
+                } else if (TraktV2.isAccountLimitExceeded(response)) {
                     ERROR_TRAKT_ACCOUNT_LIMIT_EXCEEDED
                 } else if (TraktV2.isAccountLocked(response)) {
                     ERROR_TRAKT_ACCOUNT_LOCKED

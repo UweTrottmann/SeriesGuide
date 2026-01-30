@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2017-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2017 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.sync
 
@@ -170,7 +170,7 @@ class TraktSync(
     fun <T> handleUnsuccessfulResponse(response: Response<T>, action: String) {
         if (SgTrakt.isUnauthorized(context, response)) {
             return // Do not report auth errors.
-        } else if (SgTrakt.isAccountLimitExceeded(response)) {
+        } else if (TraktV2.isAccountLimitExceeded(response)) {
             // Currently should only occur on initial sync when uploading items to watchlist or
             // collection (notes upload has its own error handling).
             progress.setImportantErrorIfNone(context.getString(R.string.trakt_error_limit_exceeded_upload))
