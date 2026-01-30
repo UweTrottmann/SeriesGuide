@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2025 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.traktapi
 
@@ -104,7 +104,7 @@ object TraktTools4 {
 
         if (!response.isSuccessful) {
             return when {
-                SgTrakt.isAccountLimitExceeded(response) -> {
+                TraktV2.isAccountLimitExceeded(response) -> {
                     Errors.logAndReport(action, response)
                     TraktErrorResponse.IsAccountLimitExceeded()
                 }
