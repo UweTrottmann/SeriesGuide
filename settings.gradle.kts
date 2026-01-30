@@ -22,7 +22,8 @@ dependencyResolutionManagement {
         // For com.github.chrisbanes:PhotoView
         maven { url = uri("https://jitpack.io") }
         // For testing local snapshots
-        // mavenLocal()
+        // (might also want to set isChanging = true to update snapshot versions)
+//        mavenLocal()
     }
 }
 
