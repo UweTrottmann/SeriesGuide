@@ -16,6 +16,7 @@ import com.uwetrottmann.trakt5.services.Notes
 import com.uwetrottmann.trakt5.services.Sync
 import retrofit2.Call
 import retrofit2.awaitResponse
+import timber.log.Timber
 
 /**
  * Uses response classes inheriting from a Kotlin sealed interface.
@@ -80,6 +81,7 @@ object TraktTools4 {
             action = "get collected shows",
             reportIsNotVip = true // Should work even if not VIP
         ) { page ->
+            // 1000 is the maximum limit according to https://github.com/trakt/trakt-api/discussions/681
             traktSync.collectionShows(page, 1000, null)
         }
     }
@@ -119,6 +121,9 @@ object TraktTools4 {
                 is TraktNonNullResponse.Success -> {
                     allItems.addAll(response.data)
                     totalPageCount = response.pageCount
+                    if (totalPageCount == null) {
+                        Timber.w("Page count header not found for '$action'")
+                    }
                     currentPage++
                 }
 
