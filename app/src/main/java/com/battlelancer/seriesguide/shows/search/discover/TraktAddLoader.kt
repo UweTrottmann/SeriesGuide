@@ -60,7 +60,7 @@ class TraktAddLoader(
 
                 Type.COLLECTION -> {
                     action = "load show collection"
-                    response = trakt.sync().collectionShows(null).execute()
+                    response = trakt.sync().collectionShows(1, 1000,null).execute()
                 }
 
                 Type.WATCHLIST -> {
