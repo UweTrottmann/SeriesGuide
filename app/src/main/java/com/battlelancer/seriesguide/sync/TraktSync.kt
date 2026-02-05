@@ -49,7 +49,8 @@ class TraktSync(
      * To not conflict with Hexagon sync, can turn on [onlyRatings] so only
      * ratings are synced.
      *
-     * Note: this calls [TraktNotesSync.syncForShows] which may throw [InterruptedException].
+     * Note: this calls [syncEpisodes] and [TraktNotesSync.syncForShows] which may throw
+     * [InterruptedException].
      */
     @Throws(InterruptedException::class)
     fun sync(onlyRatings: Boolean): SgSyncAdapter.UpdateResult {
@@ -136,8 +137,11 @@ class TraktSync(
     /**
      * Downloads and uploads episode watched and collected flags.
      *
-     *  Do **NOT** call if there are no local shows to avoid unnecessary work.
+     * Do **NOT** call if there are no local shows to avoid unnecessary work.
+     *
+     * Note: this calls [TraktEpisodeSync.syncCollected] which may throw [InterruptedException].
      */
+    @Throws(InterruptedException::class)
     private fun syncEpisodes(
         tmdbIdsToShowIds: Map<Int, Long>,
         lastActivity: LastActivityMore
