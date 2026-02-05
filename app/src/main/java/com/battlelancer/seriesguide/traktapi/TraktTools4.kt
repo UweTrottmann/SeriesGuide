@@ -6,12 +6,15 @@ package com.battlelancer.seriesguide.traktapi
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.trakt5.TraktV2
 import com.uwetrottmann.trakt5.entities.AddNoteRequest
+import com.uwetrottmann.trakt5.entities.BaseShow
 import com.uwetrottmann.trakt5.entities.Note
 import com.uwetrottmann.trakt5.entities.Show
 import com.uwetrottmann.trakt5.entities.ShowIds
 import com.uwetrottmann.trakt5.services.Notes
+import com.uwetrottmann.trakt5.services.Sync
 import retrofit2.Call
 import retrofit2.awaitResponse
+import kotlin.collections.set
 
 /**
  * Uses response classes inheriting from a Kotlin sealed interface.
@@ -26,12 +29,22 @@ object TraktTools4 {
             /**
              * If T is [Void] this is always `null`.
              */
-            val data: T?
+            val data: T?,
+            /**
+             * If returned, the number of available pages for a paginated endpoint.
+             */
+            val pageCount: Int?
         ) : TraktResponse<T>
     }
 
     sealed interface TraktNonNullResponse<T> {
-        data class Success<T>(val data: T) : TraktNonNullResponse<T>
+        data class Success<T>(
+            val data: T,
+            /**
+             * If returned, the number of available pages for a paginated endpoint.
+             */
+            val pageCount: Int?
+        ) : TraktNonNullResponse<T>
     }
 
     sealed interface TraktErrorResponse {
@@ -39,6 +52,85 @@ object TraktTools4 {
         class IsUnauthorized<T> : TraktResponse<T>, TraktNonNullResponse<T>
         class IsAccountLimitExceeded<T> : TraktResponse<T>, TraktNonNullResponse<T>
         class Other<T> : TraktResponse<T>, TraktNonNullResponse<T>
+    }
+
+    /**
+     * Get collected shows mapped by their TMDB ID.
+     */
+    suspend fun getCollectedShowsByTmdbId(
+        traktSync: Sync
+    ): TraktNonNullResponse<Map<Int, BaseShow>> {
+        val response = fetchAllPages(
+            action = "get collected shows",
+            reportIsNotVip = true // Should work even if not VIP
+        ) { page ->
+            traktSync.collectionShows(page, 1000, null)
+        }
+
+        return when (response) {
+            is TraktNonNullResponse.Success -> TraktNonNullResponse.Success(
+                mapByTmdbId(response.data),
+                response.pageCount
+            )
+            is TraktErrorResponse.IsNotVip -> TraktErrorResponse.IsNotVip()
+            is TraktErrorResponse.IsUnauthorized -> TraktErrorResponse.IsUnauthorized()
+            is TraktErrorResponse.IsAccountLimitExceeded -> TraktErrorResponse.IsAccountLimitExceeded()
+            is TraktErrorResponse.Other -> TraktErrorResponse.Other()
+        }
+    }
+
+    /**
+     * Fetches all pages from a paginated Trakt API endpoint.
+     *
+     * @param action Description of the action for error logging
+     * @param reportIsNotVip Whether to report "not VIP" errors
+     * @param callProvider Function that creates a Call for a given page number
+     * @return All items from all pages combined, or an error response
+     */
+    private suspend fun <T> fetchAllPages(
+        action: String,
+        reportIsNotVip: Boolean = false,
+        callProvider: (page: Int) -> Call<List<T>>
+    ): TraktNonNullResponse<List<T>> {
+        val allItems = mutableListOf<T>()
+        var currentPage = 1
+        var totalPageCount: Int?
+
+        do {
+            val response = awaitTraktCallNonNull(
+                callProvider(currentPage),
+                action,
+                reportIsNotVip = reportIsNotVip
+            )
+
+            when (response) {
+                is TraktNonNullResponse.Success -> {
+                    allItems.addAll(response.data)
+                    totalPageCount = response.pageCount
+                    currentPage++
+                }
+                is TraktErrorResponse.IsNotVip -> return TraktErrorResponse.IsNotVip()
+                is TraktErrorResponse.IsUnauthorized -> return TraktErrorResponse.IsUnauthorized()
+                is TraktErrorResponse.IsAccountLimitExceeded -> return TraktErrorResponse.IsAccountLimitExceeded()
+                is TraktErrorResponse.Other -> return TraktErrorResponse.Other()
+            }
+        } while (totalPageCount != null && currentPage <= totalPageCount)
+
+        return TraktNonNullResponse.Success(allItems, totalPageCount)
+    }
+
+    fun mapByTmdbId(traktShows: List<BaseShow>?): Map<Int, BaseShow> {
+        if (traktShows == null) return emptyMap()
+
+        val traktShowsMap = HashMap<Int, BaseShow>(traktShows.size)
+        for (traktShow in traktShows) {
+            val tmdbId = traktShow.show?.ids?.tmdb
+            if (tmdbId == null || traktShow.seasons.isNullOrEmpty()) {
+                continue  // trakt show misses required data, skip.
+            }
+            traktShowsMap[tmdbId] = traktShow
+        }
+        return traktShowsMap
     }
 
     /**
@@ -129,7 +221,10 @@ object TraktTools4 {
             Errors.logAndReport(action, response, "body is null")
         }
 
-        return TraktResponse.Success(body)
+        // Only returned when using pagination
+        val pageCountOrNull = TraktV2.getPageCount(response)
+
+        return TraktResponse.Success(body, pageCountOrNull)
     }
 
     /**
@@ -151,7 +246,7 @@ object TraktTools4 {
                 if (data == null) {
                     TraktErrorResponse.Other()
                 } else {
-                    TraktNonNullResponse.Success(data)
+                    TraktNonNullResponse.Success(data, response.pageCount)
                 }
             }
         }
