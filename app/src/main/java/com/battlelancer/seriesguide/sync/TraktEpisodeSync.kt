@@ -12,7 +12,6 @@ import com.battlelancer.seriesguide.shows.database.SgEpisode2ForSync
 import com.battlelancer.seriesguide.shows.database.SgEpisode2WatchedUpdate
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
-import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktSettings
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.traktapi.TraktTools4
@@ -66,7 +65,11 @@ class TraktEpisodeSync(
      * Trakt. If an episode has multiple plays, uploads it multiple times.
      * If false, sets episodes that are not watched on Trakt but watched locally
      * (and only those, e.g. no skipped episodes) as not watched.
+     *
+     * Note: this uses [runBlocking], so if the calling thread is interrupted this will throw
+     * [InterruptedException].
      */
+    @Throws(InterruptedException::class)
     fun syncWatched(
         tmdbIdsToShowIds: Map<Int, Long>,
         watchedAt: OffsetDateTime?,
@@ -78,27 +81,17 @@ class TraktEpisodeSync(
         }
         val lastWatchedAt = TraktSettings.getLastEpisodesWatchedAt(context)
         if (isInitialSync || TimeTools.isAfterMillis(watchedAt, lastWatchedAt)) {
-            val watchedShowsTrakt = try {
-                val response = traktSync!!.sync
-                    .watchedShows(null)
-                    .execute()
-                if (!response.isSuccessful) {
-                    if (SgTrakt.isUnauthorized(context, response)) {
-                        return false
-                    }
-                    Errors.logAndReport("get watched shows", response)
-                    return false
+            val watchedShowsTrakt = runBlocking(Dispatchers.Default) {
+                when (val response = TraktTools4.getWatchedShowsByTmdbId(traktSync!!.sync)) {
+                    is Success -> response.data
+                    else -> null
                 }
-                response.body()
-            } catch (e: Exception) {
-                Errors.logAndReport("get watched shows", e)
-                return false
             } ?: return false
 
             // apply database updates, if initial sync upload diff
             val startTime = System.currentTimeMillis()
             val success = processTraktShows(
-                TraktTools4.mapByTmdbId(watchedShowsTrakt), tmdbIdsToShowIds, Flag.WATCHED,
+                watchedShowsTrakt, tmdbIdsToShowIds, Flag.WATCHED,
                 isInitialSync
             )
             Timber.d("syncWatched: processing took %s ms", System.currentTimeMillis() - startTime)
