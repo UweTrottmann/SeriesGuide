@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2017-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2017 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.sync
 
@@ -15,7 +15,8 @@ import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktSettings
 import com.battlelancer.seriesguide.traktapi.TraktTools
-import com.battlelancer.seriesguide.traktapi.TraktTools2
+import com.battlelancer.seriesguide.traktapi.TraktTools4
+import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse.Success
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.TimeTools
 import com.uwetrottmann.trakt5.entities.BaseSeason
@@ -25,6 +26,8 @@ import com.uwetrottmann.trakt5.entities.SyncEpisode
 import com.uwetrottmann.trakt5.entities.SyncItems
 import com.uwetrottmann.trakt5.entities.SyncSeason
 import com.uwetrottmann.trakt5.entities.SyncShow
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import org.threeten.bp.OffsetDateTime
 import timber.log.Timber
 
@@ -95,7 +98,7 @@ class TraktEpisodeSync(
             // apply database updates, if initial sync upload diff
             val startTime = System.currentTimeMillis()
             val success = processTraktShows(
-                watchedShowsTrakt, tmdbIdsToShowIds, Flag.WATCHED,
+                TraktTools4.mapByTmdbId(watchedShowsTrakt), tmdbIdsToShowIds, Flag.WATCHED,
                 isInitialSync
             )
             Timber.d("syncWatched: processing took %s ms", System.currentTimeMillis() - startTime)
@@ -124,7 +127,11 @@ class TraktEpisodeSync(
      * Trakt.
      * If false, sets episodes that are not collected on Trakt but collected locally
      * as not collected.
+     *
+     * Note: this uses [runBlocking], so if the calling thread is interrupted this will throw
+     * [InterruptedException].
      */
+    @Throws(InterruptedException::class)
     fun syncCollected(
         tmdbIdsToShowIds: Map<Int, Long>,
         collectedAt: OffsetDateTime?,
@@ -136,21 +143,12 @@ class TraktEpisodeSync(
         }
         val lastCollectedAt = TraktSettings.getLastEpisodesCollectedAt(context)
         if (isInitialSync || TimeTools.isAfterMillis(collectedAt, lastCollectedAt)) {
-            val collectedShowsTrakt = try {
-                val response = traktSync!!.sync
-                    .collectionShows(null)
-                    .execute()
-                if (!response.isSuccessful) {
-                    if (SgTrakt.isUnauthorized(context, response)) {
-                        return false
-                    }
-                    Errors.logAndReport("get collected shows", response)
-                    return false
+
+            val collectedShowsTrakt = runBlocking(Dispatchers.Default) {
+                when (val response = TraktTools4.getCollectedShowsByTmdbId(traktSync!!.sync)) {
+                    is Success -> response.data
+                    else -> null
                 }
-                response.body()
-            } catch (e: Exception) {
-                Errors.logAndReport("get collected shows", e)
-                return false
             } ?: return false
 
             // apply database updates, if initial sync upload diff
@@ -183,13 +181,11 @@ class TraktEpisodeSync(
     }
 
     private fun processTraktShows(
-        remoteShows: List<BaseShow>,
+        tmdbIdsToTraktShow: Map<Int, BaseShow>,
         tmdbIdsToShowIds: Map<Int, Long>,
         flag: Flag,
         isInitialSync: Boolean
     ): Boolean {
-        val tmdbIdsToTraktShow = TraktTools2.mapByTmdbId(remoteShows)
-
         var uploadedShowsCount = 0
         val showIdsToLastWatched: MutableMap<Long, Long> = HashMap()
         val showsToClear = ArrayList<Long>()
