@@ -3,6 +3,7 @@
 
 package com.battlelancer.seriesguide.traktapi
 
+import com.battlelancer.seriesguide.traktapi.TraktTools4.awaitTraktCall
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.trakt5.TraktV2
 import com.uwetrottmann.trakt5.entities.AddNoteRequest
@@ -10,11 +11,11 @@ import com.uwetrottmann.trakt5.entities.BaseShow
 import com.uwetrottmann.trakt5.entities.Note
 import com.uwetrottmann.trakt5.entities.Show
 import com.uwetrottmann.trakt5.entities.ShowIds
+import com.uwetrottmann.trakt5.enums.Extended
 import com.uwetrottmann.trakt5.services.Notes
 import com.uwetrottmann.trakt5.services.Sync
 import retrofit2.Call
 import retrofit2.awaitResponse
-import kotlin.collections.set
 
 /**
  * Uses response classes inheriting from a Kotlin sealed interface.
@@ -54,31 +55,39 @@ object TraktTools4 {
         class Other<T> : TraktResponse<T>, TraktNonNullResponse<T>
     }
 
-    suspend fun getWatchedShowsByTmdbId(
-        traktSync: Sync
-    ): TraktNonNullResponse<Map<Int, BaseShow>> {
-        val response = awaitTraktCallNonNull(
-            traktSync.watchedShows(null),
+    suspend fun getWatchedShows(
+        traktSync: Sync,
+        noSeasons: Boolean
+    ): TraktNonNullResponse<List<BaseShow>> {
+        return awaitTraktCallNonNull(
+            traktSync.watchedShows(if (noSeasons) Extended.NOSEASONS else null),
             "get watched shows",
             reportIsNotVip = true // Should work even if not VIP
         )
+    }
 
+    suspend fun getWatchedShowsByTmdbId(
+        traktSync: Sync
+    ): TraktNonNullResponse<Map<Int, BaseShow>> {
+        val response = getWatchedShows(traktSync, noSeasons = false)
         return mapResponseData(response) { mapByTmdbId(it) }
     }
 
-    /**
-     * Get collected shows mapped by their TMDB ID.
-     */
-    suspend fun getCollectedShowsByTmdbId(
+    suspend fun getCollectedShows(
         traktSync: Sync
-    ): TraktNonNullResponse<Map<Int, BaseShow>> {
-        val response = fetchAllPages(
+    ): TraktNonNullResponse<List<BaseShow>> {
+        return fetchAllPages(
             action = "get collected shows",
             reportIsNotVip = true // Should work even if not VIP
         ) { page ->
             traktSync.collectionShows(page, 1000, null)
         }
+    }
 
+    suspend fun getCollectedShowsByTmdbId(
+        traktSync: Sync
+    ): TraktNonNullResponse<Map<Int, BaseShow>> {
+        val response = getCollectedShows(traktSync)
         return mapResponseData(response) { mapByTmdbId(it) }
     }
 
@@ -112,6 +121,7 @@ object TraktTools4 {
                     totalPageCount = response.pageCount
                     currentPage++
                 }
+
                 is TraktErrorResponse.IsNotVip -> return TraktErrorResponse.IsNotVip()
                 is TraktErrorResponse.IsUnauthorized -> return TraktErrorResponse.IsUnauthorized()
                 is TraktErrorResponse.IsAccountLimitExceeded -> return TraktErrorResponse.IsAccountLimitExceeded()
@@ -132,6 +142,17 @@ object TraktTools4 {
             traktShowsMap[tmdbId] = traktShow
         }
         return traktShowsMap
+    }
+
+    suspend fun getShowsOnWatchlist(
+        traktSync: Sync
+    ): TraktNonNullResponse<List<BaseShow>> {
+        return awaitTraktCallNonNull(
+            // Use Extended.FULL to get show metadata
+            traktSync.watchlistShows(Extended.FULL),
+            "get shows on watchlist",
+            reportIsNotVip = true // Should work even if not VIP
+        )
     }
 
     /**
@@ -262,6 +283,7 @@ object TraktTools4 {
                 transform(response.data),
                 response.pageCount
             )
+
             is TraktErrorResponse.IsNotVip -> TraktErrorResponse.IsNotVip()
             is TraktErrorResponse.IsUnauthorized -> TraktErrorResponse.IsUnauthorized()
             is TraktErrorResponse.IsAccountLimitExceeded -> TraktErrorResponse.IsAccountLimitExceeded()
