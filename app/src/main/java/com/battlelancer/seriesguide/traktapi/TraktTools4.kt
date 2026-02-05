@@ -54,6 +54,18 @@ object TraktTools4 {
         class Other<T> : TraktResponse<T>, TraktNonNullResponse<T>
     }
 
+    suspend fun getWatchedShowsByTmdbId(
+        traktSync: Sync
+    ): TraktNonNullResponse<Map<Int, BaseShow>> {
+        val response = awaitTraktCallNonNull(
+            traktSync.watchedShows(null),
+            "get watched shows",
+            reportIsNotVip = true // Should work even if not VIP
+        )
+
+        return mapResponseData(response) { mapByTmdbId(it) }
+    }
+
     /**
      * Get collected shows mapped by their TMDB ID.
      */
@@ -67,16 +79,7 @@ object TraktTools4 {
             traktSync.collectionShows(page, 1000, null)
         }
 
-        return when (response) {
-            is TraktNonNullResponse.Success -> TraktNonNullResponse.Success(
-                mapByTmdbId(response.data),
-                response.pageCount
-            )
-            is TraktErrorResponse.IsNotVip -> TraktErrorResponse.IsNotVip()
-            is TraktErrorResponse.IsUnauthorized -> TraktErrorResponse.IsUnauthorized()
-            is TraktErrorResponse.IsAccountLimitExceeded -> TraktErrorResponse.IsAccountLimitExceeded()
-            is TraktErrorResponse.Other -> TraktErrorResponse.Other()
-        }
+        return mapResponseData(response) { mapByTmdbId(it) }
     }
 
     /**
@@ -119,9 +122,7 @@ object TraktTools4 {
         return TraktNonNullResponse.Success(allItems, totalPageCount)
     }
 
-    fun mapByTmdbId(traktShows: List<BaseShow>?): Map<Int, BaseShow> {
-        if (traktShows == null) return emptyMap()
-
+    private fun mapByTmdbId(traktShows: List<BaseShow>): Map<Int, BaseShow> {
         val traktShowsMap = HashMap<Int, BaseShow>(traktShows.size)
         for (traktShow in traktShows) {
             val tmdbId = traktShow.show?.ids?.tmdb
@@ -249,6 +250,22 @@ object TraktTools4 {
                     TraktNonNullResponse.Success(data, response.pageCount)
                 }
             }
+        }
+    }
+
+    private fun <T, R> mapResponseData(
+        response: TraktNonNullResponse<T>,
+        transform: (T) -> R
+    ): TraktNonNullResponse<R> {
+        return when (response) {
+            is TraktNonNullResponse.Success -> TraktNonNullResponse.Success(
+                transform(response.data),
+                response.pageCount
+            )
+            is TraktErrorResponse.IsNotVip -> TraktErrorResponse.IsNotVip()
+            is TraktErrorResponse.IsUnauthorized -> TraktErrorResponse.IsUnauthorized()
+            is TraktErrorResponse.IsAccountLimitExceeded -> TraktErrorResponse.IsAccountLimitExceeded()
+            is TraktErrorResponse.Other -> TraktErrorResponse.Other()
         }
     }
 
