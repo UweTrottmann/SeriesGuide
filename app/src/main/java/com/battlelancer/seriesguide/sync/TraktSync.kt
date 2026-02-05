@@ -139,7 +139,8 @@ class TraktSync(
      *
      * Do **NOT** call if there are no local shows to avoid unnecessary work.
      *
-     * Note: this calls [TraktEpisodeSync.syncCollected] which may throw [InterruptedException].
+     * Note: this calls [TraktEpisodeSync.syncWatched] and [TraktEpisodeSync.syncCollected] which
+     * may throw [InterruptedException].
      */
     @Throws(InterruptedException::class)
     private fun syncEpisodes(
