@@ -310,6 +310,7 @@
     <!-- Features -->
     <string name="feature_supported">پشتیبانی شده</string>
     <string name="feature_not_supported">پشتیبانی نمی‎شود</string>
+    <string name="feature_disabled">از کار افتاده</string>
     <string name="feature_history">تاریخچه‌ی شخصی و دوستان</string>
     <string name="feature_comments">ارسال نظرات</string>
     <string name="feature_sync">همگام‌‌سازی</string>
@@ -352,6 +353,8 @@
     <string name="disconnect">قطع کردن</string>
     <string name="show_library">افزودن نمایش‌ها از ترکت</string>
     <string name="about_trakt">Trakt کمک می‌کند تا حساب نمایش‌های تلویزیونی و فیلم‌هایی که می‌بینید را داشته باشید.</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">نمره</string>
     <string name="ack_rated">رتبه فرستاده شد</string>

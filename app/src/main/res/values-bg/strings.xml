@@ -310,6 +310,7 @@
     <!-- Features -->
     <string name="feature_supported">Поддържани</string>
     <string name="feature_not_supported">Не се поддържат</string>
+    <string name="feature_disabled">Изключено</string>
     <string name="feature_history">Лична и приятелска история</string>
     <string name="feature_comments">Публикувай коментар</string>
     <string name="feature_sync">Синхронизирай</string>
@@ -352,6 +353,8 @@
     <string name="disconnect">Прекъсване на връзката</string>
     <string name="show_library">Добавяне на сериали от Trakt</string>
     <string name="about_trakt">Trakt записва какви сериали и филми гледате.</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">Оцени</string>
     <string name="ack_rated">Рейтингът е изпратен</string>

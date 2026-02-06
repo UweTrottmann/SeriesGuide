@@ -300,6 +300,7 @@
     <!-- Features -->
     <string name="feature_supported">Didukung</string>
     <string name="feature_not_supported">Tidak Didukung</string>
+    <string name="feature_disabled">Disabled</string>
     <string name="feature_history">Riwayat pribadi dan teman</string>
     <string name="feature_comments">Kirim komentar</string>
     <string name="feature_sync">Sync</string>
@@ -342,6 +343,8 @@
     <string name="disconnect">Putuskan</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt membantu menyimpan catatan acara TV dan film apa yang anda tonton.</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">Beri nilai</string>
     <string name="ack_rated">Rating sent</string>

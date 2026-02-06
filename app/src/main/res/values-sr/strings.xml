@@ -320,6 +320,7 @@
     <!-- Features -->
     <string name="feature_supported">Подржано</string>
     <string name="feature_not_supported">Није подржано</string>
+    <string name="feature_disabled">Онемогућено</string>
     <string name="feature_history">Лична и историја пријатеља</string>
     <string name="feature_comments">Постујте коментаре</string>
     <string name="feature_sync">Синхронизација</string>
@@ -362,6 +363,8 @@
     <string name="disconnect">Прекини везу</string>
     <string name="show_library">Додајте емисије из Trakt</string>
     <string name="about_trakt">Trakt води евиденцију серија и филмова које гледате.</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">Оцени</string>
     <string name="ack_rated">Оцена послата</string>

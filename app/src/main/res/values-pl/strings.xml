@@ -330,6 +330,7 @@
     <!-- Features -->
     <string name="feature_supported">Obsługiwane</string>
     <string name="feature_not_supported">Nie obsługiwane</string>
+    <string name="feature_disabled">Wyłączony</string>
     <string name="feature_history">Historia osobista i przyjaciół</string>
     <string name="feature_comments">Dodaj komentarz</string>
     <string name="feature_sync">Synchronizacja</string>
@@ -372,6 +373,8 @@
     <string name="disconnect">Rozłącz</string>
     <string name="show_library">Dodaj seriale z Trakt</string>
     <string name="about_trakt">Trakt pomaga zarządzać jakie seriale i filmy oglądasz.</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">Oceń</string>
     <string name="ack_rated">Ocena wysłana</string>

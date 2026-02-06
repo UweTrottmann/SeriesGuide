@@ -310,6 +310,7 @@
     <!-- Features -->
     <string name="feature_supported">Υποστηρίζεται</string>
     <string name="feature_not_supported">Δεν υποστηρίζεται</string>
+    <string name="feature_disabled">Ανενεργό</string>
     <string name="feature_history">Ιστορικό Προσωπικο και Φίλων</string>
     <string name="feature_comments">Σχόλια Αναρτήσεων</string>
     <string name="feature_sync">Συγχρονισμός</string>
@@ -352,6 +353,8 @@
     <string name="disconnect">Αποσύνδεση</string>
     <string name="show_library">Προσθήκη σειρών από Trakt</string>
     <string name="about_trakt">Το Trakt βοηθά να καταγράψετε τα τηλεοπτικά προγράμματα και τις ταινίες που βλέπετε.</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">Αξιολόγηση</string>
     <string name="ack_rated">Η βαθμολογία απεστάλη</string>

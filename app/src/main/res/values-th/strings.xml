@@ -300,6 +300,7 @@
     <!-- Features -->
     <string name="feature_supported">รองรับ</string>
     <string name="feature_not_supported">ไม่รองรับ</string>
+    <string name="feature_disabled">ปิดใช้งาน</string>
     <string name="feature_history">ประวัติส่วนตัวและของเพื่อน</string>
     <string name="feature_comments">แสดงความคิดเห็น</string>
     <string name="feature_sync">ซิงค์</string>
@@ -342,6 +343,8 @@
     <string name="disconnect">เลิกเชื่อมต่อ</string>
     <string name="show_library">เพิ่มรายการจาก Trakt</string>
     <string name="about_trakt">Trakt ช่วยเก็บบันทึกรายการทีวีและภาพยนตร์ที่คุณกำลังดูอยู่</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">ให้คะแนน</string>
     <string name="ack_rated">Rating sent</string>

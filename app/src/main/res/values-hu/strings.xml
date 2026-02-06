@@ -310,6 +310,7 @@
     <!-- Features -->
     <string name="feature_supported">Támogatott</string>
     <string name="feature_not_supported">Nem támogatott</string>
+    <string name="feature_disabled">Letiltva</string>
     <string name="feature_history">Személyes és barátok trakt története</string>
     <string name="feature_comments">Hozzászólások</string>
     <string name="feature_sync">Szinkronizálás</string>
@@ -352,6 +353,8 @@
     <string name="disconnect">Megszakítás</string>
     <string name="show_library">Sorozatok hozzáadása innen: Trakt</string>
     <string name="about_trakt">A Trakt segít nyilvántartani a nézett sorozatokat és filmeket.</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">Értékelj</string>
     <string name="ack_rated">Rating sent</string>

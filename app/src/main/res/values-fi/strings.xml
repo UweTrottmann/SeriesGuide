@@ -310,6 +310,7 @@
     <!-- Features -->
     <string name="feature_supported">Tuettu</string>
     <string name="feature_not_supported">Ei tuettu</string>
+    <string name="feature_disabled">Poistettu käytöstä</string>
     <string name="feature_history">Henkilökohtainen ja ystävien historia</string>
     <string name="feature_comments">Lähetä kommentteja</string>
     <string name="feature_sync">Synkronointi</string>
@@ -352,6 +353,8 @@
     <string name="disconnect">Katkaise yhteys</string>
     <string name="show_library">Lisää ohjelmat Traktista</string>
     <string name="about_trakt">Trakt auttaa sinua pysymään kärryillä katsomistasi ohjelmista ja elokuvista.</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">Arvostele</string>
     <string name="ack_rated">Arvosana lähetettiin</string>

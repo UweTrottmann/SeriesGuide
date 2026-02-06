@@ -350,6 +350,7 @@
     <!-- Features -->
     <string name="feature_supported">Cefnogwyd</string>
     <string name="feature_not_supported">Heb gefnogaeth</string>
+    <string name="feature_disabled">Anweithredol</string>
     <string name="feature_history">Hanes personol a ffrind</string>
     <string name="feature_comments">Postiwch sylwadau</string>
     <string name="feature_sync">Cydamseru</string>
@@ -392,6 +393,8 @@
     <string name="disconnect">Datgysylltwch</string>
     <string name="show_library">Ychwanegu rhaglenni o Trakt</string>
     <string name="about_trakt">Mae Trakt yn helpu i gadw cofnod o\'r rhaglenni teledu a\'r ffilmiau rydych chi\'n eu gwylio.</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">Cyfradd</string>
     <string name="ack_rated">Rating sent</string>

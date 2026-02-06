@@ -300,6 +300,7 @@
     <!-- Features -->
     <string name="feature_supported">支持</string>
     <string name="feature_not_supported">不支持</string>
+    <string name="feature_disabled">已禁用</string>
     <string name="feature_history">我和朋友的历史记录</string>
     <string name="feature_comments">发布评论</string>
     <string name="feature_sync">同步</string>
@@ -342,6 +343,8 @@
     <string name="disconnect">断开</string>
     <string name="show_library">从 Trakt 中添加节目</string>
     <string name="about_trakt">Trakt 可帮您记录看过的电影和电视节目。</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">评分</string>
     <string name="ack_rated">评分已发送</string>

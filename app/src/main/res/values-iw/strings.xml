@@ -330,6 +330,7 @@
     <!-- Features -->
     <string name="feature_supported">נתמך</string>
     <string name="feature_not_supported">לא נתמך</string>
+    <string name="feature_disabled">לא מופעל</string>
     <string name="feature_history">היסטוריה שלי ושל חברים</string>
     <string name="feature_comments">פרסם תגובות</string>
     <string name="feature_sync">סנכרן</string>
@@ -372,6 +373,8 @@
     <string name="disconnect">התנתק</string>
     <string name="show_library">הוסף סדרות מ-Trakt</string>
     <string name="about_trakt">Trakt מסייעת לשמור רשימה של אילו תוכניות טלוויזיה וסרטים אתה צופה.</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">דרג</string>
     <string name="ack_rated">דירוג נשלח</string>

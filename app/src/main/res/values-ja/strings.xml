@@ -300,6 +300,7 @@
     <!-- Features -->
     <string name="feature_supported">サポートされています</string>
     <string name="feature_not_supported">サポートされていません</string>
+    <string name="feature_disabled">Disabled</string>
     <string name="feature_history">自分と友だちの履歴</string>
     <string name="feature_comments">コメントを投稿</string>
     <string name="feature_sync">同期</string>
@@ -342,6 +343,8 @@
     <string name="disconnect">切断</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt は、あなたが観ているテレビ番組や映画を記録するのに役立ちます。</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">作品を評価</string>
     <string name="ack_rated">Rating sent</string>

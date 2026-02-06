@@ -300,6 +300,7 @@
     <!-- Features -->
     <string name="feature_supported">지원하는 기능</string>
     <string name="feature_not_supported">지원하지 않는 기능</string>
+    <string name="feature_disabled">비활성화</string>
     <string name="feature_history">본인 및 친구의 시청 기록</string>
     <string name="feature_comments">댓글 작성</string>
     <string name="feature_sync">동기화</string>
@@ -342,6 +343,8 @@
     <string name="disconnect">연결 해제</string>
     <string name="show_library">Trakt으로부터 프로그램 추가</string>
     <string name="about_trakt">Trakt는 시청 중인 TV 프로그램과 영화를 기록하는 데 도움을 줍니다.</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">평가</string>
     <string name="ack_rated">평가 완료</string>

@@ -341,7 +341,7 @@
 
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud helps to back up and sync your shows, lists and movies</string>
-    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some Trakt features are not available</string>
+    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud, some Trakt features are disabled and changes are only sent to your Trakt account, not retrieved.</string>
     <string name="hexagon_signin">Sign In</string>
     <string name="hexagon_signout">Sign Out</string>
     <string name="hexagon_setup_incomplete">Setting up SeriesGuide Cloud was not completed</string>
@@ -380,6 +380,8 @@
     <string name="disconnect">Disconnect</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt is a third-party service that helps keep a record of what TV shows and movies you are watching.</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
 
     <!-- trakt ratings -->
     <string name="action_rate">Rate</string>

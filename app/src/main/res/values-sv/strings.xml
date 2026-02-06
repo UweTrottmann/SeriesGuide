@@ -310,6 +310,7 @@
     <!-- Features -->
     <string name="feature_supported">Stöds</string>
     <string name="feature_not_supported">Stöds inte</string>
+    <string name="feature_disabled">Inaktiverad</string>
     <string name="feature_history">Personlig och vän historia</string>
     <string name="feature_comments">Skicka kommentar</string>
     <string name="feature_sync">Synk</string>
@@ -352,6 +353,8 @@
     <string name="disconnect">Koppla ner</string>
     <string name="show_library">Lägg till serier från Trakt</string>
     <string name="about_trakt">Trakt hjälper till att hålla ett register över vilka TV-serier och filmer du ser på.</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">Betygsätt</string>
     <string name="ack_rated">Betyg har skickats</string>

@@ -310,6 +310,7 @@
     <!-- Features -->
     <string name="feature_supported">Suportado</string>
     <string name="feature_not_supported">Não suportado</string>
+    <string name="feature_disabled">Desativado</string>
     <string name="feature_history">Histórico pessoal e de amigos</string>
     <string name="feature_comments">Publicar comentário</string>
     <string name="feature_sync">Sincronizar</string>
@@ -352,6 +353,8 @@
     <string name="disconnect">Desconectar</string>
     <string name="show_library">Adicionar séries do Trakt</string>
     <string name="about_trakt">O Trakt ajuda-te a manter um registo das séries de televisão e dos filmes que vês.</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">Classificar</string>
     <string name="ack_rated">Classificação enviada</string>

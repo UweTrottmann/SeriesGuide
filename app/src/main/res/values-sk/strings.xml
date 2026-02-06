@@ -330,6 +330,7 @@
     <!-- Features -->
     <string name="feature_supported">Podporované</string>
     <string name="feature_not_supported">Nepodporované</string>
+    <string name="feature_disabled">Vypnuté</string>
     <string name="feature_history">Osobná história a história vašich priateľov</string>
     <string name="feature_comments">Odosielať komentáre</string>
     <string name="feature_sync">Synchronizácia</string>
@@ -372,6 +373,8 @@
     <string name="disconnect">Odpojiť</string>
     <string name="show_library">Pridať seriály z Trakt</string>
     <string name="about_trakt">V Trakt zaznamenávate, ktoré seriály a filmy sledujete.</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">Hodnotiť</string>
     <string name="ack_rated">Hodnotenie odoslané</string>
