@@ -220,6 +220,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/featureStatusCloudRate" />
 
+        <!-- In some languages (German) this text may be longer, so allow 5 lines -->
         <Button
             android:id="@+id/textViewCloudWarnings"
             style="@style/Widget.SeriesGuide.Button.Borderless.Error"
@@ -229,7 +230,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginRight="8dp"
             android:gravity="start"
-            android:maxLines="3"
+            android:maxLines="5"
             android:text="@string/hexagon_warning_trakt"
             app:icon="@drawable/ic_open_in_new_control_24dp"
             app:iconGravity="end"
