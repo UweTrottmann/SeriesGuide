@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2018-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2018 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.people
 
@@ -34,6 +34,7 @@ class PeopleFragment : Fragment() {
     private var tmdbId: Int = 0
     private var onShowPersonListener = sDummyListener
     private var activateOnItemClick: Boolean = false
+
     /** The current activated item position. Only used on tablets.  */
     private var activatedPosition = ListView.INVALID_POSITION
 
@@ -49,20 +50,27 @@ class PeopleFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         mediaType = PeopleActivity.MediaType.valueOf(
-                arguments?.getString(PeopleActivity.InitBundle.MEDIA_TYPE)
-                        ?: throw IllegalArgumentException(
-                                "Missing arg ${PeopleActivity.InitBundle.MEDIA_TYPE}"))
-        peopleType = PeopleActivity.PeopleType.valueOf(
-                arguments?.getString(PeopleActivity.InitBundle.PEOPLE_TYPE)
-                        ?: throw IllegalArgumentException(
-                                "Missing arg ${PeopleActivity.InitBundle.PEOPLE_TYPE}"))
-        tmdbId = arguments?.getInt(PeopleActivity.InitBundle.ITEM_TMDB_ID)
+            arguments?.getString(PeopleActivity.InitBundle.MEDIA_TYPE)
                 ?: throw IllegalArgumentException(
-                "Missing arg ${PeopleActivity.InitBundle.ITEM_TMDB_ID}")
+                    "Missing arg ${PeopleActivity.InitBundle.MEDIA_TYPE}"
+                )
+        )
+        peopleType = PeopleActivity.PeopleType.valueOf(
+            arguments?.getString(PeopleActivity.InitBundle.PEOPLE_TYPE)
+                ?: throw IllegalArgumentException(
+                    "Missing arg ${PeopleActivity.InitBundle.PEOPLE_TYPE}"
+                )
+        )
+        tmdbId = arguments?.getInt(PeopleActivity.InitBundle.ITEM_TMDB_ID)
+            ?: throw IllegalArgumentException(
+                "Missing arg ${PeopleActivity.InitBundle.ITEM_TMDB_ID}"
+            )
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val rootView = inflater.inflate(R.layout.fragment_people, container, false)
 
         listView = rootView.findViewById(R.id.listViewPeople)
@@ -89,7 +97,7 @@ class PeopleFragment : Fragment() {
 
         // Restore the previously serialized activated item position.
         if (savedInstanceState != null
-                && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
+            && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
             setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION))
         }
 
@@ -118,7 +126,7 @@ class PeopleFragment : Fragment() {
 
         try {
             onShowPersonListener = context as OnShowPersonListener
-        } catch (e: ClassCastException) {
+        } catch (_: ClassCastException) {
             throw ClassCastException("$context must implement OnShowPersonListener")
         }
 
@@ -168,8 +176,12 @@ class PeopleFragment : Fragment() {
             // already in desired state, avoid replaying animation
             return
         }
-        progressBar.startAnimation(AnimationUtils.loadAnimation(progressBar.context,
-                if (isVisible) R.anim.fade_in else R.anim.fade_out))
+        progressBar.startAnimation(
+            AnimationUtils.loadAnimation(
+                progressBar.context,
+                if (isVisible) R.anim.fade_in else R.anim.fade_out
+            )
+        )
         progressBar.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 
