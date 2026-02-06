@@ -28,7 +28,11 @@
     </declare-styleable>
 
     <declare-styleable name="FeatureStatusView">
-        <attr name="featureSupported" format="boolean" />
+        <attr name="featureState" format="enum">
+            <enum name="notSupported" value="0" />
+            <enum name="supported" value="1" />
+            <enum name="disabled" value="2" />
+        </attr>
         <attr name="featureDescription" format="string" />
     </declare-styleable>
 

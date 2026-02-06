@@ -16,6 +16,7 @@ import com.battlelancer.seriesguide.databinding.FragmentConnectTraktCredentialsB
 import com.battlelancer.seriesguide.shows.ShowsActivityImpl
 import com.battlelancer.seriesguide.sync.SyncProgress.SyncEvent
 import com.battlelancer.seriesguide.ui.ShowsActivity
+import com.battlelancer.seriesguide.ui.widgets.FeatureStatusView.FeatureState
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools.openUriOnClick
 import com.uwetrottmann.androidutils.AndroidUtils
@@ -40,10 +41,11 @@ class ConnectTraktCredentialsFragment : Fragment() {
         ThemeUtils.applyBottomPaddingForNavigationBar(binding.scrollViewTraktCredentials)
 
         val hexagonEnabled = HexagonSettings.isEnabled(requireContext())
-        binding.featureStatusTraktCheckIn.setFeatureEnabled(!hexagonEnabled)
-        binding.featureStatusTraktSync.setFeatureEnabled(!hexagonEnabled)
-        binding.featureStatusTraktSyncShows.setFeatureEnabled(!hexagonEnabled)
-        binding.featureStatusTraktSyncMovies.setFeatureEnabled(!hexagonEnabled)
+        val state = if (hexagonEnabled) FeatureState.DISABLED else FeatureState.SUPPORTED
+        binding.featureStatusTraktCheckIn.setFeatureState(state)
+        binding.featureStatusTraktSync.setFeatureState(state)
+        binding.featureStatusTraktSyncShows.setFeatureState(state)
+        binding.featureStatusTraktSyncMovies.setFeatureState(state)
 
         // library button
         binding.buttonTraktLibrary.setOnClickListener {

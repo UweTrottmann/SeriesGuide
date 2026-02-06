@@ -104,7 +104,6 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             app:featureDescription="@string/feature_supported"
-            app:featureSupported="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewCloudDescription"
             app:layout_constraintWidth_max="150dp" />
@@ -116,7 +115,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             app:featureDescription="@string/feature_not_supported"
-            app:featureSupported="false"
+            app:featureState="notSupported"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/feature_status_cloud_supported"
             app:layout_constraintTop_toTopOf="@+id/feature_status_cloud_supported" />
@@ -177,7 +176,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             app:featureDescription="@string/feature_history"
-            app:featureSupported="false"
+            app:featureState="notSupported"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/featureStatusCloudSyncMovies" />
@@ -190,7 +189,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             app:featureDescription="@string/checkin"
-            app:featureSupported="false"
+            app:featureState="notSupported"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/featureStatusCloudHistory" />
@@ -203,7 +202,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             app:featureDescription="@string/action_rate"
-            app:featureSupported="false"
+            app:featureState="notSupported"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/featureStatusCloudCheckIn" />
@@ -216,7 +215,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             app:featureDescription="@string/feature_comments"
-            app:featureSupported="false"
+            app:featureState="notSupported"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/featureStatusCloudRate" />
