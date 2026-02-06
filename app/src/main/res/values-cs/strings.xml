@@ -52,7 +52,6 @@
     <string name="unknown">neznámé</string>
     <string name="offline">Připojte se k síti a zkuste to znovu.</string>
     <string name="app_not_available">Není k dispozici použitelná aplikace</string>
-    <string name="people_empty">Nikdo tu není?! Klepnutím to zkuste znovu.</string>
     <string name="database_error">Nelze upravovat data.</string>
     <string name="reinstall_info">Zkuste zálohovat v sekci nastavení, přeinstalovat a obnovit</string>
     <string name="api_error_generic">Nelze komunikovat s %s. Zkuste to prosím později.</string>

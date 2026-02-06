@@ -52,7 +52,6 @@
     <string name="unknown">அறியாத</string>
     <string name="offline">பிணையத்துடன் இணைக்கவும், பிறகு மீண்டும் முயற்சிக்கவும்.</string>
     <string name="app_not_available">No app available to handle this</string>
-    <string name="people_empty">யாரும் இங்கே?! மீண்டும் முயற்சிக்க தொடர்பு.</string>
     <string name="database_error">தரவு மாற்ற முடியவில்லை.</string>
     <string name="reinstall_info">Try to export your data, re-install and restore</string>
     <string name="api_error_generic">Could not talk to %s. Try again later.</string>

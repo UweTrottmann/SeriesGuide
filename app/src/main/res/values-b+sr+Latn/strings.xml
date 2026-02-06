@@ -52,7 +52,6 @@
     <string name="unknown">nepoznato</string>
     <string name="offline">Povežite se na internet, a zatim pokušajte ponovo</string>
     <string name="app_not_available">Nema dostupne aplikacije za ovo</string>
-    <string name="people_empty">Nema nikog ovde?! Dodirnite da biste pokušali ponovo.</string>
     <string name="database_error">Nije moguće izmeniti podatke</string>
     <string name="reinstall_info">Pokušajte da napravite rezervnu kopiju u podešavanjima, ponovo instalirajte i vratite</string>
     <string name="api_error_generic">Nije moguće razgovarati sa %s. Pokušajte ponovo kasnije.</string>

@@ -52,7 +52,6 @@
     <string name="unknown">nepoznato</string>
     <string name="offline">Spojite se na mrežu i probajte ponovno.</string>
     <string name="app_not_available">Ne postoji aplikacija koja može ovo otvoriti</string>
-    <string name="people_empty">Ima li koga? Dodirnite kako bi pokušali ponovno.</string>
     <string name="database_error">Nije moguće izmijeniti podatke.</string>
     <string name="reinstall_info">Pokušajte sigurnosno kopirati postavke, ponovno instalirajte i vratite sig. kopiju.</string>
     <string name="api_error_generic">%s nedostupan. Pokušajte kasnije.</string>

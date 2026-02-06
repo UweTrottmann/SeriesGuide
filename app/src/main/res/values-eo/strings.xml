@@ -52,7 +52,6 @@
     <string name="unknown">nekonata</string>
     <string name="offline">Konekti al interreto kaj provu denove</string>
     <string name="app_not_available">Neniu aplikaĵo por pritrakti ĉi tiun</string>
-    <string name="people_empty">Ĉu neniu estas ĉi tie?! Tuŝi por reprovi.</string>
     <string name="database_error">Ne povis modifi datumon</string>
     <string name="reinstall_info">Try to export your data, re-install and restore</string>
     <string name="api_error_generic">Could not talk to %s. Try again later.</string>

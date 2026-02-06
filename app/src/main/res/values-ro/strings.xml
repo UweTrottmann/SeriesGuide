@@ -52,7 +52,6 @@
     <string name="unknown">necunoscut</string>
     <string name="offline">Conectați-vă la o rețea, apoi încercați din nou.</string>
     <string name="app_not_available">Nu exista aplicatii instalate pentru a utiliza aceasta actiune</string>
-    <string name="people_empty">Nimeni aici?! Apăsați să încercați din nou.</string>
     <string name="database_error">Datele nu pot fi modificate.</string>
     <string name="reinstall_info">Încercați sa creați o copie de rezerva în Setări, reinstalati și restaurati.</string>
     <string name="api_error_generic">Nu s-a putut comunica cu %s. Încercați mai tarziu.</string>

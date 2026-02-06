@@ -52,7 +52,6 @@
     <string name="unknown">Невідомо</string>
     <string name="offline">Перевірте підключення до мережі та повторіть спробу.</string>
     <string name="app_not_available">Немає доступних програм, щоб впоратися з цим</string>
-    <string name="people_empty">Не відображаються імена?! Натисніть щоб спробувати ще раз.</string>
     <string name="database_error">Не вдалося змінити дані.</string>
     <string name="reinstall_info">Спробуйте створити резервну копію в Налаштуваннях, повторно інсталюйте та відновіть дані</string>
     <string name="api_error_generic">Не вдалося зв\'язатися з %s. Спробуйте пізніше.</string>

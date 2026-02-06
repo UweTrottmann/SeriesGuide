@@ -58,7 +58,6 @@
     <string name="unknown">unknown</string>
     <string name="offline">Connect to the internet, then try again</string>
     <string name="app_not_available">No app available to handle this</string>
-    <string name="people_empty">Nobody here?! Touch to try again.</string>
     <string name="database_error">Could not modify data</string>
     <string name="reinstall_info">Try to export your data, re-install and restore</string>
     <string name="api_error_generic">Could not talk to %s. Try again later.</string>

@@ -52,7 +52,6 @@
     <string name="unknown">ukjent</string>
     <string name="offline">Koble til et nettverk, og prøv på nytt.</string>
     <string name="app_not_available">Ingen app tilgjengelig for å håndtere dette</string>
-    <string name="people_empty">Ingen her?! Trykk for å prøve på nytt.</string>
     <string name="database_error">Klarte ikke endre dataene.</string>
     <string name="reinstall_info">Forsøk å sikkerhetskopiere under innstillinger, installer på nytt og gjenopprett</string>
     <string name="api_error_generic">Klarte ikke å koble til %s. Prøv igjen senere.</string>

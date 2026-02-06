@@ -52,7 +52,6 @@
     <string name="unknown">알 수 없음</string>
     <string name="offline">네트워크에 연결한 후 다시 시도해주세요.</string>
     <string name="app_not_available">실행할 수 있는 앱이 없습니다</string>
-    <string name="people_empty">다시 시도해보세요.</string>
     <string name="database_error">데이터 수정에 실패하였습니다.</string>
     <string name="reinstall_info">설정에서 백업하고 재설치 후 복구하세요</string>
     <string name="api_error_generic">%s와 통신할 수 없습니다. 잠시 후 다시 시도해주세요.</string>

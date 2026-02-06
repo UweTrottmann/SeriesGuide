@@ -52,7 +52,6 @@
     <string name="unknown">tuntematon</string>
     <string name="offline">Muodosta yhteys verkkoon ja yritä uudelleen.</string>
     <string name="app_not_available">Tähän toimintoon ei löydy sovellusta</string>
-    <string name="people_empty">Onko kukaan täällä?! Kosketa yrittääksesi uudelleen.</string>
     <string name="database_error">Tietojen muokkaaminen ei onnistunut.</string>
     <string name="reinstall_info">Yritä varmuuskopioida asetuksista, asenna uudelleen ja palauta.</string>
     <string name="api_error_generic">Kommunikointi %sin kanssa ei onnistu. Yritä myöhemmin uudelleen.</string>

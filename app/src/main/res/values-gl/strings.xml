@@ -52,7 +52,6 @@
     <string name="unknown">descoñecido</string>
     <string name="offline">Conéctate a unha rede e tenta de novo</string>
     <string name="app_not_available">Ningunha app dispoñíbel para lidar con isto</string>
-    <string name="people_empty">Ninguén aquí?! Toca para tentar de novo.</string>
     <string name="database_error">Non se poden modificar os dados</string>
     <string name="reinstall_info">Tenta facer unha copia de seguridade nos Axustes, reinstalar e restarurar</string>
     <string name="api_error_generic">Non se puido conectar con %s. Tenta máis tarde.</string>

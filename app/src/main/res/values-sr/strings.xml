@@ -52,7 +52,6 @@
     <string name="unknown">непознато</string>
     <string name="offline">Спојите се на мрежу и покушајте поново.</string>
     <string name="app_not_available">Нема доступне апликације за ово</string>
-    <string name="people_empty">Нема никога?! Поновите претрагу.</string>
     <string name="database_error">Није могуће променити податке.</string>
     <string name="reinstall_info">Покушајте да направите резервну копију у подешавањима, поново инсталирајте и вратите</string>
     <string name="api_error_generic">Није могуће разговарати са %s. Покушајте поново касније.</string>

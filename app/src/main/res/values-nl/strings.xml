@@ -52,7 +52,6 @@
     <string name="unknown">onbekend</string>
     <string name="offline">Maak verbinding met een netwerk en probeer het opnieuw.</string>
     <string name="app_not_available">Geen app beschikbaar voor deze actie.</string>
-    <string name="people_empty">Niemand?! Probeer opnieuw.</string>
     <string name="database_error">Wijziging niet mogelijk.</string>
     <string name="reinstall_info">Maak een back-up in de Instellingen, installeer opnieuw en herstel</string>
     <string name="api_error_generic">Kon niet praten met %s. Probeer later opnieuw.</string>

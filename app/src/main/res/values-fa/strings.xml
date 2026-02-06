@@ -52,7 +52,6 @@
     <string name="unknown">نامعلوم</string>
     <string name="offline">به شبکه‌ای وصل شده، سپس دوباره تلاش کنید.</string>
     <string name="app_not_available">هیچ کاره‌ای برای این کار موجود نیست.</string>
-    <string name="people_empty">کسی این‌جا نیست ؟ برای تلاش دوباره لمس کنید.</string>
     <string name="database_error">نمی‌توان داده را تغییر داد.</string>
     <string name="reinstall_info">در تنظیمات پشتیبان گرفته، دوباره نصب و بازیابی کنید.</string>
     <string name="api_error_generic">نمی‌توان با %s صحبت کرد. بعداً دوباره تلاش کنید.</string>

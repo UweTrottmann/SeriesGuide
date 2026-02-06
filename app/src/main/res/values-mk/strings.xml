@@ -52,7 +52,6 @@
     <string name="unknown">Непознато</string>
     <string name="offline">Поврзи се на интернет, после пробај повторно.</string>
     <string name="app_not_available">Нема апликација што може да го поддржи ова</string>
-    <string name="people_empty">Никој не е тука? Пробајте повторно.</string>
     <string name="database_error">Не е возможно да ги променити податоците.</string>
     <string name="reinstall_info">Try to export your data, re-install and restore</string>
     <string name="api_error_generic">Неможе да се конектира со %s. Пробајте подоцна.</string>

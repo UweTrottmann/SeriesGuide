@@ -52,7 +52,6 @@
     <string name="unknown">anhysbys</string>
     <string name="offline">Cysylltu â rhwydwaith, yna ceisiwch eto</string>
     <string name="app_not_available">Nid oes ap ar gael i drin hyn</string>
-    <string name="people_empty">Neb yma?! Cyffyrddwch i roi cynnig arall arni.</string>
     <string name="database_error">Methu addasu data</string>
     <string name="reinstall_info">Ceisiwch wneud copi wrth gefn yn Gosodiadau, ail-osod ac adfer</string>
     <string name="api_error_generic">Methu siarad â %s Rhowch gynnig arall arni yn nes ymlaen.</string>

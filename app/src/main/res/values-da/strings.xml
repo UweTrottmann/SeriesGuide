@@ -52,7 +52,6 @@
     <string name="unknown">ukendt</string>
     <string name="offline">Forbind til et netværk, og prøv igen.</string>
     <string name="app_not_available">Ingen app tilgængelig til at håndtere dette</string>
-    <string name="people_empty">Ingen her?! Tryk for at prøve igen.</string>
     <string name="database_error">Kunne ikke ændre data.</string>
     <string name="reinstall_info">Prøv fra Indstillinger at oprette en sikkerhedskopi, geninstallere og gendanne.</string>
     <string name="api_error_generic">Kunne ikke tale med %s. Forsøg venligst igen senere.</string>

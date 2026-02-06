@@ -52,7 +52,6 @@
     <string name="unknown">неизвестен</string>
     <string name="offline">Свържете се към мрежа и пробвайте отново.</string>
     <string name="app_not_available">Няма налично подходящо приложение</string>
-    <string name="people_empty">Няма никой тук?! Натисни, за да опиташ отново.</string>
     <string name="database_error">Не може да промени данните.</string>
     <string name="reinstall_info">Опитайте се да архивирате от настройките, преинсталирайте и възстановете.</string>
     <string name="api_error_generic">Няма връзка с %s. trakt. Опитайте отново по-късно.</string>

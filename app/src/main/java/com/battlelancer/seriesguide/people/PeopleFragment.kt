@@ -190,7 +190,12 @@ class PeopleFragment : Fragment() {
         if (!AndroidUtils.isNetworkConnected(requireContext())) {
             emptyView.setMessage(R.string.offline)
         } else {
-            emptyView.setMessage(R.string.people_empty)
+            emptyView.setMessage(
+                requireContext().getString(
+                    R.string.api_error_generic,
+                    requireContext().getString(R.string.tmdb)
+                )
+            )
         }
         emptyView.setContentVisibility(View.VISIBLE)
     }

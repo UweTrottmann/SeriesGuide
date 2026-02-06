@@ -52,7 +52,6 @@
     <string name="unknown">לא ידוע</string>
     <string name="offline">התחבר לרשת, ואז נסה שוב</string>
     <string name="app_not_available">אין אפליקצייה זמינה לטפל בזה</string>
-    <string name="people_empty">אין כאן אף אחד?! לחץ כדי לנסות שוב.</string>
     <string name="database_error">לא הייתה אפשרות לשנות את הנתונים</string>
     <string name="reinstall_info">נסה לייצא את הנתונים שלך, להתקין מחדש, ולשחזר</string>
     <string name="api_error_generic">לא ניתן היה לדבר עם %s. נסה שוב מאוחר יותר.</string>
