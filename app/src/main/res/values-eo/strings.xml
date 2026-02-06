@@ -235,6 +235,7 @@
     <string name="title_new_episodes">Novaj epizodoj</string>
     <string name="watched_shows">Spektitaj</string>
     <string name="shows_collection">Kolekto</string>
+    <string name="title_library">Library</string>
     <string name="watchlist">Spektolisto</string>
     <!-- Similar shows -->
     <string name="action_similar">Similar</string>

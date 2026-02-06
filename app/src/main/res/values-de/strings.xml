@@ -235,6 +235,7 @@
     <string name="title_new_episodes">Neue Folgen</string>
     <string name="watched_shows">Angesehen</string>
     <string name="shows_collection">Sammlung</string>
+    <string name="title_library">Bibliothek</string>
     <string name="watchlist">Merkliste</string>
     <!-- Similar shows -->
     <string name="action_similar">Ähnliche</string>

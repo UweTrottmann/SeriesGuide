@@ -235,6 +235,7 @@
     <string name="title_new_episodes">Νέα επεισόδια</string>
     <string name="watched_shows">Είδατε</string>
     <string name="shows_collection">Συλλογή</string>
+    <string name="title_library">Library</string>
     <string name="watchlist">Λίστα προς παρακολούθηση</string>
     <!-- Similar shows -->
     <string name="action_similar">Παρόμοια</string>

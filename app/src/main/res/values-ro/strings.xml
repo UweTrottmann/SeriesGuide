@@ -242,6 +242,7 @@
     <string name="title_new_episodes">Episoade noi</string>
     <string name="watched_shows">Vizionat</string>
     <string name="shows_collection">Colecție</string>
+    <string name="title_library">Library</string>
     <string name="watchlist">Listă vizionate</string>
     <!-- Similar shows -->
     <string name="action_similar">Similar</string>
