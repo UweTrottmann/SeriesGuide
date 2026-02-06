@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2012-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2012 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.traktapi
 
@@ -18,6 +18,7 @@ import com.battlelancer.seriesguide.sync.SyncProgress.SyncEvent
 import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools.openUriOnClick
+import com.uwetrottmann.androidutils.AndroidUtils
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -86,8 +87,12 @@ class ConnectTraktCredentialsFragment : Fragment() {
         if (hasCredentials) {
             var username = traktCredentials.username
             val displayName = traktCredentials.displayName
-            if (!displayName.isNullOrEmpty()) {
-                username += " ($displayName)"
+            if (!displayName.isNullOrEmpty() && username != displayName) {
+                if (AndroidUtils.isRtlLayout) {
+                    username = "($displayName) $username"
+                } else {
+                    username = "$username ($displayName)"
+                }
             }
             binding.textViewTraktUser.text = username
         } else {
