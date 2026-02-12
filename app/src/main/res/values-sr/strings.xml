@@ -325,7 +325,7 @@
     <string name="feature_sync">Синхронизација</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriusGuide Cloud вам помаже да направите резервну копију и синхронизујете ваше емисије, листе и филмове</string>
-    <string name="hexagon_warning_trakt">Док сте пријављени помоћу SeriesGuide Clouda-a, неке Trakt функције нису доступне</string>
+    <string name="hexagon_warning_trakt">Док сте пријављени помоћу SeriesGuide Cloud-а, неке функције Trakt-а су онемогућене и промене се шаљу само на ваш Trakt налог, а не преузимају.</string>
     <string name="hexagon_signin">Пријави се</string>
     <string name="hexagon_signout">Одјави се</string>
     <string name="hexagon_setup_incomplete">Подешавање SeriesGuide Cloud-а није обављено.</string>

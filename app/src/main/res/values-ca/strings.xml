@@ -315,7 +315,7 @@
     <string name="feature_sync">Sincronització</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud ajuda a fer còpia de seguretat i sincronitzar les teves sèries, llistes i pel·lícules.</string>
-    <string name="hexagon_warning_trakt">Mentre siguis connectat a SeriesGuide Cloud algunes funcionalitats de trakt no són disponibles.</string>
+    <string name="hexagon_warning_trakt">Quan estiguis amb la sessió iniciada a SeriesGuide Cloud, algunes funcions de Trakt estan desactivades i els canvis només s\'envien al teu compte de Trakt, no se’n recuperen.</string>
     <string name="hexagon_signin">Inicia la sessió</string>
     <string name="hexagon_signout">Tanca la sessió</string>
     <string name="hexagon_setup_incomplete">No s\'ha pogut configurar el Cloud de SeriesGuide.</string>

@@ -315,7 +315,7 @@
     <string name="feature_sync">Synchronisatie</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud helpt uw series, lijsten en films te synchroniseren en te back-uppen</string>
-    <string name="hexagon_warning_trakt">Terwijl u aangemeld bent bij SeriesGuide Cloud zijn bepaalde functies van trakt niet beschikbaar</string>
+    <string name="hexagon_warning_trakt">Terwijl u bent aangemeld bij SeriesGuide Cloud, zijn sommige functies van Trakt uitgeschakeld en worden wijzigingen alleen verzonden naar uw Trakt-account, niet opgehaald.</string>
     <string name="hexagon_signin">Log in</string>
     <string name="hexagon_signout">Uitloggen</string>
     <string name="hexagon_setup_incomplete">SeriesGuide cloud instellen is niet afgerond.</string>

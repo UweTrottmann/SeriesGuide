@@ -335,7 +335,7 @@
     <string name="feature_sync">Синхронизация</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud позволяет создавать резервную копию и синхронизировать ваши сериалы, списки и фильмы.</string>
-    <string name="hexagon_warning_trakt">При подкючении к SeriesGuide Cloud некоторые функции trakt недоступны.</string>
+    <string name="hexagon_warning_trakt">При входе через SeriesGuide Cloud часть функций Trakt недоступна. Изменения отправляются только в аккаунт Trakt и не синхронизируются обратно.</string>
     <string name="hexagon_signin">Войти</string>
     <string name="hexagon_signout">Выйти</string>
     <string name="hexagon_setup_incomplete">Настройка SeriesGuide Cloud не была завершена.</string>
