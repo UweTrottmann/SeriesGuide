@@ -27,6 +27,9 @@ import timber.log.Timber
  */
 object TraktTools4 {
 
+    // 1000 is the maximum limit according to https://github.com/trakt/trakt-api/discussions/681
+    private const val COLLECTION_MAX_LIMIT = 1000
+
     sealed interface TraktResponse<T> {
         data class Success<T>(
             /**
@@ -82,8 +85,7 @@ object TraktTools4 {
             action = "get collected shows",
             reportIsNotVip = true // Should work even if not VIP
         ) { page ->
-            // 1000 is the maximum limit according to https://github.com/trakt/trakt-api/discussions/681
-            traktSync.collectionShows(page, 1000, null)
+            traktSync.collectionShows(page, COLLECTION_MAX_LIMIT, null)
         }
     }
 
@@ -185,11 +187,12 @@ object TraktTools4 {
     suspend fun getCollectedMoviesByTmdbId(
         traktSync: Sync
     ): TraktNonNullResponse<MutableSet<Int>> {
-        val response = awaitTraktCallNonNull(
-            traktSync.collectionMovies(null),
-            "get movie collection",
+        val response = fetchAllPages(
+            action = "get collected movies",
             reportIsNotVip = true // Should work even if not VIP
-        )
+        ) { page ->
+            traktSync.collectionMovies(page, COLLECTION_MAX_LIMIT, null)
+        }
         return mapResponseData(response) { mapMoviesToTmdbIdSet(it) }
     }
 
