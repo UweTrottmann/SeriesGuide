@@ -7,6 +7,7 @@ import com.battlelancer.seriesguide.traktapi.TraktTools4.awaitTraktCall
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.trakt5.TraktV2
 import com.uwetrottmann.trakt5.entities.AddNoteRequest
+import com.uwetrottmann.trakt5.entities.BaseMovie
 import com.uwetrottmann.trakt5.entities.BaseShow
 import com.uwetrottmann.trakt5.entities.Note
 import com.uwetrottmann.trakt5.entities.Show
@@ -158,6 +159,59 @@ object TraktTools4 {
             "get shows on watchlist",
             reportIsNotVip = true // Should work even if not VIP
         )
+    }
+
+    suspend fun getWatchedMoviesByTmdbId(
+        traktSync: Sync
+    ): TraktNonNullResponse<MutableMap<Int, Int>> {
+        val response = awaitTraktCallNonNull(
+            traktSync.watchedMovies(null),
+            "get watched movies",
+            reportIsNotVip = true // Should work even if not VIP
+        )
+        return mapResponseData(response) { mapMoviesToTmdbIdWithPlays(it) }
+    }
+
+    private fun mapMoviesToTmdbIdWithPlays(traktMovies: List<BaseMovie>): MutableMap<Int, Int> {
+        val map: MutableMap<Int, Int> = HashMap(traktMovies.size)
+        for (movie in traktMovies) {
+            val tmdbId = movie.movie?.ids?.tmdb
+                ?: continue // skip invalid values
+            map[tmdbId] = movie.plays
+        }
+        return map
+    }
+
+    suspend fun getCollectedMoviesByTmdbId(
+        traktSync: Sync
+    ): TraktNonNullResponse<MutableSet<Int>> {
+        val response = awaitTraktCallNonNull(
+            traktSync.collectionMovies(null),
+            "get movie collection",
+            reportIsNotVip = true // Should work even if not VIP
+        )
+        return mapResponseData(response) { mapMoviesToTmdbIdSet(it) }
+    }
+
+    suspend fun getMoviesOnWatchlistByTmdbId(
+        traktSync: Sync
+    ): TraktNonNullResponse<MutableSet<Int>> {
+        val response = awaitTraktCallNonNull(
+            traktSync.watchlistMovies(null),
+            "get movie watchlist",
+            reportIsNotVip = true // Should work even if not VIP
+        )
+        return mapResponseData(response) { mapMoviesToTmdbIdSet(it) }
+    }
+
+    private fun mapMoviesToTmdbIdSet(traktMovies: List<BaseMovie>): MutableSet<Int> {
+        val tmdbIdSet: MutableSet<Int> = HashSet(traktMovies.size)
+        for (movie in traktMovies) {
+            val tmdbId = movie.movie?.ids?.tmdb
+                ?: continue // skip invalid values
+            tmdbIdSet.add(tmdbId)
+        }
+        return tmdbIdSet
     }
 
     /**
