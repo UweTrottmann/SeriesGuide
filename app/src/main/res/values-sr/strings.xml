@@ -241,7 +241,7 @@
     <string name="title_new_episodes">Нове епизоде</string>
     <string name="watched_shows">Одгледано</string>
     <string name="shows_collection">Колекција</string>
-    <string name="title_library">Library</string>
+    <string name="title_library">Библиотека</string>
     <string name="watchlist">Листа за гледање</string>
     <!-- Similar shows -->
     <string name="action_similar">Слично</string>
@@ -362,8 +362,8 @@
     <string name="disconnect">Прекини везу</string>
     <string name="show_library">Додајте емисије из Trakt</string>
     <string name="about_trakt">Trakt води евиденцију серија и филмова које гледате.</string>
-    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
-    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
+    <string name="trakt_note_collection">Оно што Trakt назива библиотеком, у SeriesGuide-у се назива колекција.</string>
+    <string name="trakt_note_add_shows">Када се повежете, додајте емисије са свог Trakt налога користећи Trakt ставке на картици Discover.</string>
     <!-- trakt ratings -->
     <string name="action_rate">Оцени</string>
     <string name="ack_rated">Оцена послата</string>

@@ -248,7 +248,7 @@
     <string name="title_new_episodes">Nowe odcinki</string>
     <string name="watched_shows">Obejrzane</string>
     <string name="shows_collection">Kolekcja</string>
-    <string name="title_library">Library</string>
+    <string name="title_library">Biblioteka</string>
     <string name="watchlist">Do obejrzenia</string>
     <!-- Similar shows -->
     <string name="action_similar">Podobne</string>
@@ -372,8 +372,8 @@
     <string name="disconnect">Rozłącz</string>
     <string name="show_library">Dodaj seriale z Trakt</string>
     <string name="about_trakt">Trakt pomaga zarządzać jakie seriale i filmy oglądasz.</string>
-    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
-    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
+    <string name="trakt_note_collection">To co Trakt nazywa biblioteką w SeriesGuide jest nazwane kolekcją.</string>
+    <string name="trakt_note_add_shows">Po podłączeniu dodaj seriale ze swojego konta Trakt przy użyciu elementów Trakt na karcie Odkrywanie.</string>
     <!-- trakt ratings -->
     <string name="action_rate">Oceń</string>
     <string name="ack_rated">Ocena wysłana</string>

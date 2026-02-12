@@ -13,6 +13,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 ### Next release
 
 * 🔨 Debug log: don't crash if entries can't be modified due to database corruption.
+* 📝 Import latest user interface translations.
 
 ### 2026.1.0 - 2025-12-05 🧪
 

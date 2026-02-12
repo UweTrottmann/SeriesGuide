@@ -352,8 +352,8 @@
     <string name="disconnect">Verbreken</string>
     <string name="show_library">Series van Trakt toevoegen</string>
     <string name="about_trakt">Trakt helpt met het bijhouden van welke TV-shows en films u aan het bekijken bent.</string>
-    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
-    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
+    <string name="trakt_note_collection">Wat Trakt bibliotheek noemt, heet in SeriesGuide collectie.</string>
+    <string name="trakt_note_add_shows">Eenmaal verbonden, voeg series toe vanuit je Trakt-account met behulp van de Trakt-items op het Discover-tabblad.</string>
     <!-- trakt ratings -->
     <string name="action_rate">Beoordelen</string>
     <string name="ack_rated">Beoordeling verstuurd</string>

@@ -372,8 +372,8 @@
     <string name="disconnect">Отключиться</string>
     <string name="show_library">Добавить сериалы из Trakt</string>
     <string name="about_trakt">Trakt помогает вести учет, какие сериалы и фильмы Вы смотрите.</string>
-    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
-    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
+    <string name="trakt_note_collection">То, что Trakt называет библиотекой, в SeriesGuide называется коллекцией.</string>
+    <string name="trakt_note_add_shows">После подключения добавьте сериалы из своей учетной записи Trakt, используя элементы Trakt на вкладке «Discover».</string>
     <!-- trakt ratings -->
     <string name="action_rate">Oценить</string>
     <string name="ack_rated">Оценка отправлена</string>
