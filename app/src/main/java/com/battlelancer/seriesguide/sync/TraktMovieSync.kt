@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2017-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2017 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.sync
 
@@ -9,20 +9,20 @@ import com.battlelancer.seriesguide.movies.database.SgMovieFlags
 import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktSettings
+import com.battlelancer.seriesguide.traktapi.TraktTools4
+import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse.Success
 import com.battlelancer.seriesguide.util.DBUtils
 import com.battlelancer.seriesguide.util.Errors
-import com.uwetrottmann.trakt5.entities.BaseMovie
 import com.uwetrottmann.trakt5.entities.LastActivityMore
 import com.uwetrottmann.trakt5.entities.MovieIds
 import com.uwetrottmann.trakt5.entities.SyncItems
 import com.uwetrottmann.trakt5.entities.SyncMovie
 import com.uwetrottmann.trakt5.entities.SyncResponse
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import retrofit2.Response
 import timber.log.Timber
-import kotlin.collections.set
 
 /**
  * Syncs movie collection and watchlist and watched movies with the connected Trakt profile.
@@ -74,9 +74,15 @@ class TraktMovieSync(
         }
 
         // Download Trakt state.
-        val collection = downloadCollection() ?: return false
-        val watchlist = downloadWatchlist() ?: return false
-        val watchedWithPlays = downloadWatched() ?: return false
+        val collection = runBlocking(Dispatchers.Default) {
+            downloadCollection()
+        } ?: return false
+        val watchlist = runBlocking(Dispatchers.Default) {
+            downloadWatchlist()
+        } ?: return false
+        val watchedWithPlays = runBlocking(Dispatchers.Default) {
+            downloadWatched()
+        } ?: return false
 
         // Loop through local movies to build updates.
         val localMovies: List<SgMovieFlags> = try {
@@ -214,98 +220,25 @@ class TraktMovieSync(
         return addingSuccessful
     }
 
-    private fun downloadCollection(): MutableSet<Int>? {
-        return try {
-            val response = traktSync.sync
-                .collectionMovies(null)
-                .execute()
-            val collection = verifyListResponse(
-                response,
-                "null collection response", ACTION_GET_COLLECTION
-            )
-            toTmdbIdSet(collection)
-        } catch (e: Exception) {
-            Errors.logAndReport(ACTION_GET_COLLECTION, e)
-            null
+    private suspend fun downloadCollection(): MutableSet<Int>? {
+        return when (val response = TraktTools4.getCollectedMoviesByTmdbId(traktSync.sync)) {
+            is Success -> response.data
+            else -> null
         }
     }
 
-    private fun downloadWatchlist(): MutableSet<Int>? {
-        return try {
-            val response = traktSync.sync
-                .watchlistMovies(null)
-                .execute()
-            val watchlist = verifyListResponse(
-                response,
-                "null watchlist response", ACTION_GET_WATCHLIST
-            )
-            toTmdbIdSet(watchlist)
-        } catch (e: Exception) {
-            Errors.logAndReport(ACTION_GET_WATCHLIST, e)
-            null
+    private suspend fun downloadWatchlist(): MutableSet<Int>? {
+        return when (val response = TraktTools4.getMoviesOnWatchlistByTmdbId(traktSync.sync)) {
+            is Success -> response.data
+            else -> null
         }
     }
 
-    private fun downloadWatched(): MutableMap<Int, Int>? {
-        return try {
-            val response = traktSync.sync
-                .watchedMovies(null)
-                .execute()
-            val watched = verifyListResponse(
-                response,
-                "null watched response", ACTION_GET_WATCHED
-            )
-            mapTmdbIdToPlays(watched)
-        } catch (e: Exception) {
-            Errors.logAndReport(ACTION_GET_WATCHED, e)
-            null
+    private suspend fun downloadWatched(): MutableMap<Int, Int>? {
+        return when (val response = TraktTools4.getWatchedMoviesByTmdbId(traktSync.sync)) {
+            is Success -> response.data
+            else -> null
         }
-    }
-
-    private fun verifyListResponse(
-        response: Response<List<BaseMovie>>,
-        nullResponse: String,
-        action: String
-    ): List<BaseMovie>? {
-        return if (response.isSuccessful) {
-            val movies = response.body()
-            if (movies == null) {
-                Timber.e(nullResponse)
-            }
-            movies
-        } else {
-            if (SgTrakt.isUnauthorized(context, response)) {
-                return null
-            }
-            Errors.logAndReport(action, response)
-            null
-        }
-    }
-
-    private fun toTmdbIdSet(movies: List<BaseMovie>?): MutableSet<Int>? {
-        if (movies == null) {
-            return null
-        }
-        val tmdbIdSet: MutableSet<Int> = HashSet()
-        for (movie in movies) {
-            val tmdbId = movie.movie?.ids?.tmdb
-                ?: continue  // skip invalid values
-            tmdbIdSet.add(tmdbId)
-        }
-        return tmdbIdSet
-    }
-
-    private fun mapTmdbIdToPlays(movies: List<BaseMovie>?): MutableMap<Int, Int>? {
-        if (movies == null) {
-            return null
-        }
-        val map: MutableMap<Int, Int> = HashMap()
-        for (movie in movies) {
-            val tmdbId = movie.movie?.ids?.tmdb
-                ?: continue  // skip invalid values
-            map[tmdbId] = movie.plays
-        }
-        return map
     }
 
     /**
@@ -368,10 +301,4 @@ class TraktMovieSync(
 
     private fun convertToSyncMovieList(movieTmdbIds: Set<Int>): List<SyncMovie> =
         movieTmdbIds.map { SyncMovie().id(MovieIds.tmdb(it)) }
-
-    companion object {
-        private const val ACTION_GET_COLLECTION = "get movie collection"
-        private const val ACTION_GET_WATCHLIST = "get movie watchlist"
-        private const val ACTION_GET_WATCHED = "get watched movies"
-    }
 }
