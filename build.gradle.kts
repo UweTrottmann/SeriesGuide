@@ -26,7 +26,7 @@ buildscript {
     // - allows multiple releases per month (though currently unlikely)
     val sgVersionName by extra("2026.1.1")
     // version 23yyrrbb -> min SDK 23, year yy, release rr, build bb
-    val sgVersionCode by extra(23260101)
+    val sgVersionCode by extra(23260102)
 
     val isCiBuild by extra { System.getenv("CI") == "true" }
 
