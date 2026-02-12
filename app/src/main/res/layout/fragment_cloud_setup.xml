@@ -236,7 +236,8 @@
             app:iconGravity="end"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/featureStatusCloudComment" />
+            app:layout_constraintTop_toBottomOf="@+id/featureStatusCloudComment"
+            app:shapeAppearance="@style/ShapeAppearance.M3.Sys.Shape.Corner.Small" />
 
         <Button
             android:id="@+id/buttonCloudRemoveAccount"
