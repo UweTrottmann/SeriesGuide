@@ -52,7 +52,6 @@
     <string name="unknown">不明</string>
     <string name="offline">ネットワークに接続して、もう一度やり直してください</string>
     <string name="app_not_available">処理できるアプリがありません</string>
-    <string name="people_empty">タップして再試行します</string>
     <string name="database_error">データを更新することが出来ませんでした</string>
     <string name="reinstall_info">設定でバックアップし、再インストール、復元してみてください</string>
     <string name="api_error_generic">%s と通信出来ませんでした。後でもう一度やり直してください。</string>
@@ -228,6 +227,7 @@
     <string name="title_new_episodes">新しいエピソード</string>
     <string name="watched_shows">視聴済</string>
     <string name="shows_collection">コレクション</string>
+    <string name="title_library">Library</string>
     <string name="watchlist">ウォッチリスト</string>
     <!-- Similar shows -->
     <string name="action_similar">Similar</string>
@@ -299,6 +299,7 @@
     <!-- Features -->
     <string name="feature_supported">サポートされています</string>
     <string name="feature_not_supported">サポートされていません</string>
+    <string name="feature_disabled">Disabled</string>
     <string name="feature_history">自分と友だちの履歴</string>
     <string name="feature_comments">コメントを投稿</string>
     <string name="feature_sync">同期</string>
@@ -341,6 +342,8 @@
     <string name="disconnect">切断</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt は、あなたが観ているテレビ番組や映画を記録するのに役立ちます。</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">作品を評価</string>
     <string name="ack_rated">Rating sent</string>

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2021-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2021 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.traktapi
 
@@ -14,54 +14,6 @@ import retrofit2.Response
  * New code should use the [TraktTools4] design patterns.
  */
 object TraktTools2 {
-
-    enum class ServiceResult {
-        SUCCESS,
-        AUTH_ERROR,
-        API_ERROR
-    }
-
-    @JvmStatic
-    fun getCollectedOrWatchedShows(
-        isCollectionNotWatched: Boolean,
-        context: Context
-    ): Pair<Map<Int, BaseShow>?, ServiceResult> {
-        val traktSync = SgApp.getServicesComponent(context).traktSync()!!
-        val action = if (isCollectionNotWatched) "get collection" else "get watched"
-        try {
-            val response: Response<List<BaseShow>> = if (isCollectionNotWatched) {
-                traktSync.collectionShows(null).execute()
-            } else {
-                traktSync.watchedShows(null).execute()
-            }
-            if (response.isSuccessful) {
-                return Pair(mapByTmdbId(response.body()), ServiceResult.SUCCESS)
-            } else {
-                if (SgTrakt.isUnauthorized(context, response)) {
-                    return Pair(null, ServiceResult.AUTH_ERROR)
-                }
-                Errors.logAndReport(action, response)
-            }
-        } catch (e: Exception) {
-            Errors.logAndReport(action, e)
-        }
-        return Pair(null, ServiceResult.API_ERROR)
-    }
-
-    @JvmStatic
-    fun mapByTmdbId(traktShows: List<BaseShow>?): Map<Int, BaseShow> {
-        if (traktShows == null) return emptyMap()
-
-        val traktShowsMap = HashMap<Int, BaseShow>(traktShows.size)
-        for (traktShow in traktShows) {
-            val tmdbId = traktShow.show?.ids?.tmdb
-            if (tmdbId == null || traktShow.seasons.isNullOrEmpty()) {
-                continue  // trakt show misses required data, skip.
-            }
-            traktShowsMap[tmdbId] = traktShow
-        }
-        return traktShowsMap
-    }
 
     fun getEpisodeRatings(
         context: Context,

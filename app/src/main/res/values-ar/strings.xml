@@ -52,7 +52,6 @@
     <string name="unknown">غير معروف</string>
     <string name="offline">اتصل بالشبكة، ثم حاول مرة أخرى</string>
     <string name="app_not_available">ليس هناك تطبيق متاح للتعامل مع هذا</string>
-    <string name="people_empty">لا أحد هنا ؟! قم باللمس من أجل المحاولة مرة أخرى.</string>
     <string name="database_error">لا يمكن تعديل البيانات.</string>
     <string name="reinstall_info">حاول أخد نسخة احتياطية، اعادة تثبيت البرنامج ومن ثم استعادة البيانات</string>
     <string name="api_error_generic">لا يمكن الاتصال بـ %s. الرجاء المحاولة لاحقا.</string>
@@ -263,6 +262,7 @@
     <string name="title_new_episodes">حلَقات جديدة</string>
     <string name="watched_shows">تمت مشاهدتها</string>
     <string name="shows_collection">مجموعة</string>
+    <string name="title_library">Library</string>
     <string name="watchlist">قائمة المشاهدة</string>
     <!-- Similar shows -->
     <string name="action_similar">Similar</string>
@@ -349,6 +349,7 @@
     <!-- Features -->
     <string name="feature_supported">مدعوم</string>
     <string name="feature_not_supported">غير مدعوم</string>
+    <string name="feature_disabled">معطَّل</string>
     <string name="feature_history">التاريخ الشخصى و تاريخ الأصدقاء</string>
     <string name="feature_comments">أضف تعليق</string>
     <string name="feature_sync">نقل بيانات</string>
@@ -391,6 +392,8 @@
     <string name="disconnect">قطع الاتصال</string>
     <string name="show_library">إضافة مسلسلات من Trakt</string>
     <string name="about_trakt">يساعدك Trakt على حفظ ما تشاهده من أفلام ومسلسلات.</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">قيم</string>
     <string name="ack_rated">Rating sent</string>

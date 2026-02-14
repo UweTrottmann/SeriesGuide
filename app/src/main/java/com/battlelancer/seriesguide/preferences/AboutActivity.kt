@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2021-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2021 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.preferences
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,12 +14,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
@@ -142,10 +143,10 @@ class AboutActivity : ComponentActivity() {
                             text = versionString,
                             style = MaterialTheme.typography.bodyLarge
                         )
-                        FilledTonalButton(onClick = onOpenWebsite) {
+                        TextButton(onClick = onOpenWebsite) {
                             Text(text = stringResource(id = R.string.website))
                         }
-                        FilledTonalButton(onClick = onOpenPrivacyPolicy) {
+                        TextButton(onClick = onOpenPrivacyPolicy) {
                             Text(text = stringResource(id = R.string.privacy_policy))
                         }
                     }
@@ -155,7 +156,7 @@ class AboutActivity : ComponentActivity() {
                             style = MaterialTheme.typography.bodyLarge,
                             modifier = Modifier.padding(top = 16.dp)
                         )
-                        FilledTonalButton(onClick = onOpenCredits) {
+                        TextButton(onClick = onOpenCredits) {
                             Text(text = stringResource(id = R.string.licences_and_credits))
                         }
                         Text(
@@ -163,10 +164,10 @@ class AboutActivity : ComponentActivity() {
                             style = MaterialTheme.typography.bodyLarge,
                             modifier = Modifier.padding(top = 16.dp)
                         )
-                        FilledTonalButton(onClick = onOpenTmdbTerms) {
+                        TextButton(onClick = onOpenTmdbTerms) {
                             Text(text = stringResource(id = R.string.tmdb_terms))
                         }
-                        FilledTonalButton(onClick = onOpenTmdbApiTerms) {
+                        TextButton(onClick = onOpenTmdbApiTerms) {
                             Text(text = stringResource(id = R.string.tmdb_api_terms))
                         }
                     }
@@ -176,7 +177,7 @@ class AboutActivity : ComponentActivity() {
                             style = MaterialTheme.typography.bodyLarge,
                             modifier = Modifier.padding(top = 16.dp)
                         )
-                        FilledTonalButton(onClick = onOpenTraktTerms) {
+                        TextButton(onClick = onOpenTraktTerms) {
                             Text(text = stringResource(id = R.string.trakt_terms))
                         }
                     }
@@ -187,6 +188,7 @@ class AboutActivity : ComponentActivity() {
 
     @Preview
     @Preview(device = Devices.TABLET)
+    @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
     @Composable
     fun AboutPreview() {
         SeriesGuideTheme {

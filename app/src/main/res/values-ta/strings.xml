@@ -52,7 +52,6 @@
     <string name="unknown">அறியாத</string>
     <string name="offline">பிணையத்துடன் இணைக்கவும், பிறகு மீண்டும் முயற்சிக்கவும்.</string>
     <string name="app_not_available">No app available to handle this</string>
-    <string name="people_empty">யாரும் இங்கே?! மீண்டும் முயற்சிக்க தொடர்பு.</string>
     <string name="database_error">தரவு மாற்ற முடியவில்லை.</string>
     <string name="reinstall_info">Try to export your data, re-install and restore</string>
     <string name="api_error_generic">Could not talk to %s. Try again later.</string>
@@ -235,6 +234,7 @@
     <string name="title_new_episodes">New episodes</string>
     <string name="watched_shows">பார்த்த</string>
     <string name="shows_collection">தொகுப்பு</string>
+    <string name="title_library">Library</string>
     <string name="watchlist">Watchlist</string>
     <!-- Similar shows -->
     <string name="action_similar">Similar</string>
@@ -309,12 +309,13 @@
     <!-- Features -->
     <string name="feature_supported">Supported</string>
     <string name="feature_not_supported">Not supported</string>
+    <string name="feature_disabled">Disabled</string>
     <string name="feature_history">Personal and friend history</string>
     <string name="feature_comments">Post comments</string>
     <string name="feature_sync">Sync</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud helps to back up and sync your shows, lists and movies</string>
-    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some Trakt features are not available</string>
+    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud, some Trakt features are disabled and changes are only sent to your Trakt account, not retrieved.</string>
     <string name="hexagon_signin">உள்நுழைக</string>
     <string name="hexagon_signout">வெளியில் செல்லவும்</string>
     <string name="hexagon_setup_incomplete">SeriesGuide மேகம் அமைக்கிறது நிறைவடையவில்லை.</string>
@@ -351,6 +352,8 @@
     <string name="disconnect">துண்டி</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt டிவி என்ன காண்பிக்கும் பதிவேட்டை வைத்திருக்க உதவுகிறது மற்றும் திரைப்படங்கள் நீங்கள் வருவதாக.</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">விகிதம்</string>
     <string name="ack_rated">Rating sent</string>

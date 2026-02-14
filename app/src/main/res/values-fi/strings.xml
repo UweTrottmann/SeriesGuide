@@ -52,7 +52,6 @@
     <string name="unknown">tuntematon</string>
     <string name="offline">Muodosta yhteys verkkoon ja yritä uudelleen.</string>
     <string name="app_not_available">Tähän toimintoon ei löydy sovellusta</string>
-    <string name="people_empty">Onko kukaan täällä?! Kosketa yrittääksesi uudelleen.</string>
     <string name="database_error">Tietojen muokkaaminen ei onnistunut.</string>
     <string name="reinstall_info">Yritä varmuuskopioida asetuksista, asenna uudelleen ja palauta.</string>
     <string name="api_error_generic">Kommunikointi %sin kanssa ei onnistu. Yritä myöhemmin uudelleen.</string>
@@ -235,6 +234,7 @@
     <string name="title_new_episodes">Uusia jaksoja</string>
     <string name="watched_shows">Katsotut</string>
     <string name="shows_collection">Kokoelma</string>
+    <string name="title_library">Library</string>
     <string name="watchlist">Seurantalista</string>
     <!-- Similar shows -->
     <string name="action_similar">Samankaltaiset</string>
@@ -309,6 +309,7 @@
     <!-- Features -->
     <string name="feature_supported">Tuettu</string>
     <string name="feature_not_supported">Ei tuettu</string>
+    <string name="feature_disabled">Poistettu käytöstä</string>
     <string name="feature_history">Henkilökohtainen ja ystävien historia</string>
     <string name="feature_comments">Lähetä kommentteja</string>
     <string name="feature_sync">Synkronointi</string>
@@ -351,6 +352,8 @@
     <string name="disconnect">Katkaise yhteys</string>
     <string name="show_library">Lisää ohjelmat Traktista</string>
     <string name="about_trakt">Trakt auttaa sinua pysymään kärryillä katsomistasi ohjelmista ja elokuvista.</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">Arvostele</string>
     <string name="ack_rated">Arvosana lähetettiin</string>

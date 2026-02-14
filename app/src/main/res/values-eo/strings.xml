@@ -52,7 +52,6 @@
     <string name="unknown">nekonata</string>
     <string name="offline">Konekti al interreto kaj provu denove</string>
     <string name="app_not_available">Neniu aplikaĵo por pritrakti ĉi tiun</string>
-    <string name="people_empty">Ĉu neniu estas ĉi tie?! Tuŝi por reprovi.</string>
     <string name="database_error">Ne povis modifi datumon</string>
     <string name="reinstall_info">Try to export your data, re-install and restore</string>
     <string name="api_error_generic">Could not talk to %s. Try again later.</string>
@@ -235,6 +234,7 @@
     <string name="title_new_episodes">Novaj epizodoj</string>
     <string name="watched_shows">Spektitaj</string>
     <string name="shows_collection">Kolekto</string>
+    <string name="title_library">Library</string>
     <string name="watchlist">Spektolisto</string>
     <!-- Similar shows -->
     <string name="action_similar">Similar</string>
@@ -309,12 +309,13 @@
     <!-- Features -->
     <string name="feature_supported">Subtenata</string>
     <string name="feature_not_supported">Nesubtenata</string>
+    <string name="feature_disabled">Disabled</string>
     <string name="feature_history">Historio de mi kaj miaj amikoj</string>
     <string name="feature_comments">Sendi komentoj</string>
     <string name="feature_sync">Sinkronigi</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud helps to back up and sync your shows, lists and movies</string>
-    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some Trakt features are not available</string>
+    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud, some Trakt features are disabled and changes are only sent to your Trakt account, not retrieved.</string>
     <string name="hexagon_signin">Ensaluti</string>
     <string name="hexagon_signout">Elsaluti</string>
     <string name="hexagon_setup_incomplete">Setting up SeriesGuide Cloud was not completed</string>
@@ -351,6 +352,8 @@
     <string name="disconnect">Malkonekti</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt is a third-party service that helps keep a record of what TV shows and movies you are watching.</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">Taksi</string>
     <string name="ack_rated">Rating sent</string>

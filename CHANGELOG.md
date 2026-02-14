@@ -10,13 +10,18 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2026.1
 
-### Next release
+* 📝 Trakt: support upcoming server changes when fetching collections.
 
+### 2026.1.1 - 2026-02-12
+
+* 📝 Trakt: support upcoming server changes when fetching collections. Add notes on how to add shows,
+  that library is called collection and if Cloud is connected at the same time.
 * 🔨 Debug log: don't crash if entries can't be modified due to database corruption.
+* 📝 Import latest user interface translations.
 
 ### 2026.1.0 - 2025-12-05 🧪
 
-* 🔧 Internal: When doing network requests, send user agent that includes the app name and version.
+* 🔧 Internal: When talking to servers, send app name and version.
 * 🔧 Internal: update various components, including for UI and networking.
 * 🔧 Download movie posters through the SeriesGuide image cache server to reduce load on TMDB.
 * 📝 Import latest user interface translations.

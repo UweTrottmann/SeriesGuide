@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2015-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2015 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.shows.search.discover
 
@@ -8,14 +8,13 @@ import androidx.annotation.StringRes
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.shows.ShowsSettings
-import com.battlelancer.seriesguide.traktapi.SgTrakt
-import com.battlelancer.seriesguide.util.Errors
+import com.battlelancer.seriesguide.traktapi.TraktTools4
+import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse.Success
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.androidutils.GenericSimpleLoader
 import com.uwetrottmann.trakt5.TraktV2
-import com.uwetrottmann.trakt5.entities.BaseShow
-import com.uwetrottmann.trakt5.enums.Extended
-import retrofit2.Response
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import java.util.LinkedList
 
 /**
@@ -48,46 +47,28 @@ class TraktAddLoader(
     private val trakt: TraktV2 = SgApp.getServicesComponent(context).trakt()
 
     override fun loadInBackground(): Result {
-        var shows: List<BaseShow> = emptyList()
-        var action: String? = null
-        try {
-            val response: Response<List<BaseShow>>
+        val response = runBlocking(Dispatchers.Default) {
+            val traktSync = trakt.sync()
             when (type) {
-                Type.WATCHED -> {
-                    action = "load watched shows"
-                    response = trakt.sync().watchedShows(Extended.NOSEASONS).execute()
-                }
+                Type.WATCHED -> TraktTools4.getWatchedShows(traktSync, noSeasons = true)
+                Type.COLLECTION -> TraktTools4.getCollectedShows(traktSync)
+                Type.WATCHLIST -> TraktTools4.getShowsOnWatchlist(traktSync)
+            }
+        }
 
-                Type.COLLECTION -> {
-                    action = "load show collection"
-                    response = trakt.sync().collectionShows(null).execute()
-                }
-
-                Type.WATCHLIST -> {
-                    action = "load show watchlist"
-                    response = trakt.sync().watchlistShows(Extended.FULL).execute()
-                }
+        val shows = when (response) {
+            is Success -> response.data
+            is TraktTools4.TraktErrorResponse.IsUnauthorized -> {
+                return buildResultFailure(R.string.trakt_error_credentials)
             }
 
-            if (response.isSuccessful) {
-                val body = response.body()
-                if (body != null) {
-                    shows = body
+            else -> {
+                // Wait to check for network until here to allow hitting the response cache
+                return if (AndroidUtils.isNetworkConnected(context)) {
+                    buildResultGenericFailure()
+                } else {
+                    buildResultFailure(R.string.offline)
                 }
-            } else {
-                if (SgTrakt.isUnauthorized(context, response)) {
-                    return buildResultFailure(R.string.trakt_error_credentials)
-                }
-                Errors.logAndReport(action, response)
-                return buildResultGenericFailure()
-            }
-        } catch (e: Exception) {
-            Errors.logAndReport(action!!, e)
-            // only check for network here to allow hitting the response cache
-            return if (AndroidUtils.isNetworkConnected(context)) {
-                buildResultGenericFailure()
-            } else {
-                buildResultFailure(R.string.offline)
             }
         }
 

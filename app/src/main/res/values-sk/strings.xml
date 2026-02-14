@@ -52,7 +52,6 @@
     <string name="unknown">neznámy</string>
     <string name="offline">Pripojte sa k sieti a skúste to znova.</string>
     <string name="app_not_available">Žiadna použiteľná aplikácia k dispozícii</string>
-    <string name="people_empty">Nikde nikto?! Skúste to znova.</string>
     <string name="database_error">Nie je možné zmeniť dáta.</string>
     <string name="reinstall_info">Skúste zálohovať cez nastavenia, preinštalovať a obnoviť.</string>
     <string name="api_error_generic">Nemožno komunikovať s %s. Skúste to znova neskôr.</string>
@@ -249,6 +248,7 @@
     <string name="title_new_episodes">Nové epizódy</string>
     <string name="watched_shows">Videné</string>
     <string name="shows_collection">Zbierka</string>
+    <string name="title_library">Library</string>
     <string name="watchlist">Chcem vidieť</string>
     <!-- Similar shows -->
     <string name="action_similar">Podobné</string>
@@ -329,6 +329,7 @@
     <!-- Features -->
     <string name="feature_supported">Podporované</string>
     <string name="feature_not_supported">Nepodporované</string>
+    <string name="feature_disabled">Vypnuté</string>
     <string name="feature_history">Osobná história a história vašich priateľov</string>
     <string name="feature_comments">Odosielať komentáre</string>
     <string name="feature_sync">Synchronizácia</string>
@@ -371,6 +372,8 @@
     <string name="disconnect">Odpojiť</string>
     <string name="show_library">Pridať seriály z Trakt</string>
     <string name="about_trakt">V Trakt zaznamenávate, ktoré seriály a filmy sledujete.</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">Hodnotiť</string>
     <string name="ack_rated">Hodnotenie odoslané</string>

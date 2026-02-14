@@ -52,7 +52,6 @@
     <string name="unknown">알 수 없음</string>
     <string name="offline">네트워크에 연결한 후 다시 시도해주세요.</string>
     <string name="app_not_available">실행할 수 있는 앱이 없습니다</string>
-    <string name="people_empty">다시 시도해보세요.</string>
     <string name="database_error">데이터 수정에 실패하였습니다.</string>
     <string name="reinstall_info">설정에서 백업하고 재설치 후 복구하세요</string>
     <string name="api_error_generic">%s와 통신할 수 없습니다. 잠시 후 다시 시도해주세요.</string>
@@ -228,6 +227,7 @@
     <string name="title_new_episodes">새로운 에피소드</string>
     <string name="watched_shows">시청한 목록</string>
     <string name="shows_collection">컬렉션</string>
+    <string name="title_library">Library</string>
     <string name="watchlist">관심목록</string>
     <!-- Similar shows -->
     <string name="action_similar">비슷한</string>
@@ -299,6 +299,7 @@
     <!-- Features -->
     <string name="feature_supported">지원하는 기능</string>
     <string name="feature_not_supported">지원하지 않는 기능</string>
+    <string name="feature_disabled">비활성화</string>
     <string name="feature_history">본인 및 친구의 시청 기록</string>
     <string name="feature_comments">댓글 작성</string>
     <string name="feature_sync">동기화</string>
@@ -341,6 +342,8 @@
     <string name="disconnect">연결 해제</string>
     <string name="show_library">Trakt으로부터 프로그램 추가</string>
     <string name="about_trakt">Trakt는 시청 중인 TV 프로그램과 영화를 기록하는 데 도움을 줍니다.</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">평가</string>
     <string name="ack_rated">평가 완료</string>

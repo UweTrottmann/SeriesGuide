@@ -1,10 +1,13 @@
 # Release process
 
-- If it does not exist, create a release branch. If it exists, merge latest changes.
+- Collect changes in release branch
 
-  ```shell
-  git checkout -b release-2025.3
-  # or
+  ```bash
+  # If it does not exist, create a release branch
+  git checkout -b release-2026.1
+  
+  # If it exists, merge latest changes
+  git checkout release-2026.1
   git merge dev
   ```
 
@@ -17,11 +20,16 @@
 
 - Change version code and name in [`build.gradle.kts`](/build.gradle.kts)
 - Update [`CHANGELOG.md`](/CHANGELOG.md)
-- Commit and push
+
+  ```bash
+  ./update-version.sh build.gradle.kts CHANGELOG.md
+  ```
+
+- Commit with the suggested message and push
 
   ```shell
-  git commit --all --message "Prepare version 2025.3.4 (23250304)"
-  git push --set-upstream origin release-2025.3
+  git commit --all --message "Prepare version 2026.1.1 (23260101)"
+  git push --set-upstream origin release-2026.1
   ```
 
 - If it does not exist, [create a merge request](https://github.com/UweTrottmann/SeriesGuide/compare/main...) against `main`
@@ -42,10 +50,10 @@
 - Tag release commit
   
   ```shell
-  git tag v2025.2.9
-  git push origin v2025.2.9
+  git tag v2026.1.1
+  git push origin v2026.1.1
   git checkout dev
-  git merge release-2025.2
+  git merge release-2026.1
   git push origin dev
   ```
 
@@ -58,17 +66,17 @@
 - Merge release pull request to `main`
 - Download universal APK from Play Store
 - [Create GitHub release](https://github.com/UweTrottmann/SeriesGuide/releases/new)
-  - title like `SeriesGuide 2025.2.9`
+  - title like `SeriesGuide 2026.1.1`
   - get release notes from [`CHANGELOG.md`](/CHANGELOG.md)
   - attach APK
 - Prepare release post on forum
 - Promote to production
 - Publish to Amazon App Store
-- Publish release post on forum, post on Mastodon
-- Test Amazon update on test device
+- Publish release post [on forum](https://discuss.seriesgui.de)
+- Post [on Mastodon](https://mastodon.social/@SeriesGuide)
 - Merge changes to dev branch
 
   ```shell
   git checkout dev
-  git merge --no-ff release-2025.2
+  git merge --no-ff release-2026.1
   ```

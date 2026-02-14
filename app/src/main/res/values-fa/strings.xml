@@ -52,7 +52,6 @@
     <string name="unknown">نامعلوم</string>
     <string name="offline">به شبکه‌ای وصل شده، سپس دوباره تلاش کنید.</string>
     <string name="app_not_available">هیچ کاره‌ای برای این کار موجود نیست.</string>
-    <string name="people_empty">کسی این‌جا نیست ؟ برای تلاش دوباره لمس کنید.</string>
     <string name="database_error">نمی‌توان داده را تغییر داد.</string>
     <string name="reinstall_info">در تنظیمات پشتیبان گرفته، دوباره نصب و بازیابی کنید.</string>
     <string name="api_error_generic">نمی‌توان با %s صحبت کرد. بعداً دوباره تلاش کنید.</string>
@@ -235,6 +234,7 @@
     <string name="title_new_episodes">قسمت‌های جدید</string>
     <string name="watched_shows">تماشا شده</string>
     <string name="shows_collection">مجموعه</string>
+    <string name="title_library">Library</string>
     <string name="watchlist">فهرست تماشا</string>
     <!-- Similar shows -->
     <string name="action_similar">مشابه</string>
@@ -309,6 +309,7 @@
     <!-- Features -->
     <string name="feature_supported">پشتیبانی شده</string>
     <string name="feature_not_supported">پشتیبانی نمی‎شود</string>
+    <string name="feature_disabled">از کار افتاده</string>
     <string name="feature_history">تاریخچه‌ی شخصی و دوستان</string>
     <string name="feature_comments">ارسال نظرات</string>
     <string name="feature_sync">همگام‌‌سازی</string>
@@ -351,6 +352,8 @@
     <string name="disconnect">قطع کردن</string>
     <string name="show_library">افزودن نمایش‌ها از ترکت</string>
     <string name="about_trakt">Trakt کمک می‌کند تا حساب نمایش‌های تلویزیونی و فیلم‌هایی که می‌بینید را داشته باشید.</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">نمره</string>
     <string name="ack_rated">رتبه فرستاده شد</string>

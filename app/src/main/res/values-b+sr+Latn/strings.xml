@@ -52,7 +52,6 @@
     <string name="unknown">nepoznato</string>
     <string name="offline">Povežite se na internet, a zatim pokušajte ponovo</string>
     <string name="app_not_available">Nema dostupne aplikacije za ovo</string>
-    <string name="people_empty">Nema nikog ovde?! Dodirnite da biste pokušali ponovo.</string>
     <string name="database_error">Nije moguće izmeniti podatke</string>
     <string name="reinstall_info">Pokušajte da napravite rezervnu kopiju u podešavanjima, ponovo instalirajte i vratite</string>
     <string name="api_error_generic">Nije moguće razgovarati sa %s. Pokušajte ponovo kasnije.</string>
@@ -242,6 +241,7 @@
     <string name="title_new_episodes">Nove epizode</string>
     <string name="watched_shows">Odgledano</string>
     <string name="shows_collection">Kolekcija</string>
+    <string name="title_library">Biblioteka</string>
     <string name="watchlist">Lista za gledanje</string>
     <!-- Similar shows -->
     <string name="action_similar">Slično</string>
@@ -319,12 +319,13 @@
     <!-- Features -->
     <string name="feature_supported">Podržano</string>
     <string name="feature_not_supported">Nije podržano</string>
+    <string name="feature_disabled">Onemogućeno</string>
     <string name="feature_history">Lična i prijateljska istorija</string>
     <string name="feature_comments">Objavi komentare</string>
     <string name="feature_sync">Sinhronizacija</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud pomaže vam da napravite rezervnu kopiju i sinhronizujete vaše emisije, liste i filmove</string>
-    <string name="hexagon_warning_trakt">Dok ste prijavljeni pomoću SeriesGuide Cloud-a, neke Trakt funkcije nisu dostupne</string>
+    <string name="hexagon_warning_trakt">Dok ste prijavljeni pomoću SeriesGuide Cloud-a, neke funkcije Trakt-a su onemogućene i promene se šalju samo na vaš Trakt nalog, a ne preuzimaju.</string>
     <string name="hexagon_signin">Prijavi se</string>
     <string name="hexagon_signout">Odjavi se</string>
     <string name="hexagon_setup_incomplete">Podešavanje SeriesGuide Cloud-a nije završeno</string>
@@ -361,6 +362,8 @@
     <string name="disconnect">Prekini vezu</string>
     <string name="show_library">Dodajte serije sa Trakta</string>
     <string name="about_trakt">Trakt pomaže da se vodi evidencija o TV serijama i filmovima koje gledate.</string>
+    <string name="trakt_note_collection">Ono što Trakt naziva bibliotekom, u SeriesGuide-u se naziva kolekcija.</string>
+    <string name="trakt_note_add_shows">Kada se povežete, dodajte emisije sa svog Trakt naloga koristeći Trakt stavke na kartici Discover.</string>
     <!-- trakt ratings -->
     <string name="action_rate">Ocenite</string>
     <string name="ack_rated">Ocena poslata</string>

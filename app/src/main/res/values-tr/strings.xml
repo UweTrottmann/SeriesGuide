@@ -52,7 +52,6 @@
     <string name="unknown">bilinmiyor</string>
     <string name="offline">Ağa bağlanın ve yeniden deneyin.</string>
     <string name="app_not_available">İşlemi yapacak uygulama bulunamadı.</string>
-    <string name="people_empty">Burada kimse var mı?! Tekrar denemek için dokunun.</string>
     <string name="database_error">Veri değiştirilemedi.</string>
     <string name="reinstall_info">Ayarlardan yedeklemeyi deneyin. Uygulamayı yediden yükleyip, veri tabanınızı geri yükleyin.</string>
     <string name="api_error_generic">%s ile iletişim kurulamadı. Daha sonra tekrar deneyin.</string>
@@ -235,6 +234,7 @@
     <string name="title_new_episodes">Yeni bölümler</string>
     <string name="watched_shows">İzlenmiş</string>
     <string name="shows_collection">Koleksiyon</string>
+    <string name="title_library">Library</string>
     <string name="watchlist">İzlenecekler listesi</string>
     <!-- Similar shows -->
     <string name="action_similar">Benzerleri</string>
@@ -309,6 +309,7 @@
     <!-- Features -->
     <string name="feature_supported">Destekleniyor</string>
     <string name="feature_not_supported">Desteklenmiyor</string>
+    <string name="feature_disabled">Devre dışı</string>
     <string name="feature_history">Kişisel ve arkadaş geçmişi</string>
     <string name="feature_comments">Gönderi yorumları</string>
     <string name="feature_sync">Senkronizasyon</string>
@@ -351,6 +352,8 @@
     <string name="disconnect">Bağlantıyı Kes</string>
     <string name="show_library">Trakt\'tan dizileri ekle</string>
     <string name="about_trakt">Trakt, izlediğiniz dizi ve filmlerin kaydını tutmanıza yardımcı olur.</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">Puan ver</string>
     <string name="ack_rated">Puan gönderildi</string>
