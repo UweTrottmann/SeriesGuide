@@ -1,5 +1,5 @@
-// Apache-2.0
-// Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2014-2026 Uwe Trottmann
 
 package com.battlelancer.seriesguide.people
 
@@ -8,52 +8,31 @@ import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
+import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.util.CircleTransformation
 import com.battlelancer.seriesguide.util.ImageTools
 import com.squareup.picasso.Transformation
 
-interface PeopleAdapterHost {
-    fun searchResultIsEmpty(isEmpty: Boolean)
-}
-
-class PeopleAdapter(
-    private val host: PeopleAdapterHost,
-    private val placeholderDrawable: Drawable?
-) : BaseAdapter() {
+/**
+ * Shows a list of people in rows with headshots, name and description.
+ */
+internal class PeopleAdapter(context: Context) : ArrayAdapter<Person>(context, LAYOUT) {
 
     private val personImageTransform = CircleTransformation()
+    private val placeholderDrawable =
+        AppCompatResources.getDrawable(context, R.drawable.ic_account_circle_black_24dp)!!
 
-    private var originalData = emptyList<Person>()
-    private var data = emptyList<Person>()
-
-    fun setData(data: List<Person>) {
-        originalData = data
-        this.data = originalData
-        notifyDataSetChanged()
-    }
-
-    override fun getCount() = data.count()
-
-    override fun getItem(position: Int) = data.getOrNull(position)
-
-    override fun getItemId(position: Int) = position.toLong()
-
-    override fun getView(
-        position: Int,
-        convertView: View?,
-        parent: ViewGroup?
-    ): View {
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view: View
         val viewHolder: ViewHolder
-        val context = parent?.context ?: throw IllegalStateException("Context missing")
-
         if (convertView == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.item_person, parent, false)
+            view = LayoutInflater.from(parent.context)
+                .inflate(LAYOUT, parent, false)
             viewHolder = ViewHolder(view, placeholderDrawable)
             view.tag = viewHolder
         } else {
@@ -66,9 +45,17 @@ class PeopleAdapter(
         return view
     }
 
+    /**
+     * Replace the data in this [android.widget.ArrayAdapter] with the given list.
+     */
+    fun setData(data: List<Person>) {
+        clear()
+        addAll(data)
+    }
+
     class ViewHolder(
         view: View,
-        private val placeholderDrawable: Drawable?
+        private val placeholderDrawable: Drawable
     ) {
         private val name: TextView = view.findViewById(R.id.textViewPerson)
         private val description: TextView = view.findViewById(R.id.textViewPersonDescription)
@@ -80,31 +67,26 @@ class PeopleAdapter(
             description.text = person?.description ?: ""
 
             // load profile picture
-            if (person != null && placeholderDrawable != null) {
+            if (person != null) {
                 ImageTools.loadWithPicasso(
-                    context, TmdbTools.buildProfileImageUrl(
-                        context, person.profilePath, TmdbTools.ProfileImageSize.W185
+                    context,
+                    TmdbTools.buildProfileImageUrl(
+                        context, person.profilePath,
+                        TmdbTools.ProfileImageSize.W185
                     )
                 )
                     // Note: dimensions should match placeholder drawable, see notes in its file
                     .resizeDimen(R.dimen.person_headshot_size, R.dimen.person_headshot_size)
-                    .centerCrop().transform(personImageTransform)
+                    .centerCrop()
+                    .transform(personImageTransform)
                     .placeholder(placeholderDrawable)
-                    .error(placeholderDrawable).into(picture)
+                    .error(placeholderDrawable)
+                    .into(picture)
             }
         }
     }
 
-    fun filter(query: String) {
-        data = originalData.filter { person ->
-            if (person.description != null) {
-                person.name.contains(query, ignoreCase = true) ||
-                        person.description.contains(query, ignoreCase = true)
-            } else {
-                person.name.contains(query, ignoreCase = true)
-            }
-        }
-        host.searchResultIsEmpty(data.isEmpty())
-        notifyDataSetChanged()
+    companion object {
+        private val LAYOUT = R.layout.item_person
     }
 }

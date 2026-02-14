@@ -549,6 +549,8 @@
     <string name="description_extension_web_search">Nach Webseiten und Bildern suchen</string>
     <!-- People -->
     <string name="person_biography">Biografie</string>
+    <string name="people_search_crew_hint">Suche nach Crew</string>
+    <string name="people_search_cast_hint">Suche nach Besetzung</string>
     <!-- Feedback -->
     <string name="feedback_question_enjoy">Gefällt Ihnen SeriesGuide?</string>
     <string name="feedback_action_yes">Ja!</string>

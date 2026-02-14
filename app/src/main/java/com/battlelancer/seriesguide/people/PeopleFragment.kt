@@ -12,7 +12,6 @@ import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.ProgressBar
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.battlelancer.seriesguide.R
@@ -23,7 +22,7 @@ import com.uwetrottmann.androidutils.AndroidUtils
 /**
  * A fragment loading and showing a list of cast or crew members.
  */
-class PeopleFragment : Fragment(), PeopleAdapterHost {
+class PeopleFragment : Fragment() {
 
     private lateinit var listView: ListView
     private lateinit var emptyView: EmptyView
@@ -111,10 +110,7 @@ class PeopleFragment : Fragment(), PeopleAdapterHost {
 
         emptyView.setButtonClickListener { refresh() }
 
-        adapter = PeopleAdapter(
-            this,
-            AppCompatResources.getDrawable(requireContext(), R.drawable.ic_account_circle_black_24dp)
-        )
+        adapter = PeopleAdapter(requireContext())
         listView.adapter = adapter
 
         model.credits.observe(viewLifecycleOwner) {
@@ -188,8 +184,13 @@ class PeopleFragment : Fragment(), PeopleAdapterHost {
     }
 
     private fun setEmptyMessage() {
-        // display error message if we are offline
-        if (!AndroidUtils.isNetworkConnected(requireContext())) {
+
+        emptyView.setContentVisibility(View.VISIBLE)
+        if (model.isSearchOngoing()) {
+            emptyView.setMessage(R.string.empty_no_results)
+            emptyView.setButtonGone(true)
+        } else if (!AndroidUtils.isNetworkConnected(requireContext())) {
+            // display error message if we are offline
             emptyView.setMessage(R.string.offline)
         } else {
             emptyView.setMessage(
@@ -199,21 +200,10 @@ class PeopleFragment : Fragment(), PeopleAdapterHost {
                 )
             )
         }
-        emptyView.setContentVisibility(View.VISIBLE)
     }
 
     fun search(query: String) {
-        adapter.filter(query)
-    }
-
-    override fun searchResultIsEmpty(isEmpty: Boolean) {
-        if (isEmpty) {
-            emptyView.setMessage(R.string.empty_no_results)
-            emptyView.setButtonGone(true)
-        } else {
-            emptyView.setButtonGone(false)
-            setEmptyMessage()
-        }
+        model.filter(query)
     }
 
     companion object {
