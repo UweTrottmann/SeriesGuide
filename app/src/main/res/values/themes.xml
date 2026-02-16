@@ -215,6 +215,10 @@
         <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
     </style>
 
+    <style name="ThemeOverlay.SeriesGuide.Dialog.PositiveButton.Primary" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.SeriesGuide.Button.Dialog.Primary</item>
+    </style>
+
     <style name="ThemeOverlay.SeriesGuide.Dialog.PositiveButton.Warn" parent="ThemeOverlay.Material3.MaterialAlertDialog">
         <item name="buttonBarPositiveButtonStyle">@style/Widget.SeriesGuide.Button.Dialog.Error</item>
     </style>
