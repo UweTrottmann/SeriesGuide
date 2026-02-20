@@ -8,6 +8,11 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
 
+## Next release
+
+* 🔧 Export: in the created JSON file, write each show, list or movie on a separate line to make,
+  especially large files, easier to open and edit.
+
 ## Version 2026.1
 
 * 📝 Trakt: support upcoming server changes when fetching collections.

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2021-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2013 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.dataliberation
 
@@ -16,19 +16,20 @@ import com.battlelancer.seriesguide.dataliberation.model.ListItem
 import com.battlelancer.seriesguide.dataliberation.model.Movie
 import com.battlelancer.seriesguide.dataliberation.model.Season
 import com.battlelancer.seriesguide.dataliberation.model.Show
+import com.battlelancer.seriesguide.lists.database.SgList
 import com.battlelancer.seriesguide.lists.database.SgListHelper
 import com.battlelancer.seriesguide.movies.database.MovieHelper
+import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper
 import com.battlelancer.seriesguide.shows.database.SgSeason2Helper
+import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.database.SgShow2Helper
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.TextTools
-import com.google.gson.Gson
 import com.google.gson.JsonParseException
-import com.google.gson.stream.JsonWriter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -42,9 +43,6 @@ import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStream
-import java.io.OutputStreamWriter
-import java.nio.charset.StandardCharsets
-import kotlin.collections.List
 import com.battlelancer.seriesguide.dataliberation.model.List as ExportList
 
 /**
@@ -288,22 +286,7 @@ class JsonExportTask(
 
     @Throws(IOException::class)
     suspend fun writeJsonStreamShows(coroutineScope: CoroutineScope, out: OutputStream) {
-        val shows = sgShow2Helper.getShowsForExport()
-
-        val numTotal = shows.size
-        var numExported = 0
-
-        onProgressUpdate(numTotal, 0)
-
-        val gson = Gson()
-        val writer = JsonWriter(OutputStreamWriter(out, StandardCharsets.UTF_8))
-        writer.beginArray()
-
-        for (sgShow in shows) {
-            if (!coroutineScope.isActive) {
-                break
-            }
-
+        val transform: (SgShow2) -> Show = { sgShow ->
             val show = Show()
             show.tmdb_id = sgShow.tmdbId
             show.tvdb_id = sgShow.tvdbId
@@ -347,14 +330,19 @@ class JsonExportTask(
             }
 
             show.seasons = getSeasons(sgShow.id)
-
-            gson.toJson(show, Show::class.java, writer)
-
-            onProgressUpdate(numTotal, ++numExported)
+            show
         }
 
-        writer.endArray()
-        writer.close()
+        val shows = sgShow2Helper.getShowsForExport()
+
+        SgJsonWriter(
+            itemsToTransform = shows,
+            outputClass = Show::class.java,
+            outputStream = out,
+            transform = transform
+        ).write(coroutineScope) { total, done ->
+            onProgressUpdate(total, done)
+        }
     }
 
     /**
@@ -422,36 +410,25 @@ class JsonExportTask(
 
     @Throws(IOException::class)
     suspend fun writeJsonStreamLists(coroutineScope: CoroutineScope, out: OutputStream) {
-        val lists = sgListHelper.getListsForExport()
-
-        val numTotal = lists.size
-        var numExported = 0
-
-        onProgressUpdate(numTotal, 0)
-
-        val gson = Gson()
-        val writer = JsonWriter(OutputStreamWriter(out, StandardCharsets.UTF_8))
-        writer.beginArray()
-
-        for (sgList in lists) {
-            if (!coroutineScope.isActive) {
-                break
-            }
-
+        val transform: (SgList) -> ExportList = { sgList ->
             val list = ExportList()
             list.list_id = sgList.listId
             list.name = sgList.name
             list.order = sgList.orderOrDefault
-
             addListItems(list)
-
-            gson.toJson(list, ExportList::class.java, writer)
-
-            onProgressUpdate(numTotal, ++numExported)
+            list
         }
 
-        writer.endArray()
-        writer.close()
+        val lists = sgListHelper.getListsForExport()
+
+        SgJsonWriter(
+            itemsToTransform = lists,
+            outputClass = ExportList::class.java,
+            outputStream = out,
+            transform = transform
+        ).write(coroutineScope) { total, done ->
+            onProgressUpdate(total, done)
+        }
     }
 
     private fun addListItems(list: ExportList) {
@@ -476,21 +453,7 @@ class JsonExportTask(
 
     @Throws(IOException::class)
     suspend fun writeJsonStreamMovies(coroutineScope: CoroutineScope, out: OutputStream) {
-        val movies = movieHelper.getMoviesForExport()
-
-        val numTotal = movies.size
-        var numExported = 0
-
-        onProgressUpdate(numTotal, 0)
-
-        val gson = Gson()
-        val writer = JsonWriter(OutputStreamWriter(out, StandardCharsets.UTF_8))
-        writer.beginArray()
-
-        for (sgMovie in movies) {
-            if (!coroutineScope.isActive) {
-                break
-            }
+        val transform: (SgMovie) -> Movie = { sgMovie ->
             val movie = Movie()
             movie.tmdb_id = sgMovie.tmdbId
             movie.imdb_id = sgMovie.imdbId
@@ -506,14 +469,19 @@ class JsonExportTask(
             if (isFullDump) {
                 movie.overview = sgMovie.overview
             }
-
-            gson.toJson(movie, Movie::class.java, writer)
-
-            onProgressUpdate(numTotal, ++numExported)
+            movie
         }
 
-        writer.endArray()
-        writer.close()
+        val movies = movieHelper.getMoviesForExport()
+
+        SgJsonWriter(
+            itemsToTransform = movies,
+            outputClass = Movie::class.java,
+            outputStream = out,
+            transform = transform
+        ).write(coroutineScope) { total, done ->
+            onProgressUpdate(total, done)
+        }
     }
 
     companion object {

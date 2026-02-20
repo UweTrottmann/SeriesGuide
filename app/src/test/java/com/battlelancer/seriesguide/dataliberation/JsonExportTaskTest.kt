@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2021-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2021 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.dataliberation
 
@@ -183,8 +183,13 @@ class JsonExportTaskTest {
         )
 
         @Language("json")
-        const val expectedJsonShows =
-            """[{"tmdb_id":95479,"imdb_id":"imdbidvalue","trakt_id":52,"title":"Jujutsu Kaisen","overview":"It\u0027s all about hollow purple.","language":"de","first_aired":"2021-02-27T05:11:12.345Z","release_time":1234,"release_weekday":1,"release_timezone":"America/New_York","country":"JP","custom_release_time":1215,"custom_release_day_offset":28,"custom_release_timezone":"Europe/Berlin","poster":"someurl/to/a/poster.jpg","content_rating":"","status":"ended","runtime":24,"genres":"Animation|Action \u0026 Adventure|Sci-Fi \u0026 Fantasy","network":"MBS","rating_tmdb":2.4,"rating_tmdb_votes":4321,"rating":10.0,"rating_votes":1234,"rating_user":4,"favorite":false,"notify":true,"hidden":false,"last_watched_ms":1234567890,"user_note":"This is an example note 😀","user_note_trakt_id":12345,"seasons":[{"tmdb_id":"1","season":1,"episodes":[{"tmdb_id":1,"episode":1,"title":"First Episode","first_aired":1234567890,"watched":true,"plays":1,"skipped":false,"collected":false,"overview":"First overview","image":"/first/still/path.jpg","writers":"writers string","gueststars":"guest stars string","directors":"directors string","rating_tmdb":2.4,"rating_tmdb_votes":4321,"rating":10.0,"rating_votes":1234,"rating_user":4},{"tmdb_id":2,"episode":2,"title":"Second Episode","first_aired":1234567890,"watched":false,"plays":0,"skipped":true,"collected":true,"overview":"Second overview","image":"/first/still/path.jpg","writers":"writers string","gueststars":"guest stars string","directors":"directors string"}]},{"tmdb_id":"2","season":2,"episodes":[{"tmdb_id":1,"episode":1,"title":"First Episode","first_aired":1234567890,"watched":true,"plays":1,"skipped":false,"collected":false,"overview":"First overview","image":"/first/still/path.jpg","writers":"writers string","gueststars":"guest stars string","directors":"directors string","rating_tmdb":2.4,"rating_tmdb_votes":4321,"rating":10.0,"rating_votes":1234,"rating_user":4},{"tmdb_id":2,"episode":2,"title":"Second Episode","first_aired":1234567890,"watched":false,"plays":0,"skipped":true,"collected":true,"overview":"Second overview","image":"/first/still/path.jpg","writers":"writers string","gueststars":"guest stars string","directors":"directors string"}]}]},{"imdb_id":"","title":"","overview":"","language":"","release_time":-1,"release_weekday":-1,"release_timezone":"","poster":"","content_rating":"","status":"unknown","runtime":0,"genres":"","network":"","favorite":false,"notify":true,"hidden":false,"last_watched_ms":0,"seasons":[]}]"""
+        val expectedJsonShows =
+            """
+            [
+            {"tmdb_id":95479,"imdb_id":"imdbidvalue","trakt_id":52,"title":"Jujutsu Kaisen","overview":"It\u0027s all about hollow purple.","language":"de","first_aired":"2021-02-27T05:11:12.345Z","release_time":1234,"release_weekday":1,"release_timezone":"America/New_York","country":"JP","custom_release_time":1215,"custom_release_day_offset":28,"custom_release_timezone":"Europe/Berlin","poster":"someurl/to/a/poster.jpg","content_rating":"","status":"ended","runtime":24,"genres":"Animation|Action \u0026 Adventure|Sci-Fi \u0026 Fantasy","network":"MBS","rating_tmdb":2.4,"rating_tmdb_votes":4321,"rating":10.0,"rating_votes":1234,"rating_user":4,"favorite":false,"notify":true,"hidden":false,"last_watched_ms":1234567890,"user_note":"This is an example note 😀","user_note_trakt_id":12345,"seasons":[{"tmdb_id":"1","season":1,"episodes":[{"tmdb_id":1,"episode":1,"title":"First Episode","first_aired":1234567890,"watched":true,"plays":1,"skipped":false,"collected":false,"overview":"First overview","image":"/first/still/path.jpg","writers":"writers string","gueststars":"guest stars string","directors":"directors string","rating_tmdb":2.4,"rating_tmdb_votes":4321,"rating":10.0,"rating_votes":1234,"rating_user":4},{"tmdb_id":2,"episode":2,"title":"Second Episode","first_aired":1234567890,"watched":false,"plays":0,"skipped":true,"collected":true,"overview":"Second overview","image":"/first/still/path.jpg","writers":"writers string","gueststars":"guest stars string","directors":"directors string"}]},{"tmdb_id":"2","season":2,"episodes":[{"tmdb_id":1,"episode":1,"title":"First Episode","first_aired":1234567890,"watched":true,"plays":1,"skipped":false,"collected":false,"overview":"First overview","image":"/first/still/path.jpg","writers":"writers string","gueststars":"guest stars string","directors":"directors string","rating_tmdb":2.4,"rating_tmdb_votes":4321,"rating":10.0,"rating_votes":1234,"rating_user":4},{"tmdb_id":2,"episode":2,"title":"Second Episode","first_aired":1234567890,"watched":false,"plays":0,"skipped":true,"collected":true,"overview":"Second overview","image":"/first/still/path.jpg","writers":"writers string","gueststars":"guest stars string","directors":"directors string"}]}]}
+            ,{"imdb_id":"","title":"","overview":"","language":"","release_time":-1,"release_weekday":-1,"release_timezone":"","poster":"","content_rating":"","status":"unknown","runtime":0,"genres":"","network":"","favorite":false,"notify":true,"hidden":false,"last_watched_ms":0,"seasons":[]}
+            ]
+            """.trimIndent()
 
         val listOfTestSeasons = listOf(
             SgSeason2(
@@ -297,7 +302,14 @@ class JsonExportTaskTest {
         val exportWithData = exportFile.readText()
         println("Export with data")
         println(exportWithData)
-        assertThat(exportWithData).isEqualTo("[{\"list_id\":\"list-1\",\"name\":\"First List\",\"order\":0,\"items\":[{\"list_item_id\":\"list-1-item-1\",\"tvdb_id\":0,\"externalId\":\"item-ref-1\",\"type\":\"tmdb-show\"},{\"list_item_id\":\"list-1-item-2\",\"tvdb_id\":0,\"externalId\":\"item-ref-2\",\"type\":\"show\"},{\"list_item_id\":\"list-1-item-3\",\"tvdb_id\":0,\"externalId\":\"item-ref-3\",\"type\":\"season\"},{\"list_item_id\":\"list-1-item-4\",\"tvdb_id\":0,\"externalId\":\"item-ref-4\",\"type\":\"episode\"}]},{\"list_id\":\"list-2\",\"name\":\"Empty List\",\"order\":1,\"items\":[]}]")
+        assertThat(exportWithData).isEqualTo(
+            """
+            [
+            {"list_id":"list-1","name":"First List","order":0,"items":[{"list_item_id":"list-1-item-1","tvdb_id":0,"externalId":"item-ref-1","type":"tmdb-show"},{"list_item_id":"list-1-item-2","tvdb_id":0,"externalId":"item-ref-2","type":"show"},{"list_item_id":"list-1-item-3","tvdb_id":0,"externalId":"item-ref-3","type":"season"},{"list_item_id":"list-1-item-4","tvdb_id":0,"externalId":"item-ref-4","type":"episode"}]}
+            ,{"list_id":"list-2","name":"Empty List","order":1,"items":[]}
+            ]
+            """.trimIndent()
+        )
     }
 
     private val listOfTestLists = listOf(
@@ -378,7 +390,14 @@ class JsonExportTaskTest {
         val exportWithData = exportFile.readText()
         println("Export with data")
         println(exportWithData)
-        assertThat(exportWithData).isEqualTo("[{\"tmdb_id\":1,\"imdb_id\":\"imdbidvalue\",\"title\":\"First Movie\",\"released_utc_ms\":1234567890,\"runtime_min\":123,\"poster\":\"/path/to/poster.jpg\",\"overview\":\"This is a movie description.\",\"in_collection\":true,\"in_watchlist\":true,\"watched\":true,\"plays\":2,\"last_updated_ms\":1234567890},{\"tmdb_id\":2,\"title\":\"Second Movie\",\"released_utc_ms\":9223372036854775807,\"runtime_min\":0,\"in_collection\":false,\"in_watchlist\":false,\"watched\":false,\"plays\":0,\"last_updated_ms\":0}]")
+        assertThat(exportWithData).isEqualTo(
+            """
+            [
+            {"tmdb_id":1,"imdb_id":"imdbidvalue","title":"First Movie","released_utc_ms":1234567890,"runtime_min":123,"poster":"/path/to/poster.jpg","overview":"This is a movie description.","in_collection":true,"in_watchlist":true,"watched":true,"plays":2,"last_updated_ms":1234567890}
+            ,{"tmdb_id":2,"title":"Second Movie","released_utc_ms":9223372036854775807,"runtime_min":0,"in_collection":false,"in_watchlist":false,"watched":false,"plays":0,"last_updated_ms":0}
+            ]
+            """.trimIndent()
+        )
     }
 
     private val listOfTestMovies = listOf(
