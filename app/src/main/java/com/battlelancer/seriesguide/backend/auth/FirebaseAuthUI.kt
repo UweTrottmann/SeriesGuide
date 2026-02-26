@@ -1,5 +1,6 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: Apache-2.0 AND AGPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
@@ -11,7 +12,6 @@ import android.content.Intent
 import androidx.annotation.RestrictTo
 import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
-import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.signOutFromFacebook
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.signOutFromGoogle
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
@@ -69,9 +69,6 @@ class FirebaseAuthUI private constructor(
 
     @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
     var testCredentialManagerProvider: AuthProvider.Google.CredentialManagerProvider? = null
-
-    @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
-    var testLoginManagerProvider: AuthProvider.Facebook.LoginManagerProvider? = null
 
     /**
      * Checks whether a user is currently signed in.
@@ -363,7 +360,6 @@ class FirebaseAuthUI private constructor(
             auth.signOut()
                 .also {
                     signOutFromGoogle(context)
-                    signOutFromFacebook()
                 }
 
             // Update state to idle (user signed out)
