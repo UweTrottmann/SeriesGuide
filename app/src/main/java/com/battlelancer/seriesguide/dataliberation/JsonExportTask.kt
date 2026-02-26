@@ -30,10 +30,11 @@ import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.TextTools
 import com.google.gson.JsonParseException
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.isActive
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
@@ -266,6 +267,10 @@ class JsonExportTask(
             Timber.e(e, "Failed to create JSON export.")
             errorCause = e.message
             return ERROR
+        } catch (e: CancellationException) {
+            Timber.e(e, "JSON export job cancelled.")
+            errorCause = e.message
+            return ERROR
         } catch (e: Exception) {
             // Only report unexpected errors.
             Errors.logAndReport("Export failed unexpectedly.", e)
@@ -336,9 +341,7 @@ class JsonExportTask(
         val shows = sgShow2Helper.getShowsForExport()
 
         // Last chance to stop (to avoid partially writing the file)
-        if (!coroutineScope.isActive) {
-            return
-        }
+        coroutineScope.ensureActive()
 
         SgJsonWriter(
             itemsToTransform = shows,
@@ -427,9 +430,7 @@ class JsonExportTask(
         val lists = sgListHelper.getListsForExport()
 
         // Last chance to stop (to avoid partially writing the file)
-        if (!coroutineScope.isActive) {
-            return
-        }
+        coroutineScope.ensureActive()
 
         SgJsonWriter(
             itemsToTransform = lists,
@@ -485,9 +486,7 @@ class JsonExportTask(
         val movies = movieHelper.getMoviesForExport()
 
         // Last chance to stop (to avoid partially writing the file)
-        if (!coroutineScope.isActive) {
-            return
-        }
+        coroutineScope.ensureActive()
 
         SgJsonWriter(
             itemsToTransform = movies,
