@@ -4,7 +4,7 @@
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
 
-package com.firebase.ui.auth.ui.components
+package com.battlelancer.seriesguide.backend.auth.ui.components
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
@@ -63,8 +63,8 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.core.text.isDigitsOnly
-import com.firebase.ui.auth.configuration.theme.AuthUITheme
-import com.firebase.ui.auth.configuration.validators.FieldValidator
+import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUITheme
+import com.battlelancer.seriesguide.backend.auth.configuration.validators.FieldValidator
 
 @Composable
 fun VerificationCodeInputField(

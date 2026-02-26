@@ -4,7 +4,7 @@
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
 
-package com.firebase.ui.auth.ui.method_picker
+package com.battlelancer.seriesguide.backend.auth.ui.method_picker
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -31,12 +31,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.firebase.ui.auth.R
-import com.firebase.ui.auth.configuration.auth_provider.AuthProvider
-import com.firebase.ui.auth.configuration.auth_provider.Provider
-import com.firebase.ui.auth.configuration.string_provider.LocalAuthUIStringProvider
-import com.firebase.ui.auth.configuration.theme.AuthUIAsset
-import com.firebase.ui.auth.ui.components.AuthProviderButton
-import com.firebase.ui.auth.util.SignInPreferenceManager
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Provider
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUIAsset
+import com.battlelancer.seriesguide.backend.auth.ui.components.AuthProviderButton
+import com.battlelancer.seriesguide.backend.auth.util.SignInPreferenceManager
 
 /**
  * Renders the provider selection screen.

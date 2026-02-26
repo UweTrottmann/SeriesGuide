@@ -4,10 +4,10 @@
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
 
-package com.firebase.ui.auth.util
+package com.battlelancer.seriesguide.backend.auth.util
 
-import com.firebase.ui.auth.data.ALL_COUNTRIES
-import com.firebase.ui.auth.data.CountryData
+import com.battlelancer.seriesguide.backend.auth.data.ALL_COUNTRIES
+import com.battlelancer.seriesguide.backend.auth.data.CountryData
 import java.text.Normalizer
 import java.util.Locale
 

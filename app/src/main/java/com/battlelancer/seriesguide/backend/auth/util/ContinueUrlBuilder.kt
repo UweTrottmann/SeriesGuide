@@ -4,13 +4,13 @@
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
 
-package com.firebase.ui.auth.util
+package com.battlelancer.seriesguide.backend.auth.util
 
 import androidx.annotation.RestrictTo
-import com.firebase.ui.auth.util.EmailLinkParser.LinkParameters.ANONYMOUS_USER_ID_IDENTIFIER
-import com.firebase.ui.auth.util.EmailLinkParser.LinkParameters.FORCE_SAME_DEVICE_IDENTIFIER
-import com.firebase.ui.auth.util.EmailLinkParser.LinkParameters.PROVIDER_ID_IDENTIFIER
-import com.firebase.ui.auth.util.EmailLinkParser.LinkParameters.SESSION_IDENTIFIER
+import com.battlelancer.seriesguide.backend.auth.util.EmailLinkParser.LinkParameters.ANONYMOUS_USER_ID_IDENTIFIER
+import com.battlelancer.seriesguide.backend.auth.util.EmailLinkParser.LinkParameters.FORCE_SAME_DEVICE_IDENTIFIER
+import com.battlelancer.seriesguide.backend.auth.util.EmailLinkParser.LinkParameters.PROVIDER_ID_IDENTIFIER
+import com.battlelancer.seriesguide.backend.auth.util.EmailLinkParser.LinkParameters.SESSION_IDENTIFIER
 
 /**
  * Builder for constructing continue URLs with embedded session and authentication parameters.

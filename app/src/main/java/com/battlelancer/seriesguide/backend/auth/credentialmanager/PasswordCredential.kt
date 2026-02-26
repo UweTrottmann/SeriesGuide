@@ -4,7 +4,7 @@
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
 
-package com.firebase.ui.auth.credentialmanager
+package com.battlelancer.seriesguide.backend.auth.credentialmanager
 
 /**
  * Represents a password credential retrieved from the system credential manager.

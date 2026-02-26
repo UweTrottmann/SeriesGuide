@@ -4,13 +4,13 @@
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
 
-package com.firebase.ui.auth.configuration
+package com.battlelancer.seriesguide.backend.auth.configuration
 
-import com.firebase.ui.auth.configuration.string_provider.AuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.AuthUIStringProvider
 
 /**
  * An abstract class representing a set of validation rules that can be applied to a password field,
- * typically within the [com.firebase.ui.auth.configuration.auth_provider.AuthProvider.Email] configuration.
+ * typically within the [com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider.Email] configuration.
  */
 abstract class PasswordRule {
     /**

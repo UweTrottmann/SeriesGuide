@@ -4,10 +4,10 @@
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
 
-package com.firebase.ui.auth.mfa
+package com.battlelancer.seriesguide.backend.auth.mfa
 
-import com.firebase.ui.auth.configuration.MfaFactor
-import com.firebase.ui.auth.data.CountryData
+import com.battlelancer.seriesguide.backend.auth.configuration.MfaFactor
+import com.battlelancer.seriesguide.backend.auth.data.CountryData
 import com.google.firebase.auth.MultiFactorInfo
 
 /**

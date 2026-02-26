@@ -4,7 +4,7 @@
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
 
-package com.firebase.ui.auth.ui.components
+package com.battlelancer.seriesguide.backend.auth.ui.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
@@ -12,9 +12,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.firebase.ui.auth.AuthException
-import com.firebase.ui.auth.AuthState
-import com.firebase.ui.auth.configuration.string_provider.AuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.AuthException
+import com.battlelancer.seriesguide.backend.auth.AuthState
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.AuthUIStringProvider
 
 /**
  * CompositionLocal for accessing the top-level dialog controller from any composable.

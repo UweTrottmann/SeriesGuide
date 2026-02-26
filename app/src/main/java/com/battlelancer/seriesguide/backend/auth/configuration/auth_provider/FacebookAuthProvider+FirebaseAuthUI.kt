@@ -4,7 +4,7 @@
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
 
-package com.firebase.ui.auth.configuration.auth_provider
+package com.battlelancer.seriesguide.backend.auth.configuration.auth_provider
 
 import android.content.Context
 import android.util.Log
@@ -19,12 +19,12 @@ import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import com.firebase.ui.auth.AuthException
-import com.firebase.ui.auth.AuthState
-import com.firebase.ui.auth.FirebaseAuthUI
-import com.firebase.ui.auth.configuration.AuthUIConfiguration
-import com.firebase.ui.auth.util.EmailLinkPersistenceManager
-import com.firebase.ui.auth.util.SignInPreferenceManager
+import com.battlelancer.seriesguide.backend.auth.AuthException
+import com.battlelancer.seriesguide.backend.auth.AuthState
+import com.battlelancer.seriesguide.backend.auth.FirebaseAuthUI
+import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
+import com.battlelancer.seriesguide.backend.auth.util.EmailLinkPersistenceManager
+import com.battlelancer.seriesguide.backend.auth.util.SignInPreferenceManager
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 

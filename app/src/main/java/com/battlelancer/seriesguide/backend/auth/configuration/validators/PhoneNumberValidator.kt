@@ -4,10 +4,10 @@
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
 
-package com.firebase.ui.auth.configuration.validators
+package com.battlelancer.seriesguide.backend.auth.configuration.validators
 
-import com.firebase.ui.auth.configuration.string_provider.AuthUIStringProvider
-import com.firebase.ui.auth.data.CountryData
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.AuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.data.CountryData
 import com.google.i18n.phonenumbers.NumberParseException
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 

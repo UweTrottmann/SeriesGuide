@@ -4,7 +4,7 @@
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
 
-package com.firebase.ui.auth.ui.screens
+package com.battlelancer.seriesguide.backend.auth.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,11 +28,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.firebase.ui.auth.configuration.MfaFactor
-import com.firebase.ui.auth.configuration.string_provider.LocalAuthUIStringProvider
-import com.firebase.ui.auth.configuration.validators.VerificationCodeValidator
-import com.firebase.ui.auth.mfa.MfaChallengeContentState
-import com.firebase.ui.auth.ui.components.VerificationCodeInputField
+import com.battlelancer.seriesguide.backend.auth.configuration.MfaFactor
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.validators.VerificationCodeValidator
+import com.battlelancer.seriesguide.backend.auth.mfa.MfaChallengeContentState
+import com.battlelancer.seriesguide.backend.auth.ui.components.VerificationCodeInputField
 
 @Composable
 internal fun DefaultMfaChallengeContent(state: MfaChallengeContentState) {
