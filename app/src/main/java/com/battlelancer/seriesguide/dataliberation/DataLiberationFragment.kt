@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2013-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2013 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.dataliberation
 
@@ -200,9 +200,9 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
         val exportTask = JsonExportTask(
             requireContext(),
             this@DataLiberationFragment,
-            binding.checkBoxDataLibFullDump.isChecked, false, type
+            binding.checkBoxDataLibFullDump.isChecked
         )
-        model.dataLibJob = exportTask.launch()
+        model.dataLibJob = exportTask.launch(type)
     }
 
     private val createShowExportFileResult =

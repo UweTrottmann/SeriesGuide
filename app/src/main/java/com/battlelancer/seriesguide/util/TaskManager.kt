@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2011-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2011 Uwe Trottmann <uwe@uwetrottmann.com>
 
 @file:Suppress("DEPRECATION") // Ignore warning that AsyncTask should not be used for new code
 
@@ -12,9 +12,11 @@ import androidx.annotation.MainThread
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
+import com.battlelancer.seriesguide.dataliberation.AutoBackupTask
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask
 import com.battlelancer.seriesguide.shows.tools.AddShowTask
 import com.battlelancer.seriesguide.shows.tools.LatestEpisodeUpdateTask
+import com.battlelancer.seriesguide.util.TaskManager.performAddTask
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Semaphore
@@ -103,12 +105,7 @@ object TaskManager {
         SgApp.coroutineScope.launch(Dispatchers.IO) {
             addShowOrBackupSemaphore.withPermit {
                 try {
-                    JsonExportTask(
-                        context, null,
-                        isFullDump = false,
-                        isAutoBackupMode = true,
-                        type = null
-                    ).run()
+                    AutoBackupTask(context).runAutoBackup()
                 } finally {
                     // If backup task gets cancelled for any reason, ensure flag is reset
                     hasBackupTask = false

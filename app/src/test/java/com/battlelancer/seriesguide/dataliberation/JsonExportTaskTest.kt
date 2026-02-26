@@ -84,8 +84,6 @@ class JsonExportTaskTest {
             context,
             progressListener = null,
             isFullDump = true,
-            isAutoBackupMode = false,
-            type = JsonExportTask.EXPORT_SHOWS,
             sgShow2Helper,
             sgSeason2Helper,
             sgEpisode2Helper,
@@ -96,7 +94,8 @@ class JsonExportTaskTest {
         val exportFile = configureTestExportFile(exportTask)
 
         // No data
-        val noDataResult = exportTask.run()
+        val type = JsonExportTask.EXPORT_SHOWS
+        val noDataResult = exportTask.run(type)
         assertThat(exportTask.errorCause).isNull()
         assertThat(noDataResult).isEqualTo(JsonExportTask.SUCCESS)
 
@@ -111,7 +110,7 @@ class JsonExportTaskTest {
         `when`(sgEpisode2Helper.getEpisodesForExport(1)).thenReturn(listOfTestEpisodes)
         `when`(sgEpisode2Helper.getEpisodesForExport(2)).thenReturn(listOfTestEpisodes)
 
-        val withDataResult = exportTask.run()
+        val withDataResult = exportTask.run(type)
         assertThat(exportTask.errorCause).isNull()
         assertThat(withDataResult).isEqualTo(JsonExportTask.SUCCESS)
 
@@ -270,8 +269,6 @@ class JsonExportTaskTest {
             context,
             progressListener = null,
             isFullDump = true,
-            isAutoBackupMode = false,
-            type = JsonExportTask.EXPORT_LISTS,
             mock(SgShow2Helper::class.java),
             mock(SgSeason2Helper::class.java),
             mock(SgEpisode2Helper::class.java),
@@ -282,7 +279,8 @@ class JsonExportTaskTest {
         val exportFile = configureTestExportFile(exportTask)
 
         // No data
-        val noDataResult = exportTask.run()
+        val type = JsonExportTask.EXPORT_LISTS
+        val noDataResult = exportTask.run(type)
         assertThat(exportTask.errorCause).isNull()
         assertThat(noDataResult).isEqualTo(JsonExportTask.SUCCESS)
 
@@ -295,7 +293,7 @@ class JsonExportTaskTest {
         `when`(sgListHelper.getListsForExport()).thenReturn(listOfTestLists)
         `when`(sgListHelper.getListItemsForExport("list-1")).thenReturn(listOfTestListItems)
 
-        val withDataResult = exportTask.run()
+        val withDataResult = exportTask.run(type)
         assertThat(exportTask.errorCause).isNull()
         assertThat(withDataResult).isEqualTo(JsonExportTask.SUCCESS)
 
@@ -360,8 +358,6 @@ class JsonExportTaskTest {
             context,
             progressListener = null,
             isFullDump = true,
-            isAutoBackupMode = false,
-            type = JsonExportTask.EXPORT_MOVIES,
             mock(SgShow2Helper::class.java),
             mock(SgSeason2Helper::class.java),
             mock(SgEpisode2Helper::class.java),
@@ -372,7 +368,8 @@ class JsonExportTaskTest {
         val exportFile = configureTestExportFile(exportTask)
 
         // No data
-        val noDataResult = exportTask.run()
+        val type = JsonExportTask.EXPORT_MOVIES
+        val noDataResult = exportTask.run(type)
         assertThat(exportTask.errorCause).isNull()
         assertThat(noDataResult).isEqualTo(JsonExportTask.SUCCESS)
 
@@ -383,7 +380,7 @@ class JsonExportTaskTest {
 
         // With data
         `when`(movieHelper.getMoviesForExport()).thenReturn(listOfTestMovies)
-        val withDataResult = exportTask.run()
+        val withDataResult = exportTask.run(type)
         assertThat(exportTask.errorCause).isNull()
         assertThat(withDataResult).isEqualTo(JsonExportTask.SUCCESS)
 

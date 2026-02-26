@@ -4,13 +4,15 @@
 package com.battlelancer.seriesguide.dataliberation
 
 import android.content.Context
-import android.net.Uri
 import android.os.ParcelFileDescriptor
 import androidx.annotation.IntDef
 import androidx.annotation.VisibleForTesting
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.dataliberation.DataLiberationFragment.LiberationResultEvent
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Companion.EXPORT_LISTS
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Companion.EXPORT_MOVIES
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Companion.EXPORT_SHOWS
 import com.battlelancer.seriesguide.dataliberation.model.Episode
 import com.battlelancer.seriesguide.dataliberation.model.ListItem
 import com.battlelancer.seriesguide.dataliberation.model.Movie
@@ -52,15 +54,12 @@ import com.battlelancer.seriesguide.dataliberation.model.List as ExportList
  *
  * @param isFullDump Whether to also export meta-data like descriptions, ratings, actors, etc.
  * Increases file size about 2-4 times.
- * @param isAutoBackupMode Whether to run an auto backup, also shows no result toasts.
  */
 @Suppress("BlockingMethodInNonBlockingContext")
-class JsonExportTask(
+open class JsonExportTask(
     context: Context,
     private val progressListener: OnTaskProgressListener?,
     private val isFullDump: Boolean,
-    private val isAutoBackupMode: Boolean,
-    private val type: Int?,
     private val sgShow2Helper: SgShow2Helper,
     private val sgSeason2Helper: SgSeason2Helper,
     private val sgEpisode2Helper: SgEpisode2Helper,
@@ -72,14 +71,10 @@ class JsonExportTask(
         context: Context,
         progressListener: OnTaskProgressListener?,
         isFullDump: Boolean,
-        isAutoBackupMode: Boolean,
-        type: Int?,
     ) : this(
         context,
         progressListener,
         isFullDump,
-        isAutoBackupMode,
-        type,
         SgRoomDatabase.getInstance(context).sgShow2Helper(),
         SgRoomDatabase.getInstance(context).sgSeason2Helper(),
         SgRoomDatabase.getInstance(context).sgEpisode2Helper(),
@@ -102,68 +97,33 @@ class JsonExportTask(
 
     /**
      * Wraps [run] so it can be called from Java code.
+     *
+     * [type] is one of [EXPORT_SHOWS], [EXPORT_LISTS] or [EXPORT_MOVIES].
      */
-    fun launch(): Job {
+    fun launch(@ExportType type: Int): Job {
         return SgApp.coroutineScope.launch {
-            run()
+            run(type)
         }
     }
 
-    suspend fun run(): Int {
+    /**
+     * [type] is one of [EXPORT_SHOWS], [EXPORT_LISTS] or [EXPORT_MOVIES].
+     */
+    suspend fun run(@ExportType type: Int): Int {
         return withContext(Dispatchers.IO) {
-            val result = doInBackground(this)
+            val result = doInBackground(this, type)
             onPostExecute(result)
             return@withContext result
         }
     }
 
-    private suspend fun doInBackground(coroutineScope: CoroutineScope): Int {
-        return if (isAutoBackupMode) {
-            // Auto backup mode.
-            try {
-                AutoBackupTask(this, context).run(coroutineScope)
-                BackupSettings.setAutoBackupErrorOrNull(context, null)
-                SUCCESS
-            } catch (e: Exception) {
-                Errors.logAndReport("Unable to auto backup.", e)
-                BackupSettings.setAutoBackupErrorOrNull(
-                    context,
-                    e.javaClass.simpleName + ": " + e.message
-                )
-                ERROR
-            }
-        } else {
-            // Manual backup mode.
-            if (!coroutineScope.isActive) {
-                return ERROR
-            }
-
-            var result = SUCCESS
-            if (type == null || type == EXPORT_SHOWS) {
-                result = exportData(coroutineScope, EXPORT_SHOWS)
-                if (result != SUCCESS) {
-                    return result
-                }
-                if (!coroutineScope.isActive) {
-                    return ERROR
-                }
-            }
-
-            if (type == null || type == EXPORT_LISTS) {
-                result = exportData(coroutineScope, EXPORT_LISTS)
-                if (result != SUCCESS) {
-                    return result
-                }
-                if (!coroutineScope.isActive) {
-                    return ERROR
-                }
-            }
-
-            if (type == null || type == EXPORT_MOVIES) {
-                result = exportData(coroutineScope, EXPORT_MOVIES)
-            }
-
-            result
+    private suspend fun doInBackground(coroutineScope: CoroutineScope, @ExportType type: Int): Int {
+        // Manual backup mode
+        return when (type) {
+            EXPORT_SHOWS -> exportData(coroutineScope, EXPORT_SHOWS)
+            EXPORT_LISTS -> exportData(coroutineScope, EXPORT_LISTS)
+            EXPORT_MOVIES -> exportData(coroutineScope, EXPORT_MOVIES)
+            else -> throw IllegalStateException("Unknown type $type")
         }
     }
 
@@ -174,38 +134,34 @@ class JsonExportTask(
     }
 
     private fun onPostExecute(result: Int) {
-        if (!isAutoBackupMode) {
-            val message: String
-            val showIndefinite: Boolean
-            when (result) {
-                SUCCESS -> {
-                    message = context.getString(R.string.status_successful)
-                    showIndefinite = false
-                }
-
-                ERROR_FILE_ACCESS -> {
-                    message = TextTools.dotSeparate(
-                        context,
-                        R.string.status_failure,
-                        R.string.status_failed_file_access
-                    )
-                    showIndefinite = true
-                }
-
-                else -> {
-                    message = context.getString(R.string.status_failure)
-                    showIndefinite = true
-                }
+        val message: String
+        val showIndefinite: Boolean
+        when (result) {
+            SUCCESS -> {
+                message = context.getString(R.string.status_successful)
+                showIndefinite = false
             }
-            EventBus.getDefault()
-                .post(
-                    LiberationResultEvent(
-                        context, message, errorCause, showIndefinite
-                    )
+
+            ERROR_FILE_ACCESS -> {
+                message = TextTools.dotSeparate(
+                    context,
+                    R.string.status_failure,
+                    R.string.status_failed_file_access
                 )
-        } else {
-            EventBus.getDefault().post(LiberationResultEvent())
+                showIndefinite = true
+            }
+
+            else -> {
+                message = context.getString(R.string.status_failure)
+                showIndefinite = true
+            }
         }
+        EventBus.getDefault()
+            .post(
+                LiberationResultEvent(
+                    context, message, errorCause, showIndefinite
+                )
+            )
     }
 
     private suspend fun exportData(coroutineScope: CoroutineScope, @ExportType type: Int): Int {
@@ -215,8 +171,9 @@ class JsonExportTask(
             var pfd: ParcelFileDescriptor? = null
             val out = if (testExportFile == null) {
                 // ensure the user has selected a file
-                val exportFileUri = getExportFileUri(type)
-                    ?: return ERROR_FILE_ACCESS
+                val exportFileUri =
+                    BackupSettings.getExportFileUri(context, type, /* isAutoBackup = */false)
+                        ?: return ERROR_FILE_ACCESS
 
                 pfd = context.contentResolver.openFileDescriptor(exportFileUri, "w")
                     ?: return ERROR_FILE_ACCESS
@@ -281,12 +238,8 @@ class JsonExportTask(
         return SUCCESS
     }
 
-    fun getExportFileUri(@ExportType type: Int): Uri? {
-        return BackupSettings.getExportFileUri(context, type, isAutoBackupMode)
-    }
-
-    fun removeExportFileUri(@ExportType type: Int) {
-        BackupSettings.storeExportFileUri(context, type, null, isAutoBackupMode)
+    private fun removeExportFileUri(@ExportType type: Int) {
+        BackupSettings.storeExportFileUri(context, type, null, false)
     }
 
     @Throws(IOException::class)
