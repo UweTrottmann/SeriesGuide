@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2019-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2019 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.backend
 
@@ -15,6 +15,12 @@ import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.backend.auth.AuthException
+import com.battlelancer.seriesguide.backend.auth.AuthFlowController
+import com.battlelancer.seriesguide.backend.auth.FirebaseAuthActivity
+import com.battlelancer.seriesguide.backend.auth.FirebaseAuthUI
+import com.battlelancer.seriesguide.backend.auth.configuration.authUIConfiguration
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.databinding.FragmentCloudSetupBinding
@@ -24,14 +30,12 @@ import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.safeShow
-import com.firebase.ui.auth.AuthMethodPickerLayout
-import com.firebase.ui.auth.AuthUI
-import com.firebase.ui.auth.ErrorCodes
-import com.firebase.ui.auth.IdpResponse
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.uwetrottmann.androidutils.AndroidUtils
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -125,6 +129,7 @@ class CloudSetupFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+        authController?.dispose()
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -188,52 +193,48 @@ class CloudSetupFragment : Fragment() {
             if (result.resultCode == Activity.RESULT_OK) {
                 changeAccount(FirebaseAuth.getInstance().currentUser, null)
             } else {
-                val response = IdpResponse.fromResultIntent(result.data)
-                if (response == null) {
+                val error = result.data
+                    ?.let {
+                        if (AndroidUtils.isAtLeastTiramisu) {
+                            it.getSerializableExtra(
+                                FirebaseAuthActivity.EXTRA_ERROR,
+                                AuthException::class.java
+                            )
+                        } else {
+                            @Suppress("DEPRECATION")
+                            it.getSerializableExtra(FirebaseAuthActivity.EXTRA_ERROR)
+                                    as? AuthException
+                        }
+                    }
+                if (error == null) {
                     // user chose not to sign in or add account, show no error message
                     changeAccount(null, null)
                 } else {
                     val errorMessage: String?
-                    val ex = response.error
-                    if (ex != null) {
-                        when (ex.errorCode) {
-                            ErrorCodes.NO_NETWORK -> {
-                                errorMessage = getString(R.string.offline)
-                            }
+                    when (error) {
+                        is AuthException.NetworkException -> {
+                            errorMessage = getString(R.string.offline)
+                        }
 
-                            ErrorCodes.PLAY_SERVICES_UPDATE_CANCELLED -> {
-                                // user cancelled, show no error message
-                                errorMessage = null
-                            }
+                        is AuthException.AuthCancelledException -> {
+                            // user cancelled, show no error message
+                            errorMessage = null
+                        }
 
-                            else -> {
-                                if (ex.errorCode == ErrorCodes.DEVELOPER_ERROR
-                                    && !hexagonTools.isGoogleSignInAvailable) {
-                                    // Note: If trying to sign-in with email already used with
-                                    // Google Sign-In on other device, fails to fall back to
-                                    // Google Sign-In because Play Services is not available.
-                                    errorMessage = getString(R.string.hexagon_signin_google_only)
-                                } else {
-                                    // Note: error code in message can be from Firebase Auth UI
-                                    // https://github.com/firebase/FirebaseUI-Android/blob/master/auth/src/main/java/com/firebase/ui/auth/ErrorCodes.java
-                                    // or from Play Services API
-                                    // https://developers.google.com/android/reference/com/google/android/gms/common/api/CommonStatusCodes
-                                    // despite being wrapped in FirebaseUiException.
-                                    // The message format is a good hint, e.g.
-                                    // "Code: 10, message: 10: " is from CommonStatusCodes
-                                    // See also HexagonAuthError.build()
-                                    errorMessage = ex.message
-                                    Errors.logAndReportHexagonAuthError(
-                                        HexagonAuthError.build(ACTION_SIGN_IN, ex)
-                                    )
-                                }
+                        else -> {
+                            if (error is AuthException.AccountLinkingRequiredException
+                                && !hexagonTools.isGoogleSignInAvailable) {
+                                // Note: If trying to sign-in with email already used with
+                                // Google Sign-In on other device, fails to fall back to
+                                // Google Sign-In because Play Services is not available.
+                                errorMessage = getString(R.string.hexagon_signin_google_only)
+                            } else {
+                                errorMessage = error.message
+                                Errors.logAndReportHexagonAuthError(
+                                    HexagonAuthError.build(ACTION_SIGN_IN, error)
+                                )
                             }
                         }
-                    } else {
-                        errorMessage = "Unknown error"
-                        Errors.logAndReportHexagonAuthError(
-                            HexagonAuthError(ACTION_SIGN_IN, errorMessage)
-                        )
                     }
 
                     changeAccount(null, errorMessage)
@@ -241,27 +242,45 @@ class CloudSetupFragment : Fragment() {
             }
         }
 
+    private var authController: AuthFlowController? = null
+
+    // FIXME
     private fun signIn() {
-        // Note: no need to provide a layout when just email sign-in is available
-        // as Firebase UI will just directly proceed without asking for the provider.
-        val authPickerLayout = AuthMethodPickerLayout.Builder(R.layout.auth_picker_email_google)
-            .setEmailButtonId(R.id.buttonAuthSignInEmail)
-            .setGoogleButtonId(R.id.buttonAuthSignInGoogle)
-            .build()
+        val authUI = FirebaseAuthUI.getInstance()
+        val configuration = authUIConfiguration {
+            context = requireContext().applicationContext
+            providers {
+                provider(
+                    AuthProvider.Email(
+                        emailLinkActionCodeSettings = null,
+                        passwordValidationRules = emptyList()
+                    )
+                )
+                if (hexagonTools.isGoogleSignInAvailable) {
+                    provider(
+                        AuthProvider.Google(
+                            scopes = listOf("email"),
+                            // TODO Created by google-services plugin, but should define manually
+                            serverClientId = requireContext().getString(R.string.default_web_client_id),
+                            filterByAuthorizedAccounts = false
+                        )
+                    )
+                }
+            }
+        }
 
-        // Create and launch sign-in intent
-        val intent = AuthUI.getInstance()
-            .createSignInIntentBuilder()
-            .setAvailableProviders(hexagonTools.firebaseSignInProviders)
-            .setIsSmartLockEnabled(hexagonTools.isGoogleSignInAvailable)
-            // AuthUI is not compatible with edge-to-edge on Android 15 (target SDK 35),
-            // so opt out its activities.
-            // https://github.com/firebase/FirebaseUI-Android/issues/2177
-            .setTheme(R.style.Theme_SeriesGuide_DayNight_OptOutEdgeToEdge)
-            .setAuthMethodPickerLayout(authPickerLayout)
-            .build()
+        val authController = authUI.createAuthFlow(configuration)
+            .also { this.authController = it }
 
+        val intent = authController.createIntent(requireContext())
         signInWithFirebase.launch(intent)
+
+//        // Note: no need to provide a layout when just email sign-in is available
+//        // as Firebase UI will just directly proceed without asking for the provider.
+//        val authPickerLayout = AuthMethodPickerLayout.Builder(R.layout.auth_picker_email_google)
+//            .setEmailButtonId(R.id.buttonAuthSignInEmail)
+//            .setGoogleButtonId(R.id.buttonAuthSignInGoogle)
+//            .build()
     }
 
     private fun signOut() {
@@ -270,16 +289,17 @@ class CloudSetupFragment : Fragment() {
             hexagonTools.removeAccountAndSetDisabled()
             updateViews()
         } else {
-            setProgressVisible(true)
-            AuthUI.getInstance().signOut(requireContext()).addOnCompleteListener {
-                Timber.i("Signed out.")
-                signInAccount = null
-                hexagonTools.removeAccountAndSetDisabled()
-                if (this@CloudSetupFragment.isAdded) {
-                    setProgressVisible(false)
-                    updateViews()
-                }
-            }
+            // FIXME
+//            setProgressVisible(true)
+//            AuthUI.getInstance().signOut(requireContext()).addOnCompleteListener {
+//                Timber.i("Signed out.")
+//                signInAccount = null
+//                hexagonTools.removeAccountAndSetDisabled()
+//                if (this@CloudSetupFragment.isAdded) {
+//                    setProgressVisible(false)
+//                    updateViews()
+//                }
+//            }
         }
     }
 
