@@ -4,15 +4,15 @@
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
 
-package com.firebase.ui.auth
+package com.battlelancer.seriesguide.backend.auth
 
 import android.content.Context
 import android.content.Intent
 import androidx.annotation.RestrictTo
-import com.firebase.ui.auth.configuration.AuthUIConfiguration
-import com.firebase.ui.auth.configuration.auth_provider.AuthProvider
-import com.firebase.ui.auth.configuration.auth_provider.signOutFromFacebook
-import com.firebase.ui.auth.configuration.auth_provider.signOutFromGoogle
+import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.signOutFromFacebook
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.signOutFromGoogle
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth

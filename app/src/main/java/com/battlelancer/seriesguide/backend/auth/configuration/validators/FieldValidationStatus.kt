@@ -4,7 +4,7 @@
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
 
-package com.firebase.ui.auth.configuration.validators
+package com.battlelancer.seriesguide.backend.auth.configuration.validators
 
 /**
  * Class for encapsulating [hasError] and [errorMessage] properties in

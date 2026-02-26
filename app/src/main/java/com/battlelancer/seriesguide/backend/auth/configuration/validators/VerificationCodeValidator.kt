@@ -4,9 +4,9 @@
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
 
-package com.firebase.ui.auth.configuration.validators
+package com.battlelancer.seriesguide.backend.auth.configuration.validators
 
-import com.firebase.ui.auth.configuration.string_provider.AuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.AuthUIStringProvider
 
 internal class VerificationCodeValidator(override val stringProvider: AuthUIStringProvider) :
     FieldValidator {

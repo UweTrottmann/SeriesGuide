@@ -4,7 +4,7 @@
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
 
-package com.firebase.ui.auth.ui.screens
+package com.battlelancer.seriesguide.backend.auth.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -41,17 +41,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.firebase.ui.auth.configuration.AuthUIConfiguration
-import com.firebase.ui.auth.configuration.MfaFactor
-import com.firebase.ui.auth.configuration.string_provider.AuthUIStringProvider
-import com.firebase.ui.auth.configuration.string_provider.LocalAuthUIStringProvider
-import com.firebase.ui.auth.mfa.MfaEnrollmentContentState
-import com.firebase.ui.auth.mfa.MfaEnrollmentStep
-import com.firebase.ui.auth.mfa.toMfaErrorMessage
-import com.firebase.ui.auth.ui.components.QrCodeImage
-import com.firebase.ui.auth.ui.components.ReauthenticationDialog
-import com.firebase.ui.auth.ui.screens.phone.EnterPhoneNumberUI
-import com.firebase.ui.auth.ui.screens.phone.EnterVerificationCodeUI
+import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
+import com.battlelancer.seriesguide.backend.auth.configuration.MfaFactor
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.AuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.mfa.MfaEnrollmentContentState
+import com.battlelancer.seriesguide.backend.auth.mfa.MfaEnrollmentStep
+import com.battlelancer.seriesguide.backend.auth.mfa.toMfaErrorMessage
+import com.battlelancer.seriesguide.backend.auth.ui.components.QrCodeImage
+import com.battlelancer.seriesguide.backend.auth.ui.components.ReauthenticationDialog
+import com.battlelancer.seriesguide.backend.auth.ui.screens.phone.EnterPhoneNumberUI
+import com.battlelancer.seriesguide.backend.auth.ui.screens.phone.EnterVerificationCodeUI
 import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.MultiFactorInfo

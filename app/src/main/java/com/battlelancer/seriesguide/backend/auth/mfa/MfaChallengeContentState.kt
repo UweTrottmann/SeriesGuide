@@ -4,9 +4,9 @@
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
 
-package com.firebase.ui.auth.mfa
+package com.battlelancer.seriesguide.backend.auth.mfa
 
-import com.firebase.ui.auth.configuration.MfaFactor
+import com.battlelancer.seriesguide.backend.auth.configuration.MfaFactor
 
 /**
  * State class containing all the necessary information to render a custom UI for the

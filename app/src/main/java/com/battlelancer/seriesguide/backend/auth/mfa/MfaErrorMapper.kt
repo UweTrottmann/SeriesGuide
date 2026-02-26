@@ -4,9 +4,9 @@
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
 
-package com.firebase.ui.auth.mfa
+package com.battlelancer.seriesguide.backend.auth.mfa
 
-import com.firebase.ui.auth.configuration.string_provider.AuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.AuthUIStringProvider
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException

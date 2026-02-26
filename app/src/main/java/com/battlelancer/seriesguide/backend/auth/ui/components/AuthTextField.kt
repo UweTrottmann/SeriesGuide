@@ -4,7 +4,7 @@
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
 
-package com.firebase.ui.auth.ui.components
+package com.battlelancer.seriesguide.backend.auth.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -38,11 +38,11 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.firebase.ui.auth.configuration.PasswordRule
-import com.firebase.ui.auth.configuration.string_provider.DefaultAuthUIStringProvider
-import com.firebase.ui.auth.configuration.validators.EmailValidator
-import com.firebase.ui.auth.configuration.validators.FieldValidator
-import com.firebase.ui.auth.configuration.validators.PasswordValidator
+import com.battlelancer.seriesguide.backend.auth.configuration.PasswordRule
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.DefaultAuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.validators.EmailValidator
+import com.battlelancer.seriesguide.backend.auth.configuration.validators.FieldValidator
+import com.battlelancer.seriesguide.backend.auth.configuration.validators.PasswordValidator
 
 /**
  * A customizable input field with built-in validation display.

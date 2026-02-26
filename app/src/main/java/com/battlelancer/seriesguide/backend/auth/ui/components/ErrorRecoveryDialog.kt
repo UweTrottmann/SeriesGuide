@@ -4,7 +4,7 @@
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
 
-package com.firebase.ui.auth.ui.components
+package com.battlelancer.seriesguide.backend.auth.ui.components
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
@@ -14,8 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.window.DialogProperties
-import com.firebase.ui.auth.AuthException
-import com.firebase.ui.auth.configuration.string_provider.AuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.AuthException
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.AuthUIStringProvider
 
 /**
  * A composable dialog for displaying authentication errors with recovery options.

@@ -4,12 +4,12 @@
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
 
-package com.firebase.ui.auth.configuration.string_provider
+package com.battlelancer.seriesguide.backend.auth.configuration.string_provider
 
 import android.content.Context
-import com.firebase.ui.auth.configuration.AuthUIConfiguration
-import com.firebase.ui.auth.configuration.authUIConfiguration
-import com.firebase.ui.auth.configuration.auth_provider.AuthProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
+import com.battlelancer.seriesguide.backend.auth.configuration.authUIConfiguration
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
 
 class AuthUIStringProviderSample {
     /**

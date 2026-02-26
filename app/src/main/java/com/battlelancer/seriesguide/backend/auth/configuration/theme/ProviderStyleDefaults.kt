@@ -4,11 +4,11 @@
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
 
-package com.firebase.ui.auth.configuration.theme
+package com.battlelancer.seriesguide.backend.auth.configuration.theme
 
 import androidx.compose.ui.graphics.Color
 import com.firebase.ui.auth.R
-import com.firebase.ui.auth.configuration.auth_provider.Provider
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Provider
 
 /**
  * Default provider styling configurations for authentication providers.

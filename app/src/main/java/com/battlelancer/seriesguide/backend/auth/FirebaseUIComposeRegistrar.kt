@@ -4,7 +4,7 @@
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
 
-package com.firebase.ui.auth
+package com.battlelancer.seriesguide.backend.auth
 
 import android.util.Log
 import androidx.annotation.Keep

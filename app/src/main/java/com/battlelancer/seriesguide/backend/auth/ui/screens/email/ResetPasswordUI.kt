@@ -4,7 +4,7 @@
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
 
-package com.firebase.ui.auth.ui.screens.email
+package com.battlelancer.seriesguide.backend.auth.ui.screens.email
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -39,14 +39,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.firebase.ui.auth.configuration.AuthUIConfiguration
-import com.firebase.ui.auth.configuration.authUIConfiguration
-import com.firebase.ui.auth.configuration.auth_provider.AuthProvider
-import com.firebase.ui.auth.configuration.string_provider.LocalAuthUIStringProvider
-import com.firebase.ui.auth.configuration.theme.AuthUITheme
-import com.firebase.ui.auth.configuration.validators.EmailValidator
-import com.firebase.ui.auth.ui.components.AuthTextField
-import com.firebase.ui.auth.ui.components.TermsAndPrivacyForm
+import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
+import com.battlelancer.seriesguide.backend.auth.configuration.authUIConfiguration
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUITheme
+import com.battlelancer.seriesguide.backend.auth.configuration.validators.EmailValidator
+import com.battlelancer.seriesguide.backend.auth.ui.components.AuthTextField
+import com.battlelancer.seriesguide.backend.auth.ui.components.TermsAndPrivacyForm
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
