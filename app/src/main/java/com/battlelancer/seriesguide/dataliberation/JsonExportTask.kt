@@ -335,12 +335,17 @@ class JsonExportTask(
 
         val shows = sgShow2Helper.getShowsForExport()
 
+        // Last chance to stop (to avoid partially writing the file)
+        if (!coroutineScope.isActive) {
+            return
+        }
+
         SgJsonWriter(
             itemsToTransform = shows,
             outputClass = Show::class.java,
             outputStream = out,
             transform = transform
-        ).write(coroutineScope) { total, done ->
+        ).write { total, done ->
             onProgressUpdate(total, done)
         }
     }
@@ -421,12 +426,17 @@ class JsonExportTask(
 
         val lists = sgListHelper.getListsForExport()
 
+        // Last chance to stop (to avoid partially writing the file)
+        if (!coroutineScope.isActive) {
+            return
+        }
+
         SgJsonWriter(
             itemsToTransform = lists,
             outputClass = ExportList::class.java,
             outputStream = out,
             transform = transform
-        ).write(coroutineScope) { total, done ->
+        ).write { total, done ->
             onProgressUpdate(total, done)
         }
     }
@@ -474,12 +484,17 @@ class JsonExportTask(
 
         val movies = movieHelper.getMoviesForExport()
 
+        // Last chance to stop (to avoid partially writing the file)
+        if (!coroutineScope.isActive) {
+            return
+        }
+
         SgJsonWriter(
             itemsToTransform = movies,
             outputClass = Movie::class.java,
             outputStream = out,
             transform = transform
-        ).write(coroutineScope) { total, done ->
+        ).write { total, done ->
             onProgressUpdate(total, done)
         }
     }

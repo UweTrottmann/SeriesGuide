@@ -5,8 +5,6 @@ package com.battlelancer.seriesguide.dataliberation
 
 import com.google.gson.Gson
 import com.google.gson.stream.JsonWriter
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.isActive
 import java.io.BufferedWriter
 import java.io.OutputStream
 
@@ -25,10 +23,7 @@ class SgJsonWriter<T, O>(
     private val transform: (T) -> O,
 ) {
 
-    suspend fun write(
-        coroutineScope: CoroutineScope,
-        progressCallback: suspend (Int, Int) -> Unit
-    ) {
+    suspend fun write(progressCallback: suspend (Int, Int) -> Unit) {
         val gson = Gson()
         val outputWriter = outputStream.bufferedWriter()
         val jsonWriter = JsonWriter(outputWriter)
@@ -41,10 +36,6 @@ class SgJsonWriter<T, O>(
         jsonWriter.beginArray()
 
         for (item in itemsToTransform) {
-            if (!coroutineScope.isActive) {
-                break
-            }
-
             // Write each item on a new line. Due to how JsonWriter works new lines for all but the
             // first item will start with a comma followed by the JSON object. This is an OK
             // trade-off to writing a completely custom JSON writer.
