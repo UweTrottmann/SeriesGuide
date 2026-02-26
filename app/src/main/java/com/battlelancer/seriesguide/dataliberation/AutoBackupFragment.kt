@@ -57,10 +57,10 @@ class AutoBackupFragment : Fragment() {
         // setup listeners
         binding.switchAutoBackup.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                BackupSettings.setAutoBackupEnabled(context)
+                BackupSettings.setAutoBackupEnabled(requireContext())
                 setContainerSettingsVisible(true)
             } else {
-                BackupSettings.setAutoBackupDisabled(context)
+                BackupSettings.setAutoBackupDisabled(requireContext())
                 setContainerSettingsVisible(false)
             }
         }
@@ -73,7 +73,7 @@ class AutoBackupFragment : Fragment() {
         binding.buttonAutoBackupImport.setOnClickListener { runAutoBackupImport() }
 
         binding.checkBoxAutoBackupCreateCopy.isChecked =
-            BackupSettings.isCreateCopyOfAutoBackup(context)
+            BackupSettings.isCreateCopyOfAutoBackup(requireContext())
         binding.checkBoxAutoBackupCreateCopy
             .setOnCheckedChangeListener { buttonView: CompoundButton, isChecked: Boolean ->
                 BackupSettings.setCreateCopyOfAutoBackup(buttonView.context, isChecked)
@@ -162,7 +162,7 @@ class AutoBackupFragment : Fragment() {
         super.onStart()
 
         // update enabled state
-        val autoBackupEnabled = BackupSettings.isAutoBackupEnabled(context)
+        val autoBackupEnabled = BackupSettings.isAutoBackupEnabled(requireContext())
         setContainerSettingsVisible(autoBackupEnabled)
         binding?.switchAutoBackup?.isChecked = autoBackupEnabled
 

@@ -191,7 +191,7 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
         if (uri == null) return
 
         DataLiberationTools.tryToPersistUri(requireContext(), uri)
-        BackupSettings.storeExportFileUri(context, type, uri, false)
+        BackupSettings.storeExportFileUri(requireContext(), type, uri, false)
         model.updateImportFileNames()
 
         val binding = binding ?: return
@@ -250,7 +250,7 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
     private fun storeImportFileUri(type: Int, uri: Uri?) {
         if (uri == null) return
         DataLiberationTools.tryToPersistUri(requireContext(), uri)
-        BackupSettings.storeImportFileUri(context, type, uri)
+        BackupSettings.storeImportFileUri(requireContext(), type, uri)
         model.updateImportFileNames()
     }
 
