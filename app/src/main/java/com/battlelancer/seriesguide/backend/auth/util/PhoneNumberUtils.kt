@@ -11,10 +11,10 @@
  * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.firebase.ui.auth.util
+package com.battlelancer.seriesguide.backend.auth.util
 
 import androidx.annotation.RestrictTo
-import com.firebase.ui.auth.util.CountryUtils
+import com.battlelancer.seriesguide.backend.auth.util.CountryUtils
 
 /**
  * Phone number validation utilities.

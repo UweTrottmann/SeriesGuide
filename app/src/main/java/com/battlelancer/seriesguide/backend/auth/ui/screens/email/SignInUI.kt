@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-package com.firebase.ui.auth.ui.screens.email
+package com.battlelancer.seriesguide.backend.auth.ui.screens.email
 
 import android.util.Log
 import androidx.compose.foundation.layout.Column
@@ -60,21 +60,21 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.firebase.ui.auth.configuration.AuthUIConfiguration
-import com.firebase.ui.auth.configuration.authUIConfiguration
-import com.firebase.ui.auth.configuration.auth_provider.AuthProvider
-import com.firebase.ui.auth.configuration.string_provider.DefaultAuthUIStringProvider
-import com.firebase.ui.auth.configuration.string_provider.LocalAuthUIStringProvider
-import com.firebase.ui.auth.configuration.theme.AuthUITheme
-import com.firebase.ui.auth.configuration.validators.EmailValidator
-import com.firebase.ui.auth.configuration.validators.PasswordValidator
-import com.firebase.ui.auth.credentialmanager.PasswordCredentialCancelledException
-import com.firebase.ui.auth.credentialmanager.PasswordCredentialException
-import com.firebase.ui.auth.credentialmanager.PasswordCredentialHandler
-import com.firebase.ui.auth.credentialmanager.PasswordCredentialNotFoundException
-import com.firebase.ui.auth.ui.components.AuthTextField
-import com.firebase.ui.auth.ui.components.LocalTopLevelDialogController
-import com.firebase.ui.auth.ui.components.TermsAndPrivacyForm
+import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
+import com.battlelancer.seriesguide.backend.auth.configuration.authUIConfiguration
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.DefaultAuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUITheme
+import com.battlelancer.seriesguide.backend.auth.configuration.validators.EmailValidator
+import com.battlelancer.seriesguide.backend.auth.configuration.validators.PasswordValidator
+import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCredentialCancelledException
+import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCredentialException
+import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCredentialHandler
+import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCredentialNotFoundException
+import com.battlelancer.seriesguide.backend.auth.ui.components.AuthTextField
+import com.battlelancer.seriesguide.backend.auth.ui.components.LocalTopLevelDialogController
+import com.battlelancer.seriesguide.backend.auth.ui.components.TermsAndPrivacyForm
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

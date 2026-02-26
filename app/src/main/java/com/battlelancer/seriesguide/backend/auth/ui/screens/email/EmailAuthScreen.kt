@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-package com.firebase.ui.auth.ui.screens.email
+package com.battlelancer.seriesguide.backend.auth.ui.screens.email
 
 import android.content.Context
 import android.util.Log
@@ -24,22 +24,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
-import com.firebase.ui.auth.AuthException
-import com.firebase.ui.auth.AuthState
-import com.firebase.ui.auth.FirebaseAuthUI
-import com.firebase.ui.auth.configuration.AuthUIConfiguration
-import com.firebase.ui.auth.configuration.auth_provider.AuthProvider
-import com.firebase.ui.auth.configuration.auth_provider.createOrLinkUserWithEmailAndPassword
-import com.firebase.ui.auth.configuration.auth_provider.sendPasswordResetEmail
-import com.firebase.ui.auth.configuration.auth_provider.sendSignInLinkToEmail
-import com.firebase.ui.auth.configuration.auth_provider.signInWithEmailAndPassword
-import com.firebase.ui.auth.configuration.auth_provider.signInWithEmailLink
-import com.firebase.ui.auth.configuration.string_provider.LocalAuthUIStringProvider
-import com.firebase.ui.auth.credentialmanager.PasswordCredentialCancelledException
-import com.firebase.ui.auth.credentialmanager.PasswordCredentialException
-import com.firebase.ui.auth.credentialmanager.PasswordCredentialHandler
-import com.firebase.ui.auth.credentialmanager.PasswordCredentialNotFoundException
-import com.firebase.ui.auth.ui.components.LocalTopLevelDialogController
+import com.battlelancer.seriesguide.backend.auth.AuthException
+import com.battlelancer.seriesguide.backend.auth.AuthState
+import com.battlelancer.seriesguide.backend.auth.FirebaseAuthUI
+import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.createOrLinkUserWithEmailAndPassword
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.sendPasswordResetEmail
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.sendSignInLinkToEmail
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.signInWithEmailAndPassword
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.signInWithEmailLink
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.ui.components.LocalTopLevelDialogController
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.AuthResult
 import kotlinx.coroutines.launch

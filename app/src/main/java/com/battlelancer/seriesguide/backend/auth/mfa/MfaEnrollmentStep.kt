@@ -12,10 +12,10 @@
  * limitations under the License.
  */
 
-package com.firebase.ui.auth.mfa
+package com.battlelancer.seriesguide.backend.auth.mfa
 
-import com.firebase.ui.auth.configuration.MfaFactor
-import com.firebase.ui.auth.configuration.string_provider.AuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.MfaFactor
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.AuthUIStringProvider
 
 /**
  * Represents the different steps in the Multi-Factor Authentication (MFA) enrollment flow.
@@ -28,7 +28,7 @@ import com.firebase.ui.auth.configuration.string_provider.AuthUIStringProvider
 enum class MfaEnrollmentStep {
     /**
      * The user is presented with a selection of available MFA factors to enroll in.
-     * The available factors are determined by the [com.firebase.ui.auth.configuration.MfaConfiguration].
+     * The available factors are determined by the [com.battlelancer.seriesguide.backend.auth.configuration.MfaConfiguration].
      */
     SelectFactor,
 

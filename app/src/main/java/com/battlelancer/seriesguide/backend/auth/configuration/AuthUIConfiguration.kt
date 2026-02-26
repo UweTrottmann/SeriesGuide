@@ -12,17 +12,17 @@
  * limitations under the License.
  */
 
-package com.firebase.ui.auth.configuration
+package com.battlelancer.seriesguide.backend.auth.configuration
 
 import android.content.Context
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.firebase.ui.auth.configuration.auth_provider.AuthProvider
-import com.firebase.ui.auth.configuration.auth_provider.AuthProvidersBuilder
-import com.firebase.ui.auth.configuration.auth_provider.Provider
-import com.firebase.ui.auth.configuration.string_provider.AuthUIStringProvider
-import com.firebase.ui.auth.configuration.string_provider.DefaultAuthUIStringProvider
-import com.firebase.ui.auth.configuration.theme.AuthUIAsset
-import com.firebase.ui.auth.configuration.theme.AuthUITheme
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvidersBuilder
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Provider
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.AuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.DefaultAuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUIAsset
+import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUITheme
 import com.google.firebase.auth.ActionCodeSettings
 import java.util.Locale
 

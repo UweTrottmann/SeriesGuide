@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-package com.firebase.ui.auth.ui.components
+package com.battlelancer.seriesguide.backend.auth.ui.components
 
 import android.content.Context
 import androidx.compose.foundation.Image
@@ -41,14 +41,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.firebase.ui.auth.configuration.auth_provider.AuthProvider
-import com.firebase.ui.auth.configuration.auth_provider.Provider
-import com.firebase.ui.auth.configuration.string_provider.AuthUIStringProvider
-import com.firebase.ui.auth.configuration.string_provider.DefaultAuthUIStringProvider
-import com.firebase.ui.auth.configuration.theme.AuthUIAsset
-import com.firebase.ui.auth.configuration.theme.AuthUITheme
-import com.firebase.ui.auth.configuration.theme.LocalAuthUITheme
-import com.firebase.ui.auth.configuration.theme.ProviderStyleDefaults
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Provider
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.AuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.DefaultAuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUIAsset
+import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUITheme
+import com.battlelancer.seriesguide.backend.auth.configuration.theme.LocalAuthUITheme
+import com.battlelancer.seriesguide.backend.auth.configuration.theme.ProviderStyleDefaults
 
 /**
  * A customizable button for an authentication provider.

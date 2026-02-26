@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-package com.firebase.ui.auth.configuration.validators
+package com.battlelancer.seriesguide.backend.auth.configuration.validators
 
 /**
  * Class for encapsulating [hasError] and [errorMessage] properties in

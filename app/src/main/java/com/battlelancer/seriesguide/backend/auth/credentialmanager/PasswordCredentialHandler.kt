@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-package com.firebase.ui.auth.credentialmanager
+package com.battlelancer.seriesguide.backend.auth.credentialmanager
 
 import android.content.Context
 import androidx.credentials.CreatePasswordRequest
@@ -25,7 +25,7 @@ import androidx.credentials.exceptions.CreateCredentialException
 import androidx.credentials.exceptions.GetCredentialCancellationException
 import androidx.credentials.exceptions.GetCredentialException
 import androidx.credentials.exceptions.NoCredentialException
-import com.firebase.ui.auth.util.CredentialPersistenceManager
+import com.battlelancer.seriesguide.backend.auth.util.CredentialPersistenceManager
 
 /**
  * Provider interface for obtaining CredentialManager instances.

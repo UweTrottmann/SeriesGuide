@@ -1,11 +1,11 @@
-package com.firebase.ui.auth.configuration.auth_provider
+package com.battlelancer.seriesguide.backend.auth.configuration.auth_provider
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import com.firebase.ui.auth.AuthException
-import com.firebase.ui.auth.AuthState
-import com.firebase.ui.auth.FirebaseAuthUI
+import com.battlelancer.seriesguide.backend.auth.AuthException
+import com.battlelancer.seriesguide.backend.auth.AuthState
+import com.battlelancer.seriesguide.backend.auth.FirebaseAuthUI
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await

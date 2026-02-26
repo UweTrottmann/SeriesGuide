@@ -12,11 +12,11 @@
  * limitations under the License.
  */
 
-package com.firebase.ui.auth.configuration.theme
+package com.battlelancer.seriesguide.backend.auth.configuration.theme
 
 import androidx.compose.ui.graphics.Color
 import com.firebase.ui.auth.R
-import com.firebase.ui.auth.configuration.auth_provider.Provider
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Provider
 
 /**
  * Default provider styling configurations for authentication providers.

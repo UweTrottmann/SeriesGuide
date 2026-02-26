@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-package com.firebase.ui.auth.configuration.auth_provider
+package com.battlelancer.seriesguide.backend.auth.configuration.auth_provider
 
 import android.app.Activity
 import android.content.Context
@@ -27,14 +27,14 @@ import androidx.credentials.GetCredentialRequest
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.facebook.AccessToken
 import com.firebase.ui.auth.R
-import com.firebase.ui.auth.configuration.AuthUIConfiguration
-import com.firebase.ui.auth.configuration.AuthUIConfigurationDsl
-import com.firebase.ui.auth.configuration.PasswordRule
-import com.firebase.ui.auth.configuration.theme.AuthUIAsset
-import com.firebase.ui.auth.util.ContinueUrlBuilder
-import com.firebase.ui.auth.util.PhoneNumberUtils
-import com.firebase.ui.auth.util.Preconditions
-import com.firebase.ui.auth.util.ProviderAvailability
+import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
+import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfigurationDsl
+import com.battlelancer.seriesguide.backend.auth.configuration.PasswordRule
+import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUIAsset
+import com.battlelancer.seriesguide.backend.auth.util.ContinueUrlBuilder
+import com.battlelancer.seriesguide.backend.auth.util.PhoneNumberUtils
+import com.battlelancer.seriesguide.backend.auth.util.Preconditions
+import com.battlelancer.seriesguide.backend.auth.util.ProviderAvailability
 import com.google.android.gms.auth.api.identity.AuthorizationRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.common.api.Scope

@@ -12,9 +12,9 @@
  * limitations under the License.
  */
 
-package com.firebase.ui.auth.configuration.validators
+package com.battlelancer.seriesguide.backend.auth.configuration.validators
 
-import com.firebase.ui.auth.configuration.string_provider.AuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.AuthUIStringProvider
 
 internal class VerificationCodeValidator(override val stringProvider: AuthUIStringProvider) :
     FieldValidator {

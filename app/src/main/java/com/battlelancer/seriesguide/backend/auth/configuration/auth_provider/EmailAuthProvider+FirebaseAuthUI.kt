@@ -12,26 +12,26 @@
  * limitations under the License.
  */
 
-package com.firebase.ui.auth.configuration.auth_provider
+package com.battlelancer.seriesguide.backend.auth.configuration.auth_provider
 
 import android.content.Context
 import android.net.Uri
 import android.util.Log
 import com.firebase.ui.auth.R
-import com.firebase.ui.auth.AuthException
-import com.firebase.ui.auth.AuthState
-import com.firebase.ui.auth.FirebaseAuthUI
-import com.firebase.ui.auth.configuration.AuthUIConfiguration
-import com.firebase.ui.auth.configuration.auth_provider.AuthProvider.Companion.canUpgradeAnonymous
-import com.firebase.ui.auth.configuration.auth_provider.AuthProvider.Companion.mergeProfile
-import com.firebase.ui.auth.credentialmanager.PasswordCredentialCancelledException
-import com.firebase.ui.auth.credentialmanager.PasswordCredentialException
-import com.firebase.ui.auth.credentialmanager.PasswordCredentialHandler
-import com.firebase.ui.auth.util.EmailLinkPersistenceManager
-import com.firebase.ui.auth.util.EmailLinkParser
-import com.firebase.ui.auth.util.PersistenceManager
-import com.firebase.ui.auth.util.SessionUtils
-import com.firebase.ui.auth.util.SignInPreferenceManager
+import com.battlelancer.seriesguide.backend.auth.AuthException
+import com.battlelancer.seriesguide.backend.auth.AuthState
+import com.battlelancer.seriesguide.backend.auth.FirebaseAuthUI
+import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider.Companion.canUpgradeAnonymous
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider.Companion.mergeProfile
+import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCredentialCancelledException
+import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCredentialException
+import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCredentialHandler
+import com.battlelancer.seriesguide.backend.auth.util.EmailLinkPersistenceManager
+import com.battlelancer.seriesguide.backend.auth.util.EmailLinkParser
+import com.battlelancer.seriesguide.backend.auth.util.PersistenceManager
+import com.battlelancer.seriesguide.backend.auth.util.SessionUtils
+import com.battlelancer.seriesguide.backend.auth.util.SignInPreferenceManager
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.AuthCredential

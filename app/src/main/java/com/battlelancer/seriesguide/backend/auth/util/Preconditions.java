@@ -18,7 +18,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 
-import com.firebase.ui.auth.FirebaseAuthUI;
+import com.battlelancer.seriesguide.backend.auth.FirebaseAuthUI;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
