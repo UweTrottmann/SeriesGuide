@@ -94,7 +94,6 @@ object EmailLinkPersistenceManager {
             val credentialForLinking = if (providerType != null && idToken != null) {
                 when (providerType) {
                     Provider.GOOGLE -> GoogleAuthProvider.getCredential(idToken, accessToken)
-                    Provider.FACEBOOK -> FacebookAuthProvider.getCredential(accessToken ?: "")
                     else -> null
                 }
             } else {

@@ -72,9 +72,6 @@ class AuthUIConfigurationBuilder {
             "Unknown providers: ${unknownProviders.joinToString { it.providerId }}"
         }
 
-        // Cannot have only anonymous provider
-        AuthProvider.Anonymous.validate(providers)
-
         // Check for duplicate providers
         val providerIds = providers.map { it.providerId }
         val duplicates = providerIds.groupingBy { it }.eachCount().filter { it.value > 1 }
@@ -90,9 +87,7 @@ class AuthUIConfigurationBuilder {
         providers.forEach { provider ->
             when (provider) {
                 is AuthProvider.Email -> provider.validate(isAnonymousUpgradeEnabled)
-                is AuthProvider.Phone -> provider.validate()
                 is AuthProvider.Google -> provider.validate(context)
-                is AuthProvider.Facebook -> provider.validate(context)
                 is AuthProvider.GenericOAuth -> provider.validate()
                 else -> null
             }

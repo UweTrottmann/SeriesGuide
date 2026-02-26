@@ -220,34 +220,10 @@ fun PreviewAuthMethodPicker() {
                     emailLinkActionCodeSettings = null,
                     passwordValidationRules = emptyList()
                 ),
-                AuthProvider.Phone(
-                    defaultNumber = null,
-                    defaultCountryCode = null,
-                    allowedCountries = null,
-                ),
                 AuthProvider.Google(
                     scopes = emptyList(),
                     serverClientId = null
-                ),
-                AuthProvider.Facebook(),
-                AuthProvider.Twitter(
-                    customParameters = emptyMap()
-                ),
-                AuthProvider.Github(
-                    customParameters = emptyMap()
-                ),
-                AuthProvider.Microsoft(
-                    tenant = null,
-                    customParameters = emptyMap()
-                ),
-                AuthProvider.Yahoo(
-                    customParameters = emptyMap()
-                ),
-                AuthProvider.Apple(
-                    locale = null,
-                    customParameters = emptyMap()
-                ),
-                AuthProvider.Anonymous,
+                )
             ),
             logo = AuthUIAsset.Resource(R.drawable.fui_ic_check_circle_black_128dp),
             onProviderSelected = { provider ->

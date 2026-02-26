@@ -45,14 +45,6 @@ class DefaultAuthUIStringProvider(
      */
     override val googleProvider: String
         get() = localizedContext.getString(R.string.fui_idp_name_google)
-    override val facebookProvider: String
-        get() = localizedContext.getString(R.string.fui_idp_name_facebook)
-    override val twitterProvider: String
-        get() = localizedContext.getString(R.string.fui_idp_name_twitter)
-    override val githubProvider: String
-        get() = localizedContext.getString(R.string.fui_idp_name_github)
-    override val phoneProvider: String
-        get() = localizedContext.getString(R.string.fui_idp_name_phone)
     override val emailProvider: String
         get() = localizedContext.getString(R.string.fui_idp_name_email)
 
@@ -61,46 +53,16 @@ class DefaultAuthUIStringProvider(
      */
     override val signInWithGoogle: String
         get() = localizedContext.getString(R.string.fui_sign_in_with_google)
-    override val signInWithFacebook: String
-        get() = localizedContext.getString(R.string.fui_sign_in_with_facebook)
-    override val signInWithTwitter: String
-        get() = localizedContext.getString(R.string.fui_sign_in_with_twitter)
-    override val signInWithGithub: String
-        get() = localizedContext.getString(R.string.fui_sign_in_with_github)
     override val signInWithEmail: String
         get() = localizedContext.getString(R.string.fui_sign_in_with_email)
-    override val signInWithPhone: String
-        get() = localizedContext.getString(R.string.fui_sign_in_with_phone)
-    override val signInAnonymously: String
-        get() = localizedContext.getString(R.string.fui_sign_in_anonymously)
-    override val signInWithApple: String
-        get() = localizedContext.getString(R.string.fui_sign_in_with_apple)
-    override val signInWithMicrosoft: String
-        get() = localizedContext.getString(R.string.fui_sign_in_with_microsoft)
-    override val signInWithYahoo: String
-        get() = localizedContext.getString(R.string.fui_sign_in_with_yahoo)
 
     /**
      * Auth Provider "Continue With" Button Strings
      */
     override val continueWithGoogle: String
         get() = localizedContext.getString(R.string.fui_continue_with_google)
-    override val continueWithFacebook: String
-        get() = localizedContext.getString(R.string.fui_continue_with_facebook)
-    override val continueWithTwitter: String
-        get() = localizedContext.getString(R.string.fui_continue_with_twitter)
-    override val continueWithGithub: String
-        get() = localizedContext.getString(R.string.fui_continue_with_github)
     override val continueWithEmail: String
         get() = localizedContext.getString(R.string.fui_continue_with_email)
-    override val continueWithPhone: String
-        get() = localizedContext.getString(R.string.fui_continue_with_phone)
-    override val continueWithApple: String
-        get() = localizedContext.getString(R.string.fui_continue_with_apple)
-    override val continueWithMicrosoft: String
-        get() = localizedContext.getString(R.string.fui_continue_with_microsoft)
-    override val continueWithYahoo: String
-        get() = localizedContext.getString(R.string.fui_continue_with_yahoo)
 
     /**
      * Email Validator Strings
