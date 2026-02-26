@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-package com.firebase.ui.auth.mfa
+package com.battlelancer.seriesguide.backend.auth.mfa
 
 import android.content.Intent
 import android.net.Uri

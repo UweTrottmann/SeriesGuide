@@ -11,7 +11,7 @@
  * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.firebase.ui.auth.util
+package com.battlelancer.seriesguide.backend.auth.util
 
 import android.net.Uri
 import androidx.annotation.RestrictTo

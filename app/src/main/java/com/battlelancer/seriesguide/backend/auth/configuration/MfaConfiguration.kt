@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-package com.firebase.ui.auth.configuration
+package com.battlelancer.seriesguide.backend.auth.configuration
 
 /**
  * Configuration class for Multi-Factor Authentication (MFA) enrollment and verification behavior.

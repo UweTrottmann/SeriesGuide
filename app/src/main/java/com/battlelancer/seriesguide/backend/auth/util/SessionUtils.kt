@@ -1,4 +1,4 @@
-package com.firebase.ui.auth.util
+package com.battlelancer.seriesguide.backend.auth.util
 
 import androidx.annotation.RestrictTo
 import kotlin.random.Random

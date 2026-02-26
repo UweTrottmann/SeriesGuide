@@ -12,10 +12,10 @@
  * limitations under the License.
  */
 
-package com.firebase.ui.auth
+package com.battlelancer.seriesguide.backend.auth
 
-import com.firebase.ui.auth.AuthState.Companion.Cancelled
-import com.firebase.ui.auth.AuthState.Companion.Idle
+import com.battlelancer.seriesguide.backend.auth.AuthState.Companion.Cancelled
+import com.battlelancer.seriesguide.backend.auth.AuthState.Companion.Idle
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.MultiFactorResolver

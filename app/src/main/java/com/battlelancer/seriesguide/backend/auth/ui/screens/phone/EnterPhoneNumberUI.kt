@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-package com.firebase.ui.auth.ui.screens.phone
+package com.battlelancer.seriesguide.backend.auth.ui.screens.phone
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -43,17 +43,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.firebase.ui.auth.configuration.AuthUIConfiguration
-import com.firebase.ui.auth.configuration.authUIConfiguration
-import com.firebase.ui.auth.configuration.auth_provider.AuthProvider
-import com.firebase.ui.auth.configuration.string_provider.LocalAuthUIStringProvider
-import com.firebase.ui.auth.configuration.theme.AuthUITheme
-import com.firebase.ui.auth.configuration.validators.PhoneNumberValidator
-import com.firebase.ui.auth.data.CountryData
-import com.firebase.ui.auth.ui.components.AuthTextField
-import com.firebase.ui.auth.ui.components.CountrySelector
-import com.firebase.ui.auth.ui.components.TermsAndPrivacyForm
-import com.firebase.ui.auth.util.CountryUtils
+import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
+import com.battlelancer.seriesguide.backend.auth.configuration.authUIConfiguration
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUITheme
+import com.battlelancer.seriesguide.backend.auth.configuration.validators.PhoneNumberValidator
+import com.battlelancer.seriesguide.backend.auth.data.CountryData
+import com.battlelancer.seriesguide.backend.auth.ui.components.AuthTextField
+import com.battlelancer.seriesguide.backend.auth.ui.components.CountrySelector
+import com.battlelancer.seriesguide.backend.auth.ui.components.TermsAndPrivacyForm
+import com.battlelancer.seriesguide.backend.auth.util.CountryUtils
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -12,12 +12,12 @@
  * limitations under the License.
  */
 
-package com.firebase.ui.auth.configuration.string_provider
+package com.battlelancer.seriesguide.backend.auth.configuration.string_provider
 
 import android.content.Context
-import com.firebase.ui.auth.configuration.AuthUIConfiguration
-import com.firebase.ui.auth.configuration.authUIConfiguration
-import com.firebase.ui.auth.configuration.auth_provider.AuthProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
+import com.battlelancer.seriesguide.backend.auth.configuration.authUIConfiguration
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
 
 class AuthUIStringProviderSample {
     /**

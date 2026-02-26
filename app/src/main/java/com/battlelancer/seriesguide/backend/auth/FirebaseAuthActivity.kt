@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-package com.firebase.ui.auth
+package com.battlelancer.seriesguide.backend.auth
 
 import android.app.Activity
 import android.content.Context
@@ -22,10 +22,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.lifecycleScope
-import com.firebase.ui.auth.configuration.AuthUIConfiguration
-import com.firebase.ui.auth.configuration.theme.AuthUITheme
-import com.firebase.ui.auth.ui.screens.FirebaseAuthScreen
-import com.firebase.ui.auth.util.EmailLinkConstants
+import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
+import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUITheme
+import com.battlelancer.seriesguide.backend.auth.ui.screens.FirebaseAuthScreen
+import com.battlelancer.seriesguide.backend.auth.util.EmailLinkConstants
 import kotlinx.coroutines.launch
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap

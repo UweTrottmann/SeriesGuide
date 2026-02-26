@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.firebase.ui.auth
+package com.battlelancer.seriesguide.backend.auth
 
 import android.util.Log
 import androidx.annotation.Keep

@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-package com.firebase.ui.auth.ui.screens
+package com.battlelancer.seriesguide.backend.auth.ui.screens
 
 import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
@@ -22,10 +22,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
-import com.firebase.ui.auth.configuration.MfaFactor
-import com.firebase.ui.auth.mfa.MfaChallengeContentState
-import com.firebase.ui.auth.mfa.SmsEnrollmentHandler
-import com.firebase.ui.auth.mfa.maskPhoneNumber
+import com.battlelancer.seriesguide.backend.auth.configuration.MfaFactor
+import com.battlelancer.seriesguide.backend.auth.mfa.MfaChallengeContentState
+import com.battlelancer.seriesguide.backend.auth.mfa.SmsEnrollmentHandler
+import com.battlelancer.seriesguide.backend.auth.mfa.maskPhoneNumber
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.MultiFactorResolver

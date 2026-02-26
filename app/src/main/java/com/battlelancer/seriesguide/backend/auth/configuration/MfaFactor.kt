@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-package com.firebase.ui.auth.configuration
+package com.battlelancer.seriesguide.backend.auth.configuration
 
 /**
  * Represents the different Multi-Factor Authentication (MFA) factors that can be used

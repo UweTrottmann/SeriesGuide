@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-package com.firebase.ui.auth.ui.screens
+package com.battlelancer.seriesguide.backend.auth.ui.screens
 
 import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
@@ -23,19 +23,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
-import com.firebase.ui.auth.configuration.AuthUIConfiguration
-import com.firebase.ui.auth.configuration.MfaConfiguration
-import com.firebase.ui.auth.configuration.MfaFactor
-import com.firebase.ui.auth.configuration.authUIConfiguration
-import com.firebase.ui.auth.configuration.auth_provider.AuthProvider
-import com.firebase.ui.auth.data.CountryData
-import com.firebase.ui.auth.util.CountryUtils
-import com.firebase.ui.auth.mfa.MfaEnrollmentContentState
-import com.firebase.ui.auth.mfa.MfaEnrollmentStep
-import com.firebase.ui.auth.mfa.SmsEnrollmentHandler
-import com.firebase.ui.auth.mfa.SmsEnrollmentSession
-import com.firebase.ui.auth.mfa.TotpEnrollmentHandler
-import com.firebase.ui.auth.mfa.TotpSecret
+import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
+import com.battlelancer.seriesguide.backend.auth.configuration.MfaConfiguration
+import com.battlelancer.seriesguide.backend.auth.configuration.MfaFactor
+import com.battlelancer.seriesguide.backend.auth.configuration.authUIConfiguration
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
+import com.battlelancer.seriesguide.backend.auth.data.CountryData
+import com.battlelancer.seriesguide.backend.auth.util.CountryUtils
+import com.battlelancer.seriesguide.backend.auth.mfa.MfaEnrollmentContentState
+import com.battlelancer.seriesguide.backend.auth.mfa.MfaEnrollmentStep
+import com.battlelancer.seriesguide.backend.auth.mfa.SmsEnrollmentHandler
+import com.battlelancer.seriesguide.backend.auth.mfa.SmsEnrollmentSession
+import com.battlelancer.seriesguide.backend.auth.mfa.TotpEnrollmentHandler
+import com.battlelancer.seriesguide.backend.auth.mfa.TotpSecret
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.delay
