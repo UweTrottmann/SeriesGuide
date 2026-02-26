@@ -100,7 +100,8 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
             model.importFiles.collect {
                 binding.textViewDataLibShowsImportFile.text = it.fileNameShows ?: it.placeholderText
                 binding.textViewDataLibListsImportFile.text = it.fileNameLists ?: it.placeholderText
-                binding.textViewDataLibMoviesImportFile.text = it.fileNameMovies ?: it.placeholderText
+                binding.textViewDataLibMoviesImportFile.text =
+                    it.fileNameMovies ?: it.placeholderText
             }
         }
         // Note: pre-check existing files for import, but do not overwrite any later changes
@@ -187,11 +188,11 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
         model.dataLibJob = SgApp.coroutineScope.launch { dataLibTask.run() }
     }
 
-    private fun doDataExport(type: Int, uri: Uri?) {
+    private fun doDataExport(export: Export, uri: Uri?) {
         if (uri == null) return
 
         DataLiberationTools.tryToPersistUri(requireContext(), uri)
-        BackupSettings.storeExportFileUri(requireContext(), type, uri, false)
+        BackupSettings.storeExportFileUri(requireContext(), export, uri, isAutoBackup = false)
         model.updateImportFileNames()
 
         val binding = binding ?: return
@@ -202,27 +203,27 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
             this@DataLiberationFragment,
             binding.checkBoxDataLibFullDump.isChecked
         )
-        model.dataLibJob = exportTask.launch(type)
+        model.dataLibJob = exportTask.launch(export)
     }
 
     private val createShowExportFileResult =
         registerForActivityResult(CreateExportFileContract()) { uri ->
-            doDataExport(JsonExportTask.EXPORT_SHOWS, uri)
+            doDataExport(Export.Shows, uri)
         }
 
     private val createListsExportFileResult =
         registerForActivityResult(CreateExportFileContract()) { uri ->
-            doDataExport(JsonExportTask.EXPORT_LISTS, uri)
+            doDataExport(Export.Lists, uri)
         }
 
     private val createMovieExportFileResult =
         registerForActivityResult(CreateExportFileContract()) { uri ->
-            doDataExport(JsonExportTask.EXPORT_MOVIES, uri)
+            doDataExport(Export.Movies, uri)
         }
 
     private val selectShowsImportFileResult =
         registerForActivityResult(SelectImportFileContract()) { uri ->
-            storeImportFileUri(JsonExportTask.EXPORT_SHOWS, uri)
+            storeImportFileUri(Export.Shows, uri)
             // For convenience and discoverability, enable for import after selecting file
             if (uri != null) {
                 binding?.checkBoxDataLibShows?.isChecked = true
@@ -231,7 +232,7 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
 
     private val selectListsImportFileResult =
         registerForActivityResult(SelectImportFileContract()) { uri ->
-            storeImportFileUri(JsonExportTask.EXPORT_LISTS, uri)
+            storeImportFileUri(Export.Lists, uri)
             // For convenience and discoverability, enable for import after selecting file
             if (uri != null) {
                 binding?.checkBoxDataLibLists?.isChecked = true
@@ -240,17 +241,17 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
 
     private val selectMoviesImportFileResult =
         registerForActivityResult(SelectImportFileContract()) { uri ->
-            storeImportFileUri(JsonExportTask.EXPORT_MOVIES, uri)
+            storeImportFileUri(Export.Movies, uri)
             // For convenience and discoverability, enable for import after selecting file
             if (uri != null) {
                 binding?.checkBoxDataLibMovies?.isChecked = true
             }
         }
 
-    private fun storeImportFileUri(type: Int, uri: Uri?) {
+    private fun storeImportFileUri(export: Export, uri: Uri?) {
         if (uri == null) return
         DataLiberationTools.tryToPersistUri(requireContext(), uri)
-        BackupSettings.storeImportFileUri(requireContext(), type, uri)
+        BackupSettings.storeImportFileUri(requireContext(), export, uri)
         model.updateImportFileNames()
     }
 

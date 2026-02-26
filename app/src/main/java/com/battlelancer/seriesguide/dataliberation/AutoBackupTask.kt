@@ -135,7 +135,7 @@ class AutoBackupTask(
     private fun copyBackupToUserFile(export: Export, sourceFile: File) {
         // Skip if no custom backup file configured.
         val outFileUri: Uri =
-            BackupSettings.getExportFileUri(context, export.type, /* isAutoBackup = */true)
+            BackupSettings.getExportFileUri(context, export, isAutoBackup = true)
                 ?: return
 
         Timber.i("Copying ${export.name} backup to user file.")
@@ -160,18 +160,18 @@ class AutoBackupTask(
                     }
                 } catch (e: FileNotFoundException) {
                     Timber.e("Backup file not found, removing from prefs.")
-                    removeExportFileUri(export.type)
+                    removeExportFileUri(export)
                     throw e
                 } catch (e: SecurityException) {
                     Timber.e("Backup file not writable, removing from prefs.")
-                    removeExportFileUri(export.type)
+                    removeExportFileUri(export)
                     throw e
                 }
             }
     }
 
-    private fun removeExportFileUri(@ExportType type: Int) {
-        BackupSettings.storeExportFileUri(context, type, null, /* isAutoBackup = */true)
+    private fun removeExportFileUri(export: Export) {
+        BackupSettings.storeExportFileUri(context, export, null, isAutoBackup = true)
     }
 
     private fun Closeable.closeFinally() {

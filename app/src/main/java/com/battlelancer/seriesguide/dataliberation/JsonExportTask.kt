@@ -5,14 +5,10 @@ package com.battlelancer.seriesguide.dataliberation
 
 import android.content.Context
 import android.os.ParcelFileDescriptor
-import androidx.annotation.IntDef
 import androidx.annotation.VisibleForTesting
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.dataliberation.DataLiberationFragment.LiberationResultEvent
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Companion.EXPORT_LISTS
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Companion.EXPORT_MOVIES
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Companion.EXPORT_SHOWS
 import com.battlelancer.seriesguide.dataliberation.model.Episode
 import com.battlelancer.seriesguide.dataliberation.model.ListItem
 import com.battlelancer.seriesguide.dataliberation.model.Movie
@@ -97,33 +93,18 @@ open class JsonExportTask(
 
     /**
      * Wraps [run] so it can be called from Java code.
-     *
-     * [type] is one of [EXPORT_SHOWS], [EXPORT_LISTS] or [EXPORT_MOVIES].
      */
-    fun launch(@ExportType type: Int): Job {
+    fun launch(export: Export): Job {
         return SgApp.coroutineScope.launch {
-            run(type)
+            run(export)
         }
     }
 
-    /**
-     * [type] is one of [EXPORT_SHOWS], [EXPORT_LISTS] or [EXPORT_MOVIES].
-     */
-    suspend fun run(@ExportType type: Int): Int {
+    suspend fun run(export: Export): Int {
         return withContext(Dispatchers.IO) {
-            val result = doInBackground(this, type)
+            val result = exportData(this, export)
             onPostExecute(result)
             return@withContext result
-        }
-    }
-
-    private suspend fun doInBackground(coroutineScope: CoroutineScope, @ExportType type: Int): Int {
-        // Manual backup mode
-        return when (type) {
-            EXPORT_SHOWS -> exportData(coroutineScope, EXPORT_SHOWS)
-            EXPORT_LISTS -> exportData(coroutineScope, EXPORT_LISTS)
-            EXPORT_MOVIES -> exportData(coroutineScope, EXPORT_MOVIES)
-            else -> throw IllegalStateException("Unknown type $type")
         }
     }
 
@@ -164,7 +145,7 @@ open class JsonExportTask(
             )
     }
 
-    private suspend fun exportData(coroutineScope: CoroutineScope, @ExportType type: Int): Int {
+    private suspend fun exportData(coroutineScope: CoroutineScope, export: Export): Int {
         // try to export all data
         try {
             val testExportFile = testExportFile
@@ -172,7 +153,7 @@ open class JsonExportTask(
             val out = if (testExportFile == null) {
                 // ensure the user has selected a file
                 val exportFileUri =
-                    BackupSettings.getExportFileUri(context, type, /* isAutoBackup = */false)
+                    BackupSettings.getExportFileUri(context, export, isAutoBackup = false)
                         ?: return ERROR_FILE_ACCESS
 
                 pfd = context.contentResolver.openFileDescriptor(exportFileUri, "w")
@@ -189,35 +170,27 @@ open class JsonExportTask(
             // so truncate the file first to clear any existing bytes.
             out.channel.truncate(0)
 
-            when (type) {
-                EXPORT_SHOWS -> {
-                    writeJsonStreamShows(coroutineScope, out)
-                }
-
-                EXPORT_LISTS -> {
-                    writeJsonStreamLists(coroutineScope, out)
-                }
-
-                EXPORT_MOVIES -> {
-                    writeJsonStreamMovies(coroutineScope, out)
-                }
+            when (export) {
+                Export.Shows -> writeJsonStreamShows(coroutineScope, out)
+                Export.Lists -> writeJsonStreamLists(coroutineScope, out)
+                Export.Movies -> writeJsonStreamMovies(coroutineScope, out)
             }
 
             // let the document provider know we're done.
             pfd?.close()
         } catch (e: FileNotFoundException) {
             Timber.e(e, "File not found.")
-            removeExportFileUri(type)
+            removeExportFileUri(export)
             errorCause = e.message
             return ERROR_FILE_ACCESS
         } catch (e: IOException) {
             Timber.e(e, "Failed to write to file.")
-            removeExportFileUri(type)
+            removeExportFileUri(export)
             errorCause = e.message
             return ERROR_FILE_ACCESS
         } catch (e: SecurityException) {
             Timber.e(e, "No permission to access file.")
-            removeExportFileUri(type)
+            removeExportFileUri(export)
             errorCause = e.message
             return ERROR_FILE_ACCESS
         } catch (e: JsonParseException) {
@@ -238,8 +211,8 @@ open class JsonExportTask(
         return SUCCESS
     }
 
-    private fun removeExportFileUri(@ExportType type: Int) {
-        BackupSettings.storeExportFileUri(context, type, null, false)
+    private fun removeExportFileUri(export: Export) {
+        BackupSettings.storeExportFileUri(context, export, null, isAutoBackup = false)
     }
 
     @Throws(IOException::class)
@@ -456,10 +429,6 @@ open class JsonExportTask(
         const val EXPORT_JSON_FILE_LISTS = "seriesguide-lists-backup.json"
         const val EXPORT_JSON_FILE_MOVIES = "seriesguide-movies-backup.json"
 
-        const val EXPORT_SHOWS = 1
-        const val EXPORT_LISTS = 2
-        const val EXPORT_MOVIES = 3
-
         const val SUCCESS = 1
         private const val ERROR_FILE_ACCESS = 0
         private const val ERROR = -1
@@ -469,14 +438,10 @@ open class JsonExportTask(
         fun onProgressUpdate(total: Int, completed: Int)
     }
 
-    @Retention(AnnotationRetention.SOURCE)
-    @IntDef(EXPORT_SHOWS, EXPORT_LISTS, EXPORT_MOVIES)
-    annotation class ExportType
-
-    sealed class Export(val name: String, @ExportType val type: Int) {
-        object Shows : Export("seriesguide-shows", EXPORT_SHOWS)
-        object Lists : Export("seriesguide-lists", EXPORT_LISTS)
-        object Movies : Export("seriesguide-movies", EXPORT_MOVIES)
+    sealed class Export(val name: String) {
+        object Shows : Export("seriesguide-shows")
+        object Lists : Export("seriesguide-lists")
+        object Movies : Export("seriesguide-movies")
     }
 
     /**

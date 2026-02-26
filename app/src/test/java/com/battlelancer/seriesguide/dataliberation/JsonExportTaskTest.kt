@@ -6,6 +6,7 @@ package com.battlelancer.seriesguide.dataliberation
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.battlelancer.seriesguide.EmptyTestApplication
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Export
 import com.battlelancer.seriesguide.lists.database.SgList
 import com.battlelancer.seriesguide.lists.database.SgListHelper
 import com.battlelancer.seriesguide.lists.database.SgListItem
@@ -93,9 +94,10 @@ class JsonExportTaskTest {
 
         val exportFile = configureTestExportFile(exportTask)
 
+        val export = Export.Shows
+
         // No data
-        val type = JsonExportTask.EXPORT_SHOWS
-        val noDataResult = exportTask.run(type)
+        val noDataResult = exportTask.run(export)
         assertThat(exportTask.errorCause).isNull()
         assertThat(noDataResult).isEqualTo(JsonExportTask.SUCCESS)
 
@@ -110,7 +112,7 @@ class JsonExportTaskTest {
         `when`(sgEpisode2Helper.getEpisodesForExport(1)).thenReturn(listOfTestEpisodes)
         `when`(sgEpisode2Helper.getEpisodesForExport(2)).thenReturn(listOfTestEpisodes)
 
-        val withDataResult = exportTask.run(type)
+        val withDataResult = exportTask.run(export)
         assertThat(exportTask.errorCause).isNull()
         assertThat(withDataResult).isEqualTo(JsonExportTask.SUCCESS)
 
@@ -278,9 +280,10 @@ class JsonExportTaskTest {
 
         val exportFile = configureTestExportFile(exportTask)
 
+        val export = Export.Lists
+
         // No data
-        val type = JsonExportTask.EXPORT_LISTS
-        val noDataResult = exportTask.run(type)
+        val noDataResult = exportTask.run(export)
         assertThat(exportTask.errorCause).isNull()
         assertThat(noDataResult).isEqualTo(JsonExportTask.SUCCESS)
 
@@ -293,7 +296,7 @@ class JsonExportTaskTest {
         `when`(sgListHelper.getListsForExport()).thenReturn(listOfTestLists)
         `when`(sgListHelper.getListItemsForExport("list-1")).thenReturn(listOfTestListItems)
 
-        val withDataResult = exportTask.run(type)
+        val withDataResult = exportTask.run(export)
         assertThat(exportTask.errorCause).isNull()
         assertThat(withDataResult).isEqualTo(JsonExportTask.SUCCESS)
 
@@ -367,9 +370,10 @@ class JsonExportTaskTest {
 
         val exportFile = configureTestExportFile(exportTask)
 
+        val export = Export.Movies
+
         // No data
-        val type = JsonExportTask.EXPORT_MOVIES
-        val noDataResult = exportTask.run(type)
+        val noDataResult = exportTask.run(export)
         assertThat(exportTask.errorCause).isNull()
         assertThat(noDataResult).isEqualTo(JsonExportTask.SUCCESS)
 
@@ -380,7 +384,7 @@ class JsonExportTaskTest {
 
         // With data
         `when`(movieHelper.getMoviesForExport()).thenReturn(listOfTestMovies)
-        val withDataResult = exportTask.run(type)
+        val withDataResult = exportTask.run(export)
         assertThat(exportTask.errorCause).isNull()
         assertThat(withDataResult).isEqualTo(JsonExportTask.SUCCESS)
 

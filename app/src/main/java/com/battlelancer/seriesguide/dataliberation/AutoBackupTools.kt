@@ -1,12 +1,11 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2020-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2020 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.dataliberation
 
 import android.content.Context
 import android.os.Environment
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Export
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ExportType
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -57,17 +56,10 @@ object AutoBackupTools {
      * Only checks if an auto backup file for shows is available, likely others are then, too.
      */
     fun isAutoBackupMaybeAvailable(context: Context): Boolean {
-        return getLatestBackupOrNull(JsonExportTask.EXPORT_SHOWS, context) != null
+        return getLatestBackupOrNull(Export.Shows, context) != null
     }
 
-    @JvmStatic
-    fun getLatestBackupOrNull(@ExportType type: Int, context: Context): BackupFile? {
-        val export = when (type) {
-            Export.Shows.type -> Export.Shows
-            Export.Lists.type -> Export.Lists
-            Export.Movies.type -> Export.Movies
-            else -> throw IllegalArgumentException("Unknown backup type $type")
-        }
+    fun getLatestBackupOrNull(export: Export, context: Context): BackupFile? {
         try {
             getAllBackupsNewestFirst(export, context)
                 .let { return if (it.isNotEmpty()) it[0] else null }
