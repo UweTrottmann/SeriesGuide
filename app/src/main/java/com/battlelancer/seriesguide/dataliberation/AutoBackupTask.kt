@@ -95,6 +95,11 @@ class AutoBackupTask(
                 Export.Movies -> jsonExportTask.writeJsonStreamMovies(coroutineScope, out)
             }
         } catch (e: Exception) {
+            // This also handles a coroutine CancellationException
+
+            // Try to close the output stream before trying to delete the file
+            out?.closeFinally()
+            // Delete the potentially broken file to avoid it getting imported
             if (backupFile.delete()) {
                 Timber.e("Backup failed, deleted backup file.")
             } else {
