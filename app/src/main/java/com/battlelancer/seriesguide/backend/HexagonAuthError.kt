@@ -3,7 +3,6 @@
 
 package com.battlelancer.seriesguide.backend
 
-import com.firebase.ui.auth.FirebaseUiException
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
 
@@ -32,7 +31,8 @@ class HexagonAuthError(
         fun build(action: String, throwable: Throwable): HexagonAuthError {
             val message = throwable.message ?: ""
             val statusCode = when (throwable) {
-                is FirebaseUiException -> throwable.errorCode
+                // FIXME
+//                is FirebaseUiException -> throwable.errorCode
                 is ApiException -> throwable.statusCode
                 else -> null
             }

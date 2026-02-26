@@ -13,7 +13,6 @@ import com.battlelancer.seriesguide.modules.ApplicationContext
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.Errors.Companion.logAndReportHexagon
 import com.battlelancer.seriesguide.util.isRetryError
-import com.firebase.ui.auth.AuthUI
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.mapError
@@ -56,17 +55,6 @@ class HexagonTools @Inject constructor(
         val code = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context)
         // Return false only on non-resolvable errors. Firebase AuthUI can help resolve others.
         code != ConnectionResult.SERVICE_MISSING && code != ConnectionResult.SERVICE_INVALID
-    }
-
-    val firebaseSignInProviders: List<AuthUI.IdpConfig> by lazy {
-        if (isGoogleSignInAvailable) {
-            listOf(
-                AuthUI.IdpConfig.EmailBuilder().build(),
-                AuthUI.IdpConfig.GoogleBuilder().build()
-            )
-        } else {
-            listOf(AuthUI.IdpConfig.EmailBuilder().build())
-        }
     }
 
     private val httpRequestInitializer by lazy { FirebaseHttpRequestInitializer() }
