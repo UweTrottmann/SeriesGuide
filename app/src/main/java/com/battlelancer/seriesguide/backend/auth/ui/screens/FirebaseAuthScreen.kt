@@ -48,9 +48,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.backend.auth.AuthException
 import com.battlelancer.seriesguide.backend.auth.AuthState
-import com.battlelancer.seriesguide.backend.auth.BuildConfig
 import com.battlelancer.seriesguide.backend.auth.FirebaseAuthUI
 import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
 import com.battlelancer.seriesguide.backend.auth.configuration.MfaConfiguration
