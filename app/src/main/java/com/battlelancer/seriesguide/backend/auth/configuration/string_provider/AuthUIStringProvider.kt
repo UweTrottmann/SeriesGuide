@@ -42,8 +42,6 @@ val LocalAuthUIStringProvider = staticCompositionLocalOf<AuthUIStringProvider> {
  * An interface for providing localized string resources. This interface defines methods for all
  * user-facing strings, such as initializing(), signInWithGoogle(), invalidEmailAddress(),
  * passwordsDoNotMatch(), etc., allowing for complete localization of the UI.
- *
- * @sample AuthUIStringProviderSample
  */
 interface AuthUIStringProvider {
     /** Loading text displayed during initialization or processing states */
@@ -52,77 +50,20 @@ interface AuthUIStringProvider {
     /** Text for Google Provider */
     val googleProvider: String
 
-    /** Text for Facebook Provider */
-    val facebookProvider: String
-
-    /** Text for Twitter Provider */
-    val twitterProvider: String
-
-    /** Text for Github Provider */
-    val githubProvider: String
-
-    /** Text for Phone Provider */
-    val phoneProvider: String
-
     /** Text for Email Provider */
     val emailProvider: String
 
     /** Button text for Google sign-in option */
     val signInWithGoogle: String
 
-    /** Button text for Facebook sign-in option */
-    val signInWithFacebook: String
-
-    /** Button text for Twitter sign-in option */
-    val signInWithTwitter: String
-
-    /** Button text for Github sign-in option */
-    val signInWithGithub: String
-
     /** Button text for Email sign-in option */
     val signInWithEmail: String
-
-    /** Button text for Phone sign-in option */
-    val signInWithPhone: String
-
-    /** Button text for Anonymous sign-in option */
-    val signInAnonymously: String
-
-    /** Button text for Apple sign-in option */
-    val signInWithApple: String
-
-    /** Button text for Microsoft sign-in option */
-    val signInWithMicrosoft: String
-
-    /** Button text for Yahoo sign-in option */
-    val signInWithYahoo: String
 
     /** Button text for Google continue option */
     val continueWithGoogle: String
 
-    /** Button text for Facebook continue option */
-    val continueWithFacebook: String
-
-    /** Button text for Twitter continue option */
-    val continueWithTwitter: String
-
-    /** Button text for Github continue option */
-    val continueWithGithub: String
-
     /** Button text for Email continue option */
     val continueWithEmail: String
-
-    /** Button text for Phone continue option */
-    val continueWithPhone: String
-
-    /** Button text for Apple continue option */
-    val continueWithApple: String
-
-    /** Button text for Microsoft continue option */
-    val continueWithMicrosoft: String
-
-    /** Button text for Yahoo continue option */
-    val continueWithYahoo: String
 
     /** Error message when email address field is empty */
     val missingEmailAddress: String
