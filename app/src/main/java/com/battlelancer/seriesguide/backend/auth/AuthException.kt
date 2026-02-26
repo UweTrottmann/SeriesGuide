@@ -72,7 +72,8 @@ abstract class AuthException(
      * The provided credentials are not valid.
      *
      * This exception is thrown when the user provides incorrect login information,
-     * such as wrong email/password combinations or malformed credentials.
+     * such as wrong email/password combinations or the account requires a different type of
+     * credentials (such as Google Sign-In).
      *
      * @property message The detailed error message
      * @property cause The underlying [Throwable] that caused this exception
