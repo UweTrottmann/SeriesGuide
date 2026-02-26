@@ -1,5 +1,6 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: Apache-2.0 AND AGPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
@@ -35,16 +36,6 @@ class DefaultAuthUIStringProvider(
     /**
      * Auth Provider strings
      */
-    override val googleProvider: String
-        get() = localizedContext.getString(R.string.fui_idp_name_google)
-    override val facebookProvider: String
-        get() = localizedContext.getString(R.string.fui_idp_name_facebook)
-    override val twitterProvider: String
-        get() = localizedContext.getString(R.string.fui_idp_name_twitter)
-    override val githubProvider: String
-        get() = localizedContext.getString(R.string.fui_idp_name_github)
-    override val phoneProvider: String
-        get() = localizedContext.getString(R.string.fui_idp_name_phone)
     override val emailProvider: String
         get() = localizedContext.getString(R.string.fui_idp_name_email)
 
@@ -53,46 +44,16 @@ class DefaultAuthUIStringProvider(
      */
     override val signInWithGoogle: String
         get() = localizedContext.getString(R.string.fui_sign_in_with_google)
-    override val signInWithFacebook: String
-        get() = localizedContext.getString(R.string.fui_sign_in_with_facebook)
-    override val signInWithTwitter: String
-        get() = localizedContext.getString(R.string.fui_sign_in_with_twitter)
-    override val signInWithGithub: String
-        get() = localizedContext.getString(R.string.fui_sign_in_with_github)
     override val signInWithEmail: String
         get() = localizedContext.getString(R.string.fui_sign_in_with_email)
-    override val signInWithPhone: String
-        get() = localizedContext.getString(R.string.fui_sign_in_with_phone)
-    override val signInAnonymously: String
-        get() = localizedContext.getString(R.string.fui_sign_in_anonymously)
-    override val signInWithApple: String
-        get() = localizedContext.getString(R.string.fui_sign_in_with_apple)
-    override val signInWithMicrosoft: String
-        get() = localizedContext.getString(R.string.fui_sign_in_with_microsoft)
-    override val signInWithYahoo: String
-        get() = localizedContext.getString(R.string.fui_sign_in_with_yahoo)
 
     /**
      * Auth Provider "Continue With" Button Strings
      */
     override val continueWithGoogle: String
         get() = localizedContext.getString(R.string.fui_continue_with_google)
-    override val continueWithFacebook: String
-        get() = localizedContext.getString(R.string.fui_continue_with_facebook)
-    override val continueWithTwitter: String
-        get() = localizedContext.getString(R.string.fui_continue_with_twitter)
-    override val continueWithGithub: String
-        get() = localizedContext.getString(R.string.fui_continue_with_github)
     override val continueWithEmail: String
         get() = localizedContext.getString(R.string.fui_continue_with_email)
-    override val continueWithPhone: String
-        get() = localizedContext.getString(R.string.fui_continue_with_phone)
-    override val continueWithApple: String
-        get() = localizedContext.getString(R.string.fui_continue_with_apple)
-    override val continueWithMicrosoft: String
-        get() = localizedContext.getString(R.string.fui_continue_with_microsoft)
-    override val continueWithYahoo: String
-        get() = localizedContext.getString(R.string.fui_continue_with_yahoo)
 
     /**
      * Email Validator Strings
@@ -204,25 +165,6 @@ class DefaultAuthUIStringProvider(
     override val emailMismatchMessage: String
         get() = localizedContext.getString(R.string.fui_error_unknown)
 
-    /**
-     * Phone Authentication Strings
-     */
-    override val verifyPhoneNumberTitle: String
-        get() = localizedContext.getString(R.string.fui_verify_phone_number_title)
-    override val phoneHint: String
-        get() = localizedContext.getString(R.string.fui_phone_hint)
-    override val countryHint: String
-        get() = localizedContext.getString(R.string.fui_country_hint)
-    override val invalidPhoneNumber: String
-        get() = localizedContext.getString(R.string.fui_invalid_phone_number)
-    override val missingPhoneNumber: String
-        get() = localizedContext.getString(R.string.fui_required_field)
-    override val enterConfirmationCode: String
-        get() = localizedContext.getString(R.string.fui_enter_confirmation_code)
-    override val verifyPhoneNumber: String
-        get() = localizedContext.getString(R.string.fui_verify_phone_number)
-    override val resendCodeIn: String
-        get() = localizedContext.getString(R.string.fui_resend_code_in)
     override val resendCode: String
         get() = localizedContext.getString(R.string.fui_resend_code)
 
@@ -236,35 +178,17 @@ class DefaultAuthUIStringProvider(
     override val smsTermsOfService: String
         get() = localizedContext.getString(R.string.fui_sms_terms_of_service)
 
-    override val enterPhoneNumberTitle: String
-        get() = localizedContext.getString(R.string.fui_verify_phone_number_title)
-
-    override val phoneNumberHint: String
-        get() = localizedContext.getString(R.string.fui_phone_hint)
-
-    override val sendVerificationCode: String
-        get() = localizedContext.getString(R.string.fui_next_default)
-
     override fun enterVerificationCodeTitle(phoneNumber: String): String =
         localizedContext.getString(R.string.fui_enter_confirmation_code) + " " + phoneNumber
 
     override val verificationCodeHint: String
         get() = localizedContext.getString(R.string.fui_enter_confirmation_code)
 
-    override val changePhoneNumber: String
-        get() = localizedContext.getString(R.string.fui_change_phone_number)
-
     override val missingVerificationCode: String
         get() = localizedContext.getString(R.string.fui_required_field)
 
     override val invalidVerificationCode: String
         get() = localizedContext.getString(R.string.fui_incorrect_code_dialog_body)
-
-    override val countrySelectorModalTitle: String
-        get() = localizedContext.getString(R.string.fui_country_selector_title)
-
-    override val searchCountriesHint: String
-        get() = localizedContext.getString(R.string.fui_search_country_field_hint)
 
     /**
      * Multi-Factor Authentication Strings

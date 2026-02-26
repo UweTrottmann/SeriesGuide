@@ -1,5 +1,6 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: Apache-2.0 AND AGPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
@@ -32,7 +33,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
-import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Provider
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUIAsset
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthProviderButton
@@ -212,34 +212,10 @@ fun PreviewAuthMethodPicker() {
                     emailLinkActionCodeSettings = null,
                     passwordValidationRules = emptyList()
                 ),
-                AuthProvider.Phone(
-                    defaultNumber = null,
-                    defaultCountryCode = null,
-                    allowedCountries = null,
-                ),
                 AuthProvider.Google(
                     scopes = emptyList(),
                     serverClientId = null
-                ),
-                AuthProvider.Facebook(),
-                AuthProvider.Twitter(
-                    customParameters = emptyMap()
-                ),
-                AuthProvider.Github(
-                    customParameters = emptyMap()
-                ),
-                AuthProvider.Microsoft(
-                    tenant = null,
-                    customParameters = emptyMap()
-                ),
-                AuthProvider.Yahoo(
-                    customParameters = emptyMap()
-                ),
-                AuthProvider.Apple(
-                    locale = null,
-                    customParameters = emptyMap()
-                ),
-                AuthProvider.Anonymous,
+                )
             ),
             logo = AuthUIAsset.Resource(R.drawable.fui_ic_check_circle_black_128dp),
             onProviderSelected = { provider ->

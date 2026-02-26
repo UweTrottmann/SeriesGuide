@@ -1,5 +1,6 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: Apache-2.0 AND AGPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
@@ -21,7 +22,7 @@ import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Pro
  * customized by passing a modified map to [AuthUITheme.fromMaterialTheme].
  *
  * Individual provider styles can be accessed and customized using the public properties
- * (e.g., [Google], [Facebook]) and then modified using the [AuthUITheme.ProviderStyle.copy] method.
+ * (e.g., [Google]) and then modified using the [AuthUITheme.ProviderStyle.copy] method.
  */
 object ProviderStyleDefaults {
     val Google = AuthUITheme.ProviderStyle(
@@ -30,71 +31,15 @@ object ProviderStyleDefaults {
         contentColor = Color(0xFF757575)
     )
 
-    val Facebook = AuthUITheme.ProviderStyle(
-        icon = AuthUIAsset.Resource(R.drawable.fui_ic_facebook_white_22dp),
-        backgroundColor = Color(0xFF1877F2),
-        contentColor = Color.White
-    )
-
-    val Twitter = AuthUITheme.ProviderStyle(
-        icon = AuthUIAsset.Resource(R.drawable.fui_ic_twitter_x_white_24dp),
-        backgroundColor = Color.Black,
-        contentColor = Color.White
-    )
-
-    val Github = AuthUITheme.ProviderStyle(
-        icon = AuthUIAsset.Resource(R.drawable.fui_ic_github_white_24dp),
-        backgroundColor = Color(0xFF24292E),
-        contentColor = Color.White
-    )
-
     val Email = AuthUITheme.ProviderStyle(
         icon = AuthUIAsset.Resource(R.drawable.fui_ic_mail_white_24dp),
         backgroundColor = Color(0xFFD0021B),
         contentColor = Color.White
     )
 
-    val Phone = AuthUITheme.ProviderStyle(
-        icon = AuthUIAsset.Resource(R.drawable.fui_ic_phone_white_24dp),
-        backgroundColor = Color(0xFF43C5A5),
-        contentColor = Color.White
-    )
-
-    val Anonymous = AuthUITheme.ProviderStyle(
-        icon = AuthUIAsset.Resource(R.drawable.fui_ic_anonymous_white_24dp),
-        backgroundColor = Color(0xFFF4B400),
-        contentColor = Color.White
-    )
-
-    val Microsoft = AuthUITheme.ProviderStyle(
-        icon = AuthUIAsset.Resource(R.drawable.fui_ic_microsoft_24dp),
-        backgroundColor = Color(0xFF2F2F2F),
-        contentColor = Color.White
-    )
-
-    val Yahoo = AuthUITheme.ProviderStyle(
-        icon = AuthUIAsset.Resource(R.drawable.fui_ic_yahoo_24dp),
-        backgroundColor = Color(0xFF720E9E),
-        contentColor = Color.White
-    )
-
-    val Apple = AuthUITheme.ProviderStyle(
-        icon = AuthUIAsset.Resource(R.drawable.fui_ic_apple_white_24dp),
-        backgroundColor = Color.Black,
-        contentColor = Color.White
-    )
-
     val default: Map<String, AuthUITheme.ProviderStyle>
         get() = mapOf(
             Provider.GOOGLE.id to Google,
-            Provider.FACEBOOK.id to Facebook,
-            Provider.TWITTER.id to Twitter,
-            Provider.GITHUB.id to Github,
             Provider.EMAIL.id to Email,
-            Provider.PHONE.id to Phone,
-            Provider.ANONYMOUS.id to Anonymous,
-            Provider.MICROSOFT.id to Microsoft,
-            Provider.YAHOO.id to Yahoo,
-            Provider.APPLE.id to Apple
         )
 }

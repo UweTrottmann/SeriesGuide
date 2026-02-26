@@ -1,12 +1,12 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: Apache-2.0 AND AGPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
 
 package com.battlelancer.seriesguide.backend.auth.ui.components
 
-import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,8 +17,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -27,7 +25,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
@@ -37,7 +34,6 @@ import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Aut
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Provider
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.AuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.DefaultAuthUIStringProvider
-import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUIAsset
 import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUITheme
 import com.battlelancer.seriesguide.backend.auth.configuration.theme.LocalAuthUITheme
 import com.battlelancer.seriesguide.backend.auth.configuration.theme.ProviderStyleDefaults
@@ -81,10 +77,9 @@ fun AuthProviderButton(
     label: String? = null,
     showAsContinue: Boolean = false,
 ) {
-    val context = LocalContext.current
     val authTheme = LocalAuthUITheme.current
     val providerLabel =
-        label ?: resolveProviderLabel(provider, stringProvider, context, showAsContinue)
+        label ?: resolveProviderLabel(provider, stringProvider, showAsContinue)
     val providerStyle = resolveProviderStyle(
         provider = provider,
         style = style,
@@ -205,32 +200,12 @@ internal fun resolveProviderStyle(
 internal fun resolveProviderLabel(
     provider: AuthProvider,
     stringProvider: AuthUIStringProvider,
-    context: Context,
     showAsContinue: Boolean = false,
 ): String = when (provider) {
     is AuthProvider.GenericOAuth -> provider.buttonLabel
-    is AuthProvider.Apple -> {
-        // Use Apple-specific locale if provided, otherwise use default stringProvider
-        if (provider.locale != null) {
-            val appleLocale = java.util.Locale.forLanguageTag(provider.locale)
-            val appleStringProvider = DefaultAuthUIStringProvider(context, appleLocale)
-            if (showAsContinue) appleStringProvider.continueWithApple else appleStringProvider.signInWithApple
-        } else {
-            if (showAsContinue) stringProvider.continueWithApple else stringProvider.signInWithApple
-        }
-    }
-
     else -> when (Provider.fromId(provider.providerId)) {
         Provider.GOOGLE -> if (showAsContinue) stringProvider.continueWithGoogle else stringProvider.signInWithGoogle
-        Provider.FACEBOOK -> if (showAsContinue) stringProvider.continueWithFacebook else stringProvider.signInWithFacebook
-        Provider.TWITTER -> if (showAsContinue) stringProvider.continueWithTwitter else stringProvider.signInWithTwitter
-        Provider.GITHUB -> if (showAsContinue) stringProvider.continueWithGithub else stringProvider.signInWithGithub
         Provider.EMAIL -> if (showAsContinue) stringProvider.continueWithEmail else stringProvider.signInWithEmail
-        Provider.PHONE -> if (showAsContinue) stringProvider.continueWithPhone else stringProvider.signInWithPhone
-        Provider.ANONYMOUS -> stringProvider.signInAnonymously
-        Provider.MICROSOFT -> if (showAsContinue) stringProvider.continueWithMicrosoft else stringProvider.signInWithMicrosoft
-        Provider.YAHOO -> if (showAsContinue) stringProvider.continueWithYahoo else stringProvider.signInWithYahoo
-        Provider.APPLE -> if (showAsContinue) stringProvider.continueWithApple else stringProvider.signInWithApple
         null -> "Unknown Provider"
     }
 }
@@ -254,15 +229,6 @@ private fun PreviewAuthProviderButton() {
             stringProvider = DefaultAuthUIStringProvider(context)
         )
         AuthProviderButton(
-            provider = AuthProvider.Phone(
-                defaultNumber = null,
-                defaultCountryCode = null,
-                allowedCountries = null,
-            ),
-            onClick = {},
-            stringProvider = DefaultAuthUIStringProvider(context)
-        )
-        AuthProviderButton(
             provider = AuthProvider.Google(
                 scopes = emptyList(),
                 serverClientId = null
@@ -270,89 +236,20 @@ private fun PreviewAuthProviderButton() {
             onClick = {},
             stringProvider = DefaultAuthUIStringProvider(context)
         )
-        AuthProviderButton(
-            provider = AuthProvider.Facebook(),
-            onClick = {},
-            stringProvider = DefaultAuthUIStringProvider(context)
-        )
-        AuthProviderButton(
-            provider = AuthProvider.Twitter(
-                customParameters = emptyMap()
-            ),
-            onClick = {},
-            stringProvider = DefaultAuthUIStringProvider(context)
-        )
-        AuthProviderButton(
-            provider = AuthProvider.Github(
-                customParameters = emptyMap()
-            ),
-            onClick = {},
-            stringProvider = DefaultAuthUIStringProvider(context)
-        )
-        AuthProviderButton(
-            provider = AuthProvider.Microsoft(
-                tenant = null,
-                customParameters = emptyMap()
-            ),
-            onClick = {},
-            stringProvider = DefaultAuthUIStringProvider(context)
-        )
-        AuthProviderButton(
-            provider = AuthProvider.Yahoo(
-                customParameters = emptyMap()
-            ),
-            onClick = {},
-            stringProvider = DefaultAuthUIStringProvider(context)
-        )
-        AuthProviderButton(
-            provider = AuthProvider.Apple(
-                locale = null,
-                customParameters = emptyMap()
-            ),
-            onClick = {},
-            stringProvider = DefaultAuthUIStringProvider(context)
-        )
-        AuthProviderButton(
-            provider = AuthProvider.Anonymous,
-            onClick = {},
-            stringProvider = DefaultAuthUIStringProvider(context)
-        )
-        AuthProviderButton(
-            provider = AuthProvider.GenericOAuth(
-                providerName = "Generic Provider",
-                providerId = "google.com",
-                scopes = emptyList(),
-                customParameters = emptyMap(),
-                buttonLabel = "Generic Provider",
-                buttonIcon = AuthUIAsset.Vector(Icons.Default.Star),
-                buttonColor = Color.Gray,
-                contentColor = Color.White
-            ),
-            onClick = {},
-            stringProvider = DefaultAuthUIStringProvider(context)
-        )
-        AuthProviderButton(
-            provider = AuthProvider.GenericOAuth(
-                providerName = "Generic Provider",
-                providerId = "google.com",
-                scopes = emptyList(),
-                customParameters = emptyMap(),
-                buttonLabel = "Custom Style",
-                buttonIcon = AuthUIAsset.Vector(Icons.Default.Star),
-                buttonColor = Color.Gray,
-                contentColor = Color.White
-            ),
-            onClick = {},
-            style = AuthUITheme.ProviderStyle(
-                icon = AuthUITheme.Default.providerStyles[Provider.MICROSOFT.id]?.icon,
-                backgroundColor = AuthUITheme.Default.providerStyles[Provider.MICROSOFT.id]!!.backgroundColor,
-                contentColor = AuthUITheme.Default.providerStyles[Provider.MICROSOFT.id]!!.contentColor,
-                iconTint = Color.Red,
-                shape = RoundedCornerShape(24.dp),
-                elevation = 6.dp
-            ),
-            stringProvider = DefaultAuthUIStringProvider(context)
-        )
+//        AuthProviderButton(
+//            provider = AuthProvider.GenericOAuth(
+//                providerName = "Generic Provider",
+//                providerId = "google.com",
+//                scopes = emptyList(),
+//                customParameters = emptyMap(),
+//                buttonLabel = "Generic Provider",
+//                buttonIcon = AuthUIAsset.Vector(Icons.Default.Star),
+//                buttonColor = Color.Gray,
+//                contentColor = Color.White
+//            ),
+//            onClick = {},
+//            stringProvider = DefaultAuthUIStringProvider(context)
+//        )
         AuthProviderButton(
             provider = AuthProvider.GenericOAuth(
                 providerName = "Generic Provider",

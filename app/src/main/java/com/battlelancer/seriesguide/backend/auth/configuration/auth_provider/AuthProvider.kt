@@ -1,58 +1,41 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: Apache-2.0 AND AGPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
 
 package com.battlelancer.seriesguide.backend.auth.configuration.auth_provider
 
-import android.app.Activity
 import android.content.Context
 import android.net.Uri
 import android.util.Log
 import androidx.annotation.RestrictTo
 import androidx.compose.ui.graphics.Color
-import androidx.core.net.toUri
 import androidx.credentials.ClearCredentialStateRequest
 import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.facebook.AccessToken
 import com.firebase.ui.auth.R
 import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
 import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfigurationDsl
 import com.battlelancer.seriesguide.backend.auth.configuration.PasswordRule
 import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUIAsset
 import com.battlelancer.seriesguide.backend.auth.util.ContinueUrlBuilder
-import com.battlelancer.seriesguide.backend.auth.util.PhoneNumberUtils
 import com.battlelancer.seriesguide.backend.auth.util.Preconditions
-import com.battlelancer.seriesguide.backend.auth.util.ProviderAvailability
 import com.google.android.gms.auth.api.identity.AuthorizationRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.common.api.Scope
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
-import com.google.firebase.FirebaseException
 import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.EmailAuthProvider
-import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GithubAuthProvider
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.auth.MultiFactorSession
-import com.google.firebase.auth.PhoneAuthCredential
-import com.google.firebase.auth.PhoneAuthOptions
-import com.google.firebase.auth.PhoneAuthProvider
-import com.google.firebase.auth.TwitterAuthProvider
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.actionCodeSettings
-import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.tasks.await
-import java.util.concurrent.TimeUnit
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
 
 @AuthUIConfigurationDsl
 class AuthProvidersBuilder {
@@ -74,15 +57,7 @@ internal enum class Provider(
     val isSocialProvider: Boolean = false,
 ) {
     GOOGLE(GoogleAuthProvider.PROVIDER_ID, providerName = "Google", isSocialProvider = true),
-    FACEBOOK(FacebookAuthProvider.PROVIDER_ID, providerName = "Facebook", isSocialProvider = true),
-    TWITTER(TwitterAuthProvider.PROVIDER_ID, providerName = "Twitter", isSocialProvider = true),
-    GITHUB(GithubAuthProvider.PROVIDER_ID, providerName = "Github", isSocialProvider = true),
-    EMAIL(EmailAuthProvider.PROVIDER_ID, providerName = "Email"),
-    PHONE(PhoneAuthProvider.PROVIDER_ID, providerName = "Phone"),
-    ANONYMOUS("anonymous", providerName = "Anonymous"),
-    MICROSOFT("microsoft.com", providerName = "Microsoft", isSocialProvider = true),
-    YAHOO("yahoo.com", providerName = "Yahoo", isSocialProvider = true),
-    APPLE("apple.com", providerName = "Apple", isSocialProvider = true);
+    EMAIL(EmailAuthProvider.PROVIDER_ID, providerName = "Email");
 
     companion object {
         fun fromId(id: String?): Provider? {
@@ -245,227 +220,6 @@ abstract class AuthProvider(open val providerId: String, open val providerName: 
     }
 
     /**
-     * Phone number authentication provider configuration.
-     */
-    class Phone(
-        /**
-         * The phone number in international format.
-         */
-        val defaultNumber: String?,
-
-        /**
-         * The default country code to pre-select.
-         */
-        val defaultCountryCode: String?,
-
-        /**
-         * A list of allowed country codes.
-         */
-        val allowedCountries: List<String>?,
-
-        /**
-         * The expected length of the SMS verification code. Defaults to 6.
-         */
-        val smsCodeLength: Int = 6,
-
-        /**
-         * The timeout in seconds for receiving the SMS. Defaults to 60L.
-         */
-        val timeout: Long = 60L,
-
-        /**
-         * Enables instant verification of the phone number. Defaults to true.
-         */
-        val isInstantVerificationEnabled: Boolean = true,
-    ) : AuthProvider(providerId = Provider.PHONE.id, providerName = Provider.PHONE.providerName) {
-        /**
-         * Sealed class representing the result of phone number verification.
-         *
-         * Phone verification can complete in two ways:
-         * - [AutoVerified]: SMS was instantly retrieved and verified by the Firebase SDK
-         * - [NeedsManualVerification]: SMS code was sent, user must manually enter it
-         */
-        internal sealed class VerifyPhoneNumberResult {
-            /**
-             * Instant verification succeeded via SMS auto-retrieval.
-             *
-             * @property credential The [PhoneAuthCredential] that can be used to sign in
-             */
-            class AutoVerified(val credential: PhoneAuthCredential) : VerifyPhoneNumberResult()
-
-            /**
-             * Instant verification failed, manual code entry required.
-             *
-             * @property verificationId The verification ID to use when submitting the code
-             * @property token Token for resending the verification code
-             */
-            class NeedsManualVerification(
-                val verificationId: String,
-                val token: PhoneAuthProvider.ForceResendingToken,
-            ) : VerifyPhoneNumberResult()
-        }
-
-        internal fun validate() {
-            defaultNumber?.let {
-                check(PhoneNumberUtils.isValid(it)) {
-                    "Invalid phone number: $it"
-                }
-            }
-
-            defaultCountryCode?.let {
-                check(PhoneNumberUtils.isValidIso(it)) {
-                    "Invalid country iso: $it"
-                }
-            }
-
-            allowedCountries?.forEach { code ->
-                check(PhoneNumberUtils.isValidIso(code)) {
-                    "Invalid input: You must provide a valid country iso (alpha-2) " +
-                            "or code (e-164). e.g. 'us' or '+1'. Invalid code: $code"
-                }
-            }
-        }
-
-        /**
-         * Internal coroutine-based wrapper for Firebase Phone Authentication verification.
-         *
-         * This method wraps the callback-based Firebase Phone Auth API into a suspending function
-         * using Kotlin coroutines. It handles the Firebase [PhoneAuthProvider.OnVerificationStateChangedCallbacks]
-         * and converts them into a [VerifyPhoneNumberResult].
-         *
-         * **Callback mapping:**
-         * - `onVerificationCompleted` → [VerifyPhoneNumberResult.AutoVerified]
-         * - `onCodeSent` → [VerifyPhoneNumberResult.NeedsManualVerification]
-         * - `onVerificationFailed` → throws the exception
-         *
-         * This is a private helper method used by [verifyPhoneNumber]. Callers should use
-         * [verifyPhoneNumber] instead as it handles state management and error handling.
-         *
-         * @param auth The [FirebaseAuth] instance to use for verification
-         * @param phoneNumber The phone number to verify in E.164 format
-         * @param multiFactorSession Optional [MultiFactorSession] for MFA enrollment. When provided,
-         * Firebase verifies the phone number for enrolling as a second authentication factor
-         * instead of primary sign-in. Pass null for standard phone authentication.
-         * @param forceResendingToken Optional token from previous verification for resending
-         *
-         * @return [VerifyPhoneNumberResult] indicating auto-verified or manual verification needed
-         * @throws FirebaseException if verification fails
-         */
-        internal suspend fun verifyPhoneNumberAwait(
-            auth: FirebaseAuth,
-            activity: Activity?,
-            phoneNumber: String,
-            multiFactorSession: MultiFactorSession? = null,
-            forceResendingToken: PhoneAuthProvider.ForceResendingToken?,
-            verifier: Verifier = DefaultVerifier(),
-        ): VerifyPhoneNumberResult {
-            return verifier.verifyPhoneNumber(
-                auth,
-                activity,
-                phoneNumber,
-                timeout,
-                forceResendingToken,
-                multiFactorSession,
-                isInstantVerificationEnabled
-            )
-        }
-
-        /**
-         * @suppress
-         */
-        internal interface Verifier {
-            suspend fun verifyPhoneNumber(
-                auth: FirebaseAuth,
-                activity: Activity?,
-                phoneNumber: String,
-                timeout: Long,
-                forceResendingToken: PhoneAuthProvider.ForceResendingToken?,
-                multiFactorSession: MultiFactorSession?,
-                isInstantVerificationEnabled: Boolean,
-            ): VerifyPhoneNumberResult
-        }
-
-        /**
-         * @suppress
-         */
-        internal class DefaultVerifier : Verifier {
-            override suspend fun verifyPhoneNumber(
-                auth: FirebaseAuth,
-                activity: Activity?,
-                phoneNumber: String,
-                timeout: Long,
-                forceResendingToken: PhoneAuthProvider.ForceResendingToken?,
-                multiFactorSession: MultiFactorSession?,
-                isInstantVerificationEnabled: Boolean,
-            ): VerifyPhoneNumberResult {
-                return suspendCoroutine { continuation ->
-                    val options = PhoneAuthOptions.newBuilder(auth)
-                        .setPhoneNumber(phoneNumber)
-                        .requireSmsValidation(!isInstantVerificationEnabled)
-                        .setTimeout(timeout, TimeUnit.SECONDS)
-                        .setCallbacks(object :
-                            PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-                            override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-                                continuation.resume(VerifyPhoneNumberResult.AutoVerified(credential))
-                            }
-
-                            override fun onVerificationFailed(e: FirebaseException) {
-                                continuation.resumeWithException(e)
-                            }
-
-                            override fun onCodeSent(
-                                verificationId: String,
-                                token: PhoneAuthProvider.ForceResendingToken,
-                            ) {
-                                continuation.resume(
-                                    VerifyPhoneNumberResult.NeedsManualVerification(
-                                        verificationId,
-                                        token
-                                    )
-                                )
-                            }
-                        })
-                        .apply {
-                            activity?.let {
-                                setActivity(it)
-                            }
-                            forceResendingToken?.let {
-                                setForceResendingToken(it)
-                            }
-                            multiFactorSession?.let {
-                                setMultiFactorSession(it)
-                            }
-                        }
-                        .build()
-                    PhoneAuthProvider.verifyPhoneNumber(options)
-                }
-            }
-        }
-
-        /**
-         * An interface to wrap the static `PhoneAuthProvider.getCredential` method to make it testable.
-         * @suppress
-         */
-        internal interface CredentialProvider {
-            fun getCredential(verificationId: String, smsCode: String): PhoneAuthCredential
-        }
-
-        /**
-         * The default implementation of [CredentialProvider] that calls the static method.
-         * @suppress
-         */
-        internal class DefaultCredentialProvider : CredentialProvider {
-            override fun getCredential(
-                verificationId: String,
-                smsCode: String,
-            ): PhoneAuthCredential {
-                return PhoneAuthProvider.getCredential(verificationId, smsCode)
-            }
-        }
-
-    }
-
-    /**
      * Google Sign-In provider configuration.
      */
     class Google(
@@ -625,291 +379,6 @@ abstract class AuthProvider(open val providerId: String, open val providerName: 
                 credentialManager: CredentialManager,
             ) {
                 credentialManager.clearCredentialState(ClearCredentialStateRequest())
-            }
-        }
-    }
-
-    /**
-     * Facebook Login provider configuration.
-     */
-    class Facebook(
-        /**
-         * The list of scopes (permissions) to request. Defaults to email and public_profile.
-         */
-        override val scopes: List<String> = listOf("email", "public_profile"),
-
-        /**
-         * A map of custom OAuth parameters.
-         */
-        override val customParameters: Map<String, String> = emptyMap(),
-    ) : OAuth(
-        providerId = Provider.FACEBOOK.id,
-        providerName = Provider.FACEBOOK.providerName,
-        scopes = scopes,
-        customParameters = customParameters
-    ) {
-        internal fun validate(context: Context) {
-            if (!ProviderAvailability.IS_FACEBOOK_AVAILABLE) {
-                throw RuntimeException(
-                    "Facebook provider cannot be configured " +
-                            "without dependency. Did you forget to add " +
-                            "'com.facebook.android:facebook-login:VERSION' dependency?"
-                )
-            }
-
-            Preconditions.checkConfigured(
-                context,
-                "Facebook provider unconfigured. Make sure to " +
-                        "add a `facebook_application_id` string to your strings.xml",
-                R.string.facebook_application_id
-            )
-
-            Preconditions.checkConfigured(
-                context,
-                "Facebook provider unconfigured. Make sure to " +
-                        "add a `facebook_login_protocol_scheme` string to your strings.xml",
-                R.string.facebook_login_protocol_scheme
-            )
-
-            Preconditions.checkConfigured(
-                context,
-                "Facebook provider unconfigured. Make sure to " +
-                        "add a `facebook_client_token` string to your strings.xml",
-                R.string.facebook_client_token
-            )
-        }
-
-        /**
-         * An interface to wrap Facebook LoginManager and credential operations to make them testable.
-         * @suppress
-         */
-        @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
-        interface LoginManagerProvider {
-            fun getCredential(token: String): AuthCredential
-            fun logOut()
-        }
-
-        /**
-         * The default implementation of [LoginManagerProvider].
-         * @suppress
-         */
-        @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
-        class DefaultLoginManagerProvider : LoginManagerProvider {
-            override fun getCredential(token: String): AuthCredential {
-                return FacebookAuthProvider.getCredential(token)
-            }
-
-            override fun logOut() {
-                com.facebook.login.LoginManager.getInstance().logOut()
-            }
-        }
-
-        /**
-         * Internal data class to hold Facebook profile information.
-         */
-        internal class FacebookProfileData(
-            val displayName: String?,
-            val email: String?,
-            val photoUrl: Uri?,
-        )
-
-        /**
-         * Fetches user profile data from Facebook Graph API.
-         *
-         * @param accessToken The Facebook access token
-         * @return FacebookProfileData containing user's display name, email, and photo URL
-         */
-        internal suspend fun fetchFacebookProfile(accessToken: AccessToken): FacebookProfileData? {
-            return suspendCancellableCoroutine { continuation ->
-                val request =
-                    com.facebook.GraphRequest.newMeRequest(accessToken) { jsonObject, response ->
-                        try {
-                            val error = response?.error
-                            if (error != null) {
-                                Log.e(
-                                    "FirebaseAuthUI.signInWithFacebook",
-                                    "Graph API error: ${error.errorMessage}"
-                                )
-                                continuation.resume(null)
-                                return@newMeRequest
-                            }
-
-                            if (jsonObject == null) {
-                                Log.e(
-                                    "FirebaseAuthUI.signInWithFacebook",
-                                    "Graph API returned null response"
-                                )
-                                continuation.resume(null)
-                                return@newMeRequest
-                            }
-
-                            val name = jsonObject.optString("name")
-                            val email = jsonObject.optString("email")
-
-                            // Extract photo URL from picture object
-                            val photoUrl = try {
-                                jsonObject.optJSONObject("picture")
-                                    ?.optJSONObject("data")
-                                    ?.optString("url")
-                                    ?.takeIf { it.isNotEmpty() }?.toUri()
-                            } catch (e: Exception) {
-                                Log.w(
-                                    "FirebaseAuthUI.signInWithFacebook",
-                                    "Error parsing photo URL",
-                                    e
-                                )
-                                null
-                            }
-
-                            Log.d(
-                                "FirebaseAuthUI.signInWithFacebook",
-                                "Profile fetched: name=$name, email=$email, hasPhoto=${photoUrl != null}"
-                            )
-
-                            continuation.resume(
-                                FacebookProfileData(
-                                    displayName = name,
-                                    email = email,
-                                    photoUrl = photoUrl
-                                )
-                            )
-                        } catch (e: Exception) {
-                            Log.e(
-                                "FirebaseAuthUI.signInWithFacebook",
-                                "Error processing Graph API response",
-                                e
-                            )
-                            continuation.resume(null)
-                        }
-                    }
-
-                // Request specific fields: id, name, email, and picture
-                val parameters = android.os.Bundle().apply {
-                    putString("fields", "id,name,email,picture")
-                }
-                request.parameters = parameters
-                request.executeAsync()
-            }
-        }
-    }
-
-    /**
-     * Twitter/X authentication provider configuration.
-     */
-    class Twitter(
-        /**
-         * A map of custom OAuth parameters.
-         */
-        override val customParameters: Map<String, String>,
-    ) : OAuth(
-        providerId = Provider.TWITTER.id,
-        providerName = Provider.TWITTER.providerName,
-        customParameters = customParameters
-    )
-
-    /**
-     * Github authentication provider configuration.
-     */
-    class Github(
-        /**
-         * The list of scopes to request. Defaults to user:email.
-         */
-        override val scopes: List<String> = listOf("user:email"),
-
-        /**
-         * A map of custom OAuth parameters.
-         */
-        override val customParameters: Map<String, String>,
-    ) : OAuth(
-        providerId = Provider.GITHUB.id,
-        providerName = Provider.GITHUB.providerName,
-        scopes = scopes,
-        customParameters = customParameters
-    )
-
-    /**
-     * Microsoft authentication provider configuration.
-     */
-    class Microsoft(
-        /**
-         * The list of scopes to request. Defaults to openid, profile, email.
-         */
-        override val scopes: List<String> = listOf("openid", "profile", "email"),
-
-        /**
-         * The tenant ID for Azure Active Directory.
-         */
-        val tenant: String?,
-
-        /**
-         * A map of custom OAuth parameters.
-         */
-        override val customParameters: Map<String, String>,
-    ) : OAuth(
-        providerId = Provider.MICROSOFT.id,
-        providerName = Provider.MICROSOFT.providerName,
-        scopes = scopes,
-        customParameters = customParameters
-    )
-
-    /**
-     * Yahoo authentication provider configuration.
-     */
-    class Yahoo(
-        /**
-         * The list of scopes to request. Defaults to openid, profile, email.
-         */
-        override val scopes: List<String> = listOf("openid", "profile", "email"),
-
-        /**
-         * A map of custom OAuth parameters.
-         */
-        override val customParameters: Map<String, String>,
-    ) : OAuth(
-        providerId = Provider.YAHOO.id,
-        providerName = Provider.YAHOO.providerName,
-        scopes = scopes,
-        customParameters = customParameters
-    )
-
-    /**
-     * Apple Sign-In provider configuration.
-     */
-    class Apple(
-        /**
-         * The list of scopes to request. Defaults to name and email.
-         */
-        override val scopes: List<String> = listOf("name", "email"),
-
-        /**
-         * The locale for the sign-in page.
-         */
-        val locale: String?,
-
-        /**
-         * A map of custom OAuth parameters.
-         */
-        override val customParameters: Map<String, String>,
-    ) : OAuth(
-        providerId = Provider.APPLE.id,
-        providerName = Provider.APPLE.providerName,
-        scopes = scopes,
-        customParameters = customParameters
-    )
-
-    /**
-     * Anonymous authentication provider. It has no configurable properties.
-     */
-    object Anonymous : AuthProvider(
-        providerId = Provider.ANONYMOUS.id,
-        providerName = Provider.ANONYMOUS.providerName
-    ) {
-        internal fun validate(providers: List<AuthProvider>) {
-            if (providers.size == 1 && providers.first() is Anonymous) {
-                throw IllegalStateException(
-                    "Sign in as guest cannot be the only sign in method. " +
-                            "In this case, sign the user in anonymously your self; no UI is needed."
-                )
             }
         }
     }

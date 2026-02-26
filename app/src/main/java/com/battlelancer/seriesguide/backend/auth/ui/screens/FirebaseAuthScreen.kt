@@ -55,10 +55,8 @@ import com.battlelancer.seriesguide.backend.auth.FirebaseAuthUI
 import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
 import com.battlelancer.seriesguide.backend.auth.configuration.MfaConfiguration
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
-import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.rememberAnonymousSignInHandler
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.rememberGoogleSignInHandler
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.rememberOAuthSignInHandler
-import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.rememberSignInWithFacebookLauncher
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.signInWithEmailLink
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.AuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.DefaultAuthUIStringProvider
@@ -70,7 +68,6 @@ import com.battlelancer.seriesguide.backend.auth.ui.method_picker.AuthMethodPick
 import com.battlelancer.seriesguide.backend.auth.ui.screens.MfaChallengeScreen
 import com.battlelancer.seriesguide.backend.auth.ui.screens.MfaEnrollmentScreen
 import com.battlelancer.seriesguide.backend.auth.ui.screens.email.EmailAuthScreen
-import com.battlelancer.seriesguide.backend.auth.ui.screens.phone.PhoneAuthScreen
 import com.battlelancer.seriesguide.backend.auth.util.EmailLinkPersistenceManager
 import com.battlelancer.seriesguide.backend.auth.util.SignInPreferenceManager
 import com.google.firebase.auth.AuthCredential
@@ -126,86 +123,17 @@ fun FirebaseAuthScreen(
         lastSignInPreference.value = SignInPreferenceManager.getLastSignIn(context)
     }
 
-    val anonymousProvider =
-        configuration.providers.filterIsInstance<AuthProvider.Anonymous>().firstOrNull()
     val googleProvider =
         configuration.providers.filterIsInstance<AuthProvider.Google>().firstOrNull()
     val emailProvider = configuration.providers.filterIsInstance<AuthProvider.Email>().firstOrNull()
-    val facebookProvider =
-        configuration.providers.filterIsInstance<AuthProvider.Facebook>().firstOrNull()
-    val appleProvider = configuration.providers.filterIsInstance<AuthProvider.Apple>().firstOrNull()
-    val githubProvider =
-        configuration.providers.filterIsInstance<AuthProvider.Github>().firstOrNull()
-    val microsoftProvider =
-        configuration.providers.filterIsInstance<AuthProvider.Microsoft>().firstOrNull()
-    val yahooProvider = configuration.providers.filterIsInstance<AuthProvider.Yahoo>().firstOrNull()
-    val twitterProvider =
-        configuration.providers.filterIsInstance<AuthProvider.Twitter>().firstOrNull()
     val genericOAuthProviders =
         configuration.providers.filterIsInstance<AuthProvider.GenericOAuth>()
 
     val logoAsset = configuration.logo
 
-    val onSignInAnonymously = anonymousProvider?.let {
-        authUI.rememberAnonymousSignInHandler()
-    }
-
     val onSignInWithGoogle = googleProvider?.let {
         authUI.rememberGoogleSignInHandler(
             context = context,
-            config = configuration,
-            provider = it
-        )
-    }
-
-    val onSignInWithFacebook = facebookProvider?.let {
-        authUI.rememberSignInWithFacebookLauncher(
-            context = context,
-            config = configuration,
-            provider = it
-        )
-    }
-
-    val onSignInWithApple = appleProvider?.let {
-        authUI.rememberOAuthSignInHandler(
-            context = context,
-            activity = activity,
-            config = configuration,
-            provider = it
-        )
-    }
-
-    val onSignInWithGithub = githubProvider?.let {
-        authUI.rememberOAuthSignInHandler(
-            context = context,
-            activity = activity,
-            config = configuration,
-            provider = it
-        )
-    }
-
-    val onSignInWithMicrosoft = microsoftProvider?.let {
-        authUI.rememberOAuthSignInHandler(
-            context = context,
-            activity = activity,
-            config = configuration,
-            provider = it
-        )
-    }
-
-    val onSignInWithYahoo = yahooProvider?.let {
-        authUI.rememberOAuthSignInHandler(
-            context = context,
-            activity = activity,
-            config = configuration,
-            provider = it
-        )
-    }
-
-    val onSignInWithTwitter = twitterProvider?.let {
-        authUI.rememberOAuthSignInHandler(
-            context = context,
-            activity = activity,
             config = configuration,
             provider = it
         )
@@ -257,29 +185,11 @@ fun FirebaseAuthScreen(
                             lastSignInPreference = lastSignInPreference.value,
                             onProviderSelected = { provider ->
                                 when (provider) {
-                                    is AuthProvider.Anonymous -> onSignInAnonymously?.invoke()
-
                                     is AuthProvider.Email -> {
                                         navController.navigate(AuthRoute.Email.route)
                                     }
 
-                                    is AuthProvider.Phone -> {
-                                        navController.navigate(AuthRoute.Phone.route)
-                                    }
-
                                     is AuthProvider.Google -> onSignInWithGoogle?.invoke()
-
-                                    is AuthProvider.Facebook -> onSignInWithFacebook?.invoke()
-
-                                    is AuthProvider.Apple -> onSignInWithApple?.invoke()
-
-                                    is AuthProvider.Github -> onSignInWithGithub?.invoke()
-
-                                    is AuthProvider.Microsoft -> onSignInWithMicrosoft?.invoke()
-
-                                    is AuthProvider.Yahoo -> onSignInWithYahoo?.invoke()
-
-                                    is AuthProvider.Twitter -> onSignInWithTwitter?.invoke()
 
                                     is AuthProvider.GenericOAuth -> genericOAuthHandlers[provider]?.invoke()
 
@@ -314,26 +224,6 @@ fun FirebaseAuthScreen(
                         },
                         onCancel = {
                             pendingLinkingCredential.value = null
-                            if (!navController.popBackStack()) {
-                                navController.navigate(AuthRoute.MethodPicker.route) {
-                                    popUpTo(AuthRoute.MethodPicker.route) { inclusive = true }
-                                    launchSingleTop = true
-                                }
-                            }
-                        }
-                    )
-                }
-
-                composable(AuthRoute.Phone.route) {
-                    PhoneAuthScreen(
-                        context = context,
-                        configuration = configuration,
-                        authUI = authUI,
-                        onSuccess = {},
-                        onError = { exception ->
-                            onSignInFailure(exception)
-                        },
-                        onCancel = {
                             if (!navController.popBackStack()) {
                                 navController.navigate(AuthRoute.MethodPicker.route) {
                                     popUpTo(AuthRoute.MethodPicker.route) { inclusive = true }
@@ -656,7 +546,6 @@ fun FirebaseAuthScreen(
 sealed class AuthRoute(val route: String) {
     object MethodPicker : AuthRoute("auth_method_picker")
     object Email : AuthRoute("auth_email")
-    object Phone : AuthRoute("auth_phone")
     object Success : AuthRoute("auth_success")
     object MfaEnrollment : AuthRoute("auth_mfa_enrollment")
     object MfaChallenge : AuthRoute("auth_mfa_challenge")

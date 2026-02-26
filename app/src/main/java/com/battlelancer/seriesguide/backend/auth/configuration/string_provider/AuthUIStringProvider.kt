@@ -1,5 +1,6 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: Apache-2.0 AND AGPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
@@ -32,29 +33,11 @@ val LocalAuthUIStringProvider = staticCompositionLocalOf<AuthUIStringProvider> {
 
 /**
  * An interface for providing localized string resources. This interface defines methods for all
- * user-facing strings, such as initializing(), signInWithGoogle(), invalidEmailAddress(),
- * passwordsDoNotMatch(), etc., allowing for complete localization of the UI.
- *
- * @sample AuthUIStringProviderSample
+ * user-facing strings allowing for localization of the UI.
  */
 interface AuthUIStringProvider {
     /** Loading text displayed during initialization or processing states */
     val initializing: String
-
-    /** Text for Google Provider */
-    val googleProvider: String
-
-    /** Text for Facebook Provider */
-    val facebookProvider: String
-
-    /** Text for Twitter Provider */
-    val twitterProvider: String
-
-    /** Text for Github Provider */
-    val githubProvider: String
-
-    /** Text for Phone Provider */
-    val phoneProvider: String
 
     /** Text for Email Provider */
     val emailProvider: String
@@ -62,59 +45,14 @@ interface AuthUIStringProvider {
     /** Button text for Google sign-in option */
     val signInWithGoogle: String
 
-    /** Button text for Facebook sign-in option */
-    val signInWithFacebook: String
-
-    /** Button text for Twitter sign-in option */
-    val signInWithTwitter: String
-
-    /** Button text for Github sign-in option */
-    val signInWithGithub: String
-
     /** Button text for Email sign-in option */
     val signInWithEmail: String
-
-    /** Button text for Phone sign-in option */
-    val signInWithPhone: String
-
-    /** Button text for Anonymous sign-in option */
-    val signInAnonymously: String
-
-    /** Button text for Apple sign-in option */
-    val signInWithApple: String
-
-    /** Button text for Microsoft sign-in option */
-    val signInWithMicrosoft: String
-
-    /** Button text for Yahoo sign-in option */
-    val signInWithYahoo: String
 
     /** Button text for Google continue option */
     val continueWithGoogle: String
 
-    /** Button text for Facebook continue option */
-    val continueWithFacebook: String
-
-    /** Button text for Twitter continue option */
-    val continueWithTwitter: String
-
-    /** Button text for Github continue option */
-    val continueWithGithub: String
-
     /** Button text for Email continue option */
     val continueWithEmail: String
-
-    /** Button text for Phone continue option */
-    val continueWithPhone: String
-
-    /** Button text for Apple continue option */
-    val continueWithApple: String
-
-    /** Button text for Microsoft continue option */
-    val continueWithMicrosoft: String
-
-    /** Button text for Yahoo continue option */
-    val continueWithYahoo: String
 
     /** Error message when email address field is empty */
     val missingEmailAddress: String
@@ -228,31 +166,6 @@ interface AuthUIStringProvider {
     /** Message shown when email mismatch occurs */
     val emailMismatchMessage: String
 
-    // Phone Authentication Strings
-    /** Phone number entry form title */
-    val verifyPhoneNumberTitle: String
-
-    /** Hint for phone input field */
-    val phoneHint: String
-
-    /** Hint for country input field */
-    val countryHint: String
-
-    /** Invalid phone number error */
-    val invalidPhoneNumber: String
-
-    /** Missing phone number error */
-    val missingPhoneNumber: String
-
-    /** Phone verification code entry form title */
-    val enterConfirmationCode: String
-
-    /** Button text to verify phone number */
-    val verifyPhoneNumber: String
-
-    /** Resend code countdown timer */
-    val resendCodeIn: String
-
     /** Resend code link text */
     val resendCode: String
 
@@ -268,35 +181,17 @@ interface AuthUIStringProvider {
     /** SMS terms of service warning */
     val smsTermsOfService: String
 
-    /** Enter phone number title */
-    val enterPhoneNumberTitle: String
-
-    /** Phone number hint */
-    val phoneNumberHint: String
-
-    /** Send verification code button text */
-    val sendVerificationCode: String
-
     /** Enter verification code title with phone number */
     fun enterVerificationCodeTitle(phoneNumber: String): String
 
     /** Verification code hint */
     val verificationCodeHint: String
 
-    /** Change phone number link text */
-    val changePhoneNumber: String
-
     /** Missing verification code error */
     val missingVerificationCode: String
 
     /** Invalid verification code error */
     val invalidVerificationCode: String
-
-    /** Select country modal sheet title */
-    val countrySelectorModalTitle: String
-
-    /** Select country modal sheet input field hint */
-    val searchCountriesHint: String
 
     // Provider Picker Strings
     /** Common button text for sign in */

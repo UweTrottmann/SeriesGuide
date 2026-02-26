@@ -637,34 +637,14 @@
     <string name="fui_no_internet" translation_descripition="User message shown when sign-in is attempted while offline.">Network error, check your internet connection.</string>
 
     <!-- Provider -->
-    <string name="fui_idp_name_google">Google</string>
-    <string name="fui_idp_name_facebook">Facebook</string>
-    <string name="fui_idp_name_twitter">Twitter</string>
-    <string name="fui_idp_name_github">GitHub</string>
-    <string name="fui_idp_name_phone">Phone</string>
     <string name="fui_idp_name_email">Email</string>
 
     <!-- Auth method picker -->
     <string name="fui_auth_method_picker_logo" translatable="false">"Auth method picker logo"</string>
     <string name="fui_sign_in_with_google" translation_description="Sign in button text">Sign in with Google</string>
-    <string name="fui_sign_in_with_facebook" translation_description="Sign in button text">Sign in with Facebook</string>
-    <string name="fui_sign_in_with_twitter" translation_description="Sign in button text">Sign in with X</string>
-    <string name="fui_sign_in_with_github" translation_description="Sign in button text">Sign in with GitHub</string>
     <string name="fui_sign_in_with_email" translation_description="Sign in button text">Sign in with email</string>
-    <string name="fui_sign_in_with_phone" translation_description="Sign in button text">Sign in with phone</string>
-    <string name="fui_sign_in_anonymously" translation_description="Continue as guest">Continue as guest</string>
-    <string name="fui_sign_in_with_apple" translation_description="Sign in button text. [CHAR_LIMIT=40]">Sign in with Apple</string>
-    <string name="fui_sign_in_with_microsoft" translation_description="Sign in button text. [CHAR_LIMIT=40]">Sign in with Microsoft</string>
-    <string name="fui_sign_in_with_yahoo" translation_description="Sign in button text. [CHAR_LIMIT=40]">Sign in with Yahoo</string>
     <string name="fui_continue_with_google" translation_description="Continue button text">Continue with Google</string>
-    <string name="fui_continue_with_facebook" translation_description="Continue button text">Continue with Facebook</string>
-    <string name="fui_continue_with_twitter" translation_description="Continue button text">Continue with X</string>
-    <string name="fui_continue_with_github" translation_description="Continue button text">Continue with GitHub</string>
     <string name="fui_continue_with_email" translation_description="Continue button text">Continue with email</string>
-    <string name="fui_continue_with_phone" translation_description="Continue button text">Continue with phone</string>
-    <string name="fui_continue_with_apple" translation_description="Continue button text. [CHAR_LIMIT=40]">Continue with Apple</string>
-    <string name="fui_continue_with_microsoft" translation_description="Continue button text. [CHAR_LIMIT=40]">Continue with Microsoft</string>
-    <string name="fui_continue_with_yahoo" translation_description="Continue button text. [CHAR_LIMIT=40]">Continue with Yahoo</string>
 
     <!-- Account management -->
     <string name="fui_signed_in_as" translation_description="Message showing who is signed in.">Signed in as %1$s</string>
@@ -727,10 +707,6 @@
     <!-- Common-->
     <string name="fui_next_default" translation_description="Button text to continue">Next</string>
     <string name="fui_email_hint" translation_description="Hint in email input field">Email</string>
-    <string name="fui_phone_hint" translation_description="Hint for phone input field">Phone Number</string>
-    <string name="fui_country_hint" translation_description="Hint for phone input field">Country</string>
-    <string name="fui_country_selector_title" translation_description="Country selector modal title">Select a country</string>
-    <string name="fui_search_country_field_hint" translation_description="Hint for search for country input field">Select for country e.g. +1, "US"</string>
     <string name="fui_password_hint" translation_description="Hint for password input field for existing passwords">Password</string>
     <string name="fui_confirm_password_hint" translation_description="Hint for confirm password input field for existing passwords">Confirm Password</string>
     <string name="fui_new_password_hint" translation_description="Hint for password input field for new passwords">New password</string>
@@ -824,8 +800,6 @@
 
 
     <!-- Phone number auth -->
-    <string name="fui_verify_phone_number_title" translation_description="Phone number entry form title">Enter your phone number</string>
-    <string name="fui_invalid_phone_number" translation_description="Inline error when phone number entered is invalid">Enter a valid phone number</string>
     <string name="fui_enter_confirmation_code" translation_description="Phone number verification code entry form title">Enter the 6-digit code we sent to</string>
     <string name="fui_resend_code_in" translation_description="Countdown timer text that the user needs to wait for before attempting to resend verification sms">Resend code in %1$s</string>
     <string name="fui_verify_your_phone_title" translation_description="Button text to complete phone number verification">Verify your phone number</string>
@@ -837,8 +811,6 @@
     <string name="fui_sign_in_with_phone_number" translation_description="Label for phone number input form">Sign in with phone number</string>
     <string name="fui_auto_verified" translation_description="Popup informing the user that their phone number was automatically verified">Phone number automatically verified</string>
     <string name="fui_resend_code" translation_description="Link text to resend verification sms">Resend Code</string>
-    <string name="fui_verify_phone_number" translation_description="Button text to submit confirmation code and complete phone verification">Verify Phone Number</string>
-    <string name="fui_change_phone_number" translation_description="Link text to change the phone number during verification">Use a different phone number</string>
     <string name="fui_sms_terms_of_service" translation_description="Fine print warning displayed below Verify Phone Number button">By tapping "%1$s", an SMS may be sent. Message &amp; data rates may apply.</string>
     <string name="fui_sms_terms_of_service_and_privacy_policy_extended" translation_description="Fine print warning displayed below Verify Phone Number button">By tapping "%1$s", you are indicating that you accept our <xliff:g example="https://google.com/terms" id="tos" translation_description="">%2$s</xliff:g> and <xliff:g example="https://google.com/privacy" id="pp" translation_description="">%3$s</xliff:g>. An SMS may be sent. Message &amp; data rates may apply.</string>
 

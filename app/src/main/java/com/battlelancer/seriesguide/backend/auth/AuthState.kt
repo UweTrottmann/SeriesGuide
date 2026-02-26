@@ -1,5 +1,6 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: Apache-2.0 AND AGPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
@@ -11,8 +12,6 @@ import com.battlelancer.seriesguide.backend.auth.AuthState.Companion.Idle
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.MultiFactorResolver
-import com.google.firebase.auth.PhoneAuthCredential
-import com.google.firebase.auth.PhoneAuthProvider
 
 /**
  * Represents the authentication state in Firebase Auth UI.
@@ -216,74 +215,6 @@ abstract class AuthState private constructor() {
         override fun equals(other: Any?): Boolean = other is EmailSignInLinkSent
         override fun hashCode(): Int = javaClass.hashCode()
         override fun toString(): String = "AuthState.EmailSignInLinkSent"
-    }
-
-    /**
-     * Phone number was automatically verified via SMS instant verification.
-     *
-     * This state is emitted when Firebase Phone Authentication successfully retrieves
-     * and verifies the SMS code automatically without user interaction. This happens
-     * when Google Play services can detect the incoming SMS message.
-     *
-     * @property credential The [PhoneAuthCredential] that can be used to sign in the user
-     *
-     * @see PhoneNumberVerificationRequired for the manual verification flow
-     */
-    class SMSAutoVerified(val credential: PhoneAuthCredential) : AuthState() {
-        override fun equals(other: Any?): Boolean {
-            if (this === other) return true
-            if (other !is SMSAutoVerified) return false
-            return credential == other.credential
-        }
-
-        override fun hashCode(): Int {
-            var result = credential.hashCode()
-            result = 31 * result + credential.hashCode()
-            return result
-        }
-
-        override fun toString(): String =
-            "AuthState.SMSAutoVerified(credential=$credential)"
-    }
-
-    /**
-     * Phone number verification requires manual code entry.
-     *
-     * This state is emitted when Firebase Phone Authentication cannot instantly verify
-     * the phone number and sends an SMS code that the user must manually enter. This is
-     * the normal flow when automatic SMS retrieval is not available or fails.
-     *
-     * **Resending codes:**
-     * To allow users to resend the verification code (if they didn't receive it),
-     * call [FirebaseAuthUI.verifyPhoneNumber] again with:
-     * - `isForceResendingTokenEnabled = true`
-     * - `forceResendingToken` from this state
-     *
-     * @property verificationId The verification ID to use when submitting the code.
-     *                          This must be passed to [FirebaseAuthUI.submitVerificationCode].
-     * @property forceResendingToken Token that can be used to resend the SMS code if needed
-     *
-     */
-    class PhoneNumberVerificationRequired(
-        val verificationId: String,
-        val forceResendingToken: PhoneAuthProvider.ForceResendingToken,
-    ) : AuthState() {
-        override fun equals(other: Any?): Boolean {
-            if (this === other) return true
-            if (other !is PhoneNumberVerificationRequired) return false
-            return verificationId == other.verificationId &&
-                    forceResendingToken == other.forceResendingToken
-        }
-
-        override fun hashCode(): Int {
-            var result = verificationId.hashCode()
-            result = 31 * result + forceResendingToken.hashCode()
-            return result
-        }
-
-        override fun toString(): String =
-            "AuthState.PhoneNumberVerificationRequired(verificationId=$verificationId, " +
-                    "forceResendingToken=$forceResendingToken)"
     }
 
     companion object {
