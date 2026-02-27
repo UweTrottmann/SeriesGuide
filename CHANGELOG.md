@@ -8,17 +8,17 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
 
-## Next release
+## Version 2026.1
+
+* 📝 Trakt: support upcoming server changes when fetching collections.
+
+## 2026.1.2 - 2026-02-27 🧪
 
 * 🔧 Export: in the created JSON file, write each show, list or movie on a separate line to make,
   especially large files, easier to open and edit.
 * 📝 Import latest user interface translations.
 
-## Version 2026.1
-
-* 📝 Trakt: support upcoming server changes when fetching collections.
-
-### 2026.1.1 - 2026-02-12
+### 2026.1.1 - 2026-02-12 🧪
 
 * 📝 Trakt: support upcoming server changes when fetching collections. Add notes on how to add shows,
   that library is called collection and if Cloud is connected at the same time.
