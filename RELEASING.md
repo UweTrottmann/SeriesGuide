@@ -21,7 +21,7 @@
 - Update [`CHANGELOG.md`](/CHANGELOG.md)
 
   ```bash
-  ./update-version.sh build.gradle.kts CHANGELOG.md
+  ./insert-next-release.sh build.gradle.kts CHANGELOG.md
   ```
 
 - Commit with the suggested message and push
