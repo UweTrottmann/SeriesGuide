@@ -76,7 +76,7 @@ material = "com.google.android.material:material:1.13.0"
 # https://developer.android.com/jetpack/compose/setup
 # https://developer.android.com/jetpack/compose/bom/bom-mapping
 # https://developer.android.com/jetpack/androidx/releases/compose
-compose = "androidx.compose:compose-bom:2025.11.00"
+compose = "androidx.compose:compose-bom:2026.02.00"
 # https://developer.android.com/jetpack/androidx/releases/compose-material3
 compose-material3 = { module = "androidx.compose.material3:material3" }
 compose-tooling = { module = "androidx.compose.ui:ui-tooling" }
