@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2021-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2021 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.dataliberation
 
@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools.getFileNameFromUriOrLastPathSegment
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Export
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -47,15 +48,15 @@ class DataLiberationViewModel(application: Application) : AndroidViewModel(appli
             val context = getApplication<Application>()
             val showsFileUri = BackupSettings.getImportFileUriOrExportFileUri(
                 context,
-                JsonExportTask.EXPORT_SHOWS
+                Export.Shows
             )
             val listsFileUri = BackupSettings.getImportFileUriOrExportFileUri(
                 context,
-                JsonExportTask.EXPORT_LISTS
+                Export.Lists
             )
             val moviesFileUri = BackupSettings.getImportFileUriOrExportFileUri(
                 context,
-                JsonExportTask.EXPORT_MOVIES
+                Export.Movies
             )
 
             importFiles.value = ImportFiles(

@@ -9,6 +9,7 @@ import android.net.Uri
 import android.text.format.DateUtils
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.dataliberation.BackupSettings.isWarnLastAutoBackupFailed
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Export
 
 /**
  * Settings related to creating and restoring backups of the database.
@@ -143,11 +144,11 @@ object BackupSettings {
      */
     fun storeExportFileUri(
         context: Context,
-        @JsonExportTask.ExportType type: Int,
+        export: Export,
         uri: Uri?,
         isAutoBackup: Boolean
     ) {
-        val key = if (isAutoBackup) getAutoBackupFileKey(type) else getExportFileKey(type)
+        val key = if (isAutoBackup) getAutoBackupFileKey(export) else getExportFileKey(export)
 
         PreferenceManager.getDefaultSharedPreferences(context)
             .edit()
@@ -160,10 +161,10 @@ object BackupSettings {
      */
     fun storeImportFileUri(
         context: Context,
-        @JsonExportTask.ExportType type: Int,
+        export: Export,
         uri: Uri
     ) {
-        val key = getImportFileKey(type)
+        val key = getImportFileKey(export)
 
         PreferenceManager.getDefaultSharedPreferences(context)
             .edit()
@@ -173,10 +174,10 @@ object BackupSettings {
 
     fun getExportFileUri(
         context: Context,
-        @JsonExportTask.ExportType type: Int,
+        export: Export,
         isAutoBackup: Boolean
     ): Uri? {
-        val key = if (isAutoBackup) getAutoBackupFileKey(type) else getExportFileKey(type)
+        val key = if (isAutoBackup) getAutoBackupFileKey(export) else getExportFileKey(export)
 
         val uriString = PreferenceManager.getDefaultSharedPreferences(context)
             .getString(key, null)
@@ -189,42 +190,39 @@ object BackupSettings {
      */
     fun getImportFileUriOrExportFileUri(
         context: Context,
-        @JsonExportTask.ExportType type: Int
+        export: Export
     ): Uri? {
-        val key = getImportFileKey(type)
+        val key = getImportFileKey(export)
 
         val uriString = PreferenceManager.getDefaultSharedPreferences(context)
             .getString(key, null)
             ?: return getExportFileUri(
                 context,
-                type,
+                export,
                 false
             ) // If there is no import uri, try to fall back to the export file uri.
         return Uri.parse(uriString)
     }
 
-    private fun getAutoBackupFileKey(@JsonExportTask.ExportType type: Int): String =
-        when (type) {
-            JsonExportTask.EXPORT_SHOWS -> KEY_AUTOBACKUP_SHOWS_EXPORT_URI
-            JsonExportTask.EXPORT_LISTS -> KEY_AUTOBACKUP_LISTS_EXPORT_URI
-            JsonExportTask.EXPORT_MOVIES -> KEY_AUTOBACKUP_MOVIES_EXPORT_URI
-            else -> throw IllegalArgumentException("Unknown backup type $type")
+    private fun getAutoBackupFileKey(export: Export): String =
+        when (export) {
+            Export.Shows -> KEY_AUTOBACKUP_SHOWS_EXPORT_URI
+            Export.Lists -> KEY_AUTOBACKUP_LISTS_EXPORT_URI
+            Export.Movies -> KEY_AUTOBACKUP_MOVIES_EXPORT_URI
         }
 
-    private fun getExportFileKey(@JsonExportTask.ExportType type: Int): String =
-        when (type) {
-            JsonExportTask.EXPORT_SHOWS -> KEY_SHOWS_EXPORT_URI
-            JsonExportTask.EXPORT_LISTS -> KEY_LISTS_EXPORT_URI
-            JsonExportTask.EXPORT_MOVIES -> KEY_MOVIES_EXPORT_URI
-            else -> throw IllegalArgumentException("Unknown backup type $type")
+    private fun getExportFileKey(export: Export): String =
+        when (export) {
+            Export.Shows -> KEY_SHOWS_EXPORT_URI
+            Export.Lists -> KEY_LISTS_EXPORT_URI
+            Export.Movies -> KEY_MOVIES_EXPORT_URI
         }
 
-    private fun getImportFileKey(@JsonExportTask.ExportType type: Int): String =
-        when (type) {
-            JsonExportTask.EXPORT_SHOWS -> KEY_SHOWS_IMPORT_URI
-            JsonExportTask.EXPORT_LISTS -> KEY_LISTS_IMPORT_URI
-            JsonExportTask.EXPORT_MOVIES -> KEY_MOVIES_IMPORT_URI
-            else -> throw IllegalArgumentException("Unknown backup type $type")
+    private fun getImportFileKey(export: Export): String =
+        when (export) {
+            Export.Shows -> KEY_SHOWS_IMPORT_URI
+            Export.Lists -> KEY_LISTS_IMPORT_URI
+            Export.Movies -> KEY_MOVIES_IMPORT_URI
         }
 
     /**
