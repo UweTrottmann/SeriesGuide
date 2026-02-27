@@ -12,7 +12,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 * 📝 Trakt: support upcoming server changes when fetching collections.
 
-## 2026.1.2 - 2026-02-27 🧪
+### 2026.1.2 - 2026-02-27 🧪
 
 * 🔧 Export: in the created JSON file, write each show, list or movie on a separate line to make,
   especially large files, easier to open and edit.

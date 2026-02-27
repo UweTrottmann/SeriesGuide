@@ -49,8 +49,8 @@
 - Tag release commit
   
   ```shell
-  git tag v2026.1.1
-  git push origin v2026.1.1
+  git tag v2026.1.2
+  git push origin v2026.1.2
   git checkout dev
   git merge release-2026.1
   git push origin dev
