@@ -49,7 +49,7 @@ fi
 CURRENT_DATE=$(date +%Y-%m-%d)
 
 # Create replacement string
-REPLACEMENT="$VERSION - $CURRENT_DATE"
+REPLACEMENT="$VERSION - $CURRENT_DATE 🧪"
 
 echo "Extracted version: $VERSION"
 echo "Extracted version code: $VERSION_CODE"
