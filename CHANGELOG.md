@@ -12,6 +12,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 * 🔧 Export: in the created JSON file, write each show, list or movie on a separate line to make,
   especially large files, easier to open and edit.
+* 📝 Import latest user interface translations.
 
 ## Version 2026.1
 

@@ -234,7 +234,7 @@
     <string name="title_new_episodes">Nuovi episodi</string>
     <string name="watched_shows">Visti</string>
     <string name="shows_collection">Collezione</string>
-    <string name="title_library">Library</string>
+    <string name="title_library">Libreria</string>
     <string name="watchlist">Da vedere</string>
     <!-- Similar shows -->
     <string name="action_similar">Simili</string>
@@ -315,7 +315,7 @@
     <string name="feature_sync">Sincronizza</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud consente di eseguire backup e sincronizzare liste, film e serie TV.</string>
-    <string name="hexagon_warning_trakt">Mentre sei connesso con SeriesGuide Cloud alcune funzioni trakt non sono disponibili.</string>
+    <string name="hexagon_warning_trakt">Mentre sei connesso con SeriesGuide Cloud, alcune funzioni di Trakt sono disabilitate e le modifiche vengono solo inviate al tuo account Trakt, senza essere recuperate.</string>
     <string name="hexagon_signin">Connettiti</string>
     <string name="hexagon_signout">Esci</string>
     <string name="hexagon_setup_incomplete">La configurazione di SeriesGuide Cloud non è stata completata.</string>
@@ -352,8 +352,8 @@
     <string name="disconnect">Disconnetti</string>
     <string name="show_library">Aggiungi serie da Trakt</string>
     <string name="about_trakt">Trakt ti aiuta a tenere traccia delle serie TV e dei film che guardi.</string>
-    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
-    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
+    <string name="trakt_note_collection">Quella che Trakt chiama libreria è la collezione in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Una volta connesso, aggiungi le serie TV dal tuo account Trakt utilizzando gli elementi Trakt nella scheda Scopri.</string>
     <!-- trakt ratings -->
     <string name="action_rate">Vota</string>
     <string name="ack_rated">Valutazione inviata</string>

@@ -234,7 +234,7 @@
     <string name="title_new_episodes">Uusia jaksoja</string>
     <string name="watched_shows">Katsotut</string>
     <string name="shows_collection">Kokoelma</string>
-    <string name="title_library">Library</string>
+    <string name="title_library">Kirjasto</string>
     <string name="watchlist">Seurantalista</string>
     <!-- Similar shows -->
     <string name="action_similar">Samankaltaiset</string>
@@ -315,7 +315,7 @@
     <string name="feature_sync">Synkronointi</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud auttaa varmuuskopioimaan ja synkronoimaan ohjelmasi, listasi ja elokuvasi.</string>
-    <string name="hexagon_warning_trakt">Kun olet kirjautuneena sisään SeriesGuide Cloudiin, jotkin Traktin ominaisuudet eivät ole käytettävissä.</string>
+    <string name="hexagon_warning_trakt">SeriesGuide Cloudin ollessa aktiivinen osa Trakt-toiminnoista on estetty, ja muutokset siirtyvät vain SeriesGuidesta Traktiin.</string>
     <string name="hexagon_signin">Kirjaudu sisään</string>
     <string name="hexagon_signout">Kirjaudu ulos</string>
     <string name="hexagon_setup_incomplete">SeriesGuide Cloudin määrittäminen epäonnistui.</string>
@@ -352,8 +352,8 @@
     <string name="disconnect">Katkaise yhteys</string>
     <string name="show_library">Lisää ohjelmat Traktista</string>
     <string name="about_trakt">Trakt auttaa sinua pysymään kärryillä katsomistasi ohjelmista ja elokuvista.</string>
-    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
-    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
+    <string name="trakt_note_collection">Se, mitä Trakt kutsuu kirjastoksi, on SeriesGuidessa nimeltään kokoelma.</string>
+    <string name="trakt_note_add_shows">Yhdistämisen jälkeen voit lisätä ohjelmia Trakt-tililtäsi käyttämällä Tutustu-välilehden Trakt-valintoja.</string>
     <!-- trakt ratings -->
     <string name="action_rate">Arvostele</string>
     <string name="ack_rated">Arvosana lähetettiin</string>

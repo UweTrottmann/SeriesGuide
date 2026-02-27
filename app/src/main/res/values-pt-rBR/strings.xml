@@ -234,7 +234,7 @@
     <string name="title_new_episodes">Novos episódios</string>
     <string name="watched_shows">Assistido</string>
     <string name="shows_collection">Coleção</string>
-    <string name="title_library">Library</string>
+    <string name="title_library">Biblioteca</string>
     <string name="watchlist">Lista</string>
     <!-- Similar shows -->
     <string name="action_similar">Similares</string>
@@ -315,7 +315,7 @@
     <string name="feature_sync">Sincronizar</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud ajuda a salvar e sincronizar suas séries, listas e filmes.</string>
-    <string name="hexagon_warning_trakt">Enquanto conectado ao SeriesGuide Cloud algumas funções do trakt não estarão disponíveis.</string>
+    <string name="hexagon_warning_trakt">Quando conectado ao SeriesGuide Cloud, alguns recursos do Trakt são desabilitados e as mudanças são enviadas somente para sua conta Trakt, não recuperadas.</string>
     <string name="hexagon_signin">Entrar</string>
     <string name="hexagon_signout">Sair</string>
     <string name="hexagon_setup_incomplete">Não foi possível configurar o SeriesGuide Cloud.</string>
@@ -352,7 +352,7 @@
     <string name="disconnect">Desconectar</string>
     <string name="show_library">Adicionar séries do Trakt</string>
     <string name="about_trakt">Trakt ajuda a manter um registro dos programas de TV e filmes você está assistindo.</string>
-    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_collection">A biblioteca no Trakt é a coleção no SeriesGuide.</string>
     <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">Avaliar</string>
