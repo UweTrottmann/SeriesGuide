@@ -11,10 +11,9 @@
   git merge dev
   ```
 
-- Optional: update translations (run script in PowerShell)
+- Optional: [update translations](/translations/README.md)
 
-  ```powershell
-  .\download-translations.ps1
+  ```bash
   git commit --all --message "Import latest translations"
   ```
 

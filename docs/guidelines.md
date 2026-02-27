@@ -114,6 +114,14 @@ Some relevant documentation:
 
 - https://developer.android.com/develop/ui/views/layout/responsive-adaptive-design-with-views
 
+### Adding or removing a language
+
+- Add or remove the `values-<tags>` directory.
+  When adding, take the strings file from the [translation provider](/translations/README.md).
+- Update [locales_config.xml](/app/src/main/res/xml/locales_config.xml) to
+  [support per-app language preferences](https://developer.android.com/guide/topics/resources/app-languages#sample-config).
+  See the link for supported language codes. They differ from the resource directory name!
+
 ### Layout resources
 
 View IDs should be unique across the project to support refactoring using Android Studio.
