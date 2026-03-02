@@ -33,6 +33,19 @@ to the database.
 Prefer to define table and column names using constants (like `@ColumnInfo(name = CONSTANT)`). 
 This makes them safer to re-use.
 
+There isn't a need to handle `android.database.sqlite.SQLiteDatabaseCorruptException`. If an 
+operation fails due to this, the app will crash. And when next started, Room will delete the corrupt
+database files (`androidx.room.RoomConnectionManager.SupportOpenHelperCallback` extends 
+`androidx.sqlite.db.SupportSQLiteOpenHelper.Callback` where in `onCorruption` the file is deleted).
+
+### Lifecycle
+
+For fragments, use `viewLifecycleOwner` to tie to the lifecycle of the view.
+
+Note that dialog fragments don't have a `viewLifecycleOwner`.
+
+Obtain a coroutine scope with `lifecycleScope`.
+
 ### Click listeners
 
 The interface class is owned by the class that owns the views that trigger the click events, for
@@ -101,6 +114,14 @@ Some relevant documentation:
 
 - https://developer.android.com/develop/ui/views/layout/responsive-adaptive-design-with-views
 
+### Adding or removing a language
+
+- Add or remove the `values-<tags>` directory.
+  When adding, take the strings file from the [translation provider](/translations/README.md).
+- Update [locales_config.xml](/app/src/main/res/xml/locales_config.xml) to
+  [support per-app language preferences](https://developer.android.com/guide/topics/resources/app-languages#sample-config).
+  See the link for supported language codes. They differ from the resource directory name!
+
 ### Layout resources
 
 View IDs should be unique across the project to support refactoring using Android Studio.
@@ -161,6 +182,12 @@ When using a custom layout via `setView()`:
 - its parents use `layout_width="match_parent"`, `layout_height="wrap_content"`, `minHeight="48dp"` (see `abc_alert_dialog_material.xml`)
 - its `customPanel` parent is resized to take only as much space as is available (see `AlertDialogLayout`)
 
+### OptionsMenu
+
+Register a `MenuProvider` using `ComponentActivity.addMenuProvider()` instead of overriding `onCreateOptionsMenu()`.
+
+An example is documented in the [androidx.activity Version 1.4.0-alpha01 release notes](https://developer.android.com/jetpack/androidx/releases/activity#1.4.0-alpha01).
+
 ### PopupMenu
 
 Use `androidx.appcompat.widget.PopupMenu` so Material 3 styles are correctly applied.
@@ -192,3 +219,15 @@ As it is a `LinearLayout`, [until this is fixed](https://github.com/material-com
 
 </com.google.android.material.textfield.TextInputLayout>
 ```
+
+## Dependencies
+
+To [inspect dependencies with Gradle](https://docs.gradle.org/current/userguide/viewing_debugging_dependencies.html) use
+
+```bash
+./gradlew :app:dependencies --configuration pureDebugCompileClasspath
+
+./gradlew :app:dependencyInsight --configuration pureDebugAndroidTestRuntimeClasspath --dependency kotlinx-serialization-core-jvm
+```
+
+When adding a new dependency, list it and its license in [credits](/CREDITS.txt).

@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2019-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2019 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.movies
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -13,11 +12,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemMovieBinding
 import com.battlelancer.seriesguide.movies.database.SgMovie
+import com.battlelancer.seriesguide.movies.tools.MovieTools
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ViewTools.setContextAndLongClickListener
 import com.squareup.picasso.Picasso
 import com.uwetrottmann.tmdb2.entities.BaseMovie
-import java.text.DateFormat
 
 class MovieViewHolder(
     binding: ItemMovieBinding,
@@ -50,74 +50,31 @@ class MovieViewHolder(
         itemClickListener?.onMoreOptionsClick(movieTmdbId, moreOptions)
     }
 
-    @SuppressLint("SetTextI18n")
-    fun bindTo(sgMovie: SgMovie?, dateFormatMovieReleaseDate: DateFormat, posterBaseUrl: String) {
-        if (sgMovie == null) {
+    fun bindTo(movie: UiMovie?) {
+        if (movie == null) {
             movieTmdbId = -1
             title.text = ""
             date.text = ""
             Picasso.get().cancelRequest(poster)
             poster.setImageDrawable(null)
         } else {
-            movieTmdbId = sgMovie.tmdbId
-            title.text = sgMovie.title
-            if (sgMovie.releasedMsOrDefault != Long.MAX_VALUE) {
-                date.text = dateFormatMovieReleaseDate.format(sgMovie.releasedMsOrDefault)
-            } else {
-                date.text = ""
-            }
+            movieTmdbId = movie.tmdbId
+            title.text = movie.title
+            date.text = movie.date
 
             // poster
             // use fixed size so bitmaps can be re-used on config change
-            val context = itemView.context.applicationContext
-            ImageTools.loadWithPicasso(context, posterBaseUrl + sgMovie.poster)
+            ImageTools.loadWithPicasso(
+                itemView.context.applicationContext,
+                movie.posterUrl
+            )
                 .resizeDimen(R.dimen.movie_poster_width, R.dimen.movie_poster_height)
                 .centerCrop()
                 .into(poster)
-        }
-    }
-
-    @SuppressLint("SetTextI18n")
-    fun bindTo(
-        tmdbMovie: BaseMovie?,
-        context: Context,
-        dateFormatMovieReleaseDate: DateFormat,
-        posterBaseUrl: String
-    ) {
-        movieTmdbId = tmdbMovie?.id ?: 0
-        title.text = tmdbMovie?.title
-        val releaseDate = tmdbMovie?.release_date
-        if (releaseDate != null) {
-            date.text = dateFormatMovieReleaseDate.format(releaseDate)
-        } else {
-            date.text = ""
-        }
-
-        if (tmdbMovie != null) {
-            // poster
-            // use fixed size so bitmaps can be re-used on config change
-            val posterUrl = tmdbMovie.poster_path
-                ?.let { posterBaseUrl + it }
-            ImageTools.loadWithPicasso(context, posterUrl)
-                .resizeDimen(R.dimen.movie_poster_width, R.dimen.movie_poster_height)
-                .centerCrop()
-                .into(poster)
-        } else {
-            Picasso.get().cancelRequest(poster)
         }
     }
 
     companion object {
-
-        val DIFF_CALLBACK_BASE_MOVIE = object : DiffUtil.ItemCallback<BaseMovie>() {
-            override fun areItemsTheSame(oldItem: BaseMovie, newItem: BaseMovie): Boolean =
-                oldItem.id == newItem.id
-
-            override fun areContentsTheSame(oldItem: BaseMovie, newItem: BaseMovie): Boolean =
-                oldItem.title == newItem.title
-                        && oldItem.release_date == newItem.release_date
-                        && oldItem.poster_path == newItem.poster_path
-        }
 
         @JvmStatic
         fun inflate(parent: ViewGroup, itemClickListener: MovieClickListener?): MovieViewHolder {
@@ -129,5 +86,59 @@ class MovieViewHolder(
             )
         }
 
+    }
+}
+
+data class UiMovie(
+    val tmdbId: Int,
+    val title: String,
+    val date: String,
+    val posterUrl: String?
+) {
+
+    companion object {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<UiMovie>() {
+            override fun areItemsTheSame(oldItem: UiMovie, newItem: UiMovie): Boolean =
+                oldItem.tmdbId == newItem.tmdbId
+
+            // Is a data class so equals compares all properties
+            override fun areContentsTheSame(oldItem: UiMovie, newItem: UiMovie): Boolean =
+                oldItem == newItem
+        }
+    }
+}
+
+/**
+ * Builds [UiMovie] instances, caches things like date format and poster base URL.
+ */
+class UiMovieBuilder(context: Context) {
+
+    private val dateFormatMovieReleaseDate = MovieTools.getMovieShortDateFormat()
+    private val posterBaseUrl = TmdbTools.getPosterBaseUrl(context)
+
+    fun buildFrom(sgMovie: SgMovie): UiMovie {
+        return UiMovie(
+            sgMovie.tmdbId,
+            sgMovie.title.orEmpty(),
+            if (sgMovie.releasedMsOrDefault != Long.MAX_VALUE) {
+                dateFormatMovieReleaseDate.format(sgMovie.releasedMsOrDefault)
+            } else {
+                ""
+            },
+            buildPosterUrl(sgMovie.poster)
+        )
+    }
+
+    fun buildFrom(baseMovie: BaseMovie) = UiMovie(
+        baseMovie.id!!,
+        baseMovie.title.orEmpty(),
+        baseMovie.release_date?.let { dateFormatMovieReleaseDate.format(it) }.orEmpty(),
+        buildPosterUrl(baseMovie.poster_path)
+    )
+
+    private fun buildPosterUrl(posterPath: String?): String? {
+        return if (!posterPath.isNullOrEmpty()) {
+            ImageTools.buildImageCacheUrl("$posterBaseUrl$posterPath")
+        } else null
     }
 }

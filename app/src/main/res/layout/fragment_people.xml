@@ -22,8 +22,7 @@
         android:id="@+id/emptyViewPeople"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:emptyViewButtonText="@string/action_try_again"
-        app:emptyViewMessage="@string/people_empty" />
+        app:emptyViewButtonText="@string/action_try_again" />
 
     <ProgressBar
         android:id="@+id/progressBarPeople"

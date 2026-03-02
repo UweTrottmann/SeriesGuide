@@ -52,7 +52,6 @@
     <string name="unknown">neznámé</string>
     <string name="offline">Připojte se k síti a zkuste to znovu.</string>
     <string name="app_not_available">Není k dispozici použitelná aplikace</string>
-    <string name="people_empty">Nikdo tu není?! Klepnutím to zkuste znovu.</string>
     <string name="database_error">Nelze upravovat data.</string>
     <string name="reinstall_info">Zkuste zálohovat v sekci nastavení, přeinstalovat a obnovit</string>
     <string name="api_error_generic">Nelze komunikovat s %s. Zkuste to prosím později.</string>
@@ -249,6 +248,7 @@
     <string name="title_new_episodes">Nové epizody</string>
     <string name="watched_shows">Zhlédnuto</string>
     <string name="shows_collection">Sbírka</string>
+    <string name="title_library">Library</string>
     <string name="watchlist">Chci vidět</string>
     <!-- Similar shows -->
     <string name="action_similar">Podobné</string>
@@ -329,6 +329,7 @@
     <!-- Features -->
     <string name="feature_supported">Podporováno</string>
     <string name="feature_not_supported">Není podporováno</string>
+    <string name="feature_disabled">Vypnuto</string>
     <string name="feature_history">Osobní historie a historie přátel</string>
     <string name="feature_comments">Přidání komentářů</string>
     <string name="feature_sync">Synchronizace</string>
@@ -371,6 +372,8 @@
     <string name="disconnect">Odpojit</string>
     <string name="show_library">Přidat seriály z Trakt</string>
     <string name="about_trakt">Trakt pomáhá uchovávat záznamy o televizních seriálech a filmech, které sledujete.</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">Ohodnotit</string>
     <string name="ack_rated">Hodnocení odesláno</string>

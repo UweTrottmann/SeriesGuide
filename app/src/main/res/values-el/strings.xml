@@ -52,7 +52,6 @@
     <string name="unknown">άγνωστο</string>
     <string name="offline">Συνδεθείτε σε ένα δίκτυο και, ξανά προσπαθήστε.</string>
     <string name="app_not_available">Δεν υπάρχει διαθέσιμη εφαρμογή για να το χειριστεί</string>
-    <string name="people_empty">Κανείς εδώ;! Πατήστε για να προσπαθήσετε ξανά.</string>
     <string name="database_error">Δεν ήταν δυνατή η τροποποίηση δεδομένων.</string>
     <string name="reinstall_info">Προσπαθήστε να κρατήσετε αντίγραφο ασφαλείας στις Ρυθμίσεις, να εγκαταστήσετε ξανά την εφαρμογή και να κάνετε επαναφορά.</string>
     <string name="api_error_generic">Δεν είναι δυνατή η επικοινωνία με το %s. Ξαναδοκιμάστε αργότερα.</string>
@@ -235,6 +234,7 @@
     <string name="title_new_episodes">Νέα επεισόδια</string>
     <string name="watched_shows">Είδατε</string>
     <string name="shows_collection">Συλλογή</string>
+    <string name="title_library">Library</string>
     <string name="watchlist">Λίστα προς παρακολούθηση</string>
     <!-- Similar shows -->
     <string name="action_similar">Παρόμοια</string>
@@ -309,6 +309,7 @@
     <!-- Features -->
     <string name="feature_supported">Υποστηρίζεται</string>
     <string name="feature_not_supported">Δεν υποστηρίζεται</string>
+    <string name="feature_disabled">Ανενεργό</string>
     <string name="feature_history">Ιστορικό Προσωπικο και Φίλων</string>
     <string name="feature_comments">Σχόλια Αναρτήσεων</string>
     <string name="feature_sync">Συγχρονισμός</string>
@@ -351,6 +352,8 @@
     <string name="disconnect">Αποσύνδεση</string>
     <string name="show_library">Προσθήκη σειρών από Trakt</string>
     <string name="about_trakt">Το Trakt βοηθά να καταγράψετε τα τηλεοπτικά προγράμματα και τις ταινίες που βλέπετε.</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">Αξιολόγηση</string>
     <string name="ack_rated">Η βαθμολογία απεστάλη</string>

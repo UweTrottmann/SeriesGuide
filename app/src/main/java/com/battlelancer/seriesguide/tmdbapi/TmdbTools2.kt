@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2019-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2019 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.tmdbapi
 
@@ -406,13 +406,10 @@ class TmdbTools2 {
                 providers.ads.size +
                 providers.buy.size +
                 providers.rent.size
-        // For season-level watch provider info TMDB returns a link to a season-specific website
-        // that doesn't exist. So remove the /season/<number> part of the URL to end up with the
-        // existing show-level page. For example:
-        // https://www.themoviedb.org/tv/10283-archer/season/14/watch?locale=DE ->
-        // https://www.themoviedb.org/tv/10283-archer/watch?locale=DE
+        // Note: for season-level watch provider info TMDB still returns a link to the show-specific
+        // website as a season-level page doesn't exist.
         return WatchInfo(
-            url = providers.link?.replace(WATCH_PROVIDER_SEASON_PATH_REGEX, ""),
+            url = providers.link,
             topProvider = topProvider?.provider_name,
             countMore = (count - 1).coerceAtLeast(0),
             subscription = providers.flatrate.toSortedNames(),
@@ -487,7 +484,6 @@ class TmdbTools2 {
     }
 
     companion object {
-        val WATCH_PROVIDER_SEASON_PATH_REGEX = "/season/[0-9]+".toRegex()
         // In UI, crew is currently not grouped by department, but for easier scanning sort by it,
         // then job (description).
         private val byDepartmentJobAndName: Comparator<SgPerson> =

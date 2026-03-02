@@ -52,7 +52,6 @@
     <string name="unknown">未知</string>
     <string name="offline">请连接到互联网后重试</string>
     <string name="app_not_available">没有可用于处理此操作的应用</string>
-    <string name="people_empty">什么也没有？！点按一下再试试。</string>
     <string name="database_error">无法修改数据</string>
     <string name="reinstall_info">请尝试在设置中进行备份，然后重新安装本应用并恢复备份</string>
     <string name="api_error_generic">无法连接到 %s。请稍后重试。</string>
@@ -228,6 +227,7 @@
     <string name="title_new_episodes">有更新的剧集</string>
     <string name="watched_shows">看过</string>
     <string name="shows_collection">收藏</string>
+    <string name="title_library">Library</string>
     <string name="watchlist">待看清单</string>
     <!-- Similar shows -->
     <string name="action_similar">相似</string>
@@ -299,6 +299,7 @@
     <!-- Features -->
     <string name="feature_supported">支持</string>
     <string name="feature_not_supported">不支持</string>
+    <string name="feature_disabled">已禁用</string>
     <string name="feature_history">我和朋友的历史记录</string>
     <string name="feature_comments">发布评论</string>
     <string name="feature_sync">同步</string>
@@ -341,6 +342,8 @@
     <string name="disconnect">断开</string>
     <string name="show_library">从 Trakt 中添加节目</string>
     <string name="about_trakt">Trakt 可帮您记录看过的电影和电视节目。</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">评分</string>
     <string name="ack_rated">评分已发送</string>

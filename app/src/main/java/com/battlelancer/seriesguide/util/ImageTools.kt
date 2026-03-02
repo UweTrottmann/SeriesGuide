@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2021-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2021 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.util
 
@@ -9,8 +9,8 @@ import android.widget.ImageView
 import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.AppSettings
-import com.battlelancer.seriesguide.settings.TmdbSettings
 import com.battlelancer.seriesguide.settings.UpdateSettings
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.RequestCreator
@@ -60,8 +60,8 @@ object ImageTools {
      *
      * Always uses [context.getApplicationContext()][Context.getApplicationContext].
      */
-    @JvmStatic
     fun loadWithPicasso(context: Context, path: String?): RequestCreator {
+//        Timber.d("Loading image with Picasso: %s", path)
         val requestCreator = Picasso.get().load(path)
         if (!isAllowedLargeDataConnection(context.applicationContext)) {
             // avoid the network, hit the cache immediately + accept stale images.
@@ -106,7 +106,7 @@ object ImageTools {
                 pickDemoPosterUrl(nonNullImagePath)
             },
             tmdbSmallImageUrl = { nonNullImagePath ->
-                "${TmdbSettings.getPosterBaseUrl(context)}$nonNullImagePath"
+                "${TmdbTools.getPosterBaseUrl(context)}$nonNullImagePath"
             }
         )
     }
@@ -141,7 +141,7 @@ object ImageTools {
             imagePath, context, originalSize,
             demoUrl = { demoEpisodeImageUrl },
             tmdbSmallImageUrl = { nonNullImagePath ->
-                TmdbSettings.buildBackdropUrl(context, nonNullImagePath)
+                TmdbTools.buildBackdropUrl(context, nonNullImagePath)
             }
         )
     }
@@ -182,7 +182,7 @@ object ImageTools {
                     // TMDB images have no path at all, but always start with /.
                     // Use small size based on density, or original size (as large as possible).
                     if (originalSize) {
-                        TmdbSettings.getImageOriginalUrl(context, imagePath)
+                        TmdbTools.buildOriginalSizeImageUrl(context, imagePath)
                     } else {
                         tmdbSmallImageUrl(imagePath)
                     }
@@ -197,17 +197,17 @@ object ImageTools {
     }
 
     /**
-     * [posterUrl] must not be empty.
+     * [imageUrl] must not be empty.
      */
-    private fun buildImageCacheUrl(posterUrl: String): String? {
+    fun buildImageCacheUrl(imageUrl: String): String? {
         @Suppress("SENSELESS_COMPARISON")
         if (BuildConfig.IMAGE_CACHE_URL == null) {
-            return posterUrl // no cache
+            return imageUrl // no cache
         }
 
-        val mac = encodeImageUrl(posterUrl)
+        val mac = encodeImageUrl(imageUrl)
         return if (mac != null) {
-            String.format("%s/s%s/%s", BuildConfig.IMAGE_CACHE_URL, mac, posterUrl)
+            String.format("%s/s%s/%s", BuildConfig.IMAGE_CACHE_URL, mac, imageUrl)
         } else {
             null
         }

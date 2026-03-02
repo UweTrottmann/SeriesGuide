@@ -52,7 +52,6 @@
     <string name="unknown">Неизвестно</string>
     <string name="offline">Подключитесь к сети и повторите попытку</string>
     <string name="app_not_available">Нет приложения для обработки этой команды.</string>
-    <string name="people_empty">Никого нет? Коснитесь, чтобы попробовать еще раз.</string>
     <string name="database_error">Не получается модифицирофавать данные.</string>
     <string name="reinstall_info">Попробуйте сделать бэкап в настройках, переустановите приложение и восстановите данные.</string>
     <string name="api_error_generic">Не могу связаться с %s. Попробуйте позже.</string>
@@ -249,6 +248,7 @@
     <string name="title_new_episodes">Новые эпизоды</string>
     <string name="watched_shows">Просмотрено</string>
     <string name="shows_collection">Коллекция</string>
+    <string name="title_library">Library</string>
     <string name="watchlist">Список просмотра</string>
     <!-- Similar shows -->
     <string name="action_similar">Похожие</string>
@@ -329,12 +329,13 @@
     <!-- Features -->
     <string name="feature_supported">Поддерживается</string>
     <string name="feature_not_supported">Не поддерживается</string>
+    <string name="feature_disabled">Отключено</string>
     <string name="feature_history">История личная и друзей</string>
     <string name="feature_comments">Прокомментировать</string>
     <string name="feature_sync">Синхронизация</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud позволяет создавать резервную копию и синхронизировать ваши сериалы, списки и фильмы.</string>
-    <string name="hexagon_warning_trakt">При подкючении к SeriesGuide Cloud некоторые функции trakt недоступны.</string>
+    <string name="hexagon_warning_trakt">При входе через SeriesGuide Cloud часть функций Trakt недоступна. Изменения отправляются только в аккаунт Trakt и не синхронизируются обратно.</string>
     <string name="hexagon_signin">Войти</string>
     <string name="hexagon_signout">Выйти</string>
     <string name="hexagon_setup_incomplete">Настройка SeriesGuide Cloud не была завершена.</string>
@@ -371,6 +372,8 @@
     <string name="disconnect">Отключиться</string>
     <string name="show_library">Добавить сериалы из Trakt</string>
     <string name="about_trakt">Trakt помогает вести учет, какие сериалы и фильмы Вы смотрите.</string>
+    <string name="trakt_note_collection">То, что Trakt называет библиотекой, в SeriesGuide называется коллекцией.</string>
+    <string name="trakt_note_add_shows">После подключения добавьте сериалы из своей учетной записи Trakt, используя элементы Trakt на вкладке «Discover».</string>
     <!-- trakt ratings -->
     <string name="action_rate">Oценить</string>
     <string name="ack_rated">Оценка отправлена</string>

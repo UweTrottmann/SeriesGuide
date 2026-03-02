@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2018-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2018 Uwe Trottmann <uwe@uwetrottmann.com>
 package com.battlelancer.seriesguide.shows.search.discover
 
 import androidx.annotation.StringRes
@@ -12,7 +12,7 @@ enum class DiscoverShowsLink(
     POPULAR(0, R.string.title_popular),
     NEW_EPISODES(1, R.string.title_new_episodes),
     WATCHED(2, R.string.watched_shows),
-    COLLECTION(3, R.string.shows_collection),
+    COLLECTION(3, R.string.title_library),
     WATCHLIST(4, R.string.watchlist);
 
     companion object {

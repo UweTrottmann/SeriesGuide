@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2017-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2017 Uwe Trottmann <uwe@uwetrottmann.com>
 package com.battlelancer.seriesguide.movies
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,26 +11,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.databinding.ItemDiscoverHeaderBinding
 import com.battlelancer.seriesguide.databinding.ItemDiscoverLinkBinding
 import com.battlelancer.seriesguide.movies.MovieViewHolder.Companion.inflate
-import com.battlelancer.seriesguide.movies.tools.MovieTools
-import com.battlelancer.seriesguide.settings.TmdbSettings
-import com.uwetrottmann.tmdb2.entities.BaseMovie
-import java.text.DateFormat
 
 /**
  * [RecyclerView.Adapter] that displays a number of [links] and after a header
  * a small number of [movies].
  */
 class MoviesDiscoverAdapter(
-    private val context: Context,
     private val itemClickListener: ItemClickListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     interface ItemClickListener : MovieClickListener {
         fun onLinkClick(link: MoviesDiscoverLink, anchor: View)
     }
 
-    private val dateFormatMovieReleaseDate: DateFormat = MovieTools.getMovieShortDateFormat()
-    private val posterBaseUrl = TmdbSettings.getPosterBaseUrl(context)
-    private val movies: MutableList<BaseMovie> = ArrayList()
+    private val movies: MutableList<UiMovie> = ArrayList()
 
     private val links: List<MoviesDiscoverLink> = listOf(
         MoviesDiscoverLink.POPULAR,
@@ -76,15 +68,14 @@ class MoviesDiscoverAdapter(
             }
 
             is MovieViewHolder -> {
-                val movie = getMovie(position)
-                holder.bindTo(movie, context, dateFormatMovieReleaseDate, posterBaseUrl)
+                holder.bindTo(getMovie(position))
             }
         }
     }
 
     // No need for incremental updates/animations
     @SuppressLint("NotifyDataSetChanged")
-    fun updateMovies(newMovies: List<BaseMovie>?) {
+    fun updateMovies(newMovies: List<UiMovie>?) {
         movies.clear()
         if (newMovies != null) {
             movies.addAll(newMovies)
@@ -96,7 +87,7 @@ class MoviesDiscoverAdapter(
 
     private fun getLink(position: Int): MoviesDiscoverLink = links[position]
 
-    private fun getMovie(position: Int): BaseMovie = movies[position - links.size - 1]
+    private fun getMovie(position: Int) = movies[position - links.size - 1]
 
     private fun positionHeader(): Int = links.size
 

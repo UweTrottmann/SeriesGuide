@@ -52,7 +52,6 @@
     <string name="unknown">desconocido</string>
     <string name="offline">Conéctate a una red y vuelve a intentarlo.</string>
     <string name="app_not_available">No existe ninguna aplicación disponible para gestionar esto</string>
-    <string name="people_empty">¿Nadie aquí? Toque para intentarlo de nuevo.</string>
     <string name="database_error">No se pueden modificar los datos.</string>
     <string name="reinstall_info">Intenta salvar los datos en Opciones, re-instalar y restauralos.</string>
     <string name="api_error_generic">No se pudo hablar con %s. Intenta nuevamente.</string>
@@ -235,6 +234,7 @@
     <string name="title_new_episodes">Nuevos episodios</string>
     <string name="watched_shows">Visto</string>
     <string name="shows_collection">Colección</string>
+    <string name="title_library">Biblioteca</string>
     <string name="watchlist">Lista de visualización</string>
     <!-- Similar shows -->
     <string name="action_similar">Similares</string>
@@ -309,12 +309,13 @@
     <!-- Features -->
     <string name="feature_supported">Soportado</string>
     <string name="feature_not_supported">No soportado</string>
+    <string name="feature_disabled">Desactivado</string>
     <string name="feature_history">Historial personal y de amigos</string>
     <string name="feature_comments">Publicar comentarios</string>
     <string name="feature_sync">Sincronizar</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud te permite realizar una copia de seguridad en la nube, y sincronizar tus series, listas y películas.</string>
-    <string name="hexagon_warning_trakt">Mientras estés identificado en SeriesGuide Cloud, algunas funciones de trakt no estarán disponibles.</string>
+    <string name="hexagon_warning_trakt">Mientras inicias sesión con SeriesGuide Cloud, algunas funciones de Trakt están desactivadas y los cambios solo se envían a tu cuenta de Trakt, no se recuperan.</string>
     <string name="hexagon_signin">Iniciar sesión</string>
     <string name="hexagon_signout">Cerrar sesión</string>
     <string name="hexagon_setup_incomplete">La configuración de SeriesGuide cloud no se completó.</string>
@@ -352,6 +353,8 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="disconnect">Desconectar</string>
     <string name="show_library">Añadir series de Trakt</string>
     <string name="about_trakt">Trakt ayuda a mantener un registro de los programas de televisión y películas que estás viendo.</string>
+    <string name="trakt_note_collection">Lo que Trakt llama biblioteca se llama colección en SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Una vez conectado, añade series de tu cuenta de Trakt usando los elementos de Trakt en la pestaña Descubrir.</string>
     <!-- trakt ratings -->
     <string name="action_rate">Calificar</string>
     <string name="ack_rated">Valoración enviada</string>

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2020-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2020 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.dataliberation
 
@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools.getFileNameFromUriOrLastPathSegment
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Export
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -46,13 +47,13 @@ class AutoBackupViewModel(application: Application) : AndroidViewModel(applicati
 
     fun updateAvailableBackupData() = viewModelScope.launch(Dispatchers.IO) {
         val backupShows = AutoBackupTools.getLatestBackupOrNull(
-            JsonExportTask.EXPORT_SHOWS, getApplication()
+            Export.Shows, getApplication()
         )
         val backupLists = AutoBackupTools.getLatestBackupOrNull(
-            JsonExportTask.EXPORT_LISTS, getApplication()
+            Export.Lists, getApplication()
         )
         val backupMovies = AutoBackupTools.getLatestBackupOrNull(
-            JsonExportTask.EXPORT_MOVIES, getApplication()
+            Export.Movies, getApplication()
         )
 
         // All three files required.
@@ -89,15 +90,18 @@ class AutoBackupViewModel(application: Application) : AndroidViewModel(applicati
             } else {
                 val showsFileUri = BackupSettings.getExportFileUri(
                     context,
-                    JsonExportTask.EXPORT_SHOWS, true
+                    Export.Shows,
+                    isAutoBackup = true
                 )
                 val listsFileUri = BackupSettings.getExportFileUri(
                     context,
-                    JsonExportTask.EXPORT_LISTS, true
+                    Export.Lists,
+                    isAutoBackup = true
                 )
                 val moviesFileUri = BackupSettings.getExportFileUri(
                     context,
-                    JsonExportTask.EXPORT_MOVIES, true
+                    Export.Movies,
+                    isAutoBackup = true
                 )
 
                 copiesFiles.value = CopiesFiles(

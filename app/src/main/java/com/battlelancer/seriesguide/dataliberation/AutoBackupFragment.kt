@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2013-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2013 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.dataliberation
 
@@ -20,6 +20,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.databinding.FragmentAutoBackupBinding
 import com.battlelancer.seriesguide.dataliberation.DataLiberationFragment.LiberationResultEvent
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Export
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
@@ -57,10 +58,10 @@ class AutoBackupFragment : Fragment() {
         // setup listeners
         binding.switchAutoBackup.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                BackupSettings.setAutoBackupEnabled(context)
+                BackupSettings.setAutoBackupEnabled(requireContext())
                 setContainerSettingsVisible(true)
             } else {
-                BackupSettings.setAutoBackupDisabled(context)
+                BackupSettings.setAutoBackupDisabled(requireContext())
                 setContainerSettingsVisible(false)
             }
         }
@@ -73,7 +74,7 @@ class AutoBackupFragment : Fragment() {
         binding.buttonAutoBackupImport.setOnClickListener { runAutoBackupImport() }
 
         binding.checkBoxAutoBackupCreateCopy.isChecked =
-            BackupSettings.isCreateCopyOfAutoBackup(context)
+            BackupSettings.isCreateCopyOfAutoBackup(requireContext())
         binding.checkBoxAutoBackupCreateCopy
             .setOnCheckedChangeListener { buttonView: CompoundButton, isChecked: Boolean ->
                 BackupSettings.setCreateCopyOfAutoBackup(buttonView.context, isChecked)
@@ -162,7 +163,7 @@ class AutoBackupFragment : Fragment() {
         super.onStart()
 
         // update enabled state
-        val autoBackupEnabled = BackupSettings.isAutoBackupEnabled(context)
+        val autoBackupEnabled = BackupSettings.isAutoBackupEnabled(requireContext())
         setContainerSettingsVisible(autoBackupEnabled)
         binding?.switchAutoBackup?.isChecked = autoBackupEnabled
 
@@ -204,23 +205,23 @@ class AutoBackupFragment : Fragment() {
 
     private val createShowExportFileResult =
         registerForActivityResult(DataLiberationTools.CreateExportFileContract()) { uri ->
-            storeBackupFile(JsonExportTask.EXPORT_SHOWS, uri)
+            storeBackupFile(Export.Shows, uri)
         }
 
     private val createListsExportFileResult =
         registerForActivityResult(DataLiberationTools.CreateExportFileContract()) { uri ->
-            storeBackupFile(JsonExportTask.EXPORT_LISTS, uri)
+            storeBackupFile(Export.Lists, uri)
         }
 
     private val createMovieExportFileResult =
         registerForActivityResult(DataLiberationTools.CreateExportFileContract()) { uri ->
-            storeBackupFile(JsonExportTask.EXPORT_MOVIES, uri)
+            storeBackupFile(Export.Movies, uri)
         }
 
-    private fun storeBackupFile(type: Int, uri: Uri?) {
+    private fun storeBackupFile(export: Export, uri: Uri?) {
         if (uri == null) return
         DataLiberationTools.tryToPersistUri(requireContext(), uri)
-        BackupSettings.storeExportFileUri(requireContext(), type, uri, true)
+        BackupSettings.storeExportFileUri(requireContext(), export, uri, isAutoBackup = true)
         viewModel.updateCopiesFileNames()
     }
 

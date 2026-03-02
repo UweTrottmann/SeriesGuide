@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2020-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2020 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.movies.search
 
@@ -15,8 +15,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentMoviesSearchBinding
-import com.battlelancer.seriesguide.movies.MovieClickListenerImpl
 import com.battlelancer.seriesguide.movies.MovieLocalizationDialogFragment
+import com.battlelancer.seriesguide.movies.MoviePagesAdapter
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
@@ -37,7 +37,7 @@ class MoviesSearchFragment : Fragment() {
     private var _binding: FragmentMoviesSearchBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var adapter: MoviesSearchAdapter
+    private lateinit var adapter: MoviePagesAdapter
 
     private val activityModel: MoviesSearchViewModel by activityViewModels()
 
@@ -79,7 +79,7 @@ class MoviesSearchFragment : Fragment() {
                 )
         }
 
-        adapter = MoviesSearchAdapter(requireContext(), MovieClickListenerImpl(requireContext()))
+        adapter = MoviePagesAdapter(requireContext())
         binding.recyclerViewMoviesSearch.adapter = adapter
 
         viewLifecycleOwner.lifecycleScope.launch {

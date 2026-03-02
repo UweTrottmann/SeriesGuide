@@ -52,7 +52,6 @@
     <string name="unknown">ukjent</string>
     <string name="offline">Koble til et nettverk, og prøv på nytt.</string>
     <string name="app_not_available">Ingen app tilgjengelig for å håndtere dette</string>
-    <string name="people_empty">Ingen her?! Trykk for å prøve på nytt.</string>
     <string name="database_error">Klarte ikke endre dataene.</string>
     <string name="reinstall_info">Forsøk å sikkerhetskopiere under innstillinger, installer på nytt og gjenopprett</string>
     <string name="api_error_generic">Klarte ikke å koble til %s. Prøv igjen senere.</string>
@@ -235,6 +234,7 @@
     <string name="title_new_episodes">Nye episoder</string>
     <string name="watched_shows">Sett</string>
     <string name="shows_collection">Samling</string>
+    <string name="title_library">Library</string>
     <string name="watchlist">Overvåkningsliste</string>
     <!-- Similar shows -->
     <string name="action_similar">Similar</string>
@@ -309,6 +309,7 @@
     <!-- Features -->
     <string name="feature_supported">Støttet</string>
     <string name="feature_not_supported">Ikke støttet</string>
+    <string name="feature_disabled">Disabled</string>
     <string name="feature_history">Personlig- og vennehistorie</string>
     <string name="feature_comments">Kommenter</string>
     <string name="feature_sync">Synkroniser</string>
@@ -351,6 +352,8 @@
     <string name="disconnect">Koble fra</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt hjelper deg å holde oversikten over hvilke TV-serier og filmer du ser på.</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">Bedøm</string>
     <string name="ack_rated">Rating sent</string>

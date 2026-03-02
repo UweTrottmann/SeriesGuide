@@ -52,7 +52,6 @@
     <string name="unknown">tuntematon</string>
     <string name="offline">Muodosta yhteys verkkoon ja yritä uudelleen.</string>
     <string name="app_not_available">Tähän toimintoon ei löydy sovellusta</string>
-    <string name="people_empty">Onko kukaan täällä?! Kosketa yrittääksesi uudelleen.</string>
     <string name="database_error">Tietojen muokkaaminen ei onnistunut.</string>
     <string name="reinstall_info">Yritä varmuuskopioida asetuksista, asenna uudelleen ja palauta.</string>
     <string name="api_error_generic">Kommunikointi %sin kanssa ei onnistu. Yritä myöhemmin uudelleen.</string>
@@ -235,6 +234,7 @@
     <string name="title_new_episodes">Uusia jaksoja</string>
     <string name="watched_shows">Katsotut</string>
     <string name="shows_collection">Kokoelma</string>
+    <string name="title_library">Kirjasto</string>
     <string name="watchlist">Seurantalista</string>
     <!-- Similar shows -->
     <string name="action_similar">Samankaltaiset</string>
@@ -309,12 +309,13 @@
     <!-- Features -->
     <string name="feature_supported">Tuettu</string>
     <string name="feature_not_supported">Ei tuettu</string>
+    <string name="feature_disabled">Poistettu käytöstä</string>
     <string name="feature_history">Henkilökohtainen ja ystävien historia</string>
     <string name="feature_comments">Lähetä kommentteja</string>
     <string name="feature_sync">Synkronointi</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud auttaa varmuuskopioimaan ja synkronoimaan ohjelmasi, listasi ja elokuvasi.</string>
-    <string name="hexagon_warning_trakt">Kun olet kirjautuneena sisään SeriesGuide Cloudiin, jotkin Traktin ominaisuudet eivät ole käytettävissä.</string>
+    <string name="hexagon_warning_trakt">SeriesGuide Cloudin ollessa aktiivinen osa Trakt-toiminnoista on estetty, ja muutokset siirtyvät vain SeriesGuidesta Traktiin.</string>
     <string name="hexagon_signin">Kirjaudu sisään</string>
     <string name="hexagon_signout">Kirjaudu ulos</string>
     <string name="hexagon_setup_incomplete">SeriesGuide Cloudin määrittäminen epäonnistui.</string>
@@ -351,6 +352,8 @@
     <string name="disconnect">Katkaise yhteys</string>
     <string name="show_library">Lisää ohjelmat Traktista</string>
     <string name="about_trakt">Trakt auttaa sinua pysymään kärryillä katsomistasi ohjelmista ja elokuvista.</string>
+    <string name="trakt_note_collection">Se, mitä Trakt kutsuu kirjastoksi, on SeriesGuidessa nimeltään kokoelma.</string>
+    <string name="trakt_note_add_shows">Yhdistämisen jälkeen voit lisätä ohjelmia Trakt-tililtäsi käyttämällä Tutustu-välilehden Trakt-valintoja.</string>
     <!-- trakt ratings -->
     <string name="action_rate">Arvostele</string>
     <string name="ack_rated">Arvosana lähetettiin</string>

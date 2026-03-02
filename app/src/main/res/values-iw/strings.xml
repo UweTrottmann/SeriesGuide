@@ -52,7 +52,6 @@
     <string name="unknown">לא ידוע</string>
     <string name="offline">התחבר לרשת, ואז נסה שוב</string>
     <string name="app_not_available">אין אפליקצייה זמינה לטפל בזה</string>
-    <string name="people_empty">אין כאן אף אחד?! לחץ כדי לנסות שוב.</string>
     <string name="database_error">לא הייתה אפשרות לשנות את הנתונים</string>
     <string name="reinstall_info">נסה לייצא את הנתונים שלך, להתקין מחדש, ולשחזר</string>
     <string name="api_error_generic">לא ניתן היה לדבר עם %s. נסה שוב מאוחר יותר.</string>
@@ -249,6 +248,7 @@
     <string name="title_new_episodes">פרקים חדשים</string>
     <string name="watched_shows">נצפה</string>
     <string name="shows_collection">אוסף</string>
+    <string name="title_library">Library</string>
     <string name="watchlist">רשימת צפייה</string>
     <!-- Similar shows -->
     <string name="action_similar">דומה</string>
@@ -329,6 +329,7 @@
     <!-- Features -->
     <string name="feature_supported">נתמך</string>
     <string name="feature_not_supported">לא נתמך</string>
+    <string name="feature_disabled">לא מופעל</string>
     <string name="feature_history">היסטוריה שלי ושל חברים</string>
     <string name="feature_comments">פרסם תגובות</string>
     <string name="feature_sync">סנכרן</string>
@@ -371,6 +372,8 @@
     <string name="disconnect">התנתק</string>
     <string name="show_library">הוסף סדרות מ-Trakt</string>
     <string name="about_trakt">Trakt מסייעת לשמור רשימה של אילו תוכניות טלוויזיה וסרטים אתה צופה.</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">דרג</string>
     <string name="ack_rated">דירוג נשלח</string>

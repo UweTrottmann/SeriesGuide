@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// SPDX-FileCopyrightText: Copyright © 2017 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.jobs
 
@@ -21,6 +21,7 @@ import com.uwetrottmann.trakt5.enums.HistoryType
 import org.threeten.bp.Instant
 import org.threeten.bp.OffsetDateTime
 import org.threeten.bp.ZoneOffset
+import org.threeten.bp.temporal.ChronoUnit
 import retrofit2.Call
 
 class TraktMovieJob(
@@ -40,13 +41,17 @@ class TraktMovieJob(
 
         val movie = SyncMovie().id(MovieIds.tmdb(jobInfo.movieTmdbId()))
 
-        // Send time of action to avoid adding duplicate collection entries at Trakt (does not work
-        // for watched entries, separate check for those below) if this job re-runs due to failure,
-        // but Trakt already applied changes (it happens).
+        // Send time of action to avoid adding duplicate collection or watched entries at Trakt
+        // (may not work for watched entries, additional check for those below) if this job re-runs
+        // due to failure, but Trakt already applied changes (it happens).
         // Also if execution is delayed due to being offline this will ensure the actual action time
         // is stored at Trakt.
-        val instant = Instant.ofEpochMilli(actionAtMs)
-        val actionAtDateTime = instant.atOffset(ZoneOffset.UTC)
+        // Clamp to minutes as since 2026-02 Trakt only stores and returns watched at times with
+        // minute precision: https://github.com/trakt/trakt-api/discussions/694
+        val actionAtDateTime = Instant.ofEpochMilli(actionAtMs)
+            .atOffset(ZoneOffset.UTC)
+            .truncatedTo(ChronoUnit.MINUTES)
+
         // only send timestamp if adding, not if removing to save data
         // note: timestamp currently not supported for watchlist action
         if (action == JobAction.MOVIE_COLLECTION_ADD) {

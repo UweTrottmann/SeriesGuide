@@ -205,6 +205,8 @@ dependencies {
     implementation(libs.androidx.browser)
     implementation(libs.androidx.collection) // For SparseArrayCompat
     implementation(libs.androidx.fragment)
+    implementation(libs.kotlinx.serialization.core)
+
     implementation(libs.material)
     implementation(libs.androidx.palette)
     implementation(libs.androidx.recyclerview)

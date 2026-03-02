@@ -52,7 +52,6 @@
     <string name="unknown">nieznana</string>
     <string name="offline">Spróbuj ponownie po podłączeniu do sieci.</string>
     <string name="app_not_available">Brak aplikacji obsługującej to żądanie.</string>
-    <string name="people_empty">Nikogo tutaj nie ma?! Dotknij, aby spróbować ponownie.</string>
     <string name="database_error">Nie można zmodyfikować danych.</string>
     <string name="reinstall_info">Spróbuj zrobić kopię zapasową w ustawieniach, przeinstalować program i przywrócić ustawienia.</string>
     <string name="api_error_generic">Nie można połączyć z %s. Spróbuj ponownie później.</string>
@@ -249,6 +248,7 @@
     <string name="title_new_episodes">Nowe odcinki</string>
     <string name="watched_shows">Obejrzane</string>
     <string name="shows_collection">Kolekcja</string>
+    <string name="title_library">Biblioteka</string>
     <string name="watchlist">Do obejrzenia</string>
     <!-- Similar shows -->
     <string name="action_similar">Podobne</string>
@@ -329,12 +329,13 @@
     <!-- Features -->
     <string name="feature_supported">Obsługiwane</string>
     <string name="feature_not_supported">Nie obsługiwane</string>
+    <string name="feature_disabled">Wyłączony</string>
     <string name="feature_history">Historia osobista i przyjaciół</string>
     <string name="feature_comments">Dodaj komentarz</string>
     <string name="feature_sync">Synchronizacja</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud pomaga w synchronizacji i tworzeniu kopii bezpieczeństwa seriali, list i filmów.</string>
-    <string name="hexagon_warning_trakt">W przypadku zalogowania do chmury SeriesGuide Cloud niektóre funkcje trakt są niedostępne.</string>
+    <string name="hexagon_warning_trakt">Po zalogowaniu do SeriesGuide Cloud niektóre funkcje Trakt są wyłączone, zmiany są jedynie wysyłane na konto Trakt, a nie odbierane.</string>
     <string name="hexagon_signin">Zaloguj się</string>
     <string name="hexagon_signout">Wyloguj</string>
     <string name="hexagon_setup_incomplete">Konfiguracja chmury SeriesGuide nie została zakończona.</string>
@@ -371,6 +372,8 @@
     <string name="disconnect">Rozłącz</string>
     <string name="show_library">Dodaj seriale z Trakt</string>
     <string name="about_trakt">Trakt pomaga zarządzać jakie seriale i filmy oglądasz.</string>
+    <string name="trakt_note_collection">To co Trakt nazywa biblioteką w SeriesGuide jest nazwane kolekcją.</string>
+    <string name="trakt_note_add_shows">Po podłączeniu dodaj seriale ze swojego konta Trakt przy użyciu elementów Trakt na karcie Odkrywanie.</string>
     <!-- trakt ratings -->
     <string name="action_rate">Oceń</string>
     <string name="ack_rated">Ocena wysłana</string>

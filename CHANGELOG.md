@@ -8,6 +8,30 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
 
+## Version 2026.1
+
+* 📝 Trakt: support server changes when fetching collections.
+
+### 2026.1.2 - 2026-02-27
+
+* 🔧 Export: in the created JSON file, write each show, list or movie on a separate line to make,
+  especially large files, easier to open and edit.
+* 📝 Import latest user interface translations.
+
+### 2026.1.1 - 2026-02-12 🧪
+
+* 📝 Trakt: support upcoming server changes when fetching collections. Add notes on how to add shows,
+  that library is called collection and if Cloud is connected at the same time.
+* 🔨 Debug log: don't crash if entries can't be modified due to database corruption.
+* 📝 Import latest user interface translations.
+
+### 2026.1.0 - 2025-12-05 🧪
+
+* 🔧 Internal: When talking to servers, send app name and version.
+* 🔧 Internal: update various components, including for UI and networking.
+* 🔧 Download movie posters through the SeriesGuide image cache server to reduce load on TMDB.
+* 📝 Import latest user interface translations.
+
 ## Version 2025.3
 
 * 📝 Only for devices running Android 6.0 or higher.

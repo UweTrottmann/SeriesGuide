@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2011-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2011 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.shows.tools
 
@@ -11,13 +11,13 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.shows.tools.AddShowTask.OnShowAddedEvent
 import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowResult
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktSettings
-import com.battlelancer.seriesguide.traktapi.TraktTools2
-import com.battlelancer.seriesguide.traktapi.TraktTools2.ServiceResult
+import com.battlelancer.seriesguide.traktapi.TraktTools4
+import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktErrorResponse.IsUnauthorized
+import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse.Success
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.trakt5.entities.BaseShow
@@ -114,7 +114,7 @@ class AddShowTask(
         addQueue.addAll(shows)
     }
 
-    fun run() {
+    suspend fun run() {
         Timber.d("Starting to add shows...")
 
         val firstShow = addQueue.peek()
@@ -298,15 +298,30 @@ class AddShowTask(
         publishProgress(result, 0, "")
     }
 
-    private fun getTraktShows(isCollectionNotWatched: Boolean): Map<Int, BaseShow>? {
-        val result: Pair<Map<Int, BaseShow>?, ServiceResult> =
-            TraktTools2.getCollectedOrWatchedShows(isCollectionNotWatched, context)
-        if (result.second == ServiceResult.AUTH_ERROR) {
-            publishProgress(RESULT_TRAKT_AUTH_ERROR)
-        } else if (result.second == ServiceResult.API_ERROR) {
-            publishProgress(RESULT_TRAKT_API_ERROR)
+    private suspend fun getTraktShows(isCollectionNotWatched: Boolean): Map<Int, BaseShow>? {
+        val traktSync = SgApp.getServicesComponent(context).traktSync()!!
+
+        val response =
+            if (isCollectionNotWatched) {
+                TraktTools4.getCollectedShowsByTmdbId(traktSync)
+            } else {
+                TraktTools4.getWatchedShowsByTmdbId(traktSync)
+            }
+
+        when (response) {
+            is Success -> {
+                return response.data
+            }
+
+            is IsUnauthorized -> {
+                publishProgress(RESULT_TRAKT_AUTH_ERROR)
+            }
+
+            else -> {
+                publishProgress(RESULT_TRAKT_API_ERROR)
+            }
         }
-        return result.first
+        return null
     }
 
     companion object {

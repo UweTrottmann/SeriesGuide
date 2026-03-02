@@ -52,7 +52,6 @@
     <string name="unknown">anhysbys</string>
     <string name="offline">Cysylltu â rhwydwaith, yna ceisiwch eto</string>
     <string name="app_not_available">Nid oes ap ar gael i drin hyn</string>
-    <string name="people_empty">Neb yma?! Cyffyrddwch i roi cynnig arall arni.</string>
     <string name="database_error">Methu addasu data</string>
     <string name="reinstall_info">Ceisiwch wneud copi wrth gefn yn Gosodiadau, ail-osod ac adfer</string>
     <string name="api_error_generic">Methu siarad â %s Rhowch gynnig arall arni yn nes ymlaen.</string>
@@ -263,6 +262,7 @@
     <string name="title_new_episodes">Penodau newydd</string>
     <string name="watched_shows">Gwylio</string>
     <string name="shows_collection">Casgliad</string>
+    <string name="title_library">Library</string>
     <string name="watchlist">Rhestr wylio</string>
     <!-- Similar shows -->
     <string name="action_similar">Similar</string>
@@ -349,6 +349,7 @@
     <!-- Features -->
     <string name="feature_supported">Cefnogwyd</string>
     <string name="feature_not_supported">Heb gefnogaeth</string>
+    <string name="feature_disabled">Anweithredol</string>
     <string name="feature_history">Hanes personol a ffrind</string>
     <string name="feature_comments">Postiwch sylwadau</string>
     <string name="feature_sync">Cydamseru</string>
@@ -391,6 +392,8 @@
     <string name="disconnect">Datgysylltwch</string>
     <string name="show_library">Ychwanegu rhaglenni o Trakt</string>
     <string name="about_trakt">Mae Trakt yn helpu i gadw cofnod o\'r rhaglenni teledu a\'r ffilmiau rydych chi\'n eu gwylio.</string>
+    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
     <!-- trakt ratings -->
     <string name="action_rate">Cyfradd</string>
     <string name="ack_rated">Rating sent</string>

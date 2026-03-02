@@ -1,12 +1,10 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2021-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2013 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.dataliberation
 
 import android.content.Context
-import android.net.Uri
 import android.os.ParcelFileDescriptor
-import androidx.annotation.IntDef
 import androidx.annotation.VisibleForTesting
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
@@ -16,23 +14,25 @@ import com.battlelancer.seriesguide.dataliberation.model.ListItem
 import com.battlelancer.seriesguide.dataliberation.model.Movie
 import com.battlelancer.seriesguide.dataliberation.model.Season
 import com.battlelancer.seriesguide.dataliberation.model.Show
+import com.battlelancer.seriesguide.lists.database.SgList
 import com.battlelancer.seriesguide.lists.database.SgListHelper
 import com.battlelancer.seriesguide.movies.database.MovieHelper
+import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper
 import com.battlelancer.seriesguide.shows.database.SgSeason2Helper
+import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.database.SgShow2Helper
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.TextTools
-import com.google.gson.Gson
 import com.google.gson.JsonParseException
-import com.google.gson.stream.JsonWriter
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.isActive
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
@@ -42,9 +42,6 @@ import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStream
-import java.io.OutputStreamWriter
-import java.nio.charset.StandardCharsets
-import kotlin.collections.List
 import com.battlelancer.seriesguide.dataliberation.model.List as ExportList
 
 /**
@@ -53,15 +50,12 @@ import com.battlelancer.seriesguide.dataliberation.model.List as ExportList
  *
  * @param isFullDump Whether to also export meta-data like descriptions, ratings, actors, etc.
  * Increases file size about 2-4 times.
- * @param isAutoBackupMode Whether to run an auto backup, also shows no result toasts.
  */
 @Suppress("BlockingMethodInNonBlockingContext")
-class JsonExportTask(
+open class JsonExportTask(
     context: Context,
     private val progressListener: OnTaskProgressListener?,
     private val isFullDump: Boolean,
-    private val isAutoBackupMode: Boolean,
-    private val type: Int?,
     private val sgShow2Helper: SgShow2Helper,
     private val sgSeason2Helper: SgSeason2Helper,
     private val sgEpisode2Helper: SgEpisode2Helper,
@@ -73,14 +67,10 @@ class JsonExportTask(
         context: Context,
         progressListener: OnTaskProgressListener?,
         isFullDump: Boolean,
-        isAutoBackupMode: Boolean,
-        type: Int?,
     ) : this(
         context,
         progressListener,
         isFullDump,
-        isAutoBackupMode,
-        type,
         SgRoomDatabase.getInstance(context).sgShow2Helper(),
         SgRoomDatabase.getInstance(context).sgSeason2Helper(),
         SgRoomDatabase.getInstance(context).sgEpisode2Helper(),
@@ -104,67 +94,17 @@ class JsonExportTask(
     /**
      * Wraps [run] so it can be called from Java code.
      */
-    fun launch(): Job {
+    fun launch(export: Export): Job {
         return SgApp.coroutineScope.launch {
-            run()
+            run(export)
         }
     }
 
-    suspend fun run(): Int {
+    suspend fun run(export: Export): Int {
         return withContext(Dispatchers.IO) {
-            val result = doInBackground(this)
+            val result = exportData(this, export)
             onPostExecute(result)
             return@withContext result
-        }
-    }
-
-    private suspend fun doInBackground(coroutineScope: CoroutineScope): Int {
-        return if (isAutoBackupMode) {
-            // Auto backup mode.
-            try {
-                AutoBackupTask(this, context).run(coroutineScope)
-                BackupSettings.setAutoBackupErrorOrNull(context, null)
-                SUCCESS
-            } catch (e: Exception) {
-                Errors.logAndReport("Unable to auto backup.", e)
-                BackupSettings.setAutoBackupErrorOrNull(
-                    context,
-                    e.javaClass.simpleName + ": " + e.message
-                )
-                ERROR
-            }
-        } else {
-            // Manual backup mode.
-            if (!coroutineScope.isActive) {
-                return ERROR
-            }
-
-            var result = SUCCESS
-            if (type == null || type == EXPORT_SHOWS) {
-                result = exportData(coroutineScope, EXPORT_SHOWS)
-                if (result != SUCCESS) {
-                    return result
-                }
-                if (!coroutineScope.isActive) {
-                    return ERROR
-                }
-            }
-
-            if (type == null || type == EXPORT_LISTS) {
-                result = exportData(coroutineScope, EXPORT_LISTS)
-                if (result != SUCCESS) {
-                    return result
-                }
-                if (!coroutineScope.isActive) {
-                    return ERROR
-                }
-            }
-
-            if (type == null || type == EXPORT_MOVIES) {
-                result = exportData(coroutineScope, EXPORT_MOVIES)
-            }
-
-            result
         }
     }
 
@@ -175,49 +115,46 @@ class JsonExportTask(
     }
 
     private fun onPostExecute(result: Int) {
-        if (!isAutoBackupMode) {
-            val message: String
-            val showIndefinite: Boolean
-            when (result) {
-                SUCCESS -> {
-                    message = context.getString(R.string.status_successful)
-                    showIndefinite = false
-                }
-
-                ERROR_FILE_ACCESS -> {
-                    message = TextTools.dotSeparate(
-                        context,
-                        R.string.status_failure,
-                        R.string.status_failed_file_access
-                    )
-                    showIndefinite = true
-                }
-
-                else -> {
-                    message = context.getString(R.string.status_failure)
-                    showIndefinite = true
-                }
+        val message: String
+        val showIndefinite: Boolean
+        when (result) {
+            SUCCESS -> {
+                message = context.getString(R.string.status_successful)
+                showIndefinite = false
             }
-            EventBus.getDefault()
-                .post(
-                    LiberationResultEvent(
-                        context, message, errorCause, showIndefinite
-                    )
+
+            ERROR_FILE_ACCESS -> {
+                message = TextTools.dotSeparate(
+                    context,
+                    R.string.status_failure,
+                    R.string.status_failed_file_access
                 )
-        } else {
-            EventBus.getDefault().post(LiberationResultEvent())
+                showIndefinite = true
+            }
+
+            else -> {
+                message = context.getString(R.string.status_failure)
+                showIndefinite = true
+            }
         }
+        EventBus.getDefault()
+            .post(
+                LiberationResultEvent(
+                    context, message, errorCause, showIndefinite
+                )
+            )
     }
 
-    private suspend fun exportData(coroutineScope: CoroutineScope, @ExportType type: Int): Int {
+    private suspend fun exportData(coroutineScope: CoroutineScope, export: Export): Int {
         // try to export all data
         try {
             val testExportFile = testExportFile
             var pfd: ParcelFileDescriptor? = null
             val out = if (testExportFile == null) {
                 // ensure the user has selected a file
-                val exportFileUri = getExportFileUri(type)
-                    ?: return ERROR_FILE_ACCESS
+                val exportFileUri =
+                    BackupSettings.getExportFileUri(context, export, isAutoBackup = false)
+                        ?: return ERROR_FILE_ACCESS
 
                 pfd = context.contentResolver.openFileDescriptor(exportFileUri, "w")
                     ?: return ERROR_FILE_ACCESS
@@ -233,39 +170,35 @@ class JsonExportTask(
             // so truncate the file first to clear any existing bytes.
             out.channel.truncate(0)
 
-            when (type) {
-                EXPORT_SHOWS -> {
-                    writeJsonStreamShows(coroutineScope, out)
-                }
-
-                EXPORT_LISTS -> {
-                    writeJsonStreamLists(coroutineScope, out)
-                }
-
-                EXPORT_MOVIES -> {
-                    writeJsonStreamMovies(coroutineScope, out)
-                }
+            when (export) {
+                Export.Shows -> writeJsonStreamShows(coroutineScope, out)
+                Export.Lists -> writeJsonStreamLists(coroutineScope, out)
+                Export.Movies -> writeJsonStreamMovies(coroutineScope, out)
             }
 
             // let the document provider know we're done.
             pfd?.close()
         } catch (e: FileNotFoundException) {
             Timber.e(e, "File not found.")
-            removeExportFileUri(type)
+            removeExportFileUri(export)
             errorCause = e.message
             return ERROR_FILE_ACCESS
         } catch (e: IOException) {
             Timber.e(e, "Failed to write to file.")
-            removeExportFileUri(type)
+            removeExportFileUri(export)
             errorCause = e.message
             return ERROR_FILE_ACCESS
         } catch (e: SecurityException) {
             Timber.e(e, "No permission to access file.")
-            removeExportFileUri(type)
+            removeExportFileUri(export)
             errorCause = e.message
             return ERROR_FILE_ACCESS
         } catch (e: JsonParseException) {
             Timber.e(e, "Failed to create JSON export.")
+            errorCause = e.message
+            return ERROR
+        } catch (e: CancellationException) {
+            Timber.e(e, "JSON export job cancelled.")
             errorCause = e.message
             return ERROR
         } catch (e: Exception) {
@@ -278,32 +211,13 @@ class JsonExportTask(
         return SUCCESS
     }
 
-    fun getExportFileUri(@ExportType type: Int): Uri? {
-        return BackupSettings.getExportFileUri(context, type, isAutoBackupMode)
-    }
-
-    fun removeExportFileUri(@ExportType type: Int) {
-        BackupSettings.storeExportFileUri(context, type, null, isAutoBackupMode)
+    private fun removeExportFileUri(export: Export) {
+        BackupSettings.storeExportFileUri(context, export, null, isAutoBackup = false)
     }
 
     @Throws(IOException::class)
     suspend fun writeJsonStreamShows(coroutineScope: CoroutineScope, out: OutputStream) {
-        val shows = sgShow2Helper.getShowsForExport()
-
-        val numTotal = shows.size
-        var numExported = 0
-
-        onProgressUpdate(numTotal, 0)
-
-        val gson = Gson()
-        val writer = JsonWriter(OutputStreamWriter(out, StandardCharsets.UTF_8))
-        writer.beginArray()
-
-        for (sgShow in shows) {
-            if (!coroutineScope.isActive) {
-                break
-            }
-
+        val transform: (SgShow2) -> Show = { sgShow ->
             val show = Show()
             show.tmdb_id = sgShow.tmdbId
             show.tvdb_id = sgShow.tvdbId
@@ -347,14 +261,22 @@ class JsonExportTask(
             }
 
             show.seasons = getSeasons(sgShow.id)
-
-            gson.toJson(show, Show::class.java, writer)
-
-            onProgressUpdate(numTotal, ++numExported)
+            show
         }
 
-        writer.endArray()
-        writer.close()
+        val shows = sgShow2Helper.getShowsForExport()
+
+        // Last chance to stop (to avoid partially writing the file)
+        coroutineScope.ensureActive()
+
+        SgJsonWriter(
+            itemsToTransform = shows,
+            outputClass = Show::class.java,
+            outputStream = out,
+            transform = transform
+        ).write { total, done ->
+            onProgressUpdate(total, done)
+        }
     }
 
     /**
@@ -422,36 +344,28 @@ class JsonExportTask(
 
     @Throws(IOException::class)
     suspend fun writeJsonStreamLists(coroutineScope: CoroutineScope, out: OutputStream) {
-        val lists = sgListHelper.getListsForExport()
-
-        val numTotal = lists.size
-        var numExported = 0
-
-        onProgressUpdate(numTotal, 0)
-
-        val gson = Gson()
-        val writer = JsonWriter(OutputStreamWriter(out, StandardCharsets.UTF_8))
-        writer.beginArray()
-
-        for (sgList in lists) {
-            if (!coroutineScope.isActive) {
-                break
-            }
-
+        val transform: (SgList) -> ExportList = { sgList ->
             val list = ExportList()
             list.list_id = sgList.listId
             list.name = sgList.name
             list.order = sgList.orderOrDefault
-
             addListItems(list)
-
-            gson.toJson(list, ExportList::class.java, writer)
-
-            onProgressUpdate(numTotal, ++numExported)
+            list
         }
 
-        writer.endArray()
-        writer.close()
+        val lists = sgListHelper.getListsForExport()
+
+        // Last chance to stop (to avoid partially writing the file)
+        coroutineScope.ensureActive()
+
+        SgJsonWriter(
+            itemsToTransform = lists,
+            outputClass = ExportList::class.java,
+            outputStream = out,
+            transform = transform
+        ).write { total, done ->
+            onProgressUpdate(total, done)
+        }
     }
 
     private fun addListItems(list: ExportList) {
@@ -476,21 +390,7 @@ class JsonExportTask(
 
     @Throws(IOException::class)
     suspend fun writeJsonStreamMovies(coroutineScope: CoroutineScope, out: OutputStream) {
-        val movies = movieHelper.getMoviesForExport()
-
-        val numTotal = movies.size
-        var numExported = 0
-
-        onProgressUpdate(numTotal, 0)
-
-        val gson = Gson()
-        val writer = JsonWriter(OutputStreamWriter(out, StandardCharsets.UTF_8))
-        writer.beginArray()
-
-        for (sgMovie in movies) {
-            if (!coroutineScope.isActive) {
-                break
-            }
+        val transform: (SgMovie) -> Movie = { sgMovie ->
             val movie = Movie()
             movie.tmdb_id = sgMovie.tmdbId
             movie.imdb_id = sgMovie.imdbId
@@ -506,24 +406,28 @@ class JsonExportTask(
             if (isFullDump) {
                 movie.overview = sgMovie.overview
             }
-
-            gson.toJson(movie, Movie::class.java, writer)
-
-            onProgressUpdate(numTotal, ++numExported)
+            movie
         }
 
-        writer.endArray()
-        writer.close()
+        val movies = movieHelper.getMoviesForExport()
+
+        // Last chance to stop (to avoid partially writing the file)
+        coroutineScope.ensureActive()
+
+        SgJsonWriter(
+            itemsToTransform = movies,
+            outputClass = Movie::class.java,
+            outputStream = out,
+            transform = transform
+        ).write { total, done ->
+            onProgressUpdate(total, done)
+        }
     }
 
     companion object {
         const val EXPORT_JSON_FILE_SHOWS = "seriesguide-shows-backup.json"
         const val EXPORT_JSON_FILE_LISTS = "seriesguide-lists-backup.json"
         const val EXPORT_JSON_FILE_MOVIES = "seriesguide-movies-backup.json"
-
-        const val EXPORT_SHOWS = 1
-        const val EXPORT_LISTS = 2
-        const val EXPORT_MOVIES = 3
 
         const val SUCCESS = 1
         private const val ERROR_FILE_ACCESS = 0
@@ -534,14 +438,10 @@ class JsonExportTask(
         fun onProgressUpdate(total: Int, completed: Int)
     }
 
-    @Retention(AnnotationRetention.SOURCE)
-    @IntDef(EXPORT_SHOWS, EXPORT_LISTS, EXPORT_MOVIES)
-    annotation class ExportType
-
-    sealed class Export(val name: String, @ExportType val type: Int) {
-        object Shows : Export("seriesguide-shows", EXPORT_SHOWS)
-        object Lists : Export("seriesguide-lists", EXPORT_LISTS)
-        object Movies : Export("seriesguide-movies", EXPORT_MOVIES)
+    sealed class Export(val name: String) {
+        object Shows : Export("seriesguide-shows")
+        object Lists : Export("seriesguide-lists")
+        object Movies : Export("seriesguide-movies")
     }
 
     /**

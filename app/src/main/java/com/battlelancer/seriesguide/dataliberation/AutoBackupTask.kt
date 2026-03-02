@@ -1,12 +1,16 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2020-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2020 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.dataliberation
 
 import android.content.Context
 import android.net.Uri
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Export
+import com.battlelancer.seriesguide.dataliberation.DataLiberationFragment.LiberationResultEvent
+import com.battlelancer.seriesguide.util.Errors
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
 import java.io.Closeable
 import java.io.File
@@ -18,7 +22,7 @@ import java.io.IOException
 class AutoBackupException(message: String) : IOException(message)
 
 /**
- * Backs up shows, lists and movies to timestamped files
+ * A [JsonExportTask] that backs up shows, lists and movies to timestamped files
  * in a [Context.getExternalFilesDir] subdirectory.
  * This directory is included in Android's full auto backup (app data backup).
  *
@@ -29,16 +33,32 @@ class AutoBackupException(message: String) : IOException(message)
  */
 @Suppress("BlockingMethodInNonBlockingContext")
 class AutoBackupTask(
-    private val jsonExportTask: JsonExportTask,
     private val context: Context
-) {
+) : JsonExportTask(context, null, isFullDump = false) {
+
+    suspend fun runAutoBackup() {
+        withContext(Dispatchers.IO) {
+            try {
+                run(this)
+                BackupSettings.setAutoBackupErrorOrNull(context, null)
+            } catch (e: Exception) {
+                Errors.logAndReport("Unable to auto backup.", e)
+                BackupSettings.setAutoBackupErrorOrNull(
+                    context,
+                    e.javaClass.simpleName + ": " + e.message
+                )
+            }
+
+            EventBus.getDefault().post(LiberationResultEvent())
+        }
+    }
 
     private fun getBackupFile(export: Export, timestamp: String, backupDirectory: File): File {
         return File(backupDirectory, DataLiberationTools.createExportFileName(export, timestamp))
     }
 
     @Throws(AutoBackupException::class)
-    suspend fun run(coroutineScope: CoroutineScope) {
+    private suspend fun run(coroutineScope: CoroutineScope) {
         Timber.i("Creating auto backup.")
 
         val backupDirectory = AutoBackupTools.getBackupDirectory(context)
@@ -90,11 +110,16 @@ class AutoBackupTask(
             out = FileOutputStream(backupFile)
 
             when (type) {
-                Export.Shows -> jsonExportTask.writeJsonStreamShows(coroutineScope, out)
-                Export.Lists -> jsonExportTask.writeJsonStreamLists(coroutineScope, out)
-                Export.Movies -> jsonExportTask.writeJsonStreamMovies(coroutineScope, out)
+                Export.Shows -> writeJsonStreamShows(coroutineScope, out)
+                Export.Lists -> writeJsonStreamLists(coroutineScope, out)
+                Export.Movies -> writeJsonStreamMovies(coroutineScope, out)
             }
         } catch (e: Exception) {
+            // This also handles a coroutine CancellationException
+
+            // Try to close the output stream before trying to delete the file
+            out?.closeFinally()
+            // Delete the potentially broken file to avoid it getting imported
             if (backupFile.delete()) {
                 Timber.e("Backup failed, deleted backup file.")
             } else {
@@ -109,8 +134,9 @@ class AutoBackupTask(
     @Throws(AutoBackupException::class)
     private fun copyBackupToUserFile(export: Export, sourceFile: File) {
         // Skip if no custom backup file configured.
-        val outFileUri: Uri = jsonExportTask.getExportFileUri(export.type)
-            ?: return
+        val outFileUri: Uri =
+            BackupSettings.getExportFileUri(context, export, isAutoBackup = true)
+                ?: return
 
         Timber.i("Copying ${export.name} backup to user file.")
 
@@ -134,14 +160,18 @@ class AutoBackupTask(
                     }
                 } catch (e: FileNotFoundException) {
                     Timber.e("Backup file not found, removing from prefs.")
-                    jsonExportTask.removeExportFileUri(export.type)
+                    removeExportFileUri(export)
                     throw e
                 } catch (e: SecurityException) {
                     Timber.e("Backup file not writable, removing from prefs.")
-                    jsonExportTask.removeExportFileUri(export.type)
+                    removeExportFileUri(export)
                     throw e
                 }
             }
+    }
+
+    private fun removeExportFileUri(export: Export) {
+        BackupSettings.storeExportFileUri(context, export, null, isAutoBackup = true)
     }
 
     private fun Closeable.closeFinally() {
