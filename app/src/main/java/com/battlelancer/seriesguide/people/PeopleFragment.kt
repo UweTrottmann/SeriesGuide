@@ -88,7 +88,6 @@ class PeopleFragment : Fragment() {
             ListView.CHOICE_MODE_NONE
         }
 
-
         return rootView
     }
 
@@ -134,7 +133,6 @@ class PeopleFragment : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
-
         onShowPersonListener = sDummyListener
     }
 
@@ -186,8 +184,13 @@ class PeopleFragment : Fragment() {
     }
 
     private fun setEmptyMessage() {
-        // display error message if we are offline
-        if (!AndroidUtils.isNetworkConnected(requireContext())) {
+
+        emptyView.setContentVisibility(View.VISIBLE)
+        if (model.isSearchOngoing()) {
+            emptyView.setMessage(R.string.empty_no_results)
+            emptyView.setButtonGone(true)
+        } else if (!AndroidUtils.isNetworkConnected(requireContext())) {
+            // display error message if we are offline
             emptyView.setMessage(R.string.offline)
         } else {
             emptyView.setMessage(
@@ -197,7 +200,10 @@ class PeopleFragment : Fragment() {
                 )
             )
         }
-        emptyView.setContentVisibility(View.VISIBLE)
+    }
+
+    fun search(query: String) {
+        model.filter(query)
     }
 
     companion object {
