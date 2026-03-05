@@ -12,8 +12,6 @@ class HexagonAuthError(
     cause: Throwable?
 ) : Throwable("$action: $failure", cause) {
 
-    constructor(action: String, failure: String) : this(action, failure, null)
-
     companion object {
 
         /**
