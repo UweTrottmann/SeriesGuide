@@ -28,7 +28,7 @@ import timber.log.Timber
 object TraktTools4 {
 
     // 1000 is the maximum limit according to https://github.com/trakt/trakt-api/discussions/681
-    private const val COLLECTION_MAX_LIMIT = 1000
+    private const val LIST_AND_COLLECTION_MAX_LIMIT = 1000
 
     sealed interface TraktResponse<T> {
         data class Success<T>(
@@ -85,7 +85,7 @@ object TraktTools4 {
             action = "get collected shows",
             reportIsNotVip = true // Should work even if not VIP
         ) { page ->
-            traktSync.collectionShows(page, COLLECTION_MAX_LIMIT, null)
+            traktSync.collectionShows(page, LIST_AND_COLLECTION_MAX_LIMIT, null)
         }
     }
 
@@ -155,12 +155,13 @@ object TraktTools4 {
     suspend fun getShowsOnWatchlist(
         traktSync: Sync
     ): TraktNonNullResponse<List<BaseShow>> {
-        return awaitTraktCallNonNull(
-            // Use Extended.FULL to get show metadata
-            traktSync.watchlistShows(Extended.FULL),
-            "get shows on watchlist",
+        return fetchAllPages(
+            action = "get shows on watchlist",
             reportIsNotVip = true // Should work even if not VIP
-        )
+        ) { page ->
+            // Use Extended.FULL to get show metadata
+            traktSync.watchlistShows(page, LIST_AND_COLLECTION_MAX_LIMIT, Extended.FULL)
+        }
     }
 
     suspend fun getWatchedMoviesByTmdbId(
@@ -191,7 +192,7 @@ object TraktTools4 {
             action = "get collected movies",
             reportIsNotVip = true // Should work even if not VIP
         ) { page ->
-            traktSync.collectionMovies(page, COLLECTION_MAX_LIMIT, null)
+            traktSync.collectionMovies(page, LIST_AND_COLLECTION_MAX_LIMIT, null)
         }
         return mapResponseData(response) { mapMoviesToTmdbIdSet(it) }
     }
@@ -199,11 +200,12 @@ object TraktTools4 {
     suspend fun getMoviesOnWatchlistByTmdbId(
         traktSync: Sync
     ): TraktNonNullResponse<MutableSet<Int>> {
-        val response = awaitTraktCallNonNull(
-            traktSync.watchlistMovies(null),
-            "get movie watchlist",
+        val response = fetchAllPages(
+            action = "get movie watchlist",
             reportIsNotVip = true // Should work even if not VIP
-        )
+        ) { page ->
+            traktSync.watchlistMovies(page, LIST_AND_COLLECTION_MAX_LIMIT, null)
+        }
         return mapResponseData(response) { mapMoviesToTmdbIdSet(it) }
     }
 
