@@ -5,7 +5,7 @@ you really need them to.
 
 ## Android 5.0, 5.1
 
-**Latest version:** 2025.2.13 (2025-10-30)
+**Latest version:** 2025.2.14 (2026-02-12)
 
 **Available on Google Play:** yes
 
@@ -13,7 +13,7 @@ you really need them to.
 
 **Status:** everything is known to work.
 
-[Get the APK](https://github.com/UweTrottmann/SeriesGuide/releases/tag/v2025.2.13)
+[Get the APK](https://github.com/UweTrottmann/SeriesGuide/releases/tag/v2025.2.14)
 
 ## Android 4.4, 4.3, 4.2, 4.1
 
