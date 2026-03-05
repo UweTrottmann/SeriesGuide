@@ -111,6 +111,8 @@
         <activity
             android:name="com.battlelancer.seriesguide.backend.CloudSetupActivity"
             android:label="@string/hexagon" />
+        <activity
+            android:name="com.battlelancer.seriesguide.backend.auth.FirebaseAuthActivity" />
 
         <!-- Shows -->
         <activity
