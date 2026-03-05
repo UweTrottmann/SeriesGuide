@@ -139,7 +139,6 @@ class Errors {
             bendCauseStackTrace(throwable)
 
             getReporter()?.setCustomKey("action", throwable.action)
-            throwable.statusCode?.let { getReporter()?.setCustomKey("code", it) }
             getReporter()?.recordException(throwable)
         }
 
