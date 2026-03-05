@@ -15,7 +15,7 @@
 package com.battlelancer.seriesguide.backend.auth.configuration.theme
 
 import androidx.compose.ui.graphics.Color
-import com.firebase.ui.auth.R
+import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Provider
 
 /**
