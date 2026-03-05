@@ -20,12 +20,6 @@ package com.battlelancer.seriesguide.backend.auth.configuration
  */
 enum class MfaFactor {
     /**
-     * SMS-based authentication factor.
-     * Users receive a verification code via text message to their registered phone number.
-     */
-    Sms,
-
-    /**
      * Time-based One-Time Password (TOTP) authentication factor.
      * Users generate verification codes using an authenticator app.
      */
