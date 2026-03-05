@@ -659,7 +659,6 @@
     <string name="fui_remove_action" translation_description="Generic remove action label.">Remove</string>
     <string name="fui_back_action" translation_description="Generic back action label.">Back</string>
     <string name="fui_verify_action" translation_description="Generic verify action label.">Verify</string>
-    <string name="fui_use_different_method_action" translation_description="Action prompting the user to select a different MFA method.">Use a different method</string>
     <string name="fui_recovery_codes_saved_action" translation_description="Action confirming recovery codes have been saved.">I\'ve saved these codes</string>
     <string name="fui_secret_key_label" translation_description="Label for a secret key value.">Secret key</string>
     <string name="fui_verification_code_label" translation_description="Label for verification code input fields.">Verification code</string>
@@ -671,16 +670,13 @@
     <string name="fui_mfa_active_methods_title" translation_description="Title for the list of enrolled factors.">Active methods</string>
     <string name="fui_mfa_add_new_method_title" translation_description="Title for the list of available factors to enroll.">Add new method</string>
     <string name="fui_mfa_all_methods_enrolled_message" translation_description="Message shown when all available factors are already enrolled.">All available authentication methods are enrolled</string>
-    <string name="fui_mfa_label_sms_authentication" translation_description="Label for the SMS MFA factor.">SMS authentication</string>
     <string name="fui_mfa_label_totp_authentication" translation_description="Label for the authenticator app MFA factor.">Authenticator app</string>
     <string name="fui_mfa_label_unknown_method" translation_description="Label for an unknown MFA factor.">Unknown method</string>
     <string name="fui_mfa_enrolled_on" translation_description="Label indicating the enrollment date of an MFA factor.">Enrolled on %1$s</string>
     <string name="fui_mfa_setup_authenticator_description" translation_description="Description displayed during authenticator app setup.">Scan the QR code or enter the secret key in your authenticator app</string>
     <string name="fui_mfa_choose_method_instruction" translation_description="Instruction to choose an MFA verification method.">Choose a verification method</string>
     <string name="fui_mfa_enrollment_instruction" translation_description="Instruction to enroll in MFA.">Add an extra layer of security</string>
-    <string name="fui_mfa_method_sms" translation_description="Label for SMS MFA method.">SMS</string>
     <string name="fui_mfa_method_totp" translation_description="Label for authenticator app MFA method.">Authenticator app</string>
-    <string name="fui_mfa_phone_number_already_exists_error" translation_description="Error when phone number is already associated with another account.">This phone number is associated with another account</string>
     <string name="fui_mfa_second_factor_required_error" translation_description="Error when second factor verification is required.">Verification required</string>
     <string name="fui_mfa_setup_instruction" translation_description="Instruction for setting up authenticator app.">Scan the QR code with your authenticator app</string>
     <string name="fui_mfa_totp_already_exists_error" translation_description="Error when authenticator app is already set up.">Authenticator app is already set up</string>
@@ -798,22 +794,6 @@
     <string name="fui_email_link_dismiss_button" translation_description="Dismiss button for the wrong device or invalid link dialog">Dismiss</string>
     <string name="fui_email_link_cross_device_linking_text" translation_description="Text shown when the user opens an email link on a different device, but they had originally intended to link a provider to their account.">You originally intended to connect %1$s to your email account but have opened the link on a different device where you are not signed in.\n\nIf you still want to connect your %1$s account, open the link on the same device where you started sign-in. Otherwise, tap Continue to sign-in on this device.</string>
 
-
-    <!-- Phone number auth -->
-    <string name="fui_enter_confirmation_code" translation_description="Phone number verification code entry form title">Enter the 6-digit code we sent to</string>
-    <string name="fui_resend_code_in" translation_description="Countdown timer text that the user needs to wait for before attempting to resend verification sms">Resend code in %1$s</string>
-    <string name="fui_verify_your_phone_title" translation_description="Button text to complete phone number verification">Verify your phone number</string>
-    <string name="fui_verifying" translation_description="Progress dialog text while phone number is being verified">Verifying…</string>
-    <string name="fui_incorrect_code_dialog_body" translation_description="Inline error when incorrect sms verification code is being used to verify">Wrong code. Try again.</string>
-    <string name="fui_error_too_many_attempts" translation_description="Error message when the phone number has been used too many times">This phone number has been used too many times</string>
-    <string name="fui_error_quota_exceeded" translation_description="Error message when the Firebase project's quota has been exceeded.">There was a problem verifying your phone number</string>
-    <string name="fui_error_session_expired" translation_description="Error message when SMS confirmation code has expired.">This code is no longer valid</string>
-    <string name="fui_sign_in_with_phone_number" translation_description="Label for phone number input form">Sign in with phone number</string>
-    <string name="fui_auto_verified" translation_description="Popup informing the user that their phone number was automatically verified">Phone number automatically verified</string>
-    <string name="fui_resend_code" translation_description="Link text to resend verification sms">Resend Code</string>
-    <string name="fui_sms_terms_of_service" translation_description="Fine print warning displayed below Verify Phone Number button">By tapping "%1$s", an SMS may be sent. Message &amp; data rates may apply.</string>
-    <string name="fui_sms_terms_of_service_and_privacy_policy_extended" translation_description="Fine print warning displayed below Verify Phone Number button">By tapping "%1$s", you are indicating that you accept our <xliff:g example="https://google.com/terms" id="tos" translation_description="">%2$s</xliff:g> and <xliff:g example="https://google.com/privacy" id="pp" translation_description="">%3$s</xliff:g>. An SMS may be sent. Message &amp; data rates may apply.</string>
-
     <!-- Error Recovery Dialog -->
     <string name="fui_error_dialog_title" translation_description="Title for error recovery dialog">Authentication Error</string>
     <string name="fui_error_retry_action" translation_description="Retry button text in error dialog">Try again</string>
@@ -823,23 +803,18 @@
 
     <!-- MFA Enrollment -->
     <string name="fui_mfa_step_select_factor_title" translation_description="Title for MFA factor selection step">Choose Authentication Method</string>
-    <string name="fui_mfa_step_configure_sms_title" translation_description="Title for SMS MFA configuration step">Set Up SMS Verification</string>
     <string name="fui_mfa_step_configure_totp_title" translation_description="Title for TOTP MFA configuration step">Set Up Authenticator App</string>
     <string name="fui_mfa_step_verify_factor_title" translation_description="Title for MFA verification step">Verify Your Code</string>
     <string name="fui_mfa_step_show_recovery_codes_title" translation_description="Title for recovery codes step">Save Your Recovery Codes</string>
 
     <string name="fui_mfa_step_select_factor_helper" translation_description="Helper text for selecting MFA factor">Select a second authentication method to secure your account</string>
-    <string name="fui_mfa_step_configure_sms_helper" translation_description="Helper text for SMS configuration">Enter your phone number to receive verification codes</string>
     <string name="fui_mfa_step_configure_totp_helper" translation_description="Helper text for TOTP configuration">Scan the QR code with your authenticator app</string>
-    <string name="fui_mfa_step_verify_factor_sms_helper" translation_description="Helper text for SMS verification">Enter the code sent to your phone</string>
     <string name="fui_mfa_step_verify_factor_totp_helper" translation_description="Helper text for TOTP verification">Enter the code from your authenticator app</string>
     <string name="fui_mfa_step_verify_factor_generic_helper" translation_description="Generic helper text for factor verification">Enter your verification code</string>
     <string name="fui_mfa_step_show_recovery_codes_helper" translation_description="Helper text for recovery codes">Store these codes in a safe place. You can use them to sign in if you lose access to your authentication method.</string>
 
-    <string name="fui_mfa_enrollment_enter_phone_number" translation_description="Title for MFA phone number enrollment screen (top app bar)">Set Up SMS Authentication</string>
-    <string name="fui_mfa_enrollment_verify_sms_code" translation_description="Title for MFA SMS verification screen (top app bar)">Verify SMS Code</string>
-
     <!-- MFA Error Messages -->
+    <string name="fui_mfa_incorrect_code" translation_description="Inline error when incorrect verification code is being used to verify">Wrong code. Try again.</string>
     <string name="fui_mfa_error_recent_login_required" translation_description="Error message when MFA enrollment requires recent authentication">This operation requires recent authentication. Please sign in again and try again.</string>
     <string name="fui_mfa_error_invalid_verification_code" translation_description="Error message when MFA enrollment fails due to invalid verification code">The verification code is incorrect. Please try again.</string>
     <string name="fui_mfa_error_network" translation_description="Error message when MFA enrollment fails due to network issues">A network error occurred. Please check your connection and try again.</string>

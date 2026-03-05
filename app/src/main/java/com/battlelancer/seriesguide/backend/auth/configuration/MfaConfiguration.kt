@@ -13,7 +13,7 @@ package com.battlelancer.seriesguide.backend.auth.configuration
  * and whether recovery codes are generated.
  *
  * @property allowedFactors List of MFA factors that users are permitted to enroll in.
- *                          Defaults to [MfaFactor.Sms, MfaFactor.Totp].
+ *                          Defaults to [MfaFactor.Totp].
  * @property requireEnrollment Whether MFA enrollment is mandatory for all users.
  *                             When true, users must enroll in at least one MFA factor.
  *                             Defaults to false.
@@ -22,7 +22,7 @@ package com.battlelancer.seriesguide.backend.auth.configuration
  *                               as a backup authentication method. Defaults to true.
  */
 class MfaConfiguration(
-    val allowedFactors: List<MfaFactor> = listOf(MfaFactor.Sms, MfaFactor.Totp),
+    val allowedFactors: List<MfaFactor> = listOf(MfaFactor.Totp),
     val requireEnrollment: Boolean = false,
     val enableRecoveryCodes: Boolean = true
 ) {
