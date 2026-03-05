@@ -115,8 +115,6 @@ play-services-auth = "com.google.android.gms:play-services-auth:20.7.0"
 # https://firebase.google.com/support/release-notes/android
 firebase-crashlytics = "com.google.firebase:firebase-crashlytics:20.0.3"
 firebase-auth = "com.google.firebase:firebase-auth:24.0.1"
-# https://github.com/firebase/FirebaseUI-Android/releases
-firebase-ui-auth = "com.firebaseui:firebase-ui-auth:8.0.2"
 # Note: ZXing is no longer actively developed
 # https://github.com/zxing/zxing/releases
 zxing = "com.google.zxing:core:3.5.3"
