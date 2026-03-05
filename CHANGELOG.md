@@ -10,7 +10,11 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2026.1
 
-* 📝 Trakt: support server changes when fetching collections.
+* 📝 Trakt: support server changes to correctly fetch all collection and watchlist items.
+
+### 2026.1.3 - 2026-03-05
+
+* 🔨 Trakt: support server changes to correctly fetch all watchlist items.
 
 ### 2026.1.2 - 2026-02-27
 
