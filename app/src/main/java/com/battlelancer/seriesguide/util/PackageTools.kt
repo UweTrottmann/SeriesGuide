@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2023-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2023 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.util
 
@@ -43,6 +43,14 @@ object PackageTools {
             null
         }
         return version ?: "UnknownVersion"
+    }
+
+    /**
+     * User agent to use with HTTP requests.
+     */
+    fun getUserAgent(context: Context): String {
+        val version = getVersion(context)
+        return "SeriesGuide/$version"
     }
 
     /**

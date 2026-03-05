@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2017-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2017 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.sync
 
@@ -49,7 +49,8 @@ class TraktSync(
      * To not conflict with Hexagon sync, can turn on [onlyRatings] so only
      * ratings are synced.
      *
-     * Note: this calls [TraktNotesSync.syncForShows] which may throw [InterruptedException].
+     * Note: this calls [syncEpisodes] and [TraktNotesSync.syncForShows] which may throw
+     * [InterruptedException].
      */
     @Throws(InterruptedException::class)
     fun sync(onlyRatings: Boolean): SgSyncAdapter.UpdateResult {
@@ -136,8 +137,12 @@ class TraktSync(
     /**
      * Downloads and uploads episode watched and collected flags.
      *
-     *  Do **NOT** call if there are no local shows to avoid unnecessary work.
+     * Do **NOT** call if there are no local shows to avoid unnecessary work.
+     *
+     * Note: this calls [TraktEpisodeSync.syncWatched] and [TraktEpisodeSync.syncCollected] which
+     * may throw [InterruptedException].
      */
+    @Throws(InterruptedException::class)
     private fun syncEpisodes(
         tmdbIdsToShowIds: Map<Int, Long>,
         lastActivity: LastActivityMore
@@ -170,7 +175,7 @@ class TraktSync(
     fun <T> handleUnsuccessfulResponse(response: Response<T>, action: String) {
         if (SgTrakt.isUnauthorized(context, response)) {
             return // Do not report auth errors.
-        } else if (SgTrakt.isAccountLimitExceeded(response)) {
+        } else if (TraktV2.isAccountLimitExceeded(response)) {
             // Currently should only occur on initial sync when uploading items to watchlist or
             // collection (notes upload has its own error handling).
             progress.setImportantErrorIfNone(context.getString(R.string.trakt_error_limit_exceeded_upload))

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2016-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2016 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.modules
 
@@ -9,6 +9,7 @@ import android.os.StatFs
 import com.battlelancer.seriesguide.tmdbapi.SgTmdbInterceptor
 import com.battlelancer.seriesguide.traktapi.SgTraktInterceptor
 import com.battlelancer.seriesguide.util.AllApisAuthenticator
+import com.battlelancer.seriesguide.util.PackageTools
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
@@ -28,6 +29,7 @@ open class HttpClientModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(
+        @ApplicationContext context: Context,
         cache: Cache,
         traktInterceptor: SgTraktInterceptor,
         tmdbInterceptor: SgTmdbInterceptor,
@@ -36,6 +38,15 @@ open class HttpClientModule {
         val builder = OkHttpClient.Builder()
         builder.connectTimeout(CONNECT_TIMEOUT_MILLIS.toLong(), TimeUnit.MILLISECONDS)
         builder.readTimeout(READ_TIMEOUT_MILLIS.toLong(), TimeUnit.MILLISECONDS)
+        val userAgent = PackageTools.getUserAgent(context)
+        builder.addInterceptor { chain ->
+            val request = chain.request()
+            // At least Trakt requires to include the app name in the User-Agent header
+            val requestWithUserAgent = request.newBuilder()
+                .header(HEADER_USER_AGENT, userAgent)
+                .build()
+            chain.proceed(requestWithUserAgent)
+        }
         builder.addInterceptor(tmdbInterceptor)
         builder.addInterceptor(traktInterceptor)
         builder.authenticator(authenticator)
@@ -51,6 +62,8 @@ open class HttpClientModule {
     }
 
     companion object {
+        private const val HEADER_USER_AGENT = "User-Agent"
+
         private const val CONNECT_TIMEOUT_MILLIS = 15 * 1000 // 15s
         private const val READ_TIMEOUT_MILLIS = 20 * 1000 // 20s
 

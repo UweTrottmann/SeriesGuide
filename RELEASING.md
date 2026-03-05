@@ -17,7 +17,12 @@
 
 - Change version code and name in [`build.gradle.kts`](/build.gradle.kts)
 - Update [`CHANGELOG.md`](/CHANGELOG.md)
-- Commit and push
+
+  ```bash
+  ./update-version.sh build.gradle.kts CHANGELOG.md
+  ```
+
+- Commit with the suggested message and push
 
   ```shell
   git commit --all --message "Prepare version 2025.2.9 (21250212)"
