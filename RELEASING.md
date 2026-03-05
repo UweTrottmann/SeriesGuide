@@ -4,10 +4,10 @@
 
   ```bash
   # If it does not exist, create a release branch
-  git checkout -b release-2026.1
+  git checkout -b releases/2026.1
   
   # If it exists, merge latest changes
-  git checkout release-2026.1
+  git checkout releases/2026.1
   git merge dev
   ```
 
@@ -28,7 +28,7 @@
 
   ```shell
   git commit --all --message "Prepare version 2026.1.1 (23260101)"
-  git push --set-upstream origin release-2026.1
+  git push --set-upstream origin releases/2026.1
   ```
 
 - If it does not exist, [create a merge request](https://github.com/UweTrottmann/SeriesGuide/compare/main...) against `main`
@@ -52,7 +52,7 @@
   git tag v2026.1.2
   git push origin v2026.1.2
   git checkout dev
-  git merge release-2026.1
+  git merge releases/2026.1
   git push origin dev
   ```
 
@@ -77,5 +77,5 @@
 
   ```shell
   git checkout dev
-  git merge --no-ff release-2026.1
+  git merge --no-ff releases/2026.1
   ```
