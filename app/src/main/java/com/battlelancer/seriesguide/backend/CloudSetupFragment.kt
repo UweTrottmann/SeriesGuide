@@ -13,6 +13,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.auth.AuthException
@@ -288,17 +289,27 @@ class CloudSetupFragment : Fragment() {
             hexagonTools.removeAccountAndSetDisabled()
             updateViews()
         } else {
-            // FIXME
-//            setProgressVisible(true)
-//            AuthUI.getInstance().signOut(requireContext()).addOnCompleteListener {
-//                Timber.i("Signed out.")
-//                signInAccount = null
-//                hexagonTools.removeAccountAndSetDisabled()
-//                if (this@CloudSetupFragment.isAdded) {
-//                    setProgressVisible(false)
-//                    updateViews()
-//                }
-//            }
+            setProgressVisible(true)
+            val context = requireContext().applicationContext
+            viewLifecycleOwner.lifecycleScope.launch {
+                // Launch on app scope to guarantee state in HexagonTools is updated even if this
+                // fragment is destroyed.
+                SgApp.coroutineScope.launch {
+                    try {
+                        FirebaseAuthUI.getInstance().signOut(context)
+                    } catch (e: Exception) {
+                        Timber.e(e, "Failed to sign out")
+                        Errors.reportHexagonAuthError(ACTION_SIGN_OUT, e)
+                    }
+                    Timber.i("Signed out.")
+                    hexagonTools.removeAccountAndSetDisabled()
+                }.join()
+
+                // If views aren't destroyed, yet, update them
+                signInAccount = null
+                setProgressVisible(false)
+                updateViews()
+            }
         }
     }
 
@@ -413,5 +424,6 @@ class CloudSetupFragment : Fragment() {
 
     companion object {
         private const val ACTION_SIGN_IN = "sign-in"
+        private const val ACTION_SIGN_OUT = "sign-out"
     }
 }
