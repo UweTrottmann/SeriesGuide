@@ -165,30 +165,11 @@ class DefaultAuthUIStringProvider(
     override val emailMismatchMessage: String
         get() = localizedContext.getString(R.string.fui_error_unknown)
 
-    override val resendCode: String
-        get() = localizedContext.getString(R.string.fui_resend_code)
-
-    override fun resendCodeTimer(timeFormatted: String): String =
-        localizedContext.getString(R.string.fui_resend_code_in, timeFormatted)
-
-    override val verifying: String
-        get() = localizedContext.getString(R.string.fui_verifying)
-    override val incorrectCodeDialogBody: String
-        get() = localizedContext.getString(R.string.fui_incorrect_code_dialog_body)
-    override val smsTermsOfService: String
-        get() = localizedContext.getString(R.string.fui_sms_terms_of_service)
-
-    override fun enterVerificationCodeTitle(phoneNumber: String): String =
-        localizedContext.getString(R.string.fui_enter_confirmation_code) + " " + phoneNumber
-
-    override val verificationCodeHint: String
-        get() = localizedContext.getString(R.string.fui_enter_confirmation_code)
-
     override val missingVerificationCode: String
         get() = localizedContext.getString(R.string.fui_required_field)
 
     override val invalidVerificationCode: String
-        get() = localizedContext.getString(R.string.fui_incorrect_code_dialog_body)
+        get() = localizedContext.getString(R.string.fui_mfa_incorrect_code)
 
     /**
      * Multi-Factor Authentication Strings
@@ -252,9 +233,6 @@ class DefaultAuthUIStringProvider(
     override val verifyAction: String
         get() = localizedContext.getString(R.string.fui_verify_action)
 
-    override val useDifferentMethodAction: String
-        get() = localizedContext.getString(R.string.fui_use_different_method_action)
-
     override val recoveryCodesSavedAction: String
         get() = localizedContext.getString(R.string.fui_recovery_codes_saved_action)
 
@@ -281,9 +259,6 @@ class DefaultAuthUIStringProvider(
 
     override val mfaAllMethodsEnrolledMessage: String
         get() = localizedContext.getString(R.string.fui_mfa_all_methods_enrolled_message)
-
-    override val smsAuthenticationLabel: String
-        get() = localizedContext.getString(R.string.fui_mfa_label_sms_authentication)
 
     override val totpAuthenticationLabel: String
         get() = localizedContext.getString(R.string.fui_mfa_label_totp_authentication)
@@ -322,8 +297,6 @@ class DefaultAuthUIStringProvider(
         )
     override val emailAlreadyInUseRecoveryMessage: String
         get() = localizedContext.getString(R.string.fui_email_account_creation_error)
-    override val tooManyRequestsRecoveryMessage: String
-        get() = localizedContext.getString(R.string.fui_error_too_many_attempts)
     override val mfaRequiredRecoveryMessage: String
         get() = localizedContext.getString(R.string.fui_error_mfa_required_message)
     override val accountLinkingRequiredRecoveryMessage: String
@@ -338,8 +311,6 @@ class DefaultAuthUIStringProvider(
      */
     override val mfaStepSelectFactorTitle: String
         get() = localizedContext.getString(R.string.fui_mfa_step_select_factor_title)
-    override val mfaStepConfigureSmsTitle: String
-        get() = localizedContext.getString(R.string.fui_mfa_step_configure_sms_title)
     override val mfaStepConfigureTotpTitle: String
         get() = localizedContext.getString(R.string.fui_mfa_step_configure_totp_title)
     override val mfaStepVerifyFactorTitle: String
@@ -352,24 +323,14 @@ class DefaultAuthUIStringProvider(
      */
     override val mfaStepSelectFactorHelper: String
         get() = localizedContext.getString(R.string.fui_mfa_step_select_factor_helper)
-    override val mfaStepConfigureSmsHelper: String
-        get() = localizedContext.getString(R.string.fui_mfa_step_configure_sms_helper)
     override val mfaStepConfigureTotpHelper: String
         get() = localizedContext.getString(R.string.fui_mfa_step_configure_totp_helper)
-    override val mfaStepVerifyFactorSmsHelper: String
-        get() = localizedContext.getString(R.string.fui_mfa_step_verify_factor_sms_helper)
     override val mfaStepVerifyFactorTotpHelper: String
         get() = localizedContext.getString(R.string.fui_mfa_step_verify_factor_totp_helper)
     override val mfaStepVerifyFactorGenericHelper: String
         get() = localizedContext.getString(R.string.fui_mfa_step_verify_factor_generic_helper)
     override val mfaStepShowRecoveryCodesHelper: String
         get() = localizedContext.getString(R.string.fui_mfa_step_show_recovery_codes_helper)
-
-    // MFA Enrollment Screen Titles
-    override val mfaEnrollmentEnterPhoneNumber: String
-        get() = localizedContext.getString(R.string.fui_mfa_enrollment_enter_phone_number)
-    override val mfaEnrollmentVerifySmsCode: String
-        get() = localizedContext.getString(R.string.fui_mfa_enrollment_verify_sms_code)
 
     // MFA Error Messages
     override val mfaErrorRecentLoginRequired: String

@@ -1,5 +1,6 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: Apache-2.0 AND AGPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
@@ -123,6 +124,7 @@ private fun getRecoveryMessage(
             error.message?.takeIf { it.isNotBlank() && it != "Invalid credentials provided" }
                 ?: stringProvider.invalidCredentialsRecoveryMessage
         }
+
         is AuthException.UserNotFoundException -> stringProvider.userNotFoundRecoveryMessage
         is AuthException.WeakPasswordException -> {
             // Include specific reason if available
@@ -140,31 +142,30 @@ private fun getRecoveryMessage(
             } ?: baseMessage
         }
 
-        is AuthException.TooManyRequestsException -> stringProvider.tooManyRequestsRecoveryMessage
-        is AuthException.PhoneVerificationCooldownException -> {
-            // Use the custom message which includes remaining cooldown time
-            error.message ?: stringProvider.unknownErrorRecoveryMessage
-        }
         is AuthException.MfaRequiredException -> stringProvider.mfaRequiredRecoveryMessage
         is AuthException.AccountLinkingRequiredException -> {
             // Use the custom message which includes email and provider details
             error.message ?: stringProvider.accountLinkingRequiredRecoveryMessage
         }
+
         is AuthException.EmailMismatchException -> stringProvider.emailMismatchMessage
         is AuthException.InvalidEmailLinkException -> stringProvider.emailLinkInvalidLinkMessage
         is AuthException.EmailLinkWrongDeviceException -> stringProvider.emailLinkWrongDeviceMessage
         is AuthException.EmailLinkDifferentAnonymousUserException ->
             stringProvider.emailLinkDifferentAnonymousUserMessage
+
         is AuthException.EmailLinkPromptForEmailException -> stringProvider.emailLinkPromptForEmailMessage
         is AuthException.EmailLinkCrossDeviceLinkingException -> {
             val providerName = error.providerName ?: stringProvider.emailProvider
             stringProvider.emailLinkCrossDeviceLinkingMessage(providerName)
         }
+
         is AuthException.AuthCancelledException -> stringProvider.authCancelledRecoveryMessage
         is AuthException.UnknownException -> {
             // Use custom message if available (e.g., for configuration errors)
             error.message?.takeIf { it.isNotBlank() } ?: stringProvider.unknownErrorRecoveryMessage
         }
+
         else -> stringProvider.unknownErrorRecoveryMessage
     }
 }
@@ -192,9 +193,8 @@ private fun getRecoveryActionText(
         is AuthException.UserNotFoundException -> stringProvider.signupPageTitle // Navigate to sign-up when user not found
         is AuthException.NetworkException,
         is AuthException.InvalidCredentialsException,
-        is AuthException.WeakPasswordException,
-        is AuthException.TooManyRequestsException,
-        is AuthException.PhoneVerificationCooldownException -> stringProvider.retryAction
+        is AuthException.WeakPasswordException -> stringProvider.retryAction
+
         is AuthException.UnknownException -> stringProvider.retryAction
 
         else -> stringProvider.retryAction
@@ -214,8 +214,6 @@ private fun isRecoverable(error: AuthException): Boolean {
         is AuthException.UserNotFoundException -> true
         is AuthException.WeakPasswordException -> true
         is AuthException.EmailAlreadyInUseException -> true
-        is AuthException.TooManyRequestsException -> false // User must wait
-        is AuthException.PhoneVerificationCooldownException -> false // User must wait for cooldown
         is AuthException.MfaRequiredException -> true
         is AuthException.AccountLinkingRequiredException -> true
         is AuthException.AuthCancelledException -> true

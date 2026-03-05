@@ -166,27 +166,6 @@ interface AuthUIStringProvider {
     /** Message shown when email mismatch occurs */
     val emailMismatchMessage: String
 
-    /** Resend code link text */
-    val resendCode: String
-
-    /** Resend code with timer */
-    fun resendCodeTimer(timeFormatted: String): String
-
-    /** Verifying progress text */
-    val verifying: String
-
-    /** Wrong verification code error */
-    val incorrectCodeDialogBody: String
-
-    /** SMS terms of service warning */
-    val smsTermsOfService: String
-
-    /** Enter verification code title with phone number */
-    fun enterVerificationCodeTitle(phoneNumber: String): String
-
-    /** Verification code hint */
-    val verificationCodeHint: String
-
     /** Missing verification code error */
     val missingVerificationCode: String
 
@@ -249,9 +228,6 @@ interface AuthUIStringProvider {
     /** Action text for confirming verification. */
     val verifyAction: String
 
-    /** Action text for choosing a different factor during MFA challenge. */
-    val useDifferentMethodAction: String
-
     /** Action text for confirming recovery codes have been saved. */
     val recoveryCodesSavedAction: String
 
@@ -278,9 +254,6 @@ interface AuthUIStringProvider {
 
     /** Message shown when all factors are already enrolled. */
     val mfaAllMethodsEnrolledMessage: String
-
-    /** Label for SMS MFA factor. */
-    val smsAuthenticationLabel: String
 
     /** Label for authenticator-app MFA factor. */
     val totpAuthenticationLabel: String
@@ -325,9 +298,6 @@ interface AuthUIStringProvider {
     /** Email already in use recovery message */
     val emailAlreadyInUseRecoveryMessage: String
 
-    /** Too many requests recovery message */
-    val tooManyRequestsRecoveryMessage: String
-
     /** MFA required recovery message */
     val mfaRequiredRecoveryMessage: String
 
@@ -344,9 +314,6 @@ interface AuthUIStringProvider {
     /** Title for MFA factor selection step */
     val mfaStepSelectFactorTitle: String
 
-    /** Title for SMS MFA configuration step */
-    val mfaStepConfigureSmsTitle: String
-
     /** Title for TOTP MFA configuration step */
     val mfaStepConfigureTotpTitle: String
 
@@ -360,14 +327,8 @@ interface AuthUIStringProvider {
     /** Helper text for selecting MFA factor */
     val mfaStepSelectFactorHelper: String
 
-    /** Helper text for SMS configuration */
-    val mfaStepConfigureSmsHelper: String
-
     /** Helper text for TOTP configuration */
     val mfaStepConfigureTotpHelper: String
-
-    /** Helper text for SMS verification */
-    val mfaStepVerifyFactorSmsHelper: String
 
     /** Helper text for TOTP verification */
     val mfaStepVerifyFactorTotpHelper: String
@@ -377,13 +338,6 @@ interface AuthUIStringProvider {
 
     /** Helper text for recovery codes */
     val mfaStepShowRecoveryCodesHelper: String
-
-    // MFA Enrollment Screen Titles
-    /** Title for MFA phone number enrollment screen (top app bar) */
-    val mfaEnrollmentEnterPhoneNumber: String
-
-    /** Title for MFA SMS verification screen (top app bar) */
-    val mfaEnrollmentVerifySmsCode: String
 
     // MFA Error Messages
     /** Error message when MFA enrollment requires recent authentication */

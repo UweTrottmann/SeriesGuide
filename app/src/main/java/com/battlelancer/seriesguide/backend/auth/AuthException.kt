@@ -1,5 +1,6 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: Apache-2.0 AND AGPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
@@ -127,36 +128,6 @@ abstract class AuthException(
         message: String,
         cause: Throwable? = null,
         val email: String? = null
-    ) : AuthException(message, cause)
-
-    /**
-     * Too many requests have been made to the server.
-     *
-     * This exception is thrown when the client has made too many requests
-     * in a short period and needs to wait before making additional requests.
-     *
-     * @property message The detailed error message
-     * @property cause The underlying [Throwable] that caused this exception
-     */
-    class TooManyRequestsException(
-        message: String,
-        cause: Throwable? = null
-    ) : AuthException(message, cause)
-
-    /**
-     * Phone verification is in cooldown period for the same phone number.
-     *
-     * This exception is thrown when attempting to verify the same phone number
-     * again before the cooldown period (timeout) has expired.
-     *
-     * @property message The detailed error message
-     * @property cooldownSeconds The number of seconds remaining in the cooldown period
-     * @property cause The underlying [Throwable] that caused this exception
-     */
-    class PhoneVerificationCooldownException(
-        message: String,
-        val cooldownSeconds: Long,
-        cause: Throwable? = null
     ) : AuthException(message, cause)
 
     /**
@@ -316,7 +287,6 @@ abstract class AuthException(
          * - [FirebaseAuthInvalidUserException] → [UserNotFoundException]
          * - [FirebaseAuthWeakPasswordException] → [WeakPasswordException]
          * - [FirebaseAuthUserCollisionException] → [EmailAlreadyInUseException]
-         * - [FirebaseAuthException] with ERROR_TOO_MANY_REQUESTS → [TooManyRequestsException]
          * - [FirebaseAuthMultiFactorException] → [MfaRequiredException]
          * - Other exceptions → [UnknownException]
          *
@@ -419,20 +389,11 @@ abstract class AuthException(
                 }
 
                 is FirebaseAuthException -> {
-                    // Handle FirebaseAuthException and check for specific error codes
-                    when (firebaseException.errorCode) {
-                        "ERROR_TOO_MANY_REQUESTS" -> TooManyRequestsException(
-                            message = firebaseException.message
-                                ?: "Too many requests. Please try again later",
-                            cause = firebaseException
-                        )
-
-                        else -> UnknownException(
-                            message = firebaseException.message
-                                ?: "An unknown authentication error occurred",
-                            cause = firebaseException
-                        )
-                    }
+                    UnknownException(
+                        message = firebaseException.message
+                            ?: "An unknown authentication error occurred",
+                        cause = firebaseException
+                    )
                 }
 
                 is FirebaseException -> {

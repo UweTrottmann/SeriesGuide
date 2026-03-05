@@ -22,6 +22,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -31,7 +32,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -41,7 +41,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
 import com.battlelancer.seriesguide.backend.auth.configuration.MfaFactor
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.AuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
@@ -50,18 +49,14 @@ import com.battlelancer.seriesguide.backend.auth.mfa.MfaEnrollmentStep
 import com.battlelancer.seriesguide.backend.auth.mfa.toMfaErrorMessage
 import com.battlelancer.seriesguide.backend.auth.ui.components.QrCodeImage
 import com.battlelancer.seriesguide.backend.auth.ui.components.ReauthenticationDialog
-import com.battlelancer.seriesguide.backend.auth.ui.screens.phone.EnterPhoneNumberUI
-import com.battlelancer.seriesguide.backend.auth.ui.screens.phone.EnterVerificationCodeUI
 import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.MultiFactorInfo
-import com.google.firebase.auth.PhoneMultiFactorInfo
 import com.google.firebase.auth.TotpMultiFactorInfo
 
 @Composable
 internal fun DefaultMfaEnrollmentContent(
     state: MfaEnrollmentContentState,
-    authConfiguration: AuthUIConfiguration,
     user: FirebaseUser
 ) {
     val stringProvider = LocalAuthUIStringProvider.current
@@ -76,9 +71,11 @@ internal fun DefaultMfaEnrollmentContent(
             exception is FirebaseAuthRecentLoginRequiredException -> {
                 showReauthDialog.value = true
             }
+
             exception != null -> {
                 snackbarHostState.showSnackbar(exception.toMfaErrorMessage(stringProvider))
             }
+
             !state.error.isNullOrBlank() -> {
                 snackbarHostState.showSnackbar(state.error!!)
             }
@@ -113,8 +110,10 @@ internal fun DefaultMfaEnrollmentContent(
                 reauthErrorMessage.value = when {
                     exception.message?.contains("password", ignoreCase = true) == true ->
                         stringProvider.incorrectPasswordError
+
                     exception.message?.contains("network", ignoreCase = true) == true ->
                         stringProvider.noInternet
+
                     else -> stringProvider.reauthGenericError
                 }
             }
@@ -136,21 +135,6 @@ internal fun DefaultMfaEnrollmentContent(
                 )
             }
 
-            MfaEnrollmentStep.ConfigureSms -> {
-                state.selectedCountry?.let { country ->
-                    EnterPhoneNumberUI(
-                        configuration = authConfiguration,
-                        isLoading = state.isLoading,
-                        phoneNumber = state.phoneNumber,
-                        selectedCountry = country,
-                        onPhoneNumberChange = state.onPhoneNumberChange,
-                        onCountrySelected = state.onCountrySelected,
-                        onSendCodeClick = state.onSendSmsCodeClick,
-                        title = stringProvider.mfaEnrollmentEnterPhoneNumber
-                    )
-                }
-            }
-
             MfaEnrollmentStep.ConfigureTotp -> {
                 ConfigureTotpUI(
                     totpSecret = state.totpSecret?.sharedSecretKey,
@@ -166,23 +150,6 @@ internal fun DefaultMfaEnrollmentContent(
 
             MfaEnrollmentStep.VerifyFactor -> {
                 when (state.selectedFactor) {
-                    MfaFactor.Sms -> {
-                        val formattedPhone =
-                            "${state.selectedCountry?.dialCode ?: ""}${state.phoneNumber}"
-                        EnterVerificationCodeUI(
-                            configuration = authConfiguration,
-                            isLoading = state.isLoading,
-                            verificationCode = state.verificationCode,
-                            fullPhoneNumber = formattedPhone,
-                            resendTimer = state.resendTimer,
-                            onVerificationCodeChange = state.onVerificationCodeChange,
-                            onVerifyCodeClick = state.onVerifyClick,
-                            onResendCodeClick = state.onResendCodeClick ?: {},
-                            onChangeNumberClick = state.onBackClick,
-                            title = stringProvider.mfaEnrollmentVerifySmsCode
-                        )
-                    }
-
                     MfaFactor.Totp -> {
                         VerifyTotpUI(
                             verificationCode = state.verificationCode,
@@ -234,7 +201,6 @@ private fun SelectFactorUI(
 ) {
     val enrolledFactorIds = enrolledFactors.mapNotNull {
         when (it) {
-            is PhoneMultiFactorInfo -> MfaFactor.Sms
             is TotpMultiFactorInfo -> MfaFactor.Totp
             else -> null
         }
@@ -308,7 +274,6 @@ private fun SelectFactorUI(
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         when (factor) {
-                            MfaFactor.Sms -> Text(stringProvider.mfaStepConfigureSmsTitle)
                             MfaFactor.Totp -> Text(stringProvider.mfaStepConfigureTotpTitle)
                         }
                     }
@@ -358,7 +323,6 @@ private fun EnrolledFactorItem(
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = when (factorInfo) {
-                        is PhoneMultiFactorInfo -> stringProvider.smsAuthenticationLabel
                         is TotpMultiFactorInfo -> stringProvider.totpAuthenticationLabel
                         else -> stringProvider.unknownMethodLabel
                     },
@@ -366,8 +330,9 @@ private fun EnrolledFactorItem(
                 )
                 Text(
                     text = when (factorInfo) {
-                        is PhoneMultiFactorInfo -> factorInfo.phoneNumber ?: stringProvider.smsAuthenticationLabel
-                        is TotpMultiFactorInfo -> factorInfo.displayName ?: stringProvider.totpAuthenticationLabel
+                        is TotpMultiFactorInfo -> factorInfo.displayName
+                            ?: stringProvider.totpAuthenticationLabel
+
                         else -> ""
                     },
                     style = MaterialTheme.typography.bodySmall,
