@@ -277,7 +277,6 @@ dependencies {
     }
 
     // Firebase Authentication
-    implementation(libs.firebase.ui.auth) // temporary
     implementation(libs.firebase.auth)
     implementation(libs.androidx.credentials)
     implementation(libs.androidx.credentials.play)
