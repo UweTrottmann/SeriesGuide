@@ -17,7 +17,7 @@ package com.battlelancer.seriesguide.backend.auth.configuration.auth_provider
 import android.content.Context
 import android.net.Uri
 import android.util.Log
-import com.firebase.ui.auth.R
+import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.auth.AuthException
 import com.battlelancer.seriesguide.backend.auth.AuthState
 import com.battlelancer.seriesguide.backend.auth.FirebaseAuthUI
