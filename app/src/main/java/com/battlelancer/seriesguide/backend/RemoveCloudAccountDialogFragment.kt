@@ -84,8 +84,7 @@ class RemoveCloudAccountDialogFragment : AppCompatDialogFragment() {
                 FirebaseAuthUI.getInstance().delete(context)
             } catch (e: AuthException) {
                 Timber.e(e, "Failed to delete Firebase account")
-                val authEx = HexagonAuthError.build(ACTION_REMOVE_ACCOUNT, e)
-                Errors.logAndReportHexagonAuthError(authEx)
+                Errors.reportHexagonAuthError(ACTION_REMOVE_ACCOUNT, e)
                 return false
             }
 

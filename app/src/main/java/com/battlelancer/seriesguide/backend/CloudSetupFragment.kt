@@ -230,9 +230,8 @@ class CloudSetupFragment : Fragment() {
                                 errorMessage = getString(R.string.hexagon_signin_google_only)
                             } else {
                                 errorMessage = error.message
-                                Errors.logAndReportHexagonAuthError(
-                                    HexagonAuthError.build(ACTION_SIGN_IN, error)
-                                )
+                                Timber.e(error, "Failed to sign in")
+                                Errors.reportHexagonAuthError(ACTION_SIGN_IN, error)
                             }
                         }
                     }
