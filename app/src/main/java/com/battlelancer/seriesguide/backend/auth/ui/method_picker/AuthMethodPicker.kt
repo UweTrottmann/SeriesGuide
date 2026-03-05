@@ -38,7 +38,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.firebase.ui.auth.R
+import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Provider
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
