@@ -384,8 +384,6 @@ class DefaultAuthUIStringProvider(
      */
     override val mfaStepSelectFactorTitle: String
         get() = localizedContext.getString(R.string.fui_mfa_step_select_factor_title)
-    override val mfaStepConfigureSmsTitle: String
-        get() = localizedContext.getString(R.string.fui_mfa_step_configure_sms_title)
     override val mfaStepConfigureTotpTitle: String
         get() = localizedContext.getString(R.string.fui_mfa_step_configure_totp_title)
     override val mfaStepVerifyFactorTitle: String
@@ -398,12 +396,8 @@ class DefaultAuthUIStringProvider(
      */
     override val mfaStepSelectFactorHelper: String
         get() = localizedContext.getString(R.string.fui_mfa_step_select_factor_helper)
-    override val mfaStepConfigureSmsHelper: String
-        get() = localizedContext.getString(R.string.fui_mfa_step_configure_sms_helper)
     override val mfaStepConfigureTotpHelper: String
         get() = localizedContext.getString(R.string.fui_mfa_step_configure_totp_helper)
-    override val mfaStepVerifyFactorSmsHelper: String
-        get() = localizedContext.getString(R.string.fui_mfa_step_verify_factor_sms_helper)
     override val mfaStepVerifyFactorTotpHelper: String
         get() = localizedContext.getString(R.string.fui_mfa_step_verify_factor_totp_helper)
     override val mfaStepVerifyFactorGenericHelper: String
@@ -414,8 +408,6 @@ class DefaultAuthUIStringProvider(
     // MFA Enrollment Screen Titles
     override val mfaEnrollmentEnterPhoneNumber: String
         get() = localizedContext.getString(R.string.fui_mfa_enrollment_enter_phone_number)
-    override val mfaEnrollmentVerifySmsCode: String
-        get() = localizedContext.getString(R.string.fui_mfa_enrollment_verify_sms_code)
 
     // MFA Error Messages
     override val mfaErrorRecentLoginRequired: String

@@ -33,12 +33,6 @@ enum class MfaEnrollmentStep {
     SelectFactor,
 
     /**
-     * The user is configuring SMS-based MFA by entering their phone number.
-     * This step prepares to send an SMS verification code to the provided number.
-     */
-    ConfigureSms,
-
-    /**
      * The user is configuring TOTP (Time-based One-Time Password) MFA.
      * This step presents the TOTP secret (as both text and QR code) for the user
      * to scan into their authenticator app.
@@ -68,7 +62,6 @@ enum class MfaEnrollmentStep {
  */
 fun MfaEnrollmentStep.getTitle(stringProvider: AuthUIStringProvider): String = when (this) {
     MfaEnrollmentStep.SelectFactor -> stringProvider.mfaStepSelectFactorTitle
-    MfaEnrollmentStep.ConfigureSms -> stringProvider.mfaStepConfigureSmsTitle
     MfaEnrollmentStep.ConfigureTotp -> stringProvider.mfaStepConfigureTotpTitle
     MfaEnrollmentStep.VerifyFactor -> stringProvider.mfaStepVerifyFactorTitle
     MfaEnrollmentStep.ShowRecoveryCodes -> stringProvider.mfaStepShowRecoveryCodesTitle
@@ -87,10 +80,8 @@ fun MfaEnrollmentStep.getHelperText(
     selectedFactor: MfaFactor? = null
 ): String = when (this) {
     MfaEnrollmentStep.SelectFactor -> stringProvider.mfaStepSelectFactorHelper
-    MfaEnrollmentStep.ConfigureSms -> stringProvider.mfaStepConfigureSmsHelper
     MfaEnrollmentStep.ConfigureTotp -> stringProvider.mfaStepConfigureTotpHelper
     MfaEnrollmentStep.VerifyFactor -> when (selectedFactor) {
-        MfaFactor.Sms -> stringProvider.mfaStepVerifyFactorSmsHelper
         MfaFactor.Totp -> stringProvider.mfaStepVerifyFactorTotpHelper
         null -> stringProvider.mfaStepVerifyFactorGenericHelper
     }

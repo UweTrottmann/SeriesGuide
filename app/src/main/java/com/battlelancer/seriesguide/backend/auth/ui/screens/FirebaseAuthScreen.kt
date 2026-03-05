@@ -62,8 +62,6 @@ import com.battlelancer.seriesguide.backend.auth.configuration.theme.LocalAuthUI
 import com.battlelancer.seriesguide.backend.auth.ui.components.LocalTopLevelDialogController
 import com.battlelancer.seriesguide.backend.auth.ui.components.rememberTopLevelDialogController
 import com.battlelancer.seriesguide.backend.auth.ui.method_picker.AuthMethodPicker
-import com.battlelancer.seriesguide.backend.auth.ui.screens.MfaChallengeScreen
-import com.battlelancer.seriesguide.backend.auth.ui.screens.MfaEnrollmentScreen
 import com.battlelancer.seriesguide.backend.auth.ui.screens.email.EmailAuthScreen
 import com.battlelancer.seriesguide.backend.auth.util.EmailLinkPersistenceManager
 import com.battlelancer.seriesguide.backend.auth.util.SignInPreferenceManager
@@ -320,7 +318,6 @@ fun FirebaseAuthScreen(
                             user = user,
                             auth = authUI.auth,
                             configuration = mfaConfiguration,
-                            authConfiguration = configuration,
                             onComplete = { navController.popBackStack() },
                             onSkip = { navController.popBackStack() },
                             onError = { exception ->

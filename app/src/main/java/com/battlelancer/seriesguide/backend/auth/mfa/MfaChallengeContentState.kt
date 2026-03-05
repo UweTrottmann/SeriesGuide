@@ -51,14 +51,12 @@ import com.battlelancer.seriesguide.backend.auth.configuration.MfaFactor
  * ```
  *
  * @property factorType The type of MFA factor being challenged (SMS or TOTP)
- * @property maskedPhoneNumber For SMS factors, the masked phone number (e.g., "+1••••••890")
  * @property isLoading `true` when verification is in progress. Use this to show loading indicators.
  * @property error An optional error message to display to the user. Will be `null` if there's no error.
  * @property verificationCode The current value of the verification code input field.
  * @property resendTimer The number of seconds remaining before the "Resend" action is available. Will be 0 when resend is allowed.
  * @property onVerificationCodeChange Callback invoked when the verification code input changes.
  * @property onVerifyClick Callback to verify the entered code and complete sign-in.
- * @property onResendCodeClick For SMS only: Callback to resend the verification code. `null` for TOTP.
  * @property onCancelClick Callback to cancel the MFA challenge and return to sign-in.
  *
  * @since 10.0.0
@@ -66,9 +64,6 @@ import com.battlelancer.seriesguide.backend.auth.configuration.MfaFactor
 data class MfaChallengeContentState(
     /** The type of MFA factor being challenged (SMS or TOTP). */
     val factorType: MfaFactor,
-
-    /** For SMS: the masked phone number. For TOTP: null. */
-    val maskedPhoneNumber: String? = null,
 
     /** `true` when verification is in progress. Use to show loading indicators. */
     val isLoading: Boolean = false,
@@ -88,9 +83,6 @@ data class MfaChallengeContentState(
     /** Callback to verify the code and complete sign-in. */
     val onVerifyClick: () -> Unit = {},
 
-    /** For SMS only: Callback to resend the code. `null` for TOTP. */
-    val onResendCodeClick: (() -> Unit)? = null,
-
     /** Callback to cancel the challenge and return to sign-in. */
     val onCancelClick: () -> Unit = {}
 ) {
@@ -107,9 +99,4 @@ data class MfaChallengeContentState(
     val hasError: Boolean
         get() = !error.isNullOrBlank()
 
-    /**
-     * Returns true if the resend action is available (SMS only).
-     */
-    val canResend: Boolean
-        get() = factorType == MfaFactor.Sms && onResendCodeClick != null
 }

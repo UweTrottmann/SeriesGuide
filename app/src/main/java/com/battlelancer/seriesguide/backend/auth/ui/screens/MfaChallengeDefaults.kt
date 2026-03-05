@@ -44,7 +44,6 @@ import com.battlelancer.seriesguide.backend.auth.ui.components.VerificationCodeI
 
 @Composable
 internal fun DefaultMfaChallengeContent(state: MfaChallengeContentState) {
-    val isSms = state.factorType == MfaFactor.Sms
     val stringProvider = LocalAuthUIStringProvider.current
     val verificationCodeValidator = remember {
         VerificationCodeValidator(stringProvider)
@@ -59,24 +58,10 @@ internal fun DefaultMfaChallengeContent(state: MfaChallengeContentState) {
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Text(
-            text = if (isSms) {
-                val phoneLabel = state.maskedPhoneNumber ?: ""
-                stringProvider.enterVerificationCodeTitle(phoneLabel)
-            } else {
-                stringProvider.mfaStepVerifyFactorTitle
-            },
+            text = stringProvider.mfaStepVerifyFactorTitle,
             style = MaterialTheme.typography.headlineSmall,
             textAlign = TextAlign.Center
         )
-
-        if (isSms && state.maskedPhoneNumber != null) {
-            Text(
-                text = stringProvider.mfaStepVerifyFactorSmsHelper,
-                style = MaterialTheme.typography.bodyMedium,
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
 
         if (state.error != null) {
             Text(
@@ -100,43 +85,12 @@ internal fun DefaultMfaChallengeContent(state: MfaChallengeContentState) {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        if (isSms) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                TextButton(
-                    onClick = { state.onResendCodeClick?.invoke() },
-                    enabled = state.onResendCodeClick != null && !state.isLoading && state.resendTimer == 0
-                ) {
-                    Text(
-                        text = if (state.resendTimer > 0) {
-                            val minutes = state.resendTimer / 60
-                            val seconds = state.resendTimer % 60
-                            val formatted = "$minutes:${String.format(java.util.Locale.ROOT, "%02d", seconds)}"
-                            stringProvider.resendCodeTimer(formatted)
-                        } else {
-                            stringProvider.resendCode
-                        }
-                    )
-                }
-
-                TextButton(
-                    onClick = state.onCancelClick,
-                    enabled = !state.isLoading
-                ) {
-                    Text(stringProvider.useDifferentMethodAction)
-                }
-            }
-        } else {
-            OutlinedButton(
-                onClick = state.onCancelClick,
-                enabled = !state.isLoading,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(stringProvider.dismissAction)
-            }
+        OutlinedButton(
+            onClick = state.onCancelClick,
+            enabled = !state.isLoading,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(stringProvider.dismissAction)
         }
 
         Button(

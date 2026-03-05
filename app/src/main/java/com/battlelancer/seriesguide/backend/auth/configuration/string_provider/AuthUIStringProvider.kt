@@ -398,9 +398,6 @@ interface AuthUIStringProvider {
     /** Title for MFA factor selection step */
     val mfaStepSelectFactorTitle: String
 
-    /** Title for SMS MFA configuration step */
-    val mfaStepConfigureSmsTitle: String
-
     /** Title for TOTP MFA configuration step */
     val mfaStepConfigureTotpTitle: String
 
@@ -414,14 +411,8 @@ interface AuthUIStringProvider {
     /** Helper text for selecting MFA factor */
     val mfaStepSelectFactorHelper: String
 
-    /** Helper text for SMS configuration */
-    val mfaStepConfigureSmsHelper: String
-
     /** Helper text for TOTP configuration */
     val mfaStepConfigureTotpHelper: String
-
-    /** Helper text for SMS verification */
-    val mfaStepVerifyFactorSmsHelper: String
 
     /** Helper text for TOTP verification */
     val mfaStepVerifyFactorTotpHelper: String
@@ -435,9 +426,6 @@ interface AuthUIStringProvider {
     // MFA Enrollment Screen Titles
     /** Title for MFA phone number enrollment screen (top app bar) */
     val mfaEnrollmentEnterPhoneNumber: String
-
-    /** Title for MFA SMS verification screen (top app bar) */
-    val mfaEnrollmentVerifySmsCode: String
 
     // MFA Error Messages
     /** Error message when MFA enrollment requires recent authentication */
