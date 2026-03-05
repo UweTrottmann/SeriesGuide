@@ -8,7 +8,7 @@ package com.battlelancer.seriesguide.backend.auth.configuration.string_provider
 
 import android.content.Context
 import android.content.res.Configuration
-import com.firebase.ui.auth.R
+import com.battlelancer.seriesguide.R
 import java.util.Locale
 
 class DefaultAuthUIStringProvider(
