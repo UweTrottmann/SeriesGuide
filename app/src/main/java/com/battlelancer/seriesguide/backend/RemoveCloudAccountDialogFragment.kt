@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// SPDX-FileCopyrightText: Copyright © 2014 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.backend
 
@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.SgApp.Companion.getServicesComponent
+import com.battlelancer.seriesguide.backend.auth.AuthException
+import com.battlelancer.seriesguide.backend.auth.FirebaseAuthUI
 import com.battlelancer.seriesguide.util.Errors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Dispatchers
@@ -20,6 +22,7 @@ import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
+import timber.log.Timber
 import java.io.IOException
 
 /**
@@ -65,7 +68,7 @@ class RemoveCloudAccountDialogFragment : AppCompatDialogFragment() {
             }
         }
 
-        private fun doInBackground(): Boolean {
+        private suspend fun doInBackground(): Boolean {
             // remove account from hexagon
             try {
                 val accountService = hexagonTools.buildAccountService()
@@ -76,31 +79,19 @@ class RemoveCloudAccountDialogFragment : AppCompatDialogFragment() {
                 return false
             }
 
-            // FIXME
             // Delete Firebase account so other clients are signed out as well
-//            val task = AuthUI.getInstance().delete(context)
-//            try {
-//                Tasks.await(task)
-//            } catch (e: Exception) {
-//                // https://developers.google.com/android/reference/com/google/android/gms/tasks/Tasks#public-static-tresult-await-tasktresult-task
-//                if (e is InterruptedException) {
-//                    // Do not report thread interruptions, it's expected.
-//                    Timber.w(e, ACTION_REMOVE_ACCOUNT)
-//                } else {
-//                    val cause = if (e is ExecutionException) {
-//                        e.cause ?: e // The Task failed, getCause returns the original exception.
-//                    } else {
-//                        e // Unexpected exception.
-//                    }
-//                    val authEx = HexagonAuthError.build(ACTION_REMOVE_ACCOUNT, cause)
-//                    Errors.logAndReportHexagonAuthError(authEx)
-//                }
+            try {
+                FirebaseAuthUI.getInstance().delete(context)
+            } catch (e: AuthException) {
+                Timber.e(e, "Failed to delete Firebase account")
+                val authEx = HexagonAuthError.build(ACTION_REMOVE_ACCOUNT, e)
+                Errors.logAndReportHexagonAuthError(authEx)
                 return false
-//            }
-//
-//            // disable Hexagon integration, remove local account data
-//            hexagonTools.removeAccountAndSetDisabled()
-//            return true
+            }
+
+            // disable Hexagon integration, remove local account data
+            hexagonTools.removeAccountAndSetDisabled()
+            return true
         }
 
         private fun onPostExecute(result: Boolean) {
