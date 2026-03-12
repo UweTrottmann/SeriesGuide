@@ -41,7 +41,7 @@ import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.L
 import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUIAsset
 import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUITheme
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthProviderButton
-import com.battlelancer.seriesguide.backend.auth.util.SignInPreferenceManager
+import com.battlelancer.seriesguide.backend.auth.util.SignInPreferenceManager.SignInPreference
 
 /**
  * Renders the provider selection screen.
@@ -73,11 +73,11 @@ fun AuthMethodPicker(
     modifier: Modifier = Modifier,
     providers: List<AuthProvider>,
     logo: AuthUIAsset? = null,
-    onProviderSelected: (AuthProvider) -> Unit,
-    customLayout: @Composable ((List<AuthProvider>, (AuthProvider) -> Unit) -> Unit)? = null,
+    onProviderSelected: (AuthProvider, SignInPreference?) -> Unit,
+    customLayout: @Composable ((List<AuthProvider>, (AuthProvider, SignInPreference?) -> Unit) -> Unit)? = null,
     termsOfServiceUrl: String? = null,
     privacyPolicyUrl: String? = null,
-    lastSignInPreference: SignInPreferenceManager.SignInPreference? = null,
+    lastSignInPreference: SignInPreference? = null,
 ) {
     val context = LocalContext.current
     val inPreview = LocalInspectionMode.current
@@ -118,7 +118,7 @@ fun AuthMethodPicker(
                                 ContinueAsButton(
                                     provider = lastProvider,
                                     identifier = preference.identifier,
-                                    onClick = { onProviderSelected(lastProvider) }
+                                    onClick = { onProviderSelected(lastProvider, preference) }
                                 )
                                 Spacer(modifier = Modifier.height(24.dp))
 
@@ -150,7 +150,7 @@ fun AuthMethodPicker(
                                 modifier = Modifier
                                     .fillMaxWidth(),
                                 onClick = {
-                                    onProviderSelected(provider)
+                                    onProviderSelected(provider, null)
                                 },
                                 provider = provider,
                                 stringProvider = LocalAuthUIStringProvider.current
@@ -229,10 +229,10 @@ fun PreviewAuthMethodPicker() {
                             serverClientId = null
                         )
                     ),
-                    onProviderSelected = { _ -> },
+                    onProviderSelected = { _, _ -> },
                     termsOfServiceUrl = "https://example.com/terms",
                     privacyPolicyUrl = "https://example.com/privacy",
-                    lastSignInPreference = SignInPreferenceManager.SignInPreference(
+                    lastSignInPreference = SignInPreference(
                         providerId = Provider.EMAIL.id,
                         identifier = "someone@domain.example",
                         timestamp = 0

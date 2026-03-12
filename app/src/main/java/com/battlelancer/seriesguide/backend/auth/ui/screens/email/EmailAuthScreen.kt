@@ -1,5 +1,6 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: Apache-2.0 AND AGPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
@@ -26,8 +27,8 @@ import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.sen
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.sendSignInLinkToEmail
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.signInWithEmailAndPassword
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.signInWithEmailLink
-import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.ui.components.LocalTopLevelDialogController
+import com.battlelancer.seriesguide.backend.auth.util.SignInPreferenceManager
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.AuthResult
 import kotlinx.coroutines.launch
@@ -106,6 +107,7 @@ class EmailAuthContentState(
  * a custom UI via a trailing lambda (slot), allowing for complete visual customization.
  *
  * @param configuration
+ * @param signInPreference A sign-in preference to pre-populate the email address with
  * @param onSuccess
  * @param onError
  * @param onCancel
@@ -116,6 +118,7 @@ fun EmailAuthScreen(
     context: Context,
     configuration: AuthUIConfiguration,
     authUI: FirebaseAuthUI,
+    signInPreference: SignInPreferenceManager.SignInPreference? = null,
     credentialForLinking: AuthCredential? = null,
     emailLinkFromDifferentDevice: String? = null,
     onSuccess: (AuthResult) -> Unit,
@@ -124,7 +127,6 @@ fun EmailAuthScreen(
     content: @Composable ((EmailAuthContentState) -> Unit)? = null,
 ) {
     val provider = configuration.providers.filterIsInstance<AuthProvider.Email>().first()
-    val stringProvider = LocalAuthUIStringProvider.current
     val dialogController = LocalTopLevelDialogController.current
     val coroutineScope = rememberCoroutineScope()
 
@@ -136,7 +138,9 @@ fun EmailAuthScreen(
     }
     val mode = rememberSaveable { mutableStateOf(initialMode) }
     val displayNameValue = rememberSaveable { mutableStateOf("") }
-    val emailTextValue = rememberSaveable { mutableStateOf("") }
+    // The user has chosen to continue with a specific email address, so pre-populate it. Note that
+    // it might get overwritten with a value retrieved from credential manager in SignInUI.
+    val emailTextValue = rememberSaveable { mutableStateOf(signInPreference?.identifier.orEmpty()) }
     val passwordTextValue = rememberSaveable { mutableStateOf("") }
     val confirmPasswordTextValue = rememberSaveable { mutableStateOf("") }
 
