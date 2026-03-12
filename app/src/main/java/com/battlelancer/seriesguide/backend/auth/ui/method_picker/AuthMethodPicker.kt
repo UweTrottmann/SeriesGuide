@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.HorizontalDivider
@@ -31,6 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Provider
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.DefaultAuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUIAsset
@@ -81,16 +83,16 @@ fun AuthMethodPicker(
     Column(
         modifier = modifier
     ) {
-        logo?.let {
-            Image(
-                modifier = Modifier
-                    .weight(0.4f)
-                    .align(Alignment.CenterHorizontally),
-                painter = it.painter,
-                contentDescription = if (inPreview) ""
-                else stringResource(R.string.fui_auth_method_picker_logo)
-            )
-        }
+        Image(
+            modifier = Modifier
+                .size(48.dp)
+                .weight(0.4f)
+                .align(Alignment.CenterHorizontally),
+            painter = (logo
+                ?: AuthUIAsset.Resource(R.drawable.ic_account_circle_black_24dp)).painter,
+            contentDescription = if (inPreview) ""
+            else stringResource(R.string.fui_auth_method_picker_logo)
+        )
         if (customLayout != null) {
             customLayout(providers, onProviderSelected)
         } else {
@@ -224,12 +226,14 @@ fun PreviewAuthMethodPicker() {
                             serverClientId = null
                         )
                     ),
-                    logo = AuthUIAsset.Resource(R.drawable.fui_ic_check_circle_black_128dp),
-                    onProviderSelected = { provider ->
-
-                    },
+                    onProviderSelected = { _ -> },
                     termsOfServiceUrl = "https://example.com/terms",
-                    privacyPolicyUrl = "https://example.com/privacy"
+                    privacyPolicyUrl = "https://example.com/privacy",
+                    lastSignInPreference = SignInPreferenceManager.SignInPreference(
+                        providerId = Provider.EMAIL.id,
+                        identifier = "someone@domain.example",
+                        timestamp = 0
+                    )
                 )
             }
         }
