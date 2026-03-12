@@ -130,6 +130,8 @@ class FirebaseAuthUI private constructor(
      * lifecycle. The controller provides methods to start the flow, monitor its state,
      * and clean up resources when done.
      *
+     * Resets the internal auth state to [AuthState.Idle].
+     *
      * **Example with ActivityResultLauncher:**
      * ```kotlin
      * class MyActivity : ComponentActivity() {
