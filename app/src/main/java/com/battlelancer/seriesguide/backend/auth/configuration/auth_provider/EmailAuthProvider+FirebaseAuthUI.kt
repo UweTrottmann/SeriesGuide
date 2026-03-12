@@ -179,7 +179,7 @@ internal suspend fun FirebaseAuthUI.createOrLinkUserWithEmailAndPassword(
             try {
                 SignInPreferenceManager.saveLastSignIn(
                     context = context,
-                    providerId = "password",
+                    providerId = provider.providerId,
                     identifier = email
                 )
                 Log.d(TAG, "Sign-in preference saved for: $email")
@@ -307,6 +307,7 @@ internal suspend fun FirebaseAuthUI.createOrLinkUserWithEmailAndPassword(
 internal suspend fun FirebaseAuthUI.signInWithEmailAndPassword(
     context: Context,
     config: AuthUIConfiguration,
+    provider: AuthProvider,
     email: String,
     password: String,
     credentialForLinking: AuthCredential? = null,
@@ -413,7 +414,7 @@ internal suspend fun FirebaseAuthUI.signInWithEmailAndPassword(
                 try {
                     SignInPreferenceManager.saveLastSignIn(
                         context = context,
-                        providerId = "password",
+                        providerId = provider.providerId,
                         identifier = email
                     )
                     Log.d(TAG, "Sign-in preference saved for: $email")
