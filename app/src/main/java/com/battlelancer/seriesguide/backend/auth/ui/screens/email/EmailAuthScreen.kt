@@ -148,14 +148,6 @@ fun EmailAuthScreen(
     val passwordTextValue = rememberSaveable { mutableStateOf("") }
     val confirmPasswordTextValue = rememberSaveable { mutableStateOf("") }
 
-    // Used for clearing text fields when switching EmailAuthMode changes
-    val textValues = listOf(
-        displayNameValue,
-        emailTextValue,
-        passwordTextValue,
-        confirmPasswordTextValue
-    )
-
     val authState by authUI.authStateFlow().collectAsState(AuthState.Idle)
     val isLoading = authState is AuthState.Loading
     val authCredentialForLinking = remember { credentialForLinking }
@@ -320,19 +312,17 @@ fun EmailAuthScreen(
             }
         },
         onGoToSignUp = {
-            textValues.forEach { it.value = "" }
             mode.value = EmailAuthMode.SignUp
         },
         onGoToSignIn = {
-            textValues.forEach { it.value = "" }
             mode.value = EmailAuthMode.SignIn
         },
         onGoToResetPassword = {
-            textValues.forEach { it.value = "" }
+            // Password must be incorrect, so clear it
+            passwordTextValue.value = ""
             mode.value = EmailAuthMode.ResetPassword
         },
         onGoToEmailLinkSignIn = {
-            textValues.forEach { it.value = "" }
             mode.value = EmailAuthMode.EmailLinkSignIn
         },
     )
