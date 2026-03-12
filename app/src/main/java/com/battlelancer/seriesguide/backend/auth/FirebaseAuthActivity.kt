@@ -141,14 +141,6 @@ class FirebaseAuthActivity : ComponentActivity() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        // Reset auth state when activity is destroyed
-        if (!isFinishing) {
-            authUI.updateAuthState(AuthState.Idle)
-        }
-    }
-
     companion object {
         private const val EXTRA_CONFIGURATION_KEY = "com.firebase.ui.auth.CONFIGURATION_KEY"
 

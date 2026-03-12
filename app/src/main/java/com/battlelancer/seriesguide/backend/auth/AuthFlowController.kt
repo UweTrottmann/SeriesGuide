@@ -105,6 +105,11 @@ class AuthFlowController internal constructor(
     private val isDisposed = AtomicBoolean(false)
     private var stateCollectionJob: Job? = null
 
+    init {
+        // Reset internal state
+        authUI.updateAuthState(AuthState.Idle)
+    }
+
     /**
      * Flow of [AuthState] changes during the authentication flow.
      *
