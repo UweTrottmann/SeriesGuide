@@ -674,7 +674,7 @@ private fun EmailVerificationContent(
         )
         Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = { user?.sendEmailVerification() }) {
-            Text(stringProvider.resendVerificationEmailAction)
+            Text(stringProvider.sendVerificationEmailAction)
         }
         Spacer(modifier = Modifier.height(8.dp))
         Button(onClick = onCheckStatus) {

@@ -274,8 +274,8 @@ class DefaultAuthUIStringProvider(
     override fun verifyEmailInstruction(email: String): String =
         localizedContext.getString(R.string.fui_verify_email_instruction, email)
 
-    override val resendVerificationEmailAction: String
-        get() = localizedContext.getString(R.string.fui_resend_verification_email_action)
+    override val sendVerificationEmailAction: String
+        get() = localizedContext.getString(R.string.fui_send_verification_email_action)
 
     override val verifiedEmailAction: String
         get() = localizedContext.getString(R.string.fui_verified_email_action)
