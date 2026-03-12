@@ -23,6 +23,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -33,8 +34,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.DefaultAuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUIAsset
+import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUITheme
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthProviderButton
 import com.battlelancer.seriesguide.backend.auth.util.SignInPreferenceManager
 
@@ -202,27 +205,36 @@ private fun ContinueAsButton(
 @Preview(showBackground = true)
 @Composable
 fun PreviewAuthMethodPicker() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        AuthMethodPicker(
-            providers = listOf(
-                AuthProvider.Email(
-                    emailLinkActionCodeSettings = null,
-                    passwordValidationRules = emptyList()
-                ),
-                AuthProvider.Google(
-                    scopes = emptyList(),
-                    serverClientId = null
-                )
-            ),
-            logo = AuthUIAsset.Resource(R.drawable.fui_ic_check_circle_black_128dp),
-            onProviderSelected = { provider ->
+    val applicationContext = LocalContext.current
+    val stringProvider = DefaultAuthUIStringProvider(applicationContext)
 
-            },
-            termsOfServiceUrl = "https://example.com/terms",
-            privacyPolicyUrl = "https://example.com/privacy"
-        )
+    AuthUITheme {
+        CompositionLocalProvider(
+            LocalAuthUIStringProvider provides stringProvider
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+            ) {
+                AuthMethodPicker(
+                    providers = listOf(
+                        AuthProvider.Email(
+                            emailLinkActionCodeSettings = null,
+                            passwordValidationRules = emptyList()
+                        ),
+                        AuthProvider.Google(
+                            scopes = emptyList(),
+                            serverClientId = null
+                        )
+                    ),
+                    logo = AuthUIAsset.Resource(R.drawable.fui_ic_check_circle_black_128dp),
+                    onProviderSelected = { provider ->
+
+                    },
+                    termsOfServiceUrl = "https://example.com/terms",
+                    privacyPolicyUrl = "https://example.com/privacy"
+                )
+            }
+        }
     }
 }
