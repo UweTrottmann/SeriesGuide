@@ -38,6 +38,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -50,6 +51,7 @@ import androidx.compose.ui.unit.dp
 import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
 import com.battlelancer.seriesguide.backend.auth.configuration.authUIConfiguration
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.DefaultAuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUITheme
 import com.battlelancer.seriesguide.backend.auth.configuration.validators.EmailValidator
@@ -205,21 +207,26 @@ fun PreviewResetPasswordUI() {
         minimumPasswordLength = 8,
         passwordValidationRules = listOf()
     )
+    val stringProvider = DefaultAuthUIStringProvider(applicationContext)
 
     AuthUITheme {
-        ResetPasswordUI(
-            configuration = authUIConfiguration {
-                context = applicationContext
-                providers { provider(provider) }
-                tosUrl = ""
-                privacyPolicyUrl = ""
-            },
-            email = "",
-            isLoading = false,
-            resetLinkSent = true,
-            onEmailChange = { email -> },
-            onSendResetLink = {},
-            onGoToSignIn = {},
-        )
+        CompositionLocalProvider(
+            LocalAuthUIStringProvider provides stringProvider
+        ) {
+            ResetPasswordUI(
+                configuration = authUIConfiguration {
+                    context = applicationContext
+                    providers { provider(provider) }
+                    tosUrl = ""
+                    privacyPolicyUrl = ""
+                },
+                email = "someone@domain.example",
+                isLoading = false,
+                resetLinkSent = true,
+                onEmailChange = { email -> },
+                onSendResetLink = {},
+                onGoToSignIn = {},
+            )
+        }
     }
 }

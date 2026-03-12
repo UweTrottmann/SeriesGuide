@@ -35,6 +35,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -45,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
 import com.battlelancer.seriesguide.backend.auth.configuration.authUIConfiguration
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.DefaultAuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUITheme
 import com.battlelancer.seriesguide.backend.auth.configuration.validators.EmailValidator
@@ -235,26 +237,31 @@ fun PreviewSignUpUI() {
         minimumPasswordLength = 8,
         passwordValidationRules = listOf()
     )
+    val stringProvider = DefaultAuthUIStringProvider(applicationContext)
 
     AuthUITheme {
-        SignUpUI(
-            configuration = authUIConfiguration {
-                context = applicationContext
-                providers { provider(provider) }
-                tosUrl = ""
-                privacyPolicyUrl = ""
-            },
-            isLoading = false,
-            displayName = "",
-            email = "",
-            password = "",
-            confirmPassword = "",
-            onDisplayNameChange = { name -> },
-            onEmailChange = { email -> },
-            onPasswordChange = { password -> },
-            onConfirmPasswordChange = { confirmPassword -> },
-            onSignUpClick = {},
-            onGoToSignIn = {}
-        )
+        CompositionLocalProvider(
+            LocalAuthUIStringProvider provides stringProvider
+        ) {
+            SignUpUI(
+                configuration = authUIConfiguration {
+                    context = applicationContext
+                    providers { provider(provider) }
+                    tosUrl = ""
+                    privacyPolicyUrl = ""
+                },
+                isLoading = false,
+                displayName = "",
+                email = "",
+                password = "",
+                confirmPassword = "",
+                onDisplayNameChange = { name -> },
+                onEmailChange = { email -> },
+                onPasswordChange = { password -> },
+                onConfirmPasswordChange = { confirmPassword -> },
+                onSignUpClick = {},
+                onGoToSignIn = {}
+            )
+        }
     }
 }
