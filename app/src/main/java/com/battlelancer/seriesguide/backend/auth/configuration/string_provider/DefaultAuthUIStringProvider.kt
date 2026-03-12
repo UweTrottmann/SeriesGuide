@@ -206,14 +206,15 @@ class DefaultAuthUIStringProvider(
     override val signOutAction: String
         get() = localizedContext.getString(R.string.fui_sign_out_action)
 
-    override fun verifyEmailInstruction(email: String): String =
-        localizedContext.getString(R.string.fui_verify_email_instruction, email)
-
-    override val sendVerificationEmailAction: String
-        get() = localizedContext.getString(R.string.fui_send_verification_email_action)
-
-    override val verifiedEmailAction: String
-        get() = localizedContext.getString(R.string.fui_verified_email_action)
+    // Temporarily don't require email verification, see notes in FirebaseAuthUI
+//    override fun verifyEmailInstruction(email: String): String =
+//        localizedContext.getString(R.string.fui_verify_email_instruction, email)
+//
+//    override val sendVerificationEmailAction: String
+//        get() = localizedContext.getString(R.string.fui_send_verification_email_action)
+//
+//    override val verifiedEmailAction: String
+//        get() = localizedContext.getString(R.string.fui_verified_email_action)
 
     override val profileCompletionMessage: String
         get() = localizedContext.getString(R.string.fui_profile_completion_message)

@@ -145,32 +145,33 @@ abstract class AuthState private constructor() {
             "AuthState.RequiresMfa(resolver=$resolver, hint=$hint)"
     }
 
-    /**
-     * Email verification is required before the user can access the app.
-     *
-     * @property user The [FirebaseUser] who needs to verify their email
-     * @property email The email address that needs verification
-     */
-    class RequiresEmailVerification(
-        val user: FirebaseUser,
-        val email: String
-    ) : AuthState() {
-        override fun equals(other: Any?): Boolean {
-            if (this === other) return true
-            if (other !is RequiresEmailVerification) return false
-            return user == other.user &&
-                    email == other.email
-        }
-
-        override fun hashCode(): Int {
-            var result = user.hashCode()
-            result = 31 * result + email.hashCode()
-            return result
-        }
-
-        override fun toString(): String =
-            "AuthState.RequiresEmailVerification(user=$user, email=$email)"
-    }
+// Temporarily don't require email verification, see notes in FirebaseAuthUI
+//    /**
+//     * Email verification is required before the user can access the app.
+//     *
+//     * @property user The [FirebaseUser] who needs to verify their email
+//     * @property email The email address that needs verification
+//     */
+//    class RequiresEmailVerification(
+//        val user: FirebaseUser,
+//        val email: String
+//    ) : AuthState() {
+//        override fun equals(other: Any?): Boolean {
+//            if (this === other) return true
+//            if (other !is RequiresEmailVerification) return false
+//            return user == other.user &&
+//                    email == other.email
+//        }
+//
+//        override fun hashCode(): Int {
+//            var result = user.hashCode()
+//            result = 31 * result + email.hashCode()
+//            return result
+//        }
+//
+//        override fun toString(): String =
+//            "AuthState.RequiresEmailVerification(user=$user, email=$email)"
+//    }
 
     /**
      * The user needs to complete their profile information.
