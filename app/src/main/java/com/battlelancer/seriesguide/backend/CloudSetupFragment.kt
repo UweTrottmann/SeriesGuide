@@ -141,6 +141,7 @@ class CloudSetupFragment : Fragment() {
 
     // FIXME
     private fun signIn() {
+        dismissSnackbar() // clear any error from previous sign in attempt
         setProgressVisible(true)
 
         val authUI = FirebaseAuthUI.getInstance()
@@ -182,6 +183,7 @@ class CloudSetupFragment : Fragment() {
 
     private val signInWithFirebase =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            authController?.dispose()
             setProgressVisible(false)
             if (result.resultCode == Activity.RESULT_OK) {
                 startSetupIfSignedIn()
