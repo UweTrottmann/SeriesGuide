@@ -12,6 +12,7 @@ import android.content.Intent
 import androidx.annotation.RestrictTo
 import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Provider
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.signOutFromGoogle
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
@@ -249,7 +250,7 @@ class FirebaseAuthUI private constructor(
                 // Check if email verification is required
                 if (!user.isEmailVerified &&
                     user.email != null &&
-                    user.providerData.any { it.providerId == "password" }
+                    user.providerData.any { it.providerId == Provider.EMAIL.id }
                 ) {
                     AuthState.RequiresEmailVerification(
                         user = user,
@@ -269,7 +270,7 @@ class FirebaseAuthUI private constructor(
                     // Check if email verification is required
                     if (!currentUser.isEmailVerified &&
                         currentUser.email != null &&
-                        currentUser.providerData.any { it.providerId == "password" }
+                        currentUser.providerData.any { it.providerId == Provider.EMAIL.id }
                     ) {
                         AuthState.RequiresEmailVerification(
                             user = currentUser,
