@@ -141,8 +141,7 @@ class CloudSetupFragment : Fragment() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventMainThread(event: RemoveCloudAccountDialogFragment.AccountRemovedEvent) {
         event.handle(requireContext())
-        setProgressVisible(false)
-        updateViews()
+        checkSignedIn()
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
