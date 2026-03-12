@@ -232,7 +232,6 @@ class CloudSetupFragment : Fragment() {
                     }
 
                     errorMessage?.let {
-                        HexagonSettings.setShouldValidateAccount(requireContext(), true)
                         updateViewsWithCloudState()
                         showSnackbar(getString(R.string.hexagon_signin_fail_format, it))
                     }
