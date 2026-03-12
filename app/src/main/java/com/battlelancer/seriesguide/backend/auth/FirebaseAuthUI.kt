@@ -9,7 +9,6 @@ import android.content.Intent
 import androidx.annotation.RestrictTo
 import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
-import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Provider
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.signOutFromGoogle
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
@@ -244,18 +243,21 @@ class FirebaseAuthUI private constructor(
         val firebaseAuthFlow = callbackFlow {
             // Set initial state based on current auth state
             val initialState = auth.currentUser?.let { user ->
+                // Temporarily remove email verification UI as the signed-in check in
+                // CloudSetupFragment and HexagonTools don't enforce it (could probably back out
+                // and would be signed in) and the Firebase account is created regardless.
                 // Check if email verification is required
-                if (!user.isEmailVerified &&
-                    user.email != null &&
-                    user.providerData.any { it.providerId == Provider.EMAIL.id }
-                ) {
-                    AuthState.RequiresEmailVerification(
-                        user = user,
-                        email = user.email!!
-                    )
-                } else {
-                    AuthState.Success(result = null, user = user, isNewUser = false)
-                }
+//                if (!user.isEmailVerified &&
+//                    user.email != null &&
+//                    user.providerData.any { it.providerId == Provider.EMAIL.id }
+//                ) {
+//                    AuthState.RequiresEmailVerification(
+//                        user = user,
+//                        email = user.email!!
+//                    )
+//                } else {
+                AuthState.Success(result = null, user = user, isNewUser = false)
+//                }
             } ?: AuthState.Idle
 
             trySend(initialState)
@@ -264,22 +266,23 @@ class FirebaseAuthUI private constructor(
             val authStateListener = AuthStateListener { firebaseAuth ->
                 val currentUser = firebaseAuth.currentUser
                 val state = if (currentUser != null) {
+                    // Temporarily don't require email verification, see notes above
                     // Check if email verification is required
-                    if (!currentUser.isEmailVerified &&
-                        currentUser.email != null &&
-                        currentUser.providerData.any { it.providerId == Provider.EMAIL.id }
-                    ) {
-                        AuthState.RequiresEmailVerification(
-                            user = currentUser,
-                            email = currentUser.email!!
-                        )
-                    } else {
-                        AuthState.Success(
-                            result = null,
-                            user = currentUser,
-                            isNewUser = false
-                        )
-                    }
+//                    if (!currentUser.isEmailVerified &&
+//                        currentUser.email != null &&
+//                        currentUser.providerData.any { it.providerId == Provider.EMAIL.id }
+//                    ) {
+//                        AuthState.RequiresEmailVerification(
+//                            user = currentUser,
+//                            email = currentUser.email!!
+//                        )
+//                    } else {
+                    AuthState.Success(
+                        result = null,
+                        user = currentUser,
+                        isNewUser = false
+                    )
+//                    }
                 } else {
                     AuthState.Idle
                 }
