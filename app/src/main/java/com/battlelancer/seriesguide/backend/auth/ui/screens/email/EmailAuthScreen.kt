@@ -255,6 +255,7 @@ fun EmailAuthScreen(
                     authUI.signInWithEmailAndPassword(
                         context = context,
                         config = configuration,
+                        provider = provider,
                         email = emailTextValue.value,
                         password = passwordTextValue.value,
                         credentialForLinking = authCredentialForLinking,
