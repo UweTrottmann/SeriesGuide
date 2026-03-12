@@ -204,8 +204,8 @@ interface AuthUIStringProvider {
     /** Instruction shown when the user must verify their email. Accepts the email value. */
     fun verifyEmailInstruction(email: String): String
 
-    /** Action text for resending the verification email. */
-    val resendVerificationEmailAction: String
+    /** Action text for sending the verification email. */
+    val sendVerificationEmailAction: String
 
     /** Action text once the user has verified their email. */
     val verifiedEmailAction: String
