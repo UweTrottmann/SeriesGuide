@@ -112,6 +112,8 @@ fun FirebaseAuthScreen(
     val emailLinkFromDifferentDevice = remember { mutableStateOf<String?>(null) }
     val lastSignInPreference =
         remember { mutableStateOf<SignInPreferenceManager.SignInPreference?>(null) }
+    val signInPreference =
+        remember { mutableStateOf<SignInPreferenceManager.SignInPreference?>(null) }
 
     // Load last sign-in preference on launch
     LaunchedEffect(authState) {
@@ -178,9 +180,10 @@ fun FirebaseAuthScreen(
                             termsOfServiceUrl = configuration.tosUrl,
                             privacyPolicyUrl = configuration.privacyPolicyUrl,
                             lastSignInPreference = lastSignInPreference.value,
-                            onProviderSelected = { provider ->
+                            onProviderSelected = { provider, signInPref ->
                                 when (provider) {
                                     is AuthProvider.Email -> {
+                                        signInPreference.value = signInPref
                                         navController.navigate(AuthRoute.Email.route)
                                     }
 
@@ -209,6 +212,7 @@ fun FirebaseAuthScreen(
                         context = context,
                         configuration = configuration,
                         authUI = authUI,
+                        signInPreference = signInPreference.value,
                         credentialForLinking = pendingLinkingCredential.value,
                         emailLinkFromDifferentDevice = emailLinkFromDifferentDevice.value,
                         onSuccess = {

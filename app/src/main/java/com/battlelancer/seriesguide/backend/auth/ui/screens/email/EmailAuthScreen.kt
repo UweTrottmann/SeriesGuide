@@ -1,16 +1,6 @@
-/*
- * Copyright 2025 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License. You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the
- * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.backend.auth.ui.screens.email
 
@@ -34,8 +24,8 @@ import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.sen
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.sendSignInLinkToEmail
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.signInWithEmailAndPassword
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.signInWithEmailLink
-import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.ui.components.LocalTopLevelDialogController
+import com.battlelancer.seriesguide.backend.auth.util.SignInPreferenceManager
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.AuthResult
 import kotlinx.coroutines.launch
@@ -114,6 +104,7 @@ class EmailAuthContentState(
  * a custom UI via a trailing lambda (slot), allowing for complete visual customization.
  *
  * @param configuration
+ * @param signInPreference A sign-in preference to pre-populate the email address with
  * @param onSuccess
  * @param onError
  * @param onCancel
@@ -124,6 +115,7 @@ fun EmailAuthScreen(
     context: Context,
     configuration: AuthUIConfiguration,
     authUI: FirebaseAuthUI,
+    signInPreference: SignInPreferenceManager.SignInPreference? = null,
     credentialForLinking: AuthCredential? = null,
     emailLinkFromDifferentDevice: String? = null,
     onSuccess: (AuthResult) -> Unit,
@@ -132,7 +124,6 @@ fun EmailAuthScreen(
     content: @Composable ((EmailAuthContentState) -> Unit)? = null,
 ) {
     val provider = configuration.providers.filterIsInstance<AuthProvider.Email>().first()
-    val stringProvider = LocalAuthUIStringProvider.current
     val dialogController = LocalTopLevelDialogController.current
     val coroutineScope = rememberCoroutineScope()
 
@@ -147,6 +138,12 @@ fun EmailAuthScreen(
     val emailTextValue = rememberSaveable { mutableStateOf("") }
     val passwordTextValue = rememberSaveable { mutableStateOf("") }
     val confirmPasswordTextValue = rememberSaveable { mutableStateOf("") }
+
+    // The user has chosen to continue with a specific email address, so pre-populate it. Note that
+    // it might get overwritten by a credential retrieved from credential manager below.
+    signInPreference?.identifier?.let {
+        emailTextValue.value = it
+    }
 
     val authState by authUI.authStateFlow().collectAsState(AuthState.Idle)
     val isLoading = authState is AuthState.Loading
