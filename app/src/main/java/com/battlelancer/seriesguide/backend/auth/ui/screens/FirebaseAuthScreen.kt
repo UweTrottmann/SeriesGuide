@@ -262,40 +262,41 @@ fun FirebaseAuthScreen(
                                     authUI.updateAuthState(AuthState.Error(exception))
                                 }
                             },
-                            onReloadUser = {
-                                coroutineScope.launch {
-                                    try {
-                                        // Reload user to get fresh data from server
-                                        authUI.getCurrentUser()?.reload()
-                                        authUI.getCurrentUser()?.getIdToken(true)
-
-                                        // Check the user's email verification status after reload
-                                        val user = authUI.getCurrentUser()
-                                        if (user != null) {
-                                            // If email is now verified, transition to Success state
-                                            if (user.isEmailVerified) {
-                                                authUI.updateAuthState(
-                                                    AuthState.Success(
-                                                        result = null,
-                                                        user = user,
-                                                        isNewUser = false
-                                                    )
-                                                )
-                                            } else {
-                                                // Email still not verified, keep showing verification screen
-                                                authUI.updateAuthState(
-                                                    AuthState.RequiresEmailVerification(
-                                                        user = user,
-                                                        email = user.email ?: ""
-                                                    )
-                                                )
-                                            }
-                                        }
-                                    } catch (e: Exception) {
-                                        Log.e("FirebaseAuthScreen", "Failed to refresh user", e)
-                                    }
-                                }
-                            },
+// Temporarily don't require email verification, see notes in FirebaseAuthUI
+//                            onReloadUser = {
+//                                coroutineScope.launch {
+//                                    try {
+//                                        // Reload user to get fresh data from server
+//                                        authUI.getCurrentUser()?.reload()
+//                                        authUI.getCurrentUser()?.getIdToken(true)
+//
+//                                        // Check the user's email verification status after reload
+//                                        val user = authUI.getCurrentUser()
+//                                        if (user != null) {
+//                                            // If email is now verified, transition to Success state
+//                                            if (user.isEmailVerified) {
+//                                                authUI.updateAuthState(
+//                                                    AuthState.Success(
+//                                                        result = null,
+//                                                        user = user,
+//                                                        isNewUser = false
+//                                                    )
+//                                                )
+//                                            } else {
+//                                                // Email still not verified, keep showing verification screen
+//                                                authUI.updateAuthState(
+//                                                    AuthState.RequiresEmailVerification(
+//                                                        user = user,
+//                                                        email = user.email ?: ""
+//                                                    )
+//                                                )
+//                                            }
+//                                        }
+//                                    } catch (e: Exception) {
+//                                        Log.e("FirebaseAuthScreen", "Failed to refresh user", e)
+//                                    }
+//                                }
+//                            },
                             onNavigate = { route ->
                                 navController.navigate(route.route)
                             }
@@ -423,7 +424,8 @@ fun FirebaseAuthScreen(
                         }
                     }
 
-                    is AuthState.RequiresEmailVerification,
+                    // Temporarily don't require email verification, see notes in FirebaseAuthUI
+//                    is AuthState.RequiresEmailVerification,
                     is AuthState.RequiresProfileCompletion,
                         -> {
                         pendingResolver.value = null
@@ -554,7 +556,8 @@ data class AuthSuccessUiContext(
     val configuration: AuthUIConfiguration,
     val onSignOut: () -> Unit,
     val onManageMfa: () -> Unit,
-    val onReloadUser: () -> Unit,
+    // Temporarily don't require email verification, see notes in FirebaseAuthUI
+//    val onReloadUser: () -> Unit,
     val onNavigate: (AuthRoute) -> Unit,
 )
 
@@ -576,14 +579,15 @@ private fun SuccessDestination(
             )
         }
 
-        is AuthState.RequiresEmailVerification -> {
-            EmailVerificationContent(
-                authUI = uiContext.authUI,
-                stringProvider = stringProvider,
-                onCheckStatus = uiContext.onReloadUser,
-                onSignOut = uiContext.onSignOut
-            )
-        }
+        // Temporarily don't require email verification, see notes in FirebaseAuthUI
+//        is AuthState.RequiresEmailVerification -> {
+//            EmailVerificationContent(
+//                authUI = uiContext.authUI,
+//                stringProvider = stringProvider,
+//                onCheckStatus = uiContext.onReloadUser,
+//                onSignOut = uiContext.onSignOut
+//            )
+//        }
 
         is AuthState.RequiresProfileCompletion -> {
             ProfileCompletionContent(
@@ -656,39 +660,40 @@ private fun AuthSuccessContent(
     }
 }
 
-@Composable
-private fun EmailVerificationContent(
-    authUI: FirebaseAuthUI,
-    stringProvider: AuthUIStringProvider,
-    onCheckStatus: () -> Unit,
-    onSignOut: () -> Unit,
-) {
-    val user = authUI.getCurrentUser()
-    val emailLabel = user?.email ?: stringProvider.emailProvider
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = stringProvider.verifyEmailInstruction(emailLabel),
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.bodyMedium
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = { user?.sendEmailVerification() }) {
-            Text(stringProvider.sendVerificationEmailAction)
-        }
-        Spacer(modifier = Modifier.height(8.dp))
-        Button(onClick = onCheckStatus) {
-            Text(stringProvider.verifiedEmailAction)
-        }
-        Spacer(modifier = Modifier.height(8.dp))
-        Button(onClick = onSignOut) {
-            Text(stringProvider.signOutAction)
-        }
-    }
-}
+// Temporarily don't require email verification, see notes in FirebaseAuthUI
+//@Composable
+//private fun EmailVerificationContent(
+//    authUI: FirebaseAuthUI,
+//    stringProvider: AuthUIStringProvider,
+//    onCheckStatus: () -> Unit,
+//    onSignOut: () -> Unit,
+//) {
+//    val user = authUI.getCurrentUser()
+//    val emailLabel = user?.email ?: stringProvider.emailProvider
+//    Column(
+//        modifier = Modifier.fillMaxSize(),
+//        verticalArrangement = Arrangement.Center,
+//        horizontalAlignment = Alignment.CenterHorizontally
+//    ) {
+//        Text(
+//            text = stringProvider.verifyEmailInstruction(emailLabel),
+//            textAlign = TextAlign.Center,
+//            style = MaterialTheme.typography.bodyMedium
+//        )
+//        Spacer(modifier = Modifier.height(16.dp))
+//        Button(onClick = { user?.sendEmailVerification() }) {
+//            Text(stringProvider.sendVerificationEmailAction)
+//        }
+//        Spacer(modifier = Modifier.height(8.dp))
+//        Button(onClick = onCheckStatus) {
+//            Text(stringProvider.verifiedEmailAction)
+//        }
+//        Spacer(modifier = Modifier.height(8.dp))
+//        Button(onClick = onSignOut) {
+//            Text(stringProvider.signOutAction)
+//        }
+//    }
+//}
 
 @Composable
 private fun ProfileCompletionContent(

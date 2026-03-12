@@ -650,9 +650,10 @@
     <string name="fui_signed_in_as" translation_description="Message showing who is signed in.">Signed in as %1$s</string>
     <string name="fui_manage_mfa_action" translation_description="Action label for managing multi-factor authentication.">Manage multi-factor authentication</string>
     <string name="fui_sign_out_action" translation_description="Action label for signing out.">Sign out</string>
-    <string name="fui_verify_email_instruction" translation_description="Instruction asking the user to verify their email.">Please verify %1$s to continue.</string>
-    <string name="fui_send_verification_email_action" translation_description="Action label for resending a verification email.">Send verification email</string>
-    <string name="fui_verified_email_action" translation_description="Action label once the user has verified their email.">I\'ve verified my email</string>
+    <!-- Temporarily don't require email verification, see notes in FirebaseAuthUI -->
+<!--    <string name="fui_verify_email_instruction" translation_description="Instruction asking the user to verify their email.">Please verify %1$s to continue.</string>-->
+<!--    <string name="fui_send_verification_email_action" translation_description="Action label for resending a verification email.">Send verification email</string>-->
+<!--    <string name="fui_verified_email_action" translation_description="Action label once the user has verified their email.">I\'ve verified my email</string>-->
     <string name="fui_profile_completion_message" translation_description="Message shown when profile completion is required.">Please complete your profile information to continue.</string>
     <string name="fui_profile_missing_fields_message" translation_description="Message enumerating missing profile fields.">Missing fields: %1$s</string>
     <string name="fui_skip_action" translation_description="Generic action for skipping an optional step.">Skip for now</string>
