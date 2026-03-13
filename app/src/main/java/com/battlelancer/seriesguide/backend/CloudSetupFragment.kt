@@ -17,11 +17,8 @@ import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.auth.AuthException
-import com.battlelancer.seriesguide.backend.auth.AuthFlowController
 import com.battlelancer.seriesguide.backend.auth.FirebaseAuthActivity
 import com.battlelancer.seriesguide.backend.auth.FirebaseAuthUI
-import com.battlelancer.seriesguide.backend.auth.configuration.authUIConfiguration
-import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.databinding.FragmentCloudSetupBinding
@@ -55,7 +52,6 @@ class CloudSetupFragment : Fragment() {
     private var snackbar: Snackbar? = null
 
     private lateinit var hexagonTools: HexagonTools
-    private var authController: AuthFlowController? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -121,7 +117,6 @@ class CloudSetupFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
-        authController?.dispose()
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
@@ -144,33 +139,7 @@ class CloudSetupFragment : Fragment() {
         dismissSnackbar() // clear any error from previous sign in attempt
         setProgressVisible(true)
 
-        val authUI = FirebaseAuthUI.getInstance()
-        val configuration = authUIConfiguration {
-            context = requireContext().applicationContext
-            providers {
-                provider(
-                    AuthProvider.Email(
-                        emailLinkActionCodeSettings = null,
-                        passwordValidationRules = emptyList()
-                    )
-                )
-                if (hexagonTools.isGoogleSignInAvailable) {
-                    provider(
-                        AuthProvider.Google(
-                            scopes = listOf("email"),
-                            // TODO Created by google-services plugin, but should define manually
-                            serverClientId = requireContext().getString(R.string.default_web_client_id),
-                            filterByAuthorizedAccounts = false
-                        )
-                    )
-                }
-            }
-        }
-
-        val authController = authUI.createAuthFlow(configuration)
-            .also { this.authController = it }
-
-        val intent = authController.createIntent(requireContext())
+        val intent = FirebaseAuthActivity.createIntent(requireContext())
         signInWithFirebase.launch(intent)
 
 //        // Note: no need to provide a layout when just email sign-in is available
@@ -183,7 +152,6 @@ class CloudSetupFragment : Fragment() {
 
     private val signInWithFirebase =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            authController?.dispose()
             setProgressVisible(false)
             if (result.resultCode == Activity.RESULT_OK) {
                 startSetupIfSignedIn()
