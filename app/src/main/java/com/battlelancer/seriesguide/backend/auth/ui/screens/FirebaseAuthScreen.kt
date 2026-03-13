@@ -45,7 +45,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.backend.auth.AuthException
 import com.battlelancer.seriesguide.backend.auth.AuthState
 import com.battlelancer.seriesguide.backend.auth.FirebaseAuthUI
@@ -92,11 +91,6 @@ fun FirebaseAuthScreen(
     mfaConfiguration: MfaConfiguration = MfaConfiguration(),
     authenticatedContent: (@Composable (state: AuthState, uiContext: AuthSuccessUiContext) -> Unit)? = null,
 ) {
-    // Set FirebaseUI version
-    LaunchedEffect(authUI.auth) {
-        authUI.auth.setFirebaseUIVersion(BuildConfig.VERSION_NAME)
-    }
-
     val activity = LocalActivity.current
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
