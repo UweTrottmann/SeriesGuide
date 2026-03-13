@@ -24,7 +24,6 @@ import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.sen
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.sendSignInLinkToEmail
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.signInWithEmailAndPassword
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.signInWithEmailLink
-import com.battlelancer.seriesguide.backend.auth.ui.components.LocalTopLevelDialogController
 import com.battlelancer.seriesguide.backend.auth.util.SignInPreferenceManager
 import com.google.firebase.auth.AuthCredential
 import kotlinx.coroutines.launch
@@ -114,6 +113,8 @@ fun EmailAuthScreen(
     context: Context,
     configuration: AuthUIConfiguration,
     authUI: FirebaseAuthUI,
+    mode: EmailAuthMode?,
+    changeMode: (EmailAuthMode) -> Unit,
     signInPreference: SignInPreferenceManager.SignInPreference? = null,
     credentialForLinking: AuthCredential? = null,
     emailLinkFromDifferentDevice: String? = null,
@@ -123,16 +124,15 @@ fun EmailAuthScreen(
     content: @Composable ((EmailAuthContentState) -> Unit)? = null,
 ) {
     val provider = configuration.providers.filterIsInstance<AuthProvider.Email>().first()
-    val dialogController = LocalTopLevelDialogController.current
     val coroutineScope = rememberCoroutineScope()
 
     // Start in EmailLinkSignIn mode if coming from cross-device flow
-    val initialMode = if (emailLinkFromDifferentDevice != null && provider.isEmailLinkSignInEnabled) {
-        EmailAuthMode.EmailLinkSignIn
-    } else {
-        EmailAuthMode.SignIn
-    }
-    val mode = rememberSaveable { mutableStateOf(initialMode) }
+    val safeMode = mode
+        ?: if (emailLinkFromDifferentDevice != null && provider.isEmailLinkSignInEnabled) {
+            EmailAuthMode.EmailLinkSignIn
+        } else {
+            EmailAuthMode.SignIn
+        }
     val displayNameValue = rememberSaveable { mutableStateOf("") }
     val emailTextValue = rememberSaveable { mutableStateOf("") }
     val passwordTextValue = rememberSaveable { mutableStateOf("") }
@@ -165,36 +165,6 @@ fun EmailAuthScreen(
             is AuthState.Error -> {
                 val exception = AuthException.from(state.exception)
                 onError(exception)
-                dialogController?.showErrorDialog(
-                    exception = exception,
-                    onRecover = { ex ->
-                        when (ex) {
-                            is AuthException.UserNotFoundException -> {
-                                val provider = configuration.providers
-                                    .filterIsInstance<AuthProvider.Email>()
-                                    .first()
-                                if (provider.isNewAccountsAllowed) {
-                                    // User not found, but new accounts are allowed, switch to sign-up
-                                    mode.value = EmailAuthMode.SignUp
-                                }
-                            }
-
-                            is AuthException.InvalidCredentialsException -> {
-                                // User can retry sign in with corrected credentials
-                            }
-
-                            is AuthException.EmailAlreadyInUseException -> {
-                                // Switch to sign-in mode
-                                mode.value = EmailAuthMode.SignIn
-                            }
-
-                            else -> Unit
-                        }
-                    },
-                    onDismiss = {
-                        // Dialog dismissed
-                    }
-                )
             }
 
             is AuthState.Cancelled -> {
@@ -206,7 +176,7 @@ fun EmailAuthScreen(
     }
 
     val state = EmailAuthContentState(
-        mode = mode.value,
+        mode = safeMode,
         displayName = displayNameValue.value,
         email = emailTextValue.value,
         password = passwordTextValue.value,
@@ -234,9 +204,10 @@ fun EmailAuthScreen(
             coroutineScope.launch {
                 try {
                     // Check if user is signing in with retrieved credentials
-                    val isUsingRetrievedCredential = retrievedCredential.value?.let { (email, password) ->
-                        email == emailTextValue.value && password == passwordTextValue.value
-                    } ?: false
+                    val isUsingRetrievedCredential =
+                        retrievedCredential.value?.let { (email, password) ->
+                            email == emailTextValue.value && password == passwordTextValue.value
+                        } ?: false
 
                     authUI.signInWithEmailAndPassword(
                         context = context,
@@ -306,18 +277,18 @@ fun EmailAuthScreen(
             }
         },
         onGoToSignUp = {
-            mode.value = EmailAuthMode.SignUp
+            changeMode(EmailAuthMode.SignUp)
         },
         onGoToSignIn = {
-            mode.value = EmailAuthMode.SignIn
+            changeMode(EmailAuthMode.SignIn)
         },
         onGoToResetPassword = {
             // Password must be incorrect, so clear it
             passwordTextValue.value = ""
-            mode.value = EmailAuthMode.ResetPassword
+            changeMode(EmailAuthMode.ResetPassword)
         },
         onGoToEmailLinkSignIn = {
-            mode.value = EmailAuthMode.EmailLinkSignIn
+            changeMode(EmailAuthMode.EmailLinkSignIn)
         },
     )
 
