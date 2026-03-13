@@ -478,49 +478,54 @@ fun FirebaseAuthScreen(
                         else -> AuthException.from(throwable)
                     }
 
-                    dialogController.showErrorDialog(
-                        exception = exception,
-                        onRetry = { _ ->
-                            // Child screens handle their own retry logic
-                        },
-                        onRecover = { exception ->
-                            when (exception) {
-                                is AuthException.EmailAlreadyInUseException -> {
-                                    navController.navigate(AuthRoute.Email.route) {
-                                        launchSingleTop = true
+                    // Don't show error dialog if the user has canceled an operation (like a
+                    // credentials manager popup).
+                    val showErrorDialog = exception !is AuthException.AuthCancelledException
+                    if (showErrorDialog) {
+                        dialogController.showErrorDialog(
+                            exception = exception,
+                            onRetry = { _ ->
+                                // Child screens handle their own retry logic
+                            },
+                            onRecover = { exception ->
+                                when (exception) {
+                                    is AuthException.EmailAlreadyInUseException -> {
+                                        navController.navigate(AuthRoute.Email.route) {
+                                            launchSingleTop = true
+                                        }
                                     }
-                                }
 
-                                is AuthException.AccountLinkingRequiredException -> {
-                                    pendingLinkingCredential.value = exception.credential
-                                    navController.navigate(AuthRoute.Email.route) {
-                                        launchSingleTop = true
+                                    is AuthException.AccountLinkingRequiredException -> {
+                                        pendingLinkingCredential.value = exception.credential
+                                        navController.navigate(AuthRoute.Email.route) {
+                                            launchSingleTop = true
+                                        }
                                     }
-                                }
 
-                                is AuthException.EmailLinkPromptForEmailException -> {
-                                    // Cross-device flow: User needs to enter their email
-                                    emailLinkFromDifferentDevice.value = exception.emailLink
-                                    navController.navigate(AuthRoute.Email.route) {
-                                        launchSingleTop = true
+                                    is AuthException.EmailLinkPromptForEmailException -> {
+                                        // Cross-device flow: User needs to enter their email
+                                        emailLinkFromDifferentDevice.value = exception.emailLink
+                                        navController.navigate(AuthRoute.Email.route) {
+                                            launchSingleTop = true
+                                        }
                                     }
-                                }
 
-                                is AuthException.EmailLinkCrossDeviceLinkingException -> {
-                                    // Cross-device linking flow: User needs to enter email to link provider
-                                    emailLinkFromDifferentDevice.value = exception.emailLink
-                                    navController.navigate(AuthRoute.Email.route) {
-                                        launchSingleTop = true
+                                    is AuthException.EmailLinkCrossDeviceLinkingException -> {
+                                        // Cross-device linking flow: User needs to enter email to link provider
+                                        emailLinkFromDifferentDevice.value = exception.emailLink
+                                        navController.navigate(AuthRoute.Email.route) {
+                                            launchSingleTop = true
+                                        }
                                     }
-                                }
 
-                                else -> Unit
+                                    else -> Unit
+                                }
+                            },
+                            onDismiss = {
+                                // Dialog dismissed
                             }
-                        },
-                        onDismiss = {
-                            // Dialog dismissed
-                        }
-                    )
+                        )
+                    }
                 }
             }
 
