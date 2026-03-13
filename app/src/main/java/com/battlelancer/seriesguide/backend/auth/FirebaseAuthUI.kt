@@ -7,7 +7,6 @@ package com.battlelancer.seriesguide.backend.auth
 import android.content.Context
 import android.content.Intent
 import androidx.annotation.RestrictTo
-import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.signOutFromGoogle
 import com.google.firebase.Firebase
@@ -181,7 +180,7 @@ class FirebaseAuthUI private constructor(
 //                        email = user.email!!
 //                    )
 //                } else {
-                AuthState.Success(result = null, user = user, isNewUser = false)
+                AuthState.Success(user = user)
 //                }
             } ?: AuthState.Idle
 
@@ -202,11 +201,7 @@ class FirebaseAuthUI private constructor(
 //                            email = currentUser.email!!
 //                        )
 //                    } else {
-                    AuthState.Success(
-                        result = null,
-                        user = currentUser,
-                        isNewUser = false
-                    )
+                    AuthState.Success(user = currentUser)
 //                    }
                 } else {
                     AuthState.Idle

@@ -66,7 +66,6 @@ import com.battlelancer.seriesguide.backend.auth.ui.screens.email.EmailAuthScree
 import com.battlelancer.seriesguide.backend.auth.util.EmailLinkPersistenceManager
 import com.battlelancer.seriesguide.backend.auth.util.SignInPreferenceManager
 import com.google.firebase.auth.AuthCredential
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.MultiFactorResolver
 import kotlinx.coroutines.launch
 
@@ -84,7 +83,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun FirebaseAuthScreen(
     configuration: AuthUIConfiguration,
-    onSignInSuccess: (AuthResult) -> Unit,
+    onSignInSuccess: () -> Unit,
     onSignInFailure: (AuthException) -> Unit,
     onSignInCancelled: () -> Unit,
     modifier: Modifier = Modifier,
@@ -404,16 +403,15 @@ fun FirebaseAuthScreen(
                         pendingResolver.value = null
                         pendingLinkingCredential.value = null
 
-                        state.result?.let { result ->
-                            if (state.user.uid != lastSuccessfulUserId.value) {
-                                onSignInSuccess(result)
-                                lastSuccessfulUserId.value = state.user.uid
+                        if (state.user.uid != lastSuccessfulUserId.value) {
+                            // Set before callback in case callback changes state
+                            lastSuccessfulUserId.value = state.user.uid
+                            onSignInSuccess()
 
-                                // Reload sign-in preference (may have been updated by provider)
-                                coroutineScope.launch {
-                                    lastSignInPreference.value =
-                                        SignInPreferenceManager.getLastSignIn(context)
-                                }
+                            // Reload sign-in preference (may have been updated by provider)
+                            coroutineScope.launch {
+                                lastSignInPreference.value =
+                                    SignInPreferenceManager.getLastSignIn(context)
                             }
                         }
 

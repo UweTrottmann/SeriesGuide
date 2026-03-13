@@ -27,7 +27,6 @@ import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.sig
 import com.battlelancer.seriesguide.backend.auth.ui.components.LocalTopLevelDialogController
 import com.battlelancer.seriesguide.backend.auth.util.SignInPreferenceManager
 import com.google.firebase.auth.AuthCredential
-import com.google.firebase.auth.AuthResult
 import kotlinx.coroutines.launch
 
 enum class EmailAuthMode {
@@ -118,7 +117,7 @@ fun EmailAuthScreen(
     signInPreference: SignInPreferenceManager.SignInPreference? = null,
     credentialForLinking: AuthCredential? = null,
     emailLinkFromDifferentDevice: String? = null,
-    onSuccess: (AuthResult) -> Unit,
+    onSuccess: () -> Unit,
     onError: (AuthException) -> Unit,
     onCancel: () -> Unit,
     content: @Composable ((EmailAuthContentState) -> Unit)? = null,
@@ -160,9 +159,7 @@ fun EmailAuthScreen(
         Log.d("EmailAuthScreen", "Current state: $authState")
         when (val state = authState) {
             is AuthState.Success -> {
-                state.result?.let { result ->
-                    onSuccess(result)
-                }
+                onSuccess()
             }
 
             is AuthState.Error -> {

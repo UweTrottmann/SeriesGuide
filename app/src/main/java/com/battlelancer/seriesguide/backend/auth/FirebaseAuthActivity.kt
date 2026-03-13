@@ -145,7 +145,7 @@ class FirebaseAuthActivity : ComponentActivity() {
                     authUI = authUI,
                     configuration = configuration,
                     emailLink = emailLink,
-                    onSignInSuccess = { _ ->
+                    onSignInSuccess = {
                         // State flow will handle finishing
                     },
                     onSignInFailure = { _ ->
