@@ -761,7 +761,7 @@
 
     <!-- Other error messages -->
     <string name="fui_error_unknown" translation_description="General error messages for an unknown failure.">An unknown error occurred.</string>
-    <string name="fui_error_invalid_password" translation_description="Error message for when the user enters an invalid or wrong password.">Incorrect password.</string>
+    <string name="fui_error_invalid_password" translation_description="Error message for when the user enters an invalid or wrong password.">This password is incorrect or this account does not support signing in with a password.</string>
 
     <!-- Password validation messages -->
     <string name="fui_passwords_do_not_match" translation_description="Error message when password don't match">Passwords do not match</string>
