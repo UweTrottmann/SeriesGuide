@@ -167,7 +167,7 @@ fun EmailAuthScreen(
                 onError(exception)
                 dialogController?.showErrorDialog(
                     exception = exception,
-                    onRetry = { ex ->
+                    onRecover = { ex ->
                         when (ex) {
                             is AuthException.UserNotFoundException -> {
                                 val provider = configuration.providers

@@ -78,13 +78,12 @@ class TopLevelDialogController(
      * Automatically prevents duplicate dialogs for the same AuthState.Error instance.
      *
      * @param exception The auth exception to display
-     * @param onRetry Callback when user clicks retry button
-     * @param onRecover Callback when user clicks recover button (e.g., navigate to different screen)
+     * @param onRecover Callback (such as navigate to different screen) when user clicks recover
+     *                  button that is shown for recoverable exceptions
      * @param onDismiss Callback when dialog is dismissed
      */
     fun showErrorDialog(
         exception: AuthException,
-        onRetry: (AuthException) -> Unit = {},
         onRecover: (AuthException) -> Unit = {},
         onDismiss: () -> Unit = {}
     ) {
@@ -101,7 +100,6 @@ class TopLevelDialogController(
 
         dialogState = DialogState.ErrorDialog(
             exception = exception,
-            onRetry = onRetry,
             onRecover = onRecover,
             onDismiss = {
                 dialogState = null
@@ -131,10 +129,6 @@ class TopLevelDialogController(
                 ErrorRecoveryDialog(
                     error = state.exception,
                     stringProvider = stringProvider,
-                    onRetry = { exception ->
-                        state.onRetry(exception)
-                        state.onDismiss()
-                    },
                     onRecover = { exception ->
                         state.onRecover(exception)
                         state.onDismiss()
@@ -151,7 +145,6 @@ class TopLevelDialogController(
     private sealed class DialogState {
         data class ErrorDialog(
             val exception: AuthException,
-            val onRetry: (AuthException) -> Unit,
             val onRecover: (AuthException) -> Unit,
             val onDismiss: () -> Unit
         ) : DialogState()
