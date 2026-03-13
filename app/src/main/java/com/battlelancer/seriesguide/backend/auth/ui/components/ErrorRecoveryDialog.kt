@@ -114,11 +114,8 @@ private fun getRecoveryMessage(
 ): String {
     return when (error) {
         is AuthException.NetworkException -> stringProvider.networkErrorRecoveryMessage
-        is AuthException.InvalidCredentialsException -> {
-            // Use the actual error message from Firebase if available, otherwise fallback to generic message
-            error.message?.takeIf { it.isNotBlank() && it != "Invalid credentials provided" }
-                ?: stringProvider.invalidCredentialsRecoveryMessage
-        }
+        is AuthException.InvalidCredentialsException ->
+            stringProvider.invalidCredentialsRecoveryMessage
 
         is AuthException.UserNotFoundException -> stringProvider.userNotFoundRecoveryMessage
         is AuthException.WeakPasswordException -> {
@@ -187,7 +184,6 @@ private fun getRecoveryActionText(
         is AuthException.EmailLinkDifferentAnonymousUserException -> stringProvider.dismissAction
         is AuthException.UserNotFoundException -> stringProvider.signupPageTitle // Navigate to sign-up when user not found
         is AuthException.NetworkException,
-        is AuthException.InvalidCredentialsException,
         is AuthException.WeakPasswordException,
         is AuthException.TooManyRequestsException,
         is AuthException.PhoneVerificationCooldownException -> stringProvider.retryAction
@@ -199,7 +195,7 @@ private fun getRecoveryActionText(
 }
 
 /**
- * Determines if the given [AuthException] is recoverable through user action.
+ * If for the given [AuthException] the recover action should be shown.
  *
  * @param error The [AuthException] to check
  * @return `true` if the error is recoverable, `false` otherwise
@@ -207,7 +203,7 @@ private fun getRecoveryActionText(
 private fun isRecoverable(error: AuthException): Boolean {
     return when (error) {
         is AuthException.NetworkException -> true
-        is AuthException.InvalidCredentialsException -> true
+        is AuthException.InvalidCredentialsException -> false // Just dismiss and allow user to edit password
         is AuthException.UserNotFoundException -> true
         is AuthException.WeakPasswordException -> true
         is AuthException.EmailAlreadyInUseException -> true
