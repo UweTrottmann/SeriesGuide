@@ -73,7 +73,6 @@ import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCrede
 import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCredentialHandler
 import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCredentialNotFoundException
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthTextField
-import com.battlelancer.seriesguide.backend.auth.ui.components.LocalTopLevelDialogController
 import com.battlelancer.seriesguide.backend.auth.ui.components.TermsAndPrivacyForm
 
 @OptIn(ExperimentalMaterial3Api::class)
