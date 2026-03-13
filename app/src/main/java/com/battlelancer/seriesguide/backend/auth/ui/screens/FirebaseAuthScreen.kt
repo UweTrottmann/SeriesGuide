@@ -487,9 +487,6 @@ fun FirebaseAuthScreen(
                     if (showErrorDialog) {
                         dialogController.showErrorDialog(
                             exception = exception,
-                            onRetry = { _ ->
-                                // Child screens handle their own retry logic
-                            },
                             onRecover = { exception ->
                                 when (exception) {
                                     is AuthException.EmailAlreadyInUseException -> {

@@ -25,43 +25,20 @@ import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.A
  * based on the specific [AuthException] type. It integrates with [AuthUIStringProvider]
  * for localization support.
  *
- * **Example usage:**
- * ```kotlin
- * var showError by remember { mutableStateOf<AuthException?>(null) }
- *
- * if (showError != null) {
- *     ErrorRecoveryDialog(
- *         error = showError!!,
- *         stringProvider = stringProvider,
- *         onRetry = {
- *             showError = null
- *             // Retry authentication operation
- *         },
- *         onDismiss = {
- *             showError = null
- *         }
- *     )
- * }
- * ```
- *
  * @param error The [AuthException] to display recovery information for
  * @param stringProvider The [AuthUIStringProvider] for localized strings
- * @param onRetry Callback invoked when the user taps the retry action
  * @param onDismiss Callback invoked when the user dismisses the dialog
  * @param modifier Optional [Modifier] for the dialog
  * @param onRecover Optional callback for custom recovery actions based on the exception type
  * @param properties Optional [DialogProperties] for dialog configuration
- *
- * @since 10.0.0
  */
 @Composable
 fun ErrorRecoveryDialog(
     error: AuthException,
     stringProvider: AuthUIStringProvider,
-    onRetry: (AuthException) -> Unit,
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier,
-    onRecover: ((AuthException) -> Unit)? = null,
+    onRecover: ((AuthException) -> Unit),
     properties: DialogProperties = DialogProperties()
 ) {
     AlertDialog(
@@ -83,7 +60,7 @@ fun ErrorRecoveryDialog(
             if (isRecoverable(error)) {
                 TextButton(
                     onClick = {
-                        onRecover?.invoke(error) ?: onRetry(error)
+                        onRecover.invoke(error)
                     }
                 ) {
                     Text(
