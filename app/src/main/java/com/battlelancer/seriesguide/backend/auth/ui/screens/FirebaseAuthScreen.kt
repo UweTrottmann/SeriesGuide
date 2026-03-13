@@ -39,6 +39,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -64,6 +65,7 @@ import com.battlelancer.seriesguide.backend.auth.configuration.theme.LocalAuthUI
 import com.battlelancer.seriesguide.backend.auth.ui.components.LocalTopLevelDialogController
 import com.battlelancer.seriesguide.backend.auth.ui.components.rememberTopLevelDialogController
 import com.battlelancer.seriesguide.backend.auth.ui.method_picker.AuthMethodPicker
+import com.battlelancer.seriesguide.backend.auth.ui.screens.email.EmailAuthMode
 import com.battlelancer.seriesguide.backend.auth.ui.screens.email.EmailAuthScreen
 import com.battlelancer.seriesguide.backend.auth.util.EmailLinkPersistenceManager
 import com.battlelancer.seriesguide.backend.auth.util.SignInPreferenceManager
@@ -105,6 +107,9 @@ fun FirebaseAuthScreen(
     val lastSuccessfulUserId = remember { mutableStateOf<String?>(null) }
     val pendingLinkingCredential = remember { mutableStateOf<AuthCredential?>(null) }
     val pendingResolver = remember { mutableStateOf<MultiFactorResolver?>(null) }
+    // The email screen mode state is remembered here instead of inside EmailAuthScreen as error
+    // recovery might have to change it.
+    val emailScreenMode = rememberSaveable { mutableStateOf<EmailAuthMode?>(null) }
     val emailLinkFromDifferentDevice = remember { mutableStateOf<String?>(null) }
     val lastSignInPreference =
         remember { mutableStateOf<SignInPreferenceManager.SignInPreference?>(null) }
@@ -208,6 +213,10 @@ fun FirebaseAuthScreen(
                         context = context,
                         configuration = configuration,
                         authUI = authUI,
+                        mode = emailScreenMode.value,
+                        changeMode = { mode ->
+                            emailScreenMode.value = mode
+                        },
                         signInPreference = signInPreference.value,
                         credentialForLinking = pendingLinkingCredential.value,
                         emailLinkFromDifferentDevice = emailLinkFromDifferentDevice.value,
@@ -489,10 +498,20 @@ fun FirebaseAuthScreen(
                             exception = exception,
                             onRecover = { exception ->
                                 when (exception) {
-                                    is AuthException.EmailAlreadyInUseException -> {
-                                        navController.navigate(AuthRoute.Email.route) {
-                                            launchSingleTop = true
+                                    is AuthException.UserNotFoundException -> {
+                                        val provider = configuration.providers
+                                            .filterIsInstance<AuthProvider.Email>()
+                                            .first()
+                                        if (provider.isNewAccountsAllowed) {
+                                            // User not found, but new accounts are allowed, switch
+                                            // email screen to sign-up mode.
+                                            emailScreenMode.value = EmailAuthMode.SignUp
                                         }
+                                    }
+
+                                    is AuthException.EmailAlreadyInUseException -> {
+                                        // Switch email screen to sign-in mode
+                                        emailScreenMode.value = EmailAuthMode.SignIn
                                     }
 
                                     is AuthException.AccountLinkingRequiredException -> {
