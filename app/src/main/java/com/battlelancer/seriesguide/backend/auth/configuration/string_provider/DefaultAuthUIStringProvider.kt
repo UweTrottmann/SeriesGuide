@@ -297,7 +297,7 @@ class DefaultAuthUIStringProvider(
             6
         )
     override val emailAlreadyInUseRecoveryMessage: String
-        get() = localizedContext.getString(R.string.fui_email_account_creation_error)
+        get() = localizedContext.getString(R.string.fui_email_alreay_in_use)
     override val mfaRequiredRecoveryMessage: String
         get() = localizedContext.getString(R.string.fui_error_mfa_required_message)
     override val accountLinkingRequiredRecoveryMessage: String
