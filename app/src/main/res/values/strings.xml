@@ -722,7 +722,7 @@
         <item quantity="one" translation_description="Inline error for weak password">Password not strong enough. Use at least %1$d character and a mix of letters and numbers</item>
         <item quantity="other" translation_description="Inline error for weak password">Password not strong enough. Use at least %1$d characters and a mix of letters and numbers</item>
     </plurals>
-    <string name="fui_email_account_creation_error" translation_description="Inline error for signup failure">Email account registration unsuccessful</string>
+    <string name="fui_email_alreay_in_use" translation_description="Inline error for signup failure">This email address is already in use by an existing account. Please sign in with your existing account.</string>
     <string name="fui_terms_of_service" translation_description="Link text to web url containing the app's terms of service">Terms of Service</string>
     <string name="fui_privacy_policy" translation_description="Link text to web url containing the app's privacy policy">Privacy Policy</string>
     <string name="fui_email_field_name" translatable="false">email_field</string>
