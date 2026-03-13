@@ -9,7 +9,6 @@ package com.battlelancer.seriesguide.backend.auth
 
 import com.battlelancer.seriesguide.backend.auth.AuthState.Companion.Cancelled
 import com.battlelancer.seriesguide.backend.auth.AuthState.Companion.Idle
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.MultiFactorResolver
 
@@ -54,33 +53,11 @@ abstract class AuthState private constructor() {
     /**
      * Authentication completed successfully.
      *
-     * @property result The [AuthResult] containing the authenticated user, may be null if not available
      * @property user The authenticated [FirebaseUser]
-     * @property isNewUser Whether this is a newly created user account
      */
     class Success(
-        val result: AuthResult?,
-        val user: FirebaseUser,
-        val isNewUser: Boolean = false
-    ) : AuthState() {
-        override fun equals(other: Any?): Boolean {
-            if (this === other) return true
-            if (other !is Success) return false
-            return result == other.result &&
-                    user == other.user &&
-                    isNewUser == other.isNewUser
-        }
-
-        override fun hashCode(): Int {
-            var result1 = result?.hashCode() ?: 0
-            result1 = 31 * result1 + user.hashCode()
-            result1 = 31 * result1 + isNewUser.hashCode()
-            return result1
-        }
-
-        override fun toString(): String =
-            "AuthState.Success(result=$result, user=$user, isNewUser=$isNewUser)"
-    }
+        val user: FirebaseUser
+    ) : AuthState()
 
     /**
      * An error occurred during authentication.
