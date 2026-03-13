@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2025 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide
 
@@ -7,6 +7,7 @@ import android.content.Context
 import com.battlelancer.seriesguide.billing.BillingRepository
 import com.battlelancer.seriesguide.diagnostics.DebugLogBuffer
 import com.battlelancer.seriesguide.diagnostics.DebugLogDatabase
+import com.battlelancer.seriesguide.util.AgeCheck
 import com.battlelancer.seriesguide.util.PackageTools
 import com.battlelancer.seriesguide.util.PackageTools.isEuropeanEconomicArea
 import com.battlelancer.seriesguide.util.PackageTools.isUnitedStates
@@ -27,12 +28,16 @@ class SgAppContainer(context: Context, coroutineScope: CoroutineScope) {
         )
     }
 
+    val installedBy: PackageTools.InstallingPackage by lazy {
+        PackageTools.getInstallingPackage(context)
+    }
+
     /**
      * If true, should not display links to third-party websites that in any way link to a website
      * that accepts payments.
      */
     val preventExternalLinks by lazy {
-        val installedByPlay = PackageTools.wasInstalledByPlayStore(context)
+        val installedByPlay = installedBy == PackageTools.InstalledByPlayStore
         val region = PackageTools.getDeviceRegion(context)
         val isEEA = region.isEuropeanEconomicArea(context)
         val isUS = region.isUnitedStates()
@@ -48,6 +53,10 @@ class SgAppContainer(context: Context, coroutineScope: CoroutineScope) {
                 )
             }
 //            .let { if (BuildConfig.DEBUG) true else it }
+    }
+
+    val ageCheck by lazy {
+        AgeCheck(context)
     }
 
     val billingRepository by lazy {
