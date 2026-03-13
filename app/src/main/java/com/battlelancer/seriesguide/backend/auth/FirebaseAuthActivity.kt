@@ -1,16 +1,6 @@
-/*
- * Copyright 2025 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License. You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the
- * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.backend.auth
 
@@ -22,41 +12,55 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.lifecycleScope
-import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
+import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.backend.auth.configuration.authUIConfiguration
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUITheme
 import com.battlelancer.seriesguide.backend.auth.ui.screens.FirebaseAuthScreen
 import com.battlelancer.seriesguide.backend.auth.util.EmailLinkConstants
 import kotlinx.coroutines.launch
-import java.util.UUID
-import java.util.concurrent.ConcurrentHashMap
 
 /**
  * Activity that hosts the Firebase authentication flow UI.
  *
- * This activity displays the [FirebaseAuthScreen] composable and manages
+ * This activity displays a [FirebaseAuthScreen] composable and manages
  * the authentication flow lifecycle. It automatically finishes when the user
  * signs in successfully or cancels the flow.
  *
- * **Do not launch this Activity directly.**
- * Use [AuthFlowController] to start the auth flow:
- *
  * ```kotlin
- * val authUI = FirebaseAuthUI.getInstance()
- * val configuration = authUIConfiguration {
- *     providers = listOf(AuthProvider.Email(), AuthProvider.Google(...))
- * }
- * val controller = authUI.createAuthFlow(configuration)
- * val intent = controller.createIntent(context)
- * launcher.launch(intent)
+ * private val signInWithFirebase = registerForActivityResult(
+ *     ActivityResultContracts.StartActivityForResult()
+ * ) { result: ActivityResult ->
+ *         if (result.resultCode == Activity.RESULT_OK) {
+ *             // User has signed in
+ *         } else {
+ *             // User has left, there might have been an error
+ *             // Optional: access AuthException
+ *             val error = result.data
+ *                 ?.let {
+ *                     if (AndroidUtils.isAtLeastTiramisu) {
+ *                         it.getSerializableExtra(
+ *                             FirebaseAuthActivity.EXTRA_ERROR,
+ *                             AuthException::class.java
+ *                         )
+ *                     } else {
+ *                         @Suppress("DEPRECATION")
+ *                         it.getSerializableExtra(FirebaseAuthActivity.EXTRA_ERROR)
+ *                                 as? AuthException
+ *                     }
+ *                 }
+ *         }
+ *     }
+ *
+ * val intent = FirebaseAuthActivity.createIntent(requireContext())
+ * signInWithFirebase.launch(intent)
  * ```
  *
  * **Result Codes:**
  * - [Activity.RESULT_OK] - User signed in successfully
- * - [Activity.RESULT_CANCELED] - User cancelled or error occurred
+ * - [Activity.RESULT_CANCELED] - User has left, an error may have occurred
  *
  * **Result Data:**
- * - [EXTRA_USER_ID] - User ID string (when RESULT_OK)
- * - [EXTRA_IS_NEW_USER] - Boolean indicating if user is new (when RESULT_OK)
  * - [EXTRA_ERROR] - [AuthException] when an error occurs
  *
  * **Note:** To get the full user object after successful sign-in, use:
@@ -64,33 +68,43 @@ import java.util.concurrent.ConcurrentHashMap
  * FirebaseAuth.getInstance().currentUser
  * ```
  *
- * @see AuthFlowController
  * @see FirebaseAuthScreen
- * @since 10.0.0
  */
 class FirebaseAuthActivity : ComponentActivity() {
-
-    private lateinit var authUI: FirebaseAuthUI
-    private lateinit var configuration: AuthUIConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        // Extract configuration from cache using UUID key
-        val configKey = intent.getStringExtra(EXTRA_CONFIGURATION_KEY)
-        configuration = if (configKey != null) {
-            configurationCache.remove(configKey)
-        } else {
-            null
-        } ?: run {
-            // Missing configuration, finish with error
-            setResult(RESULT_CANCELED)
-            finish()
-            return
+        val authUI = FirebaseAuthUI.getInstance()
+        if (savedInstanceState == null) {
+            // Clear any previous error before starting a new sign-in flow
+            authUI.updateAuthState(AuthState.Idle)
         }
 
-        authUI = FirebaseAuthUI.getInstance()
+        val hexagonTools = SgApp.getServicesComponent(this).hexagonTools()
+
+        val configuration = authUIConfiguration {
+            context = applicationContext
+            providers {
+                provider(
+                    AuthProvider.Email(
+                        emailLinkActionCodeSettings = null,
+                        passwordValidationRules = emptyList()
+                    )
+                )
+                if (hexagonTools.isGoogleSignInAvailable) {
+                    provider(
+                        AuthProvider.Google(
+                            scopes = listOf("email"),
+                            // TODO Created by google-services plugin, but should define manually
+                            serverClientId = null,
+                            filterByAuthorizedAccounts = false
+                        )
+                    )
+                }
+            }
+        }
 
         // Extract email link if present
         val emailLink = intent.getStringExtra(EmailLinkConstants.EXTRA_EMAIL_LINK)
@@ -101,15 +115,11 @@ class FirebaseAuthActivity : ComponentActivity() {
                 when (state) {
                     is AuthState.Success -> {
                         // User signed in successfully
-                        val resultIntent = Intent().apply {
-                            putExtra(EXTRA_USER_ID, state.user.uid)
-                            putExtra(EXTRA_IS_NEW_USER, state.isNewUser)
-                        }
-                        setResult(RESULT_OK, resultIntent)
+                        setResult(RESULT_OK)
                         finish()
                     }
                     is AuthState.Cancelled -> {
-                        // User cancelled the flow
+                        // User canceled the flow
                         setResult(RESULT_CANCELED)
                         finish()
                     }
@@ -135,10 +145,10 @@ class FirebaseAuthActivity : ComponentActivity() {
                     authUI = authUI,
                     configuration = configuration,
                     emailLink = emailLink,
-                    onSignInSuccess = { authResult ->
+                    onSignInSuccess = { _ ->
                         // State flow will handle finishing
                     },
-                    onSignInFailure = { exception ->
+                    onSignInFailure = { _ ->
                         // State flow will handle error
                     },
                     onSignInCancelled = {
@@ -150,18 +160,6 @@ class FirebaseAuthActivity : ComponentActivity() {
     }
 
     companion object {
-        private const val EXTRA_CONFIGURATION_KEY = "com.firebase.ui.auth.CONFIGURATION_KEY"
-
-        /**
-         * Intent extra key for user ID on successful sign-in.
-         * Use [com.google.firebase.auth.FirebaseAuth.getInstance().currentUser] to get the full user object.
-         */
-        const val EXTRA_USER_ID = "com.firebase.ui.auth.USER_ID"
-
-        /**
-         * Intent extra key for isNewUser flag on successful sign-in.
-         */
-        const val EXTRA_IS_NEW_USER = "com.firebase.ui.auth.IS_NEW_USER"
 
         /**
          * Intent extra key for [AuthException] on error.
@@ -169,28 +167,13 @@ class FirebaseAuthActivity : ComponentActivity() {
         const val EXTRA_ERROR = "com.firebase.ui.auth.ERROR"
 
         /**
-         * Cache for configurations passed through Intents.
-         * Uses UUID keys to avoid serialization issues with Context references.
-         */
-        private val configurationCache = ConcurrentHashMap<String, AuthUIConfiguration>()
-
-        /**
          * Creates an Intent to launch the Firebase authentication flow.
          *
          * @param context Android [Context]
-         * @param configuration [AuthUIConfiguration] defining the auth flow
          * @return Configured [Intent] to start [FirebaseAuthActivity]
          */
-        internal fun createIntent(
-            context: Context,
-            configuration: AuthUIConfiguration
-        ): Intent {
-            val configKey = UUID.randomUUID().toString()
-            configurationCache[configKey] = configuration
-
-            return Intent(context, FirebaseAuthActivity::class.java).apply {
-                putExtra(EXTRA_CONFIGURATION_KEY, configKey)
-            }
+        fun createIntent(context: Context): Intent {
+            return Intent(context, FirebaseAuthActivity::class.java)
         }
     }
 }
