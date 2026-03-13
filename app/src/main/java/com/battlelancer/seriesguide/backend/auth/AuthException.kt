@@ -1,16 +1,6 @@
-/*
- * Copyright 2025 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License. You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the
- * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.backend.auth
 
@@ -123,17 +113,15 @@ abstract class AuthException(
     /**
      * An account with the given email already exists.
      *
-     * This exception is thrown when attempting to create a new account with
-     * an email address that is already registered.
+     * This exception is thrown when attempting to create a new account or linking to an existing
+     * account with an email address that is already used by an existing account.
      *
      * @property message The detailed error message
      * @property cause The underlying [Throwable] that caused this exception
-     * @property email The email address that already exists
      */
     class EmailAlreadyInUseException(
         message: String,
-        cause: Throwable? = null,
-        val email: String? = null
+        cause: Throwable? = null
     ) : AuthException(message, cause)
 
     /**
@@ -386,8 +374,7 @@ abstract class AuthException(
                         "ERROR_EMAIL_ALREADY_IN_USE" -> EmailAlreadyInUseException(
                             message = firebaseException.message
                                 ?: "Email address is already in use",
-                            cause = firebaseException,
-                            email = firebaseException.email
+                            cause = firebaseException
                         )
 
                         "ERROR_ACCOUNT_EXISTS_WITH_DIFFERENT_CREDENTIAL" -> AccountLinkingRequiredException(

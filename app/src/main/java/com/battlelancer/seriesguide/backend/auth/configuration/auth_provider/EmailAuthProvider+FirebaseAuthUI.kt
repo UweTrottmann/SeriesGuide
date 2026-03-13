@@ -1,16 +1,6 @@
-/*
- * Copyright 2025 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License. You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the
- * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.backend.auth.configuration.auth_provider
 
@@ -19,6 +9,7 @@ import android.net.Uri
 import android.util.Log
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.auth.AuthException
+import com.battlelancer.seriesguide.backend.auth.AuthException.EmailAlreadyInUseException
 import com.battlelancer.seriesguide.backend.auth.AuthState
 import com.battlelancer.seriesguide.backend.auth.FirebaseAuthUI
 import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
@@ -27,8 +18,8 @@ import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Aut
 import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCredentialCancelledException
 import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCredentialException
 import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCredentialHandler
-import com.battlelancer.seriesguide.backend.auth.util.EmailLinkPersistenceManager
 import com.battlelancer.seriesguide.backend.auth.util.EmailLinkParser
+import com.battlelancer.seriesguide.backend.auth.util.EmailLinkPersistenceManager
 import com.battlelancer.seriesguide.backend.auth.util.PersistenceManager
 import com.battlelancer.seriesguide.backend.auth.util.SessionUtils
 import com.battlelancer.seriesguide.backend.auth.util.SignInPreferenceManager
@@ -51,7 +42,7 @@ private const val TAG = "EmailAuthProvider"
  * Mirrors the legacy email sign-up handler: validates password strength, validates custom
  * password rules, checks if new accounts are allowed, chooses between
  * `createUserWithEmailAndPassword` and `linkWithCredential`, merges the supplied display name
- * into the Firebase profile, and throws [AuthException.AccountLinkingRequiredException] when
+ * into the Firebase profile, and throws [AuthException.EmailAlreadyInUseException] when
  * anonymous upgrade encounters an existing account for the email.
  *
  * **Flow:**
@@ -200,20 +191,16 @@ internal suspend fun FirebaseAuthUI.createOrLinkUserWithEmailAndPassword(
         updateAuthState(AuthState.Idle)
         return result
     } catch (e: FirebaseAuthUserCollisionException) {
-        // Account collision: email already exists
-        val accountLinkingException = AuthException.AccountLinkingRequiredException(
-            message = "An account already exists with this email. " +
-                    "Please sign in with your existing account.",
-            email = e.email ?: email,
-            credential = if (canUpgrade) {
-                e.updatedCredential ?: pendingCredential
-            } else {
-                null
-            },
+        // When trying to link email to anonymous account, failed because another account is linked
+        // to this email address already.
+        // When trying to create an account, failed because an account using this email address
+        // already exists.
+        val authException = EmailAlreadyInUseException(
+            message = e.message ?: "Email address is already in use",
             cause = e
         )
-        updateAuthState(AuthState.Error(accountLinkingException))
-        throw accountLinkingException
+        updateAuthState(AuthState.Error(authException))
+        throw authException
     } catch (e: CancellationException) {
         val cancelledException = AuthException.AuthCancelledException(
             message = "Create or link user with email and password was cancelled",

@@ -1,16 +1,6 @@
-/*
- * Copyright 2025 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License. You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the
- * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.backend.auth.ui.components
 
@@ -131,6 +121,7 @@ private fun getRecoveryMessage(
             error.message?.takeIf { it.isNotBlank() && it != "Invalid credentials provided" }
                 ?: stringProvider.invalidCredentialsRecoveryMessage
         }
+
         is AuthException.UserNotFoundException -> stringProvider.userNotFoundRecoveryMessage
         is AuthException.WeakPasswordException -> {
             // Include specific reason if available
@@ -140,39 +131,38 @@ private fun getRecoveryMessage(
             } ?: baseMessage
         }
 
-        is AuthException.EmailAlreadyInUseException -> {
-            // Include email if available
-            val baseMessage = stringProvider.emailAlreadyInUseRecoveryMessage
-            error.email?.let { email ->
-                "$baseMessage ($email)"
-            } ?: baseMessage
-        }
+        is AuthException.EmailAlreadyInUseException -> stringProvider.emailAlreadyInUseRecoveryMessage
 
         is AuthException.TooManyRequestsException -> stringProvider.tooManyRequestsRecoveryMessage
         is AuthException.PhoneVerificationCooldownException -> {
             // Use the custom message which includes remaining cooldown time
             error.message ?: stringProvider.unknownErrorRecoveryMessage
         }
+
         is AuthException.MfaRequiredException -> stringProvider.mfaRequiredRecoveryMessage
         is AuthException.AccountLinkingRequiredException -> {
             // Use the custom message which includes email and provider details
             error.message ?: stringProvider.accountLinkingRequiredRecoveryMessage
         }
+
         is AuthException.EmailMismatchException -> stringProvider.emailMismatchMessage
         is AuthException.InvalidEmailLinkException -> stringProvider.emailLinkInvalidLinkMessage
         is AuthException.EmailLinkWrongDeviceException -> stringProvider.emailLinkWrongDeviceMessage
         is AuthException.EmailLinkDifferentAnonymousUserException ->
             stringProvider.emailLinkDifferentAnonymousUserMessage
+
         is AuthException.EmailLinkPromptForEmailException -> stringProvider.emailLinkPromptForEmailMessage
         is AuthException.EmailLinkCrossDeviceLinkingException -> {
             val providerName = error.providerName ?: stringProvider.emailProvider
             stringProvider.emailLinkCrossDeviceLinkingMessage(providerName)
         }
+
         is AuthException.AuthCancelledException -> stringProvider.authCancelledRecoveryMessage
         is AuthException.UnknownException -> {
             // Use custom message if available (e.g., for configuration errors)
             error.message?.takeIf { it.isNotBlank() } ?: stringProvider.unknownErrorRecoveryMessage
         }
+
         else -> stringProvider.unknownErrorRecoveryMessage
     }
 }
@@ -203,6 +193,7 @@ private fun getRecoveryActionText(
         is AuthException.WeakPasswordException,
         is AuthException.TooManyRequestsException,
         is AuthException.PhoneVerificationCooldownException -> stringProvider.retryAction
+
         is AuthException.UnknownException -> stringProvider.retryAction
 
         else -> stringProvider.retryAction

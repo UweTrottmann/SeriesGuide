@@ -1,16 +1,6 @@
-/*
- * Copyright 2025 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License. You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the
- * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.backend.auth.configuration.string_provider
 
@@ -367,7 +357,7 @@ class DefaultAuthUIStringProvider(
             6
         )
     override val emailAlreadyInUseRecoveryMessage: String
-        get() = localizedContext.getString(R.string.fui_email_account_creation_error)
+        get() = localizedContext.getString(R.string.fui_email_alreay_in_use)
     override val tooManyRequestsRecoveryMessage: String
         get() = localizedContext.getString(R.string.fui_error_too_many_attempts)
     override val mfaRequiredRecoveryMessage: String
