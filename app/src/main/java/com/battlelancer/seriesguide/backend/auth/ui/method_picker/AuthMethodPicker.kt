@@ -11,7 +11,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,9 +19,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
@@ -40,6 +36,7 @@ import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.D
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUIAsset
 import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUITheme
+import com.battlelancer.seriesguide.backend.auth.ui.components.AuthHorizontalDivider
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthProviderButton
 import com.battlelancer.seriesguide.backend.auth.util.SignInPreferenceManager.SignInPreference
 
@@ -120,22 +117,8 @@ fun AuthMethodPicker(
                                     identifier = preference.identifier,
                                     onClick = { onProviderSelected(lastProvider, preference) }
                                 )
-                                Spacer(modifier = Modifier.height(24.dp))
 
-                                // Divider with "or"
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    HorizontalDivider(modifier = Modifier.weight(1f))
-                                    Text(
-                                        text = stringProvider.orContinueWith,
-                                        modifier = Modifier.padding(horizontal = 8.dp),
-                                        style = MaterialTheme.typography.bodySmall
-                                    )
-                                    HorizontalDivider(modifier = Modifier.weight(1f))
-                                }
-                                Spacer(modifier = Modifier.height(24.dp))
+                                AuthHorizontalDivider()
                             }
                         }
                     }
