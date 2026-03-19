@@ -96,7 +96,7 @@ fun FirebaseAuthScreen(
     val activity = LocalActivity.current
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
-    val stringProvider = DefaultAuthUIStringProvider(context)
+    val stringProvider: AuthUIStringProvider = DefaultAuthUIStringProvider(context)
     val navController = rememberNavController()
 
     val authState by authUI.authStateFlow().collectAsState(AuthState.Idle)
