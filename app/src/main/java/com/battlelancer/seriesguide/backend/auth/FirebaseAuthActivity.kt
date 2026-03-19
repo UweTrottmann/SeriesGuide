@@ -102,8 +102,8 @@ class FirebaseAuthActivity : ComponentActivity() {
                     provider(
                         AuthProvider.Google(
                             scopes = listOf("email"),
-                            // TODO Created by google-services plugin, but should define manually
-                            serverClientId = null,
+                            // The string resource is created by the google-services plugin
+                            serverClientId = getString(R.string.default_web_client_id),
                             filterByAuthorizedAccounts = false
                         )
                     )
