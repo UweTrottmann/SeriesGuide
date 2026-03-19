@@ -138,6 +138,7 @@ Use [Material Symbols](https://fonts.google.com/icons) with
 - weight 400
 - no grade
 - typically 24dp size
+- to auto-mirror vector drawables in RTL layouts, add `android:autoMirrored="true"`
 
 Some existing icons may still use the old Filled or the old non-rounded Outlined style.
 
