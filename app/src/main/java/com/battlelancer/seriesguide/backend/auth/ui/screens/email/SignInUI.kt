@@ -61,6 +61,7 @@ import com.battlelancer.seriesguide.backend.auth.ui.components.AuthHorizontalDiv
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthTextField
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthTopAppBar
 import com.battlelancer.seriesguide.backend.auth.ui.components.TermsAndPrivacyForm
+import com.google.firebase.auth.actionCodeSettings
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -68,7 +69,6 @@ fun SignInUI(
     modifier: Modifier = Modifier,
     configuration: AuthUIConfiguration,
     isLoading: Boolean,
-    emailSignInLinkSent: Boolean,
     email: String,
     password: String,
     onEmailChange: (String) -> Unit,
@@ -269,9 +269,12 @@ fun PreviewSignInUI() {
     val applicationContext = LocalContext.current
     val provider = AuthProvider.Email(
         isDisplayNameRequired = true,
-        isEmailLinkSignInEnabled = false,
+        isEmailLinkSignInEnabled = true,
         isEmailLinkForceSameDeviceEnabled = true,
-        emailLinkActionCodeSettings = null,
+        emailLinkActionCodeSettings = actionCodeSettings {
+            url = ""
+            handleCodeInApp = true
+        },
         isNewAccountsAllowed = false,
         minimumPasswordLength = 8,
         passwordValidationRules = listOf()
@@ -292,7 +295,6 @@ fun PreviewSignInUI() {
                 email = "",
                 password = "",
                 isLoading = false,
-                emailSignInLinkSent = false,
                 onEmailChange = { email -> },
                 onPasswordChange = { password -> },
                 onRetrievedCredential = { credential -> },
