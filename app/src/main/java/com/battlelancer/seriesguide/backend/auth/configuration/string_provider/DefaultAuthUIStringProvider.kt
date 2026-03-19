@@ -185,12 +185,6 @@ class DefaultAuthUIStringProvider(
 //    override val verifiedEmailAction: String
 //        get() = localizedContext.getString(R.string.fui_verified_email_action)
 
-    override val profileCompletionMessage: String
-        get() = localizedContext.getString(R.string.fui_profile_completion_message)
-
-    override fun profileMissingFieldsMessage(fields: String): String =
-        localizedContext.getString(R.string.fui_profile_missing_fields_message, fields)
-
     override val skipAction: String
         get() = localizedContext.getString(R.string.fui_skip_action)
 
