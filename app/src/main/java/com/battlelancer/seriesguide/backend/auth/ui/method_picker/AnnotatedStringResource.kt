@@ -1,5 +1,6 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: Apache-2.0 AND AGPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
@@ -16,7 +17,6 @@ import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withLink
 import androidx.core.net.toUri
@@ -25,17 +25,9 @@ import androidx.core.net.toUri
 internal fun AnnotatedStringResource(
     context: Context,
     modifier: Modifier = Modifier,
-    text: String,
-    vararg links: Pair<String, String>,
-    inPreview: Boolean = false,
-    previewText: String? = null,
+    template: String,
+    vararg links: Pair<String, String>
 ) {
-    val template = if (inPreview && previewText != null) {
-        previewText
-    } else {
-        text
-    }
-
     val annotated = buildAnnotatedString {
         var currentIndex = 0
 
@@ -72,7 +64,6 @@ internal fun AnnotatedStringResource(
     Text(
         modifier = modifier,
         text = annotated,
-        style = MaterialTheme.typography.bodyMedium,
-        textAlign = TextAlign.Center
+        style = MaterialTheme.typography.bodyMedium
     )
 }
