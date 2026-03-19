@@ -1,5 +1,6 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: Apache-2.0 AND AGPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
@@ -16,16 +17,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.derivedStateOf
@@ -45,6 +41,7 @@ import com.battlelancer.seriesguide.backend.auth.configuration.validators.EmailV
 import com.battlelancer.seriesguide.backend.auth.configuration.validators.GeneralFieldValidator
 import com.battlelancer.seriesguide.backend.auth.configuration.validators.PasswordValidator
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthTextField
+import com.battlelancer.seriesguide.backend.auth.ui.components.AuthTopAppBar
 import com.battlelancer.seriesguide.backend.auth.ui.components.TermsAndPrivacyForm
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -66,7 +63,6 @@ fun SignUpUI(
     onNavigateBack: (() -> Unit)? = null,
 ) {
     val provider = configuration.providers.filterIsInstance<AuthProvider.Email>().first()
-    val context = LocalContext.current
     val stringProvider = LocalAuthUIStringProvider.current
     val displayNameValidator = remember { GeneralFieldValidator(stringProvider) }
     val emailValidator = remember { EmailValidator(stringProvider) }
@@ -100,21 +96,9 @@ fun SignUpUI(
     Scaffold(
         modifier = modifier,
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(stringProvider.signupPageTitle)
-                },
-                navigationIcon = {
-                    if (onNavigateBack != null) {
-                        IconButton(onClick = onNavigateBack) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = stringProvider.backAction
-                            )
-                        }
-                    }
-                },
-                colors = AuthUITheme.topAppBarColors
+            AuthTopAppBar(
+                title = stringProvider.signupPageTitle,
+                onNavigateBack = onNavigateBack
             )
         },
     ) { innerPadding ->

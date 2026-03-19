@@ -1,5 +1,6 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: Apache-2.0 AND AGPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
@@ -17,20 +18,15 @@ import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.derivedStateOf
@@ -39,8 +35,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.semantics.heading
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
@@ -53,6 +47,7 @@ import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.L
 import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUITheme
 import com.battlelancer.seriesguide.backend.auth.configuration.validators.EmailValidator
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthTextField
+import com.battlelancer.seriesguide.backend.auth.ui.components.AuthTopAppBar
 import com.battlelancer.seriesguide.backend.auth.ui.components.TermsAndPrivacyForm
 import com.google.firebase.auth.actionCodeSettings
 
@@ -118,24 +113,9 @@ fun SignInEmailLinkUI(
     Scaffold(
         modifier = modifier,
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = stringProvider.signInDefault,
-                        modifier = Modifier.semantics { heading() }
-                    )
-                },
-                navigationIcon = {
-                    if (onNavigateBack != null) {
-                        IconButton(onClick = onNavigateBack) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = stringProvider.backAction
-                            )
-                        }
-                    }
-                },
-                colors = AuthUITheme.topAppBarColors
+            AuthTopAppBar(
+                title = stringProvider.signInDefault,
+                onNavigateBack = onNavigateBack
             )
         },
     ) { innerPadding ->
