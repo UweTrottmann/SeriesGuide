@@ -132,7 +132,7 @@ Use dimension resources (like `@dimen/default_padding`) for margin and padding t
 
 ### Icons
 
-Use [Material Icons](https://fonts.google.com/icons) with
+Use [Material Symbols](https://fonts.google.com/icons) with
 
 - **Rounded** style
 - weight 400
