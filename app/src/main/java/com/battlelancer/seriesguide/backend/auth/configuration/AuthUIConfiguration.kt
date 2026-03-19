@@ -8,7 +8,6 @@
 package com.battlelancer.seriesguide.backend.auth.configuration
 
 import android.content.Context
-import androidx.compose.ui.graphics.vector.ImageVector
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvidersBuilder
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Provider
@@ -35,7 +34,6 @@ class AuthUIConfigurationBuilder {
     var isCredentialManagerEnabled: Boolean = true
     var isMfaEnabled: Boolean = true
     var isAnonymousUpgradeEnabled: Boolean = false
-    var tosUrl: String? = null
     var privacyPolicyUrl: String? = null
     var logo: AuthUIAsset? = null
     var passwordResetActionCodeSettings: ActionCodeSettings? = null
@@ -95,7 +93,6 @@ class AuthUIConfigurationBuilder {
             isCredentialManagerEnabled = isCredentialManagerEnabled,
             isMfaEnabled = isMfaEnabled,
             isAnonymousUpgradeEnabled = isAnonymousUpgradeEnabled,
-            tosUrl = tosUrl,
             privacyPolicyUrl = privacyPolicyUrl,
             logo = logo,
             passwordResetActionCodeSettings = passwordResetActionCodeSettings,
@@ -151,11 +148,6 @@ class AuthUIConfiguration(
      * Allows upgrading an anonymous user to a new credential.
      */
     val isAnonymousUpgradeEnabled: Boolean = false,
-
-    /**
-     * The URL for the terms of service.
-     */
-    val tosUrl: String? = null,
 
     /**
      * The URL for the privacy policy.

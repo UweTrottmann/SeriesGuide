@@ -42,7 +42,6 @@ import com.battlelancer.seriesguide.backend.auth.configuration.validators.Genera
 import com.battlelancer.seriesguide.backend.auth.configuration.validators.PasswordValidator
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthTextField
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthTopAppBar
-import com.battlelancer.seriesguide.backend.auth.ui.components.TermsAndPrivacyForm
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -190,12 +189,6 @@ fun SignUpUI(
                     }
                 }
             }
-            Spacer(modifier = Modifier.height(16.dp))
-            TermsAndPrivacyForm(
-                modifier = Modifier.align(Alignment.End),
-                tosUrl = configuration.tosUrl,
-                ppUrl = configuration.privacyPolicyUrl,
-            )
         }
     }
 }
@@ -223,7 +216,6 @@ fun PreviewSignUpUI() {
                 configuration = authUIConfiguration {
                     context = applicationContext
                     providers { provider(provider) }
-                    tosUrl = ""
                     privacyPolicyUrl = ""
                 },
                 isLoading = false,

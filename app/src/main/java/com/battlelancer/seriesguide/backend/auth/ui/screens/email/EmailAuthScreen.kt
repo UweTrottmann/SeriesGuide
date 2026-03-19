@@ -360,7 +360,6 @@ private fun DefaultEmailAuthContent(
 
         EmailAuthMode.ResetPassword -> {
             ResetPasswordUI(
-                configuration = configuration,
                 isLoading = state.isLoading,
                 email = state.email,
                 resetLinkSent = state.resetLinkSent,

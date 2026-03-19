@@ -36,8 +36,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
-import com.battlelancer.seriesguide.backend.auth.configuration.authUIConfiguration
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.DefaultAuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
@@ -45,13 +43,11 @@ import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUITheme
 import com.battlelancer.seriesguide.backend.auth.configuration.validators.EmailValidator
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthTextField
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthTopAppBar
-import com.battlelancer.seriesguide.backend.auth.ui.components.TermsAndPrivacyForm
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ResetPasswordUI(
     modifier: Modifier = Modifier,
-    configuration: AuthUIConfiguration,
     isLoading: Boolean,
     email: String,
     resetLinkSent: Boolean,
@@ -159,12 +155,6 @@ fun ResetPasswordUI(
                     }
                 }
             }
-            Spacer(modifier = Modifier.height(16.dp))
-            TermsAndPrivacyForm(
-                modifier = Modifier.align(Alignment.End),
-                tosUrl = configuration.tosUrl,
-                ppUrl = configuration.privacyPolicyUrl,
-            )
         }
     }
 }
@@ -189,12 +179,6 @@ fun PreviewResetPasswordUI() {
             LocalAuthUIStringProvider provides stringProvider
         ) {
             ResetPasswordUI(
-                configuration = authUIConfiguration {
-                    context = applicationContext
-                    providers { provider(provider) }
-                    tosUrl = ""
-                    privacyPolicyUrl = ""
-                },
                 email = "someone@domain.example",
                 isLoading = false,
                 resetLinkSent = true,

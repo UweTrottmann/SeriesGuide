@@ -60,7 +60,6 @@ import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCrede
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthHorizontalDivider
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthTextField
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthTopAppBar
-import com.battlelancer.seriesguide.backend.auth.ui.components.TermsAndPrivacyForm
 import com.google.firebase.auth.actionCodeSettings
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -252,13 +251,6 @@ fun SignInUI(
                     Text(stringProvider.signInWithEmailLink.uppercase())
                 }
             }
-
-            Spacer(modifier = Modifier.height(16.dp))
-            TermsAndPrivacyForm(
-                modifier = Modifier.align(Alignment.End),
-                tosUrl = configuration.tosUrl,
-                ppUrl = configuration.privacyPolicyUrl,
-            )
         }
     }
 }
@@ -289,7 +281,6 @@ fun PreviewSignInUI() {
                 configuration = authUIConfiguration {
                     context = applicationContext
                     providers { provider(provider) }
-                    tosUrl = ""
                     privacyPolicyUrl = ""
                 },
                 email = "",
