@@ -372,15 +372,11 @@ interface AuthUIStringProvider {
     /** General error message for re-authentication failures. */
     val reauthGenericError: String
 
-    // Terms of Service and Privacy Policy
-    /** Terms of Service link text */
-    val termsOfService: String
-
     /** Privacy Policy link text */
     val privacyPolicy: String
 
-    /** ToS and Privacy Policy combined message with placeholders for links */
-    fun tosAndPrivacyPolicy(termsOfServiceLabel: String, privacyPolicyLabel: String): String
+    /** Privacy Policy message */
+    fun privacyPolicyMessage(privacyPolicyLabel: String): String
 
     /** Tooltip message shown when new account sign-up is disabled */
     val newAccountsDisabledTooltip: String

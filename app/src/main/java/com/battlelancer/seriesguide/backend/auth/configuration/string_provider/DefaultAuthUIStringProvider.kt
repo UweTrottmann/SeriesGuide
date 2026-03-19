@@ -361,14 +361,11 @@ class DefaultAuthUIStringProvider(
     override val reauthGenericError: String
         get() = localizedContext.getString(R.string.fui_reauth_generic_error)
 
-    override val termsOfService: String
-        get() = localizedContext.getString(R.string.fui_terms_of_service)
-
     override val privacyPolicy: String
-        get() = localizedContext.getString(R.string.fui_privacy_policy)
+        get() = localizedContext.getString(R.string.privacy_policy)
 
-    override fun tosAndPrivacyPolicy(termsOfServiceLabel: String, privacyPolicyLabel: String): String =
-        localizedContext.getString(R.string.fui_tos_and_pp, termsOfServiceLabel, privacyPolicyLabel)
+    override fun privacyPolicyMessage(privacyPolicyLabel: String): String =
+        localizedContext.getString(R.string.auth_privacy_policy_message, privacyPolicyLabel)
 
     override val newAccountsDisabledTooltip: String
         get() = localizedContext.getString(R.string.fui_new_accounts_disabled_tooltip)

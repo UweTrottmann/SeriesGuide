@@ -11,22 +11,22 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.battlelancer.seriesguide.R
@@ -39,6 +39,7 @@ import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUITheme
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthHorizontalDivider
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthProviderButton
 import com.battlelancer.seriesguide.backend.auth.util.SignInPreferenceManager.SignInPreference
+import com.battlelancer.seriesguide.util.ThemeUtils.plus
 
 /**
  * Renders the provider selection screen.
@@ -54,12 +55,10 @@ import com.battlelancer.seriesguide.backend.auth.util.SignInPreferenceManager.Si
  * )
  * ```
  *
- * @param modifier A modifier for the screen layout.
+ * @param contentPadding Padding values such as from a Scaffold.
  * @param providers The list of providers to display.
  * @param logo An optional logo to display.
  * @param onProviderSelected A callback when a provider is selected.
- * @param customLayout An optional custom layout composable for the provider buttons.
- * @param termsOfServiceUrl The URL for the Terms of Service.
  * @param privacyPolicyUrl The URL for the Privacy Policy.
  * @param lastSignInPreference The last sign-in preference to show a "Continue as..." button.
  *
@@ -67,96 +66,103 @@ import com.battlelancer.seriesguide.backend.auth.util.SignInPreferenceManager.Si
  */
 @Composable
 fun AuthMethodPicker(
-    modifier: Modifier = Modifier,
+    contentPadding: PaddingValues,
     providers: List<AuthProvider>,
     logo: AuthUIAsset? = null,
     onProviderSelected: (AuthProvider, SignInPreference?) -> Unit,
-    customLayout: @Composable ((List<AuthProvider>, (AuthProvider, SignInPreference?) -> Unit) -> Unit)? = null,
-    termsOfServiceUrl: String? = null,
     privacyPolicyUrl: String? = null,
     lastSignInPreference: SignInPreference? = null,
 ) {
     val context = LocalContext.current
-    val inPreview = LocalInspectionMode.current
     val stringProvider = LocalAuthUIStringProvider.current
 
-    Column(
-        modifier = modifier
+    BoxWithConstraints(
+        modifier = Modifier.fillMaxWidth()
     ) {
-        Image(
-            modifier = Modifier
-                .size(48.dp)
-                .weight(0.4f)
-                .align(Alignment.CenterHorizontally),
-            painter = (logo
-                ?: AuthUIAsset.Resource(R.drawable.ic_account_circle_control_24dp)).painter,
-            contentDescription = if (inPreview) ""
-            else stringResource(R.string.fui_auth_method_picker_logo)
-        )
-        if (customLayout != null) {
-            customLayout(providers, onProviderSelected)
-        } else {
-            BoxWithConstraints(
-                modifier = Modifier
-                    .weight(1f),
-            ) {
-                val paddingWidth = maxWidth.value * 0.23
-                LazyColumn(
+        LazyColumn(
+            // If wider than 300 dp center align
+            modifier = if (maxWidth > 300.dp) {
+                Modifier
+                    .width(300.dp)
+                    .align(Alignment.Center)
+            } else {
+                Modifier
+            },
+            contentPadding = contentPadding + PaddingValues(16.dp)
+        ) {
+            item {
+                Column(
                     modifier = Modifier
-                        .padding(horizontal = paddingWidth.dp)
-                        .testTag("AuthMethodPicker LazyColumn"),
-                    horizontalAlignment = Alignment.CenterHorizontally,
+                        .padding(vertical = 32.dp)
+                        .fillMaxWidth()
                 ) {
-                    // Show "Continue as..." button if last sign-in preference exists
-                    lastSignInPreference?.let { preference ->
-                        val lastProvider = providers.find { it.providerId == preference.providerId }
-                        if (lastProvider != null) {
-                            item {
-                                ContinueAsButton(
-                                    provider = lastProvider,
-                                    identifier = preference.identifier,
-                                    onClick = { onProviderSelected(lastProvider, preference) }
-                                )
+                    Image(
+                        modifier = Modifier
+                            .size(48.dp)
+                            .align(Alignment.CenterHorizontally),
+                        painter = (logo
+                            ?: AuthUIAsset.Resource(R.drawable.ic_account_circle_control_24dp)).painter,
+                        contentDescription = null /* Title is below */
+                    )
+                    Text(
+                        text = stringProvider.methodPickerTitle,
+                        modifier = Modifier
+                            .padding(top = 16.dp)
+                            .align(Alignment.CenterHorizontally),
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                    Text(
+                        text = stringProvider.methodPickerDescription,
+                        modifier = Modifier.padding(top = 16.dp),
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                    AnnotatedStringResource(
+                        modifier = Modifier.padding(top = 16.dp),
+                        context = context,
+                        template = stringProvider.privacyPolicyMessage(
+                            privacyPolicyLabel = stringProvider.privacyPolicy
+                        ),
+                        links = arrayOf(
+                            stringProvider.privacyPolicy to (privacyPolicyUrl ?: "")
+                        )
+                    )
+                }
+            }
 
-                                AuthHorizontalDivider()
-                            }
-                        }
-                    }
+            // Show "Continue with..." button if last sign-in preference exists
+            lastSignInPreference?.let { preference ->
+                val lastProvider = providers.find { it.providerId == preference.providerId }
+                if (lastProvider != null) {
+                    item {
+                        ContinueAsButton(
+                            provider = lastProvider,
+                            identifier = preference.identifier,
+                            onClick = { onProviderSelected(lastProvider, preference) }
+                        )
 
-                    // Show all providers
-                    itemsIndexed(providers) { index, provider ->
-                        Box(
-                            modifier = Modifier
-                                .padding(bottom = if (index < providers.lastIndex) 16.dp else 0.dp)
-                        ) {
-                            AuthProviderButton(
-                                modifier = Modifier
-                                    .fillMaxWidth(),
-                                onClick = {
-                                    onProviderSelected(provider, null)
-                                },
-                                provider = provider,
-                                stringProvider = LocalAuthUIStringProvider.current
-                            )
-                        }
+                        AuthHorizontalDivider()
                     }
                 }
             }
+
+            // Show all providers
+            itemsIndexed(providers) { _, provider ->
+                Box(
+                    modifier = Modifier
+                        .padding(bottom = 16.dp)
+                ) {
+                    AuthProviderButton(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        onClick = {
+                            onProviderSelected(provider, null)
+                        },
+                        provider = provider,
+                        stringProvider = LocalAuthUIStringProvider.current
+                    )
+                }
+            }
         }
-        AnnotatedStringResource(
-            modifier = Modifier.padding(vertical = 16.dp, horizontal = 16.dp),
-            context = context,
-            inPreview = inPreview,
-            previewText = "By continuing, you accept our Terms of Service and Privacy Policy.",
-            text = stringProvider.tosAndPrivacyPolicy(
-                termsOfServiceLabel = stringProvider.termsOfService,
-                privacyPolicyLabel = stringProvider.privacyPolicy
-            ),
-            links = arrayOf(
-                stringProvider.termsOfService to (termsOfServiceUrl ?: ""),
-                stringProvider.privacyPolicy to (privacyPolicyUrl ?: "")
-            )
-        )
     }
 }
 
@@ -197,11 +203,9 @@ fun PreviewAuthMethodPicker() {
         CompositionLocalProvider(
             LocalAuthUIStringProvider provides stringProvider
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-            ) {
+            Scaffold { innerPadding ->
                 AuthMethodPicker(
+                    contentPadding = innerPadding,
                     providers = listOf(
                         AuthProvider.Email(
                             emailLinkActionCodeSettings = null,
@@ -213,8 +217,7 @@ fun PreviewAuthMethodPicker() {
                         )
                     ),
                     onProviderSelected = { _, _ -> },
-                    termsOfServiceUrl = "https://example.com/terms",
-                    privacyPolicyUrl = "https://example.com/privacy",
+                    privacyPolicyUrl = "https://app.example/privacy",
                     lastSignInPreference = SignInPreference(
                         providerId = Provider.EMAIL.id,
                         identifier = "someone@domain.example",

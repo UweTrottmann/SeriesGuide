@@ -89,7 +89,6 @@ fun FirebaseAuthScreen(
     onSignInSuccess: () -> Unit,
     onSignInFailure: (AuthException) -> Unit,
     onSignInCancelled: () -> Unit,
-    modifier: Modifier = Modifier,
     authUI: FirebaseAuthUI = FirebaseAuthUI.getInstance(),
     emailLink: String? = null,
     mfaConfiguration: MfaConfiguration = MfaConfiguration(),
@@ -172,11 +171,9 @@ fun FirebaseAuthScreen(
                 composable(AuthRoute.MethodPicker.route) {
                     Scaffold { innerPadding ->
                         AuthMethodPicker(
-                            modifier = modifier
-                                .padding(innerPadding),
+                            contentPadding = innerPadding,
                             providers = configuration.providers,
                             logo = logoAsset,
-                            termsOfServiceUrl = configuration.tosUrl,
                             privacyPolicyUrl = configuration.privacyPolicyUrl,
                             lastSignInPreference = lastSignInPreference.value,
                             onProviderSelected = { provider, signInPref ->
