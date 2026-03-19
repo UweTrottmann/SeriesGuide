@@ -231,7 +231,7 @@ private fun PreviewAuthProviderButton() {
         AuthProviderButton(
             provider = AuthProvider.Google(
                 scopes = emptyList(),
-                serverClientId = null
+                serverClientId = "EXAMPLE"
             ),
             onClick = {},
             stringProvider = DefaultAuthUIStringProvider(context)

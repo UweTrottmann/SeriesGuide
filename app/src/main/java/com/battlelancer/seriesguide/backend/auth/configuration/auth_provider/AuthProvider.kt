@@ -17,14 +17,12 @@ import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.exceptions.GetCredentialCancellationException
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.auth.AuthException.AuthCancelledException
 import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
 import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfigurationDsl
 import com.battlelancer.seriesguide.backend.auth.configuration.PasswordRule
 import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUIAsset
 import com.battlelancer.seriesguide.backend.auth.util.ContinueUrlBuilder
-import com.battlelancer.seriesguide.backend.auth.util.Preconditions
 import com.google.android.gms.auth.api.identity.AuthorizationRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.common.api.Scope
@@ -232,8 +230,10 @@ abstract class AuthProvider(open val providerId: String, open val providerName: 
 
         /**
          * The OAuth 2.0 client ID for your server.
+         *
+         * When using the google-services plugin, this is the default_web_client_id string.
          */
-        var serverClientId: String?,
+        val serverClientId: String,
 
         /**
          * Whether to filter by authorized accounts.
@@ -259,19 +259,9 @@ abstract class AuthProvider(open val providerId: String, open val providerName: 
         scopes = scopes,
         customParameters = customParameters
     ) {
-        internal fun validate(context: Context) {
-            if (serverClientId == null) {
-                Preconditions.checkConfigured(
-                    context,
-                    "Check your google-services plugin configuration, the" +
-                            " default_web_client_id string wasn't populated.",
-                    R.string.default_web_client_id
-                )
-                serverClientId = context.getString(R.string.default_web_client_id)
-            } else {
-                require(serverClientId!!.isNotBlank()) {
-                    "Server client ID cannot be blank."
-                }
+        internal fun validate() {
+            require(serverClientId.isNotBlank()) {
+                "Server client ID cannot be blank."
             }
 
             val hasEmailScope = scopes.contains("email")

@@ -213,7 +213,7 @@ fun PreviewAuthMethodPicker() {
                         ),
                         AuthProvider.Google(
                             scopes = emptyList(),
-                            serverClientId = null
+                            serverClientId = "EXAMPLE"
                         )
                     ),
                     onProviderSelected = { _, _ -> },

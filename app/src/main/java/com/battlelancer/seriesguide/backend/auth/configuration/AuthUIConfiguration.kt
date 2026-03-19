@@ -78,7 +78,7 @@ class AuthUIConfigurationBuilder {
         providers.forEach { provider ->
             when (provider) {
                 is AuthProvider.Email -> provider.validate(isAnonymousUpgradeEnabled)
-                is AuthProvider.Google -> provider.validate(context)
+                is AuthProvider.Google -> provider.validate()
                 is AuthProvider.GenericOAuth -> provider.validate()
                 else -> null
             }
