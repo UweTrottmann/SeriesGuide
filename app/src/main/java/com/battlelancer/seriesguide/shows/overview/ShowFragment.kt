@@ -394,9 +394,9 @@ class ShowFragment() : Fragment() {
             TooltipCompat.setTooltipText(this, contentDescription)
             setIconResource(
                 if (isHidden) {
-                    R.drawable.ic_visibility_off_black_24dp
+                    R.drawable.ic_visibility_off_control_24dp
                 } else {
-                    R.drawable.ic_visibility_white_24dp
+                    R.drawable.ic_visibility_control_24dp
                 }
             )
             isEnabled = true

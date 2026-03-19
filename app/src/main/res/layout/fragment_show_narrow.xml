@@ -164,7 +164,7 @@
                     android:gravity="start|center_vertical"
                     android:text="@string/context_hide"
                     android:textColor="?attr/colorPrimary"
-                    app:icon="@drawable/ic_visibility_white_24dp"
+                    app:icon="@drawable/ic_visibility_control_24dp"
                     app:iconTint="?attr/colorPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

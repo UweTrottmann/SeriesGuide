@@ -151,7 +151,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/context_hide"
                     android:textColor="?attr/colorPrimary"
-                    app:icon="@drawable/ic_visibility_white_24dp"
+                    app:icon="@drawable/ic_visibility_control_24dp"
                     app:iconGravity="top"
                     app:iconTint="?attr/colorPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
