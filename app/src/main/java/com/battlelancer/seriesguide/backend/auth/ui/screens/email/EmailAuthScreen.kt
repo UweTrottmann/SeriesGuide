@@ -314,7 +314,6 @@ private fun DefaultEmailAuthContent(
                 configuration = configuration,
                 email = state.email,
                 isLoading = state.isLoading,
-                emailSignInLinkSent = state.emailSignInLinkSent,
                 password = state.password,
                 onEmailChange = state.onEmailChange,
                 onPasswordChange = state.onPasswordChange,
