@@ -10,13 +10,10 @@ package com.battlelancer.seriesguide.backend.auth.configuration.theme
 import androidx.compose.ui.graphics.Color
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Provider
+import com.battlelancer.seriesguide.backend.auth.configuration.theme.ProviderStyleDefaults.Google
 
 /**
  * Default provider styling configurations for authentication providers.
- *
- * This object provides brand-appropriate visual styling for each supported authentication
- * provider, including background colors, text colors, and other visual properties that
- * match each provider's brand guidelines.
  *
  * The styles are automatically applied when using [AuthUITheme.Default] or can be
  * customized by passing a modified map to [AuthUITheme.fromMaterialTheme].
@@ -26,13 +23,13 @@ import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Pro
  */
 object ProviderStyleDefaults {
     val Google = AuthUITheme.ProviderStyle(
-        icon = AuthUIAsset.Resource(R.drawable.fui_ic_googleg_color_24dp),
+        icon = AuthUIAsset.Resource(R.drawable.ic_account_circle_on_surface_light_24dp),
         backgroundColor = Color.White,
-        contentColor = Color(0xFF757575)
+        contentColor = Color(0xFF49454E /* light colorOnSurfaceVariant */ )
     )
 
     val Email = AuthUITheme.ProviderStyle(
-        icon = AuthUIAsset.Resource(R.drawable.fui_ic_mail_white_24dp),
+        icon = AuthUIAsset.Resource(R.drawable.ic_email_white_24dp),
         backgroundColor = Color(0xFFD0021B),
         contentColor = Color.White
     )
