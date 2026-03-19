@@ -247,19 +247,6 @@ abstract class AuthException(
     ) : AuthException("Please enter your email to continue signing in", cause)
 
     /**
-     * Email link sign-in attempted with a different anonymous user than expected.
-     *
-     * This exception is thrown when an email link for anonymous account upgrade is
-     * opened on a device with a different anonymous user session.
-     *
-     * @property cause The underlying [Throwable] that caused this exception
-     */
-    class EmailLinkDifferentAnonymousUserException(
-        cause: Throwable? = null
-    ) : AuthException("The session associated with this sign-in request has either " +
-            "expired or was cleared", cause)
-
-    /**
      * The email address provided does not match the email link.
      *
      * This exception is thrown when the user enters an email address that doesn't

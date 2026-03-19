@@ -24,13 +24,11 @@ interface PersistenceManager {
      * @param context Android context for storage access
      * @param email Email address to save
      * @param sessionId Unique session identifier for same-device validation
-     * @param anonymousUserId Optional anonymous user ID for upgrade flows
      */
     suspend fun saveEmail(
         context: Context,
         email: String,
-        sessionId: String,
-        anonymousUserId: String?
+        sessionId: String
     )
 
     /**

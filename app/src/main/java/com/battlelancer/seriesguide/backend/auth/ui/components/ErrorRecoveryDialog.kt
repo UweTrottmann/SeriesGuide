@@ -119,8 +119,6 @@ private fun getRecoveryMessage(
         is AuthException.EmailMismatchException -> stringProvider.emailMismatchMessage
         is AuthException.InvalidEmailLinkException -> stringProvider.emailLinkInvalidLinkMessage
         is AuthException.EmailLinkWrongDeviceException -> stringProvider.emailLinkWrongDeviceMessage
-        is AuthException.EmailLinkDifferentAnonymousUserException ->
-            stringProvider.emailLinkDifferentAnonymousUserMessage
 
         is AuthException.EmailLinkPromptForEmailException -> stringProvider.emailLinkPromptForEmailMessage
         is AuthException.EmailLinkCrossDeviceLinkingException -> {
@@ -157,7 +155,6 @@ private fun getRecoveryActionText(
         is AuthException.EmailLinkPromptForEmailException -> stringProvider.continueText
         is AuthException.EmailLinkCrossDeviceLinkingException -> stringProvider.continueText
         is AuthException.EmailLinkWrongDeviceException -> stringProvider.continueText
-        is AuthException.EmailLinkDifferentAnonymousUserException -> stringProvider.dismissAction
         is AuthException.UserNotFoundException -> stringProvider.signupPageTitle // Navigate to sign-up when user not found
         is AuthException.NetworkException,
         is AuthException.WeakPasswordException -> stringProvider.retryAction
@@ -186,7 +183,6 @@ private fun isRecoverable(error: AuthException): Boolean {
         is AuthException.EmailLinkPromptForEmailException -> true
         is AuthException.EmailLinkCrossDeviceLinkingException -> true
         is AuthException.EmailLinkWrongDeviceException -> true
-        is AuthException.EmailLinkDifferentAnonymousUserException -> false
         is AuthException.UnknownException -> true
         else -> true
     }

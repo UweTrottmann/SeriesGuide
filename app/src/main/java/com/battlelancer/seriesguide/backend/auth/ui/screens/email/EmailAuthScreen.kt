@@ -22,7 +22,7 @@ import com.battlelancer.seriesguide.backend.auth.AuthState
 import com.battlelancer.seriesguide.backend.auth.FirebaseAuthUI
 import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
-import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.createOrLinkUserWithEmailAndPassword
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.createUserWithEmailAndPassword
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.sendPasswordResetEmail
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.sendSignInLinkToEmail
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.signInWithEmailAndPassword
@@ -228,7 +228,6 @@ fun EmailAuthScreen(
                     if (emailLinkFromDifferentDevice != null) {
                         authUI.signInWithEmailLink(
                             context = context,
-                            config = configuration,
                             provider = provider,
                             email = emailTextValue.value,
                             emailLink = emailLinkFromDifferentDevice,
@@ -236,7 +235,6 @@ fun EmailAuthScreen(
                     } else {
                         authUI.sendSignInLinkToEmail(
                             context = context,
-                            config = configuration,
                             provider = provider,
                             email = emailTextValue.value,
                             credentialForLinking = authCredentialForLinking,
@@ -250,7 +248,7 @@ fun EmailAuthScreen(
         onSignUpClick = {
             coroutineScope.launch {
                 try {
-                    authUI.createOrLinkUserWithEmailAndPassword(
+                    authUI.createUserWithEmailAndPassword(
                         context = context,
                         config = configuration,
                         provider = provider,
