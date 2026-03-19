@@ -184,12 +184,6 @@ interface AuthUIStringProvider {
 //    /** Action text once the user has verified their email. */
 //    val verifiedEmailAction: String
 
-    /** Message shown when profile completion is required. */
-    val profileCompletionMessage: String
-
-    /** Message listing missing profile fields. Accepts a comma-separated list. */
-    fun profileMissingFieldsMessage(fields: String): String
-
     /** Action text for skipping an optional step. */
     val skipAction: String
 

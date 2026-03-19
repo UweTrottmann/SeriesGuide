@@ -151,33 +151,6 @@ abstract class AuthState private constructor() {
 //    }
 
     /**
-     * The user needs to complete their profile information.
-     *
-     * @property user The [FirebaseUser] who needs to complete their profile
-     * @property missingFields List of profile fields that need to be completed
-     */
-    class RequiresProfileCompletion(
-        val user: FirebaseUser,
-        val missingFields: List<String> = emptyList()
-    ) : AuthState() {
-        override fun equals(other: Any?): Boolean {
-            if (this === other) return true
-            if (other !is RequiresProfileCompletion) return false
-            return user == other.user &&
-                    missingFields == other.missingFields
-        }
-
-        override fun hashCode(): Int {
-            var result = user.hashCode()
-            result = 31 * result + missingFields.hashCode()
-            return result
-        }
-
-        override fun toString(): String =
-            "AuthState.RequiresProfileCompletion(user=$user, missingFields=$missingFields)"
-    }
-
-    /**
      * Password reset link has been sent to the user's email.
      */
     class PasswordResetLinkSent : AuthState() {

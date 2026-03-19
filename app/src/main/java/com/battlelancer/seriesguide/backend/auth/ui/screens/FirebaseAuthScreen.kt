@@ -22,7 +22,6 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -425,18 +424,16 @@ fun FirebaseAuthScreen(
                     }
 
                     // Temporarily don't require email verification, see notes in FirebaseAuthUI
-//                    is AuthState.RequiresEmailVerification,
-                    is AuthState.RequiresProfileCompletion,
-                        -> {
-                        pendingResolver.value = null
-                        pendingLinkingCredential.value = null
-                        if (currentRoute != AuthRoute.Success.route) {
-                            navController.navigate(AuthRoute.Success.route) {
-                                popUpTo(AuthRoute.MethodPicker.route) { inclusive = true }
-                                launchSingleTop = true
-                            }
-                        }
-                    }
+//                    is AuthState.RequiresEmailVerification -> {
+//                        pendingResolver.value = null
+//                        pendingLinkingCredential.value = null
+//                        if (currentRoute != AuthRoute.Success.route) {
+//                            navController.navigate(AuthRoute.Success.route) {
+//                                popUpTo(AuthRoute.MethodPicker.route) { inclusive = true }
+//                                launchSingleTop = true
+//                            }
+//                        }
+//                    }
 
                     is AuthState.RequiresMfa -> {
                         pendingResolver.value = state.resolver
@@ -607,13 +604,6 @@ private fun SuccessDestination(
 //            )
 //        }
 
-        is AuthState.RequiresProfileCompletion -> {
-            ProfileCompletionContent(
-                missingFields = authState.missingFields,
-                stringProvider = stringProvider
-            )
-        }
-
         else -> {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -712,31 +702,6 @@ private fun AuthSuccessContent(
 //        }
 //    }
 //}
-
-@Composable
-private fun ProfileCompletionContent(
-    missingFields: List<String>,
-    stringProvider: AuthUIStringProvider,
-) {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = stringProvider.profileCompletionMessage,
-            textAlign = TextAlign.Center
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        if (missingFields.isNotEmpty()) {
-            Text(
-                text = stringProvider.profileMissingFieldsMessage(missingFields.joinToString()),
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.bodyMedium
-            )
-        }
-    }
-}
 
 @Composable
 private fun LoadingDialog(message: String) {
