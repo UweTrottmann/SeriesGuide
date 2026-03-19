@@ -1,5 +1,6 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: Apache-2.0 AND AGPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
@@ -15,13 +16,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -34,10 +28,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.auth.configuration.PasswordRule
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.DefaultAuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.validators.EmailValidator
@@ -106,10 +104,12 @@ fun AuthTextField(
                 keyboardType = KeyboardType.Email,
                 imeAction = ImeAction.Next
             )
+
             isSecureTextField -> KeyboardOptions(
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done
             )
+
             else -> keyboardOptions
         }
     }
@@ -139,8 +139,8 @@ fun AuthTextField(
             validator is EmailValidator -> {
                 {
                     Icon(
-                        imageVector = Icons.Default.Email,
-                        contentDescription = "Email Input Icon"
+                        painter = painterResource(R.drawable.ic_email_control_24dp),
+                        contentDescription = null /* TextField has label */
                     )
                 }
             }
@@ -148,8 +148,8 @@ fun AuthTextField(
             isSecureTextField -> {
                 {
                     Icon(
-                        imageVector = Icons.Default.Lock,
-                        contentDescription = "Password Input Icon"
+                        painter = painterResource(R.drawable.ic_rounded_password_control_24dp),
+                        contentDescription = null /* TextField has label */
                     )
                 }
             }
@@ -164,8 +164,13 @@ fun AuthTextField(
                     }
                 ) {
                     Icon(
-                        imageVector = if (passwordVisible)
-                            Icons.Filled.VisibilityOff else Icons.Filled.Visibility,
+                        painter = painterResource(
+                            if (passwordVisible) {
+                                R.drawable.ic_visibility_off_control_24dp
+                            } else {
+                                R.drawable.ic_visibility_control_24dp
+                            }
+                        ),
                         contentDescription = if (passwordVisible) "Hide password" else "Show password"
                     )
                 }
@@ -220,12 +225,6 @@ internal fun PreviewAuthTextField() {
             },
             onValueChange = { text ->
                 emailTextValue.value = text
-            },
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Email,
-                    contentDescription = ""
-                )
             }
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -238,12 +237,6 @@ internal fun PreviewAuthTextField() {
             },
             onValueChange = { text ->
                 passwordTextValue.value = text
-            },
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Lock,
-                    contentDescription = ""
-                )
             }
         )
     }
