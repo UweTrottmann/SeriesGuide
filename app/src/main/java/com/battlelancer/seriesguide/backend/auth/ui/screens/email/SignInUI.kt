@@ -1,5 +1,6 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: Apache-2.0 AND AGPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
@@ -22,7 +23,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Scaffold
@@ -57,6 +57,7 @@ import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCrede
 import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCredentialException
 import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCredentialHandler
 import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCredentialNotFoundException
+import com.battlelancer.seriesguide.backend.auth.ui.components.AuthHorizontalDivider
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthTextField
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthTopAppBar
 import com.battlelancer.seriesguide.backend.auth.ui.components.TermsAndPrivacyForm
@@ -240,20 +241,7 @@ fun SignInUI(
 
             // Show toggle to email link sign-in
             if (provider.isEmailLinkSignInEnabled) {
-                Spacer(modifier = Modifier.height(64.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    HorizontalDivider(modifier = Modifier.weight(1f))
-                    Text(
-                        text = stringProvider.orContinueWith,
-                        modifier = Modifier.padding(horizontal = 8.dp),
-                        style = MaterialTheme.typography.bodySmall
-                    )
-                    HorizontalDivider(modifier = Modifier.weight(1f))
-                }
-                Spacer(modifier = Modifier.height(24.dp))
+                AuthHorizontalDivider()
                 Button(
                     onClick = {
                         onGoToEmailLinkSignIn()

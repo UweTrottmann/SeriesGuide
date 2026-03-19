@@ -127,8 +127,11 @@ interface AuthUIStringProvider {
     /** Body for email sign in link sent dialog */
     fun emailSignInLinkSentDialogBody(email: String): String
 
-    /** Divider text for alternate sign-in options */
-    val orContinueWith: String
+    /** Title text in auth method picker screen */
+    val methodPickerTitle: String
+
+    /** Description text in auth method picker screen */
+    val methodPickerDescription: String
 
     /** Button text to sign in with email link */
     val signInWithEmailLink: String
