@@ -306,6 +306,15 @@ abstract class AuthException(
             return when (firebaseException) {
                 // If already an AuthException, return it directly
                 is AuthException -> firebaseException
+
+                // Is a FirebaseAuthInvalidCredentialsException, so handle before
+                is FirebaseAuthWeakPasswordException -> {
+                    WeakPasswordException(
+                        message = firebaseException.message ?: "Password is too weak",
+                        cause = firebaseException,
+                        reason = firebaseException.reason
+                    )
+                }
                 
                 // Handle specific Firebase Auth exceptions first (before general FirebaseException)
                 is FirebaseAuthInvalidCredentialsException -> {
@@ -332,14 +341,6 @@ abstract class AuthException(
                             cause = firebaseException
                         )
                     }
-                }
-
-                is FirebaseAuthWeakPasswordException -> {
-                    WeakPasswordException(
-                        message = firebaseException.message ?: "Password is too weak",
-                        cause = firebaseException,
-                        reason = firebaseException.reason
-                    )
                 }
 
                 is FirebaseAuthUserCollisionException -> {
