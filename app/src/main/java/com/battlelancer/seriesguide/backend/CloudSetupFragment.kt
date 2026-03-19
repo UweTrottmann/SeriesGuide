@@ -134,20 +134,12 @@ class CloudSetupFragment : Fragment() {
         }
     }
 
-    // FIXME
     private fun signIn() {
         dismissSnackbar() // clear any error from previous sign in attempt
         setProgressVisible(true)
 
         val intent = FirebaseAuthActivity.createIntent(requireContext())
         signInWithFirebase.launch(intent)
-
-//        // Note: no need to provide a layout when just email sign-in is available
-//        // as Firebase UI will just directly proceed without asking for the provider.
-//        val authPickerLayout = AuthMethodPickerLayout.Builder(R.layout.auth_picker_email_google)
-//            .setEmailButtonId(R.id.buttonAuthSignInEmail)
-//            .setGoogleButtonId(R.id.buttonAuthSignInGoogle)
-//            .build()
     }
 
     private val signInWithFirebase =
