@@ -28,12 +28,6 @@ class DefaultAuthUIStringProvider(
     } ?: context
 
     /**
-     * Common Strings
-     */
-    override val initializing: String
-        get() = "Initializing"
-
-    /**
      * Auth Provider strings
      */
     override val emailProvider: String
@@ -94,14 +88,8 @@ class DefaultAuthUIStringProvider(
         get() = localizedContext.getString(R.string.fui_password_hint)
     override val confirmPasswordHint: String
         get() = localizedContext.getString(R.string.fui_confirm_password_hint)
-    override val newPasswordHint: String
-        get() = localizedContext.getString(R.string.fui_new_password_hint)
     override val nameHint: String
         get() = localizedContext.getString(R.string.fui_name_hint)
-    override val buttonTextSave: String
-        get() = localizedContext.getString(R.string.fui_button_text_save)
-    override val welcomeBackEmailHeader: String
-        get() = localizedContext.getString(R.string.fui_welcome_back_email_header)
     override val troubleSigningIn: String
         get() = localizedContext.getString(R.string.fui_trouble_signing_in)
 
@@ -135,20 +123,11 @@ class DefaultAuthUIStringProvider(
     override val signInWithPassword: String
         get() = localizedContext.getString(R.string.fui_sign_in_with_password)
 
-    override val emailLinkPromptForEmailTitle: String
-        get() = localizedContext.getString(R.string.fui_email_link_confirm_email_header)
-
     override val emailLinkPromptForEmailMessage: String
         get() = localizedContext.getString(R.string.fui_email_link_confirm_email_message)
 
-    override val emailLinkWrongDeviceTitle: String
-        get() = localizedContext.getString(R.string.fui_email_link_wrong_device_header)
-
     override val emailLinkWrongDeviceMessage: String
         get() = localizedContext.getString(R.string.fui_email_link_wrong_device_message)
-
-    override val emailLinkDifferentAnonymousUserTitle: String
-        get() = localizedContext.getString(R.string.fui_email_link_different_anonymous_user_header)
 
     override val emailLinkDifferentAnonymousUserMessage: String
         get() = localizedContext.getString(R.string.fui_email_link_different_anonymous_user_message)
@@ -158,9 +137,6 @@ class DefaultAuthUIStringProvider(
             R.string.fui_email_link_cross_device_linking_text,
             providerName
         )
-
-    override val emailLinkInvalidLinkTitle: String
-        get() = localizedContext.getString(R.string.fui_email_link_invalid_link_header)
 
     override val emailLinkInvalidLinkMessage: String
         get() = localizedContext.getString(R.string.fui_email_link_invalid_link_message)
@@ -175,26 +151,16 @@ class DefaultAuthUIStringProvider(
         get() = localizedContext.getString(R.string.fui_mfa_incorrect_code)
 
     /**
-     * Multi-Factor Authentication Strings
-     */
-    override val enterTOTPCode: String
-        get() = "Enter TOTP Code"
-
-    /**
      * Provider Picker Strings
      */
     override val signInDefault: String
         get() = localizedContext.getString(R.string.fui_sign_in_default)
     override val continueText: String
         get() = localizedContext.getString(R.string.fui_continue)
-    override val nextDefault: String
-        get() = localizedContext.getString(R.string.fui_next_default)
 
     /**
      * General Error Messages
      */
-    override val errorUnknown: String
-        get() = localizedContext.getString(R.string.fui_error_unknown)
     override val requiredField: String
         get() = localizedContext.getString(R.string.fui_required_field)
     override val progressDialogLoading: String

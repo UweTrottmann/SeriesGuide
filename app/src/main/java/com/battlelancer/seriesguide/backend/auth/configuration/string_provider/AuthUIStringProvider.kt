@@ -36,9 +36,6 @@ val LocalAuthUIStringProvider = staticCompositionLocalOf<AuthUIStringProvider> {
  * user-facing strings allowing for localization of the UI.
  */
 interface AuthUIStringProvider {
-    /** Loading text displayed during initialization or processing states */
-    val initializing: String
-
     /** Text for Email Provider */
     val emailProvider: String
 
@@ -94,17 +91,8 @@ interface AuthUIStringProvider {
     /** Hint for confirm password input field */
     val confirmPasswordHint: String
 
-    /** Hint for new password input field */
-    val newPasswordHint: String
-
     /** Hint for name input field */
     val nameHint: String
-
-    /** Button text to save form */
-    val buttonTextSave: String
-
-    /** Welcome back header for email users */
-    val welcomeBackEmailHeader: String
 
     /** Trouble signing in link text */
     val troubleSigningIn: String
@@ -139,29 +127,17 @@ interface AuthUIStringProvider {
     /** Button text to sign in with password */
     val signInWithPassword: String
 
-    /** Title shown when prompting the user to confirm their email for cross-device flows */
-    val emailLinkPromptForEmailTitle: String
-
     /** Message shown when prompting the user to confirm their email for cross-device flows */
     val emailLinkPromptForEmailMessage: String
 
-    /** Title shown when email link must be opened on same device */
-    val emailLinkWrongDeviceTitle: String
-
     /** Message shown when email link must be opened on same device */
     val emailLinkWrongDeviceMessage: String
-
-    /** Title shown when the anonymous session differs */
-    val emailLinkDifferentAnonymousUserTitle: String
 
     /** Message shown when the anonymous session differs */
     val emailLinkDifferentAnonymousUserMessage: String
 
     /** Message shown for cross-device linking flows with the provider name */
     fun emailLinkCrossDeviceLinkingMessage(providerName: String): String
-
-    /** Title shown when email link is invalid */
-    val emailLinkInvalidLinkTitle: String
 
     /** Message shown when email link is invalid */
     val emailLinkInvalidLinkMessage: String
@@ -182,13 +158,7 @@ interface AuthUIStringProvider {
     /** Common button text for continue */
     val continueText: String
 
-    /** Common button text for next */
-    val nextDefault: String
-
     // General Error Messages
-    /** General unknown error message */
-    val errorUnknown: String
-
     /** Required field error */
     val requiredField: String
 
@@ -273,9 +243,6 @@ interface AuthUIStringProvider {
 
     /** Network error message */
     val noInternet: String
-
-    /** TOTP Code prompt */
-    val enterTOTPCode: String
 
     // Error Recovery Dialog Strings
     /** Error dialog title */
