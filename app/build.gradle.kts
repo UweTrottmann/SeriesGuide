@@ -220,7 +220,6 @@ dependencies {
     implementation(platform(libs.compose))
     androidTestImplementation(platform(libs.compose))
     implementation(libs.compose.material3)
-    implementation(libs.compose.material3.icons)
     // Android Studio Preview support
     implementation(libs.compose.tooling.preview)
     debugImplementation(libs.compose.tooling)

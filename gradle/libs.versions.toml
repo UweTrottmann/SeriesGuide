@@ -79,7 +79,6 @@ material = "com.google.android.material:material:1.13.0"
 compose = "androidx.compose:compose-bom:2026.02.00"
 # https://developer.android.com/jetpack/androidx/releases/compose-material3
 compose-material3 = { module = "androidx.compose.material3:material3" }
-compose-material3-icons = { module = "androidx.compose.material:material-icons-extended" }
 compose-tooling = { module = "androidx.compose.ui:ui-tooling" }
 compose-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 # https://developer.android.com/jetpack/androidx/releases/navigation
