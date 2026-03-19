@@ -15,6 +15,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.lifecycleScope
+import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.auth.configuration.authUIConfiguration
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
@@ -89,6 +90,7 @@ class FirebaseAuthActivity : ComponentActivity() {
 
         val configuration = authUIConfiguration {
             context = applicationContext
+            privacyPolicyUrl = getString(R.string.url_privacy)
             providers {
                 provider(
                     AuthProvider.Email(
