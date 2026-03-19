@@ -36,9 +36,6 @@ class AuthUIConfigurationBuilder {
     var privacyPolicyUrl: String? = null
     var logo: AuthUIAsset? = null
     var passwordResetActionCodeSettings: ActionCodeSettings? = null
-    var isNewEmailAccountsAllowed: Boolean = true
-    var isDisplayNameRequired: Boolean = true
-    var isProviderChoiceAlwaysShown: Boolean = false
     var transitions: AuthUITransitions? = null
 
     fun providers(block: AuthProvidersBuilder.() -> Unit) =
@@ -79,7 +76,6 @@ class AuthUIConfigurationBuilder {
                 is AuthProvider.Email -> provider.validate()
                 is AuthProvider.Google -> provider.validate()
                 is AuthProvider.GenericOAuth -> provider.validate()
-                else -> null
             }
         }
 
@@ -94,9 +90,6 @@ class AuthUIConfigurationBuilder {
             privacyPolicyUrl = privacyPolicyUrl,
             logo = logo,
             passwordResetActionCodeSettings = passwordResetActionCodeSettings,
-            isNewEmailAccountsAllowed = isNewEmailAccountsAllowed,
-            isDisplayNameRequired = isDisplayNameRequired,
-            isProviderChoiceAlwaysShown = isProviderChoiceAlwaysShown,
             transitions = transitions
         )
     }
@@ -156,21 +149,6 @@ class AuthUIConfiguration(
      * Configuration for sending email reset link.
      */
     val passwordResetActionCodeSettings: ActionCodeSettings? = null,
-
-    /**
-     * Allows new email accounts to be created. Defaults to true.
-     */
-    val isNewEmailAccountsAllowed: Boolean = true,
-
-    /**
-     * Requires the user to provide a display name on sign-up. Defaults to true.
-     */
-    val isDisplayNameRequired: Boolean = true,
-
-    /**
-     * Always shows the provider selection screen, even if only one is enabled.
-     */
-    val isProviderChoiceAlwaysShown: Boolean = false,
 
     /**
      * Custom screen transition animations.
