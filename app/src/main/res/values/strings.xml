@@ -673,16 +673,6 @@
     <string name="fui_mfa_label_unknown_method" translation_description="Label for an unknown MFA factor.">Unknown method</string>
     <string name="fui_mfa_enrolled_on" translation_description="Label indicating the enrollment date of an MFA factor.">Enrolled on %1$s</string>
     <string name="fui_mfa_setup_authenticator_description" translation_description="Description displayed during authenticator app setup.">Scan the QR code or enter the secret key in your authenticator app</string>
-    <string name="fui_mfa_choose_method_instruction" translation_description="Instruction to choose an MFA verification method.">Choose a verification method</string>
-    <string name="fui_mfa_enrollment_instruction" translation_description="Instruction to enroll in MFA.">Add an extra layer of security</string>
-    <string name="fui_mfa_method_totp" translation_description="Label for authenticator app MFA method.">Authenticator app</string>
-    <string name="fui_mfa_second_factor_required_error" translation_description="Error when second factor verification is required.">Verification required</string>
-    <string name="fui_mfa_setup_instruction" translation_description="Instruction for setting up authenticator app.">Scan the QR code with your authenticator app</string>
-    <string name="fui_mfa_totp_already_exists_error" translation_description="Error when authenticator app is already set up.">Authenticator app is already set up</string>
-    <string name="fui_mfa_unenrollment_confirmation_message" translation_description="Confirmation message before removing an MFA method.">Are you sure you want to remove this method?</string>
-    <string name="fui_mfa_unenrollment_error" translation_description="Error when unable to remove MFA method.">Unable to remove method</string>
-    <string name="fui_mfa_unenrollment_success_message" translation_description="Success message after removing MFA method.">Method removed</string>
-    <string name="fui_mfa_verification_instruction" translation_description="Instruction to enter verification code.">Enter the verification code</string>
 
     <!-- Re-authentication dialog -->
     <string name="fui_reauth_dialog_title" translation_description="Title for the re-authentication dialog.">Verify your identity</string>
@@ -700,59 +690,28 @@
     <string name="fui_profile_update_success_message" translation_description="Success message after profile update.">Profile updated</string>
 
     <!-- Common-->
-    <string name="fui_next_default" translation_description="Button text to continue">Next</string>
     <string name="fui_email_hint" translation_description="Hint in email input field">Email</string>
     <string name="fui_password_hint" translation_description="Hint for password input field for existing passwords">Password</string>
     <string name="fui_confirm_password_hint" translation_description="Hint for confirm password input field for existing passwords">Confirm Password</string>
-    <string name="fui_new_password_hint" translation_description="Hint for password input field for new passwords">New password</string>
     <string name="fui_required_field" translation_description="Inline error for required field">You can\'t leave this empty.</string>
     <string name="fui_invalid_email_address" translation_description="Inline error for invalid email address">That email address isn\'t correct</string>
     <string name="fui_missing_email_address" translation_description="Inline error for empty email address in input field">Enter your email address to continue</string>
-    <string name="fui_missing_first_and_last_name" translation_description="Inline error for empty email address in input field. [CHAR_LIMIT=60]">Please enter a first and last name.</string>
-    <string name="fui_progress_dialog_checking_accounts" translation_description="Progress dialog text while checking for existing accounts">Checking for existing accounts…</string>
 
     <!-- Email sign up -->
     <string name="fui_title_register_email" translation_description="Title for signup form">Sign up</string>
     <string name="fui_name_hint" translation_description="Hint for last name input field">First &amp; last name</string>
-    <string name="fui_button_text_save" translation_description="Button text to save input form">Save</string>
-    <string name="fui_progress_dialog_signing_up" translation_description="Dialog text while waiting for server's signup response">Signing up…</string>
     <plurals name="fui_error_weak_password" translation_description="Inline error for weak password">
         <item quantity="one" translation_description="Inline error for weak password">Password not strong enough. Use at least %1$d character and a mix of letters and numbers</item>
         <item quantity="other" translation_description="Inline error for weak password">Password not strong enough. Use at least %1$d characters and a mix of letters and numbers</item>
     </plurals>
     <string name="fui_email_alreay_in_use" translation_description="Inline error for signup failure">This email address is already in use by an existing account. Please sign in with your existing account.</string>
-    <string name="fui_email_field_name" translatable="false">email_field</string>
-
-    <!-- Idp/Email welcome back -->
-    <string name="fui_title_welcome_back_idp_prompt" translatable="false">@string/fui_sign_in_default</string>
-    <string name="fui_title_welcome_back_password_prompt" translatable="false">@string/fui_sign_in_default</string>
-    <string name="fui_welcome_back_idp_header" translation_description="Inline subtitle to users whose signup was interrupted since an existing account was detected">You already have an account</string>
-    <string name="fui_welcome_back_email_header" translation_description="Message for returning users">Welcome back!</string>
-    <string name="fui_welcome_back_email_link_header" translation_description="Message for returning users">You already have an account\n</string>
-
-    <string name="fui_welcome_back_idp_prompt" translation_description="Message to users that need to signin using existing IDP accounts">
-        You\'ve already used <xliff:g example="jane.doe@example.com" id="email_addr" translation_description="">%1$s</xliff:g>.
-        Sign in with <xliff:g example="Google" id="provider_name" translation_description="">%2$s</xliff:g> to continue.
-    </string>
-    <string name="fui_welcome_back_password_prompt_body" translation_description="Message to users that need to signin using existing email accounts">
-        You\'ve already used <xliff:g example="jane.doe@example.com" id="email_addr" translation_description="">%1$s</xliff:g>
-        to sign in. Enter your password for that account.
-    </string>
-    <string name="fui_welcome_back_email_link_prompt_body" translation_description="Message to users that need to signin using existing email link accounts">
-        You\'ve already used <xliff:g example="jane.doe@example.com" id="email_addr" translation_description="">%1$s</xliff:g>.
-        You can connect your %2$s account with %1$s by signing in with email link below.\n\nFor this flow to successfully connect your %2$s account with this email, you have to open the link on the same device or browser.
-    </string>
-    <string name="fui_progress_dialog_signing_in" translation_description="Progress dialog text">Signing in…</string>
     <string name="fui_trouble_signing_in" translation_description="Link leading to forgot password flow">Trouble signing in?</string>
 
     <!-- Password recovery -->
     <string name="fui_title_recover_password_activity" translation_description="Recover password screen title">Recover password</string>
     <string name="fui_title_confirm_recover_password" translation_description="Password recovery confirmation message">Check your email</string>
-    <string name="fui_password_recovery_body" translation_description="Password recovery message body">Get instructions sent to this email that explain how to
-        reset your password.</string>
     <string name="fui_button_text_send" translation_description="Button text to send recovery email">Send</string>
     <string name="fui_confirm_recovery_body" translation_description="Alert dialog displayed after password recovery email is sent">Follow the instructions sent to %1$s to recover your password.</string>
-    <string name="fui_progress_dialog_sending" translation_description="Progress dialog while password recovery email or email link is being sent">Sending…</string>
     <string name="fui_error_email_does_not_exist" translation_description="Inline error when user attempt signin with invalid account">That email address doesn\'t match an existing account</string>
 
     <!-- Other error messages -->
@@ -767,25 +726,14 @@
     <string name="fui_error_password_missing_digit" translation_description="Error message when password is missing digit">Password must contain at least one number</string>
     <string name="fui_error_password_missing_special_character" translation_description="Error message when password is missing special character">Password must contain at least one special character</string>
 
-    <!-- Accessibility -->
-    <string name="fui_accessibility_logo" translation_description="Content description for app logo">App logo</string>
-
-
     <!-- Email Link Sign In -->
     <string name="fui_sign_in_with_email_link" translation_description="Button text to sign in with email link">Sign in with email link</string>
     <string name="fui_sign_in_with_password" translation_description="Button text to sign in with password">Sign in with password</string>
     <string name="fui_email_link_header" translation_description="Email link sign in email sent header">Sign-in email sent\n</string>
     <string name="fui_email_link_email_sent" translation_description="Text to tell the user that the email has been sent">A sign-in email with additional instructions was sent to %1$s. Check your email to complete sign-in.</string>
-    <string name="fui_email_link_trouble_getting_email_header" translation_description="Header that is displayed on the trouble signing in activity">Trouble getting email?</string>
-    <string name="fui_email_link_trouble_getting_possible_fixes" translation_description="A list of possible fixes for receiving the email">Try these common fixes:\n\u2022 Check if the email was marked as spam or filtered.\n\u2022 Check your internet connection.\n\u2022 Check that you did not misspell your email.\n\u2022 Check that your inbox space is not running out or other inbox setting related issues.\n</string>
-    <string name="fui_email_link_resend" translation_description="Button text to resend">Resend</string>
-    <string name="fui_email_link_wrong_device_header" translation_description="Header shown when the user opens a link that was sent from a different device">New device or browser detected.</string>
     <string name="fui_email_link_wrong_device_message" translation_description="Message shown when the user opens a link that was sent from a different device">Try opening the link using the same device or browser where you started the sign-in process.</string>
-    <string name="fui_email_link_invalid_link_header" translation_description="Header shown when the user opens a link that was sent from a different device">Unable to complete sign in</string>
     <string name="fui_email_link_invalid_link_message" translation_description="Message shown when the user opens a link that was sent from a different device">The action code is invalid. This can happen if the code is malformed, expired, or has already been used.</string>
-    <string name="fui_email_link_different_anonymous_user_header" translation_description="Header shown when the user opens a link but the underlying session has changed">Session ended</string>
     <string name="fui_email_link_different_anonymous_user_message" translation_description="Message shown when the user opens a link but the underlying session has changed">The session associated with this sign-in request has either expired or was cleared.</string>
-    <string name="fui_email_link_confirm_email_header" translation_description="Header shown when prompting the user to confirm their email to complete the sign in">Confirm email</string>
     <string name="fui_email_link_confirm_email_message" translation_description="Message shown when prompting the user to confirm their email to finish the sign in flow">Confirm email to continue sign in</string>
     <string name="fui_email_link_dismiss_button" translation_description="Dismiss button for the wrong device or invalid link dialog">Dismiss</string>
     <string name="fui_email_link_cross_device_linking_text" translation_description="Text shown when the user opens an email link on a different device, but they had originally intended to link a provider to their account.">You originally intended to connect %1$s to your email account but have opened the link on a different device where you are not signed in.\n\nIf you still want to connect your %1$s account, open the link on the same device where you started sign-in. Otherwise, tap Continue to sign-in on this device.</string>
