@@ -19,14 +19,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Scaffold
@@ -35,7 +31,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TooltipAnchorPosition
 import androidx.compose.material3.TooltipBox
 import androidx.compose.material3.TooltipDefaults
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -46,8 +41,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.semantics.heading
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
@@ -65,6 +58,7 @@ import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCrede
 import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCredentialHandler
 import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCredentialNotFoundException
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthTextField
+import com.battlelancer.seriesguide.backend.auth.ui.components.AuthTopAppBar
 import com.battlelancer.seriesguide.backend.auth.ui.components.TermsAndPrivacyForm
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -144,24 +138,9 @@ fun SignInUI(
     Scaffold(
         modifier = modifier,
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = stringProvider.signInDefault,
-                        modifier = Modifier.semantics { heading() }
-                    )
-                },
-                navigationIcon = {
-                    if (onNavigateBack != null) {
-                        IconButton(onClick = onNavigateBack) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = stringProvider.backAction
-                            )
-                        }
-                    }
-                },
-                colors = AuthUITheme.topAppBarColors
+            AuthTopAppBar(
+                title = stringProvider.signInDefault,
+                onNavigateBack = onNavigateBack
             )
         },
     ) { innerPadding ->
