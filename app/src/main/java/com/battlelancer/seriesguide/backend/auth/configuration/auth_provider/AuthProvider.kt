@@ -18,7 +18,6 @@ import androidx.credentials.GetCredentialRequest
 import androidx.credentials.exceptions.GetCredentialCancellationException
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.battlelancer.seriesguide.backend.auth.AuthException.AuthCancelledException
-import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
 import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfigurationDsl
 import com.battlelancer.seriesguide.backend.auth.configuration.PasswordRule
 import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUIAsset
@@ -53,10 +52,9 @@ class AuthProvidersBuilder {
  */
 internal enum class Provider(
     val id: String,
-    val providerName: String,
-    val isSocialProvider: Boolean = false,
+    val providerName: String
 ) {
-    GOOGLE(GoogleAuthProvider.PROVIDER_ID, providerName = "Google", isSocialProvider = true),
+    GOOGLE(GoogleAuthProvider.PROVIDER_ID, providerName = "Google"),
     EMAIL(EmailAuthProvider.PROVIDER_ID, providerName = "Email");
 
     companion object {
@@ -98,10 +96,10 @@ abstract class AuthProvider(open val providerId: String, open val providerName: 
         /**
          * Forces email link sign-in to complete on the same device that initiated it.
          *
-         * When enabled, prevents email links from being opened on different devices,
-         * which is required for security when upgrading anonymous users. Defaults to true.
+         * This is required for security when upgrading anonymous users, but as this doesn't support
+         * anonymous accounts defaults to false.
          */
-        val isEmailLinkForceSameDeviceEnabled: Boolean = true,
+        val isEmailLinkForceSameDeviceEnabled: Boolean = false,
 
         /**
          * Settings for email link actions.
@@ -127,14 +125,12 @@ abstract class AuthProvider(open val providerId: String, open val providerName: 
             const val SESSION_ID_LENGTH = 10
             val KEY_EMAIL = stringPreferencesKey("com.firebase.ui.auth.data.client.email")
             val KEY_PROVIDER = stringPreferencesKey("com.firebase.ui.auth.data.client.provider")
-            val KEY_ANONYMOUS_USER_ID =
-                stringPreferencesKey("com.firebase.ui.auth.data.client.auid")
             val KEY_SESSION_ID = stringPreferencesKey("com.firebase.ui.auth.data.client.sid")
             val KEY_IDP_TOKEN = stringPreferencesKey("com.firebase.ui.auth.data.client.idpToken")
             val KEY_IDP_SECRET = stringPreferencesKey("com.firebase.ui.auth.data.client.idpSecret")
         }
 
-        internal fun validate(isAnonymousUpgradeEnabled: Boolean = false) {
+        internal fun validate() {
             if (isEmailLinkSignInEnabled) {
                 val actionCodeSettings = requireNotNull(emailLinkActionCodeSettings) {
                     "ActionCodeSettings cannot be null when using " +
@@ -145,20 +141,15 @@ abstract class AuthProvider(open val providerId: String, open val providerName: 
                     "You must set canHandleCodeInApp in your " +
                             "ActionCodeSettings to true for Email-Link Sign-in."
                 }
-
-                if (isAnonymousUpgradeEnabled) {
-                    check(isEmailLinkForceSameDeviceEnabled) {
-                        "You must force the same device flow when using email link sign in " +
-                                "with anonymous user upgrade"
-                    }
-                }
             }
         }
 
-        // For Send Email Link
-        internal fun addSessionInfoToActionCodeSettings(
+        /**
+         * Using this providers [emailLinkActionCodeSettings] builds [ActionCodeSettings] for
+         * sending an email link for sign-in.
+         */
+        internal fun buildActionCodeSettings(
             sessionId: String,
-            anonymousUserId: String,
             credentialForLinking: AuthCredential? = null,
         ): ActionCodeSettings {
             requireNotNull(emailLinkActionCodeSettings) {
@@ -167,7 +158,6 @@ abstract class AuthProvider(open val providerId: String, open val providerName: 
 
             val continueUrl = continueUrl(emailLinkActionCodeSettings.url) {
                 appendSessionId(sessionId)
-                appendAnonymousUserId(anonymousUserId)
                 appendForceSameDeviceBit(isEmailLinkForceSameDeviceEnabled)
                 // Only append providerId for linking flows (when credentialForLinking is not null)
                 if (credentialForLinking != null) {
@@ -200,23 +190,6 @@ abstract class AuthProvider(open val providerId: String, open val providerName: 
         private fun continueUrl(continueUrl: String, block: ContinueUrlBuilder.() -> Unit) =
             ContinueUrlBuilder(continueUrl).apply(block).build()
 
-        /**
-         * An interface to wrap the static `EmailAuthProvider.getCredential` method to make it testable.
-         * @suppress
-         */
-        internal interface CredentialProvider {
-            fun getCredential(email: String, password: String): AuthCredential
-        }
-
-        /**
-         * The default implementation of [CredentialProvider] that calls the static method.
-         * @suppress
-         */
-        internal class DefaultCredentialProvider : CredentialProvider {
-            override fun getCredential(email: String, password: String): AuthCredential {
-                return EmailAuthProvider.getCredential(email, password)
-            }
-        }
     }
 
     /**
@@ -443,12 +416,6 @@ abstract class AuthProvider(open val providerId: String, open val providerName: 
     }
 
     companion object {
-        internal fun canUpgradeAnonymous(config: AuthUIConfiguration, auth: FirebaseAuth): Boolean {
-            val currentUser = auth.currentUser
-            return config.isAnonymousUpgradeEnabled
-                    && currentUser != null
-                    && currentUser.isAnonymous
-        }
 
         /**
          * Merges profile information (display name and photo URL) with the current user's profile.

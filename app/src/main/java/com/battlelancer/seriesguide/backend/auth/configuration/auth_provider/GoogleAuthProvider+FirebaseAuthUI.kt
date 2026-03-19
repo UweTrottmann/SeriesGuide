@@ -18,7 +18,6 @@ import androidx.credentials.exceptions.NoCredentialException
 import com.battlelancer.seriesguide.backend.auth.AuthException
 import com.battlelancer.seriesguide.backend.auth.AuthState
 import com.battlelancer.seriesguide.backend.auth.FirebaseAuthUI
-import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
 import com.battlelancer.seriesguide.backend.auth.util.EmailLinkPersistenceManager
 import com.battlelancer.seriesguide.backend.auth.util.SignInPreferenceManager
 import com.google.android.gms.common.api.Scope
@@ -33,26 +32,12 @@ import kotlinx.coroutines.launch
  * flow using [signInWithGoogle]. The callback is stable across recompositions and automatically
  * handles coroutine scoping and error state management.
  *
- * **Usage:**
- * ```kotlin
- * val onSignInWithGoogle = authUI.rememberGoogleSignInHandler(
- *     context = context,
- *     config = configuration,
- *     provider = googleProvider
- * )
- *
- * Button(onClick = onSignInWithGoogle) {
- *     Text("Sign in with Google")
- * }
- * ```
- *
  * **Error Handling:**
  * - Catches all exceptions and converts them to [AuthException]
  * - Automatically updates [AuthState.Error] on failures
  * - Logs errors for debugging purposes
  *
  * @param context Android context for Credential Manager
- * @param config Authentication UI configuration
  * @param provider Google provider configuration with server client ID and optional scopes
  * @return A callback function that initiates Google Sign-In when invoked
  *
@@ -62,7 +47,6 @@ import kotlinx.coroutines.launch
 @Composable
 internal fun FirebaseAuthUI.rememberGoogleSignInHandler(
     context: Context,
-    config: AuthUIConfiguration,
     provider: AuthProvider.Google,
 ): () -> Unit {
     val coroutineScope = rememberCoroutineScope()
@@ -70,7 +54,7 @@ internal fun FirebaseAuthUI.rememberGoogleSignInHandler(
         {
             coroutineScope.launch {
                 try {
-                    signInWithGoogle(context, config, provider)
+                    signInWithGoogle(context, provider)
                 } catch (e: AuthException) {
                     updateAuthState(AuthState.Error(e))
                 } catch (e: Exception) {
@@ -91,7 +75,7 @@ internal fun FirebaseAuthUI.rememberGoogleSignInHandler(
  * **Flow:**
  * 1. If [AuthProvider.Google.scopes] are specified, requests OAuth authorization first
  * 2. Attempts sign-in using Credential Manager
- * 3. Creates Firebase credential and calls [signInAndLinkWithCredential]
+ * 3. Creates Firebase credential and calls [signInWithCredential]
  *
  * **Scopes Behavior:**
  * - If [AuthProvider.Google.scopes] is not empty, requests OAuth authorization before sign-in
@@ -105,7 +89,6 @@ internal fun FirebaseAuthUI.rememberGoogleSignInHandler(
  * - Configuration errors trigger detailed developer guidance logs
  *
  * @param context Android context for Credential Manager
- * @param config Authentication UI configuration
  * @param provider Google provider configuration with optional scopes
  * @param authorizationProvider Provider for OAuth scopes authorization (for testing)
  * @param credentialManagerProvider Provider for Credential Manager flow (for testing)
@@ -115,11 +98,10 @@ internal fun FirebaseAuthUI.rememberGoogleSignInHandler(
  * @throws AuthException if sign-in or linking fails
  *
  * @see AuthProvider.Google
- * @see signInAndLinkWithCredential
+ * @see signInWithCredential
  */
 internal suspend fun FirebaseAuthUI.signInWithGoogle(
     context: Context,
-    config: AuthUIConfiguration,
     provider: AuthProvider.Google,
     authorizationProvider: AuthProvider.Google.AuthorizationProvider = AuthProvider.Google.DefaultAuthorizationProvider(),
     credentialManagerProvider: AuthProvider.Google.CredentialManagerProvider = AuthProvider.Google.DefaultCredentialManagerProvider(),
@@ -184,8 +166,7 @@ internal suspend fun FirebaseAuthUI.signInWithGoogle(
         }
         idTokenFromResult = result.idToken
 
-        signInAndLinkWithCredential(
-            config = config,
+        signInWithCredential(
             credential = result.credential,
             provider = provider,
             displayName = result.displayName,

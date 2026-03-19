@@ -129,9 +129,6 @@ class DefaultAuthUIStringProvider(
     override val emailLinkWrongDeviceMessage: String
         get() = localizedContext.getString(R.string.fui_email_link_wrong_device_message)
 
-    override val emailLinkDifferentAnonymousUserMessage: String
-        get() = localizedContext.getString(R.string.fui_email_link_different_anonymous_user_message)
-
     override fun emailLinkCrossDeviceLinkingMessage(providerName: String): String =
         localizedContext.getString(
             R.string.fui_email_link_cross_device_linking_text,

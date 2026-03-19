@@ -1,5 +1,6 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: Apache-2.0 AND AGPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
@@ -15,7 +16,6 @@ import com.battlelancer.seriesguide.backend.auth.AuthException
 import com.battlelancer.seriesguide.backend.auth.AuthState
 import com.battlelancer.seriesguide.backend.auth.FirebaseAuthUI
 import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
-import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider.Companion.canUpgradeAnonymous
 import com.battlelancer.seriesguide.backend.auth.util.SignInPreferenceManager
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.OAuthCredential
@@ -73,7 +73,6 @@ internal fun FirebaseAuthUI.rememberOAuthSignInHandler(
                 try {
                     signInWithProvider(
                         context = context,
-                        config = config,
                         activity = activity,
                         provider = provider
                     )
@@ -92,7 +91,6 @@ internal fun FirebaseAuthUI.rememberOAuthSignInHandler(
  * Signs in with an OAuth provider (GitHub, Microsoft, Yahoo, Apple, Twitter).
  *
  * This function implements OAuth provider authentication using Firebase's native OAuthProvider.
- * It handles both normal sign-in flow and anonymous user upgrade flow.
  *
  * **Supported Providers:**
  * - GitHub (github.com)
@@ -103,21 +101,14 @@ internal fun FirebaseAuthUI.rememberOAuthSignInHandler(
  *
  * **Flow:**
  * 1. Checks for pending auth results (e.g., from app restart during OAuth flow)
- * 2. If anonymous upgrade is enabled and user is anonymous, links credential to anonymous account
- * 3. Otherwise, performs normal sign-in
- * 4. Updates auth state to Idle on success
- *
- * **Anonymous Upgrade:**
- * If [AuthUIConfiguration.isAnonymousUpgradeEnabled] is true and a user is currently signed in
- * anonymously, this will attempt to link the OAuth credential to the anonymous account instead
- * of creating a new account.
+ * 2. Performs normal sign-in
+ * 3. Updates auth state to Idle on success
  *
  * **Error Handling:**
  * - [AuthException.AuthCancelledException]: User cancelled OAuth flow
  * - [AuthException.AccountLinkingRequiredException]: Account collision (email already exists)
  * - [AuthException]: Other authentication errors
  *
- * @param config Authentication UI configuration
  * @param activity Activity for OAuth flow
  * @param provider OAuth provider configuration with scopes and custom parameters
  *
@@ -126,11 +117,10 @@ internal fun FirebaseAuthUI.rememberOAuthSignInHandler(
  * @throws AuthException if OAuth flow or sign-in fails
  *
  * @see AuthProvider.OAuth
- * @see signInAndLinkWithCredential
+ * @see signInWithCredential
  */
 internal suspend fun FirebaseAuthUI.signInWithProvider(
     context: Context,
-    config: AuthUIConfiguration,
     activity: Activity,
     provider: AuthProvider.OAuth,
 ) {
@@ -160,8 +150,7 @@ internal suspend fun FirebaseAuthUI.signInWithProvider(
 
             if (credential != null) {
                 // Complete the pending sign-in/link flow
-                signInAndLinkWithCredential(
-                    config = config,
+                signInWithCredential(
                     credential = credential,
                     provider = provider,
                     displayName = authResult.user?.displayName,
@@ -172,12 +161,8 @@ internal suspend fun FirebaseAuthUI.signInWithProvider(
             return
         }
 
-        // Determine if we should upgrade anonymous user or do normal sign-in
-        val authResult = if (canUpgradeAnonymous(config, auth)) {
-            auth.currentUser?.startActivityForLinkWithProvider(activity, oauthProvider)?.await()
-        } else {
-            auth.startActivityForSignInWithProvider(activity, oauthProvider).await()
-        }
+        val authResult = auth.startActivityForSignInWithProvider(activity, oauthProvider)
+            .await()
 
         // Extract OAuth credential and complete sign-in
         val credential = authResult?.credential as? OAuthCredential

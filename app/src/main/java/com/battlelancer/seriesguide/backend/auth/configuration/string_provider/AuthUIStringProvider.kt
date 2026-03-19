@@ -133,9 +133,6 @@ interface AuthUIStringProvider {
     /** Message shown when email link must be opened on same device */
     val emailLinkWrongDeviceMessage: String
 
-    /** Message shown when the anonymous session differs */
-    val emailLinkDifferentAnonymousUserMessage: String
-
     /** Message shown for cross-device linking flows with the provider name */
     fun emailLinkCrossDeviceLinkingMessage(providerName: String): String
 

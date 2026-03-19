@@ -33,7 +33,6 @@ class AuthUIConfigurationBuilder {
     var stringProvider: AuthUIStringProvider? = null
     var isCredentialManagerEnabled: Boolean = true
     var isMfaEnabled: Boolean = true
-    var isAnonymousUpgradeEnabled: Boolean = false
     var privacyPolicyUrl: String? = null
     var logo: AuthUIAsset? = null
     var passwordResetActionCodeSettings: ActionCodeSettings? = null
@@ -77,7 +76,7 @@ class AuthUIConfigurationBuilder {
         // Provider specific validations
         providers.forEach { provider ->
             when (provider) {
-                is AuthProvider.Email -> provider.validate(isAnonymousUpgradeEnabled)
+                is AuthProvider.Email -> provider.validate()
                 is AuthProvider.Google -> provider.validate()
                 is AuthProvider.GenericOAuth -> provider.validate()
                 else -> null
@@ -92,7 +91,6 @@ class AuthUIConfigurationBuilder {
             stringProvider = stringProvider ?: DefaultAuthUIStringProvider(context, locale),
             isCredentialManagerEnabled = isCredentialManagerEnabled,
             isMfaEnabled = isMfaEnabled,
-            isAnonymousUpgradeEnabled = isAnonymousUpgradeEnabled,
             privacyPolicyUrl = privacyPolicyUrl,
             logo = logo,
             passwordResetActionCodeSettings = passwordResetActionCodeSettings,
@@ -143,11 +141,6 @@ class AuthUIConfiguration(
      * Enables Multi-Factor Authentication support. Defaults to true.
      */
     val isMfaEnabled: Boolean = true,
-
-    /**
-     * Allows upgrading an anonymous user to a new credential.
-     */
-    val isAnonymousUpgradeEnabled: Boolean = false,
 
     /**
      * The URL for the privacy policy.

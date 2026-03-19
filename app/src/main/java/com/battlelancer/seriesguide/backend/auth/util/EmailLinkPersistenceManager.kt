@@ -15,7 +15,6 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Provider
 import com.google.firebase.auth.AuthCredential
-import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.flow.first
 
@@ -27,7 +26,6 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
  * This class provides persistence for email link authentication sessions, including:
  * - Email address
  * - Session ID for same-device validation
- * - Anonymous user ID for upgrade flows
  * - Social provider credentials for linking flows
  *
  * @since 10.0.0
@@ -46,13 +44,11 @@ object EmailLinkPersistenceManager {
         override suspend fun saveEmail(
             context: Context,
             email: String,
-            sessionId: String,
-            anonymousUserId: String?
+            sessionId: String
         ) {
             context.dataStore.edit { prefs ->
                 prefs[AuthProvider.Email.KEY_EMAIL] = email
                 prefs[AuthProvider.Email.KEY_SESSION_ID] = sessionId
-                prefs[AuthProvider.Email.KEY_ANONYMOUS_USER_ID] = anonymousUserId ?: ""
             }
         }
         
@@ -78,7 +74,6 @@ object EmailLinkPersistenceManager {
                 return null
             }
 
-            val anonymousUserId = prefs[AuthProvider.Email.KEY_ANONYMOUS_USER_ID]
             val providerType = Provider.fromId(prefs[AuthProvider.Email.KEY_PROVIDER])
             val idToken = prefs[AuthProvider.Email.KEY_IDP_TOKEN]
             val accessToken = prefs[AuthProvider.Email.KEY_IDP_SECRET]
@@ -96,7 +91,6 @@ object EmailLinkPersistenceManager {
             return SessionRecord(
                 sessionId = sessionId,
                 email = email,
-                anonymousUserId = anonymousUserId,
                 credentialForLinking = credentialForLinking
             )
         }
@@ -105,7 +99,6 @@ object EmailLinkPersistenceManager {
             context.dataStore.edit { prefs ->
                 prefs.remove(AuthProvider.Email.KEY_SESSION_ID)
                 prefs.remove(AuthProvider.Email.KEY_EMAIL)
-                prefs.remove(AuthProvider.Email.KEY_ANONYMOUS_USER_ID)
                 prefs.remove(AuthProvider.Email.KEY_PROVIDER)
                 prefs.remove(AuthProvider.Email.KEY_IDP_TOKEN)
                 prefs.remove(AuthProvider.Email.KEY_IDP_SECRET)
@@ -118,13 +111,11 @@ object EmailLinkPersistenceManager {
      *
      * @property sessionId Unique session identifier for same-device validation
      * @property email Email address for sign-in
-     * @property anonymousUserId Optional anonymous user ID for upgrade flows
      * @property credentialForLinking Optional social provider credential to link after sign-in
      */
     data class SessionRecord(
         val sessionId: String,
         val email: String,
-        val anonymousUserId: String?,
         val credentialForLinking: AuthCredential?
     )
 }

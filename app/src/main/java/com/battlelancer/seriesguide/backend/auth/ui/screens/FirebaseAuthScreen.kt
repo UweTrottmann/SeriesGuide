@@ -129,7 +129,6 @@ fun FirebaseAuthScreen(
     val onSignInWithGoogle = googleProvider?.let {
         authUI.rememberGoogleSignInHandler(
             context = context,
-            config = configuration,
             provider = it
         )
     }
@@ -371,7 +370,6 @@ fun FirebaseAuthScreen(
                             // Same device - we have the email, sign in automatically
                             authUI.signInWithEmailLink(
                                 context = context,
-                                config = configuration,
                                 provider = emailProvider,
                                 email = savedEmail,
                                 emailLink = emailLink
@@ -382,7 +380,6 @@ fun FirebaseAuthScreen(
                             // This will throw EmailLinkPromptForEmailException or EmailLinkWrongDeviceException
                             authUI.signInWithEmailLink(
                                 context = context,
-                                config = configuration,
                                 provider = emailProvider,
                                 email = "", // Empty email triggers cross-device detection
                                 emailLink = emailLink

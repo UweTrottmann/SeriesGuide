@@ -1,5 +1,6 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: Apache-2.0 AND AGPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
@@ -37,9 +38,6 @@ class EmailLinkParser(link: String) {
 
     val sessionId: String?
         get() = params[LinkParameters.SESSION_IDENTIFIER]
-
-    val anonymousUserId: String?
-        get() = params[LinkParameters.ANONYMOUS_USER_ID_IDENTIFIER]
 
     val forceSameDeviceBit: Boolean
         get() {
@@ -79,7 +77,6 @@ class EmailLinkParser(link: String) {
 
     object LinkParameters {
         const val SESSION_IDENTIFIER = "ui_sid"
-        const val ANONYMOUS_USER_ID_IDENTIFIER = "ui_auid"
         const val FORCE_SAME_DEVICE_IDENTIFIER = "ui_sd"
         const val PROVIDER_ID_IDENTIFIER = "ui_pid"
     }
