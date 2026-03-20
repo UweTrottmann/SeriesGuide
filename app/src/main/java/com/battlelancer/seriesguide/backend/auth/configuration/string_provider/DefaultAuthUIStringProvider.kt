@@ -97,7 +97,7 @@ class DefaultAuthUIStringProvider(
         get() = localizedContext.getString(R.string.fui_title_recover_password_activity)
 
     override val sendButtonText: String
-        get() = localizedContext.getString(R.string.fui_button_text_send)
+        get() = localizedContext.getString(R.string.feedback)
 
     override val recoverPasswordLinkSentDialogTitle: String
         get() = localizedContext.getString(R.string.fui_title_confirm_recover_password)
@@ -151,7 +151,7 @@ class DefaultAuthUIStringProvider(
      * Provider Picker Strings
      */
     override val signInDefault: String
-        get() = localizedContext.getString(R.string.fui_sign_in_default)
+        get() = localizedContext.getString(R.string.hexagon_signin)
     override val continueText: String
         get() = localizedContext.getString(R.string.fui_continue)
 
@@ -170,7 +170,7 @@ class DefaultAuthUIStringProvider(
         get() = localizedContext.getString(R.string.fui_manage_mfa_action)
 
     override val signOutAction: String
-        get() = localizedContext.getString(R.string.fui_sign_out_action)
+        get() = localizedContext.getString(R.string.hexagon_signout)
 
     // Temporarily don't require email verification, see notes in FirebaseAuthUI
 //    override fun verifyEmailInstruction(email: String): String =
@@ -232,8 +232,6 @@ class DefaultAuthUIStringProvider(
 
     override val setupAuthenticatorDescription: String
         get() = localizedContext.getString(R.string.fui_mfa_setup_authenticator_description)
-    override val noInternet: String
-        get() = localizedContext.getString(R.string.fui_no_internet)
 
     /**
      * Error Recovery Dialog Strings
@@ -241,11 +239,11 @@ class DefaultAuthUIStringProvider(
     override val errorDialogTitle: String
         get() = localizedContext.getString(R.string.fui_error_dialog_title)
     override val retryAction: String
-        get() = localizedContext.getString(R.string.fui_error_retry_action)
+        get() = localizedContext.getString(R.string.action_try_again)
     override val dismissAction: String
-        get() = localizedContext.getString(R.string.fui_email_link_dismiss_button)
+        get() = localizedContext.getString(R.string.dismiss)
     override val networkErrorRecoveryMessage: String
-        get() = localizedContext.getString(R.string.fui_no_internet)
+        get() = localizedContext.getString(R.string.api_error_generic, localizedContext.getString(R.string.hexagon))
     override val invalidCredentialsRecoveryMessage: String
         get() = localizedContext.getString(R.string.fui_error_invalid_password)
     override val userNotFoundRecoveryMessage: String
@@ -298,8 +296,6 @@ class DefaultAuthUIStringProvider(
         get() = localizedContext.getString(R.string.fui_mfa_error_recent_login_required)
     override val mfaErrorInvalidVerificationCode: String
         get() = localizedContext.getString(R.string.fui_mfa_error_invalid_verification_code)
-    override val mfaErrorNetwork: String
-        get() = localizedContext.getString(R.string.fui_mfa_error_network)
     override val mfaErrorGeneric: String
         get() = localizedContext.getString(R.string.fui_mfa_error_generic)
 

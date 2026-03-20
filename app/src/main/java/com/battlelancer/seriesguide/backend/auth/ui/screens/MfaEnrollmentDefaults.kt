@@ -112,7 +112,7 @@ internal fun DefaultMfaEnrollmentContent(
                         stringProvider.incorrectPasswordError
 
                     exception.message?.contains("network", ignoreCase = true) == true ->
-                        stringProvider.noInternet
+                        stringProvider.networkErrorRecoveryMessage
 
                     else -> stringProvider.reauthGenericError
                 }

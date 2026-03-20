@@ -630,10 +630,8 @@
     <!-- Common -->
     <string name="fui_default_toolbar_title" translatable="false">@string/app_name</string>
     <string name="fui_progress_dialog_loading" translation_description="Loading text in dialog">Loading…</string>
-    <string name="fui_sign_in_default" translation_description="Button text to sign in">Sign in</string>
     <string name="fui_continue" translation_description="Button text to continue">Continue</string>
     <string name="auth_privacy_policy_message" translation_description="Privacy policy message">By continuing, you are indicating that you accept the <xliff:g example="https://app.example/privacy" id="pp" translation_description="Privacy policy text">%1$s</xliff:g>.</string>
-    <string name="fui_no_internet" translation_descripition="User message shown when sign-in is attempted while offline.">Network error, check your internet connection.</string>
 
     <!-- Provider -->
     <string name="fui_idp_name_email">Email</string>
@@ -647,7 +645,6 @@
     <!-- Account management -->
     <string name="fui_signed_in_as" translation_description="Message showing who is signed in.">Signed in as %1$s</string>
     <string name="fui_manage_mfa_action" translation_description="Action label for managing multi-factor authentication.">Manage multi-factor authentication</string>
-    <string name="fui_sign_out_action" translation_description="Action label for signing out.">Sign out</string>
     <!-- Temporarily don't require email verification, see notes in FirebaseAuthUI -->
 <!--    <string name="fui_verify_email_instruction" translation_description="Instruction asking the user to verify their email.">Please verify %1$s to continue.</string>-->
 <!--    <string name="fui_send_verification_email_action" translation_description="Action label for resending a verification email.">Send verification email</string>-->
@@ -708,7 +705,6 @@
     <!-- Password recovery -->
     <string name="fui_title_recover_password_activity" translation_description="Recover password screen title">Recover password</string>
     <string name="fui_title_confirm_recover_password" translation_description="Password recovery confirmation message">Check your email</string>
-    <string name="fui_button_text_send" translation_description="Button text to send recovery email">Send</string>
     <string name="fui_confirm_recovery_body" translation_description="Alert dialog displayed after password recovery email is sent">Follow the instructions sent to %1$s to recover your password.</string>
     <string name="fui_error_email_does_not_exist" translation_description="Inline error when user attempt signin with invalid account">That email address doesn\'t match an existing account</string>
 
@@ -732,12 +728,10 @@
     <string name="fui_email_link_wrong_device_message" translation_description="Message shown when the user opens a link that was sent from a different device">Try opening the link using the same device or browser where you started the sign-in process.</string>
     <string name="fui_email_link_invalid_link_message" translation_description="Message shown when the user opens a link that was sent from a different device">The action code is invalid. This can happen if the code is malformed, expired, or has already been used.</string>
     <string name="fui_email_link_confirm_email_message" translation_description="Message shown when prompting the user to confirm their email to finish the sign in flow">Confirm email to continue sign in</string>
-    <string name="fui_email_link_dismiss_button" translation_description="Dismiss button for the wrong device or invalid link dialog">Dismiss</string>
     <string name="fui_email_link_cross_device_linking_text" translation_description="Text shown when the user opens an email link on a different device, but they had originally intended to link a provider to their account.">You originally intended to connect %1$s to your email account but have opened the link on a different device where you are not signed in.\n\nIf you still want to connect your %1$s account, open the link on the same device where you started sign-in. Otherwise, tap Continue to sign-in on this device.</string>
 
     <!-- Error Recovery Dialog -->
     <string name="fui_error_dialog_title" translation_description="Title for error recovery dialog">Authentication Error</string>
-    <string name="fui_error_retry_action" translation_description="Retry button text in error dialog">Try again</string>
     <string name="fui_error_mfa_required_message" translation_description="Error message when MFA is required">Additional verification required. Please complete multi-factor authentication.</string>
     <string name="fui_error_account_linking_required_message" translation_description="Error message when account linking is required">Account needs to be linked. Please try a different sign-in method.</string>
     <string name="fui_error_auth_cancelled_message" translation_description="Error message when authentication is cancelled">Authentication was cancelled. Please try again when ready.</string>

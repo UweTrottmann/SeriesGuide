@@ -25,7 +25,7 @@ fun Exception.toMfaErrorMessage(stringProvider: AuthUIStringProvider): String {
         is FirebaseAuthInvalidCredentialsException ->
             stringProvider.mfaErrorInvalidVerificationCode
         is IOException, is FirebaseNetworkException ->
-            stringProvider.mfaErrorNetwork
+            stringProvider.networkErrorRecoveryMessage
         else -> stringProvider.mfaErrorGeneric
     }
 }
