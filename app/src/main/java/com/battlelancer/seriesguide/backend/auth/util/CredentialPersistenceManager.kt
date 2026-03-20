@@ -1,5 +1,6 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: Apache-2.0 AND AGPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
@@ -8,14 +9,24 @@ package com.battlelancer.seriesguide.backend.auth.util
 
 import android.content.Context
 import androidx.datastore.core.DataStore
+import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.first
+import timber.log.Timber
 
 private val Context.credentialDataStore: DataStore<Preferences> by preferencesDataStore(
-    name = "com.firebase.ui.auth.util.CredentialPersistenceManager"
+    name = "seriesguide.auth.credentialmanager",
+    corruptionHandler = ReplaceFileCorruptionHandler { corruptionException ->
+        Timber.e(
+            corruptionException,
+            "Reading credential manager preferences failed, clearing file"
+        )
+        emptyPreferences()
+    }
 )
 
 /**

@@ -9,16 +9,25 @@ package com.battlelancer.seriesguide.backend.auth.util
 
 import android.content.Context
 import androidx.datastore.core.DataStore
+import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Provider
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.flow.first
+import timber.log.Timber
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "com.firebase.ui.auth.util.EmailLinkPersistenceManager")
+private val Context.emailLinkDataStore: DataStore<Preferences> by preferencesDataStore(
+    name = "seriesguide.auth.emaillink",
+    corruptionHandler = ReplaceFileCorruptionHandler { corruptionException ->
+        Timber.e(corruptionException, "Reading email link preferences failed, clearing file")
+        emptyPreferences()
+    }
+)
 
 /**
  * Manages saving/retrieving from DataStore for email link sign in.
@@ -31,12 +40,12 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
  * @since 10.0.0
  */
 object EmailLinkPersistenceManager {
-    
+
     /**
      * Default instance.
      */
     internal val default: PersistenceManager = DefaultPersistenceManager()
-    
+
     /**
      * The default implementation of [PersistenceManager] that uses DataStore.
      */
@@ -46,27 +55,27 @@ object EmailLinkPersistenceManager {
             email: String,
             sessionId: String
         ) {
-            context.dataStore.edit { prefs ->
+            context.emailLinkDataStore.edit { prefs ->
                 prefs[AuthProvider.Email.KEY_EMAIL] = email
                 prefs[AuthProvider.Email.KEY_SESSION_ID] = sessionId
             }
         }
-        
+
         override suspend fun saveCredentialForLinking(
             context: Context,
             providerType: String,
             idToken: String?,
             accessToken: String?
         ) {
-            context.dataStore.edit { prefs ->
+            context.emailLinkDataStore.edit { prefs ->
                 prefs[AuthProvider.Email.KEY_PROVIDER] = providerType
                 prefs[AuthProvider.Email.KEY_IDP_TOKEN] = idToken ?: ""
                 prefs[AuthProvider.Email.KEY_IDP_SECRET] = accessToken ?: ""
             }
         }
-        
+
         override suspend fun retrieveSessionRecord(context: Context): SessionRecord? {
-            val prefs = context.dataStore.data.first()
+            val prefs = context.emailLinkDataStore.data.first()
             val email = prefs[AuthProvider.Email.KEY_EMAIL]
             val sessionId = prefs[AuthProvider.Email.KEY_SESSION_ID]
 
@@ -94,9 +103,9 @@ object EmailLinkPersistenceManager {
                 credentialForLinking = credentialForLinking
             )
         }
-        
+
         override suspend fun clear(context: Context) {
-            context.dataStore.edit { prefs ->
+            context.emailLinkDataStore.edit { prefs ->
                 prefs.remove(AuthProvider.Email.KEY_SESSION_ID)
                 prefs.remove(AuthProvider.Email.KEY_EMAIL)
                 prefs.remove(AuthProvider.Email.KEY_PROVIDER)
