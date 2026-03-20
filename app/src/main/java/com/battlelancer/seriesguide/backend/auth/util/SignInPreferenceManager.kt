@@ -8,6 +8,7 @@
 package com.battlelancer.seriesguide.backend.auth.util
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import androidx.datastore.preferences.core.Preferences
@@ -44,24 +45,31 @@ object SignInPreferenceManager {
     private val KEY_LAST_TIMESTAMP = longPreferencesKey("last_timestamp")
 
     /**
-     * Saves the last-used sign-in method and user identifier.
+     * Tries to save the last-used sign-in method and user identifier for the "Continue as..."
+     * feature. On failure will just log.
      *
      * This should be called after a successful sign-in to track the user's
      * preferred sign-in method.
      *
-     * @param context The Android context
-     * @param providerId The provider ID (e.g., "google.com", "facebook.com", "password", "phone")
-     * @param identifier The user identifier (email for social/email auth, phone number for phone auth)
+     * @param providerId The AuthProvider.providerId
+     * @param identifier The user identifier (email)
      */
-    suspend fun saveLastSignIn(
+    suspend fun tryToSaveLastSignIn(
         context: Context,
         providerId: String,
-        identifier: String?
+        identifier: String?,
+        logTag: String
     ) {
-        context.signInPreferenceDataStore.edit { prefs ->
-            prefs[KEY_LAST_PROVIDER_ID] = providerId
-            identifier?.let { prefs[KEY_LAST_IDENTIFIER] = it }
-            prefs[KEY_LAST_TIMESTAMP] = System.currentTimeMillis()
+        try {
+            context.signInPreferenceDataStore.edit { prefs ->
+                prefs[KEY_LAST_PROVIDER_ID] = providerId
+                identifier?.let { prefs[KEY_LAST_IDENTIFIER] = it }
+                prefs[KEY_LAST_TIMESTAMP] = System.currentTimeMillis()
+            }
+            Log.d(logTag, "Sign-in preference saved for: $identifier")
+        } catch (e: Exception) {
+            // Failed to save preference - log but don't break auth flow
+            Log.w(logTag, "Failed to save sign-in preference for: $identifier", e)
         }
     }
 

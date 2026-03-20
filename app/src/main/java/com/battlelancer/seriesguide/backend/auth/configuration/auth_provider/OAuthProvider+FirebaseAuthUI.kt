@@ -24,6 +24,8 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
+private const val LOG_TAG = "OAuthProvider"
+
 /**
  * Creates a Composable handler for OAuth provider sign-in.
  *
@@ -170,20 +172,15 @@ internal suspend fun FirebaseAuthUI.signInWithProvider(
             // The user is already signed in via startActivityForSignInWithProvider/startActivityForLinkWithProvider
 
             // Save sign-in preference for "Continue as..." feature
-            try {
-                val user = auth.currentUser
-                val identifier = user?.email
-                if (identifier != null) {
-                    SignInPreferenceManager.saveLastSignIn(
-                        context = context,
-                        providerId = provider.providerId,
-                        identifier = identifier
-                    )
-                    android.util.Log.d("OAuthProvider", "Sign-in preference saved for: $identifier (${provider.providerId})")
-                }
-            } catch (e: Exception) {
-                // Failed to save preference - log but don't break auth flow
-                android.util.Log.w("OAuthProvider", "Failed to save sign-in preference", e)
+            val user = auth.currentUser
+            val identifier = user?.email
+            if (identifier != null) {
+                SignInPreferenceManager.tryToSaveLastSignIn(
+                    context = context,
+                    providerId = provider.providerId,
+                    identifier = identifier,
+                    LOG_TAG
+                )
             }
 
             // Just update state to Idle
