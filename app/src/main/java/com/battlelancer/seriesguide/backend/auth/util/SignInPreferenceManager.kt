@@ -1,5 +1,6 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: Apache-2.0 AND AGPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
@@ -8,15 +9,22 @@ package com.battlelancer.seriesguide.backend.auth.util
 
 import android.content.Context
 import androidx.datastore.core.DataStore
+import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.first
+import timber.log.Timber
 
 private val Context.signInPreferenceDataStore: DataStore<Preferences> by preferencesDataStore(
-    name = "com.firebase.ui.auth.util.SignInPreferenceManager"
+    name = "seriesguide.auth.signin",
+    corruptionHandler = ReplaceFileCorruptionHandler { corruptionException ->
+        Timber.e(corruptionException, "Reading sign-in preferences failed, clearing file")
+        emptyPreferences()
+    }
 )
 
 /**
@@ -24,7 +32,7 @@ private val Context.signInPreferenceDataStore: DataStore<Preferences> by prefere
  *
  * This class tracks which authentication provider was last used to sign in,
  * along with the user identifier (email, phone number, etc.). This enables
- * a better UX by showing "Continue as [identifier]" with the last-used provider
+ * a better UX by showing "Continue as `identifier`" with the last-used provider
  * prominently on the method picker screen.
  *
  * @since 10.0.0
