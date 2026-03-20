@@ -232,9 +232,6 @@ interface AuthUIStringProvider {
     /** Description displayed during authenticator app setup. */
     val setupAuthenticatorDescription: String
 
-    /** Network error message */
-    val noInternet: String
-
     // Error Recovery Dialog Strings
     /** Error dialog title */
     val errorDialogTitle: String
@@ -307,9 +304,6 @@ interface AuthUIStringProvider {
 
     /** Error message when MFA enrollment fails due to invalid verification code */
     val mfaErrorInvalidVerificationCode: String
-
-    /** Error message when MFA enrollment fails due to network issues */
-    val mfaErrorNetwork: String
 
     /** Generic error message for MFA enrollment failures */
     val mfaErrorGeneric: String

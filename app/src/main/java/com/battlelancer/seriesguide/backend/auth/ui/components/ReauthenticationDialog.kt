@@ -197,6 +197,6 @@ private fun Exception.toUserMessage(stringProvider: AuthUIStringProvider): Strin
     message?.contains("password", ignoreCase = true) == true ->
         stringProvider.incorrectPasswordError
     message?.contains("network", ignoreCase = true) == true ->
-        stringProvider.noInternet
+        stringProvider.networkErrorRecoveryMessage
     else -> stringProvider.reauthGenericError
 }
