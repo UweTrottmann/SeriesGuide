@@ -34,7 +34,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.tasks.await
 
-private const val TAG = "EmailAuthProvider"
+private const val LOG_TAG = "EmailAuthProvider"
 
 /**
  * Creates an email/password account.
@@ -126,34 +126,10 @@ internal suspend fun FirebaseAuthUI.createUserWithEmailAndPassword(
                 }
             }
 
-        // Save credentials to Credential Manager if enabled
-        if (config.isCredentialManagerEnabled) {
-            try {
-                val credentialHandler = PasswordCredentialHandler(context)
-                credentialHandler.savePassword(email, password)
-                Log.d(TAG, "Password credential saved successfully for: $email")
-            } catch (e: PasswordCredentialCancelledException) {
-                // User cancelled - this is fine, don't break the auth flow
-                Log.d(TAG, "User cancelled credential save for: $email")
-            } catch (e: PasswordCredentialException) {
-                // Failed to save - log but don't break the auth flow
-                Log.w(TAG, "Failed to save password credential for: $email", e)
-            }
-        }
-
-        // Save sign-in preference for "Continue as..." feature
-        if (result != null) {
-            try {
-                SignInPreferenceManager.saveLastSignIn(
-                    context = context,
-                    providerId = provider.providerId,
-                    identifier = email
-                )
-                Log.d(TAG, "Sign-in preference saved for: $email")
-            } catch (e: Exception) {
-                // Failed to save preference - log but don't break auth flow
-                Log.w(TAG, "Failed to save sign-in preference for: $email", e)
-            }
+        result?.let {
+            saveCredentialAndSignInPreference(
+                context, config, provider.providerId, email, password
+            )
         }
 
         updateAuthState(AuthState.Idle)
@@ -273,35 +249,10 @@ internal suspend fun FirebaseAuthUI.signInWithEmailAndPassword(
                 }
             }
             .also { result ->
-                // Save credentials to Credential Manager if enabled
-                // Skip if user signed in with a retrieved credential (already saved)
-                if (config.isCredentialManagerEnabled && result != null && !skipCredentialSave) {
-                    try {
-                        val credentialHandler = PasswordCredentialHandler(context)
-                        credentialHandler.savePassword(email, password)
-                        Log.d(TAG, "Password credential saved successfully for: $email")
-                    } catch (e: PasswordCredentialCancelledException) {
-                        // User cancelled - this is fine, don't break the auth flow
-                        Log.d(TAG, "User cancelled credential save for: $email")
-                    } catch (e: PasswordCredentialException) {
-                        // Failed to save - log but don't break the auth flow
-                        Log.w(TAG, "Failed to save password credential for: $email", e)
-                    }
-                }
-
-                // Save sign-in preference for "Continue as..." feature
-                if (result != null) {
-                    try {
-                        SignInPreferenceManager.saveLastSignIn(
-                            context = context,
-                            providerId = provider.providerId,
-                            identifier = email
-                        )
-                        Log.d(TAG, "Sign-in preference saved for: $email")
-                    } catch (e: Exception) {
-                        // Failed to save preference - log but don't break auth flow
-                        Log.w(TAG, "Failed to save sign-in preference for: $email", e)
-                    }
+                result?.let {
+                    saveCredentialAndSignInPreference(
+                        context, config, provider.providerId, email, password, skipCredentialSave
+                    )
                 }
 
                 updateAuthState(AuthState.Idle)
@@ -327,6 +278,43 @@ internal suspend fun FirebaseAuthUI.signInWithEmailAndPassword(
         updateAuthState(AuthState.Error(authException))
         throw authException
     }
+}
+
+/**
+ * Saves the password credential to Credential Manager and records the sign-in preference.
+ * As this isn't necessary to complete sign-in, failures are only logged.
+ */
+private suspend fun saveCredentialAndSignInPreference(
+    context: Context,
+    config: AuthUIConfiguration,
+    providerId: String,
+    email: String,
+    password: String,
+    skipCredentialSave: Boolean = false,
+) {
+    // Save credentials to Credential Manager if enabled
+    // Skip if user signed in with a retrieved credential (already saved)
+    if (config.isCredentialManagerEnabled && !skipCredentialSave) {
+        try {
+            val credentialHandler = PasswordCredentialHandler(context)
+            credentialHandler.savePassword(email, password)
+            Log.d(LOG_TAG, "Password credential saved successfully for: $email")
+        } catch (e: PasswordCredentialCancelledException) {
+            // User cancelled - this is fine, don't break the auth flow
+            Log.d(LOG_TAG, "User cancelled credential save for: $email")
+        } catch (e: PasswordCredentialException) {
+            // Failed to save - log but don't break the auth flow
+            Log.w(LOG_TAG, "Failed to save password credential for: $email", e)
+        }
+    }
+
+    // Save sign-in preference for "Continue as..." feature
+    SignInPreferenceManager.tryToSaveLastSignIn(
+        context = context,
+        providerId = providerId,
+        identifier = email,
+        LOG_TAG
+    )
 }
 
 /**

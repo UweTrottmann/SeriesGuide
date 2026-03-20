@@ -25,6 +25,8 @@ import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingExcept
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 
+private const val LOG_TAG = "GoogleAuthProvider"
+
 /**
  * Creates a remembered callback for Google Sign-In that can be invoked from UI components.
  *
@@ -174,20 +176,15 @@ internal suspend fun FirebaseAuthUI.signInWithGoogle(
         )
 
         // Save sign-in preference for "Continue as..." feature
-        try {
-            val user = auth.currentUser
-            val identifier = user?.email
-            if (identifier != null) {
-                SignInPreferenceManager.saveLastSignIn(
-                    context = context,
-                    providerId = provider.providerId,
-                    identifier = identifier
-                )
-                Log.d("GoogleAuthProvider", "Sign-in preference saved for: $identifier")
-            }
-        } catch (e: Exception) {
-            // Failed to save preference - log but don't break auth flow
-            android.util.Log.w("GoogleAuthProvider", "Failed to save sign-in preference", e)
+        val user = auth.currentUser
+        val identifier = user?.email
+        if (identifier != null) {
+            SignInPreferenceManager.tryToSaveLastSignIn(
+                context = context,
+                providerId = provider.providerId,
+                identifier = identifier,
+                LOG_TAG
+            )
         }
     } catch (e: AuthException.AccountLinkingRequiredException) {
         // Account collision occurred - save Facebook credential for linking after email link sign-in
@@ -249,6 +246,6 @@ internal suspend fun FirebaseAuthUI.signOutFromGoogle(
             credentialManager = CredentialManager.create(context)
         )
     } catch (e: Exception) {
-        Log.e("GoogleAuthProvider", "Error during Google sign out", e)
+        Log.e(LOG_TAG, "Error during Google sign out", e)
     }
 }
