@@ -8,7 +8,6 @@
 package com.battlelancer.seriesguide.backend.auth.ui.screens.email
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -155,7 +154,7 @@ fun EmailAuthScreen(
     val retrievedCredential = remember { mutableStateOf<Pair<String, String>?>(null) }
 
     LaunchedEffect(authState) {
-        Log.d("EmailAuthScreen", "Current state: $authState")
+        // Timber.d("Current state: $authState")
         when (val state = authState) {
             is AuthState.Success -> {
                 onSuccess()

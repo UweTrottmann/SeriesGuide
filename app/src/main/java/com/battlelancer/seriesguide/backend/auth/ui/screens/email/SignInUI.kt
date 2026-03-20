@@ -7,7 +7,6 @@
 
 package com.battlelancer.seriesguide.backend.auth.ui.screens.email
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -61,6 +60,7 @@ import com.battlelancer.seriesguide.backend.auth.ui.components.AuthHorizontalDiv
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthTextField
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthTopAppBar
 import com.google.firebase.auth.actionCodeSettings
+import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -109,7 +109,7 @@ fun SignInUI(
                 val credentialHandler = PasswordCredentialHandler(context)
                 val credential = credentialHandler.getPassword()
 
-                Log.d("EmailAuthScreen", "Retrieved credential for: ${credential.username}")
+                Timber.d("Retrieved credential for: %s", credential.username)
 
                 // Auto-fill the email and password fields
                 onEmailChange(credential.username)
@@ -122,14 +122,14 @@ fun SignInUI(
                 onRetrievedCredential(Pair(credential.username, credential.password))
 
                 onSignInClick()
-            } catch (e: PasswordCredentialNotFoundException) {
-                Log.d("EmailAuthScreen", "No saved credentials found")
+            } catch (_: PasswordCredentialNotFoundException) {
+                Timber.d("No saved credentials found")
                 // No credentials saved - user will enter manually
-            } catch (e: PasswordCredentialCancelledException) {
-                Log.d("EmailAuthScreen", "User cancelled credential selection")
+            } catch (_: PasswordCredentialCancelledException) {
+                Timber.d("User cancelled credential selection")
                 // User cancelled - let them enter manually
             } catch (e: PasswordCredentialException) {
-                Log.w("EmailAuthScreen", "Failed to retrieve credentials", e)
+                Timber.w(e, "Failed to retrieve credentials")
                 // Failed to retrieve - let them enter manually
             }
         }
