@@ -66,10 +66,10 @@ object SignInPreferenceManager {
                 identifier?.let { prefs[KEY_LAST_IDENTIFIER] = it }
                 prefs[KEY_LAST_TIMESTAMP] = System.currentTimeMillis()
             }
-            Log.d(logTag, "Sign-in preference saved for: $identifier")
+            Timber.tag(logTag).d("Sign-in preference saved for: %s", identifier)
         } catch (e: Exception) {
             // Failed to save preference - log but don't break auth flow
-            Log.w(logTag, "Failed to save sign-in preference for: $identifier", e)
+            Timber.tag(logTag).w(e, "Failed to save sign-in preference for: %s", identifier)
         }
     }
 

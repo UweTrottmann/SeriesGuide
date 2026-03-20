@@ -7,7 +7,6 @@
 
 package com.battlelancer.seriesguide.backend.auth.ui.screens
 
-import android.util.Log
 import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -70,6 +69,7 @@ import com.battlelancer.seriesguide.backend.auth.util.SignInPreferenceManager
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.MultiFactorResolver
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 /**
  * High-level authentication screen that wires together provider selection, individual provider
@@ -292,7 +292,7 @@ fun FirebaseAuthScreen(
 //                                            }
 //                                        }
 //                                    } catch (e: Exception) {
-//                                        Log.e("FirebaseAuthScreen", "Failed to refresh user", e)
+//                                        Timber.e(e, "Failed to refresh user")
 //                                    }
 //                                }
 //                            },
@@ -386,7 +386,7 @@ fun FirebaseAuthScreen(
                             )
                         }
                     } catch (e: Exception) {
-                        Log.e("FirebaseAuthScreen", "Failed to complete email link sign-in", e)
+                        Timber.e(e, "Failed to complete email link sign-in")
                     }
                 }
             }

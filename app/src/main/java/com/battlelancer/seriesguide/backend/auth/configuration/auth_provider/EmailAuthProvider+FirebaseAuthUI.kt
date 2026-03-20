@@ -9,7 +9,6 @@ package com.battlelancer.seriesguide.backend.auth.configuration.auth_provider
 
 import android.content.Context
 import android.net.Uri
-import android.util.Log
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.auth.AuthException
 import com.battlelancer.seriesguide.backend.auth.AuthException.EmailAlreadyInUseException
@@ -33,6 +32,7 @@ import com.google.firebase.auth.FirebaseAuthMultiFactorException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.tasks.await
+import timber.log.Timber
 
 private const val LOG_TAG = "EmailAuthProvider"
 
@@ -298,13 +298,13 @@ private suspend fun saveCredentialAndSignInPreference(
         try {
             val credentialHandler = PasswordCredentialHandler(context)
             credentialHandler.savePassword(email, password)
-            Log.d(LOG_TAG, "Password credential saved successfully for: $email")
-        } catch (e: PasswordCredentialCancelledException) {
+            Timber.d("Password credential saved successfully for: %s", email)
+        } catch (_: PasswordCredentialCancelledException) {
             // User cancelled - this is fine, don't break the auth flow
-            Log.d(LOG_TAG, "User cancelled credential save for: $email")
+            Timber.d("User cancelled credential save for: %s", email)
         } catch (e: PasswordCredentialException) {
             // Failed to save - log but don't break the auth flow
-            Log.w(LOG_TAG, "Failed to save password credential for: $email", e)
+            Timber.w(e, "Failed to save password credential for: %s", email)
         }
     }
 

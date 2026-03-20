@@ -9,7 +9,6 @@ package com.battlelancer.seriesguide.backend.auth.configuration.auth_provider
 
 import android.content.Context
 import android.net.Uri
-import android.util.Log
 import androidx.annotation.RestrictTo
 import androidx.compose.ui.graphics.Color
 import androidx.credentials.ClearCredentialStateRequest
@@ -35,6 +34,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.actionCodeSettings
 import kotlinx.coroutines.tasks.await
+import timber.log.Timber
 
 @AuthUIConfigurationDsl
 class AuthProvidersBuilder {
@@ -239,10 +239,7 @@ abstract class AuthProvider(open val providerId: String, open val providerName: 
 
             val hasEmailScope = scopes.contains("email")
             if (!hasEmailScope) {
-                Log.w(
-                    "AuthProvider.Google",
-                    "The scopes do not include 'email'. In most cases this is a mistake!"
-                )
+                Timber.w("The scopes do not include 'email'. In most cases this is a mistake!")
             }
         }
 
@@ -466,7 +463,7 @@ abstract class AuthProvider(open val providerId: String, open val providerName: 
                 }
             } catch (e: Exception) {
                 // Log error but don't throw - profile update failure shouldn't prevent sign-in
-                Log.e("AuthProvider.Email", "Error updating profile", e)
+                Timber.e(e, "Error updating profile")
             }
         }
     }

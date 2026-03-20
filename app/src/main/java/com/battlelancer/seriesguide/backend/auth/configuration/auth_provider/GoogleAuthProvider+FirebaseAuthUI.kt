@@ -8,7 +8,6 @@
 package com.battlelancer.seriesguide.backend.auth.configuration.auth_provider
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -24,6 +23,7 @@ import com.google.android.gms.common.api.Scope
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 private const val LOG_TAG = "GoogleAuthProvider"
 
@@ -139,7 +139,7 @@ internal suspend fun FirebaseAuthUI.signInWithGoogle(
                 )
             } catch (e: NoCredentialException) {
                 // No authorized accounts found, try again with all accounts for sign-up flow
-                Log.d("GoogleAuthProvider", "No authorized accounts found, showing all Google accounts for sign-up")
+                Timber.d("No authorized accounts found, showing all Google accounts for sign-up")
                 try {
                     (testCredentialManagerProvider ?: credentialManagerProvider).getGoogleCredential(
                         context = context,
@@ -246,6 +246,6 @@ internal suspend fun FirebaseAuthUI.signOutFromGoogle(
             credentialManager = CredentialManager.create(context)
         )
     } catch (e: Exception) {
-        Log.e(LOG_TAG, "Error during Google sign out", e)
+        Timber.e(e, "Error during Google sign out")
     }
 }
