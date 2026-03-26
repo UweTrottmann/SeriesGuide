@@ -332,6 +332,4 @@ interface AuthUIStringProvider {
     /** Tooltip message shown when new account sign-up is disabled */
     val newAccountsDisabledTooltip: String
 
-    /** Tooltip message shown when MFA is disabled */
-    val mfaDisabledTooltip: String
 }
