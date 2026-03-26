@@ -76,6 +76,10 @@
     <string name="auth_verified_email_action" comment="Action label once the user has verified their email.">I\'ve verified my email</string>
 
     <!-- MFA management -->
+    <string name="auth_secret_key_label" comment="Label for a secret key value.">Secret key</string>
+    <string name="auth_recovery_codes_saved_action" comment="Action confirming recovery codes have been saved.">I\'ve saved these codes</string>
+    <string name="auth_verification_code_label" comment="Label for verification code input fields.">Verification code</string>
+    <string name="auth_identity_verified_message" comment="Message shown when identity verification succeeds.">Identity verified. Please try your action again.</string>
     <string name="auth_mfa_manage_factors_title" comment="Title for the manage MFA screen.">Manage two-factor authentication</string>
     <string name="auth_mfa_manage_factors_description" comment="Helper description for managing MFA methods.">Add or remove authentication methods for your account</string>
     <string name="auth_mfa_active_methods_title" comment="Title for the list of enrolled factors.">Active methods</string>

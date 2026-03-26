@@ -645,10 +645,6 @@
     <string name="auth_remove_action" comment="Generic remove action label.">Remove</string>
     <string name="auth_back_action" comment="Generic back action label.">Back</string>
     <string name="auth_verify_action" comment="Generic verify action label.">Verify</string>
-    <string name="auth_recovery_codes_saved_action" comment="Action confirming recovery codes have been saved.">I\'ve saved these codes</string>
-    <string name="auth_secret_key_label" comment="Label for a secret key value.">Secret key</string>
-    <string name="auth_verification_code_label" comment="Label for verification code input fields.">Verification code</string>
-    <string name="auth_identity_verified_message" comment="Message shown when identity verification succeeds.">Identity verified. Please try your action again.</string>
 
     <!-- Re-authentication dialog -->
     <string name="auth_reauth_dialog_title" comment="Title for the re-authentication dialog.">Verify your identity</string>
