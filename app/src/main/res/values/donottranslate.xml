@@ -117,9 +117,6 @@
     <string name="auth_mfa_error_network" comment="Error message when MFA enrollment fails due to network issues">A network error occurred. Please check your connection and try again.</string>
     <string name="auth_mfa_error_generic" comment="Generic error message for MFA enrollment failures">An error occurred during enrollment. Please try again.</string>
 
-    <!-- Tooltips -->
-    <string name="auth_mfa_disabled_tooltip" comment="Tooltip shown when manage MFA button is disabled because MFA is not enabled">Multi-factor authentication is currently disabled</string>
-
     <!-- Season sort orders -->
     <string-array name="sesorting">
         <item>@string/sort_order_latest_first</item>

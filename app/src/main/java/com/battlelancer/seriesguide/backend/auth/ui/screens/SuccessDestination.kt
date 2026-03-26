@@ -11,14 +11,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Text
-import androidx.compose.material3.TooltipAnchorPosition
-import androidx.compose.material3.TooltipBox
-import androidx.compose.material3.TooltipDefaults
-import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
@@ -67,15 +61,12 @@ fun SuccessDestination(
 ) {
     when (authState) {
         is AuthState.Success -> {
-            val canManageMfa =
-                uiContext.authUI.auth.app.options.projectId != null
             val userIdentifier =
                 authState.user.email ?: authState.user.phoneNumber ?: authState.user.uid
             AuthSuccessContent(
                 userIdentifier = userIdentifier,
                 stringProvider = uiContext.stringProvider,
-                isMfaEnabled = uiContext.configuration.isMfaEnabled,
-                showManageMfaAction = canManageMfa,
+                showManageMfaAction = uiContext.configuration.isMfaEnabled,
                 onManageMfa = uiContext.onManageMfa,
                 onSignOut = uiContext.onSignOut
             )
@@ -103,12 +94,10 @@ fun SuccessDestination(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun AuthSuccessContent(
     userIdentifier: String,
     stringProvider: AuthUIStringProvider,
-    isMfaEnabled: Boolean,
     showManageMfaAction: Boolean,
     onManageMfa: () -> Unit,
     onSignOut: () -> Unit
@@ -126,25 +115,8 @@ private fun AuthSuccessContent(
             Spacer(modifier = Modifier.height(16.dp))
         }
         if (showManageMfaAction) {
-            TooltipBox(
-                positionProvider = TooltipDefaults.rememberTooltipPositionProvider(
-                    TooltipAnchorPosition.Above
-                ),
-                tooltip = {
-                    PlainTooltip {
-                        Text(stringProvider.mfaDisabledTooltip)
-                    }
-                },
-                state = rememberTooltipState(
-                    initialIsVisible = !isMfaEnabled
-                )
-            ) {
-                Button(
-                    onClick = onManageMfa,
-                    enabled = isMfaEnabled
-                ) {
-                    Text(stringProvider.manageMfaAction)
-                }
+            Button(onClick = onManageMfa) {
+                Text(stringProvider.manageMfaAction)
             }
             Spacer(modifier = Modifier.height(8.dp))
         }
@@ -202,8 +174,7 @@ fun AuthSuccessContentPreview() {
                 showManageMfaAction = true,
                 stringProvider = stringProvider,
                 onSignOut = { },
-                onManageMfa = { },
-                isMfaEnabled = true
+                onManageMfa = { }
             )
         }
     }
