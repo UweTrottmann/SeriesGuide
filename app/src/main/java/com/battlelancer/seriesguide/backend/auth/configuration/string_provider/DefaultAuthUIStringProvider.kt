@@ -52,10 +52,8 @@ class DefaultAuthUIStringProvider(
     /**
      * Email Validator Strings
      */
-    override val missingEmailAddress: String
-        get() = localizedContext.getString(R.string.auth_missing_email_address)
-    override val invalidEmailAddress: String
-        get() = localizedContext.getString(R.string.auth_invalid_email_address)
+    override val requiredEmailAddress: String
+        get() = localizedContext.getString(R.string.auth_required_email)
 
     /**
      * Password Validator Strings

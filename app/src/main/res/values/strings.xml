@@ -665,9 +665,8 @@
     <string name="auth_email_hint" comment="Hint in email input field">Email</string>
     <string name="auth_password_hint" comment="Hint for password input field for existing passwords">Password</string>
     <string name="auth_confirm_password_hint" comment="Hint for confirm password input field for existing passwords">Confirm Password</string>
-    <string name="auth_required_field" comment="Inline error for required field">You can\'t leave this empty.</string>
-    <string name="auth_invalid_email_address" comment="Inline error for invalid email address">That email address isn\'t correct</string>
-    <string name="auth_missing_email_address" comment="Inline error for empty email address in input field">Enter your email address to continue</string>
+    <string name="auth_required_field" comment="Inline error for required field">Required</string>
+    <string name="auth_required_email" comment="Inline error for empty email address in input field">Valid email address required</string>
 
     <!-- Email sign up -->
     <string name="auth_title_register_email" comment="Title for signup form">Sign up</string>

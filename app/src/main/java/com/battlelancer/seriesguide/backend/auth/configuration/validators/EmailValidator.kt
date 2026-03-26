@@ -1,5 +1,6 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: Apache-2.0 AND AGPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
@@ -18,18 +19,11 @@ internal class EmailValidator(override val stringProvider: AuthUIStringProvider)
         get() = _validationStatus.errorMessage ?: ""
 
     override fun validate(value: String): Boolean {
-        if (value.isEmpty()) {
+        if (value.isEmpty() ||
+            !android.util.Patterns.EMAIL_ADDRESS.matcher(value).matches()) {
             _validationStatus = FieldValidationStatus(
                 hasError = true,
-                errorMessage = stringProvider.missingEmailAddress
-            )
-            return false
-        }
-
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(value).matches()) {
-            _validationStatus = FieldValidationStatus(
-                hasError = true,
-                errorMessage = stringProvider.invalidEmailAddress
+                errorMessage = stringProvider.requiredEmailAddress
             )
             return false
         }
