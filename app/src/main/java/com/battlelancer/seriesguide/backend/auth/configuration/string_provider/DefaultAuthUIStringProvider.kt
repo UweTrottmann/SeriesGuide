@@ -139,11 +139,8 @@ class DefaultAuthUIStringProvider(
     override val emailMismatchMessage: String
         get() = localizedContext.getString(R.string.auth_error_unknown)
 
-    override val missingVerificationCode: String
-        get() = localizedContext.getString(R.string.auth_required_field)
-
-    override val invalidVerificationCode: String
-        get() = localizedContext.getString(R.string.auth_mfa_incorrect_code)
+    override val requiredVerificationCode: String
+        get() = localizedContext.getString(R.string.auth_mfa_required_code)
 
     /**
      * Provider Picker Strings
