@@ -172,15 +172,14 @@ class DefaultAuthUIStringProvider(
     override val signOutAction: String
         get() = localizedContext.getString(R.string.hexagon_signout)
 
-    // Temporarily don't require email verification, see notes in FirebaseAuthUI
-//    override fun verifyEmailInstruction(email: String): String =
-//        localizedContext.getString(R.string.auth_verify_email_instruction, email)
-//
-//    override val sendVerificationEmailAction: String
-//        get() = localizedContext.getString(R.string.auth_send_verification_email_action)
-//
-//    override val verifiedEmailAction: String
-//        get() = localizedContext.getString(R.string.auth_verified_email_action)
+    override fun verifyEmailInstruction(email: String): String =
+        localizedContext.getString(R.string.auth_verify_email_instruction, email)
+
+    override val sendVerificationEmailAction: String
+        get() = localizedContext.getString(R.string.auth_send_verification_email_action)
+
+    override val verifiedEmailAction: String
+        get() = localizedContext.getString(R.string.auth_verified_email_action)
 
     override val skipAction: String
         get() = localizedContext.getString(R.string.auth_skip_action)

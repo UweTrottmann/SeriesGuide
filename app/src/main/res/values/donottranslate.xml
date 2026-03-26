@@ -70,6 +70,11 @@
     <!-- Provider -->
     <string name="auth_idp_name_email">Email</string>
 
+    <!-- Account management -->
+    <string name="auth_verify_email_instruction" comment="Instruction asking the user to verify their email.">Please verify %1$s to continue.</string>
+    <string name="auth_send_verification_email_action" comment="Action label for resending a verification email.">Send verification email</string>
+    <string name="auth_verified_email_action" comment="Action label once the user has verified their email.">I\'ve verified my email</string>
+
     <!-- MFA management -->
     <string name="auth_mfa_manage_factors_title" comment="Title for the manage MFA screen.">Manage two-factor authentication</string>
     <string name="auth_mfa_manage_factors_description" comment="Helper description for managing MFA methods.">Add or remove authentication methods for your account</string>
