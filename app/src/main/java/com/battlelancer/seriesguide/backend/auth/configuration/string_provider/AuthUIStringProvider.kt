@@ -171,15 +171,14 @@ interface AuthUIStringProvider {
     /** Action text for signing out. */
     val signOutAction: String
 
-    // Temporarily don't require email verification, see notes in FirebaseAuthUI
-//    /** Instruction shown when the user must verify their email. Accepts the email value. */
-//    fun verifyEmailInstruction(email: String): String
-//
-//    /** Action text for sending the verification email. */
-//    val sendVerificationEmailAction: String
-//
-//    /** Action text once the user has verified their email. */
-//    val verifiedEmailAction: String
+    /** Instruction shown when the user must verify their email. Accepts the email value. */
+    fun verifyEmailInstruction(email: String): String
+
+    /** Action text for sending the verification email. */
+    val sendVerificationEmailAction: String
+
+    /** Action text once the user has verified their email. */
+    val verifiedEmailAction: String
 
     /** Action text for skipping an optional step. */
     val skipAction: String

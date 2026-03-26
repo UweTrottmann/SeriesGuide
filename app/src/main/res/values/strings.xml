@@ -641,10 +641,6 @@
     <!-- Account management -->
     <string name="auth_signed_in_as" comment="Message showing who is signed in.">Signed in as %1$s</string>
     <string name="auth_manage_mfa_action" comment="Action label for managing multi-factor authentication.">Manage multi-factor authentication</string>
-    <!-- Temporarily don't require email verification, see notes in FirebaseAuthUI -->
-<!--    <string name="auth_verify_email_instruction" comment="Instruction asking the user to verify their email.">Please verify %1$s to continue.</string>-->
-<!--    <string name="auth_send_verification_email_action" comment="Action label for resending a verification email.">Send verification email</string>-->
-<!--    <string name="auth_verified_email_action" comment="Action label once the user has verified their email.">I\'ve verified my email</string>-->
     <string name="auth_skip_action" comment="Generic action for skipping an optional step.">Skip for now</string>
     <string name="auth_remove_action" comment="Generic remove action label.">Remove</string>
     <string name="auth_back_action" comment="Generic back action label.">Back</string>

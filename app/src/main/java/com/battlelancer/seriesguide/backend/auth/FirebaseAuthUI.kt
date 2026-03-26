@@ -11,6 +11,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.annotation.RestrictTo
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Provider
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.signOutFromGoogle
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
@@ -174,17 +175,19 @@ class FirebaseAuthUI private constructor(
                 // CloudSetupFragment and HexagonTools don't enforce it (could probably back out
                 // and would be signed in) and the Firebase account is created regardless.
                 // Check if email verification is required
-//                if (!user.isEmailVerified &&
-//                    user.email != null &&
-//                    user.providerData.any { it.providerId == Provider.EMAIL.id }
-//                ) {
-//                    AuthState.RequiresEmailVerification(
-//                        user = user,
-//                        email = user.email!!
-//                    )
-//                } else {
-                AuthState.Success(user = user)
-//                }
+                @Suppress("KotlinConstantConditions", "KotlinUnreachableCode")
+                if (false &&
+                    !user.isEmailVerified &&
+                    user.email != null &&
+                    user.providerData.any { it.providerId == Provider.EMAIL.id }
+                ) {
+                    AuthState.RequiresEmailVerification(
+                        user = user,
+                        email = user.email!!
+                    )
+                } else {
+                    AuthState.Success(user = user)
+                }
             } ?: AuthState.Idle
 
             trySend(initialState)
@@ -195,17 +198,19 @@ class FirebaseAuthUI private constructor(
                 val state = if (currentUser != null) {
                     // Temporarily don't require email verification, see notes above
                     // Check if email verification is required
-//                    if (!currentUser.isEmailVerified &&
-//                        currentUser.email != null &&
-//                        currentUser.providerData.any { it.providerId == Provider.EMAIL.id }
-//                    ) {
-//                        AuthState.RequiresEmailVerification(
-//                            user = currentUser,
-//                            email = currentUser.email!!
-//                        )
-//                    } else {
-                    AuthState.Success(user = currentUser)
-//                    }
+                    @Suppress("KotlinConstantConditions", "KotlinUnreachableCode")
+                    if (false &&
+                        !currentUser.isEmailVerified &&
+                        currentUser.email != null &&
+                        currentUser.providerData.any { it.providerId == Provider.EMAIL.id }
+                    ) {
+                        AuthState.RequiresEmailVerification(
+                            user = currentUser,
+                            email = currentUser.email!!
+                        )
+                    } else {
+                        AuthState.Success(user = currentUser)
+                    }
                 } else {
                     AuthState.Idle
                 }
