@@ -1,0 +1,231 @@
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
+
+package com.battlelancer.seriesguide.backend.auth.ui.screens
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.PlainTooltip
+import androidx.compose.material3.Text
+import androidx.compose.material3.TooltipAnchorPosition
+import androidx.compose.material3.TooltipBox
+import androidx.compose.material3.TooltipDefaults
+import androidx.compose.material3.rememberTooltipState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.battlelancer.seriesguide.backend.auth.AuthState
+import com.battlelancer.seriesguide.backend.auth.FirebaseAuthUI
+import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.AuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.DefaultAuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUITheme
+
+data class AuthSuccessUiContext(
+    val authUI: FirebaseAuthUI,
+    val stringProvider: AuthUIStringProvider,
+    val configuration: AuthUIConfiguration,
+    val onSignOut: () -> Unit,
+    val onManageMfa: () -> Unit,
+    val onSendVerification: () -> Unit,
+    /**
+     * Callback to reload the signed-in user to check if email is now verified.
+     * Should update auth state to either [AuthState.Success] or
+     * [AuthState.RequiresEmailVerification].
+     */
+    val onReloadUser: () -> Unit,
+    val onNavigate: (AuthRoute) -> Unit,
+)
+
+/**
+ * On [AuthState.Success] displays [AuthSuccessContent] with details, MFA management link and sign
+ * out action for the contained user.
+ *
+ * On [AuthState.RequiresEmailVerification] displays [EmailVerificationContent] with actions to
+ * verify the contained email address.
+ *
+ * Otherwise, displays a progress indicator.
+ */
+@Composable
+fun SuccessDestination(
+    authState: AuthState,
+    uiContext: AuthSuccessUiContext,
+) {
+    when (authState) {
+        is AuthState.Success -> {
+            val canManageMfa =
+                uiContext.authUI.auth.app.options.projectId != null
+            val userIdentifier =
+                authState.user.email ?: authState.user.phoneNumber ?: authState.user.uid
+            AuthSuccessContent(
+                userIdentifier = userIdentifier,
+                stringProvider = uiContext.stringProvider,
+                isMfaEnabled = uiContext.configuration.isMfaEnabled,
+                showManageMfaAction = canManageMfa,
+                onManageMfa = uiContext.onManageMfa,
+                onSignOut = uiContext.onSignOut
+            )
+        }
+
+        is AuthState.RequiresEmailVerification -> {
+            EmailVerificationContent(
+                stringProvider = uiContext.stringProvider,
+                onCheckVerificationStatus = uiContext.onReloadUser,
+                onSendVerification = uiContext.onSendVerification,
+                onSignOut = uiContext.onSignOut,
+                email = authState.email
+            )
+        }
+
+        else -> {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                CircularProgressIndicator()
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun AuthSuccessContent(
+    userIdentifier: String,
+    stringProvider: AuthUIStringProvider,
+    isMfaEnabled: Boolean,
+    showManageMfaAction: Boolean,
+    onManageMfa: () -> Unit,
+    onSignOut: () -> Unit
+) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        if (userIdentifier.isNotBlank()) {
+            Text(
+                text = stringProvider.signedInAs(userIdentifier),
+                textAlign = TextAlign.Center
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+        if (showManageMfaAction) {
+            TooltipBox(
+                positionProvider = TooltipDefaults.rememberTooltipPositionProvider(
+                    TooltipAnchorPosition.Above
+                ),
+                tooltip = {
+                    PlainTooltip {
+                        Text(stringProvider.mfaDisabledTooltip)
+                    }
+                },
+                state = rememberTooltipState(
+                    initialIsVisible = !isMfaEnabled
+                )
+            ) {
+                Button(
+                    onClick = onManageMfa,
+                    enabled = isMfaEnabled
+                ) {
+                    Text(stringProvider.manageMfaAction)
+                }
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+        }
+        Button(onClick = onSignOut) {
+            Text(stringProvider.signOutAction)
+        }
+    }
+}
+
+@Composable
+private fun EmailVerificationContent(
+    email: String,
+    stringProvider: AuthUIStringProvider,
+    onSendVerification: () -> Unit,
+    onCheckVerificationStatus: () -> Unit,
+    onSignOut: () -> Unit
+) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = stringProvider.verifyEmailInstruction(email),
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.bodyMedium
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(onClick = onSendVerification) {
+            Text(stringProvider.sendVerificationEmailAction)
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        Button(onClick = onCheckVerificationStatus) {
+            Text(stringProvider.verifiedEmailAction)
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        Button(onClick = onSignOut) {
+            Text(stringProvider.signOutAction)
+        }
+    }
+}
+
+@Preview
+@Composable
+fun AuthSuccessContentPreview() {
+    val applicationContext = LocalContext.current
+    val stringProvider = DefaultAuthUIStringProvider(applicationContext)
+
+    AuthUITheme {
+        CompositionLocalProvider(
+            LocalAuthUIStringProvider provides stringProvider
+        ) {
+            AuthSuccessContent(
+                userIdentifier = "user@app.example",
+                showManageMfaAction = true,
+                stringProvider = stringProvider,
+                onSignOut = { },
+                onManageMfa = { },
+                isMfaEnabled = true
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+fun EmailVerificationContentPreview() {
+    val applicationContext = LocalContext.current
+    val stringProvider = DefaultAuthUIStringProvider(applicationContext)
+
+    AuthUITheme {
+        CompositionLocalProvider(
+            LocalAuthUIStringProvider provides stringProvider
+        ) {
+            EmailVerificationContent(
+                email = "user@app.example",
+                stringProvider = stringProvider,
+                onSendVerification = { },
+                onCheckVerificationStatus = { },
+                onSignOut = { }
+            )
+        }
+    }
+}

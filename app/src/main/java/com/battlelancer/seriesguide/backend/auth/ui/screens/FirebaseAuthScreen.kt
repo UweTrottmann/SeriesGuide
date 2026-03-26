@@ -18,18 +18,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TooltipAnchorPosition
-import androidx.compose.material3.TooltipBox
-import androidx.compose.material3.TooltipDefaults
-import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -77,10 +69,6 @@ import timber.log.Timber
  * flows, error handling, and multi-factor enrollment/challenge flows. Back navigation is driven by
  * the Jetpack Navigation stack so presses behave like native Android navigation.
  *
- * @param authenticatedContent Optional slot that allows callers to render the authenticated
- * state themselves. When provided, it receives the current [AuthState] alongside an
- * [AuthSuccessUiContext] containing common callbacks (sign out, manage MFA, reload user).
- *
  * @since 10.0.0
  */
 @Composable
@@ -91,8 +79,7 @@ fun FirebaseAuthScreen(
     onSignInCancelled: () -> Unit,
     authUI: FirebaseAuthUI = FirebaseAuthUI.getInstance(),
     emailLink: String? = null,
-    mfaConfiguration: MfaConfiguration = MfaConfiguration(),
-    authenticatedContent: (@Composable (state: AuthState, uiContext: AuthSuccessUiContext) -> Unit)? = null,
+    mfaConfiguration: MfaConfiguration = MfaConfiguration()
 ) {
     val activity = LocalActivity.current
     val context = LocalContext.current
@@ -262,6 +249,9 @@ fun FirebaseAuthScreen(
                                     authUI.updateAuthState(AuthState.Error(exception))
                                 }
                             },
+                            onSendVerification = {
+                                authUI.getCurrentUser()?.sendEmailVerification()
+                            },
                             onReloadUser = {
                                 coroutineScope.launch {
                                     try {
@@ -273,19 +263,24 @@ fun FirebaseAuthScreen(
                                         val user = authUI.getCurrentUser()
                                         if (user != null) {
                                             // If email is now verified, transition to Success state
+                                            val email = user.email
                                             if (user.isEmailVerified) {
                                                 authUI.updateAuthState(
                                                     AuthState.Success(user = user)
                                                 )
-                                            } else {
+                                            } else if (email != null) {
                                                 // Email still not verified, keep showing verification screen
                                                 authUI.updateAuthState(
                                                     AuthState.RequiresEmailVerification(
                                                         user = user,
-                                                        email = user.email ?: ""
+                                                        email = email
                                                     )
                                                 )
                                             }
+                                            // Otherwise, if the email was removed from the user for
+                                            // whatever reason stay on the verification screen
+                                            // (== do not update auth state) to at least allow to
+                                            // sign out.
                                         }
                                     } catch (e: Exception) {
                                         Timber.e(e, "Failed to refresh user")
@@ -298,16 +293,10 @@ fun FirebaseAuthScreen(
                         )
                     }
 
-                    if (authenticatedContent != null) {
-                        authenticatedContent(authState, uiContext)
-                    } else {
-                        SuccessDestination(
-                            authState = authState,
-                            stringProvider = stringProvider,
-                            configuration = configuration,
-                            uiContext = uiContext
-                        )
-                    }
+                    SuccessDestination(
+                        authState = authState,
+                        uiContext = uiContext
+                    )
                 }
 
                 composable(AuthRoute.MfaEnrollment.route) {
@@ -555,144 +544,6 @@ sealed class AuthRoute(val route: String) {
     object Success : AuthRoute("auth_success")
     object MfaEnrollment : AuthRoute("auth_mfa_enrollment")
     object MfaChallenge : AuthRoute("auth_mfa_challenge")
-}
-
-data class AuthSuccessUiContext(
-    val authUI: FirebaseAuthUI,
-    val stringProvider: AuthUIStringProvider,
-    val configuration: AuthUIConfiguration,
-    val onSignOut: () -> Unit,
-    val onManageMfa: () -> Unit,
-    /**
-     * Callback to reload the signed-in user to check if email is now verified.
-     */
-    val onReloadUser: () -> Unit,
-    val onNavigate: (AuthRoute) -> Unit,
-)
-
-@Composable
-private fun SuccessDestination(
-    authState: AuthState,
-    stringProvider: AuthUIStringProvider,
-    configuration: AuthUIConfiguration,
-    uiContext: AuthSuccessUiContext,
-) {
-    when (authState) {
-        is AuthState.Success -> {
-            AuthSuccessContent(
-                authUI = uiContext.authUI,
-                stringProvider = stringProvider,
-                configuration = configuration,
-                onSignOut = uiContext.onSignOut,
-                onManageMfa = uiContext.onManageMfa
-            )
-        }
-
-        is AuthState.RequiresEmailVerification -> {
-            EmailVerificationContent(
-                authUI = uiContext.authUI,
-                stringProvider = stringProvider,
-                onCheckStatus = uiContext.onReloadUser,
-                onSignOut = uiContext.onSignOut
-            )
-        }
-
-        else -> {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                CircularProgressIndicator()
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun AuthSuccessContent(
-    authUI: FirebaseAuthUI,
-    stringProvider: AuthUIStringProvider,
-    configuration: AuthUIConfiguration,
-    onSignOut: () -> Unit,
-    onManageMfa: () -> Unit,
-) {
-    val user = authUI.getCurrentUser()
-    val userIdentifier = user?.email ?: user?.phoneNumber ?: user?.uid.orEmpty()
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        if (userIdentifier.isNotBlank()) {
-            Text(
-                text = stringProvider.signedInAs(userIdentifier),
-                textAlign = TextAlign.Center
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-        }
-        if (user != null && authUI.auth.app.options.projectId != null) {
-            TooltipBox(
-                positionProvider = TooltipDefaults.rememberTooltipPositionProvider(
-                    TooltipAnchorPosition.Above
-                ),
-                tooltip = {
-                    PlainTooltip {
-                        Text(stringProvider.mfaDisabledTooltip)
-                    }
-                },
-                state = rememberTooltipState(
-                    initialIsVisible = !configuration.isMfaEnabled
-                )
-            ) {
-                Button(
-                    onClick = onManageMfa,
-                    enabled = configuration.isMfaEnabled
-                ) {
-                    Text(stringProvider.manageMfaAction)
-                }
-            }
-            Spacer(modifier = Modifier.height(8.dp))
-        }
-        Button(onClick = onSignOut) {
-            Text(stringProvider.signOutAction)
-        }
-    }
-}
-
-@Composable
-private fun EmailVerificationContent(
-    authUI: FirebaseAuthUI,
-    stringProvider: AuthUIStringProvider,
-    onCheckStatus: () -> Unit,
-    onSignOut: () -> Unit,
-) {
-    val user = authUI.getCurrentUser()
-    val emailLabel = user?.email ?: stringProvider.emailProvider
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = stringProvider.verifyEmailInstruction(emailLabel),
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.bodyMedium
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = { user?.sendEmailVerification() }) {
-            Text(stringProvider.sendVerificationEmailAction)
-        }
-        Spacer(modifier = Modifier.height(8.dp))
-        Button(onClick = onCheckStatus) {
-            Text(stringProvider.verifiedEmailAction)
-        }
-        Spacer(modifier = Modifier.height(8.dp))
-        Button(onClick = onSignOut) {
-            Text(stringProvider.signOutAction)
-        }
-    }
 }
 
 @Composable
