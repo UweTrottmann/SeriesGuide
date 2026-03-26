@@ -628,7 +628,6 @@
 
     <!-- Cloud Authentication -->
     <!-- Common -->
-    <string name="auth_default_toolbar_title" translatable="false">@string/app_name</string>
     <string name="auth_progress_dialog_loading" comment="Loading text in dialog">Loading…</string>
     <string name="auth_continue" comment="Button text to continue">Continue</string>
     <string name="auth_privacy_policy_message" comment="Privacy policy message">By continuing, you are indicating that you accept the <xliff:g example="https://app.example/privacy" id="pp" comment="Privacy policy text">%1$s</xliff:g>.</string>
