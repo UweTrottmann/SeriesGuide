@@ -94,14 +94,14 @@ internal suspend fun FirebaseAuthUI.createUserWithEmailAndPassword(
         // Check if new accounts are allowed
         if (!provider.isNewAccountsAllowed) {
             throw AuthException.UserNotFoundException(
-                message = context.getString(R.string.fui_error_email_does_not_exist)
+                message = context.getString(R.string.auth_error_email_does_not_exist)
             )
         }
 
         // Validate minimum password length
         if (password.length < provider.minimumPasswordLength) {
             throw AuthException.InvalidCredentialsException(
-                message = context.getString(R.string.fui_error_password_too_short)
+                message = context.getString(R.string.auth_error_password_too_short)
                     .format(provider.minimumPasswordLength)
             )
         }
