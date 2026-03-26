@@ -51,11 +51,8 @@ interface AuthUIStringProvider {
     /** Button text for Email continue option */
     val continueWithEmail: String
 
-    /** Error message when email address field is empty */
-    val missingEmailAddress: String
-
-    /** Error message when email address format is invalid */
-    val invalidEmailAddress: String
+    /** Error message when email address is invalid or empty */
+    val requiredEmailAddress: String
 
     /** Generic error message for incorrect password during sign-in */
     val invalidPassword: String
