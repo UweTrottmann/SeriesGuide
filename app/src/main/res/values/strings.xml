@@ -652,14 +652,6 @@
     <string name="auth_reauth_account_label" comment="Label indicating the email account being re-authenticated.">Account: %1$s</string>
     <string name="auth_incorrect_password_error" comment="Error shown when the provided password is incorrect.">Incorrect password. Please try again.</string>
     <string name="auth_reauth_generic_error" comment="Generic error shown when re-authentication fails.">Authentication failed. Please try again.</string>
-    <string name="auth_reauth_instruction" comment="Instruction to confirm identity to continue.">Confirm your identity to continue</string>
-    <string name="auth_reauth_required_error" comment="Error when re-authentication is required.">Re-authentication required</string>
-    <string name="auth_reauth_success_message" comment="Success message after re-authentication.">Re-authentication successful</string>
-    <string name="auth_reauthenticate_action" comment="Action to re-authenticate.">Re-authenticate</string>
-
-    <!-- Profile updates -->
-    <string name="auth_profile_update_error" comment="Error when unable to update profile.">Unable to update profile</string>
-    <string name="auth_profile_update_success_message" comment="Success message after profile update.">Profile updated</string>
 
     <!-- Common-->
     <string name="auth_email_hint" comment="Hint in email input field">Email</string>
