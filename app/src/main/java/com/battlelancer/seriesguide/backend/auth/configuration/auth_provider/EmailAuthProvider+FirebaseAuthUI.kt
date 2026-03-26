@@ -41,10 +41,9 @@ private const val LOG_TAG = "EmailAuthProvider"
  *
  * **Flow:**
  * 1. Check if new accounts are allowed
- * 2. Validate password length against [AuthProvider.Email.minimumPasswordLength]
- * 3. Validate password against custom [AuthProvider.Email.passwordValidationRules]
- * 5. Create new account with `createUserWithEmailAndPassword`
- * 6. Merge display name into user profile
+ * 2. Validate password against [AuthProvider.Email.passwordValidationRules]
+ * 3. Create new account with `createUserWithEmailAndPassword`
+ * 4. Merge display name into user profile
  *
  * **Example: Normal sign-up**
  * ```kotlin
@@ -98,20 +97,13 @@ internal suspend fun FirebaseAuthUI.createUserWithEmailAndPassword(
             )
         }
 
-        // Validate minimum password length
-        if (password.length < provider.minimumPasswordLength) {
-            throw AuthException.InvalidCredentialsException(
-                message = context.getString(R.string.auth_error_password_too_short)
-                    .format(provider.minimumPasswordLength)
-            )
-        }
-
-        // Validate password against custom rules
+        // Validate password against rules
         for (rule in provider.passwordValidationRules) {
             if (!rule.isValid(password)) {
+                val reason = rule.getErrorMessage(config.stringProvider)
                 throw AuthException.WeakPasswordException(
-                    message = rule.getErrorMessage(config.stringProvider),
-                    reason = "Password does not meet custom validation rules"
+                    message = "Password does not meet rules: $reason",
+                    reason = reason
                 )
             }
         }

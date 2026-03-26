@@ -202,9 +202,7 @@ fun PreviewSignInEmailLinkUI() {
                 null
             )
         },
-        isNewAccountsAllowed = true,
-        minimumPasswordLength = 8,
-        passwordValidationRules = listOf()
+        isNewAccountsAllowed = true
     )
     val stringProvider = DefaultAuthUIStringProvider(applicationContext)
 
@@ -221,7 +219,7 @@ fun PreviewSignInEmailLinkUI() {
                 email = "",
                 isLoading = false,
                 emailSignInLinkSent = false,
-                onEmailChange = { email -> },
+                onEmailChange = { _ -> },
                 onSignInWithEmailLink = {},
                 onGoToSignIn = {},
                 onGoToResetPassword = {},

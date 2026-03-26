@@ -202,9 +202,7 @@ fun PreviewSignUpUI() {
         isEmailLinkSignInEnabled = false,
         isEmailLinkForceSameDeviceEnabled = true,
         emailLinkActionCodeSettings = null,
-        isNewAccountsAllowed = true,
-        minimumPasswordLength = 8,
-        passwordValidationRules = listOf()
+        isNewAccountsAllowed = true
     )
     val stringProvider = DefaultAuthUIStringProvider(applicationContext)
 
@@ -223,10 +221,10 @@ fun PreviewSignUpUI() {
                 email = "",
                 password = "",
                 confirmPassword = "",
-                onDisplayNameChange = { name -> },
-                onEmailChange = { email -> },
-                onPasswordChange = { password -> },
-                onConfirmPasswordChange = { confirmPassword -> },
+                onDisplayNameChange = { _ -> },
+                onEmailChange = { _ -> },
+                onPasswordChange = { _ -> },
+                onConfirmPasswordChange = { _ -> },
                 onSignUpClick = {},
                 onGoToSignIn = {}
             )

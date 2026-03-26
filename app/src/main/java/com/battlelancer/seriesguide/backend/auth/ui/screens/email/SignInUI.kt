@@ -267,9 +267,7 @@ fun PreviewSignInUI() {
             url = ""
             handleCodeInApp = true
         },
-        isNewAccountsAllowed = false,
-        minimumPasswordLength = 8,
-        passwordValidationRules = listOf()
+        isNewAccountsAllowed = false
     )
     val stringProvider = DefaultAuthUIStringProvider(applicationContext)
 
@@ -286,9 +284,9 @@ fun PreviewSignInUI() {
                 email = "",
                 password = "",
                 isLoading = false,
-                onEmailChange = { email -> },
-                onPasswordChange = { password -> },
-                onRetrievedCredential = { credential -> },
+                onEmailChange = { _ -> },
+                onPasswordChange = { _ -> },
+                onRetrievedCredential = { _ -> },
                 onSignInClick = {},
                 onGoToSignUp = {},
                 onGoToResetPassword = {},

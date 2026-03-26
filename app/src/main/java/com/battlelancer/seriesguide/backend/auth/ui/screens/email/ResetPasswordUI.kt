@@ -36,7 +36,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.DefaultAuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUITheme
@@ -163,15 +162,6 @@ fun ResetPasswordUI(
 @Composable
 fun PreviewResetPasswordUI() {
     val applicationContext = LocalContext.current
-    val provider = AuthProvider.Email(
-        isDisplayNameRequired = true,
-        isEmailLinkSignInEnabled = false,
-        isEmailLinkForceSameDeviceEnabled = true,
-        emailLinkActionCodeSettings = null,
-        isNewAccountsAllowed = true,
-        minimumPasswordLength = 8,
-        passwordValidationRules = listOf()
-    )
     val stringProvider = DefaultAuthUIStringProvider(applicationContext)
 
     AuthUITheme {
@@ -182,7 +172,7 @@ fun PreviewResetPasswordUI() {
                 email = "someone@domain.example",
                 isLoading = false,
                 resetLinkSent = true,
-                onEmailChange = { email -> },
+                onEmailChange = { _ -> },
                 onSendResetLink = {},
                 onGoToSignIn = {},
             )

@@ -1,5 +1,6 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: Apache-2.0 AND AGPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
@@ -9,8 +10,8 @@ package com.battlelancer.seriesguide.backend.auth.configuration
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.AuthUIStringProvider
 
 /**
- * An abstract class representing a set of validation rules that can be applied to a password field,
- * typically within the [com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider.Email] configuration.
+ * A set of validation rules that can be applied to a password when using
+ * [com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider.Email].
  */
 abstract class PasswordRule {
     /**

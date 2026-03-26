@@ -60,6 +60,9 @@ interface AuthUIStringProvider {
     /** Error message when password confirmation doesn't match the original password */
     val passwordsDoNotMatch: String
 
+    /** Weak password recovery message */
+    val weakPasswordRecoveryMessage: String
+
     /** Error message when password doesn't meet minimum length requirement. Should support string formatting with minimum length parameter. */
     fun passwordTooShort(minimumLength: Int): String
 
@@ -243,9 +246,6 @@ interface AuthUIStringProvider {
 
     /** User not found recovery message */
     val userNotFoundRecoveryMessage: String
-
-    /** Weak password recovery message */
-    val weakPasswordRecoveryMessage: String
 
     /** Email already in use recovery message */
     val emailAlreadyInUseRecoveryMessage: String

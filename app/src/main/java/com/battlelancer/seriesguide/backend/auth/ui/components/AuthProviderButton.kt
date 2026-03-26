@@ -222,8 +222,7 @@ private fun PreviewAuthProviderButton() {
     ) {
         AuthProviderButton(
             provider = AuthProvider.Email(
-                emailLinkActionCodeSettings = null,
-                passwordValidationRules = emptyList()
+                emailLinkActionCodeSettings = null
             ),
             onClick = {},
             stringProvider = DefaultAuthUIStringProvider(context)
@@ -236,20 +235,6 @@ private fun PreviewAuthProviderButton() {
             onClick = {},
             stringProvider = DefaultAuthUIStringProvider(context)
         )
-//        AuthProviderButton(
-//            provider = AuthProvider.GenericOAuth(
-//                providerName = "Generic Provider",
-//                providerId = "google.com",
-//                scopes = emptyList(),
-//                customParameters = emptyMap(),
-//                buttonLabel = "Generic Provider",
-//                buttonIcon = AuthUIAsset.Vector(Icons.Default.Star),
-//                buttonColor = Color.Gray,
-//                contentColor = Color.White
-//            ),
-//            onClick = {},
-//            stringProvider = DefaultAuthUIStringProvider(context)
-//        )
         AuthProviderButton(
             provider = AuthProvider.GenericOAuth(
                 providerName = "Generic Provider",
