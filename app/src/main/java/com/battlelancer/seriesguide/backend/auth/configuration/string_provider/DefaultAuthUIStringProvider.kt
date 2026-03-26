@@ -79,7 +79,7 @@ class DefaultAuthUIStringProvider(
      * Email Authentication Strings
      */
     override val signupPageTitle: String
-        get() = localizedContext.getString(R.string.auth_title_register_email)
+        get() = localizedContext.getString(R.string.auth_sign_up)
     override val emailHint: String
         get() = localizedContext.getString(R.string.auth_email_hint)
     override val passwordHint: String
