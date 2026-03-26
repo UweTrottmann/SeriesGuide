@@ -123,11 +123,6 @@ abstract class AuthProvider(open val providerId: String, open val providerName: 
     ) : AuthProvider(providerId = Provider.EMAIL.id, providerName = Provider.EMAIL.providerName) {
         companion object {
             const val SESSION_ID_LENGTH = 10
-            val KEY_EMAIL = stringPreferencesKey("com.firebase.ui.auth.data.client.email")
-            val KEY_PROVIDER = stringPreferencesKey("com.firebase.ui.auth.data.client.provider")
-            val KEY_SESSION_ID = stringPreferencesKey("com.firebase.ui.auth.data.client.sid")
-            val KEY_IDP_TOKEN = stringPreferencesKey("com.firebase.ui.auth.data.client.idpToken")
-            val KEY_IDP_SECRET = stringPreferencesKey("com.firebase.ui.auth.data.client.idpSecret")
         }
 
         internal fun validate() {
