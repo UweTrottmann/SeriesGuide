@@ -56,6 +56,11 @@ nexusPublishing {
     packageGroup.set("com.uwetrottmann")
     this.repositories {
         sonatype {
+            // Use the Portal OSSRH Staging API as this plugin does not support the new Portal API
+            // https://central.sonatype.org/publish/publish-portal-ossrh-staging-api/#configuring-your-plugin
+            nexusUrl.set(uri("https://ossrh-staging-api.central.sonatype.com/service/local/"))
+            snapshotRepositoryUrl.set(uri("https://central.sonatype.com/repository/maven-snapshots/"))
+
             if (rootProject.hasProperty("SONATYPE_NEXUS_USERNAME")
                 && rootProject.hasProperty("SONATYPE_NEXUS_PASSWORD")) {
                 username.set(rootProject.property("SONATYPE_NEXUS_USERNAME").toString())
