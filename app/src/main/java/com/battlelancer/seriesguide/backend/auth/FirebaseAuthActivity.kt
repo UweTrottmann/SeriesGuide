@@ -91,6 +91,7 @@ class FirebaseAuthActivity : ComponentActivity() {
         val configuration = authUIConfiguration {
             context = applicationContext
             privacyPolicyUrl = getString(R.string.url_privacy)
+            isMfaEnabled = false
             providers {
                 provider(
                     AuthProvider.Email(
