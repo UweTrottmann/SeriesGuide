@@ -13,8 +13,8 @@ import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Provider
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.GoogleAuthProvider
@@ -41,6 +41,12 @@ private val Context.emailLinkDataStore: DataStore<Preferences> by preferencesDat
  */
 object EmailLinkPersistenceManager {
 
+    val KEY_EMAIL = stringPreferencesKey("email")
+    val KEY_PROVIDER = stringPreferencesKey("provider")
+    val KEY_SESSION_ID = stringPreferencesKey("sid")
+    val KEY_IDP_TOKEN = stringPreferencesKey("idpToken")
+    val KEY_IDP_SECRET = stringPreferencesKey("idpSecret")
+
     /**
      * Default instance.
      */
@@ -56,8 +62,8 @@ object EmailLinkPersistenceManager {
             sessionId: String
         ) {
             context.emailLinkDataStore.edit { prefs ->
-                prefs[AuthProvider.Email.KEY_EMAIL] = email
-                prefs[AuthProvider.Email.KEY_SESSION_ID] = sessionId
+                prefs[KEY_EMAIL] = email
+                prefs[KEY_SESSION_ID] = sessionId
             }
         }
 
@@ -68,24 +74,24 @@ object EmailLinkPersistenceManager {
             accessToken: String?
         ) {
             context.emailLinkDataStore.edit { prefs ->
-                prefs[AuthProvider.Email.KEY_PROVIDER] = providerType
-                prefs[AuthProvider.Email.KEY_IDP_TOKEN] = idToken ?: ""
-                prefs[AuthProvider.Email.KEY_IDP_SECRET] = accessToken ?: ""
+                prefs[KEY_PROVIDER] = providerType
+                prefs[KEY_IDP_TOKEN] = idToken ?: ""
+                prefs[KEY_IDP_SECRET] = accessToken ?: ""
             }
         }
 
         override suspend fun retrieveSessionRecord(context: Context): SessionRecord? {
             val prefs = context.emailLinkDataStore.data.first()
-            val email = prefs[AuthProvider.Email.KEY_EMAIL]
-            val sessionId = prefs[AuthProvider.Email.KEY_SESSION_ID]
+            val email = prefs[KEY_EMAIL]
+            val sessionId = prefs[KEY_SESSION_ID]
 
             if (email == null || sessionId == null) {
                 return null
             }
 
-            val providerType = Provider.fromId(prefs[AuthProvider.Email.KEY_PROVIDER])
-            val idToken = prefs[AuthProvider.Email.KEY_IDP_TOKEN]
-            val accessToken = prefs[AuthProvider.Email.KEY_IDP_SECRET]
+            val providerType = Provider.fromId(prefs[KEY_PROVIDER])
+            val idToken = prefs[KEY_IDP_TOKEN]
+            val accessToken = prefs[KEY_IDP_SECRET]
 
             // Rebuild credential if we have provider data
             val credentialForLinking = if (providerType != null && idToken != null) {
@@ -106,11 +112,11 @@ object EmailLinkPersistenceManager {
 
         override suspend fun clear(context: Context) {
             context.emailLinkDataStore.edit { prefs ->
-                prefs.remove(AuthProvider.Email.KEY_SESSION_ID)
-                prefs.remove(AuthProvider.Email.KEY_EMAIL)
-                prefs.remove(AuthProvider.Email.KEY_PROVIDER)
-                prefs.remove(AuthProvider.Email.KEY_IDP_TOKEN)
-                prefs.remove(AuthProvider.Email.KEY_IDP_SECRET)
+                prefs.remove(KEY_SESSION_ID)
+                prefs.remove(KEY_EMAIL)
+                prefs.remove(KEY_PROVIDER)
+                prefs.remove(KEY_IDP_TOKEN)
+                prefs.remove(KEY_IDP_SECRET)
             }
         }
     }
