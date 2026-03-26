@@ -661,7 +661,7 @@
     <string name="auth_required_email" comment="Inline error for empty email address in input field">Valid email address required</string>
 
     <!-- Email sign up -->
-    <string name="auth_title_register_email" comment="Title for signup form">Sign up</string>
+    <string name="auth_sign_up" comment="Action to create an account">Create an account</string>
     <string name="auth_name_hint" comment="Hint for last name input field">First &amp; last name</string>
     <plurals name="auth_error_weak_password" comment="Inline error for weak password">
         <item quantity="one" comment="Inline error for weak password">Password not strong enough. Use at least %1$d character and a mix of letters and numbers</item>
