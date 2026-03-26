@@ -139,11 +139,8 @@ interface AuthUIStringProvider {
     /** Message shown when email mismatch occurs */
     val emailMismatchMessage: String
 
-    /** Missing verification code error */
-    val missingVerificationCode: String
-
-    /** Invalid verification code error */
-    val invalidVerificationCode: String
+    /** No or invalid verification code entered */
+    val requiredVerificationCode: String
 
     // Provider Picker Strings
     /** Common button text for sign in */

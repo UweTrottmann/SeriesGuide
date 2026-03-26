@@ -115,7 +115,7 @@
     <string name="auth_mfa_step_show_recovery_codes_helper" comment="Helper text for recovery codes">Store these codes in a safe place. You can use them to sign in if you lose access to your authentication method.</string>
 
     <!-- MFA Error Messages -->
-    <string name="auth_mfa_incorrect_code" comment="Inline error when incorrect verification code is being used to verify">Wrong code. Try again.</string>
+    <string name="auth_mfa_required_code" comment="Inline error when incorrect verification code is being used to verify">Valid code required</string>
     <string name="auth_mfa_error_recent_login_required" comment="Error message when MFA enrollment requires recent authentication">This operation requires recent authentication. Please sign in again and try again.</string>
     <string name="auth_mfa_error_invalid_verification_code" comment="Error message when MFA enrollment fails due to invalid verification code">The verification code is incorrect. Please try again.</string>
     <string name="auth_mfa_error_network" comment="Error message when MFA enrollment fails due to network issues">A network error occurred. Please check your connection and try again.</string>

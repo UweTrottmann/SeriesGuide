@@ -1,5 +1,6 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: Apache-2.0 AND AGPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
@@ -19,25 +20,22 @@ internal class VerificationCodeValidator(override val stringProvider: AuthUIStri
         get() = _validationStatus.errorMessage ?: ""
 
     override fun validate(value: String): Boolean {
-        if (value.isEmpty()) {
-            _validationStatus = FieldValidationStatus(
-                hasError = true,
-                errorMessage = stringProvider.missingVerificationCode
-            )
-            return false
+        val isInvalid = if (value.isEmpty()) {
+            true
+        } else {
+            val digitsOnly = value.replace(Regex("[^0-9]"), "")
+            digitsOnly.length != 6
         }
 
-        // Verification codes are typically 6 digits
-        val digitsOnly = value.replace(Regex("[^0-9]"), "")
-        if (digitsOnly.length != 6) {
+        return if (isInvalid) {
             _validationStatus = FieldValidationStatus(
                 hasError = true,
-                errorMessage = stringProvider.invalidVerificationCode
+                errorMessage = stringProvider.requiredVerificationCode
             )
-            return false
+            false
+        } else {
+            _validationStatus = FieldValidationStatus(hasError = false, errorMessage = null)
+            true
         }
-
-        _validationStatus = FieldValidationStatus(hasError = false, errorMessage = null)
-        return true
     }
 }
