@@ -99,14 +99,15 @@ abstract class AuthException(
     ) : AuthException(message, cause)
 
     /**
-     * The password provided is not strong enough.
+     * The password provided does not meet the password policy configured in Firebase Authentication
+     * settings.
      *
-     * This exception is thrown when creating an account or updating a password
-     * with a password that doesn't meet the security requirements.
+     * This exception is thrown when creating an account or updating a password.
      *
      * @property message The detailed error message
      * @property cause The underlying [Throwable] that caused this exception
-     * @property reason The specific reason why the password is considered weak
+     * @property reason The specific reason why the password is considered weak that can be shown to
+     * the user.
      */
     class WeakPasswordException(
         message: String,

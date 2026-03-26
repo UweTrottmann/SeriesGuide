@@ -663,10 +663,6 @@
     <!-- Email sign up -->
     <string name="auth_sign_up" comment="Action to create an account">Create an account</string>
     <string name="auth_name_hint" comment="Hint for name input field">Your name</string>
-    <plurals name="auth_error_weak_password" comment="Inline error for weak password">
-        <item quantity="one" comment="Inline error for weak password">Password not strong enough. Use at least %1$d character and a mix of letters and numbers</item>
-        <item quantity="other" comment="Inline error for weak password">Password not strong enough. Use at least %1$d characters and a mix of letters and numbers</item>
-    </plurals>
     <string name="auth_email_alreay_in_use" comment="Inline error for signup failure">This email address is already in use by an existing account. Please sign in with your existing account.</string>
     <string name="auth_trouble_signing_in" comment="Link leading to forgot password flow">Trouble signing in?</string>
 
@@ -681,12 +677,13 @@
     <string name="auth_error_invalid_password" comment="Error message for when the user enters an invalid or wrong password.">This password is incorrect or this account does not support signing in with a password.</string>
 
     <!-- Password validation messages -->
+    <string name="auth_error_weak_password" comment="Error message when password does not meet requirements">Password not strong enough.</string>
+    <string name="auth_error_password_too_short" comment="Explanation when password is too short">Use at least %1$d characters</string>
+    <string name="auth_error_password_missing_uppercase" comment="Explanation when password is missing uppercase letter">Use at least one uppercase letter</string>
+    <string name="auth_error_password_missing_lowercase" comment="Explanation when password is missing lowercase letter">Use at least one lowercase letter</string>
+    <string name="auth_error_password_missing_digit" comment="Explanation when password is missing digit">Use at least one number</string>
+    <string name="auth_error_password_missing_special_character" comment="Explanation when password is missing special character">Use at least one special character</string>
     <string name="auth_passwords_do_not_match" comment="Error message when password don't match">Passwords do not match</string>
-    <string name="auth_error_password_too_short" comment="Error message when password is too short">Password must be at least %1$d characters long</string>
-    <string name="auth_error_password_missing_uppercase" comment="Error message when password is missing uppercase letter">Password must contain at least one uppercase letter</string>
-    <string name="auth_error_password_missing_lowercase" comment="Error message when password is missing lowercase letter">Password must contain at least one lowercase letter</string>
-    <string name="auth_error_password_missing_digit" comment="Error message when password is missing digit">Password must contain at least one number</string>
-    <string name="auth_error_password_missing_special_character" comment="Error message when password is missing special character">Password must contain at least one special character</string>
 
     <!-- Error Recovery Dialog -->
     <string name="auth_error_dialog_title" comment="Title for error recovery dialog">Authentication Error</string>

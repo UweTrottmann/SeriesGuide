@@ -104,7 +104,7 @@ private fun getRecoveryMessage(
             // Include specific reason if available
             val baseMessage = stringProvider.weakPasswordRecoveryMessage
             error.reason?.let { reason ->
-                "$baseMessage\n\nReason: $reason"
+                "$baseMessage\n\n$reason"
             } ?: baseMessage
         }
 
@@ -156,9 +156,6 @@ private fun getRecoveryActionText(
         is AuthException.EmailLinkCrossDeviceLinkingException -> stringProvider.continueText
         is AuthException.EmailLinkWrongDeviceException -> stringProvider.continueText
         is AuthException.UserNotFoundException -> stringProvider.signupPageTitle // Navigate to sign-up when user not found
-        is AuthException.NetworkException,
-        is AuthException.WeakPasswordException -> stringProvider.retryAction
-        is AuthException.UnknownException -> stringProvider.retryAction
 
         else -> stringProvider.retryAction
     }
@@ -173,9 +170,14 @@ private fun getRecoveryActionText(
 private fun isRecoverable(error: AuthException): Boolean {
     return when (error) {
         is AuthException.NetworkException -> true
-        is AuthException.InvalidCredentialsException -> false // Just dismiss and allow user to edit password
+
+        is AuthException.InvalidCredentialsException,
+        is AuthException.WeakPasswordException -> {
+            // Just show dismiss action and allow user to edit password
+            false
+        }
+
         is AuthException.UserNotFoundException -> true
-        is AuthException.WeakPasswordException -> true
         is AuthException.EmailAlreadyInUseException -> true
         is AuthException.MfaRequiredException -> true
         is AuthException.AccountLinkingRequiredException -> true

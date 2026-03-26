@@ -95,8 +95,7 @@ class FirebaseAuthActivity : ComponentActivity() {
             providers {
                 provider(
                     AuthProvider.Email(
-                        emailLinkActionCodeSettings = null,
-                        passwordValidationRules = emptyList()
+                        emailLinkActionCodeSettings = null
                     )
                 )
                 if (hexagonTools.isGoogleSignInAvailable) {

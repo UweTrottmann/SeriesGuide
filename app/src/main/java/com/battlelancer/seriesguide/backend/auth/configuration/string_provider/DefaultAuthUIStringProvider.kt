@@ -63,9 +63,10 @@ class DefaultAuthUIStringProvider(
     override val passwordsDoNotMatch: String
         get() = localizedContext.getString(R.string.auth_passwords_do_not_match)
 
+    override val weakPasswordRecoveryMessage: String
+        get() = localizedContext.getString(R.string.auth_error_weak_password)
     override fun passwordTooShort(minimumLength: Int): String =
         localizedContext.getString(R.string.auth_error_password_too_short, minimumLength)
-
     override val passwordMissingUppercase: String
         get() = localizedContext.getString(R.string.auth_error_password_missing_uppercase)
     override val passwordMissingLowercase: String
@@ -242,12 +243,6 @@ class DefaultAuthUIStringProvider(
         get() = localizedContext.getString(R.string.auth_error_invalid_password)
     override val userNotFoundRecoveryMessage: String
         get() = localizedContext.getString(R.string.auth_error_email_does_not_exist)
-    override val weakPasswordRecoveryMessage: String
-        get() = localizedContext.resources.getQuantityString(
-            R.plurals.auth_error_weak_password,
-            6,
-            6
-        )
     override val emailAlreadyInUseRecoveryMessage: String
         get() = localizedContext.getString(R.string.auth_email_alreay_in_use)
     override val mfaRequiredRecoveryMessage: String

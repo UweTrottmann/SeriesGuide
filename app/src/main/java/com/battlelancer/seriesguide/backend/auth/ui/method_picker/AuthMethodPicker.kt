@@ -208,8 +208,7 @@ fun PreviewAuthMethodPicker() {
                     contentPadding = innerPadding,
                     providers = listOf(
                         AuthProvider.Email(
-                            emailLinkActionCodeSettings = null,
-                            passwordValidationRules = emptyList()
+                            emailLinkActionCodeSettings = null
                         ),
                         AuthProvider.Google(
                             scopes = emptyList(),

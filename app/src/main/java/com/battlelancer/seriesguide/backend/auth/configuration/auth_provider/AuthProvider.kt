@@ -113,14 +113,34 @@ abstract class AuthProvider(open val providerId: String, open val providerName: 
 
         /**
          * The minimum length for a password. Defaults to 6.
+         *
+         * This should match or exceed the value configured in the Firebase Authentication password
+         * policy settings. Otherwise, creating an account will fail.
+         *
+         * Additional rules can be defined with [passwordValidationRules].
          */
         val minimumPasswordLength: Int = 6,
 
         /**
-         * A list of custom password validation rules.
+         * A list of password validation rules in addition to [minimumPasswordLength].
+         *
+         * This should match or exceed the rules configured in the Firebase Authentication password
+         * policy settings. Otherwise, creating an account will fail.
          */
-        val passwordValidationRules: List<PasswordRule>,
+        val additionalPasswordValidationRules: List<PasswordRule> = emptyList(),
     ) : AuthProvider(providerId = Provider.EMAIL.id, providerName = Provider.EMAIL.providerName) {
+
+        /**
+         * At least a [PasswordRule.MinimumLength] rule using [minimumPasswordLength] and any
+         * [additionalPasswordValidationRules].
+         */
+        val passwordValidationRules: List<PasswordRule> = buildList {
+            // Add minimum length rule first to avoid misleading error messages if the password is
+            // empty
+            add(PasswordRule.MinimumLength(minimumPasswordLength))
+            addAll(additionalPasswordValidationRules)
+        }
+
         companion object {
             const val SESSION_ID_LENGTH = 10
         }
@@ -136,6 +156,13 @@ abstract class AuthProvider(open val providerId: String, open val providerName: 
                     "You must set canHandleCodeInApp in your " +
                             "ActionCodeSettings to true for Email-Link Sign-in."
                 }
+            }
+
+            check(
+                additionalPasswordValidationRules
+                    .find { it is PasswordRule.MinimumLength } == null
+            ) {
+                "Must not add a MinimumLength rule, set minimumPasswordLength instead"
             }
         }
 
