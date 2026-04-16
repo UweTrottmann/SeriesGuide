@@ -137,7 +137,7 @@ internal suspend fun FirebaseAuthUI.signInWithGoogle(
                     filterByAuthorizedAccounts = true,
                     autoSelectEnabled = provider.autoSelectEnabled
                 )
-            } catch (e: NoCredentialException) {
+            } catch (_: NoCredentialException) {
                 // No authorized accounts found, try again with all accounts for sign-up flow
                 Timber.d("No authorized accounts found, showing all Google accounts for sign-up")
                 try {
