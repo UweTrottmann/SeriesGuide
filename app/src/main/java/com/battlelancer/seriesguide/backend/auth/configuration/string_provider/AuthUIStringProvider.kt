@@ -91,6 +91,12 @@ interface AuthUIStringProvider {
     /** Hint for name input field */
     val nameHint: String
 
+    /** Label for button to show the contents of a text field. */
+    val showText: String
+
+    /** Label for button to hide the contents of a text field. */
+    val hideText: String
+
     /** Trouble signing in link text */
     val troubleSigningIn: String
 

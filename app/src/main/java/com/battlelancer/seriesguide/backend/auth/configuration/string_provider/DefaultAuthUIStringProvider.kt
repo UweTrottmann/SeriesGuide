@@ -86,6 +86,10 @@ class DefaultAuthUIStringProvider(
         get() = localizedContext.getString(R.string.auth_confirm_password_hint)
     override val nameHint: String
         get() = localizedContext.getString(R.string.auth_name_hint)
+    override val showText: String
+        get() = localizedContext.getString(R.string.auth_show_text)
+    override val hideText: String
+        get() = localizedContext.getString(R.string.auth_hide_text)
     override val troubleSigningIn: String
         get() = localizedContext.getString(R.string.auth_trouble_signing_in)
 

@@ -21,6 +21,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.auth.configuration.PasswordRule
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.DefaultAuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.validators.EmailValidator
 import com.battlelancer.seriesguide.backend.auth.configuration.validators.FieldValidator
 import com.battlelancer.seriesguide.backend.auth.configuration.validators.PasswordValidator
@@ -94,7 +96,8 @@ fun AuthTextField(
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
 ) {
-    var passwordVisible by remember { mutableStateOf(false) }
+    val stringProvider = LocalAuthUIStringProvider.current
+    var textVisible by remember { mutableStateOf(false) }
 
     // Automatically set the correct keyboard type based on validator or field type
     val resolvedKeyboardOptions = remember(validator, isSecureTextField, keyboardOptions) {
@@ -133,7 +136,7 @@ fun AuthTextField(
         },
         keyboardOptions = resolvedKeyboardOptions,
         keyboardActions = keyboardActions,
-        visualTransformation = if (isSecureTextField && !passwordVisible)
+        visualTransformation = if (isSecureTextField && !textVisible)
             PasswordVisualTransformation() else visualTransformation,
         leadingIcon = leadingIcon ?: when {
             validator is EmailValidator -> {
@@ -160,18 +163,22 @@ fun AuthTextField(
             if (isSecureTextField) {
                 IconButton(
                     onClick = {
-                        passwordVisible = !passwordVisible
+                        textVisible = !textVisible
                     }
                 ) {
                     Icon(
                         painter = painterResource(
-                            if (passwordVisible) {
+                            if (textVisible) {
                                 R.drawable.ic_visibility_off_control_24dp
                             } else {
                                 R.drawable.ic_visibility_control_24dp
                             }
                         ),
-                        contentDescription = if (passwordVisible) "Hide password" else "Show password"
+                        contentDescription = if (textVisible) {
+                            stringProvider.hideText
+                        } else {
+                            stringProvider.showText
+                        }
                     )
                 }
             }
@@ -199,45 +206,50 @@ internal fun PreviewAuthTextField() {
             )
         )
     }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
+    val applicationContext = LocalContext.current
+    val stringProvider = DefaultAuthUIStringProvider(applicationContext)
+    CompositionLocalProvider(
+        LocalAuthUIStringProvider provides stringProvider
     ) {
-        AuthTextField(
-            value = nameTextValue.value,
-            label = {
-                Text("Name")
-            },
-            onValueChange = { text ->
-                nameTextValue.value = text
-            },
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        AuthTextField(
-            value = emailTextValue.value,
-            validator = emailValidator,
-            label = {
-                Text("Email")
-            },
-            onValueChange = { text ->
-                emailTextValue.value = text
-            }
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        AuthTextField(
-            value = passwordTextValue.value,
-            validator = passwordValidator,
-            isSecureTextField = true,
-            label = {
-                Text("Password")
-            },
-            onValueChange = { text ->
-                passwordTextValue.value = text
-            }
-        )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            AuthTextField(
+                value = nameTextValue.value,
+                label = {
+                    Text("Name")
+                },
+                onValueChange = { text ->
+                    nameTextValue.value = text
+                },
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            AuthTextField(
+                value = emailTextValue.value,
+                validator = emailValidator,
+                label = {
+                    Text("Email")
+                },
+                onValueChange = { text ->
+                    emailTextValue.value = text
+                }
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            AuthTextField(
+                value = passwordTextValue.value,
+                validator = passwordValidator,
+                isSecureTextField = true,
+                label = {
+                    Text("Password")
+                },
+                onValueChange = { text ->
+                    passwordTextValue.value = text
+                }
+            )
+        }
     }
 }
