@@ -22,6 +22,8 @@ import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Aut
 import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUITheme
 import com.battlelancer.seriesguide.backend.auth.ui.screens.FirebaseAuthScreen
 import com.battlelancer.seriesguide.backend.auth.util.EmailLinkConstants
+import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.ui.theme.SeriesGuideTheme
 import kotlinx.coroutines.launch
 
 /**
@@ -123,11 +125,13 @@ class FirebaseAuthActivity : ComponentActivity() {
                         setResult(RESULT_OK)
                         finish()
                     }
+
                     is AuthState.Cancelled -> {
                         // User canceled the flow
                         setResult(RESULT_CANCELED)
                         finish()
                     }
+
                     is AuthState.Error -> {
                         // Error occurred, finish with error info
                         val resultIntent = Intent().apply {
@@ -136,6 +140,7 @@ class FirebaseAuthActivity : ComponentActivity() {
                         setResult(RESULT_CANCELED, resultIntent)
                         // Don't finish on error, let user see error and retry
                     }
+
                     else -> {
                         // Other states, keep showing UI
                     }
@@ -145,21 +150,23 @@ class FirebaseAuthActivity : ComponentActivity() {
 
         // Set up Compose UI
         setContent {
-            AuthUITheme {
-                FirebaseAuthScreen(
-                    authUI = authUI,
-                    configuration = configuration,
-                    emailLink = emailLink,
-                    onSignInSuccess = {
-                        // State flow will handle finishing
-                    },
-                    onSignInFailure = { _ ->
-                        // State flow will handle error
-                    },
-                    onSignInCancelled = {
-                        authUI.updateAuthState(AuthState.Cancelled)
-                    }
-                )
+            SeriesGuideTheme(useDynamicColor = DisplaySettings.isDynamicColorsEnabled(this)) {
+                AuthUITheme(theme = AuthUITheme.fromMaterialTheme()) {
+                    FirebaseAuthScreen(
+                        authUI = authUI,
+                        configuration = configuration,
+                        emailLink = emailLink,
+                        onSignInSuccess = {
+                            // State flow will handle finishing
+                        },
+                        onSignInFailure = { _ ->
+                            // State flow will handle error
+                        },
+                        onSignInCancelled = {
+                            authUI.updateAuthState(AuthState.Cancelled)
+                        }
+                    )
+                }
             }
         }
     }
