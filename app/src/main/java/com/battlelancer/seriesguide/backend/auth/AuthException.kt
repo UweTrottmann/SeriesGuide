@@ -164,13 +164,8 @@ abstract class AuthException(
     ) : AuthException(message, cause)
 
     /**
-     * Authentication was cancelled by the user.
-     *
-     * This exception is thrown when the user cancels an authentication flow,
-     * such as dismissing a sign-in dialog or backing out of the process.
-     *
-     * @property message The detailed error message
-     * @property cause The underlying [Throwable] that caused this exception
+     * An operation was cancelled, such as a coroutine getting cancelled or the user cancelling an
+     * operation.
      */
     class AuthCancelledException(
         message: String,

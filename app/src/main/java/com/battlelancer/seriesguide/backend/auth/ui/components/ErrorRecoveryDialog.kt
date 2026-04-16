@@ -25,7 +25,8 @@ import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.A
  * based on the specific [AuthException] type. It integrates with [AuthUIStringProvider]
  * for localization support.
  *
- * @param error The [AuthException] to display recovery information for
+ * @param error The [AuthException] to display recovery information for. Should never be an
+ * [AuthException.AuthCancelledException].
  * @param stringProvider The [AuthUIStringProvider] for localized strings
  * @param onDismiss Callback invoked when the user dismisses the dialog
  * @param modifier Optional [Modifier] for the dialog
@@ -126,8 +127,6 @@ private fun getRecoveryMessage(
             stringProvider.emailLinkCrossDeviceLinkingMessage(providerName)
         }
 
-        is AuthException.AuthCancelledException -> stringProvider.authCancelledRecoveryMessage
-
         is AuthException.AdminRestrictedException -> {
             // AdminRestrictedException currently only by SignUpUI, deletion is handled by
             // RemoveCloudAccountDialogFragment. So this should only occur when trying to create a
@@ -156,8 +155,6 @@ private fun getRecoveryActionText(
     stringProvider: AuthUIStringProvider
 ): String {
     return when (error) {
-        is AuthException.AuthCancelledException -> error.message ?: stringProvider.continueText
-
         is AuthException.EmailAlreadyInUseException, // onRecover switches to sign-in mode
         is AuthException.AccountLinkingRequiredException // onRecover navigates to email auth screen
             -> stringProvider.signInDefault
@@ -185,7 +182,6 @@ private fun getRecoveryActionText(
 private fun isRecoverable(error: AuthException): Boolean {
     return when (error) {
         is AuthException.NetworkException,
-        is AuthException.AuthCancelledException,
         is AuthException.EmailAlreadyInUseException,
         is AuthException.AccountLinkingRequiredException,
         is AuthException.MfaRequiredException,

@@ -256,9 +256,6 @@ interface AuthUIStringProvider {
     /** Account linking required recovery message */
     val accountLinkingRequiredRecoveryMessage: String
 
-    /** Auth cancelled recovery message */
-    val authCancelledRecoveryMessage: String
-
     /** Unknown error recovery message */
     val unknownErrorRecoveryMessage: String
 
