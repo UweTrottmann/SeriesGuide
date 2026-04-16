@@ -159,9 +159,6 @@ interface AuthUIStringProvider {
     /** Required field error */
     val requiredField: String
 
-    /** Label shown when the user is signed in. String should contain a single %s placeholder. */
-    fun signedInAs(userIdentifier: String): String
-
     /** Action text for managing multi-factor authentication settings. */
     val manageMfaAction: String
 
