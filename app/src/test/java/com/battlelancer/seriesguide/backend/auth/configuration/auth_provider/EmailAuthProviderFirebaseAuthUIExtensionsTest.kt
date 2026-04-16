@@ -17,9 +17,14 @@ import com.google.android.gms.tasks.TaskCompletionSource
 import com.google.common.truth.Truth.assertThat
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
+import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -288,6 +293,103 @@ class EmailAuthProviderFirebaseAuthUIExtensionsTest {
                 }
             assertThat(restrictedException.message).contains("This action is restricted to admins")
         }
+
+    @Test
+    fun `signInWithEmailAndPassword - returns result on success`() = runTest {
+        // Return fake auth result
+        val mockAuthResult = mock(AuthResult::class.java)
+        val taskCompletionSource = TaskCompletionSource<AuthResult>()
+        taskCompletionSource.setResult(mockAuthResult)
+        `when`(mockFirebaseAuth.signInWithEmailAndPassword(anyString(), anyString()))
+            .thenReturn(taskCompletionSource.task)
+
+        val result = signInWithTestEmailAndPassword()
+        assertThat(result).isNotNull()
+        assertThat(result).isEqualTo(mockAuthResult)
+    }
+
+    @Test
+    fun `signInWithEmailAndPassword - links given credential`() = runTest {
+        val googleCredential = GoogleAuthProvider.getCredential("google-id-token", null)
+        val mockUser = mock(FirebaseUser::class.java)
+
+        // Return fake auth result
+        val mockAuthResult = mock(AuthResult::class.java)
+        `when`(mockAuthResult.user).thenReturn(mockUser)
+
+        val signInTask = TaskCompletionSource<AuthResult>()
+        signInTask.setResult(mockAuthResult)
+        `when`(mockFirebaseAuth.signInWithEmailAndPassword(anyString(), anyString()))
+            .thenReturn(signInTask.task)
+
+        val linkTask = TaskCompletionSource<AuthResult>()
+        linkTask.setResult(mockAuthResult)
+        `when`(mockUser.linkWithCredential(googleCredential))
+            .thenReturn(linkTask.task)
+
+        val result = signInWithTestEmailAndPassword(credentialForLinking = googleCredential)
+        assertThat(result).isNotNull()
+        assertThat(result).isEqualTo(mockAuthResult)
+
+        // Firebase API should have been called with given credential
+        verify(mockUser).linkWithCredential(googleCredential)
+    }
+
+    @Test
+    fun `signInWithEmailAndPassword - handles invalid credentials`() = runTest {
+        // Fail API call with fake invalid credentials exception
+        val invalidCredentialsException =
+            FirebaseAuthInvalidCredentialsException("IGNORED", "ignored")
+        val taskCompletionSource = TaskCompletionSource<AuthResult>()
+        taskCompletionSource.setException(invalidCredentialsException)
+        `when`(mockFirebaseAuth.signInWithEmailAndPassword(anyString(), anyString()))
+            .thenReturn(taskCompletionSource.task)
+
+        assertThrows(AuthException.InvalidCredentialsException::class.java) {
+            runBlocking {
+                signInWithTestEmailAndPassword()
+            }
+        }
+    }
+
+    @Test
+    fun `signInWithEmailAndPassword - handles user not found`() = runTest {
+        // Fail API call with fake invalid credentials exception
+        val invalidUserException =
+            FirebaseAuthInvalidUserException("IGNORED", "ignored")
+        val taskCompletionSource = TaskCompletionSource<AuthResult>()
+        taskCompletionSource.setException(invalidUserException)
+        `when`(mockFirebaseAuth.signInWithEmailAndPassword(anyString(), anyString()))
+            .thenReturn(taskCompletionSource.task)
+
+        assertThrows(AuthException.UserNotFoundException::class.java) {
+            runBlocking {
+                signInWithTestEmailAndPassword()
+            }
+        }
+    }
+
+    private suspend fun signInWithTestEmailAndPassword(credentialForLinking: AuthCredential? = null): AuthResult? {
+        val instance = FirebaseAuthUI.create(firebaseApp, mockFirebaseAuth)
+        val emailProvider = AuthProvider.Email(
+            emailLinkActionCodeSettings = null
+        )
+        val config = authUIConfiguration {
+            context = applicationContext
+            providers {
+                provider(emailProvider)
+            }
+        }
+        return instance.signInWithEmailAndPassword(
+            context = applicationContext,
+            config = config,
+            provider = emailProvider,
+            email = TEST_EMAIL,
+            password = "InsecureDoNotUse@123",
+            credentialForLinking = credentialForLinking,
+            skipCredentialSave = true // Credential manager not set up for unit tests
+        )
+    }
 
     companion object {
         private const val TEST_EMAIL = "test@user.example"
