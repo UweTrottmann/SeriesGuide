@@ -688,7 +688,6 @@
     <!-- Error Recovery Dialog -->
     <string name="auth_error_dialog_title" comment="Title for error recovery dialog">Authentication Error</string>
     <string name="auth_error_account_linking_required_message" comment="Error message when account linking is required">Account needs to be linked. Please try a different sign-in method.</string>
-    <string name="auth_error_auth_cancelled_message" comment="Error message when authentication is cancelled">Authentication was cancelled. Please try again when ready.</string>
 
     <!-- Tooltips -->
     <string name="auth_new_accounts_disabled" comment="Message shown when creating new accounts is not allowed">Creating new accounts is currently not allowed</string>

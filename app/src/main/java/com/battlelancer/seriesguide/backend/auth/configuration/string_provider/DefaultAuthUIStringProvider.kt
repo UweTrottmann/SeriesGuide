@@ -249,8 +249,6 @@ class DefaultAuthUIStringProvider(
         get() = localizedContext.getString(R.string.auth_error_mfa_required_message)
     override val accountLinkingRequiredRecoveryMessage: String
         get() = localizedContext.getString(R.string.auth_error_account_linking_required_message)
-    override val authCancelledRecoveryMessage: String
-        get() = localizedContext.getString(R.string.auth_error_auth_cancelled_message)
     override val unknownErrorRecoveryMessage: String
         get() = localizedContext.getString(R.string.auth_error_unknown)
 
