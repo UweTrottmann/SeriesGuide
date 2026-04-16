@@ -158,9 +158,6 @@ class DefaultAuthUIStringProvider(
     override val requiredField: String
         get() = localizedContext.getString(R.string.auth_required_field)
 
-    override fun signedInAs(userIdentifier: String): String =
-        localizedContext.getString(R.string.auth_signed_in_as, userIdentifier)
-
     override val manageMfaAction: String
         get() = localizedContext.getString(R.string.auth_manage_mfa_action)
 

@@ -4,11 +4,13 @@
 
 package com.battlelancer.seriesguide.backend.auth.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -21,12 +23,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.auth.AuthState
 import com.battlelancer.seriesguide.backend.auth.FirebaseAuthUI
 import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.AuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.DefaultAuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUIAsset
 import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUITheme
 
 data class AuthSuccessUiContext(
@@ -107,9 +111,17 @@ private fun AuthSuccessContent(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Image(
+            modifier = Modifier
+                .size(48.dp)
+                .align(Alignment.CenterHorizontally),
+            painter = (AuthUIAsset.Resource(R.drawable.ic_account_circle_control_24dp)).painter,
+            contentDescription = null /* Title is below */
+        )
+        Spacer(modifier = Modifier.height(8.dp))
         if (userIdentifier.isNotBlank()) {
             Text(
-                text = stringProvider.signedInAs(userIdentifier),
+                text = userIdentifier,
                 textAlign = TextAlign.Center
             )
             Spacer(modifier = Modifier.height(16.dp))
