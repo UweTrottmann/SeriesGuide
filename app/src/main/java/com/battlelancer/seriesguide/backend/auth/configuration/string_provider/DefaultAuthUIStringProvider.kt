@@ -58,11 +58,8 @@ class DefaultAuthUIStringProvider(
     /**
      * Password Validator Strings
      */
-    override val invalidPassword: String
-        get() = localizedContext.getString(R.string.auth_error_invalid_password)
     override val passwordsDoNotMatch: String
         get() = localizedContext.getString(R.string.auth_passwords_do_not_match)
-
     override val weakPasswordRecoveryMessage: String
         get() = localizedContext.getString(R.string.auth_error_weak_password)
     override fun passwordTooShort(minimumLength: Int): String =

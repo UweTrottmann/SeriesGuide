@@ -54,9 +54,6 @@ interface AuthUIStringProvider {
     /** Error message when email address is invalid or empty */
     val requiredEmailAddress: String
 
-    /** Generic error message for incorrect password during sign-in */
-    val invalidPassword: String
-
     /** Error message when password confirmation doesn't match the original password */
     val passwordsDoNotMatch: String
 
