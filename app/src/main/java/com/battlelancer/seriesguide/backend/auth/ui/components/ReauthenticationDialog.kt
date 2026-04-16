@@ -30,7 +30,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -195,7 +194,7 @@ private suspend fun reauthenticate(
 
 private fun Exception.toUserMessage(stringProvider: AuthUIStringProvider): String = when {
     message?.contains("password", ignoreCase = true) == true ->
-        stringProvider.incorrectPasswordError
+        stringProvider.invalidCredentialsRecoveryMessage
     message?.contains("network", ignoreCase = true) == true ->
         stringProvider.networkErrorRecoveryMessage
     else -> stringProvider.reauthGenericError
