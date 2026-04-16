@@ -225,7 +225,7 @@ class AuthUITheme(
         @get:Composable
         val topAppBarColors
             get() = TopAppBarDefaults.topAppBarColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                containerColor = MaterialTheme.colorScheme.background,
                 navigationIconContentColor = MaterialTheme.colorScheme.primary,
                 titleContentColor = MaterialTheme.colorScheme.primary
             )
