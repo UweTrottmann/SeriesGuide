@@ -157,13 +157,19 @@ private fun getRecoveryActionText(
 ): String {
     return when (error) {
         is AuthException.AuthCancelledException -> error.message ?: stringProvider.continueText
-        is AuthException.EmailAlreadyInUseException -> stringProvider.signInDefault // Use existing "Sign in" text
-        is AuthException.AccountLinkingRequiredException -> stringProvider.signInDefault // User needs to sign in to link accounts
-        is AuthException.MfaRequiredException -> stringProvider.continueText // Use "Continue" for MFA
-        is AuthException.EmailLinkPromptForEmailException -> stringProvider.continueText
-        is AuthException.EmailLinkCrossDeviceLinkingException -> stringProvider.continueText
-        is AuthException.EmailLinkWrongDeviceException -> stringProvider.continueText
-        is AuthException.UserNotFoundException -> stringProvider.signupPageTitle // Navigate to sign-up when user not found
+
+        is AuthException.EmailAlreadyInUseException, // onRecover switches to sign-in mode
+        is AuthException.AccountLinkingRequiredException // onRecover navigates to email auth screen
+            -> stringProvider.signInDefault
+
+        is AuthException.MfaRequiredException, // Dialog is just dismissed
+        is AuthException.EmailLinkPromptForEmailException, // onRecover navigates to email auth screen
+        is AuthException.EmailLinkCrossDeviceLinkingException, // onRecover navigates to email auth screen
+        is AuthException.EmailLinkWrongDeviceException // Dialog is just dismissed
+            -> stringProvider.continueText
+
+        is AuthException.UserNotFoundException // onRecover switches to sign-up mode
+            -> stringProvider.signupPageTitle
 
         else -> stringProvider.retryAction
     }
@@ -171,29 +177,25 @@ private fun getRecoveryActionText(
 
 /**
  * If for the given [AuthException] the recover action should be shown.
+ * If so, may also want to supply a custom [getRecoveryActionText].
  *
  * @param error The [AuthException] to check
  * @return `true` if the error is recoverable, `false` otherwise
  */
 private fun isRecoverable(error: AuthException): Boolean {
     return when (error) {
-        is AuthException.NetworkException -> true
+        is AuthException.NetworkException,
+        is AuthException.AuthCancelledException,
+        is AuthException.EmailAlreadyInUseException,
+        is AuthException.AccountLinkingRequiredException,
+        is AuthException.MfaRequiredException,
+        is AuthException.EmailLinkPromptForEmailException,
+        is AuthException.EmailLinkCrossDeviceLinkingException,
+        is AuthException.EmailLinkWrongDeviceException,
+        is AuthException.UserNotFoundException,
+        is AuthException.UnknownException
+            -> true
 
-        is AuthException.InvalidCredentialsException,
-        is AuthException.WeakPasswordException -> {
-            // Just show dismiss action and allow user to edit password
-            false
-        }
-
-        is AuthException.UserNotFoundException -> true
-        is AuthException.EmailAlreadyInUseException -> true
-        is AuthException.MfaRequiredException -> true
-        is AuthException.AccountLinkingRequiredException -> true
-        is AuthException.AuthCancelledException -> true
-        is AuthException.EmailLinkPromptForEmailException -> true
-        is AuthException.EmailLinkCrossDeviceLinkingException -> true
-        is AuthException.EmailLinkWrongDeviceException -> true
-        is AuthException.UnknownException -> true
-        else -> true
+        else -> false
     }
 }
