@@ -147,7 +147,7 @@ fun SignInEmailLinkUI(
             ) {
                 Text(
                     modifier = modifier,
-                    text = stringProvider.troubleSigningIn,
+                    text = stringProvider.resetPasswordAction,
                     style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Center,
                     textDecoration = TextDecoration.Underline

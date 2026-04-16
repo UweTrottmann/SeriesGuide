@@ -97,11 +97,8 @@ interface AuthUIStringProvider {
     /** Label for button to hide the contents of a text field. */
     val hideText: String
 
-    /** Trouble signing in link text */
-    val troubleSigningIn: String
-
-    /** Title for recover password page */
-    val recoverPasswordPageTitle: String
+    /** Title for reset password function. */
+    val resetPasswordAction: String
 
     /** Button text for reset password */
     val sendButtonText: String
