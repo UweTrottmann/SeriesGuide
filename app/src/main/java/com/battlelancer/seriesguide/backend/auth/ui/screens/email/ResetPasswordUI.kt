@@ -101,7 +101,7 @@ fun ResetPasswordUI(
         modifier = modifier,
         topBar = {
             AuthTopAppBar(
-                title = stringProvider.recoverPasswordPageTitle,
+                title = stringProvider.resetPasswordAction,
                 onNavigateBack = onNavigateBack
             )
         },

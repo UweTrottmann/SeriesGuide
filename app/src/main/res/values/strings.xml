@@ -648,7 +648,6 @@
     <string name="auth_required_email" comment="Inline error for empty email address in input field">Valid email address required</string>
     <string name="auth_sign_up" comment="Action to create an account">Create an account</string>
     <string name="auth_email_alreay_in_use" comment="Inline error for signup failure">This email address is already in use by an existing account. Please sign in with your existing account.</string>
-    <string name="auth_trouble_signing_in" comment="Link leading to forgot password flow">Trouble signing in?</string>
     <string name="auth_show_text" comment="Action to show the value of a text field">Show</string>
     <string name="auth_hide_text" comment="Action to hide the value of a text field">Hide</string>
 
@@ -658,7 +657,7 @@
     <string name="auth_passwords_do_not_match" comment="Error message when password don't match">Passwords do not match</string>
 
     <!-- Password recovery -->
-    <string name="auth_title_recover_password_activity" comment="Recover password screen title">Recover password</string>
+    <string name="auth_action_reset_password" comment="Recover password screen title">Reset password</string>
     <string name="auth_title_confirm_recover_password" comment="Password recovery confirmation message">Check your email</string>
     <string name="auth_confirm_recovery_body" comment="Alert dialog displayed after password recovery email is sent">Follow the instructions sent to %1$s to recover your password.</string>
     <string name="auth_error_email_does_not_exist" comment="Inline error when user attempt signin with invalid account">This email address doesn\'t match an existing account</string>
