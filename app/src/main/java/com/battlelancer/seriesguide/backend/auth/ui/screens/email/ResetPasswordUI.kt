@@ -135,7 +135,7 @@ fun ResetPasswordUI(
                     },
                     enabled = !isLoading,
                 ) {
-                    Text(stringProvider.signInDefault.uppercase())
+                    Text(stringProvider.signInDefault)
                 }
                 Spacer(modifier = Modifier.width(16.dp))
                 Button(
@@ -150,7 +150,7 @@ fun ResetPasswordUI(
                                 .size(16.dp)
                         )
                     } else {
-                        Text(stringProvider.sendButtonText.uppercase())
+                        Text(stringProvider.sendButtonText)
                     }
                 }
             }

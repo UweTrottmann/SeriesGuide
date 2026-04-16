@@ -166,7 +166,7 @@ fun SignInEmailLinkUI(
                         modifier = Modifier.size(16.dp)
                     )
                 } else {
-                    Text(stringProvider.signInDefault.uppercase())
+                    Text(stringProvider.signInDefault)
                 }
             }
 
@@ -179,7 +179,7 @@ fun SignInEmailLinkUI(
                 modifier = Modifier.fillMaxWidth(),
                 enabled = !isLoading
             ) {
-                Text(stringProvider.signInWithPassword.uppercase())
+                Text(stringProvider.signInWithPassword)
             }
         }
     }
