@@ -217,7 +217,7 @@ fun SignInUI(
                         },
                         enabled = provider.isNewAccountsAllowed && !isLoading,
                     ) {
-                        Text(stringProvider.signupPageTitle.uppercase())
+                        Text(stringProvider.signupPageTitle)
                     }
                 }
                 Spacer(modifier = Modifier.width(16.dp))
@@ -233,7 +233,7 @@ fun SignInUI(
                                 .size(16.dp)
                         )
                     } else {
-                        Text(stringProvider.signInDefault.uppercase())
+                        Text(stringProvider.signInDefault)
                     }
                 }
             }
@@ -248,7 +248,7 @@ fun SignInUI(
                     modifier = Modifier.fillMaxWidth(),
                     enabled = !isLoading
                 ) {
-                    Text(stringProvider.signInWithEmailLink.uppercase())
+                    Text(stringProvider.signInWithEmailLink)
                 }
             }
         }

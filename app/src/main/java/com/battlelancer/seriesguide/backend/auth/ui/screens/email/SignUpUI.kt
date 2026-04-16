@@ -170,7 +170,7 @@ fun SignUpUI(
                     },
                     enabled = !isLoading,
                 ) {
-                    Text(stringProvider.signInDefault.uppercase())
+                    Text(stringProvider.signInDefault)
                 }
                 Spacer(modifier = Modifier.width(16.dp))
                 Button(
@@ -185,7 +185,7 @@ fun SignUpUI(
                                 .size(16.dp)
                         )
                     } else {
-                        Text(stringProvider.signupPageTitle.uppercase())
+                        Text(stringProvider.signupPageTitle)
                     }
                 }
             }
