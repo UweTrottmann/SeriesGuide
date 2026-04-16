@@ -71,9 +71,14 @@
     <string name="auth_idp_name_email">Email</string>
 
     <!-- Account management -->
+    <string name="auth_signed_in_as" comment="Message showing who is signed in.">Signed in as %1$s</string>
     <string name="auth_verify_email_instruction" comment="Instruction asking the user to verify their email.">Please verify %1$s to continue.</string>
     <string name="auth_send_verification_email_action" comment="Action label for resending a verification email.">Send verification email</string>
     <string name="auth_verified_email_action" comment="Action label once the user has verified their email.">I\'ve verified my email</string>
+    <string name="auth_manage_mfa_action" comment="Action label for managing multi-factor authentication.">Manage multi-factor authentication</string>
+    <string name="auth_skip_action" comment="Generic action for skipping an optional step.">Skip for now</string>
+    <string name="auth_remove_action" comment="Generic remove action label.">Remove</string>
+    <string name="auth_verify_action" comment="Generic verify action label.">Verify</string>
 
     <!-- MFA management -->
     <string name="auth_secret_key_label" comment="Label for a secret key value.">Secret key</string>
@@ -89,6 +94,12 @@
     <string name="auth_mfa_label_unknown_method" comment="Label for an unknown MFA factor.">Unknown method</string>
     <string name="auth_mfa_enrolled_on" comment="Label indicating the enrollment date of an MFA factor.">Enrolled on %1$s</string>
     <string name="auth_mfa_setup_authenticator_description" comment="Description displayed during authenticator app setup.">Scan the QR code or enter the secret key in your authenticator app</string>
+
+    <!-- Re-authentication dialog -->
+    <string name="auth_reauth_dialog_title" comment="Title for the re-authentication dialog.">Verify your identity</string>
+    <string name="auth_reauth_dialog_message" comment="Message shown in the re-authentication dialog.">For your security, please re-enter your password to continue.</string>
+    <string name="auth_reauth_account_label" comment="Label indicating the email account being re-authenticated.">Account: %1$s</string>
+    <string name="auth_reauth_generic_error" comment="Generic error shown when re-authentication fails.">Authentication failed. Please try again.</string>
 
     <!-- Email Link Sign In -->
     <string name="auth_sign_in_with_email_link" comment="Button text to sign in with email link">Sign in with email link</string>
