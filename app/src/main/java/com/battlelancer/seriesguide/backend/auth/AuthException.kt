@@ -261,6 +261,14 @@ abstract class AuthException(
             "than previously provided", cause)
 
     companion object {
+        private const val FIREBASE_ERROR_ACCOUNT_EXISTS_WITH_DIFFERENT_CREDENTIAL =
+            "ERROR_ACCOUNT_EXISTS_WITH_DIFFERENT_CREDENTIAL"
+        private const val FIREBASE_ERROR_CREDENTIAL_ALREADY_IN_USE =
+            "ERROR_CREDENTIAL_ALREADY_IN_USE"
+        private const val FIREBASE_ERROR_EMAIL_ALREADY_IN_USE = "ERROR_EMAIL_ALREADY_IN_USE"
+        private const val FIREBASE_ERROR_USER_DISABLED = "ERROR_USER_DISABLED"
+        private const val FIREBASE_ERROR_USER_NOT_FOUND = "ERROR_USER_NOT_FOUND"
+
         /**
          * Creates an appropriate [AuthException] instance from a Firebase authentication exception.
          *
@@ -303,7 +311,7 @@ abstract class AuthException(
                         reason = firebaseException.reason
                     )
                 }
-                
+
                 // Handle specific Firebase Auth exceptions first (before general FirebaseException)
                 is FirebaseAuthInvalidCredentialsException -> {
                     InvalidCredentialsException(
@@ -314,12 +322,12 @@ abstract class AuthException(
 
                 is FirebaseAuthInvalidUserException -> {
                     when (firebaseException.errorCode) {
-                        "ERROR_USER_NOT_FOUND" -> UserNotFoundException(
+                        FIREBASE_ERROR_USER_NOT_FOUND -> UserNotFoundException(
                             message = firebaseException.message ?: "User not found",
                             cause = firebaseException
                         )
 
-                        "ERROR_USER_DISABLED" -> InvalidCredentialsException(
+                        FIREBASE_ERROR_USER_DISABLED -> InvalidCredentialsException(
                             message = firebaseException.message ?: "User account has been disabled",
                             cause = firebaseException
                         )
@@ -333,19 +341,19 @@ abstract class AuthException(
 
                 is FirebaseAuthUserCollisionException -> {
                     when (firebaseException.errorCode) {
-                        "ERROR_EMAIL_ALREADY_IN_USE" -> EmailAlreadyInUseException(
+                        FIREBASE_ERROR_EMAIL_ALREADY_IN_USE -> EmailAlreadyInUseException(
                             message = firebaseException.message
                                 ?: "Email address is already in use",
                             cause = firebaseException
                         )
 
-                        "ERROR_ACCOUNT_EXISTS_WITH_DIFFERENT_CREDENTIAL" -> AccountLinkingRequiredException(
+                        FIREBASE_ERROR_ACCOUNT_EXISTS_WITH_DIFFERENT_CREDENTIAL -> AccountLinkingRequiredException(
                             message = firebaseException.message
                                 ?: "Account already exists with different credentials",
                             cause = firebaseException
                         )
 
-                        "ERROR_CREDENTIAL_ALREADY_IN_USE" -> AccountLinkingRequiredException(
+                        FIREBASE_ERROR_CREDENTIAL_ALREADY_IN_USE -> AccountLinkingRequiredException(
                             message = firebaseException.message
                                 ?: "Credential is already associated with a different user account",
                             cause = firebaseException
