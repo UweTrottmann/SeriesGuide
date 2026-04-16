@@ -129,7 +129,7 @@ fun ResetPasswordUI(
                 modifier = Modifier
                     .align(Alignment.End),
             ) {
-                Button(
+                TextButton(
                     onClick = {
                         onGoToSignIn()
                     },
