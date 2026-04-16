@@ -101,6 +101,12 @@
     <string name="auth_reauth_account_label" comment="Label indicating the email account being re-authenticated.">Account: %1$s</string>
     <string name="auth_reauth_generic_error" comment="Generic error shown when re-authentication fails.">Authentication failed. Please try again.</string>
 
+    <!-- Password validation messages -->
+    <string name="auth_error_password_missing_uppercase" comment="Explanation when password is missing uppercase letter">Use at least one uppercase letter</string>
+    <string name="auth_error_password_missing_lowercase" comment="Explanation when password is missing lowercase letter">Use at least one lowercase letter</string>
+    <string name="auth_error_password_missing_digit" comment="Explanation when password is missing digit">Use at least one number</string>
+    <string name="auth_error_password_missing_special_character" comment="Explanation when password is missing special character">Use at least one special character</string>
+
     <!-- Email Link Sign In -->
     <string name="auth_sign_in_with_email_link" comment="Button text to sign in with email link">Sign in with email link</string>
     <string name="auth_sign_in_with_password" comment="Button text to sign in with password">Sign in with password</string>
