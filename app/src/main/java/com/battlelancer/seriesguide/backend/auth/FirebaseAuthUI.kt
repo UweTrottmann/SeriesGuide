@@ -341,6 +341,7 @@ class FirebaseAuthUI private constructor(
      * @throws AuthException.InvalidCredentialsException if reauthentication is required
      * @throws AuthException.AuthCancelledException if the operation is cancelled
      * @throws AuthException.NetworkException if a network error occurs
+     * @throws AuthException.AdminRestrictedException if deleting accounts is not allowed
      * @throws AuthException.UnknownException for other errors
      * @since 10.0.0
      */

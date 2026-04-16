@@ -9,7 +9,6 @@ package com.battlelancer.seriesguide.backend.auth.configuration.auth_provider
 
 import android.content.Context
 import android.net.Uri
-import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.auth.AuthException
 import com.battlelancer.seriesguide.backend.auth.AuthException.EmailAlreadyInUseException
 import com.battlelancer.seriesguide.backend.auth.AuthState
@@ -73,7 +72,7 @@ private const val LOG_TAG = "EmailAuthProvider"
  *
  * @return [AuthResult] containing the newly created or linked user, or null if failed
  *
- * @throws AuthException.UserNotFoundException if new accounts are not allowed
+ * @throws AuthException.AdminRestrictedException if new accounts are not allowed
  * @throws AuthException.WeakPasswordException if the password fails validation rules
  * @throws AuthException.InvalidCredentialsException if the email or password is invalid
  * @throws AuthException.EmailAlreadyInUseException if the email already exists
@@ -90,11 +89,12 @@ internal suspend fun FirebaseAuthUI.createUserWithEmailAndPassword(
     password: String,
 ): AuthResult? {
     try {
-        // Check if new accounts are allowed
+        // This should never get called if isNewAccountsAllowed is false.
+        // Note: this only checks the configuration in this app. Sign-ups can also be turned off
+        // server side in which case the API call below should throw FirebaseAuthException with
+        // ERROR_ADMIN_RESTRICTED_OPERATION which is then wrapped into a AdminRestrictedException.
         if (!provider.isNewAccountsAllowed) {
-            throw AuthException.UserNotFoundException(
-                message = context.getString(R.string.auth_error_email_does_not_exist)
-            )
+            throw AuthException.AdminRestrictedException("Called despite provider.isNewAccountsAllowed = false")
         }
 
         // Validate password against rules

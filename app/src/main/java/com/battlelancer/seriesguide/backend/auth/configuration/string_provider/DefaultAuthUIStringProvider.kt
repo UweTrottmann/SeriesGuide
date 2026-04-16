@@ -309,7 +309,7 @@ class DefaultAuthUIStringProvider(
     override fun privacyPolicyMessage(privacyPolicyLabel: String): String =
         localizedContext.getString(R.string.auth_privacy_policy_message, privacyPolicyLabel)
 
-    override val newAccountsDisabledTooltip: String
-        get() = localizedContext.getString(R.string.auth_new_accounts_disabled_tooltip)
+    override val newAccountsDisabled: String
+        get() = localizedContext.getString(R.string.auth_new_accounts_disabled)
 
 }

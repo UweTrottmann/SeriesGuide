@@ -204,7 +204,7 @@ fun SignInUI(
                     ),
                     tooltip = {
                         PlainTooltip {
-                            Text(stringProvider.newAccountsDisabledTooltip)
+                            Text(stringProvider.newAccountsDisabled)
                         }
                     },
                     state = rememberTooltipState(
