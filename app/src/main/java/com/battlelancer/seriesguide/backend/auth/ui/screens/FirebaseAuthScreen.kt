@@ -11,17 +11,9 @@ import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -31,12 +23,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -54,6 +42,7 @@ import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.D
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.theme.LocalAuthUITheme
 import com.battlelancer.seriesguide.backend.auth.ui.components.ErrorRecoveryDialog
+import com.battlelancer.seriesguide.backend.auth.ui.components.LoadingDialog
 import com.battlelancer.seriesguide.backend.auth.ui.method_picker.AuthMethodPicker
 import com.battlelancer.seriesguide.backend.auth.ui.screens.email.EmailAuthMode
 import com.battlelancer.seriesguide.backend.auth.ui.screens.email.EmailAuthScreen
@@ -532,7 +521,7 @@ fun FirebaseAuthScreen(
 
             val loadingState = authState as? AuthState.Loading
             if (loadingState != null) {
-                LoadingDialog(loadingState.message ?: stringProvider.progressDialogLoading)
+                LoadingDialog()
             }
         }
     }
@@ -544,30 +533,4 @@ sealed class AuthRoute(val route: String) {
     object Success : AuthRoute("auth_success")
     object MfaEnrollment : AuthRoute("auth_mfa_enrollment")
     object MfaChallenge : AuthRoute("auth_mfa_challenge")
-}
-
-@Composable
-private fun LoadingDialog(message: String) {
-    AlertDialog(
-        onDismissRequest = {},
-        confirmButton = {},
-        containerColor = Color.Transparent,
-        text = {
-            Column(
-                modifier = Modifier
-                    .padding(24.dp)
-                    .fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-            ) {
-                CircularProgressIndicator()
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                    text = message,
-                    textAlign = TextAlign.Center,
-                    color = Color.White
-                )
-            }
-        }
-    )
 }
