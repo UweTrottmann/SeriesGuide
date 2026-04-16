@@ -178,6 +178,16 @@ abstract class AuthException(
     ) : AuthException(message, cause)
 
     /**
+     * If an action, like sign-up or deletion, is (temporarily) restricted to
+     * admins server-side (so no user self-service).
+     * https://firebase.google.com/docs/auth/users#user-actions
+     */
+    class AdminRestrictedException(
+        message: String,
+        cause: Throwable? = null
+    ) : AuthException(message, cause)
+
+    /**
      * An unknown or unhandled error occurred.
      *
      * This exception is thrown for errors that don't match any of the specific
@@ -263,6 +273,8 @@ abstract class AuthException(
     companion object {
         private const val FIREBASE_ERROR_ACCOUNT_EXISTS_WITH_DIFFERENT_CREDENTIAL =
             "ERROR_ACCOUNT_EXISTS_WITH_DIFFERENT_CREDENTIAL"
+        const val FIREBASE_ERROR_ADMIN_RESTRICTED_OPERATION =
+            "ERROR_ADMIN_RESTRICTED_OPERATION"
         private const val FIREBASE_ERROR_CREDENTIAL_ALREADY_IN_USE =
             "ERROR_CREDENTIAL_ALREADY_IN_USE"
         private const val FIREBASE_ERROR_EMAIL_ALREADY_IN_USE = "ERROR_EMAIL_ALREADY_IN_USE"
@@ -383,11 +395,21 @@ abstract class AuthException(
                 }
 
                 is FirebaseAuthException -> {
-                    UnknownException(
-                        message = firebaseException.message
-                            ?: "An unknown authentication error occurred",
-                        cause = firebaseException
-                    )
+                    when (firebaseException.errorCode) {
+                        FIREBASE_ERROR_ADMIN_RESTRICTED_OPERATION -> {
+                            AdminRestrictedException(
+                                message = firebaseException.message
+                                    ?: "This action is restricted to admins",
+                                cause = firebaseException
+                            )
+                        }
+
+                        else -> UnknownException(
+                            message = firebaseException.message
+                                ?: "An unknown authentication error occurred",
+                            cause = firebaseException
+                        )
+                    }
                 }
 
                 is FirebaseException -> {

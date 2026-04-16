@@ -691,6 +691,6 @@
     <string name="auth_error_auth_cancelled_message" comment="Error message when authentication is cancelled">Authentication was cancelled. Please try again when ready.</string>
 
     <!-- Tooltips -->
-    <string name="auth_new_accounts_disabled_tooltip" comment="Tooltip shown when sign-up button is disabled because new accounts are not allowed">This button is currently disabled because new accounts are not allowed</string>
+    <string name="auth_new_accounts_disabled" comment="Message shown when creating new accounts is not allowed">Creating new accounts is currently not allowed</string>
 
 </resources>

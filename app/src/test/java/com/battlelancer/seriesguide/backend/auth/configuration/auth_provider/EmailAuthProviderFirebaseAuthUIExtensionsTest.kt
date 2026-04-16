@@ -19,6 +19,7 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -28,6 +29,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mock
+import org.mockito.Mockito.mock
 import org.mockito.Mockito.never
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
@@ -207,6 +209,85 @@ class EmailAuthProviderFirebaseAuthUIExtensionsTest {
         verify(mockFirebaseAuth, never())
             .createUserWithEmailAndPassword(anyString(), anyString())
     }
+
+    @Test
+    fun `createUserWithEmailAndPassword - fails if new accounts not allowed`() = runTest {
+        val instance = FirebaseAuthUI.create(firebaseApp, mockFirebaseAuth)
+        val emailProvider = AuthProvider.Email(
+            emailLinkActionCodeSettings = null,
+            isNewAccountsAllowed = false
+        )
+        val config = authUIConfiguration {
+            context = applicationContext
+            providers {
+                provider(emailProvider)
+            }
+        }
+
+        // Just return null when calling Firebase API
+        val taskCompletionSource = TaskCompletionSource<AuthResult>()
+        taskCompletionSource.setResult(null)
+        `when`(mockFirebaseAuth.createUserWithEmailAndPassword(anyString(), anyString()))
+            .thenReturn(taskCompletionSource.task)
+
+        val restrictedException = assertThrows(AuthException.AdminRestrictedException::class.java) {
+            runBlocking {
+                instance.createUserWithEmailAndPassword(
+                    context = applicationContext,
+                    config = config,
+                    provider = emailProvider,
+                    name = null,
+                    email = TEST_EMAIL,
+                    password = "InsecureDoNotUse@123"
+                )
+            }
+        }
+        assertThat(restrictedException.message).contains("Called despite provider.isNewAccountsAllowed = false")
+
+        // Firebase API to create user shouldn't get called
+        verify(mockFirebaseAuth, never())
+            .createUserWithEmailAndPassword(anyString(), anyString())
+    }
+
+    @Test
+    fun `createUserWithEmailAndPassword - handles account sign-up disabled server-side`() =
+        runTest {
+            val instance = FirebaseAuthUI.create(firebaseApp, mockFirebaseAuth)
+            val emailProvider = AuthProvider.Email(
+                emailLinkActionCodeSettings = null
+            )
+            val config = authUIConfiguration {
+                context = applicationContext
+                providers {
+                    provider(emailProvider)
+                }
+            }
+
+            // Fake exception with admin restricted error code
+            val firebaseRestrictedException = mock(FirebaseAuthException::class.java)
+            `when`(firebaseRestrictedException.errorCode)
+                .thenReturn(AuthException.FIREBASE_ERROR_ADMIN_RESTRICTED_OPERATION)
+
+            val taskCompletionSource = TaskCompletionSource<AuthResult>()
+            taskCompletionSource.setException(firebaseRestrictedException)
+            `when`(mockFirebaseAuth.createUserWithEmailAndPassword(anyString(), anyString()))
+                .thenReturn(taskCompletionSource.task)
+
+            val restrictedException =
+                assertThrows(AuthException.AdminRestrictedException::class.java) {
+                    runBlocking {
+                        instance.createUserWithEmailAndPassword(
+                            context = applicationContext,
+                            config = config,
+                            provider = emailProvider,
+                            name = null,
+                            email = TEST_EMAIL,
+                            password = "InsecureDoNotUse@123"
+                        )
+                    }
+                }
+            assertThat(restrictedException.message).contains("This action is restricted to admins")
+        }
 
     companion object {
         private const val TEST_EMAIL = "test@user.example"

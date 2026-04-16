@@ -324,6 +324,6 @@ interface AuthUIStringProvider {
     fun privacyPolicyMessage(privacyPolicyLabel: String): String
 
     /** Tooltip message shown when new account sign-up is disabled */
-    val newAccountsDisabledTooltip: String
+    val newAccountsDisabled: String
 
 }

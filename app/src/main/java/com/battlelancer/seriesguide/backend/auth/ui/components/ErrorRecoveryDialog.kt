@@ -127,6 +127,14 @@ private fun getRecoveryMessage(
         }
 
         is AuthException.AuthCancelledException -> stringProvider.authCancelledRecoveryMessage
+
+        is AuthException.AdminRestrictedException -> {
+            // AdminRestrictedException currently only by SignUpUI, deletion is handled by
+            // RemoveCloudAccountDialogFragment. So this should only occur when trying to create a
+            // new account.
+            stringProvider.newAccountsDisabled
+        }
+
         is AuthException.UnknownException -> {
             // Use custom message if available (e.g., for configuration errors)
             error.message?.takeIf { it.isNotBlank() } ?: stringProvider.unknownErrorRecoveryMessage
