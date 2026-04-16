@@ -109,7 +109,7 @@ internal fun DefaultMfaEnrollmentContent(
             onError = { exception ->
                 reauthErrorMessage.value = when {
                     exception.message?.contains("password", ignoreCase = true) == true ->
-                        stringProvider.incorrectPasswordError
+                        stringProvider.invalidCredentialsRecoveryMessage
 
                     exception.message?.contains("network", ignoreCase = true) == true ->
                         stringProvider.networkErrorRecoveryMessage

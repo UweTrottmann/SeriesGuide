@@ -305,9 +305,6 @@ interface AuthUIStringProvider {
     /** Label showing the account email being re-authenticated. */
     fun reauthAccountLabel(email: String): String
 
-    /** Error message shown when the provided password is incorrect. */
-    val incorrectPasswordError: String
-
     /** General error message for re-authentication failures. */
     val reauthGenericError: String
 

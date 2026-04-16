@@ -293,9 +293,6 @@ class DefaultAuthUIStringProvider(
     override fun reauthAccountLabel(email: String): String =
         localizedContext.getString(R.string.auth_reauth_account_label, email)
 
-    override val incorrectPasswordError: String
-        get() = localizedContext.getString(R.string.auth_incorrect_password_error)
-
     override val reauthGenericError: String
         get() = localizedContext.getString(R.string.auth_reauth_generic_error)
 
