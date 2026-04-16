@@ -629,7 +629,9 @@
     <!-- Cloud Authentication -->
     <!-- Common -->
     <string name="auth_continue" comment="Button text to continue">Continue</string>
+    <string name="auth_back_action" comment="Generic back action label.">Back</string>
     <string name="auth_privacy_policy_message" comment="Privacy policy message, the placeholder will use the label for privacy_policy">By continuing, you are indicating that you accept the <xliff:g comment="Privacy policy label">%1$s</xliff:g>.</string>
+    <string name="auth_new_accounts_disabled" comment="Message shown when creating new accounts is not allowed">Creating new accounts is currently not allowed</string>
 
     <!-- Auth method picker -->
     <string name="auth_sign_in_with_google" comment="Sign in button text">Sign in with Google</string>
@@ -637,21 +639,21 @@
     <string name="auth_continue_with_google" comment="Continue button text">Continue with Google</string>
     <string name="auth_continue_with_email" comment="Continue button text">Continue with email</string>
 
-    <!-- Account management -->
-    <string name="auth_back_action" comment="Generic back action label.">Back</string>
-
-    <!-- Common-->
+    <!-- Email auth -->
+    <string name="auth_name_hint" comment="Hint for name input field">Your name</string>
     <string name="auth_email_hint" comment="Hint in email input field">Email</string>
     <string name="auth_password_hint" comment="Hint for password input field for existing passwords">Password</string>
     <string name="auth_confirm_password_hint" comment="Hint for confirm password input field for existing passwords">Confirm Password</string>
     <string name="auth_required_field" comment="Inline error for required field">Required</string>
     <string name="auth_required_email" comment="Inline error for empty email address in input field">Valid email address required</string>
-
-    <!-- Email sign up -->
     <string name="auth_sign_up" comment="Action to create an account">Create an account</string>
-    <string name="auth_name_hint" comment="Hint for name input field">Your name</string>
     <string name="auth_email_alreay_in_use" comment="Inline error for signup failure">This email address is already in use by an existing account. Please sign in with your existing account.</string>
     <string name="auth_trouble_signing_in" comment="Link leading to forgot password flow">Trouble signing in?</string>
+
+    <!-- Password validation messages -->
+    <string name="auth_error_weak_password" comment="Error message when password does not meet requirements">Password not strong enough.</string>
+    <string name="auth_error_password_too_short" comment="Explanation when password is too short">Use at least %1$d characters</string>
+    <string name="auth_passwords_do_not_match" comment="Error message when password don't match">Passwords do not match</string>
 
     <!-- Password recovery -->
     <string name="auth_title_recover_password_activity" comment="Recover password screen title">Recover password</string>
@@ -659,20 +661,10 @@
     <string name="auth_confirm_recovery_body" comment="Alert dialog displayed after password recovery email is sent">Follow the instructions sent to %1$s to recover your password.</string>
     <string name="auth_error_email_does_not_exist" comment="Inline error when user attempt signin with invalid account">That email address doesn\'t match an existing account</string>
 
-    <!-- Other error messages -->
-    <string name="auth_error_unknown" comment="General error messages for an unknown failure.">An unknown error occurred.</string>
-    <string name="auth_error_invalid_password" comment="Error message for when the user enters an invalid or wrong password.">This password is incorrect or this account does not support signing in with a password.</string>
-
-    <!-- Password validation messages -->
-    <string name="auth_error_weak_password" comment="Error message when password does not meet requirements">Password not strong enough.</string>
-    <string name="auth_error_password_too_short" comment="Explanation when password is too short">Use at least %1$d characters</string>
-    <string name="auth_passwords_do_not_match" comment="Error message when password don't match">Passwords do not match</string>
-
     <!-- Error Recovery Dialog -->
     <string name="auth_error_dialog_title" comment="Title for error recovery dialog">Authentication Error</string>
     <string name="auth_error_account_linking_required_message" comment="Error message when account linking is required">Account needs to be linked. Please try a different sign-in method.</string>
-
-    <!-- Tooltips -->
-    <string name="auth_new_accounts_disabled" comment="Message shown when creating new accounts is not allowed">Creating new accounts is currently not allowed</string>
+    <string name="auth_error_unknown" comment="General error messages for an unknown failure.">An unknown error occurred.</string>
+    <string name="auth_error_invalid_password" comment="Error message for when the user enters an invalid or wrong password.">This password is incorrect or this account does not support signing in with a password.</string>
 
 </resources>
