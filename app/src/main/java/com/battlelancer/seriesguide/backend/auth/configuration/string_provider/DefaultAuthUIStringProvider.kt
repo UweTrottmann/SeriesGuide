@@ -156,8 +156,6 @@ class DefaultAuthUIStringProvider(
      */
     override val requiredField: String
         get() = localizedContext.getString(R.string.auth_required_field)
-    override val progressDialogLoading: String
-        get() = localizedContext.getString(R.string.auth_progress_dialog_loading)
 
     override fun signedInAs(userIdentifier: String): String =
         localizedContext.getString(R.string.auth_signed_in_as, userIdentifier)

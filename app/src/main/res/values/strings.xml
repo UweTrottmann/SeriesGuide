@@ -628,7 +628,6 @@
 
     <!-- Cloud Authentication -->
     <!-- Common -->
-    <string name="auth_progress_dialog_loading" comment="Loading text in dialog">Loading…</string>
     <string name="auth_continue" comment="Button text to continue">Continue</string>
     <string name="auth_privacy_policy_message" comment="Privacy policy message, the placeholder will use the label for privacy_policy">By continuing, you are indicating that you accept the <xliff:g comment="Privacy policy label">%1$s</xliff:g>.</string>
 

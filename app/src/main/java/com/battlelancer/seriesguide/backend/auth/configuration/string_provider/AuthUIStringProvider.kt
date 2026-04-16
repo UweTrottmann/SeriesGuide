@@ -156,9 +156,6 @@ interface AuthUIStringProvider {
     /** Required field error */
     val requiredField: String
 
-    /** Loading progress text */
-    val progressDialogLoading: String
-
     /** Label shown when the user is signed in. String should contain a single %s placeholder. */
     fun signedInAs(userIdentifier: String): String
 
