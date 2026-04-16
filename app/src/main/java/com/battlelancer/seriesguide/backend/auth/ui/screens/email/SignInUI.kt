@@ -175,7 +175,6 @@ fun SignInUI(
                     onPasswordChange(text)
                 }
             )
-            Spacer(modifier = Modifier.height(8.dp))
             TextButton(
                 modifier = Modifier
                     .align(Alignment.Start),
@@ -185,15 +184,9 @@ fun SignInUI(
                 enabled = !isLoading,
                 contentPadding = PaddingValues.Zero
             ) {
-                Text(
-                    modifier = modifier,
-                    text = stringProvider.troubleSigningIn,
-                    style = MaterialTheme.typography.bodyMedium,
-                    textAlign = TextAlign.Center,
-                    textDecoration = TextDecoration.Underline
-                )
+                Text(stringProvider.troubleSigningIn)
             }
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             Row(
                 modifier = Modifier
                     .align(Alignment.End),
@@ -211,7 +204,7 @@ fun SignInUI(
                         initialIsVisible = !provider.isNewAccountsAllowed
                     )
                 ) {
-                    Button(
+                    TextButton(
                         onClick = {
                             onGoToSignUp()
                         },
