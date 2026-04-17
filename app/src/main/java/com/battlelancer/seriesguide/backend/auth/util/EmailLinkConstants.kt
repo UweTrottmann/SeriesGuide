@@ -52,5 +52,5 @@ object EmailLinkConstants {
      * val emailLink = intent.getStringExtra(EmailLinkConstants.EXTRA_EMAIL_LINK)
      * ```
      */
-    const val EXTRA_EMAIL_LINK = "com.firebase.ui.auth.EXTRA_EMAIL_LINK"
+    const val EXTRA_EMAIL_LINK = "seriesguide.auth.EXTRA_EMAIL_LINK"
 }
