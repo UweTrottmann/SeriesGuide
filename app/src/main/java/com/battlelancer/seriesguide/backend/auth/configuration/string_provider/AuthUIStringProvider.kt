@@ -91,11 +91,8 @@ interface AuthUIStringProvider {
     /** Hint for name input field */
     val nameHint: String
 
-    /** Label for button to show the contents of a text field. */
-    val showText: String
-
-    /** Label for button to hide the contents of a text field. */
-    val hideText: String
+    /** Label for checkbox to toggle showing the password. */
+    val showPassword: String
 
     /** Title for reset password function. */
     val resetPasswordAction: String

@@ -7,6 +7,7 @@
 
 package com.battlelancer.seriesguide.backend.auth.ui.components
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -17,15 +18,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -37,47 +34,13 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.backend.auth.configuration.PasswordRule
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.DefaultAuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.validators.EmailValidator
 import com.battlelancer.seriesguide.backend.auth.configuration.validators.FieldValidator
-import com.battlelancer.seriesguide.backend.auth.configuration.validators.PasswordValidator
 
 /**
  * A customizable input field with built-in validation display.
- *
- * **Example usage:**
- * ```kotlin
- * val emailTextValue = remember { mutableStateOf("") }
- *
- * val emailValidator = remember {
- *     EmailValidator(stringProvider = DefaultAuthUIStringProvider(context))
- * }
- *
- * AuthTextField(
- *     value = emailTextValue,
- *     onValueChange = { emailTextValue.value = it },
- *     label = {
- *         Text("Email")
- *     },
- *     validator = emailValidator
- * )
- * ```
- *
- * @param modifier A modifier for the field.
- * @param value The current value of the text field.
- * @param onValueChange A callback when the value changes.
- * @param label The label for the text field.
- * @param enabled If the field is enabled.
- * @param isError Manually set the error state.
- * @param errorMessage A custom error message to display.
- * @param validator A validator to automatically handle error state and messages.
- * @param keyboardOptions Keyboard options for the field.
- * @param keyboardActions Keyboard actions for the field.
- * @param visualTransformation Visual transformation for the input (e.g., password).
- * @param leadingIcon An optional icon to display at the start of the field.
- * @param trailingIcon An optional icon to display at the start of the field.
  */
 @Composable
 fun AuthTextField(
@@ -86,6 +49,7 @@ fun AuthTextField(
     onValueChange: (String) -> Unit,
     label: @Composable (() -> Unit)? = null,
     isSecureTextField: Boolean = false,
+    textVisible: Boolean = false,
     enabled: Boolean = true,
     isError: Boolean? = null,
     errorMessage: String? = null,
@@ -93,12 +57,8 @@ fun AuthTextField(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     visualTransformation: VisualTransformation = VisualTransformation.None,
-    leadingIcon: @Composable (() -> Unit)? = null,
-    trailingIcon: @Composable (() -> Unit)? = null,
+    @DrawableRes leadingIcon: Int? = null
 ) {
-    val stringProvider = LocalAuthUIStringProvider.current
-    var textVisible by remember { mutableStateOf(false) }
-
     // Automatically set the correct keyboard type based on validator or field type
     val resolvedKeyboardOptions = remember(validator, isSecureTextField, keyboardOptions) {
         when {
@@ -138,51 +98,58 @@ fun AuthTextField(
         keyboardActions = keyboardActions,
         visualTransformation = if (isSecureTextField && !textVisible)
             PasswordVisualTransformation() else visualTransformation,
-        leadingIcon = leadingIcon ?: when {
-            validator is EmailValidator -> {
-                {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_email_control_24dp),
-                        contentDescription = null /* TextField has label */
-                    )
-                }
+        leadingIcon = leadingIcon?.let {
+            {
+                Icon(
+                    painter = painterResource(leadingIcon),
+                    contentDescription = null /* TextField has label */
+                )
             }
+        }
+    )
+}
 
-            isSecureTextField -> {
-                {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_rounded_password_control_24dp),
-                        contentDescription = null /* TextField has label */
-                    )
-                }
-            }
+@Composable
+fun AuthEmailTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    enabled: Boolean = true,
+    validator: FieldValidator? = null
+) {
+    val stringProvider = LocalAuthUIStringProvider.current
+    AuthTextField(
+        value = value,
+        onValueChange = onValueChange,
+        label = {
+            Text(stringProvider.emailHint)
+        },
+        enabled = enabled,
+        validator = validator,
+        leadingIcon = R.drawable.ic_email_control_24dp
+    )
+}
 
-            else -> null
+@Composable
+fun AuthPasswordTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: @Composable (() -> Unit)? = null,
+    enabled: Boolean = true,
+    textVisible: Boolean,
+    validator: FieldValidator? = null
+) {
+    val stringProvider = LocalAuthUIStringProvider.current
+    AuthTextField(
+        value = value,
+        onValueChange = onValueChange,
+        label = label ?: {
+            Text(stringProvider.passwordHint)
         },
-        trailingIcon = trailingIcon ?: {
-            if (isSecureTextField) {
-                IconButton(
-                    onClick = {
-                        textVisible = !textVisible
-                    }
-                ) {
-                    Icon(
-                        painter = painterResource(
-                            if (textVisible) {
-                                R.drawable.ic_visibility_off_control_24dp
-                            } else {
-                                R.drawable.ic_visibility_control_24dp
-                            }
-                        ),
-                        contentDescription = if (textVisible) {
-                            stringProvider.hideText
-                        } else {
-                            stringProvider.showText
-                        }
-                    )
-                }
-            }
-        },
+        enabled = enabled,
+        validator = validator,
+        isSecureTextField = true,
+        textVisible = textVisible,
+        leadingIcon = R.drawable.ic_rounded_password_control_24dp
     )
 }
 
@@ -190,24 +157,7 @@ fun AuthTextField(
 @Composable
 internal fun PreviewAuthTextField() {
     val context = LocalContext.current
-    val nameTextValue = remember { mutableStateOf("") }
-    val emailTextValue = remember { mutableStateOf("") }
-    val passwordTextValue = remember { mutableStateOf("") }
-    val emailValidator = remember {
-        EmailValidator(stringProvider = DefaultAuthUIStringProvider(context))
-    }
-    val passwordValidator = remember {
-        PasswordValidator(
-            stringProvider = DefaultAuthUIStringProvider(context),
-            rules = listOf(
-                PasswordRule.MinimumLength(8),
-                PasswordRule.RequireUppercase,
-                PasswordRule.RequireLowercase,
-            )
-        )
-    }
-    val applicationContext = LocalContext.current
-    val stringProvider = DefaultAuthUIStringProvider(applicationContext)
+    val stringProvider = DefaultAuthUIStringProvider(context)
     CompositionLocalProvider(
         LocalAuthUIStringProvider provides stringProvider
     ) {
@@ -219,35 +169,31 @@ internal fun PreviewAuthTextField() {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             AuthTextField(
-                value = nameTextValue.value,
+                value = "Base variant",
                 label = {
-                    Text("Name")
+                    Text("Base variant")
                 },
-                onValueChange = { text ->
-                    nameTextValue.value = text
+                onValueChange = { _ ->
                 },
             )
             Spacer(modifier = Modifier.height(16.dp))
-            AuthTextField(
-                value = emailTextValue.value,
-                validator = emailValidator,
-                label = {
-                    Text("Email")
-                },
-                onValueChange = { text ->
-                    emailTextValue.value = text
+            AuthEmailTextField(
+                value = "AuthEmailTextField",
+                onValueChange = { _ ->
                 }
             )
             Spacer(modifier = Modifier.height(16.dp))
-            AuthTextField(
-                value = passwordTextValue.value,
-                validator = passwordValidator,
-                isSecureTextField = true,
-                label = {
-                    Text("Password")
-                },
-                onValueChange = { text ->
-                    passwordTextValue.value = text
+            AuthPasswordTextField(
+                value = "example value",
+                textVisible = false,
+                onValueChange = { _ ->
+                }
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            AuthPasswordTextField(
+                value = "example value",
+                textVisible = true,
+                onValueChange = { _ ->
                 }
             )
         }

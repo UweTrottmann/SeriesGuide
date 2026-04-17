@@ -40,7 +40,7 @@ import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.D
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUITheme
 import com.battlelancer.seriesguide.backend.auth.configuration.validators.EmailValidator
-import com.battlelancer.seriesguide.backend.auth.ui.components.AuthTextField
+import com.battlelancer.seriesguide.backend.auth.ui.components.AuthEmailTextField
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthTopAppBar
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -113,13 +113,10 @@ fun ResetPasswordUI(
                 .padding(horizontal = 16.dp)
                 .verticalScroll(rememberScrollState()),
         ) {
-            AuthTextField(
+            AuthEmailTextField(
                 value = email,
                 validator = emailValidator,
                 enabled = !isLoading,
-                label = {
-                    Text(stringProvider.emailHint)
-                },
                 onValueChange = { text ->
                     onEmailChange(text)
                 }

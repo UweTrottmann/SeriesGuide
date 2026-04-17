@@ -648,7 +648,6 @@
     <string name="auth_action_sign_up" comment="Action to create an account">Create an account</string>
     <string name="auth_error_email_alreay_in_use" comment="Error message when signing up with a used email address">This email address is already in use by an existing account. Please sign in with your existing account.</string>
     <string name="auth_action_show_password" comment="Action to show the password in a text field">Show password</string>
-    <string name="auth_action_hide_password" comment="Action to hide the password in a text field">Hide password</string>
 
     <!-- Password validation messages -->
     <string name="auth_error_weak_password" comment="Error message when password does not meet requirements">Password not strong enough</string>
