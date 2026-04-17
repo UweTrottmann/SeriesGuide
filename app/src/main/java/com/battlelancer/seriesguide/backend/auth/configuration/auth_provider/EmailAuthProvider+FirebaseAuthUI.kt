@@ -27,6 +27,7 @@ import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.EmailAuthProvider
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthMultiFactorException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import kotlinx.coroutines.CancellationException
@@ -201,8 +202,8 @@ internal suspend fun FirebaseAuthUI.createUserWithEmailAndPassword(
  *
  * @return [AuthResult] containing the signed-in user, or null if multi-factor auth is required
  *
- * @throws AuthException.InvalidCredentialsException if email or password is incorrect
- * @throws AuthException.UserNotFoundException if the user doesn't exist
+ * @throws AuthException.InvalidCredentialsException if email or password is incorrect or the user
+ * is not found or disabled
  * @throws AuthException.AuthCancelledException if the operation is cancelled
  * @throws AuthException.NetworkException for network-related failures
  */
@@ -684,19 +685,9 @@ private suspend fun FirebaseAuthUI.handleEmailLinkCredentialLinkingFlow(
 /**
  * Sends a password reset email to the specified email address.
  *
- * This method initiates the "forgot password" flow by sending an email to the user
- * with a link to reset their password. The user will receive an email from Firebase
- * containing a link that allows them to set a new password for their account.
- *
- * **Flow:**
- * 1. Validate the email address exists in Firebase Auth
- * 2. Send password reset email to the user
- * 3. Emit [AuthState.PasswordResetLinkSent] state
- * 4. User clicks link in email to reset password
- * 5. User is redirected to Firebase-hosted password reset page (or custom URL if configured)
- *
  * **Error Handling:**
- * - If the email doesn't exist: throws [AuthException.UserNotFoundException]
+ *
+ * - If the email doesn't exist: completes successfully to avoid email enumeration
  * - If the email is invalid: throws [AuthException.InvalidCredentialsException]
  * - If network error occurs: throws [AuthException.NetworkException]
  *
@@ -704,44 +695,10 @@ private suspend fun FirebaseAuthUI.handleEmailLinkCredentialLinkingFlow(
  * @param actionCodeSettings Optional [ActionCodeSettings] to configure the password reset link.
  *                           Use this to customize the continue URL, dynamic link domain, and other settings.
  *
- * @throws AuthException.UserNotFoundException if no account exists with this email
  * @throws AuthException.InvalidCredentialsException if the email format is invalid
  * @throws AuthException.NetworkException if a network error occurs
  * @throws AuthException.AuthCancelledException if the operation is cancelled
  * @throws AuthException.UnknownException for other errors
- *
- * **Example 1: Basic password reset**
- * ```kotlin
- * try {
- *     firebaseAuthUI.sendPasswordResetEmail(
- *         email = "user@example.com"
- *     )
- *     // Show success message: "Password reset email sent to $email"
- * } catch (e: AuthException.UserNotFoundException) {
- *     // Show error: "No account exists with this email"
- * } catch (e: AuthException.InvalidCredentialsException) {
- *     // Show error: "Invalid email address"
- * }
- * ```
- *
- * **Example 2: Custom password reset with ActionCodeSettings**
- * ```kotlin
- * val actionCodeSettings = ActionCodeSettings.newBuilder()
- *     .setUrl("https://myapp.com/resetPassword")  // Continue URL after reset
- *     .setHandleCodeInApp(false)  // Use Firebase-hosted reset page
- *     .setAndroidPackageName(
- *         "com.myapp",
- *         true,  // Install if not available
- *         null   // Minimum version
- *     )
- *     .build()
- *
- * firebaseAuthUI.sendPasswordResetEmail(
- *     email = "user@example.com",
- *     actionCodeSettings = actionCodeSettings
- * )
- * // User receives email with custom continue URL
- * ```
  *
  * @see com.google.firebase.auth.ActionCodeSettings
  */
@@ -752,6 +709,9 @@ internal suspend fun FirebaseAuthUI.sendPasswordResetEmail(
     try {
         updateAuthState(AuthState.Loading("Sending password reset email..."))
         auth.sendPasswordResetEmail(email, actionCodeSettings).await()
+        updateAuthState(AuthState.PasswordResetLinkSent())
+    } catch (_: FirebaseAuthInvalidUserException) {
+        // To protect against email enumeration don't indicate failure if user doesn't exist
         updateAuthState(AuthState.PasswordResetLinkSent())
     } catch (e: CancellationException) {
         val cancelledException = AuthException.AuthCancelledException(

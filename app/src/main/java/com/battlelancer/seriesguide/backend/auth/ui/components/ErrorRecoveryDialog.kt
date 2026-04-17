@@ -100,7 +100,6 @@ private fun getRecoveryMessage(
         is AuthException.InvalidCredentialsException ->
             stringProvider.invalidCredentialsRecoveryMessage
 
-        is AuthException.UserNotFoundException -> stringProvider.userNotFoundRecoveryMessage
         is AuthException.WeakPasswordException -> {
             // Include specific reason if available
             val baseMessage = stringProvider.weakPasswordRecoveryMessage
@@ -165,9 +164,6 @@ private fun getRecoveryActionText(
         is AuthException.EmailLinkWrongDeviceException // Dialog is just dismissed
             -> stringProvider.continueText
 
-        is AuthException.UserNotFoundException // onRecover switches to sign-up mode
-            -> stringProvider.signupPageTitle
-
         else -> stringProvider.retryAction
     }
 }
@@ -188,7 +184,6 @@ private fun isRecoverable(error: AuthException): Boolean {
         is AuthException.EmailLinkPromptForEmailException,
         is AuthException.EmailLinkCrossDeviceLinkingException,
         is AuthException.EmailLinkWrongDeviceException,
-        is AuthException.UserNotFoundException,
         is AuthException.UnknownException
             -> true
 

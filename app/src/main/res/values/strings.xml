@@ -657,13 +657,12 @@
     <!-- Password recovery -->
     <string name="auth_action_reset_password" comment="Action to reset password">Reset password</string>
     <string name="auth_title_reset_password_instructions" comment="Title of reset password instructions">Check your email</string>
-    <string name="auth_message_reset_password_instructions" comment="Reset password instructions">Follow the instructions sent to %1$s to reset your password.</string>
-    <string name="auth_error_email_does_not_exist" comment="Error message when no account was found for the email address">This email address doesn\'t match an existing account</string>
+    <string name="auth_message_reset_password_instructions" comment="Reset password instructions">If an account for this email address exists, an email with instructions was sent to %1$s to reset your password.</string>
 
     <!-- Error Recovery Dialog -->
     <string name="auth_error_dialog_title" comment="Title for error recovery dialog">Authentication Error</string>
     <string name="auth_error_account_linking_required" comment="Error message when account linking is required">Account needs to be linked. Please try a different sign-in method.</string>
     <string name="auth_error_unknown" comment="General error messages for an unknown failure.">An unknown error occurred</string>
-    <string name="auth_error_invalid_password" comment="Error message for when signing in fails because the password is wrong or the account does not support signing in with a password.">This password is incorrect or this account does not support signing in with a password. Maybe reset your password.</string>
+    <string name="auth_error_invalid_password" comment="Error message for when signing in fails.">This password is incorrect, this account does not support signing in with a password or there is no account with this email address. Maybe reset your password.</string>
 
 </resources>

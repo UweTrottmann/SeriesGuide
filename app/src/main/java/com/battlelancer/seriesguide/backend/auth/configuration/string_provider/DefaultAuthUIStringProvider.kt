@@ -235,8 +235,6 @@ class DefaultAuthUIStringProvider(
         get() = localizedContext.getString(R.string.api_error_generic, localizedContext.getString(R.string.hexagon))
     override val invalidCredentialsRecoveryMessage: String
         get() = localizedContext.getString(R.string.auth_error_invalid_password)
-    override val userNotFoundRecoveryMessage: String
-        get() = localizedContext.getString(R.string.auth_error_email_does_not_exist)
     override val emailAlreadyInUseRecoveryMessage: String
         get() = localizedContext.getString(R.string.auth_error_email_alreay_in_use)
     override val mfaRequiredRecoveryMessage: String

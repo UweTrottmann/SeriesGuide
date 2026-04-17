@@ -238,9 +238,6 @@ interface AuthUIStringProvider {
     /** Invalid credentials recovery message */
     val invalidCredentialsRecoveryMessage: String
 
-    /** User not found recovery message */
-    val userNotFoundRecoveryMessage: String
-
     /** Email already in use recovery message */
     val emailAlreadyInUseRecoveryMessage: String
 

@@ -73,27 +73,13 @@ abstract class AuthException(
      * The provided credentials are not valid.
      *
      * This exception is thrown when the user provides incorrect login information,
-     * such as wrong email/password combinations or the account requires a different type of
-     * credentials (such as Google Sign-In).
+     * such as wrong email/password combinations, the account doesn't exist or is disabled or the
+     * account requires a different type of credentials (such as Google Sign-In).
      *
      * @property message The detailed error message
      * @property cause The underlying [Throwable] that caused this exception
      */
     class InvalidCredentialsException(
-        message: String,
-        cause: Throwable? = null
-    ) : AuthException(message, cause)
-
-    /**
-     * The user account does not exist.
-     *
-     * This exception is thrown when attempting to sign in with credentials
-     * for a user that doesn't exist in the Firebase Auth system.
-     *
-     * @property message The detailed error message
-     * @property cause The underlying [Throwable] that caused this exception
-     */
-    class UserNotFoundException(
         message: String,
         cause: Throwable? = null
     ) : AuthException(message, cause)
@@ -282,27 +268,6 @@ abstract class AuthException(
          * This method maps known Firebase exception types to their corresponding [AuthException]
          * subtypes, providing a consistent exception hierarchy for error handling.
          *
-         * **Mapping:**
-         * - [FirebaseException] → [NetworkException] (for network-related errors)
-         * - [FirebaseAuthInvalidCredentialsException] → [InvalidCredentialsException]
-         * - [FirebaseAuthInvalidUserException] → [UserNotFoundException]
-         * - [FirebaseAuthWeakPasswordException] → [WeakPasswordException]
-         * - [FirebaseAuthUserCollisionException] → [EmailAlreadyInUseException]
-         * - [FirebaseAuthMultiFactorException] → [MfaRequiredException]
-         * - Other exceptions → [UnknownException]
-         *
-         * **Example:**
-         * ```kotlin
-         * try {
-         *     // Firebase auth operation
-         * } catch (firebaseException: Exception) {
-         *     val authException = AuthException.from(firebaseException)
-         *     handleAuthError(authException)
-         * }
-         * ```
-         *
-         * @param firebaseException The Firebase exception to convert
-         * @return An appropriate [AuthException] subtype
          */
         @JvmStatic
         fun from(firebaseException: Exception): AuthException {
@@ -327,9 +292,11 @@ abstract class AuthException(
                     )
                 }
 
+                // Don't differentiate in UI between invalid credentials and user not found or
+                // disabled to avoid enumeration.
                 is FirebaseAuthInvalidUserException -> {
                     when (firebaseException.errorCode) {
-                        FIREBASE_ERROR_USER_NOT_FOUND -> UserNotFoundException(
+                        FIREBASE_ERROR_USER_NOT_FOUND -> InvalidCredentialsException(
                             message = firebaseException.message ?: "User not found",
                             cause = firebaseException
                         )
@@ -339,7 +306,7 @@ abstract class AuthException(
                             cause = firebaseException
                         )
 
-                        else -> UserNotFoundException(
+                        else -> InvalidCredentialsException(
                             message = firebaseException.message ?: "User account error",
                             cause = firebaseException
                         )

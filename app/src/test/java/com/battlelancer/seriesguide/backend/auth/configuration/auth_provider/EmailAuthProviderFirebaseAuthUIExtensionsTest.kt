@@ -10,6 +10,7 @@ package com.battlelancer.seriesguide.backend.auth.configuration.auth_provider
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.battlelancer.seriesguide.backend.auth.AuthException
+import com.battlelancer.seriesguide.backend.auth.AuthState
 import com.battlelancer.seriesguide.backend.auth.FirebaseAuthUI
 import com.battlelancer.seriesguide.backend.auth.configuration.PasswordRule
 import com.battlelancer.seriesguide.backend.auth.configuration.authUIConfiguration
@@ -23,8 +24,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -33,6 +36,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.anyString
+import org.mockito.ArgumentMatchers.isNull
 import org.mockito.Mock
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.never
@@ -90,37 +94,18 @@ class EmailAuthProviderFirebaseAuthUIExtensionsTest {
     @Test
     fun `createUserWithEmailAndPassword - create user with email and password succeeds`() =
         runTest {
-            val instance = FirebaseAuthUI.create(firebaseApp, mockFirebaseAuth)
-            val emailProvider = AuthProvider.Email(
-                emailLinkActionCodeSettings = null
-            )
-            val config = authUIConfiguration {
-                context = applicationContext
-                providers {
-                    provider(emailProvider)
-                }
-            }
-
-            val testPassword = "InsecureDoNotUse@123"
             // Just return null when calling Firebase API
             val taskCompletionSource = TaskCompletionSource<AuthResult>()
             taskCompletionSource.setResult(null)
-            `when`(mockFirebaseAuth.createUserWithEmailAndPassword(TEST_EMAIL, testPassword))
+            `when`(mockFirebaseAuth.createUserWithEmailAndPassword(TEST_EMAIL, TEST_PASSWORD))
                 .thenReturn(taskCompletionSource.task)
 
-            val result = instance.createUserWithEmailAndPassword(
-                context = applicationContext,
-                config = config,
-                provider = emailProvider,
-                name = null,
-                email = TEST_EMAIL,
-                password = testPassword
-            )
+            val result = createTestUserWithEmailAndPassword()
             assertThat(result).isNull()
 
             // Check correct Firebase API would have been called
             verify(mockFirebaseAuth)
-                .createUserWithEmailAndPassword(TEST_EMAIL, testPassword)
+                .createUserWithEmailAndPassword(TEST_EMAIL, TEST_PASSWORD)
         }
 
     @Test
@@ -217,37 +202,25 @@ class EmailAuthProviderFirebaseAuthUIExtensionsTest {
 
     @Test
     fun `createUserWithEmailAndPassword - fails if new accounts not allowed`() = runTest {
-        val instance = FirebaseAuthUI.create(firebaseApp, mockFirebaseAuth)
-        val emailProvider = AuthProvider.Email(
-            emailLinkActionCodeSettings = null,
-            isNewAccountsAllowed = false
-        )
-        val config = authUIConfiguration {
-            context = applicationContext
-            providers {
-                provider(emailProvider)
-            }
-        }
-
         // Just return null when calling Firebase API
         val taskCompletionSource = TaskCompletionSource<AuthResult>()
         taskCompletionSource.setResult(null)
         `when`(mockFirebaseAuth.createUserWithEmailAndPassword(anyString(), anyString()))
             .thenReturn(taskCompletionSource.task)
 
-        val restrictedException = assertThrows(AuthException.AdminRestrictedException::class.java) {
-            runBlocking {
-                instance.createUserWithEmailAndPassword(
-                    context = applicationContext,
-                    config = config,
-                    provider = emailProvider,
-                    name = null,
-                    email = TEST_EMAIL,
-                    password = "InsecureDoNotUse@123"
-                )
+        val restrictedException =
+            assertThrows(AuthException.AdminRestrictedException::class.java) {
+                runBlocking {
+                    createTestUserWithEmailAndPassword(
+                        customEmailProvider = AuthProvider.Email(
+                            emailLinkActionCodeSettings = null,
+                            isNewAccountsAllowed = false
+                        )
+                    )
+                }
             }
-        }
-        assertThat(restrictedException.message).contains("Called despite provider.isNewAccountsAllowed = false")
+        assertThat(restrictedException.message)
+            .contains("Called despite provider.isNewAccountsAllowed = false")
 
         // Firebase API to create user shouldn't get called
         verify(mockFirebaseAuth, never())
@@ -257,17 +230,6 @@ class EmailAuthProviderFirebaseAuthUIExtensionsTest {
     @Test
     fun `createUserWithEmailAndPassword - handles account sign-up disabled server-side`() =
         runTest {
-            val instance = FirebaseAuthUI.create(firebaseApp, mockFirebaseAuth)
-            val emailProvider = AuthProvider.Email(
-                emailLinkActionCodeSettings = null
-            )
-            val config = authUIConfiguration {
-                context = applicationContext
-                providers {
-                    provider(emailProvider)
-                }
-            }
-
             // Fake exception with admin restricted error code
             val firebaseRestrictedException = mock(FirebaseAuthException::class.java)
             `when`(firebaseRestrictedException.errorCode)
@@ -281,18 +243,54 @@ class EmailAuthProviderFirebaseAuthUIExtensionsTest {
             val restrictedException =
                 assertThrows(AuthException.AdminRestrictedException::class.java) {
                     runBlocking {
-                        instance.createUserWithEmailAndPassword(
-                            context = applicationContext,
-                            config = config,
-                            provider = emailProvider,
-                            name = null,
-                            email = TEST_EMAIL,
-                            password = "InsecureDoNotUse@123"
-                        )
+                        createTestUserWithEmailAndPassword()
                     }
                 }
             assertThat(restrictedException.message).contains("This action is restricted to admins")
         }
+
+    @Test
+    fun `createUserWithEmailAndPassword - handles existing account`() =
+        runTest {
+            // Fake user collision exception
+            val firebaseCollisionException = mock(FirebaseAuthUserCollisionException::class.java)
+            val taskCompletionSource = TaskCompletionSource<AuthResult>()
+            taskCompletionSource.setException(firebaseCollisionException)
+            `when`(mockFirebaseAuth.createUserWithEmailAndPassword(anyString(), anyString()))
+                .thenReturn(taskCompletionSource.task)
+
+            val inUseException =
+                assertThrows(AuthException.EmailAlreadyInUseException::class.java) {
+                    runBlocking {
+                        createTestUserWithEmailAndPassword()
+                    }
+                }
+            assertThat(inUseException.message).contains("Email address is already in use")
+        }
+
+    private suspend fun createTestUserWithEmailAndPassword(
+        customEmailProvider: AuthProvider.Email? = null
+    ): AuthResult? {
+        val instance = FirebaseAuthUI.create(firebaseApp, mockFirebaseAuth)
+        val emailProvider = customEmailProvider
+            ?: AuthProvider.Email(
+                emailLinkActionCodeSettings = null
+            )
+        val config = authUIConfiguration {
+            context = applicationContext
+            providers {
+                provider(emailProvider)
+            }
+        }
+        return instance.createUserWithEmailAndPassword(
+            context = applicationContext,
+            config = config,
+            provider = emailProvider,
+            name = null,
+            email = TEST_EMAIL,
+            password = TEST_PASSWORD
+        )
+    }
 
     @Test
     fun `signInWithEmailAndPassword - returns result on success`() = runTest {
@@ -353,8 +351,10 @@ class EmailAuthProviderFirebaseAuthUIExtensionsTest {
     }
 
     @Test
-    fun `signInWithEmailAndPassword - handles user not found`() = runTest {
-        // Fail API call with fake invalid credentials exception
+    fun `signInWithEmailAndPassword - handles user not found like invalid password`() = runTest {
+        // Fail API call with fake invalid user exception
+        // Note: once email enumeration protection can be enabled (all clients use the new auth UI)
+        // the Firebase API would also return FirebaseAuthInvalidCredentialsException in this case.
         val invalidUserException =
             FirebaseAuthInvalidUserException("IGNORED", "ignored")
         val taskCompletionSource = TaskCompletionSource<AuthResult>()
@@ -362,7 +362,7 @@ class EmailAuthProviderFirebaseAuthUIExtensionsTest {
         `when`(mockFirebaseAuth.signInWithEmailAndPassword(anyString(), anyString()))
             .thenReturn(taskCompletionSource.task)
 
-        assertThrows(AuthException.UserNotFoundException::class.java) {
+        assertThrows(AuthException.InvalidCredentialsException::class.java) {
             runBlocking {
                 signInWithTestEmailAndPassword()
             }
@@ -385,14 +385,35 @@ class EmailAuthProviderFirebaseAuthUIExtensionsTest {
             config = config,
             provider = emailProvider,
             email = TEST_EMAIL,
-            password = "InsecureDoNotUse@123",
+            password = TEST_PASSWORD,
             credentialForLinking = credentialForLinking,
             skipCredentialSave = true // Credential manager not set up for unit tests
         )
     }
 
+    @Test
+    fun `sendPasswordResetEmail - handles user not found as success`() = runTest {
+        val instance = FirebaseAuthUI.create(firebaseApp, mockFirebaseAuth)
+
+        // Fail API call with fake invalid user exception
+        // Note: once email enumeration protection can be enabled (all clients use the new auth UI)
+        // the Firebase API would return no exception in this case.
+        val invalidUserException =
+            FirebaseAuthInvalidUserException("IGNORED", "ignored")
+        val resetTask = TaskCompletionSource<Void>()
+        resetTask.setException(invalidUserException)
+        `when`(mockFirebaseAuth.sendPasswordResetEmail(anyString(), isNull()))
+            .thenReturn(resetTask.task)
+
+        instance.sendPasswordResetEmail(TEST_EMAIL)
+
+        val authState = instance.authStateFlow().first()
+        assertThat(authState).isEqualTo(AuthState.PasswordResetLinkSent())
+    }
+
     companion object {
         private const val TEST_EMAIL = "test@user.example"
+        private const val TEST_PASSWORD = "InsecureDoNotUse@123"
     }
 
 }
