@@ -326,8 +326,6 @@
     <string name="hexagon_remove_account_confirmation">Rimuovendo il tuo account verranno eliminati tutti i film e le serie TV dalla SeriesGuide Cloud. Assicurati di rimuoverlo anche su tutti gli altri dispositivi connessi.</string>
     <string name="hexagon_api_queued">Invio a SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Disconnesso da SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Errore di accesso (%s)</string>
-    <string name="hexagon_signin_google_only">L\' indirizzo e-mail richiede l\'accesso a Google</string>
     <string name="hexagon_signin_choose">Scegli l\'email per accedere se stai usando SeriesGuide su altri dispositivi che non supportano l\'autenticazione Google.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Invio a trakt.</string>

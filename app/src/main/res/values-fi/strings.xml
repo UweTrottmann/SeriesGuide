@@ -326,8 +326,6 @@
     <string name="hexagon_remove_account_confirmation">Tämä poistaa ohjelmasi, listasi ja elokuvasi SeriesGuide Cloudista</string>
     <string name="hexagon_api_queued">Lähetetään SeriesGuide Cloudiin.</string>
     <string name="hexagon_signed_out">Kirjauduttu ulos SeriesGuide Cloudista.</string>
-    <string name="hexagon_signin_fail_format">Virhe sisäänkirjautumisessa (%s)</string>
-    <string name="hexagon_signin_google_only">Sähköpostiosoite vaatii Googlen sisäänkirjautumisen</string>
     <string name="hexagon_signin_choose">Valitse sähköpostiosoite, jolla kirjaudut sisään, jos käytät SeriesGuidea muilla laitteilla, jotka eivät tue Google-kirjautumista.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Lähetetään Traktiin.</string>

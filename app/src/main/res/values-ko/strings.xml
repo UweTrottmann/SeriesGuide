@@ -316,8 +316,6 @@
     <string name="hexagon_remove_account_confirmation">계정을 삭제하면 SeriesGuide Cloud에서 모든 프로그램과 영화가 제거됩니다.</string>
     <string name="hexagon_api_queued">SeriesGuide Cloud로 전송합니다.</string>
     <string name="hexagon_signed_out">SeriesGuide Cloud에서 로그아웃함</string>
-    <string name="hexagon_signin_fail_format">로그인 오류(%s)</string>
-    <string name="hexagon_signin_google_only">이메일 주소는 Google 로그인이 필요합니다</string>
     <string name="hexagon_signin_choose">Google 로그인을 지원하지 않는 다른 기기에서 SeriesGuide를 사용하는 경우, 로그인할 이메일을 선택하세요.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">trakt에 전송하고 있습니다.</string>

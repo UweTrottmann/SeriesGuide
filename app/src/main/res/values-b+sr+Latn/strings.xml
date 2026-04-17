@@ -336,8 +336,6 @@
     <string name="hexagon_remove_account_confirmation">Ovo će izbrisati vaše serije, liste i filmove iz SeriesGuide Cloud-a</string>
     <string name="hexagon_api_queued">Slanje u SeriesGuide Cloud</string>
     <string name="hexagon_signed_out">Odjavljeni ste iz SeriesGuide Cloud-a</string>
-    <string name="hexagon_signin_fail_format">Greška pri prijavljivanju (%s)</string>
-    <string name="hexagon_signin_google_only">Adresa e-pošte zahteva prijavljivanje na Google</string>
     <string name="hexagon_signin_choose">Izaberite imejl za prijavu ako koristite SeriesGuide na drugim uređajima koji ne podržavaju prijavljivanje na Google.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Poslato na Trakt</string>

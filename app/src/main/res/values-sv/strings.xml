@@ -326,8 +326,6 @@
     <string name="hexagon_remove_account_confirmation">Att ta bort ditt konto kommer även att radera alla serier och filmer från SeriesGuide Cloud. Se till att ta bort det även på andra anslutna enheter.</string>
     <string name="hexagon_api_queued">Skickar till SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Loggat ut från SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Fel med inloggning (%s)</string>
-    <string name="hexagon_signin_google_only">E-postadress kräver Google-inloggning</string>
     <string name="hexagon_signin_choose">Välj e-post att logga in med om du använder SeriesGuide på andra enheter som inte har stöd för Google-inloggning.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Skickar till trakt.</string>

@@ -366,8 +366,6 @@
     <string name="hexagon_remove_account_confirmation">Bydd hyn yn dileu eich sioeau, rhestrau a ffilmiau o SeriesGuide Cloud</string>
     <string name="hexagon_api_queued">Anfon i SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Llofnodwyd allan o SeriesGuide Cloud</string>
-    <string name="hexagon_signin_fail_format">Gwall wrth fewngofnodi (%s)</string>
-    <string name="hexagon_signin_google_only">Mae cyfeiriad Google yn gofyn am Google Sign-In</string>
     <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Anfon at Trakt.</string>
