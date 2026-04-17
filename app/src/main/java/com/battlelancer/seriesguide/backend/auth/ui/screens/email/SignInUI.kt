@@ -36,6 +36,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -53,8 +54,10 @@ import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCrede
 import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCredentialException
 import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCredentialHandler
 import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCredentialNotFoundException
+import com.battlelancer.seriesguide.backend.auth.ui.components.AuthEmailTextField
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthHorizontalDivider
-import com.battlelancer.seriesguide.backend.auth.ui.components.AuthTextField
+import com.battlelancer.seriesguide.backend.auth.ui.components.AuthPasswordTextField
+import com.battlelancer.seriesguide.backend.auth.ui.components.AuthShowPasswordToggle
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthTopAppBar
 import com.google.firebase.auth.actionCodeSettings
 import timber.log.Timber
@@ -83,6 +86,7 @@ fun SignInUI(
     val passwordValidator = remember {
         PasswordValidator(stringProvider = stringProvider, rules = emptyList())
     }
+    val showPassword = rememberSaveable { mutableStateOf(false) }
 
     val isFormValid = remember(email, password) {
         derivedStateOf {
@@ -148,28 +152,28 @@ fun SignInUI(
                 .padding(horizontal = 16.dp)
                 .verticalScroll(rememberScrollState()),
         ) {
-            AuthTextField(
+            AuthEmailTextField(
                 value = email,
                 validator = emailValidator,
                 enabled = !isLoading,
-                label = {
-                    Text(stringProvider.emailHint)
-                },
                 onValueChange = { text ->
                     onEmailChange(text)
                 }
             )
             Spacer(modifier = Modifier.height(16.dp))
-            AuthTextField(
+            AuthPasswordTextField(
                 value = password,
                 validator = passwordValidator,
                 enabled = !isLoading,
-                isSecureTextField = true,
-                label = {
-                    Text(stringProvider.passwordHint)
-                },
+                textVisible = showPassword.value,
                 onValueChange = { text ->
                     onPasswordChange(text)
+                }
+            )
+            AuthShowPasswordToggle(
+                value = showPassword.value,
+                onValueChange = { newValue ->
+                    showPassword.value = newValue
                 }
             )
             TextButton(
