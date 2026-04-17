@@ -664,6 +664,6 @@
     <string name="auth_error_dialog_title" comment="Title for error recovery dialog">Authentication Error</string>
     <string name="auth_error_account_linking_required_message" comment="Error message when account linking is required">Account needs to be linked. Please try a different sign-in method.</string>
     <string name="auth_error_unknown" comment="General error messages for an unknown failure.">An unknown error occurred</string>
-    <string name="auth_error_invalid_password" comment="Error message for when the user enters an invalid or wrong password.">This password is incorrect or this account does not support signing in with a password.</string>
+    <string name="auth_error_invalid_password" comment="Error message for when the user enters an invalid or wrong password.">This password is incorrect or this account does not support signing in with a password. Maybe reset your password.</string>
 
 </resources>
