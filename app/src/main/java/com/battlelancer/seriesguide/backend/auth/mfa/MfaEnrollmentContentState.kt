@@ -40,9 +40,9 @@ import com.google.firebase.auth.MultiFactorInfo
  * @property error An optional error message to display to the user. Will be `null` if there's no error.
  * @property onBackClick Callback to navigate to the previous step in the flow. Invoked when the user clicks a back button.
  *
- * @property availableFactors (Step: [MfaEnrollmentStep.SelectFactor]) A list of MFA factors the user can choose from (e.g., SMS, TOTP). Determined by [com.firebase.ui.auth.configuration.MfaConfiguration.allowedFactors].
+ * @property availableFactors (Step: [MfaEnrollmentStep.SelectFactor]) A list of MFA factors the user can choose from (e.g., SMS, TOTP). Determined by [com.battlelancer.seriesguide.backend.auth.configuration.MfaConfiguration.allowedFactors].
  * @property onFactorSelected (Step: [MfaEnrollmentStep.SelectFactor]) Callback invoked when the user selects an MFA factor. Receives the selected [MfaFactor].
- * @property onSkipClick (Step: [MfaEnrollmentStep.SelectFactor]) Callback for the "Skip" action. Will be `null` if MFA enrollment is required via [com.firebase.ui.auth.configuration.MfaConfiguration.requireEnrollment].
+ * @property onSkipClick (Step: [MfaEnrollmentStep.SelectFactor]) Callback for the "Skip" action. Will be `null` if MFA enrollment is required via [com.battlelancer.seriesguide.backend.auth.configuration.MfaConfiguration.requireEnrollment].
  *
  * @property totpSecret (Step: [MfaEnrollmentStep.ConfigureTotp]) The TOTP secret containing the shared key and configuration. Use this to display the secret key or access the underlying Firebase TOTP secret.
  * @property totpQrCodeUrl (Step: [MfaEnrollmentStep.ConfigureTotp]) A URI that can be rendered as a QR code or used as a deep link to open authenticator apps. Generated via [TotpSecret.generateQrCodeUrl].
@@ -54,7 +54,7 @@ import com.google.firebase.auth.MultiFactorInfo
  * @property selectedFactor (Step: [MfaEnrollmentStep.VerifyFactor]) The MFA factor being verified (SMS or TOTP). Use this to customize UI messages.
  * @property resendTimer (Step: [MfaEnrollmentStep.VerifyFactor], SMS only) The number of seconds remaining before the "Resend" action is available. Will be 0 when resend is allowed.
  *
- * @property recoveryCodes (Step: [MfaEnrollmentStep.ShowRecoveryCodes]) A list of one-time backup codes the user should save. Only present if [com.firebase.ui.auth.configuration.MfaConfiguration.enableRecoveryCodes] is `true`.
+ * @property recoveryCodes (Step: [MfaEnrollmentStep.ShowRecoveryCodes]) A list of one-time backup codes the user should save. Only present if [com.battlelancer.seriesguide.backend.auth.configuration.MfaConfiguration.enableRecoveryCodes] is `true`.
  * @property onCodesSavedClick (Step: [MfaEnrollmentStep.ShowRecoveryCodes]) Callback invoked when the user confirms they have saved their recovery codes. Completes the enrollment flow.
  *
  * @since 10.0.0
