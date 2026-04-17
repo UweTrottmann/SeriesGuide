@@ -107,7 +107,7 @@ interface AuthUIStringProvider {
     val recoverPasswordLinkSentDialogTitle: String
 
     /** Body for recover password link sent dialog */
-    fun recoverPasswordLinkSentDialogBody(email: String): String
+    val recoverPasswordLinkSentDialogBody: String
 
     /** Title for email sign in link sent dialog */
     val emailSignInLinkSentDialogTitle: String

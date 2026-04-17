@@ -657,7 +657,7 @@
     <!-- Password recovery -->
     <string name="auth_action_reset_password" comment="Action to reset password">Reset password</string>
     <string name="auth_title_reset_password_instructions" comment="Title of reset password instructions">Check your email</string>
-    <string name="auth_message_reset_password_instructions" comment="Reset password instructions">If an account for this email address exists, an email with instructions was sent to %1$s to reset your password.</string>
+    <string name="auth_message_reset_password_instructions" comment="Reset password instructions">If an account for this email address exists, an email with instructions to reset your password was sent to it.</string>
 
     <!-- Error Recovery Dialog -->
     <string name="auth_error_dialog_title" comment="Title for error recovery dialog">Authentication Error</string>

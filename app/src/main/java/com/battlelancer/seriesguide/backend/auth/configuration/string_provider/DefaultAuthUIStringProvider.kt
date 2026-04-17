@@ -100,8 +100,8 @@ class DefaultAuthUIStringProvider(
     override val recoverPasswordLinkSentDialogTitle: String
         get() = localizedContext.getString(R.string.auth_title_reset_password_instructions)
 
-    override fun recoverPasswordLinkSentDialogBody(email: String): String =
-        localizedContext.getString(R.string.auth_message_reset_password_instructions, email)
+    override val recoverPasswordLinkSentDialogBody: String
+        get() = localizedContext.getString(R.string.auth_message_reset_password_instructions)
 
     override val emailSignInLinkSentDialogTitle: String
         get() = localizedContext.getString(R.string.auth_email_link_header)

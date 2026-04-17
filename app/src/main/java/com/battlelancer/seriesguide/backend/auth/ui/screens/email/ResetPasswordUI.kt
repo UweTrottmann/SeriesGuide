@@ -76,7 +76,7 @@ fun ResetPasswordUI(
             },
             text = {
                 Text(
-                    text = stringProvider.recoverPasswordLinkSentDialogBody(email),
+                    text = stringProvider.recoverPasswordLinkSentDialogBody,
                     style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Start
                 )
