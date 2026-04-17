@@ -176,7 +176,7 @@ class FirebaseAuthActivity : ComponentActivity() {
         /**
          * Intent extra key for [AuthException] on error.
          */
-        const val EXTRA_ERROR = "com.firebase.ui.auth.ERROR"
+        const val EXTRA_ERROR = "seriesguide.auth.error"
 
         /**
          * Creates an Intent to launch the Firebase authentication flow.
