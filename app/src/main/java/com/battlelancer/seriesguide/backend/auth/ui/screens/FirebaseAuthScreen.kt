@@ -471,17 +471,6 @@ fun FirebaseAuthScreen(
                     onRecover = { exception ->
                         errorDialogException.value = null
                         when (exception) {
-                            is AuthException.UserNotFoundException -> {
-                                val provider = configuration.providers
-                                    .filterIsInstance<AuthProvider.Email>()
-                                    .first()
-                                if (provider.isNewAccountsAllowed) {
-                                    // User not found, but new accounts are allowed, switch
-                                    // email screen to sign-up mode.
-                                    emailScreenMode.value = EmailAuthMode.SignUp
-                                }
-                            }
-
                             is AuthException.EmailAlreadyInUseException -> {
                                 // Switch email screen to sign-in mode
                                 emailScreenMode.value = EmailAuthMode.SignIn

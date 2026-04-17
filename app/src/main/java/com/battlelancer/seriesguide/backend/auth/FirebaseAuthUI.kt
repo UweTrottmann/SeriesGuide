@@ -347,7 +347,7 @@ class FirebaseAuthUI private constructor(
     suspend fun delete() {
         try {
             val currentUser = auth.currentUser
-                ?: throw AuthException.UserNotFoundException(
+                ?: throw AuthException.UnknownException(
                     message = "No user is currently signed in"
                 )
 
