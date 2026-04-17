@@ -337,7 +337,6 @@ class FirebaseAuthUI private constructor(
      * }
      * ```
      *
-     * @param context The Android [Context] for any required UI operations
      * @throws AuthException.InvalidCredentialsException if reauthentication is required
      * @throws AuthException.AuthCancelledException if the operation is cancelled
      * @throws AuthException.NetworkException if a network error occurs
@@ -345,7 +344,7 @@ class FirebaseAuthUI private constructor(
      * @throws AuthException.UnknownException for other errors
      * @since 10.0.0
      */
-    suspend fun delete(context: Context) {
+    suspend fun delete() {
         try {
             val currentUser = auth.currentUser
                 ?: throw AuthException.UserNotFoundException(
