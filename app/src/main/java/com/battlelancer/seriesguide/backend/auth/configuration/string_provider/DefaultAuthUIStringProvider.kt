@@ -37,29 +37,29 @@ class DefaultAuthUIStringProvider(
      * Auth Provider Button Strings
      */
     override val signInWithGoogle: String
-        get() = localizedContext.getString(R.string.auth_sign_in_with_google)
+        get() = localizedContext.getString(R.string.auth_action_sign_in_with_google)
     override val signInWithEmail: String
-        get() = localizedContext.getString(R.string.auth_sign_in_with_email)
+        get() = localizedContext.getString(R.string.auth_action_sign_in_with_email)
 
     /**
      * Auth Provider "Continue With" Button Strings
      */
     override val continueWithGoogle: String
-        get() = localizedContext.getString(R.string.auth_continue_with_google)
+        get() = localizedContext.getString(R.string.auth_action_continue_with_google)
     override val continueWithEmail: String
-        get() = localizedContext.getString(R.string.auth_continue_with_email)
+        get() = localizedContext.getString(R.string.auth_action_continue_with_email)
 
     /**
      * Email Validator Strings
      */
     override val requiredEmailAddress: String
-        get() = localizedContext.getString(R.string.auth_required_email)
+        get() = localizedContext.getString(R.string.auth_hint_email_required)
 
     /**
      * Password Validator Strings
      */
     override val passwordsDoNotMatch: String
-        get() = localizedContext.getString(R.string.auth_passwords_do_not_match)
+        get() = localizedContext.getString(R.string.auth_hint_confirm_password_does_not_match)
     override val weakPasswordRecoveryMessage: String
         get() = localizedContext.getString(R.string.auth_error_weak_password)
     override fun passwordTooShort(minimumLength: Int): String =
@@ -77,19 +77,19 @@ class DefaultAuthUIStringProvider(
      * Email Authentication Strings
      */
     override val signupPageTitle: String
-        get() = localizedContext.getString(R.string.auth_sign_up)
+        get() = localizedContext.getString(R.string.auth_action_sign_up)
     override val emailHint: String
-        get() = localizedContext.getString(R.string.auth_email_hint)
+        get() = localizedContext.getString(R.string.auth_hint_email)
     override val passwordHint: String
-        get() = localizedContext.getString(R.string.auth_password_hint)
+        get() = localizedContext.getString(R.string.auth_hint_password)
     override val confirmPasswordHint: String
-        get() = localizedContext.getString(R.string.auth_confirm_password_hint)
+        get() = localizedContext.getString(R.string.auth_hint_confirm_password)
     override val nameHint: String
-        get() = localizedContext.getString(R.string.auth_name_hint)
+        get() = localizedContext.getString(R.string.auth_hint_name)
     override val showText: String
-        get() = localizedContext.getString(R.string.auth_show_text)
+        get() = localizedContext.getString(R.string.auth_action_show_password)
     override val hideText: String
-        get() = localizedContext.getString(R.string.auth_hide_text)
+        get() = localizedContext.getString(R.string.auth_action_hide_password)
 
     override val resetPasswordAction: String
         get() = localizedContext.getString(R.string.auth_action_reset_password)
@@ -98,10 +98,10 @@ class DefaultAuthUIStringProvider(
         get() = localizedContext.getString(R.string.feedback)
 
     override val recoverPasswordLinkSentDialogTitle: String
-        get() = localizedContext.getString(R.string.auth_title_confirm_recover_password)
+        get() = localizedContext.getString(R.string.auth_title_reset_password_instructions)
 
     override fun recoverPasswordLinkSentDialogBody(email: String): String =
-        localizedContext.getString(R.string.auth_confirm_recovery_body, email)
+        localizedContext.getString(R.string.auth_message_reset_password_instructions, email)
 
     override val emailSignInLinkSentDialogTitle: String
         get() = localizedContext.getString(R.string.auth_email_link_header)
@@ -148,13 +148,13 @@ class DefaultAuthUIStringProvider(
     override val signInDefault: String
         get() = localizedContext.getString(R.string.hexagon_signin)
     override val continueText: String
-        get() = localizedContext.getString(R.string.auth_continue)
+        get() = localizedContext.getString(R.string.auth_action_continue)
 
     /**
      * General Error Messages
      */
     override val requiredField: String
-        get() = localizedContext.getString(R.string.auth_required_field)
+        get() = localizedContext.getString(R.string.auth_hint_required)
 
     override val manageMfaAction: String
         get() = localizedContext.getString(R.string.auth_manage_mfa_action)
@@ -178,7 +178,7 @@ class DefaultAuthUIStringProvider(
         get() = localizedContext.getString(R.string.auth_remove_action)
 
     override val backAction: String
-        get() = localizedContext.getString(R.string.auth_back_action)
+        get() = localizedContext.getString(R.string.auth_action_back)
 
     override val verifyAction: String
         get() = localizedContext.getString(R.string.auth_verify_action)
@@ -238,11 +238,11 @@ class DefaultAuthUIStringProvider(
     override val userNotFoundRecoveryMessage: String
         get() = localizedContext.getString(R.string.auth_error_email_does_not_exist)
     override val emailAlreadyInUseRecoveryMessage: String
-        get() = localizedContext.getString(R.string.auth_email_alreay_in_use)
+        get() = localizedContext.getString(R.string.auth_error_email_alreay_in_use)
     override val mfaRequiredRecoveryMessage: String
         get() = localizedContext.getString(R.string.auth_error_mfa_required_message)
     override val accountLinkingRequiredRecoveryMessage: String
-        get() = localizedContext.getString(R.string.auth_error_account_linking_required_message)
+        get() = localizedContext.getString(R.string.auth_error_account_linking_required)
     override val unknownErrorRecoveryMessage: String
         get() = localizedContext.getString(R.string.auth_error_unknown)
 
@@ -296,9 +296,9 @@ class DefaultAuthUIStringProvider(
         get() = localizedContext.getString(R.string.privacy_policy)
 
     override fun privacyPolicyMessage(privacyPolicyLabel: String): String =
-        localizedContext.getString(R.string.auth_privacy_policy_message, privacyPolicyLabel)
+        localizedContext.getString(R.string.auth_message_privacy_policy, privacyPolicyLabel)
 
     override val newAccountsDisabled: String
-        get() = localizedContext.getString(R.string.auth_new_accounts_disabled)
+        get() = localizedContext.getString(R.string.auth_message_new_accounts_disabled)
 
 }
