@@ -49,7 +49,6 @@ import timber.log.Timber
 class CloudSetupFragment : Fragment() {
 
     private var binding: FragmentCloudSetupBinding? = null
-    private var snackbar: Snackbar? = null
 
     private lateinit var hexagonTools: HexagonTools
 
@@ -135,7 +134,6 @@ class CloudSetupFragment : Fragment() {
     }
 
     private fun signIn() {
-        dismissSnackbar() // clear any error from previous sign in attempt
         setProgressVisible(true)
 
         val intent = FirebaseAuthActivity.createIntent(requireContext())
@@ -148,6 +146,8 @@ class CloudSetupFragment : Fragment() {
             if (result.resultCode == Activity.RESULT_OK) {
                 startSetupIfSignedIn()
             } else {
+                // Don't display any error message, the auth UI would already have,
+                // but log and if needed report the final error.
                 val error = result.data
                     ?.let {
                         if (AndroidUtils.isAtLeastTiramisu) {
@@ -162,39 +162,24 @@ class CloudSetupFragment : Fragment() {
                         }
                     }
                 if (error == null) {
-                    // user chose not to sign in or add account, show no error message
+                    // user chose not to sign in or add account
                     Timber.i("Sign in cancelled")
                 } else {
-                    val errorMessage: String?
-                    when (error) {
-                        is AuthException.NetworkException -> {
-                            errorMessage = getString(R.string.offline)
-                        }
-
-                        is AuthException.AuthCancelledException -> {
-                            // user cancelled, show no error message
-                            errorMessage = null
-                        }
-
-                        else -> {
-                            if (error is AuthException.InvalidCredentialsException
-                                && !hexagonTools.isGoogleSignInAvailable) {
-                                // Note: If trying to sign-in with email already used with
-                                // Google Sign-In on other device, fails to fall back to
-                                // Google Sign-In because Play Services is not available.
-                                errorMessage = getString(R.string.hexagon_signin_google_only)
-                            } else {
-                                errorMessage = error.message
-                                Timber.e(error, "Failed to sign in")
-                                Errors.reportHexagonAuthError(ACTION_SIGN_IN, error)
-                            }
-                        }
+                    if (error is AuthException.InvalidCredentialsException
+                        && !hexagonTools.isGoogleSignInAvailable) {
+                        // Note: If trying to sign in with an account that is configured for
+                        // Google Sign-In (such as one created on other device), can't sign in
+                        // because Play Services is not available.
+                        // The user or an admin would have to use the reset password function to
+                        // change the account back to email sign-in.
+                        Timber.e("Account requires Google Sign-In, but Google Play Services not available")
+                    } else {
+                        // Log and report other reasons signing in fails
+                        Timber.e(error, "Failed to sign in")
+                        Errors.reportHexagonAuthError(ACTION_SIGN_IN, error)
                     }
 
-                    errorMessage?.let {
-                        updateViewsWithCloudState()
-                        showSnackbar(getString(R.string.hexagon_signin_fail_format, it))
-                    }
+                    updateViewsWithCloudState()
                 }
             }
         }
@@ -271,7 +256,7 @@ class CloudSetupFragment : Fragment() {
                 )
             }
         } else {
-            // did try to setup, but failed?
+            // did try setup, but failed?
             if (!HexagonSettings.hasCompletedSetup(requireContext())) {
                 // show error message
                 binding?.textViewCloudDescription?.setText(R.string.hexagon_setup_incomplete)
@@ -312,17 +297,6 @@ class CloudSetupFragment : Fragment() {
         }
     }
 
-    private fun showSnackbar(message: CharSequence) {
-        dismissSnackbar()
-        snackbar = Snackbar.make(requireView(), message, Snackbar.LENGTH_INDEFINITE).also {
-            it.show()
-        }
-    }
-
-    private fun dismissSnackbar() {
-        snackbar?.dismiss()
-    }
-
     private fun startSetupIfSignedIn(): Boolean {
         val account = FirebaseAuth.getInstance().currentUser
         val signedIn = account != null
@@ -334,7 +308,6 @@ class CloudSetupFragment : Fragment() {
     }
 
     private fun startHexagonSetup(account: FirebaseUser) {
-        dismissSnackbar()
         setProgressVisible(true)
 
         Timber.i("Setting up Hexagon...")
