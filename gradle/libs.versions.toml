@@ -144,8 +144,7 @@ junit = "junit:junit:4.13.2"
 # https://github.com/google/truth/releases
 truth = "com.google.truth:truth:1.4.5"
 # https://github.com/mockito/mockito/releases
-# mockito 5 requires JDK 11
-mockito = "org.mockito:mockito-core:4.11.0"
+mockito = "org.mockito:mockito-core:5.23.0"
 # https://github.com/robolectric/robolectric/releases/
 robolectric = "org.robolectric:robolectric:4.16"
 # https://developer.android.com/jetpack/androidx/releases/test
