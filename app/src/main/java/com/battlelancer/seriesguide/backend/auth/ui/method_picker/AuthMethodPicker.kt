@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.MaterialTheme
@@ -44,17 +43,6 @@ import com.battlelancer.seriesguide.util.ThemeUtils.plus
 /**
  * Renders the provider selection screen.
  *
- * **Example usage:**
- * ```kotlin
- * AuthMethodPicker(
- *     providers = listOf(
- *      AuthProvider.Google(),
- *      AuthProvider.Email(),
- *     ),
- *     onProviderSelected = { provider -> /* ... */ }
- * )
- * ```
- *
  * @param contentPadding Padding values such as from a Scaffold.
  * @param providers The list of providers to display.
  * @param logo An optional logo to display.
@@ -79,16 +67,19 @@ fun AuthMethodPicker(
     BoxWithConstraints(
         modifier = Modifier.fillMaxWidth()
     ) {
-        LazyColumn(
-            // If wider than 300 dp center align
-            modifier = if (maxWidth > 300.dp) {
-                Modifier
-                    .width(300.dp)
-                    .align(Alignment.Center)
+        // If wider than 300 dp center align, use padding so whole screen remains scrollable
+        val maxContentWidth = 300.dp
+        val defaultContentPadding = 16.dp
+        val contentCenteredPadding =
+            if (maxWidth > defaultContentPadding + maxContentWidth + defaultContentPadding) {
+                val horizontalPadding = (maxWidth - maxContentWidth) / 2
+                PaddingValues(horizontal = horizontalPadding, vertical = defaultContentPadding)
             } else {
-                Modifier
-            },
-            contentPadding = contentPadding + PaddingValues(16.dp)
+                PaddingValues(defaultContentPadding)
+            }
+
+        LazyColumn(
+            contentPadding = contentPadding + contentCenteredPadding
         ) {
             item {
                 Column(
