@@ -7,16 +7,11 @@
 
 package com.battlelancer.seriesguide.backend.auth.ui.screens.email
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -42,6 +37,7 @@ import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUITheme
 import com.battlelancer.seriesguide.backend.auth.configuration.validators.EmailValidator
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthEmailTextField
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthTopAppBar
+import com.battlelancer.seriesguide.backend.auth.ui.components.BoxWithCenteredColumn
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -106,12 +102,8 @@ fun ResetPasswordUI(
             )
         },
     ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .padding(innerPadding)
-                .safeDrawingPadding()
-                .padding(horizontal = 16.dp)
-                .verticalScroll(rememberScrollState()),
+        BoxWithCenteredColumn(
+            insetPadding = innerPadding
         ) {
             AuthEmailTextField(
                 value = email,
