@@ -37,26 +37,25 @@ import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUIAsset
 import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUITheme
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthHorizontalDivider
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthProviderButton
+import com.battlelancer.seriesguide.backend.auth.ui.components.AuthTopAppBar
 import com.battlelancer.seriesguide.backend.auth.util.SignInPreferenceManager.SignInPreference
 import com.battlelancer.seriesguide.util.ThemeUtils.plus
 
 /**
  * Renders the provider selection screen.
  *
- * @param contentPadding Padding values such as from a Scaffold.
  * @param providers The list of providers to display.
  * @param logo An optional logo to display.
+ * @param onNavigateBack When the back navigation icon was selected.
  * @param onProviderSelected A callback when a provider is selected.
  * @param privacyPolicyUrl The URL for the Privacy Policy.
  * @param lastSignInPreference The last sign-in preference to show a "Continue as..." button.
- *
- * @since 10.0.0
  */
 @Composable
 fun AuthMethodPicker(
-    contentPadding: PaddingValues,
     providers: List<AuthProvider>,
     logo: AuthUIAsset? = null,
+    onNavigateBack: () -> Unit,
     onProviderSelected: (AuthProvider, SignInPreference?) -> Unit,
     privacyPolicyUrl: String? = null,
     lastSignInPreference: SignInPreference? = null,
@@ -64,93 +63,95 @@ fun AuthMethodPicker(
     val context = LocalContext.current
     val stringProvider = LocalAuthUIStringProvider.current
 
-    BoxWithConstraints(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        // If wider than 300 dp center align, use padding so whole screen remains scrollable
-        val maxContentWidth = 300.dp
-        val defaultContentPadding = 16.dp
-        val contentCenteredPadding =
-            if (maxWidth > defaultContentPadding + maxContentWidth + defaultContentPadding) {
-                val horizontalPadding = (maxWidth - maxContentWidth) / 2
-                PaddingValues(horizontal = horizontalPadding, vertical = defaultContentPadding)
-            } else {
-                PaddingValues(defaultContentPadding)
-            }
-
-        LazyColumn(
-            contentPadding = contentPadding + contentCenteredPadding
+    Scaffold(
+        topBar = {
+            AuthTopAppBar(
+                title = stringProvider.methodPickerTitle,
+                onNavigateBack = onNavigateBack
+            )
+        }
+    ) { contentPadding ->
+        BoxWithConstraints(
+            modifier = Modifier.fillMaxWidth()
         ) {
-            item {
-                Column(
-                    modifier = Modifier
-                        .padding(vertical = 32.dp)
-                        .fillMaxWidth()
-                ) {
-                    Image(
-                        modifier = Modifier
-                            .size(48.dp)
-                            .align(Alignment.CenterHorizontally),
-                        painter = (logo
-                            ?: AuthUIAsset.Resource(R.drawable.ic_account_circle_control_24dp)).painter,
-                        contentDescription = null /* Title is below */
-                    )
-                    Text(
-                        text = stringProvider.methodPickerTitle,
-                        modifier = Modifier
-                            .padding(top = 16.dp)
-                            .align(Alignment.CenterHorizontally),
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-                    Text(
-                        text = stringProvider.methodPickerDescription,
-                        modifier = Modifier.padding(top = 16.dp),
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                    AnnotatedStringResource(
-                        modifier = Modifier.padding(top = 16.dp),
-                        context = context,
-                        template = stringProvider.privacyPolicyMessage(
-                            privacyPolicyLabel = stringProvider.privacyPolicy
-                        ),
-                        links = arrayOf(
-                            stringProvider.privacyPolicy to (privacyPolicyUrl ?: "")
-                        )
-                    )
+            // If wider than 300 dp center align, use padding so whole screen remains scrollable
+            val maxContentWidth = 300.dp
+            val defaultContentPadding = 16.dp
+            val contentCenteredPadding =
+                if (maxWidth > defaultContentPadding + maxContentWidth + defaultContentPadding) {
+                    val horizontalPadding = (maxWidth - maxContentWidth) / 2
+                    PaddingValues(horizontal = horizontalPadding, vertical = defaultContentPadding)
+                } else {
+                    PaddingValues(defaultContentPadding)
                 }
-            }
 
-            // Show "Continue with..." button if last sign-in preference exists
-            lastSignInPreference?.let { preference ->
-                val lastProvider = providers.find { it.providerId == preference.providerId }
-                if (lastProvider != null) {
-                    item {
-                        ContinueAsButton(
-                            provider = lastProvider,
-                            identifier = preference.identifier,
-                            onClick = { onProviderSelected(lastProvider, preference) }
+            LazyColumn(
+                contentPadding = contentPadding + contentCenteredPadding
+            ) {
+                item {
+                    Column(
+                        modifier = Modifier
+                            .padding(top = 8.dp, bottom = 24.dp)
+                            .fillMaxWidth()
+                    ) {
+                        Image(
+                            modifier = Modifier
+                                .size(48.dp)
+                                .align(Alignment.CenterHorizontally),
+                            painter = (logo
+                                ?: AuthUIAsset.Resource(R.drawable.ic_account_circle_control_24dp)).painter,
+                            contentDescription = null /* Title is below */
                         )
-
-                        AuthHorizontalDivider()
+                        Text(
+                            text = stringProvider.methodPickerDescription,
+                            modifier = Modifier.padding(top = 16.dp),
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                        AnnotatedStringResource(
+                            modifier = Modifier.padding(top = 16.dp),
+                            context = context,
+                            template = stringProvider.privacyPolicyMessage(
+                                privacyPolicyLabel = stringProvider.privacyPolicy
+                            ),
+                            links = arrayOf(
+                                stringProvider.privacyPolicy to (privacyPolicyUrl ?: "")
+                            )
+                        )
                     }
                 }
-            }
 
-            // Show all providers
-            itemsIndexed(providers) { _, provider ->
-                Box(
-                    modifier = Modifier
-                        .padding(bottom = 16.dp)
-                ) {
-                    AuthProviderButton(
+                // Show "Continue with..." button if last sign-in preference exists
+                lastSignInPreference?.let { preference ->
+                    val lastProvider = providers.find { it.providerId == preference.providerId }
+                    if (lastProvider != null) {
+                        item {
+                            ContinueAsButton(
+                                provider = lastProvider,
+                                identifier = preference.identifier,
+                                onClick = { onProviderSelected(lastProvider, preference) }
+                            )
+
+                            AuthHorizontalDivider()
+                        }
+                    }
+                }
+
+                // Show all providers
+                itemsIndexed(providers) { _, provider ->
+                    Box(
                         modifier = Modifier
-                            .fillMaxWidth(),
-                        onClick = {
-                            onProviderSelected(provider, null)
-                        },
-                        provider = provider,
-                        stringProvider = LocalAuthUIStringProvider.current
-                    )
+                            .padding(bottom = 16.dp)
+                    ) {
+                        AuthProviderButton(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            onClick = {
+                                onProviderSelected(provider, null)
+                            },
+                            provider = provider,
+                            stringProvider = LocalAuthUIStringProvider.current
+                        )
+                    }
                 }
             }
         }
@@ -194,27 +195,25 @@ fun PreviewAuthMethodPicker() {
         CompositionLocalProvider(
             LocalAuthUIStringProvider provides stringProvider
         ) {
-            Scaffold { innerPadding ->
-                AuthMethodPicker(
-                    contentPadding = innerPadding,
-                    providers = listOf(
-                        AuthProvider.Email(
-                            emailLinkActionCodeSettings = null
-                        ),
-                        AuthProvider.Google(
-                            scopes = emptyList(),
-                            serverClientId = "EXAMPLE"
-                        )
+            AuthMethodPicker(
+                providers = listOf(
+                    AuthProvider.Email(
+                        emailLinkActionCodeSettings = null
                     ),
-                    onProviderSelected = { _, _ -> },
-                    privacyPolicyUrl = "https://app.example/privacy",
-                    lastSignInPreference = SignInPreference(
-                        providerId = Provider.EMAIL.id,
-                        identifier = "someone@domain.example",
-                        timestamp = 0
+                    AuthProvider.Google(
+                        scopes = emptyList(),
+                        serverClientId = "EXAMPLE"
                     )
+                ),
+                onNavigateBack = {},
+                onProviderSelected = { _, _ -> },
+                privacyPolicyUrl = "https://app.example/privacy",
+                lastSignInPreference = SignInPreference(
+                    providerId = Provider.EMAIL.id,
+                    identifier = "someone@domain.example",
+                    timestamp = 0
                 )
-            }
+            )
         }
     }
 }

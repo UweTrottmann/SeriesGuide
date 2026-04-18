@@ -12,7 +12,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -144,38 +143,36 @@ fun FirebaseAuthScreen(
                 }
             ) {
                 composable(AuthRoute.MethodPicker.route) {
-                    Scaffold { innerPadding ->
-                        AuthMethodPicker(
-                            contentPadding = innerPadding,
-                            providers = configuration.providers,
-                            logo = logoAsset,
-                            privacyPolicyUrl = configuration.privacyPolicyUrl,
-                            lastSignInPreference = lastSignInPreference.value,
-                            onProviderSelected = { provider, signInPref ->
-                                when (provider) {
-                                    is AuthProvider.Email -> {
-                                        signInPreference.value = signInPref
-                                        navController.navigate(AuthRoute.Email.route)
-                                    }
+                    AuthMethodPicker(
+                        providers = configuration.providers,
+                        logo = logoAsset,
+                        privacyPolicyUrl = configuration.privacyPolicyUrl,
+                        lastSignInPreference = lastSignInPreference.value,
+                        onNavigateBack = onSignInCancelled,
+                        onProviderSelected = { provider, signInPref ->
+                            when (provider) {
+                                is AuthProvider.Email -> {
+                                    signInPreference.value = signInPref
+                                    navController.navigate(AuthRoute.Email.route)
+                                }
 
-                                    is AuthProvider.Google -> onSignInWithGoogle?.invoke()
+                                is AuthProvider.Google -> onSignInWithGoogle?.invoke()
 
-                                    is AuthProvider.GenericOAuth -> genericOAuthHandlers[provider]?.invoke()
+                                is AuthProvider.GenericOAuth -> genericOAuthHandlers[provider]?.invoke()
 
-                                    else -> {
-                                        onSignInFailure(
-                                            AuthException.UnknownException(
-                                                message = "Provider ${provider.providerId} is not supported in FirebaseAuthScreen",
-                                                cause = IllegalArgumentException(
-                                                    "Provider ${provider.providerId} is not supported in FirebaseAuthScreen"
-                                                )
+                                else -> {
+                                    onSignInFailure(
+                                        AuthException.UnknownException(
+                                            message = "Provider ${provider.providerId} is not supported in FirebaseAuthScreen",
+                                            cause = IllegalArgumentException(
+                                                "Provider ${provider.providerId} is not supported in FirebaseAuthScreen"
                                             )
                                         )
-                                    }
+                                    )
                                 }
                             }
-                        )
-                    }
+                        }
+                    )
                 }
 
                 composable(AuthRoute.Email.route) {
