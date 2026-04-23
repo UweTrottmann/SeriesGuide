@@ -153,6 +153,9 @@ fun FirebaseAuthScreen(
                             when (provider) {
                                 is AuthProvider.Email -> {
                                     signInPreference.value = signInPref
+                                    // Reset the mode, in case the user leaves the email screen
+                                    // and then returns to it again
+                                    emailScreenMode.value = EmailAuthMode.SignIn
                                     navController.navigate(AuthRoute.Email.route)
                                 }
 
