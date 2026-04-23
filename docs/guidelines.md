@@ -221,6 +221,23 @@ As it is a `LinearLayout`, [until this is fixed](https://github.com/material-com
 </com.google.android.material.textfield.TextInputLayout>
 ```
 
+## Jetpack Compose
+
+### Scrollable modifier clip to padding
+
+https://developer.android.com/develop/ui/compose/touch-input/scroll/scroll-modifiers
+
+To achieve something similar to `android:clipToPadding="false"` make sure the scrollable modifier is
+added before padding modifiers, such as:
+
+```kotlin
+Modifier
+  .fillMaxSize()
+  .verticalScroll(rememberScrollState())
+  .padding(innerPadding)
+  .padding(16.dp)
+```
+
 ## Dependencies
 
 To [inspect dependencies with Gradle](https://docs.gradle.org/current/userguide/viewing_debugging_dependencies.html) use
