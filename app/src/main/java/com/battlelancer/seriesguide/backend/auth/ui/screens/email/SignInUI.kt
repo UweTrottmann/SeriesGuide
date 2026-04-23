@@ -118,7 +118,7 @@ fun SignInUI(
                 // Store retrieved credential to compare later
                 onRetrievedCredential(Pair(credential.username, credential.password))
 
-                onSignInClick()
+                // Just fill, let user confirm filled credentials and manually trigger sign in
             } catch (_: PasswordCredentialNotFoundException) {
                 Timber.d("No saved credentials found")
                 // No credentials saved - user will enter manually
