@@ -91,6 +91,7 @@ class EmailAuthContentState(
     val onSignUpClick: () -> Unit,
     val onSendResetLinkClick: () -> Unit,
     val resetLinkSent: Boolean = false,
+    val onResetLinkSentConfirmed: () -> Unit,
     val emailSignInLinkSent: Boolean = false,
     val onGoToSignUp: () -> Unit,
     val onGoToSignIn: () -> Unit,
@@ -272,6 +273,11 @@ fun EmailAuthScreen(
                 }
             }
         },
+        onResetLinkSentConfirmed = {
+            // Reset state set by sendPasswordResetEmail so confirmation dialog isn't shown again
+            authUI.updateAuthState(AuthState.Idle)
+            changeMode(EmailAuthMode.SignIn)
+        },
         onGoToSignUp = {
             changeMode(EmailAuthMode.SignUp)
         },
@@ -359,10 +365,10 @@ private fun DefaultEmailAuthContent(
             ResetPasswordUI(
                 isLoading = state.isLoading,
                 email = state.email,
-                resetLinkSent = state.resetLinkSent,
                 onEmailChange = state.onEmailChange,
                 onSendResetLink = state.onSendResetLinkClick,
-                onGoToSignIn = state.onGoToSignIn,
+                isConfirmationDialogVisible = state.resetLinkSent,
+                onConfirmationDialogDismissed = state.onResetLinkSentConfirmed,
                 onNavigateBack = onCancel
             )
         }
