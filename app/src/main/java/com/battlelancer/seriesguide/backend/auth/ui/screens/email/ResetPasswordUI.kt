@@ -23,7 +23,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,10 +44,10 @@ fun ResetPasswordUI(
     modifier: Modifier = Modifier,
     isLoading: Boolean,
     email: String,
-    resetLinkSent: Boolean,
     onEmailChange: (String) -> Unit,
     onSendResetLink: () -> Unit,
-    onGoToSignIn: () -> Unit,
+    isConfirmationDialogVisible: Boolean,
+    onConfirmationDialogDismissed: () -> Unit,
     onNavigateBack: (() -> Unit)? = null,
 ) {
     val stringProvider = LocalAuthUIStringProvider.current
@@ -60,9 +59,9 @@ fun ResetPasswordUI(
         derivedStateOf { emailValidator.validate(email) }
     }
 
-    val isDialogVisible = remember(resetLinkSent) { mutableStateOf(resetLinkSent) }
-
-    if (isDialogVisible.value) {
+    // Note: currently don't need to remember dialog visible state as on dismissal leaving this
+    // screen, see dismiss callback.
+    if (isConfirmationDialogVisible) {
         AlertDialog(
             title = {
                 Text(
@@ -80,16 +79,15 @@ fun ResetPasswordUI(
             confirmButton = {
                 TextButton(
                     onClick = {
-                        onGoToSignIn()
-                        isDialogVisible.value = false
+                        onConfirmationDialogDismissed()
                     }
                 ) {
                     Text(stringProvider.dismissAction)
                 }
             },
             onDismissRequest = {
-                isDialogVisible.value = false
-            },
+                onConfirmationDialogDismissed()
+            }
         )
     }
 
@@ -120,7 +118,7 @@ fun ResetPasswordUI(
             ) {
                 TextButton(
                     onClick = {
-                        onGoToSignIn()
+                        onConfirmationDialogDismissed()
                     },
                     enabled = !isLoading,
                 ) {
@@ -160,10 +158,10 @@ fun PreviewResetPasswordUI() {
             ResetPasswordUI(
                 email = "someone@domain.example",
                 isLoading = false,
-                resetLinkSent = true,
                 onEmailChange = { _ -> },
                 onSendResetLink = {},
-                onGoToSignIn = {},
+                isConfirmationDialogVisible = true,
+                onConfirmationDialogDismissed = {},
             )
         }
     }
