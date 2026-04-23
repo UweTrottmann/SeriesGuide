@@ -394,6 +394,7 @@ fun FirebaseAuthScreen(
                     is AuthState.RequiresEmailVerification -> {
                         pendingResolver.value = null
                         pendingLinkingCredential.value = null
+                        // Navigate to success screen (handles email verification)
                         if (currentRoute != AuthRoute.Success.route) {
                             navController.navigate(AuthRoute.Success.route) {
                                 popUpTo(AuthRoute.MethodPicker.route) { inclusive = true }
@@ -412,9 +413,11 @@ fun FirebaseAuthScreen(
                     }
 
                     is AuthState.Cancelled -> {
+                        // Clear any state from operations
                         pendingResolver.value = null
                         pendingLinkingCredential.value = null
                         lastSuccessfulUserId.value = null
+                        // If not already shown, navigate to method picker
                         if (currentRoute != AuthRoute.MethodPicker.route) {
                             navController.navigate(AuthRoute.MethodPicker.route) {
                                 popUpTo(AuthRoute.MethodPicker.route) { inclusive = true }
@@ -425,15 +428,10 @@ fun FirebaseAuthScreen(
                     }
 
                     is AuthState.Idle -> {
+                        // Clear any state from operations
                         pendingResolver.value = null
                         pendingLinkingCredential.value = null
                         lastSuccessfulUserId.value = null
-                        if (currentRoute != AuthRoute.MethodPicker.route) {
-                            navController.navigate(AuthRoute.MethodPicker.route) {
-                                popUpTo(AuthRoute.MethodPicker.route) { inclusive = true }
-                                launchSingleTop = true
-                            }
-                        }
                     }
 
                     else -> Unit
