@@ -134,8 +134,16 @@ abstract class AuthException(
      *
      * This exception is thrown when a user tries to sign in with a provider
      * that needs to be linked to an existing account. For example, when a user
-     * tries to sign in with Facebook but an account already exists with that
+     * tries to sign in with OAuth but an account already exists with that
      * email using a different provider (like email/password).
+     *
+     * **Important:**
+     * this exception (or rather its cause [FirebaseAuthUserCollisionException]) is **not**
+     * thrown when the new provider is considered trusted by Firebase (notably Google for Gmail
+     * or Workspace emails). Firebase then will just "overwrite" the existing provider and use
+     * the trusted provider for the account.
+     * https://github.com/firebase/FirebaseUI-Android/issues/1180
+     * https://groups.google.com/g/firebase-talk/c/ms_NVQem_Cw/m/8g7BFk1IAAAJ
      *
      * @property message The detailed error message
      * @property email The email address that already has an account (optional)

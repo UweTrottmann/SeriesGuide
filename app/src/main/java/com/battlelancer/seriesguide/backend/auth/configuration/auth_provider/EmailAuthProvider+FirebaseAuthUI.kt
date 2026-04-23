@@ -352,6 +352,8 @@ internal suspend fun FirebaseAuthUI.signInWithCredential(
     } catch (e: FirebaseAuthUserCollisionException) {
         // Account collision: account already exists with different sign-in method
         // Create AccountLinkingRequiredException with credential for linking
+        // Note: this is *not* thrown if the new provider is trusted, see
+        // AccountLinkingRequiredException for details.
         val email = e.email
         val accountLinkingException = AuthException.AccountLinkingRequiredException(
             message = "An account already exists with the email ${email ?: ""}. " +
