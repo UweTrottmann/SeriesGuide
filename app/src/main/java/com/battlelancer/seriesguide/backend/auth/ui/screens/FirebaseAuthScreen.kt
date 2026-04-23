@@ -76,7 +76,7 @@ fun FirebaseAuthScreen(
     val navController = rememberNavController()
 
     val authState by authUI.authStateFlow().collectAsState(AuthState.Idle)
-    val errorDialogException = remember { mutableStateOf<AuthException?>(null) }
+    val isErrorDialogVisible = remember { mutableStateOf(false) }
     val lastSuccessfulUserId = remember { mutableStateOf<String?>(null) }
     val pendingLinkingCredential = remember { mutableStateOf<AuthCredential?>(null) }
     val pendingResolver = remember { mutableStateOf<MultiFactorResolver?>(null) }
@@ -427,13 +427,6 @@ fun FirebaseAuthScreen(
                         onSignInCancelled()
                     }
 
-                    is AuthState.Idle -> {
-                        // Clear any state from operations
-                        pendingResolver.value = null
-                        pendingLinkingCredential.value = null
-                        lastSuccessfulUserId.value = null
-                    }
-
                     else -> Unit
                 }
             }
@@ -441,66 +434,70 @@ fun FirebaseAuthScreen(
             // Handle errors
             val errorState = authState as? AuthState.Error
             if (errorState != null) {
-                // The launch state is only run again if the error changes (or if auth state changed
-                // to a non-error state before).
-                LaunchedEffect(errorState) {
-                    val exception = when (val throwable = errorState.exception) {
-                        is AuthException -> throwable
-                        else -> AuthException.from(throwable)
-                    }
+                val exception = when (val throwable = errorState.exception) {
+                    is AuthException -> throwable
+                    else -> AuthException.from(throwable)
+                }
 
+                // The launch state is only run again if the error changes (or if auth state changed
+                // to a non-error state before, and on config changes).
+                LaunchedEffect(errorState) {
                     // Don't show error dialog if the user has canceled an operation (like a
                     // credentials manager popup).
                     if (exception !is AuthException.AuthCancelledException) {
-                        errorDialogException.value = exception
+                        isErrorDialogVisible.value = true
                     }
                 }
-            }
 
-            // Show error dialog
-            val currentErrorException = errorDialogException.value
-            if (currentErrorException != null) {
-                ErrorRecoveryDialog(
-                    error = currentErrorException,
-                    stringProvider = stringProvider,
-                    onRecover = { exception ->
-                        errorDialogException.value = null
-                        when (exception) {
-                            is AuthException.EmailAlreadyInUseException -> {
-                                // Switch email screen to sign-in mode
-                                emailScreenMode.value = EmailAuthMode.SignIn
-                            }
-
-                            is AuthException.AccountLinkingRequiredException -> {
-                                pendingLinkingCredential.value = exception.credential
-                                navController.navigate(AuthRoute.Email.route) {
-                                    launchSingleTop = true
+                // Error dialog
+                if (isErrorDialogVisible.value) {
+                    ErrorRecoveryDialog(
+                        error = exception,
+                        stringProvider = stringProvider,
+                        onRecover = { exception ->
+                            isErrorDialogVisible.value = false
+                            // Clear error
+                            authUI.updateAuthState(AuthState.Idle)
+                            // If applicable, do recovery action
+                            when (exception) {
+                                is AuthException.EmailAlreadyInUseException -> {
+                                    // Switch email screen to sign-in mode
+                                    emailScreenMode.value = EmailAuthMode.SignIn
                                 }
-                            }
 
-                            is AuthException.EmailLinkPromptForEmailException -> {
-                                // Cross-device flow: User needs to enter their email
-                                emailLinkFromDifferentDevice.value = exception.emailLink
-                                navController.navigate(AuthRoute.Email.route) {
-                                    launchSingleTop = true
+                                is AuthException.AccountLinkingRequiredException -> {
+                                    pendingLinkingCredential.value = exception.credential
+                                    navController.navigate(AuthRoute.Email.route) {
+                                        launchSingleTop = true
+                                    }
                                 }
-                            }
 
-                            is AuthException.EmailLinkCrossDeviceLinkingException -> {
-                                // Cross-device linking flow: User needs to enter email to link provider
-                                emailLinkFromDifferentDevice.value = exception.emailLink
-                                navController.navigate(AuthRoute.Email.route) {
-                                    launchSingleTop = true
+                                is AuthException.EmailLinkPromptForEmailException -> {
+                                    // Cross-device flow: User needs to enter their email
+                                    emailLinkFromDifferentDevice.value = exception.emailLink
+                                    navController.navigate(AuthRoute.Email.route) {
+                                        launchSingleTop = true
+                                    }
                                 }
-                            }
 
-                            else -> Unit
+                                is AuthException.EmailLinkCrossDeviceLinkingException -> {
+                                    // Cross-device linking flow: User needs to enter email to link provider
+                                    emailLinkFromDifferentDevice.value = exception.emailLink
+                                    navController.navigate(AuthRoute.Email.route) {
+                                        launchSingleTop = true
+                                    }
+                                }
+
+                                else -> Unit
+                            }
+                        },
+                        onDismiss = {
+                            isErrorDialogVisible.value = false
+                            // Clear error
+                            authUI.updateAuthState(AuthState.Idle)
                         }
-                    },
-                    onDismiss = {
-                        errorDialogException.value = null
-                    }
-                )
+                    )
+                }
             }
 
             val loadingState = authState as? AuthState.Loading
