@@ -25,6 +25,7 @@ import com.battlelancer.seriesguide.backend.auth.util.EmailLinkConstants
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.theme.SeriesGuideTheme
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 /**
  * Activity that hosts the Firebase authentication flow UI.
@@ -133,6 +134,8 @@ class FirebaseAuthActivity : ComponentActivity() {
                     }
 
                     is AuthState.Error -> {
+                        // Log all errors (final error is also reported by CloudSetupFragment)
+                        Timber.e(state.exception)
                         // Error occurred, finish with error info
                         val resultIntent = Intent().apply {
                             putExtra(EXTRA_ERROR, state.exception)
