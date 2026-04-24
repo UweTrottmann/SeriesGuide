@@ -30,6 +30,9 @@ To reset the password, an email is sent with a link to a password reset website.
 Templates and sender name and address for the emails as well as password requirements (currently 
 default) are configured in the Firebase Authentication settings.
 
+The UI currently requires the password to be at least 15 characters, 
+see [FirebaseAuthActivity](FirebaseAuthActivity.kt).
+
 ### Google Sign-In
 
 To sign up, need to have a Google account set up in Android.
