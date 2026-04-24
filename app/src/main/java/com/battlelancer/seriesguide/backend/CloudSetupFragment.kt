@@ -175,7 +175,7 @@ class CloudSetupFragment : Fragment() {
                         Timber.e("Account requires Google Sign-In, but Google Play Services not available")
                     } else {
                         // Log and report other reasons signing in fails
-                        Timber.e(error, "Failed to sign in")
+                        Timber.e(error, "Failed to sign in (last error)")
                         Errors.reportHexagonAuthError(ACTION_SIGN_IN, error)
                     }
 
