@@ -242,7 +242,6 @@ internal suspend fun FirebaseAuthUI.signOutFromGoogle(
     try {
         if (Provider.fromId(getCurrentUser()?.providerId) != Provider.GOOGLE) return
         (testCredentialManagerProvider ?: credentialManagerProvider).clearCredentialState(
-            context = context,
             credentialManager = CredentialManager.create(context)
         )
     } catch (e: Exception) {
