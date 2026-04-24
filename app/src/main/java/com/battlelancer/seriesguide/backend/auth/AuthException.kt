@@ -137,6 +137,8 @@ abstract class AuthException(
      * tries to sign in with OAuth but an account already exists with that
      * email using a different provider (like email/password).
      *
+     * Currently, the auth screen assumes that the existing provider is always email.
+     *
      * **Important:**
      * this exception (or rather its cause [FirebaseAuthUserCollisionException]) is **not**
      * thrown when the new provider is considered trusted by Firebase (notably Google for Gmail
@@ -155,7 +157,19 @@ abstract class AuthException(
         val email: String? = null,
         val credential: AuthCredential? = null,
         cause: Throwable? = null
-    ) : AuthException(message, cause)
+    ) : AuthException(message, cause) {
+        constructor(
+            collisionException: FirebaseAuthUserCollisionException,
+            credential: AuthCredential? = null
+        ) : this(
+            message = collisionException.message
+                ?: ("Account already exists for email '${collisionException.email}' " +
+                        "with provider '${collisionException.updatedCredential?.provider}'"),
+            email = collisionException.email,
+            credential = credential,
+            cause = collisionException
+        )
+    }
 
     /**
      * An operation was cancelled, such as a coroutine getting cancelled or the user cancelling an

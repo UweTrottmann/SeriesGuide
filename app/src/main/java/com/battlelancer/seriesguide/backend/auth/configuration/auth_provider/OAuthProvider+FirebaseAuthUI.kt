@@ -154,7 +154,6 @@ internal suspend fun FirebaseAuthUI.signInWithProvider(
                 // Complete the pending sign-in/link flow
                 signInWithCredential(
                     credential = credential,
-                    provider = provider,
                     displayName = authResult.user?.displayName,
                     photoUrl = authResult.user?.photoUrl,
                 )
@@ -193,16 +192,10 @@ internal suspend fun FirebaseAuthUI.signInWithProvider(
 
     } catch (e: FirebaseAuthUserCollisionException) {
         // Account collision: account already exists with different sign-in method
-        val email = e.email
         val credential = e.updatedCredential
-
         val accountLinkingException = AuthException.AccountLinkingRequiredException(
-            message = "An account already exists with the email ${email ?: ""}. " +
-                    "Please sign in with your existing account to link " +
-                    "your ${provider.providerName} account.",
-            email = email,
-            credential = credential,
-            cause = e
+            collisionException = e,
+            credential = credential
         )
         updateAuthState(AuthState.Error(accountLinkingException))
         throw accountLinkingException
