@@ -15,7 +15,6 @@ import androidx.credentials.ClearCredentialStateRequest
 import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.exceptions.GetCredentialCancellationException
-import androidx.datastore.preferences.core.stringPreferencesKey
 import com.battlelancer.seriesguide.backend.auth.AuthException.AuthCancelledException
 import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfigurationDsl
 import com.battlelancer.seriesguide.backend.auth.configuration.PasswordRule
@@ -315,10 +314,7 @@ abstract class AuthProvider(open val providerId: String, open val providerName: 
                 autoSelectEnabled: Boolean,
             ): GoogleSignInResult
 
-            suspend fun clearCredentialState(
-                context: Context,
-                credentialManager: CredentialManager,
-            )
+            suspend fun clearCredentialState(credentialManager: CredentialManager)
         }
 
         /**
@@ -365,10 +361,7 @@ abstract class AuthProvider(open val providerId: String, open val providerName: 
                 )
             }
 
-            override suspend fun clearCredentialState(
-                context: Context,
-                credentialManager: CredentialManager,
-            ) {
+            override suspend fun clearCredentialState(credentialManager: CredentialManager) {
                 credentialManager.clearCredentialState(ClearCredentialStateRequest())
             }
         }
