@@ -37,39 +37,16 @@ import timber.log.Timber
 private const val LOG_TAG = "EmailAuthProvider"
 
 /**
- * Creates an email/password account.
+ * Creates an account using [email] and [password].
  *
  * **Flow:**
- * 1. Check if new accounts are allowed
- * 2. Validate password against [AuthProvider.Email.passwordValidationRules]
- * 3. Create new account with `createUserWithEmailAndPassword`
- * 4. Merge display name into user profile
+ * - Check if new accounts are allowed by the [config]
+ * - Validate password against [provider] [AuthProvider.Email.passwordValidationRules]
+ * - Create new account with `createUserWithEmailAndPassword`
+ * - Save credentials, unless [config] disables it
+ * - Merge display [name] into user profile
  *
- * **Example: Normal sign-up**
- * ```kotlin
- * try {
- *     val result = firebaseAuthUI.createUserWithEmailAndPassword(
- *         context = context,
- *         config = authUIConfig,
- *         provider = emailProvider,
- *         name = "John Doe",
- *         email = "john@example.com",
- *         password = "SecurePass123!"
- *     )
- *     // User account created successfully
- * } catch (e: AuthException.WeakPasswordException) {
- *     // Password doesn't meet validation rules
- * } catch (e: AuthException.EmailAlreadyInUseException) {
- *     // Email already exists - redirect to sign-in
- * }
- * ```
- *
- * @param context Android [Context] for localized strings
- * @param config Auth UI configuration describing provider settings
- * @param provider Email provider configuration
- * @param name Optional display name collected during sign-up
- * @param email Email address for the new account
- * @param password Password for the new account
+ * @param context Android [Context] for saving credentials
  *
  * @return [AuthResult] containing the newly created or linked user, or null if failed
  *
@@ -138,7 +115,7 @@ internal suspend fun FirebaseAuthUI.createUserWithEmailAndPassword(
         throw authException
     } catch (e: CancellationException) {
         val cancelledException = AuthException.AuthCancelledException(
-            message = "Create or link user with email and password was cancelled",
+            message = "Create user with email and password was cancelled",
             cause = e
         )
         updateAuthState(AuthState.Error(cancelledException))
@@ -154,51 +131,14 @@ internal suspend fun FirebaseAuthUI.createUserWithEmailAndPassword(
 }
 
 /**
- * Signs in a user with email and password, optionally linking a social credential.
+ * Signs in a user with [email] and [password], optionally linking a [credentialForLinking].
  *
  * **Flow:**
  * - Sign in with email/password
- * - If credential provided: link it and merge profile
+ * - Save credentials, unless [config] disables it or [skipCredentialSave] is set
+ * - If [credentialForLinking] provided: link it and merge profile
  *
- * **Example: Normal sign-in**
- * ```kotlin
- * try {
- *     val result = firebaseAuthUI.signInWithEmailAndPassword(
- *         context = context,
- *         config = authUIConfig,
- *         provider = emailProvider,
- *         email = "user@example.com",
- *         password = "password123"
- *     )
- *     // User signed in successfully
- * } catch (e: AuthException.InvalidCredentialsException) {
- *     // Wrong password
- * }
- * ```
- *
- * **Example: Sign-in with social credential linking**
- * ```kotlin
- * // User tried to sign in with Google, but account exists with email/password
- * // Prompt for password, then link Google credential
- * val googleCredential = GoogleAuthProvider.getCredential(idToken, null)
- *
- * val result = firebaseAuthUI.signInWithEmailAndPassword(
- *     context = context,
- *     config = authUIConfig,
- *     provider = emailProvider,
- *     email = "user@example.com",
- *     password = "password123",
- *     credentialForLinking = googleCredential
- * )
- * // User signed in with email/password AND Google is now linked
- * // Profile updated with Google display name and photo
- * ```
- *
- * @param context Android [Context]
- * @param config Auth UI configuration describing provider settings
- * @param email Email address for sign-in
- * @param password Password for sign-in
- * @param credentialForLinking Optional social provider credential to link after sign-in
+ * @param context Android [Context] for saving credentials
  *
  * @return [AuthResult] containing the signed-in user, or null if multi-factor auth is required
  *
