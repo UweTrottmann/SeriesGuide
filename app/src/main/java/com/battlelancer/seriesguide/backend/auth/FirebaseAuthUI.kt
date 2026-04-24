@@ -162,58 +162,17 @@ class FirebaseAuthUI private constructor(
     fun authStateFlow(): Flow<AuthState> {
         // Create a flow from FirebaseAuth state listener
         val firebaseAuthFlow = callbackFlow {
-            // Set initial state based on current auth state
-            val initialState = auth.currentUser?.let { user ->
-                // Temporarily remove email verification UI as the signed-in check in
-                // CloudSetupFragment and HexagonTools don't enforce it (could probably back out
-                // and would be signed in) and the Firebase account is created regardless.
-                // Check if email verification is required
-                @Suppress("KotlinConstantConditions", "KotlinUnreachableCode")
-                if (false &&
-                    !user.isEmailVerified &&
-                    user.email != null &&
-                    user.providerData.any { it.providerId == Provider.EMAIL.id }
-                ) {
-                    AuthState.RequiresEmailVerification(
-                        user = user,
-                        email = user.email!!
-                    )
-                } else {
-                    AuthState.Success(user = user)
-                }
-            } ?: AuthState.Idle
-
+            // Set initial state based on current FirebaseAuth user
+            val initialState = auth.currentUser.toAuthState()
             trySend(initialState)
 
-            // Create auth state listener
+            // Listen to changes in the FirebaseAuth user authentication state
             val authStateListener = AuthStateListener { firebaseAuth ->
-                val currentUser = firebaseAuth.currentUser
-                val state = if (currentUser != null) {
-                    // Temporarily don't require email verification, see notes above
-                    // Check if email verification is required
-                    @Suppress("KotlinConstantConditions", "KotlinUnreachableCode")
-                    if (false &&
-                        !currentUser.isEmailVerified &&
-                        currentUser.email != null &&
-                        currentUser.providerData.any { it.providerId == Provider.EMAIL.id }
-                    ) {
-                        AuthState.RequiresEmailVerification(
-                            user = currentUser,
-                            email = currentUser.email!!
-                        )
-                    } else {
-                        AuthState.Success(user = currentUser)
-                    }
-                } else {
-                    AuthState.Idle
-                }
+                val state = firebaseAuth.currentUser.toAuthState()
                 trySend(state)
             }
-
-            // Add listener
             auth.addAuthStateListener(authStateListener)
-
-            // Remove listener when flow collection is cancelled
+            // Stop listening when flow collection is cancelled
             awaitClose {
                 auth.removeAuthStateListener(authStateListener)
             }
@@ -227,6 +186,30 @@ class FirebaseAuthUI private constructor(
             // Prefer non-idle internal states (like PasswordResetLinkSent, Error, etc.)
             if (internalState !is AuthState.Idle) internalState else firebaseState
         }.distinctUntilChanged()
+    }
+
+    private fun FirebaseUser?.toAuthState(): AuthState {
+        return if (this != null) {
+            // Temporarily remove email verification UI as the signed-in check in
+            // CloudSetupFragment and HexagonTools don't enforce it (could probably back out
+            // and would be signed in) and the Firebase account is created regardless.
+            // Check if email verification is required
+            @Suppress("KotlinConstantConditions", "KotlinUnreachableCode")
+            if (false &&
+                !isEmailVerified &&
+                email != null &&
+                providerData.any { it.providerId == Provider.EMAIL.id }
+            ) {
+                AuthState.RequiresEmailVerification(
+                    user = this,
+                    email = email!!
+                )
+            } else {
+                AuthState.Success(user = this)
+            }
+        } else {
+            AuthState.Idle
+        }
     }
 
     /**
