@@ -57,7 +57,21 @@ import timber.log.Timber
  * flows, error handling, and multi-factor enrollment/challenge flows. Back navigation is driven by
  * the Jetpack Navigation stack so presses behave like native Android navigation.
  *
- * @since 10.0.0
+ * [onSignInSuccess] is called on successful sign-in and if the user is different from before.
+ *
+ * [onSignInFailure] is called when
+ * - a selected provider is not supported by this screen
+ * - email auth has failed
+ * - signing out (from the success screen) has failed
+ * - MFA enrollment failed
+ * - MFA challenge failed
+ *
+ * [onSignInCancelled] is called if state reaches [AuthState.Cancelled].
+ *
+ * If [emailLink] is given and there is a matching email address stored, upon launch tries to sign
+ * in using the email link.
+ *
+ * Supply [mfaConfiguration] to customize settings for [MfaEnrollmentScreen].
  */
 @Composable
 fun FirebaseAuthScreen(
@@ -148,7 +162,9 @@ fun FirebaseAuthScreen(
                         logo = logoAsset,
                         privacyPolicyUrl = configuration.privacyPolicyUrl,
                         lastSignInPreference = lastSignInPreference.value,
-                        onNavigateBack = onSignInCancelled,
+                        onNavigateBack = {
+                            authUI.updateAuthState(AuthState.Cancelled)
+                        },
                         onProviderSelected = { provider, signInPref ->
                             when (provider) {
                                 is AuthProvider.Email -> {
