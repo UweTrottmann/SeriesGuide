@@ -113,10 +113,9 @@ class FirebaseAuthUI private constructor(
     fun getCurrentUser(): FirebaseUser? = auth.currentUser
 
     /**
-     * Returns true if this instance can handle the provided [Intent].
+     * Returns true if this instance can handle the email link in the provided [Intent.getData].
      *
-     * This mirrors the classic `AuthUI.canHandleIntent` API but uses the [FirebaseAuth] instance
-     * backing this [FirebaseAuthUI], ensuring custom app/auth configurations are respected.
+     * See [FirebaseAuth.isSignInWithEmailLink].
      */
     fun canHandleIntent(intent: Intent?): Boolean {
         val link = intent?.data ?: return false
@@ -124,20 +123,16 @@ class FirebaseAuthUI private constructor(
     }
 
     /**
-     * Returns a [Flow] that emits [AuthState] changes.
+     * Creates a [Flow] that emits [AuthState] changes.
      *
-     * This flow observes changes to the authentication state and emits appropriate
-     * [AuthState] objects. The flow will emit:
-     * - [AuthState.Idle] when there's no active authentication operation
-     * - [AuthState.Loading] during authentication operations
-     * - [AuthState.Success] when a user successfully signs in
-     * - [AuthState.Error] when an authentication error occurs
-     * - [AuthState.Cancelled] when authentication is cancelled
-     * - [AuthState.RequiresMfa] when multi-factor authentication is needed
-     * - [AuthState.RequiresEmailVerification] when email verification is needed
+     * This flow observes changes to the internal authentication state and emits appropriate
+     * [AuthState] objects. See [AuthState] for all possible states.
      *
-     * The flow automatically emits [AuthState.Success] or [AuthState.Idle] based on
-     * the current authentication state when collection starts.
+     * The initial state depends on if there is a [FirebaseAuth.getCurrentUser]:
+     * - [AuthState.RequiresEmailVerification] if there is one using the [Provider.EMAIL] provider,
+     *   but the email needs to be verified (Note: temporarily disabled)
+     * - [AuthState.Success] if there is one in all other cases
+     * - [AuthState.Idle] if there is none
      *
      * **Example:**
      * ```kotlin
@@ -163,8 +158,6 @@ class FirebaseAuthUI private constructor(
      *     }
      * }
      * ```
-     *
-     * @return A [Flow] of [AuthState] that emits authentication state changes
      */
     fun authStateFlow(): Flow<AuthState> {
         // Create a flow from FirebaseAuth state listener
@@ -237,22 +230,20 @@ class FirebaseAuthUI private constructor(
     }
 
     /**
-     * Updates the internal authentication state.
+     * Updates the internal authentication state to [state].
      * This method can be used to manually trigger state updates when the Firebase Auth state
      * listener doesn't automatically detect changes (e.g., after reloading user properties).
-     *
-     * @param state The new [AuthState] to emit
      */
     fun updateAuthState(state: AuthState) {
         _authStateFlow.value = state
     }
 
     /**
-     * Signs out the current user and clears authentication state.
+     * Signs out the current user and if successful sets authentication state to [AuthState.Idle].
      *
-     * This method signs out the user from Firebase Auth and updates the auth state flow
-     * to reflect the change. The operation is performed asynchronously and will emit
-     * appropriate states during the process.
+     * This method signs out the user from Firebase Auth, if signed in with Google calls
+     * [signOutFromGoogle] and updates the auth state flow to reflect the change. The operation is
+     * performed partially asynchronous and will emit appropriate states during the process.
      *
      * **Example:**
      * ```kotlin
@@ -274,7 +265,7 @@ class FirebaseAuthUI private constructor(
      * }
      * ```
      *
-     * @param context The Android [Context] for any required UI operations
+     * @param context For [signOutFromGoogle] to create [androidx.credentials.CredentialManager]
      * @throws AuthException.AuthCancelledException if the operation is cancelled
      * @throws AuthException.NetworkException if a network error occurs
      * @throws AuthException.UnknownException for other errors
@@ -315,7 +306,8 @@ class FirebaseAuthUI private constructor(
     }
 
     /**
-     * Deletes the current user account and clears authentication state.
+     * Deletes the current user account and if successful sets authentication state to
+     * [AuthState.Idle].
      *
      * This method deletes the current user's account from Firebase Auth. If the user
      * hasn't signed in recently, it will throw an exception requiring reauthentication.
@@ -496,6 +488,5 @@ class FirebaseAuthUI private constructor(
             return instanceCache.size
         }
 
-        const val UNCONFIGURED_CONFIG_VALUE: String = "CHANGE-ME"
     }
 }

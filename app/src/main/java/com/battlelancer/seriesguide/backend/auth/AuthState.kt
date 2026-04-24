@@ -16,7 +16,17 @@ import com.google.firebase.auth.MultiFactorResolver
  * Represents the authentication state in Firebase Auth UI.
  *
  * This class encapsulates all possible authentication states that can occur during
- * the authentication flow, including success, error, and intermediate states.
+ * the authentication flow:
+ *
+ * - [AuthState.Idle] when there's no active authentication operation
+ * - [AuthState.Loading] during authentication operations
+ * - [AuthState.Success] when a user successfully signs in
+ * - [AuthState.Error] when an authentication error occurs
+ * - [AuthState.Cancelled] when authentication is cancelled
+ * - [AuthState.RequiresMfa] when multi-factor authentication is needed
+ * - [AuthState.RequiresEmailVerification] when email verification is needed
+ * - [AuthState.PasswordResetLinkSent] when a password reset link has been sent
+ * - [AuthState.EmailSignInLinkSent] when an email sign in link has been sent
  *
  * Use the companion object factory methods or specific subclass constructors to create instances.
  *
