@@ -170,7 +170,6 @@ internal suspend fun FirebaseAuthUI.signInWithGoogle(
 
         signInWithCredential(
             credential = result.credential,
-            provider = provider,
             displayName = result.displayName,
             photoUrl = result.photoUrl,
         )

@@ -111,10 +111,8 @@ private fun getRecoveryMessage(
         is AuthException.EmailAlreadyInUseException -> stringProvider.emailAlreadyInUseRecoveryMessage
 
         is AuthException.MfaRequiredException -> stringProvider.mfaRequiredRecoveryMessage
-        is AuthException.AccountLinkingRequiredException -> {
-            // Use the custom message which includes email and provider details
-            error.message ?: stringProvider.accountLinkingRequiredRecoveryMessage
-        }
+        is AuthException.AccountLinkingRequiredException ->
+            stringProvider.accountLinkingRequiredRecoveryMessage
 
         is AuthException.EmailMismatchException -> stringProvider.emailMismatchMessage
         is AuthException.InvalidEmailLinkException -> stringProvider.emailLinkInvalidLinkMessage

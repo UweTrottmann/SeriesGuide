@@ -660,7 +660,7 @@
 
     <!-- Error Recovery Dialog -->
     <string name="auth_error_dialog_title" comment="Title for error recovery dialog">Authentication Error</string>
-    <string name="auth_error_account_linking_required" comment="Error message when account linking is required">Account needs to be linked. Please try a different sign-in method.</string>
+    <string name="auth_error_account_linking_required" comment="Error message when account exists, but created with different sign-in method">An account was already created for this email address using a different sign-in method. Sign in using the original method to add this one.</string>
     <string name="auth_error_unknown" comment="General error messages for an unknown failure.">An unknown error occurred</string>
     <string name="auth_error_invalid_password" comment="Error message for when signing in fails.">This password is incorrect, this account does not support signing in with a password or there is no account with this email address. Maybe reset your password.</string>
 

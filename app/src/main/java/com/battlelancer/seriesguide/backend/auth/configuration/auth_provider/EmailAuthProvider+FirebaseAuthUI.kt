@@ -321,14 +321,13 @@ private suspend fun saveCredentialAndSignInPreference(
  *
  * @throws AuthException.InvalidCredentialsException if credential is invalid or expired
  * @throws AuthException.AccountLinkingRequiredException if account was created with a different
- * provider, but not if [provider] is considered trusted by Firebase. See the exception for details.
+ * provider, but not if provider is considered trusted by Firebase. See the exception for details.
  * @throws AuthException.EmailAlreadyInUseException if linking and email is already in use
  * @throws AuthException.AuthCancelledException if the operation is cancelled
  * @throws AuthException.NetworkException if a network error occurs
  */
 internal suspend fun FirebaseAuthUI.signInWithCredential(
     credential: AuthCredential,
-    provider: AuthProvider? = null,
     displayName: String? = null,
     photoUrl: Uri? = null,
 ): AuthResult? {
@@ -354,14 +353,9 @@ internal suspend fun FirebaseAuthUI.signInWithCredential(
         // Create AccountLinkingRequiredException with credential for linking
         // Note: this is *not* thrown if the new provider is trusted, see
         // AccountLinkingRequiredException for details.
-        val email = e.email
         val accountLinkingException = AuthException.AccountLinkingRequiredException(
-            message = "An account already exists with the email ${email ?: ""}. " +
-                    "Please sign in with your existing account to link " +
-                    "your ${provider?.providerName ?: "this provider"} account.",
-            email = email,
-            credential = credential,
-            cause = e
+            collisionException = e,
+            credential = credential
         )
         updateAuthState(AuthState.Error(accountLinkingException))
         throw accountLinkingException
