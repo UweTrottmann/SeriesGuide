@@ -98,7 +98,10 @@ class FirebaseAuthActivity : ComponentActivity() {
             providers {
                 provider(
                     AuthProvider.Email(
-                        emailLinkActionCodeSettings = null
+                        emailLinkActionCodeSettings = null,
+                        // As recommended by NIST in 2026
+                        // https://www.nist.gov/cybersecurity/how-do-i-create-good-password
+                        minimumPasswordLength = 15
                     )
                 )
                 if (hexagonTools.isGoogleSignInAvailable) {
