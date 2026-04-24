@@ -14,7 +14,6 @@ import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Pro
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.AuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.DefaultAuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUIAsset
-import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUITheme
 import com.google.firebase.auth.ActionCodeSettings
 import java.util.Locale
 
@@ -28,7 +27,6 @@ annotation class AuthUIConfigurationDsl
 class AuthUIConfigurationBuilder {
     var context: Context? = null
     private val providers = mutableListOf<AuthProvider>()
-    var theme: AuthUITheme? = null
     var locale: Locale? = null
     var stringProvider: AuthUIStringProvider? = null
     var isCredentialManagerEnabled: Boolean = true
@@ -82,7 +80,6 @@ class AuthUIConfigurationBuilder {
         return AuthUIConfiguration(
             context = context,
             providers = providers.toList(),
-            theme = theme,
             locale = locale,
             stringProvider = stringProvider ?: DefaultAuthUIStringProvider(context, locale),
             isCredentialManagerEnabled = isCredentialManagerEnabled,
@@ -108,12 +105,6 @@ class AuthUIConfiguration(
      * The list of enabled authentication providers.
      */
     val providers: List<AuthProvider> = emptyList(),
-
-    /**
-     * The theming configuration for the UI. If null, inherits from the outer AuthUITheme wrapper
-     * or defaults to [AuthUITheme.Default] if no wrapper is present.
-     */
-    val theme: AuthUITheme? = null,
 
     /**
      * The locale for internationalization.

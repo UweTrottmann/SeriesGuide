@@ -39,7 +39,6 @@ import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.sig
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.AuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.DefaultAuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
-import com.battlelancer.seriesguide.backend.auth.configuration.theme.LocalAuthUITheme
 import com.battlelancer.seriesguide.backend.auth.ui.components.ErrorRecoveryDialog
 import com.battlelancer.seriesguide.backend.auth.ui.components.LoadingDialog
 import com.battlelancer.seriesguide.backend.auth.ui.method_picker.AuthMethodPicker
@@ -133,8 +132,7 @@ fun FirebaseAuthScreen(
     }
 
     CompositionLocalProvider(
-        LocalAuthUIStringProvider provides configuration.stringProvider,
-        LocalAuthUITheme provides (configuration.theme ?: LocalAuthUITheme.current)
+        LocalAuthUIStringProvider provides configuration.stringProvider
     ) {
         Surface(
             modifier = Modifier
