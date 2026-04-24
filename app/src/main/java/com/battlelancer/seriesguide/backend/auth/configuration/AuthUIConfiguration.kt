@@ -107,7 +107,7 @@ class AuthUIConfiguration(
     val providers: List<AuthProvider> = emptyList(),
 
     /**
-     * The locale for internationalization.
+     * Overrides the [locale] of the default [stringProvider].
      */
     val locale: Locale? = null,
 
