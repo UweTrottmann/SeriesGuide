@@ -1,34 +1,46 @@
 # SeriesGuide Cloud Authentication
 
-Currently, using [Firebase Authentication](https://firebase.google.com/docs/auth/android/start).
-
-## Process
-
-Supported to sign up using:
-
-- email and password
-- Google sign-in
-
-### Email and password
-
-To sign up, need to specify email address, display name (first and last name) and password.
-Requires to verify the email address through a verification email.
-
-To reset the password, an email is sent. The new password is entered on the sent website.
-
-Templates and sender name and address for the emails are configured in the Firebase Authentication
-settings.
-
-### Google sign-in
-
-There is currently an issue when signing in using Google to an existing email-based account. The
-account is silently changed to Google sign-in, preventing sign in with email. When trying to sign
-in with email there is an error that the account doesn't exist.
-
-However, it is possible to sign up again using email to overwrite it back to the email auth 
-provider. An alternative is to delete the account in Firebase Authentication and re-create it (Cloud
-data is preserved).
+Currently, using Firebase Authentication to obtain an email address to use for Cloud.
 
 ## Documentation
 
+- [Firebase Authentication](https://firebase.google.com/docs/auth/android/start)
+
 - [Firebase for Android Auth API](https://firebase.google.com/docs/reference/android/com/google/firebase/auth/package-summary)
+
+  - [FirebaseAuth](https://firebase.google.com/docs/reference/android/com/google/firebase/auth/FirebaseAuth)
+
+  - [FirebaseAuthException](https://firebase.google.com/docs/reference/android/com/google/firebase/auth/FirebaseAuthException)
+
+## Providers
+
+Supported to sign up using:
+
+- [email and password](https://firebase.google.com/docs/auth/android/password-auth)
+- [Google Sign-In](https://firebase.google.com/docs/auth/android/google-signin)
+
+### Email and password
+
+To sign up, need to specify a display name, email address and password.
+Currently, doesn't require to verify the email address through a verification email.
+Currently, doesn't support multi-factor authentication.
+
+To reset the password, an email is sent with a link to a password reset website.
+
+Templates and sender name and address for the emails as well as password requirements (currently 
+default) are configured in the Firebase Authentication settings.
+
+### Google Sign-In
+
+To sign up, need to have a Google account set up in Android.
+
+> [!IMPORTANT]
+> Note that currently when signing in using Google to an existing email-based account and the email
+address is provided by Gmail, Firebase **converts the account to Google Sign-In**. So signing in
+using email (like on another device without Play Services) will then fail unless the password is
+reset.
+>
+> This is because Firebase considers Google the trusted provider for these email addresses. See:
+>
+> * https://github.com/firebase/FirebaseUI-Android/issues/1180
+> * https://groups.google.com/g/firebase-talk/c/ms_NVQem_Cw/m/8g7BFk1IAAAJ
