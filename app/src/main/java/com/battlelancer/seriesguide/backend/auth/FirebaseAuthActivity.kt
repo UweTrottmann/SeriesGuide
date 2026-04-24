@@ -163,7 +163,7 @@ class FirebaseAuthActivity : ComponentActivity() {
                             // State flow will handle error
                         },
                         onSignInCancelled = {
-                            authUI.updateAuthState(AuthState.Cancelled)
+                            // State flow will handle cancellation
                         }
                     )
                 }
