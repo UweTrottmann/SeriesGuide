@@ -258,7 +258,7 @@ fun EmailAuthScreen(
                         email = emailTextValue.value,
                         password = passwordTextValue.value,
                     )
-                } catch (e: Exception) {
+                } catch (_: Exception) {
 
                 }
             }
@@ -270,7 +270,7 @@ fun EmailAuthScreen(
                         email = emailTextValue.value,
                         actionCodeSettings = configuration.passwordResetActionCodeSettings,
                     )
-                } catch (e: Exception) {
+                } catch (_: Exception) {
 
                 }
             }
