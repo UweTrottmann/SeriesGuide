@@ -597,6 +597,8 @@
 
     <!-- People -->
     <string name="person_biography">Biography</string>
+    <string name="people_search_crew_hint">Search for crew</string>
+    <string name="people_search_cast_hint">Search for cast</string>
 
     <!-- Feedback -->
     <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>

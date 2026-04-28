@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2014-2025 Uwe Trottmann
+// Copyright 2014-2026 Uwe Trottmann
 
 package com.battlelancer.seriesguide.people
 
