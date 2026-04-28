@@ -166,6 +166,11 @@ class SgApp : Application() {
                 appContainer.billingRepository.startAndConnectToBillingService()
             }
         }
+
+        // If necessary, run age checks. BaseTopActivity will check for the result.
+        coroutineScope.launch {
+            appContainer.ageCheck.run(appContainer.installedBy)
+        }
     }
 
     /**
