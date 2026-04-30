@@ -28,9 +28,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Provider
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.AuthUIStringProvider
@@ -136,24 +136,14 @@ fun AuthProviderButton(
                 Column(
                     verticalArrangement = Arrangement.Center
                 ) {
-                    Text(
-                        text = providerLabel,
-                        overflow = TextOverflow.Ellipsis,
-                        maxLines = 1,
-                    )
+                    Text(text = providerLabel)
                     Text(
                         text = subtitle,
-                        overflow = TextOverflow.Ellipsis,
-                        maxLines = 1,
-                        style = MaterialTheme.typography.bodySmall,
+                        style = MaterialTheme.typography.bodySmall
                     )
                 }
             } else {
-                Text(
-                    text = providerLabel,
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 1,
-                )
+                Text(text = providerLabel)
             }
         }
     }
@@ -241,11 +231,12 @@ private fun PreviewAuthProviderButton() {
                 providerId = "unknown_provider",
                 scopes = emptyList(),
                 customParameters = emptyMap(),
-                buttonLabel = "Unsupported Provider",
-                buttonIcon = null,
+                buttonLabel = "Unsupported Provider with a super duper long message that wraps",
+                buttonIcon = R.drawable.ic_account_circle_on_surface_light_24dp,
                 buttonColor = null,
                 contentColor = null,
             ),
+            subtitle = "Unsupported Provider with a super duper long message that wraps",
             onClick = {},
             stringProvider = DefaultAuthUIStringProvider(context)
         )
