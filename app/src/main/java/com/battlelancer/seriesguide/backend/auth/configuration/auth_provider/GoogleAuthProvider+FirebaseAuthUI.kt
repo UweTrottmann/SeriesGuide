@@ -132,9 +132,9 @@ internal suspend fun FirebaseAuthUI.signInWithGoogle(
                 }
             }
         } catch (e: NoCredentialException) {
-            // Display no error message, stay on picker screen
-            throw AuthException.AuthCancelledException(
-                "No Google account available or selected", e
+            // Display error message, stay on picker screen
+            throw AuthException.NoGoogleAccountAvailableException(
+                "Google sign-in failed: no Google account available", e
             )
         } catch (e: GetCredentialCancellationException) {
             // Display no error message, stay on picker screen

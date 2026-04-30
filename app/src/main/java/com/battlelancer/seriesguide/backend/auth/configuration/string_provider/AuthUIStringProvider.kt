@@ -244,6 +244,8 @@ interface AuthUIStringProvider {
     /** Account linking required recovery message */
     val accountLinkingRequiredRecoveryMessage: String
 
+    val noGoogleAccountAvailableMessage: String
+
     /** Unknown error recovery message */
     val unknownErrorRecoveryMessage: String
 

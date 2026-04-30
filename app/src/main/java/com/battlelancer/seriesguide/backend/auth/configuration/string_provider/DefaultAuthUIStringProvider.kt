@@ -239,6 +239,8 @@ class DefaultAuthUIStringProvider(
         get() = localizedContext.getString(R.string.auth_error_mfa_required_message)
     override val accountLinkingRequiredRecoveryMessage: String
         get() = localizedContext.getString(R.string.auth_error_account_linking_required)
+    override val noGoogleAccountAvailableMessage: String
+        get() = localizedContext.getString(R.string.auth_error_no_google_account_available)
     override val unknownErrorRecoveryMessage: String
         get() = localizedContext.getString(R.string.auth_error_unknown)
 
