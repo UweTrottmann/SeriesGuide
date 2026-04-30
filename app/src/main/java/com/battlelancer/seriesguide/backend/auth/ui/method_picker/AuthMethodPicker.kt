@@ -201,7 +201,6 @@ fun PreviewAuthMethodPicker() {
                         emailLinkActionCodeSettings = null
                     ),
                     AuthProvider.Google(
-                        scopes = emptyList(),
                         serverClientId = "EXAMPLE"
                     )
                 ),

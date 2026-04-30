@@ -107,7 +107,6 @@ class FirebaseAuthActivity : ComponentActivity() {
                 if (hexagonTools.isGoogleSignInAvailable) {
                     provider(
                         AuthProvider.Google(
-                            scopes = listOf("email"),
                             // The string resource is created by the google-services plugin
                             serverClientId = getString(R.string.default_web_client_id),
                             filterByAuthorizedAccounts = false

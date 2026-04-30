@@ -20,7 +20,6 @@ import com.battlelancer.seriesguide.backend.auth.AuthState
 import com.battlelancer.seriesguide.backend.auth.FirebaseAuthUI
 import com.battlelancer.seriesguide.backend.auth.util.EmailLinkPersistenceManager
 import com.battlelancer.seriesguide.backend.auth.util.SignInPreferenceManager
-import com.google.android.gms.common.api.Scope
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
@@ -40,7 +39,7 @@ private const val LOG_TAG = "GoogleAuthProvider"
  * - Automatically updates [AuthState.Error] on failures
  *
  * @param context Android context for Credential Manager
- * @param provider Google provider configuration with server client ID and optional scopes
+ * @param provider Google provider configuration
  * @return A callback function that initiates Google Sign-In when invoked
  *
  * @see signInWithGoogle
@@ -76,20 +75,11 @@ internal fun FirebaseAuthUI.rememberGoogleSignInHandler(
 }
 
 /**
- * Signs in with Google using Credential Manager and optionally requests OAuth scopes.
- *
- * This function implements Google Sign-In using Android's Credential Manager API with
- * comprehensive error handling.
+ * Signs in with Google using Credential Manager.
  *
  * **Flow:**
- * 1. If [AuthProvider.Google.scopes] are specified, requests OAuth authorization first
- * 2. Attempts sign-in using Credential Manager
- * 3. Creates Firebase credential and calls [signInWithCredential]
- *
- * **Scopes Behavior:**
- * - If [AuthProvider.Google.scopes] is not empty, requests OAuth authorization before sign-in
- * - Basic profile, email, and ID token are always included automatically
- * - Scopes are requested using the AuthorizationClient API
+ * 1. Attempts to retrieve Google account credential using Credential Manager
+ * 2. Creates Firebase credential and calls [signInWithCredential]
  *
  * **Error Handling:**
  * - [GoogleIdTokenParsingException]: if creating a GoogleIdTokenCredential in [getGoogleCredential]
@@ -98,8 +88,7 @@ internal fun FirebaseAuthUI.rememberGoogleSignInHandler(
  * - [GetCredentialException]: User cancellation, configuration errors, or no credentials
  *
  * @param context Android context for Credential Manager
- * @param provider Google provider configuration with optional scopes
- * @param authorizationProvider Provider for OAuth scopes authorization (for testing)
+ * @param provider Google provider configuration
  * @param credentialManagerProvider Provider for Credential Manager flow (for testing)
  *
  * @throws AuthException.AuthCancelledException if user cancels, no accounts found or other error
@@ -113,28 +102,9 @@ internal fun FirebaseAuthUI.rememberGoogleSignInHandler(
 internal suspend fun FirebaseAuthUI.signInWithGoogle(
     context: Context,
     provider: AuthProvider.Google,
-    authorizationProvider: AuthProvider.Google.AuthorizationProvider = AuthProvider.Google.DefaultAuthorizationProvider(),
     credentialManagerProvider: AuthProvider.Google.CredentialManagerProvider = AuthProvider.Google.DefaultCredentialManagerProvider(),
 ) {
     updateAuthState(AuthState.Loading("Signing in with Google..."))
-
-    // Request OAuth scopes if specified (before sign-in)
-    if (provider.scopes.isNotEmpty()) {
-        try {
-            val requestedScopes = provider.scopes.map { Scope(it) }
-            // FIXME This doesn't authorize anything. From the docs:
-            // If an eligible signed-in account is found for the application, this request will
-            // verify that all the requested OAuth 2.0 scopes were previously granted by the
-            // user. If they were, the requested tokens will be returned in the result. If,
-            // however, no saved account is found or the required grants do not exist, the
-            // result will contain a PendingIntent that can be used to launch the authorization
-            // flow.
-            authorizationProvider.authorize(context, requestedScopes)
-        } catch (e: Exception) {
-            // Continue with sign-in even if scope authorization fails
-            Timber.e(e)
-        }
-    }
 
     // Get Google account from user using credential manager
     val result =

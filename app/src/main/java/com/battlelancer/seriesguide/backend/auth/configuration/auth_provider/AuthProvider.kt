@@ -19,9 +19,6 @@ import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfigurati
 import com.battlelancer.seriesguide.backend.auth.configuration.PasswordRule
 import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUIAsset
 import com.battlelancer.seriesguide.backend.auth.util.ContinueUrlBuilder
-import com.google.android.gms.auth.api.identity.AuthorizationRequest
-import com.google.android.gms.auth.api.identity.Identity
-import com.google.android.gms.common.api.Scope
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.firebase.auth.ActionCodeSettings
@@ -216,10 +213,6 @@ abstract class AuthProvider(open val providerId: String, open val providerName: 
      * Google Sign-In provider configuration.
      */
     class Google(
-        /**
-         * The list of scopes to request.
-         */
-        override val scopes: List<String>,
 
         /**
          * The OAuth 2.0 client ID for your server.
@@ -249,17 +242,11 @@ abstract class AuthProvider(open val providerId: String, open val providerName: 
     ) : OAuth(
         providerId = Provider.GOOGLE.id,
         providerName = Provider.GOOGLE.providerName,
-        scopes = scopes,
         customParameters = customParameters
     ) {
         internal fun validate() {
             require(serverClientId.isNotBlank()) {
                 "Server client ID cannot be blank."
-            }
-
-            val hasEmailScope = scopes.contains("email")
-            if (!hasEmailScope) {
-                Timber.w("The scopes do not include 'email'. In most cases this is a mistake!")
             }
         }
 
@@ -274,33 +261,6 @@ abstract class AuthProvider(open val providerId: String, open val providerName: 
             val displayName: String?,
             val photoUrl: Uri?,
         )
-
-        /**
-         * An interface to wrap the Authorization API for requesting OAuth scopes.
-         * @suppress
-         */
-        internal interface AuthorizationProvider {
-            suspend fun authorize(context: Context, scopes: List<Scope>)
-        }
-
-        /**
-         * The default implementation of [AuthorizationProvider].
-         * @suppress
-         */
-        internal class DefaultAuthorizationProvider : AuthorizationProvider {
-            override suspend fun authorize(context: Context, scopes: List<Scope>) {
-                // https://developers.google.com/android/reference/com/google/android/gms/auth/api/identity/Identity
-                // https://developers.google.com/android/reference/com/google/android/gms/auth/api/identity/AuthorizationClient
-
-                val authorizationRequest = AuthorizationRequest.builder()
-                    .setRequestedScopes(scopes)
-                    .build()
-
-                Identity.getAuthorizationClient(context)
-                    .authorize(authorizationRequest)
-                    .await()
-            }
-        }
 
         /**
          * An interface to wrap the Credential Manager flow for Google Sign-In.
