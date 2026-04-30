@@ -229,7 +229,6 @@ private fun PreviewAuthProviderButton() {
         )
         AuthProviderButton(
             provider = AuthProvider.Google(
-                scopes = emptyList(),
                 serverClientId = "EXAMPLE"
             ),
             onClick = {},
