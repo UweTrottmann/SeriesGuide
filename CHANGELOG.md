@@ -8,6 +8,10 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
 
+## Next release
+
+* 📝 Trakt: prepare for server changes to correctly fetch all watched items.
+
 ## Version 2026.1
 
 * 📝 Trakt: support server changes to correctly fetch all collection and watchlist items.
