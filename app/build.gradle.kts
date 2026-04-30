@@ -280,7 +280,6 @@ dependencies {
     implementation(libs.androidx.credentials)
     implementation(libs.androidx.credentials.play)
     implementation(libs.googleid)
-    implementation(libs.play.services.auth)
     implementation(libs.zxing)
 
     // Note: can not use Firebase BOM as firebase-ui-auth has not updated in a while
