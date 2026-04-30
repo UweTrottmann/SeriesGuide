@@ -62,15 +62,36 @@ object TraktTools4 {
         class Other<T> : TraktResponse<T>, TraktNonNullResponse<T>
     }
 
+    /**
+     * If [noSeasons] is `true`, only show info is available. Starting 2026-05-30 also full info.
+     * If it's `false`, seasons and episodes are available. Starting 2026-05-30 also full info.
+     *
+     * See the Trakt [Upcoming API Changes: Watched Endpoints Pagination & Extended Defaults](https://github.com/trakt/trakt-api/discussions/775)
+     * discussion about details and updates.
+     */
     suspend fun getWatchedShows(
         traktSync: Sync,
         noSeasons: Boolean
     ): TraktNonNullResponse<List<BaseShow>> {
-        return awaitTraktCallNonNull(
-            traktSync.watchedShows(if (noSeasons) Extended.NOSEASONS else null),
-            "get watched shows",
+        return fetchAllPages(
+            action = "get watched shows",
             reportIsNotVip = true // Should work even if not VIP
-        )
+        ) { page ->
+            traktSync.watchedShows(
+                page,
+                MAX_LIMIT,
+                if (noSeasons) {
+                    // As of 2026-05-30 this should be the default, still request until then
+                    // https://github.com/trakt/trakt-api/discussions/775
+                    @Suppress("DEPRECATION")
+                    ExtendedShowsWatched.NOSEASONS
+                } else {
+                    // This should only work starting 2026-05-30, but already request it
+                    // https://github.com/trakt/trakt-api/discussions/775
+                    ExtendedShowsWatched.PROGRESS
+                }
+            )
+        }
     }
 
     suspend fun getWatchedShowsByTmdbId(
@@ -169,11 +190,12 @@ object TraktTools4 {
     suspend fun getWatchedMoviesByTmdbId(
         traktSync: Sync
     ): TraktNonNullResponse<MutableMap<Int, Int>> {
-        val response = awaitTraktCallNonNull(
-            traktSync.watchedMovies(null),
-            "get watched movies",
+        val response = fetchAllPages(
+            action = "get watched movies",
             reportIsNotVip = true // Should work even if not VIP
-        )
+        ) { page ->
+            traktSync.watchedMovies(page, MAX_LIMIT, null)
+        }
         return mapResponseData(response) { mapMoviesToTmdbIdWithPlays(it) }
     }
 
