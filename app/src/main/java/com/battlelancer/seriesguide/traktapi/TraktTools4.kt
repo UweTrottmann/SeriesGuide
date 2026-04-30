@@ -27,8 +27,9 @@ import timber.log.Timber
  */
 object TraktTools4 {
 
-    // 1000 is the maximum limit according to https://github.com/trakt/trakt-api/discussions/681
-    private const val LIST_AND_COLLECTION_MAX_LIMIT = 1000
+    // 250 is the maximum limit according to the Trakt [Upcoming API Changes: Pagination & Sorting Updates](https://github.com/trakt/trakt-api/discussions/681)
+    // discussion.
+    private const val LIST_AND_COLLECTION_MAX_LIMIT = 250
 
     sealed interface TraktResponse<T> {
         data class Success<T>(
