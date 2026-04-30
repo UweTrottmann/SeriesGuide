@@ -13,6 +13,7 @@ import com.uwetrottmann.trakt5.entities.Note
 import com.uwetrottmann.trakt5.entities.Show
 import com.uwetrottmann.trakt5.entities.ShowIds
 import com.uwetrottmann.trakt5.enums.Extended
+import com.uwetrottmann.trakt5.enums.ExtendedShowsWatched
 import com.uwetrottmann.trakt5.services.Notes
 import com.uwetrottmann.trakt5.services.Sync
 import retrofit2.Call
@@ -29,7 +30,7 @@ object TraktTools4 {
 
     // 250 is the maximum limit according to the Trakt [Upcoming API Changes: Pagination & Sorting Updates](https://github.com/trakt/trakt-api/discussions/681)
     // discussion.
-    private const val LIST_AND_COLLECTION_MAX_LIMIT = 250
+    private const val MAX_LIMIT = 250
 
     sealed interface TraktResponse<T> {
         data class Success<T>(
@@ -86,7 +87,7 @@ object TraktTools4 {
             action = "get collected shows",
             reportIsNotVip = true // Should work even if not VIP
         ) { page ->
-            traktSync.collectionShows(page, LIST_AND_COLLECTION_MAX_LIMIT, null)
+            traktSync.collectionShows(page, MAX_LIMIT, null)
         }
     }
 
@@ -161,7 +162,7 @@ object TraktTools4 {
             reportIsNotVip = true // Should work even if not VIP
         ) { page ->
             // Use Extended.FULL to get show metadata
-            traktSync.watchlistShows(page, LIST_AND_COLLECTION_MAX_LIMIT, Extended.FULL)
+            traktSync.watchlistShows(page, MAX_LIMIT, Extended.FULL)
         }
     }
 
@@ -193,7 +194,7 @@ object TraktTools4 {
             action = "get collected movies",
             reportIsNotVip = true // Should work even if not VIP
         ) { page ->
-            traktSync.collectionMovies(page, LIST_AND_COLLECTION_MAX_LIMIT, null)
+            traktSync.collectionMovies(page, MAX_LIMIT, null)
         }
         return mapResponseData(response) { mapMoviesToTmdbIdSet(it) }
     }
@@ -205,7 +206,7 @@ object TraktTools4 {
             action = "get movie watchlist",
             reportIsNotVip = true // Should work even if not VIP
         ) { page ->
-            traktSync.watchlistMovies(page, LIST_AND_COLLECTION_MAX_LIMIT, null)
+            traktSync.watchlistMovies(page, MAX_LIMIT, null)
         }
         return mapResponseData(response) { mapMoviesToTmdbIdSet(it) }
     }
