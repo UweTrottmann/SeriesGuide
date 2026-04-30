@@ -22,6 +22,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -32,7 +33,6 @@ import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfigurati
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.AuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.DefaultAuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
-import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUIAsset
 import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUITheme
 
 data class AuthSuccessUiContext(
@@ -119,7 +119,7 @@ private fun AuthSuccessContent(
             modifier = Modifier
                 .size(48.dp)
                 .align(Alignment.CenterHorizontally),
-            painter = (AuthUIAsset.Resource(R.drawable.ic_account_circle_control_24dp)).painter,
+            painter = painterResource(R.drawable.ic_account_circle_control_24dp),
             contentDescription = null /* Title is below */
         )
         Spacer(modifier = Modifier.height(8.dp))

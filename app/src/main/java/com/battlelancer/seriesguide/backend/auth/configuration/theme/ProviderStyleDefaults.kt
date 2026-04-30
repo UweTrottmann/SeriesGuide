@@ -23,13 +23,13 @@ import com.battlelancer.seriesguide.backend.auth.configuration.theme.ProviderSty
  */
 object ProviderStyleDefaults {
     val Google = AuthUITheme.ProviderStyle(
-        icon = AuthUIAsset.Resource(R.drawable.ic_account_circle_on_surface_light_24dp),
+        icon = R.drawable.ic_account_circle_on_surface_light_24dp,
         backgroundColor = Color.White,
         contentColor = Color(0xFF49454E /* light colorOnSurfaceVariant */ )
     )
 
     val Email = AuthUITheme.ProviderStyle(
-        icon = AuthUIAsset.Resource(R.drawable.ic_email_white_24dp),
+        icon = R.drawable.ic_email_white_24dp,
         backgroundColor = Color(0xFFD0021B),
         contentColor = Color.White
     )

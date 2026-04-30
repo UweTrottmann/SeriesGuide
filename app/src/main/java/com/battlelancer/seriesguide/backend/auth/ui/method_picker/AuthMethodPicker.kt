@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.battlelancer.seriesguide.R
@@ -33,7 +34,6 @@ import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Aut
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Provider
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.DefaultAuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
-import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUIAsset
 import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUITheme
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthHorizontalDivider
 import com.battlelancer.seriesguide.backend.auth.ui.components.AuthProviderButton
@@ -54,7 +54,7 @@ import com.battlelancer.seriesguide.util.ThemeUtils.plus
 @Composable
 fun AuthMethodPicker(
     providers: List<AuthProvider>,
-    logo: AuthUIAsset? = null,
+    logo: Int? = null,
     onNavigateBack: () -> Unit,
     onProviderSelected: (AuthProvider, SignInPreference?) -> Unit,
     privacyPolicyUrl: String? = null,
@@ -98,8 +98,9 @@ fun AuthMethodPicker(
                             modifier = Modifier
                                 .size(48.dp)
                                 .align(Alignment.CenterHorizontally),
-                            painter = (logo
-                                ?: AuthUIAsset.Resource(R.drawable.ic_account_circle_control_24dp)).painter,
+                            painter = painterResource(
+                                logo ?: R.drawable.ic_account_circle_control_24dp
+                            ),
                             contentDescription = null /* Title is below */
                         )
                         Text(

@@ -7,6 +7,7 @@
 
 package com.battlelancer.seriesguide.backend.auth.configuration.theme
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -137,7 +138,8 @@ class AuthUITheme(
         /**
          * The provider's icon.
          */
-        val icon: AuthUIAsset?,
+        @DrawableRes
+        val icon: Int?,
 
         /**
          * The background color of the button.
