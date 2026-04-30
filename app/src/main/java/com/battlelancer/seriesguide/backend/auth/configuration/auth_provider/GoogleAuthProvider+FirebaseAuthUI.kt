@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.credentials.CredentialManager
+import androidx.credentials.exceptions.GetCredentialCancellationException
 import androidx.credentials.exceptions.GetCredentialException
 import androidx.credentials.exceptions.NoCredentialException
 import com.battlelancer.seriesguide.backend.auth.AuthException
@@ -37,7 +38,6 @@ private const val LOG_TAG = "GoogleAuthProvider"
  * **Error Handling:**
  * - Catches all exceptions and converts them to [AuthException]
  * - Automatically updates [AuthState.Error] on failures
- * - Logs errors for debugging purposes
  *
  * @param context Android context for Credential Manager
  * @param provider Google provider configuration with server client ID and optional scopes
@@ -56,12 +56,19 @@ internal fun FirebaseAuthUI.rememberGoogleSignInHandler(
         {
             coroutineScope.launch {
                 try {
-                    signInWithGoogle(context, provider)
+                    try {
+                        signInWithGoogle(context, provider)
+                    } catch (e: CancellationException) {
+                        throw AuthException.AuthCancelledException(
+                            message = "Google sign-in coroutine interrupted",
+                            cause = e
+                        )
+                    } catch (e: Exception) {
+                        // Don't crash on any unhandled exceptions
+                        throw AuthException.from(e)
+                    }
                 } catch (e: AuthException) {
                     updateAuthState(AuthState.Error(e))
-                } catch (e: Exception) {
-                    val authException = AuthException.from(e)
-                    updateAuthState(AuthState.Error(authException))
                 }
             }
         }
@@ -85,19 +92,20 @@ internal fun FirebaseAuthUI.rememberGoogleSignInHandler(
  * - Scopes are requested using the AuthorizationClient API
  *
  * **Error Handling:**
- * - [GoogleIdTokenParsingException]: Library version mismatch
+ * - [GoogleIdTokenParsingException]: if creating a GoogleIdTokenCredential in [getGoogleCredential]
+ *   failed and the googleid library likely needs to be updated
  * - [NoCredentialException]: No Google accounts on device
  * - [GetCredentialException]: User cancellation, configuration errors, or no credentials
- * - Configuration errors trigger detailed developer guidance logs
  *
  * @param context Android context for Credential Manager
  * @param provider Google provider configuration with optional scopes
  * @param authorizationProvider Provider for OAuth scopes authorization (for testing)
  * @param credentialManagerProvider Provider for Credential Manager flow (for testing)
  *
- * @throws AuthException.InvalidCredentialsException if token parsing fails
- * @throws AuthException.AuthCancelledException if user cancels or no accounts found
- * @throws AuthException if sign-in or linking fails
+ * @throws AuthException.AuthCancelledException if user cancels, no accounts found or other error
+ * related to Google sign-in
+ * @throws AuthException.AccountLinkingRequiredException if an account using email sign-in exists
+ * after the Google credential was saved using [EmailLinkPersistenceManager].
  *
  * @see AuthProvider.Google
  * @see signInWithCredential
@@ -108,113 +116,119 @@ internal suspend fun FirebaseAuthUI.signInWithGoogle(
     authorizationProvider: AuthProvider.Google.AuthorizationProvider = AuthProvider.Google.DefaultAuthorizationProvider(),
     credentialManagerProvider: AuthProvider.Google.CredentialManagerProvider = AuthProvider.Google.DefaultCredentialManagerProvider(),
 ) {
-    var idTokenFromResult: String? = null
-    try {
-        updateAuthState(AuthState.Loading("Signing in with google..."))
+    updateAuthState(AuthState.Loading("Signing in with Google..."))
 
-        // Request OAuth scopes if specified (before sign-in)
-        if (provider.scopes.isNotEmpty()) {
-            try {
-                val requestedScopes = provider.scopes.map { Scope(it) }
-                authorizationProvider.authorize(context, requestedScopes)
-            } catch (e: Exception) {
-                // Continue with sign-in even if scope authorization fails
-                val authException = AuthException.from(e)
-                updateAuthState(AuthState.Error(authException))
-            }
+    // Request OAuth scopes if specified (before sign-in)
+    if (provider.scopes.isNotEmpty()) {
+        try {
+            val requestedScopes = provider.scopes.map { Scope(it) }
+            // FIXME This doesn't authorize anything. From the docs:
+            // If an eligible signed-in account is found for the application, this request will
+            // verify that all the requested OAuth 2.0 scopes were previously granted by the
+            // user. If they were, the requested tokens will be returned in the result. If,
+            // however, no saved account is found or the required grants do not exist, the
+            // result will contain a PendingIntent that can be used to launch the authorization
+            // flow.
+            authorizationProvider.authorize(context, requestedScopes)
+        } catch (e: Exception) {
+            // Continue with sign-in even if scope authorization fails
+            Timber.e(e)
         }
+    }
 
-        // Try with configured filterByAuthorizedAccounts setting
-        // If default (true), fallback to false if no authorized accounts found
-        // See: https://developer.android.com/identity/sign-in/credential-manager-siwg#siwg-button
-        val result = if (provider.filterByAuthorizedAccounts) {
-            // Default behavior: Try authorized accounts first, fallback to all accounts
+    // Get Google account from user using credential manager
+    val result =
+        try {
             try {
-                (testCredentialManagerProvider ?: credentialManagerProvider).getGoogleCredential(
+                getGoogleCredential(
                     context = context,
-                    credentialManager = CredentialManager.create(context),
-                    serverClientId = provider.serverClientId,
-                    filterByAuthorizedAccounts = true,
-                    autoSelectEnabled = provider.autoSelectEnabled
+                    provider = provider,
+                    credentialManagerProvider = credentialManagerProvider,
+                    filterByAuthorizedAccounts = provider.filterByAuthorizedAccounts
                 )
-            } catch (_: NoCredentialException) {
-                // No authorized accounts found, try again with all accounts for sign-up flow
-                Timber.d("No authorized accounts found, showing all Google accounts for sign-up")
-                try {
-                    (testCredentialManagerProvider ?: credentialManagerProvider).getGoogleCredential(
+            } catch (e: NoCredentialException) {
+                if (provider.filterByAuthorizedAccounts) {
+                    // Should try again without filter according to
+                    // https://developer.android.com/identity/sign-in/credential-manager-siwg-implementation
+                    Timber.d("No authorized accounts found, trying again and showing all Google accounts")
+                    getGoogleCredential(
                         context = context,
-                        credentialManager = CredentialManager.create(context),
-                        serverClientId = provider.serverClientId,
-                        filterByAuthorizedAccounts = false,
-                        autoSelectEnabled = provider.autoSelectEnabled
+                        provider = provider,
+                        credentialManagerProvider = credentialManagerProvider,
+                        filterByAuthorizedAccounts = false
                     )
-                } catch (fallbackException: NoCredentialException) {
-                    // No Google accounts available on device at all
-                    throw AuthException.UnknownException(
-                        message = "No Google accounts available.\n\nPlease add a Google account to your device and try again.",
-                        cause = fallbackException
-                    )
+                } else {
+                    throw e // let outer try-catch handle it
                 }
             }
-        } else {
-            // Developer explicitly wants to show all accounts (no fallback needed)
-            (testCredentialManagerProvider ?: credentialManagerProvider).getGoogleCredential(
-                context = context,
-                credentialManager = CredentialManager.create(context),
-                serverClientId = provider.serverClientId,
-                filterByAuthorizedAccounts = false,
-                autoSelectEnabled = provider.autoSelectEnabled
+        } catch (e: NoCredentialException) {
+            // Display no error message, stay on picker screen
+            throw AuthException.AuthCancelledException(
+                "No Google account available or selected", e
+            )
+        } catch (e: GetCredentialCancellationException) {
+            // Display no error message, stay on picker screen
+            throw AuthException.AuthCancelledException(
+                "Google sign-in cancelled by user", e
+            )
+        } catch (e: GetCredentialException) {
+            // Display no error message, stay on picker screen
+            throw AuthException.AuthCancelledException(
+                "Google sign-in failed due to other", e
             )
         }
-        idTokenFromResult = result.idToken
 
+    // Sign in using the Google account info
+    try {
         signInWithCredential(
             credential = result.credential,
             displayName = result.displayName,
             photoUrl = result.photoUrl,
         )
-
-        // Save sign-in preference for "Continue as..." feature
-        val user = auth.currentUser
-        val identifier = user?.email
-        if (identifier != null) {
-            SignInPreferenceManager.tryToSaveLastSignIn(
-                context = context,
-                providerId = provider.providerId,
-                identifier = identifier,
-                LOG_TAG
-            )
-        }
     } catch (e: AuthException.AccountLinkingRequiredException) {
         // Account collision occurred - save credential for linking after email link sign-in
         // This happens when a user tries to sign in but an email link account exists
         EmailLinkPersistenceManager.default.saveCredentialForLinking(
             context = context,
             providerType = provider.providerId,
-            idToken = idTokenFromResult,
+            idToken = result.idToken,
             accessToken = null
         )
-
         // Re-throw to let UI handle the account linking flow
-        updateAuthState(AuthState.Error(e))
         throw e
-    } catch (e: CancellationException) {
-        val cancelledException = AuthException.AuthCancelledException(
-            message = "Sign in with google was cancelled",
-            cause = e
-        )
-        updateAuthState(AuthState.Error(cancelledException))
-        throw cancelledException
-
-    } catch (e: AuthException) {
-        updateAuthState(AuthState.Error(e))
-        throw e
-
-    } catch (e: Exception) {
-        val authException = AuthException.from(e)
-        updateAuthState(AuthState.Error(authException))
-        throw authException
     }
+
+    // Save sign-in preference for "Continue as..." feature
+    val user = auth.currentUser
+    val identifier = user?.email
+    if (identifier != null) {
+        SignInPreferenceManager.tryToSaveLastSignIn(
+            context = context,
+            providerId = provider.providerId,
+            identifier = identifier,
+            LOG_TAG
+        )
+    }
+}
+
+/**
+ * @throws GetCredentialException
+ * @see CredentialManager.getCredential
+ */
+private suspend fun FirebaseAuthUI.getGoogleCredential(
+    context: Context,
+    provider: AuthProvider.Google,
+    credentialManagerProvider: AuthProvider.Google.CredentialManagerProvider,
+    filterByAuthorizedAccounts: Boolean
+): AuthProvider.Google.GoogleSignInResult {
+    return (testCredentialManagerProvider ?: credentialManagerProvider)
+        .getGoogleCredential(
+            context = context,
+            credentialManager = CredentialManager.create(context),
+            serverClientId = provider.serverClientId,
+            filterByAuthorizedAccounts = filterByAuthorizedAccounts,
+            autoSelectEnabled = provider.autoSelectEnabled
+        )
 }
 
 /**

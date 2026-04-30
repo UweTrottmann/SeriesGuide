@@ -14,8 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.credentials.ClearCredentialStateRequest
 import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
-import androidx.credentials.exceptions.GetCredentialCancellationException
-import com.battlelancer.seriesguide.backend.auth.AuthException.AuthCancelledException
+import androidx.credentials.exceptions.GetCredentialException
 import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfigurationDsl
 import com.battlelancer.seriesguide.backend.auth.configuration.PasswordRule
 import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUIAsset
@@ -290,6 +289,9 @@ abstract class AuthProvider(open val providerId: String, open val providerName: 
          */
         internal class DefaultAuthorizationProvider : AuthorizationProvider {
             override suspend fun authorize(context: Context, scopes: List<Scope>) {
+                // https://developers.google.com/android/reference/com/google/android/gms/auth/api/identity/Identity
+                // https://developers.google.com/android/reference/com/google/android/gms/auth/api/identity/AuthorizationClient
+
                 val authorizationRequest = AuthorizationRequest.builder()
                     .setRequestedScopes(scopes)
                     .build()
@@ -306,6 +308,12 @@ abstract class AuthProvider(open val providerId: String, open val providerName: 
          */
         @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
         interface CredentialManagerProvider {
+
+            /**
+             * @throws GetCredentialException
+             * @throws com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
+             * @see CredentialManager.getCredential
+             */
             suspend fun getGoogleCredential(
                 context: Context,
                 credentialManager: CredentialManager,
@@ -323,6 +331,7 @@ abstract class AuthProvider(open val providerId: String, open val providerName: 
          */
         @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
         class DefaultCredentialManagerProvider : CredentialManagerProvider {
+
             override suspend fun getGoogleCredential(
                 context: Context,
                 credentialManager: CredentialManager,
@@ -330,6 +339,7 @@ abstract class AuthProvider(open val providerId: String, open val providerName: 
                 filterByAuthorizedAccounts: Boolean,
                 autoSelectEnabled: Boolean,
             ): GoogleSignInResult {
+                // https://developers.google.com/identity/android-credential-manager/android/reference/com/google/android/libraries/identity/googleid/GetGoogleIdOption.Builder
                 val googleIdOption = GetGoogleIdOption.Builder()
                     .setServerClientId(serverClientId)
                     .setFilterByAuthorizedAccounts(filterByAuthorizedAccounts)
@@ -340,21 +350,18 @@ abstract class AuthProvider(open val providerId: String, open val providerName: 
                     .addCredentialOption(googleIdOption)
                     .build()
 
-                val result = try {
-                    credentialManager.getCredential(context, request)
-                } catch (e: GetCredentialCancellationException) {
-                    throw AuthCancelledException(
-                        message = e.message ?: "Google Sign-in was canceled",
-                        cause = e
-                    )
-                }
+                val result = credentialManager.getCredential(context, request)
+
+                // According to https://developer.android.com/identity/sign-in/credential-manager-siwg-implementation#create-shared
+                // createFrom may throw GoogleIdTokenParsingException if the googleid library is
+                // incompatible.
                 val googleIdTokenCredential =
                     GoogleIdTokenCredential.createFrom(result.credential.data)
-                val credential =
+                val firebaseCredential =
                     GoogleAuthProvider.getCredential(googleIdTokenCredential.idToken, null)
 
                 return GoogleSignInResult(
-                    credential = credential,
+                    credential = firebaseCredential,
                     idToken = googleIdTokenCredential.idToken,
                     displayName = googleIdTokenCredential.displayName,
                     photoUrl = googleIdTokenCredential.profilePictureUri,
