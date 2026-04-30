@@ -114,6 +114,9 @@ private fun getRecoveryMessage(
         is AuthException.AccountLinkingRequiredException ->
             stringProvider.accountLinkingRequiredRecoveryMessage
 
+        is AuthException.NoGoogleAccountAvailableException ->
+            stringProvider.noGoogleAccountAvailableMessage
+
         is AuthException.EmailMismatchException -> stringProvider.emailMismatchMessage
         is AuthException.InvalidEmailLinkException -> stringProvider.emailLinkInvalidLinkMessage
         is AuthException.EmailLinkWrongDeviceException -> stringProvider.emailLinkWrongDeviceMessage

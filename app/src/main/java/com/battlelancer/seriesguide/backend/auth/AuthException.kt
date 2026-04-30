@@ -172,6 +172,15 @@ abstract class AuthException(
     }
 
     /**
+     * When signing in with Google, but according to credential manager no Google account is
+     * available on the device.
+     */
+    class NoGoogleAccountAvailableException(
+        message: String,
+        cause: Throwable? = null
+    ) : AuthException(message, cause)
+
+    /**
      * An operation was cancelled, such as a coroutine getting cancelled or the user cancelling an
      * operation.
      */
