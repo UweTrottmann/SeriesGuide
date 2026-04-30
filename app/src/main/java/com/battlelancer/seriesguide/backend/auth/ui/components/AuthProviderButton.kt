@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -116,7 +117,7 @@ fun AuthProviderButton(
                     Icon(
                         modifier = Modifier
                             .size(24.dp),
-                        painter = providerIcon.painter,
+                        painter = painterResource(providerIcon),
                         contentDescription = providerLabel,
                         tint = iconTint
                     )
@@ -124,7 +125,7 @@ fun AuthProviderButton(
                     Image(
                         modifier = Modifier
                             .size(24.dp),
-                        painter = providerIcon.painter,
+                        painter = painterResource(providerIcon),
                         contentDescription = providerLabel
                     )
                 }

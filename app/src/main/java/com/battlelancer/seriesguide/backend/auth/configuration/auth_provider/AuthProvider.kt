@@ -9,6 +9,7 @@ package com.battlelancer.seriesguide.backend.auth.configuration.auth_provider
 
 import android.content.Context
 import android.net.Uri
+import androidx.annotation.DrawableRes
 import androidx.annotation.RestrictTo
 import androidx.compose.ui.graphics.Color
 import androidx.credentials.ClearCredentialStateRequest
@@ -17,7 +18,6 @@ import androidx.credentials.GetCredentialRequest
 import androidx.credentials.exceptions.GetCredentialException
 import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfigurationDsl
 import com.battlelancer.seriesguide.backend.auth.configuration.PasswordRule
-import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUIAsset
 import com.battlelancer.seriesguide.backend.auth.util.ContinueUrlBuilder
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
@@ -366,7 +366,8 @@ abstract class AuthProvider(open val providerId: String, open val providerName: 
         /**
          * An optional icon for the provider button.
          */
-        val buttonIcon: AuthUIAsset?,
+        @DrawableRes
+        val buttonIcon: Int?,
 
         /**
          * An optional background color for the provider button.

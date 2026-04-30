@@ -8,12 +8,12 @@
 package com.battlelancer.seriesguide.backend.auth.configuration
 
 import android.content.Context
+import androidx.annotation.DrawableRes
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvidersBuilder
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Provider
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.AuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.DefaultAuthUIStringProvider
-import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUIAsset
 import com.google.firebase.auth.ActionCodeSettings
 import java.util.Locale
 
@@ -32,7 +32,7 @@ class AuthUIConfigurationBuilder {
     var isCredentialManagerEnabled: Boolean = true
     var isMfaEnabled: Boolean = true
     var privacyPolicyUrl: String? = null
-    var logo: AuthUIAsset? = null
+    var logo: Int? = null
     var passwordResetActionCodeSettings: ActionCodeSettings? = null
     var transitions: AuthUITransitions? = null
 
@@ -134,7 +134,8 @@ class AuthUIConfiguration(
     /**
      * The logo to display on the authentication screens.
      */
-    val logo: AuthUIAsset? = null,
+    @DrawableRes
+    val logo: Int? = null,
 
     /**
      * Configuration for sending email reset link.
