@@ -107,10 +107,8 @@ photoview = "com.github.chrisbanes:PhotoView:2.3.0"
 # https://developer.android.com/jetpack/androidx/releases/credentials
 androidx-credentials = "androidx.credentials:credentials:1.5.0"
 androidx-credentials-play = "androidx.credentials:credentials-play-services-auth:1.5.0"
+# https://developers.google.com/identity/android-credential-manager/releases
 googleid = "com.google.android.libraries.identity.googleid:googleid:1.1.1"
-# https://developers.google.com/android/guides/releases
-# 21.0.0 removes Credentials API used by firebase-ui-auth
-play-services-auth = "com.google.android.gms:play-services-auth:20.7.0"
 # https://firebase.google.com/support/release-notes/android
 firebase-crashlytics = "com.google.firebase:firebase-crashlytics:20.0.3"
 firebase-auth = "com.google.firebase:firebase-auth:24.0.1"
