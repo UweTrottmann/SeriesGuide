@@ -1,6 +1,8 @@
-// SPDX-License-Identifier: Apache-2.0
-// Copyright 2014-2025 Uwe Trottmann
-// Copyright 2013 The Android Open Source Project
+// SPDX-License-Identifier: Apache-2.0 AND AGPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2013 The Android Open Source Project
+// SPDX-FileCopyrightText: Copyright © 2014 Uwe Trottmann <uwe@uwetrottmann.com>
+
+// Original file by The Android Open Source Project licensed under Apache-2.0 copied from Android samples
 
 package com.uwetrottmann.seriesguide.widgets
 
