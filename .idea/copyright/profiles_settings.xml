@@ -1,7 +1,7 @@
 <component name="CopyrightManager">
-  <settings default="Uwe AGPL-3.0-or-later">
+  <settings default="Uwe GPL-3.0-or-later">
     <module2copyright>
-      <element module="Copyright files" copyright="Uwe AGPL-3.0-or-later" />
+      <element module="Copyright files" copyright="Uwe GPL-3.0-or-later" />
     </module2copyright>
     <LanguageOptions name="__TEMPLATE__">
       <option name="block" value="false" />

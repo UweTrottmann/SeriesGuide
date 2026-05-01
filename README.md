@@ -13,13 +13,13 @@ Android app to help you keep track of your favorite TV shows and movies.
 ## Licensing
 
 This program by [Uwe Trottmann](https://www.uwetrottmann.com) is licensed under
-the [AGPL 3.0 or later](LICENSES/AGPL-3.0-or-later.txt).
+the [GPL 3.0 or later](LICENSES/GPL-3.0-or-later.txt).
 
 Some parts, including the [SeriesGuide API library](/api), are licensed under
 the [Apache License 2.0](LICENSES/Apache-2.0.txt).
 
 To get an overview of what these licenses allow you to do, check choosealicense.com for
-[AGPL 3.0](https://choosealicense.com/licenses/agpl-3.0/) and
+[GPL 3.0](https://choosealicense.com/licenses/gpl-3.0/) and
 [Apache License 2.0](https://choosealicense.com/licenses/apache-2.0/).
 
 To help identify licenses and copyright holders, files contain
