@@ -1,5 +1,8 @@
-// Copyright 2014, 2015, 2017, 2019 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// SPDX-FileCopyrightText: Copyright © 2012 Carl Bauer
+
+// Original file by Carl Bauer licensed under Apache-2.0 copied from DragSortListView
+// https://github.com/bauerca/drag-sort-listview
 
 package com.uwetrottmann.seriesguide.widgets.dragsortview;
 
