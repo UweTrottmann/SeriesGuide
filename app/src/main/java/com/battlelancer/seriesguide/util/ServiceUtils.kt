@@ -1,6 +1,5 @@
-// SPDX-License-Identifier: Apache-2.0
-// Copyright 2013-2025 Uwe Trottmann
-// Copyright 2013 Andrew Neal
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2013 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.util
 
@@ -135,6 +134,8 @@ object ServiceUtils {
             return Intent(Intent.ACTION_VIEW)
                 .apply { data = Uri.parse(String.format(YOUTUBE_SEARCH, Uri.encode(query))) }
     }
+
+    // Original web search buttons added thanks to Andrew Neal <andrew@seeingpixels.org>
 
     /**
      * Builds a search [android.content.Intent] using [Intent.ACTION_WEB_SEARCH] and
