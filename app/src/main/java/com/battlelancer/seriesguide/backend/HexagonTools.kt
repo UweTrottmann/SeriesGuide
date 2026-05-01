@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: Apache-2.0
-// Copyright 2014-2025 Uwe Trottmann
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2014 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.backend
 
@@ -10,10 +10,8 @@ import com.battlelancer.seriesguide.backend.CloudEndpointUtils.updateBuilder
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.jobs.NetworkJobProcessor
 import com.battlelancer.seriesguide.modules.ApplicationContext
-import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.Errors.Companion.logAndReportHexagon
 import com.battlelancer.seriesguide.util.isRetryError
-import com.firebase.ui.auth.AuthUI
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.mapError
@@ -21,7 +19,6 @@ import com.github.michaelbull.result.runCatching
 import com.github.michaelbull.result.throwUnless
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
-import com.google.android.gms.tasks.Tasks
 import com.google.api.client.http.HttpRequestInitializer
 import com.google.api.client.http.HttpTransport
 import com.google.api.client.http.javanet.NetHttpTransport
@@ -35,9 +32,7 @@ import com.uwetrottmann.seriesguide.backend.lists.Lists
 import com.uwetrottmann.seriesguide.backend.movies.Movies
 import com.uwetrottmann.seriesguide.backend.shows.Shows
 import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow
-import timber.log.Timber
 import java.io.IOException
-import java.util.concurrent.ExecutionException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -56,17 +51,6 @@ class HexagonTools @Inject constructor(
         val code = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context)
         // Return false only on non-resolvable errors. Firebase AuthUI can help resolve others.
         code != ConnectionResult.SERVICE_MISSING && code != ConnectionResult.SERVICE_INVALID
-    }
-
-    val firebaseSignInProviders: List<AuthUI.IdpConfig> by lazy {
-        if (isGoogleSignInAvailable) {
-            listOf(
-                AuthUI.IdpConfig.EmailBuilder().build(),
-                AuthUI.IdpConfig.GoogleBuilder().build()
-            )
-        } else {
-            listOf(AuthUI.IdpConfig.EmailBuilder().build())
-        }
     }
 
     private val httpRequestInitializer by lazy { FirebaseHttpRequestInitializer() }
@@ -190,8 +174,10 @@ class HexagonTools @Inject constructor(
      * Make sure to check [FirebaseHttpRequestInitializer.firebaseUser] is not null (the
      * account might have gotten signed out).
      *
-     * @param checkSignInState If enabled, tries to silently sign in with Google. If it fails, sets
-     * the [HexagonSettings.setShouldValidateAccount] flag. If successful, clears the flag.
+     * @param checkSignInState If set, tries to retrieve the signed in user from [FirebaseAuth] (if
+     * [FirebaseHttpRequestInitializer.firebaseUser] is null and [isTimeForSignInStateCheck]).
+     * If it fails, sets the [HexagonSettings.setShouldValidateAccount] flag.
+     * If successful, clears the flag.
      */
     @Synchronized
     private fun getHttpRequestInitializer(checkSignInState: Boolean): FirebaseHttpRequestInitializer {
@@ -216,45 +202,10 @@ class HexagonTools @Inject constructor(
         }
         lastSignInCheck = SystemClock.elapsedRealtime()
 
-        var account = FirebaseAuth.getInstance().currentUser
+        val account = FirebaseAuth.getInstance().currentUser
         if (account != null) {
             // still signed in
             httpRequestInitializer.firebaseUser = account
-        } else {
-            // Try to silently sign in. This is fine as Cloud was enabled by the user
-            // and they reasonably expect to stay signed in.
-            val signInTask = AuthUI.getInstance().silentSignIn(context, firebaseSignInProviders)
-            try {
-                val authResult = Tasks.await(signInTask)
-                if (authResult?.user != null) {
-                    Timber.i("%s: successful", ACTION_SILENT_SIGN_IN)
-                    authResult.user.let {
-                        account = it
-                        httpRequestInitializer.firebaseUser = it
-                    }
-                } else {
-                    Errors.logAndReportHexagonAuthError(
-                        HexagonAuthError(ACTION_SILENT_SIGN_IN, "FirebaseUser is null")
-                    )
-                }
-            } catch (e: Exception) {
-                // https://developers.google.com/android/reference/com/google/android/gms/tasks/Tasks#public-static-tresult-await-tasktresult-task
-                if (e is InterruptedException) {
-                    // Do not report thread interruptions, it's expected.
-                    Timber.w(e, ACTION_SILENT_SIGN_IN)
-                } else {
-                    val cause = if (e is ExecutionException) {
-                        e.cause ?: e // The Task failed, getCause returns the original exception.
-                    } else {
-                        e // Unexpected exception.
-                    }
-                    // Do not report sign in required errors, this is expected and handled below.
-                    val authEx = HexagonAuthError.build(ACTION_SILENT_SIGN_IN, cause)
-                    if (!authEx.isSignInRequiredError()) {
-                        Errors.logAndReportHexagonAuthError(authEx)
-                    }
-                }
-            }
         }
 
         val shouldFixAccount = account == null
@@ -309,7 +260,6 @@ class HexagonTools @Inject constructor(
     }
 
     companion object {
-        private const val ACTION_SILENT_SIGN_IN = "silent sign-in"
         private val JSON_FACTORY: JsonFactory = GsonFactory()
         private val HTTP_TRANSPORT: HttpTransport = NetHttpTransport()
         private const val SIGN_IN_CHECK_INTERVAL_MS = 5 * DateUtils.MINUTE_IN_MILLIS

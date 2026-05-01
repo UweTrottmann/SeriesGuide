@@ -336,8 +336,6 @@
     <string name="hexagon_remove_account_confirmation">Брисање вашег налога ће обрисати све серије и филмове са SeriesGuide Cloud. Побрините се да га обришете и са осталих повезаних уређаја.</string>
     <string name="hexagon_api_queued">Слање на SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Излогован из SeriesGuide Cloud-a</string>
-    <string name="hexagon_signin_fail_format">Грешка са пријавом (%s)</string>
-    <string name="hexagon_signin_google_only">Имејл захтева пријављивање на Google</string>
     <string name="hexagon_signin_choose">Изаберите имејл за пријаву ако користите SeriesGuide на другим уређајима који не подржавају пријављивање на Google.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Послато на тракт.</string>

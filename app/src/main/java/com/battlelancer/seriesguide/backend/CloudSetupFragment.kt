@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: Apache-2.0
-// Copyright 2019-2025 Uwe Trottmann
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2019 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.backend
 
@@ -13,8 +13,12 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.backend.auth.AuthException
+import com.battlelancer.seriesguide.backend.auth.FirebaseAuthActivity
+import com.battlelancer.seriesguide.backend.auth.FirebaseAuthUI
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.databinding.FragmentCloudSetupBinding
@@ -24,14 +28,12 @@ import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.safeShow
-import com.firebase.ui.auth.AuthMethodPickerLayout
-import com.firebase.ui.auth.AuthUI
-import com.firebase.ui.auth.ErrorCodes
-import com.firebase.ui.auth.IdpResponse
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.uwetrottmann.androidutils.AndroidUtils
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -48,9 +50,6 @@ class CloudSetupFragment : Fragment() {
 
     private var binding: FragmentCloudSetupBinding? = null
 
-    private var snackbar: Snackbar? = null
-
-    private var signInAccount: FirebaseUser? = null
     private lateinit var hexagonTools: HexagonTools
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,15 +76,13 @@ class CloudSetupFragment : Fragment() {
                     (buttonCloudSignIn as MaterialButton).setIconResource(R.drawable.ic_awesome_black_24dp)
                 }
                 setOnClickListener {
-                    // restrict access to supporters
-                    if (BillingTools.hasAccessToPaidFeatures()) {
-                        startHexagonSetup()
-                    } else {
-                        BillingTools.advertiseSubscription(requireContext())
-                    }
+                    signInOrStartSetupOrAdvertiseSubscription()
                 }
             }
-            buttonCloudSignOut.setOnClickListener { signOut() }
+
+            buttonCloudSignOut.setOnClickListener {
+                signOut()
+            }
 
             textViewCloudWarnings.setOnClickListener {
                 // link to trakt account activity which has details about disabled features
@@ -93,23 +90,17 @@ class CloudSetupFragment : Fragment() {
             }
 
             buttonCloudRemoveAccount.setOnClickListener {
-                if (RemoveCloudAccountDialogFragment().safeShow(
-                        parentFragmentManager,
-                        "remove-cloud-account"
-                    )) {
-                    setProgressVisible(true)
-                }
+                removeCloudAccount()
             }
 
-            updateViews()
-            setProgressVisible(true)
+            setProgressVisible(false)
             syncStatusCloud.visibility = View.GONE
         }
     }
 
     override fun onStart() {
         super.onStart()
-        checkSignedIn()
+        updateViewsWithCloudState()
     }
 
     override fun onResume() {
@@ -127,6 +118,110 @@ class CloudSetupFragment : Fragment() {
         binding = null
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    fun onEvent(event: SyncProgress.SyncEvent) {
+        binding?.syncStatusCloud?.setProgress(event)
+    }
+
+    private fun signInOrStartSetupOrAdvertiseSubscription() {
+        if (BillingTools.hasAccessToPaidFeatures()) {
+            if (!startSetupIfSignedIn()) {
+                signIn()
+            }
+        } else {
+            BillingTools.advertiseSubscription(requireContext())
+        }
+    }
+
+    private fun signIn() {
+        setProgressVisible(true)
+
+        val intent = FirebaseAuthActivity.createIntent(requireContext())
+        signInWithFirebase.launch(intent)
+    }
+
+    private val signInWithFirebase =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            setProgressVisible(false)
+            if (result.resultCode == Activity.RESULT_OK) {
+                startSetupIfSignedIn()
+            } else {
+                // Don't display any error message, the auth UI would already have,
+                // but log and if needed report the final error.
+                val error = result.data
+                    ?.let {
+                        if (AndroidUtils.isAtLeastTiramisu) {
+                            it.getSerializableExtra(
+                                FirebaseAuthActivity.EXTRA_ERROR,
+                                AuthException::class.java
+                            )
+                        } else {
+                            @Suppress("DEPRECATION")
+                            it.getSerializableExtra(FirebaseAuthActivity.EXTRA_ERROR)
+                                    as? AuthException
+                        }
+                    }
+                if (error == null) {
+                    // user chose not to sign in or add account
+                    Timber.i("Sign in cancelled")
+                } else {
+                    if (error is AuthException.InvalidCredentialsException
+                        && !hexagonTools.isGoogleSignInAvailable) {
+                        // Note: If trying to sign in with an account that is configured for
+                        // Google Sign-In (such as one created on other device), can't sign in
+                        // because Play Services is not available.
+                        // The user or an admin would have to use the reset password function to
+                        // change the account back to email sign-in.
+                        Timber.e("Account requires Google Sign-In, but Google Play Services not available")
+                    } else {
+                        // Log and report other reasons signing in fails
+                        Timber.e(error, "Failed to sign in (last error)")
+                        Errors.reportHexagonAuthError(ACTION_SIGN_IN, error)
+                    }
+
+                    updateViewsWithCloudState()
+                }
+            }
+        }
+
+    private fun signOut() {
+        if (HexagonSettings.shouldValidateAccount(requireContext())) {
+            // Account needs to be repaired, so can't sign out, just disable Cloud
+            hexagonTools.removeAccountAndSetDisabled()
+            updateViewsWithCloudState()
+        } else {
+            setProgressVisible(true)
+            val context = requireContext().applicationContext
+            viewLifecycleOwner.lifecycleScope.launch {
+                // Launch on app scope to guarantee state in HexagonTools is updated even if this
+                // fragment is destroyed.
+                SgApp.coroutineScope.launch {
+                    try {
+                        FirebaseAuthUI.getInstance().signOut(context)
+                    } catch (e: Exception) {
+                        Timber.e(e, "Failed to sign out")
+                        Errors.reportHexagonAuthError(ACTION_SIGN_OUT, e)
+                    }
+                    Timber.i("Signed out.")
+                    hexagonTools.removeAccountAndSetDisabled()
+                }.join()
+
+                // If views aren't destroyed, yet, update them
+                setProgressVisible(false)
+                updateViewsWithCloudState()
+            }
+        }
+    }
+
+    private fun removeCloudAccount() {
+        if (RemoveCloudAccountDialogFragment().safeShow(
+                parentFragmentManager,
+                "remove-cloud-account"
+            )) {
+            setProgressVisible(true)
+        }
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventMainThread(@Suppress("UNUSED_PARAMETER") event: RemoveCloudAccountDialogFragment.CanceledEvent) {
         setProgressVisible(false)
@@ -136,154 +231,10 @@ class CloudSetupFragment : Fragment() {
     fun onEventMainThread(event: RemoveCloudAccountDialogFragment.AccountRemovedEvent) {
         event.handle(requireContext())
         setProgressVisible(false)
-        updateViews()
+        updateViewsWithCloudState()
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    fun onEvent(event: SyncProgress.SyncEvent) {
-        binding?.syncStatusCloud?.setProgress(event)
-    }
-
-    /**
-     * If there is a signed in account, displays it.
-     */
-    private fun checkSignedIn() {
-        val firebaseUser = FirebaseAuth.getInstance().currentUser
-        // If not signed in account will be null.
-        changeAccount(firebaseUser, null)
-    }
-
-    /**
-     * If the Firebase account is not null, saves it and auto-starts setup if Cloud is not
-     * enabled or the account needs validation.
-     * On sign-in failure with error message (so was not canceled) sets should validate account flag.
-     */
-    private fun changeAccount(account: FirebaseUser?, errorIfNull: String?) {
-        val signedIn = account != null
-        if (signedIn) {
-            Timber.i("Signed in to Cloud.")
-            signInAccount = account
-        } else {
-            signInAccount = null
-            errorIfNull?.let {
-                HexagonSettings.setShouldValidateAccount(requireContext(), true)
-                showSnackbar(getString(R.string.hexagon_signin_fail_format, it))
-            }
-        }
-
-        setProgressVisible(false)
-        updateViews()
-
-        if (signedIn && BillingTools.hasAccessToPaidFeatures()) {
-            if (!HexagonSettings.isEnabled(requireContext())
-                || HexagonSettings.shouldValidateAccount(requireContext())) {
-                Timber.i("Auto-start Cloud setup.")
-                startHexagonSetup()
-            }
-        }
-    }
-
-    private val signInWithFirebase =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                changeAccount(FirebaseAuth.getInstance().currentUser, null)
-            } else {
-                val response = IdpResponse.fromResultIntent(result.data)
-                if (response == null) {
-                    // user chose not to sign in or add account, show no error message
-                    changeAccount(null, null)
-                } else {
-                    val errorMessage: String?
-                    val ex = response.error
-                    if (ex != null) {
-                        when (ex.errorCode) {
-                            ErrorCodes.NO_NETWORK -> {
-                                errorMessage = getString(R.string.offline)
-                            }
-
-                            ErrorCodes.PLAY_SERVICES_UPDATE_CANCELLED -> {
-                                // user cancelled, show no error message
-                                errorMessage = null
-                            }
-
-                            else -> {
-                                if (ex.errorCode == ErrorCodes.DEVELOPER_ERROR
-                                    && !hexagonTools.isGoogleSignInAvailable) {
-                                    // Note: If trying to sign-in with email already used with
-                                    // Google Sign-In on other device, fails to fall back to
-                                    // Google Sign-In because Play Services is not available.
-                                    errorMessage = getString(R.string.hexagon_signin_google_only)
-                                } else {
-                                    // Note: error code in message can be from Firebase Auth UI
-                                    // https://github.com/firebase/FirebaseUI-Android/blob/master/auth/src/main/java/com/firebase/ui/auth/ErrorCodes.java
-                                    // or from Play Services API
-                                    // https://developers.google.com/android/reference/com/google/android/gms/common/api/CommonStatusCodes
-                                    // despite being wrapped in FirebaseUiException.
-                                    // The message format is a good hint, e.g.
-                                    // "Code: 10, message: 10: " is from CommonStatusCodes
-                                    // See also HexagonAuthError.build()
-                                    errorMessage = ex.message
-                                    Errors.logAndReportHexagonAuthError(
-                                        HexagonAuthError.build(ACTION_SIGN_IN, ex)
-                                    )
-                                }
-                            }
-                        }
-                    } else {
-                        errorMessage = "Unknown error"
-                        Errors.logAndReportHexagonAuthError(
-                            HexagonAuthError(ACTION_SIGN_IN, errorMessage)
-                        )
-                    }
-
-                    changeAccount(null, errorMessage)
-                }
-            }
-        }
-
-    private fun signIn() {
-        // Note: no need to provide a layout when just email sign-in is available
-        // as Firebase UI will just directly proceed without asking for the provider.
-        val authPickerLayout = AuthMethodPickerLayout.Builder(R.layout.auth_picker_email_google)
-            .setEmailButtonId(R.id.buttonAuthSignInEmail)
-            .setGoogleButtonId(R.id.buttonAuthSignInGoogle)
-            .build()
-
-        // Create and launch sign-in intent
-        val intent = AuthUI.getInstance()
-            .createSignInIntentBuilder()
-            .setAvailableProviders(hexagonTools.firebaseSignInProviders)
-            .setIsSmartLockEnabled(hexagonTools.isGoogleSignInAvailable)
-            // AuthUI is not compatible with edge-to-edge on Android 15 (target SDK 35),
-            // so opt out its activities.
-            // https://github.com/firebase/FirebaseUI-Android/issues/2177
-            .setTheme(R.style.Theme_SeriesGuide_DayNight_OptOutEdgeToEdge)
-            .setAuthMethodPickerLayout(authPickerLayout)
-            .build()
-
-        signInWithFirebase.launch(intent)
-    }
-
-    private fun signOut() {
-        if (HexagonSettings.shouldValidateAccount(requireContext())) {
-            // Account needs to be repaired, so can't sign out, just disable Cloud
-            hexagonTools.removeAccountAndSetDisabled()
-            updateViews()
-        } else {
-            setProgressVisible(true)
-            AuthUI.getInstance().signOut(requireContext()).addOnCompleteListener {
-                Timber.i("Signed out.")
-                signInAccount = null
-                hexagonTools.removeAccountAndSetDisabled()
-                if (this@CloudSetupFragment.isAdded) {
-                    setProgressVisible(false)
-                    updateViews()
-                }
-            }
-        }
-    }
-
-    private fun updateViews() {
+    private fun updateViewsWithCloudState() {
         if (HexagonSettings.isEnabled(requireContext())) {
             // hexagon enabled...
             binding?.textViewCloudUser?.text = HexagonSettings.getAccountName(requireContext())
@@ -305,7 +256,7 @@ class CloudSetupFragment : Fragment() {
                 )
             }
         } else {
-            // did try to setup, but failed?
+            // did try setup, but failed?
             if (!HexagonSettings.hasCompletedSetup(requireContext())) {
                 // show error message
                 binding?.textViewCloudDescription?.setText(R.string.hexagon_setup_incomplete)
@@ -346,53 +297,47 @@ class CloudSetupFragment : Fragment() {
         }
     }
 
-    private fun showSnackbar(message: CharSequence) {
-        dismissSnackbar()
-        snackbar = Snackbar.make(requireView(), message, Snackbar.LENGTH_INDEFINITE).also {
-            it.show()
+    private fun startSetupIfSignedIn(): Boolean {
+        val account = FirebaseAuth.getInstance().currentUser
+        val signedIn = account != null
+        if (account != null) {
+            Timber.i("Authenticated with Firebase")
+            startHexagonSetup(account)
         }
+        return signedIn
     }
 
-    private fun dismissSnackbar() {
-        snackbar?.dismiss()
-    }
-
-    private fun startHexagonSetup() {
-        dismissSnackbar()
+    private fun startHexagonSetup(account: FirebaseUser) {
         setProgressVisible(true)
 
-        val signInAccountOrNull = signInAccount
-        if (signInAccountOrNull == null) {
-            signIn()
-        } else {
-            Timber.i("Setting up Hexagon...")
-            // set setup incomplete flag
-            HexagonSettings.setSetupIncomplete(requireContext())
+        Timber.i("Setting up Hexagon...")
+        // set setup incomplete flag
+        HexagonSettings.setSetupIncomplete(requireContext())
 
-            // validate account data
-            if (signInAccountOrNull.email.isNullOrEmpty()) {
-                Timber.d("Setting up Hexagon...FAILURE_AUTH")
-                // show setup incomplete message + error toast
-                view?.let {
-                    Snackbar.make(it, R.string.hexagon_setup_fail_auth, Snackbar.LENGTH_LONG)
-                        .show()
-                }
-            } else if (hexagonTools.setAccountAndEnabled(signInAccountOrNull)) {
-                // schedule full sync
-                Timber.d("Setting up Hexagon...SUCCESS_SYNC_REQUIRED")
-                SgSyncAdapter.requestSyncFullImmediate(requireContext(), false)
-                HexagonSettings.setSetupCompleted(requireContext())
-            } else {
-                // Do not set completed, will show setup incomplete message.
-                Timber.d("Setting up Hexagon...FAILURE")
+        // validate account data
+        if (account.email.isNullOrEmpty()) {
+            Timber.d("Setting up Hexagon...FAILURE_AUTH")
+            // show setup incomplete message + error toast
+            view?.let {
+                Snackbar.make(it, R.string.hexagon_setup_fail_auth, Snackbar.LENGTH_LONG)
+                    .show()
             }
-
-            setProgressVisible(false)
-            updateViews()
+        } else if (hexagonTools.setAccountAndEnabled(account)) {
+            // schedule full sync
+            Timber.d("Setting up Hexagon...SUCCESS_SYNC_REQUIRED")
+            SgSyncAdapter.requestSyncFullImmediate(requireContext(), false)
+            HexagonSettings.setSetupCompleted(requireContext())
+        } else {
+            // Do not set completed, will show setup incomplete message.
+            Timber.d("Setting up Hexagon...FAILURE")
         }
+
+        setProgressVisible(false)
+        updateViewsWithCloudState()
     }
 
     companion object {
         private const val ACTION_SIGN_IN = "sign-in"
+        private const val ACTION_SIGN_OUT = "sign-out"
     }
 }

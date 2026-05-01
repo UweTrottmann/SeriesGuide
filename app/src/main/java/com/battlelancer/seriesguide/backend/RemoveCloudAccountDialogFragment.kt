@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2014 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.backend
 
@@ -12,11 +12,9 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.SgApp.Companion.getServicesComponent
-import com.battlelancer.seriesguide.backend.RemoveCloudAccountDialogFragment.AccountRemovedEvent
-import com.battlelancer.seriesguide.backend.RemoveCloudAccountDialogFragment.CanceledEvent
+import com.battlelancer.seriesguide.backend.auth.AuthException
+import com.battlelancer.seriesguide.backend.auth.FirebaseAuthUI
 import com.battlelancer.seriesguide.util.Errors
-import com.firebase.ui.auth.AuthUI
-import com.google.android.gms.tasks.Tasks
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,7 +24,6 @@ import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
 import java.io.IOException
-import java.util.concurrent.ExecutionException
 
 /**
  * Confirms whether to obliterate a SeriesGuide cloud account. If removal is tried, posts result as
@@ -59,7 +56,6 @@ class RemoveCloudAccountDialogFragment : AppCompatDialogFragment() {
 
     class RemoveHexagonAccountTask(context: Context) {
 
-        private val context: Context = context.applicationContext
         private val hexagonTools: HexagonTools = getServicesComponent(context).hexagonTools()
 
         suspend fun run() {
@@ -71,7 +67,7 @@ class RemoveCloudAccountDialogFragment : AppCompatDialogFragment() {
             }
         }
 
-        private fun doInBackground(): Boolean {
+        private suspend fun doInBackground(): Boolean {
             // remove account from hexagon
             try {
                 val accountService = hexagonTools.buildAccountService()
@@ -83,23 +79,11 @@ class RemoveCloudAccountDialogFragment : AppCompatDialogFragment() {
             }
 
             // Delete Firebase account so other clients are signed out as well
-            val task = AuthUI.getInstance().delete(context)
             try {
-                Tasks.await(task)
-            } catch (e: Exception) {
-                // https://developers.google.com/android/reference/com/google/android/gms/tasks/Tasks#public-static-tresult-await-tasktresult-task
-                if (e is InterruptedException) {
-                    // Do not report thread interruptions, it's expected.
-                    Timber.w(e, ACTION_REMOVE_ACCOUNT)
-                } else {
-                    val cause = if (e is ExecutionException) {
-                        e.cause ?: e // The Task failed, getCause returns the original exception.
-                    } else {
-                        e // Unexpected exception.
-                    }
-                    val authEx = HexagonAuthError.build(ACTION_REMOVE_ACCOUNT, cause)
-                    Errors.logAndReportHexagonAuthError(authEx)
-                }
+                FirebaseAuthUI.getInstance().delete()
+            } catch (e: AuthException) {
+                Timber.e(e, "Failed to delete Firebase account")
+                Errors.reportHexagonAuthError(ACTION_REMOVE_ACCOUNT, e)
                 return false
             }
 

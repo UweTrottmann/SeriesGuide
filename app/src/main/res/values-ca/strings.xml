@@ -326,8 +326,6 @@
     <string name="hexagon_remove_account_confirmation">Si esborreu el vostre compte, també s\'esborraran totes les sèries i peŀlícules que tingueu al Cloud de SeriesGuide. Assegureu-vos d\'esborrar-ho dels altres dispositius on el tingueu sincronitzat.</string>
     <string name="hexagon_api_queued">Enviant a SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Has desconnectat de SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Error amb l\'inici de sessió (%s)</string>
-    <string name="hexagon_signin_google_only">L\'adreça de correu electrònic requereix iniciar sessió amb Google</string>
     <string name="hexagon_signin_choose">Trieu el correu electrònic per iniciar sessió en cas que s\'utilitzi SeriesGuide en altres dispositius que no permetin l\'inici de sessió amb Google.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">S\'està enviant a trakt.</string>

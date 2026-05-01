@@ -81,12 +81,16 @@ compose = "androidx.compose:compose-bom:2026.02.00"
 compose-material3 = { module = "androidx.compose.material3:material3" }
 compose-tooling = { module = "androidx.compose.ui:ui-tooling" }
 compose-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+# https://developer.android.com/jetpack/androidx/releases/navigation
+androidx-navigation = "androidx.navigation:navigation-compose:2.8.9"
 
 # https://developer.android.com/jetpack/androidx/releases/browser
 androidx-browser = "androidx.browser:browser:1.9.0"
 androidx-palette = "androidx.palette:palette-ktx:1.0.0"
 # https://developer.android.com/jetpack/androidx/releases/preference
 androidx-preference = "androidx.preference:preference-ktx:1.2.1"
+# https://developer.android.com/jetpack/androidx/releases/datastore
+androidx-datastore = "androidx.datastore:datastore-preferences:1.1.7"
 
 # Room
 # https://developer.android.com/jetpack/androidx/releases/room
@@ -100,15 +104,17 @@ androidx-room-testing = "androidx.room:room-testing:2.8.4"
 androidutils = "com.uwetrottmann.androidutils:androidutils:4.0.0"
 photoview = "com.github.chrisbanes:PhotoView:2.3.0"
 
-# https://developers.google.com/android/guides/releases
-# 21.0.0 removes Credentials API used by firebase-ui-auth
-play-services-auth = "com.google.android.gms:play-services-auth:20.7.0"
+# https://developer.android.com/jetpack/androidx/releases/credentials
+androidx-credentials = "androidx.credentials:credentials:1.5.0"
+androidx-credentials-play = "androidx.credentials:credentials-play-services-auth:1.5.0"
+# https://developers.google.com/identity/android-credential-manager/releases
+googleid = "com.google.android.libraries.identity.googleid:googleid:1.1.1"
 # https://firebase.google.com/support/release-notes/android
 firebase-crashlytics = "com.google.firebase:firebase-crashlytics:20.0.3"
-# 23.0.0 requires min SDK 23
-firebase-auth = "com.google.firebase:firebase-auth:22.3.1"
-# https://github.com/firebase/FirebaseUI-Android/releases
-firebase-ui-auth = "com.firebaseui:firebase-ui-auth:8.0.2"
+firebase-auth = "com.google.firebase:firebase-auth:24.0.1"
+# Note: ZXing is no longer actively developed
+# https://github.com/zxing/zxing/releases
+zxing = "com.google.zxing:core:3.5.3"
 # https://github.com/googleapis/google-api-java-client/releases
 google-api-client = "com.google.api-client:google-api-client:2.6.0"
 google-api-client-android = "com.google.api-client:google-api-client-android:2.6.0"
@@ -136,8 +142,7 @@ junit = "junit:junit:4.13.2"
 # https://github.com/google/truth/releases
 truth = "com.google.truth:truth:1.4.5"
 # https://github.com/mockito/mockito/releases
-# mockito 5 requires JDK 11
-mockito = "org.mockito:mockito-core:4.11.0"
+mockito = "org.mockito:mockito-core:5.23.0"
 # https://github.com/robolectric/robolectric/releases/
 robolectric = "org.robolectric:robolectric:4.16"
 # https://developer.android.com/jetpack/androidx/releases/test

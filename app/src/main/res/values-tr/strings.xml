@@ -326,8 +326,6 @@
     <string name="hexagon_remove_account_confirmation">Hesabınızı kaldırdığınızda SeriesGuide Cloud üzerindeki bütün film ve dizileriniz silinecektir. Hesabınızı diğer bağlı cihazlardan da kaldırdığınızdan emin olun.</string>
     <string name="hexagon_api_queued">SeriesGuide bulutuna gönder.</string>
     <string name="hexagon_signed_out">SeriesGuide Bulut servisinden çıkış yapıldı.</string>
-    <string name="hexagon_signin_fail_format">%s ile girişte hata oluştu</string>
-    <string name="hexagon_signin_google_only">E-posta adresi, Google ile Oturum Açmayı gerektirir</string>
     <string name="hexagon_signin_choose">SeriesGuide\'ı, Google ile oturum açmayı desteklemeyen diğer cihazlarda kullanıyorsanız, oturum açmak için e-postayı seçin.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Trakt\'a gönderiliyor.</string>

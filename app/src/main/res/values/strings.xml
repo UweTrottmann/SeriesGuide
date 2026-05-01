@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <!-- Main Menu -->
     <string name="shows">Shows</string>
@@ -351,8 +351,6 @@
     <string name="hexagon_remove_account_confirmation">This will delete your shows, lists and movies from SeriesGuide Cloud</string>
     <string name="hexagon_api_queued">Sending to SeriesGuide Cloud</string>
     <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud</string>
-    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
-    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
     <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
 
     <!-- trakt -->
@@ -625,5 +623,46 @@
     <string name="title_stream_with_ads">With ads</string>
     <string name="title_stream_buy">Purchase</string>
     <string name="title_stream_rent">Rental</string>
+
+    <!-- Cloud Authentication -->
+    <!-- Common -->
+    <string name="auth_action_continue" comment="Action to continue">Continue</string>
+    <string name="auth_action_back" comment="Action to go back">Back</string>
+    <string name="auth_message_privacy_policy" comment="Privacy policy message, the placeholder will use the label for privacy_policy">By continuing, you are indicating that you accept the <xliff:g comment="Privacy policy label">%1$s</xliff:g>.</string>
+    <string name="auth_message_new_accounts_disabled" comment="Message shown when creating new accounts is not allowed">Creating new accounts is currently not allowed</string>
+
+    <!-- Auth method picker -->
+    <string name="auth_action_sign_in_with_google" comment="Action to sign in with a Google account">Sign in with Google</string>
+    <string name="auth_action_sign_in_with_email" comment="Action to sign in with an email address">Sign in with email</string>
+    <string name="auth_action_continue_with_google" comment="Action to continue signing in with a suggested Google account">Continue with Google</string>
+    <string name="auth_action_continue_with_email" comment="Action to continue signing in with a suggested email address">Continue with email</string>
+
+    <!-- Email auth -->
+    <string name="auth_hint_name" comment="Hint for name input field">Your name</string>
+    <string name="auth_hint_email" comment="Hint for email input field">Email</string>
+    <string name="auth_hint_password" comment="Hint for password input field">Password</string>
+    <string name="auth_hint_confirm_password" comment="Hint for confirm password input field">Confirm Password</string>
+    <string name="auth_hint_confirm_password_does_not_match" comment="Hint when password entered in confirm password field does not match">Passwords do not match</string>
+    <string name="auth_hint_required" comment="Hint that the value of an input field is required">Required</string>
+    <string name="auth_hint_email_required" comment="Hint that a valid email address is required in an input field">Valid email address required</string>
+    <string name="auth_action_sign_up" comment="Action to create an account">Create an account</string>
+    <string name="auth_error_email_alreay_in_use" comment="Error message when signing up with a used email address">This email address is already in use by an existing account. Please sign in with your existing account.</string>
+    <string name="auth_action_show_password" comment="Action to show the password in a text field">Show password</string>
+
+    <!-- Password validation messages -->
+    <string name="auth_error_weak_password" comment="Error message when password does not meet requirements">Password not strong enough</string>
+    <string name="auth_error_password_too_short" comment="Error message when password is too short">Use at least %1$d characters</string>
+
+    <!-- Password recovery -->
+    <string name="auth_action_reset_password" comment="Action to reset password">Reset password</string>
+    <string name="auth_title_reset_password_instructions" comment="Title of reset password instructions">Check your email</string>
+    <string name="auth_message_reset_password_instructions" comment="Reset password instructions">If an account for this email address exists, an email with instructions to reset your password was sent to it.</string>
+
+    <!-- Error Recovery Dialog -->
+    <string name="auth_error_dialog_title" comment="Title for error recovery dialog">Authentication Error</string>
+    <string name="auth_error_account_linking_required" comment="Error message when account exists, but created with different sign-in method">An account was already created for this email address using a different sign-in method. Sign in using the original method to add this one.</string>
+    <string name="auth_error_no_google_account_available" comment="Error message when trying to sign in with Google but no Google accounts are available on the device">No Google account is available on this device. Sign in using email or add a Google account to this device.</string>
+    <string name="auth_error_unknown" comment="General error messages for an unknown failure.">An unknown error occurred</string>
+    <string name="auth_error_invalid_password" comment="Error message for when signing in fails.">This password is incorrect, this account does not support signing in with a password or there is no account with this email address. Maybe reset your password.</string>
 
 </resources>

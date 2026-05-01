@@ -346,8 +346,6 @@
     <string name="hexagon_remove_account_confirmation">Tímto smažete vaše seriály, seznamy a filmy ze SeriesGuide cloudu.</string>
     <string name="hexagon_api_queued">Odesílání do SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Odhlášeno z SeriesGuide Cloudu.</string>
-    <string name="hexagon_signin_fail_format">Chyba při přihlášení (%s)</string>
-    <string name="hexagon_signin_google_only">E-mailová adresa vyžaduje přihlášení Google</string>
     <string name="hexagon_signin_choose">Pokud používáte SeriesGuide na jiných zařízeních, která nepodporují přihlášení Google, zvolte e-mail pro přihlášení.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Odesílání na Trakt.</string>

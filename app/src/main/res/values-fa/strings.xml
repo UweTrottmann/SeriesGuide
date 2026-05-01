@@ -326,8 +326,6 @@
     <string name="hexagon_remove_account_confirmation">حذف حسابتان تمام نمایش‌ها و فیلم‌ها را از فضای ابری SeriesGuide پاک می‌کند. مطمئن شوید که آن را از دیگر افزاره‌های وصل شده نیز حذف میکنید.</string>
     <string name="hexagon_api_queued">در حال ارسال به فضای ابری SeriesGuide.</string>
     <string name="hexagon_signed_out">از فضای ابری SeriesGuide خارج شدید.</string>
-    <string name="hexagon_signin_fail_format">خطا در ورود (%s)</string>
-    <string name="hexagon_signin_google_only">نشانی رایانامه نیازمند ورود گوگلی است</string>
     <string name="hexagon_signin_choose">اگر روی افزاره‌ای دیگر که از ورود گوگل پشتیبانی نمی‌کند از سریزگاید استفاده می‌کنید رایانامه را برای ورود برگزینید.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">ارسال به trakt.</string>

@@ -213,6 +213,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.coordinatorlayout)
     implementation(libs.androidx.preference)
+    implementation(libs.androidx.datastore)
     implementation(libs.androidx.swiperefreshlayout)
 
     // Compose
@@ -226,6 +227,7 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     // Optional - Integration with ViewModels
     implementation(libs.androidx.lifecycle.compose)
+    implementation(libs.androidx.navigation)
 
     // ViewModel and LiveData
     implementation(libs.androidx.lifecycle.livedata)
@@ -273,14 +275,16 @@ dependencies {
         exclude(group = "org.threeten", module = "threetenbp") // using ThreeTenABP instead
     }
 
+    // Firebase Authentication
+    implementation(libs.firebase.auth)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play)
+    implementation(libs.googleid)
+    implementation(libs.zxing)
+
     // Note: can not use Firebase BOM as firebase-ui-auth has not updated in a while
     // Crashlytics
     implementation(libs.firebase.crashlytics)
-    // Firebase Sign-In
-    implementation(libs.firebase.ui.auth)
-    // Use compatible later versions of firebase-ui-auth dependencies to get latest fixes.
-    implementation(libs.firebase.auth)
-    implementation(libs.play.services.auth)
 
     // Amazon Billing
     // Note: requires to add AppstoreAuthenticationKey.pem into amazon/assets.

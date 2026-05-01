@@ -326,8 +326,6 @@
     <string name="hexagon_remove_account_confirmation">Hvis du sletter din konto, slettes alle film og serier fra SeriesGuide Cloud. Sørg for også at fjerne kontoen på andre tilsluttede enheder.</string>
     <string name="hexagon_api_queued">Sender til SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Logget ud af SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Fejl i login (%s)</string>
-    <string name="hexagon_signin_google_only">E-mail-adresse kræver Google Sign-In</string>
     <string name="hexagon_signin_choose">Vælg e-mail til login, hvis du bruger SeriesGuide på andre enheder, der ikke understøtter Google-login.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Sender til trakt.</string>

@@ -1,0 +1,192 @@
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+
+// Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
+// https://github.com/firebase/FirebaseUI-Android
+
+package com.battlelancer.seriesguide.backend.auth.credentialmanager
+
+import android.content.Context
+import androidx.credentials.CreatePasswordRequest
+import androidx.credentials.CredentialManager
+import androidx.credentials.GetCredentialRequest
+import androidx.credentials.GetPasswordOption
+import androidx.credentials.PasswordCredential as AndroidPasswordCredential
+import androidx.credentials.exceptions.CreateCredentialCancellationException
+import androidx.credentials.exceptions.CreateCredentialException
+import androidx.credentials.exceptions.GetCredentialCancellationException
+import androidx.credentials.exceptions.GetCredentialException
+import androidx.credentials.exceptions.NoCredentialException
+import com.battlelancer.seriesguide.backend.auth.util.CredentialPersistenceManager
+
+/**
+ * Provider interface for obtaining CredentialManager instances.
+ * This allows test code to inject mock CredentialManager instances.
+ */
+interface CredentialManagerProvider {
+    fun getCredentialManager(context: Context): CredentialManager
+}
+
+/**
+ * Default implementation that creates a real CredentialManager instance.
+ */
+class DefaultCredentialManagerProvider : CredentialManagerProvider {
+    override fun getCredentialManager(context: Context): CredentialManager {
+        return CredentialManager.create(context)
+    }
+}
+
+/**
+ * Handler for password credential operations using Android's Credential Manager.
+ *
+ * This class provides methods to save and retrieve password credentials through
+ * the system credential manager, which displays native UI prompts to the user.
+ *
+ * @property context The Android context used for credential operations
+ * @property provider Optional provider for testing purposes
+ */
+class PasswordCredentialHandler(
+    private val context: Context,
+    provider: CredentialManagerProvider? = null
+) {
+    companion object {
+        /**
+         * Test-only provider for injecting mock CredentialManager instances.
+         * Set this in your test setup to override the default CredentialManager.
+         *
+         * Example:
+         * ```
+         * PasswordCredentialHandler.testCredentialManagerProvider = object : CredentialManagerProvider {
+         *     override fun getCredentialManager(context: Context) = mockCredentialManager
+         * }
+         * ```
+         */
+        @Volatile
+        var testCredentialManagerProvider: CredentialManagerProvider? = null
+
+        /**
+         * Checks if credentials have been saved at least once.
+         * This prevents unnecessary credential retrieval attempts.
+         *
+         * @param context The Android context
+         * @return true if credentials have been saved, false otherwise
+         */
+        suspend fun hasSavedCredentials(context: Context): Boolean {
+            return CredentialPersistenceManager.hasSavedCredentials(context)
+        }
+
+        /**
+         * Clears the saved credentials flag.
+         * Useful for testing or when user signs out permanently.
+         *
+         * @param context The Android context
+         */
+        suspend fun clearSavedCredentialsFlag(context: Context) {
+            CredentialPersistenceManager.clearSavedCredentialsFlag(context)
+        }
+    }
+
+    private val credentialManager: CredentialManager =
+        provider?.getCredentialManager(context)
+            ?: testCredentialManagerProvider?.getCredentialManager(context)
+            ?: CredentialManager.create(context)
+
+    /**
+     * Saves a password credential to the system credential manager.
+     *
+     * This method displays a system prompt to the user asking if they want to save
+     * the credential. The operation is performed asynchronously using Kotlin coroutines.
+     *
+     * @param username The username/identifier for the credential
+     * @param password The password to save
+     * @throws CreateCredentialException if the credential cannot be saved
+     * @throws CreateCredentialCancellationException if the user cancels the save operation
+     * @throws IllegalArgumentException if username or password is blank
+     */
+    suspend fun savePassword(username: String, password: String) {
+        require(username.isNotBlank()) { "Username cannot be blank" }
+        require(password.isNotBlank()) { "Password cannot be blank" }
+
+        val request = CreatePasswordRequest(
+            id = username,
+            password = password
+        )
+
+        try {
+            credentialManager.createCredential(context, request)
+            // Mark that credentials have been saved successfully
+            CredentialPersistenceManager.setCredentialsSaved(context)
+        } catch (e: CreateCredentialCancellationException) {
+            // User cancelled the save operation
+            throw PasswordCredentialCancelledException("User cancelled password save operation", e)
+        } catch (e: CreateCredentialException) {
+            // Other credential creation errors
+            throw PasswordCredentialException("Failed to save password credential", e)
+        }
+    }
+
+    /**
+     * Retrieves a password credential from the system credential manager.
+     *
+     * This method displays a system prompt showing available credentials for the user
+     * to select from. The operation is performed asynchronously using Kotlin coroutines.
+     *
+     * @return PasswordCredential containing the username and password
+     * @throws NoCredentialException if no credentials are available
+     * @throws GetCredentialCancellationException if the user cancels the retrieval operation
+     * @throws GetCredentialException if the credential cannot be retrieved
+     */
+    suspend fun getPassword(): PasswordCredential {
+        val getPasswordOption = GetPasswordOption()
+        val request = GetCredentialRequest.Builder()
+            .addCredentialOption(getPasswordOption)
+            .build()
+
+        try {
+            val result = credentialManager.getCredential(context, request)
+            val credential = result.credential
+
+            if (credential is AndroidPasswordCredential) {
+                return PasswordCredential(
+                    username = credential.id,
+                    password = credential.password
+                )
+            } else {
+                throw PasswordCredentialException("Retrieved credential is not a password credential")
+            }
+        } catch (e: GetCredentialCancellationException) {
+            // User cancelled the retrieval operation
+            throw PasswordCredentialCancelledException("User cancelled password retrieval operation", e)
+        } catch (e: NoCredentialException) {
+            // No credentials available
+            throw PasswordCredentialNotFoundException("No password credentials found", e)
+        } catch (e: GetCredentialException) {
+            // Other credential retrieval errors
+            throw PasswordCredentialException("Failed to retrieve password credential", e)
+        }
+    }
+}
+
+/**
+ * Base exception for password credential operations.
+ */
+open class PasswordCredentialException(
+    message: String,
+    cause: Throwable? = null
+) : Exception(message, cause)
+
+/**
+ * Exception thrown when a password credential operation is cancelled by the user.
+ */
+class PasswordCredentialCancelledException(
+    message: String,
+    cause: Throwable? = null
+) : PasswordCredentialException(message, cause)
+
+/**
+ * Exception thrown when no password credentials are found.
+ */
+class PasswordCredentialNotFoundException(
+    message: String,
+    cause: Throwable? = null
+) : PasswordCredentialException(message, cause)

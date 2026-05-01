@@ -326,8 +326,6 @@
     <string name="hexagon_remove_account_confirmation">உங்கள் கணக்கு அகற்றுவது இருக்கும் அனைத்து காட்சிகள் மற்றும் திரைப்படங்கள் இருந்து நீக்க SeriesGuide மேகம். மற்ற இணைக்கப்பட்ட சாதனங்கள் நன்றாக அதை அகற்ற உறுதி.</string>
     <string name="hexagon_api_queued">SeriesGuide மேகம் அனுப்புகிறது.</string>
     <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud</string>
-    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
-    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
     <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Trakt அனுப்புகிறது.</string>

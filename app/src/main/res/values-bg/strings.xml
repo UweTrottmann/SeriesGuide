@@ -326,8 +326,6 @@
     <string name="hexagon_remove_account_confirmation">С премахването на акаунта ви ще се изтрият всички предавания и филми от SeriesGuide облака. Не забраявайте да го премахнете и на други свързани устройства.</string>
     <string name="hexagon_api_queued">Изпращане към SeriesGuide облака.</string>
     <string name="hexagon_signed_out">Излизане от облака SeriesGuide.</string>
-    <string name="hexagon_signin_fail_format">Грешка при влизане с (%s)</string>
-    <string name="hexagon_signin_google_only">Email адресът изисква Google Sign-In</string>
     <string name="hexagon_signin_choose">Изберете имейл за вход, ако използвате SeriesGuide на устройства, които не поддържат Google акаунти.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Подаване към trakt.</string>
