@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0 AND AGPL-3.0-or-later
+// SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2015 Andrew Neal
 // SPDX-FileCopyrightText: Copyright © 2023 Uwe Trottmann <uwe@uwetrottmann.com>
 

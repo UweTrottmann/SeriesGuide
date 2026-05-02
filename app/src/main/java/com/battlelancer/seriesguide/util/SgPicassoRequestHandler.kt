@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0 AND AGPL-3.0-or-later
+// SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2013 Square, Inc.
 // SPDX-FileCopyrightText: Copyright © 2017 Uwe Trottmann <uwe@uwetrottmann.com>
 

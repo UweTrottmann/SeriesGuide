@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0 AND AGPL-3.0-or-later
+// SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2018 Google Inc. All Rights Reserved.
 // SPDX-FileCopyrightText: Copyright © 2019 Uwe Trottmann <uwe@uwetrottmann.com>
 
