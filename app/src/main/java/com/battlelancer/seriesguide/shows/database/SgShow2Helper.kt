@@ -1,6 +1,8 @@
-// SPDX-License-Identifier: Apache-2.0
-// Copyright 2021-2024 Uwe Trottmann
-// Copyright 2021 Andre Ippisch
+// SPDX-License-Identifier: Apache-2.0 AND AGPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2021 Uwe Trottmann <uwe@uwetrottmann.com>
+// SPDX-FileCopyrightText: Copyright © 2021 Andre Ippisch
+
+// Contributions by Andre Ippisch licensed under Apache-2.0
 
 package com.battlelancer.seriesguide.shows.database
 
