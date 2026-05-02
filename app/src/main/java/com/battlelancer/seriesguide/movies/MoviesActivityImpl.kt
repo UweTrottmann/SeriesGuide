@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2013-2024 Uwe Trottmann
-// Copyright 2017 Christophe Beyls
+// SPDX-FileCopyrightText: Copyright © 2013 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.movies
 
@@ -44,6 +43,7 @@ open class MoviesActivityImpl : BaseTopActivity() {
         setupViews(savedInstanceState)
         setupSyncProgressBar(R.id.sgProgressBar)
 
+        // Fix thanks to cbeyls (Christophe Beyls)
         if (savedInstanceState != null) {
             postponeEnterTransition()
             // Allow the adapters to repopulate during the next layout pass
