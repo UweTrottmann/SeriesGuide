@@ -21,6 +21,7 @@ public class MovieDetails {
     private Ratings traktRatings;
     private Movie tmdbMovie;
 
+    private boolean isInDatabase;
     private boolean inCollection;
     private boolean inWatchlist;
     private boolean isWatched;
@@ -46,6 +47,18 @@ public class MovieDetails {
 
     public void tmdbMovie(Movie movie) {
         tmdbMovie = movie;
+    }
+
+    /**
+     * If this movie is stored in the local database.
+     */
+    public boolean isInDatabase() {
+        return isInDatabase;
+    }
+
+    public MovieDetails setInDatabase(boolean inDatabase) {
+        isInDatabase = inDatabase;
+        return this;
     }
 
     public boolean isInCollection() {

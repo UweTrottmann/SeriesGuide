@@ -49,6 +49,7 @@ internal class MovieLoader(
 
         // set local state for watched, collected and watchlist status
         // assumption: local db has the truth for these
+        details.isInDatabase = true
         details.isInCollection = dbMovieOrNull.inCollectionOrDefault
         details.isInWatchlist = dbMovieOrNull.inWatchlistOrDefault
         details.isWatched = dbMovieOrNull.watchedOrDefault
