@@ -941,7 +941,8 @@ public class SeriesGuideContract {
             ListItemTypes.TVDB_SHOW,
             ListItemTypes.SEASON,
             ListItemTypes.EPISODE,
-            ListItemTypes.TMDB_SHOW
+            ListItemTypes.TMDB_SHOW,
+            ListItemTypes.TMDB_MOVIE
     })
     public @interface ListItemTypes {
         int TVDB_SHOW = 1;
@@ -954,6 +955,7 @@ public class SeriesGuideContract {
          */
         int EPISODE = 3;
         int TMDB_SHOW = 4;
+        int TMDB_MOVIE = 5;
     }
 
     interface MoviesColumns {
@@ -1201,7 +1203,8 @@ public class SeriesGuideContract {
             return type == ListItemTypes.TVDB_SHOW
                     || type == ListItemTypes.SEASON
                     || type == ListItemTypes.EPISODE
-                    || type == ListItemTypes.TMDB_SHOW;
+                    || type == ListItemTypes.TMDB_SHOW
+                    || type == ListItemTypes.TMDB_MOVIE;
         }
     }
 

@@ -264,7 +264,7 @@ open class OverviewActivityImpl : BaseMessageActivity() {
             return true
         }
         if (itemId == R.id.menu_show_manage_lists) {
-            ManageListsDialogFragment.show(supportFragmentManager, showId)
+            ManageListsDialogFragment.showForShow(supportFragmentManager, showId)
             return true
         }
         if (itemId == R.id.menu_overview_remove_show) {

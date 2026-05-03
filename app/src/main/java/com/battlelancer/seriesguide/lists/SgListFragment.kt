@@ -184,7 +184,7 @@ class SgListFragment : Fragment() {
                 }
 
                 R.id.menu_action_lists_manage -> {
-                    ManageListsDialogFragment.show(fragmentManager, showId)
+                    ManageListsDialogFragment.showForShow(fragmentManager, showId)
                     return true
                 }
 
