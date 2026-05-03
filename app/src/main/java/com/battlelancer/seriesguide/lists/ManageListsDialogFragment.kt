@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2023 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.lists
 
@@ -14,39 +14,41 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.core.view.isGone
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.launch
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.DialogManageListsBinding
 import com.battlelancer.seriesguide.databinding.ItemListCheckedBinding
+import com.battlelancer.seriesguide.lists.ManageListsDialogFragmentViewModel.ListItem
 import com.battlelancer.seriesguide.lists.ManageListsDialogFragmentViewModel.ListWithItem
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.safeShow
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 /**
  * Displays a dialog displaying all user created lists,
- * allowing to add or remove the given show for any.
+ * allowing to add or remove the given show or movie for any.
  */
 class ManageListsDialogFragment : AppCompatDialogFragment() {
 
     private var binding: DialogManageListsBinding? = null
-    private val model by viewModels<ManageListsDialogFragmentViewModel> {
-        ManageListsDialogFragmentViewModelFactory(requireActivity().application, showId)
+
+    private val listItem: ListItem by lazy {
+        val args = requireArguments()
+        val movieTmdbId = args.getInt(ARG_INT_MOVIE_TMDB_ID, 0)
+        if (movieTmdbId != 0) {
+            ListItem.Movie(movieTmdbId)
+        } else {
+            ListItem.Show(args.getLong(ARG_LONG_SHOW_ID))
+        }
     }
-    private var showId: Long = 0
 
-    /**
-     * Remains 0 if TMDB id for show not found (show is not migrated to TMDB data).
-     */
-    private var showTmdbId = 0
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        showId = requireArguments().getLong(ARG_LONG_SHOW_ID)
+    private val model by viewModels<ManageListsDialogFragmentViewModel> {
+        ManageListsDialogFragmentViewModelFactory(requireActivity().application, listItem)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -63,18 +65,17 @@ class ManageListsDialogFragment : AppCompatDialogFragment() {
         }
 
         // Note: viewLifeCycleOwner not available for DialogFragment, use DialogFragment itself.
-        model.showDetails.observe(this) { showDetails ->
-            if (showDetails == null) {
+        model.listItemDetails.observe(this) { details ->
+            if (details == null) {
                 Toast.makeText(requireContext(), R.string.database_error, Toast.LENGTH_LONG).show()
                 dismiss()
                 return@observe
             }
-            showTmdbId = showDetails.tmdbId ?: 0
 
-            binding.item.text = showDetails.title
+            binding.item.text = details.title
 
-            if (showTmdbId <= 0) {
-                // Note: see OK button handler that prevents changing lists if not migrated.
+            // For shows: warn if not yet migrated to TMDB data. Not applicable for movies.
+            if (listItem is ListItem.Show && details.tmdbId <= 0) {
                 ViewTools.configureNotMigratedWarning(binding.textViewManageListsError, true)
             }
         }
@@ -86,32 +87,10 @@ class ManageListsDialogFragment : AppCompatDialogFragment() {
             .setView(binding.root)
             .setNegativeButton(android.R.string.cancel, null)
             .setPositiveButton(android.R.string.ok) { _: DialogInterface, _: Int ->
-                // Note: see show details loader that prevents loading list data if not migrated.
-                if ((model.showDetails.value?.tmdbId ?: 0) <= 0) {
+                lifecycleScope.launch {
+                    model.saveChanges()
                     dismiss()
-                    return@setPositiveButton
                 }
-                // add item to selected lists, remove from previously selected lists
-                val addToTheseLists: MutableList<String> = ArrayList()
-                val removeFromTheseLists: MutableList<String> = ArrayList()
-                val lists = model.listsWithItem.value
-                    ?: return@setPositiveButton // Do nothing, lists not loaded, yet.
-                lists
-                    .filter { it.isItemOnList != it.isItemOnListOriginal }
-                    .forEach {
-                        if (it.isItemOnListOriginal) {
-                            // remove from list
-                            removeFromTheseLists.add(it.listId)
-                        } else {
-                            // add to list
-                            addToTheseLists.add(it.listId)
-                        }
-                    }
-                ListsTools.changeListsOfItem(
-                    requireContext(), showTmdbId,
-                    ListItemTypes.TMDB_SHOW, addToTheseLists, removeFromTheseLists
-                )
-                dismiss()
             }
             .create()
     }
@@ -185,28 +164,44 @@ class ManageListsDialogFragment : AppCompatDialogFragment() {
     companion object {
         private const val TAG = "listsdialog"
         private const val ARG_LONG_SHOW_ID = "show_id"
+        private const val ARG_INT_MOVIE_TMDB_ID = "movie_tmdb_id"
 
-        private fun newInstance(showId: Long): ManageListsDialogFragment {
-            val f = ManageListsDialogFragment()
-            val args = Bundle()
-            args.putLong(ARG_LONG_SHOW_ID, showId)
-            f.arguments = args
-            return f
+        private fun newInstance(listItem: ListItem): ManageListsDialogFragment =
+            ManageListsDialogFragment().apply {
+                arguments = Bundle().apply {
+                    when (listItem) {
+                        is ListItem.Show -> putLong(ARG_LONG_SHOW_ID, listItem.showId)
+                        is ListItem.Movie -> putInt(ARG_INT_MOVIE_TMDB_ID, listItem.movieTmdbId)
+                    }
+                }
+            }
+
+        /**
+         * Replaces any currently shown list dialog and shows this in its place.
+         * (Does not add it to the back stack.)
+         */
+        private fun ManageListsDialogFragment.replaceAndShow(fm: FragmentManager): Boolean {
+            val ft = fm.beginTransaction()
+            fm.findFragmentByTag(TAG)?.also { ft.remove(it) }
+            return safeShow(fm, ft, TAG)
         }
 
         /**
          * Display a dialog which asks if the user wants to add the given show to one or more lists.
          */
         @JvmStatic
-        fun show(fm: FragmentManager, showId: Long): Boolean {
+        fun showForShow(fm: FragmentManager, showId: Long): Boolean {
             if (showId <= 0) return false
-            // replace any currently showing list dialog (do not add it to the back stack)
-            val ft = fm.beginTransaction()
-            val prev = fm.findFragmentByTag(TAG)
-            if (prev != null) {
-                ft.remove(prev)
-            }
-            return newInstance(showId).safeShow(fm, ft, TAG)
+            return newInstance(ListItem.Show(showId)).replaceAndShow(fm)
+        }
+
+        /**
+         * Display a dialog which asks if the user wants to add the given movie to one or more lists.
+         */
+        @JvmStatic
+        fun showForMovie(fm: FragmentManager, movieTmdbId: Int): Boolean {
+            if (movieTmdbId <= 0) return false
+            return newInstance(ListItem.Movie(movieTmdbId)).replaceAndShow(fm)
         }
     }
 }
