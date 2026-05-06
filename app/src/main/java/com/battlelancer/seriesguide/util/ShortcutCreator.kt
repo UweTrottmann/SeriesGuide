@@ -1,8 +1,6 @@
-// SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-or-later
+// SPDX-License-Identifier: GPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2013 Uwe Trottmann <uwe@uwetrottmann.com>
-// SPDX-FileCopyrightText: Copyright © 2015 Andrew Neal
-
-// Contributions by Andrew Neal licensed under Apache-2.0
+// SPDX-FileCopyrightText: Copyright © 2015 Andrew Neal <andrew@seeingpixels.org>
 
 package com.battlelancer.seriesguide.util
 
