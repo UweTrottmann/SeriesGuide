@@ -14,6 +14,9 @@ import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.databinding.FragmentListBinding
@@ -26,6 +29,8 @@ import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.startActivityWithAnimation
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -79,11 +84,17 @@ class SgListFragment : Fragment() {
                 }
             }
 
-        model.sgListItemLiveData.observe(viewLifecycleOwner) {
-            val bindingOnDemand = this.binding ?: return@observe
-            bindingOnDemand.recyclerViewListItems.isGone = it.isEmpty()
-            bindingOnDemand.emptyViewList.isGone = it.isNotEmpty()
-            adapter.submitList(it)
+        viewLifecycleOwner.lifecycleScope.launch {
+            // This is a page in a RecyclerView-based ViewPager2, so use STARTED to work with the
+            // pager prefetching next/previous pages.
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                model.items.collectLatest {
+                    val bindingOnDemand = this@SgListFragment.binding ?: return@collectLatest
+                    bindingOnDemand.recyclerViewListItems.isGone = it.isEmpty()
+                    bindingOnDemand.emptyViewList.isGone = it.isNotEmpty()
+                    adapter.submitList(it)
+                }
+            }
         }
     }
 

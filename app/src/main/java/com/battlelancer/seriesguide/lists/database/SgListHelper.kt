@@ -13,6 +13,7 @@ import androidx.room.Query
 import androidx.room.RawQuery
 import androidx.room.Transaction
 import androidx.sqlite.db.SupportSQLiteQuery
+import kotlinx.coroutines.flow.Flow
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists
@@ -45,7 +46,7 @@ interface SgListHelper {
     fun getListItemsWithTmdbId(tmdbId: Int): List<SgListItem>
 
     @RawQuery(observedEntities = [SgListItem::class, SgShow2::class])
-    fun getListItemsWithDetails(query: SupportSQLiteQuery): LiveData<List<SgListItemWithDetails>>
+    fun getListItemsWithDetails(query: SupportSQLiteQuery): Flow<List<SgListItemWithDetails>>
 
     @Query("SELECT * FROM listitems WHERE list_id = :listId")
     fun getListItemsForExport(listId: String): List<SgListItem>
