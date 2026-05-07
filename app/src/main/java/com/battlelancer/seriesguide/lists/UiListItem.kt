@@ -27,14 +27,24 @@ data class UiListItem(
      */
     val id: Long,
     val listItemId: String,
-    val showId: Long,
     @ListItemTypes val type: Int,
+
+    /**
+     * Only if [type] is [ListItemTypes.TMDB_MOVIE].
+     */
+    val movieTmdbId: Int?,
+    /**
+     * Only if [type] is **not** a [ListItemTypes.TMDB_MOVIE].
+     */
+    val showId: Long?,
 
     val isSetWatchedButtonVisible: Boolean,
     val isFavorite: Boolean,
 
     /**
-     * See [com.battlelancer.seriesguide.shows.database.SgShow2.posterSmall].
+     * If [type] is [ListItemTypes.TMDB_MOVIE], then see
+     * [com.battlelancer.seriesguide.movies.database.SgMovie.poster].
+     * Otherwise, see [com.battlelancer.seriesguide.shows.database.SgShow2.posterSmall].
      */
     val posterUrl: String?,
 
@@ -131,11 +141,12 @@ class UiListItemBuilder(private val context: Context) {
         return UiListItem(
             id = item.id,
             listItemId = item.listItemId,
-            showId = item.showId,
             type = item.type,
+            movieTmdbId = null,
+            showId = item.showId,
             isSetWatchedButtonVisible = hasNextEpisode,
             isFavorite = item.favorite,
-            posterUrl = item.posterSmall,
+            posterUrl = item.poster,
             titleText = item.title,
             nextEpisodeText = nextEpisodeText,
             nextEpisodeTimeText = nextEpisodeTimeText,
@@ -160,11 +171,12 @@ class UiListItemBuilder(private val context: Context) {
         return UiListItem(
             id = item.id,
             listItemId = item.listItemId,
-            showId = item.showId,
             type = item.type,
+            movieTmdbId = null,
+            showId = item.showId,
             isSetWatchedButtonVisible = false,
             isFavorite = item.favorite,
-            posterUrl = item.posterSmall,
+            posterUrl = item.poster,
             titleText = item.title,
             nextEpisodeText = nextEpisodeText,
             nextEpisodeTimeText = null,
@@ -211,11 +223,12 @@ class UiListItemBuilder(private val context: Context) {
         return UiListItem(
             id = item.id,
             listItemId = item.listItemId,
-            showId = item.showId,
             type = item.type,
+            movieTmdbId = null,
+            showId = item.showId,
             isSetWatchedButtonVisible = false,
             isFavorite = item.favorite,
-            posterUrl = item.posterSmall,
+            posterUrl = item.poster,
             titleText = item.title,
             nextEpisodeText = nextEpisodeText,
             nextEpisodeTimeText = nextEpisodeTimeText,

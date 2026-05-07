@@ -10,6 +10,7 @@ import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.movies.database.SgMovie;
 import com.battlelancer.seriesguide.shows.database.SgEpisode2;
 import com.battlelancer.seriesguide.shows.database.SgShow2;
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags;
@@ -958,7 +959,7 @@ public class SeriesGuideContract {
         int TMDB_MOVIE = 5;
     }
 
-    interface MoviesColumns {
+    public interface MoviesColumns {
 
         String TITLE = "movies_title";
 
@@ -971,6 +972,9 @@ public class SeriesGuideContract {
 
         String TMDB_ID = "movies_tmdbid";
 
+        /**
+         * See {@link SgMovie#getPoster()}.
+         */
         String POSTER = "movies_poster";
 
         String GENRES = "movies_genres";

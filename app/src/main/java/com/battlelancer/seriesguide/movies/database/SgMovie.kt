@@ -34,6 +34,9 @@ data class SgMovie(
     @ColumnInfo(name = Movies.TITLE_NOARTICLE)
     val titleNoArticle: String? = null,
 
+    /**
+     * A poster path. Needs to be prefixed with the poster server URL.
+     */
     @ColumnInfo(name = Movies.POSTER)
     val poster: String? = null,
 
