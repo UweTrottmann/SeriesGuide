@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2021 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.lists
 
@@ -9,9 +9,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.map
 import androidx.lifecycle.switchMap
 import androidx.sqlite.db.SimpleSQLiteQuery
-import com.battlelancer.seriesguide.lists.database.SgListItemWithDetails
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
@@ -26,10 +26,13 @@ class SgListItemViewModel(
 ) : AndroidViewModel(application) {
 
     private val queryString = MutableLiveData<String>()
-    val sgListItemLiveData: LiveData<List<SgListItemWithDetails>> =
+    val sgListItemLiveData: LiveData<List<UiListItem>> =
         queryString.switchMap { queryString ->
             SgRoomDatabase.getInstance(getApplication()).sgListHelper()
                 .getListItemsWithDetails(SimpleSQLiteQuery(queryString, arrayOf(listId)))
+        }.map { items ->
+            val builder = UiListItemBuilder(getApplication())
+            items.map { builder.buildFrom(it) }
         }
 
     init {

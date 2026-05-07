@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2012-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2012 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.lists
 
@@ -18,7 +18,6 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.databinding.FragmentListBinding
 import com.battlelancer.seriesguide.lists.ListsDistillationSettings.ListsSortOrderChangedEvent
-import com.battlelancer.seriesguide.lists.database.SgListItemWithDetails
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.shows.tools.ShowSync
@@ -111,25 +110,23 @@ class SgListFragment : Fragment() {
 
     private val itemClickListener: SgListItemViewHolder.ItemClickListener =
         object : SgListItemViewHolder.ItemClickListener {
-            override fun onItemClick(anchor: View, item: SgListItemWithDetails) {
+            override fun onItemClick(anchor: View, item: UiListItem) {
                 requireActivity().startActivityWithAnimation(
                     OverviewActivity.intentShow(requireActivity(), item.showId),
                     anchor
                 )
             }
 
-            override fun onMoreOptionsClick(anchor: View, item: SgListItemWithDetails) {
+            override fun onMoreOptionsClick(anchor: View, item: UiListItem) {
                 val popupMenu = PopupMenu(anchor.context, anchor)
                 popupMenu.inflate(R.menu.lists_popup_menu)
                 val menu = popupMenu.menu
                 // Hide some options that only make sense for shows (for legacy non-show items)
-                val isShow =
-                    item.type == ListItemTypes.TMDB_SHOW || item.type == ListItemTypes.TVDB_SHOW
-                menu.findItem(R.id.menu_action_lists_watched_next).isVisible = isShow
+                menu.findItem(R.id.menu_action_lists_watched_next).isVisible = item.isShow
                 menu.findItem(R.id.menu_action_lists_favorites_add).isVisible =
-                    isShow && !item.favorite
+                    item.isShow && !item.isFavorite
                 menu.findItem(R.id.menu_action_lists_favorites_remove).isVisible =
-                    isShow && item.favorite
+                    item.isShow && item.isFavorite
                 popupMenu.setOnMenuItemClickListener(
                     PopupMenuItemClickListener(
                         requireContext(), parentFragmentManager,
@@ -143,7 +140,7 @@ class SgListFragment : Fragment() {
                 popupMenu.show()
             }
 
-            override fun onSetWatchedClick(item: SgListItemWithDetails) {
+            override fun onSetWatchedClick(item: UiListItem) {
                 EpisodeTools.episodeWatchedIfNotZero(requireContext(), item.nextEpisodeId)
             }
         }
