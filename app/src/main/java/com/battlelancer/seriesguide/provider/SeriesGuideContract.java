@@ -1147,8 +1147,6 @@ public class SeriesGuideContract {
 
         public static final String SELECTION_LIST = Lists.LIST_ID + "=?";
 
-        public static final String SORT_TYPE = ListItems.TYPE + " ASC";
-
         public static Uri buildListItemUri(String id) {
             return CONTENT_URI.buildUpon().appendPath(id).build();
         }
