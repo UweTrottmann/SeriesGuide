@@ -7,8 +7,6 @@ import android.content.Context
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.lists.database.SgListItemWithDetails
 import com.battlelancer.seriesguide.settings.DisplaySettings
-import com.battlelancer.seriesguide.shows.ShowsDistillationSettings
-import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowSortOrder
 
 /**
  * Provides settings used to sort displayed list items.
@@ -20,25 +18,27 @@ object ListsDistillationSettings {
     const val KEY_SORT_ORDER = "com.battlelancer.seriesguide.lists.sortorder"
 
     /**
-     * Builds an appropriate SQL sort statement for sorting lists.
+     * Builds an appropriate SQL sort statement for sorting [SgListItemWithDetails] rows.
      */
     fun getSortQuery(context: Context): String {
-        val sortOrderId = when (getSortOrderId(context)) {
-            ListsSortOrder.LATEST_EPISODE_ID -> ShowSortOrder.LATEST_EPISODE_ID
-            ListsSortOrder.OLDEST_EPISODE_ID -> ShowSortOrder.OLDEST_EPISODE_ID
-            ListsSortOrder.LAST_WATCHED_ID -> ShowSortOrder.LAST_WATCHED_ID
-            ListsSortOrder.LEAST_REMAINING_EPISODES_ID -> ShowSortOrder.LEAST_REMAINING_EPISODES_ID
-            else -> ShowSortOrder.TITLE_ID
-        }
+        val query = StringBuilder()
 
-        val baseQuery = ShowsDistillationSettings.getSortQuery2(
-            sortOrderId,
-            isSortFavoritesFirst = false,
-            DisplaySettings.isSortOrderIgnoringArticles(context)
+        // TODO Support new sort order options for lists
+        val sortOrderId = getSortOrderId(context)
+
+        // Sort by title
+        query.append(
+            if (DisplaySettings.isSortOrderIgnoringArticles(context)) {
+                SgListItemWithDetails.SORT_TITLE_NO_ARTICLE
+            } else {
+                SgListItemWithDetails.SORT_TITLE
+            }
         )
 
-        // append sorting by list type
-        return "$baseQuery,${SgListItemWithDetails.SORT_TYPE}"
+        // Then by type
+        query.append(",").append(SgListItemWithDetails.SORT_TYPE)
+
+        return query.toString()
     }
 
     /**
