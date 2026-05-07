@@ -1146,14 +1146,6 @@ public class SeriesGuideContract {
                 = "vnd.android.cursor.item/vnd.seriesguide.listitem";
 
         public static final String SELECTION_LIST = Lists.LIST_ID + "=?";
-        public static final String SELECTION_TVDB_SHOWS =
-                ListItems.TYPE + "=" + ListItemTypes.TVDB_SHOW;
-        public static final String SELECTION_TMDB_SHOWS =
-                ListItems.TYPE + "=" + ListItemTypes.TMDB_SHOW;
-        public static final String SELECTION_SEASONS =
-                ListItems.TYPE + "=" + ListItemTypes.SEASON;
-        public static final String SELECTION_EPISODES =
-                ListItems.TYPE + "=" + ListItemTypes.EPISODE;
 
         public static final String SORT_TYPE = ListItems.TYPE + " ASC";
 

@@ -9,9 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.sqlite.db.SimpleSQLiteQuery
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
+import com.battlelancer.seriesguide.lists.database.SgListItemWithDetails
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -57,13 +55,7 @@ class SgListItemViewModel(
 
     fun updateQuery() {
         val orderClause = ListsDistillationSettings.getSortQuery(getApplication())
-
-        // items of this list, but exclude any if show was removed from the database
-        // (the join on show data will fail, hence the show id will be 0/null)
-        queryString.value =
-            "SELECT * FROM ${Tables.LIST_ITEMS_WITH_DETAILS}" +
-                    " WHERE ${Lists.LIST_ID}=? AND ${SgShow2Columns.REF_SHOW_ID}>0" +
-                    " ORDER BY $orderClause"
+        queryString.value = SgListItemWithDetails.buildSelect(orderClause)
     }
 
 }
