@@ -288,6 +288,11 @@ data class SgListItemWithDetails(
                 //
                 ")"
 
+        // Android provides the UNICODE collator,
+        // use it to correctly order characters with, for example, accents.
+        // https://developer.android.com/reference/android/database/sqlite/SQLiteDatabase
+        const val SORT_TITLE: String = TITLE + " COLLATE UNICODE ASC"
+        const val SORT_TITLE_NO_ARTICLE: String = TITLE_NO_ARTICLE + " COLLATE UNICODE ASC"
         const val SORT_TYPE: String = ListItems.TYPE + " ASC"
 
         /**
