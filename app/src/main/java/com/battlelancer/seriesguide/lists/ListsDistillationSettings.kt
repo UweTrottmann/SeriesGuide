@@ -1,73 +1,62 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright 2015-2025 Uwe Trottmann
 
-package com.battlelancer.seriesguide.lists;
+package com.battlelancer.seriesguide.lists
 
-import android.content.Context;
-import androidx.preference.PreferenceManager;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.shows.ShowsDistillationSettings;
-import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowSortOrder;
+import android.content.Context
+import androidx.preference.PreferenceManager
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems
+import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.shows.ShowsDistillationSettings
+import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowSortOrder
 
 /**
  * Provides settings used to sort displayed list items.
  */
-public class ListsDistillationSettings {
+object ListsDistillationSettings {
 
-    public static class ListsSortOrderChangedEvent {
-    }
+    class ListsSortOrderChangedEvent
 
-    public static String KEY_SORT_ORDER = "com.battlelancer.seriesguide.lists.sortorder";
+    const val KEY_SORT_ORDER = "com.battlelancer.seriesguide.lists.sortorder"
 
     /**
      * Builds an appropriate SQL sort statement for sorting lists.
      */
-    static String getSortQuery(Context context) {
-        int sortOrderId = getSortOrderId(context);
-
-        // convert to show sort order id
-        switch (sortOrderId) {
-            case ListsSortOrder.LATEST_EPISODE_ID:
-                sortOrderId = ShowSortOrder.LATEST_EPISODE_ID;
-                break;
-            case ListsSortOrder.OLDEST_EPISODE_ID:
-                sortOrderId = ShowSortOrder.OLDEST_EPISODE_ID;
-                break;
-            case ListsSortOrder.LAST_WATCHED_ID:
-                sortOrderId = ShowSortOrder.LAST_WATCHED_ID;
-                break;
-            case ListsSortOrder.LEAST_REMAINING_EPISODES_ID:
-                sortOrderId = ShowSortOrder.LEAST_REMAINING_EPISODES_ID;
-                break;
-            default:
-                sortOrderId = ShowSortOrder.TITLE_ID;
-                break;
+    fun getSortQuery(context: Context): String {
+        val sortOrderId = when (getSortOrderId(context)) {
+            ListsSortOrder.LATEST_EPISODE_ID -> ShowSortOrder.LATEST_EPISODE_ID
+            ListsSortOrder.OLDEST_EPISODE_ID -> ShowSortOrder.OLDEST_EPISODE_ID
+            ListsSortOrder.LAST_WATCHED_ID -> ShowSortOrder.LAST_WATCHED_ID
+            ListsSortOrder.LEAST_REMAINING_EPISODES_ID -> ShowSortOrder.LEAST_REMAINING_EPISODES_ID
+            else -> ShowSortOrder.TITLE_ID
         }
 
-        String baseQuery = ShowsDistillationSettings.getSortQuery2(sortOrderId, false,
-                DisplaySettings.isSortOrderIgnoringArticles(context));
+        val baseQuery = ShowsDistillationSettings.getSortQuery2(
+            sortOrderId,
+            isSortFavoritesFirst = false,
+            DisplaySettings.isSortOrderIgnoringArticles(context)
+        )
 
         // append sorting by list type
-        return baseQuery + "," + ListItems.SORT_TYPE;
+        return "$baseQuery,${ListItems.SORT_TYPE}"
     }
 
     /**
-     * Returns the id as of {@link ListsDistillationSettings.ListsSortOrder}
+     * Returns the id as of [ListsDistillationSettings.ListsSortOrder]
      * of the current list sort order.
      */
-    public static int getSortOrderId(Context context) {
+    fun getSortOrderId(context: Context): Int {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getInt(KEY_SORT_ORDER, ListsSortOrder.TITLE_ALPHABETICAL_ID);
+            .getInt(KEY_SORT_ORDER, ListsSortOrder.TITLE_ALPHABETICAL_ID)
     }
 
-    public interface ListsSortOrder {
-        int TITLE_ALPHABETICAL_ID = 0;
+    object ListsSortOrder {
+        const val TITLE_ALPHABETICAL_ID = 0
         // @deprecated Only supporting alphabetical sort order going forward.
-        // int TITLE_REVERSE_ALHPABETICAL_ID = 1;
-        int LATEST_EPISODE_ID = 2;
-        int OLDEST_EPISODE_ID = 3;
-        int LAST_WATCHED_ID = 4;
-        int LEAST_REMAINING_EPISODES_ID = 5;
+        // const val TITLE_REVERSE_ALPHABETICAL_ID = 1
+        const val LATEST_EPISODE_ID = 2
+        const val OLDEST_EPISODE_ID = 3
+        const val LAST_WATCHED_ID = 4
+        const val LEAST_REMAINING_EPISODES_ID = 5
     }
 }
