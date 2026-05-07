@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2022-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2022 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.shows.tools
 
@@ -12,7 +12,6 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.enums.NetworkResult
 import com.battlelancer.seriesguide.modules.ApplicationContext
 import com.battlelancer.seriesguide.notifications.NotificationService
-import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgShow2
@@ -30,7 +29,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
-import kotlin.collections.set
 import com.battlelancer.seriesguide.enums.Result as SgResult
 
 /**
@@ -213,10 +211,6 @@ class ShowTools2 @Inject constructor(
         // Save to local database.
         withContext(Dispatchers.IO) {
             SgRoomDatabase.getInstance(context).sgShow2Helper().setShowFavorite(showId, isFavorite)
-
-            // Also notify URI used by lists.
-            context.contentResolver
-                .notifyChange(SeriesGuideContract.ListItems.CONTENT_WITH_DETAILS_URI, null)
         }
 
         // display info toast

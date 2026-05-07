@@ -13,9 +13,9 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.shows.database.SgEpisode2;
 import com.battlelancer.seriesguide.shows.database.SgShow2;
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags;
+import com.battlelancer.seriesguide.shows.tools.NextEpisodeUpdater;
 import com.battlelancer.seriesguide.shows.tools.ShowStatus;
 import com.battlelancer.seriesguide.shows.tools.ShowTools2;
-import com.battlelancer.seriesguide.shows.tools.NextEpisodeUpdater;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -1063,8 +1063,6 @@ public class SeriesGuideContract {
 
     public static final String PATH_LIST_ITEMS = "listitems";
 
-    public static final String PATH_WITH_DETAILS = "with_details";
-
     public static final String PATH_MOVIES = "movies";
 
     public static final String PATH_JOBS = "jobs";
@@ -1134,14 +1132,6 @@ public class SeriesGuideContract {
          */
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
                 .appendPath(PATH_LIST_ITEMS)
-                .build();
-
-        /**
-         * List items table joined with shows, seasons and episodes table (depending on list item
-         * type). See {@link SeriesGuideProvider#LIST_ITEMS_WITH_DETAILS}.
-         */
-        public static final Uri CONTENT_WITH_DETAILS_URI = CONTENT_URI.buildUpon()
-                .appendPath(PATH_WITH_DETAILS)
                 .build();
 
         /**

@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2011 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.provider;
 
@@ -47,8 +47,6 @@ public class SeriesGuideProvider extends ContentProvider {
 
     static final int LIST_ITEMS_ID = 601;
 
-    static final int LIST_ITEMS_WITH_DETAILS = 602;
-
     static final int MOVIES = 700;
 
     static final int MOVIES_ID = 701;
@@ -71,8 +69,6 @@ public class SeriesGuideProvider extends ContentProvider {
 
         // List items
         matcher.addURI(authority, SeriesGuideContract.PATH_LIST_ITEMS, LIST_ITEMS);
-        matcher.addURI(authority, SeriesGuideContract.PATH_LIST_ITEMS + "/"
-                + SeriesGuideContract.PATH_WITH_DETAILS, LIST_ITEMS_WITH_DETAILS);
         matcher.addURI(authority, SeriesGuideContract.PATH_LIST_ITEMS + "/*", LIST_ITEMS_ID);
 
         // Movies
@@ -146,7 +142,6 @@ public class SeriesGuideProvider extends ContentProvider {
             case LISTS_ID:
                 return Lists.CONTENT_ITEM_TYPE;
             case LIST_ITEMS:
-            case LIST_ITEMS_WITH_DETAILS:
                 return ListItems.CONTENT_TYPE;
             case LIST_ITEMS_ID:
                 return ListItems.CONTENT_ITEM_TYPE;
@@ -415,9 +410,6 @@ public class SeriesGuideProvider extends ContentProvider {
                 final String list_item_id = ListItems.getId(uri);
                 return builder.table(Tables.LIST_ITEMS).where(ListItems.LIST_ITEM_ID + "=?",
                         list_item_id);
-            }
-            case LIST_ITEMS_WITH_DETAILS: {
-                return builder.table(Tables.LIST_ITEMS_WITH_DETAILS);
             }
             case MOVIES: {
                 return builder.table(Tables.MOVIES);
