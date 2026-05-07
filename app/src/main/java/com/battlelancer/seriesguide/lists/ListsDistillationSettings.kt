@@ -5,7 +5,7 @@ package com.battlelancer.seriesguide.lists
 
 import android.content.Context
 import androidx.preference.PreferenceManager
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems
+import com.battlelancer.seriesguide.lists.database.SgListItemWithDetails
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.shows.ShowsDistillationSettings
 import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowSortOrder
@@ -38,7 +38,7 @@ object ListsDistillationSettings {
         )
 
         // append sorting by list type
-        return "$baseQuery,${ListItems.SORT_TYPE}"
+        return "$baseQuery,${SgListItemWithDetails.SORT_TYPE}"
     }
 
     /**

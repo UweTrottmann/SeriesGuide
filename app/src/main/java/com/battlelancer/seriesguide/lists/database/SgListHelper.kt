@@ -223,9 +223,13 @@ data class SgListItemWithDetails(
                 //
                 ")"
 
+        const val SORT_TYPE: String = ListItems.TYPE + " ASC"
+
         /**
          * Selects items of this list, but exclude any if show was removed from the database
-         * (the join on show data will fail, hence the show id will be 0/null)
+         * (the join on show data will fail, hence the show id will be 0/null).
+         *
+         * [orderClause] as built by [com.battlelancer.seriesguide.lists.ListsDistillationSettings].
          */
         fun buildSelect(orderClause: String): String = "SELECT * FROM $LIST_ITEMS_WITH_DETAILS" +
                 " WHERE ${Lists.LIST_ID}=? AND ${SgShow2Columns.REF_SHOW_ID}>0" +
