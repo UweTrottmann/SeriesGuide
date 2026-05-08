@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2017 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.jobs
 
@@ -48,7 +48,7 @@ class NetworkJobProcessor(private val context: Context) {
             val action = JobAction.fromId(typeId)
 
             if (action != JobAction.UNKNOWN) {
-                Timber.d("Running job %d %s", jobId, action)
+                Timber.d("Running job %d: action = %s", jobId, action)
 
                 val createdAt = query.getLong(2)
                 val jobInfoArr = query.getBlob(3)
@@ -56,10 +56,13 @@ class NetworkJobProcessor(private val context: Context) {
                 val jobInfo = SgJobInfo.getRootAsSgJobInfo(jobInfoBuffered)
 
                 if (!doNetworkJob(jobId, action, createdAt, jobInfo)) {
-                    Timber.e("Job %d failed, will retry.", jobId)
+                    Timber.e(
+                        "Job %d failed, will retry with next sync, stop processing jobs",
+                        jobId
+                    )
                     break // abort to avoid ordering issues
                 }
-                Timber.d("Job %d completed, will remove.", jobId)
+                Timber.d("Job %d completed or failed and can't retry, will remove", jobId)
             }
             jobsToRemove.add(jobId)
         }
@@ -123,6 +126,7 @@ class NetworkJobProcessor(private val context: Context) {
             JobAction.EPISODE_WATCHED_FLAG -> {
                 HexagonEpisodeJob(hexagonTools, action, jobInfo)
             }
+
             JobAction.MOVIE_COLLECTION_ADD,
             JobAction.MOVIE_COLLECTION_REMOVE,
             JobAction.MOVIE_WATCHLIST_ADD,
@@ -131,6 +135,7 @@ class NetworkJobProcessor(private val context: Context) {
             JobAction.MOVIE_WATCHED_REMOVE -> {
                 HexagonMovieJob(hexagonTools, action, jobInfo)
             }
+
             else -> {
                 null // Action not supported by hexagon.
             }
@@ -147,11 +152,13 @@ class NetworkJobProcessor(private val context: Context) {
             JobAction.EPISODE_WATCHED_FLAG -> {
                 TraktEpisodeJob(action, jobInfo, createdAt)
             }
+
             JobAction.MOVIE_COLLECTION_ADD,
             JobAction.MOVIE_COLLECTION_REMOVE, JobAction.MOVIE_WATCHLIST_ADD, JobAction.MOVIE_WATCHLIST_REMOVE, JobAction.MOVIE_WATCHED_SET, JobAction.MOVIE_WATCHED_REMOVE -> // action not supported by trakt
             {
                 TraktMovieJob(action, jobInfo, createdAt)
             }
+
             else -> {
                 null // Action not supported by Trakt.
             }
@@ -162,6 +169,14 @@ class NetworkJobProcessor(private val context: Context) {
         if (result.action == null || result.error == null || result.item == null) {
             return // missing required values
         }
+        Timber.e(
+            "Job %d failed, notifying: error = %s, item = %s, action = %s",
+            jobId,
+            result.error,
+            result.item,
+            result.action
+        )
+
         val nb = NotificationCompat.Builder(context, SgApp.NOTIFICATION_CHANNEL_ERRORS)
         NotificationSettings.setDefaultsForChannelErrors(context, nb)
 
