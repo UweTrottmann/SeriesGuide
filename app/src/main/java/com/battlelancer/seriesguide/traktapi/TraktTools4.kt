@@ -13,6 +13,7 @@ import com.uwetrottmann.trakt5.entities.Note
 import com.uwetrottmann.trakt5.entities.Show
 import com.uwetrottmann.trakt5.entities.ShowIds
 import com.uwetrottmann.trakt5.enums.Extended
+import com.uwetrottmann.trakt5.enums.ExtendedShowsWatched
 import com.uwetrottmann.trakt5.services.Notes
 import com.uwetrottmann.trakt5.services.Sync
 import retrofit2.Call
@@ -27,8 +28,9 @@ import timber.log.Timber
  */
 object TraktTools4 {
 
-    // 1000 is the maximum limit according to https://github.com/trakt/trakt-api/discussions/681
-    private const val LIST_AND_COLLECTION_MAX_LIMIT = 1000
+    // 250 is the maximum limit according to the Trakt [Upcoming API Changes: Pagination & Sorting Updates](https://github.com/trakt/trakt-api/discussions/681)
+    // discussion.
+    private const val MAX_LIMIT = 250
 
     sealed interface TraktResponse<T> {
         data class Success<T>(
@@ -60,15 +62,36 @@ object TraktTools4 {
         class Other<T> : TraktResponse<T>, TraktNonNullResponse<T>
     }
 
+    /**
+     * If [noSeasons] is `true`, only show info is available. Starting 2026-05-30 also full info.
+     * If it's `false`, seasons and episodes are available. Starting 2026-05-30 also full info.
+     *
+     * See the Trakt [Upcoming API Changes: Watched Endpoints Pagination & Extended Defaults](https://github.com/trakt/trakt-api/discussions/775)
+     * discussion about details and updates.
+     */
     suspend fun getWatchedShows(
         traktSync: Sync,
         noSeasons: Boolean
     ): TraktNonNullResponse<List<BaseShow>> {
-        return awaitTraktCallNonNull(
-            traktSync.watchedShows(if (noSeasons) Extended.NOSEASONS else null),
-            "get watched shows",
+        return fetchAllPages(
+            action = "get watched shows",
             reportIsNotVip = true // Should work even if not VIP
-        )
+        ) { page ->
+            traktSync.watchedShows(
+                page,
+                MAX_LIMIT,
+                if (noSeasons) {
+                    // As of 2026-05-30 this should be the default, still request until then
+                    // https://github.com/trakt/trakt-api/discussions/775
+                    @Suppress("DEPRECATION")
+                    ExtendedShowsWatched.NOSEASONS
+                } else {
+                    // This should only work starting 2026-05-30, but already request it
+                    // https://github.com/trakt/trakt-api/discussions/775
+                    ExtendedShowsWatched.PROGRESS
+                }
+            )
+        }
     }
 
     suspend fun getWatchedShowsByTmdbId(
@@ -85,7 +108,7 @@ object TraktTools4 {
             action = "get collected shows",
             reportIsNotVip = true // Should work even if not VIP
         ) { page ->
-            traktSync.collectionShows(page, LIST_AND_COLLECTION_MAX_LIMIT, null)
+            traktSync.collectionShows(page, MAX_LIMIT, null)
         }
     }
 
@@ -160,18 +183,19 @@ object TraktTools4 {
             reportIsNotVip = true // Should work even if not VIP
         ) { page ->
             // Use Extended.FULL to get show metadata
-            traktSync.watchlistShows(page, LIST_AND_COLLECTION_MAX_LIMIT, Extended.FULL)
+            traktSync.watchlistShows(page, MAX_LIMIT, Extended.FULL)
         }
     }
 
     suspend fun getWatchedMoviesByTmdbId(
         traktSync: Sync
     ): TraktNonNullResponse<MutableMap<Int, Int>> {
-        val response = awaitTraktCallNonNull(
-            traktSync.watchedMovies(null),
-            "get watched movies",
+        val response = fetchAllPages(
+            action = "get watched movies",
             reportIsNotVip = true // Should work even if not VIP
-        )
+        ) { page ->
+            traktSync.watchedMovies(page, MAX_LIMIT, null)
+        }
         return mapResponseData(response) { mapMoviesToTmdbIdWithPlays(it) }
     }
 
@@ -192,7 +216,7 @@ object TraktTools4 {
             action = "get collected movies",
             reportIsNotVip = true // Should work even if not VIP
         ) { page ->
-            traktSync.collectionMovies(page, LIST_AND_COLLECTION_MAX_LIMIT, null)
+            traktSync.collectionMovies(page, MAX_LIMIT, null)
         }
         return mapResponseData(response) { mapMoviesToTmdbIdSet(it) }
     }
@@ -204,7 +228,7 @@ object TraktTools4 {
             action = "get movie watchlist",
             reportIsNotVip = true // Should work even if not VIP
         ) { page ->
-            traktSync.watchlistMovies(page, LIST_AND_COLLECTION_MAX_LIMIT, null)
+            traktSync.watchlistMovies(page, MAX_LIMIT, null)
         }
         return mapResponseData(response) { mapMoviesToTmdbIdSet(it) }
     }
