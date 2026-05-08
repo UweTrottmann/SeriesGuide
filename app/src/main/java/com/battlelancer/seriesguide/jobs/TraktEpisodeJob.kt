@@ -29,6 +29,7 @@ import org.threeten.bp.OffsetDateTime
 import org.threeten.bp.ZoneOffset
 import org.threeten.bp.temporal.ChronoUnit
 import retrofit2.Call
+import timber.log.Timber
 import java.util.LinkedList
 
 class TraktEpisodeJob(
@@ -39,13 +40,15 @@ class TraktEpisodeJob(
 
     override fun execute(context: Context): NetworkJobResult {
         // Do not send if show has no trakt id (was not on trakt last time we checked).
+        val showId = jobInfo.showId()
         val showTraktId = SgApp.getServicesComponent(context)
-            .showTools().getShowTraktId(jobInfo.showId())
+            .showTools().getShowTraktId(showId)
         val canSendToTrakt = showTraktId != null
         if (!canSendToTrakt) {
+            Timber.e("Failed: show %d has no Trakt ID", showId)
             return buildResult(context, ERROR_TRAKT_NOT_FOUND)
         }
-        val result = upload(context, showTraktId!!)
+        val result = upload(context, showTraktId)
         return buildResult(context, result)
     }
 
@@ -102,6 +105,30 @@ class TraktEpisodeJob(
             // Check if any items were not found.
             if (isSyncSuccessful(body)) Ok(SUCCESS) else Err(ERROR_TRAKT_NOT_FOUND)
         }.getOrElse { return it }
+    }
+
+    /**
+     * If the [SyncResponse.not_found] indicates any show,
+     * season or episode was not found returns `false`.
+     */
+    private fun isSyncSuccessful(response: SyncResponse?): Boolean {
+        val notFound = response?.not_found ?: return true
+        if (notFound.shows?.isNotEmpty() == true) {
+            // show not found
+            Timber.e("Failed: show not found on Trakt")
+            return false
+        }
+        if (notFound.seasons?.isNotEmpty() == true) {
+            // show exists, but seasons not found
+            Timber.e("Failed: season(s) not found on Trakt")
+            return false
+        }
+        if (notFound.episodes?.isNotEmpty() == true) {
+            // show and season exists, but episodes not found
+            Timber.e("Failed: episode(s) not found on Trakt")
+            return false
+        }
+        return true
     }
 
     /**
@@ -233,29 +260,6 @@ class TraktEpisodeJob(
             }
             val pageCount = TraktV2.getPageCount(response) ?: 1
             Ok(HistoryPage(episodes, pageCount))
-        }
-    }
-
-    companion object {
-        /**
-         * If the [SyncResponse.not_found] indicates any show,
-         * season or episode was not found returns `false`.
-         */
-        private fun isSyncSuccessful(response: SyncResponse?): Boolean {
-            val notFound = response?.not_found ?: return true
-            if (notFound.shows?.isNotEmpty() == true) {
-                // show not found
-                return false
-            }
-            if (notFound.seasons?.isNotEmpty() == true) {
-                // show exists, but seasons not found
-                return false
-            }
-            if (notFound.episodes?.isNotEmpty() == true) {
-                // show and season exists, but episodes not found
-                return false
-            }
-            return true
         }
     }
 }
