@@ -20,6 +20,10 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 * 📝 Removed the unsupported release for devices running Android 4 from Google Play, it is no longer
   working properly.
 
+### 2025.2.16 - 2026-05-08
+
+* 📝 Trakt: prepare for server changes to correctly fetch all watched items.
+
 ### 2025.2.15 - 2026-03-05
 
 * 🔨 Trakt: support server changes to correctly fetch all watchlist items.
