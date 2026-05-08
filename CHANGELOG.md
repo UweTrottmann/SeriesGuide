@@ -11,6 +11,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 ## Next release
 
 * 📝 Trakt: prepare for server changes to correctly fetch all watched items.
+* 📝 Import latest user interface translations.
 
 ## Version 2026.1
 

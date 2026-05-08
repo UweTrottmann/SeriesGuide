@@ -19,7 +19,7 @@
     <string name="season_number">Κύκλος %d</string>
     <string name="specialseason">Ειδικά Επεισόδια</string>
     <string name="ratings">Βαθμολογίες</string>
-    <string name="more_information">More information</string>
+    <string name="more_information">Περισσότερες πληροφορίες</string>
     <!-- Descriptions -->
     <string name="navigate_up">Πλοήγηση προς τα επάνω</string>
     <string name="description_overview">Επισκόπηση</string>
@@ -40,7 +40,7 @@
     <string name="action_reset">Επαναφορά</string>
     <string name="action_save">Αποθήκευση</string>
     <string name="action_turn_on">Ενεργοποίηση</string>
-    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Έλεγχος</string>
     <!-- Search -->
     <string name="clear_search_history">Εκκαθάριση ιστορικού αναζήτησης</string>
     <string name="search_hint">Αναζήτηση επεισοδίων</string>
@@ -189,7 +189,7 @@
     <string name="only_favorites">Μόνο αγαπημένες σειρές</string>
     <string name="calendar_only_collected">Μόνο επεισόδια από την συλλογή</string>
     <string name="calendar_only_premieres">Μόνο πρεμιέρες</string>
-    <string name="pref_infinite_scrolling">Unlimited days</string>
+    <string name="pref_infinite_scrolling">Απεριόριστες ημέρες</string>
     <!-- Updating -->
     <string name="update_scheduled">Ενημέρωση&#8230;</string>
     <string name="update_no_connection">Για ενημέρωση συνδεθείτε στο internet.</string>
@@ -234,7 +234,7 @@
     <string name="title_new_episodes">Νέα επεισόδια</string>
     <string name="watched_shows">Είδατε</string>
     <string name="shows_collection">Συλλογή</string>
-    <string name="title_library">Library</string>
+    <string name="title_library">Βιβλιοθήκη</string>
     <string name="watchlist">Λίστα προς παρακολούθηση</string>
     <!-- Similar shows -->
     <string name="action_similar">Παρόμοια</string>
@@ -315,7 +315,7 @@
     <string name="feature_sync">Συγχρονισμός</string>
     <!-- Hexagon -->
     <string name="hexagon_description">Το SeriesGuide Cloud διατηρεί συγχρονισμένο αντίγραφο to backup των σειρών, ταινιών και λιστών σας</string>
-    <string name="hexagon_warning_trakt">Ενώ είστε συνδεμένοι με το SeriesGuide Cloud κάποιες δυνατότητες του trakt δεν είναι διαθέσιμες</string>
+    <string name="hexagon_warning_trakt">Όταν είστε συνδεδεμένοι με το SeriesGuide Cloud, ορισμένες λειτουργίες του Trakt απενεργοποιούνται και γίνεται αποκλειστικά αποστολή των αλλαγών στον λογαριασμό Trakt σας, όχι λήψη.</string>
     <string name="hexagon_signin">Σύνδεση</string>
     <string name="hexagon_signout">Αποσύνδεση</string>
     <string name="hexagon_setup_incomplete">Η ρύθμιση του SeriesGuide cloud δεν ολοκληρώθηκε.</string>
@@ -352,8 +352,8 @@
     <string name="disconnect">Αποσύνδεση</string>
     <string name="show_library">Προσθήκη σειρών από Trakt</string>
     <string name="about_trakt">Το Trakt βοηθά να καταγράψετε τα τηλεοπτικά προγράμματα και τις ταινίες που βλέπετε.</string>
-    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
-    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
+    <string name="trakt_note_collection">Αυτό που το Trakt αποκαλεί «βιβλιοθήκη», ονομάζεται «συλλογή» στο SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Μόλις συνδεθείτε, προσθέστε σειρές από τον λογαριασμό Trakt σας μέσω των στοιχείων Trakt στην καρτέλα «Ανακάλυψη».</string>
     <!-- trakt ratings -->
     <string name="action_rate">Αξιολόγηση</string>
     <string name="ack_rated">Η βαθμολογία απεστάλη</string>
@@ -472,12 +472,12 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Αυτόματο αντίγραφο ασφαλείας</string>
     <string name="pref_autobackupsummary">Εβδομαδιαίο αντίγραφο ασφαλείας των σειρών, λιστών και ταινιών σας</string>
-    <string name="autobackup_details">These backups are deleted if the app is uninstalled. You can choose to create copies in another location below that can be restored using the import tool.</string>
+    <string name="autobackup_details">Αυτά τα αντίγραφα ασφαλείας διαγράφονται αν η εφαρμογή απεγκατασταθεί. Μπορείτε να επιλέξετε να δημιουργήσετε αντίγραφα σε μια άλλη τοποθεσία παρακάτω, τα οποία μπορείτε να ανακτήσετε με το εργαλείο εισαγωγής.</string>
     <string name="backup_button">Δημιουργία αντιγράφων ασφαλείας</string>
     <string name="last_auto_backup">Τελευταίο αυτόματο αντίγραφο ασφαλείας: %s</string>
     <string name="restore_auto_backup">Επαναφορά αντιγράφου ασφαλείας στο αυτόματο</string>
     <string name="autobackup_failed" comment="Brief error message shown for auto backup">Το τελευταίο αυτόματο αντίγραφο ασφαλείας απέτυχε</string>
-    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">A file to store the copy of an auto-backup is missing</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">Λείπει ένα αρχείο για την αποθήκευση ενός αυτόματου αντιγράφου ασφαλείας</string>
     <string name="autobackup_create_user_copy">Δημιουργία αντιγράφου μετά από κάθε αντίγραφο ασφαλείας</string>
     <string name="autobackup_restore_available">Μπορεί να υπάρχει διαθέσιμο κάποιο αυτόματο αντίγραφο ασφαλείας για να κάνετε επαναφορά.</string>
     <!-- Welcome dialog -->
@@ -513,7 +513,7 @@
     <string name="pref_widget_type">τύπος Widget</string>
     <string name="pref_large_font">Χρήση μεγάλης γραμματοσειράς</string>
     <string name="pref_hide_watch_button">Απόκρυψη κουμπιού παρακολούθησης</string>
-    <string name="description_widget_limited_items">Note that the number of items is always limited to save resources</string>
+    <string name="description_widget_limited_items">Σημειώστε ότι ο αριθμός των στοιχείων είναι πάντα περιορισμένος για εξοικονόμηση πόρων</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Διαφανές</string>
     <string name="widget_background_25">25%</string>
@@ -530,9 +530,9 @@
     <string name="billing_sub_description">Δοκιμάστε δωρεάν για 30 ημέρες, ακυρώστε όποτε θέλετε. </string>
     <string name="upgrade_description">Κάθε συνδρομή ξεκλειδώνει όλες τις δυνατότητες και υποστηρίζει μελλοντικές ενημερώσεις. Η συνδρομή δεν είναι απαραίτητη γιατη χρήση της εφαρμογής.</string>
     <string name="upgrade_success">Ευχαριστούμε για την υποστήριξη του SeriesGuide! Έχετε πρόσβαση σε όλα τα χαρακτηριστικά.</string>
-    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">All Access Pass detected. You may still subscribe to support future updates.</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">Εντοπίστηκε All Access Pass. Μπορείτε ακόμη να εγγραφείτε για να υποστηρίξετε μελλοντικές ενημερώσεις.</string>
     <string name="billing_learn_more">Περισσότερες πληροφορίες και βοήθεια</string>
-    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">Access to all features expired</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">Η πρόσβαση σε όλες τις λειτουργίες έληξε</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Συνδεθείτε στο λογαριασμό σας Amazon!</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">Η συνδρομή επί του παρόντος δεν είναι διαθέσιμη.</string>
@@ -560,7 +560,7 @@
     <string name="feedback_action_nothanks">Όχι, ευχαριστώ</string>
     <!-- Support the dev -->
     <string name="support_the_dev">Υποστήριξη της ανάπτυξης;</string>
-    <string name="support_the_dev_other_ways">Other ways to support</string>
+    <string name="support_the_dev_other_ways">Άλλοι τρόποι υποστήριξης</string>
     <!-- Diagnostics -->
     <string name="title_debug_log">Αρχείο εντοπισμού σφαλμάτων</string>
     <string name="status_saving_file_success">Το αρχείο αποθηκεύτηκε</string>
@@ -568,9 +568,9 @@
     <!-- Streaming info -->
     <string name="action_stream">Stream ή αγορά</string>
     <string name="action_stream_settings">Ρυθμίσεις streaming ή αγορών</string>
-    <string name="title_stream_subscription">Subscription</string>
-    <string name="title_stream_free">Free</string>
-    <string name="title_stream_with_ads">With ads</string>
-    <string name="title_stream_buy">Purchase</string>
-    <string name="title_stream_rent">Rental</string>
+    <string name="title_stream_subscription">Συνδρομή</string>
+    <string name="title_stream_free">Δωρεάν</string>
+    <string name="title_stream_with_ads">Με διαφημίσεις</string>
+    <string name="title_stream_buy">Αγορά</string>
+    <string name="title_stream_rent">Ενοικίαση</string>
 </resources>
