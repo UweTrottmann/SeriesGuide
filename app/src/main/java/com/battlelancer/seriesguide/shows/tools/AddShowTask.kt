@@ -156,10 +156,11 @@ class AddShowTask(
         var addedAtLeastOneShow = false
         var failedMergingShows = false
         while (!addQueue.isEmpty()) {
-            Timber.d("Starting to add next show...")
             val nextShow = addQueue.removeFirst()
             val currentShowName = nextShow.title
             val currentShowTmdbId = nextShow.tmdbId
+            val currentShowLanguageCode = nextShow.languageCode
+            Timber.d("Starting to add next show ('$currentShowName', TMDB ID $currentShowTmdbId, language '$currentShowLanguageCode')...")
 
             if (currentShowTmdbId <= 0) {
                 // Invalid ID, should never have been passed, report.
@@ -178,8 +179,8 @@ class AddShowTask(
             }
 
             val addResult = showTools.addShow(
-                nextShow.tmdbId,
-                nextShow.languageCode,
+                currentShowTmdbId,
+                currentShowLanguageCode,
                 traktCollection, traktWatched,
                 hexagonEpisodeSync
             )
