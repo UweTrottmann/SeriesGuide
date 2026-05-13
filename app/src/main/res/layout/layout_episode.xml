@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 <!-- Copyright 2015-2024 Uwe Trottmann -->
 
 <!-- Need to define root ID in include tag or view binding breaks. -->
@@ -92,7 +92,7 @@
                 android:padding="@dimen/large_padding"
                 android:text="@string/no_spoilers"
                 android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Dim"
-                app:drawableTopCompat="@drawable/ic_visibility_off_black_24dp"
+                app:drawableTopCompat="@drawable/ic_visibility_off_control_24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"

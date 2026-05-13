@@ -248,7 +248,7 @@
     <string name="title_new_episodes">פרקים חדשים</string>
     <string name="watched_shows">נצפה</string>
     <string name="shows_collection">אוסף</string>
-    <string name="title_library">Library</string>
+    <string name="title_library">ספרייה</string>
     <string name="watchlist">רשימת צפייה</string>
     <!-- Similar shows -->
     <string name="action_similar">דומה</string>
@@ -335,7 +335,7 @@
     <string name="feature_sync">סנכרן</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud עוזר לגבות ולסנכרון את התוכניות, הרשימות והסרטים שלך.</string>
-    <string name="hexagon_warning_trakt">בעת ההתחברות עם SeriesGuide Cloud, חלק מהתכונות של Trakt אינן זמינות</string>
+    <string name="hexagon_warning_trakt">כאשר מחוברים באמצעות SeriesGuide Cloud, חלק מהתכונות של Trakt מושבתות ושינויים רק נשלחים לחשבון ה-Trakt שלך ולא מאוחזרים.</string>
     <string name="hexagon_signin">התחבר</string>
     <string name="hexagon_signout">התנתק</string>
     <string name="hexagon_setup_incomplete">הגדרת SeriesGuide Cloud לא הושלמה.</string>
@@ -372,8 +372,8 @@
     <string name="disconnect">התנתק</string>
     <string name="show_library">הוסף סדרות מ-Trakt</string>
     <string name="about_trakt">Trakt מסייעת לשמור רשימה של אילו תוכניות טלוויזיה וסרטים אתה צופה.</string>
-    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
-    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
+    <string name="trakt_note_collection">מה ש-Trakt מכנה ספרייה, נקרא אוסף ב-SeriesGuide.</string>
+    <string name="trakt_note_add_shows">לאחר החיבור, הוסף סדרות מחשבון ה-Trakt שלך באמצעות פריטי Trakt בכרטיסיית גלה עוד.</string>
     <!-- trakt ratings -->
     <string name="action_rate">דרג</string>
     <string name="ack_rated">דירוג נשלח</string>

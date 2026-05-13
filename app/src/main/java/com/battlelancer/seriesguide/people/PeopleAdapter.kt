@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright 2014-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.people
@@ -25,7 +25,7 @@ internal class PeopleAdapter(context: Context) : ArrayAdapter<Person>(context, L
 
     private val personImageTransform = CircleTransformation()
     private val placeholderDrawable =
-        AppCompatResources.getDrawable(context, R.drawable.ic_account_circle_black_24dp)!!
+        AppCompatResources.getDrawable(context, R.drawable.ic_account_circle_control_24dp)!!
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view: View

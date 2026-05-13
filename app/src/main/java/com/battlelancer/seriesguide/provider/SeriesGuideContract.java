@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2011 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.provider;
@@ -885,6 +885,7 @@ public class SeriesGuideContract {
          */
         String LAST_UPDATED = "episode_lastupdate";
 
+        // Options to hide special episodes and watched shows originally added thanks to JakeWharton
         String SELECTION_UNWATCHED = WATCHED + "=" + EpisodeFlags.UNWATCHED;
         String SELECTION_NOT_SKIPPED = WATCHED + "!=" + EpisodeFlags.SKIPPED;
         String SELECTION_COLLECTED = COLLECTED + "=1";

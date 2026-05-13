@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright 2016-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.util
@@ -64,6 +64,7 @@ object TextTools {
         }
 
         return if (format.startsWith(EpisodeFormat.PREFIX_ENGLISH_LOWER.value)) {
+            // Lower case episode number format originally added thanks to dqdb
             // s1:e1 or s01e01 format
             if (includeEpisode) {
                 "s" + seasonStr + (if (useLongNumbers) "" else ":") + "e" + episodeStr

@@ -12,6 +12,12 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 * 📝 Trakt: support server changes to correctly fetch all collection and watchlist items.
 
+## 2026.1.4 - 2026-05-08
+
+* 🔧 Trakt: prepare for server changes to correctly fetch all watched items.
+* 🔧 Trakt: improve log messages when a Trakt job fails.
+* 📝 Import latest user interface translations.
+
 ### 2026.1.3 - 2026-03-05
 
 * 🔨 Trakt: support server changes to correctly fetch all watchlist items.

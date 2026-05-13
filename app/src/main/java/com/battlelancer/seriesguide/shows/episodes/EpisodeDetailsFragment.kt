@@ -1,6 +1,5 @@
-// SPDX-License-Identifier: Apache-2.0
-// Copyright 2011-2025 Uwe Trottmann
-// Copyright 2013 Andrew Neal
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2011 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.shows.episodes
 

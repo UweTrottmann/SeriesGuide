@@ -1,6 +1,9 @@
-// SPDX-License-Identifier: Apache-2.0
-// Copyright 2017 Google Inc.
-// Copyright 2019-2025 Uwe Trottmann
+// SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2017 Google Inc.
+// SPDX-FileCopyrightText: Copyright © 2019 Uwe Trottmann <uwe@uwetrottmann.com>
+
+// Original file by Google Inc. licensed under Apache-2.0 copied from Android Architecture Samples
+// https://github.com/android/architecture-samples
 
 package com.battlelancer.seriesguide.common
 

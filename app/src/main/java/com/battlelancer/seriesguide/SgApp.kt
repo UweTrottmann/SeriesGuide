@@ -1,6 +1,5 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2011 Uwe Trottmann <uwe@uwetrottmann.com>
-// SPDX-FileCopyrightText: Copyright © 2013 Andrew Neal
 
 package com.battlelancer.seriesguide
 
@@ -262,6 +261,8 @@ class SgApp : Application() {
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
         manager?.createNotificationChannels(channels)
     }
+
+    // Strict mode originally added thanks to Andrew Neal <andrew@seeingpixels.org>
 
     /**
      * Used to enable [StrictMode] for debug builds.

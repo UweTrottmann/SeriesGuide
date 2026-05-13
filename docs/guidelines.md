@@ -132,12 +132,13 @@ Use dimension resources (like `@dimen/default_padding`) for margin and padding t
 
 ### Icons
 
-Use [Material Icons](https://fonts.google.com/icons) with
+Use [Material Symbols](https://fonts.google.com/icons) with
 
 - **Rounded** style
 - weight 400
 - no grade
 - typically 24dp size
+- to auto-mirror vector drawables in RTL layouts, add `android:autoMirrored="true"`
 
 Some existing icons may still use the old Filled or the old non-rounded Outlined style.
 

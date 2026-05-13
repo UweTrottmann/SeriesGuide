@@ -124,7 +124,7 @@ picasso = "com.squareup.picasso:picasso:2.8" # https://github.com/square/picasso
 retrofit2-gson = "com.squareup.retrofit2:converter-gson:3.0.0"
 retrofit2 = "com.squareup.retrofit2:retrofit:3.0.0"
 tmdb-java = "com.uwetrottmann.tmdb2:tmdb-java:2.13.0" # https://github.com/UweTrottmann/tmdb-java/blob/main/CHANGELOG.md
-trakt-java = "com.uwetrottmann.trakt5:trakt-java:6.17.0" # https://github.com/UweTrottmann/trakt-java/blob/main/CHANGELOG.md
+trakt-java = "com.uwetrottmann.trakt5:trakt-java:6.19.0" # https://github.com/UweTrottmann/trakt-java/blob/main/CHANGELOG.md
 
 # Billing
 amazon-appstore-sdk = "com.amazon.device:amazon-appstore-sdk:3.0.8" # https://developer.amazon.com/docs/in-app-purchasing/iap-whats-new.html
@@ -165,7 +165,7 @@ compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version = "2.2.
 # https://github.com/ben-manes/gradle-versions-plugin/releases
 versions = { id = "com.github.ben-manes.versions", version = "0.53.0" }
 # https://github.com/gradle-nexus/publish-plugin/releases
-publish = { id = "io.github.gradle-nexus.publish-plugin", version = "1.3.0" }
+publish = { id = "io.github.gradle-nexus.publish-plugin", version = "2.0.0" }
 # https://firebase.google.com/support/release-notes/android
 google-services = { id = "com.google.gms.google-services", version = "4.4.4" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version = "3.0.6" }

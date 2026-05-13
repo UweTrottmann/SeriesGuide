@@ -1,6 +1,5 @@
-// SPDX-License-Identifier: Apache-2.0
-// Copyright 2013-2025 Uwe Trottmann
-// Copyright 2013 Andrew Neal
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2013 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.shows.overview
 
@@ -394,9 +393,9 @@ class ShowFragment() : Fragment() {
             TooltipCompat.setTooltipText(this, contentDescription)
             setIconResource(
                 if (isHidden) {
-                    R.drawable.ic_visibility_off_black_24dp
+                    R.drawable.ic_visibility_off_control_24dp
                 } else {
-                    R.drawable.ic_visibility_white_24dp
+                    R.drawable.ic_visibility_control_24dp
                 }
             )
             isEnabled = true

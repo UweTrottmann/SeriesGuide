@@ -1,6 +1,5 @@
-// SPDX-License-Identifier: Apache-2.0
-// Copyright 2021-2024 Uwe Trottmann
-// Copyright 2018 Thouseef Hameed
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2021 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.shows.search
 
@@ -26,6 +25,7 @@ class ShowSearchViewModel(application: Application) : AndroidViewModel(applicati
                         "ORDER BY ${SgShow2Columns.SORT_LAST_WATCHED}, ${SgShow2Columns.SORT_TITLE}"
             )
         } else {
+            // Improved thanks to thouseef (Thouseef Hameed)
             // Query uses % at the beginning and end of the given string
             // so remove trailing whitespace and replace inner whitespaces with %
             // this improves matching if characters are left out, like "Mr Robot" vs "Mr. Robot"

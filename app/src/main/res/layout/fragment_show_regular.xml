@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 <!-- Copyright 2014-2024 Uwe Trottmann -->
 
 <!-- Enable nested scrolling to scroll app bar, fix fling to top registering. -->
@@ -151,7 +151,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/context_hide"
                     android:textColor="?attr/colorPrimary"
-                    app:icon="@drawable/ic_visibility_white_24dp"
+                    app:icon="@drawable/ic_visibility_control_24dp"
                     app:iconGravity="top"
                     app:iconTint="?attr/colorPrimary"
                     app:layout_constraintEnd_toEndOf="parent"

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright 2018-2025 Uwe Trottmann
 
 @file:Suppress("DEPRECATION") // ViewPager2 paging performance is bad, don't need its improvements

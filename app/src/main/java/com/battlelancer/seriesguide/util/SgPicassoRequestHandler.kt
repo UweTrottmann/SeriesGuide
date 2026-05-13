@@ -1,6 +1,9 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2013 Square, Inc.
 // SPDX-FileCopyrightText: Copyright © 2017 Uwe Trottmann <uwe@uwetrottmann.com>
+
+// Original file by Square, Inc. licensed under Apache-2.0 copied from Picasso
+// https://github.com/square/picasso
 
 package com.battlelancer.seriesguide.util
 
