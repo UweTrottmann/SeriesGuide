@@ -310,8 +310,32 @@ data class SgListItemWithDetails(
         // Android provides the UNICODE collator,
         // use it to correctly order characters with, for example, accents.
         // https://developer.android.com/reference/android/database/sqlite/SQLiteDatabase
-        const val SORT_TITLE: String = TITLE + " COLLATE UNICODE ASC"
-        const val SORT_TITLE_NO_ARTICLE: String = TITLE_NO_ARTICLE + " COLLATE UNICODE ASC"
+        const val SORT_TITLE: String = "$TITLE COLLATE UNICODE ASC"
+        const val SORT_TITLE_NO_ARTICLE: String = "$TITLE_NO_ARTICLE COLLATE UNICODE ASC"
+
+        /**
+         * By oldest movie or next episode release date, then continued first (for no next episode).
+         */
+        const val SORT_OLDEST_RELEASE_DATE =
+            "$RELEASED_MS ASC,${SgShow2Columns.STATUS} DESC"
+
+        /**
+         * By latest movie or next episode release date, then continued first (for no next episode).
+         */
+        const val SORT_LATEST_RELEASE_DATE =
+            "$RELEASED_MS DESC,${SgShow2Columns.STATUS} DESC"
+
+        /**
+         * By latest watched first.
+         */
+        const val SORT_LAST_WATCHED = "${SgShow2Columns.LASTWATCHED_MS} DESC"
+
+        /**
+         * By least episodes remaining to watch, then continued first (for no remaining episode).
+         */
+        const val SORT_REMAINING_EPISODES =
+            "${SgShow2Columns.UNWATCHED_COUNT} ASC,${SgShow2Columns.STATUS} DESC"
+
         const val SORT_TYPE: String = ListItems.TYPE + " ASC"
 
         /**
