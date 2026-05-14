@@ -13,6 +13,7 @@ import com.battlelancer.seriesguide.lists.database.SgListItem
 import com.battlelancer.seriesguide.movies.database.MovieHelper
 import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems
 import com.battlelancer.seriesguide.shows.database.SgEpisode2
 import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper
 import com.battlelancer.seriesguide.shows.database.SgSeason2
@@ -123,6 +124,8 @@ class JsonExportTaskTest {
     }
 
     companion object {
+        const val TEST_LIST_1 = "list-1"
+
         val listOfTestShows = listOf(
             SgShow2(
                 id = 1,
@@ -261,6 +264,43 @@ class JsonExportTaskTest {
                 ratingUser = null
             )
         )
+
+        val listOfTestLists = listOf(
+            SgList(
+                listId = TEST_LIST_1,
+                name = "First List",
+                order = 0
+            ),
+            SgList(
+                listId = "list-2",
+                name = "Empty List",
+                order = 1
+            )
+        )
+
+        fun buildTestListItem(itemRefId: String, type: Int) = SgListItem(
+            listId = TEST_LIST_1,
+            listItemId = ListItems.generateListItemId(itemRefId, type, TEST_LIST_1),
+            itemRefId = itemRefId,
+            type = type
+        )
+
+        val listOfTestListItems = listOf(
+            buildTestListItem("item-ref-1", SeriesGuideContract.ListItemTypes.TMDB_SHOW),
+            buildTestListItem("item-ref-2", SeriesGuideContract.ListItemTypes.TVDB_SHOW),
+            buildTestListItem("item-ref-3", SeriesGuideContract.ListItemTypes.SEASON),
+            buildTestListItem("item-ref-4", SeriesGuideContract.ListItemTypes.EPISODE),
+            buildTestListItem("item-ref-5", SeriesGuideContract.ListItemTypes.TMDB_MOVIE)
+        )
+
+        @Language("json")
+        val expectedJsonLists =
+            """
+            [
+            {"list_id":"list-1","name":"First List","order":0,"items":[{"list_item_id":"item-ref-1-4-list-1","externalId":"item-ref-1","type":"tmdb-show"},{"list_item_id":"item-ref-2-1-list-1","externalId":"item-ref-2","type":"show"},{"list_item_id":"item-ref-3-2-list-1","externalId":"item-ref-3","type":"season"},{"list_item_id":"item-ref-4-3-list-1","externalId":"item-ref-4","type":"episode"},{"list_item_id":"item-ref-5-5-list-1","externalId":"item-ref-5","type":"movie"}]}
+            ,{"list_id":"list-2","name":"Empty List","order":1,"items":[]}
+            ]
+            """.trimIndent()
     }
 
     @Test
@@ -294,7 +334,7 @@ class JsonExportTaskTest {
 
         // With data
         `when`(sgListHelper.getListsForExport()).thenReturn(listOfTestLists)
-        `when`(sgListHelper.getListItemsForExport("list-1")).thenReturn(listOfTestListItems)
+        `when`(sgListHelper.getListItemsForExport(TEST_LIST_1)).thenReturn(listOfTestListItems)
 
         val withDataResult = exportTask.run(export)
         assertThat(exportTask.errorCause).isNull()
@@ -306,58 +346,13 @@ class JsonExportTaskTest {
         assertThat(exportWithData).isEqualTo(
             """
             [
-            {"list_id":"list-1","name":"First List","order":0,"items":[{"list_item_id":"list-1-item-1","externalId":"item-ref-1","type":"tmdb-show"},{"list_item_id":"list-1-item-2","externalId":"item-ref-2","type":"show"},{"list_item_id":"list-1-item-3","externalId":"item-ref-3","type":"season"},{"list_item_id":"list-1-item-4","externalId":"item-ref-4","type":"episode"},{"list_item_id":"list-1-item-5","externalId":"item-ref-5","type":"movie"}]}
+            {"list_id":"list-1","name":"First List","order":0,"items":[{"list_item_id":"item-ref-1-4-list-1","externalId":"item-ref-1","type":"tmdb-show"},{"list_item_id":"item-ref-2-1-list-1","externalId":"item-ref-2","type":"show"},{"list_item_id":"item-ref-3-2-list-1","externalId":"item-ref-3","type":"season"},{"list_item_id":"item-ref-4-3-list-1","externalId":"item-ref-4","type":"episode"},{"list_item_id":"item-ref-5-5-list-1","externalId":"item-ref-5","type":"movie"}]}
             ,{"list_id":"list-2","name":"Empty List","order":1,"items":[]}
             ]
             """.trimIndent()
         )
     }
 
-    private val listOfTestLists = listOf(
-        SgList(
-            listId = "list-1",
-            name = "First List",
-            order = 0
-        ),
-        SgList(
-            listId = "list-2",
-            name = "Empty List",
-            order = 1
-        )
-    )
-
-    private val listOfTestListItems = listOf(
-        SgListItem(
-            listId = "list-1",
-            listItemId = "list-1-item-1",
-            itemRefId = "item-ref-1",
-            type = SeriesGuideContract.ListItemTypes.TMDB_SHOW
-        ),
-        SgListItem(
-            listId = "list-1",
-            listItemId = "list-1-item-2",
-            itemRefId = "item-ref-2",
-            type = SeriesGuideContract.ListItemTypes.TVDB_SHOW,
-        ),
-        SgListItem(
-            listId = "list-1",
-            listItemId = "list-1-item-3",
-            itemRefId = "item-ref-3",
-            type = SeriesGuideContract.ListItemTypes.SEASON,
-        ),
-        SgListItem(
-            listId = "list-1",
-            listItemId = "list-1-item-4",
-            itemRefId = "item-ref-4",
-            type = SeriesGuideContract.ListItemTypes.EPISODE
-        ),
-        SgListItem(
-            listId = "list-1",
-            listItemId = "list-1-item-5",
-            itemRefId = "item-ref-5",
-            type = SeriesGuideContract.ListItemTypes.TMDB_MOVIE
-        ),
-    )
 
     @Test
     fun exportMovies_jsonAsExpected() = runTest {

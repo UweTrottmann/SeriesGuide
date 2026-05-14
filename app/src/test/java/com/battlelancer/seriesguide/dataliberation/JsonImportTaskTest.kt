@@ -6,6 +6,7 @@ package com.battlelancer.seriesguide.dataliberation
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.battlelancer.seriesguide.EmptyTestApplication
+import com.battlelancer.seriesguide.lists.database.SgList
 import com.battlelancer.seriesguide.lists.database.SgListHelper
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper
@@ -38,7 +39,6 @@ class JsonImportTaskTest {
      */
     private fun <T> anyNotNull(type: Class<T>): T = Mockito.any(type)
 
-    @Suppress("BlockingMethodInNonBlockingContext")
     @Test
     fun importShow_modelAsExpected() = runTest {
         val sgShow2Helper = mock(SgShow2Helper::class.java)
@@ -114,6 +114,44 @@ class JsonImportTaskTest {
             season = 2
         )
         verify(sgEpisode2Helper).insertEpisodes(listOf(expectedEpisode3, expectedEpisode4))
+    }
+
+    @Test
+    fun importList_modelAsExpected() = runTest {
+        val sgListHelper = mock(SgListHelper::class.java)
+
+        val importTask = JsonImportTask(
+            context,
+            importShows = false,
+            importLists = true,
+            importMovies = false,
+            mock(SgRoomDatabase::class.java),
+            mock(SgShow2Helper::class.java),
+            mock(SgSeason2Helper::class.java),
+            mock(SgEpisode2Helper::class.java),
+            sgListHelper
+        )
+
+        // Test data from export task test: two lists, the first with one item of each type.
+        val testBackupFile = Files.createTempFile("seriesguide-lists-json", null)
+        testBackupFile.writeText(JsonExportTaskTest.expectedJsonLists)
+        importTask.testBackupFile = testBackupFile.toFile()
+
+        val result = importTask.run()
+        assertThat(importTask.errorCause).isNull()
+        assertThat(result).isEqualTo(JsonImportTask.SUCCESS)
+
+        // List 1 with items
+        verify(sgListHelper).insertList(
+            SgList(listId = "list-1", name = "First List", order = 0)
+        )
+        val expectedListItems = JsonExportTaskTest.listOfTestListItems
+        verify(sgListHelper).insertListItems(expectedListItems)
+
+        // List 2 has no items
+        verify(sgListHelper).insertList(
+            SgList(listId = "list-2", name = "Empty List", order = 1)
+        )
     }
 
 }
