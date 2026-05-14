@@ -31,17 +31,13 @@ class ListsSortDialogFragment : AppCompatDialogFragment() {
         val context = requireContext()
 
         // Set initial state from saved settings
-        val sortOrderId = ListsDistillationSettings.getSortOrderId(context)
-        val radioButtonId = when (sortOrderId) {
-            ListsSortOrder.LATEST_EPISODE_ID ->
-                R.id.radioListsSortLatestEpisode
-            ListsSortOrder.OLDEST_EPISODE_ID ->
-                R.id.radioListsSortOldestEpisode
-            ListsSortOrder.LAST_WATCHED_ID ->
-                R.id.radioListsSortLastWatched
-            ListsSortOrder.LEAST_REMAINING_EPISODES_ID ->
-                R.id.radioListsSortRemaining
-            else -> R.id.radioListsSortTitle
+        val sortOrder = ListsDistillationSettings.getSortOrder(context)
+        val radioButtonId = when (sortOrder) {
+            ListsSortOrder.TITLE_ALPHABETICAL -> R.id.radioListsSortTitle
+            ListsSortOrder.LATEST_EPISODE -> R.id.radioListsSortLatestEpisode
+            ListsSortOrder.OLDEST_EPISODE -> R.id.radioListsSortOldestEpisode
+            ListsSortOrder.LAST_WATCHED -> R.id.radioListsSortLastWatched
+            ListsSortOrder.LEAST_REMAINING_EPISODES -> R.id.radioListsSortRemaining
         }
         binding.radioGroupListsSort.check(radioButtonId)
         binding.checkboxListsSortIgnoreArticles.isChecked =
@@ -49,18 +45,15 @@ class ListsSortDialogFragment : AppCompatDialogFragment() {
 
         // Apply sort order change immediately when a radio button is selected
         binding.radioGroupListsSort.setOnCheckedChangeListener { _, checkedId ->
-            val newSortOrderId = when (checkedId) {
-                R.id.radioListsSortLatestEpisode ->
-                    ListsSortOrder.LATEST_EPISODE_ID
-                R.id.radioListsSortOldestEpisode ->
-                    ListsSortOrder.OLDEST_EPISODE_ID
-                R.id.radioListsSortLastWatched ->
-                    ListsSortOrder.LAST_WATCHED_ID
-                R.id.radioListsSortRemaining ->
-                    ListsSortOrder.LEAST_REMAINING_EPISODES_ID
-                else -> ListsSortOrder.TITLE_ALPHABETICAL_ID
+            val newSortOrder = when (checkedId) {
+                R.id.radioListsSortTitle -> ListsSortOrder.TITLE_ALPHABETICAL
+                R.id.radioListsSortLatestEpisode -> ListsSortOrder.LATEST_EPISODE
+                R.id.radioListsSortOldestEpisode -> ListsSortOrder.OLDEST_EPISODE
+                R.id.radioListsSortLastWatched -> ListsSortOrder.LAST_WATCHED
+                R.id.radioListsSortRemaining -> ListsSortOrder.LEAST_REMAINING_EPISODES
+                else -> throw IllegalStateException("Unknown checkedId $checkedId")
             }
-            ListsDistillationSettings.saveSortOrderId(context, newSortOrderId)
+            ListsDistillationSettings.saveSortOrder(context, newSortOrder)
 
             // Post event, so all active list fragments can react
             EventBus.getDefault().post(ListsDistillationSettings.ListsSortOrderChangedEvent())
