@@ -101,6 +101,7 @@ data class SgListItemWithDetails(
      */
     @ColumnInfo(name = SgShow2Columns.REF_SHOW_ID) val showId: Long?,
     @ColumnInfo(name = SgShow2Columns.RELEASE_TIME) val releaseTime: Int?,
+    @ColumnInfo(name = RUNNING_TIME_MINUTES) val runningTimeMinutes: Int?,
     @ColumnInfo(name = SgShow2Columns.NEXTTEXT) val nextText: String?,
     /**
      * Get via [releasedMsOrDefault].
@@ -135,6 +136,8 @@ data class SgListItemWithDetails(
      */
     val releasedMsOrDefault: Long
         get() = releasedMs ?: Long.MAX_VALUE
+    val runningTimeMinutesOrZero: Int
+        get() = runningTimeMinutes ?: 0
     val releaseTimeOrDefault: Int
         get() = releaseTime ?: -1
     val releaseWeekDayOrDefault: Int
@@ -155,6 +158,7 @@ data class SgListItemWithDetails(
         private const val TITLE_NO_ARTICLE = "list_item_title_no_article"
         private const val POSTER = "list_item_poster"
         private const val RELEASED_MS = "list_item_released_ms"
+        private const val RUNNING_TIME_MINUTES = "list_item_running_time_minutes"
         private const val ITEM_ROW_ID = "item_row_id"
 
         private const val ITEMS_COLUMNS: String =
@@ -200,6 +204,7 @@ data class SgListItemWithDetails(
                     "NULL AS ${SgShow2Columns.RELEASE_TIME}," +
                     "NULL AS ${SgShow2Columns.NEXTTEXT}," +
                     "${MoviesColumns.RELEASED_UTC_MS} AS $RELEASED_MS," +
+                    "${MoviesColumns.RUNTIME_MIN} AS $RUNNING_TIME_MINUTES," +
                     "${MoviesColumns.TITLE} AS $TITLE," +
                     "${MoviesColumns.TITLE_NOARTICLE} AS $TITLE_NO_ARTICLE," +
                     "${MoviesColumns.POSTER} AS $POSTER," +
@@ -227,6 +232,7 @@ data class SgListItemWithDetails(
                     SgShow2Columns.RELEASE_TIME + "," +
                     SgShow2Columns.NEXTTEXT + "," +
                     "${SgShow2Columns.NEXTAIRDATEMS} AS $RELEASED_MS," +
+                    "${SgShow2Columns.RUNTIME} AS $RUNNING_TIME_MINUTES," +
                     "${SgShow2Columns.TITLE} AS $TITLE," +
                     "${SgShow2Columns.TITLE_NOARTICLE} AS $TITLE_NO_ARTICLE," +
                     "${SgShow2Columns.POSTER_SMALL} AS $POSTER," +

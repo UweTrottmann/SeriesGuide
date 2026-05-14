@@ -106,6 +106,9 @@ class UiListItemBuilder(private val context: Context) {
             ""
         }
 
+        val runningTime =
+            TimeTools.formatToHoursAndMinutes(context.resources, item.runningTimeMinutesOrZero)
+
         return UiListItem(
             id = item.id,
             listItemId = item.listItemId,
@@ -116,7 +119,7 @@ class UiListItemBuilder(private val context: Context) {
             isFavorite = false,
             posterUrl = item.posterUrl(),
             titleText = item.title,
-            nextEpisodeText = null,
+            nextEpisodeText = runningTime,
             nextEpisodeTimeText = releaseDate,
             timeAndNetworkText = "",
             remainingText = null,
