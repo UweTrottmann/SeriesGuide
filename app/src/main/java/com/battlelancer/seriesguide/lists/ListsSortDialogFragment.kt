@@ -34,8 +34,8 @@ class ListsSortDialogFragment : AppCompatDialogFragment() {
         val sortOrder = ListsDistillationSettings.getSortOrder(context)
         val radioButtonId = when (sortOrder) {
             ListsSortOrder.TITLE_ALPHABETICAL -> R.id.radioListsSortTitle
-            ListsSortOrder.LATEST_EPISODE -> R.id.radioListsSortLatestEpisode
-            ListsSortOrder.OLDEST_EPISODE -> R.id.radioListsSortOldestEpisode
+            ListsSortOrder.LATEST_RELEASE_DATE -> R.id.radioListsSortLatestReleaseDate
+            ListsSortOrder.OLDEST_RELEASE_DATE -> R.id.radioListsSortOldestReleaseDate
             ListsSortOrder.LAST_WATCHED -> R.id.radioListsSortLastWatched
             ListsSortOrder.LEAST_REMAINING_EPISODES -> R.id.radioListsSortRemaining
         }
@@ -47,8 +47,8 @@ class ListsSortDialogFragment : AppCompatDialogFragment() {
         binding.radioGroupListsSort.setOnCheckedChangeListener { _, checkedId ->
             val newSortOrder = when (checkedId) {
                 R.id.radioListsSortTitle -> ListsSortOrder.TITLE_ALPHABETICAL
-                R.id.radioListsSortLatestEpisode -> ListsSortOrder.LATEST_EPISODE
-                R.id.radioListsSortOldestEpisode -> ListsSortOrder.OLDEST_EPISODE
+                R.id.radioListsSortLatestReleaseDate -> ListsSortOrder.LATEST_RELEASE_DATE
+                R.id.radioListsSortOldestReleaseDate -> ListsSortOrder.OLDEST_RELEASE_DATE
                 R.id.radioListsSortLastWatched -> ListsSortOrder.LAST_WATCHED
                 R.id.radioListsSortRemaining -> ListsSortOrder.LEAST_REMAINING_EPISODES
                 else -> throw IllegalStateException("Unknown checkedId $checkedId")

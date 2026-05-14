@@ -27,18 +27,18 @@
                 android:text="@string/action_shows_sort_title" />
 
             <RadioButton
-                android:id="@+id/radioListsSortLatestEpisode"
+                android:id="@+id/radioListsSortLatestReleaseDate"
                 style="@style/Widget.SeriesGuide.DistillationItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/action_shows_sort_latest_episode" />
+                android:text="@string/action_lists_sort_latest_release_date" />
 
             <RadioButton
-                android:id="@+id/radioListsSortOldestEpisode"
+                android:id="@+id/radioListsSortOldestReleaseDate"
                 style="@style/Widget.SeriesGuide.DistillationItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/action_shows_sort_oldest_episode" />
+                android:text="@string/action_lists_sort_oldest_release_date" />
 
             <RadioButton
                 android:id="@+id/radioListsSortLastWatched"

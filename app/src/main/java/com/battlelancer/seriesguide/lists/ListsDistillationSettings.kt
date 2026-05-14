@@ -33,8 +33,8 @@ object ListsDistillationSettings {
                     SgListItemWithDetails.SORT_TITLE
                 }
 
-            ListsSortOrder.LATEST_EPISODE -> SgListItemWithDetails.SORT_LATEST_RELEASE_DATE
-            ListsSortOrder.OLDEST_EPISODE -> SgListItemWithDetails.SORT_OLDEST_RELEASE_DATE
+            ListsSortOrder.LATEST_RELEASE_DATE -> SgListItemWithDetails.SORT_LATEST_RELEASE_DATE
+            ListsSortOrder.OLDEST_RELEASE_DATE -> SgListItemWithDetails.SORT_OLDEST_RELEASE_DATE
             ListsSortOrder.LAST_WATCHED -> SgListItemWithDetails.SORT_LAST_WATCHED
             ListsSortOrder.LEAST_REMAINING_EPISODES -> SgListItemWithDetails.SORT_REMAINING_EPISODES
         }
@@ -68,8 +68,8 @@ object ListsDistillationSettings {
         // Deprecated: Only supporting alphabetical sort order going forward.
         // TITLE_REVERSE_ALPHABETICAL(1),
 
-        LATEST_EPISODE(2),
-        OLDEST_EPISODE(3),
+        LATEST_RELEASE_DATE(2),
+        OLDEST_RELEASE_DATE(3),
         LAST_WATCHED(4),
         LEAST_REMAINING_EPISODES(5);
 
