@@ -3,14 +3,17 @@
 
 package com.battlelancer.seriesguide.dataliberation.model;
 
+import androidx.annotation.Nullable;
+
 public class ListItem {
 
     public String list_item_id;
 
     /**
-     * Used in legacy backup files.
+     * Null in new backups. Used in legacy backup files.
      */
-    public int tvdb_id;
+    @Nullable
+    public Integer tvdb_id;
 
     /**
      * TMDB ID for new list items, TVDB ID for legacy list items.

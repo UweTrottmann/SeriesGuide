@@ -306,7 +306,7 @@ class JsonExportTaskTest {
         assertThat(exportWithData).isEqualTo(
             """
             [
-            {"list_id":"list-1","name":"First List","order":0,"items":[{"list_item_id":"list-1-item-1","tvdb_id":0,"externalId":"item-ref-1","type":"tmdb-show"},{"list_item_id":"list-1-item-2","tvdb_id":0,"externalId":"item-ref-2","type":"show"},{"list_item_id":"list-1-item-3","tvdb_id":0,"externalId":"item-ref-3","type":"season"},{"list_item_id":"list-1-item-4","tvdb_id":0,"externalId":"item-ref-4","type":"episode"}]}
+            {"list_id":"list-1","name":"First List","order":0,"items":[{"list_item_id":"list-1-item-1","externalId":"item-ref-1","type":"tmdb-show"},{"list_item_id":"list-1-item-2","externalId":"item-ref-2","type":"show"},{"list_item_id":"list-1-item-3","externalId":"item-ref-3","type":"season"},{"list_item_id":"list-1-item-4","externalId":"item-ref-4","type":"episode"}]}
             ,{"list_id":"list-2","name":"Empty List","order":1,"items":[]}
             ]
             """.trimIndent()

@@ -511,10 +511,11 @@ class JsonImportTask(
             }
 
             var externalId: String? = null
+            val legacyTvdbId = item.tvdb_id
             if (item.externalId != null && item.externalId.isNotEmpty()) {
                 externalId = item.externalId
-            } else if (item.tvdb_id > 0) {
-                externalId = item.tvdb_id.toString()
+            } else if (legacyTvdbId != null && legacyTvdbId > 0) {
+                externalId = legacyTvdbId.toString()
             }
             if (externalId == null) continue  // No external ID, skip
 
