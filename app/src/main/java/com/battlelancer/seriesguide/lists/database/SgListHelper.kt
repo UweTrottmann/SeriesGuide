@@ -13,7 +13,6 @@ import androidx.room.Query
 import androidx.room.RawQuery
 import androidx.room.Transaction
 import androidx.sqlite.db.SupportSQLiteQuery
-import kotlinx.coroutines.flow.Flow
 import com.battlelancer.seriesguide.lists.database.SgListItemWithDetails.Companion.LIST_ITEMS_WITH_DETAILS
 import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
@@ -27,6 +26,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Qualified
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.tools.ShowStatus
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SgListHelper {
@@ -102,7 +102,10 @@ data class SgListItemWithDetails(
     @ColumnInfo(name = SgShow2Columns.REF_SHOW_ID) val showId: Long?,
     @ColumnInfo(name = SgShow2Columns.RELEASE_TIME) val releaseTime: Int?,
     @ColumnInfo(name = SgShow2Columns.NEXTTEXT) val nextText: String?,
-    @ColumnInfo(name = SgShow2Columns.NEXTAIRDATEMS) val nextAirdateMs: Long,
+    /**
+     * Get via [releasedMsOrDefault].
+     */
+    @ColumnInfo(name = RELEASED_MS) val releasedMs: Long?,
     @ColumnInfo(name = TITLE) val title: String,
     @ColumnInfo(name = TITLE_NO_ARTICLE) val titleNoArticle: String?,
     /**
@@ -123,6 +126,15 @@ data class SgListItemWithDetails(
     @ColumnInfo(name = SgShow2Columns.UNWATCHED_COUNT) val unwatchedCount: Int,
 ) {
 
+    /**
+     * If [releasedMs] is not null returns it, otherwise [Long.MAX_VALUE].
+     * This works for both shows and movies as that's the default for both
+     * ([SgMovie.RELEASED_MS_UNKNOWN] and
+     * [com.battlelancer.seriesguide.shows.tools.NextEpisodeUpdater.UNKNOWN_NEXT_RELEASE_DATE]), see
+     * [MoviesColumns.RELEASED_UTC_MS] and [SgShow2Columns.NEXTAIRDATEMS].
+     */
+    val releasedMsOrDefault: Long
+        get() = releasedMs ?: Long.MAX_VALUE
     val releaseTimeOrDefault: Int
         get() = releaseTime ?: -1
     val releaseWeekDayOrDefault: Int
@@ -142,6 +154,7 @@ data class SgListItemWithDetails(
         private const val TITLE = "list_item_title"
         private const val TITLE_NO_ARTICLE = "list_item_title_no_article"
         private const val POSTER = "list_item_poster"
+        private const val RELEASED_MS = "list_item_released_ms"
         private const val ITEM_ROW_ID = "item_row_id"
 
         private const val ITEMS_COLUMNS: String =
@@ -186,7 +199,7 @@ data class SgListItemWithDetails(
                     "NULL AS ${SgShow2Columns.REF_SHOW_ID}," +
                     "NULL AS ${SgShow2Columns.RELEASE_TIME}," +
                     "NULL AS ${SgShow2Columns.NEXTTEXT}," +
-                    "NULL AS ${SgShow2Columns.NEXTAIRDATEMS}," +
+                    "${MoviesColumns.RELEASED_UTC_MS} AS $RELEASED_MS," +
                     "${MoviesColumns.TITLE} AS $TITLE," +
                     "${MoviesColumns.TITLE_NOARTICLE} AS $TITLE_NO_ARTICLE," +
                     "${MoviesColumns.POSTER} AS $POSTER," +
@@ -213,7 +226,7 @@ data class SgListItemWithDetails(
                     "${Qualified.SG_SHOW_ID} AS ${SgShow2Columns.REF_SHOW_ID}," +
                     SgShow2Columns.RELEASE_TIME + "," +
                     SgShow2Columns.NEXTTEXT + "," +
-                    SgShow2Columns.NEXTAIRDATEMS + "," +
+                    "${SgShow2Columns.NEXTAIRDATEMS} AS $RELEASED_MS," +
                     "${SgShow2Columns.TITLE} AS $TITLE," +
                     "${SgShow2Columns.TITLE_NOARTICLE} AS $TITLE_NO_ARTICLE," +
                     "${SgShow2Columns.POSTER_SMALL} AS $POSTER," +
