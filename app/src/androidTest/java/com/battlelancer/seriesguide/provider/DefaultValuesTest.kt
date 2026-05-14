@@ -1,16 +1,15 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2018-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2018 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.provider
 
-import android.content.ContentProviderOperation
 import android.content.ContentResolver
 import android.content.Context
 import android.database.Cursor
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgEpisodeForImport
+import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgListForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgSeasonForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgShowForImport
 import com.battlelancer.seriesguide.dataliberation.model.Episode
@@ -206,19 +205,15 @@ class DefaultValuesTest {
     fun listDefaultValuesImport() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         val database = SgRoomDatabase.getInstance(context)
-        // Delete initial list.
-        database.sgListHelper().deleteAllLists()
+        val listHelper = database.sgListHelper()
+        // By default, the database inserts a first list when being created: delete it
+        listHelper.deleteAllLists()
 
-        val values = LIST.toContentValues()
+        val sgList = LIST.toSgListForImport()
 
-        val op = ContentProviderOperation.newInsert(Lists.CONTENT_URI)
-            .withValues(values).build()
+        listHelper.insertList(sgList)
 
-        val batch = ArrayList<ContentProviderOperation>()
-        batch.add(op)
-        resolver.applyBatch(SgApp.CONTENT_AUTHORITY, batch)
-
-        val lists = database.sgListHelper().getListsForExport()
+        val lists = listHelper.getListsForExport()
         assertThat(lists).hasSize(1)
         assertThat(lists[0].name).isEqualTo(LIST.name)
 

@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2021-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2021 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.dataliberation
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.battlelancer.seriesguide.EmptyTestApplication
+import com.battlelancer.seriesguide.lists.database.SgListHelper
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper
 import com.battlelancer.seriesguide.shows.database.SgSeason2
@@ -52,7 +53,8 @@ class JsonImportTaskTest {
             mock(SgRoomDatabase::class.java),
             sgShow2Helper,
             sgSeason2Helper,
-            sgEpisode2Helper
+            sgEpisode2Helper,
+            mock(SgListHelper::class.java)
         )
 
         // Test data from export task test: single show, two seasons, each with two episodes.

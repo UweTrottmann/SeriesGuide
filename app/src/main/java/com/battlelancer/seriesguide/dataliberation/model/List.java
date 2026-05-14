@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2013-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2013 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.dataliberation.model;
 
@@ -14,11 +14,4 @@ public class List {
 
     public java.util.List<ListItem> items;
 
-    public ContentValues toContentValues() {
-        ContentValues values = new ContentValues();
-        values.put(Lists.LIST_ID, list_id);
-        values.put(Lists.NAME, name);
-        values.put(Lists.ORDER, order);
-        return values;
-    }
 }
