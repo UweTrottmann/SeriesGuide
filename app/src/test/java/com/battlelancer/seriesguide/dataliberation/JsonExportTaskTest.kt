@@ -306,7 +306,7 @@ class JsonExportTaskTest {
         assertThat(exportWithData).isEqualTo(
             """
             [
-            {"list_id":"list-1","name":"First List","order":0,"items":[{"list_item_id":"list-1-item-1","externalId":"item-ref-1","type":"tmdb-show"},{"list_item_id":"list-1-item-2","externalId":"item-ref-2","type":"show"},{"list_item_id":"list-1-item-3","externalId":"item-ref-3","type":"season"},{"list_item_id":"list-1-item-4","externalId":"item-ref-4","type":"episode"}]}
+            {"list_id":"list-1","name":"First List","order":0,"items":[{"list_item_id":"list-1-item-1","externalId":"item-ref-1","type":"tmdb-show"},{"list_item_id":"list-1-item-2","externalId":"item-ref-2","type":"show"},{"list_item_id":"list-1-item-3","externalId":"item-ref-3","type":"season"},{"list_item_id":"list-1-item-4","externalId":"item-ref-4","type":"episode"},{"list_item_id":"list-1-item-5","externalId":"item-ref-5","type":"movie"}]}
             ,{"list_id":"list-2","name":"Empty List","order":1,"items":[]}
             ]
             """.trimIndent()
@@ -350,7 +350,13 @@ class JsonExportTaskTest {
             listItemId = "list-1-item-4",
             itemRefId = "item-ref-4",
             type = SeriesGuideContract.ListItemTypes.EPISODE
-        )
+        ),
+        SgListItem(
+            listId = "list-1",
+            listItemId = "list-1-item-5",
+            itemRefId = "item-ref-5",
+            type = SeriesGuideContract.ListItemTypes.TMDB_MOVIE
+        ),
     )
 
     @Test

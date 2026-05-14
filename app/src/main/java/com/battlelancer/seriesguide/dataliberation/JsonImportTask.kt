@@ -497,7 +497,9 @@ class JsonImportTask(
         for (item in list.items) {
             // Note: DO import legacy types (seasons and episodes),
             // as e.g. older backups can still contain legacy show data to allow displaying them.
-            val type: Int = if (ListItemTypesExport.SHOW == item.type) {
+            val type: Int = if (ListItemTypesExport.MOVIE == item.type) {
+                ListItemTypes.TMDB_MOVIE
+            } else if (ListItemTypesExport.SHOW == item.type) {
                 ListItemTypes.TVDB_SHOW
             } else if (ListItemTypesExport.TMDB_SHOW == item.type) {
                 ListItemTypes.TMDB_SHOW
