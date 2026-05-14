@@ -488,7 +488,7 @@ public class SeriesGuideContract {
          */
         String POSTER = "series_poster";
         /**
-         * Path to a small variant of the poster. Needs to be prefixed with the poster server URL.
+         * See {@link SgShow2#getPosterSmall()}.
          */
         String POSTER_SMALL = "series_poster_small";
 

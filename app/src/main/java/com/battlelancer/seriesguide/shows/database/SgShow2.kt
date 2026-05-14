@@ -189,6 +189,11 @@ data class SgShow2(
      * A poster path. Needs to be prefixed with the poster server URL.
      */
     @ColumnInfo(name = POSTER) val poster: String? = "",
+    /**
+     * For shows using TMDB data, the same as [poster].
+     *
+     * For shows using legacy TVDB data, path to a small variant of the poster.
+     */
     @ColumnInfo(name = POSTER_SMALL) val posterSmall: String? = "",
     @ColumnInfo(name = NEXTAIRDATEMS) val nextAirdateMs: Long? = NextEpisodeUpdater.UNKNOWN_NEXT_RELEASE_DATE,
     @ColumnInfo(name = NEXTTEXT) val nextText: String? = "",
