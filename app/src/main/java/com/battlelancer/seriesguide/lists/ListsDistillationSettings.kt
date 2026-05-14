@@ -4,6 +4,7 @@
 package com.battlelancer.seriesguide.lists
 
 import android.content.Context
+import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.lists.database.SgListItemWithDetails
 import com.battlelancer.seriesguide.settings.DisplaySettings
@@ -15,7 +16,7 @@ object ListsDistillationSettings {
 
     class ListsSortOrderChangedEvent
 
-    const val KEY_SORT_ORDER = "com.battlelancer.seriesguide.lists.sortorder"
+    private const val KEY_SORT_ORDER = "com.battlelancer.seriesguide.lists.sortorder"
 
     /**
      * Builds an appropriate SQL sort statement for sorting [SgListItemWithDetails] rows.
@@ -46,6 +47,12 @@ object ListsDistillationSettings {
         query.append(",").append(SgListItemWithDetails.SORT_TYPE)
 
         return query.toString()
+    }
+
+    fun saveSortOrderId(context: Context, newSortOrderId: Int) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit {
+            putInt(KEY_SORT_ORDER, newSortOrderId)
+        }
     }
 
     /**
