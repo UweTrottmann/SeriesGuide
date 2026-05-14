@@ -24,8 +24,6 @@ import com.battlelancer.seriesguide.dataliberation.model.Show
 import com.battlelancer.seriesguide.lists.database.SgListHelper
 import com.battlelancer.seriesguide.lists.database.SgListItem
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgEpisode2
@@ -337,14 +335,11 @@ class JsonImportTask(
             }
 
             Export.Lists -> {
-                // delete list items before lists to prevent violating foreign key constraints
-                batch.add(
-                    ContentProviderOperation.newDelete(ListItems.CONTENT_URI).build()
-                )
-                batch.add(
-                    ContentProviderOperation.newDelete(SeriesGuideContract.Lists.CONTENT_URI)
-                        .build()
-                )
+                database.runInTransaction {
+                    // Delete list items before lists to prevent violating foreign key constraints
+                    sgListHelper.deleteAllListItems()
+                    sgListHelper.deleteAllLists()
+                }
             }
 
             Export.Movies -> {
