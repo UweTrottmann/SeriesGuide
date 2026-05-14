@@ -24,24 +24,21 @@ object ListsDistillationSettings {
     fun getSortQuery(context: Context): String {
         val query = StringBuilder()
 
-        val sortOrderId = getSortOrderId(context)
-        val orderClause: String? = when (sortOrderId) {
-            ListsSortOrder.TITLE_ALPHABETICAL_ID ->
+        val sortOrder = getSortOrder(context)
+        val orderClause: String = when (sortOrder) {
+            ListsSortOrder.TITLE_ALPHABETICAL ->
                 if (DisplaySettings.isSortOrderIgnoringArticles(context)) {
                     SgListItemWithDetails.SORT_TITLE_NO_ARTICLE
                 } else {
                     SgListItemWithDetails.SORT_TITLE
                 }
 
-            ListsSortOrder.LATEST_EPISODE_ID -> SgListItemWithDetails.SORT_LATEST_RELEASE_DATE
-            ListsSortOrder.OLDEST_EPISODE_ID -> SgListItemWithDetails.SORT_OLDEST_RELEASE_DATE
-            ListsSortOrder.LAST_WATCHED_ID -> SgListItemWithDetails.SORT_LAST_WATCHED
-            ListsSortOrder.LEAST_REMAINING_EPISODES_ID -> SgListItemWithDetails.SORT_REMAINING_EPISODES
-            else -> null
+            ListsSortOrder.LATEST_EPISODE -> SgListItemWithDetails.SORT_LATEST_RELEASE_DATE
+            ListsSortOrder.OLDEST_EPISODE -> SgListItemWithDetails.SORT_OLDEST_RELEASE_DATE
+            ListsSortOrder.LAST_WATCHED -> SgListItemWithDetails.SORT_LAST_WATCHED
+            ListsSortOrder.LEAST_REMAINING_EPISODES -> SgListItemWithDetails.SORT_REMAINING_EPISODES
         }
-        if (orderClause != null) {
-            query.append(orderClause)
-        }
+        query.append(orderClause)
 
         // Then by type
         query.append(",").append(SgListItemWithDetails.SORT_TYPE)
@@ -49,30 +46,36 @@ object ListsDistillationSettings {
         return query.toString()
     }
 
-    fun saveSortOrderId(context: Context, newSortOrderId: Int) {
+    fun saveSortOrder(context: Context, sortOrder: ListsSortOrder) {
         PreferenceManager.getDefaultSharedPreferences(context).edit {
-            putInt(KEY_SORT_ORDER, newSortOrderId)
+            putInt(KEY_SORT_ORDER, sortOrder.id)
         }
     }
 
     /**
-     * Returns the id as of [ListsDistillationSettings.ListsSortOrder]
-     * of the current list sort order.
+     * Returns the current [ListsSortOrder], defaulting to [ListsSortOrder.TITLE_ALPHABETICAL]
+     * for unknown stored values.
      */
-    fun getSortOrderId(context: Context): Int {
+    fun getSortOrder(context: Context): ListsSortOrder {
         return PreferenceManager.getDefaultSharedPreferences(context)
-            .getInt(KEY_SORT_ORDER, ListsSortOrder.TITLE_ALPHABETICAL_ID)
+            .getInt(KEY_SORT_ORDER, ListsSortOrder.TITLE_ALPHABETICAL.id)
+            .let { ListsSortOrder.fromId(it) }
     }
 
-    object ListsSortOrder {
-        const val TITLE_ALPHABETICAL_ID = 0
+    enum class ListsSortOrder(val id: Int) {
+        TITLE_ALPHABETICAL(0),
 
-        // @deprecated Only supporting alphabetical sort order going forward.
-        // const val TITLE_REVERSE_ALPHABETICAL_ID = 1
+        // Deprecated: Only supporting alphabetical sort order going forward.
+        // TITLE_REVERSE_ALPHABETICAL(1),
 
-        const val LATEST_EPISODE_ID = 2
-        const val OLDEST_EPISODE_ID = 3
-        const val LAST_WATCHED_ID = 4
-        const val LEAST_REMAINING_EPISODES_ID = 5
+        LATEST_EPISODE(2),
+        OLDEST_EPISODE(3),
+        LAST_WATCHED(4),
+        LEAST_REMAINING_EPISODES(5);
+
+        companion object {
+            fun fromId(id: Int): ListsSortOrder =
+                entries.find { it.id == id } ?: TITLE_ALPHABETICAL
+        }
     }
 }
