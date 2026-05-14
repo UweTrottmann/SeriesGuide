@@ -4,7 +4,6 @@
 package com.battlelancer.seriesguide.dataliberation
 
 import android.content.ContentProviderOperation
-import android.content.ContentValues
 import android.content.Context
 import android.content.OperationApplicationException
 import android.net.Uri
@@ -13,14 +12,17 @@ import androidx.annotation.VisibleForTesting
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.dataliberation.DataLiberationFragment.LiberationResultEvent
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgEpisodeForImport
+import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgListForImport
+import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgListItemForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgSeasonForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgShowForImport
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Export
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ListItemTypesExport
 import com.battlelancer.seriesguide.dataliberation.model.List
 import com.battlelancer.seriesguide.dataliberation.model.Movie
 import com.battlelancer.seriesguide.dataliberation.model.Season
 import com.battlelancer.seriesguide.dataliberation.model.Show
+import com.battlelancer.seriesguide.lists.database.SgListHelper
+import com.battlelancer.seriesguide.lists.database.SgListItem
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems
@@ -62,7 +64,8 @@ class JsonImportTask(
     private val database: SgRoomDatabase,
     private val sgShow2Helper: SgShow2Helper,
     private val sgSeason2Helper: SgSeason2Helper,
-    private val sgEpisode2Helper: SgEpisode2Helper
+    private val sgEpisode2Helper: SgEpisode2Helper,
+    private val sgListHelper: SgListHelper
 ) {
 
     private val context: Context = context.applicationContext
@@ -104,7 +107,8 @@ class JsonImportTask(
         SgRoomDatabase.getInstance(context),
         SgRoomDatabase.getInstance(context).sgShow2Helper(),
         SgRoomDatabase.getInstance(context).sgSeason2Helper(),
-        SgRoomDatabase.getInstance(context).sgEpisode2Helper()
+        SgRoomDatabase.getInstance(context).sgEpisode2Helper(),
+        SgRoomDatabase.getInstance(context).sgListHelper()
     )
 
     constructor(context: Context) : this(context, true, true, true) {
@@ -483,58 +487,21 @@ class JsonImportTask(
         }
 
         // Insert the list
-        context.contentResolver.insert(
-            SeriesGuideContract.Lists.CONTENT_URI,
-            list.toContentValues()
-        )
+        val sgList = list.toSgListForImport()
+        sgListHelper.insertList(sgList)
 
         if (list.items == null || list.items.isEmpty()) {
             return
         }
 
-        // Insert the lists items
-        val items = ArrayList<ContentValues>()
+        // Insert the list items
+        val items = ArrayList<SgListItem>()
         for (item in list.items) {
-            // Note: DO import legacy types (seasons and episodes),
-            // as e.g. older backups can still contain legacy show data to allow displaying them.
-            val type: Int = if (ListItemTypesExport.MOVIE == item.type) {
-                ListItemTypes.TMDB_MOVIE
-            } else if (ListItemTypesExport.SHOW == item.type) {
-                ListItemTypes.TVDB_SHOW
-            } else if (ListItemTypesExport.TMDB_SHOW == item.type) {
-                ListItemTypes.TMDB_SHOW
-            } else if (ListItemTypesExport.SEASON == item.type) {
-                ListItemTypes.SEASON
-            } else if (ListItemTypesExport.EPISODE == item.type) {
-                ListItemTypes.EPISODE
-            } else {
-                // Unknown item type, skip
-                continue
-            }
-
-            var externalId: String? = null
-            val legacyTvdbId = item.tvdb_id
-            if (item.externalId != null && item.externalId.isNotEmpty()) {
-                externalId = item.externalId
-            } else if (legacyTvdbId != null && legacyTvdbId > 0) {
-                externalId = legacyTvdbId.toString()
-            }
-            if (externalId == null) continue  // No external ID, skip
-
-            // Generate list item ID from values, do not trust given item ID
-            // (e.g. encoded list ID might not match)
-            item.list_item_id = ListItems.generateListItemId(externalId, type, list.list_id)
-
-            val itemValues = ContentValues()
-            itemValues.put(ListItems.LIST_ITEM_ID, item.list_item_id)
-            itemValues.put(SeriesGuideContract.Lists.LIST_ID, list.list_id)
-            itemValues.put(ListItems.ITEM_REF_ID, externalId)
-            itemValues.put(ListItems.TYPE, type)
-
-            items.add(itemValues)
+            item.toSgListItemForImport(sgList.listId)
+                ?.let { items.add(it) }
         }
 
-        context.contentResolver.bulkInsert(ListItems.CONTENT_URI, items.toTypedArray())
+        sgListHelper.insertListItems(items)
     }
 
     companion object {

@@ -59,6 +59,9 @@ interface SgListHelper {
     fun getListItemsForExport(listId: String): List<SgListItem>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertList(list: SgList)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertListItems(listItems: List<SgListItem>)
 
     @Query("SELECT * FROM listitems WHERE item_type = ${ListItemTypes.TVDB_SHOW}")
