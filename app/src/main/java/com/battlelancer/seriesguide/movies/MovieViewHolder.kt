@@ -120,7 +120,7 @@ class UiMovieBuilder(context: Context) {
         return UiMovie(
             sgMovie.tmdbId,
             sgMovie.title.orEmpty(),
-            if (sgMovie.releasedMsOrDefault != Long.MAX_VALUE) {
+            if (sgMovie.releasedMsOrDefault != SgMovie.RELEASED_MS_UNKNOWN) {
                 dateFormatMovieReleaseDate.format(sgMovie.releasedMsOrDefault)
             } else {
                 ""

@@ -5,6 +5,7 @@ package com.battlelancer.seriesguide.movies.details;
 
 import android.content.ContentValues;
 import androidx.annotation.Nullable;
+import com.battlelancer.seriesguide.movies.database.SgMovie;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TextTools;
@@ -129,7 +130,7 @@ public class MovieDetails {
             // also helps correctly sorting movies by release date
             Date releaseDate = tmdbMovie.release_date;
             values.put(Movies.RELEASED_UTC_MS,
-                    releaseDate == null ? Long.MAX_VALUE : releaseDate.getTime());
+                    releaseDate == null ? SgMovie.RELEASED_MS_UNKNOWN : releaseDate.getTime());
         }
 
         return values;

@@ -43,6 +43,9 @@ data class SgMovie(
     @ColumnInfo(name = Movies.OVERVIEW)
     val overview: String? = null,
 
+    /**
+     * Get safely via [releasedMsOrDefault].
+     */
     @ColumnInfo(name = Movies.RELEASED_UTC_MS)
     val releasedMs: Long? = null,
 
@@ -87,11 +90,11 @@ data class SgMovie(
 ) {
 
     /**
-     * If [releasedMs] is not null returns it, otherwise [Long.MAX_VALUE].
-     * See [Movies.RELEASED_UTC_MS].
+     * Release date in milliseconds. [RELEASED_MS_UNKNOWN] if unknown, assuming the true date is
+     * likely in the future (also helps to correctly sort movies by release date).
      */
     val releasedMsOrDefault: Long
-        get() = releasedMs ?: Long.MAX_VALUE
+        get() = releasedMs ?: RELEASED_MS_UNKNOWN
 
     val runtimeMinOrDefault: Int
         get() = runtimeMin ?: 0
@@ -110,4 +113,8 @@ data class SgMovie(
 
     val lastUpdatedOrDefault: Long
         get() = lastUpdated ?: 0
+
+    companion object {
+        const val RELEASED_MS_UNKNOWN = Long.MAX_VALUE
+    }
 }

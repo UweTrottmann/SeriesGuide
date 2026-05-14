@@ -976,8 +976,7 @@ public class SeriesGuideContract {
         String OVERVIEW = "movies_overview";
 
         /**
-         * Release date in milliseconds. Store Long.MAX if unknown, as it is likely in the future
-         * (also helps correctly sorting movies by release date).
+         * See {@link SgMovie#getReleasedMsOrDefault()}.
          */
         String RELEASED_UTC_MS = "movies_released";
 

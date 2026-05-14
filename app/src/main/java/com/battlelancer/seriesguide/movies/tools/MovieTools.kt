@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.jobs.movies.MovieWatchedJob
 import com.battlelancer.seriesguide.jobs.movies.MovieWatchlistJob
 import com.battlelancer.seriesguide.modules.ApplicationContext
 import com.battlelancer.seriesguide.movies.MoviesSettings
+import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.movies.details.MovieDetails
 import com.battlelancer.seriesguide.movies.tools.MovieTools.Lists
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
@@ -375,7 +376,7 @@ class MovieTools @Inject constructor(
          * [Movies.RELEASED_UTC_MS].
          */
         fun movieReleaseDateFrom(releaseDateMs: Long): Date? {
-            return if (releaseDateMs == Long.MAX_VALUE) null else Date(releaseDateMs)
+            return if (releaseDateMs == SgMovie.RELEASED_MS_UNKNOWN) null else Date(releaseDateMs)
         }
 
         /**
