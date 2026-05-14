@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.lists.UiListItem.Companion.DIFF_CALLBACK
 import com.battlelancer.seriesguide.lists.database.SgListItemWithDetails
+import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
@@ -99,6 +100,12 @@ class UiListItemBuilder(private val context: Context) {
         imageUrlTools.tmdbOrTvdbPosterUrl(this.poster)
 
     private fun buildMovie(item: SgListItemWithDetails): UiListItem {
+        val releaseDate = if (item.releasedMsOrDefault != SgMovie.RELEASED_MS_UNKNOWN) {
+            TimeTools.formatToLocalDateShort(context, item.releasedMsOrDefault)
+        } else {
+            ""
+        }
+
         return UiListItem(
             id = item.id,
             listItemId = item.listItemId,
@@ -110,7 +117,7 @@ class UiListItemBuilder(private val context: Context) {
             posterUrl = item.posterUrl(),
             titleText = item.title,
             nextEpisodeText = null,
-            nextEpisodeTimeText = null,
+            nextEpisodeTimeText = releaseDate,
             timeAndNetworkText = "",
             remainingText = null,
             nextEpisodeId = 0,
@@ -132,7 +139,7 @@ class UiListItemBuilder(private val context: Context) {
             nextEpisodeTimeText = ShowStatus.getStatus(context, item.statusOrUnknown)
         } else {
             val releaseTimeEpisode =
-                TimeTools.applyUserOffset(context, item.nextAirdateMs)
+                TimeTools.applyUserOffset(context, item.releasedMsOrDefault)
             val displayExactDate = DisplaySettings.isDisplayExactDate(context)
             val dateTime = if (displayExactDate) {
                 TimeTools.formatToLocalDateShort(context, releaseTimeEpisode)
