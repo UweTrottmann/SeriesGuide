@@ -8,11 +8,13 @@ import androidx.recyclerview.widget.DiffUtil
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.lists.UiListItem.Companion.DIFF_CALLBACK
 import com.battlelancer.seriesguide.lists.database.SgListItemWithDetails
+import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.shows.overview.SeasonTools
 import com.battlelancer.seriesguide.shows.tools.ShowStatus
+import com.battlelancer.seriesguide.util.ImageUrlTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.TimeTools.formatWithDeviceZoneToDayAndTime
@@ -42,9 +44,7 @@ data class UiListItem(
     val isFavorite: Boolean,
 
     /**
-     * If [type] is [ListItemTypes.TMDB_MOVIE], then see
-     * [com.battlelancer.seriesguide.movies.database.SgMovie.poster].
-     * Otherwise, see [com.battlelancer.seriesguide.shows.database.SgShow2.posterSmall].
+     * A poster URL ready to be loaded.
      */
     val posterUrl: String?,
 
@@ -82,13 +82,39 @@ data class UiListItem(
  */
 class UiListItemBuilder(private val context: Context) {
 
+    private val imageUrlTools = ImageUrlTools(context)
+    private val dateFormatMovieReleaseDate = MovieTools.getMovieShortDateFormat()
+
     fun buildFrom(item: SgListItemWithDetails): UiListItem {
         return when (item.type) {
+            ListItemTypes.TMDB_MOVIE -> buildMovie(item)
             ListItemTypes.TMDB_SHOW, ListItemTypes.TVDB_SHOW -> buildShow(item)
             ListItemTypes.SEASON -> buildSeason(item)
             ListItemTypes.EPISODE -> buildEpisode(item)
             else -> throw IllegalArgumentException("Unsupported item type ${item.type}")
         }
+    }
+
+    private fun SgListItemWithDetails.posterUrl(): String? =
+        imageUrlTools.tmdbOrTvdbPosterUrl(this.poster)
+
+    private fun buildMovie(item: SgListItemWithDetails): UiListItem {
+        return UiListItem(
+            id = item.id,
+            listItemId = item.listItemId,
+            type = item.type,
+            movieTmdbId = item.movieTmdbId,
+            showId = null,
+            isSetWatchedButtonVisible = false,
+            isFavorite = false,
+            posterUrl = item.posterUrl(),
+            titleText = item.title,
+            nextEpisodeText = null,
+            nextEpisodeTimeText = null,
+            timeAndNetworkText = "",
+            remainingText = null,
+            nextEpisodeId = 0,
+        )
     }
 
     private fun buildShow(item: SgListItemWithDetails): UiListItem {
@@ -146,7 +172,7 @@ class UiListItemBuilder(private val context: Context) {
             showId = item.showId,
             isSetWatchedButtonVisible = hasNextEpisode,
             isFavorite = item.favorite,
-            posterUrl = item.poster,
+            posterUrl = item.posterUrl(),
             titleText = item.title,
             nextEpisodeText = nextEpisodeText,
             nextEpisodeTimeText = nextEpisodeTimeText,
@@ -176,7 +202,7 @@ class UiListItemBuilder(private val context: Context) {
             showId = item.showId,
             isSetWatchedButtonVisible = false,
             isFavorite = item.favorite,
-            posterUrl = item.poster,
+            posterUrl = item.posterUrl(),
             titleText = item.title,
             nextEpisodeText = nextEpisodeText,
             nextEpisodeTimeText = null,
@@ -228,7 +254,7 @@ class UiListItemBuilder(private val context: Context) {
             showId = item.showId,
             isSetWatchedButtonVisible = false,
             isFavorite = item.favorite,
-            posterUrl = item.poster,
+            posterUrl = item.posterUrl(),
             titleText = item.title,
             nextEpisodeText = nextEpisodeText,
             nextEpisodeTimeText = nextEpisodeTimeText,
