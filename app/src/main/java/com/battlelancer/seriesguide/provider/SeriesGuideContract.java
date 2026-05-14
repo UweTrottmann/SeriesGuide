@@ -500,6 +500,9 @@ public class SeriesGuideContract {
          */
         String STATUS = "series_status";
 
+        /**
+         * See {@link SgShow2#getRuntime()}.
+         */
         String RUNTIME = "series_runtime";
 
         /** See {@link SgShow2#getRatingTmdb()}. */
@@ -986,6 +989,9 @@ public class SeriesGuideContract {
          */
         String RELEASED_UTC_MS = "movies_released";
 
+        /**
+         * See {@link SgMovie#getRuntimeMin()}.
+         */
         String RUNTIME_MIN = "movies_runtime";
 
         String TRAILER = "movies_trailer";

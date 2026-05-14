@@ -52,6 +52,9 @@ data class SgMovie(
     @ColumnInfo(name = Movies.RELEASED_UTC_MS)
     val releasedMs: Long? = null,
 
+    /**
+     * Running time of this movie in minutes.
+     */
     @ColumnInfo(name = Movies.RUNTIME_MIN)
     val runtimeMin: Int? = 0,
 
