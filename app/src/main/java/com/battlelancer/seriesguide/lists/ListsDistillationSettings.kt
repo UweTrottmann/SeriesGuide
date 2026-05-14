@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2015-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2015 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.lists
 
@@ -23,17 +23,24 @@ object ListsDistillationSettings {
     fun getSortQuery(context: Context): String {
         val query = StringBuilder()
 
-        // TODO Support new sort order options for lists
         val sortOrderId = getSortOrderId(context)
+        val orderClause: String? = when (sortOrderId) {
+            ListsSortOrder.TITLE_ALPHABETICAL_ID ->
+                if (DisplaySettings.isSortOrderIgnoringArticles(context)) {
+                    SgListItemWithDetails.SORT_TITLE_NO_ARTICLE
+                } else {
+                    SgListItemWithDetails.SORT_TITLE
+                }
 
-        // Sort by title
-        query.append(
-            if (DisplaySettings.isSortOrderIgnoringArticles(context)) {
-                SgListItemWithDetails.SORT_TITLE_NO_ARTICLE
-            } else {
-                SgListItemWithDetails.SORT_TITLE
-            }
-        )
+            ListsSortOrder.LATEST_EPISODE_ID -> SgListItemWithDetails.SORT_LATEST_RELEASE_DATE
+            ListsSortOrder.OLDEST_EPISODE_ID -> SgListItemWithDetails.SORT_OLDEST_RELEASE_DATE
+            ListsSortOrder.LAST_WATCHED_ID -> SgListItemWithDetails.SORT_LAST_WATCHED
+            ListsSortOrder.LEAST_REMAINING_EPISODES_ID -> SgListItemWithDetails.SORT_REMAINING_EPISODES
+            else -> null
+        }
+        if (orderClause != null) {
+            query.append(orderClause)
+        }
 
         // Then by type
         query.append(",").append(SgListItemWithDetails.SORT_TYPE)
@@ -52,8 +59,10 @@ object ListsDistillationSettings {
 
     object ListsSortOrder {
         const val TITLE_ALPHABETICAL_ID = 0
+
         // @deprecated Only supporting alphabetical sort order going forward.
         // const val TITLE_REVERSE_ALPHABETICAL_ID = 1
+
         const val LATEST_EPISODE_ID = 2
         const val OLDEST_EPISODE_ID = 3
         const val LAST_WATCHED_ID = 4
