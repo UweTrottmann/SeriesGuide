@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<!-- SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com> -->
+
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioGroup
+            android:id="@+id/radioGroupListsSort"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/radioListsSortTitle"
+                style="@style/Widget.SeriesGuide.DistillationItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/action_shows_sort_title" />
+
+            <RadioButton
+                android:id="@+id/radioListsSortLatestEpisode"
+                style="@style/Widget.SeriesGuide.DistillationItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/action_shows_sort_latest_episode" />
+
+            <RadioButton
+                android:id="@+id/radioListsSortOldestEpisode"
+                style="@style/Widget.SeriesGuide.DistillationItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/action_shows_sort_oldest_episode" />
+
+            <RadioButton
+                android:id="@+id/radioListsSortLastWatched"
+                style="@style/Widget.SeriesGuide.DistillationItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/action_shows_sort_last_watched" />
+
+            <RadioButton
+                android:id="@+id/radioListsSortRemaining"
+                style="@style/Widget.SeriesGuide.DistillationItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/action_shows_sort_remaining" />
+
+        </RadioGroup>
+
+        <CheckBox
+            android:id="@+id/checkboxListsSortIgnoreArticles"
+            style="@style/Widget.SeriesGuide.DistillationItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_sort_ignore_articles" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

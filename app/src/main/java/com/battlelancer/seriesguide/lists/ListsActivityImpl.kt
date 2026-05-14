@@ -1,29 +1,23 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2012-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2012 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.lists
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.preference.PreferenceManager
 import androidx.viewpager2.widget.ViewPager2
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
 import com.battlelancer.seriesguide.databinding.ActivityListsBinding
-import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.BaseTopActivity
 import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.menus.ManualSyncMenu
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ThemeUtils.setDefaultStyle
-import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.safeShow
-import org.greenrobot.eventbus.EventBus
 
 /**
  * Hosts a view pager to display and manage user created lists.
@@ -99,46 +93,6 @@ open class ListsActivityImpl : BaseTopActivity() {
     private val optionsMenuProvider by lazy {
         object : ManualSyncMenu(this@ListsActivityImpl, R.menu.lists_menu) {
 
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                super.onCreateMenu(menu, menuInflater)
-
-                // set current sort order and check box states
-                val sortOrderId = ListsDistillationSettings.getSortOrderId(this@ListsActivityImpl)
-                val sortTitleItem = menu.findItem(R.id.menu_action_lists_sort_title)
-                sortTitleItem.setTitle(R.string.action_shows_sort_title)
-                val sortLatestItem = menu.findItem(R.id.menu_action_lists_sort_latest_episode)
-                sortLatestItem.setTitle(R.string.action_shows_sort_latest_episode)
-                val sortOldestItem = menu.findItem(R.id.menu_action_lists_sort_oldest_episode)
-                sortOldestItem.setTitle(R.string.action_shows_sort_oldest_episode)
-                val lastWatchedItem = menu.findItem(R.id.menu_action_lists_sort_last_watched)
-                lastWatchedItem.setTitle(R.string.action_shows_sort_last_watched)
-                val remainingItem = menu.findItem(R.id.menu_action_lists_sort_remaining)
-                remainingItem.setTitle(R.string.action_shows_sort_remaining)
-                when (sortOrderId) {
-                    ListsDistillationSettings.ListsSortOrder.TITLE_ALPHABETICAL_ID -> {
-                        ViewTools.setMenuItemActiveString(sortTitleItem)
-                    }
-
-                    ListsDistillationSettings.ListsSortOrder.LATEST_EPISODE_ID -> {
-                        ViewTools.setMenuItemActiveString(sortLatestItem)
-                    }
-
-                    ListsDistillationSettings.ListsSortOrder.OLDEST_EPISODE_ID -> {
-                        ViewTools.setMenuItemActiveString(sortOldestItem)
-                    }
-
-                    ListsDistillationSettings.ListsSortOrder.LAST_WATCHED_ID -> {
-                        ViewTools.setMenuItemActiveString(lastWatchedItem)
-                    }
-
-                    ListsDistillationSettings.ListsSortOrder.LEAST_REMAINING_EPISODES_ID -> {
-                        ViewTools.setMenuItemActiveString(remainingItem)
-                    }
-                }
-                menu.findItem(R.id.menu_action_lists_sort_ignore_articles).isChecked =
-                    DisplaySettings.isSortOrderIgnoringArticles(this@ListsActivityImpl)
-            }
-
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 when (menuItem.itemId) {
                     R.id.menu_action_lists_add -> {
@@ -154,28 +108,8 @@ open class ListsActivityImpl : BaseTopActivity() {
                         showListManageDialog(selectedListIndex)
                         return true
                     }
-                    R.id.menu_action_lists_sort_title -> {
-                        changeSortOrder(ListsDistillationSettings.ListsSortOrder.TITLE_ALPHABETICAL_ID)
-                        return true
-                    }
-                    R.id.menu_action_lists_sort_latest_episode -> {
-                        changeSortOrder(ListsDistillationSettings.ListsSortOrder.LATEST_EPISODE_ID)
-                        return true
-                    }
-                    R.id.menu_action_lists_sort_oldest_episode -> {
-                        changeSortOrder(ListsDistillationSettings.ListsSortOrder.OLDEST_EPISODE_ID)
-                        return true
-                    }
-                    R.id.menu_action_lists_sort_last_watched -> {
-                        changeSortOrder(ListsDistillationSettings.ListsSortOrder.LAST_WATCHED_ID)
-                        return true
-                    }
-                    R.id.menu_action_lists_sort_remaining -> {
-                        changeSortOrder(ListsDistillationSettings.ListsSortOrder.LEAST_REMAINING_EPISODES_ID)
-                        return true
-                    }
-                    R.id.menu_action_lists_sort_ignore_articles -> {
-                        toggleSortIgnoreArticles()
+                    R.id.menu_action_lists_sort -> {
+                        ListsSortDialogFragment.show(supportFragmentManager)
                         return true
                     }
                     R.id.menu_action_lists_reorder -> {
@@ -202,35 +136,6 @@ open class ListsActivityImpl : BaseTopActivity() {
         viewModel.scrollTabToTop(binding.viewPagerLists.currentItem)
     }
 
-    private fun changeSortOrder(sortOrderId: Int) {
-        PreferenceManager.getDefaultSharedPreferences(this).edit()
-            .putInt(ListsDistillationSettings.KEY_SORT_ORDER, sortOrderId)
-            .apply()
-
-        // refresh icon state
-        invalidateOptionsMenu()
-
-        // post event, so all active list fragments can react
-        EventBus.getDefault().post(ListsDistillationSettings.ListsSortOrderChangedEvent())
-    }
-
-    private fun toggleSortIgnoreArticles() {
-        PreferenceManager.getDefaultSharedPreferences(this).edit()
-            .putBoolean(
-                DisplaySettings.KEY_SORT_IGNORE_ARTICLE,
-                !DisplaySettings.isSortOrderIgnoringArticles(this)
-            )
-            .apply()
-
-        // refresh icon state
-        invalidateOptionsMenu()
-
-        // refresh all list widgets
-        ListWidgetProvider.notifyDataChanged(this)
-
-        // post event, so all active list fragments can react
-        EventBus.getDefault().post(ListsDistillationSettings.ListsSortOrderChangedEvent())
-    }
 
     override val snackbarParentView: View
         get() = binding.coordinatorLayoutLists
