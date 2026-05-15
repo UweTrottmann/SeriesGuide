@@ -1,153 +1,128 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2016 Uwe Trottmann <uwe@uwetrottmann.com>
 
-package com.battlelancer.seriesguide.util.tasks;
+package com.battlelancer.seriesguide.util.tasks
 
-import android.content.ContentProviderOperation;
-import android.content.Context;
-import android.content.OperationApplicationException;
-import androidx.annotation.NonNull;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.backend.HexagonTools;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.Errors;
-import com.uwetrottmann.seriesguide.backend.lists.Lists;
-import com.uwetrottmann.seriesguide.backend.lists.model.SgList;
-import com.uwetrottmann.seriesguide.backend.lists.model.SgListItem;
-import com.uwetrottmann.seriesguide.backend.lists.model.SgListList;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import timber.log.Timber;
+import android.content.ContentProviderOperation
+import android.content.Context
+import android.content.OperationApplicationException
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.provider.SeriesGuideContract
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems
+import com.battlelancer.seriesguide.util.DBUtils
+import com.battlelancer.seriesguide.util.Errors
+import com.uwetrottmann.seriesguide.backend.lists.model.SgList
+import com.uwetrottmann.seriesguide.backend.lists.model.SgListItem
+import com.uwetrottmann.seriesguide.backend.lists.model.SgListList
+import timber.log.Timber
+import java.io.IOException
 
 /**
  * Task to add or remove an item to and from lists.
  */
-public class ChangeListItemListsTask extends BaseActionTask {
+class ChangeListItemListsTask(
+    context: Context,
+    private val itemStableId: Int,
+    private val itemType: Int,
+    private val addToTheseLists: List<String>,
+    private val removeFromTheseLists: List<String>
+) : BaseActionTask(context) {
 
-    private final int itemStableId;
-    private final int itemType;
-    private final List<String> addToTheseLists;
-    private final List<String> removeFromTheseLists;
+    override val isSendingToTrakt: Boolean = false
 
-    public ChangeListItemListsTask(@NonNull Context context, int itemStableId, int itemType,
-            @NonNull List<String> addToTheseLists, @NonNull List<String> removeFromTheseLists) {
-        super(context);
-        this.itemStableId = itemStableId;
-        this.itemType = itemType;
-        this.addToTheseLists = addToTheseLists;
-        this.removeFromTheseLists = removeFromTheseLists;
-    }
+    override fun doBackgroundAction(vararg params: Void?): Int {
+        if (isSendingToHexagon) {
+            val hexagonTools = SgApp.getServicesComponent(context).hexagonTools()
+            val listsService = hexagonTools.listsService
+                ?: return ERROR_HEXAGON_API
 
-    @Override
-    protected boolean isSendingToTrakt() {
-        return false;
-    }
-
-    @Override
-    protected Integer doBackgroundAction(Void... params) {
-        if (isSendingToHexagon()) {
-            HexagonTools hexagonTools = SgApp.getServicesComponent(getContext()).hexagonTools();
-            Lists listsService = hexagonTools.getListsService();
-            if (listsService == null) {
-                return ERROR_HEXAGON_API;
-            }
-
-            SgListList wrapper = new SgListList();
-            if (addToTheseLists.size() > 0) {
-                List<SgList> lists = buildListItemLists(addToTheseLists);
-                wrapper.setLists(lists);
+            val wrapper = SgListList()
+            if (addToTheseLists.isNotEmpty()) {
+                val lists = buildListItemLists(addToTheseLists)
+                wrapper.setLists(lists)
 
                 try {
-                    listsService.save(wrapper).execute();
-                } catch (IOException e) {
-                    Errors.logAndReportHexagon("add list items", e);
-                    return ERROR_HEXAGON_API;
+                    listsService.save(wrapper).execute()
+                } catch (e: IOException) {
+                    Errors.logAndReportHexagon("add list items", e)
+                    return ERROR_HEXAGON_API
                 }
             }
 
-            if (removeFromTheseLists.size() > 0) {
-                List<SgList> lists = buildListItemLists(removeFromTheseLists);
-                wrapper.setLists(lists);
+            if (removeFromTheseLists.isNotEmpty()) {
+                val lists = buildListItemLists(removeFromTheseLists)
+                wrapper.setLists(lists)
 
                 try {
-                    listsService.removeItems(wrapper).execute();
-                } catch (IOException e) {
-                    Errors.logAndReportHexagon("remove list items", e);
-                    return ERROR_HEXAGON_API;
+                    listsService.removeItems(wrapper).execute()
+                } catch (e: IOException) {
+                    Errors.logAndReportHexagon("remove list items", e)
+                    return ERROR_HEXAGON_API
                 }
             }
         }
 
         // update local state
         if (!doDatabaseUpdate()) {
-            return ERROR_DATABASE;
+            return ERROR_DATABASE
         }
 
-        return SUCCESS;
+        return SUCCESS
     }
 
-    @NonNull
-    private List<SgList> buildListItemLists(List<String> listsToChange) {
-        List<SgList> lists = new ArrayList<>(listsToChange.size());
-        for (String listId : listsToChange) {
-            SgList list = new SgList();
-            list.setListId(listId);
-            lists.add(list);
+    private fun buildListItemLists(listsToChange: List<String>): List<SgList> {
+        return listsToChange.map { listId ->
+            SgList().also { list ->
+                list.setListId(listId)
 
-            List<SgListItem> items = new ArrayList<>(1);
-            list.setListItems(items);
+                val item = SgListItem().also {
+                    val listItemId = ListItems.generateListItemId(itemStableId, itemType, listId)
+                    it.setListItemId(listItemId)
+                }
 
-            String listItemId = SeriesGuideContract.ListItems
-                    .generateListItemId(itemStableId, itemType, listId);
-            SgListItem item = new SgListItem();
-            items.add(item);
-            item.setListItemId(listItemId);
+                list.setListItems(listOf(item))
+            }
         }
-        return lists;
     }
 
-    private boolean doDatabaseUpdate() {
-        ArrayList<ContentProviderOperation> batch = new ArrayList<>(
-                addToTheseLists.size() + removeFromTheseLists.size());
-        for (String listId : addToTheseLists) {
-            String listItemId = SeriesGuideContract.ListItems.generateListItemId(itemStableId,
-                    itemType, listId);
-            batch.add(ContentProviderOperation
-                    .newInsert(SeriesGuideContract.ListItems.CONTENT_URI)
-                    .withValue(SeriesGuideContract.ListItems.LIST_ITEM_ID, listItemId)
-                    .withValue(SeriesGuideContract.ListItems.ITEM_REF_ID, itemStableId)
-                    .withValue(SeriesGuideContract.ListItems.TYPE, itemType)
+    private fun doDatabaseUpdate(): Boolean {
+        val batch = ArrayList<ContentProviderOperation>(
+            addToTheseLists.size + removeFromTheseLists.size
+        )
+        for (listId in addToTheseLists) {
+            val listItemId = ListItems.generateListItemId(itemStableId, itemType, listId)
+
+            batch.add(
+                ContentProviderOperation
+                    .newInsert(ListItems.CONTENT_URI)
+                    .withValue(ListItems.LIST_ITEM_ID, listItemId)
+                    .withValue(ListItems.ITEM_REF_ID, itemStableId)
+                    .withValue(ListItems.TYPE, itemType)
                     .withValue(SeriesGuideContract.Lists.LIST_ID, listId)
-                    .build());
+                    .build()
+            )
         }
-        for (String listId : removeFromTheseLists) {
-            String listItemId = SeriesGuideContract.ListItems.generateListItemId(itemStableId,
-                    itemType, listId);
-            batch.add(ContentProviderOperation
-                    .newDelete(SeriesGuideContract.ListItems.buildListItemUri(listItemId))
-                    .build());
+        for (listId in removeFromTheseLists) {
+            val listItemId = ListItems.generateListItemId(itemStableId, itemType, listId)
+            batch.add(
+                ContentProviderOperation
+                    .newDelete(ListItems.buildListItemUri(listItemId))
+                    .build()
+            )
         }
 
         // apply ops
         try {
-            DBUtils.applyInSmallBatches(getContext(), batch);
-        } catch (OperationApplicationException e) {
-            Timber.e(e, "Applying list changes failed");
-            return false;
+            DBUtils.applyInSmallBatches(context, batch)
+        } catch (e: OperationApplicationException) {
+            Timber.e(e, "Applying list changes failed")
+            return false
         }
 
-        return true;
+        return true
     }
 
-    @Override
-    protected int getSuccessTextResId() {
-        if (isSendingToHexagon()) {
-            return R.string.ack_list_item_manage;
-        } else {
-            return 0;
-        }
-    }
+    override val successTextResId: Int
+        get() = if (isSendingToHexagon) R.string.ack_list_item_manage else 0
 }
