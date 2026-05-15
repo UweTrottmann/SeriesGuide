@@ -1,164 +1,148 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2016 Uwe Trottmann <uwe@uwetrottmann.com>
 
-package com.battlelancer.seriesguide.lists;
+@file:Suppress("DEPRECATION") // Ignore warning that AsyncTask should not be used for new code
 
-import android.content.Context;
-import android.database.Cursor;
-import android.os.AsyncTask;
-import android.text.TextUtils;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.util.tasks.AddListTask;
-import com.battlelancer.seriesguide.util.tasks.ChangeListItemListsTask;
-import com.battlelancer.seriesguide.util.tasks.RemoveListItemTask;
-import com.battlelancer.seriesguide.util.tasks.DeleteListTask;
-import com.battlelancer.seriesguide.util.tasks.RenameListTask;
-import com.battlelancer.seriesguide.util.tasks.ReorderListsTask;
-import com.uwetrottmann.seriesguide.backend.lists.model.SgListItem;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+package com.battlelancer.seriesguide.lists
+
+import android.content.Context
+import android.os.AsyncTask
+import com.battlelancer.seriesguide.provider.SeriesGuideContract
+import com.battlelancer.seriesguide.util.tasks.AddListTask
+import com.battlelancer.seriesguide.util.tasks.ChangeListItemListsTask
+import com.battlelancer.seriesguide.util.tasks.DeleteListTask
+import com.battlelancer.seriesguide.util.tasks.RemoveListItemTask
+import com.battlelancer.seriesguide.util.tasks.RenameListTask
+import com.battlelancer.seriesguide.util.tasks.ReorderListsTask
+import com.uwetrottmann.seriesguide.backend.lists.model.SgListItem
 
 /**
  * Helper tools for SeriesGuide lists.
  */
-public class ListsTools {
+object ListsTools {
 
-    private static final String[] SELECTION_ARG = new String[1];
-
-    public interface Query {
-        String[] PROJECTION_LIST_ID = new String[] {
+    interface Query {
+        companion object {
+            val PROJECTION_LIST_ID = arrayOf(
                 SeriesGuideContract.Lists.LIST_ID
-        };
-        String[] PROJECTION_LIST = new String[] {
+            )
+            val PROJECTION_LIST = arrayOf(
                 SeriesGuideContract.Lists.LIST_ID,
                 SeriesGuideContract.Lists.NAME,
                 SeriesGuideContract.Lists.ORDER
-        };
-        int LIST_ID = 0;
-        int NAME = 1;
-        int ORDER = 2;
+            )
+            const val LIST_ID = 0
+            const val NAME = 1
+            const val ORDER = 2
 
-        String[] PROJECTION_LIST_ITEMS = new String[] {
+            val PROJECTION_LIST_ITEMS = arrayOf(
                 SeriesGuideContract.ListItems.LIST_ITEM_ID
-        };
-        int LIST_ITEM_ID = 0;
+            )
+            const val LIST_ITEM_ID = 0
+        }
     }
 
-    private ListsTools() {
+    fun addList(context: Context, listName: String) {
+        AddListTask(context, listName).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
-    public static void addList(@NonNull Context context, @NonNull String listName) {
-        new AddListTask(context, listName).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    fun renameList(context: Context, listId: String, listName: String) {
+        RenameListTask(context, listId, listName).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
-    static void renameList(@NonNull Context context, @NonNull String listId,
-            @NonNull String listName) {
-        new RenameListTask(context, listId, listName).executeOnExecutor(
-                AsyncTask.THREAD_POOL_EXECUTOR);
+    fun deleteList(context: Context, listId: String) {
+        DeleteListTask(context, listId).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
-    static void deleteList(@NonNull Context context, @NonNull String listId) {
-        new DeleteListTask(context, listId).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    fun reorderLists(context: Context, listIdsInOrder: List<String>) {
+        ReorderListsTask(context, listIdsInOrder).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
-    static void reorderLists(@NonNull Context context,
-            @NonNull List<String> listIdsInOrder) {
-        new ReorderListsTask(context, listIdsInOrder).executeOnExecutor(
-                AsyncTask.THREAD_POOL_EXECUTOR);
+    fun changeListsOfItem(
+        context: Context,
+        itemStableId: Int,
+        itemType: Int,
+        addToTheseLists: List<String>,
+        removeFromTheseLists: List<String>
+    ) {
+        ChangeListItemListsTask(
+            context,
+            itemStableId,
+            itemType,
+            addToTheseLists,
+            removeFromTheseLists
+        ).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
-    static void changeListsOfItem(@NonNull Context context, int itemStableId, int itemType,
-            @NonNull List<String> addToTheseLists, @NonNull List<String> removeFromTheseLists) {
-        new ChangeListItemListsTask(context, itemStableId, itemType, addToTheseLists,
-                removeFromTheseLists).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-    }
-
-    static void removeListItem(@NonNull Context context, @NonNull String listItemId) {
-        new RemoveListItemTask(context, listItemId).executeOnExecutor(
-                AsyncTask.THREAD_POOL_EXECUTOR);
+    fun removeListItem(context: Context, listItemId: String) {
+        RemoveListItemTask(context, listItemId).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
     /**
-     * Returns a all list ids in the local database.
+     * Returns all list ids in the local database.
      *
      * @return null if there was an error, empty list if there are no lists.
      */
-    public static HashSet<String> getListIds(Context context) {
-        Cursor query = context.getContentResolver().query(SeriesGuideContract.Lists.CONTENT_URI,
-                Query.PROJECTION_LIST_ID, null, null, null);
-        if (query == null) {
-            return null;
+    fun getListIds(context: Context): HashSet<String>? {
+        val query = context.contentResolver.query(
+            SeriesGuideContract.Lists.CONTENT_URI,
+            Query.PROJECTION_LIST_ID, null, null, null
+        ) ?: return null
+
+        val listIds = HashSet<String>()
+        query.use {
+            while (it.moveToNext()) {
+                listIds.add(it.getString(Query.LIST_ID))
+            }
         }
-
-        HashSet<String> listIds = new HashSet<>();
-        while (query.moveToNext()) {
-            listIds.add(query.getString(Query.LIST_ID));
-        }
-
-        query.close();
-
-        return listIds;
+        return listIds
     }
 
     /**
-     * Returns a all list item ids of the given list in the local database.
+     * Returns all list item ids of the given list in the local database.
      *
      * @return null if there was an error, empty list if there are no list items in this list.
      */
-    public static HashSet<String> getListItemIds(Context context, String listId) {
-        SELECTION_ARG[0] = listId;
-        Cursor query = context.getContentResolver().query(SeriesGuideContract.ListItems.CONTENT_URI,
-                Query.PROJECTION_LIST_ITEMS,
-                SeriesGuideContract.ListItems.SELECTION_LIST,
-                SELECTION_ARG, null);
-        if (query == null) {
-            return null;
+    fun getListItemIds(context: Context, listId: String): HashSet<String>? {
+        val query = context.contentResolver.query(
+            SeriesGuideContract.ListItems.CONTENT_URI,
+            Query.PROJECTION_LIST_ITEMS,
+            SeriesGuideContract.ListItems.SELECTION_LIST,
+            arrayOf(listId), null
+        ) ?: return null
+
+        val listItemIds = HashSet<String>()
+        query.use {
+            while (it.moveToNext()) {
+                listItemIds.add(it.getString(Query.LIST_ITEM_ID))
+            }
         }
-
-        HashSet<String> listItemIds = new HashSet<>();
-        while (query.moveToNext()) {
-            listItemIds.add(query.getString(Query.LIST_ITEM_ID));
-        }
-
-        query.close();
-
-        return listItemIds;
+        return listItemIds
     }
 
-    @Nullable
-    public static List<SgListItem> getListItems(Context context, String listId) {
-        SELECTION_ARG[0] = listId;
-        Cursor query = context.getContentResolver()
-                .query(SeriesGuideContract.ListItems.CONTENT_URI,
-                        Query.PROJECTION_LIST_ITEMS,
-                        SeriesGuideContract.ListItems.SELECTION_LIST,
-                        SELECTION_ARG, null);
-        if (query == null) {
-            return null; // query failed
+    fun getListItems(context: Context, listId: String): List<SgListItem>? {
+        val query = context.contentResolver.query(
+            SeriesGuideContract.ListItems.CONTENT_URI,
+            Query.PROJECTION_LIST_ITEMS,
+            SeriesGuideContract.ListItems.SELECTION_LIST,
+            arrayOf(listId), null
+        ) ?: return null // query failed
+
+        if (query.count == 0) {
+            query.close()
+            return null // no items in this list
         }
 
-        int itemCount = query.getCount();
-        if (itemCount == 0) {
-            query.close();
-            return null; // no items in this list
-        }
-
-        List<SgListItem> items = new ArrayList<>(itemCount);
-        while (query.moveToNext()) {
-            SgListItem item = new SgListItem();
-            String itemId = query.getString(Query.LIST_ITEM_ID);
-            if (TextUtils.isEmpty(itemId)) {
-                continue; // skip, no item id
+        val items = ArrayList<SgListItem>(query.count)
+        query.use {
+            while (it.moveToNext()) {
+                val itemId = it.getString(Query.LIST_ITEM_ID)
+                if (itemId.isNullOrEmpty()) continue // skip, no item id
+                val item = SgListItem()
+                item.listItemId = itemId
+                items.add(item)
             }
-            item.setListItemId(itemId);
-            items.add(item);
         }
-
-        query.close();
-
-        return items;
+        return items
     }
 }
