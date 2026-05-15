@@ -48,7 +48,7 @@ internal class HexagonMovieSync(
         val lastSyncTime = HexagonSettings.getLastMoviesSyncTime(context)?.let { DateTime(it) }
         if (hasMergedMovies) {
             if (lastSyncTime != null) {
-                Timber.d("download: NOT merging, get CHANGED since %s", lastSyncTime)
+                Timber.d("download: NOT merging, get movies CHANGED since %s", lastSyncTime)
             } else {
                 Timber.d("download: NOT merging, get ALL movies")
             }
@@ -56,10 +56,12 @@ internal class HexagonMovieSync(
             Timber.d("download: MERGING, get ALL movies")
         }
 
+        // Store new last sync time before downloading to not miss any changes for the next sync
+        val newLastSyncTime = System.currentTimeMillis()
+
         var movies: List<Movie>?
         var hasMoreMovies = true
         var cursor: String? = null
-        val currentTime = System.currentTimeMillis()
         var updatedCount = 0
         var removedCount = 0
 
@@ -195,7 +197,7 @@ internal class HexagonMovieSync(
         Timber.d("download: updated %d and removed %d movies", updatedCount, removedCount)
 
         if (hasMergedMovies) {
-            HexagonSettings.setLastMoviesSyncTime(context, currentTime)
+            HexagonSettings.setLastMoviesSyncTime(context, newLastSyncTime)
         }
 
         return true

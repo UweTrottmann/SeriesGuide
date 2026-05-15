@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2017-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2017 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.sync
 
@@ -25,14 +25,19 @@ class HexagonListsSync(
 ) {
 
     fun download(hasMergedLists: Boolean): Boolean {
-        val currentTime = System.currentTimeMillis()
-        val lastSyncTime = DateTime(HexagonSettings.getLastListsSyncTime(context))
-
+        val lastSyncTime = HexagonSettings.getLastListsSyncTime(context)?.let { DateTime(it) }
         if (hasMergedLists) {
-            Timber.d("download: lists changed since %s.", lastSyncTime)
+            if (lastSyncTime != null) {
+                Timber.d("download: NOT merging, get lists CHANGED since %s", lastSyncTime)
+            } else {
+                Timber.d("download: NOT merging, get ALL lists")
+            }
         } else {
-            Timber.d("download: all lists.")
+            Timber.d("download: MERGING, get ALL lists")
         }
+
+        // Store new last sync time before downloading to not miss any changes for the next sync
+        val newLastSyncTime = System.currentTimeMillis()
 
         val localListIds = ListsTools.getListIds(context)
         var lists: List<SgList>?
@@ -44,7 +49,7 @@ class HexagonListsSync(
                     ?: return false // no longer signed in
 
                 val request = listsService.get() // use default server limit
-                if (hasMergedLists) {
+                if (hasMergedLists && lastSyncTime != null) {
                     request.updatedSince = lastSyncTime
                 }
                 if (!TextUtils.isEmpty(cursor)) {
@@ -78,7 +83,7 @@ class HexagonListsSync(
         } while (!TextUtils.isEmpty(cursor)) // fetch next batch
 
         if (hasMergedLists) {
-            HexagonSettings.setLastListsSyncTime(context, currentTime)
+            HexagonSettings.setLastListsSyncTime(context, newLastSyncTime)
         }
 
         return true

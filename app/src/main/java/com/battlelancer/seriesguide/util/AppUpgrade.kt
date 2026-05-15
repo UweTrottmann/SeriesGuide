@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2021-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2021 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.util
 
@@ -128,6 +128,13 @@ class AppUpgrade(
             if (AndroidUtils.isNougatOrHigher) {
                 context.deleteSharedPreferences("extension_amazon")
             }
+        }
+
+        if (lastVersion <= SgApp.RELEASE_VERSION_2026_1_4) {
+            // Support for movies in lists was added. When downloading list changes, Cloud skips
+            // items with unknown type. So reset lists sync, so items with the new movie type,
+            // potentially added by other, already upgraded devices, are added to lists.
+            HexagonSettings.resetLastListsSyncTime(context)
         }
     }
 
