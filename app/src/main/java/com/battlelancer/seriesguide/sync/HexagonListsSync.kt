@@ -40,6 +40,10 @@ class HexagonListsSync(
         val newLastSyncTime = System.currentTimeMillis()
 
         val localListIds = ListsTools.getListIds(context)
+        if (localListIds == null) {
+            Timber.e("download: failed to get list IDs from database")
+            return false
+        }
         var lists: List<SgList>?
         var cursor: String? = null
         do {
