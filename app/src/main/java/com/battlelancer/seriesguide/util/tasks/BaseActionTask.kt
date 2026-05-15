@@ -78,7 +78,7 @@ abstract class BaseActionTask(context: Context) : AsyncTask<Void?, Void?, Int?>(
         return doBackgroundAction(*params)
     }
 
-    protected abstract fun doBackgroundAction(vararg params: Void?): Int?
+    protected abstract fun doBackgroundAction(vararg params: Void?): Int
 
     interface ResponseCallback<T> {
         fun handleSuccessfulResponse(body: T): Int

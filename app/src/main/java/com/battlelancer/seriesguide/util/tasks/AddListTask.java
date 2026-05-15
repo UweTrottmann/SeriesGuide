@@ -38,7 +38,7 @@ public class AddListTask extends BaseActionTask {
     }
 
     @Override
-    protected Integer doBackgroundAction(Void... params) {
+    protected int doBackgroundAction(Void... params) {
         String listId = getListId();
 
         if (isSendingToHexagon()) {
