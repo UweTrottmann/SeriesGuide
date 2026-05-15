@@ -16,6 +16,7 @@ import com.battlelancer.seriesguide.dataliberation.model.Episode
 import com.battlelancer.seriesguide.dataliberation.model.List
 import com.battlelancer.seriesguide.dataliberation.model.Season
 import com.battlelancer.seriesguide.dataliberation.model.Show
+import com.battlelancer.seriesguide.lists.database.SgList
 import com.battlelancer.seriesguide.movies.details.MovieDetails
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
@@ -89,6 +90,9 @@ class DefaultValuesTest {
             return
         }
 
+        // Check a primary key was assigned
+        assertThat(show.id).isGreaterThan(0)
+
         // Note: compare with SgShow2 and ImportTools.
         assertThat(show.tvdbId).isEqualTo(SHOW.tvdb_id)
         assertThat(show.title).isNotNull()
@@ -139,6 +143,9 @@ class DefaultValuesTest {
             return
         }
 
+        // Check a primary key was assigned
+        assertThat(season.id).isGreaterThan(0)
+
         assertThat(season.tmdbId).isEqualTo(SEASON.tmdb_id)
         assertThat(season.tvdbId).isEqualTo(SEASON.tvdb_id)
         assertThat(season.showId).isEqualTo(showId)
@@ -171,6 +178,9 @@ class DefaultValuesTest {
             return
         }
 
+        // Check a primary key was assigned
+        assertThat(episode.id).isGreaterThan(0)
+
         assertThat(episode.title).isNotNull()
         assertThat(episode.number).isEqualTo(0)
         assertThat(episode.watched).isEqualTo(EpisodeFlags.UNWATCHED)
@@ -196,9 +206,7 @@ class DefaultValuesTest {
         val lists = database.sgListHelper().getListsForExport()
         // Initial data + new list from above; initial data asserted with RoomInitialDataTest.
         assertThat(lists).hasSize(2)
-        assertThat(lists[1].name).isEqualTo(LIST.name)
-
-        assertThat(lists[1].order).isEqualTo(0)
+        assertTestList(lists[1])
     }
 
     @Test
@@ -215,9 +223,15 @@ class DefaultValuesTest {
 
         val lists = listHelper.getListsForExport()
         assertThat(lists).hasSize(1)
-        assertThat(lists[0].name).isEqualTo(LIST.name)
+        assertTestList(lists[0])
+    }
 
-        assertThat(lists[0].order).isEqualTo(0)
+    private fun assertTestList(actualList: SgList) {
+        // Check a primary key was assigned
+        assertThat(actualList.id).isGreaterThan(0)
+
+        assertThat(actualList.name).isEqualTo(LIST.name)
+        assertThat(actualList.order).isEqualTo(0)
     }
 
     @Test
@@ -240,6 +254,9 @@ class DefaultValuesTest {
         assertThat(query).isNotNull()
         assertThat(query!!.count).isEqualTo(1)
         assertThat(query.moveToFirst()).isTrue()
+
+        // Check a primary key was assigned
+        assertThat(query.getLong(query.getColumnIndexOrThrow(Movies._ID))).isGreaterThan(0)
 
         assertDefaultValue(query, Movies.RUNTIME_MIN, 0)
         assertDefaultValue(query, Movies.IN_COLLECTION, 0)
