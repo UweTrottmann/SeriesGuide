@@ -31,7 +31,7 @@ public class DeleteListTask extends BaseActionTask {
     }
 
     @Override
-    protected Integer doBackgroundAction(Void... params) {
+    protected int doBackgroundAction(Void... params) {
         if (isSendingToHexagon()) {
             HexagonTools hexagonTools = SgApp.getServicesComponent(getContext()).hexagonTools();
             Lists listsService = hexagonTools.getListsService();
