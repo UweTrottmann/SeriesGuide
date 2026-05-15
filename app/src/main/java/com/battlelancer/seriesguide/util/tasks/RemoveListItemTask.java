@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2016-2019, 2023 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2016 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.util.tasks;
 
@@ -90,15 +90,7 @@ public class RemoveListItemTask extends BaseActionTask {
     private boolean doDatabaseUpdate() {
         int deleted = getContext().getContentResolver()
                 .delete(SeriesGuideContract.ListItems.buildListItemUri(listItemId), null, null);
-        if (deleted == 0) {
-            return false; // nothing got deleted
-        }
-
-        // notify URI used by list fragments
-        getContext().getContentResolver()
-                .notifyChange(SeriesGuideContract.ListItems.CONTENT_WITH_DETAILS_URI, null);
-
-        return true;
+        return deleted != 0; // if 0 nothing got deleted
     }
 
     @Override

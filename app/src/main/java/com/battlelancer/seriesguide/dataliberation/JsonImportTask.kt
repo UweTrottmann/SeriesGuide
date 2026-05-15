@@ -4,7 +4,6 @@
 package com.battlelancer.seriesguide.dataliberation
 
 import android.content.ContentProviderOperation
-import android.content.ContentValues
 import android.content.Context
 import android.content.OperationApplicationException
 import android.net.Uri
@@ -13,17 +12,18 @@ import androidx.annotation.VisibleForTesting
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.dataliberation.DataLiberationFragment.LiberationResultEvent
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgEpisodeForImport
+import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgListForImport
+import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgListItemForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgSeasonForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgShowForImport
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Export
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ListItemTypesExport
 import com.battlelancer.seriesguide.dataliberation.model.List
 import com.battlelancer.seriesguide.dataliberation.model.Movie
 import com.battlelancer.seriesguide.dataliberation.model.Season
 import com.battlelancer.seriesguide.dataliberation.model.Show
+import com.battlelancer.seriesguide.lists.database.SgListHelper
+import com.battlelancer.seriesguide.lists.database.SgListItem
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgEpisode2
@@ -42,6 +42,7 @@ import com.google.gson.stream.JsonReader
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
+import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
@@ -62,7 +63,8 @@ class JsonImportTask(
     private val database: SgRoomDatabase,
     private val sgShow2Helper: SgShow2Helper,
     private val sgSeason2Helper: SgSeason2Helper,
-    private val sgEpisode2Helper: SgEpisode2Helper
+    private val sgEpisode2Helper: SgEpisode2Helper,
+    private val sgListHelper: SgListHelper
 ) {
 
     private val context: Context = context.applicationContext
@@ -104,7 +106,8 @@ class JsonImportTask(
         SgRoomDatabase.getInstance(context),
         SgRoomDatabase.getInstance(context).sgShow2Helper(),
         SgRoomDatabase.getInstance(context).sgSeason2Helper(),
-        SgRoomDatabase.getInstance(context).sgEpisode2Helper()
+        SgRoomDatabase.getInstance(context).sgEpisode2Helper(),
+        SgRoomDatabase.getInstance(context).sgListHelper()
     )
 
     constructor(context: Context) : this(context, true, true, true) {
@@ -113,22 +116,21 @@ class JsonImportTask(
 
     suspend fun run(): Int {
         return withContext(Dispatchers.IO) {
-            val result = doInBackground(this)
+            val result = if (SgSyncAdapter.isSyncActive(context, false)) {
+                // Do not import if an update task is running
+                ERROR_LARGE_DB_OP
+            } else {
+                // Do not import until an add or backup task are finished
+                TaskManager.addShowOrBackupSemaphore.withPermit {
+                    doInBackground(this)
+                }
+            }
             onPostExecute(result)
             return@withContext result
         }
     }
 
     private fun doInBackground(coroutineScope: CoroutineScope): Int {
-        // Do not import if an update task is running
-        if (SgSyncAdapter.isSyncActive(context, false)) {
-            return ERROR_LARGE_DB_OP
-        }
-        // Do not import if an add or backup task is running
-        if (!TaskManager.addShowOrBackupSemaphore.tryAcquire()) {
-            return ERROR_LARGE_DB_OP
-        }
-
         // last chance to abort
         if (!coroutineScope.isActive) {
             return ERROR
@@ -167,9 +169,6 @@ class JsonImportTask(
 
         // Renew search table
         SeriesGuideDatabase.rebuildFtsTable(context)
-
-        // allow other tasks to resume
-        TaskManager.addShowOrBackupSemaphore.release()
 
         return SUCCESS
     }
@@ -333,14 +332,11 @@ class JsonImportTask(
             }
 
             Export.Lists -> {
-                // delete list items before lists to prevent violating foreign key constraints
-                batch.add(
-                    ContentProviderOperation.newDelete(ListItems.CONTENT_URI).build()
-                )
-                batch.add(
-                    ContentProviderOperation.newDelete(SeriesGuideContract.Lists.CONTENT_URI)
-                        .build()
-                )
+                database.runInTransaction {
+                    // Delete list items before lists to prevent violating foreign key constraints
+                    sgListHelper.deleteAllListItems()
+                    sgListHelper.deleteAllLists()
+                }
             }
 
             Export.Movies -> {
@@ -483,55 +479,21 @@ class JsonImportTask(
         }
 
         // Insert the list
-        context.contentResolver.insert(
-            SeriesGuideContract.Lists.CONTENT_URI,
-            list.toContentValues()
-        )
+        val sgList = list.toSgListForImport()
+        sgListHelper.insertList(sgList)
 
         if (list.items == null || list.items.isEmpty()) {
             return
         }
 
-        // Insert the lists items
-        val items = ArrayList<ContentValues>()
+        // Insert the list items
+        val items = ArrayList<SgListItem>()
         for (item in list.items) {
-            // Note: DO import legacy types (seasons and episodes),
-            // as e.g. older backups can still contain legacy show data to allow displaying them.
-            val type: Int = if (ListItemTypesExport.SHOW == item.type) {
-                ListItemTypes.TVDB_SHOW
-            } else if (ListItemTypesExport.TMDB_SHOW == item.type) {
-                ListItemTypes.TMDB_SHOW
-            } else if (ListItemTypesExport.SEASON == item.type) {
-                ListItemTypes.SEASON
-            } else if (ListItemTypesExport.EPISODE == item.type) {
-                ListItemTypes.EPISODE
-            } else {
-                // Unknown item type, skip
-                continue
-            }
-
-            var externalId: String? = null
-            if (item.externalId != null && item.externalId.isNotEmpty()) {
-                externalId = item.externalId
-            } else if (item.tvdb_id > 0) {
-                externalId = item.tvdb_id.toString()
-            }
-            if (externalId == null) continue  // No external ID, skip
-
-            // Generate list item ID from values, do not trust given item ID
-            // (e.g. encoded list ID might not match)
-            item.list_item_id = ListItems.generateListItemId(externalId, type, list.list_id)
-
-            val itemValues = ContentValues()
-            itemValues.put(ListItems.LIST_ITEM_ID, item.list_item_id)
-            itemValues.put(SeriesGuideContract.Lists.LIST_ID, list.list_id)
-            itemValues.put(ListItems.ITEM_REF_ID, externalId)
-            itemValues.put(ListItems.TYPE, type)
-
-            items.add(itemValues)
+            item.toSgListItemForImport(sgList.listId)
+                ?.let { items.add(it) }
         }
 
-        context.contentResolver.bulkInsert(ListItems.CONTENT_URI, items.toTypedArray())
+        sgListHelper.insertListItems(items)
     }
 
     companion object {

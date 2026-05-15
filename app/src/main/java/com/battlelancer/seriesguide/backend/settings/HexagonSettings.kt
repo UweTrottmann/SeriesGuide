@@ -1,11 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2013-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2013 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.backend.settings
 
 import android.content.Context
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings.getLastListsSyncTime
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings.getLastMoviesSyncTime
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings.getLastSyncTime
 import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 
@@ -213,14 +216,8 @@ object HexagonSettings {
         }
     }
 
-    fun getLastMoviesSyncTime(context: Context): Long? {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        if (!prefs.contains(KEY_LAST_SYNC_MOVIES)) return null
-        return prefs.getLong(
-            KEY_LAST_SYNC_MOVIES,
-            0 /* Never returned, returning null above if it does not exist */
-        )
-    }
+    fun getLastMoviesSyncTime(context: Context): Long? =
+        getLastSyncTimeIfKeyExists(context, KEY_LAST_SYNC_MOVIES)
 
     fun setLastMoviesSyncTime(context: Context, timeInMs: Long) {
         PreferenceManager.getDefaultSharedPreferences(context).edit {
@@ -229,7 +226,8 @@ object HexagonSettings {
     }
 
     /**
-     * Sets [getLastMoviesSyncTime] so that all movies are downloaded on the next sync.
+     * Removes the key for [getLastMoviesSyncTime] so that all movies are downloaded on the next
+     * sync.
      */
     fun resetLastMoviesSyncTime(context: Context) {
         PreferenceManager.getDefaultSharedPreferences(context).edit {
@@ -237,13 +235,21 @@ object HexagonSettings {
         }
     }
 
-    fun getLastListsSyncTime(context: Context): Long {
-        return getLastSyncTime(context, KEY_LAST_SYNC_LISTS)
-    }
+    fun getLastListsSyncTime(context: Context): Long? =
+        getLastSyncTimeIfKeyExists(context, KEY_LAST_SYNC_LISTS)
 
     fun setLastListsSyncTime(context: Context, timeInMs: Long) {
         PreferenceManager.getDefaultSharedPreferences(context).edit {
             putLong(KEY_LAST_SYNC_LISTS, timeInMs)
+        }
+    }
+
+    /**
+     * Removes the key for [getLastListsSyncTime] so that all lists are downloaded on the next sync.
+     */
+    fun resetLastListsSyncTime(context: Context) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit {
+            remove(KEY_LAST_SYNC_LISTS)
         }
     }
 
@@ -256,4 +262,21 @@ object HexagonSettings {
         }
         return lastSync
     }
+
+    /**
+     * Unlike [getLastSyncTime], handles a deleted [key] by returning `null`.
+     *
+     * This is done to support resetting (deleting the key) to download all instead of just changed
+     * elements without resetting merged state.
+     */
+    private fun getLastSyncTimeIfKeyExists(context: Context, key: String): Long? {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        return if (prefs.contains(key)) {
+            prefs.getLong(
+                key,
+                0 /* Never returned, returning null above if it does not exist */
+            )
+        } else null
+    }
+
 }

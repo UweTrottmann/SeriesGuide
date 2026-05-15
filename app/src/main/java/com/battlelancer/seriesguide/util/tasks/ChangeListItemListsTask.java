@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2016-2019, 2021, 2023 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2016 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.util.tasks;
 
@@ -138,10 +138,6 @@ public class ChangeListItemListsTask extends BaseActionTask {
             Timber.e(e, "Applying list changes failed");
             return false;
         }
-
-        // notify URI used by list fragments
-        getContext().getContentResolver()
-                .notifyChange(SeriesGuideContract.ListItems.CONTENT_WITH_DETAILS_URI, null);
 
         return true;
     }

@@ -8,6 +8,10 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
 
+### Next release
+
+* 🔨 Import: a failure no longer blocks trying again, adding shows or creating an auto backup.
+
 ## Version 2026.1
 
 * 📝 Trakt: support server changes to correctly fetch all collection and watchlist items.

@@ -36,6 +36,7 @@ import com.battlelancer.seriesguide.extensions.ActionsHelper
 import com.battlelancer.seriesguide.extensions.ExtensionManager
 import com.battlelancer.seriesguide.extensions.MovieActionsContract
 import com.battlelancer.seriesguide.getSgAppContainer
+import com.battlelancer.seriesguide.lists.ManageListsDialogFragment
 import com.battlelancer.seriesguide.movies.MovieLoader
 import com.battlelancer.seriesguide.movies.MovieLocalizationDialogFragment
 import com.battlelancer.seriesguide.movies.MoviesSettings
@@ -125,6 +126,10 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         // some action buttons
         binding.containerMovieButtons.apply {
             root.isGone = true
+            // Manage lists button
+            buttonMovieManageLists.setOnClickListener {
+                ManageListsDialogFragment.showForMovie(parentFragmentManager, tmdbId)
+            }
             // trailer button
             buttonMovieTrailer.apply {
                 setOnClickListener {
@@ -338,6 +343,10 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         val isConnectedToTrakt = TraktCredentials.get(requireContext()).hasCredentials()
         val hideCheckIn = !isConnectedToTrakt || HexagonSettings.isEnabled(requireContext())
         binding.containerMovieButtons.buttonMovieCheckIn.isGone = hideCheckIn
+
+        // Hide manage lists button if movie isn't in the database (and therefore can't show up in a
+        // list).
+        binding.containerMovieButtons.buttonMovieManageLists.isGone = !movieDetails.isInDatabase
 
         // watched button
         binding.containerMovieButtons.buttonMovieWatched.also {

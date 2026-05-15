@@ -34,6 +34,9 @@ data class SgMovie(
     @ColumnInfo(name = Movies.TITLE_NOARTICLE)
     val titleNoArticle: String? = null,
 
+    /**
+     * A poster path. Needs to be prefixed with the poster server URL.
+     */
     @ColumnInfo(name = Movies.POSTER)
     val poster: String? = null,
 
@@ -49,6 +52,9 @@ data class SgMovie(
     @ColumnInfo(name = Movies.RELEASED_UTC_MS)
     val releasedMs: Long? = null,
 
+    /**
+     * Running time of this movie in minutes.
+     */
     @ColumnInfo(name = Movies.RUNTIME_MIN)
     val runtimeMin: Int? = 0,
 

@@ -85,7 +85,7 @@ class SgListItemViewHolder(
         binding.imageViewItemShowListFavorited.isVisible = item?.isFavorite ?: false
 
         // Poster
-        ImageTools.loadShowPosterResizeCrop(
+        ImageTools.loadAndResizeCropToShowPosterSize(
             context,
             binding.imageViewItemShowListPoster,
             item?.posterUrl

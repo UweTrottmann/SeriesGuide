@@ -1,23 +1,28 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2018-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2018 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.provider
 
-import android.content.ContentProviderOperation
 import android.content.ContentResolver
 import android.content.Context
 import android.database.Cursor
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgEpisodeForImport
+import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgListForImport
+import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgListItemForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgSeasonForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgShowForImport
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ListItemTypesExport
 import com.battlelancer.seriesguide.dataliberation.model.Episode
 import com.battlelancer.seriesguide.dataliberation.model.List
+import com.battlelancer.seriesguide.dataliberation.model.ListItem
 import com.battlelancer.seriesguide.dataliberation.model.Season
 import com.battlelancer.seriesguide.dataliberation.model.Show
+import com.battlelancer.seriesguide.lists.database.SgList
 import com.battlelancer.seriesguide.movies.details.MovieDetails
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
 import com.battlelancer.seriesguide.shows.database.SgShow2
@@ -50,9 +55,17 @@ class DefaultValuesTest {
             tmdb_id = 123456
             tvdb_id = 123456
         }
+        private const val TEST_LIST_NAME = "Test List"
+        private val TEST_LIST_ID = Lists.generateListId(TEST_LIST_NAME)
         private val LIST = List().apply {
-            name = "Test List"
-            list_id = Lists.generateListId(name)
+            name = TEST_LIST_NAME
+            list_id = TEST_LIST_ID
+        }
+        private const val TEST_LIST_ITEM_EXTERNAL_ID = "test-external-id"
+        private val LIST_ITEM = ListItem().apply {
+            list_item_id = ListItems.generateListItemId(TEST_LIST_ITEM_EXTERNAL_ID, ListItemTypes.TMDB_SHOW, TEST_LIST_ID)
+            externalId = TEST_LIST_ITEM_EXTERNAL_ID
+            type = ListItemTypesExport.TMDB_SHOW
         }
         private val MOVIE = MovieDetails().apply {
             val tmdbMovie = Movie().apply { id = 12 }
@@ -89,6 +102,9 @@ class DefaultValuesTest {
             fail("show is null")
             return
         }
+
+        // Check a primary key was assigned
+        assertThat(show.id).isGreaterThan(0)
 
         // Note: compare with SgShow2 and ImportTools.
         assertThat(show.tvdbId).isEqualTo(SHOW.tvdb_id)
@@ -140,6 +156,9 @@ class DefaultValuesTest {
             return
         }
 
+        // Check a primary key was assigned
+        assertThat(season.id).isGreaterThan(0)
+
         assertThat(season.tmdbId).isEqualTo(SEASON.tmdb_id)
         assertThat(season.tvdbId).isEqualTo(SEASON.tvdb_id)
         assertThat(season.showId).isEqualTo(showId)
@@ -172,6 +191,9 @@ class DefaultValuesTest {
             return
         }
 
+        // Check a primary key was assigned
+        assertThat(episode.id).isGreaterThan(0)
+
         assertThat(episode.title).isNotNull()
         assertThat(episode.number).isEqualTo(0)
         assertThat(episode.watched).isEqualTo(EpisodeFlags.UNWATCHED)
@@ -197,32 +219,50 @@ class DefaultValuesTest {
         val lists = database.sgListHelper().getListsForExport()
         // Initial data + new list from above; initial data asserted with RoomInitialDataTest.
         assertThat(lists).hasSize(2)
-        assertThat(lists[1].name).isEqualTo(LIST.name)
-
-        assertThat(lists[1].order).isEqualTo(0)
+        assertTestList(lists[1])
     }
 
     @Test
     fun listDefaultValuesImport() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         val database = SgRoomDatabase.getInstance(context)
-        // Delete initial list.
-        database.sgListHelper().deleteAllLists()
+        val listHelper = database.sgListHelper()
+        // By default, the database inserts a first list when being created: delete it
+        listHelper.deleteAllLists()
 
-        val values = LIST.toContentValues()
+        // List
+        val sgList = LIST.toSgListForImport()
 
-        val op = ContentProviderOperation.newInsert(Lists.CONTENT_URI)
-            .withValues(values).build()
+        listHelper.insertList(sgList)
 
-        val batch = ArrayList<ContentProviderOperation>()
-        batch.add(op)
-        resolver.applyBatch(SgApp.CONTENT_AUTHORITY, batch)
-
-        val lists = database.sgListHelper().getListsForExport()
+        val lists = listHelper.getListsForExport()
         assertThat(lists).hasSize(1)
-        assertThat(lists[0].name).isEqualTo(LIST.name)
+        assertTestList(lists[0])
 
-        assertThat(lists[0].order).isEqualTo(0)
+        // List item
+        val sgListItem = LIST_ITEM.toSgListItemForImport(TEST_LIST_ID)!!
+
+        listHelper.insertListItems(listOf(sgListItem))
+
+        val listItems = listHelper.getListItemsForExport(TEST_LIST_ID)
+        assertThat(listItems).hasSize(1)
+        val listItem = listItems[0]
+
+        // Check a primary key was assigned
+        assertThat(listItem.id).isGreaterThan(0)
+
+        assertThat(listItem.listItemId).isEqualTo(LIST_ITEM.list_item_id)
+        assertThat(listItem.type).isEqualTo(ListItemTypes.TMDB_SHOW)
+        assertThat(listItem.itemRefId).isEqualTo(LIST_ITEM.externalId)
+        assertThat(listItem.listId).isEqualTo(TEST_LIST_ID)
+    }
+
+    private fun assertTestList(actualList: SgList) {
+        // Check a primary key was assigned
+        assertThat(actualList.id).isGreaterThan(0)
+
+        assertThat(actualList.name).isEqualTo(LIST.name)
+        assertThat(actualList.order).isEqualTo(0)
     }
 
     @Test
@@ -245,6 +285,9 @@ class DefaultValuesTest {
         assertThat(query).isNotNull()
         assertThat(query!!.count).isEqualTo(1)
         assertThat(query.moveToFirst()).isTrue()
+
+        // Check a primary key was assigned
+        assertThat(query.getLong(query.getColumnIndexOrThrow(Movies._ID))).isGreaterThan(0)
 
         assertDefaultValue(query, Movies.RUNTIME_MIN, 0)
         assertDefaultValue(query, Movies.IN_COLLECTION, 0)

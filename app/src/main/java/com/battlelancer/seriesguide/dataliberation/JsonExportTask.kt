@@ -378,6 +378,7 @@ open class JsonExportTask(
             item.externalId = listItem.itemRefId
             // Note: export legacy types so users can get to legacy data if they need to.
             when (listItem.type) {
+                ListItemTypes.TMDB_MOVIE -> item.type = ListItemTypesExport.MOVIE
                 ListItemTypes.TVDB_SHOW -> item.type = ListItemTypesExport.SHOW
                 ListItemTypes.TMDB_SHOW -> item.type = ListItemTypesExport.TMDB_SHOW
                 ListItemTypes.SEASON -> item.type = ListItemTypesExport.SEASON
@@ -459,6 +460,7 @@ open class JsonExportTask(
     }
 
     object ListItemTypesExport {
+        const val MOVIE = "movie"
         const val SHOW = "show"
         const val TMDB_SHOW = "tmdb-show"
         const val SEASON = "season"
