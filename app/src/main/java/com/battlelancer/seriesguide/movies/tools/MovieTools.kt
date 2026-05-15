@@ -12,8 +12,10 @@ import com.battlelancer.seriesguide.jobs.movies.MovieWatchlistJob
 import com.battlelancer.seriesguide.modules.ApplicationContext
 import com.battlelancer.seriesguide.movies.MoviesSettings
 import com.battlelancer.seriesguide.movies.database.SgMovie
+import com.battlelancer.seriesguide.movies.database.SgMovieFlags
 import com.battlelancer.seriesguide.movies.details.MovieDetails
-import com.battlelancer.seriesguide.movies.tools.MovieTools.Lists
+import com.battlelancer.seriesguide.movies.tools.MovieTools.Companion.updateReleaseDateForRegion
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools4
@@ -54,8 +56,39 @@ class MovieTools @Inject constructor(
     }
 
     /**
+     * If the movie is no longer on a custom or built-in list, deletes it from the database.
+     * In this case, it's assumed the movie must be in the database.
+     * If it is on a custom list and isn't already in the database, adds it.
+     *
+     * @see addToList
+     */
+    suspend fun addToOrDeleteFromDatabaseAfterCustomListChange(movieTmdbId: Int): Boolean {
+        if (isMovieNotOnCustomList(movieTmdbId)) {
+            // Movie is no longer on a custom list, but maybe still on a built-in list?
+            val movieFlags = SgRoomDatabase.getInstance(context).movieHelper()
+                .getMovieFlags(movieTmdbId)
+                ?: return false // query failed
+
+            return if (movieFlags.isNotOnBuiltInList()) {
+                deleteMovie(context, movieTmdbId)
+            } else {
+                true // Movie still on built-in list, don't delete
+            }
+        } else {
+            // Movie was added to at least one custom list
+            return if (isMovieInDatabase(movieTmdbId)) {
+                true // Movie already in database, nothing to do
+            } else {
+                addMovie(movieTmdbId, null)
+            }
+        }
+    }
+
+    /**
      * Adds the movie to the given list. If it was not in any list before, adds the movie to the
      * local database first. Returns if the database operation was successful.
+     *
+     * @see addToOrDeleteFromDatabaseAfterCustomListChange
      */
     suspend fun addToList(movieTmdbId: Int, list: Lists): Boolean {
         val movieExists = isMovieInDatabase(movieTmdbId)
@@ -66,12 +99,69 @@ class MovieTools @Inject constructor(
         }
     }
 
+    /**
+     * If the movie isn't on any built-in or custom lists, deletes it from the database.
+     *
+     * Assumes, the movie is in the database.
+     *
+     * @return If the database operation was successful.
+     *
+     * @see removeFromList
+     */
+    fun deleteFromDatabaseIfNotOnBuiltInList(movieTmdbId: Int): Boolean {
+        val movieFlags = SgRoomDatabase.getInstance(context).movieHelper()
+            .getMovieFlags(movieTmdbId)
+            ?: return false // query failed
+
+        return if (movieFlags.isNotOnBuiltInList() && isMovieNotOnCustomList(movieTmdbId)) {
+            deleteMovie(context, movieTmdbId)
+        } else {
+            true // Still on a built-in list
+        }
+    }
+
+    /**
+     * Removes the movie from [listToRemoveFrom] or if the movie wouldn't be on any built-in or
+     * custom list after removing it, deletes it from the database instead.
+     *
+     * @return If the database operation was successful.
+     *
+     * @see deleteFromDatabaseIfNotOnBuiltInList
+     */
+    fun removeFromList(movieTmdbId: Int, listToRemoveFrom: Lists): Boolean {
+        val movieFlags = SgRoomDatabase.getInstance(context).movieHelper()
+            .getMovieFlags(movieTmdbId)
+            ?: return false // query failed
+
+        val newMovieFlags = when (listToRemoveFrom) {
+            Lists.COLLECTION -> movieFlags.copy(inCollection = false)
+            Lists.WATCHLIST -> movieFlags.copy(inWatchlist = false)
+            Lists.WATCHED -> movieFlags.copy(watched = false)
+        }
+
+        return if (newMovieFlags.isNotOnBuiltInList() && isMovieNotOnCustomList(movieTmdbId)) {
+            deleteMovie(context, movieTmdbId)
+        } else {
+            // otherwise, just update
+            updateMovie(context, movieTmdbId, listToRemoveFrom, false)
+        }
+    }
+
+    private fun SgMovieFlags.isNotOnBuiltInList(): Boolean {
+        return !inWatchlist && !inCollection && !watched
+    }
+
+    private fun isMovieNotOnCustomList(movieTmdbId: Int): Boolean {
+        return SgRoomDatabase.getInstance(context).sgListHelper()
+            .getListItemsWithTmdbIdCount(movieTmdbId, ListItemTypes.TMDB_MOVIE) == 0
+    }
+
     private fun isMovieInDatabase(movieTmdbId: Int): Boolean {
         val count = SgRoomDatabase.getInstance(context).movieHelper().getCount(movieTmdbId)
         return count > 0
     }
 
-    private suspend fun addMovie(movieTmdbId: Int, listToAddTo: Lists): Boolean {
+    private suspend fun addMovie(movieTmdbId: Int, listToAddTo: Lists?): Boolean {
         // get movie info
         val details = getMovieDetailsWithDefaults(movieTmdbId, false).movieDetails
         if (details.tmdbMovie() == null) {
@@ -445,38 +535,6 @@ class MovieTools @Inject constructor(
 
         fun removeFromWatchlist(context: Context, movieTmdbId: Int) {
             FlagJobExecutor.execute(context, MovieWatchlistJob(movieTmdbId, false))
-        }
-
-        /**
-         * Removes the movie from the given list.
-         *
-         * If it would not be on any list afterwards, deletes the movie from the local database.
-         *
-         * @return If the database operation was successful.
-         */
-        fun removeFromList(context: Context, movieTmdbId: Int, listToRemoveFrom: Lists): Boolean {
-            val movieFlags = SgRoomDatabase.getInstance(context).movieHelper()
-                .getMovieFlags(movieTmdbId)
-            if (movieFlags == null) {
-                return false // query failed
-            }
-
-            var removeMovie = false
-            if (listToRemoveFrom == Lists.COLLECTION) {
-                removeMovie = !movieFlags.inWatchlist && !movieFlags.watched
-            } else if (listToRemoveFrom == Lists.WATCHLIST) {
-                removeMovie = !movieFlags.inCollection && !movieFlags.watched
-            } else if (listToRemoveFrom == Lists.WATCHED) {
-                removeMovie = !movieFlags.inCollection && !movieFlags.inWatchlist
-            }
-
-            // if movie will not be in any list, remove it completely
-            return if (removeMovie) {
-                deleteMovie(context, movieTmdbId)
-            } else {
-                // otherwise, just update
-                updateMovie(context, movieTmdbId, listToRemoveFrom, false)
-            }
         }
 
         fun watchedMovie(

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2020, 2022, 2023 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2020 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.jobs.movies
 
@@ -25,7 +25,7 @@ class MovieCollectionJob(
         return if (isInCollection) {
             movieTools.addToList(movieTmdbId, MovieTools.Lists.COLLECTION)
         } else {
-            MovieTools.removeFromList(context, movieTmdbId, MovieTools.Lists.COLLECTION)
+            movieTools.removeFromList(movieTmdbId, MovieTools.Lists.COLLECTION)
         }
     }
 }

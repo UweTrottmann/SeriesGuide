@@ -9,22 +9,27 @@ import android.content.OperationApplicationException
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems
 import com.battlelancer.seriesguide.util.DBUtils
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.seriesguide.backend.lists.model.SgList
 import com.uwetrottmann.seriesguide.backend.lists.model.SgListItem
 import com.uwetrottmann.seriesguide.backend.lists.model.SgListList
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.io.IOException
 
 /**
  * Task to add or remove an item to and from lists.
+ *
+ * If the [itemType] is a movie, also adds to or deletes it from the database depending on if it
+ * is on a custom list or built-in list after the list changes.
  */
 class ChangeListItemListsTask(
     context: Context,
-    private val itemStableId: Int,
-    private val itemType: Int,
+    private val itemTmdbId: Int,
+    @ListItemTypes private val itemType: Int,
     private val addToTheseLists: List<String>,
     private val removeFromTheseLists: List<String>
 ) : BaseActionTask(context) {
@@ -77,7 +82,7 @@ class ChangeListItemListsTask(
                 list.setListId(listId)
 
                 val item = SgListItem().also {
-                    val listItemId = ListItems.generateListItemId(itemStableId, itemType, listId)
+                    val listItemId = ListItems.generateListItemId(itemTmdbId, itemType, listId)
                     it.setListItemId(listItemId)
                 }
 
@@ -91,20 +96,20 @@ class ChangeListItemListsTask(
             addToTheseLists.size + removeFromTheseLists.size
         )
         for (listId in addToTheseLists) {
-            val listItemId = ListItems.generateListItemId(itemStableId, itemType, listId)
+            val listItemId = ListItems.generateListItemId(itemTmdbId, itemType, listId)
 
             batch.add(
                 ContentProviderOperation
                     .newInsert(ListItems.CONTENT_URI)
                     .withValue(ListItems.LIST_ITEM_ID, listItemId)
-                    .withValue(ListItems.ITEM_REF_ID, itemStableId)
+                    .withValue(ListItems.ITEM_REF_ID, itemTmdbId)
                     .withValue(ListItems.TYPE, itemType)
                     .withValue(SeriesGuideContract.Lists.LIST_ID, listId)
                     .build()
             )
         }
         for (listId in removeFromTheseLists) {
-            val listItemId = ListItems.generateListItemId(itemStableId, itemType, listId)
+            val listItemId = ListItems.generateListItemId(itemTmdbId, itemType, listId)
             batch.add(
                 ContentProviderOperation
                     .newDelete(ListItems.buildListItemUri(listItemId))
@@ -118,6 +123,20 @@ class ChangeListItemListsTask(
         } catch (e: OperationApplicationException) {
             Timber.e(e, "Applying list changes failed")
             return false
+        }
+
+        // For a movie, also add it to or delete it from the database depending on if it is on
+        // any custom lists or built-in lists after the above list changes.
+        if (itemType == ListItemTypes.TMDB_MOVIE) {
+            try {
+                runBlocking {
+                    SgApp.getServicesComponent(context).movieTools()
+                        .addToOrDeleteFromDatabaseAfterCustomListChange(itemTmdbId)
+                }
+            } catch (e: InterruptedException) {
+                Timber.e(e, "Adding movie to database interrupted")
+                return false
+            }
         }
 
         return true

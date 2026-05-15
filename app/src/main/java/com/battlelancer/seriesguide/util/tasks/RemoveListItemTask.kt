@@ -15,10 +15,14 @@ import java.io.IOException
 
 /**
  * Task to remove an item from a single list (basically delete the list item).
+ *
+ * If a [movieTmdbId] is given, will also delete that movie from the database if it isn't on any
+ * other custom list or built-in list.
  */
 class RemoveListItemTask(
     context: Context,
-    private val listItemId: String
+    private val listItemId: String,
+    private val movieTmdbId: Int?
 ) : BaseActionTask(context) {
 
     override val isSendingToTrakt: Boolean = false
@@ -68,7 +72,18 @@ class RemoveListItemTask(
     private fun doDatabaseUpdate(): Boolean {
         val deleted = context.contentResolver
             .delete(ListItems.buildListItemUri(listItemId), null, null)
-        return deleted != 0 // if 0 nothing got deleted
+        if (deleted == 0) {
+            return false // if 0 nothing got deleted
+        }
+
+        // For a movie, also delete it from the database if it is no longer on any custom or
+        // built-in list.
+        if (movieTmdbId != null) {
+            return SgApp.getServicesComponent(context).movieTools()
+                .deleteFromDatabaseIfNotOnBuiltInList(movieTmdbId)
+        }
+
+        return true
     }
 
     override val successTextResId: Int
