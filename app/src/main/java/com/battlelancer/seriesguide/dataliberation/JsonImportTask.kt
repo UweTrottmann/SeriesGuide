@@ -42,6 +42,7 @@ import com.google.gson.stream.JsonReader
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
+import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
@@ -115,22 +116,21 @@ class JsonImportTask(
 
     suspend fun run(): Int {
         return withContext(Dispatchers.IO) {
-            val result = doInBackground(this)
+            val result = if (SgSyncAdapter.isSyncActive(context, false)) {
+                // Do not import if an update task is running
+                ERROR_LARGE_DB_OP
+            } else {
+                // Do not import until an add or backup task are finished
+                TaskManager.addShowOrBackupSemaphore.withPermit {
+                    doInBackground(this)
+                }
+            }
             onPostExecute(result)
             return@withContext result
         }
     }
 
     private fun doInBackground(coroutineScope: CoroutineScope): Int {
-        // Do not import if an update task is running
-        if (SgSyncAdapter.isSyncActive(context, false)) {
-            return ERROR_LARGE_DB_OP
-        }
-        // Do not import if an add or backup task is running
-        if (!TaskManager.addShowOrBackupSemaphore.tryAcquire()) {
-            return ERROR_LARGE_DB_OP
-        }
-
         // last chance to abort
         if (!coroutineScope.isActive) {
             return ERROR
@@ -169,9 +169,6 @@ class JsonImportTask(
 
         // Renew search table
         SeriesGuideDatabase.rebuildFtsTable(context)
-
-        // allow other tasks to resume
-        TaskManager.addShowOrBackupSemaphore.release()
 
         return SUCCESS
     }
