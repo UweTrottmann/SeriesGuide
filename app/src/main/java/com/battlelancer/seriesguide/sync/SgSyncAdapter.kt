@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2013-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2013 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.sync
 
@@ -21,7 +21,7 @@ import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
 import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.jobs.NetworkJobProcessor
-import com.battlelancer.seriesguide.lists.ListsTools2
+import com.battlelancer.seriesguide.lists.ListsTools
 import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
@@ -198,7 +198,7 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
 
                 // Migrate legacy list items
                 // Note: might send to Hexagon, so make sure to sync lists with Hexagon before
-                ListsTools2.migrateTvdbShowListItemsToTmdbIds(context)
+                ListsTools.migrateTvdbShowListItemsToTmdbIds(context)
 
                 if (Thread.interrupted()) throw InterruptedException()
 
