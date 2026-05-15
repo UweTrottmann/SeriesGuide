@@ -10,14 +10,19 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgEpisodeForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgListForImport
+import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgListItemForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgSeasonForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgShowForImport
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ListItemTypesExport
 import com.battlelancer.seriesguide.dataliberation.model.Episode
 import com.battlelancer.seriesguide.dataliberation.model.List
+import com.battlelancer.seriesguide.dataliberation.model.ListItem
 import com.battlelancer.seriesguide.dataliberation.model.Season
 import com.battlelancer.seriesguide.dataliberation.model.Show
 import com.battlelancer.seriesguide.lists.database.SgList
 import com.battlelancer.seriesguide.movies.details.MovieDetails
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
 import com.battlelancer.seriesguide.shows.database.SgShow2
@@ -50,9 +55,17 @@ class DefaultValuesTest {
             tmdb_id = 123456
             tvdb_id = 123456
         }
+        private const val TEST_LIST_NAME = "Test List"
+        private val TEST_LIST_ID = Lists.generateListId(TEST_LIST_NAME)
         private val LIST = List().apply {
-            name = "Test List"
-            list_id = Lists.generateListId(name)
+            name = TEST_LIST_NAME
+            list_id = TEST_LIST_ID
+        }
+        private const val TEST_LIST_ITEM_EXTERNAL_ID = "test-external-id"
+        private val LIST_ITEM = ListItem().apply {
+            list_item_id = ListItems.generateListItemId(TEST_LIST_ITEM_EXTERNAL_ID, ListItemTypes.TMDB_SHOW, TEST_LIST_ID)
+            externalId = TEST_LIST_ITEM_EXTERNAL_ID
+            type = ListItemTypesExport.TMDB_SHOW
         }
         private val MOVIE = MovieDetails().apply {
             val tmdbMovie = Movie().apply { id = 12 }
@@ -217,6 +230,7 @@ class DefaultValuesTest {
         // By default, the database inserts a first list when being created: delete it
         listHelper.deleteAllLists()
 
+        // List
         val sgList = LIST.toSgListForImport()
 
         listHelper.insertList(sgList)
@@ -224,6 +238,23 @@ class DefaultValuesTest {
         val lists = listHelper.getListsForExport()
         assertThat(lists).hasSize(1)
         assertTestList(lists[0])
+
+        // List item
+        val sgListItem = LIST_ITEM.toSgListItemForImport(TEST_LIST_ID)!!
+
+        listHelper.insertListItems(listOf(sgListItem))
+
+        val listItems = listHelper.getListItemsForExport(TEST_LIST_ID)
+        assertThat(listItems).hasSize(1)
+        val listItem = listItems[0]
+
+        // Check a primary key was assigned
+        assertThat(listItem.id).isGreaterThan(0)
+
+        assertThat(listItem.listItemId).isEqualTo(LIST_ITEM.list_item_id)
+        assertThat(listItem.type).isEqualTo(ListItemTypes.TMDB_SHOW)
+        assertThat(listItem.itemRefId).isEqualTo(LIST_ITEM.externalId)
+        assertThat(listItem.listId).isEqualTo(TEST_LIST_ID)
     }
 
     private fun assertTestList(actualList: SgList) {
