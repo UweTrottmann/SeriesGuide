@@ -1,104 +1,77 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2016 Uwe Trottmann <uwe@uwetrottmann.com>
 
-package com.battlelancer.seriesguide.util.tasks;
+package com.battlelancer.seriesguide.util.tasks
 
-import android.content.Context;
-import androidx.annotation.NonNull;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.backend.HexagonTools;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.util.Errors;
-import com.uwetrottmann.seriesguide.backend.lists.Lists;
-import com.uwetrottmann.seriesguide.backend.lists.model.SgList;
-import com.uwetrottmann.seriesguide.backend.lists.model.SgListItem;
-import com.uwetrottmann.seriesguide.backend.lists.model.SgListList;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import android.content.Context
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems
+import com.battlelancer.seriesguide.util.Errors
+import com.uwetrottmann.seriesguide.backend.lists.model.SgList
+import com.uwetrottmann.seriesguide.backend.lists.model.SgListItem
+import com.uwetrottmann.seriesguide.backend.lists.model.SgListList
+import java.io.IOException
 
 /**
  * Task to remove an item from a single list (basically delete the list item).
  */
-public class RemoveListItemTask extends BaseActionTask {
+class RemoveListItemTask(
+    context: Context,
+    private val listItemId: String
+) : BaseActionTask(context) {
 
-    private final String listItemId;
+    override val isSendingToTrakt: Boolean = false
 
-    public RemoveListItemTask(@NonNull Context context, @NonNull String listItemId) {
-        super(context);
-        this.listItemId = listItemId;
-    }
-
-    @Override
-    protected boolean isSendingToTrakt() {
-        return false;
-    }
-
-    @Override
-    protected Integer doBackgroundAction(Void... params) {
-        if (isSendingToHexagon()) {
-            HexagonTools hexagonTools = SgApp.getServicesComponent(getContext()).hexagonTools();
-            Lists listsService = hexagonTools.getListsService();
-            if (listsService == null) {
-                return ERROR_HEXAGON_API; // no longer signed in
-            }
+    override fun doBackgroundAction(vararg params: Void?): Int {
+        if (isSendingToHexagon) {
+            val hexagonTools = SgApp.getServicesComponent(context).hexagonTools()
+            val listsService = hexagonTools.listsService
+                ?: return ERROR_HEXAGON_API // no longer signed in
 
             // extract the list id of this list item
-            String[] splitListItemId = SeriesGuideContract.ListItems.splitListItemId(listItemId);
-            if (splitListItemId == null) {
-                return ERROR_DATABASE;
-            }
-            String removeFromListId = splitListItemId[2];
+            val splitListItemId = ListItems.splitListItemId(listItemId)
+                ?: return ERROR_DATABASE
+            val removeFromListId = splitListItemId[2]
 
             // send the item to be removed from hexagon
-            SgListList wrapper = new SgListList();
-            List<SgList> lists = buildListItemLists(removeFromListId, listItemId);
-            wrapper.setLists(lists);
+            val wrapper = SgListList()
+            val lists = buildListItemLists(removeFromListId, listItemId)
+            wrapper.setLists(lists)
             try {
-                listsService.removeItems(wrapper).execute();
-            } catch (IOException e) {
-                Errors.logAndReportHexagon("remove list item", e);
-                return ERROR_HEXAGON_API;
+                listsService.removeItems(wrapper).execute()
+            } catch (e: IOException) {
+                Errors.logAndReportHexagon("remove list item", e)
+                return ERROR_HEXAGON_API
             }
         }
 
         // update local state
         if (!doDatabaseUpdate()) {
-            return ERROR_DATABASE;
+            return ERROR_DATABASE
         }
 
-        return SUCCESS;
+        return SUCCESS
     }
 
-    @NonNull
-    private static List<SgList> buildListItemLists(String listId, String listItemId) {
-        List<SgList> lists = new ArrayList<>(1);
-        SgList list = new SgList();
-        list.setListId(listId);
-        lists.add(list);
+    private fun buildListItemLists(listId: String, listItemId: String): List<SgList> {
+        val list = SgList().also { list ->
+            list.setListId(listId)
 
-        List<SgListItem> items = new ArrayList<>(1);
-        list.setListItems(items);
-
-        SgListItem item = new SgListItem();
-        items.add(item);
-        item.setListItemId(listItemId);
-        return lists;
-    }
-
-    private boolean doDatabaseUpdate() {
-        int deleted = getContext().getContentResolver()
-                .delete(SeriesGuideContract.ListItems.buildListItemUri(listItemId), null, null);
-        return deleted != 0; // if 0 nothing got deleted
-    }
-
-    @Override
-    protected int getSuccessTextResId() {
-        if (isSendingToHexagon()) {
-            return R.string.ack_list_item_removed;
-        } else {
-            return 0;
+            val item = SgListItem()
+                .also { it.setListItemId(listItemId) }
+            list.setListItems(listOf(item))
         }
+        return listOf(list)
     }
+
+    private fun doDatabaseUpdate(): Boolean {
+        val deleted = context.contentResolver
+            .delete(ListItems.buildListItemUri(listItemId), null, null)
+        return deleted != 0 // if 0 nothing got deleted
+    }
+
+    override val successTextResId: Int
+        get() = if (isSendingToHexagon) R.string.ack_list_item_removed else 0
+
 }
