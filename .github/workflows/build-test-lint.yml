@@ -5,6 +5,7 @@ on:
     branches:
       - 'dev'
       - 'main'
+      - 'releases/**'
   workflow_dispatch: # Allow running manually from web UI
 
 jobs:
@@ -62,7 +63,6 @@ jobs:
         run: ./gradlew :app:lintPureRelease
 
       - name: Lint amzn release
-        if: ${{ contains(github.ref, 'release') }}
         run: ./gradlew :app:lintAmazonRelease
 
       - name: Upload lint reports
