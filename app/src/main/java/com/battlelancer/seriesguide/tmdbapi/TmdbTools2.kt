@@ -38,6 +38,7 @@ import com.battlelancer.seriesguide.people.Person as SgPerson
 class TmdbTools2 {
 
     fun getShowDetails(showTmdbId: Int, language: String, context: Context): TvShow? {
+        val action = "show details showTmdbId = $showTmdbId language = $language"
         val tmdb = SgApp.getServicesComponent(context.applicationContext).tmdb()
         try {
             val response = tmdb.tvService()
@@ -47,10 +48,10 @@ class TmdbTools2 {
                 val results = response.body()
                 if (results != null) return results
             } else {
-                Errors.logAndReport("show details", response)
+                Errors.logAndReport(action, response)
             }
         } catch (e: Exception) {
-            Errors.logAndReport("show details", e)
+            Errors.logAndReport(action, e)
         }
         return null
     }
