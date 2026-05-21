@@ -215,12 +215,10 @@ open class ListsActivityImpl : BaseTopActivity() {
     }
 
     private fun toggleSortIgnoreArticles() {
-        PreferenceManager.getDefaultSharedPreferences(this).edit()
-            .putBoolean(
-                DisplaySettings.KEY_SORT_IGNORE_ARTICLE,
-                !DisplaySettings.isSortOrderIgnoringArticles(this)
-            )
-            .apply()
+        DisplaySettings.saveSortOrderIgnoringArticles(
+            this,
+            !DisplaySettings.isSortOrderIgnoringArticles(this)
+        )
 
         // refresh icon state
         invalidateOptionsMenu()
