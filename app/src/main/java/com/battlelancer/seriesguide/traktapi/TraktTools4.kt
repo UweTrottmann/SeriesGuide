@@ -14,6 +14,7 @@ import com.uwetrottmann.trakt5.entities.Show
 import com.uwetrottmann.trakt5.entities.ShowIds
 import com.uwetrottmann.trakt5.enums.Extended
 import com.uwetrottmann.trakt5.enums.ExtendedShowsWatched
+import com.uwetrottmann.trakt5.enums.Specials
 import com.uwetrottmann.trakt5.services.Notes
 import com.uwetrottmann.trakt5.services.Sync
 import retrofit2.Call
@@ -89,7 +90,8 @@ object TraktTools4 {
                     // This should only work starting 2026-05-30, but already request it
                     // https://github.com/trakt/trakt-api/discussions/775
                     ExtendedShowsWatched.PROGRESS
-                }
+                },
+                if (noSeasons) null else Specials.TRUE
             )
         }
     }

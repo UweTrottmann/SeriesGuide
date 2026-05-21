@@ -20,6 +20,10 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 * 📝 Removed the unsupported release for devices running Android 4 from Google Play, it is no longer
   working properly.
 
+### Next release
+
+* 🔨 Trakt: address unexpected server changes to correctly fetch watched special episodes.
+
 ### 2025.2.16 - 2026-05-08
 
 * 📝 Trakt: prepare for server changes to correctly fetch all watched items.
