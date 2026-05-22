@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.jobs.movies.MovieWatchedJob
 import com.battlelancer.seriesguide.jobs.movies.MovieWatchlistJob
 import com.battlelancer.seriesguide.modules.ApplicationContext
 import com.battlelancer.seriesguide.movies.MoviesSettings
+import com.battlelancer.seriesguide.movies.database.MovieHelper
 import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.movies.database.SgMovieFlags
 import com.battlelancer.seriesguide.movies.details.MovieDetails
@@ -42,11 +43,24 @@ import javax.inject.Inject
 /**
  * Helps with loading movie details and adding or removing movies from [Lists].
  */
-class MovieTools @Inject constructor(
-    @param:ApplicationContext private val context: Context,
+class MovieTools(
+    private val context: Context,
     private val tmdbMovies: Lazy<MoviesService>,
-    private val trakt: Lazy<SgTrakt>
+    private val trakt: Lazy<SgTrakt>,
+    private val movieHelper: MovieHelper
 ) {
+
+    @Inject
+    constructor(
+        @ApplicationContext context: Context,
+        tmdbMovies: Lazy<MoviesService>,
+        trakt: Lazy<SgTrakt>
+    ) : this(
+        context,
+        tmdbMovies,
+        trakt,
+        SgRoomDatabase.getInstance(context).movieHelper()
+    )
 
     enum class Lists {
         COLLECTION,
@@ -61,7 +75,7 @@ class MovieTools @Inject constructor(
     suspend fun addToList(movieTmdbId: Int, list: Lists): Boolean {
         val movieExists = isMovieInDatabase(movieTmdbId)
         return if (movieExists) {
-            updateMovie(context, movieTmdbId, list, true)
+            updateMovie(movieTmdbId, list, true)
         } else {
             addMovie(movieTmdbId, list)
         }
@@ -75,8 +89,7 @@ class MovieTools @Inject constructor(
      * @return If the database operation was successful.
      */
     fun removeFromList(movieTmdbId: Int, listToRemoveFrom: Lists): Boolean {
-        val movieFlags = SgRoomDatabase.getInstance(context).movieHelper()
-            .getMovieFlags(movieTmdbId)
+        val movieFlags = movieHelper.getMovieFlags(movieTmdbId)
             ?: return false // query failed
 
         val newMovieFlags = when (listToRemoveFrom) {
@@ -86,20 +99,56 @@ class MovieTools @Inject constructor(
         }
 
         return if (newMovieFlags.isNotOnBuiltInList()) {
-            deleteMovie(context, movieTmdbId)
+            deleteMovie(movieTmdbId)
         } else {
             // otherwise, just update
-            updateMovie(context, movieTmdbId, listToRemoveFrom, false)
+            updateMovie(movieTmdbId, listToRemoveFrom, false)
         }
     }
 
-    private fun SgMovieFlags.isNotOnBuiltInList(): Boolean {
-        return !inWatchlist && !inCollection && !watched
+    private fun SgMovieFlags.isNotOnBuiltInList(): Boolean =
+        !inWatchlist && !inCollection && !watched
+
+    private fun isMovieInDatabase(movieTmdbId: Int): Boolean =
+        movieHelper.getCount(movieTmdbId) > 0
+
+    /**
+     * Returns `true` if the movie was updated.
+     */
+    private fun updateMovie(
+        movieTmdbId: Int,
+        list: Lists,
+        value: Boolean
+    ): Boolean {
+        val rowsUpdated = when (list) {
+            Lists.COLLECTION -> movieHelper.updateInCollection(movieTmdbId, value)
+
+            Lists.WATCHLIST -> movieHelper.updateInWatchlist(movieTmdbId, value)
+
+            Lists.WATCHED -> if (value) {
+                movieHelper.setWatchedAndAddPlay(movieTmdbId)
+            } else {
+                movieHelper.setNotWatchedAndRemovePlays(movieTmdbId)
+            }
+        }
+
+        // As some movie lists still use the old ContentProvider, notify the movie URI.
+        context.contentResolver.notifyChange(Movies.CONTENT_URI, null)
+
+        return rowsUpdated > 0
     }
 
-    private fun isMovieInDatabase(movieTmdbId: Int): Boolean {
-        val count = SgRoomDatabase.getInstance(context).movieHelper().getCount(movieTmdbId)
-        return count > 0
+    /**
+     * Returns `true` if the movie was deleted.
+     */
+    private fun deleteMovie(movieTmdbId: Int): Boolean {
+        val rowsDeleted = movieHelper.deleteMovie(movieTmdbId)
+        Timber.d("deleteMovie: deleted %s movies", rowsDeleted)
+
+        // As some movie lists still use the old ContentProvider, notify the movie URI.
+        context.contentResolver.notifyChange(Movies.CONTENT_URI, null)
+
+        return rowsDeleted > 0
     }
 
     private suspend fun addMovie(movieTmdbId: Int, listToAddTo: Lists): Boolean {
@@ -529,47 +578,5 @@ class MovieTools @Inject constructor(
             return localMoviesIds
         }
 
-        /**
-         * Returns `true` if the movie was updated.
-         */
-        private fun updateMovie(
-            context: Context,
-            movieTmdbId: Int,
-            list: Lists,
-            value: Boolean
-        ): Boolean {
-            val helper = SgRoomDatabase.getInstance(context).movieHelper()
-
-            val rowsUpdated = when (list) {
-                Lists.COLLECTION -> helper.updateInCollection(movieTmdbId, value)
-
-                Lists.WATCHLIST -> helper.updateInWatchlist(movieTmdbId, value)
-
-                Lists.WATCHED -> if (value) {
-                    helper.setWatchedAndAddPlay(movieTmdbId)
-                } else {
-                    helper.setNotWatchedAndRemovePlays(movieTmdbId)
-                }
-            }
-
-            // As some movie lists still use the old ContentProvider, notify the movie URI.
-            context.contentResolver.notifyChange(Movies.CONTENT_URI, null)
-
-            return rowsUpdated > 0
-        }
-
-        /**
-         * Returns `true` if the movie was deleted.
-         */
-        private fun deleteMovie(context: Context, movieTmdbId: Int): Boolean {
-            val rowsDeleted = SgRoomDatabase.getInstance(context).movieHelper()
-                .deleteMovie(movieTmdbId)
-            Timber.d("deleteMovie: deleted %s movies", rowsDeleted)
-
-            // As some movie lists still use the old ContentProvider, notify the movie URI.
-            context.contentResolver.notifyChange(Movies.CONTENT_URI, null)
-
-            return rowsDeleted > 0
-        }
     }
 }
