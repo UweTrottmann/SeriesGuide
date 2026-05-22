@@ -71,22 +71,22 @@ object ListsTools {
 
     fun changeListsOfItem(
         context: Context,
-        itemStableId: Int,
-        itemType: Int,
+        itemTmdbId: Int,
+        @ListItemTypes itemType: Int,
         addToTheseLists: List<String>,
         removeFromTheseLists: List<String>
     ) {
         ChangeListItemListsTask(
             context,
-            itemStableId,
+            itemTmdbId,
             itemType,
             addToTheseLists,
             removeFromTheseLists
         ).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
-    fun removeListItem(context: Context, listItemId: String) {
-        RemoveListItemTask(context, listItemId).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+    fun removeListItem(context: Context, listItemId: String, movieTmdbId: Int?) {
+        RemoveListItemTask(context, listItemId, movieTmdbId).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
     /**

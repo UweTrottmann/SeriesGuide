@@ -51,6 +51,9 @@ interface SgListHelper {
     @Query("SELECT * FROM listitems WHERE item_ref_id = :tmdbId AND item_type = :type")
     fun getListItemsWithTmdbId(tmdbId: Int, @ListItemTypes type: Int): List<SgListItem>
 
+    @Query("SELECT COUNT(_id) FROM listitems WHERE item_ref_id = :tmdbId AND item_type = :type")
+    fun getListItemsWithTmdbIdCount(tmdbId: Int, @ListItemTypes type: Int): Int
+
     @RawQuery(observedEntities = [SgListItem::class, SgShow2::class, SgMovie::class])
     fun getListItemsWithDetails(query: SupportSQLiteQuery): Flow<List<SgListItemWithDetails>>
 

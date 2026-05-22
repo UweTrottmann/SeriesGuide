@@ -213,7 +213,7 @@ class SgListFragment : Fragment() {
                 }
 
                 R.id.menu_action_lists_remove -> {
-                    ListsTools.removeListItem(context, itemId)
+                    ListsTools.removeListItem(context, itemId, movieTmdbId)
                     return true
                 }
 

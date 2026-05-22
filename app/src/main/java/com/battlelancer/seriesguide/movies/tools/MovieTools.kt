@@ -8,6 +8,7 @@ import com.battlelancer.seriesguide.jobs.FlagJobExecutor
 import com.battlelancer.seriesguide.jobs.movies.MovieCollectionJob
 import com.battlelancer.seriesguide.jobs.movies.MovieWatchedJob
 import com.battlelancer.seriesguide.jobs.movies.MovieWatchlistJob
+import com.battlelancer.seriesguide.lists.database.SgListHelper
 import com.battlelancer.seriesguide.modules.ApplicationContext
 import com.battlelancer.seriesguide.movies.MoviesSettings
 import com.battlelancer.seriesguide.movies.database.MovieHelper
@@ -15,6 +16,7 @@ import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.movies.database.SgMovieFlags
 import com.battlelancer.seriesguide.movies.database.toSgMovieForInsert
 import com.battlelancer.seriesguide.movies.details.MovieDetails
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.traktapi.SgTrakt
@@ -35,6 +37,7 @@ import javax.inject.Inject
 class MovieTools(
     private val context: Context,
     private val databaseHelper: MovieHelper,
+    private val listHelper: SgListHelper,
     val downloader: MovieDownloader
 ) {
 
@@ -46,6 +49,7 @@ class MovieTools(
     ) : this(
         context,
         SgRoomDatabase.getInstance(context).movieHelper(),
+        SgRoomDatabase.getInstance(context).sgListHelper(),
         MovieDownloader(context, tmdbMovies, trakt)
     )
 
@@ -56,8 +60,40 @@ class MovieTools(
     }
 
     /**
+     * If the movie is no longer on a custom or built-in list, deletes it from the database.
+     * In this case, it's assumed the movie must be in the database.
+     * If it is on a custom list and isn't already in the database, adds it.
+     *
+     * Returns false if a database or network operation failed.
+     *
+     * @see addToList
+     */
+    suspend fun addToOrDeleteFromDatabaseAfterCustomListChange(movieTmdbId: Int): Boolean {
+        if (isMovieNotOnCustomList(movieTmdbId)) {
+            // Movie is no longer on a custom list, but maybe still on a built-in list?
+            val movieFlags = databaseHelper.getMovieFlags(movieTmdbId)
+                ?: return false // query failed
+
+            return if (movieFlags.isNotOnBuiltInList()) {
+                deleteMovie(movieTmdbId)
+            } else {
+                true // Movie still on built-in list, don't delete
+            }
+        } else {
+            // Movie was added to at least one custom list
+            return if (isMovieInDatabase(movieTmdbId)) {
+                true // Movie already in database, nothing to do
+            } else {
+                addMovie(movieTmdbId, null)
+            }
+        }
+    }
+
+    /**
      * Adds the movie to the given list. If it was not in any list before, adds the movie to the
      * local database first. Returns if the database operation was successful.
+     *
+     * @see addToOrDeleteFromDatabaseAfterCustomListChange
      */
     suspend fun addToList(movieTmdbId: Int, list: Lists): Boolean {
         val movieExists = isMovieInDatabase(movieTmdbId)
@@ -69,11 +105,32 @@ class MovieTools(
     }
 
     /**
-     * Removes the movie from the given list.
+     * If the movie isn't on any built-in or custom lists, deletes it from the database.
      *
-     * If it would not be on any list afterwards, deletes the movie from the local database.
+     * Assumes, the movie is in the database.
      *
      * @return If the database operation was successful.
+     *
+     * @see removeFromList
+     */
+    fun deleteFromDatabaseIfNotOnBuiltInList(movieTmdbId: Int): Boolean {
+        val movieFlags = databaseHelper.getMovieFlags(movieTmdbId)
+            ?: return false // query failed
+
+        return if (movieFlags.isNotOnBuiltInList() && isMovieNotOnCustomList(movieTmdbId)) {
+            deleteMovie(movieTmdbId)
+        } else {
+            true // Still on a built-in list
+        }
+    }
+
+    /**
+     * Removes the movie from [listToRemoveFrom] or if the movie wouldn't be on any built-in or
+     * custom list after removing it, deletes it from the database instead.
+     *
+     * @return If the database operation was successful.
+     *
+     * @see deleteFromDatabaseIfNotOnBuiltInList
      */
     fun removeFromList(movieTmdbId: Int, listToRemoveFrom: Lists): Boolean {
         val movieFlags = databaseHelper.getMovieFlags(movieTmdbId)
@@ -85,7 +142,7 @@ class MovieTools(
             Lists.WATCHED -> movieFlags.copy(watched = false)
         }
 
-        return if (newMovieFlags.isNotOnBuiltInList()) {
+        return if (newMovieFlags.isNotOnBuiltInList() && isMovieNotOnCustomList(movieTmdbId)) {
             deleteMovie(movieTmdbId)
         } else {
             // otherwise, just update
@@ -95,6 +152,10 @@ class MovieTools(
 
     private fun SgMovieFlags.isNotOnBuiltInList(): Boolean =
         !inWatchlist && !inCollection && !watched
+
+    private fun isMovieNotOnCustomList(movieTmdbId: Int): Boolean =
+        listHelper
+            .getListItemsWithTmdbIdCount(movieTmdbId, ListItemTypes.TMDB_MOVIE) == 0
 
     private fun isMovieInDatabase(movieTmdbId: Int): Boolean =
         databaseHelper.getCount(movieTmdbId) > 0
@@ -138,7 +199,7 @@ class MovieTools(
         return rowsDeleted > 0
     }
 
-    private suspend fun addMovie(movieTmdbId: Int, listToAddTo: Lists): Boolean {
+    private suspend fun addMovie(movieTmdbId: Int, listToAddTo: Lists?): Boolean {
         // get movie info
         val details = downloader.getMovieDetailsWithDefaults(movieTmdbId, false).movieDetails
         if (details.tmdbMovie() == null) {
