@@ -22,6 +22,9 @@ interface MovieHelper {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMovie(movie: SgMovie)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertMovies(movie: List<SgMovie>)
+
     @Query("SELECT * FROM movies WHERE movies_tmdbid=:tmdbId")
     fun getMovie(tmdbId: Int): SgMovie?
 

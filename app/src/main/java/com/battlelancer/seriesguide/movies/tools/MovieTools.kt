@@ -3,7 +3,6 @@
 
 package com.battlelancer.seriesguide.movies.tools
 
-import android.content.ContentValues
 import android.content.Context
 import com.battlelancer.seriesguide.jobs.FlagJobExecutor
 import com.battlelancer.seriesguide.jobs.movies.MovieCollectionJob
@@ -238,26 +237,22 @@ class MovieTools(
             val plays = newWatchedMoviesToPlays[tmdbId]
             val isWatched = plays != null
             movieDetails.isWatched = isWatched
-            movieDetails.plays = (if (isWatched) plays else 0)!!
+            movieDetails.plays = (if (isWatched) plays else 0)
 
             movies.add(movieDetails)
 
             // Already add to the database if we have 10 movies so UI can already update.
             if (movies.size == 10) {
-                context.contentResolver.bulkInsert(
-                    Movies.CONTENT_URI,
-                    buildMoviesContentValues(movies)
-                )
+                val sgMovies = movies.map { it.toSgMovieForInsert() }
+                databaseHelper.insertMovies(sgMovies)
                 movies.clear() // Start a new batch.
             }
         }
 
         // Insert remaining new movies into the database.
         if (movies.isNotEmpty()) {
-            context.contentResolver.bulkInsert(
-                Movies.CONTENT_URI,
-                buildMoviesContentValues(movies)
-            )
+            val sgMovies = movies.map { it.toSgMovieForInsert() }
+            databaseHelper.insertMovies(sgMovies)
         }
 
         return true
@@ -368,10 +363,6 @@ class MovieTools(
 
         fun unwatchedMovie(context: Context, movieTmdbId: Int) {
             FlagJobExecutor.execute(context, MovieWatchedJob(movieTmdbId, false, 0))
-        }
-
-        private fun buildMoviesContentValues(movies: List<MovieDetails>): Array<ContentValues> {
-            return movies.map { it.toContentValuesInsert() }.toTypedArray()
         }
 
         /**
