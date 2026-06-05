@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2014-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2014 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.movies.tools
 
@@ -12,8 +12,9 @@ import com.battlelancer.seriesguide.jobs.movies.MovieWatchlistJob
 import com.battlelancer.seriesguide.modules.ApplicationContext
 import com.battlelancer.seriesguide.movies.MoviesSettings
 import com.battlelancer.seriesguide.movies.database.SgMovie
+import com.battlelancer.seriesguide.movies.database.SgMovieFlags
 import com.battlelancer.seriesguide.movies.details.MovieDetails
-import com.battlelancer.seriesguide.movies.tools.MovieTools.Lists
+import com.battlelancer.seriesguide.movies.tools.MovieTools.Companion.updateReleaseDateForRegion
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools4
@@ -64,6 +65,36 @@ class MovieTools @Inject constructor(
         } else {
             addMovie(movieTmdbId, list)
         }
+    }
+
+    /**
+     * Removes the movie from the given list.
+     *
+     * If it would not be on any list afterwards, deletes the movie from the local database.
+     *
+     * @return If the database operation was successful.
+     */
+    fun removeFromList(movieTmdbId: Int, listToRemoveFrom: Lists): Boolean {
+        val movieFlags = SgRoomDatabase.getInstance(context).movieHelper()
+            .getMovieFlags(movieTmdbId)
+            ?: return false // query failed
+
+        val newMovieFlags = when (listToRemoveFrom) {
+            Lists.COLLECTION -> movieFlags.copy(inCollection = false)
+            Lists.WATCHLIST -> movieFlags.copy(inWatchlist = false)
+            Lists.WATCHED -> movieFlags.copy(watched = false)
+        }
+
+        return if (newMovieFlags.isNotOnBuiltInList()) {
+            deleteMovie(context, movieTmdbId)
+        } else {
+            // otherwise, just update
+            updateMovie(context, movieTmdbId, listToRemoveFrom, false)
+        }
+    }
+
+    private fun SgMovieFlags.isNotOnBuiltInList(): Boolean {
+        return !inWatchlist && !inCollection && !watched
     }
 
     private fun isMovieInDatabase(movieTmdbId: Int): Boolean {
@@ -445,38 +476,6 @@ class MovieTools @Inject constructor(
 
         fun removeFromWatchlist(context: Context, movieTmdbId: Int) {
             FlagJobExecutor.execute(context, MovieWatchlistJob(movieTmdbId, false))
-        }
-
-        /**
-         * Removes the movie from the given list.
-         *
-         * If it would not be on any list afterwards, deletes the movie from the local database.
-         *
-         * @return If the database operation was successful.
-         */
-        fun removeFromList(context: Context, movieTmdbId: Int, listToRemoveFrom: Lists): Boolean {
-            val movieFlags = SgRoomDatabase.getInstance(context).movieHelper()
-                .getMovieFlags(movieTmdbId)
-            if (movieFlags == null) {
-                return false // query failed
-            }
-
-            var removeMovie = false
-            if (listToRemoveFrom == Lists.COLLECTION) {
-                removeMovie = !movieFlags.inWatchlist && !movieFlags.watched
-            } else if (listToRemoveFrom == Lists.WATCHLIST) {
-                removeMovie = !movieFlags.inCollection && !movieFlags.watched
-            } else if (listToRemoveFrom == Lists.WATCHED) {
-                removeMovie = !movieFlags.inCollection && !movieFlags.inWatchlist
-            }
-
-            // if movie will not be in any list, remove it completely
-            return if (removeMovie) {
-                deleteMovie(context, movieTmdbId)
-            } else {
-                // otherwise, just update
-                updateMovie(context, movieTmdbId, listToRemoveFrom, false)
-            }
         }
 
         fun watchedMovie(
