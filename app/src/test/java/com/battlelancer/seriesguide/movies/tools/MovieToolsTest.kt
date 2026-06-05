@@ -7,6 +7,7 @@ import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.battlelancer.seriesguide.EmptyTestApplication
 import com.battlelancer.seriesguide.movies.database.MovieHelper
+import com.battlelancer.seriesguide.movies.details.MovieDetails
 import com.battlelancer.seriesguide.movies.tools.MovieTools.Lists
 import com.google.common.truth.Truth.assertThat
 import com.uwetrottmann.tmdb2.entities.Movie
@@ -92,6 +93,55 @@ class MovieToolsTest {
             verify(it, never()).updateInCollection(anyInt(), anyBoolean())
             verify(it, never()).updateInWatchlist(anyInt(), anyBoolean())
         }
+    }
+
+    private fun addToList_notInDatabase_isAdded(list: Lists) =
+        runTest {
+            val testEnv = MovieToolsTestEnv(context)
+                .apply {
+                    // So isMovieInDatabase returns false
+                    `when`(databaseHelper.getCount(TEST_MOVIE_TMDBID))
+                        .thenReturn(0)
+
+                    // So addMovie returns true
+                    `when`(downloader.getMovieDetailsWithDefaults(TEST_MOVIE_TMDBID, false))
+                        .thenReturn(
+                            MovieDownloader.MovieDetailsResult(
+                                MovieDetails().apply {
+                                    tmdbMovie(Movie())
+                                },
+                                isNotFoundOnTmdb = false
+                            )
+                        )
+                }
+
+            assertThat(
+                testEnv.movieTools
+                    .addToList(TEST_MOVIE_TMDBID, list)
+            ).isTrue()
+
+            // TODO Verify movie is added to database with expected list boolean set true
+//            verify(testEnv.databaseHelper)
+
+            // Verify never updated
+            verify(testEnv.databaseHelper, never()).setWatchedAndAddPlay(anyInt())
+            verify(testEnv.databaseHelper, never()).updateInCollection(anyInt(), anyBoolean())
+            verify(testEnv.databaseHelper, never()).updateInWatchlist(anyInt(), anyBoolean())
+        }
+
+    @Test
+    fun addToList_collection_notInDatabase_isAdded() {
+        addToList_notInDatabase_isAdded(Lists.COLLECTION)
+    }
+
+    @Test
+    fun addToList_watchlist_notInDatabase_isAdded() {
+        addToList_notInDatabase_isAdded(Lists.WATCHLIST)
+    }
+
+    @Test
+    fun addToList_watched_notInDatabase_isAdded() {
+        addToList_notInDatabase_isAdded(Lists.WATCHED)
     }
 
     @Test
