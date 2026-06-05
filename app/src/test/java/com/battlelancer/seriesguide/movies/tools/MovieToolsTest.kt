@@ -8,14 +8,11 @@ import androidx.test.core.app.ApplicationProvider
 import com.battlelancer.seriesguide.EmptyTestApplication
 import com.battlelancer.seriesguide.movies.database.MovieHelper
 import com.battlelancer.seriesguide.movies.tools.MovieTools.Lists
-import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.google.common.truth.Truth.assertThat
 import com.uwetrottmann.tmdb2.entities.Movie
 import com.uwetrottmann.tmdb2.entities.ReleaseDate
 import com.uwetrottmann.tmdb2.entities.ReleaseDatesResult
 import com.uwetrottmann.tmdb2.entities.ReleaseDatesResults
-import com.uwetrottmann.tmdb2.services.MoviesService
-import dagger.Lazy
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -36,15 +33,13 @@ class MovieToolsTest {
     private val context = ApplicationProvider.getApplicationContext<Context>()
 
     class MovieToolsTestEnv(context: Context) {
-        val tmdbMovies: Lazy<MoviesService> = mock()
-        val trakt: Lazy<SgTrakt> = mock()
-        val movieHelper: MovieHelper = mock()
+        val databaseHelper: MovieHelper = mock()
+        val downloader: MovieDownloader = mock()
 
         val movieTools = MovieTools(
             context,
-            tmdbMovies,
-            trakt,
-            movieHelper
+            databaseHelper,
+            downloader
         )
     }
 
@@ -53,14 +48,14 @@ class MovieToolsTest {
             val testEnv = MovieToolsTestEnv(context)
                 .apply {
                     // So isMovieInDatabase returns true
-                    `when`(movieHelper.getCount(TEST_MOVIE_TMDBID))
+                    `when`(databaseHelper.getCount(TEST_MOVIE_TMDBID))
                         .thenReturn(1)
                     // So updateMovie returns true
-                    `when`(movieHelper.updateInCollection(TEST_MOVIE_TMDBID, true))
+                    `when`(databaseHelper.updateInCollection(TEST_MOVIE_TMDBID, true))
                         .thenReturn(1)
-                    `when`(movieHelper.updateInWatchlist(TEST_MOVIE_TMDBID, true))
+                    `when`(databaseHelper.updateInWatchlist(TEST_MOVIE_TMDBID, true))
                         .thenReturn(1)
-                    `when`(movieHelper.setWatchedAndAddPlay(TEST_MOVIE_TMDBID))
+                    `when`(databaseHelper.setWatchedAndAddPlay(TEST_MOVIE_TMDBID))
                         .thenReturn(1)
                 }
 
@@ -69,7 +64,7 @@ class MovieToolsTest {
                     .addToList(TEST_MOVIE_TMDBID, list)
             ).isTrue()
 
-            verify(testEnv.movieHelper)
+            verify(testEnv.databaseHelper)
         }
 
     @Test

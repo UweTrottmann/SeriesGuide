@@ -15,25 +15,15 @@ import com.battlelancer.seriesguide.movies.database.MovieHelper
 import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.movies.database.SgMovieFlags
 import com.battlelancer.seriesguide.movies.details.MovieDetails
-import com.battlelancer.seriesguide.movies.tools.MovieTools.Companion.updateReleaseDateForRegion
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.tmdbapi.TmdbTools4
-import com.battlelancer.seriesguide.tmdbapi.TmdbTools4.TmdbErrorResponse
-import com.battlelancer.seriesguide.tmdbapi.TmdbTools4.TmdbErrorResponse.IsNotFound
-import com.battlelancer.seriesguide.tmdbapi.TmdbTools4.TmdbNonNullResponse.Success
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktSettings
-import com.battlelancer.seriesguide.traktapi.TraktTools
-import com.battlelancer.seriesguide.util.Errors
-import com.battlelancer.seriesguide.util.TextTools
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.entities.Movie
 import com.uwetrottmann.tmdb2.entities.ReleaseDate
 import com.uwetrottmann.tmdb2.entities.ReleaseDatesResults
 import com.uwetrottmann.tmdb2.services.MoviesService
-import com.uwetrottmann.trakt5.entities.Ratings
-import dagger.Lazy
 import timber.log.Timber
 import java.text.DateFormat
 import java.util.Date
@@ -45,21 +35,19 @@ import javax.inject.Inject
  */
 class MovieTools(
     private val context: Context,
-    private val tmdbMovies: Lazy<MoviesService>,
-    private val trakt: Lazy<SgTrakt>,
-    private val movieHelper: MovieHelper
+    private val databaseHelper: MovieHelper,
+    val downloader: MovieDownloader
 ) {
 
     @Inject
     constructor(
         @ApplicationContext context: Context,
-        tmdbMovies: Lazy<MoviesService>,
-        trakt: Lazy<SgTrakt>
+        tmdbMovies: MoviesService,
+        trakt: SgTrakt
     ) : this(
         context,
-        tmdbMovies,
-        trakt,
-        SgRoomDatabase.getInstance(context).movieHelper()
+        SgRoomDatabase.getInstance(context).movieHelper(),
+        MovieDownloader(context, tmdbMovies, trakt)
     )
 
     enum class Lists {
@@ -89,7 +77,7 @@ class MovieTools(
      * @return If the database operation was successful.
      */
     fun removeFromList(movieTmdbId: Int, listToRemoveFrom: Lists): Boolean {
-        val movieFlags = movieHelper.getMovieFlags(movieTmdbId)
+        val movieFlags = databaseHelper.getMovieFlags(movieTmdbId)
             ?: return false // query failed
 
         val newMovieFlags = when (listToRemoveFrom) {
@@ -110,7 +98,7 @@ class MovieTools(
         !inWatchlist && !inCollection && !watched
 
     private fun isMovieInDatabase(movieTmdbId: Int): Boolean =
-        movieHelper.getCount(movieTmdbId) > 0
+        databaseHelper.getCount(movieTmdbId) > 0
 
     /**
      * Returns `true` if the movie was updated.
@@ -121,14 +109,14 @@ class MovieTools(
         value: Boolean
     ): Boolean {
         val rowsUpdated = when (list) {
-            Lists.COLLECTION -> movieHelper.updateInCollection(movieTmdbId, value)
+            Lists.COLLECTION -> databaseHelper.updateInCollection(movieTmdbId, value)
 
-            Lists.WATCHLIST -> movieHelper.updateInWatchlist(movieTmdbId, value)
+            Lists.WATCHLIST -> databaseHelper.updateInWatchlist(movieTmdbId, value)
 
             Lists.WATCHED -> if (value) {
-                movieHelper.setWatchedAndAddPlay(movieTmdbId)
+                databaseHelper.setWatchedAndAddPlay(movieTmdbId)
             } else {
-                movieHelper.setNotWatchedAndRemovePlays(movieTmdbId)
+                databaseHelper.setNotWatchedAndRemovePlays(movieTmdbId)
             }
         }
 
@@ -142,7 +130,7 @@ class MovieTools(
      * Returns `true` if the movie was deleted.
      */
     private fun deleteMovie(movieTmdbId: Int): Boolean {
-        val rowsDeleted = movieHelper.deleteMovie(movieTmdbId)
+        val rowsDeleted = databaseHelper.deleteMovie(movieTmdbId)
         Timber.d("deleteMovie: deleted %s movies", rowsDeleted)
 
         // As some movie lists still use the old ContentProvider, notify the movie URI.
@@ -153,7 +141,7 @@ class MovieTools(
 
     private suspend fun addMovie(movieTmdbId: Int, listToAddTo: Lists): Boolean {
         // get movie info
-        val details = getMovieDetailsWithDefaults(movieTmdbId, false).movieDetails
+        val details = downloader.getMovieDetailsWithDefaults(movieTmdbId, false).movieDetails
         if (details.tmdbMovie() == null) {
             // abort if minimal data failed to load
             return false
@@ -229,7 +217,7 @@ class MovieTools(
             }
 
             // download movie data
-            val result = getMovieDetails(languageCode, regionCode, tmdbId, false)
+            val result = downloader.getMovieDetails(languageCode, regionCode, tmdbId, false)
             if (result.isNotFoundOnTmdb) {
                 Timber.w("addMovies: movie with TMDB ID %s not found, skipping", tmdbId)
                 continue
@@ -272,173 +260,6 @@ class MovieTools(
         }
 
         return true
-    }
-
-    data class MovieDetailsResult(
-        val movieDetails: MovieDetails,
-        val isNotFoundOnTmdb: Boolean
-    )
-
-    /**
-     * Download movie data from TMDB and if [getTraktRating] ratings from Trakt.
-     *
-     * Fetching the rating from Trakt requires to look up the Trakt ID first, so skip if not
-     * necessary.
-     */
-    suspend fun getMovieDetails(
-        languageCode: String,
-        regionCode: String,
-        movieTmdbId: Int,
-        getTraktRating: Boolean
-    ): MovieDetailsResult {
-        val details = MovieDetails()
-
-        // Load movie details from TMDB
-        val tmdbResult = getEnhancedMovieFromTmdb(languageCode, regionCode, movieTmdbId)
-        details.tmdbMovie(tmdbResult.movie)
-
-        // Optionally load ratings from Trakt
-        if (tmdbResult.movie != null) {
-            if (getTraktRating) {
-                val movieTraktId = TraktTools.lookupMovieTraktId(trakt.get(), movieTmdbId)
-                if (movieTraktId != null) {
-                    details.traktRatings(loadRatingsFromTrakt(movieTraktId))
-                }
-            }
-        }
-
-        return MovieDetailsResult(details, isNotFoundOnTmdb = tmdbResult.isNotFoundOnTmdb)
-    }
-
-    /**
-     * Like [getMovieDetails], but uses [MoviesSettings.getMoviesLanguage]
-     * and [MoviesSettings.getMoviesRegion].
-     */
-    suspend fun getMovieDetailsWithDefaults(
-        movieTmdbId: Int,
-        getTraktRating: Boolean
-    ): MovieDetailsResult {
-        val languageCode = MoviesSettings.getMoviesLanguage(context)
-        val regionCode = MoviesSettings.getMoviesRegion(context)
-        return getMovieDetails(languageCode, regionCode, movieTmdbId, getTraktRating)
-    }
-
-    private fun loadRatingsFromTrakt(movieTraktId: Int): Ratings? {
-        try {
-            val response = trakt.get().movies()
-                .ratings(movieTraktId.toString())
-                .execute()
-            if (response.isSuccessful) {
-                return response.body()
-            }
-            Errors.logAndReport("get movie rating", response)
-        } catch (e: Exception) {
-            Errors.logAndReport("get movie rating", e)
-        }
-        return null
-    }
-
-    data class EnhancedTmdbMovieResult(
-        val movie: Movie?,
-        val isNotFoundOnTmdb: Boolean
-    ) {
-        constructor(movie: Movie) : this(movie, false)
-        constructor(isNotFoundOnTmdb: Boolean) : this(null, isNotFoundOnTmdb)
-    }
-
-    /**
-     * Loads movie from TMDB and calls [updateReleaseDateForRegion] using [regionCode] on it.
-     *
-     * If there is no description for the given [languageCode], fetches the default description.
-     * In this case and also if there is no description in the default language, adds a note that
-     * there is no description in that language available.
-     */
-    private suspend fun getEnhancedMovieFromTmdb(
-        languageCode: String,
-        regionCode: String,
-        movieTmdbId: Int
-    ): EnhancedTmdbMovieResult {
-        // Try to get movie details for desired language
-        val movieResult = TmdbTools4.getMovieSummary(
-            tmdbMovies.get(),
-            movieTmdbId,
-            languageCode,
-            includeReleaseDates = true,
-            "get localized movie summary"
-        )
-        when (movieResult) {
-            is Success -> {
-                val movie = movieResult.data
-                updateReleaseDateForRegion(movie, movie.release_dates, regionCode)
-
-                // The title will never be empty, TMDB returns the title in the default language if
-                // there is no translation. However, the overview might be empty if not translated.
-                // So if there is no overview, try to get the default one.
-                if (movie.overview.isNullOrEmpty()) {
-                    movie.overview = getMovieDefaultOverviewFromTmdb(languageCode, movieTmdbId)
-                }
-
-                return EnhancedTmdbMovieResult(movie)
-            }
-
-            is IsNotFound -> {
-                return EnhancedTmdbMovieResult(isNotFoundOnTmdb = true)
-            }
-
-            is TmdbErrorResponse.Other -> {
-                return EnhancedTmdbMovieResult(isNotFoundOnTmdb = false)
-            }
-        }
-    }
-
-    private suspend fun getMovieDefaultOverviewFromTmdb(
-        originalLanguageCode: String,
-        movieTmdbId: Int
-    ): String {
-        // Try with default language if TMDb has no localized overview
-        val fallbackResult = TmdbTools4.getMovieSummary(
-            tmdbMovies.get(),
-            movieTmdbId,
-            language = null,
-            includeReleaseDates = false,
-            "get default movie summary"
-        )
-
-        // Add note about non-translated or non-existing overview
-        var overviewWithNote = TextTools.textNoTranslationMovieLanguage(
-            context, originalLanguageCode,
-            MoviesSettings.getMoviesLanguage(context)
-        )
-
-        // Add default overview
-        if (fallbackResult is Success) {
-            val fallbackMovie = fallbackResult.data
-            val defaultOverview = fallbackMovie.overview
-            if (!defaultOverview.isNullOrEmpty()) {
-                overviewWithNote += "\n\n" + defaultOverview
-            }
-        }
-
-        return overviewWithNote
-    }
-
-    /**
-     * Downloads movie info for [MoviesSettings.getMoviesLanguage] and returns only the poster path.
-     */
-    suspend fun getMoviePosterPath(movieTmdbId: Int): String? {
-        val languageCode = MoviesSettings.getMoviesLanguage(context)
-        val result = TmdbTools4.getMovieSummary(
-            tmdbMovies.get(),
-            movieTmdbId,
-            languageCode,
-            includeReleaseDates = false,
-            "get movie poster"
-        )
-        return if (result is Success) {
-            result.data.poster_path
-        } else {
-            null
-        }
     }
 
     companion object {
