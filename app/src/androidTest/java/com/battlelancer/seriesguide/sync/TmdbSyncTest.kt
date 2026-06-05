@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2018-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2018 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.sync
 
-import android.content.ContentResolver
 import android.content.Context
 import android.text.format.DateUtils
 import androidx.test.core.app.ApplicationProvider
@@ -16,9 +15,9 @@ import com.battlelancer.seriesguide.modules.TestTmdbModule
 import com.battlelancer.seriesguide.modules.TestTraktModule
 import com.battlelancer.seriesguide.movies.database.MovieHelper
 import com.battlelancer.seriesguide.movies.database.SgMovie
+import com.battlelancer.seriesguide.movies.database.toSgMovieForInsert
 import com.battlelancer.seriesguide.movies.details.MovieDetails
 import com.battlelancer.seriesguide.movies.tools.MovieTools
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.google.common.truth.Truth.assertThat
 import com.google.common.truth.Truth.assertWithMessage
@@ -31,6 +30,10 @@ import org.junit.runner.RunWith
 import java.util.Date
 import javax.inject.Inject
 
+/**
+ * Note: these tests actually updates the movies with data from TMDB, so they require an internet
+ * connection and TMDB API key.
+ */
 @RunWith(AndroidJUnit4::class)
 class TmdbSyncTest {
 
@@ -40,19 +43,14 @@ class TmdbSyncTest {
     @Inject
     lateinit var movieTools: MovieTools
 
-    private lateinit var resolver: ContentResolver
     private lateinit var db: SgRoomDatabase
     private lateinit var movieHelper: MovieHelper
 
     @Before
     fun setup() {
-        /*
-        ProviderTestRule does not work with Room, so instead blatantly replace the instance with one
-        that uses an in-memory database and use the real ContentResolver.
-        */
+        // Use an in-memory database for testing with Room
         val context = ApplicationProvider.getApplicationContext<Context>()
         SgRoomDatabase.switchToInMemory(context)
-        resolver = context.contentResolver
         db = SgRoomDatabase.getInstance(context)
         movieHelper = db.movieHelper()
 
@@ -72,22 +70,20 @@ class TmdbSyncTest {
 
     @Test
     fun updatesMoviesLessFrequentIfOlder() {
-        val lastUpdatedCurrent =
-            System.currentTimeMillis()
+        val currentTime = System.currentTimeMillis()
+
         val lastUpdatedOutdated =
-            System.currentTimeMillis() - TmdbSync.UPDATED_BEFORE_DAYS - DateUtils.DAY_IN_MILLIS
+            currentTime - TmdbSync.UPDATED_BEFORE_DAYS - DateUtils.DAY_IN_MILLIS
         val lastUpdatedVeryOutdated =
-            System.currentTimeMillis() - TmdbSync.UPDATED_BEFORE_90_DAYS - DateUtils.DAY_IN_MILLIS
-        val releaseDateCurrent =
-            System.currentTimeMillis()
+            currentTime - TmdbSync.UPDATED_BEFORE_90_DAYS - DateUtils.DAY_IN_MILLIS
         val releaseDateOld =
-            System.currentTimeMillis() - TmdbSync.RELEASED_AFTER_DAYS - DateUtils.DAY_IN_MILLIS
+            currentTime - TmdbSync.RELEASED_AFTER_DAYS - DateUtils.DAY_IN_MILLIS
 
         // released today
-        insertMovie(10, releaseDateCurrent, lastUpdatedCurrent)
-        insertMovie(11, releaseDateCurrent, lastUpdatedOutdated)
+        insertMovie(10, releaseDateMs = currentTime, lastUpdatedMs = currentTime)
+        insertMovie(11, releaseDateMs = currentTime, lastUpdatedOutdated)
         // released a while ago
-        insertMovie(12, releaseDateOld, lastUpdatedCurrent)
+        insertMovie(12, releaseDateOld, lastUpdatedMs = currentTime)
         insertMovie(13, releaseDateOld, lastUpdatedOutdated)
         insertMovie(14, releaseDateOld, lastUpdatedVeryOutdated)
 
@@ -95,11 +91,12 @@ class TmdbSyncTest {
 
         // only the recently released outdated and the older very outdated movie should have been updated
         val movies = movieHelper.getAllMovies()
-        assertThat(findMovieWithId(movies, 10).lastUpdated).isEqualTo(lastUpdatedCurrent)
+        assertThat(findMovieWithId(movies, 10).lastUpdated).isEqualTo(currentTime)
+        // FIXME Movie 11 is not updated, only movie 14
         assertThat(lastUpdatedOutdated < findMovieWithId(movies, 11).lastUpdatedOrDefault)
             .isTrue()
 
-        assertThat(findMovieWithId(movies, 12).lastUpdated).isEqualTo(lastUpdatedCurrent)
+        assertThat(findMovieWithId(movies, 12).lastUpdated).isEqualTo(currentTime)
         assertThat(findMovieWithId(movies, 13).lastUpdated).isEqualTo(lastUpdatedOutdated)
         assertThat(lastUpdatedVeryOutdated < findMovieWithId(movies, 14).lastUpdatedOrDefault)
             .isTrue()
@@ -141,13 +138,18 @@ class TmdbSyncTest {
             tmdbMovie(movie)
         }
 
-        val values = details.toContentValuesInsert()
-        if (lastUpdatedMs == null) {
-            values.remove(Movies.LAST_UPDATED)
-        } else {
-            values.put(Movies.LAST_UPDATED, lastUpdatedMs)
-        }
-        resolver.insert(Movies.CONTENT_URI, values)
+        details.toSgMovieForInsert()
+            .let {
+                // Replace the default lastUpdated value with the one needed for this test
+                if (lastUpdatedMs == null) {
+                    it.copy(lastUpdated = null)
+                } else {
+                    it.copy(lastUpdated = lastUpdatedMs)
+                }
+            }
+            .also {
+                movieHelper.insertMovie(it)
+            }
     }
 
     private fun doUpdateAndAssertSuccess() {
