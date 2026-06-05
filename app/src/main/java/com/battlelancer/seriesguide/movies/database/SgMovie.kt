@@ -7,6 +7,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.battlelancer.seriesguide.movies.database.SgMovie.Companion.RELEASED_MS_UNKNOWN
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
 
@@ -76,12 +77,29 @@ data class SgMovie(
     @ColumnInfo(name = Movies.WATCHED)
     val watched: Boolean? = false,
 
+    /**
+     * TMDB rating. Encoded as double.
+     * ```
+     * Range:   0.0-10.0
+     * Default: 0.0
+     * ```
+     */
     @ColumnInfo(name = Movies.RATING_TMDB)
     val ratingTmdb: Double? = 0.0,
 
     @ColumnInfo(name = Movies.RATING_VOTES_TMDB)
     val ratingVotesTmdb: Int? = 0,
 
+    /**
+     * **Note**: Due to an oversight, the current database type is INTEGER and not REAL (Int? below
+     * instead of Double?).
+     *
+     * Trakt rating. Encoded as double.
+     * ```
+     * Range:   0.0-10.0
+     * Default: 0.0
+     * ```
+     */
     @ColumnInfo(name = Movies.RATING_TRAKT)
     val ratingTrakt: Int? = 0,
 
@@ -121,6 +139,11 @@ data class SgMovie(
         get() = lastUpdated ?: 0
 
     companion object {
+        /**
+         * If there is no release date, store max value as it is most likely not known, yet. This
+         * will then order this release date after known ones, which is likely expected most of the
+         * time.
+         */
         const val RELEASED_MS_UNKNOWN = Long.MAX_VALUE
     }
 }

@@ -20,6 +20,8 @@ import com.battlelancer.seriesguide.dataliberation.model.ListItem
 import com.battlelancer.seriesguide.dataliberation.model.Season
 import com.battlelancer.seriesguide.dataliberation.model.Show
 import com.battlelancer.seriesguide.lists.database.SgList
+import com.battlelancer.seriesguide.movies.database.MovieHelper
+import com.battlelancer.seriesguide.movies.database.toSgMovieForInsert
 import com.battlelancer.seriesguide.movies.details.MovieDetails
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems
@@ -63,12 +65,17 @@ class DefaultValuesTest {
         }
         private const val TEST_LIST_ITEM_EXTERNAL_ID = "test-external-id"
         private val LIST_ITEM = ListItem().apply {
-            list_item_id = ListItems.generateListItemId(TEST_LIST_ITEM_EXTERNAL_ID, ListItemTypes.TMDB_SHOW, TEST_LIST_ID)
+            list_item_id = ListItems.generateListItemId(
+                TEST_LIST_ITEM_EXTERNAL_ID,
+                ListItemTypes.TMDB_SHOW,
+                TEST_LIST_ID
+            )
             externalId = TEST_LIST_ITEM_EXTERNAL_ID
             type = ListItemTypesExport.TMDB_SHOW
         }
+        private const val TEST_MOVIE_TMDB_ID = 12
         private val MOVIE = MovieDetails().apply {
-            val tmdbMovie = Movie().apply { id = 12 }
+            val tmdbMovie = Movie().apply { id = TEST_MOVIE_TMDB_ID }
             tmdbMovie(tmdbMovie)
         }
         private val MOVIE_I = com.battlelancer.seriesguide.dataliberation.model.Movie()
@@ -267,10 +274,33 @@ class DefaultValuesTest {
 
     @Test
     fun movieDefaultValues() {
-        val values = MOVIE.toContentValuesInsert()
-        resolver.insert(Movies.CONTENT_URI, values)
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val database = SgRoomDatabase.getInstance(context)
+        val movieHelper = database.movieHelper()
 
-        assertMovie()
+        val sgMovie = MOVIE.toSgMovieForInsert()
+
+        movieHelper.insertMovie(sgMovie)
+
+        assertMovie(movieHelper)
+    }
+
+    private fun assertMovie(movieHelper: MovieHelper) {
+        val movie = movieHelper.getMovie(TEST_MOVIE_TMDB_ID)
+        assertThat(movie).isNotNull()
+
+        // Check a primary key was assigned
+        assertThat(movie!!.id).isGreaterThan(0)
+
+        assertThat(movie.runtimeMin).isEqualTo(0)
+        assertThat(movie.inCollection).isEqualTo(false)
+        assertThat(movie.inWatchlist).isEqualTo(false)
+        assertThat(movie.plays).isEqualTo(0)
+        assertThat(movie.watched).isEqualTo(false)
+        assertThat(movie.ratingTmdb).isEqualTo(0.0)
+        assertThat(movie.ratingVotesTmdb).isEqualTo(0)
+        assertThat(movie.ratingTrakt).isEqualTo(0)
+        assertThat(movie.ratingVotesTrakt).isEqualTo(0)
     }
 
     @Test

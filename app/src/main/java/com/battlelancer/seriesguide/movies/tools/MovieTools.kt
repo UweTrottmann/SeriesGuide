@@ -14,6 +14,7 @@ import com.battlelancer.seriesguide.movies.MoviesSettings
 import com.battlelancer.seriesguide.movies.database.MovieHelper
 import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.movies.database.SgMovieFlags
+import com.battlelancer.seriesguide.movies.database.toSgMovieForInsert
 import com.battlelancer.seriesguide.movies.details.MovieDetails
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
@@ -153,10 +154,10 @@ class MovieTools(
         val isWatched = listToAddTo == Lists.WATCHED
         details.isWatched = isWatched
         details.plays = if (isWatched) 1 else 0
-        val values = details.toContentValuesInsert()
 
         // add to database
-        context.contentResolver.insert(Movies.CONTENT_URI, values)
+        val sgMovie = details.toSgMovieForInsert()
+        databaseHelper.insertMovie(sgMovie)
 
         // ensure ratings for new movie are downloaded on next sync
         TraktSettings.resetMoviesLastRatedAt(context)

@@ -1,19 +1,26 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2020-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2020 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.movies.database
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.RawQuery
 import androidx.sqlite.db.SupportSQLiteQuery
+import com.battlelancer.seriesguide.movies.details.MovieDetails
+import com.battlelancer.seriesguide.util.TextTools
 
 /**
  * Data Access Object for the movies table.
  */
 @Dao
 interface MovieHelper {
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertMovie(movie: SgMovie)
 
     @Query("SELECT * FROM movies WHERE movies_tmdbid=:tmdbId")
     fun getMovie(tmdbId: Int): SgMovie?
@@ -102,3 +109,62 @@ data class MovieStats(
     val count: Int,
     val runtime: Long
 )
+
+/**
+ * Extracts ratings from Trakt, all other properties from TMDB data.
+ *
+ * If either Trakt or TMDB movie data is null, will still extract the properties of the other.
+ *
+ * Does not set collection, watchlist or watched flags or plays value.
+ *
+ * See [toSgMovieForInsert] for that.
+ */
+fun MovieDetails.toSgMovieForUpdate(tmdbId: Int): SgMovie {
+    val sgMovie = SgMovie(tmdbId = tmdbId)
+        .let {
+            val traktRatings = traktRatings()
+            if (traktRatings != null) {
+                it.copy(
+                    ratingTrakt = traktRatings.rating?.toInt() ?: 0,
+                    ratingVotesTrakt = traktRatings.votes ?: 0
+                )
+            } else {
+                it
+            }
+        }.let {
+            val tmdbMovie = tmdbMovie()
+            if (tmdbMovie != null) {
+                it.copy(
+                    imdbId = tmdbMovie.imdb_id,
+                    title = tmdbMovie.title,
+                    titleNoArticle = TextTools.trimLeadingArticle(tmdbMovie.title),
+                    overview = tmdbMovie.overview,
+                    poster = tmdbMovie.poster_path,
+                    runtimeMin = tmdbMovie.runtime ?: 0,
+                    ratingTmdb = tmdbMovie.vote_average ?: 0.0,
+                    ratingVotesTmdb = tmdbMovie.vote_count ?: 0,
+                    releasedMs = tmdbMovie.release_date?.time ?: SgMovie.RELEASED_MS_UNKNOWN
+                )
+            } else {
+                it
+            }
+        }
+
+    return sgMovie
+}
+
+/**
+ * Like [toSgMovieForUpdate] and adds values for collection, watchlist, watched status and plays
+ * and sets [SgMovie.lastUpdated] to the current time.
+ */
+fun MovieDetails.toSgMovieForInsert(): SgMovie {
+    val tmdbMovie = tmdbMovie()!!
+    return toSgMovieForUpdate(tmdbMovie.id!!)
+        .copy(
+            inCollection = isInCollection,
+            inWatchlist = isInWatchlist,
+            plays = plays,
+            watched = isWatched,
+            lastUpdated = System.currentTimeMillis()
+        )
+}
