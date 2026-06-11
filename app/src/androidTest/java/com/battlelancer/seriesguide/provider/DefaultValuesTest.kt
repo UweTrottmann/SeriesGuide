@@ -41,6 +41,7 @@ import org.junit.runner.RunWith
 class DefaultValuesTest {
 
     private lateinit var resolver: ContentResolver
+    private lateinit var testDb: SgRoomDatabase
 
     companion object {
         private val SHOW = Show().apply {
@@ -84,18 +85,18 @@ class DefaultValuesTest {
         // and use the real ContentResolver
         val context = ApplicationProvider.getApplicationContext<Context>()
         SgRoomDatabase.switchToInMemory(context)
+        testDb = SgRoomDatabase.getInstance(context)
         resolver = context.contentResolver
     }
 
     @After
     fun closeDb() {
-        SgRoomDatabase.getInstance(ApplicationProvider.getApplicationContext()).close()
+        testDb.close()
     }
 
     @Test
     fun showDefaultValuesImport() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        val showHelper = SgRoomDatabase.getInstance(context).sgShow2Helper()
+        val showHelper = testDb.sgShow2Helper()
 
         val sgShow = SHOW.toSgShowForImport()
         val showId = showHelper.insertShow(sgShow)
@@ -144,16 +145,13 @@ class DefaultValuesTest {
     @Test
     fun seasonDefaultValuesImport() {
         // with Room insert actually checks constraints, so add a matching show first
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        val database = SgRoomDatabase.getInstance(context)
-
         val sgShow = SHOW.toSgShowForImport()
-        val showId = database.sgShow2Helper().insertShow(sgShow)
+        val showId = testDb.sgShow2Helper().insertShow(sgShow)
 
         val sgSeason = SEASON.toSgSeasonForImport(showId)
-        val seasonId = database.sgSeason2Helper().insertSeason(sgSeason)
+        val seasonId = testDb.sgSeason2Helper().insertSeason(sgSeason)
 
-        val season = database.sgSeason2Helper().getSeason(seasonId)
+        val season = testDb.sgSeason2Helper().getSeason(seasonId)
         if (season == null) {
             fail("season is null")
             return
@@ -176,19 +174,16 @@ class DefaultValuesTest {
     @Test
     fun episodeDefaultValuesImport() {
         // with Room insert actually checks constraints, so add a matching show and season first
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        val database = SgRoomDatabase.getInstance(context)
-
         val sgShow = SHOW.toSgShowForImport()
-        val showId = database.sgShow2Helper().insertShow(sgShow)
+        val showId = testDb.sgShow2Helper().insertShow(sgShow)
 
         val sgSeason = SEASON.toSgSeasonForImport(showId)
-        val seasonId = database.sgSeason2Helper().insertSeason(sgSeason)
+        val seasonId = testDb.sgSeason2Helper().insertSeason(sgSeason)
 
         val sgEpisode = EPISODE.toSgEpisodeForImport(showId, seasonId, sgSeason.number)
-        val episodeId = database.sgEpisode2Helper().insertEpisode(sgEpisode)
+        val episodeId = testDb.sgEpisode2Helper().insertEpisode(sgEpisode)
 
-        val episode = database.sgEpisode2Helper().getEpisode(episodeId)
+        val episode = testDb.sgEpisode2Helper().getEpisode(episodeId)
         if (episode == null) {
             fail("episode is null")
             return
@@ -213,13 +208,10 @@ class DefaultValuesTest {
 
     @Test
     fun listDefaultValues() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        val database = SgRoomDatabase.getInstance(context)
-
         val addListTask = AddListTask(ApplicationProvider.getApplicationContext(), LIST.name)
         addListTask.doDatabaseUpdate(resolver, addListTask.listId)
 
-        val lists = database.sgListHelper().getListsForExport()
+        val lists = testDb.sgListHelper().getListsForExport()
         // Initial data + new list from above; initial data asserted with RoomInitialDataTest.
         assertThat(lists).hasSize(2)
         assertTestList(lists[1])
@@ -227,9 +219,7 @@ class DefaultValuesTest {
 
     @Test
     fun listDefaultValuesImport() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        val database = SgRoomDatabase.getInstance(context)
-        val listHelper = database.sgListHelper()
+        val listHelper = testDb.sgListHelper()
         // By default, the database inserts a first list when being created: delete it
         listHelper.deleteAllLists()
 
@@ -270,9 +260,7 @@ class DefaultValuesTest {
 
     @Test
     fun movieDefaultValues() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        val database = SgRoomDatabase.getInstance(context)
-        val movieHelper = database.movieHelper()
+        val movieHelper = testDb.movieHelper()
 
         val sgMovie = MOVIE.toSgMovieForInsert(TEST_MOVIE_TMDB_ID)
 
