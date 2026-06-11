@@ -1,82 +1,65 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2016-2019, 2021, 2023 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2016 Uwe Trottmann <uwe@uwetrottmann.com>
 
-package com.battlelancer.seriesguide.util.tasks;
+package com.battlelancer.seriesguide.util.tasks
 
-import android.content.Context;
-import androidx.annotation.NonNull;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.backend.HexagonTools;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.util.Errors;
-import com.uwetrottmann.seriesguide.backend.lists.Lists;
-import java.io.IOException;
+import android.content.Context
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.provider.SeriesGuideContract
+import com.battlelancer.seriesguide.util.Errors
+import java.io.IOException
 
 /**
  * Task to delete a list and its items.
  */
-public class DeleteListTask extends BaseActionTask {
+class DeleteListTask(
+    context: Context,
+    private val listId: String
+) : BaseActionTask(context) {
 
-    @NonNull protected final String listId;
+    override val isSendingToTrakt: Boolean = false
 
-    public DeleteListTask(@NonNull Context context, @NonNull String listId) {
-        super(context);
-        this.listId = listId;
-    }
-
-    @Override
-    protected boolean isSendingToTrakt() {
-        return false;
-    }
-
-    @Override
-    protected int doBackgroundAction(Void... params) {
-        if (isSendingToHexagon()) {
-            HexagonTools hexagonTools = SgApp.getServicesComponent(getContext()).hexagonTools();
-            Lists listsService = hexagonTools.getListsService();
-            if (listsService == null) {
-                return ERROR_HEXAGON_API; // no longer signed in
-            }
+    override fun doBackgroundAction(vararg params: Void?): Int {
+        if (isSendingToHexagon) {
+            val hexagonTools = SgApp.getServicesComponent(context).hexagonTools()
+            val listsService = hexagonTools.listsService
+                    ?: return ERROR_HEXAGON_API // no longer signed in
 
             // send list to be removed from hexagon
             try {
-                listsService.remove(listId).execute();
-            } catch (IOException e) {
-                Errors.logAndReportHexagon("remove list", e);
-                return ERROR_HEXAGON_API;
+                listsService.remove(listId).execute()
+            } catch (e: IOException) {
+                Errors.logAndReportHexagon("remove list", e)
+                return ERROR_HEXAGON_API
             }
         }
 
         // update local state
         if (!doDatabaseUpdate()) {
-            return ERROR_DATABASE;
+            return ERROR_DATABASE
         }
 
-        return SUCCESS;
+        return SUCCESS
     }
 
-    private boolean doDatabaseUpdate() {
+    private fun doDatabaseUpdate(): Boolean {
         // delete all items of the list before list to avoid violating foreign key constraints
-        getContext().getContentResolver()
-                .delete(SeriesGuideContract.ListItems.CONTENT_URI,
-                        SeriesGuideContract.ListItems.SELECTION_LIST, new String[] {
-                                listId
-                        });
+        context.contentResolver
+            .delete(
+                SeriesGuideContract.ListItems.CONTENT_URI,
+                SeriesGuideContract.ListItems.SELECTION_LIST,
+                arrayOf(listId)
+            )
         // count of deleted items is not returned, so do not check
 
         // delete the list
-        int deleted = getContext().getContentResolver()
-                .delete(SeriesGuideContract.Lists.buildListUri(listId), null, null);
-        return deleted != 0;
+        val deleted = context.contentResolver
+            .delete(SeriesGuideContract.Lists.buildListUri(listId), null, null)
+        return deleted != 0
     }
 
-    @Override
-    protected int getSuccessTextResId() {
-        if (isSendingToHexagon()) {
-            return R.string.ack_list_removed;
-        } else {
-            return 0;
-        }
-    }
+    override val successTextResId: Int
+        get() = if (isSendingToHexagon) R.string.ack_list_removed else 0
+
 }
