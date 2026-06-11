@@ -389,12 +389,19 @@ class JsonImportTask(
             Export.Movies -> {
                 while (reader.hasNext()) {
                     val movie = gson.fromJson<Movie>(reader, Movie::class.java)
-                    sgMovieHelper.insertMovie(movie.toSgMovieForImport())
+                    addMovieToDatabase(movie)
                 }
             }
         }
         reader.endArray()
         reader.close()
+    }
+
+    private fun addMovieToDatabase(movie: Movie) {
+        if (movie.tmdb_id <= 0) {
+            return // Valid TMDB ID required
+        }
+        sgMovieHelper.insertMovie(movie.toSgMovieForImport())
     }
 
     private fun addShowToDatabase(show: Show) {

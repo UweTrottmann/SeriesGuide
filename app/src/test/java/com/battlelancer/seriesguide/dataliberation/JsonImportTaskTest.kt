@@ -18,6 +18,7 @@ import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.database.SgShow2Helper
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
+import org.intellij.lang.annotations.Language
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -173,8 +174,7 @@ class JsonImportTaskTest {
         )
     }
 
-    @Test
-    fun importMovie_modelAsExpected() = runTest {
+    private suspend fun importMovies(json: String) {
         val importTask = JsonImportTask(
             context,
             importShows = false,
@@ -182,14 +182,19 @@ class JsonImportTaskTest {
             importMovies = true
         )
 
-        // Test data from export task test: two lists, the first with one item of each type.
+        @Suppress("BlockingMethodInNonBlockingContext")
         val testBackupFile = Files.createTempFile("seriesguide-movies-json", null)
-        testBackupFile.writeText(JsonExportTaskTest.expectedJsonMovies)
+        testBackupFile.writeText(json)
         importTask.testBackupFile = testBackupFile.toFile()
 
         val result = importTask.run()
         assertThat(importTask.errorCause).isNull()
         assertThat(result).isEqualTo(JsonImportTask.SUCCESS)
+    }
+
+    @Test
+    fun importMovie_modelAsExpected() = runTest {
+        importMovies(JsonExportTaskTest.expectedJsonMovies)
 
         // Two movies, second one with only TMDB ID and title
         val insertedMovies = testDb.movieHelper().getAllMovies()
@@ -222,6 +227,22 @@ class JsonImportTaskTest {
                     lastUpdated = 0
                 )
             )
+    }
+
+    @Test
+    fun importMovie_missingRequired_notImported() = runTest {
+        @Language("json")
+        val jsonMovieMissingRequiredValues =
+            """
+            [
+            {"imdb_id":"imdbidvalue","title":"First Movie"}
+            ]
+            """.trimIndent()
+
+        importMovies(jsonMovieMissingRequiredValues)
+
+        // Nothing is imported
+        assertThat(testDb.movieHelper().getAllMovies()).hasSize(0)
     }
 
 }
