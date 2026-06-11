@@ -59,6 +59,18 @@ class MovieToolsTest {
         fun insertTestMovie() {
             databaseHelper.insertMovie(TEST_MOVIE)
         }
+
+        suspend fun downloaderReturnsTestMovie() {
+            `when`(downloader.getMovieDetailsWithDefaults(TEST_MOVIE_TMDBID, false))
+                .thenReturn(
+                    MovieDownloader.MovieDetailsResult(
+                        MovieDetails().apply {
+                            tmdbMovie(Movie())
+                        },
+                        isNotFoundOnTmdb = false
+                    )
+                )
+        }
     }
 
     private suspend fun addToListAndAssert(testEnv: MovieToolsTestEnv, list: Lists) {
@@ -109,15 +121,7 @@ class MovieToolsTest {
             val testEnv = MovieToolsTestEnv(context, testDb)
                 .apply {
                     // So addMovie returns true
-                    `when`(downloader.getMovieDetailsWithDefaults(TEST_MOVIE_TMDBID, false))
-                        .thenReturn(
-                            MovieDownloader.MovieDetailsResult(
-                                MovieDetails().apply {
-                                    tmdbMovie(Movie())
-                                },
-                                isNotFoundOnTmdb = false
-                            )
-                        )
+                    downloaderReturnsTestMovie()
                 }
 
             addToListAndAssert(testEnv, list)
@@ -136,6 +140,65 @@ class MovieToolsTest {
     @Test
     fun addToList_watched_notInDatabase_isAdded() {
         addToList_notInDatabase_isAdded(Lists.WATCHED)
+    }
+
+    @Test
+    fun removeFromList_notOnAnyList_isRemoved() = runTest {
+        val testEnv = MovieToolsTestEnv(context, testDb)
+            .apply {
+                // So addMovie returns true
+                downloaderReturnsTestMovie()
+            }
+        testEnv.movieTools
+            .addToList(TEST_MOVIE_TMDBID, Lists.COLLECTION)
+
+        assertThat(
+            testEnv.movieTools.removeFromList(TEST_MOVIE_TMDBID, Lists.COLLECTION)
+        ).isTrue()
+
+        val deletedMovie = testEnv.databaseHelper.getMovie(TEST_MOVIE_TMDBID)
+        assertThat(deletedMovie).isNull()
+    }
+
+    private fun removeFromList_stillOnOtherList_isUpdated(removeFromList: Lists) = runTest {
+        val testEnv = MovieToolsTestEnv(context, testDb)
+            .apply {
+                // So addMovie returns true
+                downloaderReturnsTestMovie()
+            }
+        // For simplicity add to all lists
+        testEnv.movieTools
+            .addToList(TEST_MOVIE_TMDBID, Lists.COLLECTION)
+        testEnv.movieTools
+            .addToList(TEST_MOVIE_TMDBID, Lists.WATCHLIST)
+        testEnv.movieTools
+            .addToList(TEST_MOVIE_TMDBID, Lists.WATCHED)
+
+        assertThat(
+            testEnv.movieTools.removeFromList(TEST_MOVIE_TMDBID, removeFromList)
+        ).isTrue()
+
+        val updatedMovie = testEnv.databaseHelper.getMovie(TEST_MOVIE_TMDBID)
+        assertThat(updatedMovie).isNotNull()
+        assertThat(updatedMovie!!.inCollection).isEqualTo(removeFromList != Lists.COLLECTION)
+        assertThat(updatedMovie.inWatchlist).isEqualTo(removeFromList != Lists.WATCHLIST)
+        assertThat(updatedMovie.watched).isEqualTo(removeFromList != Lists.WATCHED)
+        assertThat(updatedMovie.plays).isEqualTo(if (removeFromList != Lists.WATCHED) 1 else 0)
+    }
+
+    @Test
+    fun removeFromList_collection_stillOnOtherList_isUpdated() {
+        removeFromList_stillOnOtherList_isUpdated(Lists.COLLECTION)
+    }
+
+    @Test
+    fun removeFromList_watchlist_stillOnOtherList_isUpdated() {
+        removeFromList_stillOnOtherList_isUpdated(Lists.WATCHLIST)
+    }
+
+    @Test
+    fun removeFromList_watched_stillOnOtherList_isUpdated() {
+        removeFromList_stillOnOtherList_isUpdated(Lists.WATCHED)
     }
 
     @Test
