@@ -7,10 +7,12 @@ import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ListItemTypesE
 import com.battlelancer.seriesguide.dataliberation.model.Episode
 import com.battlelancer.seriesguide.dataliberation.model.List
 import com.battlelancer.seriesguide.dataliberation.model.ListItem
+import com.battlelancer.seriesguide.dataliberation.model.Movie
 import com.battlelancer.seriesguide.dataliberation.model.Season
 import com.battlelancer.seriesguide.dataliberation.model.Show
 import com.battlelancer.seriesguide.lists.database.SgList
 import com.battlelancer.seriesguide.lists.database.SgListItem
+import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems
 import com.battlelancer.seriesguide.shows.database.SgEpisode2
@@ -154,6 +156,25 @@ object ImportTools {
             itemRefId = externalIdToInsert,
             type = type,
             listId = listId
+        )
+    }
+
+    fun Movie.toSgMovieForImport(): SgMovie {
+        return SgMovie(
+            tmdbId = tmdb_id,
+            imdbId = imdb_id,
+            title = title,
+            titleNoArticle = TextTools.trimLeadingArticle(title),
+            releasedMs = released_utc_ms,
+            runtimeMin = runtime_min,
+            poster = poster,
+            inCollection = in_collection,
+            inWatchlist = in_watchlist,
+            watched = watched,
+            plays = if (watched && plays >= 1) plays else if (watched) 1 else 0,
+            lastUpdated = last_updated_ms,
+            // full dump values
+            overview = overview
         )
     }
 

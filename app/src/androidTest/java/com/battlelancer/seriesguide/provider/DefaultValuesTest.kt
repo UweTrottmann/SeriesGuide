@@ -5,12 +5,12 @@ package com.battlelancer.seriesguide.provider
 
 import android.content.ContentResolver
 import android.content.Context
-import android.database.Cursor
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgEpisodeForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgListForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgListItemForImport
+import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgMovieForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgSeasonForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgShowForImport
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ListItemTypesExport
@@ -20,13 +20,12 @@ import com.battlelancer.seriesguide.dataliberation.model.ListItem
 import com.battlelancer.seriesguide.dataliberation.model.Season
 import com.battlelancer.seriesguide.dataliberation.model.Show
 import com.battlelancer.seriesguide.lists.database.SgList
-import com.battlelancer.seriesguide.movies.database.MovieHelper
+import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.movies.database.toSgMovieForInsert
 import com.battlelancer.seriesguide.movies.details.MovieDetails
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.util.tasks.AddListTask
@@ -266,11 +265,19 @@ class DefaultValuesTest {
 
         movieHelper.insertMovie(sgMovie)
 
-        assertMovie(movieHelper)
+        assertMovie(movieHelper.getMovie(TEST_MOVIE_TMDB_ID))
     }
 
-    private fun assertMovie(movieHelper: MovieHelper) {
-        val movie = movieHelper.getMovie(TEST_MOVIE_TMDB_ID)
+    @Test
+    fun movieDefaultValuesImport() {
+        val movieHelper = testDb.movieHelper()
+
+        movieHelper.insertMovie(MOVIE_I.toSgMovieForImport())
+
+        assertMovie(movieHelper.getAllMovies()[0])
+    }
+
+    private fun assertMovie(movie: SgMovie?) {
         assertThat(movie).isNotNull()
 
         // Check a primary key was assigned
@@ -287,41 +294,4 @@ class DefaultValuesTest {
         assertThat(movie.ratingVotesTrakt).isEqualTo(0)
     }
 
-    @Test
-    fun movieDefaultValuesImport() {
-        resolver.insert(Movies.CONTENT_URI, MOVIE_I.toContentValues())
-
-        assertMovie()
-    }
-
-    private fun assertMovie() {
-        val query = resolver.query(Movies.CONTENT_URI, null, null, null, null)
-        assertThat(query).isNotNull()
-        assertThat(query!!.count).isEqualTo(1)
-        assertThat(query.moveToFirst()).isTrue()
-
-        // Check a primary key was assigned
-        assertThat(query.getLong(query.getColumnIndexOrThrow(Movies._ID))).isGreaterThan(0)
-
-        assertDefaultValue(query, Movies.RUNTIME_MIN, 0)
-        assertDefaultValue(query, Movies.IN_COLLECTION, 0)
-        assertDefaultValue(query, Movies.IN_WATCHLIST, 0)
-        assertDefaultValue(query, Movies.PLAYS, 0)
-        assertDefaultValue(query, Movies.WATCHED, 0)
-        assertDefaultValue(query, Movies.RATING_TMDB, 0)
-        assertDefaultValue(query, Movies.RATING_VOTES_TMDB, 0)
-        assertDefaultValue(query, Movies.RATING_TRAKT, 0)
-        assertDefaultValue(query, Movies.RATING_VOTES_TRAKT, 0)
-
-        query.close()
-    }
-
-    private fun assertNotNullValue(query: Cursor, column: String) {
-        assertThat(query.isNull(query.getColumnIndexOrThrow(column))).isFalse()
-    }
-
-    private fun assertDefaultValue(query: Cursor, column: String, defaultValue: Int) {
-        assertNotNullValue(query, column)
-        assertThat(query.getInt(query.getColumnIndexOrThrow(column))).isEqualTo(defaultValue)
-    }
 }

@@ -14,6 +14,7 @@ import com.battlelancer.seriesguide.dataliberation.DataLiberationFragment.Libera
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgEpisodeForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgListForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgListItemForImport
+import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgMovieForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgSeasonForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgShowForImport
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Export
@@ -23,6 +24,7 @@ import com.battlelancer.seriesguide.dataliberation.model.Season
 import com.battlelancer.seriesguide.dataliberation.model.Show
 import com.battlelancer.seriesguide.lists.database.SgListHelper
 import com.battlelancer.seriesguide.lists.database.SgListItem
+import com.battlelancer.seriesguide.movies.database.MovieHelper
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
@@ -64,7 +66,8 @@ class JsonImportTask(
     private val sgShow2Helper: SgShow2Helper,
     private val sgSeason2Helper: SgSeason2Helper,
     private val sgEpisode2Helper: SgEpisode2Helper,
-    private val sgListHelper: SgListHelper
+    private val sgListHelper: SgListHelper,
+    private val sgMovieHelper: MovieHelper
 ) {
 
     private val context: Context = context.applicationContext
@@ -107,7 +110,8 @@ class JsonImportTask(
         SgRoomDatabase.getInstance(context).sgShow2Helper(),
         SgRoomDatabase.getInstance(context).sgSeason2Helper(),
         SgRoomDatabase.getInstance(context).sgEpisode2Helper(),
-        SgRoomDatabase.getInstance(context).sgListHelper()
+        SgRoomDatabase.getInstance(context).sgListHelper(),
+        SgRoomDatabase.getInstance(context).movieHelper()
     )
 
     constructor(context: Context) : this(context, true, true, true) {
@@ -385,10 +389,7 @@ class JsonImportTask(
             Export.Movies -> {
                 while (reader.hasNext()) {
                     val movie = gson.fromJson<Movie>(reader, Movie::class.java)
-                    context.contentResolver.insert(
-                        SeriesGuideContract.Movies.CONTENT_URI,
-                        movie.toContentValues()
-                    )
+                    sgMovieHelper.insertMovie(movie.toSgMovieForImport())
                 }
             }
         }
