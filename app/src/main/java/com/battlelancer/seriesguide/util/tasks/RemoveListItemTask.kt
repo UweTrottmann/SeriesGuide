@@ -11,6 +11,8 @@ import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.seriesguide.backend.lists.model.SgList
 import com.uwetrottmann.seriesguide.backend.lists.model.SgListItem
 import com.uwetrottmann.seriesguide.backend.lists.model.SgListList
+import kotlinx.coroutines.runBlocking
+import timber.log.Timber
 import java.io.IOException
 
 /**
@@ -79,8 +81,18 @@ class RemoveListItemTask(
         // For a movie, also delete it from the database if it is no longer on any custom or
         // built-in list.
         if (movieTmdbId != null) {
-            return SgApp.getServicesComponent(context).movieTools()
-                .deleteFromDatabaseIfNotOnBuiltInList(movieTmdbId)
+            try {
+                val success: Boolean = runBlocking {
+                    SgApp.getServicesComponent(context).movieTools()
+                        .addToOrDeleteFromDatabaseAfterCustomListChange(movieTmdbId)
+                }
+                if (!success) {
+                    return false
+                }
+            } catch (e: InterruptedException) {
+                Timber.e(e, "Deleting movie from database interrupted")
+                return false
+            }
         }
 
         return true

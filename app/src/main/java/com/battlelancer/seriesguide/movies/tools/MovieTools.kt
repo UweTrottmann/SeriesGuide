@@ -105,32 +105,10 @@ class MovieTools(
     }
 
     /**
-     * If the movie isn't on any built-in or custom lists, deletes it from the database.
-     *
-     * Assumes, the movie is in the database.
-     *
-     * @return If the database operation was successful.
-     *
-     * @see removeFromList
-     */
-    fun deleteFromDatabaseIfNotOnBuiltInList(movieTmdbId: Int): Boolean {
-        val movieFlags = databaseHelper.getMovieFlags(movieTmdbId)
-            ?: return false // query failed
-
-        return if (movieFlags.isNotOnBuiltInList() && isMovieNotOnCustomList(movieTmdbId)) {
-            deleteMovie(movieTmdbId)
-        } else {
-            true // Still on a built-in list
-        }
-    }
-
-    /**
      * Removes the movie from [listToRemoveFrom] or if the movie wouldn't be on any built-in or
      * custom list after removing it, deletes it from the database instead.
      *
      * @return If the database operation was successful.
-     *
-     * @see deleteFromDatabaseIfNotOnBuiltInList
      */
     fun removeFromList(movieTmdbId: Int, listToRemoveFrom: Lists): Boolean {
         val movieFlags = databaseHelper.getMovieFlags(movieTmdbId)
