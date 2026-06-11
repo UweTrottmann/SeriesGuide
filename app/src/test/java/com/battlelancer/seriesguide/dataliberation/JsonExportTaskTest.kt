@@ -301,6 +301,40 @@ class JsonExportTaskTest {
             ,{"list_id":"list-2","name":"Empty List","order":1,"items":[]}
             ]
             """.trimIndent()
+
+        val testMovieWithValues = SgMovie(
+            tmdbId = 1,
+            imdbId = "imdbidvalue",
+            title = "First Movie",
+            releasedMs = 1234567890,
+            runtimeMin = 123,
+            poster = "/path/to/poster.jpg",
+            overview = "This is a movie description.",
+            inCollection = true,
+            inWatchlist = true,
+            plays = 2,
+            watched = true,
+            lastUpdated = 1234567890
+        )
+
+        val testMovieMinimal = SgMovie(
+            tmdbId = 2,
+            title = "Second Movie"
+        )
+
+        val listOfTestMovies = listOf(
+            testMovieWithValues,
+            testMovieMinimal
+        )
+
+        @Language("json")
+        val expectedJsonMovies =
+            """
+            [
+            {"tmdb_id":1,"imdb_id":"imdbidvalue","title":"First Movie","released_utc_ms":1234567890,"runtime_min":123,"poster":"/path/to/poster.jpg","overview":"This is a movie description.","in_collection":true,"in_watchlist":true,"watched":true,"plays":2,"last_updated_ms":1234567890}
+            ,{"tmdb_id":2,"title":"Second Movie","released_utc_ms":9223372036854775807,"runtime_min":0,"in_collection":false,"in_watchlist":false,"watched":false,"plays":0,"last_updated_ms":0}
+            ]
+            """.trimIndent()
     }
 
     @Test
@@ -385,35 +419,7 @@ class JsonExportTaskTest {
         val exportWithData = exportFile.readText()
         println("Export with data")
         println(exportWithData)
-        assertThat(exportWithData).isEqualTo(
-            """
-            [
-            {"tmdb_id":1,"imdb_id":"imdbidvalue","title":"First Movie","released_utc_ms":1234567890,"runtime_min":123,"poster":"/path/to/poster.jpg","overview":"This is a movie description.","in_collection":true,"in_watchlist":true,"watched":true,"plays":2,"last_updated_ms":1234567890}
-            ,{"tmdb_id":2,"title":"Second Movie","released_utc_ms":9223372036854775807,"runtime_min":0,"in_collection":false,"in_watchlist":false,"watched":false,"plays":0,"last_updated_ms":0}
-            ]
-            """.trimIndent()
-        )
+        assertThat(exportWithData).isEqualTo(expectedJsonMovies)
     }
-
-    private val listOfTestMovies = listOf(
-        SgMovie(
-            tmdbId = 1,
-            imdbId = "imdbidvalue",
-            title = "First Movie",
-            releasedMs = 1234567890,
-            runtimeMin = 123,
-            poster = "/path/to/poster.jpg",
-            overview = "This is a movie description.",
-            inCollection = true,
-            inWatchlist = true,
-            plays = 2,
-            watched = true,
-            lastUpdated = 1234567890
-        ),
-        SgMovie(
-            tmdbId = 2,
-            title = "Second Movie"
-        )
-    )
 
 }

@@ -5,12 +5,12 @@ package com.battlelancer.seriesguide.provider
 
 import android.content.ContentResolver
 import android.content.Context
-import android.database.Cursor
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgEpisodeForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgListForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgListItemForImport
+import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgMovieForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgSeasonForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgShowForImport
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ListItemTypesExport
@@ -20,16 +20,16 @@ import com.battlelancer.seriesguide.dataliberation.model.ListItem
 import com.battlelancer.seriesguide.dataliberation.model.Season
 import com.battlelancer.seriesguide.dataliberation.model.Show
 import com.battlelancer.seriesguide.lists.database.SgList
+import com.battlelancer.seriesguide.movies.database.SgMovie
+import com.battlelancer.seriesguide.movies.database.toSgMovieForInsert
 import com.battlelancer.seriesguide.movies.details.MovieDetails
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.util.tasks.AddListTask
 import com.google.common.truth.Truth.assertThat
-import com.uwetrottmann.tmdb2.entities.Movie
 import org.junit.After
 import org.junit.Assert.fail
 import org.junit.Before
@@ -40,6 +40,7 @@ import org.junit.runner.RunWith
 class DefaultValuesTest {
 
     private lateinit var resolver: ContentResolver
+    private lateinit var testDb: SgRoomDatabase
 
     companion object {
         private val SHOW = Show().apply {
@@ -63,14 +64,16 @@ class DefaultValuesTest {
         }
         private const val TEST_LIST_ITEM_EXTERNAL_ID = "test-external-id"
         private val LIST_ITEM = ListItem().apply {
-            list_item_id = ListItems.generateListItemId(TEST_LIST_ITEM_EXTERNAL_ID, ListItemTypes.TMDB_SHOW, TEST_LIST_ID)
+            list_item_id = ListItems.generateListItemId(
+                TEST_LIST_ITEM_EXTERNAL_ID,
+                ListItemTypes.TMDB_SHOW,
+                TEST_LIST_ID
+            )
             externalId = TEST_LIST_ITEM_EXTERNAL_ID
             type = ListItemTypesExport.TMDB_SHOW
         }
-        private val MOVIE = MovieDetails().apply {
-            val tmdbMovie = Movie().apply { id = 12 }
-            tmdbMovie(tmdbMovie)
-        }
+        private const val TEST_MOVIE_TMDB_ID = 12
+        private val MOVIE = MovieDetails()
         private val MOVIE_I = com.battlelancer.seriesguide.dataliberation.model.Movie()
     }
 
@@ -81,18 +84,18 @@ class DefaultValuesTest {
         // and use the real ContentResolver
         val context = ApplicationProvider.getApplicationContext<Context>()
         SgRoomDatabase.switchToInMemory(context)
+        testDb = SgRoomDatabase.getInstance(context)
         resolver = context.contentResolver
     }
 
     @After
     fun closeDb() {
-        SgRoomDatabase.getInstance(ApplicationProvider.getApplicationContext()).close()
+        testDb.close()
     }
 
     @Test
     fun showDefaultValuesImport() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        val showHelper = SgRoomDatabase.getInstance(context).sgShow2Helper()
+        val showHelper = testDb.sgShow2Helper()
 
         val sgShow = SHOW.toSgShowForImport()
         val showId = showHelper.insertShow(sgShow)
@@ -141,16 +144,13 @@ class DefaultValuesTest {
     @Test
     fun seasonDefaultValuesImport() {
         // with Room insert actually checks constraints, so add a matching show first
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        val database = SgRoomDatabase.getInstance(context)
-
         val sgShow = SHOW.toSgShowForImport()
-        val showId = database.sgShow2Helper().insertShow(sgShow)
+        val showId = testDb.sgShow2Helper().insertShow(sgShow)
 
         val sgSeason = SEASON.toSgSeasonForImport(showId)
-        val seasonId = database.sgSeason2Helper().insertSeason(sgSeason)
+        val seasonId = testDb.sgSeason2Helper().insertSeason(sgSeason)
 
-        val season = database.sgSeason2Helper().getSeason(seasonId)
+        val season = testDb.sgSeason2Helper().getSeason(seasonId)
         if (season == null) {
             fail("season is null")
             return
@@ -173,19 +173,16 @@ class DefaultValuesTest {
     @Test
     fun episodeDefaultValuesImport() {
         // with Room insert actually checks constraints, so add a matching show and season first
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        val database = SgRoomDatabase.getInstance(context)
-
         val sgShow = SHOW.toSgShowForImport()
-        val showId = database.sgShow2Helper().insertShow(sgShow)
+        val showId = testDb.sgShow2Helper().insertShow(sgShow)
 
         val sgSeason = SEASON.toSgSeasonForImport(showId)
-        val seasonId = database.sgSeason2Helper().insertSeason(sgSeason)
+        val seasonId = testDb.sgSeason2Helper().insertSeason(sgSeason)
 
         val sgEpisode = EPISODE.toSgEpisodeForImport(showId, seasonId, sgSeason.number)
-        val episodeId = database.sgEpisode2Helper().insertEpisode(sgEpisode)
+        val episodeId = testDb.sgEpisode2Helper().insertEpisode(sgEpisode)
 
-        val episode = database.sgEpisode2Helper().getEpisode(episodeId)
+        val episode = testDb.sgEpisode2Helper().getEpisode(episodeId)
         if (episode == null) {
             fail("episode is null")
             return
@@ -210,13 +207,10 @@ class DefaultValuesTest {
 
     @Test
     fun listDefaultValues() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        val database = SgRoomDatabase.getInstance(context)
-
         val addListTask = AddListTask(ApplicationProvider.getApplicationContext(), LIST.name)
         addListTask.doDatabaseUpdate(resolver, addListTask.listId)
 
-        val lists = database.sgListHelper().getListsForExport()
+        val lists = testDb.sgListHelper().getListsForExport()
         // Initial data + new list from above; initial data asserted with RoomInitialDataTest.
         assertThat(lists).hasSize(2)
         assertTestList(lists[1])
@@ -224,9 +218,7 @@ class DefaultValuesTest {
 
     @Test
     fun listDefaultValuesImport() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        val database = SgRoomDatabase.getInstance(context)
-        val listHelper = database.sgListHelper()
+        val listHelper = testDb.sgListHelper()
         // By default, the database inserts a first list when being created: delete it
         listHelper.deleteAllLists()
 
@@ -267,47 +259,39 @@ class DefaultValuesTest {
 
     @Test
     fun movieDefaultValues() {
-        val values = MOVIE.toContentValuesInsert()
-        resolver.insert(Movies.CONTENT_URI, values)
+        val movieHelper = testDb.movieHelper()
 
-        assertMovie()
+        val sgMovie = MOVIE.toSgMovieForInsert(TEST_MOVIE_TMDB_ID)
+
+        movieHelper.insertMovie(sgMovie)
+
+        assertMovie(movieHelper.getMovie(TEST_MOVIE_TMDB_ID))
     }
 
     @Test
     fun movieDefaultValuesImport() {
-        resolver.insert(Movies.CONTENT_URI, MOVIE_I.toContentValues())
+        val movieHelper = testDb.movieHelper()
 
-        assertMovie()
+        movieHelper.insertMovie(MOVIE_I.toSgMovieForImport())
+
+        assertMovie(movieHelper.getAllMovies()[0])
     }
 
-    private fun assertMovie() {
-        val query = resolver.query(Movies.CONTENT_URI, null, null, null, null)
-        assertThat(query).isNotNull()
-        assertThat(query!!.count).isEqualTo(1)
-        assertThat(query.moveToFirst()).isTrue()
+    private fun assertMovie(movie: SgMovie?) {
+        assertThat(movie).isNotNull()
 
         // Check a primary key was assigned
-        assertThat(query.getLong(query.getColumnIndexOrThrow(Movies._ID))).isGreaterThan(0)
+        assertThat(movie!!.id).isGreaterThan(0)
 
-        assertDefaultValue(query, Movies.RUNTIME_MIN, 0)
-        assertDefaultValue(query, Movies.IN_COLLECTION, 0)
-        assertDefaultValue(query, Movies.IN_WATCHLIST, 0)
-        assertDefaultValue(query, Movies.PLAYS, 0)
-        assertDefaultValue(query, Movies.WATCHED, 0)
-        assertDefaultValue(query, Movies.RATING_TMDB, 0)
-        assertDefaultValue(query, Movies.RATING_VOTES_TMDB, 0)
-        assertDefaultValue(query, Movies.RATING_TRAKT, 0)
-        assertDefaultValue(query, Movies.RATING_VOTES_TRAKT, 0)
-
-        query.close()
+        assertThat(movie.runtimeMin).isEqualTo(0)
+        assertThat(movie.inCollection).isEqualTo(false)
+        assertThat(movie.inWatchlist).isEqualTo(false)
+        assertThat(movie.plays).isEqualTo(0)
+        assertThat(movie.watched).isEqualTo(false)
+        assertThat(movie.ratingTmdb).isEqualTo(0.0)
+        assertThat(movie.ratingVotesTmdb).isEqualTo(0)
+        assertThat(movie.ratingTrakt).isEqualTo(0)
+        assertThat(movie.ratingVotesTrakt).isEqualTo(0)
     }
 
-    private fun assertNotNullValue(query: Cursor, column: String) {
-        assertThat(query.isNull(query.getColumnIndexOrThrow(column))).isFalse()
-    }
-
-    private fun assertDefaultValue(query: Cursor, column: String, defaultValue: Int) {
-        assertNotNullValue(query, column)
-        assertThat(query.getInt(query.getColumnIndexOrThrow(column))).isEqualTo(defaultValue)
-    }
 }

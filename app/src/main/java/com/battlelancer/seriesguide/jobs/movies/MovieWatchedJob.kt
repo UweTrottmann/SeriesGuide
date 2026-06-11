@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2019, 2020, 2022, 2023 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2019 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.jobs.movies
 
@@ -19,11 +19,11 @@ class MovieWatchedJob(
 ) {
 
     override suspend fun applyDatabaseUpdate(context: Context, movieTmdbId: Int): Boolean {
+        val movieTools = SgApp.getServicesComponent(context).movieTools()
         return if (isWatched) {
-            val movieTools = SgApp.getServicesComponent(context).movieTools()
             movieTools.addToList(movieTmdbId, MovieTools.Lists.WATCHED)
         } else {
-            MovieTools.removeFromList(context, movieTmdbId, MovieTools.Lists.WATCHED)
+            movieTools.removeFromList(movieTmdbId, MovieTools.Lists.WATCHED)
         }
     }
 }
