@@ -242,7 +242,7 @@ class HexagonListsSync(
         if (localListIds.isNotEmpty()) {
             val batch = ArrayList<ContentProviderOperation>()
             for (listId in localListIds) {
-                // note: this matches what RemoveListTask does
+                // note: this matches what DeleteListTask does
                 // delete all list items before the list to avoid violating foreign key constraints
                 batch.add(
                     ContentProviderOperation
