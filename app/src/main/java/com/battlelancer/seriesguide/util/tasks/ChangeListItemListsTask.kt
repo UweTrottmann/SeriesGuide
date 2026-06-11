@@ -137,7 +137,7 @@ class ChangeListItemListsTask(
                     return false
                 }
             } catch (e: InterruptedException) {
-                Timber.e(e, "Adding movie to database interrupted")
+                Timber.e(e, "Adding to or deleting movie from database interrupted")
                 return false
             }
         }

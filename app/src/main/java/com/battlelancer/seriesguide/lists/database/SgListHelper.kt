@@ -54,6 +54,14 @@ interface SgListHelper {
     @Query("SELECT COUNT(_id) FROM listitems WHERE item_ref_id = :tmdbId AND item_type = :type")
     fun getListItemsWithTmdbIdCount(tmdbId: Int, @ListItemTypes type: Int): Int
 
+    @Query("SELECT item_ref_id FROM listitems WHERE list_id = :listId AND item_type = ${ListItemTypes.TMDB_MOVIE}")
+    fun getRefIdsOfMovieListItemsOfList(listId: String): List<String>
+
+    fun getTmdbIdsOfMovieListItemsOfList(listId: String): List<Int> {
+        return getRefIdsOfMovieListItemsOfList(listId)
+            .mapNotNull { it.toIntOrNull() }
+    }
+
     @RawQuery(observedEntities = [SgListItem::class, SgShow2::class, SgMovie::class])
     fun getListItemsWithDetails(query: SupportSQLiteQuery): Flow<List<SgListItemWithDetails>>
 
