@@ -27,7 +27,6 @@ import com.uwetrottmann.tmdb2.services.MoviesService
 import timber.log.Timber
 import java.text.DateFormat
 import java.util.Date
-import java.util.LinkedList
 import javax.inject.Inject
 
 /**
@@ -155,7 +154,7 @@ class MovieTools(
         details.plays = if (isWatched) 1 else 0
 
         // add to database
-        val sgMovie = details.toSgMovieForInsert()
+        val sgMovie = details.toSgMovieForInsert(movieTmdbId)
         databaseHelper.insertMovie(sgMovie)
 
         // ensure ratings for new movie are downloaded on next sync
@@ -205,7 +204,7 @@ class MovieTools(
 
         val languageCode = MoviesSettings.getMoviesLanguage(context)
         val regionCode = MoviesSettings.getMoviesRegion(context)
-        val movies: MutableList<MovieDetails> = LinkedList()
+        val moviesToInsert = mutableListOf<SgMovie>()
 
         // loop through ids
         val iterator: Iterator<Int> = newMovies.iterator()
@@ -239,20 +238,18 @@ class MovieTools(
             movieDetails.isWatched = isWatched
             movieDetails.plays = (if (isWatched) plays else 0)
 
-            movies.add(movieDetails)
+            moviesToInsert.add(movieDetails.toSgMovieForInsert(tmdbId))
 
             // Already add to the database if we have 10 movies so UI can already update.
-            if (movies.size == 10) {
-                val sgMovies = movies.map { it.toSgMovieForInsert() }
-                databaseHelper.insertMovies(sgMovies)
-                movies.clear() // Start a new batch.
+            if (moviesToInsert.size == 10) {
+                databaseHelper.insertMovies(moviesToInsert)
+                moviesToInsert.clear() // Start a new batch.
             }
         }
 
         // Insert remaining new movies into the database.
-        if (movies.isNotEmpty()) {
-            val sgMovies = movies.map { it.toSgMovieForInsert() }
-            databaseHelper.insertMovies(sgMovies)
+        if (moviesToInsert.isNotEmpty()) {
+            databaseHelper.insertMovies(moviesToInsert)
         }
 
         return true

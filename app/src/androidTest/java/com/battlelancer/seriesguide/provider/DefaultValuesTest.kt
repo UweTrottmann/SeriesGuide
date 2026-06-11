@@ -31,7 +31,6 @@ import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.util.tasks.AddListTask
 import com.google.common.truth.Truth.assertThat
-import com.uwetrottmann.tmdb2.entities.Movie
 import org.junit.After
 import org.junit.Assert.fail
 import org.junit.Before
@@ -74,10 +73,7 @@ class DefaultValuesTest {
             type = ListItemTypesExport.TMDB_SHOW
         }
         private const val TEST_MOVIE_TMDB_ID = 12
-        private val MOVIE = MovieDetails().apply {
-            val tmdbMovie = Movie().apply { id = TEST_MOVIE_TMDB_ID }
-            tmdbMovie(tmdbMovie)
-        }
+        private val MOVIE = MovieDetails()
         private val MOVIE_I = com.battlelancer.seriesguide.dataliberation.model.Movie()
     }
 
@@ -278,7 +274,7 @@ class DefaultValuesTest {
         val database = SgRoomDatabase.getInstance(context)
         val movieHelper = database.movieHelper()
 
-        val sgMovie = MOVIE.toSgMovieForInsert()
+        val sgMovie = MOVIE.toSgMovieForInsert(TEST_MOVIE_TMDB_ID)
 
         movieHelper.insertMovie(sgMovie)
 

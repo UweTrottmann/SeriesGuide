@@ -160,9 +160,8 @@ fun MovieDetails.toSgMovieForUpdate(tmdbId: Int): SgMovie {
  * Like [toSgMovieForUpdate] and adds values for collection, watchlist, watched status and plays
  * and sets [SgMovie.lastUpdated] to the current time.
  */
-fun MovieDetails.toSgMovieForInsert(): SgMovie {
-    val tmdbMovie = tmdbMovie()!!
-    return toSgMovieForUpdate(tmdbMovie.id!!)
+fun MovieDetails.toSgMovieForInsert(tmdbId: Int): SgMovie {
+    return toSgMovieForUpdate(tmdbId)
         .copy(
             inCollection = isInCollection,
             inWatchlist = isInWatchlist,

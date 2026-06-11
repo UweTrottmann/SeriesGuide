@@ -128,7 +128,6 @@ class TmdbSyncTest {
 
     private fun insertMovie(tmdbId: Int, releaseDateMs: Long, lastUpdatedMs: Long?) {
         val movie = Movie().apply {
-            id = tmdbId
             release_date = Date(releaseDateMs)
         }
 
@@ -138,7 +137,7 @@ class TmdbSyncTest {
             tmdbMovie(movie)
         }
 
-        details.toSgMovieForInsert()
+        details.toSgMovieForInsert(tmdbId)
             .let {
                 // Replace the default lastUpdated value with the one needed for this test
                 if (lastUpdatedMs == null) {
