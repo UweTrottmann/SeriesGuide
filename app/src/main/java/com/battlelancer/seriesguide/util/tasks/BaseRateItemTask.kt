@@ -24,7 +24,7 @@ abstract class BaseRateItemTask(
     override val isSendingToHexagon: Boolean
         get() = false // Hexagon does not support ratings.
 
-    override fun doBackgroundAction(vararg params: Void?): Int? {
+    override fun doBackgroundAction(vararg params: Void?): Int {
         if (isSendingToTrakt) {
             if (!TraktCredentials.get(context).hasCredentials()) {
                 return ERROR_TRAKT_AUTH
