@@ -344,10 +344,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         val hideCheckIn = !isConnectedToTrakt || HexagonSettings.isEnabled(requireContext())
         binding.containerMovieButtons.buttonMovieCheckIn.isGone = hideCheckIn
 
-        // Hide manage lists button if movie isn't in the database (and therefore can't show up in a
-        // list).
-        binding.containerMovieButtons.buttonMovieManageLists.isGone = !movieDetails.isInDatabase
-
         // watched button
         binding.containerMovieButtons.buttonMovieWatched.also {
             it.text = TextTools.getWatchedButtonText(requireContext(), isWatched, plays)
