@@ -174,7 +174,26 @@ class MovieToolsTest {
         assertThat(deletedMovie).isNull()
     }
 
-    private fun removeFromList_stillOnOtherList_isUpdated(removeFromList: Lists) = runTest {
+    @Test
+    fun removeFromList_stillOnCustomList_isUpdated() = runTest {
+        val testEnv = MovieToolsTestEnv(context, testDb)
+            .apply {
+                insertTestMovie()
+                getListItemsWithTmdbIdCount(returns = 1)
+                movieTools.addToList(TEST_MOVIE_TMDBID, Lists.COLLECTION)
+            }
+
+        assertThat(
+            testEnv.movieTools.removeFromList(TEST_MOVIE_TMDBID, Lists.COLLECTION)
+        ).isTrue()
+
+        // Not deleted, but updated instead
+        val updatedMovie = testEnv.databaseHelper.getMovie(TEST_MOVIE_TMDBID)
+        assertThat(updatedMovie).isNotNull()
+        assertThat(updatedMovie!!.inCollection).isEqualTo(false)
+    }
+
+    private fun removeFromList_stillOnBuiltInList_isUpdated(removeFromList: Lists) = runTest {
         val testEnv = MovieToolsTestEnv(context, testDb)
             .apply {
                 // So addMovie returns true
@@ -199,17 +218,17 @@ class MovieToolsTest {
 
     @Test
     fun removeFromList_collection_stillOnOtherList_isUpdated() {
-        removeFromList_stillOnOtherList_isUpdated(Lists.COLLECTION)
+        removeFromList_stillOnBuiltInList_isUpdated(Lists.COLLECTION)
     }
 
     @Test
     fun removeFromList_watchlist_stillOnOtherList_isUpdated() {
-        removeFromList_stillOnOtherList_isUpdated(Lists.WATCHLIST)
+        removeFromList_stillOnBuiltInList_isUpdated(Lists.WATCHLIST)
     }
 
     @Test
     fun removeFromList_watched_stillOnOtherList_isUpdated() {
-        removeFromList_stillOnOtherList_isUpdated(Lists.WATCHED)
+        removeFromList_stillOnBuiltInList_isUpdated(Lists.WATCHED)
     }
 
     @Test
