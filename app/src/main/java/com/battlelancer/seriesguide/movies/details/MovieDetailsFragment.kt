@@ -128,7 +128,15 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             root.isGone = true
             // Manage lists button
             buttonMovieManageLists.setOnClickListener {
-                ManageListsDialogFragment.showForMovie(parentFragmentManager, tmdbId)
+                movieDetails?.tmdbMovie()
+                    ?.title
+                    ?.let {
+                        ManageListsDialogFragment.showForMovie(
+                            parentFragmentManager,
+                            tmdbId,
+                            it
+                        )
+                    }
             }
             // trailer button
             buttonMovieTrailer.apply {

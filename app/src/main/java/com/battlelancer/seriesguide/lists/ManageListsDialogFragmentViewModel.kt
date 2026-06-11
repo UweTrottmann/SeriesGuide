@@ -36,7 +36,7 @@ class ManageListsDialogFragmentViewModel(
         data class Show(val showId: Long) : ListItem()
 
         /** A movie identified by its TMDB ID. */
-        data class Movie(val movieTmdbId: Int) : ListItem()
+        data class Movie(val movieTmdbId: Int, val movieTitle: String) : ListItem()
     }
 
     /**
@@ -57,8 +57,7 @@ class ManageListsDialogFragmentViewModel(
             }
 
             is ListItem.Movie -> {
-                db.movieHelper().getMovieTitle(listItem.movieTmdbId)
-                    ?.let { ItemDetails(it, listItem.movieTmdbId) }
+                ItemDetails(listItem.movieTitle, listItem.movieTmdbId)
             }
         }
         emit(details)
