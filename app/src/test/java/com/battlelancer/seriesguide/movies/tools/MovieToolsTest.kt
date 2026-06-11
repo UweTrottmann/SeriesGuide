@@ -7,21 +7,21 @@ import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.battlelancer.seriesguide.EmptyTestApplication
 import com.battlelancer.seriesguide.movies.database.MovieHelper
+import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.movies.details.MovieDetails
 import com.battlelancer.seriesguide.movies.tools.MovieTools.Lists
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.google.common.truth.Truth.assertThat
 import com.uwetrottmann.tmdb2.entities.Movie
 import com.uwetrottmann.tmdb2.entities.ReleaseDate
 import com.uwetrottmann.tmdb2.entities.ReleaseDatesResult
 import com.uwetrottmann.tmdb2.entities.ReleaseDatesResults
 import kotlinx.coroutines.test.runTest
+import org.junit.After
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers.anyBoolean
-import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.Mockito.mock
-import org.mockito.Mockito.never
-import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
@@ -32,9 +32,22 @@ import java.util.Date
 class MovieToolsTest {
 
     private val context = ApplicationProvider.getApplicationContext<Context>()
+    private lateinit var testDb: SgRoomDatabase
 
-    class MovieToolsTestEnv(context: Context) {
-        val databaseHelper: MovieHelper = mock()
+    @Before
+    fun switchToInMemoryDb() {
+        // Use an in-memory database for testing with Room
+        SgRoomDatabase.switchToInMemory(context)
+        testDb = SgRoomDatabase.getInstance(context)
+    }
+
+    @After
+    fun closeDb() {
+        testDb.close()
+    }
+
+    class MovieToolsTestEnv(context: Context, db: SgRoomDatabase) {
+        val databaseHelper: MovieHelper = db.movieHelper()
         val downloader: MovieDownloader = mock()
 
         val movieTools = MovieTools(
@@ -42,67 +55,59 @@ class MovieToolsTest {
             databaseHelper,
             downloader
         )
+
+        fun insertTestMovie() {
+            databaseHelper.insertMovie(TEST_MOVIE)
+        }
     }
 
-    private fun addToList_isInDatabase_isUpdated(list: Lists, verify: (MovieHelper) -> Unit) =
+    private suspend fun addToListAndAssert(testEnv: MovieToolsTestEnv, list: Lists) {
+        assertThat(
+            testEnv.movieTools
+                .addToList(TEST_MOVIE_TMDBID, list)
+        ).isTrue()
+
+        // Verify movie is in the database with expected list boolean set true
+        val movieInDb = testEnv.databaseHelper.getMovie(TEST_MOVIE_TMDBID)
+        assertThat(movieInDb).isNotNull()
+        assertThat(movieInDb!!.tmdbId).isEqualTo(TEST_MOVIE_TMDBID)
+
+        assertThat(movieInDb.inCollection).isEqualTo(list == Lists.COLLECTION)
+        assertThat(movieInDb.inWatchlist).isEqualTo(list == Lists.WATCHLIST)
+        assertThat(movieInDb.watched).isEqualTo(list == Lists.WATCHED)
+        assertThat(movieInDb.plays).isEqualTo(if (list == Lists.WATCHED) 1 else 0)
+    }
+
+    private fun addToList_isInDatabase_isUpdated(list: Lists) =
         runTest {
-            val testEnv = MovieToolsTestEnv(context)
+            val testEnv = MovieToolsTestEnv(context, testDb)
                 .apply {
                     // So isMovieInDatabase returns true
-                    `when`(databaseHelper.getCount(TEST_MOVIE_TMDBID))
-                        .thenReturn(1)
-                    // So updateMovie returns true
-                    `when`(databaseHelper.updateInCollection(TEST_MOVIE_TMDBID, true))
-                        .thenReturn(1)
-                    `when`(databaseHelper.updateInWatchlist(TEST_MOVIE_TMDBID, true))
-                        .thenReturn(1)
-                    `when`(databaseHelper.setWatchedAndAddPlay(TEST_MOVIE_TMDBID))
-                        .thenReturn(1)
+                    insertTestMovie()
                 }
 
-            assertThat(
-                testEnv.movieTools
-                    .addToList(TEST_MOVIE_TMDBID, list)
-            ).isTrue()
-
-            verify(testEnv.databaseHelper)
+            addToListAndAssert(testEnv, list)
         }
 
     @Test
     fun addToList_collection_isInDatabase_isUpdated() {
-        addToList_isInDatabase_isUpdated(Lists.COLLECTION) {
-            verify(it).updateInCollection(TEST_MOVIE_TMDBID, true)
-            verify(it, never()).updateInWatchlist(anyInt(), anyBoolean())
-            verify(it, never()).setWatchedAndAddPlay(anyInt())
-        }
+        addToList_isInDatabase_isUpdated(Lists.COLLECTION)
     }
 
     @Test
     fun addToList_watchlist_isInDatabase_isUpdated() {
-        addToList_isInDatabase_isUpdated(Lists.WATCHLIST) {
-            verify(it).updateInWatchlist(TEST_MOVIE_TMDBID, true)
-            verify(it, never()).updateInCollection(anyInt(), anyBoolean())
-            verify(it, never()).setWatchedAndAddPlay(anyInt())
-        }
+        addToList_isInDatabase_isUpdated(Lists.WATCHLIST)
     }
 
     @Test
     fun addToList_watched_isInDatabase_isUpdated() {
-        addToList_isInDatabase_isUpdated(Lists.WATCHED) {
-            verify(it).setWatchedAndAddPlay(TEST_MOVIE_TMDBID)
-            verify(it, never()).updateInCollection(anyInt(), anyBoolean())
-            verify(it, never()).updateInWatchlist(anyInt(), anyBoolean())
-        }
+        addToList_isInDatabase_isUpdated(Lists.WATCHED)
     }
 
     private fun addToList_notInDatabase_isAdded(list: Lists) =
         runTest {
-            val testEnv = MovieToolsTestEnv(context)
+            val testEnv = MovieToolsTestEnv(context, testDb)
                 .apply {
-                    // So isMovieInDatabase returns false
-                    `when`(databaseHelper.getCount(TEST_MOVIE_TMDBID))
-                        .thenReturn(0)
-
                     // So addMovie returns true
                     `when`(downloader.getMovieDetailsWithDefaults(TEST_MOVIE_TMDBID, false))
                         .thenReturn(
@@ -115,18 +120,7 @@ class MovieToolsTest {
                         )
                 }
 
-            assertThat(
-                testEnv.movieTools
-                    .addToList(TEST_MOVIE_TMDBID, list)
-            ).isTrue()
-
-            // TODO Verify movie is added to database with expected list boolean set true
-//            verify(testEnv.databaseHelper)
-
-            // Verify never updated
-            verify(testEnv.databaseHelper, never()).setWatchedAndAddPlay(anyInt())
-            verify(testEnv.databaseHelper, never()).updateInCollection(anyInt(), anyBoolean())
-            verify(testEnv.databaseHelper, never()).updateInWatchlist(anyInt(), anyBoolean())
+            addToListAndAssert(testEnv, list)
         }
 
     @Test
@@ -194,5 +188,8 @@ class MovieToolsTest {
 
     companion object {
         private const val TEST_MOVIE_TMDBID = 12345
+        private val TEST_MOVIE = SgMovie(
+            tmdbId = TEST_MOVIE_TMDBID
+        )
     }
 }
