@@ -6,7 +6,9 @@ package com.battlelancer.seriesguide.movies.tools
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.battlelancer.seriesguide.EmptyTestApplication
+import com.battlelancer.seriesguide.lists.database.SgList
 import com.battlelancer.seriesguide.lists.database.SgListHelper
+import com.battlelancer.seriesguide.lists.database.SgListItem
 import com.battlelancer.seriesguide.movies.database.MovieHelper
 import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.movies.details.MovieDetails
@@ -54,7 +56,7 @@ class MovieToolsTest {
 
     class MovieToolsTestEnv(context: Context, db: SgRoomDatabase) {
         val databaseHelper: MovieHelper = db.movieHelper()
-        val listDatabaseHelper: SgListHelper = mock()
+        val listDatabaseHelper: SgListHelper = db.sgListHelper()
         val downloader: MovieDownloader = mock()
 
         val movieTools = MovieTools(
@@ -80,11 +82,10 @@ class MovieToolsTest {
                 )
         }
 
-        fun getListItemsWithTmdbIdCount(returns: Int) {
-            `when`(
-                listDatabaseHelper
-                    .getListItemsWithTmdbIdCount(TEST_MOVIE_TMDBID, ListItemTypes.TMDB_MOVIE)
-            ).thenReturn(returns)
+        fun insertTestListItem() {
+            // Note: must insert list first to not violate foreign key constraint for list ID
+            listDatabaseHelper.insertList(TEST_LIST)
+            listDatabaseHelper.insertListItems(listOf(TEST_LIST_ITEM))
         }
     }
 
@@ -179,7 +180,7 @@ class MovieToolsTest {
         val testEnv = MovieToolsTestEnv(context, testDb)
             .apply {
                 insertTestMovie()
-                getListItemsWithTmdbIdCount(returns = 1)
+                insertTestListItem()
                 movieTools.addToList(TEST_MOVIE_TMDBID, Lists.COLLECTION)
             }
 
@@ -237,7 +238,6 @@ class MovieToolsTest {
             val testEnv = MovieToolsTestEnv(context, testDb)
                 .apply {
                     insertTestMovie()
-                    getListItemsWithTmdbIdCount(returns = 0)
                 }
 
             assertThat(
@@ -269,7 +269,6 @@ class MovieToolsTest {
         val testEnv = MovieToolsTestEnv(context, testDb)
             .apply {
                 insertTestMovie() // To be able to add to built-in list without "downloading"
-                getListItemsWithTmdbIdCount(returns = 0)
                 movieTools.addToList(TEST_MOVIE_TMDBID, addToList)
             }
 
@@ -296,26 +295,30 @@ class MovieToolsTest {
         val testEnv = MovieToolsTestEnv(context, testDb)
             .apply {
                 insertTestMovie()
-                getListItemsWithTmdbIdCount(returns = 1)
+                insertTestListItem()
             }
 
         addToOrDeleteFromDatabaseAfterCustomListChange_assertNotDeleted(testEnv)
     }
 
     @Test
-    fun addToOrDeleteFromDatabaseAfterCustomListChange_inCustomListNotInDatabase_isAdded() = runTest {
-        val testEnv = MovieToolsTestEnv(context, testDb)
-            .apply {
-                getListItemsWithTmdbIdCount(returns = 1)
-                downloaderReturnsTestMovie()
-            }
+    fun addToOrDeleteFromDatabaseAfterCustomListChange_inCustomListNotInDatabase_isAdded() =
+        runTest {
+            val testEnv = MovieToolsTestEnv(context, testDb)
+                .apply {
+                    insertTestListItem()
+                    downloaderReturnsTestMovie()
+                }
 
-        assertThat(
-            testEnv.movieTools
-                .addToOrDeleteFromDatabaseAfterCustomListChange(TEST_MOVIE_TMDBID)
-        ).isTrue()
+            assertThat(
+                testEnv.movieTools
+                    .addToOrDeleteFromDatabaseAfterCustomListChange(TEST_MOVIE_TMDBID)
+            ).isTrue()
 
-        // Verify movie was added to the database, but not to any built-in lists
+            assertMovieIsAddedToDatabaseButNotBuiltInLists(testEnv)
+        }
+
+    private fun assertMovieIsAddedToDatabaseButNotBuiltInLists(testEnv: MovieToolsTestEnv) {
         val movieInDb = testEnv.databaseHelper.getMovie(TEST_MOVIE_TMDBID)
         assertThat(movieInDb).isNotNull()
         assertThat(movieInDb!!.tmdbId).isEqualTo(TEST_MOVIE_TMDBID)
@@ -378,6 +381,16 @@ class MovieToolsTest {
         private const val TEST_MOVIE_TMDBID = 12345
         private val TEST_MOVIE = SgMovie(
             tmdbId = TEST_MOVIE_TMDBID
+        )
+        private val TEST_LIST_ID = "test-list"
+        private val TEST_LIST = SgList(
+            listId = TEST_LIST_ID,
+            name = "Test List"
+        )
+        private val TEST_LIST_ITEM = SgListItem(
+            itemRefId = TEST_MOVIE_TMDBID,
+            type = ListItemTypes.TMDB_MOVIE,
+            listId = TEST_LIST_ID
         )
     }
 }
