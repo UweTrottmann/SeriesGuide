@@ -9,6 +9,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.RawQuery
+import androidx.room.Transaction
 import androidx.sqlite.db.SupportSQLiteQuery
 import com.battlelancer.seriesguide.movies.details.MovieDetails
 import com.battlelancer.seriesguide.util.TextTools
@@ -59,6 +60,15 @@ interface MovieHelper {
     )
     fun getMoviesOnListsOrWatched(): List<SgMovieFlags>
 
+    // Note: use "SELECT 1" to just return 1 if there is a matching row as EXISTS only checks if a
+    // row is returned, not what row is returned.
+    @Query(
+        "SELECT movies_tmdbid FROM movies " +
+                "WHERE movies_incollection=0 AND movies_inwatchlist=0 AND movies_watched=0 " +
+                "AND NOT EXISTS (SELECT 1 FROM listitems WHERE listitems.item_ref_id = movies.movies_tmdbid)"
+    )
+    fun getTmdbIdsOfMoviesNotOnAnyList(): List<Int>
+
     @Query("SELECT movies_tmdbid, movies_incollection, movies_inwatchlist, movies_watched, movies_plays FROM movies")
     fun getMovieFlags(): List<SgMovieFlags>
 
@@ -100,6 +110,13 @@ interface MovieHelper {
 
     @Query("DELETE FROM movies WHERE movies_tmdbid=:tmdbId")
     fun deleteMovie(tmdbId: Int): Int
+
+    @Transaction
+    fun deleteMovies(tmdbIds: List<Int>) {
+        for (tmdbId in tmdbIds) {
+            deleteMovie(tmdbId)
+        }
+    }
 
     /**
      * For testing.

@@ -90,6 +90,30 @@ class MovieTools(
     }
 
     /**
+     * Adds any movies that are on a custom list, but not in the database. Deletes any movies from
+     * the database that are not on any built-in or custom list.
+     */
+    suspend fun updateDatabaseAfterCustomListChange(): Boolean {
+        var hasError = false
+
+        // Get all movies on custom lists, but not in the database and add them
+        val moviesToAdd = listHelper.getTmdbIdsOfMovieListItemsNotInDatabase()
+        for (movieTmdbId in moviesToAdd) {
+            val success = addMovie(movieTmdbId, null)
+            if (!success) {
+                hasError = true
+                Timber.e("Failed to add movie on custom list to database: tmdbId = %s", movieTmdbId)
+            }
+        }
+
+        // Get all movies not on a built-in list and if they are not on a custom list, delete them
+        val moviesToDelete = databaseHelper.getTmdbIdsOfMoviesNotOnAnyList()
+        databaseHelper.deleteMovies(moviesToDelete)
+
+        return !hasError
+    }
+
+    /**
      * Adds the movie to the given list. If it was not in any list before, adds the movie to the
      * local database first. Returns if the database operation was successful.
      *
@@ -349,19 +373,6 @@ class MovieTools(
                     }
                 }
             }
-        }
-
-        /**
-         * Deletes all movies which are not watched and not in any list.
-         */
-        fun deleteUnusedMovies(context: Context) {
-            val rowsDeleted = context.contentResolver
-                .delete(
-                    Movies.CONTENT_URI,
-                    "${Movies.SELECTION_UNWATCHED} AND ${Movies.SELECTION_NOT_COLLECTION} AND ${Movies.SELECTION_NOT_WATCHLIST}",
-                    null
-                )
-            Timber.d("deleteUnusedMovies: removed %s movies", rowsDeleted)
         }
 
         fun addToCollection(context: Context, movieTmdbId: Int) {

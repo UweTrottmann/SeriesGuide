@@ -7,10 +7,7 @@ import android.content.Context
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
-import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.util.Errors
-import kotlinx.coroutines.runBlocking
-import timber.log.Timber
 import java.io.IOException
 
 /**
@@ -47,9 +44,8 @@ class DeleteListTask(
     }
 
     private fun doDatabaseUpdate(): Boolean {
-        // Get movies to potentially delete before removing their list items
-        val movieTmdbIds = SgRoomDatabase.getInstance(context).sgListHelper()
-            .getTmdbIdsOfMovieListItemsOfList(listId)
+        // Note: movies that are no longer on any custom or built-in list after this will be deleted
+        // from the database during the next sync.
 
         // delete all items of the list before list to avoid violating foreign key constraints
         context.contentResolver
@@ -63,24 +59,7 @@ class DeleteListTask(
         // delete the list
         val deleted = context.contentResolver
             .delete(SeriesGuideContract.Lists.buildListUri(listId), null, null)
-        if (deleted == 0) return false
-
-        // For movies, delete them from the database if they aren't on any other custom or built-in
-        // lists.
-        val movieTools = SgApp.getServicesComponent(context).movieTools()
-        movieTmdbIds.forEach { movieTmdbId ->
-            try {
-                // Note: don't abort on failure as it's impossible to re-try, instead try to delete
-                // as many as possible.
-                runBlocking {
-                    movieTools.addToOrDeleteFromDatabaseAfterCustomListChange(movieTmdbId)
-                }
-            } catch (e: InterruptedException) {
-                Timber.e(e, "Deleting movie from database interrupted")
-            }
-        }
-
-        return true
+        return deleted != 0
     }
 
     override val successTextResId: Int

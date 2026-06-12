@@ -85,8 +85,8 @@ object ListsTools {
         ).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
-    fun removeListItem(context: Context, listItemId: String, movieTmdbId: Int?) {
-        RemoveListItemTask(context, listItemId, movieTmdbId).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+    fun removeListItem(context: Context, listItemId: String) {
+        RemoveListItemTask(context, listItemId).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
     /**

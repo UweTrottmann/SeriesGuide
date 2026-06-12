@@ -54,13 +54,22 @@ interface SgListHelper {
     @Query("SELECT COUNT(_id) FROM listitems WHERE item_ref_id = :tmdbId AND item_type = :type")
     fun getListItemsWithTmdbIdCount(tmdbId: Int, @ListItemTypes type: Int): Int
 
-    @Query("SELECT item_ref_id FROM listitems WHERE list_id = :listId AND item_type = ${ListItemTypes.TMDB_MOVIE}")
-    fun getRefIdsOfMovieListItemsOfList(listId: String): List<String>
+    // Note: use "SELECT 1" to just return 1 if there is a matching row as EXISTS only checks if a
+    // row is returned, not what row is returned.
+    @Query(
+        "SELECT item_ref_id FROM listitems " +
+                "WHERE item_type = ${ListItemTypes.TMDB_MOVIE} " +
+                "AND NOT EXISTS (SELECT 1 FROM movies WHERE movies.movies_tmdbid = listitems.item_ref_id)"
+    )
+    fun getRefIdsOfMovieListItemsNotInDatabase(): List<String>
 
-    fun getTmdbIdsOfMovieListItemsOfList(listId: String): List<Int> {
-        return getRefIdsOfMovieListItemsOfList(listId)
+    fun getTmdbIdsOfMovieListItemsNotInDatabase(): List<Int> {
+        return getRefIdsOfMovieListItemsNotInDatabase()
             .mapNotNull { it.toIntOrNull() }
     }
+
+    @Query("SELECT * FROM listitems WHERE item_type = ${ListItemTypes.TVDB_SHOW}")
+    fun getTvdbShowListItems(): List<SgListItem>
 
     @RawQuery(observedEntities = [SgListItem::class, SgShow2::class, SgMovie::class])
     fun getListItemsWithDetails(query: SupportSQLiteQuery): Flow<List<SgListItemWithDetails>>
@@ -73,9 +82,6 @@ interface SgListHelper {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertListItems(listItems: List<SgListItem>)
-
-    @Query("SELECT * FROM listitems WHERE item_type = ${ListItemTypes.TVDB_SHOW}")
-    fun getTvdbShowListItems(): List<SgListItem>
 
     @Query("DELETE FROM listitems WHERE list_item_id = :listItemId")
     fun deleteListItem(listItemId: String)
