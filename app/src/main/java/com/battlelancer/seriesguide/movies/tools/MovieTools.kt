@@ -61,7 +61,6 @@ class MovieTools(
 
     /**
      * If the movie is no longer on a custom or built-in list, deletes it from the database.
-     * In this case, it's assumed the movie must be in the database.
      * If it is on a custom list and isn't already in the database, adds it.
      *
      * Returns false if a database or network operation failed.
@@ -72,7 +71,7 @@ class MovieTools(
         if (isMovieNotOnCustomList(movieTmdbId)) {
             // Movie is no longer on a custom list, but maybe still on a built-in list?
             val movieFlags = databaseHelper.getMovieFlags(movieTmdbId)
-                ?: return false // query failed
+                ?: return true // Already deleted from database (like by a concurrent sync)
 
             return if (movieFlags.isNotOnBuiltInList()) {
                 deleteMovie(movieTmdbId)
