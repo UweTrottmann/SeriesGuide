@@ -94,7 +94,7 @@ class MovieToolsTest {
             assertThat(getTestMovie()).isNull()
         }
 
-        fun assertTestMovieStillExists() {
+        fun assertTestMovieExists() {
             assertThat(getTestMovie()).isNotNull()
         }
 
@@ -108,6 +108,14 @@ class MovieToolsTest {
             assertThat(movieInDb.watched).isFalse()
             assertThat(movieInDb.plays).isEqualTo(0)
         }
+
+        fun assertTestMovieIsOnlyOnList(list: Lists) {
+            val movieInDb = getTestMovie()!!
+            assertThat(movieInDb.inCollection).isEqualTo(list == Lists.COLLECTION)
+            assertThat(movieInDb.inWatchlist).isEqualTo(list == Lists.WATCHLIST)
+            assertThat(movieInDb.watched).isEqualTo(list == Lists.WATCHED)
+            assertThat(movieInDb.plays).isEqualTo(if (list == Lists.WATCHED) 1 else 0)
+        }
     }
 
     private suspend fun addToListAndAssert(testEnv: MovieToolsTestEnv, list: Lists) {
@@ -117,14 +125,8 @@ class MovieToolsTest {
         ).isTrue()
 
         // Verify movie is in the database with expected list boolean set true
-        val movieInDb = testEnv.getTestMovie()
-        assertThat(movieInDb).isNotNull()
-        assertThat(movieInDb!!.tmdbId).isEqualTo(TEST_MOVIE_TMDBID)
-
-        assertThat(movieInDb.inCollection).isEqualTo(list == Lists.COLLECTION)
-        assertThat(movieInDb.inWatchlist).isEqualTo(list == Lists.WATCHLIST)
-        assertThat(movieInDb.watched).isEqualTo(list == Lists.WATCHED)
-        assertThat(movieInDb.plays).isEqualTo(if (list == Lists.WATCHED) 1 else 0)
+        testEnv.assertTestMovieExists()
+        testEnv.assertTestMovieIsOnlyOnList(list)
     }
 
     private fun addToList_isInDatabase_isUpdated(list: Lists) =
@@ -274,7 +276,7 @@ class MovieToolsTest {
                 .addToOrDeleteFromDatabaseAfterCustomListChange(TEST_MOVIE_TMDBID)
         ).isTrue()
 
-        testEnv.assertTestMovieStillExists()
+        testEnv.assertTestMovieExists()
 
         // Indirectly verify that movie is not added, because addMovie would call the downloader
         verify(testEnv.downloader, never())
@@ -291,6 +293,9 @@ class MovieToolsTest {
             }
 
         addToOrDeleteFromDatabaseAfterCustomListChange_assertNotDeleted(testEnv)
+
+        // Also verify movie remains on custom list (incl. not overwritten if incorrectly re-added)
+        testEnv.assertTestMovieIsOnlyOnList(addToList)
     }
 
     @Test
@@ -397,7 +402,9 @@ class MovieToolsTest {
                 testEnv.movieTools.updateDatabaseAfterCustomListChange()
             ).isTrue()
 
-            testEnv.assertTestMovieStillExists()
+            testEnv.assertTestMovieExists()
+            // Also verify movie is not re-added which would re-set list flags
+            testEnv.assertTestMovieIsOnlyOnList(list)
         }
 
     @Test
