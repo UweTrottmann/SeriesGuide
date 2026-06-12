@@ -71,14 +71,14 @@ object ListsTools {
 
     fun changeListsOfItem(
         context: Context,
-        itemStableId: Int,
-        itemType: Int,
+        itemTmdbId: Int,
+        @ListItemTypes itemType: Int,
         addToTheseLists: List<String>,
         removeFromTheseLists: List<String>
     ) {
         ChangeListItemListsTask(
             context,
-            itemStableId,
+            itemTmdbId,
             itemType,
             addToTheseLists,
             removeFromTheseLists

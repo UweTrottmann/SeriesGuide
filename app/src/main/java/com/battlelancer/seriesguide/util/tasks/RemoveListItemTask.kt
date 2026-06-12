@@ -15,6 +15,9 @@ import java.io.IOException
 
 /**
  * Task to remove an item from a single list (basically delete the list item).
+ *
+ * Note: does not delete a movie from the database if it is no longer on a custom (or built-in) list
+ * afterward, this is done during the next sync.
  */
 class RemoveListItemTask(
     context: Context,

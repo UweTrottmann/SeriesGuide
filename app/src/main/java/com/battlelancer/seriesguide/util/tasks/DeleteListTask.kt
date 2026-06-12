@@ -24,7 +24,7 @@ class DeleteListTask(
         if (isSendingToHexagon) {
             val hexagonTools = SgApp.getServicesComponent(context).hexagonTools()
             val listsService = hexagonTools.listsService
-                    ?: return ERROR_HEXAGON_API // no longer signed in
+                ?: return ERROR_HEXAGON_API // no longer signed in
 
             // send list to be removed from hexagon
             try {
@@ -44,6 +44,9 @@ class DeleteListTask(
     }
 
     private fun doDatabaseUpdate(): Boolean {
+        // Note: movies that are no longer on any custom or built-in list after this will be deleted
+        // from the database during the next sync.
+
         // delete all items of the list before list to avoid violating foreign key constraints
         context.contentResolver
             .delete(

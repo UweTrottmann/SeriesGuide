@@ -6,10 +6,14 @@ package com.battlelancer.seriesguide.movies.tools
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.battlelancer.seriesguide.EmptyTestApplication
+import com.battlelancer.seriesguide.lists.database.SgList
+import com.battlelancer.seriesguide.lists.database.SgListHelper
+import com.battlelancer.seriesguide.lists.database.SgListItem
 import com.battlelancer.seriesguide.movies.database.MovieHelper
 import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.movies.details.MovieDetails
 import com.battlelancer.seriesguide.movies.tools.MovieTools.Lists
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.google.common.truth.Truth.assertThat
 import com.uwetrottmann.tmdb2.entities.Movie
@@ -21,7 +25,11 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.ArgumentMatchers.anyBoolean
+import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.Mockito.mock
+import org.mockito.Mockito.never
+import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
@@ -48,11 +56,13 @@ class MovieToolsTest {
 
     class MovieToolsTestEnv(context: Context, db: SgRoomDatabase) {
         val databaseHelper: MovieHelper = db.movieHelper()
+        val listDatabaseHelper: SgListHelper = db.sgListHelper()
         val downloader: MovieDownloader = mock()
 
         val movieTools = MovieTools(
             context,
             databaseHelper,
+            listDatabaseHelper,
             downloader
         )
 
@@ -71,6 +81,41 @@ class MovieToolsTest {
                     )
                 )
         }
+
+        fun insertTestListItem() {
+            // Note: must insert list first to not violate foreign key constraint for list ID
+            listDatabaseHelper.insertList(TEST_LIST)
+            listDatabaseHelper.insertListItems(listOf(TEST_LIST_ITEM))
+        }
+
+        fun getTestMovie(): SgMovie? = databaseHelper.getMovie(TEST_MOVIE_TMDBID)
+
+        fun assertTestMovieIsDeleted() {
+            assertThat(getTestMovie()).isNull()
+        }
+
+        fun assertTestMovieExists() {
+            assertThat(getTestMovie()).isNotNull()
+        }
+
+        fun assertTestMovieIsInDatabaseButNotOnBuiltInLists() {
+            val movieInDb = getTestMovie()
+            assertThat(movieInDb).isNotNull()
+            assertThat(movieInDb!!.tmdbId).isEqualTo(TEST_MOVIE_TMDBID)
+
+            assertThat(movieInDb.inCollection).isFalse()
+            assertThat(movieInDb.inWatchlist).isFalse()
+            assertThat(movieInDb.watched).isFalse()
+            assertThat(movieInDb.plays).isEqualTo(0)
+        }
+
+        fun assertTestMovieIsOnlyOnList(list: Lists) {
+            val movieInDb = getTestMovie()!!
+            assertThat(movieInDb.inCollection).isEqualTo(list == Lists.COLLECTION)
+            assertThat(movieInDb.inWatchlist).isEqualTo(list == Lists.WATCHLIST)
+            assertThat(movieInDb.watched).isEqualTo(list == Lists.WATCHED)
+            assertThat(movieInDb.plays).isEqualTo(if (list == Lists.WATCHED) 1 else 0)
+        }
     }
 
     private suspend fun addToListAndAssert(testEnv: MovieToolsTestEnv, list: Lists) {
@@ -80,14 +125,8 @@ class MovieToolsTest {
         ).isTrue()
 
         // Verify movie is in the database with expected list boolean set true
-        val movieInDb = testEnv.databaseHelper.getMovie(TEST_MOVIE_TMDBID)
-        assertThat(movieInDb).isNotNull()
-        assertThat(movieInDb!!.tmdbId).isEqualTo(TEST_MOVIE_TMDBID)
-
-        assertThat(movieInDb.inCollection).isEqualTo(list == Lists.COLLECTION)
-        assertThat(movieInDb.inWatchlist).isEqualTo(list == Lists.WATCHLIST)
-        assertThat(movieInDb.watched).isEqualTo(list == Lists.WATCHED)
-        assertThat(movieInDb.plays).isEqualTo(if (list == Lists.WATCHED) 1 else 0)
+        testEnv.assertTestMovieExists()
+        testEnv.assertTestMovieIsOnlyOnList(list)
     }
 
     private fun addToList_isInDatabase_isUpdated(list: Lists) =
@@ -148,37 +187,51 @@ class MovieToolsTest {
             .apply {
                 // So addMovie returns true
                 downloaderReturnsTestMovie()
+                movieTools.addToList(TEST_MOVIE_TMDBID, Lists.COLLECTION)
             }
-        testEnv.movieTools
-            .addToList(TEST_MOVIE_TMDBID, Lists.COLLECTION)
 
         assertThat(
             testEnv.movieTools.removeFromList(TEST_MOVIE_TMDBID, Lists.COLLECTION)
         ).isTrue()
 
-        val deletedMovie = testEnv.databaseHelper.getMovie(TEST_MOVIE_TMDBID)
-        assertThat(deletedMovie).isNull()
+        testEnv.assertTestMovieIsDeleted()
     }
 
-    private fun removeFromList_stillOnOtherList_isUpdated(removeFromList: Lists) = runTest {
+    @Test
+    fun removeFromList_stillOnCustomList_isUpdated() = runTest {
+        val testEnv = MovieToolsTestEnv(context, testDb)
+            .apply {
+                insertTestMovie()
+                insertTestListItem()
+                movieTools.addToList(TEST_MOVIE_TMDBID, Lists.COLLECTION)
+            }
+
+        assertThat(
+            testEnv.movieTools.removeFromList(TEST_MOVIE_TMDBID, Lists.COLLECTION)
+        ).isTrue()
+
+        // Not deleted, but updated instead
+        val updatedMovie = testEnv.getTestMovie()
+        assertThat(updatedMovie).isNotNull()
+        assertThat(updatedMovie!!.inCollection).isEqualTo(false)
+    }
+
+    private fun removeFromList_stillOnBuiltInList_isUpdated(removeFromList: Lists) = runTest {
         val testEnv = MovieToolsTestEnv(context, testDb)
             .apply {
                 // So addMovie returns true
                 downloaderReturnsTestMovie()
+                // For simplicity add to all lists
+                movieTools.addToList(TEST_MOVIE_TMDBID, Lists.COLLECTION)
+                movieTools.addToList(TEST_MOVIE_TMDBID, Lists.WATCHLIST)
+                movieTools.addToList(TEST_MOVIE_TMDBID, Lists.WATCHED)
             }
-        // For simplicity add to all lists
-        testEnv.movieTools
-            .addToList(TEST_MOVIE_TMDBID, Lists.COLLECTION)
-        testEnv.movieTools
-            .addToList(TEST_MOVIE_TMDBID, Lists.WATCHLIST)
-        testEnv.movieTools
-            .addToList(TEST_MOVIE_TMDBID, Lists.WATCHED)
 
         assertThat(
             testEnv.movieTools.removeFromList(TEST_MOVIE_TMDBID, removeFromList)
         ).isTrue()
 
-        val updatedMovie = testEnv.databaseHelper.getMovie(TEST_MOVIE_TMDBID)
+        val updatedMovie = testEnv.getTestMovie()
         assertThat(updatedMovie).isNotNull()
         assertThat(updatedMovie!!.inCollection).isEqualTo(removeFromList != Lists.COLLECTION)
         assertThat(updatedMovie.inWatchlist).isEqualTo(removeFromList != Lists.WATCHLIST)
@@ -188,17 +241,185 @@ class MovieToolsTest {
 
     @Test
     fun removeFromList_collection_stillOnOtherList_isUpdated() {
-        removeFromList_stillOnOtherList_isUpdated(Lists.COLLECTION)
+        removeFromList_stillOnBuiltInList_isUpdated(Lists.COLLECTION)
     }
 
     @Test
     fun removeFromList_watchlist_stillOnOtherList_isUpdated() {
-        removeFromList_stillOnOtherList_isUpdated(Lists.WATCHLIST)
+        removeFromList_stillOnBuiltInList_isUpdated(Lists.WATCHLIST)
     }
 
     @Test
     fun removeFromList_watched_stillOnOtherList_isUpdated() {
-        removeFromList_stillOnOtherList_isUpdated(Lists.WATCHED)
+        removeFromList_stillOnBuiltInList_isUpdated(Lists.WATCHED)
+    }
+
+    @Test
+    fun addToOrDeleteFromDatabaseAfterCustomListChange_notInCustomOrBuiltInList_isDeleted() =
+        runTest {
+            val testEnv = MovieToolsTestEnv(context, testDb)
+                .apply {
+                    insertTestMovie()
+                }
+
+            assertThat(
+                testEnv.movieTools
+                    .addToOrDeleteFromDatabaseAfterCustomListChange(TEST_MOVIE_TMDBID)
+            ).isTrue()
+
+            testEnv.assertTestMovieIsDeleted()
+        }
+
+    private suspend fun addToOrDeleteFromDatabaseAfterCustomListChange_assertNotDeleted(testEnv: MovieToolsTestEnv) {
+        assertThat(
+            testEnv.movieTools
+                .addToOrDeleteFromDatabaseAfterCustomListChange(TEST_MOVIE_TMDBID)
+        ).isTrue()
+
+        testEnv.assertTestMovieExists()
+
+        // Indirectly verify that movie is not added, because addMovie would call the downloader
+        verify(testEnv.downloader, never())
+            .getMovieDetailsWithDefaults(anyInt(), anyBoolean())
+    }
+
+    private fun addToOrDeleteFromDatabaseAfterCustomListChange_notDeleted(
+        addToList: Lists
+    ) = runTest {
+        val testEnv = MovieToolsTestEnv(context, testDb)
+            .apply {
+                insertTestMovie() // To be able to add to built-in list without "downloading"
+                movieTools.addToList(TEST_MOVIE_TMDBID, addToList)
+            }
+
+        addToOrDeleteFromDatabaseAfterCustomListChange_assertNotDeleted(testEnv)
+
+        // Also verify movie remains on custom list (incl. not overwritten if incorrectly re-added)
+        testEnv.assertTestMovieIsOnlyOnList(addToList)
+    }
+
+    @Test
+    fun addToOrDeleteFromDatabaseAfterCustomListChange_inCollection_notDeleted() {
+        addToOrDeleteFromDatabaseAfterCustomListChange_notDeleted(Lists.COLLECTION)
+    }
+
+    @Test
+    fun addToOrDeleteFromDatabaseAfterCustomListChange_onWatchlist_notDeleted() {
+        addToOrDeleteFromDatabaseAfterCustomListChange_notDeleted(Lists.WATCHLIST)
+    }
+
+    @Test
+    fun addToOrDeleteFromDatabaseAfterCustomListChange_isWatched_notDeleted() {
+        addToOrDeleteFromDatabaseAfterCustomListChange_notDeleted(Lists.WATCHED)
+    }
+
+    @Test
+    fun addToOrDeleteFromDatabaseAfterCustomListChange_inCustomList_notDeleted() = runTest {
+        val testEnv = MovieToolsTestEnv(context, testDb)
+            .apply {
+                insertTestMovie()
+                insertTestListItem()
+            }
+
+        addToOrDeleteFromDatabaseAfterCustomListChange_assertNotDeleted(testEnv)
+    }
+
+    @Test
+    fun addToOrDeleteFromDatabaseAfterCustomListChange_inCustomListNotInDatabase_isAdded() =
+        runTest {
+            val testEnv = MovieToolsTestEnv(context, testDb)
+                .apply {
+                    insertTestListItem()
+                    downloaderReturnsTestMovie()
+                }
+
+            assertThat(
+                testEnv.movieTools
+                    .addToOrDeleteFromDatabaseAfterCustomListChange(TEST_MOVIE_TMDBID)
+            ).isTrue()
+
+            testEnv.assertTestMovieIsInDatabaseButNotOnBuiltInLists()
+        }
+
+    @Test
+    fun updateDatabaseAfterCustomListChange_movieInCustomList_isAdded() = runTest {
+        val testEnv = MovieToolsTestEnv(context, testDb)
+            .apply {
+                insertTestListItem()
+                downloaderReturnsTestMovie()
+            }
+
+        assertThat(
+            testEnv.movieTools.updateDatabaseAfterCustomListChange()
+        ).isTrue()
+
+        testEnv.assertTestMovieIsInDatabaseButNotOnBuiltInLists()
+    }
+
+    @Test
+    fun updateDatabaseAfterCustomListChange_movieInDatabase_notAdded() = runTest {
+        val testEnv = MovieToolsTestEnv(context, testDb)
+            .apply {
+                insertTestMovie()
+                insertTestListItem()
+            }
+
+        assertThat(
+            testEnv.movieTools.updateDatabaseAfterCustomListChange()
+        ).isTrue()
+
+        // Indirectly verify that movie is not added, because addMovie would call the downloader
+        verify(testEnv.downloader, never())
+            .getMovieDetailsWithDefaults(anyInt(), anyBoolean())
+
+        // Check movie is not deleted either
+        testEnv.assertTestMovieIsInDatabaseButNotOnBuiltInLists()
+    }
+
+    @Test
+    fun updateDatabaseAfterCustomListChange_movieNotOnAnyList_isDeleted() = runTest {
+        val testEnv = MovieToolsTestEnv(context, testDb)
+            .apply {
+                insertTestMovie()
+            }
+
+        assertThat(
+            testEnv.movieTools.updateDatabaseAfterCustomListChange()
+        ).isTrue()
+
+        testEnv.assertTestMovieIsDeleted()
+    }
+
+    private fun updateDatabaseAfterCustomListChange_onBuiltInList_notDeleted(list: Lists) =
+        runTest {
+            val testEnv = MovieToolsTestEnv(context, testDb)
+                .apply {
+                    insertTestMovie()
+                    movieTools.addToList(TEST_MOVIE_TMDBID, list)
+                }
+
+            assertThat(
+                testEnv.movieTools.updateDatabaseAfterCustomListChange()
+            ).isTrue()
+
+            testEnv.assertTestMovieExists()
+            // Also verify movie is not re-added which would re-set list flags
+            testEnv.assertTestMovieIsOnlyOnList(list)
+        }
+
+    @Test
+    fun updateDatabaseAfterCustomListChange_inCollection_notDeleted() {
+        updateDatabaseAfterCustomListChange_onBuiltInList_notDeleted(Lists.COLLECTION)
+    }
+
+    @Test
+    fun updateDatabaseAfterCustomListChange_onWatchlist_notDeleted() {
+        updateDatabaseAfterCustomListChange_onBuiltInList_notDeleted(Lists.WATCHLIST)
+    }
+
+    @Test
+    fun updateDatabaseAfterCustomListChange_watched_notDeleted() {
+        updateDatabaseAfterCustomListChange_onBuiltInList_notDeleted(Lists.WATCHED)
     }
 
     @Test
@@ -253,6 +474,16 @@ class MovieToolsTest {
         private const val TEST_MOVIE_TMDBID = 12345
         private val TEST_MOVIE = SgMovie(
             tmdbId = TEST_MOVIE_TMDBID
+        )
+        private val TEST_LIST_ID = "test-list"
+        private val TEST_LIST = SgList(
+            listId = TEST_LIST_ID,
+            name = "Test List"
+        )
+        private val TEST_LIST_ITEM = SgListItem(
+            itemRefId = TEST_MOVIE_TMDBID,
+            type = ListItemTypes.TMDB_MOVIE,
+            listId = TEST_LIST_ID
         )
     }
 }

@@ -41,7 +41,8 @@ class ManageListsDialogFragment : AppCompatDialogFragment() {
         val args = requireArguments()
         val movieTmdbId = args.getInt(ARG_INT_MOVIE_TMDB_ID, 0)
         if (movieTmdbId != 0) {
-            ListItem.Movie(movieTmdbId)
+            val movieTitle = args.getString(ARG_STRING_MOVIE_TITLE)!!
+            ListItem.Movie(movieTmdbId, movieTitle)
         } else {
             ListItem.Show(args.getLong(ARG_LONG_SHOW_ID))
         }
@@ -165,13 +166,17 @@ class ManageListsDialogFragment : AppCompatDialogFragment() {
         private const val TAG = "listsdialog"
         private const val ARG_LONG_SHOW_ID = "show_id"
         private const val ARG_INT_MOVIE_TMDB_ID = "movie_tmdb_id"
+        private const val ARG_STRING_MOVIE_TITLE = "movie_title"
 
         private fun newInstance(listItem: ListItem): ManageListsDialogFragment =
             ManageListsDialogFragment().apply {
                 arguments = Bundle().apply {
                     when (listItem) {
                         is ListItem.Show -> putLong(ARG_LONG_SHOW_ID, listItem.showId)
-                        is ListItem.Movie -> putInt(ARG_INT_MOVIE_TMDB_ID, listItem.movieTmdbId)
+                        is ListItem.Movie -> {
+                            putInt(ARG_INT_MOVIE_TMDB_ID, listItem.movieTmdbId)
+                            putString(ARG_STRING_MOVIE_TITLE, listItem.movieTitle)
+                        }
                     }
                 }
             }
@@ -199,9 +204,9 @@ class ManageListsDialogFragment : AppCompatDialogFragment() {
          * Display a dialog which asks if the user wants to add the given movie to one or more lists.
          */
         @JvmStatic
-        fun showForMovie(fm: FragmentManager, movieTmdbId: Int): Boolean {
+        fun showForMovie(fm: FragmentManager, movieTmdbId: Int, movieTitle: String): Boolean {
             if (movieTmdbId <= 0) return false
-            return newInstance(ListItem.Movie(movieTmdbId)).replaceAndShow(fm)
+            return newInstance(ListItem.Movie(movieTmdbId, movieTitle)).replaceAndShow(fm)
         }
     }
 }

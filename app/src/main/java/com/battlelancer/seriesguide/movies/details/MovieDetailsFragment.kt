@@ -128,7 +128,15 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             root.isGone = true
             // Manage lists button
             buttonMovieManageLists.setOnClickListener {
-                ManageListsDialogFragment.showForMovie(parentFragmentManager, tmdbId)
+                movieDetails?.tmdbMovie()
+                    ?.title
+                    ?.let {
+                        ManageListsDialogFragment.showForMovie(
+                            parentFragmentManager,
+                            tmdbId,
+                            it
+                        )
+                    }
             }
             // trailer button
             buttonMovieTrailer.apply {
@@ -343,10 +351,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         val isConnectedToTrakt = TraktCredentials.get(requireContext()).hasCredentials()
         val hideCheckIn = !isConnectedToTrakt || HexagonSettings.isEnabled(requireContext())
         binding.containerMovieButtons.buttonMovieCheckIn.isGone = hideCheckIn
-
-        // Hide manage lists button if movie isn't in the database (and therefore can't show up in a
-        // list).
-        binding.containerMovieButtons.buttonMovieManageLists.isGone = !movieDetails.isInDatabase
 
         // watched button
         binding.containerMovieButtons.buttonMovieWatched.also {

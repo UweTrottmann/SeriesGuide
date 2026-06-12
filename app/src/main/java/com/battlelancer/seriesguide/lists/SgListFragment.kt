@@ -159,7 +159,9 @@ class SgListFragment : Fragment() {
                 popupMenu.setOnMenuItemClickListener(
                     PopupMenuItemClickListener(
                         requireContext(), parentFragmentManager,
-                        item.listItemId, item.movieTmdbId, item.showId, item.nextEpisodeId
+                        item.listItemId,
+                        item.titleText,
+                        item.movieTmdbId, item.showId, item.nextEpisodeId
                     )
                 )
                 popupMenu.show()
@@ -174,6 +176,7 @@ class SgListFragment : Fragment() {
         private val context: Context,
         private val fragmentManager: FragmentManager,
         private val itemId: String,
+        private val itemTitle: String,
         private val movieTmdbId: Int?,
         private val showId: Long?,
         private val nextEpisodeId: Long?
@@ -200,7 +203,11 @@ class SgListFragment : Fragment() {
 
                 R.id.menu_action_lists_manage -> {
                     if (movieTmdbId != null) {
-                        ManageListsDialogFragment.showForMovie(fragmentManager, movieTmdbId)
+                        ManageListsDialogFragment.showForMovie(
+                            fragmentManager,
+                            movieTmdbId,
+                            itemTitle
+                        )
                     } else if (showId != null) {
                         ManageListsDialogFragment.showForShow(fragmentManager, showId)
                     }
