@@ -182,9 +182,6 @@ class MovieTools(
             }
         }
 
-        // As some movie lists still use the old ContentProvider, notify the movie URI.
-        context.contentResolver.notifyChange(Movies.CONTENT_URI, null)
-
         return rowsUpdated > 0
     }
 
@@ -194,10 +191,6 @@ class MovieTools(
     private fun deleteMovie(movieTmdbId: Int): Boolean {
         val rowsDeleted = databaseHelper.deleteMovie(movieTmdbId)
         Timber.d("deleteMovie: deleted %s movies", rowsDeleted)
-
-        // As some movie lists still use the old ContentProvider, notify the movie URI.
-        context.contentResolver.notifyChange(Movies.CONTENT_URI, null)
-
         return rowsDeleted > 0
     }
 
