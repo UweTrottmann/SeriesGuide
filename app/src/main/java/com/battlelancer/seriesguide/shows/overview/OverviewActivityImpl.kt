@@ -16,7 +16,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.lists.ManageListsDialogFragment
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.RemoveShowDialogFragment
 import com.battlelancer.seriesguide.shows.overview.OverviewActivityImpl.OverviewLayoutType.SINGLE_PANE
@@ -261,10 +260,6 @@ open class OverviewActivityImpl : BaseMessageActivity() {
         val itemId = item.itemId
         if (itemId == R.id.menu_overview_search) {
             launchSearch()
-            return true
-        }
-        if (itemId == R.id.menu_show_manage_lists) {
-            ManageListsDialogFragment.showForShow(supportFragmentManager, showId)
             return true
         }
         if (itemId == R.id.menu_overview_remove_show) {

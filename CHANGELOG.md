@@ -10,6 +10,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ### Next release
 
+* 🔧 Shows: move manage lists button from more options menu to inside the overview and details tabs.
+
 ## Version 2026.2
 
 ### 2026.2.0 - 2026-06-18 🧪

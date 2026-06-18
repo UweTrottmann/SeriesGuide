@@ -78,13 +78,25 @@
                     android:layout_width="48dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@null"
+                    app:layout_constraintEnd_toStartOf="@id/buttonOverviewManageLists"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/ic_star_black_24dp"
+                    tools:tint="?attr/sgColorIcon" />
+
+                <ImageButton
+                    android:id="@+id/buttonOverviewManageLists"
+                    style="?attr/borderlessButtonStyle"
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
                     android:layout_marginEnd="8dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="@null"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@drawable/ic_star_black_24dp"
-                    tools:tint="?attr/sgColorIcon" />
+                    app:srcCompat="@drawable/ic_list_white_24dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
