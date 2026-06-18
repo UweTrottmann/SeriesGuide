@@ -31,7 +31,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
 data class SgListItem(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = ListItems._ID)
-    val id: Long? = 0,
+    val id: Long? = null,
 
     @ColumnInfo(name = ListItems.LIST_ITEM_ID)
     var listItemId: String,

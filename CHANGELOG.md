@@ -8,6 +8,13 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
 
+### Next release
+
+* 🌟 Lists: movies can be added to lists, currently only from the details view.
+* 🔨 Import: a failure no longer blocks trying again, adding shows or creating an auto backup.
+* 🔨 Export: for list items, no longer include always 0 tvdb_id value. 
+* 🔨 Import: skip movies without a TMDB ID.
+
 ## Version 2026.1
 
 * 📝 Trakt: support server changes to correctly fetch all collection and watchlist items.

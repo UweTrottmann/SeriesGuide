@@ -256,6 +256,8 @@
     <string name="action_lists_reorder">เรียงรายการใหม่</string>
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">มีรายการชื่อนี้อยู่แล้ว</string>
+    <string name="action_lists_sort_latest_release_date">Latest release date</string>
+    <string name="action_lists_sort_oldest_release_date">Oldest release date</string>
     <!-- Movies -->
     <string name="title_digital_releases">ออกเป็นดิจิทัล</string>
     <string name="title_disc_releases">ออกเป็นแผ่น</string>

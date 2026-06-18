@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2013-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2013 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.sync
 
@@ -21,7 +21,7 @@ import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
 import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.jobs.NetworkJobProcessor
-import com.battlelancer.seriesguide.lists.ListsTools2
+import com.battlelancer.seriesguide.lists.ListsTools
 import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
@@ -35,6 +35,7 @@ import com.battlelancer.seriesguide.util.TaskManager
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.services.ConfigurationService
 import dagger.Lazy
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.math.pow
@@ -141,7 +142,7 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
 
         if (Thread.interrupted()) throw InterruptedException()
 
-        // Update show data.
+        // Update show and movie data.
         // If failed for at least one show, do not proceed with other sync steps to avoid
         // syncing with outdated show data. However, renew the search table and trigger the
         // notification service if at least one show was updated.
@@ -163,14 +164,6 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
 
             // do some more things if this is not a quick update
             if (showSync.isSyncMultiple) {
-                if (Thread.interrupted()) throw InterruptedException()
-
-                // update data of to be released movies
-                if (!tmdbSync.updateMovies(progress)) {
-                    progress.recordError()
-                }
-                Timber.d("Syncing: TMDB...DONE")
-
                 if (Thread.interrupted()) throw InterruptedException()
 
                 // sync with hexagon
@@ -198,7 +191,7 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
 
                 // Migrate legacy list items
                 // Note: might send to Hexagon, so make sure to sync lists with Hexagon before
-                ListsTools2.migrateTvdbShowListItemsToTmdbIds(context)
+                ListsTools.migrateTvdbShowListItemsToTmdbIds(context)
 
                 if (Thread.interrupted()) throw InterruptedException()
 
@@ -224,6 +217,35 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
 
                 // update next episodes for all shows
                 TaskManager.tryNextEpisodeUpdateTask(context)
+
+                // Movies
+
+                // Add movies that were added to custom lists (by Cloud or a lists only import), but
+                // aren't in the database, yet.
+                // Delete movies from the database that were removed from custom and built-in lists
+                // by Cloud, Trakt or the user deleting a whole list (through DeleteListTask or a
+                // lists only import).
+                // This is done here once to avoid having to implement this for every component
+                // mentioned above. Also, adding a movie may fail due to network or other issues,
+                // so this will ensure eventually all movies are added to the database and will
+                // appear in custom lists during a next sync. And waiting to delete until here
+                // should not have any consequences as movies not in any list aren't displayed in
+                // the UI (they would still get exported).
+                // This is also done before updating movies to avoid updating a to be deleted movie.
+                // Note: this uses runBlocking, so if the calling thread is interrupted this will
+                // throw InterruptedException.
+                runBlocking {
+                    movieTools.get().updateDatabaseAfterCustomListChange()
+                }
+                Timber.d("Syncing: updating movie database...DONE")
+
+                // Update data of to be released movies
+                // It is OK to do this after movies are synced with Cloud or Trakt as all required
+                // data exists by default (unlike for shows, where episodes might be missing).
+                if (!tmdbSync.updateMovies(progress)) {
+                    progress.recordError()
+                }
+                Timber.d("Syncing: TMDB movies...DONE")
 
                 updateTimeAndFailedCounter(prefs, resultCode)
             }

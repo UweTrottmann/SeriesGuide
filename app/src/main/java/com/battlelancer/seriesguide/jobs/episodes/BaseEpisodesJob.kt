@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2017, 2018, 2020-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2017 Uwe Trottmann <uwe@uwetrottmann.com>
 package com.battlelancer.seriesguide.jobs.episodes
 
 import android.content.Context
@@ -7,7 +7,6 @@ import androidx.annotation.CallSuper
 import com.battlelancer.seriesguide.jobs.BaseFlagJob
 import com.battlelancer.seriesguide.jobs.EpisodeInfo
 import com.battlelancer.seriesguide.jobs.SgJobInfo
-import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgEpisode2Numbers
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
@@ -61,10 +60,6 @@ abstract class BaseEpisodesJob(
                 return false
             }
         }
-
-        // notify some other URIs about updates
-        context.contentResolver
-            .notifyChange(SeriesGuideContract.ListItems.CONTENT_WITH_DETAILS_URI, null)
 
         return true
     }

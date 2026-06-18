@@ -763,12 +763,20 @@ object TimeTools {
      *
      * @see formatToLocalDate
      */
-    fun formatToLocalDateShort(context: Context, dateTime: Date): String =
+    fun formatToLocalDateShort(context: Context, timeInMillis: Long): String =
         DateUtils.formatDateTime(
             context,
-            dateTime.time,
+            timeInMillis,
             DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_ABBREV_ALL
         )
+
+    /**
+     * Formats to a date like "Oct 31", or if the date is not in the current year "Oct 31, 2010".
+     *
+     * @see formatToLocalDate
+     */
+    fun formatToLocalDateShort(context: Context, dateTime: Date): String =
+        formatToLocalDateShort(context, dateTime.time)
 
     /**
      * Formats to a date, time zone and week day (e.g. "2014/02/04 CET (Mon)") as defined by the

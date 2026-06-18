@@ -10,12 +10,13 @@ import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.movies.database.SgMovie;
 import com.battlelancer.seriesguide.shows.database.SgEpisode2;
 import com.battlelancer.seriesguide.shows.database.SgShow2;
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags;
+import com.battlelancer.seriesguide.shows.tools.NextEpisodeUpdater;
 import com.battlelancer.seriesguide.shows.tools.ShowStatus;
 import com.battlelancer.seriesguide.shows.tools.ShowTools2;
-import com.battlelancer.seriesguide.shows.tools.NextEpisodeUpdater;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -499,6 +500,9 @@ public class SeriesGuideContract {
          */
         String STATUS = "series_status";
 
+        /**
+         * See {@link SgShow2#getRuntime()}.
+         */
         String RUNTIME = "series_runtime";
 
         /** See {@link SgShow2#getRatingTmdb()}. */
@@ -941,7 +945,8 @@ public class SeriesGuideContract {
             ListItemTypes.TVDB_SHOW,
             ListItemTypes.SEASON,
             ListItemTypes.EPISODE,
-            ListItemTypes.TMDB_SHOW
+            ListItemTypes.TMDB_SHOW,
+            ListItemTypes.TMDB_MOVIE
     })
     public @interface ListItemTypes {
         int TVDB_SHOW = 1;
@@ -954,9 +959,10 @@ public class SeriesGuideContract {
          */
         int EPISODE = 3;
         int TMDB_SHOW = 4;
+        int TMDB_MOVIE = 5;
     }
 
-    interface MoviesColumns {
+    public interface MoviesColumns {
 
         String TITLE = "movies_title";
 
@@ -969,6 +975,9 @@ public class SeriesGuideContract {
 
         String TMDB_ID = "movies_tmdbid";
 
+        /**
+         * See {@link SgMovie#getPoster()}.
+         */
         String POSTER = "movies_poster";
 
         String GENRES = "movies_genres";
@@ -980,6 +989,9 @@ public class SeriesGuideContract {
          */
         String RELEASED_UTC_MS = "movies_released";
 
+        /**
+         * See {@link SgMovie#getRuntimeMin()}.
+         */
         String RUNTIME_MIN = "movies_runtime";
 
         String TRAILER = "movies_trailer";
@@ -1061,8 +1073,6 @@ public class SeriesGuideContract {
 
     public static final String PATH_LIST_ITEMS = "listitems";
 
-    public static final String PATH_WITH_DETAILS = "with_details";
-
     public static final String PATH_MOVIES = "movies";
 
     public static final String PATH_JOBS = "jobs";
@@ -1135,14 +1145,6 @@ public class SeriesGuideContract {
                 .build();
 
         /**
-         * List items table joined with shows, seasons and episodes table (depending on list item
-         * type). See {@link SeriesGuideProvider#LIST_ITEMS_WITH_DETAILS}.
-         */
-        public static final Uri CONTENT_WITH_DETAILS_URI = CONTENT_URI.buildUpon()
-                .appendPath(PATH_WITH_DETAILS)
-                .build();
-
-        /**
          * Use if multiple items get returned
          */
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.seriesguide.listitem";
@@ -1154,16 +1156,6 @@ public class SeriesGuideContract {
                 = "vnd.android.cursor.item/vnd.seriesguide.listitem";
 
         public static final String SELECTION_LIST = Lists.LIST_ID + "=?";
-        public static final String SELECTION_TVDB_SHOWS =
-                ListItems.TYPE + "=" + ListItemTypes.TVDB_SHOW;
-        public static final String SELECTION_TMDB_SHOWS =
-                ListItems.TYPE + "=" + ListItemTypes.TMDB_SHOW;
-        public static final String SELECTION_SEASONS =
-                ListItems.TYPE + "=" + ListItemTypes.SEASON;
-        public static final String SELECTION_EPISODES =
-                ListItems.TYPE + "=" + ListItemTypes.EPISODE;
-
-        public static final String SORT_TYPE = ListItems.TYPE + " ASC";
 
         public static Uri buildListItemUri(String id) {
             return CONTENT_URI.buildUpon().appendPath(id).build();
@@ -1201,7 +1193,8 @@ public class SeriesGuideContract {
             return type == ListItemTypes.TVDB_SHOW
                     || type == ListItemTypes.SEASON
                     || type == ListItemTypes.EPISODE
-                    || type == ListItemTypes.TMDB_SHOW;
+                    || type == ListItemTypes.TMDB_SHOW
+                    || type == ListItemTypes.TMDB_MOVIE;
         }
     }
 

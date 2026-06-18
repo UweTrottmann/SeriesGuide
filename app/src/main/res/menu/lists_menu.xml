@@ -24,29 +24,7 @@
         android:icon="@drawable/ic_sort_white_24dp"
         android:orderInCategory="3"
         android:title="@string/sort"
-        app:showAsAction="never">
-        <menu>
-            <item
-                android:id="@+id/menu_action_lists_sort_title"
-                android:title="@string/action_shows_sort_title" />
-            <item
-                android:id="@+id/menu_action_lists_sort_latest_episode"
-                android:title="@string/action_shows_sort_latest_episode" />
-            <item
-                android:id="@+id/menu_action_lists_sort_oldest_episode"
-                android:title="@string/action_shows_sort_oldest_episode" />
-            <item
-                android:id="@+id/menu_action_lists_sort_last_watched"
-                android:title="@string/action_shows_sort_last_watched" />
-            <item
-                android:id="@+id/menu_action_lists_sort_remaining"
-                android:title="@string/action_shows_sort_remaining" />
-            <item
-                android:id="@+id/menu_action_lists_sort_ignore_articles"
-                android:checkable="true"
-                android:title="@string/action_sort_ignore_articles" />
-        </menu>
-    </item>
+        app:showAsAction="never" />
     <item
         android:id="@+id/menu_action_lists_reorder"
         android:orderInCategory="4"

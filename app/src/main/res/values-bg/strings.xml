@@ -263,6 +263,8 @@
     <string name="action_lists_reorder">Пренареждане на списъците</string>
     <string name="ack_lists_reordered">Списъците са подредени</string>
     <string name="error_name_already_exists">Списък с това име вече съществува</string>
+    <string name="action_lists_sort_latest_release_date">Latest release date</string>
+    <string name="action_lists_sort_oldest_release_date">Oldest release date</string>
     <!-- Movies -->
     <string name="title_digital_releases">Дихитални издания</string>
     <string name="title_disc_releases">Излезли на диск</string>

@@ -1,11 +1,20 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2021-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2021 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.dataliberation
 
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ListItemTypesExport
 import com.battlelancer.seriesguide.dataliberation.model.Episode
+import com.battlelancer.seriesguide.dataliberation.model.List
+import com.battlelancer.seriesguide.dataliberation.model.ListItem
+import com.battlelancer.seriesguide.dataliberation.model.Movie
 import com.battlelancer.seriesguide.dataliberation.model.Season
 import com.battlelancer.seriesguide.dataliberation.model.Show
+import com.battlelancer.seriesguide.lists.database.SgList
+import com.battlelancer.seriesguide.lists.database.SgListItem
+import com.battlelancer.seriesguide.movies.database.SgMovie
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems
 import com.battlelancer.seriesguide.shows.database.SgEpisode2
 import com.battlelancer.seriesguide.shows.database.SgSeason2
 import com.battlelancer.seriesguide.shows.database.SgShow2
@@ -97,6 +106,75 @@ object ImportTools {
             ratingTrakt = rating.toRating(),
             ratingTraktVotes = rating_votes.toVotes(),
             ratingUser = rating_user.toUserRating()
+        )
+    }
+
+    fun List.toSgListForImport(): SgList {
+        return SgList(
+            listId = list_id,
+            name = name,
+            order = order
+        )
+    }
+
+    /**
+     * May return null for unknown [ListItem.type] or if [ListItem.externalId] is missing.
+     */
+    fun ListItem.toSgListItemForImport(listId: String): SgListItem? {
+        // Note: DO import legacy types (seasons and episodes),
+        // as e.g. older backups can still contain legacy show data to allow displaying them.
+        val type: Int = if (ListItemTypesExport.MOVIE == type) {
+            ListItemTypes.TMDB_MOVIE
+        } else if (ListItemTypesExport.SHOW == type) {
+            ListItemTypes.TVDB_SHOW
+        } else if (ListItemTypesExport.TMDB_SHOW == type) {
+            ListItemTypes.TMDB_SHOW
+        } else if (ListItemTypesExport.SEASON == type) {
+            ListItemTypes.SEASON
+        } else if (ListItemTypesExport.EPISODE == type) {
+            ListItemTypes.EPISODE
+        } else {
+            return null // Unknown item type, skip
+        }
+
+        val externalId: String? = externalId
+        val legacyTvdbId: Int? = tvdb_id
+        val externalIdToInsert: String = if (!externalId.isNullOrEmpty()) {
+            externalId
+        } else if (legacyTvdbId != null && legacyTvdbId > 0) {
+            legacyTvdbId.toString()
+        } else {
+            return null // No external ID, skip
+        }
+
+        // Generate list item ID from values, do not trust given item ID
+        // (e.g. encoded list ID might not match)
+        val listItemId = ListItems.generateListItemId(externalIdToInsert, type, listId)
+
+        return SgListItem(
+            listItemId = listItemId,
+            itemRefId = externalIdToInsert,
+            type = type,
+            listId = listId
+        )
+    }
+
+    fun Movie.toSgMovieForImport(): SgMovie {
+        return SgMovie(
+            tmdbId = tmdb_id,
+            imdbId = imdb_id,
+            title = title,
+            titleNoArticle = TextTools.trimLeadingArticle(title),
+            releasedMs = released_utc_ms,
+            runtimeMin = runtime_min,
+            poster = poster,
+            inCollection = in_collection,
+            inWatchlist = in_watchlist,
+            watched = watched,
+            plays = if (watched && plays >= 1) plays else if (watched) 1 else 0,
+            lastUpdated = last_updated_ms,
+            // full dump values
+            overview = overview
         )
     }
 

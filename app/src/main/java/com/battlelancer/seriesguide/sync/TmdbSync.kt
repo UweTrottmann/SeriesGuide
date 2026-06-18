@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2018-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2018 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.sync
 
@@ -117,7 +117,12 @@ class TmdbSync internal constructor(
 
             // try loading details from tmdb
             val detailsResult = runBlocking {
-                movieTools.getMovieDetails(languageCode, regionCode, movie.tmdbId, false)
+                movieTools.downloader.getMovieDetails(
+                    languageCode,
+                    regionCode,
+                    movie.tmdbId,
+                    false
+                )
             }
             val details = detailsResult.movieDetails
             if (details.tmdbMovie() != null) {
