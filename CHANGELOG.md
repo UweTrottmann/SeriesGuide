@@ -8,6 +8,8 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
 
+### Next release
+
 ## Version 2026.2
 
 ### 2026.2.0 - 2026-06-18 🧪
