@@ -2,19 +2,29 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.io.FileInputStream
 import java.util.Properties
 
+// For CI (and so debug builds just work), use a placeholder file for google-services plugin
+val googleServicesJsonFile = project.file("google-services.json")
+val placeholderWarningMessage =
+    "WARNING: Using google-services.json with placeholder values, do not release this!"
+if (!googleServicesJsonFile.exists()) {
+    val templateFile = project.file("google-services-template.json")
+    templateFile.copyTo(googleServicesJsonFile)
+    // Also write warning message to template file so it shows up in git
+    templateFile.writeText(placeholderWarningMessage)
+}
+if (googleServicesJsonFile.readText().contains("placeholder")) {
+    println(placeholderWarningMessage)
+}
+
 plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
     alias(libs.plugins.compose.compiler)
+    // Firebase Authentication, Crashlytics
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.crashlytics)
 }
-
-if (project.file("google-services.json").exists()) {
-    apply(plugin = "com.google.gms.google-services")
-}
-// Note: need to apply Crashlytics after Google services plugin,
-// above conditional apply doesn't work inside plugins block.
-apply(plugin = "com.google.firebase.crashlytics")
 
 val sgCompileSdk: Int by rootProject.extra
 val sgMinSdk: Int by rootProject.extra

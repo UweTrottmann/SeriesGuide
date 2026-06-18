@@ -5,7 +5,7 @@ plugins {
     alias(libs.plugins.android) apply false
     alias(libs.plugins.kotlin) apply false
     alias(libs.plugins.compose.compiler) apply false
-    // Firebase Crashlytics
+    // Firebase Authentication, Crashlytics
     alias(libs.plugins.google.services) apply false
     alias(libs.plugins.firebase.crashlytics) apply false
     // Cloud Endpoints
