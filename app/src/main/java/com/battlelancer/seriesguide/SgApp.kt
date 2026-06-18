@@ -93,7 +93,7 @@ class SgApp : Application() {
 
         const val RELEASE_VERSION_2025_2_6 = 21250207
 
-        const val RELEASE_VERSION_2026_1_4 = 23260105
+        const val RELEASE_VERSION_2026_2_0 = 23260200
 
         /**
          * The content authority used to identify the SeriesGuide [android.content.ContentProvider].

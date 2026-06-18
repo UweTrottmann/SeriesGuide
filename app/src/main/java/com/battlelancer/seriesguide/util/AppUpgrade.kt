@@ -130,7 +130,7 @@ class AppUpgrade(
             }
         }
 
-        if (lastVersion <= SgApp.RELEASE_VERSION_2026_1_4) {
+        if (lastVersion < SgApp.RELEASE_VERSION_2026_2_0) {
             // Support for movies in lists was added. When downloading list changes, Cloud skips
             // items with unknown type. So reset lists sync, so items with the new movie type,
             // potentially added by other, already upgraded devices, are added to lists.
