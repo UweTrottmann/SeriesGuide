@@ -11,6 +11,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 ### Next release
 
 * 🔧 Shows: move manage lists button from more options menu to inside the overview and details tabs.
+* 🔨 Trakt: downloading ratings also works if API returns rating 0.
 
 ## Version 2026.2
 
