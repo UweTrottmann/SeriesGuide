@@ -15,7 +15,6 @@ import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Pro
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.AuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.DefaultAuthUIStringProvider
 import com.google.firebase.auth.ActionCodeSettings
-import java.util.Locale
 
 fun authUIConfiguration(block: AuthUIConfigurationBuilder.() -> Unit) =
     AuthUIConfigurationBuilder().apply(block).build()
@@ -27,7 +26,6 @@ annotation class AuthUIConfigurationDsl
 class AuthUIConfigurationBuilder {
     var context: Context? = null
     private val providers = mutableListOf<AuthProvider>()
-    var locale: Locale? = null
     var stringProvider: AuthUIStringProvider? = null
     var isCredentialManagerEnabled: Boolean = true
     var isMfaEnabled: Boolean = true
@@ -80,8 +78,7 @@ class AuthUIConfigurationBuilder {
         return AuthUIConfiguration(
             context = context,
             providers = providers.toList(),
-            locale = locale,
-            stringProvider = stringProvider ?: DefaultAuthUIStringProvider(context, locale),
+            stringProvider = stringProvider ?: DefaultAuthUIStringProvider(context),
             isCredentialManagerEnabled = isCredentialManagerEnabled,
             isMfaEnabled = isMfaEnabled,
             privacyPolicyUrl = privacyPolicyUrl,
@@ -107,14 +104,9 @@ class AuthUIConfiguration(
     val providers: List<AuthProvider> = emptyList(),
 
     /**
-     * Overrides the [locale] of the default [stringProvider].
-     */
-    val locale: Locale? = null,
-
-    /**
      * A custom provider for localized strings.
      */
-    val stringProvider: AuthUIStringProvider = DefaultAuthUIStringProvider(context, locale),
+    val stringProvider: AuthUIStringProvider = DefaultAuthUIStringProvider(context),
 
     /**
      * Enables integration with Android's Credential Manager API. Defaults to true.
