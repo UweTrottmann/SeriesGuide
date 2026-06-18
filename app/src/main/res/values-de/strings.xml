@@ -263,6 +263,8 @@
     <string name="action_lists_reorder">Listen anordnen</string>
     <string name="ack_lists_reordered">Listen neu angeordnet</string>
     <string name="error_name_already_exists">Eine Liste mit diesem Namen ist bereits vorhanden</string>
+    <string name="action_lists_sort_latest_release_date">Latest release date</string>
+    <string name="action_lists_sort_oldest_release_date">Oldest release date</string>
     <!-- Movies -->
     <string name="title_digital_releases">Neues in Digital</string>
     <string name="title_disc_releases">Neues auf Disc</string>

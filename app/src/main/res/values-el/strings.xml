@@ -263,6 +263,8 @@
     <string name="action_lists_reorder">Ταξινομημένες λίστες</string>
     <string name="ack_lists_reordered">Οι λίστες αναδιατάχθηκαν</string>
     <string name="error_name_already_exists">Υπάρχει ήδη μία λίστα με αυτό το όνομα</string>
+    <string name="action_lists_sort_latest_release_date">Latest release date</string>
+    <string name="action_lists_sort_oldest_release_date">Oldest release date</string>
     <!-- Movies -->
     <string name="title_digital_releases">Ψηφιακές κυκλοφορίες</string>
     <string name="title_disc_releases">Κυκλοφορίες δίσκων</string>

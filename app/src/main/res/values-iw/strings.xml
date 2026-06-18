@@ -277,6 +277,8 @@
     <string name="action_lists_reorder">סדר מחדש רשימות</string>
     <string name="ack_lists_reordered">הרשימות סודרו מחדש</string>
     <string name="error_name_already_exists">רשימה עם השם הזה כבר קיימת</string>
+    <string name="action_lists_sort_latest_release_date">Latest release date</string>
+    <string name="action_lists_sort_oldest_release_date">Oldest release date</string>
     <!-- Movies -->
     <string name="title_digital_releases">הפצה דיגיטלית</string>
     <string name="title_disc_releases">הפצת דיסק</string>

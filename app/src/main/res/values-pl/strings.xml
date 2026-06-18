@@ -277,6 +277,8 @@
     <string name="action_lists_reorder">Zmień kolejność list</string>
     <string name="ack_lists_reordered">Lista przeorganizowana</string>
     <string name="error_name_already_exists">Lista o tej nazwie już istnieje</string>
+    <string name="action_lists_sort_latest_release_date">Latest release date</string>
+    <string name="action_lists_sort_oldest_release_date">Oldest release date</string>
     <!-- Movies -->
     <string name="title_digital_releases">Wydania cyfrowe</string>
     <string name="title_disc_releases">Na płytach</string>

@@ -256,6 +256,8 @@
     <string name="action_lists_reorder">重新排序清單</string>
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">此名稱的清單已存在。</string>
+    <string name="action_lists_sort_latest_release_date">Latest release date</string>
+    <string name="action_lists_sort_oldest_release_date">Oldest release date</string>
     <!-- Movies -->
     <string name="title_digital_releases">數位發行</string>
     <string name="title_disc_releases">碟片版本</string>

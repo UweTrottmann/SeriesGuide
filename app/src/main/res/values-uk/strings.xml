@@ -277,6 +277,8 @@
     <string name="action_lists_reorder">Впорядкувати список</string>
     <string name="ack_lists_reordered">Список перевпорядковано</string>
     <string name="error_name_already_exists">Список з таким іменем вже існує</string>
+    <string name="action_lists_sort_latest_release_date">Latest release date</string>
+    <string name="action_lists_sort_oldest_release_date">Oldest release date</string>
     <!-- Movies -->
     <string name="title_digital_releases">Цифрові видання</string>
     <string name="title_disc_releases">Видання на диску</string>
