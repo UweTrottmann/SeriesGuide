@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings.getLastMovi
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings.getLastSyncTime
 import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import timber.log.Timber
 
 object HexagonSettings {
 
@@ -139,6 +140,7 @@ object HexagonSettings {
         editor.remove(KEY_LAST_SYNC_MOVIES)
         editor.remove(KEY_LAST_SYNC_LISTS)
         return editor.commit()
+            .also { Timber.i("Sync state reset") }
     }
 
     /**
@@ -233,6 +235,7 @@ object HexagonSettings {
         PreferenceManager.getDefaultSharedPreferences(context).edit {
             remove(KEY_LAST_SYNC_MOVIES)
         }
+        Timber.i("Last movies sync time reset")
     }
 
     fun getLastListsSyncTime(context: Context): Long? =
@@ -251,6 +254,7 @@ object HexagonSettings {
         PreferenceManager.getDefaultSharedPreferences(context).edit {
             remove(KEY_LAST_SYNC_LISTS)
         }
+        Timber.i("Last lists sync time reset")
     }
 
     private fun getLastSyncTime(context: Context, key: String): Long {
