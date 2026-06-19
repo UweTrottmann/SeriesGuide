@@ -21,7 +21,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.MoviesColumns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgSeason2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Qualified
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.tools.ShowStatus
@@ -176,6 +175,12 @@ data class SgListItemWithDetails(
         private const val RUNNING_TIME_MINUTES = "list_item_running_time_minutes"
         private const val ITEM_ROW_ID = "item_row_id"
 
+        /** Qualified name of list item ref ID column for use with [LIST_ITEMS_WITH_DETAILS]. */
+        private const val LIST_ITEMS_REF_ID = Tables.LIST_ITEMS + "." + ListItems.ITEM_REF_ID
+
+        /** Qualified name of show ID column for use with [LIST_ITEMS_WITH_DETAILS]. */
+        private const val SG_SHOW_ID = Tables.SG_SHOW + "." + SgShow2Columns._ID
+
         private const val ITEMS_COLUMNS: String =
             "${ListItems.LIST_ITEM_ID},${Lists.LIST_ID},${ListItems.TYPE},${ListItems.ITEM_REF_ID}"
 
@@ -243,7 +248,7 @@ data class SgListItemWithDetails(
             "SELECT $ITEM_ROW_ID AS " + ListItems._ID + "," +
                     ITEMS_COLUMNS + "," +
                     "NULL AS ${MoviesColumns.TMDB_ID}," +
-                    "${Qualified.SG_SHOW_ID} AS ${SgShow2Columns.REF_SHOW_ID}," +
+                    "$SG_SHOW_ID AS ${SgShow2Columns.REF_SHOW_ID}," +
                     SgShow2Columns.RELEASE_TIME + "," +
                     SgShow2Columns.NEXTTEXT + "," +
                     "${SgShow2Columns.NEXTAIRDATEMS} AS $RELEASED_MS," +
@@ -266,11 +271,11 @@ data class SgListItemWithDetails(
 
         private const val SG_SEASON_JOIN_SG_SHOW: String =
             "${Tables.SG_SEASON} LEFT OUTER JOIN ${Tables.SG_SHOW} " +
-                    "ON ${Tables.SG_SEASON}.${SgShow2Columns.REF_SHOW_ID}=${Qualified.SG_SHOW_ID}"
+                    "ON ${Tables.SG_SEASON}.${SgShow2Columns.REF_SHOW_ID}=$SG_SHOW_ID"
 
         private const val SG_EPISODE_JOIN_SG_SHOW: String =
             "${Tables.SG_EPISODE} LEFT OUTER JOIN ${Tables.SG_SHOW} " +
-                    "ON ${Tables.SG_EPISODE}.${SgShow2Columns.REF_SHOW_ID}=${Qualified.SG_SHOW_ID}"
+                    "ON ${Tables.SG_EPISODE}.${SgShow2Columns.REF_SHOW_ID}=$SG_SHOW_ID"
 
         /**
          * The columns of the final rows must match [SgListItemWithDetails].
@@ -285,7 +290,7 @@ data class SgListItemWithDetails(
                 "(" +
                 SELECT_TMDB_MOVIES +
                 " LEFT OUTER JOIN " + Tables.MOVIES +
-                " ON " + Qualified.LIST_ITEMS_REF_ID + "=" + MoviesColumns.TMDB_ID +
+                " ON " + LIST_ITEMS_REF_ID + "=" + MoviesColumns.TMDB_ID +
                 ")" +
                 " UNION " +
                 // new TMDB shows
@@ -293,7 +298,7 @@ data class SgListItemWithDetails(
                 "(" +
                 SELECT_TMDB_SHOWS +
                 " LEFT OUTER JOIN " + Tables.SG_SHOW +
-                " ON " + Qualified.LIST_ITEMS_REF_ID + "=" + SgShow2Columns.TMDB_ID +
+                " ON " + LIST_ITEMS_REF_ID + "=" + SgShow2Columns.TMDB_ID +
                 ")" +
                 // legacy TVDB shows
                 " UNION " +
@@ -301,7 +306,7 @@ data class SgListItemWithDetails(
                 "(" +
                 SELECT_TVDB_SHOWS +
                 " LEFT OUTER JOIN " + Tables.SG_SHOW +
-                " ON " + Qualified.LIST_ITEMS_REF_ID + "=" + SgShow2Columns.TVDB_ID +
+                " ON " + LIST_ITEMS_REF_ID + "=" + SgShow2Columns.TVDB_ID +
                 ")" +
                 // legacy TVDB seasons
                 " UNION " +
@@ -309,7 +314,7 @@ data class SgListItemWithDetails(
                 "(" +
                 SELECT_TVDB_SEASONS +
                 " LEFT OUTER JOIN " + "(" + SG_SEASON_JOIN_SG_SHOW + ") AS " + Tables.SG_SEASON +
-                " ON " + Qualified.LIST_ITEMS_REF_ID + "=" + SgSeason2Columns.TVDB_ID +
+                " ON " + LIST_ITEMS_REF_ID + "=" + SgSeason2Columns.TVDB_ID +
                 ")" +
                 // legacy TVDB episodes
                 " UNION " +
@@ -317,7 +322,7 @@ data class SgListItemWithDetails(
                 "(" +
                 SELECT_TVDB_EPISODES +
                 " LEFT OUTER JOIN " + "(" + SG_EPISODE_JOIN_SG_SHOW + ") AS " + Tables.SG_EPISODE +
-                " ON " + Qualified.LIST_ITEMS_REF_ID + "=" + SgEpisode2Columns.TVDB_ID +
+                " ON " + LIST_ITEMS_REF_ID + "=" + SgEpisode2Columns.TVDB_ID +
                 ")" +
                 //
                 ")"

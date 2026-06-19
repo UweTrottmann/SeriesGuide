@@ -4,7 +4,6 @@
 package com.battlelancer.seriesguide.provider;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.ActivityColumns;
-import static com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -23,13 +22,17 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListsColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.MoviesColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SeasonsColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ShowsColumns;
 import com.battlelancer.seriesguide.shows.database.SgShow2;
 import com.battlelancer.seriesguide.util.DBUtils;
 import timber.log.Timber;
 
+/**
+ * Database helper class. Most database related code has moved to {@link SgRoomDatabase} and helper
+ * classes for each table. This remains in addition to {@link SeriesGuideContract} to maintain a
+ * global reference to tables (and some legacy database code).
+ */
 public class SeriesGuideDatabase {
 
     public static final String DATABASE_NAME = "seriesdatabase";
@@ -133,23 +136,12 @@ public class SeriesGuideDatabase {
      */
     public static final int DBVER_42_JOBS = 42;
 
-    public static final int DATABASE_VERSION = DBVER_42_JOBS;
-
     /**
-     * Qualifies column names by prefixing their {@link Tables} name.
+     * This has been replaced by {@link SgRoomDatabase#VERSION}.
+     * <p>
+     * Kept for reference to the last non-Room database version.
      */
-    public interface Qualified {
-
-        String SHOWS_ID = Tables.SHOWS + "." + Shows._ID;
-        String SHOWS_LAST_EPISODE = Tables.SHOWS + "." + Shows.LASTWATCHEDID;
-        String SHOWS_NEXT_EPISODE = Tables.SHOWS + "." + Shows.NEXTEPISODE;
-        String EPISODES_ID = Tables.EPISODES + "." + Episodes._ID;
-        String EPISODES_SHOW_ID = Tables.EPISODES + "." + Shows.REF_SHOW_ID;
-        String LIST_ITEMS_REF_ID = Tables.LIST_ITEMS + "." + ListItems.ITEM_REF_ID;
-
-        String SG_SHOW_ID = Tables.SG_SHOW + "." + SgShow2Columns._ID;
-        String SG_EPISODE_ID = Tables.SG_EPISODE + "." + SgEpisode2Columns._ID;
-    }
+    public static final int DATABASE_VERSION = DBVER_42_JOBS;
 
     public interface Tables {
 
@@ -162,15 +154,6 @@ public class SeriesGuideDatabase {
         String SG_SHOW = "sg_show";
         String SG_SEASON = "sg_season";
         String SG_EPISODE = "sg_episode";
-
-        String SHOWS_JOIN_EPISODES_ON_LAST_EPISODE = SHOWS + " LEFT OUTER JOIN " + EPISODES
-                + " ON " + Qualified.SHOWS_LAST_EPISODE + "=" + Qualified.EPISODES_ID;
-
-        String SHOWS_JOIN_EPISODES_ON_NEXT_EPISODE = SHOWS + " LEFT OUTER JOIN " + EPISODES
-                + " ON " + Qualified.SHOWS_NEXT_EPISODE + "=" + Qualified.EPISODES_ID;
-
-        String EPISODES_JOIN_SHOWS = EPISODES + " LEFT OUTER JOIN " + SHOWS
-                + " ON " + Qualified.EPISODES_SHOW_ID + "=" + Qualified.SHOWS_ID;
 
         String EPISODES_SEARCH = "searchtable";
 

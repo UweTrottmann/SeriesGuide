@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2021-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2021 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.shows.database
 
@@ -680,6 +680,11 @@ data class SgEpisode2WithShow(
         // WAIT, make sure to update the above dummy query so there is compile time validation!
         const val SELECT =
             "SELECT sg_episode._id, episode_title, episode_number, episode_season_number, episode_firstairedms, episode_watched, episode_collected, episode_description, series_title, series_network, series_poster_small FROM sg_episode LEFT OUTER JOIN sg_show ON sg_episode.series_id=sg_show._id"
+
+        /**
+         * Qualified name of episode ID column for use with [SELECT].
+         */
+        const val SG_EPISODE_ID = Tables.SG_EPISODE + "." + _ID
 
         private const val CALENDAR_DAY_LIMIT_MS = 31 * DateUtils.DAY_IN_MILLIS
 
