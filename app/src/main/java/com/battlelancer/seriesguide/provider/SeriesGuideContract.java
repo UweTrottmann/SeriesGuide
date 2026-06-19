@@ -536,12 +536,7 @@ public class SeriesGuideContract {
         String FIRST_RELEASE = "series_firstaired";
 
         /**
-         * Local release time. Encoded as integer (hhmm).
-         *
-         * <pre>
-         * Example: 2035
-         * Default: -1
-         * </pre>
+         * See {@link SgShow2#getReleaseTime()}.
          */
         String RELEASE_TIME = "series_airstime";
 

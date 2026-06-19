@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2021-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2021 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.shows.database
 
@@ -84,10 +84,9 @@ data class SgShow2(
     /**
      * Local release time. Encoded as integer (hhmm).
      *
-     * ```
-     * Example: 2035
-     * Default: -1
-     * ```
+     * Example: `2035`
+     *
+     * Default: [UNKNOWN_RELEASE_TIME]
      */
     @ColumnInfo(name = RELEASE_TIME) val releaseTime: Int?,
     /**
@@ -281,7 +280,7 @@ data class SgShow2(
     @ColumnInfo(name = USER_NOTE_TRAKT_ID) val userNoteTraktId: Long?
 ) {
     val releaseTimeOrDefault: Int
-        get() = releaseTime ?: -1
+        get() = releaseTime ?: UNKNOWN_RELEASE_TIME
     val customReleaseTimeOrDefault: Int
         get() = customReleaseTime ?: CUSTOM_RELEASE_TIME_NOT_SET
     val customReleaseDayOffsetOrDefault: Int
@@ -302,6 +301,9 @@ data class SgShow2(
         get() = userNote?.ifBlank { "" } ?: ""
 
     companion object {
+
+        const val UNKNOWN_RELEASE_TIME = -1
+
         /**
          * Used if the number of remaining episodes to watch for a show is not (yet) known.
          *
