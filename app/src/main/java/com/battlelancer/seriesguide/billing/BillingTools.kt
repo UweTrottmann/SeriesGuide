@@ -6,6 +6,7 @@ package com.battlelancer.seriesguide.billing
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
+import androidx.annotation.VisibleForTesting
 import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
@@ -64,7 +65,11 @@ object BillingTools {
         }
     }
 
-    private fun updateUnlockState(context: Context) {
+    /**
+     * Typically use [updateUnlockStateAsync], only public for testing.
+     */
+    @VisibleForTesting
+    fun updateUnlockState(context: Context) {
         val amazonUnlockState = AdvancedSettings.getLastSupporterState(context)
         val passUnlockState = PackageTools.hasUnlockKeyInstalled(context)
         val playUnlockStateDb = LocalBillingDb.getInstance(context).unlockStateHelper()
