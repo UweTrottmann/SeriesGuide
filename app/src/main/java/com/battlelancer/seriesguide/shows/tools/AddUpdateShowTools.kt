@@ -78,6 +78,8 @@ class AddUpdateShowTools @Inject constructor(
         DATABASE_ERROR
     }
 
+    private class AddShowDatabaseException(val result: ShowResult) : Exception(result.name)
+
     /**
      * Add a show to the database.
      *
@@ -141,48 +143,59 @@ class AddUpdateShowTools @Inject constructor(
             }
         }
 
-        // Run within transaction to avoid show ID foreign key constraint failures.
+        // Run within transaction to avoid show ID foreign key constraint failures and to be able to
+        // roll back all changes on failure (to avoid a partially inserted show, such as if adding a
+        // season fails).
         val database = SgRoomDatabase.getInstance(context)
-        var showId = -1L
-        val result = database.runInTransaction<ShowResult> {
-            // Store show to database to get row ID
-            showId = database.sgShow2Helper().insertShow(show)
-            if (showId == -1L) return@runInTransaction ShowResult.DATABASE_ERROR
+        val showId: Long
+        try {
+            showId = database.runInTransaction<Long> {
+                // Store show to database to get row ID
+                val showId = database.sgShow2Helper().insertShow(show)
+                if (showId == -1L) {
+                    throw AddShowDatabaseException(ShowResult.DATABASE_ERROR)
+                }
 
-            // Store seasons to database to get row IDs
-            val seasons = mapToSgSeason2(showDetails.seasons, showId)
-            val seasonIds = database.sgSeason2Helper().insertSeasons(seasons)
+                // Store seasons to database to get row IDs
+                val seasons = mapToSgSeason2(showDetails.seasons, showId)
+                val seasonIds = database.sgSeason2Helper().insertSeasons(seasons)
 
-            // Download episodes by season and store to database
-            val episodeHelper = database.sgEpisode2Helper()
-            seasons.forEachIndexed { index, season ->
-                val seasonId = seasonIds[index]
-                if (seasonId == -1L) return@forEachIndexed
+                // Download episodes by season and store to database
+                val episodeHelper = database.sgEpisode2Helper()
+                seasons.forEachIndexed { index, season ->
+                    val seasonId = seasonIds[index]
+                    if (seasonId == -1L) return@forEachIndexed
 
-                val episodeDetails = getEpisodesOfSeason(
-                    ReleaseInfo(
-                        show.releaseTimeZone,
-                        show.releaseTimeOrDefault,
-                        show.customReleaseTimeZoneOrDefault,
-                        show.customReleaseTimeOrDefault,
-                        show.customReleaseDayOffsetOrDefault,
-                        show.releaseCountry,
-                        show.network
-                    ),
-                    showTmdbId,
-                    showId,
-                    season.number,
-                    seasonId,
-                    languageCode,
-                    null,
-                    null
-                ).getOrElse { return@runInTransaction ShowResult.TMDB_ERROR }
-                val episodes = episodeDetails.toInsert
-                episodeHelper.insertEpisodes(episodes)
+                    val episodeDetails = getEpisodesOfSeason(
+                        ReleaseInfo(
+                            show.releaseTimeZone,
+                            show.releaseTimeOrDefault,
+                            show.customReleaseTimeZoneOrDefault,
+                            show.customReleaseTimeOrDefault,
+                            show.customReleaseDayOffsetOrDefault,
+                            show.releaseCountry,
+                            show.network
+                        ),
+                        showTmdbId,
+                        showId,
+                        season.number,
+                        seasonId,
+                        languageCode,
+                        null,
+                        null
+                    ).getOrElse {
+                        // Roll back all changes, user should try again
+                        throw AddShowDatabaseException(ShowResult.TMDB_ERROR)
+                    }
+                    val episodes = episodeDetails.toInsert
+                    episodeHelper.insertEpisodes(episodes)
+                }
+
+                return@runInTransaction showId
             }
-            return@runInTransaction ShowResult.SUCCESS
+        } catch (e: AddShowDatabaseException) {
+            return e.result
         }
-        if (result != ShowResult.SUCCESS) return result
 
         // restore episode flags...
         if (hexagonEnabled) {
