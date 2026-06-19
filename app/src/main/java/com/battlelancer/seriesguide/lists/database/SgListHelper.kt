@@ -155,8 +155,6 @@ data class SgListItemWithDetails(
         get() = releasedMs ?: Long.MAX_VALUE
     val runningTimeMinutesOrZero: Int
         get() = runningTimeMinutes ?: 0
-    val releaseTimeOrDefault: Int
-        get() = releaseTime ?: -1
     val releaseWeekDayOrDefault: Int
         get() = releaseWeekDay ?: -1
     val customReleaseTimeOrDefault: Int
