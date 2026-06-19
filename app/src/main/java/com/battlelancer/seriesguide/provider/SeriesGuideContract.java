@@ -1206,14 +1206,9 @@ public class SeriesGuideContract {
 
         public static final String SELECTION_COLLECTION = Movies.IN_COLLECTION + "=1";
 
-        public static final String SELECTION_NOT_COLLECTION = Movies.IN_COLLECTION + "=0";
-
         public static final String SELECTION_WATCHLIST = Movies.IN_WATCHLIST + "=1";
 
-        public static final String SELECTION_NOT_WATCHLIST = Movies.IN_WATCHLIST + "=0";
-
         public static final String SELECTION_WATCHED = Movies.WATCHED + "=1";
-        public static final String SELECTION_UNWATCHED = Movies.WATCHED + "=0";
 
         // Android provides the UNICODE collator,
         // use to correctly order characters with e.g. accents.
