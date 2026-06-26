@@ -8,14 +8,14 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
 
-### Next release
+## Version 2026.2
+
+### 2026.2.1 - 2026-06-26 🧪
 
 * 🔧 Shows: move manage lists button from more options menu to inside the overview and details tabs.
 * 🔨 Trakt: downloading ratings also works if API returns rating 0.
 * 🔨 Shows: when adding a show fails, roll back any database changes.
 * 📝 Import latest user interface translations.
-
-## Version 2026.2
 
 ### 2026.2.0 - 2026-06-18 🧪
 
