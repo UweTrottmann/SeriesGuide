@@ -252,7 +252,7 @@
     <string name="ack_list_item_manage">列表已更新</string>
     <string name="list_item_remove">从列表中移除</string>
     <string name="ack_list_item_removed">已从列表中删除</string>
-    <string name="list_empty">您可以添加节目到此列表</string>
+    <string name="list_empty">You can add shows or movies to this list</string>
     <string name="action_lists_reorder">对列表重新排序</string>
     <string name="ack_lists_reordered">列表已重新排序</string>
     <string name="error_name_already_exists">已存在同名列表</string>
@@ -307,7 +307,7 @@
     <string name="feature_sync">同步</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud 可帮您备份并同步您的节目、列表和电影</string>
-    <string name="hexagon_warning_trakt">当登录到 SeriesGuide Cloud 时，Trakt 的某些功能将无法使用</string>
+    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud, some Trakt features are disabled and changes are only sent to your Trakt account, not retrieved.</string>
     <string name="hexagon_signin">登录</string>
     <string name="hexagon_signout">注销</string>
     <string name="hexagon_setup_incomplete">未完成对 SeriesGuide Cloud 的设置。</string>

@@ -259,7 +259,7 @@
     <string name="ack_list_item_manage">Οι λίστες ενημερώθηκαν</string>
     <string name="list_item_remove">Κατάργηση από τη λίστα</string>
     <string name="ack_list_item_removed">Αφαιρέθηκε από τη λίστα</string>
-    <string name="list_empty">Μπορείτε να προσθέσετε σειρές σε αυτή τη λίστα</string>
+    <string name="list_empty">You can add shows or movies to this list</string>
     <string name="action_lists_reorder">Ταξινομημένες λίστες</string>
     <string name="ack_lists_reordered">Οι λίστες αναδιατάχθηκαν</string>
     <string name="error_name_already_exists">Υπάρχει ήδη μία λίστα με αυτό το όνομα</string>

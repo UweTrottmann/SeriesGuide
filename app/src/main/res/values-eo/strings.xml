@@ -259,7 +259,7 @@
     <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">Forigi el listo</string>
     <string name="ack_list_item_removed">Removed from list</string>
-    <string name="list_empty">Vi povas aldoni televidaĵojn al ĉi tiu listo</string>
+    <string name="list_empty">You can add shows or movies to this list</string>
     <string name="action_lists_reorder">Reordigi listojn</string>
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">Listo kun ĉi tiu nomo jam ekzistas</string>

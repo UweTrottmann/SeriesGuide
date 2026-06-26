@@ -259,7 +259,7 @@
     <string name="ack_list_item_manage">Listes mises à jour</string>
     <string name="list_item_remove">Retirer de la liste</string>
     <string name="ack_list_item_removed">Retiré de la liste</string>
-    <string name="list_empty">Vous pouvez ajouter des séries à cette liste.</string>
+    <string name="list_empty">You can add shows or movies to this list</string>
     <string name="action_lists_reorder">Réorganiser les listes</string>
     <string name="ack_lists_reordered">Listes réordonnées</string>
     <string name="error_name_already_exists">Une liste portant ce nom existe déjà</string>
@@ -317,7 +317,7 @@
     <string name="feature_sync">Synchronisation</string>
     <!-- Hexagon -->
     <string name="hexagon_description">Le cloud SeriesGuide permet de sauvegarder et de synchroniser vos listes, émissions et films.</string>
-    <string name="hexagon_warning_trakt">Quand vous êtes connecté a SeriesGuide Cloud certaines fonctions de Trakt sont indisponibles.</string>
+    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud, some Trakt features are disabled and changes are only sent to your Trakt account, not retrieved.</string>
     <string name="hexagon_signin">Connexion</string>
     <string name="hexagon_signout">Déconnexion</string>
     <string name="hexagon_setup_incomplete">La configuration du cloud SeriesGuide n\'était pas terminée.</string>

@@ -252,7 +252,7 @@
     <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">從清單中移除</string>
     <string name="ack_list_item_removed">Removed from list</string>
-    <string name="list_empty">您可以新增節目到此列表</string>
+    <string name="list_empty">You can add shows or movies to this list</string>
     <string name="action_lists_reorder">重新排序清單</string>
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">此名稱的清單已存在。</string>
@@ -307,7 +307,7 @@
     <string name="feature_sync">同步</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud helps to back up and sync your shows, lists and movies</string>
-    <string name="hexagon_warning_trakt">若登入 SeriesGuide Cloud，部分 Trakt 的功能將無法使用</string>
+    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud, some Trakt features are disabled and changes are only sent to your Trakt account, not retrieved.</string>
     <string name="hexagon_signin">登入</string>
     <string name="hexagon_signout">登出</string>
     <string name="hexagon_setup_incomplete">SeriesGuide Cloud未完成設置。</string>

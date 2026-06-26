@@ -259,7 +259,7 @@
     <string name="ack_list_item_manage">Lister opdateret</string>
     <string name="list_item_remove">Fjern fra liste</string>
     <string name="ack_list_item_removed">Fjernet fra listen</string>
-    <string name="list_empty">Du kan tilføje serier til denne liste</string>
+    <string name="list_empty">You can add shows or movies to this list</string>
     <string name="action_lists_reorder">Omarrangér lister</string>
     <string name="ack_lists_reordered">Lister omarrangeret</string>
     <string name="error_name_already_exists">En liste med dette navn findes allerede</string>

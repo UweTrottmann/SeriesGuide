@@ -259,7 +259,7 @@
     <string name="ack_list_item_manage">Listeler güncellendi</string>
     <string name="list_item_remove">Listeden kaldır</string>
     <string name="ack_list_item_removed">Listeden kaldırıldı</string>
-    <string name="list_empty">Bu listeye dizi ekleyebilirsiniz</string>
+    <string name="list_empty">You can add shows or movies to this list</string>
     <string name="action_lists_reorder">Listeleri tekrar sırala</string>
     <string name="ack_lists_reordered">Listeler yeniden sıralandı</string>
     <string name="error_name_already_exists">Bu ada sahip bir liste zaten var</string>
@@ -317,7 +317,7 @@
     <string name="feature_sync">Senkronizasyon</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud, dizilerinizi, listelerinizi ve filmlerinizi yedeklemenizi ve senkronize etmenizi sağlar.</string>
-    <string name="hexagon_warning_trakt">SeriesGuide Cloud ile oturum açıldığında bazı Trakt özellikleri kullanılamaz.</string>
+    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud, some Trakt features are disabled and changes are only sent to your Trakt account, not retrieved.</string>
     <string name="hexagon_signin">Giriş</string>
     <string name="hexagon_signout">Çıkış</string>
     <string name="hexagon_setup_incomplete">Series Guide Bulut kurulumu tamamlanmadı.</string>

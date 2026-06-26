@@ -273,7 +273,7 @@
     <string name="ack_list_item_manage">Zoznam aktualizovaný</string>
     <string name="list_item_remove">Odstrániť zo zoznamu</string>
     <string name="ack_list_item_removed">Odstránené zo zoznamu</string>
-    <string name="list_empty">Môžete pridať seriály do tohto zoznamu</string>
+    <string name="list_empty">You can add shows or movies to this list</string>
     <string name="action_lists_reorder">Zoradiť zoznamy</string>
     <string name="ack_lists_reordered">Poradie zoznamov zmenené</string>
     <string name="error_name_already_exists">Zoznam s týmto názvom už existuje</string>
@@ -337,7 +337,7 @@
     <string name="feature_sync">Synchronizácia</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud pomáha zálohovať a synchronizovať vaše seriály, zoznamy a filmy.</string>
-    <string name="hexagon_warning_trakt">Keď ste prihlásený na SeriesGuide Cloud niektoré trakt funkcie nie sú dostupné.</string>
+    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud, some Trakt features are disabled and changes are only sent to your Trakt account, not retrieved.</string>
     <string name="hexagon_signin">Prihlásiť sa</string>
     <string name="hexagon_signout">Odhlásiť sa</string>
     <string name="hexagon_setup_incomplete">Nastavenie SeriesGuide Cloud nebolo dokončené.</string>

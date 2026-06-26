@@ -248,7 +248,7 @@
     <string name="title_new_episodes">Новые эпизоды</string>
     <string name="watched_shows">Просмотрено</string>
     <string name="shows_collection">Коллекция</string>
-    <string name="title_library">Library</string>
+    <string name="title_library">Библиотека</string>
     <string name="watchlist">Список просмотра</string>
     <!-- Similar shows -->
     <string name="action_similar">Похожие</string>
@@ -273,7 +273,7 @@
     <string name="ack_list_item_manage">Список обновлён</string>
     <string name="list_item_remove">Удалить из списка</string>
     <string name="ack_list_item_removed">Удалено из списка</string>
-    <string name="list_empty">Вы можете добавить сериалы в этот список</string>
+    <string name="list_empty">Вы можете добавить сериалы или фильмы в этот список</string>
     <string name="action_lists_reorder">Сортировка списков</string>
     <string name="ack_lists_reordered">Списки переупорядочены</string>
     <string name="error_name_already_exists">Список с таким именем уже существует</string>
@@ -592,7 +592,7 @@
     <string name="support_the_dev">Поддержать разработчика?</string>
     <string name="support_the_dev_other_ways">Другие способы поддержки</string>
     <!-- Diagnostics -->
-    <string name="title_debug_log">Debug log</string>
+    <string name="title_debug_log">Журнал отладки</string>
     <string name="status_saving_file_success">Файл сохранен</string>
     <string name="status_saving_file_failed">Не удалось сохранить файл</string>
     <!-- Streaming info -->

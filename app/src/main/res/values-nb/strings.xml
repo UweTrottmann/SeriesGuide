@@ -259,7 +259,7 @@
     <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">Fjern fra liste</string>
     <string name="ack_list_item_removed">Removed from list</string>
-    <string name="list_empty">Du kan legge til serier i denne listen</string>
+    <string name="list_empty">You can add shows or movies to this list</string>
     <string name="action_lists_reorder">Omorganiser lister</string>
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">En liste med dette navnet finnes allerede</string>
@@ -317,7 +317,7 @@
     <string name="feature_sync">Synkroniser</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud hjelper deg å sikkerhetskopiere og synkronisere dine serier, lister og filmer</string>
-    <string name="hexagon_warning_trakt">Enkelte traktfunksjoner er ikke tilgjengelig når du er innlogget på SeriesGuide Cloud</string>
+    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud, some Trakt features are disabled and changes are only sent to your Trakt account, not retrieved.</string>
     <string name="hexagon_signin">Logg inn</string>
     <string name="hexagon_signout">Logg ut</string>
     <string name="hexagon_setup_incomplete">Oppsettet av SeriesGuide Cloud er ikke fullført.</string>
