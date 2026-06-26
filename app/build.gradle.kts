@@ -318,8 +318,8 @@ dependencies {
     testImplementation(libs.truth)
     testImplementation(libs.robolectric)
     testImplementation(libs.androidx.test.core)
-    // https://github.com/mockito/mockito/releases
     testImplementation(libs.mockito)
+    testImplementation(libs.mockito.kotlin)
     testImplementation(libs.kotlinx.coroutines.test)
 }
 

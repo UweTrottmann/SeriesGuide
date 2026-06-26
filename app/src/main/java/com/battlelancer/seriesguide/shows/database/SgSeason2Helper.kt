@@ -77,6 +77,12 @@ interface SgSeason2Helper {
     @Query("SELECT * FROM sg_season WHERE series_id = :showId ORDER BY season_number ASC")
     fun getSeasonsForExport(showId: Long): List<SgSeason2>
 
+    /**
+     * Counts the number of season rows in the database. Currently only used for testing.
+     */
+    @Query("SELECT COUNT(*) FROM sg_season")
+    fun countSeasons(): Long
+
     @Query("DELETE FROM sg_season WHERE series_id = :showId")
     suspend fun deleteSeasonsOfShow(showId: Long): Int
 }
