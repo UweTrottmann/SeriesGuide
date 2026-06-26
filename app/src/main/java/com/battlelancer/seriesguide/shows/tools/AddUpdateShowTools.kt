@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2019-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2019 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.shows.tools
 
@@ -13,18 +13,15 @@ import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.modules.ApplicationContext
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.shows.ShowsSettings
-import com.battlelancer.seriesguide.shows.database.SgEpisode2
 import com.battlelancer.seriesguide.shows.database.SgEpisode2Ids
 import com.battlelancer.seriesguide.shows.database.SgEpisode2TmdbIdUpdate
-import com.battlelancer.seriesguide.shows.database.SgEpisode2Update
 import com.battlelancer.seriesguide.shows.database.SgSeason2
 import com.battlelancer.seriesguide.shows.database.SgSeason2Numbers
 import com.battlelancer.seriesguide.shows.database.SgSeason2TmdbIdUpdate
 import com.battlelancer.seriesguide.shows.database.SgSeason2Update
-import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowService.HEXAGON
 import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowService.TMDB
+import com.battlelancer.seriesguide.shows.tools.GetEpisodesOfSeasonTools.ReleaseInfo
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowDoesNotExist
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowRetry
@@ -40,8 +37,6 @@ import com.battlelancer.seriesguide.tmdbapi.TmdbTools3.TmdbError
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools3.TmdbRetry
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools3.TmdbStop
 import com.battlelancer.seriesguide.util.LanguageTools
-import com.battlelancer.seriesguide.util.TextTools
-import com.battlelancer.seriesguide.util.TimeTools
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
@@ -49,25 +44,40 @@ import com.github.michaelbull.result.andThen
 import com.github.michaelbull.result.getOrElse
 import com.github.michaelbull.result.mapError
 import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow
-import com.uwetrottmann.tmdb2.entities.TvEpisode
 import com.uwetrottmann.tmdb2.entities.TvSeason
 import com.uwetrottmann.trakt5.entities.BaseShow
 import dagger.Lazy
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
-import java.util.TimeZone
 import javax.inject.Inject
 
 /**
  * Adds or updates a show and its seasons and episodes.
  */
-class AddUpdateShowTools @Inject constructor(
-    @param:ApplicationContext private val context: Context,
+class AddUpdateShowTools(
+    private val context: Context,
     private val getShowTools: GetShowTools,
     private val hexagonShowSync: Lazy<HexagonShowSync>,
     private val hexagonTools: Lazy<HexagonTools>,
-    private val showTools: Lazy<ShowTools2>
+    private val showTools: Lazy<ShowTools2>,
+    private val getEpisodesOfSeasonTools: GetEpisodesOfSeasonTools
 ) {
+
+    @Inject
+    constructor(
+        @ApplicationContext context: Context,
+        getShowTools: GetShowTools,
+        hexagonShowSync: Lazy<HexagonShowSync>,
+        hexagonTools: Lazy<HexagonTools>,
+        showTools: Lazy<ShowTools2>
+    ) : this(
+        context,
+        getShowTools,
+        hexagonShowSync,
+        hexagonTools,
+        showTools,
+        GetEpisodesOfSeasonTools(context)
+    )
 
     enum class ShowResult {
         SUCCESS,
@@ -166,7 +176,7 @@ class AddUpdateShowTools @Inject constructor(
                     val seasonId = seasonIds[index]
                     if (seasonId == -1L) return@forEachIndexed
 
-                    val episodeDetails = getEpisodesOfSeason(
+                    val episodeDetails = getEpisodesOfSeasonTools.getEpisodesOfSeason(
                         ReleaseInfo(
                             show.releaseTimeZone,
                             show.releaseTimeOrDefault,
@@ -268,193 +278,6 @@ class AddUpdateShowTools @Inject constructor(
         )
     }
 
-    private fun getEpisodesOfSeason(
-        releaseInfo: ReleaseInfo,
-        showTmdbId: Int,
-        showId: Long,
-        seasonNumber: Int,
-        seasonId: Long,
-        language: String,
-        localEpisodesByTmdbId: MutableMap<Int, SgEpisode2Ids>?,
-        localEpisodesWithoutTmdbIdByNumber: MutableMap<Int, SgEpisode2Ids>?
-    ): Result<EpisodeDetails, TmdbError> {
-        val fallbackLanguage: String? = ShowsSettings.getShowsLanguageFallback(context)
-            .let { if (it != language) it else null }
-
-        val tmdbEpisodes = TmdbTools3.getSeason(showTmdbId, seasonNumber, language, context)
-            .getOrElse { return Err(it) }
-
-        val tmdbEpisodesFallback = if (fallbackLanguage != null
-            && tmdbEpisodes.find { it.name.isNullOrEmpty() || it.overview.isNullOrEmpty() } != null) {
-            // Also fetch in fallback language if some episodes have no name or overview.
-            TmdbTools3.getSeason(showTmdbId, seasonNumber, fallbackLanguage, context)
-                .getOrElse { return Err(it) }
-        } else {
-            null
-        }
-
-        val episodeDetails = mapToSgEpisode2(
-            tmdbEpisodes,
-            tmdbEpisodesFallback,
-            releaseInfo,
-            showId,
-            seasonId,
-            seasonNumber,
-            localEpisodesByTmdbId,
-            localEpisodesWithoutTmdbIdByNumber
-        )
-
-        return Ok(episodeDetails)
-    }
-
-    data class EpisodeDetails(
-        val toInsert: List<SgEpisode2>,
-        val toUpdate: List<SgEpisode2Update>,
-        val toRemove: List<Long>
-    )
-
-    data class ReleaseInfo(
-        val releaseTimeZone: String?,
-        val releaseTimeOrDefault: Int,
-        val customReleaseTimeZone: String,
-        val customReleaseTime: Int,
-        val customReleaseDayOffset: Int,
-        val releaseCountry: String?,
-        val network: String?
-    )
-
-    /**
-     * If [localEpisodesByTmdbId] is not null, will add update or delete info.
-     * Will choose to update episode if not found in [localEpisodesByTmdbId],
-     * but found in [localEpisodesWithoutTmdbIdByNumber].
-     */
-    private fun mapToSgEpisode2(
-        tmdbEpisodes: List<TvEpisode>,
-        tmdbEpisodesFallback: List<TvEpisode>?,
-        releaseInfo: ReleaseInfo,
-        showId: Long,
-        seasonId: Long,
-        seasonNumber: Int,
-        localEpisodesByTmdbId: MutableMap<Int, SgEpisode2Ids>?,
-        localEpisodesWithoutTmdbIdByNumber: MutableMap<Int, SgEpisode2Ids>?
-    ): EpisodeDetails {
-        // Only apply release time auto-corrections if not using a custom time.
-        val usingCustomTime = releaseInfo.customReleaseTime != SgShow2.CUSTOM_RELEASE_TIME_NOT_SET
-        // Prefer custom time zone and release time.
-        val showTimeZone = TimeTools.getDateTimeZone(
-            if (usingCustomTime) releaseInfo.customReleaseTimeZone else releaseInfo.releaseTimeZone
-        )
-        val showReleaseTime = TimeTools.getShowReleaseTime(
-            if (usingCustomTime) releaseInfo.customReleaseTime else releaseInfo.releaseTimeOrDefault
-        )
-        val deviceTimeZone = TimeZone.getDefault().id
-
-        val toInsert = mutableListOf<SgEpisode2>()
-        val toUpdate = mutableListOf<SgEpisode2Update>()
-        tmdbEpisodes.forEach { tmdbEpisode ->
-            val tmdbId = tmdbEpisode.id ?: return@forEach
-
-            // If name or overview are empty use fallback
-            val isMissingTitle = tmdbEpisode.name.isNullOrEmpty()
-            val isMissingOverview = tmdbEpisode.overview.isNullOrEmpty()
-            val fallbackEpisode = if (isMissingTitle || isMissingOverview) {
-                tmdbEpisodesFallback?.find { it.id == tmdbId }
-            } else {
-                null
-            }
-            val titleOrNull = if (isMissingTitle) fallbackEpisode?.name else tmdbEpisode.name
-            // Note: trim as contributors sometimes add pointless new lines.
-            val overviewOrNull =
-                (if (isMissingOverview) fallbackEpisode?.overview else tmdbEpisode.overview)?.trim()
-
-            // calculate release time
-            val releaseDateTime = TimeTools.parseEpisodeReleaseDate(
-                showTimeZone,
-                tmdbEpisode.air_date,
-                releaseInfo.customReleaseDayOffset,
-                showReleaseTime,
-                releaseInfo.releaseCountry,
-                releaseInfo.network,
-                deviceTimeZone,
-                applyCorrections = !usingCustomTime
-            )
-
-            val guestStars = tmdbEpisode.guest_stars?.mapNotNull { it.name } ?: emptyList()
-            val directors = tmdbEpisode.crew?.filter { it.job == "Director" }
-                ?.mapNotNull { it.name }
-                ?: emptyList()
-            val writers = tmdbEpisode.crew?.filter { it.job == "Writer" }
-                ?.mapNotNull { it.name }
-                ?: emptyList()
-
-            // Note: last edited time is not available on TMDB,
-            // so it and last updated time are currently not used
-            // to only update changed episodes.
-
-            // Update if episode with TMDb ID is in database, or if episode with same number is.
-            // Why same number? If legacy episodes get added to TMDb they would not get updated,
-            // but instead duplicates would be inserted. So instead add the TMDb ID and update
-            // the legacy episode.
-            val localEpisodeIdOrNull = localEpisodesByTmdbId?.get(tmdbId)
-                ?: tmdbEpisode.episode_number?.let { localEpisodesWithoutTmdbIdByNumber?.get(it) }
-            if (localEpisodeIdOrNull == null) {
-                // Insert
-                toInsert.add(
-                    SgEpisode2(
-                        showId = showId,
-                        seasonId = seasonId,
-                        tmdbId = tmdbEpisode.id,
-                        title = titleOrNull ?: "",
-                        overview = overviewOrNull,
-                        number = tmdbEpisode.episode_number ?: 0,
-                        order = tmdbEpisode.episode_number ?: 0,
-                        season = seasonNumber,
-                        image = tmdbEpisode.still_path,
-                        firstReleasedMs = releaseDateTime,
-                        directors = TextTools.buildPipeSeparatedString(directors),
-                        guestStars = TextTools.buildPipeSeparatedString(guestStars),
-                        writers = TextTools.buildPipeSeparatedString(writers),
-                        ratingTmdb = tmdbEpisode.vote_average,
-                        ratingTmdbVotes = tmdbEpisode.vote_count,
-                        // Trakt ratings loaded later by TraktRatingsFetcher
-                        ratingTrakt = null,
-                        ratingTraktVotes = null,
-                        // Added by TraktRatingsSync
-                        ratingUser = null
-                    )
-                )
-            } else {
-                // Update
-                // Note: update adds TMDb ID in case episode was matched by number.
-                toUpdate.add(
-                    SgEpisode2Update(
-                        id = localEpisodeIdOrNull.id,
-                        tmdbId = tmdbId,
-                        title = titleOrNull ?: "",
-                        overview = overviewOrNull,
-                        number = tmdbEpisode.episode_number ?: 0,
-                        order = tmdbEpisode.episode_number ?: 0,
-                        season = seasonNumber,
-                        directors = TextTools.buildPipeSeparatedString(directors),
-                        guestStars = TextTools.buildPipeSeparatedString(guestStars),
-                        writers = TextTools.buildPipeSeparatedString(writers),
-                        image = tmdbEpisode.still_path,
-                        firstReleasedMs = releaseDateTime,
-                        ratingTmdb = tmdbEpisode.vote_average,
-                        ratingTmdbVotes = tmdbEpisode.vote_count,
-                    )
-                )
-                // Remove from map so episode will not get deleted.
-                localEpisodesByTmdbId?.remove(tmdbId)
-            }
-        }
-
-        // Mark any local episodes that are no longer on TMDB for removal.
-        val toRemove = localEpisodesByTmdbId?.map { it.value.id } ?: emptyList()
-
-        return EpisodeDetails(toInsert, toUpdate, toRemove)
-    }
-
     /**
      * Updates a show. Adds new, updates changed and removes orphaned episodes.
      *
@@ -518,7 +341,7 @@ class AddUpdateShowTools @Inject constructor(
                 }
             }
 
-            val episodeDetails = getEpisodesOfSeason(
+            val episodeDetails = getEpisodesOfSeasonTools.getEpisodesOfSeason(
                 ReleaseInfo(
                     updatedShow.releaseTimeZone,
                     updatedShow.releaseTime,
