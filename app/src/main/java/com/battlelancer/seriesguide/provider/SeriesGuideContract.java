@@ -464,10 +464,7 @@ public class SeriesGuideContract {
         String TVDB_ID = "series_tvdb_id";
 
         /**
-         * Slug for this show to build URLs. Always a string, but may be a number string if
-         * no slug is set (still safe to build URL with). May be null or empty.
-         * <p>
-         * Currently not used.
+         * See {@link SgShow2#getSlug()}.
          */
         String SLUG = "series_slug";
 
