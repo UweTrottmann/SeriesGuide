@@ -254,7 +254,13 @@ class TraktEpisodeSync(
         isInitialSync: Boolean, showRowId: Long,
         traktShow: BaseShow, flag: Flag
     ): Boolean {
-        val traktSeasons = TraktTools.mapSeasonsByNumber(traktShow.seasons)
+        val traktSeasonsOrNull = traktShow.seasons
+        if (traktSeasonsOrNull == null) {
+            Timber.e("processTraktSeasons: seasons is null")
+            return false
+        }
+
+        val traktSeasons = TraktTools.mapSeasonsByNumber(traktSeasonsOrNull)
 
         val database = SgRoomDatabase.getInstance(context)
         val localSeasons = database.sgSeason2Helper()
@@ -320,7 +326,13 @@ class TraktEpisodeSync(
         syncSeasons: MutableList<SyncSeason>,
         isInitialSync: Boolean
     ): Boolean {
-        val traktEpisodes = TraktTools.buildTraktEpisodesMap(traktSeason.episodes)
+        val traktEpisodesOrNull = traktSeason.episodes
+        if (traktEpisodesOrNull == null) {
+            Timber.e("processWatchedTraktEpisodes: episodes is null")
+            return false
+        }
+
+        val traktEpisodes = TraktTools.buildTraktEpisodesMap(traktEpisodesOrNull)
 
         val helper = SgRoomDatabase.getInstance(context).sgEpisode2Helper()
         val localEpisodes = helper.getEpisodesForTraktSync(seasonId)

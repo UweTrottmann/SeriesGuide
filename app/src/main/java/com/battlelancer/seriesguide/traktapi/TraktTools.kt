@@ -1,145 +1,123 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2014 Uwe Trottmann <uwe@uwetrottmann.com>
 
-package com.battlelancer.seriesguide.traktapi;
+package com.battlelancer.seriesguide.traktapi
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.util.Errors;
-import com.uwetrottmann.trakt5.TraktLink;
-import com.uwetrottmann.trakt5.TraktV2;
-import com.uwetrottmann.trakt5.entities.BaseEpisode;
-import com.uwetrottmann.trakt5.entities.BaseSeason;
-import com.uwetrottmann.trakt5.entities.SearchResult;
-import com.uwetrottmann.trakt5.enums.IdType;
-import com.uwetrottmann.trakt5.enums.Type;
-import java.util.HashMap;
-import java.util.List;
-import retrofit2.Response;
-import timber.log.Timber;
+import android.annotation.SuppressLint
+import android.content.Context
+import androidx.annotation.StringRes
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.util.Errors
+import com.uwetrottmann.trakt5.TraktLink
+import com.uwetrottmann.trakt5.TraktV2
+import com.uwetrottmann.trakt5.entities.BaseEpisode
+import com.uwetrottmann.trakt5.entities.BaseSeason
+import com.uwetrottmann.trakt5.enums.IdType
+import com.uwetrottmann.trakt5.enums.Type
+import timber.log.Timber
 
-public class TraktTools {
+object TraktTools {
 
-    private TraktTools() {
-    }
-
-    @NonNull
-    public static HashMap<Integer, BaseSeason> mapSeasonsByNumber(List<BaseSeason> seasons) {
-        @SuppressLint("UseSparseArrays")
-        HashMap<Integer, BaseSeason> traktSeasonsMap = new HashMap<>(seasons.size());
-        for (BaseSeason season : seasons) {
-            if (season.number == null
-                    || season.episodes == null
-                    || season.episodes.isEmpty()) {
-                continue; // trakt season misses required data, skip.
+    fun mapSeasonsByNumber(seasons: List<BaseSeason>): HashMap<Int, BaseSeason> {
+        @SuppressLint("UseSparseArrays") val traktSeasonsMap =
+            HashMap<Int, BaseSeason>(seasons.size)
+        for (season in seasons) {
+            val number = season.number
+            val episodes = season.episodes
+            if (number == null || episodes == null || episodes.isEmpty()) {
+                continue // Missing required data, skip
             }
-            traktSeasonsMap.put(season.number, season);
+            traktSeasonsMap[number] = season
         }
-        return traktSeasonsMap;
+        return traktSeasonsMap
     }
 
-    @NonNull
-    public static HashMap<Integer, BaseEpisode> buildTraktEpisodesMap(List<BaseEpisode> episodes) {
-        HashMap<Integer, BaseEpisode> traktEpisodesMap = new HashMap<>(episodes.size());
-        for (BaseEpisode episode : episodes) {
-            if (episode.number == null) {
-                continue; // trakt episode misses required data, skip.
-            }
-            traktEpisodesMap.put(episode.number, episode);
+    fun buildTraktEpisodesMap(episodes: MutableList<BaseEpisode>): HashMap<Int, BaseEpisode> {
+        val traktEpisodesMap = HashMap<Int, BaseEpisode>(episodes.size)
+        for (episode in episodes) {
+            val number = episode.number
+                ?: continue // Skip
+            traktEpisodesMap[number] = episode
         }
-        return traktEpisodesMap;
+        return traktEpisodesMap
     }
 
-    public static String buildShowUrl(int showTmdbId) {
-        return TraktLink.tmdb(showTmdbId) + "?id_type=show";
+    fun buildShowUrl(showTmdbId: Int): String {
+        return TraktLink.tmdb(showTmdbId) + "?id_type=show"
     }
 
-    public static String buildEpisodeUrl(int episodeTmdbId) {
-        return TraktLink.tmdb(episodeTmdbId) + "?id_type=episode";
+    fun buildEpisodeUrl(episodeTmdbId: Int): String {
+        return TraktLink.tmdb(episodeTmdbId) + "?id_type=episode"
     }
 
-    public static String buildMovieUrl(int movieTmdbId) {
-        return TraktLink.tmdb(movieTmdbId) + "?id_type=movie";
+    fun buildMovieUrl(movieTmdbId: Int): String {
+        return TraktLink.tmdb(movieTmdbId) + "?id_type=movie"
     }
 
     /**
      * Converts a rating index from 1 to 10 into the localized string representation. Any other
      * value will return the rate action string.
      */
-    public static String buildUserRatingString(Context context, @Nullable Integer rating) {
-        int resId = getRatingStringRes(rating);
-        if (resId == 0) {
-            return context.getString(R.string.action_rate);
+    fun buildUserRatingString(context: Context, rating: Int?): String {
+        val resId = getRatingStringRes(rating)
+        return if (resId == 0) {
+            context.getString(R.string.action_rate)
         } else {
-            return context.getString(R.string.rating_number_text_format, rating,
-                    context.getString(resId));
+            context.getString(
+                R.string.rating_number_text_format, rating,
+                context.getString(resId)
+            )
         }
     }
 
     @StringRes
-    private static int getRatingStringRes(@Nullable Integer rating) {
-        if (rating == null) {
-            return 0;
-        }
-        switch (rating) {
-            case 1:
-                return R.string.hate;
-            case 2:
-                return R.string.rating2;
-            case 3:
-                return R.string.rating3;
-            case 4:
-                return R.string.rating4;
-            case 5:
-                return R.string.rating5;
-            case 6:
-                return R.string.rating6;
-            case 7:
-                return R.string.rating7;
-            case 8:
-                return R.string.rating8;
-            case 9:
-                return R.string.rating9;
-            case 10:
-                return R.string.love;
-            default:
-                return 0;
+    private fun getRatingStringRes(rating: Int?): Int {
+        return when (rating) {
+            1 -> R.string.hate
+            2 -> R.string.rating2
+            3 -> R.string.rating3
+            4 -> R.string.rating4
+            5 -> R.string.rating5
+            6 -> R.string.rating6
+            7 -> R.string.rating7
+            8 -> R.string.rating8
+            9 -> R.string.rating9
+            10 -> R.string.love
+            else -> 0
         }
     }
 
     /**
-     * @return {@code null} if looking up the id failed, -1 if the movie was not found or the movie
+     * @return `null` if looking up the id failed, -1 if the movie was not found or the movie
      * id if it was found.
      */
-    @Nullable
-    public static Integer lookupMovieTraktId(TraktV2 trakt, int movieTmdbId) {
+    fun lookupMovieTraktId(trakt: TraktV2, movieTmdbId: Int): Int? {
         try {
-            Response<List<SearchResult>> response = trakt
-                    .search()
-                    .idLookup(IdType.TMDB, String.valueOf(movieTmdbId), Type.MOVIE, null, 1, 1)
-                    .execute();
-            if (response.isSuccessful()) {
-                List<SearchResult> results = response.body();
-                if (results == null || results.size() != 1) {
-                    Timber.e("Finding trakt movie failed (no results)");
-                    return -1;
+            val response = trakt
+                .search()
+                .idLookup(IdType.TMDB, movieTmdbId.toString(), Type.MOVIE, null, 1, 1)
+                .execute()
+            if (response.isSuccessful) {
+                val results = response.body()
+                if (results == null || results.size != 1) {
+                    Timber.e("Finding movie failed (no results)")
+                    return -1
                 }
-                SearchResult result = results.get(0);
-                if (result.movie != null && result.movie.ids != null) {
-                    return result.movie.ids.trakt;
+
+                val traktId = results[0].movie?.ids?.trakt
+                if (traktId == null) {
+                    Timber.e("Finding movie failed (no Trakt ID)")
+                    return null
                 }
-                Timber.e("Finding trakt movie failed (not in results)");
-                return -1;
+
+                return traktId
             } else {
-                Errors.logAndReport("movie trakt id lookup", response);
+                Errors.logAndReport("movie trakt id lookup", response)
             }
-        } catch (Exception e) {
-            Errors.logAndReport("movie trakt id lookup", e);
+        } catch (e: Exception) {
+            Errors.logAndReport("movie trakt id lookup", e)
         }
-        return null;
+        return null
     }
+
 }

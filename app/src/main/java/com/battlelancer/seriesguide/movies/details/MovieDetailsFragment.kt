@@ -509,7 +509,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             } else {
                 groupRatingsUser.isGone = false
                 textViewRatingsUser.text =
-                    TraktTools.buildUserRatingString(activity, rating)
+                    TraktTools.buildUserRatingString(requireContext(), rating)
             }
             root.isGone = false
         }
