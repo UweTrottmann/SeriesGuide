@@ -18,6 +18,8 @@ import timber.log.Timber
 
 object TraktTools {
 
+    private val linksBaseUrl = "https://app.trakt.tv"
+
     fun mapSeasonsByNumber(seasons: List<BaseSeason>): HashMap<Int, BaseSeason> {
         @SuppressLint("UseSparseArrays") val traktSeasonsMap =
             HashMap<Int, BaseSeason>(seasons.size)
@@ -42,13 +44,11 @@ object TraktTools {
         return traktEpisodesMap
     }
 
-    fun buildShowUrl(showTmdbId: Int): String {
-        return TraktLink.tmdb(showTmdbId) + "?id_type=show"
-    }
+    fun buildShowUrl(slugOrTraktId: String): String =
+        "$linksBaseUrl/shows/$slugOrTraktId"
 
-    fun buildEpisodeUrl(episodeTmdbId: Int): String {
-        return TraktLink.tmdb(episodeTmdbId) + "?id_type=episode"
-    }
+    fun buildEpisodeUrl(showSlugOrTraktId: String, seasonNumber: Int, episodeNumber: Int): String =
+        "$linksBaseUrl/shows/$showSlugOrTraktId/seasons/$seasonNumber/episodes/$episodeNumber"
 
     fun buildMovieUrl(movieTmdbId: Int): String {
         return TraktLink.tmdb(movieTmdbId) + "?id_type=movie"
