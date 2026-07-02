@@ -4,14 +4,25 @@
 package com.battlelancer.seriesguide.movies
 
 import android.content.Context
+import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp.Companion.getServicesComponent
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings
+import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.movies.details.MovieDetails
+import com.battlelancer.seriesguide.movies.details.UiMovieDetails
 import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.provider.SgRoomDatabase.Companion.getInstance
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools
+import com.battlelancer.seriesguide.traktapi.TraktCredentials
+import com.battlelancer.seriesguide.traktapi.TraktTools
+import com.battlelancer.seriesguide.util.ImageTools
+import com.battlelancer.seriesguide.util.RatingsTools
+import com.battlelancer.seriesguide.util.TextTools
+import com.battlelancer.seriesguide.util.TimeTools
 import com.uwetrottmann.androidutils.GenericSimpleLoader
-import com.uwetrottmann.tmdb2.entities.Movie
-import com.uwetrottmann.trakt5.entities.Ratings
 import kotlinx.coroutines.runBlocking
+import org.threeten.bp.Instant
+import org.threeten.bp.ZonedDateTime
 
 /**
  * Tries to load current movie details from trakt and TMDb, if failing tries to fall back to local
@@ -20,9 +31,14 @@ import kotlinx.coroutines.runBlocking
 internal class MovieLoader(
     context: Context,
     private val tmdbId: Int
-) : GenericSimpleLoader<MovieDetails>(context) {
+) : GenericSimpleLoader<MovieLoader.Result>(context) {
 
-    override fun loadInBackground(): MovieDetails {
+    sealed interface Result {
+        data class Success(val details: UiMovieDetails) : Result
+        object Error : Result
+    }
+
+    override fun loadInBackground(): Result {
         // try loading from trakt and tmdb, this might return a cached response
         val movieTools = getServicesComponent(context).movieTools()
         // No need to handle InterruptedException as ModernAsyncTask does (see its constructor)
@@ -39,48 +55,128 @@ internal class MovieLoader(
         val dbMovieOrNull = getInstance(context)
             .movieHelper()
             .getMovie(tmdbId)
-        if (dbMovieOrNull == null) {
-            // ensure list flags and watched flag are false on failure
-            // (assumption: movie not in db, it has the truth, so can't be in any lists or watched)
-            details.isInCollection = false
-            details.isInWatchlist = false
-            details.isWatched = false
-            details.plays = 0
-            return details
+
+        // Need at least details from either TMDB or the database
+        if (details.tmdbMovie() == null && dbMovieOrNull == null) {
+            return Result.Error
         }
 
-        // set local state for watched, collected and watchlist status
-        // assumption: local db has the truth for these
-        details.isInCollection = dbMovieOrNull.inCollectionOrDefault
-        details.isInWatchlist = dbMovieOrNull.inWatchlistOrDefault
-        details.isWatched = dbMovieOrNull.watchedOrDefault
-        details.plays = dbMovieOrNull.playsOrDefault
-        // also use local state of user rating
-        details.userRating = dbMovieOrNull.ratingUser ?: 0
-        details.lastUpdatedMillis = dbMovieOrNull.lastUpdated ?: 0
+        return Result.Success(
+            mapToUiMovieDetails(
+                tmdbId,
+                details,
+                dbMovieOrNull,
+                context
+            )
+        )
+    }
 
-        // only overwrite other info if remote data failed to load
-        if (details.traktRatings() == null) {
-            val traktRatings = Ratings()
-            traktRatings.rating = dbMovieOrNull.ratingTrakt?.toDouble() ?: 0.0
-            traktRatings.votes = dbMovieOrNull.ratingVotesTrakt ?: 0
-            details.traktRatings(traktRatings)
-        }
-        if (details.tmdbMovie() == null) {
-            val tmdbMovie = Movie()
-            tmdbMovie.imdb_id = dbMovieOrNull.imdbId
-            tmdbMovie.title = dbMovieOrNull.title
-            tmdbMovie.overview = dbMovieOrNull.overview
-            tmdbMovie.poster_path = dbMovieOrNull.poster
-            tmdbMovie.runtime = dbMovieOrNull.runtimeMinOrDefault
-            tmdbMovie.vote_average = dbMovieOrNull.ratingTmdb ?: 0.0
-            tmdbMovie.vote_count = dbMovieOrNull.ratingVotesTmdb ?: 0
-            // if stored release date is Long.MAX, movie has no release date
-            val releaseDateMs = dbMovieOrNull.releasedMsOrDefault
-            tmdbMovie.release_date = MovieTools.movieReleaseDateFrom(releaseDateMs)
-            details.tmdbMovie(tmdbMovie)
+    fun mapToUiMovieDetails(
+        tmdbId: Int,
+        movieDetails: MovieDetails,
+        dbMovie: SgMovie?,
+        context: Context
+    ): UiMovieDetails {
+        val tmdbMovie = movieDetails.tmdbMovie()
+        val traktRatings = movieDetails.traktRatings()
+
+        val title = tmdbMovie?.title ?: dbMovie?.title
+
+        // Metacritic only has English titles so mostly English-speaking users will use it,
+        // so it's likely the original language of the movie is English.
+        val titleForMetacritic = if (tmdbMovie?.original_language == "en") {
+            tmdbMovie.original_title
+        } else title
+
+        val isWatched = dbMovie?.watchedOrDefault ?: false
+        val plays = dbMovie?.playsOrDefault ?: 0
+
+        // Release date and running time
+        val runningTime = tmdbMovie?.runtime ?: dbMovie?.runtimeMinOrDefault
+        val releaseDate = tmdbMovie?.release_date
+            ?: dbMovie
+                ?.let { MovieTools.movieReleaseDateFrom(it.releasedMsOrDefault) }
+        val releaseDateAndRunningTime = TextTools.dotSeparate(
+            releaseDate?.let { TimeTools.formatToLocalDate(context, it) },
+            runningTime?.let { TimeTools.formatToHoursAndMinutes(context.resources, it) }
+        )
+
+        val lastUpdatedMillis = dbMovie?.lastUpdated ?: 0
+
+        // hide check-in if not connected to trakt or hexagon is enabled
+        val isConnectedToTrakt = TraktCredentials.get(context).hasCredentials()
+        val hideCheckIn = !isConnectedToTrakt || HexagonSettings.isEnabled(context)
+
+        val collection = tmdbMovie?.belongs_to_collection
+
+        // Genres
+        val genres = tmdbMovie?.genres?.let { TmdbTools.buildGenresString(it) }
+            ?: dbMovie?.genres
+        val genresOrUnknown = if (genres.isNullOrEmpty()) {
+            context.getString(R.string.unknown)
+        } else genres
+
+        // Poster URLs
+        val posterPath = tmdbMovie?.poster_path ?: dbMovie?.poster
+        val hasPosterPath = !posterPath.isNullOrEmpty()
+        val posterSmallSizeImageUrl: String?
+        val posterOriginalSizeImageUrl: String?
+        if (hasPosterPath) {
+            posterSmallSizeImageUrl =
+                TmdbTools.buildLargePosterUrl(context, posterPath)
+                    .let { ImageTools.buildImageCacheUrl(it) }
+            posterOriginalSizeImageUrl =
+                TmdbTools.buildOriginalSizeImageUrl(context, posterPath)
+                    .let { ImageTools.buildImageCacheUrl(it) }
+        } else {
+            posterSmallSizeImageUrl = null
+            posterOriginalSizeImageUrl = null
         }
 
-        return details
+        return UiMovieDetails(
+            imdbId = tmdbMovie?.imdb_id ?: dbMovie?.imdbId,
+            title = title,
+            titleForMetacritic = titleForMetacritic,
+            // No need to set no translation available message if empty, movie downloader does
+            overview = tmdbMovie?.overview ?: dbMovie?.overview,
+            // Ensure lists, watched flag are false and plays 0 if db movie is not in database
+            inCollection = dbMovie?.inCollectionOrDefault ?: false,
+            inWatchlist = dbMovie?.inWatchlistOrDefault ?: false,
+            watched = isWatched,
+            plays = plays,
+            releaseDate = releaseDate,
+            releaseDateAndRunningTime = releaseDateAndRunningTime,
+            lastUpdatedText = TimeTools.formatToLocalDateAndTime(context, lastUpdatedMillis),
+            isShareButtonEnabled = title != null,
+            // Hide create event button if release date is yesterday or older
+            isCalendarButtonGone = releaseDate == null
+                    || Instant.ofEpochMilli(releaseDate.time)
+                .isBefore(ZonedDateTime.now().minusDays(1).toInstant()),
+            isCheckInButtonGone = hideCheckIn,
+            watchedButtonText = TextTools.getWatchedButtonText(context, isWatched, plays),
+            tmdbCollectionId = collection?.id,
+            tmdbCollectionName = collection?.name,
+            tmdbRating = RatingsTools.buildRatingString(
+                tmdbMovie?.vote_average ?: dbMovie?.ratingTmdb
+            ),
+            tmdbVotes = RatingsTools.buildRatingVotesString(
+                context,
+                tmdbMovie?.vote_count ?: dbMovie?.ratingVotesTmdb
+            ),
+            traktRating = RatingsTools.buildRatingString(
+                traktRatings?.rating ?: dbMovie?.ratingTrakt?.toDouble()
+            ),
+            traktVotes = RatingsTools.buildRatingVotesString(
+                context,
+                traktRatings?.votes ?: dbMovie?.ratingVotesTrakt
+            ),
+            userRating = dbMovie?.ratingUser,
+            userRatingText = TraktTools.buildUserRatingString(context, dbMovie?.ratingUser),
+            genres = genresOrUnknown,
+            tmdbUrl = TmdbTools.buildMovieUrl(tmdbId),
+            traktUrl = TraktTools.buildMovieUrl(tmdbId),
+            posterSmallSizeImageUrl = posterSmallSizeImageUrl,
+            posterOriginalSizeImageUrl = posterOriginalSizeImageUrl
+        )
     }
 }

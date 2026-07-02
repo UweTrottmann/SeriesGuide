@@ -19,10 +19,6 @@ class MovieDetails {
     var isWatched: Boolean = false
     var plays: Int = 0
 
-    var userRating: Int = 0
-
-    var lastUpdatedMillis: Long = 0
-
     fun traktRatings(): Ratings? {
         return traktRatings
     }
