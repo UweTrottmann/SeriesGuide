@@ -33,7 +33,7 @@ internal class MovieLoader(
         }
 
         // Update local database (no-op if movie not in database).
-        movieTools.updateMovie(details, tmdbId)
+        movieTools.updateMovieWithTmdbId(tmdbId, details)
 
         // Fill in details from local database.
         val dbMovieOrNull = getInstance(context)

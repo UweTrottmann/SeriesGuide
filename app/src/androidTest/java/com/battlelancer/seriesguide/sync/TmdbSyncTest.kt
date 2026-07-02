@@ -92,7 +92,6 @@ class TmdbSyncTest {
         // only the recently released outdated and the older very outdated movie should have been updated
         val movies = movieHelper.getAllMovies()
         assertThat(findMovieWithId(movies, 10).lastUpdated).isEqualTo(currentTime)
-        // FIXME Movie 11 is not updated, only movie 14
         assertThat(lastUpdatedOutdated < findMovieWithId(movies, 11).lastUpdatedOrDefault)
             .isTrue()
 

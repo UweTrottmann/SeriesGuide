@@ -127,7 +127,7 @@ class TmdbSync internal constructor(
             val details = detailsResult.movieDetails
             if (details.tmdbMovie() != null) {
                 // update local database
-                movieTools.updateMovie(details, movie.tmdbId)
+                movieTools.updateMovieWithRowId(movie.id, details)
             } else {
                 // Treat as failure if updating at least one fails.
                 result = false

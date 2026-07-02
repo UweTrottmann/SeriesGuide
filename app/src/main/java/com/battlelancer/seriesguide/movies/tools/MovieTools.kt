@@ -15,6 +15,8 @@ import com.battlelancer.seriesguide.movies.database.MovieHelper
 import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.movies.database.SgMovieFlags
 import com.battlelancer.seriesguide.movies.database.toSgMovieForInsert
+import com.battlelancer.seriesguide.movies.database.toSgMovieTmdbUpdate
+import com.battlelancer.seriesguide.movies.database.toSgMovieTraktUpdate
 import com.battlelancer.seriesguide.movies.details.MovieDetails
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
@@ -219,17 +221,27 @@ class MovieTools(
     }
 
     /**
-     * Updates existing movie. If movie does not exist in database, will do nothing.
+     * Calls [updateMovieWithRowId] if a movie with the given [tmdbId] is in the database.
      */
-    fun updateMovie(details: MovieDetails, tmdbId: Int) {
-        val values = details.toContentValuesUpdate()
-        if (values.size() == 0) {
-            return  // nothing to update, downloading probably failed :(
+    fun updateMovieWithTmdbId(tmdbId: Int, details: MovieDetails) {
+        val rowId = databaseHelper.getMovieId(tmdbId)
+            ?: return // Not in database
+        updateMovieWithRowId(rowId, details)
+    }
+
+    /**
+     * Updates existing movie with [details] from TMDB and, if they are not null, Trakt.
+     */
+    fun updateMovieWithRowId(rowId: Int, details: MovieDetails) {
+        val movieTmdbUpdate = details.toSgMovieTmdbUpdate(rowId)
+        if (movieTmdbUpdate != null) {
+            databaseHelper.update(movieTmdbUpdate)
         }
 
-        values.put(Movies.LAST_UPDATED, System.currentTimeMillis())
-
-        context.contentResolver.update(Movies.buildMovieUri(tmdbId), values, null, null)
+        val movieTraktUpdate = details.toSgMovieTraktUpdate(rowId)
+        if (movieTraktUpdate != null) {
+            databaseHelper.update(movieTraktUpdate)
+        }
     }
 
     /**

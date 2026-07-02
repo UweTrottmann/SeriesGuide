@@ -3,10 +3,6 @@
 
 package com.battlelancer.seriesguide.movies.details
 
-import android.content.ContentValues
-import com.battlelancer.seriesguide.movies.database.SgMovie
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
-import com.battlelancer.seriesguide.util.TextTools
 import com.uwetrottmann.tmdb2.entities.Movie
 import com.uwetrottmann.trakt5.entities.Ratings
 
@@ -41,44 +37,6 @@ class MovieDetails {
 
     fun tmdbMovie(movie: Movie?) {
         tmdbMovie = movie
-    }
-
-    /**
-     * Extracts ratings from trakt, all other properties from TMDb data.
-     *
-     * If either movie data is null, will still extract the properties of others.
-     *
-     * Does not add TMDB id or collection and watchlist flag.
-     */
-    fun toContentValuesUpdate(): ContentValues {
-        val values = ContentValues()
-
-        // data from trakt
-        val traktRatings = traktRatings
-        if (traktRatings != null) {
-            values.put(Movies.RATING_TRAKT, traktRatings.rating ?: 0.0)
-            values.put(Movies.RATING_VOTES_TRAKT, traktRatings.votes ?: 0)
-        }
-
-        // data from TMDb
-        val tmdbMovie = tmdbMovie
-        if (tmdbMovie != null) {
-            values.put(Movies.IMDB_ID, tmdbMovie.imdb_id)
-            values.put(Movies.TITLE, tmdbMovie.title)
-            values.put(Movies.TITLE_NOARTICLE, TextTools.trimLeadingArticle(tmdbMovie.title))
-            values.put(Movies.OVERVIEW, tmdbMovie.overview)
-            values.put(Movies.POSTER, tmdbMovie.poster_path)
-            values.put(Movies.RUNTIME_MIN, tmdbMovie.runtime ?: 0)
-            values.put(Movies.RATING_TMDB, tmdbMovie.vote_average ?: 0.0)
-            values.put(Movies.RATING_VOTES_TMDB, tmdbMovie.vote_count ?: 0)
-            // if there is no release date, store Long.MAX as it is likely in the future
-            // also helps correctly sorting movies by release date
-            val releaseDate = tmdbMovie.release_date
-            values.put(Movies.RELEASED_UTC_MS,
-                releaseDate?.getTime() ?: SgMovie.RELEASED_MS_UNKNOWN)
-        }
-
-        return values
     }
 
 }
