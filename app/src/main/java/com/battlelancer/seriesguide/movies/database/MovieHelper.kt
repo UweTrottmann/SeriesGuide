@@ -259,7 +259,7 @@ data class SgMovieTraktUpdate(
     val id: Int,
 
     @ColumnInfo(name = Movies.RATING_TRAKT)
-    val ratingTrakt: Int?,
+    val ratingTrakt: Double?,
     @ColumnInfo(name = Movies.RATING_VOTES_TRAKT)
     val ratingVotesTrakt: Int?,
 )
@@ -272,7 +272,7 @@ fun MovieDetails.toSgMovieTraktUpdate(movieId: Int): SgMovieTraktUpdate? {
 
     return SgMovieTraktUpdate(
         id = movieId,
-        ratingTrakt = traktRatings.rating?.toInt() ?: 0,
+        ratingTrakt = traktRatings.rating ?: 0.0,
         ratingVotesTrakt = traktRatings.votes ?: 0
     )
 }

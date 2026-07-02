@@ -297,7 +297,7 @@ class DefaultValuesTest {
         assertThat(movie.watched).isEqualTo(false)
         assertThat(movie.ratingTmdb).isEqualTo(0.0)
         assertThat(movie.ratingVotesTmdb).isEqualTo(0)
-        assertThat(movie.ratingTrakt).isEqualTo(0)
+        assertThat(movie.ratingTrakt).isEqualTo(0.0)
         assertThat(movie.ratingVotesTrakt).isEqualTo(0)
     }
 

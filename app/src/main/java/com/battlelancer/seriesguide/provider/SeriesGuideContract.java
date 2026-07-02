@@ -984,6 +984,11 @@ public class SeriesGuideContract {
         String RELEASED_UTC_MS = "movies_released";
 
         /**
+         * See {@link SgMovie#getSlug()}.
+         */
+        String SLUG = "movies_slug";
+
+        /**
          * See {@link SgMovie#getRuntimeMin()}.
          */
         String RUNTIME_MIN = "movies_runtime";

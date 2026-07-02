@@ -205,7 +205,7 @@ class MovieLoader(
                 tmdbMovie?.vote_count ?: dbMovie?.ratingVotesTmdb
             ),
             traktRating = RatingsTools.buildRatingString(
-                traktRatings?.rating ?: dbMovie?.ratingTrakt?.toDouble()
+                traktRatings?.rating ?: dbMovie?.ratingTrakt
             ),
             traktVotes = RatingsTools.buildRatingVotesString(
                 context,

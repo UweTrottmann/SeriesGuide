@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2018-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2018 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.movies.database
 
@@ -28,6 +28,14 @@ data class SgMovie(
 
     @ColumnInfo(name = Movies.IMDB_ID)
     val imdbId: String? = null,
+
+    /**
+     * The Trakt slug for this movie to build URLs. May be null or empty.
+     *
+     * Added in [SgRoomDatabase.VERSION_55_MOVIE_SLUG_DOUBLE_RATING].
+     */
+    @ColumnInfo(name = Movies.SLUG)
+    val slug: String? = null,
 
     @ColumnInfo(name = Movies.TITLE)
     val title: String? = null,
@@ -70,6 +78,9 @@ data class SgMovie(
     @ColumnInfo(name = Movies.TRAILER)
     val trailer: String? = null,
 
+    /**
+     * Currently unused as certifications vary by region.
+     */
     @ColumnInfo(name = Movies.CERTIFICATION)
     val certification: String? = null,
 
@@ -99,9 +110,6 @@ data class SgMovie(
     val ratingVotesTmdb: Int? = 0,
 
     /**
-     * **Note**: Due to an oversight, the current database type is INTEGER and not REAL (Int? below
-     * instead of Double?).
-     *
      * Trakt rating. Encoded as double.
      * ```
      * Range:   0.0-10.0
@@ -109,7 +117,7 @@ data class SgMovie(
      * ```
      */
     @ColumnInfo(name = Movies.RATING_TRAKT)
-    val ratingTrakt: Int? = 0,
+    val ratingTrakt: Double? = 0.0,
 
     @ColumnInfo(name = Movies.RATING_VOTES_TRAKT)
     val ratingVotesTrakt: Int? = 0,
