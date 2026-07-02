@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2018 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.provider
 
@@ -11,9 +11,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.battlelancer.seriesguide.movies.details.MovieDetails
 import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestEpisode
 import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestEpisode49
+import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestMovie
 import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestSeason
 import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestSeason49
 import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestShow
@@ -21,7 +21,6 @@ import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestShow49
 import com.battlelancer.seriesguide.shows.history.ActivityType
 import com.battlelancer.seriesguide.util.ImageTools
 import com.google.common.truth.Truth.assertThat
-import com.uwetrottmann.tmdb2.entities.Movie
 import org.junit.After
 import org.junit.Assert.assertThrows
 import org.junit.Before
@@ -198,13 +197,10 @@ class MigrationTest {
             false
         )
 
-        var testMovieDetails = getTestMovieDetails(12)
-        testMovieDetails.isWatched = true
-        RoomDatabaseTestHelper.insertMovie(db, testMovieDetails)
-
-        testMovieDetails = getTestMovieDetails(13)
-        testMovieDetails.isWatched = false
-        RoomDatabaseTestHelper.insertMovie(db, testMovieDetails)
+        val testMovieTmdbIdWatched = 12
+        val testMovieTmdbIdNotWatched = 13
+        TestMovie(testMovieTmdbIdWatched, true, null).insertInto(db)
+        TestMovie(testMovieTmdbIdNotWatched, false, null).insertInto(db)
 
         db.close()
 
@@ -220,10 +216,16 @@ class MigrationTest {
         }
 
         // Watched movie should have 1 play.
-        queryAndAssert(db, "SELECT movies_plays FROM movies WHERE movies_tmdbid=12") {
+        queryAndAssert(
+            db,
+            "SELECT movies_plays FROM movies WHERE movies_tmdbid=$testMovieTmdbIdWatched"
+        ) {
             assertThat(it.getInt(0)).isEqualTo(1)
         }
-        queryAndAssert(db, "SELECT movies_plays FROM movies WHERE movies_tmdbid=13") {
+        queryAndAssert(
+            db,
+            "SELECT movies_plays FROM movies WHERE movies_tmdbid=$testMovieTmdbIdNotWatched"
+        ) {
             assertThat(it.getInt(0)).isEqualTo(0)
         }
     }
@@ -515,18 +517,6 @@ class MigrationTest {
                 "Episode Title",
                 1
             )
-        }
-
-        private fun getTestMovieDetails(tmdbId: Int?): MovieDetails {
-            val movieDetails = MovieDetails()
-            val tmdbMovie = Movie()
-            if (tmdbId != null) {
-                tmdbMovie.id = tmdbId
-            } else {
-                tmdbMovie.id = 12
-            }
-            movieDetails.tmdbMovie(tmdbMovie)
-            return movieDetails
         }
     }
 }

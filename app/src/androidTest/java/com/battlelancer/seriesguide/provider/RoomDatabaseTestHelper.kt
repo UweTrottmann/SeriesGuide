@@ -6,12 +6,13 @@ package com.battlelancer.seriesguide.provider
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.battlelancer.seriesguide.movies.details.MovieDetails
+import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
 import com.battlelancer.seriesguide.shows.database.SgEpisode2
 import com.battlelancer.seriesguide.shows.database.SgSeason2
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
+import com.battlelancer.seriesguide.util.TextTools
 
 /**
  * Helps insert data for different database schema versions to test migrations.
@@ -257,12 +258,60 @@ object RoomDatabaseTestHelper {
         db.insert(Tables.EPISODES, SQLiteDatabase.CONFLICT_REPLACE, values)
     }
 
-    @JvmStatic
-    fun insertMovie(db: SupportSQLiteDatabase, movieDetails: MovieDetails) {
-        db.insert(
-            Tables.MOVIES, SQLiteDatabase.CONFLICT_REPLACE,
-            movieDetails.toContentValuesInsert()
-        )
+    /**
+     * Modeled after [SgMovie] table as it exists since the oldest supported database version.
+     */
+    data class TestMovie(
+        val tmdbId: Int,
+        val watched: Boolean,
+        /** Starting with [SgRoomDatabase.VERSION_48_EPISODE_PLAYS] plays are 0 or greater. */
+        val plays: Int?
+    ) {
+
+        // Use different values to spot if columns get mixed up during migration
+        val imdbId = "test-imdbId"
+        val title = "Test Movie"
+        val titleNoArticle = TextTools.trimLeadingArticle(title)
+        val poster = "test/poster.jpg"
+        val overview = "Test overview"
+        val releasedMs = SgMovie.RELEASED_MS_UNKNOWN
+        val runtimeMin = 123
+        val inCollection = true
+        val inWatchlist = true
+        val ratingTmdb = 8.5
+        val ratingVotesTmdb = 1234
+        val ratingTrakt = 8
+        val ratingVotesTrakt = 4321
+        val ratingUser = 9
+        val lastUpdated = System.currentTimeMillis()
+
+        fun toContentValues(): ContentValues {
+            return ContentValues().apply {
+                put("movies_tmdbid", tmdbId)
+                put("movies_imdbid", imdbId)
+                put("movies_title", title)
+                put("movies_title_noarticle", titleNoArticle)
+                put("movies_poster", poster)
+                put("movies_overview", overview)
+                put("movies_released", releasedMs)
+                put("movies_runtime", runtimeMin)
+                put("movies_incollection", inCollection)
+                put("movies_inwatchlist", inWatchlist)
+                put("movies_plays", plays)
+                put("movies_watched", watched)
+                put("movies_rating_tmdb", ratingTmdb)
+                put("movies_rating_votes_tmdb", ratingVotesTmdb)
+                put("movies_rating_trakt", ratingTrakt)
+                put("movies_rating_votes_trakt", ratingVotesTrakt)
+                put("movies_rating_user", ratingUser)
+                put("movies_last_updated", lastUpdated)
+            }
+        }
+
+        fun insertInto(db: SupportSQLiteDatabase) {
+            db.insert(Tables.MOVIES, SQLiteDatabase.CONFLICT_REPLACE, toContentValues())
+        }
+
     }
 
 }

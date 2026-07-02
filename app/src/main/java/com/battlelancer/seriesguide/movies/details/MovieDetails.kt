@@ -6,7 +6,6 @@ package com.battlelancer.seriesguide.movies.details
 import android.content.ContentValues
 import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
-import com.battlelancer.seriesguide.util.DBUtils
 import com.battlelancer.seriesguide.util.TextTools
 import com.uwetrottmann.tmdb2.entities.Movie
 import com.uwetrottmann.trakt5.entities.Ratings
@@ -82,23 +81,4 @@ class MovieDetails {
         return values
     }
 
-    /**
-     * Like [toContentValuesUpdate], but adds TMDB id and adds values for collection,
-     * watchlist and watched status and plays.
-     */
-    fun toContentValuesInsert(): ContentValues {
-        val values = toContentValuesUpdate()
-        values.put(Movies.TMDB_ID, tmdbMovie!!.id)
-        values.put(Movies.IN_COLLECTION, DBUtils.convertBooleanToInt(isInCollection))
-        values.put(Movies.IN_WATCHLIST, DBUtils.convertBooleanToInt(isInWatchlist))
-        values.put(Movies.WATCHED, DBUtils.convertBooleanToInt(isWatched))
-        values.put(Movies.PLAYS, plays)
-        // set default values
-        values.put(Movies.RATING_TMDB, 0)
-        values.put(Movies.RATING_VOTES_TMDB, 0)
-        values.put(Movies.RATING_TRAKT, 0)
-        values.put(Movies.RATING_VOTES_TRAKT, 0)
-        values.put(Movies.LAST_UPDATED, System.currentTimeMillis())
-        return values
-    }
 }
