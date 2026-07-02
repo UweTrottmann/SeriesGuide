@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2021 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.provider
 
@@ -13,10 +13,14 @@ import com.battlelancer.seriesguide.shows.database.SgSeason2
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 
+/**
+ * Helps insert data for different database schema versions to test migrations.
+ */
 object RoomDatabaseTestHelper {
 
     /**
-     * Modeled after [SgShow2] at version 49.
+     * Modeled after [SgShow2] table as it exists since
+     * [SgRoomDatabase.VERSION_49_AUTO_ID_MIGRATION].
      */
     data class TestShow49(
         val tmdbId: Int,
@@ -46,7 +50,8 @@ object RoomDatabaseTestHelper {
 
 
     /**
-     * Modeled after [SgSeason2] at version 49.
+     * Modeled after [SgSeason2] table as it exists since
+     * [SgRoomDatabase.VERSION_49_AUTO_ID_MIGRATION].
      */
     data class TestSeason49(
         val tmdbId: String,
@@ -63,7 +68,8 @@ object RoomDatabaseTestHelper {
     }
 
     /**
-     * Modeled after [SgEpisode2] at version 49.
+     * Modeled after [SgEpisode2] table as it exists since
+     * [SgRoomDatabase.VERSION_49_AUTO_ID_MIGRATION].
      */
     data class TestEpisode49(
         val tmdbId: Int,
@@ -105,7 +111,11 @@ object RoomDatabaseTestHelper {
         showId: Long,
         db: SupportSQLiteDatabase
     ): Long {
-        return db.insert("sg_season", SQLiteDatabase.CONFLICT_REPLACE, season.toContentValues(showId))
+        return db.insert(
+            "sg_season",
+            SQLiteDatabase.CONFLICT_REPLACE,
+            season.toContentValues(showId)
+        )
     }
 
     @JvmStatic
@@ -123,6 +133,9 @@ object RoomDatabaseTestHelper {
         )
     }
 
+    /**
+     * Modeled after shows table as it existed up to [SgRoomDatabase.VERSION_49_AUTO_ID_MIGRATION].
+     */
     data class TestShow(
         val tvdbId: Int,
         val title: String,
@@ -151,6 +164,10 @@ object RoomDatabaseTestHelper {
         }
     }
 
+    /**
+     * Modeled after seasons table as it existed up to
+     * [SgRoomDatabase.VERSION_49_AUTO_ID_MIGRATION].
+     */
     data class TestSeason(
         val tvdbId: Int,
         val showTvdbId: String,
@@ -165,6 +182,10 @@ object RoomDatabaseTestHelper {
         }
     }
 
+    /**
+     * Modeled after episodes table as it existed up to
+     * [SgRoomDatabase.VERSION_49_AUTO_ID_MIGRATION].
+     */
     data class TestEpisode(
         val tvdbId: Int,
         val name: String,
