@@ -157,61 +157,41 @@ data class MovieStats(
 )
 
 /**
- * Extracts ratings from Trakt, all other properties from TMDB data.
+ * Extracts properties from [tmdbMovie] (assumed not null) and if not null [traktRatings].
  *
- * If either Trakt or TMDB movie data is null, will still extract the properties of the other.
- *
- * Does not set collection, watchlist or watched flags or plays value.
- *
- * See [toSgMovieForInsert] for that.
- */
-fun MovieDetails.toSgMovieForUpdate(tmdbId: Int): SgMovie {
-    val sgMovie = SgMovie(tmdbId = tmdbId)
-        .let {
-            val traktRatings = traktRatings()
-            if (traktRatings != null) {
-                it.copy(
-                    ratingTrakt = traktRatings.rating?.toInt() ?: 0,
-                    ratingVotesTrakt = traktRatings.votes ?: 0
-                )
-            } else {
-                it
-            }
-        }.let {
-            val tmdbMovie = tmdbMovie()
-            if (tmdbMovie != null) {
-                it.copy(
-                    imdbId = tmdbMovie.imdb_id,
-                    title = tmdbMovie.title,
-                    titleNoArticle = TextTools.trimLeadingArticle(tmdbMovie.title),
-                    overview = tmdbMovie.overview,
-                    poster = tmdbMovie.poster_path,
-                    runtimeMin = tmdbMovie.runtime ?: 0,
-                    ratingTmdb = tmdbMovie.vote_average ?: 0.0,
-                    ratingVotesTmdb = tmdbMovie.vote_count ?: 0,
-                    releasedMs = tmdbMovie.release_date?.time ?: SgMovie.RELEASED_MS_UNKNOWN
-                )
-            } else {
-                it
-            }
-        }
-
-    return sgMovie
-}
-
-/**
- * Like [toSgMovieForUpdate] and adds values for collection, watchlist, watched status and plays
- * and sets [SgMovie.lastUpdated] to the current time.
+ * Adds values for [isInCollection], [isInWatchlist], [isWatched] and [plays] and sets
+ * [SgMovie.lastUpdated] to the current time.
  */
 fun MovieDetails.toSgMovieForInsert(tmdbId: Int): SgMovie {
-    return toSgMovieForUpdate(tmdbId)
-        .copy(
-            inCollection = isInCollection,
-            inWatchlist = isInWatchlist,
-            plays = plays,
-            watched = isWatched,
-            lastUpdated = System.currentTimeMillis()
+    val tmdbUpdate = toSgMovieTmdbUpdate(0)!!
+
+    return SgMovie(
+        tmdbId = tmdbId,
+        inCollection = isInCollection,
+        inWatchlist = isInWatchlist,
+        plays = plays,
+        watched = isWatched,
+
+        imdbId = tmdbUpdate.imdbId,
+        title = tmdbUpdate.title,
+        titleNoArticle = tmdbUpdate.titleNoArticle,
+        poster = tmdbUpdate.poster,
+        genres = tmdbUpdate.genres,
+        overview = tmdbUpdate.overview,
+        runtimeMin = tmdbUpdate.runtimeMin,
+        releasedMs = tmdbUpdate.releasedMs,
+        ratingTmdb = tmdbUpdate.ratingTmdb,
+        ratingVotesTmdb = tmdbUpdate.ratingVotesTmdb,
+        lastUpdated = tmdbUpdate.lastUpdated,
+    ).let {
+        val traktRatings = toSgMovieTraktUpdate(0)
+            ?: return@let it // Keep default values
+
+        it.copy(
+            ratingTrakt = traktRatings.ratingTrakt,
+            ratingVotesTrakt = traktRatings.ratingVotesTrakt
         )
+    }
 }
 
 data class SgMovieTmdbUpdate(
