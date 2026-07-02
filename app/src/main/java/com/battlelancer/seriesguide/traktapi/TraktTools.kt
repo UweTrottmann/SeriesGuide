@@ -50,9 +50,8 @@ object TraktTools {
     fun buildEpisodeUrl(showSlugOrTraktId: String, seasonNumber: Int, episodeNumber: Int): String =
         "$linksBaseUrl/shows/$showSlugOrTraktId/seasons/$seasonNumber/episodes/$episodeNumber"
 
-    fun buildMovieUrl(movieTmdbId: Int): String {
-        return TraktLink.tmdb(movieTmdbId) + "?id_type=movie"
-    }
+    fun buildMovieUrl(slugOrTraktId: String): String =
+        "$linksBaseUrl/movies/$slugOrTraktId"
 
     /**
      * Converts a rating index from 1 to 10 into the localized string representation. Any other
