@@ -17,6 +17,7 @@ import com.battlelancer.seriesguide.movies.database.SgMovieFlags
 import com.battlelancer.seriesguide.movies.database.toSgMovieForInsert
 import com.battlelancer.seriesguide.movies.database.toSgMovieTmdbUpdate
 import com.battlelancer.seriesguide.movies.database.toSgMovieTraktUpdate
+import com.battlelancer.seriesguide.movies.tools.MovieDetails.TraktIds
 import com.battlelancer.seriesguide.movies.tools.MovieDownloader.MovieDetailsResult
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
@@ -197,7 +198,7 @@ class MovieTools(
 
     private suspend fun addMovie(movieTmdbId: Int, listToAddTo: Lists?): Boolean {
         // get movie info
-        val detailsResult = downloader.getMovieDetailsWithDefaults(movieTmdbId, false)
+        val detailsResult = downloader.getMovieDetailsWithDefaults(movieTmdbId, true)
         val details = when (detailsResult) {
             is MovieDetailsResult.Error -> return false // abort if minimal data failed to load
             is MovieDetailsResult.Success -> detailsResult.movieDetails
@@ -235,6 +236,11 @@ class MovieTools(
     fun updateMovieWithRowId(rowId: Int, details: MovieDetails) {
         val movieTmdbUpdate = details.toSgMovieTmdbUpdate(rowId)
         databaseHelper.update(movieTmdbUpdate)
+
+        val traktIds = details.traktIds
+        if (traktIds is TraktIds.Success) {
+            databaseHelper.updateTraktIdAndSlug(rowId, traktIds.traktId, traktIds.traktSlug)
+        }
 
         val movieTraktUpdate = details.toSgMovieTraktUpdate(rowId)
         if (movieTraktUpdate != null) {
@@ -280,8 +286,14 @@ class MovieTools(
                 return false
             }
 
-            // download movie data
-            val result = downloader.getMovieDetails(languageCode, regionCode, tmdbId, false)
+            // Download movie data, but only from TMDB to avoid two extra network requests to the
+            // Trakt API that fetches data not needed until viewing movie details.
+            val result = downloader.getMovieDetails(
+                languageCode,
+                regionCode,
+                tmdbId,
+                getTraktIdsAndRating = false
+            )
             val movieDetails = when (result) {
                 is MovieDetailsResult.Error -> {
                     if (result.isNotFoundOnTmdb) {

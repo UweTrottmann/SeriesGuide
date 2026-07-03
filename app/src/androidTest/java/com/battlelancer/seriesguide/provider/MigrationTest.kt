@@ -424,47 +424,50 @@ class MigrationTest {
         queryAndAssert(
             db,
             "SELECT " +
-                    "movies_slug," + // 0
-                    "movies_tmdbid," + // 1
-                    "movies_imdbid," + // 2
-                    "movies_title," + // 3
-                    "movies_title_noarticle," + // 4
-                    "movies_poster," + // 5
-                    "movies_overview," + // 6
-                    "movies_released," + // 7
-                    "movies_runtime," + // 8
-                    "movies_incollection," + // 9
-                    "movies_inwatchlist," + // 10
-                    "movies_plays," + // 11
-                    "movies_watched," + // 12
-                    "movies_rating_tmdb," + // 13
-                    "movies_rating_votes_tmdb," + // 14
-                    "movies_rating_trakt," + // 15
-                    "movies_rating_votes_trakt," + // 16
-                    "movies_rating_user," + // 17
-                    "movies_last_updated " + // 18
+                    "movies_traktid," + // 0
+                    "movies_slug," +
+                    "movies_tmdbid," +
+                    "movies_imdbid," +
+                    "movies_title," +
+                    "movies_title_noarticle," + // 5
+                    "movies_poster," +
+                    "movies_overview," +
+                    "movies_released," +
+                    "movies_runtime," +
+                    "movies_incollection," + // 10
+                    "movies_inwatchlist," +
+                    "movies_plays," +
+                    "movies_watched," +
+                    "movies_rating_tmdb," +
+                    "movies_rating_votes_tmdb," + // 15
+                    "movies_rating_trakt," +
+                    "movies_rating_votes_trakt," +
+                    "movies_rating_user," +
+                    "movies_last_updated " + // 19
                     "FROM movies WHERE movies_tmdbid=${testMovie.tmdbId}"
         ) { movie ->
-            assertThat(movie.isNull(0)).isTrue()
-            assertThat(movie.getInt(1)).isEqualTo(testMovie.tmdbId)
-            assertThat(movie.getString(2)).isEqualTo(testMovie.imdbId)
-            assertThat(movie.getString(3)).isEqualTo(testMovie.title)
-            assertThat(movie.getString(4)).isEqualTo(testMovie.titleNoArticle)
-            assertThat(movie.getString(5)).isEqualTo(testMovie.poster)
-            assertThat(movie.getString(6)).isEqualTo(testMovie.overview)
-            assertThat(movie.getLong(7)).isEqualTo(testMovie.releasedMs)
-            assertThat(movie.getInt(8)).isEqualTo(testMovie.runtimeMin)
-            assertThat(movie.getInt(9) == 1).isEqualTo(testMovie.inCollection)
-            assertThat(movie.getInt(10) == 1).isEqualTo(testMovie.inWatchlist)
-            assertThat(movie.getInt(11)).isEqualTo(testMovie.plays)
-            assertThat(movie.getInt(12) == 1).isEqualTo(testMovie.watched)
-            assertThat(movie.getDouble(13)).isEqualTo(testMovie.ratingTmdb)
-            assertThat(movie.getInt(14)).isEqualTo(testMovie.ratingVotesTmdb)
-            assertThat(movie.getDouble(15))
+            var index = 0
+            assertThat(movie.isNull(index++)).isTrue()
+            assertThat(movie.isNull(index++)).isTrue()
+            assertThat(movie.getInt(index++)).isEqualTo(testMovie.tmdbId)
+            assertThat(movie.getString(index++)).isEqualTo(testMovie.imdbId)
+            assertThat(movie.getString(index++)).isEqualTo(testMovie.title)
+            assertThat(movie.getString(index++)).isEqualTo(testMovie.titleNoArticle)
+            assertThat(movie.getString(index++)).isEqualTo(testMovie.poster)
+            assertThat(movie.getString(index++)).isEqualTo(testMovie.overview)
+            assertThat(movie.getLong(index++)).isEqualTo(testMovie.releasedMs)
+            assertThat(movie.getInt(index++)).isEqualTo(testMovie.runtimeMin)
+            assertThat(movie.getInt(index++) == 1).isEqualTo(testMovie.inCollection)
+            assertThat(movie.getInt(index++) == 1).isEqualTo(testMovie.inWatchlist)
+            assertThat(movie.getInt(index++)).isEqualTo(testMovie.plays)
+            assertThat(movie.getInt(index++) == 1).isEqualTo(testMovie.watched)
+            assertThat(movie.getDouble(index++)).isEqualTo(testMovie.ratingTmdb)
+            assertThat(movie.getInt(index++)).isEqualTo(testMovie.ratingVotesTmdb)
+            assertThat(movie.getDouble(index++))
                 .isEqualTo(testMovie.ratingTrakt.toDouble())
-            assertThat(movie.getInt(16)).isEqualTo(testMovie.ratingVotesTrakt)
-            assertThat(movie.getInt(17)).isEqualTo(testMovie.ratingUser)
-            assertThat(movie.getLong(18)).isEqualTo(testMovie.lastUpdated)
+            assertThat(movie.getInt(index++)).isEqualTo(testMovie.ratingVotesTrakt)
+            assertThat(movie.getInt(index++)).isEqualTo(testMovie.ratingUser)
+            assertThat(movie.getLong(index)).isEqualTo(testMovie.lastUpdated)
         }
     }
 

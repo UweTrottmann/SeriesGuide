@@ -130,6 +130,9 @@ interface MovieHelper {
     @Query("UPDATE movies SET movies_trailer = :trailer WHERE movies_tmdbid=:tmdbId")
     fun updateMovieTrailer(tmdbId: Int, trailer: String)
 
+    @Query("UPDATE movies SET movies_traktid = :traktId, movies_slug = :slug WHERE _id=:rowId")
+    fun updateTraktIdAndSlug(rowId: Int, traktId: Int?, slug: String?)
+
     @Query("DELETE FROM movies WHERE movies_tmdbid=:tmdbId")
     fun deleteMovie(tmdbId: Int): Int
 
@@ -163,7 +166,8 @@ data class MovieStats(
 )
 
 /**
- * Extracts properties from [tmdbMovie] and if not null [traktRatings].
+ * Extracts properties from [tmdbMovie] and if successfully loaded from [traktIds] and
+ * [traktRatings].
  *
  * Sets [SgMovie.lastUpdated] to the current time.
  */
@@ -176,6 +180,17 @@ fun MovieDetails.toSgMovieForInsert(
 ): SgMovie {
     val tmdbUpdate = toSgMovieTmdbUpdate(0)
 
+    val traktId: Int?
+    val traktSlug: String?
+    val traktIds = traktIds
+    if (traktIds is MovieDetails.TraktIds.Success) {
+        traktId = traktIds.traktId
+        traktSlug = traktIds.traktSlug
+    } else {
+        traktId = null
+        traktSlug = null
+    }
+
     return SgMovie(
         tmdbId = tmdbId,
         inCollection = inCollection,
@@ -184,6 +199,8 @@ fun MovieDetails.toSgMovieForInsert(
         watched = isWatched,
 
         imdbId = tmdbUpdate.imdbId,
+        traktId = traktId,
+        slug = traktSlug,
         title = tmdbUpdate.title,
         titleNoArticle = tmdbUpdate.titleNoArticle,
         poster = tmdbUpdate.poster,

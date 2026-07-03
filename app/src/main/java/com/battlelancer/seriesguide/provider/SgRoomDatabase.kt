@@ -234,12 +234,13 @@ abstract class SgRoomDatabase : RoomDatabase() {
                 override fun migrate(db: SupportSQLiteDatabase) {
                     Timber.d("Migrating database from 54 to 55")
 
-                    // Create new table
+                    // Create new table (copied from Room-generated schema)
                     db.execSQL(
                         "CREATE TABLE `movies_new` (" +
                                 "`_id` INTEGER PRIMARY KEY AUTOINCREMENT, " +
                                 "`movies_tmdbid` INTEGER NOT NULL, " +
                                 "`movies_imdbid` TEXT, " +
+                                "`movies_traktid` INTEGER, " +
                                 "`movies_slug` TEXT, " +
                                 "`movies_title` TEXT, " +
                                 "`movies_title_noarticle` TEXT, " +
@@ -263,7 +264,7 @@ abstract class SgRoomDatabase : RoomDatabase() {
                     )
 
                     // Copy from existing table
-                    // - use NULL for new movies_slug column
+                    // - use NULL for new movies_traktid and movies_slug columns
                     // - movies_rating_trakt integers as-is as SQLite internally stores them as
                     //   INTEGER anyhow as they don't have a fractional component,
                     //   see https://www.sqlite.org/datatype3.html#type_affinity.
@@ -271,6 +272,7 @@ abstract class SgRoomDatabase : RoomDatabase() {
                         "INSERT INTO movies_new (" +
                                 "movies_tmdbid, " +
                                 "movies_imdbid, " +
+                                "movies_traktid, " +
                                 "movies_slug, " +
                                 "movies_title, " +
                                 "movies_title_noarticle, " +
@@ -294,6 +296,7 @@ abstract class SgRoomDatabase : RoomDatabase() {
                                 ") SELECT " +
                                 "movies_tmdbid, " +
                                 "movies_imdbid, " +
+                                "NULL, " +
                                 "NULL, " +
                                 "movies_title, " +
                                 "movies_title_noarticle, " +

@@ -970,6 +970,11 @@ public class SeriesGuideContract {
         String TMDB_ID = "movies_tmdbid";
 
         /**
+         * See {@link SgMovie#getTraktId()}.
+         */
+        String TRAKT_ID = "movies_traktid";
+
+        /**
          * See {@link SgMovie#getPoster()}.
          */
         String POSTER = "movies_poster";

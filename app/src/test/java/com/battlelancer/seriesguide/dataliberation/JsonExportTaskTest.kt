@@ -305,6 +305,8 @@ class JsonExportTaskTest {
         val testMovieWithValues = SgMovie(
             tmdbId = 1,
             imdbId = "imdbidvalue",
+            traktId = null,
+            slug = null,
             title = "First Movie",
             releasedMs = 1234567890,
             runtimeMin = 123,
@@ -319,6 +321,8 @@ class JsonExportTaskTest {
 
         val testMovieMinimal = SgMovie(
             tmdbId = 2,
+            traktId = null,
+            slug = null,
             title = "Second Movie"
         )
 

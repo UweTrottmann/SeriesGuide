@@ -5,13 +5,14 @@ package com.battlelancer.seriesguide.movies.tools
 
 import android.content.Context
 import com.battlelancer.seriesguide.movies.MoviesSettings
+import com.battlelancer.seriesguide.movies.tools.MovieDetails.TraktIds
 import com.battlelancer.seriesguide.movies.tools.MovieTools.Companion.updateReleaseDateForRegion
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools4
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools4.TmdbErrorResponse
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools4.TmdbErrorResponse.IsNotFound
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools4.TmdbNonNullResponse.Success
 import com.battlelancer.seriesguide.traktapi.SgTrakt
-import com.battlelancer.seriesguide.traktapi.TraktTools
+import com.battlelancer.seriesguide.traktapi.TraktTools4
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.TextTools
 import com.uwetrottmann.tmdb2.entities.Movie
@@ -35,7 +36,7 @@ class MovieDownloader(
     }
 
     /**
-     * Download movie data from TMDB and if [getTraktRating] ratings from Trakt.
+     * Download movie data from TMDB and if [getTraktIdsAndRating] IDs and ratings from Trakt.
      *
      * Fetching the rating from Trakt requires to look up the Trakt ID first, so skip if not
      * necessary.
@@ -44,7 +45,7 @@ class MovieDownloader(
         languageCode: String,
         regionCode: String,
         movieTmdbId: Int,
-        getTraktRating: Boolean
+        getTraktIdsAndRating: Boolean
     ): MovieDetailsResult {
         // Load movie details from TMDB
         val tmdbResult = getEnhancedMovieFromTmdb(languageCode, regionCode, movieTmdbId)
@@ -58,11 +59,20 @@ class MovieDownloader(
             }
         }
 
-        // Optionally load ratings from Trakt
-        if (getTraktRating) {
-            val movieTraktId = TraktTools.lookupMovieTraktId(trakt, movieTmdbId)
-            if (movieTraktId != null) {
-                details.traktRatings = loadRatingsFromTrakt(movieTraktId)
+        // Optionally, get ID, slug and ratings from Trakt
+        if (getTraktIdsAndRating) {
+            val traktMovieIdsResult = TraktTools4.getMovieIds(trakt.search(), movieTmdbId)
+            if (traktMovieIdsResult is TraktTools4.TraktNonNullResponse.Success) {
+                val traktMovieId = traktMovieIdsResult.data?.trakt
+                details.traktIds = TraktIds.Success(
+                    traktMovieId,
+                    traktMovieIdsResult.data?.slug
+                )
+                if (traktMovieId != null) {
+                    details.traktRatings = loadRatingsFromTrakt(traktMovieId)
+                }
+            } else {
+                details.traktIds = TraktIds.Error
             }
         }
 
@@ -75,11 +85,11 @@ class MovieDownloader(
      */
     suspend fun getMovieDetailsWithDefaults(
         movieTmdbId: Int,
-        getTraktRating: Boolean
+        getTraktIdsAndRating: Boolean
     ): MovieDetailsResult {
         val languageCode = MoviesSettings.getMoviesLanguage(context)
         val regionCode = MoviesSettings.getMoviesRegion(context)
-        return getMovieDetails(languageCode, regionCode, movieTmdbId, getTraktRating)
+        return getMovieDetails(languageCode, regionCode, movieTmdbId, getTraktIdsAndRating)
     }
 
     private fun loadRatingsFromTrakt(movieTraktId: Int): Ratings? {

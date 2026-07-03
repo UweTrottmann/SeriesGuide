@@ -10,8 +10,11 @@ import androidx.room.PrimaryKey
 import com.battlelancer.seriesguide.movies.database.SgMovie.Companion.RELEASED_MS_UNKNOWN
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 
 /**
+ * The movies table in [SgRoomDatabase].
+ *
  * Note: ensure to use CONFLICT_REPLACE when inserting to mimic SQLite UNIQUE x ON CONFLICT REPLACE.
  */
 @Entity(
@@ -30,12 +33,20 @@ data class SgMovie(
     val imdbId: String? = null,
 
     /**
+     * The Trakt ID for this movie. May be null.
+     *
+     * Added in [SgRoomDatabase.VERSION_55_MOVIE_SLUG_DOUBLE_RATING].
+     */
+    @ColumnInfo(name = Movies.TRAKT_ID)
+    val traktId: Int?,
+
+    /**
      * The Trakt slug for this movie to build URLs. May be null or empty.
      *
      * Added in [SgRoomDatabase.VERSION_55_MOVIE_SLUG_DOUBLE_RATING].
      */
     @ColumnInfo(name = Movies.SLUG)
-    val slug: String? = null,
+    val slug: String?,
 
     @ColumnInfo(name = Movies.TITLE)
     val title: String? = null,
