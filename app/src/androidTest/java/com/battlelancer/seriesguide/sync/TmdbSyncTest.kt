@@ -16,7 +16,7 @@ import com.battlelancer.seriesguide.modules.TestTraktModule
 import com.battlelancer.seriesguide.movies.database.MovieHelper
 import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.movies.database.toSgMovieForInsert
-import com.battlelancer.seriesguide.movies.details.MovieDetails
+import com.battlelancer.seriesguide.movies.tools.MovieDetails
 import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.google.common.truth.Truth.assertThat

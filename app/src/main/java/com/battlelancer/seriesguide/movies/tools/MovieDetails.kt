@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// SPDX-FileCopyrightText: Copyright © 2014 Uwe Trottmann <uwe@uwetrottmann.com>
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
-package com.battlelancer.seriesguide.movies.details
+package com.battlelancer.seriesguide.movies.tools
 
 import com.uwetrottmann.tmdb2.entities.Movie
 import com.uwetrottmann.trakt5.entities.Ratings

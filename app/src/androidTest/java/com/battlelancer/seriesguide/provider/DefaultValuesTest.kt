@@ -23,7 +23,7 @@ import com.battlelancer.seriesguide.lists.ListsTools
 import com.battlelancer.seriesguide.lists.database.SgList
 import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.movies.database.toSgMovieForInsert
-import com.battlelancer.seriesguide.movies.details.MovieDetails
+import com.battlelancer.seriesguide.movies.tools.MovieDetails
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems
 import com.battlelancer.seriesguide.shows.database.SgShow2

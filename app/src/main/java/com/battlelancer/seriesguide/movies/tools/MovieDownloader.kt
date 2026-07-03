@@ -5,7 +5,6 @@ package com.battlelancer.seriesguide.movies.tools
 
 import android.content.Context
 import com.battlelancer.seriesguide.movies.MoviesSettings
-import com.battlelancer.seriesguide.movies.details.MovieDetails
 import com.battlelancer.seriesguide.movies.tools.MovieTools.Companion.updateReleaseDateForRegion
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools4
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools4.TmdbErrorResponse

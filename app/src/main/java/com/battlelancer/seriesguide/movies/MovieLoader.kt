@@ -8,7 +8,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp.Companion.getServicesComponent
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.movies.database.SgMovie
-import com.battlelancer.seriesguide.movies.details.MovieDetails
+import com.battlelancer.seriesguide.movies.tools.MovieDetails
 import com.battlelancer.seriesguide.movies.details.UiMovieDetails
 import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.provider.SgRoomDatabase.Companion.getInstance
