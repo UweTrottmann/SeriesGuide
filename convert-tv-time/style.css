@@ -1,0 +1,22 @@
+body {
+    font-family: sans-serif;
+    margin: 40px;
+}
+
+.toolbar {
+    margin-bottom: 20px;
+}
+
+.panes {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+textarea {
+    width: 500px;
+    height: 500px;
+    font-family: monospace;
+}
+
+
