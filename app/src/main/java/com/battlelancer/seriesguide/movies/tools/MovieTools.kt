@@ -202,15 +202,15 @@ class MovieTools(
             return false
         }
 
-        // build values
-        details.isInCollection = listToAddTo == Lists.COLLECTION
-        details.isInWatchlist = listToAddTo == Lists.WATCHLIST
-        val isWatched = listToAddTo == Lists.WATCHED
-        details.isWatched = isWatched
-        details.plays = if (isWatched) 1 else 0
-
         // add to database
-        val sgMovie = details.toSgMovieForInsert(movieTmdbId)
+        val isWatched = listToAddTo == Lists.WATCHED
+        val sgMovie = details.toSgMovieForInsert(
+            movieTmdbId,
+            inCollection = listToAddTo == Lists.COLLECTION,
+            inWatchlist = listToAddTo == Lists.WATCHLIST,
+            isWatched = isWatched,
+            plays = if (isWatched) 1 else 0
+        )
         databaseHelper.insertMovie(sgMovie)
 
         // ensure ratings for new movie are downloaded on next sync
@@ -296,15 +296,19 @@ class MovieTools(
                 return false
             }
 
-            // set flags
-            movieDetails.isInCollection = newCollectionMovies.contains(tmdbId)
-            movieDetails.isInWatchlist = newWatchlistMovies.contains(tmdbId)
+            // Determine watched state based on plays
             val plays = newWatchedMoviesToPlays[tmdbId]
             val isWatched = plays != null
-            movieDetails.isWatched = isWatched
-            movieDetails.plays = (if (isWatched) plays else 0)
 
-            moviesToInsert.add(movieDetails.toSgMovieForInsert(tmdbId))
+            moviesToInsert.add(
+                movieDetails.toSgMovieForInsert(
+                    tmdbId,
+                    inCollection = newCollectionMovies.contains(tmdbId),
+                    inWatchlist = newWatchlistMovies.contains(tmdbId),
+                    isWatched = isWatched,
+                    plays = (if (isWatched) plays else 0)
+                )
+            )
 
             // Already add to the database if we have 10 movies so UI can already update.
             if (moviesToInsert.size == 10) {

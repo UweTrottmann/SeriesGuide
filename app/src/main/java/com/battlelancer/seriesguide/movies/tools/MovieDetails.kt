@@ -14,11 +14,6 @@ class MovieDetails {
     private var traktRatings: Ratings? = null
     private var tmdbMovie: Movie? = null
 
-    var isInCollection: Boolean = false
-    var isInWatchlist: Boolean = false
-    var isWatched: Boolean = false
-    var plays: Int = 0
-
     fun traktRatings(): Ratings? {
         return traktRatings
     }

@@ -264,7 +264,13 @@ class DefaultValuesTest {
     fun movieDefaultValues() {
         val movieHelper = testDb.movieHelper()
 
-        val sgMovie = MOVIE.toSgMovieForInsert(TEST_MOVIE_TMDB_ID)
+        val sgMovie = MOVIE.toSgMovieForInsert(
+            TEST_MOVIE_TMDB_ID,
+            inCollection = false,
+            inWatchlist = false,
+            isWatched = false,
+            plays = 0
+        )
 
         movieHelper.insertMovie(sgMovie)
 
