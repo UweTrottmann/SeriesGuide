@@ -17,6 +17,7 @@ import com.battlelancer.seriesguide.movies.tools.MovieDetails
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.util.TextTools
+import com.uwetrottmann.trakt5.entities.Ratings
 
 /**
  * Data Access Object for the movies table.
@@ -212,12 +213,12 @@ fun MovieDetails.toSgMovieForInsert(
         ratingVotesTmdb = tmdbUpdate.ratingVotesTmdb,
         lastUpdated = tmdbUpdate.lastUpdated,
     ).let {
-        val traktRatings = toSgMovieTraktUpdate(0)
+        val ratingsUpdate = traktRatings?.toSgMovieTraktUpdate(0)
             ?: return@let it // Keep default values
 
         it.copy(
-            ratingTrakt = traktRatings.ratingTrakt,
-            ratingVotesTrakt = traktRatings.ratingVotesTrakt
+            ratingTrakt = ratingsUpdate.ratingTrakt,
+            ratingVotesTrakt = ratingsUpdate.ratingVotesTrakt
         )
     }
 }
@@ -284,12 +285,10 @@ data class SgMovieTraktUpdate(
 /**
  * Note: this does not update [SgMovie.lastUpdated] as it is reserved for TMDB data updates.
  */
-fun MovieDetails.toSgMovieTraktUpdate(movieId: Int): SgMovieTraktUpdate? {
-    val traktRatings = traktRatings ?: return null
-
+fun Ratings.toSgMovieTraktUpdate(movieId: Int): SgMovieTraktUpdate {
     return SgMovieTraktUpdate(
         id = movieId,
-        ratingTrakt = traktRatings.rating ?: 0.0,
-        ratingVotesTrakt = traktRatings.votes ?: 0
+        ratingTrakt = rating ?: 0.0,
+        ratingVotesTrakt = votes ?: 0
     )
 }

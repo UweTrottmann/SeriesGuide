@@ -242,10 +242,9 @@ class MovieTools(
             databaseHelper.updateTraktIdAndSlug(rowId, traktIds.traktId, traktIds.traktSlug)
         }
 
-        val movieTraktUpdate = details.toSgMovieTraktUpdate(rowId)
-        if (movieTraktUpdate != null) {
-            databaseHelper.update(movieTraktUpdate)
-        }
+        details.traktRatings
+            ?.toSgMovieTraktUpdate(rowId)
+            ?.also { databaseHelper.update(it) }
     }
 
     /**
