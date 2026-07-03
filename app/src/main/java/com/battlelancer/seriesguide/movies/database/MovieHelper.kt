@@ -232,7 +232,7 @@ data class SgMovieTmdbUpdate(
  * Also sets [SgMovie.lastUpdated] to the current time.
  */
 fun MovieDetails.toSgMovieTmdbUpdate(movieId: Int): SgMovieTmdbUpdate? {
-    val tmdbMovie = tmdbMovie() ?: return null
+    val tmdbMovie = tmdbMovie ?: return null
 
     return SgMovieTmdbUpdate(
         id = movieId,
@@ -264,7 +264,7 @@ data class SgMovieTraktUpdate(
  * Note: this does not update [SgMovie.lastUpdated] as it is reserved for TMDB data updates.
  */
 fun MovieDetails.toSgMovieTraktUpdate(movieId: Int): SgMovieTraktUpdate? {
-    val traktRatings = traktRatings() ?: return null
+    val traktRatings = traktRatings ?: return null
 
     return SgMovieTraktUpdate(
         id = movieId,

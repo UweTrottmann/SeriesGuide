@@ -57,7 +57,7 @@ internal class MovieLoader(
             .getMovie(tmdbId)
 
         // Need at least details from either TMDB or the database
-        if (details.tmdbMovie() == null && dbMovieOrNull == null) {
+        if (details.tmdbMovie == null && dbMovieOrNull == null) {
             return Result.Error
         }
 
@@ -77,8 +77,8 @@ internal class MovieLoader(
         dbMovie: SgMovie?,
         context: Context
     ): UiMovieDetails {
-        val tmdbMovie = movieDetails.tmdbMovie()
-        val traktRatings = movieDetails.traktRatings()
+        val tmdbMovie = movieDetails.tmdbMovie
+        val traktRatings = movieDetails.traktRatings
 
         val title = tmdbMovie?.title ?: dbMovie?.title
 

@@ -130,17 +130,14 @@ class TmdbSyncTest {
             release_date = Date(releaseDateMs)
         }
 
-        val details = MovieDetails().apply {
-            tmdbMovie(movie)
-        }
-
-        details.toSgMovieForInsert(
-            tmdbId,
-            inCollection = true,
-            inWatchlist = true,
-            isWatched = false,
-            plays = 0
-        )
+        MovieDetails(movie)
+            .toSgMovieForInsert(
+                tmdbId,
+                inCollection = true,
+                inWatchlist = true,
+                isWatched = false,
+                plays = 0
+            )
             .let {
                 // Replace the default lastUpdated value with the one needed for this test
                 if (lastUpdatedMs == null) {

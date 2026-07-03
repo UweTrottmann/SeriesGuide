@@ -9,25 +9,10 @@ import com.uwetrottmann.trakt5.entities.Ratings
 /**
  * Holder object for Trakt and TMDb entities related to a movie.
  */
-class MovieDetails {
+class MovieDetails(
+    val tmdbMovie: Movie? = null
+) {
 
-    private var traktRatings: Ratings? = null
-    private var tmdbMovie: Movie? = null
-
-    fun traktRatings(): Ratings? {
-        return traktRatings
-    }
-
-    fun traktRatings(traktRatings: Ratings?) {
-        this.traktRatings = traktRatings
-    }
-
-    fun tmdbMovie(): Movie? {
-        return tmdbMovie
-    }
-
-    fun tmdbMovie(movie: Movie?) {
-        tmdbMovie = movie
-    }
+    var traktRatings: Ratings? = null
 
 }

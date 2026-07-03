@@ -73,9 +73,7 @@ class MovieToolsTest {
             `when`(downloader.getMovieDetailsWithDefaults(TEST_MOVIE_TMDBID, false))
                 .thenReturn(
                     MovieDownloader.MovieDetailsResult(
-                        MovieDetails().apply {
-                            tmdbMovie(Movie())
-                        },
+                        MovieDetails(Movie()),
                         isNotFoundOnTmdb = false
                     )
                 )

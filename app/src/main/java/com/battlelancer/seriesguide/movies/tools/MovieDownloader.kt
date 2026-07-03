@@ -46,18 +46,16 @@ class MovieDownloader(
         movieTmdbId: Int,
         getTraktRating: Boolean
     ): MovieDetailsResult {
-        val details = MovieDetails()
-
         // Load movie details from TMDB
         val tmdbResult = getEnhancedMovieFromTmdb(languageCode, regionCode, movieTmdbId)
-        details.tmdbMovie(tmdbResult.movie)
+        val details = MovieDetails(tmdbResult.movie)
 
         // Optionally load ratings from Trakt
         if (tmdbResult.movie != null) {
             if (getTraktRating) {
                 val movieTraktId = TraktTools.lookupMovieTraktId(trakt, movieTmdbId)
                 if (movieTraktId != null) {
-                    details.traktRatings(loadRatingsFromTrakt(movieTraktId))
+                    details.traktRatings = loadRatingsFromTrakt(movieTraktId)
                 }
             }
         }

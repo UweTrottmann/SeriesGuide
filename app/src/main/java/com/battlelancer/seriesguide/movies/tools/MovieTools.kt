@@ -197,7 +197,7 @@ class MovieTools(
     private suspend fun addMovie(movieTmdbId: Int, listToAddTo: Lists?): Boolean {
         // get movie info
         val details = downloader.getMovieDetailsWithDefaults(movieTmdbId, false).movieDetails
-        if (details.tmdbMovie() == null) {
+        if (details.tmdbMovie == null) {
             // abort if minimal data failed to load
             return false
         }
@@ -288,7 +288,7 @@ class MovieTools(
                 continue
             }
             val movieDetails = result.movieDetails
-            if (movieDetails.tmdbMovie() == null) {
+            if (movieDetails.tmdbMovie == null) {
                 Timber.e(
                     "addMovies: failed to load details for movie with TMDB ID %s, stopping",
                     tmdbId

@@ -74,9 +74,7 @@ class DefaultValuesTest {
             type = ListItemTypesExport.TMDB_SHOW
         }
         private const val TEST_MOVIE_TMDB_ID = 12
-        private val MOVIE = MovieDetails().apply {
-            tmdbMovie(Movie())
-        }
+        private val MOVIE = MovieDetails(Movie())
         private val MOVIE_I = com.battlelancer.seriesguide.dataliberation.model.Movie()
     }
 

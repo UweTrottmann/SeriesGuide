@@ -125,7 +125,7 @@ class TmdbSync internal constructor(
                 )
             }
             val details = detailsResult.movieDetails
-            if (details.tmdbMovie() != null) {
+            if (details.tmdbMovie != null) {
                 // update local database
                 movieTools.updateMovieWithRowId(movie.id, details)
             } else {
