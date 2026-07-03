@@ -1,0 +1,44 @@
+{
+  "fields": [
+    {
+      "from": "[].id.tvdb",
+      "to": "[].tvdb_id"
+    },
+    {
+      "from": "[].title",
+      "to": "[].title"
+    },
+    {
+      "from": "[].is_favorite",
+      "to": "[].favorite"
+    },
+    {
+      "from": "[].seasons[].number",
+      "to": "[].seasons[].season"
+    },
+    {
+      "value": 1,
+      "to": "[].seasons[].tvdb_id"
+    },
+    {
+      "from": "[].seasons[].episodes[].number",
+      "to": "[].seasons[].episodes[].episode"
+    },
+    {
+      "from": "[].seasons[].episodes[].name",
+      "to": "[].seasons[].episodes[].title"
+    },
+    {
+      "from": "[].seasons[].episodes[].id.tvdb",
+      "to": "[].seasons[].episodes[].tvdb_id"
+    },
+    {
+      "from": "[].seasons[].episodes[].is_watched",
+      "to": "[].seasons[].episodes[].watched"
+    },
+    {
+      "from": "[].seasons[].episodes[].watched_count",
+      "to": "[].seasons[].episodes[].plays"
+    }
+  ]
+}

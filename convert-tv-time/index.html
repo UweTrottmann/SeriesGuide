@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TV Time to SeriesGuide JSON Transformer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>TV Time to SeriesGuide JSON Transformer</h1>
+
+<div class="toolbar">
+    <input type="file" id="fileInput">
+
+    <select id="mapping">
+        <option value="mappings/tv-time-liberator-shows.json">TV Time Liberator shows.json</option>
+    </select>
+
+    <button id="transformBtn">
+        Transform
+    </button>
+</div>
+
+<div class="panes">
+
+    <div>
+        <h2>Input</h2>
+        <textarea id="input"></textarea>
+    </div>
+
+    <div>
+        <h2>Output</h2>
+        <textarea id="output"></textarea>
+    </div>
+
+</div>
+
+<button id="downloadBtn">
+    Download JSON
+</button>
+
+<script src="app.js"></script>
+
+</body>
+</html>
