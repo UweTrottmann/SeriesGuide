@@ -103,6 +103,9 @@ interface MovieHelper {
     @Query("SELECT movies_title FROM movies WHERE movies_tmdbid=:tmdbId")
     fun getMovieTitle(tmdbId: Int): String?
 
+    @Query("SELECT movies_trailer FROM movies WHERE movies_tmdbid=:tmdbId")
+    fun getMovieTrailer(tmdbId: Int): String?
+
     @Query("UPDATE movies SET movies_watched = 0, movies_plays = 0 WHERE movies_tmdbid=:tmdbId")
     fun setNotWatchedAndRemovePlays(tmdbId: Int): Int
 
@@ -123,6 +126,9 @@ interface MovieHelper {
 
     @Query("UPDATE movies SET movies_rating_user = :userRating WHERE movies_tmdbid=:tmdbId")
     fun updateUserRating(tmdbId: Int, userRating: Int): Int
+
+    @Query("UPDATE movies SET movies_trailer = :trailer WHERE movies_tmdbid=:tmdbId")
+    fun updateMovieTrailer(tmdbId: Int, trailer: String)
 
     @Query("DELETE FROM movies WHERE movies_tmdbid=:tmdbId")
     fun deleteMovie(tmdbId: Int): Int

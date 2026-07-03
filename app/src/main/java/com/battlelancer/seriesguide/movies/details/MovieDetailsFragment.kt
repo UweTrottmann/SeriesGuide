@@ -44,6 +44,7 @@ import com.battlelancer.seriesguide.movies.similar.SimilarMoviesActivity
 import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.people.Credits
 import com.battlelancer.seriesguide.people.PeopleListHelper
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.traktapi.MovieCheckInDialogFragment
@@ -630,6 +631,8 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
         // re-query to update movie details
         restartMovieLoader()
+        // re-run trailer loader to cache to database if movie was added to database
+        restartTrailerLoader()
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -655,12 +658,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     fun handleLanguageEvent(@Suppress("UNUSED_PARAMETER") event: MovieLocalizationDialogFragment.LocalizationChangedEvent) {
         // reload movie details and trailers (but not cast/crew info which is not language dependent)
         restartMovieLoader()
-        val args = Bundle().apply {
-            putInt(ARG_TMDB_ID, tmdbId)
-        }
-        LoaderManager.getInstance(this).restartLoader(
-            MovieDetailsActivity.LOADER_ID_MOVIE_TRAILERS, args, trailerLoaderCallbacks
-        )
+        restartTrailerLoader()
     }
 
     override fun loadMovieActions() {
@@ -725,6 +723,15 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             .restartLoader(MovieDetailsActivity.LOADER_ID_MOVIE, args, movieLoaderCallbacks)
     }
 
+    private fun restartTrailerLoader() {
+        val args = Bundle().apply {
+            putInt(ARG_TMDB_ID, tmdbId)
+        }
+        LoaderManager.getInstance(this).restartLoader(
+            MovieDetailsActivity.LOADER_ID_MOVIE_TRAILERS, args, trailerLoaderCallbacks
+        )
+    }
+
     private val movieLoaderCallbacks = object : LoaderManager.LoaderCallbacks<MovieLoader.Result> {
         override fun onCreateLoader(loaderId: Int, args: Bundle?): Loader<MovieLoader.Result> {
             binding.progressBar.isGone = false
@@ -763,7 +770,11 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
     private val trailerLoaderCallbacks = object : LoaderManager.LoaderCallbacks<String?> {
         override fun onCreateLoader(loaderId: Int, args: Bundle?): Loader<String?> {
-            return MovieTrailersLoader(requireContext(), args!!.getInt(ARG_TMDB_ID))
+            return MovieTrailersLoader(
+                args!!.getInt(ARG_TMDB_ID),
+                requireContext(),
+                SgRoomDatabase.getInstance(requireContext()).movieHelper()
+            )
         }
 
         override fun onLoadFinished(
