@@ -123,6 +123,42 @@ function setValue(output, toPath, value, indices) {
 }
 
 /**
+ * Sets a constant value at all leaf positions matching the toPath
+ * in the output structure, creating nested structures as needed.
+ */
+function setConstantValueAtPath(output, toPath, value) {
+    const segments = parsePath(toPath);
+
+    function walk(node, segIdx) {
+        if (segIdx >= segments.length) return;
+
+        const seg = segments[segIdx];
+        const isLastSegment = segIdx === segments.length - 1;
+
+        if (seg === "[]") {
+            if (!Array.isArray(node)) return;
+            if (isLastSegment) return; // [] can't be last segment
+            node.forEach(item => walk(item, segIdx + 1));
+        } else {
+            if (node == null || typeof node !== "object") return;
+
+            if (isLastSegment) {
+                node[seg] = value;
+            } else {
+                const nextSeg = segments[segIdx + 1];
+                const shouldBeArray = nextSeg === "[]";
+                if (node[seg] === undefined) {
+                    node[seg] = shouldBeArray ? [] : {};
+                }
+                walk(node[seg], segIdx + 1);
+            }
+        }
+    }
+
+    walk(output, 0);
+}
+
+/**
  * Transform the JSON using the mapping.
  */
 async function transform() {
@@ -141,10 +177,8 @@ async function transform() {
         for (const field of mapping.fields) {
 
             if (field.value !== undefined) {
-                // Constant value — apply to every top-level element
-                for (let i = 0; i < inputJson.length; i++) {
-                    setValue(output, field.to, field.value, [i]);
-                }
+                // Constant value — apply to all matching paths in output
+                setConstantValueAtPath(output, field.to, field.value);
             } else {
                 // Mapped value — copy from input using index trail
                 const results = getValues(inputJson, field.from);

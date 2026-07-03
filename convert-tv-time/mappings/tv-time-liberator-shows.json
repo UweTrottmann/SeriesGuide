@@ -5,10 +5,6 @@
       "to": "[].tvdb_id"
     },
     {
-      "value": "pt-BR",
-      "to": "[].language"
-    },
-    {
       "from": "[].title",
       "to": "[].title"
     },
@@ -21,7 +17,7 @@
       "to": "[].seasons[].season"
     },
     {
-      "from": "[].seasons[].number",
+      "value": 1,
       "to": "[].seasons[].tvdb_id"
     },
     {
