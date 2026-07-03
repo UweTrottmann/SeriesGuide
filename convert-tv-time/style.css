@@ -1,22 +1,73 @@
 body {
     font-family: sans-serif;
     margin: 40px;
+    max-width: 1200px;
 }
 
 .toolbar {
     margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.toolbar input,
+.toolbar select,
+.toolbar button {
+    min-width: 100px;
 }
 
 .panes {
     display: flex;
+    flex-direction: column;
     gap: 20px;
     margin-bottom: 20px;
 }
 
-textarea {
-    width: 500px;
-    height: 500px;
-    font-family: monospace;
+.panes > div {
+    flex: 1;
+    min-width: 0;
 }
 
+textarea {
+    width: 100%;
+    height: 300px;
+    font-family: monospace;
+    box-sizing: border-box;
+}
 
+button {
+    display: block;
+    width: 100%;
+    max-width: 200px;
+}
+
+/* Medium screens and up: side-by-side layout */
+@media (min-width: 768px) {
+    body {
+        margin: 40px;
+    }
+
+    .toolbar {
+        flex-wrap: nowrap;
+        gap: 20px;
+    }
+
+    .toolbar input,
+    .toolbar select {
+        flex: 1;
+        min-width: auto;
+    }
+
+    .panes {
+        flex-direction: row;
+    }
+
+    textarea {
+        height: 500px;
+    }
+
+    button {
+        width: auto;
+    }
+}
