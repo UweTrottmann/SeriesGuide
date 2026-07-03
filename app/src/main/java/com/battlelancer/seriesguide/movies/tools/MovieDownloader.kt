@@ -29,10 +29,10 @@ class MovieDownloader(
     private val trakt: SgTrakt,
 ) {
 
-    data class MovieDetailsResult(
-        val movieDetails: MovieDetails,
-        val isNotFoundOnTmdb: Boolean
-    )
+    sealed interface MovieDetailsResult {
+        data class Success(val movieDetails: MovieDetails) : MovieDetailsResult
+        data class Error(val isNotFoundOnTmdb: Boolean) : MovieDetailsResult
+    }
 
     /**
      * Download movie data from TMDB and if [getTraktRating] ratings from Trakt.
@@ -48,19 +48,25 @@ class MovieDownloader(
     ): MovieDetailsResult {
         // Load movie details from TMDB
         val tmdbResult = getEnhancedMovieFromTmdb(languageCode, regionCode, movieTmdbId)
-        val details = MovieDetails(tmdbResult.movie)
+        val details = when (tmdbResult) {
+            is EnhancedTmdbMovieResult.Error -> {
+                return MovieDetailsResult.Error(isNotFoundOnTmdb = tmdbResult.isNotFoundOnTmdb)
+            }
 
-        // Optionally load ratings from Trakt
-        if (tmdbResult.movie != null) {
-            if (getTraktRating) {
-                val movieTraktId = TraktTools.lookupMovieTraktId(trakt, movieTmdbId)
-                if (movieTraktId != null) {
-                    details.traktRatings = loadRatingsFromTrakt(movieTraktId)
-                }
+            is EnhancedTmdbMovieResult.Success -> {
+                MovieDetails(tmdbResult.movie)
             }
         }
 
-        return MovieDetailsResult(details, isNotFoundOnTmdb = tmdbResult.isNotFoundOnTmdb)
+        // Optionally load ratings from Trakt
+        if (getTraktRating) {
+            val movieTraktId = TraktTools.lookupMovieTraktId(trakt, movieTmdbId)
+            if (movieTraktId != null) {
+                details.traktRatings = loadRatingsFromTrakt(movieTraktId)
+            }
+        }
+
+        return MovieDetailsResult.Success(details)
     }
 
     /**
@@ -91,12 +97,9 @@ class MovieDownloader(
         return null
     }
 
-    data class EnhancedTmdbMovieResult(
-        val movie: Movie?,
-        val isNotFoundOnTmdb: Boolean
-    ) {
-        constructor(movie: Movie) : this(movie, false)
-        constructor(isNotFoundOnTmdb: Boolean) : this(null, isNotFoundOnTmdb)
+    sealed interface EnhancedTmdbMovieResult {
+        data class Success(val movie: Movie) : EnhancedTmdbMovieResult
+        data class Error(val isNotFoundOnTmdb: Boolean) : EnhancedTmdbMovieResult
     }
 
     /**
@@ -131,15 +134,15 @@ class MovieDownloader(
                     movie.overview = getMovieDefaultOverviewFromTmdb(languageCode, movieTmdbId)
                 }
 
-                return EnhancedTmdbMovieResult(movie)
+                return EnhancedTmdbMovieResult.Success(movie)
             }
 
             is IsNotFound -> {
-                return EnhancedTmdbMovieResult(isNotFoundOnTmdb = true)
+                return EnhancedTmdbMovieResult.Error(isNotFoundOnTmdb = true)
             }
 
             is TmdbErrorResponse.Other -> {
-                return EnhancedTmdbMovieResult(isNotFoundOnTmdb = false)
+                return EnhancedTmdbMovieResult.Error(isNotFoundOnTmdb = false)
             }
         }
     }

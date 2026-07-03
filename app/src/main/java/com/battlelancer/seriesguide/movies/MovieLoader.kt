@@ -8,8 +8,9 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp.Companion.getServicesComponent
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.movies.database.SgMovie
-import com.battlelancer.seriesguide.movies.tools.MovieDetails
 import com.battlelancer.seriesguide.movies.details.UiMovieDetails
+import com.battlelancer.seriesguide.movies.tools.MovieDetails
+import com.battlelancer.seriesguide.movies.tools.MovieDownloader.MovieDetailsResult
 import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.provider.SgRoomDatabase.Companion.getInstance
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools
@@ -42,22 +43,28 @@ internal class MovieLoader(
         // try loading from trakt and tmdb, this might return a cached response
         val movieTools = getServicesComponent(context).movieTools()
         // No need to handle InterruptedException as ModernAsyncTask does (see its constructor)
-        val details = runBlocking {
+        val detailsResult = runBlocking {
             movieTools.downloader
                 .getMovieDetailsWithDefaults(tmdbId, true)
-                .movieDetails
         }
 
-        // Update local database (no-op if movie not in database).
-        movieTools.updateMovieWithTmdbId(tmdbId, details)
+        val details: MovieDetails? = when (detailsResult) {
+            is MovieDetailsResult.Success -> detailsResult.movieDetails
+            is MovieDetailsResult.Error -> null
+        }
 
-        // Fill in details from local database.
+        if (details != null) {
+            // Update local database (no-op if movie not in database).
+            movieTools.updateMovieWithTmdbId(tmdbId, details)
+        }
+
+        // Fill in or use cached details from local database
         val dbMovieOrNull = getInstance(context)
             .movieHelper()
             .getMovie(tmdbId)
 
         // Need at least details from either TMDB or the database
-        if (details.tmdbMovie == null && dbMovieOrNull == null) {
+        if (details == null && dbMovieOrNull == null) {
             return Result.Error
         }
 
@@ -71,14 +78,16 @@ internal class MovieLoader(
         )
     }
 
+    /**
+     * Assumes at least one of [movieDetails] or [dbMovie] is not null.
+     */
     fun mapToUiMovieDetails(
         tmdbId: Int,
-        movieDetails: MovieDetails,
+        movieDetails: MovieDetails?,
         dbMovie: SgMovie?,
         context: Context
     ): UiMovieDetails {
-        val tmdbMovie = movieDetails.tmdbMovie
-        val traktRatings = movieDetails.traktRatings
+        val tmdbMovie = movieDetails?.tmdbMovie
 
         val title = tmdbMovie?.title ?: dbMovie?.title
 
@@ -132,6 +141,8 @@ internal class MovieLoader(
             posterSmallSizeImageUrl = null
             posterOriginalSizeImageUrl = null
         }
+
+        val traktRatings = movieDetails?.traktRatings
 
         return UiMovieDetails(
             imdbId = tmdbMovie?.imdb_id ?: dbMovie?.imdbId,

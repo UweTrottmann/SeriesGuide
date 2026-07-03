@@ -10,9 +10,12 @@ import com.uwetrottmann.trakt5.entities.Ratings
  * Holder object for Trakt and TMDb entities related to a movie.
  */
 class MovieDetails(
-    val tmdbMovie: Movie? = null
+    val tmdbMovie: Movie
 ) {
 
+    /**
+     * This might be null if not loaded or if the API call failed.
+     */
     var traktRatings: Ratings? = null
 
 }

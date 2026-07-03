@@ -17,6 +17,7 @@ import com.battlelancer.seriesguide.movies.database.SgMovieFlags
 import com.battlelancer.seriesguide.movies.database.toSgMovieForInsert
 import com.battlelancer.seriesguide.movies.database.toSgMovieTmdbUpdate
 import com.battlelancer.seriesguide.movies.database.toSgMovieTraktUpdate
+import com.battlelancer.seriesguide.movies.tools.MovieDownloader.MovieDetailsResult
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
@@ -196,10 +197,10 @@ class MovieTools(
 
     private suspend fun addMovie(movieTmdbId: Int, listToAddTo: Lists?): Boolean {
         // get movie info
-        val details = downloader.getMovieDetailsWithDefaults(movieTmdbId, false).movieDetails
-        if (details.tmdbMovie == null) {
-            // abort if minimal data failed to load
-            return false
+        val detailsResult = downloader.getMovieDetailsWithDefaults(movieTmdbId, false)
+        val details = when (detailsResult) {
+            is MovieDetailsResult.Error -> return false // abort if minimal data failed to load
+            is MovieDetailsResult.Success -> detailsResult.movieDetails
         }
 
         // add to database
@@ -233,9 +234,7 @@ class MovieTools(
      */
     fun updateMovieWithRowId(rowId: Int, details: MovieDetails) {
         val movieTmdbUpdate = details.toSgMovieTmdbUpdate(rowId)
-        if (movieTmdbUpdate != null) {
-            databaseHelper.update(movieTmdbUpdate)
-        }
+        databaseHelper.update(movieTmdbUpdate)
 
         val movieTraktUpdate = details.toSgMovieTraktUpdate(rowId)
         if (movieTraktUpdate != null) {
@@ -283,17 +282,21 @@ class MovieTools(
 
             // download movie data
             val result = downloader.getMovieDetails(languageCode, regionCode, tmdbId, false)
-            if (result.isNotFoundOnTmdb) {
-                Timber.w("addMovies: movie with TMDB ID %s not found, skipping", tmdbId)
-                continue
-            }
-            val movieDetails = result.movieDetails
-            if (movieDetails.tmdbMovie == null) {
-                Timber.e(
-                    "addMovies: failed to load details for movie with TMDB ID %s, stopping",
-                    tmdbId
-                )
-                return false
+            val movieDetails = when (result) {
+                is MovieDetailsResult.Error -> {
+                    if (result.isNotFoundOnTmdb) {
+                        Timber.w("addMovies: movie with TMDB ID %s not found, skipping", tmdbId)
+                        continue
+                    } else {
+                        Timber.e(
+                            "addMovies: failed to load details for movie with TMDB ID %s, stopping",
+                            tmdbId
+                        )
+                        return false
+                    }
+                }
+
+                is MovieDetailsResult.Success -> result.movieDetails
             }
 
             // Determine watched state based on plays

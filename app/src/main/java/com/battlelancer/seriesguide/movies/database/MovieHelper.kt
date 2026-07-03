@@ -163,7 +163,7 @@ data class MovieStats(
 )
 
 /**
- * Extracts properties from [tmdbMovie] (assumed not null) and if not null [traktRatings].
+ * Extracts properties from [tmdbMovie] and if not null [traktRatings].
  *
  * Sets [SgMovie.lastUpdated] to the current time.
  */
@@ -174,7 +174,7 @@ fun MovieDetails.toSgMovieForInsert(
     isWatched: Boolean,
     plays: Int
 ): SgMovie {
-    val tmdbUpdate = toSgMovieTmdbUpdate(0)!!
+    val tmdbUpdate = toSgMovieTmdbUpdate(0)
 
     return SgMovie(
         tmdbId = tmdbId,
@@ -237,9 +237,7 @@ data class SgMovieTmdbUpdate(
 /**
  * Also sets [SgMovie.lastUpdated] to the current time.
  */
-fun MovieDetails.toSgMovieTmdbUpdate(movieId: Int): SgMovieTmdbUpdate? {
-    val tmdbMovie = tmdbMovie ?: return null
-
+fun MovieDetails.toSgMovieTmdbUpdate(movieId: Int): SgMovieTmdbUpdate {
     return SgMovieTmdbUpdate(
         id = movieId,
         imdbId = tmdbMovie.imdb_id,

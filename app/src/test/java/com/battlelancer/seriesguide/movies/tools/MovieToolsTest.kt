@@ -72,9 +72,8 @@ class MovieToolsTest {
         suspend fun downloaderReturnsTestMovie() {
             `when`(downloader.getMovieDetailsWithDefaults(TEST_MOVIE_TMDBID, false))
                 .thenReturn(
-                    MovieDownloader.MovieDetailsResult(
-                        MovieDetails(Movie()),
-                        isNotFoundOnTmdb = false
+                    MovieDownloader.MovieDetailsResult.Success(
+                        MovieDetails(Movie())
                     )
                 )
         }
