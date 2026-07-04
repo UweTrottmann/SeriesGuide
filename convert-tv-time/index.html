@@ -21,10 +21,12 @@
 
     <ul>
         <li>
-            Export data using the <a href="https://chromewebstore.google.com/detail/tv-time-liberator-extensi/pohobkcjhigehafgnhehkanhjakajhpm">Tv Time Liberator</a>
-            Chrome extension (<a href="https://github.com/Hobo-Ware/tv-time-liberator">source code</a>).
+            Export data using the <a href="https://chromewebstore.google.com/detail/tv-time-out-by-refract/pmejpdpjbkjklfceogdkolmgclldogbi">TV Time Out by Refract</a>
+            browser extension. The converter also works with the JSON created by the
+            <a href="https://chromewebstore.google.com/detail/tv-time-liberator-extensi/pohobkcjhigehafgnhehkanhjakajhpm">Tv Time Liberator</a> 
+            extension, but it's currently broken.
         </li>
-        <li>Select the shows.json file it created below.</li>
+        <li>Select the tvtime-series-2026-xx-xx.json (or shows.json) file it created below.</li>
         <li>Review the Input.</li>
         <li>Select the "Preferred show language" for content (titles, descriptions).</li>
         <li>Select the "Transform" button.</li>
@@ -37,7 +39,7 @@
     <input type="file" id="fileInput">
 
     <select id="mapping">
-        <option value="mappings/tv-time-liberator-shows.json">TV Time Liberator shows.json</option>
+        <option value="mappings/tv-time-liberator-shows.json">TV Time Out JSON</option>
     </select>
 
     <label for="language">Preferred show language (titles, descriptions, ...):</label>
