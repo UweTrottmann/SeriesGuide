@@ -12,6 +12,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 * 📝 Trakt: support server changes to correctly fetch all collection and watchlist items.
 
+### Next release
+
 ### 2026.1.5 - 2026-05-21
 
 * 🔨 Trakt: address unexpected server changes to correctly fetch watched special episodes.
