@@ -1,5 +1,5 @@
-// Copyright 2014-2019 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// SPDX-FileCopyrightText: Copyright © 2014 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.api;
 
@@ -30,7 +30,6 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import androidx.annotation.NonNull;
-import androidx.core.app.JobIntentService;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -45,7 +44,7 @@ import org.json.JSONTokener;
  * SeriesGuide. Actions may for example launch other apps or display interesting information related
  * to an episode or movie.
  *
- * <p> Extensions are specialized {@link JobIntentService} classes in combination with a broadcast
+ * <p> Extensions are specialized {@code JobIntentService} classes in combination with a broadcast
  * receiver.
  *
  * <p> Multiple extensions may be enabled within SeriesGuide at the same time. When a SeriesGuide
@@ -173,7 +172,7 @@ import org.json.JSONTokener;
  * <p> Based on code from <a href="https://github.com/romannurik/muzei">Muzei</a>, an awesome Live
  * Wallpaper by Roman Nurik.
  */
-public abstract class SeriesGuideExtension extends JobIntentService {
+public abstract class SeriesGuideExtension extends SgJobIntentService {
 
     private static final String TAG = "SeriesGuideExtension";
 
@@ -223,6 +222,13 @@ public abstract class SeriesGuideExtension extends JobIntentService {
         sharedPrefs = getSharedPreferences();
         loadSubscriptions();
         loadLastAction();
+    }
+
+    @Override
+    public boolean onStopCurrentWork() {
+        // Don't re-schedule stopped work, the app will just display no extension and request it again if the
+        // episode or movie in question is shown again.
+        return false;
     }
 
     /**
