@@ -372,8 +372,22 @@ public abstract class SgJobIntentService extends Service {
             while ((work = dequeueWork()) != null) {
                 if (DEBUG) Log.d(TAG, "Processing next work: " + work);
                 onHandleWork(work.getIntent());
+
+                // Because of some aggressive power management on Xiaomi and Honor devices (likely
+                // because many services are created for extensions in a brief amount of time) the
+                // system might have brought the work item into a state where
+                // JobParameters.completeWork(JobWorkItem) throws an IllegalArgumentException
+                // ("Given work is not active").
+                // Despite being unclear if the system will properly call onStopJob (in which case
+                // dequeueWork() would return null and also complete() would be a no-op, see
+                // JobServiceEngineImpl), continue processing as the API docs recommend to
+                // dequeueWork() until null is returned.
                 if (DEBUG) Log.d(TAG, "Completing work: " + work);
-                work.complete();
+                try {
+                    work.complete();
+                } catch (IllegalArgumentException e) {
+                    Log.e(TAG, "Not completing work because job was cancelled by system", e);
+                }
             }
 
             if (DEBUG) Log.d(TAG, "Done processing work!");

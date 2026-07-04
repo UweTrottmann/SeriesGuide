@@ -14,6 +14,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ### Next release
 
+* 🔨 Potential fix to avoid a crash on Xiaomi and Honor devices when loading extensions due to aggressive system optimizations.
+
 ### 2026.1.5 - 2026-05-21
 
 * 🔨 Trakt: address unexpected server changes to correctly fetch watched special episodes.
