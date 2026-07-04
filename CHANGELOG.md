@@ -12,6 +12,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 * 🌟 Lists: movies can be added to lists, currently only from the details view.
 * 🔧 Lists: sort options are displayed in their own dialog.
+* 🔧 Shows: move manage lists button from more options menu to inside the overview and details tabs.
 
 ### 2026.2.2 - 2026-07-04
 
