@@ -224,6 +224,13 @@ public abstract class SeriesGuideExtension extends SgJobIntentService {
         loadLastAction();
     }
 
+    @Override
+    public boolean onStopCurrentWork() {
+        // Don't re-schedule stopped work, the app will just display no extension and request it again if the
+        // episode or movie in question is shown again.
+        return false;
+    }
+
     /**
      * Convenience method for accessing preferences specific to the extension (with the given name
      * within this package. The source name must be the one provided in the
