@@ -10,6 +10,14 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2026.2
 
+* 🌟 Lists: movies can be added to lists, currently only from the details view.
+* 🔧 Lists: sort options are displayed in their own dialog.
+
+### 2026.2.2 - 2026-07-04
+
+* 🔨 Potential fix to avoid a crash on Xiaomi and Honor devices when loading extensions due to aggressive system optimizations.
+* 📝 Import latest user interface translations.
+
 ### 2026.2.1 - 2026-06-26 🧪
 
 * 🔧 Shows: move manage lists button from more options menu to inside the overview and details tabs.
