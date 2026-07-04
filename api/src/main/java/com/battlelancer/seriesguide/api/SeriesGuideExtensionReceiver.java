@@ -1,12 +1,11 @@
-// Copyright 2017, 2018 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// SPDX-FileCopyrightText: Copyright © 2017 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.api;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import androidx.core.app.JobIntentService;
 
 /**
  * Base class to expose a {@link SeriesGuideExtension} service. See the documentation of {@link
@@ -22,8 +21,7 @@ public abstract class SeriesGuideExtensionReceiver extends BroadcastReceiver {
             = "com.battlelancer.seriesguide.api.SeriesGuideExtension";
 
     /**
-     * A unique job id within your app. Used to run the {@link SeriesGuideExtension} {@link
-     * JobIntentService}.
+     * A unique job id within your app. Used to run the {@link SeriesGuideExtension} job.
      */
     protected abstract int getJobId();
 
