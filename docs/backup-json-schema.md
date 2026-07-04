@@ -3,6 +3,9 @@
 _SeriesGuide can [export and import your data](https://www.seriesgui.de/help/how-to/backup/backup)
 using JSON text files._
 
+> [!NOTE]
+> Migrating from TV Time? Check [the forum post](https://discuss.seriesgui.de/t/tv-time-shutdown-and-importing-into-seriesguide/2807) on how to convert to the SeriesGuide format.
+
 The expected format and values are documented here.
 
 To see an example file, export your data from SeriesGuide. Note that unlike the examples below the
