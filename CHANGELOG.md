@@ -12,7 +12,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 * 📝 Trakt: support server changes to correctly fetch all collection and watchlist items.
 
-### Next release
+### 2026.1.6 - 2026-07-04
 
 * 🔨 Potential fix to avoid a crash on Xiaomi and Honor devices when loading extensions due to aggressive system optimizations.
 
