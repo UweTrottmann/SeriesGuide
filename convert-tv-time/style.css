@@ -48,16 +48,6 @@ button {
 
 /* Medium screens and up: side-by-side layout */
 @media (min-width: 768px) {
-    .toolbar {
-        flex-wrap: nowrap;
-        gap: 20px;
-    }
-
-    .toolbar input,
-    .toolbar select {
-        flex: 1;
-        min-width: auto;
-    }
 
     .panes {
         flex-direction: row;
