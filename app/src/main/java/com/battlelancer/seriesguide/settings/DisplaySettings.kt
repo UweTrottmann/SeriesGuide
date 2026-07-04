@@ -21,7 +21,7 @@ object DisplaySettings {
     const val KEY_SHOWS_TIME_OFFSET = "com.battlelancer.seriesguide.timeoffset"
     const val KEY_NO_RELEASED_EPISODES = "onlyFutureEpisodes"
     const val KEY_HIDE_SPECIALS = "onlySeasonEpisodes"
-    const val KEY_SORT_IGNORE_ARTICLE = "com.battlelancer.seriesguide.sort.ignorearticle"
+    private const val KEY_SORT_IGNORE_ARTICLE = "com.battlelancer.seriesguide.sort.ignorearticle"
     const val KEY_DISPLAY_EXACT_DATE = "com.battlelancer.seriesguide.shows.exactdate"
     const val KEY_PREVENT_SPOILERS = "com.battlelancer.seriesguide.PREVENT_SPOILERS"
 
@@ -82,6 +82,12 @@ object DisplaySettings {
     fun isHidingSpecials(context: Context): Boolean {
         return PreferenceManager.getDefaultSharedPreferences(context)
             .getBoolean(KEY_HIDE_SPECIALS, false)
+    }
+
+    fun saveSortOrderIgnoringArticles(context: Context, value: Boolean) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit {
+            putBoolean(KEY_SORT_IGNORE_ARTICLE, value)
+        }
     }
 
     /**

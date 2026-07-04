@@ -252,10 +252,12 @@
     <string name="ack_list_item_manage">목록이 업데이트됨</string>
     <string name="list_item_remove">목록에서 제거</string>
     <string name="ack_list_item_removed">목록에서 삭제됨</string>
-    <string name="list_empty">이 목록에 프로그램을 추가할 수 있습니다</string>
+    <string name="list_empty">You can add shows or movies to this list</string>
     <string name="action_lists_reorder">목록 재정렬</string>
     <string name="ack_lists_reordered">목록이 재정렬됨</string>
     <string name="error_name_already_exists">이 이름을 가진 목록이 이미 존재합니다</string>
+    <string name="action_lists_sort_latest_release_date">Latest release date</string>
+    <string name="action_lists_sort_oldest_release_date">Oldest release date</string>
     <!-- Movies -->
     <string name="title_digital_releases">디지털 출시</string>
     <string name="title_disc_releases">디스크 출시</string>

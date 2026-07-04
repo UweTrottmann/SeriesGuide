@@ -259,10 +259,12 @@
     <string name="ack_list_item_manage">سیاهه به‌روز شد</string>
     <string name="list_item_remove">برداشتن از فهرست</string>
     <string name="ack_list_item_removed">از سیاهه برداشته شد</string>
-    <string name="list_empty">می‌توانید نمایش‌ها را به این فهرست بیفزایید</string>
+    <string name="list_empty">You can add shows or movies to this list</string>
     <string name="action_lists_reorder">بازچینی فهرست‌ها</string>
     <string name="ack_lists_reordered">ترتیب سیاهه عوض شد</string>
     <string name="error_name_already_exists">فهرستی با این اسم موجود است</string>
+    <string name="action_lists_sort_latest_release_date">Latest release date</string>
+    <string name="action_lists_sort_oldest_release_date">Oldest release date</string>
     <!-- Movies -->
     <string name="title_digital_releases">نسخه های دیجیتال</string>
     <string name="title_disc_releases">منتشر شده روی دیسک</string>
@@ -315,7 +317,7 @@
     <string name="feature_sync">همگام‌‌سازی</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud به همگام‌سازی و پشتیبان‌گیری برنامه‌ها، لیست‌ها و فیلم‌های شما کمک می‌کند</string>
-    <string name="hexagon_warning_trakt">هنگام ورود با SeriesGuide Cloud برخی از ویژگی‌های Trakt در دسترس نیست</string>
+    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud, some Trakt features are disabled and changes are only sent to your Trakt account, not retrieved.</string>
     <string name="hexagon_signin">ورود</string>
     <string name="hexagon_signout">خروج از سیستم</string>
     <string name="hexagon_setup_incomplete">راه اندازی فضای ابری SeriesGuide کامل نشد.</string>

@@ -48,11 +48,8 @@ class ShowsDistillationSettings(
                 KEY_SORT_FAVORITES_FIRST,
                 showSortOrder.isSortFavoritesFirst
             )
-            putBoolean(
-                DisplaySettings.KEY_SORT_IGNORE_ARTICLE,
-                showSortOrder.isSortIgnoreArticles
-            )
         }
+        DisplaySettings.saveSortOrderIgnoringArticles(context, showSortOrder.isSortIgnoreArticles)
 
         // broadcast new sort order
         sortOrder.value = showSortOrder
@@ -106,6 +103,7 @@ class ShowsDistillationSettings(
         companion object {
 
             const val TITLE_ID = 0
+
             // @deprecated Only supporting alphabetical sort order going forward.
             // int TITLE_REVERSE_ID = 1;
             const val OLDEST_EPISODE_ID = 2

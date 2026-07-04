@@ -22,7 +22,6 @@ import timber.log.Timber
 /**
  * Syncs episode watched and collected state, episode ratings, show ratings,
  * watchlist, collection and watched movies and movie ratings with Trakt.
- * Removes movies not in any of these lists on Trakt.
  */
 class TraktSync(
     val context: Context,
@@ -46,6 +45,12 @@ class TraktSync(
     }
 
     /**
+     * Syncs episode watched and collected state, episode ratings, show ratings,
+     * watchlist, collection and watched movies and movie ratings with Trakt.
+     *
+     * Does not delete any movies from the database that are no longer on a built-in (or custom)
+     * list afterward, this is done in a later sync step.
+     *
      * To not conflict with Hexagon sync, can turn on [onlyRatings] so only
      * ratings are synced.
      *
@@ -120,8 +125,8 @@ class TraktSync(
                 progress.recordError()
                 return SgSyncAdapter.UpdateResult.INCOMPLETE
             }
-            // Clean up any useless movies (not watched or not in any list).
-            MovieTools.deleteUnusedMovies(context)
+            // Note: movies not in any list or not watched will be cleaned up as part of a later
+            // sync step.
         }
         // Download movie ratings.
         progress.publish(SyncProgress.Step.TRAKT_RATINGS)

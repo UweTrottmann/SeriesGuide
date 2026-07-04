@@ -4,10 +4,10 @@
 
   ```bash
   # If it does not exist, create a release branch
-  git checkout -b releases/2026.1
+  git checkout -b releases/2026.2
   
   # If it exists, merge latest changes
-  git checkout releases/2026.1
+  git checkout releases/2026.2
   git merge dev
   ```
 
@@ -27,8 +27,8 @@
 - Commit with the suggested message and push
 
   ```shell
-  git commit --all --message "Prepare version 2026.1.1 (23260101)"
-  git push --set-upstream origin releases/2026.1
+  git commit --all --message "Prepare version 2026.2.0 (23260101)"
+  git push --set-upstream origin releases/2026.2
   ```
 
 - If it does not exist, [create a merge request](https://github.com/UweTrottmann/SeriesGuide/compare/main...) against `main`
@@ -49,10 +49,10 @@
 - Tag release commit
   
   ```shell
-  git tag v2026.1.2
-  git push origin v2026.1.2
+  git tag v2026.2.0
+  git push origin v2026.2.0
   git checkout dev
-  git merge releases/2026.1
+  git merge releases/2026.2
   git push origin dev
   ```
 
@@ -65,7 +65,7 @@
 - Merge release pull request to `main`
 - Download universal APK from Play Store
 - [Create GitHub release](https://github.com/UweTrottmann/SeriesGuide/releases/new)
-  - title like `SeriesGuide 2026.1.2`
+  - title like `SeriesGuide 2026.2.0`
   - get release notes from [`CHANGELOG.md`](/CHANGELOG.md)
   - attach APK
 - Prepare release post on forum
@@ -77,5 +77,5 @@
 
   ```shell
   git checkout dev
-  git merge --no-ff releases/2026.1
+  git merge --no-ff releases/2026.2
   ```

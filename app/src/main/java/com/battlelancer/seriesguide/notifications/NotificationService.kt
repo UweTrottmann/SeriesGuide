@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2012-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2012 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.notifications
 
@@ -29,7 +29,6 @@ import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.notifications.NotificationService.Companion.ORDER
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.provider.SgRoomDatabase.Companion.getInstance
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.DisplaySettings.isHidingSpecials
@@ -291,7 +290,7 @@ class NotificationService(context: Context) {
             selection.append(" AND (")
                 .append(SgShow2Columns.NEXTEPISODE + "=''")
                 .append(" OR ")
-                .append(SgShow2Columns.NEXTEPISODE + "=" + SeriesGuideDatabase.Qualified.SG_EPISODE_ID)
+                .append(SgShow2Columns.NEXTEPISODE + "=" + SgEpisode2WithShow.SG_EPISODE_ID)
                 .append(")")
         }
 

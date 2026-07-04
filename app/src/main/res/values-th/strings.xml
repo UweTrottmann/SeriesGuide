@@ -252,10 +252,12 @@
     <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">ลบออกจากรายการ</string>
     <string name="ack_list_item_removed">Removed from list</string>
-    <string name="list_empty">คุณสามารถเพิ่มซีรีส์นี้ไปยังรายการ</string>
+    <string name="list_empty">You can add shows or movies to this list</string>
     <string name="action_lists_reorder">เรียงรายการใหม่</string>
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">มีรายการชื่อนี้อยู่แล้ว</string>
+    <string name="action_lists_sort_latest_release_date">Latest release date</string>
+    <string name="action_lists_sort_oldest_release_date">Oldest release date</string>
     <!-- Movies -->
     <string name="title_digital_releases">ออกเป็นดิจิทัล</string>
     <string name="title_disc_releases">ออกเป็นแผ่น</string>
@@ -305,7 +307,7 @@
     <string name="feature_sync">ซิงค์</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud ช่วยสำรองข้อมูลและซิงค์ซีรีส์, รายการ และภาพยนตร์ของคุณ</string>
-    <string name="hexagon_warning_trakt">ขณะเข้าสู่ระบบ SeriesGuide Cloud คุณสมบัติบางอย่างของ trakt จะใช้งานไม่ได้</string>
+    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud, some Trakt features are disabled and changes are only sent to your Trakt account, not retrieved.</string>
     <string name="hexagon_signin">เข้าสู่ระบบ</string>
     <string name="hexagon_signout">ออกจากระบบ</string>
     <string name="hexagon_setup_incomplete">การตั้งค่า SeriesGuide Cloud ไม่เสร็จสมบูรณ์</string>

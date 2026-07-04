@@ -67,9 +67,7 @@ class MoviesOptionsMenu(val activity: Activity) :
     }
 
     private fun changeSortIgnoreArticles(value: Boolean, activity: Activity) {
-        PreferenceManager.getDefaultSharedPreferences(activity).edit()
-            .putBoolean(DisplaySettings.KEY_SORT_IGNORE_ARTICLE, value)
-            .apply()
+        DisplaySettings.saveSortOrderIgnoringArticles(activity, value)
 
         // refresh icon state
         activity.invalidateOptionsMenu()

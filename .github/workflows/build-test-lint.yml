@@ -5,6 +5,7 @@ on:
     branches:
       - 'dev'
       - 'main'
+      - 'releases/**'
   workflow_dispatch: # Allow running manually from web UI
 
 jobs:
@@ -33,7 +34,7 @@ jobs:
         run: ./gradlew :app:testPureDebugUnitTest
 
       - name: Test Report
-        uses: dorny/test-reporter@b082adf0eced0765477756c2a610396589b8c637 # v2.5.0
+        uses: dorny/test-reporter@a43b3a5f7366b97d083190328d2c652e1a8b6aa2 # v3.0.0
         if: always() # also run if tests failed
         with:
           name: JUnit Report
@@ -62,11 +63,10 @@ jobs:
         run: ./gradlew :app:lintPureRelease
 
       - name: Lint amzn release
-        if: ${{ contains(github.ref, 'release') }}
         run: ./gradlew :app:lintAmazonRelease
 
       - name: Upload lint reports
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: ${{ always() }} # also upload of lint errors
         with:
           name: Lint reports

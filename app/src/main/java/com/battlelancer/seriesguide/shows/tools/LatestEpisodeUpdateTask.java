@@ -1,12 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2014-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2014 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.shows.tools;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.TaskManager;
 import timber.log.Timber;
 
@@ -45,10 +44,5 @@ public class LatestEpisodeUpdateTask extends AsyncTask<Integer, Void, Void> {
             Timber.d("Updating next episodes for all shows");
             new NextEpisodeUpdater(context).updateForShows(null);
         }
-
-        // Show cursors already notified
-        // List item cursors need to be notified manually as uri differs
-        context.getContentResolver()
-                .notifyChange(SeriesGuideContract.ListItems.CONTENT_WITH_DETAILS_URI, null);
     }
 }

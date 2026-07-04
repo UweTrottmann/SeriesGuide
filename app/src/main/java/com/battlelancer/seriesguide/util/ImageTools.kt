@@ -11,6 +11,10 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.settings.UpdateSettings
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools
+import com.battlelancer.seriesguide.util.ImageTools.buildTmdbOrTvdbImageCacheUrl
+import com.battlelancer.seriesguide.util.ImageTools.isAllowedLargeDataConnection
+import com.battlelancer.seriesguide.util.ImageTools.loadShowPosterResizeCrop
+import com.battlelancer.seriesguide.util.ImageTools.tmdbOrTvdbPosterUrl
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.RequestCreator
@@ -92,42 +96,20 @@ object ImageTools {
     }
 
     /**
-     * Calls [buildTmdbOrTvdbImageCacheUrl] with small image and demo URLs for show posters.
+     * Calls [buildTmdbOrTvdbImageCacheUrl] configured for poster URLs built from
+     * [TmdbTools.getPosterBaseUrl] and [imagePath].
+     *
+     * If possible, use [ImageUrlTools.tmdbOrTvdbPosterUrl] instead.
      */
-    @JvmStatic
     fun tmdbOrTvdbPosterUrl(
         imagePath: String?,
         context: Context,
         originalSize: Boolean = false
     ): String? {
-        return buildTmdbOrTvdbImageCacheUrl(
-            imagePath, context, originalSize,
-            demoUrl = { nonNullImagePath ->
-                pickDemoPosterUrl(nonNullImagePath)
-            },
-            tmdbSmallImageUrl = { nonNullImagePath ->
-                "${TmdbTools.getPosterBaseUrl(context)}$nonNullImagePath"
-            }
-        )
+        return ImageUrlTools(context).tmdbOrTvdbPosterUrl(imagePath, originalSize)
     }
-
-    private val demoPosterUrls = listOf(
-        "https://seriesgui.de/demo/anime.jpg",
-        "https://seriesgui.de/demo/crime.jpg",
-        "https://seriesgui.de/demo/fantasy-2.jpg",
-        "https://seriesgui.de/demo/fantasy.jpg",
-        "https://seriesgui.de/demo/medical.jpg",
-        "https://seriesgui.de/demo/scifi-3.jpg",
-        "https://seriesgui.de/demo/scifi.jpg",
-        "https://seriesgui.de/demo/sitcom.jpg",
-    )
 
     private val demoEpisodeImageUrl = "https://seriesgui.de/demo/episode-anime.jpg"
-
-    private fun pickDemoPosterUrl(imagePath: String): String {
-        // Map an image path always to the same image
-        return demoPosterUrls[imagePath.hashCode().mod(demoPosterUrls.size)]
-    }
 
     /**
      * Calls [buildTmdbOrTvdbImageCacheUrl] with small image and demo URLs for episode images.
@@ -149,12 +131,13 @@ object ImageTools {
     /**
      * Builds an image cache URL, or returns null if [imagePath] is null or empty.
      *
-     * Returns [demoUrl] if [AppSettings.isDemoModeEnabled] is enabled.
+     * If [imagePath] starts with `/` uses the URL returned by [tmdbSmallImageUrl].
+     * If [originalSize] is set, using [TmdbTools.buildOriginalSizeImageUrl] instead.
+     * Otherwise, a legacy TVDB URL.
      *
-     * If [imagePath] starts with `/` builds a TMDB episode image path with resolution depending on
-     * [originalSize]. Otherwise a legacy TVDB URL.
+     * Returns [demoUrl] if [AppSettings.isDemoModeEnabled] is enabled.
      */
-    private fun buildTmdbOrTvdbImageCacheUrl(
+    fun buildTmdbOrTvdbImageCacheUrl(
         imagePath: String?,
         context: Context,
         originalSize: Boolean = false,
@@ -267,22 +250,32 @@ object ImageTools {
      * The resize dimensions are those used for posters in the show list and change depending on
      * screen size.
      */
-    @JvmStatic
+    @Deprecated("Use ImageUrlTools to prebuild the URL and then load it later with loadAndResizeCropToShowPosterSize")
     fun loadShowPosterResizeCrop(
         context: Context,
         imageView: ImageView,
         posterPath: String?
     ) {
-        loadShowPosterUrlResizeCrop(context, imageView, tmdbOrTvdbPosterUrl(posterPath, context))
+        loadAndResizeCropToShowPosterSize(
+            context,
+            imageView,
+            tmdbOrTvdbPosterUrl(posterPath, context)
+        )
     }
 
+    /**
+     * Resizes to `show_poster_width` and `show_poster_height` dimensions used in shows and list
+     * items layouts.
+     *
+     * The [posterUrl] can be built with [tmdbOrTvdbPosterUrl].
+     */
     @JvmStatic
-    fun loadShowPosterUrlResizeCrop(
+    fun loadAndResizeCropToShowPosterSize(
         context: Context,
         imageView: ImageView,
-        url: String?
+        posterUrl: String?
     ) {
-        loadWithPicasso(context, url)
+        loadWithPicasso(context, posterUrl)
             .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
             .centerCrop()
             .error(R.drawable.ic_photo_gray_24dp)
@@ -343,4 +336,52 @@ object ImageTools {
             .into(imageView)
     }
 
+}
+
+/**
+ * Helps efficiently build image URLs by caching the base URL. Use this to construct the final image
+ * URL on a background thread and then only load it on the UI thread.
+ */
+class ImageUrlTools(
+    private val context: Context
+) {
+
+    private val posterBaseUrlTmdb = TmdbTools.getPosterBaseUrl(context)
+
+    /**
+     * Calls [buildTmdbOrTvdbImageCacheUrl] configured for poster URLs built from
+     * [TmdbTools.getPosterBaseUrl] and [imagePath].
+     */
+    fun tmdbOrTvdbPosterUrl(
+        imagePath: String?,
+        originalSize: Boolean = false
+    ): String? {
+        return buildTmdbOrTvdbImageCacheUrl(
+            imagePath, context, originalSize,
+            demoUrl = { nonNullImagePath ->
+                pickDemoPosterUrl(nonNullImagePath)
+            },
+            tmdbSmallImageUrl = { nonNullImagePath ->
+                posterBaseUrlTmdb + nonNullImagePath
+            }
+        )
+    }
+
+    companion object {
+        private fun pickDemoPosterUrl(imagePath: String): String {
+            // Map an image path always to the same image
+            return demoPosterUrls[imagePath.hashCode().mod(demoPosterUrls.size)]
+        }
+
+        private val demoPosterUrls = listOf(
+            "https://seriesgui.de/demo/anime.jpg",
+            "https://seriesgui.de/demo/crime.jpg",
+            "https://seriesgui.de/demo/fantasy-2.jpg",
+            "https://seriesgui.de/demo/fantasy.jpg",
+            "https://seriesgui.de/demo/medical.jpg",
+            "https://seriesgui.de/demo/scifi-3.jpg",
+            "https://seriesgui.de/demo/scifi.jpg",
+            "https://seriesgui.de/demo/sitcom.jpg",
+        )
+    }
 }

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2021-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2021 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.shows.database
 
@@ -84,10 +84,9 @@ data class SgShow2(
     /**
      * Local release time. Encoded as integer (hhmm).
      *
-     * ```
-     * Example: 2035
-     * Default: -1
-     * ```
+     * Example: `2035`
+     *
+     * Default: [UNKNOWN_RELEASE_TIME]
      */
     @ColumnInfo(name = RELEASE_TIME) val releaseTime: Int?,
     /**
@@ -189,6 +188,11 @@ data class SgShow2(
      * A poster path. Needs to be prefixed with the poster server URL.
      */
     @ColumnInfo(name = POSTER) val poster: String? = "",
+    /**
+     * For shows using TMDB data, the same as [poster].
+     *
+     * For shows using legacy TVDB data, path to a small variant of the poster.
+     */
     @ColumnInfo(name = POSTER_SMALL) val posterSmall: String? = "",
     @ColumnInfo(name = NEXTAIRDATEMS) val nextAirdateMs: Long? = NextEpisodeUpdater.UNKNOWN_NEXT_RELEASE_DATE,
     @ColumnInfo(name = NEXTTEXT) val nextText: String? = "",
@@ -276,7 +280,7 @@ data class SgShow2(
     @ColumnInfo(name = USER_NOTE_TRAKT_ID) val userNoteTraktId: Long?
 ) {
     val releaseTimeOrDefault: Int
-        get() = releaseTime ?: -1
+        get() = releaseTime ?: UNKNOWN_RELEASE_TIME
     val customReleaseTimeOrDefault: Int
         get() = customReleaseTime ?: CUSTOM_RELEASE_TIME_NOT_SET
     val customReleaseDayOffsetOrDefault: Int
@@ -297,6 +301,9 @@ data class SgShow2(
         get() = userNote?.ifBlank { "" } ?: ""
 
     companion object {
+
+        const val UNKNOWN_RELEASE_TIME = -1
+
         /**
          * Used if the number of remaining episodes to watch for a show is not (yet) known.
          *

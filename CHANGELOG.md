@@ -8,6 +8,32 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
 
+## Version 2026.2
+
+* 🌟 Lists: movies can be added to lists, currently only from the details view.
+* 🔧 Lists: sort options are displayed in their own dialog.
+* 🔧 Shows: move manage lists button from more options menu to inside the overview and details tabs.
+
+### 2026.2.2 - 2026-07-04
+
+* 🔨 Potential fix to avoid a crash on Xiaomi and Honor devices when loading extensions due to aggressive system optimizations.
+* 📝 Import latest user interface translations.
+
+### 2026.2.1 - 2026-06-26 🧪
+
+* 🔧 Shows: move manage lists button from more options menu to inside the overview and details tabs.
+* 🔨 Trakt: downloading ratings also works if API returns rating 0.
+* 🔨 Shows: when adding a show fails, roll back any database changes.
+* 📝 Import latest user interface translations.
+
+### 2026.2.0 - 2026-06-18 🧪
+
+* 🌟 Lists: movies can be added to lists, currently only from the details view.
+* 🔧 Lists: sort options are displayed in their own dialog.
+* 🔨 Import: a failure no longer blocks trying again, adding shows or creating an auto backup.
+* 🔨 Export: for list items, no longer include always 0 tvdb_id value. 
+* 🔨 Import: skip movies without a TMDB ID.
+
 ## Version 2026.1
 
 * 📝 Trakt: support server changes to correctly fetch all collection and watchlist items.

@@ -48,7 +48,7 @@ class ShowMenuItemClickListener(
                 return true
             }
             R.id.menu_action_shows_manage_lists -> {
-                ManageListsDialogFragment.show(fragmentManager, showId)
+                ManageListsDialogFragment.showForShow(fragmentManager, showId)
                 return true
             }
             R.id.menu_action_shows_update -> {

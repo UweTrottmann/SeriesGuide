@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2017-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2017 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.sync
 
@@ -24,17 +24,33 @@ class HexagonListsSync(
     private val hexagonTools: HexagonTools
 ) {
 
+    /**
+     * Downloads all or if [hasMergedLists] is true and there is a last list sync time, lists
+     * changed since that time and updates the database accordingly.
+     *
+     * Note: does not add movies added to a custom list to the database. This is done during a later
+     * sync step.
+     */
     fun download(hasMergedLists: Boolean): Boolean {
-        val currentTime = System.currentTimeMillis()
-        val lastSyncTime = DateTime(HexagonSettings.getLastListsSyncTime(context))
-
+        val lastSyncTime = HexagonSettings.getLastListsSyncTime(context)?.let { DateTime(it) }
         if (hasMergedLists) {
-            Timber.d("download: lists changed since %s.", lastSyncTime)
+            if (lastSyncTime != null) {
+                Timber.d("download: NOT merging, get lists CHANGED since %s", lastSyncTime)
+            } else {
+                Timber.d("download: NOT merging, get ALL lists")
+            }
         } else {
-            Timber.d("download: all lists.")
+            Timber.d("download: MERGING, get ALL lists")
         }
 
+        // Store new last sync time before downloading to not miss any changes for the next sync
+        val newLastSyncTime = System.currentTimeMillis()
+
         val localListIds = ListsTools.getListIds(context)
+        if (localListIds == null) {
+            Timber.e("download: failed to get list IDs from database")
+            return false
+        }
         var lists: List<SgList>?
         var cursor: String? = null
         do {
@@ -44,7 +60,7 @@ class HexagonListsSync(
                     ?: return false // no longer signed in
 
                 val request = listsService.get() // use default server limit
-                if (hasMergedLists) {
+                if (hasMergedLists && lastSyncTime != null) {
                     request.updatedSince = lastSyncTime
                 }
                 if (!TextUtils.isEmpty(cursor)) {
@@ -78,7 +94,7 @@ class HexagonListsSync(
         } while (!TextUtils.isEmpty(cursor)) // fetch next batch
 
         if (hasMergedLists) {
-            HexagonSettings.setLastListsSyncTime(context, currentTime)
+            HexagonSettings.setLastListsSyncTime(context, newLastSyncTime)
         }
 
         return true
@@ -141,6 +157,9 @@ class HexagonListsSync(
                         continue // failed to extract item ref id or item type not known
                     }
 
+                    // Note: movies added to a custom list that are not in the database, yet, are
+                    // added in a later sync step.
+
                     // just insert the list item, if the id already exists it will be replaced
                     builder = ContentProviderOperation
                         .newInsert(SeriesGuideContract.ListItems.CONTENT_URI)
@@ -175,6 +194,13 @@ class HexagonListsSync(
         }
     }
 
+    /**
+     * Downloads list IDs and deletes any list and its items from the database if its ID isn't
+     * in the downloaded set of list IDs.
+     *
+     * Note: this doesn't remove movies from the database that are no longer in a custom or built-in
+     * list afterward, this is done during a later sync step.
+     */
     fun pruneRemovedLists(): Boolean {
         Timber.d("pruneRemovedLists")
         val localListIds = ListsTools.getListIds(context)
@@ -233,8 +259,10 @@ class HexagonListsSync(
         if (localListIds.isNotEmpty()) {
             val batch = ArrayList<ContentProviderOperation>()
             for (listId in localListIds) {
-                // note: this matches what RemoveListTask does
-                // delete all list items before the list to avoid violating foreign key constraints
+                // Note: this matches what DeleteListTask does
+                // Delete all list items before the list to avoid violating foreign key constraints.
+                // Note: movies that are no longer on any custom (or built-in) list after this will
+                // be deleted from the database during a later sync step.
                 batch.add(
                     ContentProviderOperation
                         .newDelete(SeriesGuideContract.ListItems.CONTENT_URI)

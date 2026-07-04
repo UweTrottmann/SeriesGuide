@@ -252,10 +252,12 @@
     <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">リストから削除</string>
     <string name="ack_list_item_removed">Removed from list</string>
-    <string name="list_empty">You can add shows to this list</string>
+    <string name="list_empty">You can add shows or movies to this list</string>
     <string name="action_lists_reorder">リストの再並べ替え</string>
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">この名前のリストがすでに存在します</string>
+    <string name="action_lists_sort_latest_release_date">Latest release date</string>
+    <string name="action_lists_sort_oldest_release_date">Oldest release date</string>
     <!-- Movies -->
     <string name="title_digital_releases">デジタル リリース</string>
     <string name="title_disc_releases">ディスク リリース</string>
@@ -305,7 +307,7 @@
     <string name="feature_sync">同期</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud は番組、リスト、映画をバックアップおよび同期するのに役立ちます</string>
-    <string name="hexagon_warning_trakt">SeriesGuide Cloud でログインすると、一部の Trakt の機能が利用できません</string>
+    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud, some Trakt features are disabled and changes are only sent to your Trakt account, not retrieved.</string>
     <string name="hexagon_signin">サインイン</string>
     <string name="hexagon_signout">サインアウト</string>
     <string name="hexagon_setup_incomplete">SeriesGuide クラウドのセットアップは完了しませんでした。</string>

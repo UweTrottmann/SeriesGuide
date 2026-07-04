@@ -259,10 +259,12 @@
     <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">Избриши од листа</string>
     <string name="ack_list_item_removed">Removed from list</string>
-    <string name="list_empty">You can add shows to this list</string>
+    <string name="list_empty">You can add shows or movies to this list</string>
     <string name="action_lists_reorder">Поново сортирајте листа</string>
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">Една група со ова име веќе постои</string>
+    <string name="action_lists_sort_latest_release_date">Latest release date</string>
+    <string name="action_lists_sort_oldest_release_date">Oldest release date</string>
     <!-- Movies -->
     <string name="title_digital_releases">Дигитално издание</string>
     <string name="title_disc_releases">Диск изданија</string>

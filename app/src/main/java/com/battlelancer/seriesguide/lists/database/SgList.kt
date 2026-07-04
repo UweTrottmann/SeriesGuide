@@ -22,7 +22,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
 data class SgList(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = Lists._ID)
-    val id: Long? = 0,
+    val id: Long? = null,
 
     /**
      * Unique string identifier.

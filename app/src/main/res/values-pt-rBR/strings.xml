@@ -259,10 +259,12 @@
     <string name="ack_list_item_manage">Listas atualizadas</string>
     <string name="list_item_remove">Remover da lista</string>
     <string name="ack_list_item_removed">Removido da lista</string>
-    <string name="list_empty">Você pode adicionar séries à lista</string>
+    <string name="list_empty">You can add shows or movies to this list</string>
     <string name="action_lists_reorder">Reordenar listas</string>
     <string name="ack_lists_reordered">Listas reordenadas</string>
     <string name="error_name_already_exists">Já existe uma lista com este nome</string>
+    <string name="action_lists_sort_latest_release_date">Latest release date</string>
+    <string name="action_lists_sort_oldest_release_date">Oldest release date</string>
     <!-- Movies -->
     <string name="title_digital_releases">Lançamentos digitais</string>
     <string name="title_disc_releases">Lançamentos em disco</string>
