@@ -259,12 +259,12 @@
     <string name="ack_list_item_manage">Lister opdateret</string>
     <string name="list_item_remove">Fjern fra liste</string>
     <string name="ack_list_item_removed">Fjernet fra listen</string>
-    <string name="list_empty">You can add shows or movies to this list</string>
+    <string name="list_empty">Du kan tilføje serier eller film til denne liste</string>
     <string name="action_lists_reorder">Omarrangér lister</string>
     <string name="ack_lists_reordered">Lister omarrangeret</string>
     <string name="error_name_already_exists">En liste med dette navn findes allerede</string>
-    <string name="action_lists_sort_latest_release_date">Latest release date</string>
-    <string name="action_lists_sort_oldest_release_date">Oldest release date</string>
+    <string name="action_lists_sort_latest_release_date">Seneste udgivelsesdato</string>
+    <string name="action_lists_sort_oldest_release_date">Ældste udgivelsesdato</string>
     <!-- Movies -->
     <string name="title_digital_releases">Digitale udgivelser</string>
     <string name="title_disc_releases">Disk udgivelser</string>
