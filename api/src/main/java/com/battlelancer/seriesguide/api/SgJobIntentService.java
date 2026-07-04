@@ -251,6 +251,11 @@ public abstract class SgJobIntentService extends Service {
                     }
                 }
             }
+
+            @Override
+            public String toString() {
+                return mJobWork.toString();
+            }
         }
 
         JobServiceEngineImpl(SgJobIntentService service) {
@@ -470,6 +475,7 @@ public abstract class SgJobIntentService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (DEBUG) Log.d(TAG, "onDestroy");
         if (mCompatQueue != null) {
             synchronized (mCompatQueue) {
                 mDestroyed = true;
