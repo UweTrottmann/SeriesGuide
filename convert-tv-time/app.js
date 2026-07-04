@@ -4,6 +4,7 @@ const fileInput = document.getElementById("fileInput");
 const inputArea = document.getElementById("input");
 const outputArea = document.getElementById("output");
 const mappingSelect = document.getElementById("mapping");
+const languageSelect = document.getElementById("language");
 
 document
     .getElementById("transformBtn")
@@ -37,7 +38,9 @@ function loadFile(event) {
 }
 
 /**
- * Loads the selected mapping file.
+ * Loads the selected mapping file and returns it as JSON.
+ *
+ * Replaces language code placeholder value with selected language code.
  */
 async function loadMapping() {
     const response = await fetch(mappingSelect.value);
@@ -46,7 +49,14 @@ async function loadMapping() {
         throw new Error("Could not load mapping.");
     }
 
-    return response.json();
+    const mappingText = await response.text();
+
+    // Replace placeholder with selected language code
+    const placeholder = "PLACEHOLDER_LANGUAGE";
+    const languageCode = languageSelect.value;
+    const replacedText = mappingText.replace(placeholder, languageCode);
+
+    return JSON.parse(replacedText);
 }
 
 /**

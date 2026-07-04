@@ -5,6 +5,10 @@
       "to": "[].tvdb_id"
     },
     {
+      "value": "PLACEHOLDER_LANGUAGE",
+      "to": "[].language"
+    },
+    {
       "from": "[].title",
       "to": "[].title"
     },
