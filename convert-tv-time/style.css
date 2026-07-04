@@ -4,8 +4,12 @@ body {
     max-width: 1200px;
 }
 
+#instructions {
+    margin-bottom: 2em;
+}
+
 .toolbar {
-    margin-bottom: 20px;
+    margin-bottom: 1em;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
@@ -44,10 +48,6 @@ button {
 
 /* Medium screens and up: side-by-side layout */
 @media (min-width: 768px) {
-    body {
-        margin: 40px;
-    }
-
     .toolbar {
         flex-wrap: nowrap;
         gap: 20px;
