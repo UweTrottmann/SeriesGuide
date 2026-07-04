@@ -1,20 +1,10 @@
-/*
- * Copyright (C) 2017 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-FileCopyrightText: Copyright © 2017 The Android Open Source Project
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
-package androidx.core.app;
+// Original file by The Android Open Source Project licensed under Apache-2.0 copied from AndroidX Core
+
+package com.battlelancer.seriesguide.api;
 
 import android.app.Service;
 import android.app.job.JobInfo;
@@ -29,12 +19,9 @@ import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-
-import org.jspecify.annotations.NonNull;
-import org.jspecify.annotations.Nullable;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -53,7 +40,7 @@ import java.util.HashMap;
  * dispatched to and handled by your service.  It will be executed in
  * {@link #onHandleWork(Intent)}.</p>
  *
- * <p>You do not need to use {@link androidx.legacy.content.WakefulBroadcastReceiver}
+ * <p>You do not need to use {@code androidx.legacy.content.WakefulBroadcastReceiver}
  * when using this class.  When running on {@link android.os.Build.VERSION_CODES#O Android O},
  * the JobScheduler will take care of wake locks for you (holding a wake lock from the time
  * you enqueue work until the job has been dispatched and while it is running).  When running
@@ -82,19 +69,9 @@ import java.util.HashMap;
  *     under memory pressure, since the number of concurrent jobs is adjusted based on the
  *     memory state of the device.</p></li>
  * </ul>
- *
- * <p>Here is an example implementation of this class:</p>
- *
- * {@sample samples/Support4Demos/src/main/java/com/example/android/supportv4/app/SimpleJobIntentService.java
- *      complete}
- * @deprecated This class has been deprecated in favor of the Android Jetpack
- * <a href="https://developer.android.com/topic/libraries/architecture/workmanager">WorkManager</a>
- * library, which makes it easy to schedule deferrable, asynchronous tasks that are expected to run
- * even if the app exits or the device restarts.
  */
-@Deprecated
-public abstract class JobIntentService extends Service {
-    static final String TAG = "JobIntentService";
+public abstract class SgJobIntentService extends Service {
+    static final String TAG = "SgJobIntentService";
 
     static final boolean DEBUG = false;
 
@@ -241,20 +218,20 @@ public abstract class JobIntentService extends Service {
     }
 
     /**
-     * Implementation of a JobServiceEngine for interaction with JobIntentService.
+     * Implementation of a JobServiceEngine for interaction with SgJobIntentService.
      */
     @RequiresApi(26)
     static final class JobServiceEngineImpl extends JobServiceEngine
-            implements JobIntentService.CompatJobEngine {
+            implements SgJobIntentService.CompatJobEngine {
         static final String TAG = "JobServiceEngineImpl";
 
         static final boolean DEBUG = false;
 
-        final JobIntentService mService;
+        final SgJobIntentService mService;
         final Object mLock = new Object();
         JobParameters mParams;
 
-        final class WrapperWorkItem implements JobIntentService.GenericWorkItem {
+        final class WrapperWorkItem implements SgJobIntentService.GenericWorkItem {
             final JobWorkItem mJobWork;
 
             WrapperWorkItem(JobWorkItem jobWork) {
@@ -276,7 +253,7 @@ public abstract class JobIntentService extends Service {
             }
         }
 
-        JobServiceEngineImpl(JobIntentService service) {
+        JobServiceEngineImpl(SgJobIntentService service) {
             super(service);
             mService = service;
         }
@@ -311,7 +288,7 @@ public abstract class JobIntentService extends Service {
          * Dequeue some work.
          */
         @Override
-        public JobIntentService.GenericWorkItem dequeueWork() {
+        public SgJobIntentService.GenericWorkItem dequeueWork() {
             JobWorkItem work;
             synchronized (mLock) {
                 if (mParams == null) {
@@ -329,7 +306,7 @@ public abstract class JobIntentService extends Service {
     }
 
     @RequiresApi(26)
-    static final class JobWorkEnqueuer extends JobIntentService.WorkEnqueuer {
+    static final class JobWorkEnqueuer extends SgJobIntentService.WorkEnqueuer {
         private final JobInfo mJobInfo;
         private final JobScheduler mJobScheduler;
 
@@ -418,7 +395,7 @@ public abstract class JobIntentService extends Service {
     /**
      * Default empty constructor.
      */
-    public JobIntentService() {
+    public SgJobIntentService() {
         if (Build.VERSION.SDK_INT >= 26) {
             mCompatQueue = null;
         } else {
@@ -488,7 +465,7 @@ public abstract class JobIntentService extends Service {
     }
 
     /**
-     * Call this to enqueue work for your subclass of {@link JobIntentService}.  This will
+     * Call this to enqueue work for your subclass of {@link SgJobIntentService}.  This will
      * either directly start the service (when running on pre-O platforms) or enqueue work
      * for it as a job (when running on O and later).  In either case, a wake lock will be
      * held for you to ensure you continue running.  The work you enqueue will ultimately
