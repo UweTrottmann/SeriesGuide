@@ -13,7 +13,7 @@
 <div id="instructions">
     <p>
         <strong>This is an experimental tool (<a href="https://github.com/UweTrottmann/SeriesGuide/tree/gh-pages/convert-tv-time">source code</a>).</strong>
-        If there are issues, please leave feedback
+        If there are issues, or you have a file format that you want supported, please leave feedback
         <a href="https://discuss.seriesgui.de/t/tv-time-shutdown-and-importing-into-seriesguide/2807">on the forum</a>.
     </p>
 
@@ -22,16 +22,25 @@
     <ul>
         <li>
             Export data using the <a href="https://chromewebstore.google.com/detail/tv-time-out-by-refract/pmejpdpjbkjklfceogdkolmgclldogbi">TV Time Out by Refract</a>
-            browser extension. The converter also works with the JSON created by the
+            browser extension. For shows, the converter also works with the JSON created by the
             <a href="https://chromewebstore.google.com/detail/tv-time-liberator-extensi/pohobkcjhigehafgnhehkanhjakajhpm">Tv Time Liberator</a> 
             extension, but it's currently broken.
         </li>
-        <li>Select the tvtime-series-2026-xx-xx.json (or shows.json) file it created below and select "TV Time Out shows JSON" <strong>or</strong> the tvtime-lists-2026-xx-xx.json and select "TV Time Out lists JSON".</li>
+        <li>Upload a JSON file and select the type:
+            <ul>
+                <li>Shows: select your tvtime-series-2026-xx-xx.json (or shows.json) file and select
+                    "TV Time Out/Liberator shows JSON"</li>
+                <li>Lists (shows only): select your tvtime-lists-2026-xx-xx.json file and select
+                    "TV Time Out lists JSON"</li>
+            </ul>
+        </li>
         <li>Review the Input.</li>
         <li>When converting shows, select the "Preferred show language" for content (titles, descriptions).</li>
         <li>Select the "Transform" button.</li>
         <li>Review the Output.</li>
-        <li>Select "Download JSON" at the bottom and <a href="https://www.seriesgui.de/help/how-to/backup/backup">import the file</a> as "Shows" or "Lists" in SeriesGuide.</li>
+        <li>Select "Download JSON" at the bottom and save the file to your device.</li>
+        <li><a href="https://www.seriesgui.de/help/how-to/backup/backup">Import the files</a> as
+            "Shows" or "Lists" in SeriesGuide.</li>
     </ul>
 </div>
 
