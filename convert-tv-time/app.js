@@ -178,6 +178,24 @@ function setConstantValueAtPath(output, toPath, value) {
 }
 
 /**
+ * Recursively removes null and undefined elements from arrays.
+ * Object properties are left untouched.
+ */
+function removeNullElements(value) {
+    if (Array.isArray(value)) {
+        return value
+            .filter(item => item !== null && item !== undefined)
+            .map(removeNullElements);
+    }
+    if (value !== null && typeof value === "object") {
+        return Object.fromEntries(
+            Object.entries(value).map(([k, v]) => [k, removeNullElements(v)])
+        );
+    }
+    return value;
+}
+
+/**
  * Transform the JSON using the mapping.
  */
 async function transform() {
@@ -208,8 +226,13 @@ async function transform() {
 
         }
 
+        // As the mapping is based on indexes, if an array element has no mapped
+        // value (for example, for list items that are movies) a null element
+        // would be part of the output JSON. Remove those null/undefined items.
+        const sanitizedOutput = removeNullElements(output);
+
         outputArea.value =
-            JSON.stringify(output, null, 2);
+            JSON.stringify(sanitizedOutput, null, 2);
 
     } catch (err) {
 
