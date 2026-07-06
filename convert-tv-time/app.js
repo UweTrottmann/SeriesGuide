@@ -16,6 +16,11 @@ document
 
 fileInput.addEventListener("change", loadFile);
 
+const MAPPING_PATHS = {
+    "shows": "mappings/tv-time-out-shows.json",
+    "lists": "mappings/tv-time-out-lists.json",
+};
+
 /**
  * Reads the selected JSON file.
  */
@@ -43,7 +48,11 @@ function loadFile(event) {
  * Replaces language code placeholder value with selected language code.
  */
 async function loadMapping() {
-    const response = await fetch(mappingSelect.value);
+    const mappingPath = MAPPING_PATHS[mappingSelect.value];
+    if (!mappingPath) {
+        throw new Error("Unknown mapping selected.");
+    }
+    const response = await fetch(mappingPath);
 
     if (!response.ok) {
         throw new Error("Could not load mapping.");
@@ -212,6 +221,23 @@ async function transform() {
 }
 
 /**
+ * Returns a filename like "shows-2026-07-06-14-30.json"
+ * based on the selected mapping ID and the current date/time.
+ */
+function buildOutputFilename() {
+    const mappingId = mappingSelect.value;
+    const now = new Date();
+    const pad = n => String(n).padStart(2, "0");
+    const year = now.getFullYear();
+    const month = pad(now.getMonth() + 1);
+    const day = pad(now.getDate());
+    const hours = pad(now.getHours());
+    const minutes = pad(now.getMinutes());
+    const seconds = pad(now.getSeconds());
+    return `${mappingId}-${year}-${month}-${day}-${hours}${minutes}${seconds}.json`;
+}
+
+/**
  * Downloads the transformed JSON.
  */
 function downloadOutput() {
@@ -231,7 +257,7 @@ function downloadOutput() {
     const a = document.createElement("a");
 
     a.href = url;
-    a.download = "output.json";
+    a.download = buildOutputFilename();
 
     a.click();
 
