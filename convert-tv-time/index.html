@@ -26,12 +26,12 @@
             <a href="https://chromewebstore.google.com/detail/tv-time-liberator-extensi/pohobkcjhigehafgnhehkanhjakajhpm">Tv Time Liberator</a> 
             extension, but it's currently broken.
         </li>
-        <li>Select the tvtime-series-2026-xx-xx.json (or shows.json) file it created below.</li>
+        <li>Select the tvtime-series-2026-xx-xx.json (or shows.json) file it created below and select "TV Time Out shows JSON" <strong>or</strong> the tvtime-lists-2026-xx-xx.json and select "TV Time Out lists JSON".</li>
         <li>Review the Input.</li>
-        <li>Select the "Preferred show language" for content (titles, descriptions).</li>
+        <li>When converting shows, select the "Preferred show language" for content (titles, descriptions).</li>
         <li>Select the "Transform" button.</li>
         <li>Review the Output.</li>
-        <li>Select "Download JSON" at the bottom and <a href="https://www.seriesgui.de/help/how-to/backup/backup">import the file</a> as "Shows" in SeriesGuide.</li>
+        <li>Select "Download JSON" at the bottom and <a href="https://www.seriesgui.de/help/how-to/backup/backup">import the file</a> as "Shows" or "Lists" in SeriesGuide.</li>
     </ul>
 </div>
 
@@ -39,7 +39,8 @@
     <input type="file" id="fileInput">
 
     <select id="mapping">
-        <option value="mappings/tv-time-liberator-shows.json">TV Time Out JSON</option>
+        <option value="mappings/tv-time-out-shows.json">TV Time Out/Liberator shows JSON</option>
+        <option value="mappings/tv-time-out-lists.json">TV Time Out lists JSON (shows only)</option>
     </select>
 
     <label for="language">Preferred show language (titles, descriptions, ...):</label>

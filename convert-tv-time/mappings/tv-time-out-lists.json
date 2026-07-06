@@ -1,0 +1,16 @@
+{
+  "fields": [
+    {
+      "from": "[].name",
+      "to": "[].name"
+    },
+    {
+      "from": "[].items[].tvdb_id",
+      "to": "[].items[].externalId"
+    },
+    {
+      "value": "show",
+      "to": "[].items[].type"
+    }
+  ]
+}
