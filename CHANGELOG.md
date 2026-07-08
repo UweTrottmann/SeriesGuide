@@ -10,6 +10,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ### Next release
 
+* 🔧 Import: support importing movies with only IMDB IDs.
 * 🔧 Import: restore original data on failure.
 
 ## Version 2026.2

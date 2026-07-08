@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.ParcelFileDescriptor
 import androidx.annotation.VisibleForTesting
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.dataliberation.DataLiberationFragment.LiberationResultEvent
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgEpisodeForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgListForImport
@@ -23,6 +24,7 @@ import com.battlelancer.seriesguide.dataliberation.model.Show
 import com.battlelancer.seriesguide.lists.ListsTools
 import com.battlelancer.seriesguide.lists.database.SgListHelper
 import com.battlelancer.seriesguide.lists.database.SgListItem
+import com.battlelancer.seriesguide.movies.MoviesSettings
 import com.battlelancer.seriesguide.movies.database.MovieHelper
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
@@ -31,6 +33,9 @@ import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper
 import com.battlelancer.seriesguide.shows.database.SgSeason2Helper
 import com.battlelancer.seriesguide.shows.database.SgShow2Helper
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
+import com.battlelancer.seriesguide.tmdbapi.TmdbFindTools
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools4.TmdbErrorResponse
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools4.TmdbNonNullResponse
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.TaskManager
@@ -38,9 +43,11 @@ import com.battlelancer.seriesguide.util.TextTools
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
 import com.google.gson.stream.JsonReader
+import com.uwetrottmann.tmdb2.entities.BaseMovie
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
@@ -64,7 +71,8 @@ class JsonImportTask(
     private val sgSeason2Helper: SgSeason2Helper,
     private val sgEpisode2Helper: SgEpisode2Helper,
     private val sgListHelper: SgListHelper,
-    private val sgMovieHelper: MovieHelper
+    private val sgMovieHelper: MovieHelper,
+    private val tmdbFindTools: TmdbFindTools
 ) {
 
     private val context: Context = context.applicationContext
@@ -108,7 +116,11 @@ class JsonImportTask(
         SgRoomDatabase.getInstance(context).sgSeason2Helper(),
         SgRoomDatabase.getInstance(context).sgEpisode2Helper(),
         SgRoomDatabase.getInstance(context).sgListHelper(),
-        SgRoomDatabase.getInstance(context).movieHelper()
+        SgRoomDatabase.getInstance(context).movieHelper(),
+        TmdbFindTools(
+            SgApp.getServicesComponent(context).tmdb().findService(),
+            MoviesSettings.getMoviesLanguage(context)
+        )
     )
 
     constructor(context: Context) : this(context, true, true, true) {
@@ -377,11 +389,55 @@ class JsonImportTask(
             }
     }
 
+    /**
+     * Throws [IOException] if looking up via IMDB ID fails due to an API or network error.
+     */
+    @Throws(IOException::class)
     private fun addMovieToDatabase(movie: Movie) {
         if (movie.tmdb_id <= 0) {
-            return // Valid TMDB ID required
+            // Try to look up via IMDB ID
+            if (movie.imdb_id.isNullOrBlank()) {
+                return // Skip, needs IMDB ID for look-up
+            }
+            val tmdbIdResponse = runBlocking {
+                tmdbFindTools.findMovieByImdbId(movie.imdb_id)
+            }
+            if (tmdbIdResponse is TmdbErrorResponse.Other) {
+                // If the API or network has issues, stop importing to avoid skipping movies
+                throw IOException("Failed to look up movie: TMDB API or network error (title = ${movie.title}, imdb_id = ${movie.imdb_id})")
+            }
+            if (tmdbIdResponse is TmdbNonNullResponse.Success) {
+                val tmdbMovie = tmdbIdResponse.data
+                val tmdbId = tmdbMovie.id
+                if (tmdbId != null) {
+                    movie.tmdb_id = tmdbId
+                    // Already made an API call to TMDB, so fill in data and prevent from updating
+                    // right away.
+                    tmdbMovie.enrichAndSetUpdated(movie)
+                }
+            }
+            if (movie.tmdb_id <= 0) {
+                Timber.i(
+                    "Failed to look up movie (title = %s, imdb_id = %s)",
+                    movie.imdb_id,
+                    movie.title
+                )
+                return // Skip, TMDB ID required
+            }
         }
         sgMovieHelper.insertMovie(movie.toSgMovieForImport())
+    }
+
+    /**
+     * Sets last updated to avoid hitting TMDB again soon after importing.
+     */
+    private fun BaseMovie.enrichAndSetUpdated(toImport: Movie) {
+        title?.let { toImport.title = it }
+        release_date?.time?.let { toImport.released_utc_ms = it }
+        poster_path?.let { toImport.poster = it }
+        overview?.let { toImport.overview = it }
+
+        toImport.last_updated_ms = System.currentTimeMillis()
     }
 
     private fun addShowToDatabase(show: Show) {

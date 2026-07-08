@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2025 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.tmdbapi
 
@@ -14,10 +14,10 @@ import retrofit2.awaitResponse
 /**
  * Uses response classes inheriting from a Kotlin sealed interface.
  *
- * Removes any Android specific classes and no longer relies on a third-party library to handle
+ * Removes any Android-specific classes and no longer relies on a third-party library to handle
  * results.
  */
-class TmdbTools4 {
+open class TmdbTools4 {
 
     sealed interface TmdbNonNullResponse<T> {
         data class Success<T>(val data: T) : TmdbNonNullResponse<T>
@@ -61,7 +61,7 @@ class TmdbTools4 {
      *
      * If there is an error, logs and reports it.
      */
-    private suspend fun <T> awaitTmdbCall(
+    suspend fun <T> awaitTmdbCall(
         call: Call<T>,
         action: String
     ): TmdbNonNullResponse<T> {

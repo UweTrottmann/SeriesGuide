@@ -215,3 +215,22 @@ The JSON is an array of [Movie](/app/src/main/java/com/battlelancer/seriesguide/
     }
 ]
 ```
+
+### Import movies using IMDB IDs
+
+Movies can be imported using an IMDB ID instead of a TMDB ID if the movie has it set as an external 
+ID on TMDB:
+
+```json
+[
+    {
+        "imdb_id": "tt1022603",
+        "title": "(500) Days of Summer",
+
+        "in_collection": false,
+        "in_watchlist": false,
+        "watched": true,
+        "plays": 1
+    }
+]
+```
