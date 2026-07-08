@@ -118,6 +118,9 @@ interface MovieHelper {
         }
     }
 
+    @Query("DELETE FROM movies")
+    fun deleteAllMovies()
+
     /**
      * For testing.
      */

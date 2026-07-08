@@ -3,9 +3,7 @@
 
 package com.battlelancer.seriesguide.dataliberation
 
-import android.content.ContentProviderOperation
 import android.content.Context
-import android.content.OperationApplicationException
 import android.net.Uri
 import android.os.ParcelFileDescriptor
 import androidx.annotation.VisibleForTesting
@@ -33,7 +31,6 @@ import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper
 import com.battlelancer.seriesguide.shows.database.SgSeason2Helper
 import com.battlelancer.seriesguide.shows.database.SgShow2Helper
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
-import com.battlelancer.seriesguide.util.DBUtils
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.TaskManager
@@ -324,7 +321,6 @@ class JsonImportTask(
     }
 
     private fun clearExistingData(export: Export): Boolean {
-        val batch = ArrayList<ContentProviderOperation>()
         when (export) {
             Export.Shows -> {
                 database.runInTransaction {
@@ -344,18 +340,8 @@ class JsonImportTask(
             }
 
             Export.Movies -> {
-                batch.add(
-                    ContentProviderOperation.newDelete(SeriesGuideContract.Movies.CONTENT_URI)
-                        .build()
-                )
+                sgMovieHelper.deleteAllMovies()
             }
-        }
-        try {
-            DBUtils.applyInSmallBatches(context, batch)
-        } catch (e: OperationApplicationException) {
-            errorCause = e.message
-            Timber.e(e, "clearExistingData")
-            return false
         }
         return true
     }
