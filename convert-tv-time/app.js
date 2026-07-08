@@ -8,6 +8,7 @@ const mappingSelect = document.getElementById("mapping");
 const languageSelect = document.getElementById("language");
 const transformButton = document.getElementById("transformBtn")
 const downloadButton = document.getElementById("downloadBtn");
+const transformProgress = document.getElementById("transformProgress");
 
 const interactableControls = [
     fileInput,
@@ -39,6 +40,7 @@ function jsonPreview(json) {
 
 function setControlsDisabled(disabled) {
     for (const el of interactableControls) el.disabled = disabled;
+    transformProgress.hidden = !disabled;
 }
 
 /**

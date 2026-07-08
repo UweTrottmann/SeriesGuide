@@ -12,6 +12,11 @@ body {
     margin-bottom: 2em;
 }
 
+#transformProgress {
+    width: 100%;
+    margin-bottom: 1em;
+}
+
 .toolbar {
     margin-bottom: 1em;
     display: flex;
