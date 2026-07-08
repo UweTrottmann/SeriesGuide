@@ -6,15 +6,19 @@ const inputArea = document.getElementById("input");
 const outputArea = document.getElementById("output");
 const mappingSelect = document.getElementById("mapping");
 const languageSelect = document.getElementById("language");
+const transformButton = document.getElementById("transformBtn")
+const downloadButton = document.getElementById("downloadBtn");
 
-document
-    .getElementById("transformBtn")
-    .addEventListener("click", transform);
+const interactableControls = [
+    fileInput,
+    mappingSelect,
+    languageSelect,
+    transformButton,
+    downloadButton,
+];
 
-document
-    .getElementById("downloadBtn")
-    .addEventListener("click", downloadOutput);
-
+transformButton.addEventListener("click", transform);
+downloadButton.addEventListener("click", downloadOutput);
 fileInput.addEventListener("change", loadFile);
 
 const MAPPING_PATHS = {
@@ -31,6 +35,10 @@ function jsonPreview(json) {
     const full = JSON.stringify(json, null, 2);
     if (full.length <= JSON_PREVIEW_LIMIT) return full;
     return full.slice(0, JSON_PREVIEW_LIMIT) + `\n\n... preview truncated at ${JSON_PREVIEW_LIMIT} characters (${full.length} total)`;
+}
+
+function setControlsDisabled(disabled) {
+    for (const el of interactableControls) el.disabled = disabled;
 }
 
 /**
@@ -218,6 +226,8 @@ async function transform() {
         return;
     }
 
+    setControlsDisabled(true);
+
     try {
 
         const mapping = await loadMapping();
@@ -252,6 +262,10 @@ async function transform() {
 
         console.error(err);
         alert(err.message);
+
+    } finally {
+
+        setControlsDisabled(false);
 
     }
 
