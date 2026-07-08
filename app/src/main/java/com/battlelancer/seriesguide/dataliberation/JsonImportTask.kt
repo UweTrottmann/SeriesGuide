@@ -20,10 +20,10 @@ import com.battlelancer.seriesguide.dataliberation.model.List
 import com.battlelancer.seriesguide.dataliberation.model.Movie
 import com.battlelancer.seriesguide.dataliberation.model.Season
 import com.battlelancer.seriesguide.dataliberation.model.Show
+import com.battlelancer.seriesguide.lists.ListsTools
 import com.battlelancer.seriesguide.lists.database.SgListHelper
 import com.battlelancer.seriesguide.lists.database.SgListItem
 import com.battlelancer.seriesguide.movies.database.MovieHelper
-import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgEpisode2
@@ -469,7 +469,8 @@ class JsonImportTask(
         }
         if (list.list_id.isNullOrEmpty()) {
             // rebuild from name
-            list.list_id = SeriesGuideContract.Lists.generateListId(list.name)
+            list.list_id = ListsTools.generateListId(list.name)
+                ?: return
         }
 
         // Insert the list

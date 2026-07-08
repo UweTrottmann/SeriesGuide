@@ -5,7 +5,6 @@ package com.battlelancer.seriesguide.provider;
 
 import android.net.Uri;
 import android.provider.BaseColumns;
-import android.text.TextUtils;
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -1122,10 +1121,6 @@ public class SeriesGuideContract {
             return uri.getPathSegments().get(1);
         }
 
-        public static String generateListId(@NonNull String name) {
-            String uriEncodedId = Uri.encode(name);
-            return TextUtils.isEmpty(uriEncodedId) ? "default" : uriEncodedId;
-        }
     }
 
     public static class ListItems implements ListItemsColumns, BaseColumns {

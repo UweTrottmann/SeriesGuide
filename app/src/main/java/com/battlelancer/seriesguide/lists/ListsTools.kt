@@ -6,6 +6,7 @@
 package com.battlelancer.seriesguide.lists
 
 import android.content.Context
+import android.net.Uri
 import android.os.AsyncTask
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
@@ -52,6 +53,13 @@ object ListsTools {
             const val LIST_ITEM_ID = 0
         }
     }
+
+    /**
+     * Returns `null` if the encoded value is blank.
+     */
+    @JvmStatic
+    fun generateListId(name: String): String? =
+        Uri.encode(name)?.ifBlank { null }
 
     fun addList(context: Context, listName: String) {
         AddListTask(context, listName).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
