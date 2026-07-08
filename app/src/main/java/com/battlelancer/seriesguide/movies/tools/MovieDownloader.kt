@@ -115,7 +115,7 @@ class MovieDownloader(
         movieTmdbId: Int
     ): EnhancedTmdbMovieResult {
         // Try to get movie details for desired language
-        val movieResult = TmdbTools4.getMovieSummary(
+        val movieResult = TmdbTools4().getMovieSummary(
             tmdbMovies,
             movieTmdbId,
             languageCode,
@@ -152,7 +152,7 @@ class MovieDownloader(
         movieTmdbId: Int
     ): String {
         // Try with default language if TMDb has no localized overview
-        val fallbackResult = TmdbTools4.getMovieSummary(
+        val fallbackResult = TmdbTools4().getMovieSummary(
             tmdbMovies,
             movieTmdbId,
             language = null,

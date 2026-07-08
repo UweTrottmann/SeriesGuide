@@ -17,7 +17,7 @@ import retrofit2.awaitResponse
  * Removes any Android specific classes and no longer relies on a third-party library to handle
  * results.
  */
-object TmdbTools4 {
+class TmdbTools4 {
 
     sealed interface TmdbNonNullResponse<T> {
         data class Success<T>(val data: T) : TmdbNonNullResponse<T>
