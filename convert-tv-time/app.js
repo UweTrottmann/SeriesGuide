@@ -1,4 +1,5 @@
 let inputJson = null;
+let outputJson = null;
 
 const fileInput = document.getElementById("fileInput");
 const inputArea = document.getElementById("input");
@@ -22,6 +23,17 @@ const MAPPING_PATHS = {
 };
 
 /**
+ * Returns a truncated preview of a JSON string for display purposes.
+ */
+const JSON_PREVIEW_LIMIT = 20_000;
+
+function jsonPreview(json) {
+    const full = JSON.stringify(json, null, 2);
+    if (full.length <= JSON_PREVIEW_LIMIT) return full;
+    return full.slice(0, JSON_PREVIEW_LIMIT) + `\n\n... preview truncated at ${JSON_PREVIEW_LIMIT} characters (${full.length} total)`;
+}
+
+/**
  * Reads the selected JSON file.
  */
 function loadFile(event) {
@@ -33,7 +45,8 @@ function loadFile(event) {
     reader.onload = e => {
         try {
             inputJson = JSON.parse(e.target.result);
-            inputArea.value = JSON.stringify(inputJson, null, 2);
+            // Only display a preview to keep the page performant
+            inputArea.value = jsonPreview(inputJson);
         } catch (err) {
             alert("Invalid JSON file.");
         }
@@ -231,8 +244,9 @@ async function transform() {
         // would be part of the output JSON. Remove those null/undefined items.
         const sanitizedOutput = removeNullElements(output);
 
-        outputArea.value =
-            JSON.stringify(sanitizedOutput, null, 2);
+        outputJson = sanitizedOutput;
+        // Only display a preview to keep the page performant
+        outputArea.value = jsonPreview(sanitizedOutput);
 
     } catch (err) {
 
@@ -265,13 +279,13 @@ function buildOutputFilename() {
  */
 function downloadOutput() {
 
-    if (!outputArea.value) {
+    if (!outputJson) {
         alert("Nothing to download.");
         return;
     }
 
     const blob = new Blob(
-        [outputArea.value],
+        [JSON.stringify(outputJson, null, 2)],
         {type: "application/json"}
     );
 
