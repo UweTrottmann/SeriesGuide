@@ -10,6 +10,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ### Next release
 
+* 🔧 Import: restore original data on failure.
+
 ## Version 2026.2
 
 * 🌟 Lists: movies can be added to lists, currently only from the details view.

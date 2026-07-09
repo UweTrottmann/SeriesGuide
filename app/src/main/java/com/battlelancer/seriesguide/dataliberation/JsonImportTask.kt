@@ -139,7 +139,7 @@ class JsonImportTask(
 
         var result: Int
         if (isImportShows) {
-            result = importData(Export.Shows)
+            result = openFilesAndImport(Export.Shows)
             if (result != SUCCESS) {
                 return result
             }
@@ -149,7 +149,7 @@ class JsonImportTask(
         }
 
         if (isImportLists) {
-            result = importData(Export.Lists)
+            result = openFilesAndImport(Export.Lists)
             if (result != SUCCESS) {
                 return result
             }
@@ -159,7 +159,7 @@ class JsonImportTask(
         }
 
         if (isImportMovies) {
-            result = importData(Export.Movies)
+            result = openFilesAndImport(Export.Movies)
             if (result != SUCCESS) {
                 return result
             }
@@ -207,7 +207,7 @@ class JsonImportTask(
         )
     }
 
-    private fun importData(export: Export): Int {
+    private fun openFilesAndImport(export: Export): Int {
         if (!isImportingAutoBackup) {
             val testBackupFile = testBackupFile
             var pfd: ParcelFileDescriptor? = null
@@ -237,36 +237,21 @@ class JsonImportTask(
                 }
             }
 
-            if (!clearExistingData(export)) {
-                return ERROR
-            }
-
             // Access JSON from backup file and try to import data
             val inputStream = if (testBackupFile == null) {
                 FileInputStream(pfd!!.fileDescriptor)
             } else FileInputStream(testBackupFile)
+
             try {
-                importFromJson(export, inputStream)
-                // Let the document provider know this is done.
-                pfd?.close()
-            } catch (e: JsonParseException) {
-                // The given Json might not be valid or unreadable
-                Timber.e(e, "Import failed")
-                errorCause = e.message
-                return ERROR
-            } catch (e: IOException) {
-                Timber.e(e, "Import failed")
-                errorCause = e.message
-                return ERROR
-            } catch (e: IllegalStateException) {
-                Timber.e(e, "Import failed")
-                errorCause = e.message
-                return ERROR
-            } catch (e: Exception) {
-                // Only report unexpected errors.
-                Errors.logAndReport("Import failed", e)
-                errorCause = e.message
-                return ERROR
+                return clearDataAndImportInTransaction(export, inputStream)
+            } finally {
+                try {
+                    // Let the document provider know this is done.
+                    pfd?.close()
+                } catch (e: Exception) {
+                    // Import is already done, don't fail if closing the descriptor fails, but report it
+                    Errors.logAndReport("Import failed", e)
+                }
             }
         } else {
             // Restoring latest auto backup.
@@ -285,67 +270,74 @@ class JsonImportTask(
                 return ERROR_FILE_ACCESS
             }
 
-            // Only clear data after backup file could be opened.
-            if (!clearExistingData(export)) {
-                return ERROR
-            }
-
-            // Access JSON from backup file and try to import data
-            try {
-                importFromJson(export, inputStream)
-            } catch (e: JsonParseException) {
-                // The given Json might not be valid or unreadable
-                Timber.e(e, "Import failed")
-                errorCause = e.message
-                return ERROR
-            } catch (e: IOException) {
-                Timber.e(e, "Import failed")
-                errorCause = e.message
-                return ERROR
-            } catch (e: IllegalStateException) {
-                Timber.e(e, "Import failed")
-                errorCause = e.message
-                return ERROR
-            } catch (e: Exception) {
-                // Only report unexpected errors.
-                Errors.logAndReport("Import failed", e)
-                errorCause = e.message
-                return ERROR
-            }
+            return clearDataAndImportInTransaction(export, inputStream)
         }
-        return SUCCESS
     }
 
     private fun getDataBackupFile(export: Export): Uri? {
         return BackupSettings.getImportFileUriOrExportFileUri(context, export)
     }
 
-    private fun clearExistingData(export: Export): Boolean {
+    /**
+     * [inputStream] will be closed when this returns.
+     */
+    private fun clearDataAndImportInTransaction(export: Export, inputStream: FileInputStream): Int {
+        try {
+            // Wrap in transaction, so if anything goes wrong existing data is restored
+            database.runInTransaction {
+                clearExistingData(export)
+                // Note: takes care of closing input stream
+                importFromJson(export, inputStream)
+            }
+            return SUCCESS
+        } catch (e: JsonParseException) {
+            // The given Json might not be valid or unreadable
+            Timber.e(e, "Import failed")
+            errorCause = e.message
+            return ERROR
+        } catch (e: IOException) {
+            Timber.e(e, "Import failed")
+            errorCause = e.message
+            return ERROR
+        } catch (e: IllegalStateException) {
+            Timber.e(e, "Import failed")
+            errorCause = e.message
+            return ERROR
+        } catch (e: Exception) {
+            // Only report unexpected errors.
+            Errors.logAndReport("Import failed", e)
+            errorCause = e.message
+            return ERROR
+        }
+    }
+
+    /**
+     * Assumes this is run within a database transaction.
+     */
+    private fun clearExistingData(export: Export) {
         when (export) {
             Export.Shows -> {
-                database.runInTransaction {
-                    // delete episodes and seasons first to prevent violating foreign key constraints
-                    sgEpisode2Helper.deleteAllEpisodes()
-                    sgSeason2Helper.deleteAllSeasons()
-                    sgShow2Helper.deleteAllShows()
-                }
+                // delete episodes and seasons first to prevent violating foreign key constraints
+                sgEpisode2Helper.deleteAllEpisodes()
+                sgSeason2Helper.deleteAllSeasons()
+                sgShow2Helper.deleteAllShows()
             }
 
             Export.Lists -> {
-                database.runInTransaction {
-                    // Delete list items before lists to prevent violating foreign key constraints
-                    sgListHelper.deleteAllListItems()
-                    sgListHelper.deleteAllLists()
-                }
+                // Delete list items before lists to prevent violating foreign key constraints
+                sgListHelper.deleteAllListItems()
+                sgListHelper.deleteAllLists()
             }
 
             Export.Movies -> {
                 sgMovieHelper.deleteAllMovies()
             }
         }
-        return true
     }
 
+    /**
+     * Takes care of closing the given [inputStream].
+     */
     @Throws(JsonParseException::class, IOException::class, IllegalArgumentException::class)
     private fun importFromJson(export: Export, inputStream: FileInputStream) {
         if (inputStream.channel.size() == 0L) {
@@ -355,32 +347,34 @@ class JsonImportTask(
         }
 
         val gson = Gson()
-        val reader = JsonReader(InputStreamReader(inputStream, "UTF-8"))
-        reader.beginArray()
-        when (export) {
-            Export.Shows -> {
-                while (reader.hasNext()) {
-                    val show = gson.fromJson<Show>(reader, Show::class.java)
-                    addShowToDatabase(show)
-                }
-            }
 
-            Export.Lists -> {
-                while (reader.hasNext()) {
-                    val list = gson.fromJson<List>(reader, List::class.java)
-                    addListToDatabase(list)
-                }
-            }
+        JsonReader(InputStreamReader(inputStream, "UTF-8"))
+            .use { reader ->
+                reader.beginArray()
+                when (export) {
+                    Export.Shows -> {
+                        while (reader.hasNext()) {
+                            val show = gson.fromJson<Show>(reader, Show::class.java)
+                            addShowToDatabase(show)
+                        }
+                    }
 
-            Export.Movies -> {
-                while (reader.hasNext()) {
-                    val movie = gson.fromJson<Movie>(reader, Movie::class.java)
-                    addMovieToDatabase(movie)
+                    Export.Lists -> {
+                        while (reader.hasNext()) {
+                            val list = gson.fromJson<List>(reader, List::class.java)
+                            addListToDatabase(list)
+                        }
+                    }
+
+                    Export.Movies -> {
+                        while (reader.hasNext()) {
+                            val movie = gson.fromJson<Movie>(reader, Movie::class.java)
+                            addMovieToDatabase(movie)
+                        }
+                    }
                 }
+                reader.endArray()
             }
-        }
-        reader.endArray()
-        reader.close()
     }
 
     private fun addMovieToDatabase(movie: Movie) {
