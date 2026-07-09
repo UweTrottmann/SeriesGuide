@@ -25,6 +25,7 @@ fileInput.addEventListener("change", loadFile);
 const MAPPING_PATHS = {
     "shows": "mappings/tv-time-out-shows.json",
     "lists": "mappings/tv-time-out-lists.json",
+    "movies": "mappings/tv-time-out-movies.json",
 };
 
 /**
