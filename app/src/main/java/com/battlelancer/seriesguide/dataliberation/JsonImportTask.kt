@@ -18,6 +18,7 @@ import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgShowForImport
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Export
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ListItemTypesExport
 import com.battlelancer.seriesguide.dataliberation.model.List
+import com.battlelancer.seriesguide.dataliberation.model.ListItem
 import com.battlelancer.seriesguide.dataliberation.model.Movie
 import com.battlelancer.seriesguide.dataliberation.model.Season
 import com.battlelancer.seriesguide.dataliberation.model.Show
@@ -82,7 +83,11 @@ class JsonImportTask(
     private val isImportLists: Boolean
     private val isImportMovies: Boolean
 
+    private var importedShows: Int = 0
+    private var importedListItems: Int = 0
     private var importedMovies: Int = 0
+    private var skippedShows: MutableList<Show> = mutableListOf()
+    private var skippedListItems: MutableList<ListItem> = mutableListOf()
     private val skippedMovies: MutableList<Movie> = mutableListOf()
 
     @VisibleForTesting
@@ -191,22 +196,67 @@ class JsonImportTask(
         return SUCCESS
     }
 
+    private fun <T> MutableList<T>.skippedItemsString(
+        transform: ((T) -> CharSequence)? = null
+    ): String {
+        return if (isEmpty()) {
+            ""
+        } else {
+            joinToString(
+                prefix = "\n",
+                separator = "\n",
+                limit = SUMMARY_ITEM_LIMIT,
+                truncated = "+ ${skippedMovies.size - SUMMARY_ITEM_LIMIT}",
+                transform = transform
+            )
+        }
+    }
+
     private fun buildResult(resultCode: Int): Result {
         return when (resultCode) {
             SUCCESS -> {
-                val skippedMoviesSummary = skippedMovies.joinToString(separator = "\n") {
-                    "tmdb_id = ${it.tmdb_id}, imdb_id = ${it.imdb_id}, title = ${it.title}"
+                // As this is displayed in a TextView, try to stay below 10.000 characters
+                val skippedShowsSummary = skippedShows.skippedItemsString {
+                    "title = ${it.title}, tmdb_id = ${it.tmdb_id}, tvdb_id = ${it.tvdb_id}"
                 }
 
-                // TODO Add other types, localize
-                val summary = """
-                ${context.getString(R.string.status_successful)}
-                
-                Movies: $importedMovies imported, ${skippedMovies.size} skipped
-                
-                Skipped movies:
-                $skippedMoviesSummary
-                """.trimIndent()
+                val skippedMoviesSummary = skippedMovies.skippedItemsString {
+                    "title = ${it.title}, tmdb_id = ${it.tmdb_id}, imdb_id = ${it.imdb_id}"
+                }
+
+                val skippedListItemsSummary = skippedListItems.skippedItemsString {
+                    "type = ${it.type}, externalId = ${it.externalId}"
+                }
+
+                val stringSuccess = context.getString(R.string.status_successful)
+                val stringShows = context.getString(R.string.shows)
+                val stringMovies = context.getString(R.string.movies)
+                val stringLists = context.getString(R.string.lists)
+
+                val summary = buildString {
+                    appendLine(stringSuccess)
+
+                    appendLine()
+
+                    appendLine(stringShows)
+                    append("✔️ ").appendLine(importedShows)
+                    append("❌ ").append(skippedShows.size)
+                    appendLine(skippedShowsSummary)
+
+                    appendLine()
+
+                    appendLine(stringLists)
+                    append("✔️ ").appendLine(importedListItems)
+                    append("❌ ").append(skippedListItems.size)
+                    appendLine(skippedListItemsSummary)
+
+                    appendLine()
+
+                    appendLine(stringMovies)
+                    append("✔️ ").appendLine(importedMovies)
+                    append("❌ ").append(skippedMovies.size)
+                    appendLine(skippedMoviesSummary)
+                }
 
                 Result(summary)
             }
@@ -496,6 +546,7 @@ class JsonImportTask(
         if ((show.tmdb_id == null || show.tmdb_id!! <= 0)
             && (show.tvdb_id == null || show.tvdb_id!! <= 0)) {
             // valid id required
+            skippedShows.add(show)
             return
         }
 
@@ -522,6 +573,8 @@ class JsonImportTask(
 
         // Parse and insert seasons and episodes.
         insertSeasonsAndEpisodes(show, showId)
+
+        importedShows++
     }
 
     private fun insertSeasonsAndEpisodes(show: Show, showId: Long) {
@@ -592,17 +645,24 @@ class JsonImportTask(
                 val tmdbIdOrNull = sgMovieHelper.getTmdbIdByImdbId(item.externalId)
                 if (tmdbIdOrNull == null) {
                     Timber.i("Skipping imdb-movie list item: no movie in database with IMDB ID ${item.externalId}")
+                    skippedListItems.add(item)
                     continue
                 }
                 item.externalId = tmdbIdOrNull.toString()
                 item.type = ListItemTypesExport.MOVIE
             }
 
-            item.toSgListItemForImport(sgList.listId)
-                ?.let { items.add(it) }
+            val listItemForImport = item.toSgListItemForImport(sgList.listId)
+            if (listItemForImport != null) {
+                items.add(listItemForImport)
+            } else {
+                Timber.i("Skipping list item (type = ${item.type}, externalId = ${item.externalId})")
+                skippedListItems.add(item)
+            }
         }
 
         sgListHelper.insertListItems(items)
+        importedListItems += items.size
     }
 
     companion object {
@@ -610,5 +670,7 @@ class JsonImportTask(
         private const val ERROR = -1
         private const val ERROR_LARGE_DB_OP = -2
         private const val ERROR_FILE_ACCESS = -3
+
+        private const val SUMMARY_ITEM_LIMIT = 50
     }
 }
