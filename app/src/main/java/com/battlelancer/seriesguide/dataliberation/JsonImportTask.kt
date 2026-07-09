@@ -9,7 +9,6 @@ import android.os.ParcelFileDescriptor
 import androidx.annotation.VisibleForTesting
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.dataliberation.DataLiberationFragment.LiberationResultEvent
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgEpisodeForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgListForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgListItemForImport
@@ -50,7 +49,6 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.withContext
-import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
 import java.io.File
 import java.io.FileInputStream
@@ -82,6 +80,9 @@ class JsonImportTask(
     private val isImportShows: Boolean
     private val isImportLists: Boolean
     private val isImportMovies: Boolean
+
+    private var importedMovies: Int = 0
+    private val skippedMovies: MutableList<Movie> = mutableListOf()
 
     @VisibleForTesting
     var errorCause: String? = null
@@ -127,9 +128,14 @@ class JsonImportTask(
         isImportingAutoBackup = true
     }
 
-    suspend fun run(): Int {
+    data class Result(
+        val message: String,
+        val isError: Boolean = false
+    )
+
+    suspend fun run(): Result {
         return withContext(Dispatchers.IO) {
-            val result = if (SgSyncAdapter.isSyncActive(context, false)) {
+            val resultCode = if (SgSyncAdapter.isSyncActive(context, false)) {
                 // Do not import if an update task is running
                 ERROR_LARGE_DB_OP
             } else {
@@ -138,8 +144,7 @@ class JsonImportTask(
                     doInBackground(this)
                 }
             }
-            onPostExecute(result)
-            return@withContext result
+            return@withContext buildResult(resultCode)
         }
     }
 
@@ -186,37 +191,57 @@ class JsonImportTask(
         return SUCCESS
     }
 
-    private fun onPostExecute(result: Int) {
-        val message: String
-        val showIndefinite: Boolean
-        when (result) {
+    private fun buildResult(resultCode: Int): Result {
+        return when (resultCode) {
             SUCCESS -> {
-                message = context.getString(R.string.status_successful)
-                showIndefinite = false
+                val skippedMoviesSummary = skippedMovies.joinToString(separator = "\n") {
+                    "tmdb_id = ${it.tmdb_id}, imdb_id = ${it.imdb_id}, title = ${it.title}"
+                }
+
+                // TODO Add other types, localize
+                val summary = """
+                ${context.getString(R.string.status_successful)}
+                
+                Movies: $importedMovies imported, ${skippedMovies.size} skipped
+                
+                Skipped movies:
+                $skippedMoviesSummary
+                """.trimIndent()
+
+                Result(summary)
             }
 
-            ERROR_FILE_ACCESS -> {
-                message = TextTools.dotSeparate(
+            ERROR_FILE_ACCESS -> Result(
+                TextTools.dotSeparate(
                     context,
-                    R.string.status_failure,
-                    R.string.status_failed_file_access
-                )
-                showIndefinite = true
-            }
+                    TextTools.dotSeparate(
+                        context,
+                        R.string.status_failure,
+                        R.string.status_failed_file_access
+                    ),
+                    errorCause
+                ),
+                isError = true
+            )
 
-            ERROR_LARGE_DB_OP -> {
-                message = context.getString(R.string.update_inprogress)
-                showIndefinite = false
-            }
+            ERROR_LARGE_DB_OP -> Result(
+                TextTools.dotSeparate(
+                    context,
+                    context.getString(R.string.update_inprogress),
+                    errorCause
+                ),
+                isError = true
+            )
 
-            else -> {
-                message = context.getString(R.string.status_failure)
-                showIndefinite = true
-            }
+            else -> Result(
+                TextTools.dotSeparate(
+                    context,
+                    context.getString(R.string.status_failure),
+                    errorCause
+                ),
+                isError = true
+            )
         }
-        EventBus.getDefault().post(
-            LiberationResultEvent(context, message, errorCause, showIndefinite)
-        )
     }
 
     private fun openFilesAndImport(export: Export): Int {
@@ -397,6 +422,7 @@ class JsonImportTask(
         if (movie.tmdb_id <= 0) {
             // Try to look up via IMDB ID
             if (movie.imdb_id.isNullOrBlank()) {
+                skippedMovies.add(movie)
                 return // Skip, needs IMDB ID for look-up
             }
             val tmdbIdResponse = runBlocking {
@@ -422,10 +448,12 @@ class JsonImportTask(
                     movie.imdb_id,
                     movie.title
                 )
+                skippedMovies.add(movie)
                 return // Skip, TMDB ID required
             }
         }
         sgMovieHelper.insertMovie(movie.toSgMovieForImport())
+        importedMovies++
     }
 
     /**

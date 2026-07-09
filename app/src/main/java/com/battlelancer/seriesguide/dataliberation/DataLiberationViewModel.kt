@@ -4,20 +4,19 @@
 package com.battlelancer.seriesguide.dataliberation
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import android.content.Context
 import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools.getFileNameFromUriOrLastPathSegment
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Export
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 /**
  * Try to keep the backup tasks on config changes so they do not have to be finished.
  */
-class DataLiberationViewModel(application: Application) : AndroidViewModel(application) {
+class DataLiberationViewModel(application: Application) : BaseDataLiberationViewModel(application) {
 
     data class ImportFiles(
         val fileNameShows: String?,
@@ -27,21 +26,6 @@ class DataLiberationViewModel(application: Application) : AndroidViewModel(appli
     )
 
     val importFiles = MutableStateFlow(ImportFiles("", "", "", ""))
-
-    var dataLibJob: Job? = null
-
-    val isDataLibTaskNotCompleted: Boolean
-        get() {
-            val dataLibJob = dataLibJob
-            return (dataLibJob != null && !dataLibJob.isCompleted)
-        }
-
-    override fun onCleared() {
-        if (isDataLibTaskNotCompleted) {
-            dataLibJob?.cancel(null)
-        }
-        dataLibJob = null
-    }
 
     fun updateImportFileNames() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -64,6 +48,22 @@ class DataLiberationViewModel(application: Application) : AndroidViewModel(appli
                 fileNameLists = listsFileUri?.getFileNameFromUriOrLastPathSegment(context),
                 fileNameMovies = moviesFileUri?.getFileNameFromUriOrLastPathSegment(context),
                 placeholderText = context.getString(R.string.no_file_selected)
+            )
+        }
+    }
+
+    fun runImportTask(
+        importShows: Boolean,
+        importLists: Boolean,
+        importMovies: Boolean
+    ) {
+        val context: Context = getApplication()
+        runImportTask {
+            JsonImportTask(
+                context,
+                importShows,
+                importLists,
+                importMovies
             )
         }
     }

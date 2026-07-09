@@ -34,6 +34,7 @@ import org.mockito.kotlin.eq
 import org.mockito.kotlin.whenever
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
+import java.io.File
 import java.nio.file.Files
 import kotlin.io.path.writeText
 
@@ -62,6 +63,17 @@ class JsonImportTaskTest {
      */
     private fun <T> anyNotNull(type: Class<T>): T = Mockito.any(type)
 
+    private fun createTempJsonFile(name: String, contents: String): File =
+        Files.createTempFile(name, null)
+            .also { it.writeText(contents) }
+            .toFile()
+
+    private suspend fun JsonImportTask.runAndAssertSuccess() {
+        val result = run()
+        assertThat(errorCause).isNull()
+        assertThat(result.isError).isFalse()
+    }
+
     @Test
     fun importShow_modelAsExpected() = runTest {
         val sgShow2Helper = mock(SgShow2Helper::class.java)
@@ -80,12 +92,13 @@ class JsonImportTaskTest {
             mock(SgListHelper::class.java),
             mock(MovieHelper::class.java),
             mock()
-        )
-
-        // Test data from export task test: single show, two seasons, each with two episodes.
-        val testBackupFile = Files.createTempFile("seriesguide-shows-json", null)
-        testBackupFile.writeText(JsonExportTaskTest.expectedJsonShows)
-        importTask.testBackupFile = testBackupFile.toFile()
+        ).apply {
+            // Test data from export task test: single show, two seasons, each with two episodes.
+            testBackupFile = createTempJsonFile(
+                "seriesguide-shows-json",
+                JsonExportTaskTest.expectedJsonShows
+            )
+        }
 
         // Return row ids like it would be an insert on an empty database, so start at 1.
         `when`(sgShow2Helper.insertShow(anyNotNull(SgShow2::class.java))).thenReturn(1)
@@ -95,9 +108,7 @@ class JsonImportTaskTest {
             return@then seasonRowId
         }
 
-        val result = importTask.run()
-        assertThat(importTask.errorCause).isNull()
-        assertThat(result).isEqualTo(JsonImportTask.SUCCESS)
+        importTask.runAndAssertSuccess()
 
         val expectedShow = JsonExportTaskTest.listOfTestShows[0].copy(
             id = 0, // insert
@@ -145,7 +156,7 @@ class JsonImportTaskTest {
     fun importList_modelAsExpected() = runTest {
         val sgListHelper = mock(SgListHelper::class.java)
 
-        val importTask = JsonImportTask(
+        JsonImportTask(
             context,
             importShows = false,
             importLists = true,
@@ -157,16 +168,13 @@ class JsonImportTaskTest {
             sgListHelper,
             mock(MovieHelper::class.java),
             mock()
-        )
-
-        // Test data from export task test: two lists, the first with one item of each type.
-        val testBackupFile = Files.createTempFile("seriesguide-lists-json", null)
-        testBackupFile.writeText(JsonExportTaskTest.expectedJsonLists)
-        importTask.testBackupFile = testBackupFile.toFile()
-
-        val result = importTask.run()
-        assertThat(importTask.errorCause).isNull()
-        assertThat(result).isEqualTo(JsonImportTask.SUCCESS)
+        ).apply {
+            // Test data from export task test: two lists, the first with one item of each type.
+            testBackupFile = createTempJsonFile(
+                "seriesguide-lists-json",
+                JsonExportTaskTest.expectedJsonLists
+            )
+        }.runAndAssertSuccess()
 
         // List 1 with items
         verify(sgListHelper).insertList(
@@ -181,27 +189,19 @@ class JsonImportTaskTest {
         )
     }
 
-    private suspend fun importMovies(importTask: JsonImportTask, json: String) {
-        @Suppress("BlockingMethodInNonBlockingContext")
-        val testBackupFile = Files.createTempFile("seriesguide-movies-json", null)
-        testBackupFile.writeText(json)
-        importTask.testBackupFile = testBackupFile.toFile()
-
-        val result = importTask.run()
-        assertThat(importTask.errorCause).isNull()
-        assertThat(result).isEqualTo(JsonImportTask.SUCCESS)
-    }
-
     @Test
     fun importMovie_modelAsExpected() = runTest {
-        val importTask = JsonImportTask(
+        JsonImportTask(
             context,
             importShows = false,
             importLists = false,
             importMovies = true
-        )
-
-        importMovies(importTask, JsonExportTaskTest.expectedJsonMovies)
+        ).apply {
+            testBackupFile = createTempJsonFile(
+                "seriesguide-movies-json",
+                JsonExportTaskTest.expectedJsonMovies
+            )
+        }.runAndAssertSuccess()
 
         // Two movies, second one with only TMDB ID and title
         val insertedMovies = testDb.movieHelper().getAllMovies()
@@ -241,7 +241,7 @@ class JsonImportTaskTest {
         val testImdbId = "test-imdbid"
 
         @Language("json")
-        val jsonMovieMissingRequiredValues =
+        val jsonToImport =
             """
             [
             {"imdb_id":"test-imdbid","title":"First Movie"}
@@ -256,7 +256,7 @@ class JsonImportTaskTest {
 
         val movieHelper = testDb.movieHelper()
 
-        val importTask = JsonImportTask(
+        JsonImportTask(
             context,
             importShows = false,
             importLists = false,
@@ -268,9 +268,9 @@ class JsonImportTaskTest {
             mock(),
             movieHelper,
             tmdbTools
-        )
-
-        importMovies(importTask, jsonMovieMissingRequiredValues)
+        ).apply {
+            testBackupFile = createTempJsonFile("seriesguide-movies-json", jsonToImport)
+        }.runAndAssertSuccess()
 
         val importedMovies = movieHelper.getAllMovies()
         assertThat(importedMovies).hasSize(1)
@@ -280,21 +280,21 @@ class JsonImportTaskTest {
     @Test
     fun importMovie_missingRequired_notImported() = runTest {
         @Language("json")
-        val jsonMovieMissingRequiredValues =
+        val jsonToImport =
             """
             [
             {"title":"First Movie"}
             ]
             """.trimIndent()
 
-        val importTask = JsonImportTask(
+        JsonImportTask(
             context,
             importShows = false,
             importLists = false,
             importMovies = true
-        )
-
-        importMovies(importTask, jsonMovieMissingRequiredValues)
+        ).apply {
+            testBackupFile = createTempJsonFile("seriesguide-movies-json", jsonToImport)
+        }.runAndAssertSuccess()
 
         // Nothing is imported
         assertThat(testDb.movieHelper().getAllMovies()).hasSize(0)

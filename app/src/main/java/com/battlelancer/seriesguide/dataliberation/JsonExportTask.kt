@@ -140,7 +140,8 @@ open class JsonExportTask(
         EventBus.getDefault()
             .post(
                 LiberationResultEvent(
-                    context, message, errorCause, showIndefinite
+                    TextTools.dotSeparate(context, message, errorCause),
+                    showIndefinite
                 )
             )
     }
