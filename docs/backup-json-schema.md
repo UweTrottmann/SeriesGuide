@@ -114,6 +114,8 @@ two-letter language code (like `en`) that can be mapped to one of the supported 
 ]
 ```
 
+### Import shows using minimal values
+
 When importing from another app or data source a minimal amount of values can be enough, here is an
 example:
 
@@ -141,6 +143,46 @@ example:
 
 While the `language` is technically not required, it's easier to set it in the JSON than changing it
 for each show after importing.
+
+### Import shows using TVDB IDs
+
+Shows can be imported using a TVDB ID instead of a TMDB ID. However, only if the show has the TVDB 
+ID set as an external ID on TMDB will it be migrated to TMDB data and support all functionality.
+
+Note that only the `tvdb_id` of the show needs to be valid. You can use any `0` or greater value for
+seasons and episodes.
+
+```json
+[
+    {
+        "tvdb_id": 332331,
+        "title": "Altered Carbon",
+        "language": "pt-BR",
+        "favorite": false,
+        "seasons": [
+            {
+                "tvdb_id": 1,
+                "season": 1,
+                "episodes": [
+                    {
+                        "tvdb_id": 1,
+                        "episode": 1,
+                        "title": "Out of the Past",
+                        "watched": true,
+                        "plays": 1
+                    }
+                ]
+            }
+        ]
+    }
+]
+```
+
+Note: seasons and episodes are mapped to their TMDB equivalent based on their number (`season` and
+`episode` values). Depending on how episodes are organized or available on TMDB, not all episodes
+can be migrated. For example, for anime on TMDB all episodes might be part of the first season. Or
+later seasons might be split into a separate show entry. If affected episodes are watched or added
+to your collection, you would have to manually mark the replacements.
 
 ## Lists
 
