@@ -10,6 +10,8 @@ import com.battlelancer.seriesguide.lists.database.SgList
 import com.battlelancer.seriesguide.lists.database.SgListHelper
 import com.battlelancer.seriesguide.movies.database.MovieHelper
 import com.battlelancer.seriesguide.movies.database.SgMovie
+import com.battlelancer.seriesguide.provider.SeriesGuideContract
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper
 import com.battlelancer.seriesguide.shows.database.SgSeason2
@@ -191,6 +193,77 @@ class JsonImportTaskTest {
         verify(sgListHelper).insertList(
             SgList(listId = "list-2", name = "Empty List", order = 1)
         )
+    }
+
+    @Language("json")
+    val jsonListMovieImdbId =
+        """
+            [
+            {"name":"Movie with IMDB ID","items":[{"externalId":"test-imdbid","type":"imdb-movie"}]}
+            ]
+            """.trimIndent()
+
+    @Test
+    fun importList_movieWithKnownImdbId_mappedToTmdbId() = runTest {
+        @Language("json")
+        val moviesJson =
+            """
+            [
+            {"tmdb_id":42,"imdb_id":"test-imdbid","title":"First Movie"}
+            ]
+            """.trimIndent()
+
+        JsonImportTask(
+            context,
+            importShows = false,
+            importLists = true,
+            importMovies = true
+        ).apply {
+            setTestBackupFiles(
+                fileMovies = createTempJsonFile(
+                    "seriesguide-movies-json",
+                    moviesJson
+                ),
+                fileLists = createTempJsonFile(
+                    "seriesguide-lists-json",
+                    jsonListMovieImdbId
+                )
+            )
+        }.runAndAssertSuccess()
+
+        // The movie should be inserted (first)
+        assertThat(testDb.movieHelper().getAllMovies()).hasSize(1)
+
+        // The movie list item should be imported and use the TMDB ID of the movie
+        val lists = testDb.sgListHelper().getListsForExport()
+        assertThat(lists).hasSize(1)
+        val listItems = testDb.sgListHelper().getListItemsForExport(lists[0].listId)
+        assertThat(listItems).hasSize(1)
+        assertThat(listItems[0].itemRefId).isEqualTo("42")
+        assertThat(listItems[0].type).isEqualTo(ListItemTypes.TMDB_MOVIE)
+    }
+
+    @Test
+    fun importList_movieWithUnknownImdbId_skipped() = runTest {
+        JsonImportTask(
+            context,
+            importShows = false,
+            importLists = true,
+            importMovies = false
+        ).apply {
+            setTestBackupFiles(
+                fileLists = createTempJsonFile(
+                    "seriesguide-lists-json",
+                    jsonListMovieImdbId
+                )
+            )
+        }.runAndAssertSuccess()
+
+        // The list should be imported, but not the item
+        val lists = testDb.sgListHelper().getListsForExport()
+        assertThat(lists).hasSize(1)
+        val listItems = testDb.sgListHelper().getListItemsForExport(lists[0].listId)
+        assertThat(listItems).hasSize(0)
     }
 
     @Test

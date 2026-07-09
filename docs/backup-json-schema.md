@@ -189,6 +189,25 @@ to the library.
 ]
 ```
 
+### Import movie list items using IMDB IDs
+
+Movie list items using an IMDB ID as `externalId` can be imported if a movie with a matching IMDB ID
+is already in the database or imported at the same time. Use the special `imdb-movie` type:
+
+```json
+[
+  {
+    "name": "List with movie with IMDB ID",
+    "items": [
+      {
+        "externalId": "tt1022603",
+        "type": "imdb-movie"
+      }
+    ]
+  }
+]
+```
+
 ## Movies
 
 The JSON is an array of [Movie](/app/src/main/java/com/battlelancer/seriesguide/dataliberation/model/Movie.java)

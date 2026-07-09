@@ -16,6 +16,7 @@ import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgMovieForImpor
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgSeasonForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgShowForImport
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Export
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ListItemTypesExport
 import com.battlelancer.seriesguide.dataliberation.model.List
 import com.battlelancer.seriesguide.dataliberation.model.Movie
 import com.battlelancer.seriesguide.dataliberation.model.Season
@@ -163,8 +164,8 @@ class JsonImportTask(
             }
         }
 
-        if (isImportLists) {
-            result = openFilesAndImport(Export.Lists)
+        if (isImportMovies) {
+            result = openFilesAndImport(Export.Movies)
             if (result != SUCCESS) {
                 return result
             }
@@ -173,8 +174,9 @@ class JsonImportTask(
             }
         }
 
-        if (isImportMovies) {
-            result = openFilesAndImport(Export.Movies)
+        // Import lists last so imdb-movie list items can be mapped
+        if (isImportLists) {
+            result = openFilesAndImport(Export.Lists)
             if (result != SUCCESS) {
                 return result
             }
@@ -584,6 +586,18 @@ class JsonImportTask(
         // Insert the list items
         val items = ArrayList<SgListItem>()
         for (item in list.items) {
+
+            // Special type for movies: map to TMDB ID if movie with that IMDB ID is in the database
+            if (ListItemTypesExport.IMDB_MOVIE == item.type) {
+                val tmdbIdOrNull = sgMovieHelper.getTmdbIdByImdbId(item.externalId)
+                if (tmdbIdOrNull == null) {
+                    Timber.i("Skipping imdb-movie list item: no movie in database with IMDB ID ${item.externalId}")
+                    continue
+                }
+                item.externalId = tmdbIdOrNull.toString()
+                item.type = ListItemTypesExport.MOVIE
+            }
+
             item.toSgListItemForImport(sgList.listId)
                 ?.let { items.add(it) }
         }
