@@ -94,9 +94,11 @@ class JsonImportTaskTest {
             mock()
         ).apply {
             // Test data from export task test: single show, two seasons, each with two episodes.
-            testBackupFile = createTempJsonFile(
-                "seriesguide-shows-json",
-                JsonExportTaskTest.expectedJsonShows
+            setTestBackupFiles(
+                fileShows = createTempJsonFile(
+                    "seriesguide-shows-json",
+                    JsonExportTaskTest.expectedJsonShows
+                )
             )
         }
 
@@ -170,9 +172,11 @@ class JsonImportTaskTest {
             mock()
         ).apply {
             // Test data from export task test: two lists, the first with one item of each type.
-            testBackupFile = createTempJsonFile(
-                "seriesguide-lists-json",
-                JsonExportTaskTest.expectedJsonLists
+            setTestBackupFiles(
+                fileLists = createTempJsonFile(
+                    "seriesguide-lists-json",
+                    JsonExportTaskTest.expectedJsonLists
+                )
             )
         }.runAndAssertSuccess()
 
@@ -197,9 +201,11 @@ class JsonImportTaskTest {
             importLists = false,
             importMovies = true
         ).apply {
-            testBackupFile = createTempJsonFile(
-                "seriesguide-movies-json",
-                JsonExportTaskTest.expectedJsonMovies
+            setTestBackupFiles(
+                fileMovies = createTempJsonFile(
+                    "seriesguide-movies-json",
+                    JsonExportTaskTest.expectedJsonMovies
+                )
             )
         }.runAndAssertSuccess()
 
@@ -269,7 +275,9 @@ class JsonImportTaskTest {
             movieHelper,
             tmdbTools
         ).apply {
-            testBackupFile = createTempJsonFile("seriesguide-movies-json", jsonToImport)
+            setTestBackupFiles(
+                fileMovies = createTempJsonFile("seriesguide-movies-json", jsonToImport)
+            )
         }.runAndAssertSuccess()
 
         val importedMovies = movieHelper.getAllMovies()
@@ -293,7 +301,9 @@ class JsonImportTaskTest {
             importLists = false,
             importMovies = true
         ).apply {
-            testBackupFile = createTempJsonFile("seriesguide-movies-json", jsonToImport)
+            setTestBackupFiles(
+                fileMovies = createTempJsonFile("seriesguide-movies-json", jsonToImport)
+            )
         }.runAndAssertSuccess()
 
         // Nothing is imported

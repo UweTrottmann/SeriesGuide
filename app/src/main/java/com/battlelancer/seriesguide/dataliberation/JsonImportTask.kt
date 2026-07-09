@@ -88,12 +88,10 @@ class JsonImportTask(
     var errorCause: String? = null
         private set
 
-    /**
-     * If set will use this file instead of opening via URI, which seems broken with Robolectric
-     * (openFileDescriptor throws FileNotFoundException).
-     */
-    @VisibleForTesting
-    var testBackupFile: File? = null
+    // Note: Path or NIO APIs require Android 8 (API 26) or coreLibraryDesugaring
+    private var testBackupFileShows: File? = null
+    private var testBackupFileMovies: File? = null
+    private var testBackupFileLists: File? = null
 
     init {
         isImportingAutoBackup = false
@@ -244,9 +242,33 @@ class JsonImportTask(
         }
     }
 
+    /**
+     * If set, will use these files instead of opening via URI, which seems broken with Robolectric
+     * (openFileDescriptor throws FileNotFoundException).
+     */
+    fun setTestBackupFiles(
+        fileShows: File? = null,
+        fileMovies: File? = null,
+        fileLists: File? = null
+    ) {
+        this.testBackupFileShows = fileShows
+        this.testBackupFileMovies = fileMovies
+        this.testBackupFileLists = fileLists
+    }
+
+    private fun getTestBackupFile(export: Export): File? {
+        return when (export) {
+            Export.Shows -> testBackupFileShows
+            Export.Lists -> testBackupFileLists
+            Export.Movies -> testBackupFileMovies
+        }
+    }
+
     private fun openFilesAndImport(export: Export): Int {
         if (!isImportingAutoBackup) {
-            val testBackupFile = testBackupFile
+
+            val testBackupFile = getTestBackupFile(export)
+
             var pfd: ParcelFileDescriptor? = null
             if (testBackupFile == null) {
                 // Make sure a file is configured...
