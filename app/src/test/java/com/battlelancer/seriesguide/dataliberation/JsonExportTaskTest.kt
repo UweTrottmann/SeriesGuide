@@ -4,6 +4,8 @@
 package com.battlelancer.seriesguide.dataliberation
 
 import android.content.Context
+import android.net.Uri
+import android.os.ParcelFileDescriptor
 import androidx.test.core.app.ApplicationProvider
 import com.battlelancer.seriesguide.EmptyTestApplication
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Export
@@ -38,6 +40,7 @@ import org.mockito.Mockito.`when`
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import java.io.File
+import java.io.FileInputStream
 import java.nio.file.Files
 import java.util.concurrent.Executors
 
@@ -57,6 +60,9 @@ class JsonExportTaskTest {
 
     @After
     fun tearDown() {
+        BackupSettings.storeExportFileUri(context, Export.Shows, null, isAutoBackup = false)
+        BackupSettings.storeExportFileUri(context, Export.Lists, null, isAutoBackup = false)
+        BackupSettings.storeExportFileUri(context, Export.Movies, null, isAutoBackup = false)
         Dispatchers.resetMain() // reset main dispatcher to the original Main dispatcher
         mainThreadSurrogate.close()
     }
@@ -74,6 +80,28 @@ class JsonExportTaskTest {
 //        BackupSettings.storeExportFileUri(context, JsonExportTask.BACKUP_SHOWS, uri, false)
 
         return file
+    }
+
+    private class FileDescriptorExportTask(
+        context: Context,
+        movieHelper: MovieHelper = mock(MovieHelper::class.java),
+        private val fileDescriptorProvider: (Uri, String) -> ParcelFileDescriptor?
+    ) : JsonExportTask(
+        context,
+        progressListener = null,
+        isFullDump = true,
+        mock(SgShow2Helper::class.java),
+        mock(SgSeason2Helper::class.java),
+        mock(SgEpisode2Helper::class.java),
+        mock(SgListHelper::class.java),
+        movieHelper
+    ) {
+        val openedModes = mutableListOf<String>()
+
+        override fun openFileDescriptor(uri: Uri, mode: String): ParcelFileDescriptor? {
+            openedModes.add(mode)
+            return fileDescriptorProvider(uri, mode)
+        }
     }
 
     @Test
@@ -121,6 +149,73 @@ class JsonExportTaskTest {
         println("Export with data")
         println(exportWithData)
         assertThat(exportWithData).isEqualTo(expectedJsonShows)
+    }
+
+    @Test
+    fun exportMovies_seekableFileDescriptor_truncatesExistingContent() = runTest {
+        val exportFile = File(context.filesDir, "seekable-export.json")
+        exportFile.writeText("[] trailing content from an older, longer backup")
+        val exportUri = Uri.parse("content://seriesguide.test/seekable-export.json")
+        BackupSettings.storeExportFileUri(context, Export.Movies, exportUri, isAutoBackup = false)
+
+        val exportTask = FileDescriptorExportTask(context) { _, _ ->
+            ParcelFileDescriptor.open(exportFile, ParcelFileDescriptor.MODE_WRITE_ONLY)
+        }
+
+        val result = exportTask.run(Export.Movies)
+
+        assertThat(result).isEqualTo(JsonExportTask.SUCCESS)
+        assertThat(exportTask.openedModes).containsExactly("wt")
+        assertThat(exportFile.readText()).isEqualTo("[]")
+        assertThat(exportFile.length()).isEqualTo(2L)
+    }
+
+    @Test
+    fun exportMovies_pipeBackedFileDescriptor_ignoresTruncateFailureAndWritesJson() = runTest {
+        val movieHelper = mock(MovieHelper::class.java)
+        `when`(movieHelper.getMoviesForExport()).thenReturn(listOfTestMovies)
+
+        val exportUri = Uri.parse("content://seriesguide.test/pipe-export.json")
+        BackupSettings.storeExportFileUri(context, Export.Movies, exportUri, isAutoBackup = false)
+
+        val pipe = ParcelFileDescriptor.createPipe()
+        val readSide = pipe[0]
+        val writeSide = pipe[1]
+        val exportTask = FileDescriptorExportTask(context, movieHelper) { _, mode ->
+            if (mode == "wt") {
+                throw IllegalArgumentException("mode not supported")
+            }
+            writeSide
+        }
+
+        val result = exportTask.run(Export.Movies)
+        val exportJson = FileInputStream(readSide.fileDescriptor).use {
+            String(it.readBytes(), Charsets.UTF_8)
+        }
+
+        assertThat(result).isEqualTo(JsonExportTask.SUCCESS)
+        assertThat(exportTask.openedModes).containsExactly("wt", "w").inOrder()
+        assertThat(exportJson).isEqualTo(expectedJsonMovies)
+        assertThat(BackupSettings.getExportFileUri(context, Export.Movies, isAutoBackup = false))
+            .isEqualTo(exportUri)
+    }
+
+    @Test
+    fun exportMovies_writeFailure_returnsFileAccessErrorAndClearsExportUri() = runTest {
+        val exportUri = Uri.parse("content://seriesguide.test/broken-pipe-export.json")
+        BackupSettings.storeExportFileUri(context, Export.Movies, exportUri, isAutoBackup = false)
+
+        val pipe = ParcelFileDescriptor.createPipe()
+        pipe[0].close()
+        val exportTask = FileDescriptorExportTask(context) { _, _ ->
+            pipe[1]
+        }
+
+        val result = exportTask.run(Export.Movies)
+
+        assertThat(result).isEqualTo(0)
+        assertThat(BackupSettings.getExportFileUri(context, Export.Movies, isAutoBackup = false))
+            .isNull()
     }
 
     companion object {

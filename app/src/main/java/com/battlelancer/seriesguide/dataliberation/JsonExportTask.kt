@@ -4,6 +4,7 @@
 package com.battlelancer.seriesguide.dataliberation
 
 import android.content.Context
+import android.net.Uri
 import android.os.ParcelFileDescriptor
 import androidx.annotation.VisibleForTesting
 import com.battlelancer.seriesguide.R
@@ -156,24 +157,19 @@ open class JsonExportTask(
                     BackupSettings.getExportFileUri(context, export, isAutoBackup = false)
                         ?: return ERROR_FILE_ACCESS
 
-                pfd = context.contentResolver.openFileDescriptor(exportFileUri, "w")
-                    ?: return ERROR_FILE_ACCESS
-
-                FileOutputStream(pfd.fileDescriptor)
+                val output = openFileForOverwrite(exportFileUri) ?: return ERROR_FILE_ACCESS
+                pfd = output.first
+                output.second
             } else {
-                FileOutputStream(testExportFile)
+                FileOutputStream(testExportFile).also { truncateForOverwrite(it) }
             }
 
-            // Even though using streams and FileOutputStream does not append by
-            // default, using Storage Access Framework just overwrites existing
-            // bytes, potentially leaving old bytes hanging over:
-            // so truncate the file first to clear any existing bytes.
-            out.channel.truncate(0)
-
-            when (export) {
-                Export.Shows -> writeJsonStreamShows(coroutineScope, out)
-                Export.Lists -> writeJsonStreamLists(coroutineScope, out)
-                Export.Movies -> writeJsonStreamMovies(coroutineScope, out)
+            out.use {
+                when (export) {
+                    Export.Shows -> writeJsonStreamShows(coroutineScope, it)
+                    Export.Lists -> writeJsonStreamLists(coroutineScope, it)
+                    Export.Movies -> writeJsonStreamMovies(coroutineScope, it)
+                }
             }
 
             // let the document provider know we're done.
@@ -213,6 +209,42 @@ open class JsonExportTask(
 
     private fun removeExportFileUri(export: Export) {
         BackupSettings.storeExportFileUri(context, export, null, isAutoBackup = false)
+    }
+
+    @Throws(IOException::class)
+    protected fun openFileForOverwrite(uri: Uri): Pair<ParcelFileDescriptor, FileOutputStream>? {
+        val pfd = openFileDescriptorForOverwrite(uri) ?: return null
+        val out = FileOutputStream(pfd.fileDescriptor)
+        truncateForOverwrite(out)
+        return Pair(pfd, out)
+    }
+
+    @Throws(FileNotFoundException::class)
+    private fun openFileDescriptorForOverwrite(uri: Uri): ParcelFileDescriptor? {
+        return try {
+            openFileDescriptor(uri, "wt")
+        } catch (e: FileNotFoundException) {
+            Timber.w(e, "Opening file with truncation mode failed, falling back to write mode.")
+            openFileDescriptor(uri, "w")
+        } catch (e: IllegalArgumentException) {
+            Timber.w(e, "Opening file with truncation mode failed, falling back to write mode.")
+            openFileDescriptor(uri, "w")
+        }
+    }
+
+    @Throws(FileNotFoundException::class)
+    protected open fun openFileDescriptor(uri: Uri, mode: String): ParcelFileDescriptor? {
+        return context.contentResolver.openFileDescriptor(uri, mode)
+    }
+
+    private fun truncateForOverwrite(out: FileOutputStream) {
+        // Some document providers return non-seekable, pipe-backed descriptors. They do not have
+        // existing bytes to clear, so keep writing if truncate fails with "illegal seek".
+        try {
+            out.channel.truncate(0)
+        } catch (e: IOException) {
+            Timber.w(e, "Unable to truncate file before writing, continuing.")
+        }
     }
 
     @Throws(IOException::class)
