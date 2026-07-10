@@ -57,6 +57,7 @@ import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.io.InputStreamReader
+import java.text.NumberFormat
 
 /**
  * Imports shows, lists or movies from a human-readable JSON file replacing existing data.
@@ -197,6 +198,7 @@ class JsonImportTask(
     }
 
     private fun <T> MutableList<T>.skippedItemsString(
+        numberFormat: NumberFormat,
         transform: ((T) -> CharSequence)? = null
     ): String {
         return if (isEmpty()) {
@@ -206,7 +208,7 @@ class JsonImportTask(
                 prefix = "\n",
                 separator = "\n",
                 limit = SUMMARY_ITEM_LIMIT,
-                truncated = "+ ${skippedMovies.size - SUMMARY_ITEM_LIMIT}",
+                truncated = "+ ${numberFormat.format(skippedMovies.size - SUMMARY_ITEM_LIMIT)}",
                 transform = transform
             )
         }
@@ -215,16 +217,18 @@ class JsonImportTask(
     private fun buildResult(resultCode: Int): Result {
         return when (resultCode) {
             SUCCESS -> {
+                val numberFormat = NumberFormat.getIntegerInstance()
+
                 // As this is displayed in a TextView, try to stay below 10.000 characters
-                val skippedShowsSummary = skippedShows.skippedItemsString {
+                val skippedShowsSummary = skippedShows.skippedItemsString(numberFormat) {
                     "title = ${it.title}, tmdb_id = ${it.tmdb_id}, tvdb_id = ${it.tvdb_id}"
                 }
 
-                val skippedMoviesSummary = skippedMovies.skippedItemsString {
+                val skippedMoviesSummary = skippedMovies.skippedItemsString(numberFormat) {
                     "title = ${it.title}, tmdb_id = ${it.tmdb_id}, imdb_id = ${it.imdb_id}"
                 }
 
-                val skippedListItemsSummary = skippedListItems.skippedItemsString {
+                val skippedListItemsSummary = skippedListItems.skippedItemsString(numberFormat) {
                     "type = ${it.type}, externalId = ${it.externalId}"
                 }
 
@@ -239,22 +243,22 @@ class JsonImportTask(
                     appendLine()
 
                     appendLine(stringShows)
-                    append("✔️ ").appendLine(importedShows)
-                    append("❌ ").append(skippedShows.size)
+                    append("✔️ ").appendLine(numberFormat.format(importedShows))
+                    append("❌ ").append(numberFormat.format(skippedShows.size))
                     appendLine(skippedShowsSummary)
 
                     appendLine()
 
                     appendLine(stringLists)
-                    append("✔️ ").appendLine(importedListItems)
-                    append("❌ ").append(skippedListItems.size)
+                    append("✔️ ").appendLine(numberFormat.format(importedListItems))
+                    append("❌ ").append(numberFormat.format(skippedListItems.size))
                     appendLine(skippedListItemsSummary)
 
                     appendLine()
 
                     appendLine(stringMovies)
-                    append("✔️ ").appendLine(importedMovies)
-                    append("❌ ").append(skippedMovies.size)
+                    append("✔️ ").appendLine(numberFormat.format(importedMovies))
+                    append("❌ ").append(numberFormat.format(skippedMovies.size))
                     appendLine(skippedMoviesSummary)
                 }
 
