@@ -4,6 +4,7 @@
 package com.battlelancer.seriesguide.dataliberation
 
 import android.content.Context
+import android.net.Uri
 import android.os.ParcelFileDescriptor
 import androidx.annotation.VisibleForTesting
 import com.battlelancer.seriesguide.R
@@ -442,6 +443,80 @@ open class JsonExportTask(
          * local storage provider supports truncating in write mode.)
          */
         const val FILE_MODE = "wt"
+
+        sealed interface ExportFile {
+            data class Success(
+                var parcelFileDescriptor: ParcelFileDescriptor,
+                var outputStream: OutputStream
+            ) : ExportFile
+
+            data class Error(val message: String) : ExportFile {
+                companion object {
+                    fun fromException(e: Exception, message: String): Error {
+                        return if (e.message == null) {
+                            Error(message)
+                        } else {
+                            Error("$message (${e.message})")
+                        }
+                    }
+                }
+            }
+        }
+
+        fun openWritableTruncatedFile(context: Context, exportFileUri: Uri): ExportFile {
+            // Note: when opening files in write mode with Storage Access Framework, providers
+            // typically don't truncate an existing file. So if written content is shorter than
+            // existing content, old content might be left over. So make sure the opened file is
+            // truncated.
+
+            // Try to open with write and truncate mode.
+            // Note: would use "rw" and manually truncate for all providers, but at least
+            // providers backed by WebDAV don't support it. So try "wt" mode first.
+            val truncatedPFD: ParcelFileDescriptor? = try {
+                context.contentResolver.openFileDescriptor(exportFileUri, "wt")
+            } catch (e: Exception) {
+                Timber.i(e, "Failed to open file with mode write+truncate (wt), trying rw next")
+                null
+            }
+
+            // Alternatively, try to open in read and write ("rw") mode and manually truncate.
+            // Note: can't just use write mode as truncating requires accessing the FileChannel,
+            // which is a SeekableByteChannel. According to API docs an opened file is only seekable
+            // if opened in "rw" mode.
+            val finalPFD: ParcelFileDescriptor = truncatedPFD
+                ?: try {
+                    context.contentResolver.openFileDescriptor(exportFileUri, "rw")
+                } catch (e: Exception) {
+                    Timber.i(e, "Failed to open file with mode read+write (rw)")
+                    return ExportFile.Error.fromException(e, "Failed to open file")
+                }
+                ?: return ExportFile.Error("Failed to open file (was null)")
+
+            val out = try {
+                FileOutputStream(finalPFD.fileDescriptor)
+            } catch (e: Exception) {
+                Timber.e(e, "Failed to create output stream")
+                return ExportFile.Error.fromException(e, "Failed to create output stream")
+            }
+
+            if (truncatedPFD == null) {
+                try {
+                    out.channel.truncate(0)
+                } catch (e: Exception) {
+                    try {
+                        out.close()
+                    } catch (_: Exception) {
+                    }
+
+                    val message = "Failed to truncate file"
+                    Timber.e(e, message)
+                    return ExportFile.Error.fromException(e, message)
+                }
+            }
+
+            return ExportFile.Success(finalPFD, out)
+        }
+
     }
 
     interface OnTaskProgressListener {
