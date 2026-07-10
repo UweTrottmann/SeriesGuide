@@ -145,16 +145,11 @@ class AutoBackupTask(
             .use { source ->
                 try {
                     val outFile = context.contentResolver
-                        .openFileDescriptor(outFileUri, "w")
+                        .openFileDescriptor(outFileUri, FILE_MODE)
                         ?: throw AutoBackupException("Unable to open user backup file.")
 
                     outFile.use {
                         FileOutputStream(outFile.fileDescriptor).use {
-                            // Even though using streams and FileOutputStream does not append by
-                            // default, using Storage Access Framework just overwrites existing
-                            // bytes, potentially leaving old bytes hanging over:
-                            // so truncate the file first.
-                            it.channel.truncate(0)
                             source.copyTo(it)
                         }
                     }

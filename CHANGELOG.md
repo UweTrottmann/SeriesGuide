@@ -14,6 +14,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 * 🔧 Import: support new "imdb-movie" list item type, maps to added movie using "externalId" as IMDB ID on import, otherwise skips.
   🔧 Import: display a simple summary of imported and skipped items.
 * 🔧 Import: restore original data on failure.
+* 🔨 Export: resolve "Illegal seek" error for the DAVx5 WebDAV-backed storage provider and likely others.
 
 ## Version 2026.2
 
