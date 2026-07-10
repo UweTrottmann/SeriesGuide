@@ -17,7 +17,6 @@ import com.battlelancer.seriesguide.databinding.FragmentDataLiberationBinding
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools.CreateExportFileContract
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools.SelectImportFileContract
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Export
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask.OnTaskProgressListener
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools.openUriOnClick
 import com.battlelancer.seriesguide.util.tryLaunch
@@ -31,7 +30,7 @@ import org.greenrobot.eventbus.ThreadMode
  * One button export or import of shows, lists and movies to or from a JSON file.
  * Uses Storage Access Framework so no permissions are required.
  */
-class DataLiberationFragment : Fragment(), OnTaskProgressListener {
+class DataLiberationFragment : Fragment() {
 
     private var binding: FragmentDataLiberationBinding? = null
     private val model: DataLiberationViewModel by viewModels()
@@ -121,6 +120,12 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
                 setProgressLock(it)
             }
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            model.exportProgressState.collect {
+                updateProgressBar(it.total, it.completed)
+            }
+        }
     }
 
     private fun updateImportButtonEnabledState() {
@@ -145,7 +150,7 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
         binding = null
     }
 
-    override fun onProgressUpdate(total: Int, completed: Int) {
+    private fun updateProgressBar(total: Int, completed: Int) {
         val binding = binding ?: return
         binding.progressBarDataLib.isIndeterminate = total == completed
         binding.progressBarDataLib.max = total
@@ -203,13 +208,7 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
 
         val binding = binding ?: return
 
-        model.setInProgress(true)
-        val exportTask = JsonExportTask(
-            requireContext(),
-            this@DataLiberationFragment,
-            binding.checkBoxDataLibFullDump.isChecked
-        )
-        model.dataLibJob = exportTask.launch(export)
+        model.runExportTask(export, binding.checkBoxDataLibFullDump.isChecked)
     }
 
     private val createShowExportFileResult =

@@ -7,9 +7,9 @@ import android.app.Application
 import android.widget.TextView
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.SgApp
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -61,21 +61,6 @@ open class BaseDataLiberationViewModel(application: Application) : AndroidViewMo
         )
     )
 
-    var dataLibJob: Job? = null
-
-    private val isDataLibTaskNotCompleted: Boolean
-        get() {
-            val dataLibJob = dataLibJob
-            return (dataLibJob != null && !dataLibJob.isCompleted)
-        }
-
-    override fun onCleared() {
-        if (isDataLibTaskNotCompleted) {
-            dataLibJob?.cancel(null)
-        }
-        dataLibJob = null
-    }
-
     fun setInProgress(value: Boolean) {
         isInProgress.value = value
     }
@@ -85,9 +70,7 @@ open class BaseDataLiberationViewModel(application: Application) : AndroidViewMo
     ) {
         setInProgress(true)
 
-        // Use global coroutine scope: rather keep this view model alive for a bit than cancel an
-        // in-progress import.
-        dataLibJob = SgApp.coroutineScope.launch {
+        viewModelScope.launch(Dispatchers.Default) {
             val result = jsonImportTask().run()
 
             setInProgress(false)

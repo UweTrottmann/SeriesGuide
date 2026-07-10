@@ -14,9 +14,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 /**
- * Try to keep the backup tasks on config changes so they do not have to be finished.
+ * A [BaseDataLiberationViewModel] that also can run and report progress for an export task and
+ * keeps track of import files.
  */
-class DataLiberationViewModel(application: Application) : BaseDataLiberationViewModel(application) {
+class DataLiberationViewModel(application: Application) : BaseDataLiberationViewModel(application),
+    JsonExportTask.OnTaskProgressListener {
 
     data class ImportFiles(
         val fileNameShows: String?,
@@ -25,6 +27,9 @@ class DataLiberationViewModel(application: Application) : BaseDataLiberationView
         val placeholderText: String
     )
 
+    data class ExportProgressUiState(val total: Int, val completed: Int)
+
+    val exportProgressState = MutableStateFlow(ExportProgressUiState(0, 0))
     val importFiles = MutableStateFlow(ImportFiles("", "", "", ""))
 
     fun updateImportFileNames() {
@@ -50,6 +55,24 @@ class DataLiberationViewModel(application: Application) : BaseDataLiberationView
                 placeholderText = context.getString(R.string.no_file_selected)
             )
         }
+    }
+
+    fun runExportTask(export: Export, isFullDump: Boolean) {
+        setInProgress(true)
+
+        val context: Context = getApplication()
+        val exportTask = JsonExportTask(
+            context,
+            this,
+            isFullDump
+        )
+        viewModelScope.launch(Dispatchers.Default) {
+            exportTask.run(export)
+        }
+    }
+
+    override fun onProgressUpdate(total: Int, completed: Int) {
+        exportProgressState.value = ExportProgressUiState(total, completed)
     }
 
     fun runImportTask(
