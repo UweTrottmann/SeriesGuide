@@ -24,7 +24,7 @@ class MoviePosterDownloader(
      */
     suspend fun getMoviePosterPath(movieTmdbId: Int): String? {
         val languageCode = MoviesSettings.getMoviesLanguage(context)
-        val result = TmdbTools4.getMovieSummary(
+        val result = TmdbTools4().getMovieSummary(
             tmdbMovies,
             movieTmdbId,
             languageCode,

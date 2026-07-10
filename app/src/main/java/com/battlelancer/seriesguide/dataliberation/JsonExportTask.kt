@@ -140,7 +140,8 @@ open class JsonExportTask(
         EventBus.getDefault()
             .post(
                 LiberationResultEvent(
-                    context, message, errorCause, showIndefinite
+                    TextTools.dotSeparate(context, message, errorCause),
+                    showIndefinite
                 )
             )
     }
@@ -465,6 +466,12 @@ open class JsonExportTask(
         const val TMDB_SHOW = "tmdb-show"
         const val SEASON = "season"
         const val EPISODE = "episode"
+
+        /**
+         * Special type only supported when importing and movie with that IMDB ID is in the
+         * database already.
+         */
+        const val IMDB_MOVIE = "imdb-movie"
     }
 
 }

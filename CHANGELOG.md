@@ -10,6 +10,11 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ### Next release
 
+* 🔧 Import: support importing movies with only IMDB IDs.
+* 🔧 Import: support new "imdb-movie" list item type, maps to added movie using "externalId" as IMDB ID on import, otherwise skips.
+  🔧 Import: display a simple summary of imported and skipped items.
+* 🔧 Import: restore original data on failure.
+
 ## Version 2026.2
 
 * 🌟 Lists: movies can be added to lists, currently only from the details view.
