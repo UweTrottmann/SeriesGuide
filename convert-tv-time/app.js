@@ -272,13 +272,68 @@ async function transform() {
     if (mappingId === MAPPING_SHOWS) {
         await transformShows();
     } else if (mappingId === MAPPING_MOVIES) {
-
+        await transformMovies();
     } else if (mappingId === MAPPING_LISTS) {
         await transformLists();
     } else {
         console.error("Unknown mapping " + mappingId);
     }
 
+}
+
+async function transformMovies() {
+    const moviesFile = fileInputMovies.files[0];
+    if (!moviesFile) {
+        alert("Please select a tvtime-movies JSON file.");
+        return;
+    }
+
+    setControlsDisabled(true);
+
+    try {
+
+        // Read in movies JSON
+        const moviesJson = await readJsonFile(moviesFile);
+
+        let skippedCount = 0;
+
+        const output = moviesJson.flatMap(movie => {
+            if (movie.id?.imdb == null) {
+                skippedCount++;
+                return [];
+            }
+
+            const watched = movie.is_watched === true;
+            const entry = {
+                imdb_id: movie.id.imdb,
+                title: movie.title,
+                in_watchlist: !watched,
+                watched,
+            };
+            // For simplicity, only add plays if watched
+            if (watched) {
+                entry.plays = (movie.rewatch_count ?? 0) + 1;
+            }
+            return [entry];
+        });
+
+        outputJson = output;
+        outputArea.value = jsonPreview(output);
+
+        if (skippedCount > 0) {
+            alert(`Skipped ${skippedCount} movie(s) due to missing imdb ID.`);
+        }
+
+    } catch (err) {
+
+        console.error(err);
+        alert(err.message);
+
+    } finally {
+
+        setControlsDisabled(false);
+
+    }
 }
 
 async function transformLists() {
@@ -299,18 +354,7 @@ async function transformLists() {
     try {
 
         // Read in movies JSON
-        const moviesJson = await new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = e => {
-                try {
-                    resolve(JSON.parse(e.target.result));
-                } catch {
-                    reject(new Error("Invalid movies JSON file."));
-                }
-            };
-            reader.onerror = () => reject(new Error("Could not read movies file."));
-            reader.readAsText(moviesFile);
-        });
+        const moviesJson = await readJsonFile(moviesFile);
 
         /** @type {Map<string, string>} Maps movie uuid to its IMDb ID. */
         const movieUuidToImdb = new Map(
@@ -320,19 +364,7 @@ async function transformLists() {
         );
 
         // Read in lists JSON
-        const listsJson = await new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = e => {
-                try {
-                    resolve(JSON.parse(e.target.result));
-                } catch {
-                    reject(new Error("Invalid lists JSON file."));
-                }
-            };
-            reader.onerror = () => reject(new Error("Could not read lists file."));
-            reader.readAsText(listsFile);
-        });
-
+        const listsJson = await readJsonFile(listsFile);
 
         let totalSkippedShows = 0;
         let totalSkippedMovies = 0;
@@ -380,6 +412,26 @@ async function transformLists() {
         setControlsDisabled(false);
 
     }
+}
+
+/**
+ * Reads a File and returns its content parsed as JSON.
+ * @param {File} file
+ * @returns {Promise<any>}
+ */
+function readJsonFile(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = e => {
+            try {
+                resolve(JSON.parse(e.target.result));
+            } catch {
+                reject(new Error(`Invalid JSON file: ${file.name}`));
+            }
+        };
+        reader.onerror = () => reject(new Error(`Could not read file: ${file.name}`));
+        reader.readAsText(file);
+    });
 }
 
 async function transformShows() {
