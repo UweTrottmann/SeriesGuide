@@ -1,0 +1,85 @@
+[
+  {
+    "id": {
+      "tvdb": 154,
+      "imdb": "tt0304141"
+    },
+    "uuid": "dfe92d1c-0125-4f6d-a9d3-35443b5a9aac",
+    "created_at": "2026-07-04T01:15:56Z",
+    "title": "Harry Potter and the Prisoner of Azkaban",
+    "year": 2004,
+    "watched_at": "2026-07-04T01:15:56Z",
+    "is_watched": true,
+    "is_favorite": false,
+    "rewatch_count": 0
+  },
+  {
+    "id": {
+      "tvdb": 344106,
+      "imdb": "tt29355505"
+    },
+    "uuid": "abaa0e4d-b31e-49e9-8e33-8d878c2f6dd7",
+    "created_at": "2026-07-04T01:15:55Z",
+    "title": "Toy Story 5",
+    "year": 2026,
+    "watched_at": "2026-07-04T01:15:56Z",
+    "is_watched": true,
+    "is_favorite": false,
+    "rewatch_count": 1
+  },
+  {
+    "id": {
+      "tvdb": 89
+    },
+    "uuid": "919bfa79-f34f-470d-9472-d04016613b23",
+    "created_at": "2026-07-04T01:15:56Z",
+    "title": "Missing IMDB ID",
+    "year": 2014,
+    "watched_at": "2026-07-04T01:15:56Z",
+    "is_watched": true,
+    "is_favorite": false,
+    "rewatch_count": 0
+  },
+  {
+    "id": {
+      "tvdb": 63,
+      "imdb": "tt0295297"
+    },
+    "uuid": "5a432bdc-e493-410b-bee8-af93095c6fcf",
+    "created_at": "2026-07-04T01:15:56Z",
+    "title": "Harry Potter and the Chamber of Secrets",
+    "year": 2002,
+    "watched_at": "2026-07-04T01:15:56Z",
+    "is_watched": true,
+    "is_favorite": false,
+    "rewatch_count": 0
+  },
+  {
+    "id": {
+      "tvdb": 115,
+      "imdb": "tt1431045"
+    },
+    "uuid": "3067f4f8-c34d-4a10-a869-6c08557e869c",
+    "created_at": "2026-07-04T01:15:56Z",
+    "title": "Deadpool",
+    "year": 2016,
+    "watched_at": "2026-07-04T01:15:56Z",
+    "is_watched": true,
+    "is_favorite": true,
+    "rewatch_count": 0
+  },
+  {
+    "id": {
+      "tvdb": 343856,
+      "imdb": "tt8814476"
+    },
+    "uuid": "26b797ad-2fb4-4ceb-9a2b-61eb83ea248f",
+    "created_at": "2026-07-04T01:15:55Z",
+    "title": "Supergirl",
+    "year": 2026,
+    "watched_at": null,
+    "is_watched": false,
+    "is_favorite": false,
+    "rewatch_count": 0
+  }
+]

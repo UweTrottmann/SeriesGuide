@@ -1,0 +1,67 @@
+[
+  {
+    "id": "82a36f3c-c181-438d-a6d5-1ad7f6eae970",
+    "name": "Test",
+    "description": "",
+    "is_public": true,
+    "created_at": "2026-07-05T02:27:17Z",
+    "items": [
+      {
+        "type": "series",
+        "tvdb_id": 73762,
+        "name": "Grey's Anatomy",
+        "custom_order": 0
+      },
+      {
+        "type": "movie",
+        "uuid": "3067f4f8-c34d-4a10-a869-6c08557e869c",
+        "name": "Deadpool",
+        "custom_order": 1
+      },
+      {
+        "type": "movie",
+        "uuid": "unknown-uuid",
+        "name": "Supergirl",
+        "custom_order": 1
+      },
+      {
+        "type": "series",
+        "tvdb_id": 362696,
+        "name": "The Witcher",
+        "custom_order": 2
+      },
+      {
+        "type": "series",
+        "name": "Missing TVDB ID",
+        "custom_order": 3
+      },
+      {
+        "type": "movie",
+        "uuid": "5a432bdc-e493-410b-bee8-af93095c6fcf",
+        "name": "Harry Potter and the Chamber of Secrets",
+        "custom_order": 1
+      }
+    ]
+  },
+  {
+    "id": "9f0252de-cb46-4101-ae68-23d8944b8e38",
+    "name": "Test List 2",
+    "description": "",
+    "is_public": true,
+    "created_at": "2026-07-06T15:17:05Z",
+    "items": [
+      {
+        "type": "movie",
+        "uuid": "3067f4f8-c34d-4a10-a869-6c08557e869c",
+        "name": "Deadpool",
+        "custom_order": 1
+      },
+      {
+        "type": "series",
+        "tvdb_id": 362696,
+        "name": "The Witcher",
+        "custom_order": 0
+      }
+    ]
+  }
+]
