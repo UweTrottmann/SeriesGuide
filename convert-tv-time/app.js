@@ -31,7 +31,7 @@ const groupLanguageSelect = document.getElementById("groupLanguage");
 const inputArea = document.getElementById("input");
 const outputArea = document.getElementById("output");
 
-const transformButton = document.getElementById("transformBtn")
+const transformButton = document.getElementById("transformBtn");
 const downloadButton = document.getElementById("downloadBtn");
 const transformProgress = document.getElementById("transformProgress");
 
