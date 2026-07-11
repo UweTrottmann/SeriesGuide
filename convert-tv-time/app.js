@@ -13,7 +13,6 @@ const MAPPING_PATHS = {
  */
 const JSON_PREVIEW_LIMIT = 20_000;
 
-let inputJson = null;
 let outputJson = null;
 
 const mappingSelect = document.getElementById("mapping");
@@ -28,7 +27,6 @@ const groupFileInputLists = document.getElementById("groupFileInputLists");
 const languageSelect = document.getElementById("language");
 const groupLanguageSelect = document.getElementById("groupLanguage");
 
-const inputArea = document.getElementById("input");
 const outputArea = document.getElementById("output");
 
 const transformButton = document.getElementById("transformBtn");
@@ -54,7 +52,6 @@ updateFileInputVisibilityForType();
 
 transformButton.addEventListener("click", transform);
 downloadButton.addEventListener("click", downloadOutput);
-fileInputShows.addEventListener("change", loadFile);
 
 function updateFileInputVisibilityForType(event) {
     const mappingId = mappingSelect.value;
@@ -99,28 +96,6 @@ function jsonPreview(json) {
 function setControlsDisabled(disabled) {
     for (const el of interactableControls) el.disabled = disabled;
     transformProgress.hidden = !disabled;
-}
-
-/**
- * Reads the selected JSON file.
- */
-function loadFile(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-
-    reader.onload = e => {
-        try {
-            inputJson = JSON.parse(e.target.result);
-            // Only display a preview to keep the page performant
-            inputArea.value = jsonPreview(inputJson);
-        } catch (err) {
-            alert("Invalid JSON file.");
-        }
-    };
-
-    reader.readAsText(file);
 }
 
 /**
@@ -468,14 +443,18 @@ function showSkippedItems(title, items) {
 }
 
 async function transformShows() {
-    if (!inputJson) {
-        alert("Please load a JSON file first.");
+    const showsFile = fileInputShows.files[0];
+    if (!showsFile) {
+        alert("Please select a tvtime-series JSON file.");
         return;
     }
 
     setControlsDisabled(true);
 
     try {
+
+        // Read in shows JSON
+        const inputJson = await readJsonFile(showsFile);
 
         const mapping = await loadMapping();
 
