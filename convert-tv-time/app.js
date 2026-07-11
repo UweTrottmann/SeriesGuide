@@ -1,37 +1,81 @@
-let inputJson = null;
-let outputJson = null;
-
-const fileInput = document.getElementById("fileInput");
-const inputArea = document.getElementById("input");
-const outputArea = document.getElementById("output");
-const mappingSelect = document.getElementById("mapping");
-const languageSelect = document.getElementById("language");
-const transformButton = document.getElementById("transformBtn")
-const downloadButton = document.getElementById("downloadBtn");
-const transformProgress = document.getElementById("transformProgress");
-
-const interactableControls = [
-    fileInput,
-    mappingSelect,
-    languageSelect,
-    transformButton,
-    downloadButton,
-];
-
-transformButton.addEventListener("click", transform);
-downloadButton.addEventListener("click", downloadOutput);
-fileInput.addEventListener("change", loadFile);
+const MAPPING_SHOWS = "shows";
+const MAPPING_LISTS = "lists";
+const MAPPING_MOVIES = "movies";
 
 const MAPPING_PATHS = {
-    "shows": "mappings/tv-time-out-shows.json",
-    "lists": "mappings/tv-time-out-lists.json",
-    "movies": "mappings/tv-time-out-movies.json",
+    [MAPPING_SHOWS]: "mappings/tv-time-out-shows.json",
+    [MAPPING_LISTS]: "mappings/tv-time-out-lists.json",
+    [MAPPING_MOVIES]: "mappings/tv-time-out-movies.json",
 };
 
 /**
  * Returns a truncated preview of a JSON string for display purposes.
  */
 const JSON_PREVIEW_LIMIT = 20_000;
+
+let inputJson = null;
+let outputJson = null;
+
+const mappingSelect = document.getElementById("mapping");
+
+const fileInputShows = document.getElementById("fileInputShows");
+const fileInputMovies = document.getElementById("fileInputMovies");
+const fileInputLists = document.getElementById("fileInputLists");
+const groupFileInputShows = document.getElementById("groupFileInputShows");
+const groupFileInputMovies = document.getElementById("groupFileInputMovies");
+const groupFileInputLists = document.getElementById("groupFileInputLists");
+
+const languageSelect = document.getElementById("language");
+const groupLanguageSelect = document.getElementById("groupLanguage");
+
+const inputArea = document.getElementById("input");
+const outputArea = document.getElementById("output");
+
+const transformButton = document.getElementById("transformBtn")
+const downloadButton = document.getElementById("downloadBtn");
+const transformProgress = document.getElementById("transformProgress");
+
+const interactableControls = [
+    fileInputShows,
+    fileInputMovies,
+    fileInputLists,
+    mappingSelect,
+    languageSelect,
+    transformButton,
+    downloadButton,
+];
+
+mappingSelect.addEventListener("change", updateFileInputVisibilityForType);
+updateFileInputVisibilityForType();
+
+transformButton.addEventListener("click", transform);
+downloadButton.addEventListener("click", downloadOutput);
+fileInputShows.addEventListener("change", loadFile);
+
+function updateFileInputVisibilityForType(event) {
+    const mappingId = mappingSelect.value;
+    if (mappingId === MAPPING_SHOWS) {
+        groupLanguageSelect.hidden = false;
+
+        groupFileInputShows.hidden = false;
+        groupFileInputMovies.hidden = true;
+        groupFileInputLists.hidden = true;
+    } else if (mappingId === MAPPING_MOVIES) {
+        groupLanguageSelect.hidden = true;
+
+        groupFileInputShows.hidden = true;
+        groupFileInputMovies.hidden = false;
+        groupFileInputLists.hidden = true;
+    } else if (mappingId === MAPPING_LISTS) {
+        groupLanguageSelect.hidden = true;
+
+        groupFileInputShows.hidden = true;
+        groupFileInputMovies.hidden = false;
+        groupFileInputLists.hidden = false;
+    } else {
+        console.error("Unknown mapping", event);
+    }
+}
 
 function jsonPreview(json) {
     const full = JSON.stringify(json, null, 2);
@@ -224,6 +268,20 @@ function removeNullElements(value) {
  */
 async function transform() {
 
+    const mappingId = mappingSelect.value;
+    if (mappingId === MAPPING_SHOWS) {
+        await transformShows();
+    } else if (mappingId === MAPPING_MOVIES) {
+
+    } else if (mappingId === MAPPING_LISTS) {
+
+    } else {
+        console.error("Unknown mapping " + mappingId);
+    }
+
+}
+
+async function transformShows() {
     if (!inputJson) {
         alert("Please load a JSON file first.");
         return;
@@ -271,7 +329,6 @@ async function transform() {
         setControlsDisabled(false);
 
     }
-
 }
 
 /**

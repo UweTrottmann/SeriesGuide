@@ -45,97 +45,114 @@
 </div>
 
 <div class="toolbar">
-    <input type="file" id="fileInput">
+    <div>
+        <label for="mapping">File type</label>
+        <select id="mapping">
+            <option value="shows">TV Time Out/Liberator shows JSON</option>
+            <option value="movies">TV Time Out movies JSON</option>
+            <option value="lists">TV Time Out lists JSON</option>
+        </select>
+    </div>
 
-    <select id="mapping">
-        <option value="shows">TV Time Out/Liberator shows JSON</option>
-        <option value="lists">TV Time Out lists JSON (shows only)</option>
-        <option value="movies">TV Time Out movies JSON</option>
-    </select>
+    <div id="groupFileInputShows">
+        <label id="labelFileInputShows" for="fileInputShows">tvtime-series JSON</label>
+        <input type="file" id="fileInputShows">
+    </div>
 
-    <label for="language">Preferred show language (titles, descriptions, ...):</label>
+    <div id="groupFileInputMovies">
+        <label id="labelFileInputMovies" for="fileInputMovies">tvtime-movies JSON</label>
+        <input type="file" id="fileInputMovies">
+    </div>
 
-    <select id="language">
-        <option value="en-US">English (United States)</option>
-        <option value="pt-BR">Portuguese (Brazil)</option>
-        <option value="af-ZA">Afrikaans</option>
-        <option value="sq-AL">Albanian</option>
-        <option value="ar-SA">Arabic (Saudi Arabia)</option>
-        <option value="ar-AE">Arabic (United Arab Emirates)</option>
-        <option value="eu-ES">Basque</option>
-        <option value="be-BY">Belarusian</option>
-        <option value="bn-BD">Bengali (Bangladesh)</option>
-        <option value="bg-BG">Bulgarian</option>
-        <option value="ca-ES">Catalan</option>
-        <option value="ch-GU">Chamorro</option>
-        <option value="zh-CN">Chinese (China)</option>
-        <option value="zh-HK">Chinese (Hong Kong)</option>
-        <option value="zh-SG">Chinese (Singapore)</option>
-        <option value="zh-TW">Chinese (Taiwan)</option>
-        <option value="hr-HR">Croatian</option>
-        <option value="cs-CZ">Czech</option>
-        <option value="da-DK">Danish</option>
-        <option value="nl-BE">Dutch (Belgium)</option>
-        <option value="nl-NL">Dutch (Netherlands)</option>
-        <option value="en-AU">English (Australia)</option>
-        <option value="en-CA">English (Canada)</option>
-        <option value="en-IE">English (Ireland)</option>
-        <option value="en-NZ">English (New Zealand)</option>
-        <option value="en-GB">English (United Kingdom)</option>
-        <option value="eo-EO">Esperanto</option>
-        <option value="et-EE">Estonian</option>
-        <option value="fi-FI">Finnish</option>
-        <option value="fr-CA">French (Canada)</option>
-        <option value="fr-FR">French (France)</option>
-        <option value="gl-ES">Galician</option>
-        <option value="ka-GE">Georgian</option>
-        <option value="de-AT">German (Austria)</option>
-        <option value="de-DE">German (Germany)</option>
-        <option value="de-CH">German (Switzerland)</option>
-        <option value="el-GR">Greek</option>
-        <option value="he-IL">Hebrew</option>
-        <option value="hi-IN">Hindi</option>
-        <option value="hu-HU">Hungarian</option>
-        <option value="id-ID">Indonesian</option>
-        <option value="ga-IE">Irish</option>
-        <option value="it-IT">Italian</option>
-        <option value="ja-JP">Japanese</option>
-        <option value="kn-IN">Kannada</option>
-        <option value="kk-KZ">Kazakh</option>
-        <option value="ko-KR">Korean</option>
-        <option value="ky-KG">Kyrgyz</option>
-        <option value="lv-LV">Latvian</option>
-        <option value="lt-LT">Lithuanian</option>
-        <option value="ml-IN">Malayalam</option>
-        <option value="ms-MY">Malay (Malaysia)</option>
-        <option value="ms-SG">Malay (Singapore)</option>
-        <option value="mr-IN">Marathi</option>
-        <option value="nb-NO">Norwegian Bokmål</option>
-        <option value="no-NO">Norwegian</option>
-        <option value="fa-IR">Persian</option>
-        <option value="pl-PL">Polish</option>
-        <option value="pt-PT">Portuguese (Portugal)</option>
-        <option value="pa-IN">Punjabi</option>
-        <option value="ro-RO">Romanian</option>
-        <option value="ru-RU">Russian</option>
-        <option value="gd-GB">Scottish Gaelic</option>
-        <option value="sr-RS">Serbian</option>
-        <option value="si-LK">Sinhala</option>
-        <option value="sk-SK">Slovak</option>
-        <option value="sl-SI">Slovenian</option>
-        <option value="es-MX">Spanish (Mexico)</option>
-        <option value="es-ES">Spanish (Spain)</option>
-        <option value="sv-SE">Swedish</option>
-        <option value="tl-PH">Tagalog</option>
-        <option value="ta-IN">Tamil</option>
-        <option value="te-IN">Telugu</option>
-        <option value="th-TH">Thai</option>
-        <option value="tr-TR">Turkish</option>
-        <option value="uk-UA">Ukrainian</option>
-        <option value="vi-VN">Vietnamese</option>
-        <option value="cy-GB">Welsh</option>
-        <option value="zu-ZA">Zulu</option>
-    </select>
+    <div id="groupFileInputLists">
+        <label id="labelFileInputLists" for="fileInputLists">tvtime-lists JSON</label>
+        <input type="file" id="fileInputLists">
+    </div>
+
+    <div id="groupLanguage">
+        <label id="labelLanguage" for="language">Preferred show language (titles, descriptions, ...):</label>
+        <select id="language">
+            <option value="en-US">English (United States)</option>
+            <option value="pt-BR">Portuguese (Brazil)</option>
+            <option value="af-ZA">Afrikaans</option>
+            <option value="sq-AL">Albanian</option>
+            <option value="ar-SA">Arabic (Saudi Arabia)</option>
+            <option value="ar-AE">Arabic (United Arab Emirates)</option>
+            <option value="eu-ES">Basque</option>
+            <option value="be-BY">Belarusian</option>
+            <option value="bn-BD">Bengali (Bangladesh)</option>
+            <option value="bg-BG">Bulgarian</option>
+            <option value="ca-ES">Catalan</option>
+            <option value="ch-GU">Chamorro</option>
+            <option value="zh-CN">Chinese (China)</option>
+            <option value="zh-HK">Chinese (Hong Kong)</option>
+            <option value="zh-SG">Chinese (Singapore)</option>
+            <option value="zh-TW">Chinese (Taiwan)</option>
+            <option value="hr-HR">Croatian</option>
+            <option value="cs-CZ">Czech</option>
+            <option value="da-DK">Danish</option>
+            <option value="nl-BE">Dutch (Belgium)</option>
+            <option value="nl-NL">Dutch (Netherlands)</option>
+            <option value="en-AU">English (Australia)</option>
+            <option value="en-CA">English (Canada)</option>
+            <option value="en-IE">English (Ireland)</option>
+            <option value="en-NZ">English (New Zealand)</option>
+            <option value="en-GB">English (United Kingdom)</option>
+            <option value="eo-EO">Esperanto</option>
+            <option value="et-EE">Estonian</option>
+            <option value="fi-FI">Finnish</option>
+            <option value="fr-CA">French (Canada)</option>
+            <option value="fr-FR">French (France)</option>
+            <option value="gl-ES">Galician</option>
+            <option value="ka-GE">Georgian</option>
+            <option value="de-AT">German (Austria)</option>
+            <option value="de-DE">German (Germany)</option>
+            <option value="de-CH">German (Switzerland)</option>
+            <option value="el-GR">Greek</option>
+            <option value="he-IL">Hebrew</option>
+            <option value="hi-IN">Hindi</option>
+            <option value="hu-HU">Hungarian</option>
+            <option value="id-ID">Indonesian</option>
+            <option value="ga-IE">Irish</option>
+            <option value="it-IT">Italian</option>
+            <option value="ja-JP">Japanese</option>
+            <option value="kn-IN">Kannada</option>
+            <option value="kk-KZ">Kazakh</option>
+            <option value="ko-KR">Korean</option>
+            <option value="ky-KG">Kyrgyz</option>
+            <option value="lv-LV">Latvian</option>
+            <option value="lt-LT">Lithuanian</option>
+            <option value="ml-IN">Malayalam</option>
+            <option value="ms-MY">Malay (Malaysia)</option>
+            <option value="ms-SG">Malay (Singapore)</option>
+            <option value="mr-IN">Marathi</option>
+            <option value="nb-NO">Norwegian Bokmål</option>
+            <option value="no-NO">Norwegian</option>
+            <option value="fa-IR">Persian</option>
+            <option value="pl-PL">Polish</option>
+            <option value="pt-PT">Portuguese (Portugal)</option>
+            <option value="pa-IN">Punjabi</option>
+            <option value="ro-RO">Romanian</option>
+            <option value="ru-RU">Russian</option>
+            <option value="gd-GB">Scottish Gaelic</option>
+            <option value="sr-RS">Serbian</option>
+            <option value="si-LK">Sinhala</option>
+            <option value="sk-SK">Slovak</option>
+            <option value="sl-SI">Slovenian</option>
+            <option value="es-MX">Spanish (Mexico)</option>
+            <option value="es-ES">Spanish (Spain)</option>
+            <option value="sv-SE">Swedish</option>
+            <option value="tl-PH">Tagalog</option>
+            <option value="ta-IN">Tamil</option>
+            <option value="te-IN">Telugu</option>
+            <option value="th-TH">Thai</option>
+            <option value="tr-TR">Turkish</option>
+            <option value="uk-UA">Ukrainian</option>
+            <option value="vi-VN">Vietnamese</option>
+            <option value="cy-GB">Welsh</option>
+            <option value="zu-ZA">Zulu</option>
+        </select>
+    </div>
 
     <button id="transformBtn">
         Transform

@@ -20,8 +20,10 @@ body {
 .toolbar {
     margin-bottom: 1em;
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
-    gap: 10px;
+    align-items: start;
+    gap: 24px;
 }
 
 .toolbar input,
