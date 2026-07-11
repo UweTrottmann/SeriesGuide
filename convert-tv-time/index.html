@@ -17,30 +17,29 @@
         <a href="https://discuss.seriesgui.de/t/tv-time-shutdown-and-importing-into-seriesguide/2807">on the forum</a>.
     </p>
 
+    <p><strong>Note: importing movies and movies on lists requires SeriesGuide 2026.3.0 or newer, <a href="https://discuss.seriesgui.de/t/seriesguide-2026-3-preview-import-movies-using-imdb-ids/2815">currently only available on the beta program</a>.</strong></p>
+
+    <p><strong>Note: movies that have no IMDB ID or where the IMDB ID is not set as external ID on <a href="https://www.themoviedb.org/">TMDB</a> can't be imported into SeriesGuide.</strong></p>
+
     <p>How to use this:</p>
 
     <ul>
         <li>
-            Export data using the <a href="https://chromewebstore.google.com/detail/tv-time-out-by-refract/pmejpdpjbkjklfceogdkolmgclldogbi">TV Time Out by Refract</a>
-            browser extension. For shows, the converter also works with the JSON created by the
-            <a href="https://chromewebstore.google.com/detail/tv-time-liberator-extensi/pohobkcjhigehafgnhehkanhjakajhpm">Tv Time Liberator</a> 
-            extension, but it's currently broken.
+            Export your TV Time data using the <a href="https://chromewebstore.google.com/detail/tv-time-out-by-refract/pmejpdpjbkjklfceogdkolmgclldogbi">TV Time Out by Refract</a>
+            browser extension. If needed, extract the ZIP archive to access the JSON files inside.
         </li>
-        <li>Upload a JSON file and select the type:
+        <li>For each type, shows, movies and lists, create a transformed JSON file:
             <ul>
-                <li>Shows: select your tvtime-series-2026-xx-xx.json (or shows.json) file and select
-                    "TV Time Out/Liberator shows JSON"</li>
-                <li>Lists (shows only): select your tvtime-lists-2026-xx-xx.json file and select
-                    "TV Time Out lists JSON"</li>
+                <li>select the file type,</li>
+                <li>upload the required files from the export,</li>
+                <li>for shows specify the preffered content language,</li>
+                <li>select the "Transform" button,</li>
+                <li>review any skipped items and the preview of the transformed file,</li>
+                <li>select "Download JSON" at the bottom and save the file to your device.</li>
             </ul>
         </li>
-        <li>Review the Input.</li>
-        <li>When converting shows, select the "Preferred show language" for content (titles, descriptions).</li>
-        <li>Select the "Transform" button.</li>
-        <li>Review the Output.</li>
-        <li>Select "Download JSON" at the bottom and save the file to your device.</li>
         <li><a href="https://www.seriesgui.de/help/how-to/backup/backup">Import the files</a> as
-            "Shows" or "Lists" in SeriesGuide.</li>
+            "Shows", "Lists" and "Movies" in <strong>SeriesGuide 2026.3.0 or newer</strong> (see note at the top).</li>
     </ul>
 </div>
 
@@ -48,7 +47,7 @@
     <div class="toolbar-item">
         <label for="mapping">File type</label>
         <select id="mapping">
-            <option value="shows">TV Time Out/Liberator shows JSON</option>
+            <option value="shows">TV Time Out shows JSON</option>
             <option value="movies">TV Time Out movies JSON</option>
             <option value="lists">TV Time Out lists JSON</option>
         </select>
@@ -70,7 +69,7 @@
     </div>
 
     <div id="groupLanguage" class="toolbar-item">
-        <label id="labelLanguage" for="language">Preferred show language (titles, descriptions, ...)</label>
+        <label id="labelLanguage" for="language">Preferred content language (titles, descriptions, ...)</label>
         <select id="language">
             <option value="en-US">English (United States)</option>
             <option value="pt-BR">Portuguese (Brazil)</option>
