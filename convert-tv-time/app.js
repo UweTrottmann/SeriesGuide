@@ -274,11 +274,98 @@ async function transform() {
     } else if (mappingId === MAPPING_MOVIES) {
 
     } else if (mappingId === MAPPING_LISTS) {
-
+        await transformLists();
     } else {
         console.error("Unknown mapping " + mappingId);
     }
 
+}
+
+async function transformLists() {
+    const moviesFile = fileInputMovies.files[0];
+    if (!moviesFile) {
+        alert("Please select a tvtime-movies JSON file.");
+        return;
+    }
+
+    const listsFile = fileInputLists.files[0];
+    if (!listsFile) {
+        alert("Please select a tvtime-lists JSON file.");
+        return;
+    }
+
+    setControlsDisabled(true);
+
+    try {
+
+        // Read in movies JSON
+        const moviesJson = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = e => {
+                try {
+                    resolve(JSON.parse(e.target.result));
+                } catch {
+                    reject(new Error("Invalid movies JSON file."));
+                }
+            };
+            reader.onerror = () => reject(new Error("Could not read movies file."));
+            reader.readAsText(moviesFile);
+        });
+
+        /** @type {Map<string, string>} Maps movie uuid to its IMDb ID. */
+        const movieUuidToImdb = new Map(
+            moviesJson
+                .filter(movie => movie.uuid != null && movie.id?.imdb != null)
+                .map(movie => [movie.uuid, movie.id.imdb])
+        );
+
+        // Read in lists JSON
+        const listsJson = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = e => {
+                try {
+                    resolve(JSON.parse(e.target.result));
+                } catch {
+                    reject(new Error("Invalid lists JSON file."));
+                }
+            };
+            reader.onerror = () => reject(new Error("Could not read lists file."));
+            reader.readAsText(listsFile);
+        });
+
+        const output = listsJson
+            .map(list => {
+                if (list.name == null) return null;
+
+                const items = (list.items ?? []).flatMap(item => {
+                    if (item.type === "series") {
+                        if (item.tvdb_id == null) return [];
+                        return [{ externalId: String(item.tvdb_id), type: "show" }];
+                    } else if (item.type === "movie") {
+                        const imdbId = movieUuidToImdb.get(item.uuid);
+                        if (imdbId == null) return [];
+                        return [{ externalId: imdbId, type: "imdb-movie" }];
+                    }
+                    return [];
+                });
+
+                return { name: list.name, items };
+            })
+            .filter(list => list !== null);
+
+        outputJson = output;
+        outputArea.value = jsonPreview(output);
+
+    } catch (err) {
+
+        console.error(err);
+        alert(err.message);
+
+    } finally {
+
+        setControlsDisabled(false);
+
+    }
 }
 
 async function transformShows() {
