@@ -523,8 +523,8 @@ class JsonImportTask(
             if (movie.tmdb_id <= 0) {
                 Timber.i(
                     "Failed to look up movie (title = %s, imdb_id = %s)",
-                    movie.imdb_id,
-                    movie.title
+                    movie.title,
+                    movie.imdb_id
                 )
                 skippedMovies.add(movie)
                 return // Skip, TMDB ID required
