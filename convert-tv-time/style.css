@@ -32,6 +32,17 @@ body {
     min-width: 100px;
 }
 
+.toolbar-item {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.toolbar-item.hidden {
+    display: none;
+}
+
 .panes {
     display: flex;
     flex-direction: column;

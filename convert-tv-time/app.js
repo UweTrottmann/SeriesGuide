@@ -59,26 +59,35 @@ fileInputShows.addEventListener("change", loadFile);
 function updateFileInputVisibilityForType(event) {
     const mappingId = mappingSelect.value;
     if (mappingId === MAPPING_SHOWS) {
-        groupLanguageSelect.hidden = false;
+        applyHiddenClass(groupLanguageSelect, false);
 
-        groupFileInputShows.hidden = false;
-        groupFileInputMovies.hidden = true;
-        groupFileInputLists.hidden = true;
+        applyHiddenClass(groupFileInputShows, false);
+        applyHiddenClass(groupFileInputMovies, true);
+        applyHiddenClass(groupFileInputLists, true);
     } else if (mappingId === MAPPING_MOVIES) {
-        groupLanguageSelect.hidden = true;
+        applyHiddenClass(groupLanguageSelect, true);
 
-        groupFileInputShows.hidden = true;
-        groupFileInputMovies.hidden = false;
-        groupFileInputLists.hidden = true;
+        applyHiddenClass(groupFileInputShows, true);
+        applyHiddenClass(groupFileInputMovies, false);
+        applyHiddenClass(groupFileInputLists, true);
     } else if (mappingId === MAPPING_LISTS) {
-        groupLanguageSelect.hidden = true;
+        applyHiddenClass(groupLanguageSelect, true);
 
-        groupFileInputShows.hidden = true;
-        groupFileInputMovies.hidden = false;
-        groupFileInputLists.hidden = false;
+        applyHiddenClass(groupFileInputShows, true);
+        applyHiddenClass(groupFileInputMovies, false);
+        applyHiddenClass(groupFileInputLists, false);
     } else {
         console.error("Unknown mapping", event);
     }
+}
+
+/**
+ * Note: this works because .toolbar-item has a .hidden style defined.
+ * @param element
+ * @param isHidden
+ */
+function applyHiddenClass(element, isHidden) {
+    element.classList.toggle("hidden", isHidden);
 }
 
 function jsonPreview(json) {

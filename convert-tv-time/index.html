@@ -45,7 +45,7 @@
 </div>
 
 <div class="toolbar">
-    <div>
+    <div class="toolbar-item">
         <label for="mapping">File type</label>
         <select id="mapping">
             <option value="shows">TV Time Out/Liberator shows JSON</option>
@@ -54,23 +54,23 @@
         </select>
     </div>
 
-    <div id="groupFileInputShows">
+    <div id="groupFileInputShows" class="toolbar-item">
         <label id="labelFileInputShows" for="fileInputShows">tvtime-series JSON</label>
         <input id="fileInputShows" type="file" accept="application/json,.json">
     </div>
 
-    <div id="groupFileInputMovies">
+    <div id="groupFileInputMovies" class="toolbar-item">
         <label id="labelFileInputMovies" for="fileInputMovies">tvtime-movies JSON</label>
         <input id="fileInputMovies" type="file" accept="application/json,.json">
     </div>
 
-    <div id="groupFileInputLists">
+    <div id="groupFileInputLists" class="toolbar-item">
         <label id="labelFileInputLists" for="fileInputLists">tvtime-lists JSON</label>
         <input id="fileInputLists" type="file" accept="application/json,.json">
     </div>
 
-    <div id="groupLanguage">
-        <label id="labelLanguage" for="language">Preferred show language (titles, descriptions, ...):</label>
+    <div id="groupLanguage" class="toolbar-item">
+        <label id="labelLanguage" for="language">Preferred show language (titles, descriptions, ...)</label>
         <select id="language">
             <option value="en-US">English (United States)</option>
             <option value="pt-BR">Portuguese (Brazil)</option>
