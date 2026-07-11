@@ -302,7 +302,7 @@ async function transformMovies() {
         const skipped = [];
 
         const output = moviesJson.flatMap(movie => {
-            if (movie.id?.imdb == null) {
+            if (movie.id?.imdb == null || movie.id.imdb === "") {
                 skipped.push({ type: "movie", id: movie.id?.tvdb ?? null, name: movie.title });
                 return [];
             }
@@ -361,7 +361,11 @@ async function transformLists() {
         /** @type {Map<string, string>} Maps movie uuid to its IMDb ID. */
         const movieUuidToImdb = new Map(
             moviesJson
-                .filter(movie => movie.uuid != null && movie.id?.imdb != null)
+                .filter(movie =>
+                    movie.uuid != null &&
+                    movie.id?.imdb != null &&
+                    movie.id.imdb !== ""
+                )
                 .map(movie => [movie.uuid, movie.id.imdb])
         );
 
