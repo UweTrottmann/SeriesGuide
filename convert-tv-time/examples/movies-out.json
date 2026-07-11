@@ -1,0 +1,36 @@
+[
+  {
+    "imdb_id": "tt0304141",
+    "title": "Harry Potter and the Prisoner of Azkaban",
+    "in_watchlist": false,
+    "watched": true,
+    "plays": 1
+  },
+  {
+    "imdb_id": "tt29355505",
+    "title": "Toy Story 5",
+    "in_watchlist": false,
+    "watched": true,
+    "plays": 2
+  },
+  {
+    "imdb_id": "tt0295297",
+    "title": "Harry Potter and the Chamber of Secrets",
+    "in_watchlist": false,
+    "watched": true,
+    "plays": 1
+  },
+  {
+    "imdb_id": "tt1431045",
+    "title": "Deadpool",
+    "in_watchlist": false,
+    "watched": true,
+    "plays": 1
+  },
+  {
+    "imdb_id": "tt8814476",
+    "title": "Supergirl",
+    "in_watchlist": true,
+    "watched": false
+  }
+]

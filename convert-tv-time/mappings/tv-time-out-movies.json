@@ -1,0 +1,16 @@
+{
+  "fields": [
+    {
+      "from": "[].id.imdb",
+      "to": "[].imdb_id"
+    },
+    {
+      "from": "[].title",
+      "to": "[].title"
+    },
+    {
+      "from": "[].is_watched",
+      "to": "[].watched"
+    }
+  ]
+}

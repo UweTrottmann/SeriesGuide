@@ -17,128 +17,151 @@
         <a href="https://discuss.seriesgui.de/t/tv-time-shutdown-and-importing-into-seriesguide/2807">on the forum</a>.
     </p>
 
+    <p><strong>Note: importing movies and movies on lists requires SeriesGuide 2026.3.0 or newer, <a href="https://discuss.seriesgui.de/t/seriesguide-2026-3-preview-import-movies-using-imdb-ids/2815">currently only available on the beta program</a>.</strong></p>
+
+    <p><strong>Note: movies that have no IMDB ID or where the IMDB ID is not set as external ID on <a href="https://www.themoviedb.org/">TMDB</a> can't be imported into SeriesGuide.</strong></p>
+
     <p>How to use this:</p>
 
     <ul>
         <li>
-            Export data using the <a href="https://chromewebstore.google.com/detail/tv-time-out-by-refract/pmejpdpjbkjklfceogdkolmgclldogbi">TV Time Out by Refract</a>
-            browser extension. For shows, the converter also works with the JSON created by the
-            <a href="https://chromewebstore.google.com/detail/tv-time-liberator-extensi/pohobkcjhigehafgnhehkanhjakajhpm">Tv Time Liberator</a> 
-            extension, but it's currently broken.
+            Export your TV Time data using the <a href="https://chromewebstore.google.com/detail/tv-time-out-by-refract/pmejpdpjbkjklfceogdkolmgclldogbi">TV Time Out by Refract</a>
+            browser extension. If needed, extract the ZIP archive to access the JSON files inside.
         </li>
-        <li>Upload a JSON file and select the type:
+        <li>For each type, shows, movies and lists, create a transformed JSON file:
             <ul>
-                <li>Shows: select your tvtime-series-2026-xx-xx.json (or shows.json) file and select
-                    "TV Time Out/Liberator shows JSON"</li>
-                <li>Lists (shows only): select your tvtime-lists-2026-xx-xx.json file and select
-                    "TV Time Out lists JSON"</li>
+                <li>select the file type,</li>
+                <li>upload the required files from the export,</li>
+                <li>for shows specify the preffered content language,</li>
+                <li>select the "Transform" button,</li>
+                <li>review any skipped items and the preview of the transformed file,</li>
+                <li>select "Download JSON" at the bottom and save the file to your device.</li>
             </ul>
         </li>
-        <li>Review the Input.</li>
-        <li>When converting shows, select the "Preferred show language" for content (titles, descriptions).</li>
-        <li>Select the "Transform" button.</li>
-        <li>Review the Output.</li>
-        <li>Select "Download JSON" at the bottom and save the file to your device.</li>
         <li><a href="https://www.seriesgui.de/help/how-to/backup/backup">Import the files</a> as
-            "Shows" or "Lists" in SeriesGuide.</li>
+            "Shows", "Lists" and "Movies" in <strong>SeriesGuide 2026.3.0 or newer</strong> (see note at the top).</li>
     </ul>
 </div>
 
 <div class="toolbar">
-    <input type="file" id="fileInput">
+    <div class="toolbar-item">
+        <label for="mapping">File type</label>
+        <select id="mapping">
+            <option value="shows">TV Time Out shows JSON</option>
+            <option value="movies">TV Time Out movies JSON</option>
+            <option value="lists">TV Time Out lists JSON</option>
+        </select>
+    </div>
 
-    <select id="mapping">
-        <option value="shows">TV Time Out/Liberator shows JSON</option>
-        <option value="lists">TV Time Out lists JSON (shows only)</option>
-    </select>
+    <div id="groupFileInputShows" class="toolbar-item">
+        <label id="labelFileInputShows" for="fileInputShows">tvtime-series JSON</label>
+        <input id="fileInputShows" type="file" accept="application/json,.json">
+    </div>
 
-    <label for="language">Preferred show language (titles, descriptions, ...):</label>
+    <div id="groupFileInputMovies" class="toolbar-item">
+        <label id="labelFileInputMovies" for="fileInputMovies">tvtime-movies JSON</label>
+        <input id="fileInputMovies" type="file" accept="application/json,.json">
+    </div>
 
-    <select id="language">
-        <option value="en-US">English (United States)</option>
-        <option value="pt-BR">Portuguese (Brazil)</option>
-        <option value="af-ZA">Afrikaans</option>
-        <option value="sq-AL">Albanian</option>
-        <option value="ar-SA">Arabic (Saudi Arabia)</option>
-        <option value="ar-AE">Arabic (United Arab Emirates)</option>
-        <option value="eu-ES">Basque</option>
-        <option value="be-BY">Belarusian</option>
-        <option value="bn-BD">Bengali (Bangladesh)</option>
-        <option value="bg-BG">Bulgarian</option>
-        <option value="ca-ES">Catalan</option>
-        <option value="ch-GU">Chamorro</option>
-        <option value="zh-CN">Chinese (China)</option>
-        <option value="zh-HK">Chinese (Hong Kong)</option>
-        <option value="zh-SG">Chinese (Singapore)</option>
-        <option value="zh-TW">Chinese (Taiwan)</option>
-        <option value="hr-HR">Croatian</option>
-        <option value="cs-CZ">Czech</option>
-        <option value="da-DK">Danish</option>
-        <option value="nl-BE">Dutch (Belgium)</option>
-        <option value="nl-NL">Dutch (Netherlands)</option>
-        <option value="en-AU">English (Australia)</option>
-        <option value="en-CA">English (Canada)</option>
-        <option value="en-IE">English (Ireland)</option>
-        <option value="en-NZ">English (New Zealand)</option>
-        <option value="en-GB">English (United Kingdom)</option>
-        <option value="eo-EO">Esperanto</option>
-        <option value="et-EE">Estonian</option>
-        <option value="fi-FI">Finnish</option>
-        <option value="fr-CA">French (Canada)</option>
-        <option value="fr-FR">French (France)</option>
-        <option value="gl-ES">Galician</option>
-        <option value="ka-GE">Georgian</option>
-        <option value="de-AT">German (Austria)</option>
-        <option value="de-DE">German (Germany)</option>
-        <option value="de-CH">German (Switzerland)</option>
-        <option value="el-GR">Greek</option>
-        <option value="he-IL">Hebrew</option>
-        <option value="hi-IN">Hindi</option>
-        <option value="hu-HU">Hungarian</option>
-        <option value="id-ID">Indonesian</option>
-        <option value="ga-IE">Irish</option>
-        <option value="it-IT">Italian</option>
-        <option value="ja-JP">Japanese</option>
-        <option value="kn-IN">Kannada</option>
-        <option value="kk-KZ">Kazakh</option>
-        <option value="ko-KR">Korean</option>
-        <option value="ky-KG">Kyrgyz</option>
-        <option value="lv-LV">Latvian</option>
-        <option value="lt-LT">Lithuanian</option>
-        <option value="ml-IN">Malayalam</option>
-        <option value="ms-MY">Malay (Malaysia)</option>
-        <option value="ms-SG">Malay (Singapore)</option>
-        <option value="mr-IN">Marathi</option>
-        <option value="nb-NO">Norwegian Bokmål</option>
-        <option value="no-NO">Norwegian</option>
-        <option value="fa-IR">Persian</option>
-        <option value="pl-PL">Polish</option>
-        <option value="pt-PT">Portuguese (Portugal)</option>
-        <option value="pa-IN">Punjabi</option>
-        <option value="ro-RO">Romanian</option>
-        <option value="ru-RU">Russian</option>
-        <option value="gd-GB">Scottish Gaelic</option>
-        <option value="sr-RS">Serbian</option>
-        <option value="si-LK">Sinhala</option>
-        <option value="sk-SK">Slovak</option>
-        <option value="sl-SI">Slovenian</option>
-        <option value="es-MX">Spanish (Mexico)</option>
-        <option value="es-ES">Spanish (Spain)</option>
-        <option value="sv-SE">Swedish</option>
-        <option value="tl-PH">Tagalog</option>
-        <option value="ta-IN">Tamil</option>
-        <option value="te-IN">Telugu</option>
-        <option value="th-TH">Thai</option>
-        <option value="tr-TR">Turkish</option>
-        <option value="uk-UA">Ukrainian</option>
-        <option value="vi-VN">Vietnamese</option>
-        <option value="cy-GB">Welsh</option>
-        <option value="zu-ZA">Zulu</option>
-    </select>
+    <div id="groupFileInputLists" class="toolbar-item">
+        <label id="labelFileInputLists" for="fileInputLists">tvtime-lists JSON</label>
+        <input id="fileInputLists" type="file" accept="application/json,.json">
+    </div>
+
+    <div id="groupLanguage" class="toolbar-item">
+        <label id="labelLanguage" for="language">Preferred content language (titles, descriptions, ...)</label>
+        <select id="language">
+            <option value="en-US">English (United States)</option>
+            <option value="pt-BR">Portuguese (Brazil)</option>
+            <option value="af-ZA">Afrikaans</option>
+            <option value="sq-AL">Albanian</option>
+            <option value="ar-SA">Arabic (Saudi Arabia)</option>
+            <option value="ar-AE">Arabic (United Arab Emirates)</option>
+            <option value="eu-ES">Basque</option>
+            <option value="be-BY">Belarusian</option>
+            <option value="bn-BD">Bengali (Bangladesh)</option>
+            <option value="bg-BG">Bulgarian</option>
+            <option value="ca-ES">Catalan</option>
+            <option value="ch-GU">Chamorro</option>
+            <option value="zh-CN">Chinese (China)</option>
+            <option value="zh-HK">Chinese (Hong Kong)</option>
+            <option value="zh-SG">Chinese (Singapore)</option>
+            <option value="zh-TW">Chinese (Taiwan)</option>
+            <option value="hr-HR">Croatian</option>
+            <option value="cs-CZ">Czech</option>
+            <option value="da-DK">Danish</option>
+            <option value="nl-BE">Dutch (Belgium)</option>
+            <option value="nl-NL">Dutch (Netherlands)</option>
+            <option value="en-AU">English (Australia)</option>
+            <option value="en-CA">English (Canada)</option>
+            <option value="en-IE">English (Ireland)</option>
+            <option value="en-NZ">English (New Zealand)</option>
+            <option value="en-GB">English (United Kingdom)</option>
+            <option value="eo-EO">Esperanto</option>
+            <option value="et-EE">Estonian</option>
+            <option value="fi-FI">Finnish</option>
+            <option value="fr-CA">French (Canada)</option>
+            <option value="fr-FR">French (France)</option>
+            <option value="gl-ES">Galician</option>
+            <option value="ka-GE">Georgian</option>
+            <option value="de-AT">German (Austria)</option>
+            <option value="de-DE">German (Germany)</option>
+            <option value="de-CH">German (Switzerland)</option>
+            <option value="el-GR">Greek</option>
+            <option value="he-IL">Hebrew</option>
+            <option value="hi-IN">Hindi</option>
+            <option value="hu-HU">Hungarian</option>
+            <option value="id-ID">Indonesian</option>
+            <option value="ga-IE">Irish</option>
+            <option value="it-IT">Italian</option>
+            <option value="ja-JP">Japanese</option>
+            <option value="kn-IN">Kannada</option>
+            <option value="kk-KZ">Kazakh</option>
+            <option value="ko-KR">Korean</option>
+            <option value="ky-KG">Kyrgyz</option>
+            <option value="lv-LV">Latvian</option>
+            <option value="lt-LT">Lithuanian</option>
+            <option value="ml-IN">Malayalam</option>
+            <option value="ms-MY">Malay (Malaysia)</option>
+            <option value="ms-SG">Malay (Singapore)</option>
+            <option value="mr-IN">Marathi</option>
+            <option value="nb-NO">Norwegian Bokmål</option>
+            <option value="no-NO">Norwegian</option>
+            <option value="fa-IR">Persian</option>
+            <option value="pl-PL">Polish</option>
+            <option value="pt-PT">Portuguese (Portugal)</option>
+            <option value="pa-IN">Punjabi</option>
+            <option value="ro-RO">Romanian</option>
+            <option value="ru-RU">Russian</option>
+            <option value="gd-GB">Scottish Gaelic</option>
+            <option value="sr-RS">Serbian</option>
+            <option value="si-LK">Sinhala</option>
+            <option value="sk-SK">Slovak</option>
+            <option value="sl-SI">Slovenian</option>
+            <option value="es-MX">Spanish (Mexico)</option>
+            <option value="es-ES">Spanish (Spain)</option>
+            <option value="sv-SE">Swedish</option>
+            <option value="tl-PH">Tagalog</option>
+            <option value="ta-IN">Tamil</option>
+            <option value="te-IN">Telugu</option>
+            <option value="th-TH">Thai</option>
+            <option value="tr-TR">Turkish</option>
+            <option value="uk-UA">Ukrainian</option>
+            <option value="vi-VN">Vietnamese</option>
+            <option value="cy-GB">Welsh</option>
+            <option value="zu-ZA">Zulu</option>
+        </select>
+    </div>
 
     <button id="transformBtn">
         Transform
     </button>
+
+    <div id="skippedItems" hidden>
+        <p id="skippedItemsTitle"></p>
+        <ul id="skippedItemsList"></ul>
+    </div>
+
 </div>
 
 <progress id="transformProgress" hidden></progress>
@@ -146,12 +169,7 @@
 <div class="panes">
 
     <div>
-        <label for="input">Preview of selected file</label>
-        <textarea id="input"></textarea>
-    </div>
-
-    <div>
-        <label for="output">Preview of download file</label>
+        <label for="output">Preview of transformed file</label>
         <textarea id="output"></textarea>
     </div>
 

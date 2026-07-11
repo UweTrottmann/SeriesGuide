@@ -1,36 +1,91 @@
-let inputJson = null;
-let outputJson = null;
-
-const fileInput = document.getElementById("fileInput");
-const inputArea = document.getElementById("input");
-const outputArea = document.getElementById("output");
-const mappingSelect = document.getElementById("mapping");
-const languageSelect = document.getElementById("language");
-const transformButton = document.getElementById("transformBtn")
-const downloadButton = document.getElementById("downloadBtn");
-const transformProgress = document.getElementById("transformProgress");
-
-const interactableControls = [
-    fileInput,
-    mappingSelect,
-    languageSelect,
-    transformButton,
-    downloadButton,
-];
-
-transformButton.addEventListener("click", transform);
-downloadButton.addEventListener("click", downloadOutput);
-fileInput.addEventListener("change", loadFile);
+const MAPPING_SHOWS = "shows";
+const MAPPING_LISTS = "lists";
+const MAPPING_MOVIES = "movies";
 
 const MAPPING_PATHS = {
-    "shows": "mappings/tv-time-out-shows.json",
-    "lists": "mappings/tv-time-out-lists.json",
+    [MAPPING_SHOWS]: "mappings/tv-time-out-shows.json",
+    [MAPPING_LISTS]: "mappings/tv-time-out-lists.json",
+    [MAPPING_MOVIES]: "mappings/tv-time-out-movies.json",
 };
 
 /**
  * Returns a truncated preview of a JSON string for display purposes.
  */
 const JSON_PREVIEW_LIMIT = 20_000;
+
+let outputJson = null;
+
+const mappingSelect = document.getElementById("mapping");
+
+const fileInputShows = document.getElementById("fileInputShows");
+const fileInputMovies = document.getElementById("fileInputMovies");
+const fileInputLists = document.getElementById("fileInputLists");
+const groupFileInputShows = document.getElementById("groupFileInputShows");
+const groupFileInputMovies = document.getElementById("groupFileInputMovies");
+const groupFileInputLists = document.getElementById("groupFileInputLists");
+
+const languageSelect = document.getElementById("language");
+const groupLanguageSelect = document.getElementById("groupLanguage");
+
+const outputArea = document.getElementById("output");
+
+const transformButton = document.getElementById("transformBtn");
+const downloadButton = document.getElementById("downloadBtn");
+const transformProgress = document.getElementById("transformProgress");
+
+const skippedItems = document.getElementById("skippedItems");
+const skippedItemsTitle = document.getElementById("skippedItemsTitle");
+const skippedItemsList = document.getElementById("skippedItemsList");
+
+const interactableControls = [
+    fileInputShows,
+    fileInputMovies,
+    fileInputLists,
+    mappingSelect,
+    languageSelect,
+    transformButton,
+    downloadButton,
+];
+
+mappingSelect.addEventListener("change", updateFileInputVisibilityForType);
+updateFileInputVisibilityForType();
+
+transformButton.addEventListener("click", transform);
+downloadButton.addEventListener("click", downloadOutput);
+
+function updateFileInputVisibilityForType(event) {
+    const mappingId = mappingSelect.value;
+    if (mappingId === MAPPING_SHOWS) {
+        applyHiddenClass(groupLanguageSelect, false);
+
+        applyHiddenClass(groupFileInputShows, false);
+        applyHiddenClass(groupFileInputMovies, true);
+        applyHiddenClass(groupFileInputLists, true);
+    } else if (mappingId === MAPPING_MOVIES) {
+        applyHiddenClass(groupLanguageSelect, true);
+
+        applyHiddenClass(groupFileInputShows, true);
+        applyHiddenClass(groupFileInputMovies, false);
+        applyHiddenClass(groupFileInputLists, true);
+    } else if (mappingId === MAPPING_LISTS) {
+        applyHiddenClass(groupLanguageSelect, true);
+
+        applyHiddenClass(groupFileInputShows, true);
+        applyHiddenClass(groupFileInputMovies, false);
+        applyHiddenClass(groupFileInputLists, false);
+    } else {
+        console.error("Unknown mapping", event);
+    }
+}
+
+/**
+ * Note: this works because .toolbar-item has a .hidden style defined.
+ * @param element
+ * @param isHidden
+ */
+function applyHiddenClass(element, isHidden) {
+    element.classList.toggle("hidden", isHidden);
+}
 
 function jsonPreview(json) {
     const full = JSON.stringify(json, null, 2);
@@ -41,28 +96,6 @@ function jsonPreview(json) {
 function setControlsDisabled(disabled) {
     for (const el of interactableControls) el.disabled = disabled;
     transformProgress.hidden = !disabled;
-}
-
-/**
- * Reads the selected JSON file.
- */
-function loadFile(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-
-    reader.onload = e => {
-        try {
-            inputJson = JSON.parse(e.target.result);
-            // Only display a preview to keep the page performant
-            inputArea.value = jsonPreview(inputJson);
-        } catch (err) {
-            alert("Invalid JSON file.");
-        }
-    };
-
-    reader.readAsText(file);
 }
 
 /**
@@ -223,14 +256,205 @@ function removeNullElements(value) {
  */
 async function transform() {
 
-    if (!inputJson) {
-        alert("Please load a JSON file first.");
+    const mappingId = mappingSelect.value;
+    if (mappingId === MAPPING_SHOWS) {
+        await transformShows();
+    } else if (mappingId === MAPPING_MOVIES) {
+        await transformMovies();
+    } else if (mappingId === MAPPING_LISTS) {
+        await transformLists();
+    } else {
+        console.error("Unknown mapping " + mappingId);
+    }
+
+}
+
+async function transformMovies() {
+    const moviesFile = fileInputMovies.files[0];
+    if (!moviesFile) {
+        alert("Please select a tvtime-movies JSON file.");
         return;
     }
 
     setControlsDisabled(true);
 
     try {
+
+        // Read in movies JSON
+        const moviesJson = await readJsonFile(moviesFile);
+
+        const skipped = [];
+
+        const output = moviesJson.flatMap(movie => {
+            if (movie.id?.imdb == null || movie.id.imdb === "") {
+                skipped.push({ type: "movie", id: movie.id?.tvdb ?? null, name: movie.title });
+                return [];
+            }
+
+            const watched = movie.is_watched === true;
+            const entry = {
+                imdb_id: movie.id.imdb,
+                title: movie.title,
+                in_watchlist: !watched,
+                watched,
+            };
+            // For simplicity, only add plays if watched
+            if (watched) {
+                entry.plays = (movie.rewatch_count ?? 0) + 1;
+            }
+            return [entry];
+        });
+
+        outputJson = output;
+        outputArea.value = jsonPreview(output);
+
+        showSkippedItems(`Skipped ${skipped.length} movie(s) due to missing imdb ID:`, skipped);
+
+    } catch (err) {
+
+        console.error(err);
+        alert(err.message);
+
+    } finally {
+
+        setControlsDisabled(false);
+
+    }
+}
+
+async function transformLists() {
+    const moviesFile = fileInputMovies.files[0];
+    if (!moviesFile) {
+        alert("Please select a tvtime-movies JSON file.");
+        return;
+    }
+
+    const listsFile = fileInputLists.files[0];
+    if (!listsFile) {
+        alert("Please select a tvtime-lists JSON file.");
+        return;
+    }
+
+    setControlsDisabled(true);
+
+    try {
+
+        // Read in movies JSON
+        const moviesJson = await readJsonFile(moviesFile);
+
+        /** @type {Map<string, string>} Maps movie uuid to its IMDb ID. */
+        const movieUuidToImdb = new Map(
+            moviesJson
+                .filter(movie =>
+                    movie.uuid != null &&
+                    movie.id?.imdb != null &&
+                    movie.id.imdb !== ""
+                )
+                .map(movie => [movie.uuid, movie.id.imdb])
+        );
+
+        // Read in lists JSON
+        const listsJson = await readJsonFile(listsFile);
+
+        const skipped = [];
+
+        const output = listsJson
+            .map(list => {
+                if (list.name == null) return null;
+
+                const items = (list.items ?? []).flatMap(item => {
+                    if (item.type === "series") {
+                        if (item.tvdb_id == null) {
+                            skipped.push({ type: "show", id: null, name: item.name });
+                            return [];
+                        }
+                        return [{ externalId: String(item.tvdb_id), type: "show" }];
+                    } else if (item.type === "movie") {
+                        const imdbId = movieUuidToImdb.get(item.uuid);
+                        if (imdbId == null) {
+                            skipped.push({ type: "movie", id: item.uuid ?? null, name: item.name });
+                            return [];
+                        }
+                        return [{ externalId: imdbId, type: "imdb-movie" }];
+                    }
+                    return [];
+                });
+
+                return { name: list.name, items };
+            })
+            .filter(list => list !== null);
+
+        outputJson = output;
+        outputArea.value = jsonPreview(output);
+
+        showSkippedItems(`Skipped ${skipped.length} list item(s), shows if missing tvdb ID, movies if uuid not found in tvtime-movies:`, skipped);
+
+    } catch (err) {
+
+        console.error(err);
+        alert(err.message);
+
+    } finally {
+
+        setControlsDisabled(false);
+
+    }
+}
+
+/**
+ * Reads a File and returns its content parsed as JSON.
+ * @param {File} file
+ * @returns {Promise<any>}
+ */
+function readJsonFile(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = e => {
+            try {
+                resolve(JSON.parse(e.target.result));
+            } catch {
+                reject(new Error(`Invalid JSON file: ${file.name}`));
+            }
+        };
+        reader.onerror = () => reject(new Error(`Could not read file: ${file.name}`));
+        reader.readAsText(file);
+    });
+}
+
+/**
+ * Displays a list of skipped items below the Transform button.
+ * Hides the section if the list is empty.
+ * @param {string} title
+ * @param {{ type: string, id: string|number|null, name: string }[]} items
+ */
+function showSkippedItems(title, items) {
+    skippedItemsList.innerHTML = "";
+    if (items.length === 0) {
+        skippedItems.hidden = true;
+        return;
+    }
+    skippedItemsTitle.textContent = title;
+    for (const item of items) {
+        const li = document.createElement("li");
+        li.textContent = item.id != null ? `${item.type}: ${item.id} – ${item.name}` : item.name;
+        skippedItemsList.appendChild(li);
+    }
+    skippedItems.hidden = false;
+}
+
+async function transformShows() {
+    const showsFile = fileInputShows.files[0];
+    if (!showsFile) {
+        alert("Please select a tvtime-series JSON file.");
+        return;
+    }
+
+    setControlsDisabled(true);
+
+    try {
+
+        // Read in shows JSON
+        const inputJson = await readJsonFile(showsFile);
 
         const mapping = await loadMapping();
 
@@ -260,6 +484,9 @@ async function transform() {
         // Only display a preview to keep the page performant
         outputArea.value = jsonPreview(sanitizedOutput);
 
+        // Currently not showing skipped items
+        showSkippedItems("", [])
+
     } catch (err) {
 
         console.error(err);
@@ -270,7 +497,6 @@ async function transform() {
         setControlsDisabled(false);
 
     }
-
 }
 
 /**

@@ -1,0 +1,36 @@
+[
+  {
+    "name": "Test",
+    "items": [
+      {
+        "externalId": "73762",
+        "type": "show"
+      },
+      {
+        "externalId": "tt1431045",
+        "type": "imdb-movie"
+      },
+      {
+        "externalId": "362696",
+        "type": "show"
+      },
+      {
+        "externalId": "tt0295297",
+        "type": "imdb-movie"
+      }
+    ]
+  },
+  {
+    "name": "Test List 2",
+    "items": [
+      {
+        "externalId": "tt1431045",
+        "type": "imdb-movie"
+      },
+      {
+        "externalId": "362696",
+        "type": "show"
+      }
+    ]
+  }
+]

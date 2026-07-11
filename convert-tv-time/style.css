@@ -20,14 +20,27 @@ body {
 .toolbar {
     margin-bottom: 1em;
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
-    gap: 10px;
+    align-items: start;
+    gap: 24px;
 }
 
 .toolbar input,
 .toolbar select,
 .toolbar button {
     min-width: 100px;
+}
+
+.toolbar-item {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.toolbar-item.hidden {
+    display: none;
 }
 
 .panes {
