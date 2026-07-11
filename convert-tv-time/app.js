@@ -333,17 +333,27 @@ async function transformLists() {
             reader.readAsText(listsFile);
         });
 
+
+        let totalSkippedShows = 0;
+        let totalSkippedMovies = 0;
+
         const output = listsJson
             .map(list => {
                 if (list.name == null) return null;
 
                 const items = (list.items ?? []).flatMap(item => {
                     if (item.type === "series") {
-                        if (item.tvdb_id == null) return [];
+                        if (item.tvdb_id == null) {
+                            totalSkippedShows++;
+                            return [];
+                        }
                         return [{ externalId: String(item.tvdb_id), type: "show" }];
                     } else if (item.type === "movie") {
                         const imdbId = movieUuidToImdb.get(item.uuid);
-                        if (imdbId == null) return [];
+                        if (imdbId == null) {
+                            totalSkippedMovies++;
+                            return [];
+                        }
                         return [{ externalId: imdbId, type: "imdb-movie" }];
                     }
                     return [];
@@ -355,6 +365,10 @@ async function transformLists() {
 
         outputJson = output;
         outputArea.value = jsonPreview(output);
+
+        if (totalSkippedShows > 0 || totalSkippedMovies > 0) {
+            alert(`Skipped ${totalSkippedShows} show item(s) (missing TVDB ID) and ${totalSkippedMovies} movie item(s) (uuid not found in tvtime-movies).`);
+        }
 
     } catch (err) {
 
