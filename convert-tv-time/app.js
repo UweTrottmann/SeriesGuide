@@ -35,6 +35,10 @@ const transformButton = document.getElementById("transformBtn");
 const downloadButton = document.getElementById("downloadBtn");
 const transformProgress = document.getElementById("transformProgress");
 
+const skippedItems = document.getElementById("skippedItems");
+const skippedItemsTitle = document.getElementById("skippedItemsTitle");
+const skippedItemsList = document.getElementById("skippedItemsList");
+
 const interactableControls = [
     fileInputShows,
     fileInputMovies,
@@ -295,11 +299,11 @@ async function transformMovies() {
         // Read in movies JSON
         const moviesJson = await readJsonFile(moviesFile);
 
-        let skippedCount = 0;
+        const skipped = [];
 
         const output = moviesJson.flatMap(movie => {
             if (movie.id?.imdb == null) {
-                skippedCount++;
+                skipped.push({ type: "movie", id: movie.id?.tvdb ?? null, name: movie.title });
                 return [];
             }
 
@@ -320,9 +324,7 @@ async function transformMovies() {
         outputJson = output;
         outputArea.value = jsonPreview(output);
 
-        if (skippedCount > 0) {
-            alert(`Skipped ${skippedCount} movie(s) due to missing imdb ID.`);
-        }
+        showSkippedItems(`Skipped ${skipped.length} movie(s) due to missing imdb ID:`, skipped);
 
     } catch (err) {
 
@@ -366,8 +368,7 @@ async function transformLists() {
         // Read in lists JSON
         const listsJson = await readJsonFile(listsFile);
 
-        let totalSkippedShows = 0;
-        let totalSkippedMovies = 0;
+        const skipped = [];
 
         const output = listsJson
             .map(list => {
@@ -376,14 +377,14 @@ async function transformLists() {
                 const items = (list.items ?? []).flatMap(item => {
                     if (item.type === "series") {
                         if (item.tvdb_id == null) {
-                            totalSkippedShows++;
+                            skipped.push({ type: "show", id: null, name: item.name });
                             return [];
                         }
                         return [{ externalId: String(item.tvdb_id), type: "show" }];
                     } else if (item.type === "movie") {
                         const imdbId = movieUuidToImdb.get(item.uuid);
                         if (imdbId == null) {
-                            totalSkippedMovies++;
+                            skipped.push({ type: "movie", id: item.uuid ?? null, name: item.name });
                             return [];
                         }
                         return [{ externalId: imdbId, type: "imdb-movie" }];
@@ -398,9 +399,7 @@ async function transformLists() {
         outputJson = output;
         outputArea.value = jsonPreview(output);
 
-        if (totalSkippedShows > 0 || totalSkippedMovies > 0) {
-            alert(`Skipped ${totalSkippedShows} show item(s) (missing TVDB ID) and ${totalSkippedMovies} movie item(s) (uuid not found in tvtime-movies).`);
-        }
+        showSkippedItems(`Skipped ${skipped.length} list item(s), shows if missing tvdb ID, movies if uuid not found in tvtime-movies:`, skipped);
 
     } catch (err) {
 
@@ -432,6 +431,27 @@ function readJsonFile(file) {
         reader.onerror = () => reject(new Error(`Could not read file: ${file.name}`));
         reader.readAsText(file);
     });
+}
+
+/**
+ * Displays a list of skipped items below the Transform button.
+ * Hides the section if the list is empty.
+ * @param {string} title
+ * @param {{ type: string, id: string|number|null, name: string }[]} items
+ */
+function showSkippedItems(title, items) {
+    skippedItemsList.innerHTML = "";
+    if (items.length === 0) {
+        skippedItems.hidden = true;
+        return;
+    }
+    skippedItemsTitle.textContent = title;
+    for (const item of items) {
+        const li = document.createElement("li");
+        li.textContent = item.id != null ? `${item.type}: ${item.id} – ${item.name}` : item.name;
+        skippedItemsList.appendChild(li);
+    }
+    skippedItems.hidden = false;
 }
 
 async function transformShows() {
@@ -471,6 +491,9 @@ async function transformShows() {
         outputJson = sanitizedOutput;
         // Only display a preview to keep the page performant
         outputArea.value = jsonPreview(sanitizedOutput);
+
+        // Currently not showing skipped items
+        showSkippedItems("", [])
 
     } catch (err) {
 
