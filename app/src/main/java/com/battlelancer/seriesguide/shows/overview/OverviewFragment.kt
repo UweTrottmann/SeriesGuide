@@ -1,6 +1,5 @@
-// SPDX-License-Identifier: Apache-2.0
-// Copyright 2011-2025 Uwe Trottmann
-// Copyright 2013 Andrew Neal
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2011 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.shows.overview
 
@@ -37,6 +36,7 @@ import com.battlelancer.seriesguide.extensions.EpisodeActionsContract
 import com.battlelancer.seriesguide.extensions.EpisodeActionsLoader
 import com.battlelancer.seriesguide.extensions.ExtensionManager.EpisodeActionReceivedEvent
 import com.battlelancer.seriesguide.getSgAppContainer
+import com.battlelancer.seriesguide.lists.ManageListsDialogFragment
 import com.battlelancer.seriesguide.preferences.MoreOptionsActivity
 import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.settings.AppSettings.setAskedForFeedback
@@ -153,6 +153,13 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
                 }
             }
             buttonOverviewFavoriteShow.setOnClickListener { onButtonFavoriteClick() }
+            buttonOverviewManageLists.apply {
+                contentDescription = getString(R.string.list_item_manage)
+                TooltipCompat.setTooltipText(this, contentDescription)
+                setOnClickListener {
+                    ManageListsDialogFragment.showForShow(parentFragmentManager, showId)
+                }
+            }
 
             containerOverviewEpisodeCard.setOnClickListener { v: View ->
                 runIfHasEpisode { episode ->

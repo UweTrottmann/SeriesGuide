@@ -3,6 +3,9 @@
 _SeriesGuide can [export and import your data](https://www.seriesgui.de/help/how-to/backup/backup)
 using JSON text files._
 
+> [!NOTE]
+> Migrating from TV Time? Check [the forum post](https://discuss.seriesgui.de/t/tv-time-shutdown-and-importing-into-seriesguide/2807) on how to convert to the SeriesGuide format.
+
 The expected format and values are documented here.
 
 To see an example file, export your data from SeriesGuide. Note that unlike the examples below the
@@ -111,6 +114,8 @@ two-letter language code (like `en`) that can be mapped to one of the supported 
 ]
 ```
 
+### Import shows using minimal values
+
 When importing from another app or data source a minimal amount of values can be enough, here is an
 example:
 
@@ -138,6 +143,46 @@ example:
 
 While the `language` is technically not required, it's easier to set it in the JSON than changing it
 for each show after importing.
+
+### Import shows using TVDB IDs
+
+Shows can be imported using a TVDB ID instead of a TMDB ID. However, only if the show has the TVDB 
+ID set as an external ID on TMDB will it be migrated to TMDB data and support all functionality.
+
+Note that only the `tvdb_id` of the show needs to be valid. You can use any `0` or greater value for
+seasons and episodes.
+
+```json
+[
+    {
+        "tvdb_id": 332331,
+        "title": "Altered Carbon",
+        "language": "pt-BR",
+        "favorite": false,
+        "seasons": [
+            {
+                "tvdb_id": 1,
+                "season": 1,
+                "episodes": [
+                    {
+                        "tvdb_id": 1,
+                        "episode": 1,
+                        "title": "Out of the Past",
+                        "watched": true,
+                        "plays": 1
+                    }
+                ]
+            }
+        ]
+    }
+]
+```
+
+Note: seasons and episodes are mapped to their TMDB equivalent based on their number (`season` and
+`episode` values). Depending on how episodes are organized or available on TMDB, not all episodes
+can be migrated. For example, for anime on TMDB all episodes might be part of the first season. Or
+later seasons might be split into a separate show entry. If affected episodes are watched or added
+to your collection, you would have to manually mark the replacements.
 
 ## Lists
 
@@ -186,6 +231,25 @@ to the library.
 ]
 ```
 
+### Import movie list items using IMDB IDs
+
+Movie list items using an IMDB ID as `externalId` can be imported if a movie with a matching IMDB ID
+is already in the database or imported at the same time. Use the special `imdb-movie` type:
+
+```json
+[
+  {
+    "name": "List with movie with IMDB ID",
+    "items": [
+      {
+        "externalId": "tt1022603",
+        "type": "imdb-movie"
+      }
+    ]
+  }
+]
+```
+
 ## Movies
 
 The JSON is an array of [Movie](/app/src/main/java/com/battlelancer/seriesguide/dataliberation/model/Movie.java)
@@ -209,6 +273,25 @@ The JSON is an array of [Movie](/app/src/main/java/com/battlelancer/seriesguide/
         "plays": 1,
         
         "last_updated_ms": 1619620588554
+    }
+]
+```
+
+### Import movies using IMDB IDs
+
+Movies can be imported using an IMDB ID instead of a TMDB ID if the movie has it set as an external 
+ID on TMDB:
+
+```json
+[
+    {
+        "imdb_id": "tt1022603",
+        "title": "(500) Days of Summer",
+
+        "in_collection": false,
+        "in_watchlist": false,
+        "watched": true,
+        "plays": 1
     }
 ]
 ```

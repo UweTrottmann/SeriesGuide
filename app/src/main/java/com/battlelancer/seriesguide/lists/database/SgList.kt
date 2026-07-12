@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright 2018-2025 Uwe Trottmann
 
 package com.battlelancer.seriesguide.lists.database
@@ -22,7 +22,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
 data class SgList(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = Lists._ID)
-    val id: Long? = 0,
+    val id: Long? = null,
 
     /**
      * Unique string identifier.

@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: Apache-2.0
-// Copyright 2020-2025 Uwe Trottmann
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2020 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.movies
 
@@ -27,7 +27,9 @@ internal class MovieLoader(
         val movieTools = getServicesComponent(context).movieTools()
         // No need to handle InterruptedException as ModernAsyncTask does (see its constructor)
         val details = runBlocking {
-            movieTools.getMovieDetailsWithDefaults(tmdbId, true).movieDetails
+            movieTools.downloader
+                .getMovieDetailsWithDefaults(tmdbId, true)
+                .movieDetails
         }
 
         // Update local database (no-op if movie not in database).

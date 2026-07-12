@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright 2013-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.comments
@@ -107,8 +107,8 @@ class CommentViewHolder(
 
         ImageTools.loadWithPicasso(context, user?.images?.avatar?.full)
             .transform(avatarTransform)
-            .placeholder(R.drawable.ic_account_circle_black_24dp)
-            .error(R.drawable.ic_account_circle_black_24dp)
+            .placeholder(R.drawable.ic_account_circle_control_24dp)
+            .error(R.drawable.ic_account_circle_control_24dp)
             .into(binding.imageViewCommentAvatar)
 
         if (comment.spoiler == true) {

@@ -1,9 +1,8 @@
-// SPDX-License-Identifier: Apache-2.0
-// Copyright 2013-2025 Uwe Trottmann
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2013 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.dataliberation
 
-import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,13 +13,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.databinding.FragmentDataLiberationBinding
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools.CreateExportFileContract
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools.SelectImportFileContract
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Export
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask.OnTaskProgressListener
-import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools.openUriOnClick
 import com.battlelancer.seriesguide.util.tryLaunch
@@ -34,7 +30,7 @@ import org.greenrobot.eventbus.ThreadMode
  * One button export or import of shows, lists and movies to or from a JSON file.
  * Uses Storage Access Framework so no permissions are required.
  */
-class DataLiberationFragment : Fragment(), OnTaskProgressListener {
+class DataLiberationFragment : Fragment() {
 
     private var binding: FragmentDataLiberationBinding? = null
     private val model: DataLiberationViewModel by viewModels()
@@ -100,7 +96,8 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
             model.importFiles.collect {
                 binding.textViewDataLibShowsImportFile.text = it.fileNameShows ?: it.placeholderText
                 binding.textViewDataLibListsImportFile.text = it.fileNameLists ?: it.placeholderText
-                binding.textViewDataLibMoviesImportFile.text = it.fileNameMovies ?: it.placeholderText
+                binding.textViewDataLibMoviesImportFile.text =
+                    it.fileNameMovies ?: it.placeholderText
             }
         }
         // Note: pre-check existing files for import, but do not overwrite any later changes
@@ -108,9 +105,26 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
             model.updateImportFileNames()
         }
 
-        // restore UI state
-        if (model.isDataLibTaskNotCompleted) {
-            setProgressLock(true)
+        viewLifecycleOwner.lifecycleScope.launch {
+            model.importSummaryState.collect { state ->
+                state.applyTo(
+                    model,
+                    binding.textViewDataLibImportSummary,
+                    binding.scrollViewDataLiberation
+                )
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            model.isInProgress.collect {
+                setProgressLock(it)
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            model.exportProgressState.collect {
+                updateProgressBar(it.total, it.completed)
+            }
         }
     }
 
@@ -136,13 +150,14 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
         binding = null
     }
 
-    override fun onProgressUpdate(total: Int, completed: Int) {
+    private fun updateProgressBar(total: Int, completed: Int) {
         val binding = binding ?: return
         binding.progressBarDataLib.isIndeterminate = total == completed
         binding.progressBarDataLib.max = total
         binding.progressBarDataLib.progress = completed
     }
 
+    // This is currently only posted by the export task
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(event: LiberationResultEvent) {
         event.handle(view)
@@ -152,7 +167,7 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
         }
         // Note: export may remove an export file URI which may be used as a default import file
         model.updateImportFileNames()
-        setProgressLock(false)
+        model.setInProgress(false)
     }
 
     private fun setProgressLock(isLocked: Boolean) {
@@ -177,52 +192,43 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
 
     private fun doDataImport() {
         val binding = binding ?: return
-        setProgressLock(true)
-
-        val dataLibTask = JsonImportTask(
-            requireContext(),
-            binding.checkBoxDataLibShows.isChecked, binding.checkBoxDataLibLists.isChecked,
-            binding.checkBoxDataLibMovies.isChecked
+        model.runImportTask(
+            importShows = binding.checkBoxDataLibShows.isChecked,
+            importLists = binding.checkBoxDataLibLists.isChecked,
+            importMovies = binding.checkBoxDataLibMovies.isChecked
         )
-        model.dataLibJob = SgApp.coroutineScope.launch { dataLibTask.run() }
     }
 
-    private fun doDataExport(type: Int, uri: Uri?) {
+    private fun doDataExport(export: Export, uri: Uri?) {
         if (uri == null) return
 
         DataLiberationTools.tryToPersistUri(requireContext(), uri)
-        BackupSettings.storeExportFileUri(context, type, uri, false)
+        BackupSettings.storeExportFileUri(requireContext(), export, uri, isAutoBackup = false)
         model.updateImportFileNames()
 
         val binding = binding ?: return
-        setProgressLock(true)
 
-        val exportTask = JsonExportTask(
-            requireContext(),
-            this@DataLiberationFragment,
-            binding.checkBoxDataLibFullDump.isChecked, false, type
-        )
-        model.dataLibJob = exportTask.launch()
+        model.runExportTask(export, binding.checkBoxDataLibFullDump.isChecked)
     }
 
     private val createShowExportFileResult =
         registerForActivityResult(CreateExportFileContract()) { uri ->
-            doDataExport(JsonExportTask.EXPORT_SHOWS, uri)
+            doDataExport(Export.Shows, uri)
         }
 
     private val createListsExportFileResult =
         registerForActivityResult(CreateExportFileContract()) { uri ->
-            doDataExport(JsonExportTask.EXPORT_LISTS, uri)
+            doDataExport(Export.Lists, uri)
         }
 
     private val createMovieExportFileResult =
         registerForActivityResult(CreateExportFileContract()) { uri ->
-            doDataExport(JsonExportTask.EXPORT_MOVIES, uri)
+            doDataExport(Export.Movies, uri)
         }
 
     private val selectShowsImportFileResult =
         registerForActivityResult(SelectImportFileContract()) { uri ->
-            storeImportFileUri(JsonExportTask.EXPORT_SHOWS, uri)
+            storeImportFileUri(Export.Shows, uri)
             // For convenience and discoverability, enable for import after selecting file
             if (uri != null) {
                 binding?.checkBoxDataLibShows?.isChecked = true
@@ -231,7 +237,7 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
 
     private val selectListsImportFileResult =
         registerForActivityResult(SelectImportFileContract()) { uri ->
-            storeImportFileUri(JsonExportTask.EXPORT_LISTS, uri)
+            storeImportFileUri(Export.Lists, uri)
             // For convenience and discoverability, enable for import after selecting file
             if (uri != null) {
                 binding?.checkBoxDataLibLists?.isChecked = true
@@ -240,17 +246,17 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
 
     private val selectMoviesImportFileResult =
         registerForActivityResult(SelectImportFileContract()) { uri ->
-            storeImportFileUri(JsonExportTask.EXPORT_MOVIES, uri)
+            storeImportFileUri(Export.Movies, uri)
             // For convenience and discoverability, enable for import after selecting file
             if (uri != null) {
                 binding?.checkBoxDataLibMovies?.isChecked = true
             }
         }
 
-    private fun storeImportFileUri(type: Int, uri: Uri?) {
+    private fun storeImportFileUri(export: Export, uri: Uri?) {
         if (uri == null) return
         DataLiberationTools.tryToPersistUri(requireContext(), uri)
-        BackupSettings.storeImportFileUri(context, type, uri)
+        BackupSettings.storeImportFileUri(requireContext(), export, uri)
         model.updateImportFileNames()
     }
 
@@ -264,12 +270,10 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
         }
 
         constructor(
-            context: Context,
             message: String?,
-            errorCause: String?,
             showIndefinite: Boolean
         ) {
-            this.message = TextTools.dotSeparate(context, message, errorCause)
+            this.message = message
             this.showIndefinite = showIndefinite
         }
 

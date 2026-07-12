@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: Apache-2.0
-// Copyright 2018-2024 Uwe Trottmann
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2018 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.provider
 
@@ -14,6 +14,7 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.jobs.SgJob
+import com.battlelancer.seriesguide.lists.ListsTools
 import com.battlelancer.seriesguide.lists.database.SgList
 import com.battlelancer.seriesguide.lists.database.SgListHelper
 import com.battlelancer.seriesguide.lists.database.SgListItem
@@ -94,7 +95,7 @@ abstract class SgRoomDatabase : RoomDatabase() {
             db.execSQL(SeriesGuideDatabase.CREATE_SEARCH_TABLE)
             // Add initial data, currently only first list
             val listName = context.getString(R.string.first_list)
-            val listId = Lists.generateListId(listName)
+            val listId: String = ListsTools.generateListId(listName)!!
             val stmt =
                 db.compileStatement("INSERT INTO `${Tables.LISTS}` (`${Lists.LIST_ID}`,`${Lists.NAME}`,`${Lists.ORDER}`) VALUES (?,?,?)")
             stmt.bindString(1, listId)

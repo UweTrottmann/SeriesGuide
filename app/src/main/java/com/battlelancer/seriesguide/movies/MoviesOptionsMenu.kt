@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright 2019-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies
@@ -67,9 +67,7 @@ class MoviesOptionsMenu(val activity: Activity) :
     }
 
     private fun changeSortIgnoreArticles(value: Boolean, activity: Activity) {
-        PreferenceManager.getDefaultSharedPreferences(activity).edit()
-            .putBoolean(DisplaySettings.KEY_SORT_IGNORE_ARTICLE, value)
-            .apply()
+        DisplaySettings.saveSortOrderIgnoringArticles(activity, value)
 
         // refresh icon state
         activity.invalidateOptionsMenu()

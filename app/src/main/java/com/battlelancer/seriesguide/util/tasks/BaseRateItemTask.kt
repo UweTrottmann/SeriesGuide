@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright 2015-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.util.tasks
@@ -24,7 +24,7 @@ abstract class BaseRateItemTask(
     override val isSendingToHexagon: Boolean
         get() = false // Hexagon does not support ratings.
 
-    override fun doBackgroundAction(vararg params: Void?): Int? {
+    override fun doBackgroundAction(vararg params: Void?): Int {
         if (isSendingToTrakt) {
             if (!TraktCredentials.get(context).hasCredentials()) {
                 return ERROR_TRAKT_AUTH

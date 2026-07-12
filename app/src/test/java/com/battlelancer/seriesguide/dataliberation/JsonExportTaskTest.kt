@@ -1,17 +1,19 @@
-// SPDX-License-Identifier: Apache-2.0
-// Copyright 2021-2025 Uwe Trottmann
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2021 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.dataliberation
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.battlelancer.seriesguide.EmptyTestApplication
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Export
 import com.battlelancer.seriesguide.lists.database.SgList
 import com.battlelancer.seriesguide.lists.database.SgListHelper
 import com.battlelancer.seriesguide.lists.database.SgListItem
 import com.battlelancer.seriesguide.movies.database.MovieHelper
 import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems
 import com.battlelancer.seriesguide.shows.database.SgEpisode2
 import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper
 import com.battlelancer.seriesguide.shows.database.SgSeason2
@@ -84,8 +86,6 @@ class JsonExportTaskTest {
             context,
             progressListener = null,
             isFullDump = true,
-            isAutoBackupMode = false,
-            type = JsonExportTask.EXPORT_SHOWS,
             sgShow2Helper,
             sgSeason2Helper,
             sgEpisode2Helper,
@@ -95,8 +95,10 @@ class JsonExportTaskTest {
 
         val exportFile = configureTestExportFile(exportTask)
 
+        val export = Export.Shows
+
         // No data
-        val noDataResult = exportTask.run()
+        val noDataResult = exportTask.run(export)
         assertThat(exportTask.errorCause).isNull()
         assertThat(noDataResult).isEqualTo(JsonExportTask.SUCCESS)
 
@@ -111,7 +113,7 @@ class JsonExportTaskTest {
         `when`(sgEpisode2Helper.getEpisodesForExport(1)).thenReturn(listOfTestEpisodes)
         `when`(sgEpisode2Helper.getEpisodesForExport(2)).thenReturn(listOfTestEpisodes)
 
-        val withDataResult = exportTask.run()
+        val withDataResult = exportTask.run(export)
         assertThat(exportTask.errorCause).isNull()
         assertThat(withDataResult).isEqualTo(JsonExportTask.SUCCESS)
 
@@ -122,6 +124,8 @@ class JsonExportTaskTest {
     }
 
     companion object {
+        const val TEST_LIST_1 = "list-1"
+
         val listOfTestShows = listOf(
             SgShow2(
                 id = 1,
@@ -183,8 +187,13 @@ class JsonExportTaskTest {
         )
 
         @Language("json")
-        const val expectedJsonShows =
-            """[{"tmdb_id":95479,"imdb_id":"imdbidvalue","trakt_id":52,"title":"Jujutsu Kaisen","overview":"It\u0027s all about hollow purple.","language":"de","first_aired":"2021-02-27T05:11:12.345Z","release_time":1234,"release_weekday":1,"release_timezone":"America/New_York","country":"JP","custom_release_time":1215,"custom_release_day_offset":28,"custom_release_timezone":"Europe/Berlin","poster":"someurl/to/a/poster.jpg","content_rating":"","status":"ended","runtime":24,"genres":"Animation|Action \u0026 Adventure|Sci-Fi \u0026 Fantasy","network":"MBS","rating_tmdb":2.4,"rating_tmdb_votes":4321,"rating":10.0,"rating_votes":1234,"rating_user":4,"favorite":false,"notify":true,"hidden":false,"last_watched_ms":1234567890,"user_note":"This is an example note 😀","user_note_trakt_id":12345,"seasons":[{"tmdb_id":"1","season":1,"episodes":[{"tmdb_id":1,"episode":1,"title":"First Episode","first_aired":1234567890,"watched":true,"plays":1,"skipped":false,"collected":false,"overview":"First overview","image":"/first/still/path.jpg","writers":"writers string","gueststars":"guest stars string","directors":"directors string","rating_tmdb":2.4,"rating_tmdb_votes":4321,"rating":10.0,"rating_votes":1234,"rating_user":4},{"tmdb_id":2,"episode":2,"title":"Second Episode","first_aired":1234567890,"watched":false,"plays":0,"skipped":true,"collected":true,"overview":"Second overview","image":"/first/still/path.jpg","writers":"writers string","gueststars":"guest stars string","directors":"directors string"}]},{"tmdb_id":"2","season":2,"episodes":[{"tmdb_id":1,"episode":1,"title":"First Episode","first_aired":1234567890,"watched":true,"plays":1,"skipped":false,"collected":false,"overview":"First overview","image":"/first/still/path.jpg","writers":"writers string","gueststars":"guest stars string","directors":"directors string","rating_tmdb":2.4,"rating_tmdb_votes":4321,"rating":10.0,"rating_votes":1234,"rating_user":4},{"tmdb_id":2,"episode":2,"title":"Second Episode","first_aired":1234567890,"watched":false,"plays":0,"skipped":true,"collected":true,"overview":"Second overview","image":"/first/still/path.jpg","writers":"writers string","gueststars":"guest stars string","directors":"directors string"}]}]},{"imdb_id":"","title":"","overview":"","language":"","release_time":-1,"release_weekday":-1,"release_timezone":"","poster":"","content_rating":"","status":"unknown","runtime":0,"genres":"","network":"","favorite":false,"notify":true,"hidden":false,"last_watched_ms":0,"seasons":[]}]"""
+        val expectedJsonShows =
+            """
+            [
+            {"tmdb_id":95479,"imdb_id":"imdbidvalue","trakt_id":52,"title":"Jujutsu Kaisen","overview":"It\u0027s all about hollow purple.","language":"de","first_aired":"2021-02-27T05:11:12.345Z","release_time":1234,"release_weekday":1,"release_timezone":"America/New_York","country":"JP","custom_release_time":1215,"custom_release_day_offset":28,"custom_release_timezone":"Europe/Berlin","poster":"someurl/to/a/poster.jpg","content_rating":"","status":"ended","runtime":24,"genres":"Animation|Action \u0026 Adventure|Sci-Fi \u0026 Fantasy","network":"MBS","rating_tmdb":2.4,"rating_tmdb_votes":4321,"rating":10.0,"rating_votes":1234,"rating_user":4,"favorite":false,"notify":true,"hidden":false,"last_watched_ms":1234567890,"user_note":"This is an example note 😀","user_note_trakt_id":12345,"seasons":[{"tmdb_id":"1","season":1,"episodes":[{"tmdb_id":1,"episode":1,"title":"First Episode","first_aired":1234567890,"watched":true,"plays":1,"skipped":false,"collected":false,"overview":"First overview","image":"/first/still/path.jpg","writers":"writers string","gueststars":"guest stars string","directors":"directors string","rating_tmdb":2.4,"rating_tmdb_votes":4321,"rating":10.0,"rating_votes":1234,"rating_user":4},{"tmdb_id":2,"episode":2,"title":"Second Episode","first_aired":1234567890,"watched":false,"plays":0,"skipped":true,"collected":true,"overview":"Second overview","image":"/first/still/path.jpg","writers":"writers string","gueststars":"guest stars string","directors":"directors string"}]},{"tmdb_id":"2","season":2,"episodes":[{"tmdb_id":1,"episode":1,"title":"First Episode","first_aired":1234567890,"watched":true,"plays":1,"skipped":false,"collected":false,"overview":"First overview","image":"/first/still/path.jpg","writers":"writers string","gueststars":"guest stars string","directors":"directors string","rating_tmdb":2.4,"rating_tmdb_votes":4321,"rating":10.0,"rating_votes":1234,"rating_user":4},{"tmdb_id":2,"episode":2,"title":"Second Episode","first_aired":1234567890,"watched":false,"plays":0,"skipped":true,"collected":true,"overview":"Second overview","image":"/first/still/path.jpg","writers":"writers string","gueststars":"guest stars string","directors":"directors string"}]}]}
+            ,{"imdb_id":"","title":"","overview":"","language":"","release_time":-1,"release_weekday":-1,"release_timezone":"","poster":"","content_rating":"","status":"unknown","runtime":0,"genres":"","network":"","favorite":false,"notify":true,"hidden":false,"last_watched_ms":0,"seasons":[]}
+            ]
+            """.trimIndent()
 
         val listOfTestSeasons = listOf(
             SgSeason2(
@@ -255,134 +264,45 @@ class JsonExportTaskTest {
                 ratingUser = null
             )
         )
-    }
 
-    @Test
-    fun exportLists_jsonAsExpected() = runTest {
-        val sgListHelper = mock(SgListHelper::class.java)
-
-        val exportTask = JsonExportTask(
-            context,
-            progressListener = null,
-            isFullDump = true,
-            isAutoBackupMode = false,
-            type = JsonExportTask.EXPORT_LISTS,
-            mock(SgShow2Helper::class.java),
-            mock(SgSeason2Helper::class.java),
-            mock(SgEpisode2Helper::class.java),
-            sgListHelper,
-            mock(MovieHelper::class.java)
+        val listOfTestLists = listOf(
+            SgList(
+                listId = TEST_LIST_1,
+                name = "First List",
+                order = 0
+            ),
+            SgList(
+                listId = "list-2",
+                name = "Empty List",
+                order = 1
+            )
         )
 
-        val exportFile = configureTestExportFile(exportTask)
-
-        // No data
-        val noDataResult = exportTask.run()
-        assertThat(exportTask.errorCause).isNull()
-        assertThat(noDataResult).isEqualTo(JsonExportTask.SUCCESS)
-
-        val exportWithNoData = exportFile.readText()
-        println("Export with no data")
-        println(exportWithNoData)
-        assertThat(exportWithNoData).isEqualTo("[]")
-
-        // With data
-        `when`(sgListHelper.getListsForExport()).thenReturn(listOfTestLists)
-        `when`(sgListHelper.getListItemsForExport("list-1")).thenReturn(listOfTestListItems)
-
-        val withDataResult = exportTask.run()
-        assertThat(exportTask.errorCause).isNull()
-        assertThat(withDataResult).isEqualTo(JsonExportTask.SUCCESS)
-
-        val exportWithData = exportFile.readText()
-        println("Export with data")
-        println(exportWithData)
-        assertThat(exportWithData).isEqualTo("[{\"list_id\":\"list-1\",\"name\":\"First List\",\"order\":0,\"items\":[{\"list_item_id\":\"list-1-item-1\",\"tvdb_id\":0,\"externalId\":\"item-ref-1\",\"type\":\"tmdb-show\"},{\"list_item_id\":\"list-1-item-2\",\"tvdb_id\":0,\"externalId\":\"item-ref-2\",\"type\":\"show\"},{\"list_item_id\":\"list-1-item-3\",\"tvdb_id\":0,\"externalId\":\"item-ref-3\",\"type\":\"season\"},{\"list_item_id\":\"list-1-item-4\",\"tvdb_id\":0,\"externalId\":\"item-ref-4\",\"type\":\"episode\"}]},{\"list_id\":\"list-2\",\"name\":\"Empty List\",\"order\":1,\"items\":[]}]")
-    }
-
-    private val listOfTestLists = listOf(
-        SgList(
-            listId = "list-1",
-            name = "First List",
-            order = 0
-        ),
-        SgList(
-            listId = "list-2",
-            name = "Empty List",
-            order = 1
-        )
-    )
-
-    private val listOfTestListItems = listOf(
-        SgListItem(
-            listId = "list-1",
-            listItemId = "list-1-item-1",
-            itemRefId = "item-ref-1",
-            type = SeriesGuideContract.ListItemTypes.TMDB_SHOW
-        ),
-        SgListItem(
-            listId = "list-1",
-            listItemId = "list-1-item-2",
-            itemRefId = "item-ref-2",
-            type = SeriesGuideContract.ListItemTypes.TVDB_SHOW,
-        ),
-        SgListItem(
-            listId = "list-1",
-            listItemId = "list-1-item-3",
-            itemRefId = "item-ref-3",
-            type = SeriesGuideContract.ListItemTypes.SEASON,
-        ),
-        SgListItem(
-            listId = "list-1",
-            listItemId = "list-1-item-4",
-            itemRefId = "item-ref-4",
-            type = SeriesGuideContract.ListItemTypes.EPISODE
-        )
-    )
-
-    @Test
-    fun exportMovies_jsonAsExpected() = runTest {
-        val movieHelper = mock(MovieHelper::class.java)
-
-        val exportTask = JsonExportTask(
-            context,
-            progressListener = null,
-            isFullDump = true,
-            isAutoBackupMode = false,
-            type = JsonExportTask.EXPORT_MOVIES,
-            mock(SgShow2Helper::class.java),
-            mock(SgSeason2Helper::class.java),
-            mock(SgEpisode2Helper::class.java),
-            mock(SgListHelper::class.java),
-            movieHelper
+        fun buildTestListItem(itemRefId: String, type: Int) = SgListItem(
+            listId = TEST_LIST_1,
+            listItemId = ListItems.generateListItemId(itemRefId, type, TEST_LIST_1),
+            itemRefId = itemRefId,
+            type = type
         )
 
-        val exportFile = configureTestExportFile(exportTask)
+        val listOfTestListItems = listOf(
+            buildTestListItem("item-ref-1", SeriesGuideContract.ListItemTypes.TMDB_SHOW),
+            buildTestListItem("item-ref-2", SeriesGuideContract.ListItemTypes.TVDB_SHOW),
+            buildTestListItem("item-ref-3", SeriesGuideContract.ListItemTypes.SEASON),
+            buildTestListItem("item-ref-4", SeriesGuideContract.ListItemTypes.EPISODE),
+            buildTestListItem("item-ref-5", SeriesGuideContract.ListItemTypes.TMDB_MOVIE)
+        )
 
-        // No data
-        val noDataResult = exportTask.run()
-        assertThat(exportTask.errorCause).isNull()
-        assertThat(noDataResult).isEqualTo(JsonExportTask.SUCCESS)
+        @Language("json")
+        val expectedJsonLists =
+            """
+            [
+            {"list_id":"list-1","name":"First List","order":0,"items":[{"list_item_id":"item-ref-1-4-list-1","externalId":"item-ref-1","type":"tmdb-show"},{"list_item_id":"item-ref-2-1-list-1","externalId":"item-ref-2","type":"show"},{"list_item_id":"item-ref-3-2-list-1","externalId":"item-ref-3","type":"season"},{"list_item_id":"item-ref-4-3-list-1","externalId":"item-ref-4","type":"episode"},{"list_item_id":"item-ref-5-5-list-1","externalId":"item-ref-5","type":"movie"}]}
+            ,{"list_id":"list-2","name":"Empty List","order":1,"items":[]}
+            ]
+            """.trimIndent()
 
-        val exportWithNoData = exportFile.readText()
-        println("Export with no data")
-        println(exportWithNoData)
-        assertThat(exportWithNoData).isEqualTo("[]")
-
-        // With data
-        `when`(movieHelper.getMoviesForExport()).thenReturn(listOfTestMovies)
-        val withDataResult = exportTask.run()
-        assertThat(exportTask.errorCause).isNull()
-        assertThat(withDataResult).isEqualTo(JsonExportTask.SUCCESS)
-
-        val exportWithData = exportFile.readText()
-        println("Export with data")
-        println(exportWithData)
-        assertThat(exportWithData).isEqualTo("[{\"tmdb_id\":1,\"imdb_id\":\"imdbidvalue\",\"title\":\"First Movie\",\"released_utc_ms\":1234567890,\"runtime_min\":123,\"poster\":\"/path/to/poster.jpg\",\"overview\":\"This is a movie description.\",\"in_collection\":true,\"in_watchlist\":true,\"watched\":true,\"plays\":2,\"last_updated_ms\":1234567890},{\"tmdb_id\":2,\"title\":\"Second Movie\",\"released_utc_ms\":9223372036854775807,\"runtime_min\":0,\"in_collection\":false,\"in_watchlist\":false,\"watched\":false,\"plays\":0,\"last_updated_ms\":0}]")
-    }
-
-    private val listOfTestMovies = listOf(
-        SgMovie(
+        val testMovieWithValues = SgMovie(
             tmdbId = 1,
             imdbId = "imdbidvalue",
             title = "First Movie",
@@ -395,11 +315,111 @@ class JsonExportTaskTest {
             plays = 2,
             watched = true,
             lastUpdated = 1234567890
-        ),
-        SgMovie(
+        )
+
+        val testMovieMinimal = SgMovie(
             tmdbId = 2,
             title = "Second Movie"
         )
-    )
+
+        val listOfTestMovies = listOf(
+            testMovieWithValues,
+            testMovieMinimal
+        )
+
+        @Language("json")
+        val expectedJsonMovies =
+            """
+            [
+            {"tmdb_id":1,"imdb_id":"imdbidvalue","title":"First Movie","released_utc_ms":1234567890,"runtime_min":123,"poster":"/path/to/poster.jpg","overview":"This is a movie description.","in_collection":true,"in_watchlist":true,"watched":true,"plays":2,"last_updated_ms":1234567890}
+            ,{"tmdb_id":2,"title":"Second Movie","released_utc_ms":9223372036854775807,"runtime_min":0,"in_collection":false,"in_watchlist":false,"watched":false,"plays":0,"last_updated_ms":0}
+            ]
+            """.trimIndent()
+    }
+
+    @Test
+    fun exportLists_jsonAsExpected() = runTest {
+        val sgListHelper = mock(SgListHelper::class.java)
+
+        val exportTask = JsonExportTask(
+            context,
+            progressListener = null,
+            isFullDump = true,
+            mock(SgShow2Helper::class.java),
+            mock(SgSeason2Helper::class.java),
+            mock(SgEpisode2Helper::class.java),
+            sgListHelper,
+            mock(MovieHelper::class.java)
+        )
+
+        val exportFile = configureTestExportFile(exportTask)
+
+        val export = Export.Lists
+
+        // No data
+        val noDataResult = exportTask.run(export)
+        assertThat(exportTask.errorCause).isNull()
+        assertThat(noDataResult).isEqualTo(JsonExportTask.SUCCESS)
+
+        val exportWithNoData = exportFile.readText()
+        println("Export with no data")
+        println(exportWithNoData)
+        assertThat(exportWithNoData).isEqualTo("[]")
+
+        // With data
+        `when`(sgListHelper.getListsForExport()).thenReturn(listOfTestLists)
+        `when`(sgListHelper.getListItemsForExport(TEST_LIST_1)).thenReturn(listOfTestListItems)
+
+        val withDataResult = exportTask.run(export)
+        assertThat(exportTask.errorCause).isNull()
+        assertThat(withDataResult).isEqualTo(JsonExportTask.SUCCESS)
+
+        val exportWithData = exportFile.readText()
+        println("Export with data")
+        println(exportWithData)
+        assertThat(exportWithData).isEqualTo(expectedJsonLists)
+    }
+
+
+    @Test
+    fun exportMovies_jsonAsExpected() = runTest {
+        val movieHelper = mock(MovieHelper::class.java)
+
+        val exportTask = JsonExportTask(
+            context,
+            progressListener = null,
+            isFullDump = true,
+            mock(SgShow2Helper::class.java),
+            mock(SgSeason2Helper::class.java),
+            mock(SgEpisode2Helper::class.java),
+            mock(SgListHelper::class.java),
+            movieHelper
+        )
+
+        val exportFile = configureTestExportFile(exportTask)
+
+        val export = Export.Movies
+
+        // No data
+        val noDataResult = exportTask.run(export)
+        assertThat(exportTask.errorCause).isNull()
+        assertThat(noDataResult).isEqualTo(JsonExportTask.SUCCESS)
+
+        val exportWithNoData = exportFile.readText()
+        println("Export with no data")
+        println(exportWithNoData)
+        assertThat(exportWithNoData).isEqualTo("[]")
+
+        // With data
+        `when`(movieHelper.getMoviesForExport()).thenReturn(listOfTestMovies)
+        val withDataResult = exportTask.run(export)
+        assertThat(exportTask.errorCause).isNull()
+        assertThat(withDataResult).isEqualTo(JsonExportTask.SUCCESS)
+
+        val exportWithData = exportFile.readText()
+        println("Export with data")
+        println(exportWithData)
+        assertThat(exportWithData).isEqualTo(expectedJsonMovies)
+    }
 
 }

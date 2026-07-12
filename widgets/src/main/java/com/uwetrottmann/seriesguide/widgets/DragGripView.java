@@ -1,6 +1,9 @@
-// Copyright 2013 Google Inc.
-// Copyright 2014, 2016-2019, 2022 Uwe Trottmann
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2013 Google Inc.
+// SPDX-FileCopyrightText: Copyright © 2014 Uwe Trottmann <uwe@uwetrottmann.com>
+
+// Original file by Google Inc. licensed under Apache-2.0 copied from dashclock
+// https://github.com/romannurik/dashclock
 
 package com.uwetrottmann.seriesguide.widgets;
 
@@ -15,7 +18,7 @@ import android.view.Gravity;
 import android.view.View;
 
 /**
- * From https://code.google.com/p/dashclock. Modified for compatibility with API levels below 17.
+ * Modified for compatibility with API levels below 17.
  */
 public class DragGripView extends View {
     private static final int[] ATTRS = new int[] {

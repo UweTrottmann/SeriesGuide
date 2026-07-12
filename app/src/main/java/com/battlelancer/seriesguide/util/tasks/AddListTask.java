@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: Apache-2.0
-// Copyright 2016-2019, 2021, 2023 Uwe Trottmann
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2016 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.util.tasks;
 
@@ -11,6 +11,7 @@ import androidx.annotation.VisibleForTesting;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
+import com.battlelancer.seriesguide.lists.ListsTools;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.seriesguide.backend.lists.Lists;
@@ -38,8 +39,12 @@ public class AddListTask extends BaseActionTask {
     }
 
     @Override
-    protected Integer doBackgroundAction(Void... params) {
+    protected int doBackgroundAction(Void... params) {
         String listId = getListId();
+        // The user interface should protect against passing an empty name but check regardless
+        if (listId == null) {
+            return ERROR_DATABASE;
+        }
 
         if (isSendingToHexagon()) {
             HexagonTools hexagonTools = SgApp.getServicesComponent(getContext()).hexagonTools();
@@ -70,7 +75,7 @@ public class AddListTask extends BaseActionTask {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     public String getListId() {
-        return SeriesGuideContract.Lists.generateListId(listName);
+        return ListsTools.generateListId(listName);
     }
 
     @NonNull

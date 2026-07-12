@@ -1,6 +1,5 @@
-// SPDX-License-Identifier: Apache-2.0
-// Copyright 2013-2025 Uwe Trottmann
-// Copyright 2013 Andrew Neal
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2013 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.shows.overview
 
@@ -30,6 +29,7 @@ import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.comments.TraktCommentsActivity
 import com.battlelancer.seriesguide.databinding.LayoutRatingsBinding
 import com.battlelancer.seriesguide.getSgAppContainer
+import com.battlelancer.seriesguide.lists.ManageListsDialogFragment
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.people.Credits
 import com.battlelancer.seriesguide.people.PeopleListHelper
@@ -110,6 +110,7 @@ class ShowFragment() : Fragment() {
         val buttonNotify: MaterialButton
         val buttonHidden: MaterialButton
         val buttonEditReleaseTime: Button
+        val buttonManageLists: Button
         val buttonShortcut: MaterialButton
         val buttonLanguage: Button
         val buttonTrailer: Button
@@ -149,6 +150,7 @@ class ShowFragment() : Fragment() {
             buttonNotify = view.findViewById(R.id.buttonShowNotify)
             buttonHidden = view.findViewById(R.id.buttonShowHidden)
             buttonEditReleaseTime = view.findViewById(R.id.buttonEditReleaseTime)
+            buttonManageLists = view.findViewById(R.id.buttonShowManageLists)
             buttonShortcut = view.findViewById(R.id.buttonShowShortcut)
             buttonLanguage = view.findViewById(R.id.buttonShowLanguage)
             buttonTrailer = view.findViewById(R.id.buttonShowTrailer)
@@ -198,6 +200,11 @@ class ShowFragment() : Fragment() {
                     "custom-release-time"
                 )
             }
+        }
+
+        // Manage lists button
+        binding.buttonManageLists.setOnClickListener {
+            ManageListsDialogFragment.showForShow(parentFragmentManager, showId)
         }
 
         // Edit note button
@@ -394,9 +401,9 @@ class ShowFragment() : Fragment() {
             TooltipCompat.setTooltipText(this, contentDescription)
             setIconResource(
                 if (isHidden) {
-                    R.drawable.ic_visibility_off_black_24dp
+                    R.drawable.ic_visibility_off_control_24dp
                 } else {
-                    R.drawable.ic_visibility_white_24dp
+                    R.drawable.ic_visibility_control_24dp
                 }
             )
             isEnabled = true

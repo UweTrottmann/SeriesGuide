@@ -259,10 +259,12 @@
     <string name="ack_list_item_manage">Lijsten bijgewerkt</string>
     <string name="list_item_remove">Verwijderen uit lijst</string>
     <string name="ack_list_item_removed">Verwijderd uit lijst</string>
-    <string name="list_empty">U kunt series toevoegen aan deze lijst</string>
+    <string name="list_empty">U kunt series of films toevoegen aan deze lijst</string>
     <string name="action_lists_reorder">Lijsten opnieuw ordenen</string>
     <string name="ack_lists_reordered">Lijsten gerangschikt</string>
     <string name="error_name_already_exists">Een lijst met deze naam bestaat al</string>
+    <string name="action_lists_sort_latest_release_date">Nieuwste uitgavedatum</string>
+    <string name="action_lists_sort_oldest_release_date">Oudste uitgavedatum</string>
     <!-- Movies -->
     <string name="title_digital_releases">Digitale releases</string>
     <string name="title_disc_releases">Releases op schijf</string>

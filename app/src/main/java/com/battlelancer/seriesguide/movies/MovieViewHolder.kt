@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2019 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.movies
@@ -120,7 +120,7 @@ class UiMovieBuilder(context: Context) {
         return UiMovie(
             sgMovie.tmdbId,
             sgMovie.title.orEmpty(),
-            if (sgMovie.releasedMsOrDefault != Long.MAX_VALUE) {
+            if (sgMovie.releasedMsOrDefault != SgMovie.RELEASED_MS_UNKNOWN) {
                 dateFormatMovieReleaseDate.format(sgMovie.releasedMsOrDefault)
             } else {
                 ""

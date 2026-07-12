@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: Apache-2.0
-// Copyright 2014-2025 Uwe Trottmann
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2014 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.util
 
@@ -133,11 +133,12 @@ object TimeTools {
      * Parses a ISO 8601 time string (e.g. "20:30") and encodes it into an integer with format
      * "hhmm" (e.g. 2030).
      *
-     *  If time is invalid returns -1. Performs no extensive formatting check, though.
+     *  If time is invalid returns [SgShow2.UNKNOWN_RELEASE_TIME]. Performs no extensive formatting
+     *  check, though.
      */
     fun parseShowReleaseTime(localTime: String?): Int {
         if (localTime == null || localTime.length != 5) {
-            return -1
+            return SgShow2.UNKNOWN_RELEASE_TIME
         }
 
         // extract hour and minute, example: "20:30" => hour = 20, minute = 30
@@ -476,7 +477,7 @@ object TimeTools {
                 null, null,
                 applyCorrections = false
             )
-        } else if (releaseTime != null && releaseTime != -1) {
+        } else if (releaseTime != null && releaseTime != SgShow2.UNKNOWN_RELEASE_TIME) {
             return getShowReleaseDateTime(
                 context,
                 releaseTime,
@@ -763,12 +764,20 @@ object TimeTools {
      *
      * @see formatToLocalDate
      */
-    fun formatToLocalDateShort(context: Context, dateTime: Date): String =
+    fun formatToLocalDateShort(context: Context, timeInMillis: Long): String =
         DateUtils.formatDateTime(
             context,
-            dateTime.time,
+            timeInMillis,
             DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_ABBREV_ALL
         )
+
+    /**
+     * Formats to a date like "Oct 31", or if the date is not in the current year "Oct 31, 2010".
+     *
+     * @see formatToLocalDate
+     */
+    fun formatToLocalDateShort(context: Context, dateTime: Date): String =
+        formatToLocalDateShort(context, dateTime.time)
 
     /**
      * Formats to a date, time zone and week day (e.g. "2014/02/04 CET (Mon)") as defined by the

@@ -1,6 +1,5 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2011 Uwe Trottmann <uwe@uwetrottmann.com>
-// SPDX-FileCopyrightText: Copyright © 2013 Andrew Neal
 
 package com.battlelancer.seriesguide
 
@@ -93,6 +92,8 @@ class SgApp : Application() {
         const val RELEASE_VERSION_2025_1_1 = 21250102
 
         const val RELEASE_VERSION_2025_2_6 = 21250207
+
+        const val RELEASE_VERSION_2026_2_0 = 23260200
 
         /**
          * The content authority used to identify the SeriesGuide [android.content.ContentProvider].
@@ -262,6 +263,8 @@ class SgApp : Application() {
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
         manager?.createNotificationChannels(channels)
     }
+
+    // Strict mode originally added thanks to Andrew Neal <andrew@seeingpixels.org>
 
     /**
      * Used to enable [StrictMode] for debug builds.

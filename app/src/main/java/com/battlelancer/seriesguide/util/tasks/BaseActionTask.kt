@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2015 Uwe Trottmann <uwe@uwetrottmann.com>
 
 @file:Suppress("DEPRECATION") // Ignore warning that AsyncTask should not be used for new code
@@ -78,7 +78,7 @@ abstract class BaseActionTask(context: Context) : AsyncTask<Void?, Void?, Int?>(
         return doBackgroundAction(*params)
     }
 
-    protected abstract fun doBackgroundAction(vararg params: Void?): Int?
+    protected abstract fun doBackgroundAction(vararg params: Void?): Int
 
     interface ResponseCallback<T> {
         fun handleSuccessfulResponse(body: T): Int

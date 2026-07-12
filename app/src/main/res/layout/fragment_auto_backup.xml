@@ -294,6 +294,18 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupImportCloudWarningDetails" />
 
+                <TextView
+                    android:id="@+id/textViewAutoBackupImportSummary"
+                    style="@style/TextAppearance.SeriesGuide.Body2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/buttonAutoBackupImport"
+                    tools:text="Successful\n\nShows\n10\nx 3\n\nMovies\n10\nx 2" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>

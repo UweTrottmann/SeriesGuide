@@ -4,17 +4,16 @@
 
   ```bash
   # If it does not exist, create a release branch
-  git checkout -b release-2026.1
+  git checkout -b releases/2026.3
   
   # If it exists, merge latest changes
-  git checkout release-2026.1
+  git checkout releases/2026.3
   git merge dev
   ```
 
-- Optional: update translations (run script in PowerShell)
+- Optional: [update translations](/translations/README.md)
 
-  ```powershell
-  .\download-translations.ps1
+  ```bash
   git commit --all --message "Import latest translations"
   ```
 
@@ -22,14 +21,14 @@
 - Update [`CHANGELOG.md`](/CHANGELOG.md)
 
   ```bash
-  ./update-version.sh build.gradle.kts CHANGELOG.md
+  ./insert-next-release.sh build.gradle.kts CHANGELOG.md
   ```
 
 - Commit with the suggested message and push
 
   ```shell
-  git commit --all --message "Prepare version 2026.1.1 (23260101)"
-  git push --set-upstream origin release-2026.1
+  git commit --all --message "Prepare version 2026.3.0 (23260101)"
+  git push --set-upstream origin releases/2026.3
   ```
 
 - If it does not exist, [create a merge request](https://github.com/UweTrottmann/SeriesGuide/compare/main...) against `main`
@@ -50,14 +49,18 @@
 - Tag release commit
   
   ```shell
-  git tag v2026.1.1
-  git push origin v2026.1.1
+  git tag v2026.3.0
+  git push origin v2026.3.0
   git checkout dev
-  git merge release-2026.1
+  git merge releases/2026.3
   git push origin dev
   ```
 
 - Promote to beta channel
+- [Create GitHub preview release](https://github.com/UweTrottmann/SeriesGuide/releases/new)
+  - title like `SeriesGuide 2026.3.0`
+  - get release notes from [`CHANGELOG.md`](/CHANGELOG.md)
+  - attach APK
 - Create or update preview release post on forum
 
 ### Production
@@ -66,7 +69,7 @@
 - Merge release pull request to `main`
 - Download universal APK from Play Store
 - [Create GitHub release](https://github.com/UweTrottmann/SeriesGuide/releases/new)
-  - title like `SeriesGuide 2026.1.1`
+  - title like `SeriesGuide 2026.3.0`
   - get release notes from [`CHANGELOG.md`](/CHANGELOG.md)
   - attach APK
 - Prepare release post on forum
@@ -78,5 +81,5 @@
 
   ```shell
   git checkout dev
-  git merge --no-ff release-2026.1
+  git merge --no-ff releases/2026.3
   ```

@@ -114,6 +114,14 @@ Some relevant documentation:
 
 - https://developer.android.com/develop/ui/views/layout/responsive-adaptive-design-with-views
 
+### Adding or removing a language
+
+- Add or remove the `values-<tags>` directory.
+  When adding, take the strings file from the [translation provider](/translations/README.md).
+- Update [locales_config.xml](/app/src/main/res/xml/locales_config.xml) to
+  [support per-app language preferences](https://developer.android.com/guide/topics/resources/app-languages#sample-config).
+  See the link for supported language codes. They differ from the resource directory name!
+
 ### Layout resources
 
 View IDs should be unique across the project to support refactoring using Android Studio.
@@ -124,12 +132,13 @@ Use dimension resources (like `@dimen/default_padding`) for margin and padding t
 
 ### Icons
 
-Use [Material Icons](https://fonts.google.com/icons) with
+Use [Material Symbols](https://fonts.google.com/icons) with
 
 - **Rounded** style
 - weight 400
 - no grade
 - typically 24dp size
+- to auto-mirror vector drawables in RTL layouts, add `android:autoMirrored="true"`
 
 Some existing icons may still use the old Filled or the old non-rounded Outlined style.
 

@@ -1,29 +1,32 @@
-// SPDX-License-Identifier: Apache-2.0
-// Copyright 2013-2025 Uwe Trottmann
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2013 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.dataliberation
 
-import android.content.ContentProviderOperation
-import android.content.ContentValues
 import android.content.Context
-import android.content.OperationApplicationException
 import android.net.Uri
 import android.os.ParcelFileDescriptor
 import androidx.annotation.VisibleForTesting
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.dataliberation.DataLiberationFragment.LiberationResultEvent
+import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgEpisodeForImport
+import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgListForImport
+import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgListItemForImport
+import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgMovieForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgSeasonForImport
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgShowForImport
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ExportType
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Export
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ListItemTypesExport
 import com.battlelancer.seriesguide.dataliberation.model.List
+import com.battlelancer.seriesguide.dataliberation.model.ListItem
 import com.battlelancer.seriesguide.dataliberation.model.Movie
 import com.battlelancer.seriesguide.dataliberation.model.Season
 import com.battlelancer.seriesguide.dataliberation.model.Show
-import com.battlelancer.seriesguide.provider.SeriesGuideContract
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems
+import com.battlelancer.seriesguide.lists.ListsTools
+import com.battlelancer.seriesguide.lists.database.SgListHelper
+import com.battlelancer.seriesguide.lists.database.SgListItem
+import com.battlelancer.seriesguide.movies.MoviesSettings
+import com.battlelancer.seriesguide.movies.database.MovieHelper
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgEpisode2
@@ -31,7 +34,9 @@ import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper
 import com.battlelancer.seriesguide.shows.database.SgSeason2Helper
 import com.battlelancer.seriesguide.shows.database.SgShow2Helper
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
-import com.battlelancer.seriesguide.util.DBUtils
+import com.battlelancer.seriesguide.tmdbapi.TmdbFindTools
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools4.TmdbErrorResponse
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools4.TmdbNonNullResponse
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.TaskManager
@@ -39,17 +44,20 @@ import com.battlelancer.seriesguide.util.TextTools
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
 import com.google.gson.stream.JsonReader
+import com.uwetrottmann.tmdb2.entities.BaseMovie
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.withContext
-import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.io.InputStreamReader
+import java.text.NumberFormat
 
 /**
  * Imports shows, lists or movies from a human-readable JSON file replacing existing data.
@@ -62,7 +70,10 @@ class JsonImportTask(
     private val database: SgRoomDatabase,
     private val sgShow2Helper: SgShow2Helper,
     private val sgSeason2Helper: SgSeason2Helper,
-    private val sgEpisode2Helper: SgEpisode2Helper
+    private val sgEpisode2Helper: SgEpisode2Helper,
+    private val sgListHelper: SgListHelper,
+    private val sgMovieHelper: MovieHelper,
+    private val tmdbFindTools: TmdbFindTools
 ) {
 
     private val context: Context = context.applicationContext
@@ -73,16 +84,21 @@ class JsonImportTask(
     private val isImportLists: Boolean
     private val isImportMovies: Boolean
 
+    private var importedShows: Int = 0
+    private var importedListItems: Int = 0
+    private var importedMovies: Int = 0
+    private var skippedShows: MutableList<Show> = mutableListOf()
+    private var skippedListItems: MutableList<ListItem> = mutableListOf()
+    private val skippedMovies: MutableList<Movie> = mutableListOf()
+
     @VisibleForTesting
     var errorCause: String? = null
         private set
 
-    /**
-     * If set will use this file instead of opening via URI, which seems broken with Robolectric
-     * (openFileDescriptor throws FileNotFoundException).
-     */
-    @VisibleForTesting
-    var testBackupFile: File? = null
+    // Note: Path or NIO APIs require Android 8 (API 26) or coreLibraryDesugaring
+    private var testBackupFileShows: File? = null
+    private var testBackupFileMovies: File? = null
+    private var testBackupFileLists: File? = null
 
     init {
         isImportingAutoBackup = false
@@ -104,31 +120,40 @@ class JsonImportTask(
         SgRoomDatabase.getInstance(context),
         SgRoomDatabase.getInstance(context).sgShow2Helper(),
         SgRoomDatabase.getInstance(context).sgSeason2Helper(),
-        SgRoomDatabase.getInstance(context).sgEpisode2Helper()
+        SgRoomDatabase.getInstance(context).sgEpisode2Helper(),
+        SgRoomDatabase.getInstance(context).sgListHelper(),
+        SgRoomDatabase.getInstance(context).movieHelper(),
+        TmdbFindTools(
+            SgApp.getServicesComponent(context).tmdb().findService(),
+            MoviesSettings.getMoviesLanguage(context)
+        )
     )
 
     constructor(context: Context) : this(context, true, true, true) {
         isImportingAutoBackup = true
     }
 
-    suspend fun run(): Int {
+    data class Result(
+        val message: String,
+        val isError: Boolean = false
+    )
+
+    suspend fun run(): Result {
         return withContext(Dispatchers.IO) {
-            val result = doInBackground(this)
-            onPostExecute(result)
-            return@withContext result
+            val resultCode = if (SgSyncAdapter.isSyncActive(context, false)) {
+                // Do not import if an update task is running
+                ERROR_LARGE_DB_OP
+            } else {
+                // Do not import until an add or backup task are finished
+                TaskManager.addShowOrBackupSemaphore.withPermit {
+                    doInBackground(this)
+                }
+            }
+            return@withContext buildResult(resultCode)
         }
     }
 
     private fun doInBackground(coroutineScope: CoroutineScope): Int {
-        // Do not import if an update task is running
-        if (SgSyncAdapter.isSyncActive(context, false)) {
-            return ERROR_LARGE_DB_OP
-        }
-        // Do not import if an add or backup task is running
-        if (!TaskManager.addShowOrBackupSemaphore.tryAcquire()) {
-            return ERROR_LARGE_DB_OP
-        }
-
         // last chance to abort
         if (!coroutineScope.isActive) {
             return ERROR
@@ -136,17 +161,7 @@ class JsonImportTask(
 
         var result: Int
         if (isImportShows) {
-            result = importData(JsonExportTask.EXPORT_SHOWS)
-            if (result != SUCCESS) {
-                return result
-            }
-            if (!coroutineScope.isActive) {
-                return ERROR
-            }
-        }
-
-        if (isImportLists) {
-            result = importData(JsonExportTask.EXPORT_LISTS)
+            result = openFilesAndImport(Export.Shows)
             if (result != SUCCESS) {
                 return result
             }
@@ -156,7 +171,18 @@ class JsonImportTask(
         }
 
         if (isImportMovies) {
-            result = importData(JsonExportTask.EXPORT_MOVIES)
+            result = openFilesAndImport(Export.Movies)
+            if (result != SUCCESS) {
+                return result
+            }
+            if (!coroutineScope.isActive) {
+                return ERROR
+            }
+        }
+
+        // Import lists last so imdb-movie list items can be mapped
+        if (isImportLists) {
+            result = openFilesAndImport(Export.Lists)
             if (result != SUCCESS) {
                 return result
             }
@@ -168,49 +194,141 @@ class JsonImportTask(
         // Renew search table
         SeriesGuideDatabase.rebuildFtsTable(context)
 
-        // allow other tasks to resume
-        TaskManager.addShowOrBackupSemaphore.release()
-
         return SUCCESS
     }
 
-    private fun onPostExecute(result: Int) {
-        val message: String
-        val showIndefinite: Boolean
-        when (result) {
-            SUCCESS -> {
-                message = context.getString(R.string.status_successful)
-                showIndefinite = false
-            }
-            ERROR_FILE_ACCESS -> {
-                message = TextTools.dotSeparate(
-                    context,
-                    R.string.status_failure,
-                    R.string.status_failed_file_access
-                )
-                showIndefinite = true
-            }
-            ERROR_LARGE_DB_OP -> {
-                message = context.getString(R.string.update_inprogress)
-                showIndefinite = false
-            }
-            else -> {
-                message = context.getString(R.string.status_failure)
-                showIndefinite = true
-            }
+    private fun <T> MutableList<T>.skippedItemsString(
+        numberFormat: NumberFormat,
+        transform: ((T) -> CharSequence)? = null
+    ): String {
+        return if (isEmpty()) {
+            ""
+        } else {
+            joinToString(
+                prefix = "\n",
+                separator = "\n",
+                limit = SUMMARY_ITEM_LIMIT,
+                truncated = "+ ${numberFormat.format(skippedMovies.size - SUMMARY_ITEM_LIMIT)}",
+                transform = transform
+            )
         }
-        EventBus.getDefault().post(
-            LiberationResultEvent(context, message, errorCause, showIndefinite)
-        )
     }
 
-    private fun importData(@ExportType type: Int): Int {
+    private fun buildResult(resultCode: Int): Result {
+        return when (resultCode) {
+            SUCCESS -> {
+                val numberFormat = NumberFormat.getIntegerInstance()
+
+                // As this is displayed in a TextView, try to stay below 10.000 characters
+                val skippedShowsSummary = skippedShows.skippedItemsString(numberFormat) {
+                    "title = ${it.title}, tmdb_id = ${it.tmdb_id}, tvdb_id = ${it.tvdb_id}"
+                }
+
+                val skippedMoviesSummary = skippedMovies.skippedItemsString(numberFormat) {
+                    "title = ${it.title}, tmdb_id = ${it.tmdb_id}, imdb_id = ${it.imdb_id}"
+                }
+
+                val skippedListItemsSummary = skippedListItems.skippedItemsString(numberFormat) {
+                    "type = ${it.type}, externalId = ${it.externalId}"
+                }
+
+                val stringSuccess = context.getString(R.string.status_successful)
+                val stringShows = context.getString(R.string.shows)
+                val stringMovies = context.getString(R.string.movies)
+                val stringLists = context.getString(R.string.lists)
+
+                val summary = buildString {
+                    appendLine(stringSuccess)
+
+                    appendLine()
+
+                    appendLine(stringShows)
+                    append("✔️ ").appendLine(numberFormat.format(importedShows))
+                    append("❌ ").append(numberFormat.format(skippedShows.size))
+                    appendLine(skippedShowsSummary)
+
+                    appendLine()
+
+                    appendLine(stringLists)
+                    append("✔️ ").appendLine(numberFormat.format(importedListItems))
+                    append("❌ ").append(numberFormat.format(skippedListItems.size))
+                    appendLine(skippedListItemsSummary)
+
+                    appendLine()
+
+                    appendLine(stringMovies)
+                    append("✔️ ").appendLine(numberFormat.format(importedMovies))
+                    append("❌ ").append(numberFormat.format(skippedMovies.size))
+                    appendLine(skippedMoviesSummary)
+                }
+
+                Result(summary)
+            }
+
+            ERROR_FILE_ACCESS -> Result(
+                TextTools.dotSeparate(
+                    context,
+                    TextTools.dotSeparate(
+                        context,
+                        R.string.status_failure,
+                        R.string.status_failed_file_access
+                    ),
+                    errorCause
+                ),
+                isError = true
+            )
+
+            ERROR_LARGE_DB_OP -> Result(
+                TextTools.dotSeparate(
+                    context,
+                    context.getString(R.string.update_inprogress),
+                    errorCause
+                ),
+                isError = true
+            )
+
+            else -> Result(
+                TextTools.dotSeparate(
+                    context,
+                    context.getString(R.string.status_failure),
+                    errorCause
+                ),
+                isError = true
+            )
+        }
+    }
+
+    /**
+     * If set, will use these files instead of opening via URI, which seems broken with Robolectric
+     * (openFileDescriptor throws FileNotFoundException).
+     */
+    fun setTestBackupFiles(
+        fileShows: File? = null,
+        fileMovies: File? = null,
+        fileLists: File? = null
+    ) {
+        this.testBackupFileShows = fileShows
+        this.testBackupFileMovies = fileMovies
+        this.testBackupFileLists = fileLists
+    }
+
+    private fun getTestBackupFile(export: Export): File? {
+        return when (export) {
+            Export.Shows -> testBackupFileShows
+            Export.Lists -> testBackupFileLists
+            Export.Movies -> testBackupFileMovies
+        }
+    }
+
+    private fun openFilesAndImport(export: Export): Int {
         if (!isImportingAutoBackup) {
-            val testBackupFile = testBackupFile
+
+            val testBackupFile = getTestBackupFile(export)
+
             var pfd: ParcelFileDescriptor? = null
             if (testBackupFile == null) {
                 // Make sure a file is configured...
-                val backupFileUri = getDataBackupFile(type) ?: return ERROR_FILE_ACCESS
+                val backupFileUri = getDataBackupFile(export) ?: return ERROR_FILE_ACCESS
                 // ...and the file actually exists
                 try {
                     pfd = context.contentResolver.openFileDescriptor(backupFileUri, "r")
@@ -234,40 +352,25 @@ class JsonImportTask(
                 }
             }
 
-            if (!clearExistingData(type)) {
-                return ERROR
-            }
-
             // Access JSON from backup file and try to import data
             val inputStream = if (testBackupFile == null) {
                 FileInputStream(pfd!!.fileDescriptor)
             } else FileInputStream(testBackupFile)
+
             try {
-                importFromJson(type, inputStream)
-                // Let the document provider know this is done.
-                pfd?.close()
-            } catch (e: JsonParseException) {
-                // The given Json might not be valid or unreadable
-                Timber.e(e, "Import failed")
-                errorCause = e.message
-                return ERROR
-            } catch (e: IOException) {
-                Timber.e(e, "Import failed")
-                errorCause = e.message
-                return ERROR
-            } catch (e: IllegalStateException) {
-                Timber.e(e, "Import failed")
-                errorCause = e.message
-                return ERROR
-            } catch (e: Exception) {
-                // Only report unexpected errors.
-                Errors.logAndReport("Import failed", e)
-                errorCause = e.message
-                return ERROR
+                return clearDataAndImportInTransaction(export, inputStream)
+            } finally {
+                try {
+                    // Let the document provider know this is done.
+                    pfd?.close()
+                } catch (e: Exception) {
+                    // Import is already done, don't fail if closing the descriptor fails, but report it
+                    Errors.logAndReport("Import failed", e)
+                }
             }
         } else {
             // Restoring latest auto backup.
-            val (backupFile) = AutoBackupTools.getLatestBackupOrNull(type, context)
+            val (backupFile) = AutoBackupTools.getLatestBackupOrNull(export, context)
                 ?: // There is no backup file to restore from.
                 return ERROR_FILE_ACCESS
             val inputStream: FileInputStream // Closed by reader after importing.
@@ -282,81 +385,76 @@ class JsonImportTask(
                 return ERROR_FILE_ACCESS
             }
 
-            // Only clear data after backup file could be opened.
-            if (!clearExistingData(type)) {
-                return ERROR
-            }
-
-            // Access JSON from backup file and try to import data
-            try {
-                importFromJson(type, inputStream)
-            } catch (e: JsonParseException) {
-                // The given Json might not be valid or unreadable
-                Timber.e(e, "Import failed")
-                errorCause = e.message
-                return ERROR
-            } catch (e: IOException) {
-                Timber.e(e, "Import failed")
-                errorCause = e.message
-                return ERROR
-            } catch (e: IllegalStateException) {
-                Timber.e(e, "Import failed")
-                errorCause = e.message
-                return ERROR
-            } catch (e: Exception) {
-                // Only report unexpected errors.
-                Errors.logAndReport("Import failed", e)
-                errorCause = e.message
-                return ERROR
-            }
+            return clearDataAndImportInTransaction(export, inputStream)
         }
-        return SUCCESS
     }
 
-    private fun getDataBackupFile(@ExportType type: Int): Uri? {
-        return BackupSettings.getImportFileUriOrExportFileUri(context, type)
+    private fun getDataBackupFile(export: Export): Uri? {
+        return BackupSettings.getImportFileUriOrExportFileUri(context, export)
     }
 
-    private fun clearExistingData(@ExportType type: Int): Boolean {
-        val batch = ArrayList<ContentProviderOperation>()
-        when (type) {
-            JsonExportTask.EXPORT_SHOWS -> {
-                database.runInTransaction {
-                    // delete episodes and seasons first to prevent violating foreign key constraints
-                    sgEpisode2Helper.deleteAllEpisodes()
-                    sgSeason2Helper.deleteAllSeasons()
-                    sgShow2Helper.deleteAllShows()
-                }
-            }
-            JsonExportTask.EXPORT_LISTS -> {
-                // delete list items before lists to prevent violating foreign key constraints
-                batch.add(
-                    ContentProviderOperation.newDelete(ListItems.CONTENT_URI).build()
-                )
-                batch.add(
-                    ContentProviderOperation.newDelete(SeriesGuideContract.Lists.CONTENT_URI)
-                        .build()
-                )
-            }
-            JsonExportTask.EXPORT_MOVIES -> {
-                batch.add(
-                    ContentProviderOperation.newDelete(SeriesGuideContract.Movies.CONTENT_URI)
-                        .build()
-                )
-            }
-        }
+    /**
+     * [inputStream] will be closed when this returns.
+     */
+    private fun clearDataAndImportInTransaction(export: Export, inputStream: FileInputStream): Int {
         try {
-            DBUtils.applyInSmallBatches(context, batch)
-        } catch (e: OperationApplicationException) {
+            // Wrap in transaction, so if anything goes wrong existing data is restored
+            database.runInTransaction {
+                clearExistingData(export)
+                // Note: takes care of closing input stream
+                importFromJson(export, inputStream)
+            }
+            return SUCCESS
+        } catch (e: JsonParseException) {
+            // The given Json might not be valid or unreadable
+            Timber.e(e, "Import failed")
             errorCause = e.message
-            Timber.e(e, "clearExistingData")
-            return false
+            return ERROR
+        } catch (e: IOException) {
+            Timber.e(e, "Import failed")
+            errorCause = e.message
+            return ERROR
+        } catch (e: IllegalStateException) {
+            Timber.e(e, "Import failed")
+            errorCause = e.message
+            return ERROR
+        } catch (e: Exception) {
+            // Only report unexpected errors.
+            Errors.logAndReport("Import failed", e)
+            errorCause = e.message
+            return ERROR
         }
-        return true
     }
 
+    /**
+     * Assumes this is run within a database transaction.
+     */
+    private fun clearExistingData(export: Export) {
+        when (export) {
+            Export.Shows -> {
+                // delete episodes and seasons first to prevent violating foreign key constraints
+                sgEpisode2Helper.deleteAllEpisodes()
+                sgSeason2Helper.deleteAllSeasons()
+                sgShow2Helper.deleteAllShows()
+            }
+
+            Export.Lists -> {
+                // Delete list items before lists to prevent violating foreign key constraints
+                sgListHelper.deleteAllListItems()
+                sgListHelper.deleteAllLists()
+            }
+
+            Export.Movies -> {
+                sgMovieHelper.deleteAllMovies()
+            }
+        }
+    }
+
+    /**
+     * Takes care of closing the given [inputStream].
+     */
     @Throws(JsonParseException::class, IOException::class, IllegalArgumentException::class)
-    private fun importFromJson(@ExportType type: Int, inputStream: FileInputStream) {
+    private fun importFromJson(export: Export, inputStream: FileInputStream) {
         if (inputStream.channel.size() == 0L) {
             Timber.i("Backup file is empty, nothing to import.")
             inputStream.close()
@@ -364,39 +462,95 @@ class JsonImportTask(
         }
 
         val gson = Gson()
-        val reader = JsonReader(InputStreamReader(inputStream, "UTF-8"))
-        reader.beginArray()
-        when (type) {
-            JsonExportTask.EXPORT_SHOWS -> {
-                while (reader.hasNext()) {
-                    val show = gson.fromJson<Show>(reader, Show::class.java)
-                    addShowToDatabase(show)
+
+        JsonReader(InputStreamReader(inputStream, "UTF-8"))
+            .use { reader ->
+                reader.beginArray()
+                when (export) {
+                    Export.Shows -> {
+                        while (reader.hasNext()) {
+                            val show = gson.fromJson<Show>(reader, Show::class.java)
+                            addShowToDatabase(show)
+                        }
+                    }
+
+                    Export.Lists -> {
+                        while (reader.hasNext()) {
+                            val list = gson.fromJson<List>(reader, List::class.java)
+                            addListToDatabase(list)
+                        }
+                    }
+
+                    Export.Movies -> {
+                        while (reader.hasNext()) {
+                            val movie = gson.fromJson<Movie>(reader, Movie::class.java)
+                            addMovieToDatabase(movie)
+                        }
+                    }
+                }
+                reader.endArray()
+            }
+    }
+
+    /**
+     * Throws [IOException] if looking up via IMDB ID fails due to an API or network error.
+     */
+    @Throws(IOException::class)
+    private fun addMovieToDatabase(movie: Movie) {
+        if (movie.tmdb_id <= 0) {
+            // Try to look up via IMDB ID
+            if (movie.imdb_id.isNullOrBlank()) {
+                skippedMovies.add(movie)
+                return // Skip, needs IMDB ID for look-up
+            }
+            val tmdbIdResponse = runBlocking {
+                tmdbFindTools.findMovieByImdbId(movie.imdb_id)
+            }
+            if (tmdbIdResponse is TmdbErrorResponse.Other) {
+                // If the API or network has issues, stop importing to avoid skipping movies
+                throw IOException("Failed to look up movie: TMDB API or network error (title = ${movie.title}, imdb_id = ${movie.imdb_id})")
+            }
+            if (tmdbIdResponse is TmdbNonNullResponse.Success) {
+                val tmdbMovie = tmdbIdResponse.data
+                val tmdbId = tmdbMovie.id
+                if (tmdbId != null) {
+                    movie.tmdb_id = tmdbId
+                    // Already made an API call to TMDB, so fill in data and prevent from updating
+                    // right away.
+                    tmdbMovie.enrichAndSetUpdated(movie)
                 }
             }
-            JsonExportTask.EXPORT_LISTS -> {
-                while (reader.hasNext()) {
-                    val list = gson.fromJson<List>(reader, List::class.java)
-                    addListToDatabase(list)
-                }
-            }
-            JsonExportTask.EXPORT_MOVIES -> {
-                while (reader.hasNext()) {
-                    val movie = gson.fromJson<Movie>(reader, Movie::class.java)
-                    context.contentResolver.insert(
-                        SeriesGuideContract.Movies.CONTENT_URI,
-                        movie.toContentValues()
-                    )
-                }
+            if (movie.tmdb_id <= 0) {
+                Timber.i(
+                    "Failed to look up movie (title = %s, imdb_id = %s)",
+                    movie.imdb_id,
+                    movie.title
+                )
+                skippedMovies.add(movie)
+                return // Skip, TMDB ID required
             }
         }
-        reader.endArray()
-        reader.close()
+        sgMovieHelper.insertMovie(movie.toSgMovieForImport())
+        importedMovies++
+    }
+
+    /**
+     * Sets last updated to avoid hitting TMDB again soon after importing.
+     */
+    private fun BaseMovie.enrichAndSetUpdated(toImport: Movie) {
+        title?.let { toImport.title = it }
+        release_date?.time?.let { toImport.released_utc_ms = it }
+        poster_path?.let { toImport.poster = it }
+        overview?.let { toImport.overview = it }
+
+        toImport.last_updated_ms = System.currentTimeMillis()
     }
 
     private fun addShowToDatabase(show: Show) {
         if ((show.tmdb_id == null || show.tmdb_id!! <= 0)
             && (show.tvdb_id == null || show.tvdb_id!! <= 0)) {
             // valid id required
+            skippedShows.add(show)
             return
         }
 
@@ -423,6 +577,8 @@ class JsonImportTask(
 
         // Parse and insert seasons and episodes.
         insertSeasonsAndEpisodes(show, showId)
+
+        importedShows++
     }
 
     private fun insertSeasonsAndEpisodes(show: Show, showId: Long) {
@@ -472,59 +628,45 @@ class JsonImportTask(
         }
         if (list.list_id.isNullOrEmpty()) {
             // rebuild from name
-            list.list_id = SeriesGuideContract.Lists.generateListId(list.name)
+            list.list_id = ListsTools.generateListId(list.name)
+                ?: return
         }
 
         // Insert the list
-        context.contentResolver.insert(
-            SeriesGuideContract.Lists.CONTENT_URI,
-            list.toContentValues()
-        )
+        val sgList = list.toSgListForImport()
+        sgListHelper.insertList(sgList)
 
         if (list.items == null || list.items.isEmpty()) {
             return
         }
 
-        // Insert the lists items
-        val items = ArrayList<ContentValues>()
+        // Insert the list items
+        val items = ArrayList<SgListItem>()
         for (item in list.items) {
-            // Note: DO import legacy types (seasons and episodes),
-            // as e.g. older backups can still contain legacy show data to allow displaying them.
-            val type: Int = if (ListItemTypesExport.SHOW == item.type) {
-                ListItemTypes.TVDB_SHOW
-            } else if (ListItemTypesExport.TMDB_SHOW == item.type) {
-                ListItemTypes.TMDB_SHOW
-            } else if (ListItemTypesExport.SEASON == item.type) {
-                ListItemTypes.SEASON
-            } else if (ListItemTypesExport.EPISODE == item.type) {
-                ListItemTypes.EPISODE
+
+            // Special type for movies: map to TMDB ID if movie with that IMDB ID is in the database
+            if (ListItemTypesExport.IMDB_MOVIE == item.type) {
+                val tmdbIdOrNull = sgMovieHelper.getTmdbIdByImdbId(item.externalId)
+                if (tmdbIdOrNull == null) {
+                    Timber.i("Skipping imdb-movie list item: no movie in database with IMDB ID ${item.externalId}")
+                    skippedListItems.add(item)
+                    continue
+                }
+                item.externalId = tmdbIdOrNull.toString()
+                item.type = ListItemTypesExport.MOVIE
+            }
+
+            val listItemForImport = item.toSgListItemForImport(sgList.listId)
+            if (listItemForImport != null) {
+                items.add(listItemForImport)
             } else {
-                // Unknown item type, skip
-                continue
+                Timber.i("Skipping list item (type = ${item.type}, externalId = ${item.externalId})")
+                skippedListItems.add(item)
             }
-
-            var externalId: String? = null
-            if (item.externalId != null && item.externalId.isNotEmpty()) {
-                externalId = item.externalId
-            } else if (item.tvdb_id > 0) {
-                externalId = item.tvdb_id.toString()
-            }
-            if (externalId == null) continue  // No external ID, skip
-
-            // Generate list item ID from values, do not trust given item ID
-            // (e.g. encoded list ID might not match)
-            item.list_item_id = ListItems.generateListItemId(externalId, type, list.list_id)
-
-            val itemValues = ContentValues()
-            itemValues.put(ListItems.LIST_ITEM_ID, item.list_item_id)
-            itemValues.put(SeriesGuideContract.Lists.LIST_ID, list.list_id)
-            itemValues.put(ListItems.ITEM_REF_ID, externalId)
-            itemValues.put(ListItems.TYPE, type)
-
-            items.add(itemValues)
         }
 
-        context.contentResolver.bulkInsert(ListItems.CONTENT_URI, items.toTypedArray())
+        sgListHelper.insertListItems(items)
+        importedListItems += items.size
     }
 
     companion object {
@@ -532,5 +674,7 @@ class JsonImportTask(
         private const val ERROR = -1
         private const val ERROR_LARGE_DB_OP = -2
         private const val ERROR_FILE_ACCESS = -3
+
+        private const val SUMMARY_ITEM_LIMIT = 50
     }
 }

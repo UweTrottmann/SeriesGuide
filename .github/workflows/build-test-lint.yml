@@ -1,29 +1,25 @@
 name: Build Test Lint
 
-# Avoid running this on the gh-pages branch
 on:
-  push:
-    branches-ignore:
-      - "gh-pages"
   pull_request:
-    branches-ignore:
-      - "gh-pages"
+    branches:
+      - 'dev'
+      - 'main'
+      - 'releases/**'
   workflow_dispatch: # Allow running manually from web UI
 
 jobs:
   build:
     name: Build and Test
     runs-on: ubuntu-latest
-    # Only run on pushes or if pull request from fork
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
     permissions:
       checks: write # to publish unit test results
 
     steps:
       - name: Check out
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up JDK 21
-        uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
         with:
           java-version: '21'
           distribution: 'temurin'
@@ -38,7 +34,7 @@ jobs:
         run: ./gradlew :app:testPureDebugUnitTest
 
       - name: Test Report
-        uses: dorny/test-reporter@6e6a65b7a0bd2c9197df7d0ae36ac5cee784230c # v2.0.0
+        uses: dorny/test-reporter@a43b3a5f7366b97d083190328d2c652e1a8b6aa2 # v3.0.0
         if: always() # also run if tests failed
         with:
           name: JUnit Report
@@ -48,14 +44,12 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
-    # Only run on pushes or if pull request from fork
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
 
     steps:
       - name: Check out
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up JDK 21
-        uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
         with:
           java-version: '21'
           distribution: 'temurin'
@@ -69,11 +63,10 @@ jobs:
         run: ./gradlew :app:lintPureRelease
 
       - name: Lint amzn release
-        if: ${{ contains(github.ref, 'release') }}
         run: ./gradlew :app:lintAmazonRelease
 
       - name: Upload lint reports
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: ${{ always() }} # also upload of lint errors
         with:
           name: Lint reports

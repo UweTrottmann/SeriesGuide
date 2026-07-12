@@ -259,10 +259,12 @@
     <string name="ack_list_item_manage">Списъкът е обновен</string>
     <string name="list_item_remove">Премахване от списъка</string>
     <string name="ack_list_item_removed">Премахнато от списъка</string>
-    <string name="list_empty">Добавете сериали в този списък</string>
+    <string name="list_empty">You can add shows or movies to this list</string>
     <string name="action_lists_reorder">Пренареждане на списъците</string>
     <string name="ack_lists_reordered">Списъците са подредени</string>
     <string name="error_name_already_exists">Списък с това име вече съществува</string>
+    <string name="action_lists_sort_latest_release_date">Latest release date</string>
+    <string name="action_lists_sort_oldest_release_date">Oldest release date</string>
     <!-- Movies -->
     <string name="title_digital_releases">Дихитални издания</string>
     <string name="title_disc_releases">Излезли на диск</string>
@@ -315,7 +317,7 @@
     <string name="feature_sync">Синхронизирай</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud ти помага да създадеш копие на твоите сериали, списъци и филми и да ги синхронизираш</string>
-    <string name="hexagon_warning_trakt">Докато си вписан с SeriesGuide Cloud някои от функциите на trakt не са достъпни</string>
+    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud, some Trakt features are disabled and changes are only sent to your Trakt account, not retrieved.</string>
     <string name="hexagon_signin">Вписване</string>
     <string name="hexagon_signout">Отписване</string>
     <string name="hexagon_setup_incomplete">Настройването на SeriesGuide облака не беше завършено.</string>

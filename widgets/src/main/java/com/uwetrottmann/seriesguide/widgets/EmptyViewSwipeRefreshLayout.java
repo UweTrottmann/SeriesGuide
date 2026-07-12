@@ -1,5 +1,5 @@
-// Copyright 2014-2019 Uwe Trottmann
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2014 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.uwetrottmann.seriesguide.widgets;
 

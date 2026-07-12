@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: Apache-2.0
-// Copyright 2013-2025 Uwe Trottmann
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2013 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.dataliberation
 
@@ -17,9 +17,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.databinding.FragmentAutoBackupBinding
 import com.battlelancer.seriesguide.dataliberation.DataLiberationFragment.LiberationResultEvent
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Export
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
@@ -57,23 +57,23 @@ class AutoBackupFragment : Fragment() {
         // setup listeners
         binding.switchAutoBackup.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                BackupSettings.setAutoBackupEnabled(context)
+                BackupSettings.setAutoBackupEnabled(requireContext())
                 setContainerSettingsVisible(true)
             } else {
-                BackupSettings.setAutoBackupDisabled(context)
+                BackupSettings.setAutoBackupDisabled(requireContext())
                 setContainerSettingsVisible(false)
             }
         }
 
         binding.buttonAutoBackupNow.setOnClickListener {
             if (TaskManager.tryBackupTask(requireContext())) {
-                setProgressLock(true)
+                viewModel.setInProgress(true)
             }
         }
-        binding.buttonAutoBackupImport.setOnClickListener { runAutoBackupImport() }
+        binding.buttonAutoBackupImport.setOnClickListener { viewModel.runImportTask() }
 
         binding.checkBoxAutoBackupCreateCopy.isChecked =
-            BackupSettings.isCreateCopyOfAutoBackup(context)
+            BackupSettings.isCreateCopyOfAutoBackup(requireContext())
         binding.checkBoxAutoBackupCreateCopy
             .setOnCheckedChangeListener { buttonView: CompoundButton, isChecked: Boolean ->
                 BackupSettings.setCreateCopyOfAutoBackup(buttonView.context, isChecked)
@@ -114,12 +114,13 @@ class AutoBackupFragment : Fragment() {
 
         binding.groupState.visibility = View.GONE
         viewModel.updateCopiesFileNames()
-        setProgressLock(false) // Also disables import button if backup availability unknown.
 
-        // restore UI state
-        if (viewModel.isImportTaskNotCompleted) {
-            setProgressLock(true)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.isInProgress.collect {
+                setProgressLock(it)
+            }
         }
+
         viewModel.availableBackupLiveData
             .observe(viewLifecycleOwner, { availableBackupTimeString: String? ->
                 val lastBackupTimeString =
@@ -156,13 +157,23 @@ class AutoBackupFragment : Fragment() {
                     }
                 }
             })
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.importSummaryState.collect { state ->
+                state.applyTo(
+                    viewModel,
+                    binding.textViewAutoBackupImportSummary,
+                    binding.scrollViewAutoBackup
+                )
+            }
+        }
     }
 
     override fun onStart() {
         super.onStart()
 
         // update enabled state
-        val autoBackupEnabled = BackupSettings.isAutoBackupEnabled(context)
+        val autoBackupEnabled = BackupSettings.isAutoBackupEnabled(requireContext())
         setContainerSettingsVisible(autoBackupEnabled)
         binding?.switchAutoBackup?.isChecked = autoBackupEnabled
 
@@ -182,6 +193,7 @@ class AutoBackupFragment : Fragment() {
         binding = null
     }
 
+    // This is currently only posted by the export task
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(event: LiberationResultEvent) {
         event.handle(view)
@@ -192,35 +204,28 @@ class AutoBackupFragment : Fragment() {
         viewModel.updateAvailableBackupData()
         // Note: backup may remove a copy file URI
         viewModel.updateCopiesFileNames()
-        setProgressLock(false)
-    }
-
-    private fun runAutoBackupImport() {
-        setProgressLock(true)
-
-        val importTask = JsonImportTask(requireContext())
-        viewModel.importTask = SgApp.coroutineScope.launch { importTask.run() }
+        viewModel.setInProgress(false)
     }
 
     private val createShowExportFileResult =
         registerForActivityResult(DataLiberationTools.CreateExportFileContract()) { uri ->
-            storeBackupFile(JsonExportTask.EXPORT_SHOWS, uri)
+            storeBackupFile(Export.Shows, uri)
         }
 
     private val createListsExportFileResult =
         registerForActivityResult(DataLiberationTools.CreateExportFileContract()) { uri ->
-            storeBackupFile(JsonExportTask.EXPORT_LISTS, uri)
+            storeBackupFile(Export.Lists, uri)
         }
 
     private val createMovieExportFileResult =
         registerForActivityResult(DataLiberationTools.CreateExportFileContract()) { uri ->
-            storeBackupFile(JsonExportTask.EXPORT_MOVIES, uri)
+            storeBackupFile(Export.Movies, uri)
         }
 
-    private fun storeBackupFile(type: Int, uri: Uri?) {
+    private fun storeBackupFile(export: Export, uri: Uri?) {
         if (uri == null) return
         DataLiberationTools.tryToPersistUri(requireContext(), uri)
-        BackupSettings.storeExportFileUri(requireContext(), type, uri, true)
+        BackupSettings.storeExportFileUri(requireContext(), export, uri, isAutoBackup = true)
         viewModel.updateCopiesFileNames()
     }
 
@@ -234,6 +239,10 @@ class AutoBackupFragment : Fragment() {
         binding.buttonAutoBackupImport.isEnabled = isBackupAvailableForImport
     }
 
+    /**
+     * Also disables import button if backup availability unknown, so make sure to also call after
+     * view setup.
+     */
     private fun setProgressLock(isLocked: Boolean) {
         val binding = binding ?: return
         binding.buttonAutoBackupNow.isEnabled = !isLocked

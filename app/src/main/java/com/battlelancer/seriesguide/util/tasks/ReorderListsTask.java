@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright 2016-2019, 2021, 2023 Uwe Trottmann
 
 package com.battlelancer.seriesguide.util.tasks;
@@ -42,7 +42,7 @@ public class ReorderListsTask extends BaseActionTask {
     }
 
     @Override
-    protected Integer doBackgroundAction(Void... params) {
+    protected int doBackgroundAction(Void... params) {
         if (isSendingToHexagon()) {
             HexagonTools hexagonTools = SgApp.getServicesComponent(getContext()).hexagonTools();
             Lists listsService = hexagonTools.getListsService();

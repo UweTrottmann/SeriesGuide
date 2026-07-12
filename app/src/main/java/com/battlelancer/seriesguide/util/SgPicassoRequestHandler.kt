@@ -1,6 +1,9 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2013 Square, Inc.
 // SPDX-FileCopyrightText: Copyright © 2017 Uwe Trottmann <uwe@uwetrottmann.com>
+
+// Original file by Square, Inc. licensed under Apache-2.0 copied from Picasso
+// https://github.com/square/picasso
 
 package com.battlelancer.seriesguide.util
 
@@ -8,6 +11,7 @@ import android.content.Context
 import android.net.Uri
 import androidx.core.net.toUri
 import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.movies.tools.MoviePosterDownloader
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.squareup.picasso.Downloader
@@ -64,8 +68,8 @@ class SgPicassoRequestHandler(
 
             val posterPath: String? = try {
                 runBlocking {
-                    SgApp.getServicesComponent(context).movieTools()
-                        .getMoviePosterPath(movieTmdbId)
+                    val tmdbMovies = SgApp.getServicesComponent(context).moviesService()
+                    MoviePosterDownloader(context, tmdbMovies).getMoviePosterPath(movieTmdbId)
                 }
             } catch (e: InterruptedException) {
                 null // Do nothing

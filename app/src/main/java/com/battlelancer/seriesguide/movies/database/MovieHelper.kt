@@ -1,19 +1,30 @@
-// SPDX-License-Identifier: Apache-2.0
-// Copyright 2020-2024 Uwe Trottmann
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2020 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.movies.database
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.RawQuery
+import androidx.room.Transaction
 import androidx.sqlite.db.SupportSQLiteQuery
+import com.battlelancer.seriesguide.movies.details.MovieDetails
+import com.battlelancer.seriesguide.util.TextTools
 
 /**
  * Data Access Object for the movies table.
  */
 @Dao
 interface MovieHelper {
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertMovie(movie: SgMovie)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertMovies(movie: List<SgMovie>)
 
     @Query("SELECT * FROM movies WHERE movies_tmdbid=:tmdbId")
     fun getMovie(tmdbId: Int): SgMovie?
@@ -48,6 +59,18 @@ interface MovieHelper {
             FROM movies WHERE movies_incollection=1 OR movies_inwatchlist=1 OR movies_watched=1"""
     )
     fun getMoviesOnListsOrWatched(): List<SgMovieFlags>
+
+    // Note: use "SELECT 1" to just return 1 if there is a matching row as EXISTS only checks if a
+    // row is returned, not what row is returned.
+    @Query(
+        "SELECT movies_tmdbid FROM movies " +
+                "WHERE movies_incollection=0 AND movies_inwatchlist=0 AND movies_watched=0 " +
+                "AND NOT EXISTS (SELECT 1 FROM listitems WHERE listitems.item_ref_id = movies.movies_tmdbid)"
+    )
+    fun getTmdbIdsOfMoviesNotOnAnyList(): List<Int>
+
+    @Query("SELECT movies_tmdbid FROM movies WHERE movies_imdbid=:imdbId")
+    fun getTmdbIdByImdbId(imdbId: String): Int?
 
     @Query("SELECT movies_tmdbid, movies_incollection, movies_inwatchlist, movies_watched, movies_plays FROM movies")
     fun getMovieFlags(): List<SgMovieFlags>
@@ -91,6 +114,16 @@ interface MovieHelper {
     @Query("DELETE FROM movies WHERE movies_tmdbid=:tmdbId")
     fun deleteMovie(tmdbId: Int): Int
 
+    @Transaction
+    fun deleteMovies(tmdbIds: List<Int>) {
+        for (tmdbId in tmdbIds) {
+            deleteMovie(tmdbId)
+        }
+    }
+
+    @Query("DELETE FROM movies")
+    fun deleteAllMovies()
+
     /**
      * For testing.
      */
@@ -102,3 +135,61 @@ data class MovieStats(
     val count: Int,
     val runtime: Long
 )
+
+/**
+ * Extracts ratings from Trakt, all other properties from TMDB data.
+ *
+ * If either Trakt or TMDB movie data is null, will still extract the properties of the other.
+ *
+ * Does not set collection, watchlist or watched flags or plays value.
+ *
+ * See [toSgMovieForInsert] for that.
+ */
+fun MovieDetails.toSgMovieForUpdate(tmdbId: Int): SgMovie {
+    val sgMovie = SgMovie(tmdbId = tmdbId)
+        .let {
+            val traktRatings = traktRatings()
+            if (traktRatings != null) {
+                it.copy(
+                    ratingTrakt = traktRatings.rating?.toInt() ?: 0,
+                    ratingVotesTrakt = traktRatings.votes ?: 0
+                )
+            } else {
+                it
+            }
+        }.let {
+            val tmdbMovie = tmdbMovie()
+            if (tmdbMovie != null) {
+                it.copy(
+                    imdbId = tmdbMovie.imdb_id,
+                    title = tmdbMovie.title,
+                    titleNoArticle = TextTools.trimLeadingArticle(tmdbMovie.title),
+                    overview = tmdbMovie.overview,
+                    poster = tmdbMovie.poster_path,
+                    runtimeMin = tmdbMovie.runtime ?: 0,
+                    ratingTmdb = tmdbMovie.vote_average ?: 0.0,
+                    ratingVotesTmdb = tmdbMovie.vote_count ?: 0,
+                    releasedMs = tmdbMovie.release_date?.time ?: SgMovie.RELEASED_MS_UNKNOWN
+                )
+            } else {
+                it
+            }
+        }
+
+    return sgMovie
+}
+
+/**
+ * Like [toSgMovieForUpdate] and adds values for collection, watchlist, watched status and plays
+ * and sets [SgMovie.lastUpdated] to the current time.
+ */
+fun MovieDetails.toSgMovieForInsert(tmdbId: Int): SgMovie {
+    return toSgMovieForUpdate(tmdbId)
+        .copy(
+            inCollection = isInCollection,
+            inWatchlist = isInWatchlist,
+            plays = plays,
+            watched = isWatched,
+            lastUpdated = System.currentTimeMillis()
+        )
+}

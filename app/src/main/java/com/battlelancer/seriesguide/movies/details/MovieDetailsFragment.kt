@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2013 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.movies.details
@@ -36,6 +36,7 @@ import com.battlelancer.seriesguide.extensions.ActionsHelper
 import com.battlelancer.seriesguide.extensions.ExtensionManager
 import com.battlelancer.seriesguide.extensions.MovieActionsContract
 import com.battlelancer.seriesguide.getSgAppContainer
+import com.battlelancer.seriesguide.lists.ManageListsDialogFragment
 import com.battlelancer.seriesguide.movies.MovieLoader
 import com.battlelancer.seriesguide.movies.MovieLocalizationDialogFragment
 import com.battlelancer.seriesguide.movies.MoviesSettings
@@ -125,6 +126,18 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         // some action buttons
         binding.containerMovieButtons.apply {
             root.isGone = true
+            // Manage lists button
+            buttonMovieManageLists.setOnClickListener {
+                movieDetails?.tmdbMovie()
+                    ?.title
+                    ?.let {
+                        ManageListsDialogFragment.showForMovie(
+                            parentFragmentManager,
+                            tmdbId,
+                            it
+                        )
+                    }
+            }
             // trailer button
             buttonMovieTrailer.apply {
                 setOnClickListener {

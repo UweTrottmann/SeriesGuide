@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright 2024-2025 Uwe Trottmann
 
 @file:Suppress("DEPRECATION") // Ignore warning that AsyncTask should not be used for new code

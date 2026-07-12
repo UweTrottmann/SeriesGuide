@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright 2015-2019, 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows
@@ -48,7 +48,7 @@ class ShowMenuItemClickListener(
                 return true
             }
             R.id.menu_action_shows_manage_lists -> {
-                ManageListsDialogFragment.show(fragmentManager, showId)
+                ManageListsDialogFragment.showForShow(fragmentManager, showId)
                 return true
             }
             R.id.menu_action_shows_update -> {

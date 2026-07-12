@@ -8,11 +8,71 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
 
+## Version 2026.3
+
+### 2026.3.0 - 2026-07-10 🧪
+
+* 🔧 Import: support importing movies with only IMDB IDs.
+* 🔧 Import: support new "imdb-movie" list item type, maps to added movie using "externalId" as IMDB ID on import, otherwise skips.
+* 🔧 Import: display a simple summary of imported and skipped items.
+* 🔧 Import: restore original data on failure.
+* 🔨 Export: resolve "Illegal seek" error for the DAVx5 WebDAV-backed storage provider and likely others. Thanks @mvanhorn for the tip!
+
+## Version 2026.2
+
+* 🌟 Lists: movies can be added to lists, currently only from the details view.
+* 🔧 Lists: sort options are displayed in their own dialog.
+* 🔧 Shows: move manage lists button from more options menu to inside the overview and details tabs.
+
+### 2026.2.2 - 2026-07-04
+
+* 🔨 Potential fix to avoid a crash on Xiaomi and Honor devices when loading extensions due to aggressive system optimizations.
+* 📝 Import latest user interface translations.
+
+### 2026.2.1 - 2026-06-26 🧪
+
+* 🔧 Shows: move manage lists button from more options menu to inside the overview and details tabs.
+* 🔨 Trakt: downloading ratings also works if API returns rating 0.
+* 🔨 Shows: when adding a show fails, roll back any database changes.
+* 📝 Import latest user interface translations.
+
+### 2026.2.0 - 2026-06-18 🧪
+
+* 🌟 Lists: movies can be added to lists, currently only from the details view.
+* 🔧 Lists: sort options are displayed in their own dialog.
+* 🔨 Import: a failure no longer blocks trying again, adding shows or creating an auto backup.
+* 🔨 Export: for list items, no longer include always 0 tvdb_id value. 
+* 🔨 Import: skip movies without a TMDB ID.
+
 ## Version 2026.1
 
-* 📝 Trakt: support upcoming server changes when fetching collections.
+* 📝 Trakt: support server changes to correctly fetch all collection and watchlist items.
 
-### 2026.1.1 - 2026-02-12
+### 2026.1.6 - 2026-07-04
+
+* 🔨 Potential fix to avoid a crash on Xiaomi and Honor devices when loading extensions due to aggressive system optimizations.
+
+### 2026.1.5 - 2026-05-21
+
+* 🔨 Trakt: address unexpected server changes to correctly fetch watched special episodes.
+
+### 2026.1.4 - 2026-05-08
+
+* 🔧 Trakt: prepare for server changes to correctly fetch all watched items.
+* 🔧 Trakt: improve log messages when a Trakt job fails.
+* 📝 Import latest user interface translations.
+
+### 2026.1.3 - 2026-03-05
+
+* 🔨 Trakt: support server changes to correctly fetch all watchlist items.
+
+### 2026.1.2 - 2026-02-27
+
+* 🔧 Export: in the created JSON file, write each show, list or movie on a separate line to make,
+  especially large files, easier to open and edit.
+* 📝 Import latest user interface translations.
+
+### 2026.1.1 - 2026-02-12 🧪
 
 * 📝 Trakt: support upcoming server changes when fetching collections. Add notes on how to add shows,
   that library is called collection and if Cloud is connected at the same time.

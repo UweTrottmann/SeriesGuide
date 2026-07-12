@@ -266,10 +266,12 @@
     <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">Ukloni s popisa</string>
     <string name="ack_list_item_removed">Removed from list</string>
-    <string name="list_empty">You can add shows to this list</string>
+    <string name="list_empty">You can add shows or movies to this list</string>
     <string name="action_lists_reorder">Promijeni redoslijed popisa</string>
     <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">Popis sa ovim nazivom već postoji</string>
+    <string name="action_lists_sort_latest_release_date">Latest release date</string>
+    <string name="action_lists_sort_oldest_release_date">Oldest release date</string>
     <!-- Movies -->
     <string name="title_digital_releases">Digitalna izdanja</string>
     <string name="title_disc_releases">Disk izdanja</string>
@@ -325,7 +327,7 @@
     <string name="feature_sync">Sinkronizacija</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Oblak vam pomaže sigurnosno kopirati i sinkronizirati vaše serije, popise i filmove.</string>
-    <string name="hexagon_warning_trakt">Dok ste prijavljeni na SeriesGuide Oblak neke trakt značajke nisu dostupne.</string>
+    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud, some Trakt features are disabled and changes are only sent to your Trakt account, not retrieved.</string>
     <string name="hexagon_signin">Prijava</string>
     <string name="hexagon_signout">Odjava</string>
     <string name="hexagon_setup_incomplete">Postavljanje SeriesGuide oblaka nije dovršena.</string>

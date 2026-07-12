@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: Apache-2.0
-// Copyright 2024 Uwe Trottmann
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2024 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.shows.search.discover
 
@@ -74,7 +74,7 @@ class ItemAddShowViewHolder(
         }
 
         // poster
-        ImageTools.loadShowPosterUrlResizeCrop(context, binding.imageViewAddPoster, item.posterUrl)
+        ImageTools.loadAndResizeCropToShowPosterSize(context, binding.imageViewAddPoster, item.posterUrl)
 
         // context/long press listener and more options button
         val canBeAdded = item.state == SearchResult.STATE_ADD

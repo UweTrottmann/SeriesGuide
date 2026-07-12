@@ -273,10 +273,12 @@
     <string name="ack_list_item_manage">Lista zaktualizowana</string>
     <string name="list_item_remove">Usuń z listy</string>
     <string name="ack_list_item_removed">Usunięto z listy</string>
-    <string name="list_empty">Możesz dodać seriale do tej listy</string>
+    <string name="list_empty">Możesz dodawać seriale lub filmy do tej listy</string>
     <string name="action_lists_reorder">Zmień kolejność list</string>
     <string name="ack_lists_reordered">Lista przeorganizowana</string>
     <string name="error_name_already_exists">Lista o tej nazwie już istnieje</string>
+    <string name="action_lists_sort_latest_release_date">Data ostatniego wydania</string>
+    <string name="action_lists_sort_oldest_release_date">Data najstarszego wydania</string>
     <!-- Movies -->
     <string name="title_digital_releases">Wydania cyfrowe</string>
     <string name="title_disc_releases">Na płytach</string>
@@ -298,7 +300,7 @@
     <string name="action_movies_sort_release">Data premiery</string>
     <string name="title_similar_movies">Podobne filmy</string>
     <string name="title_release_dates">Daty premier</string>
-    <string name="error_movie_not_found">Film został usunięty z TMDB. Usuń go z list oraz ustaw jako nieobejrzany. Używasz Trakt? Na ish stronie wyszukaj ID z bazy TMDB i usuń go z historii oraz list.</string>
+    <string name="error_movie_not_found">Film został usunięty z TMDB. Usuń go z list oraz ustaw jako nieobejrzany. Używasz Trakt? Na ich stronie wyszukaj ID z bazy TMDB i usuń go z historii oraz list.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Nie można obliczyć statystyk.</string>
     <string name="shows_finished">Zakończono oglądanie %s</string>
@@ -335,7 +337,7 @@
     <string name="feature_sync">Synchronizacja</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud pomaga w synchronizacji i tworzeniu kopii bezpieczeństwa seriali, list i filmów.</string>
-    <string name="hexagon_warning_trakt">W przypadku zalogowania do chmury SeriesGuide Cloud niektóre funkcje trakt są niedostępne.</string>
+    <string name="hexagon_warning_trakt">Po zalogowaniu do SeriesGuide Cloud niektóre funkcje Trakt są wyłączone, zmiany są jedynie wysyłane na konto Trakt, a nie odbierane.</string>
     <string name="hexagon_signin">Zaloguj się</string>
     <string name="hexagon_signout">Wyloguj</string>
     <string name="hexagon_setup_incomplete">Konfiguracja chmury SeriesGuide nie została zakończona.</string>

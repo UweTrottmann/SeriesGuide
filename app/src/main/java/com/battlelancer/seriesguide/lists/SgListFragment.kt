@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: Apache-2.0
-// Copyright 2012-2024 Uwe Trottmann
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2012 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.lists
 
@@ -14,11 +14,14 @@ import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.databinding.FragmentListBinding
 import com.battlelancer.seriesguide.lists.ListsDistillationSettings.ListsSortOrderChangedEvent
-import com.battlelancer.seriesguide.lists.database.SgListItemWithDetails
+import com.battlelancer.seriesguide.movies.details.MovieDetailsActivity
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.shows.tools.ShowSync
@@ -27,9 +30,12 @@ import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.startActivityWithAnimation
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import timber.log.Timber
 
 /**
  * Displays one user created list of shows.
@@ -80,11 +86,17 @@ class SgListFragment : Fragment() {
                 }
             }
 
-        model.sgListItemLiveData.observe(viewLifecycleOwner) {
-            val bindingOnDemand = this.binding ?: return@observe
-            bindingOnDemand.recyclerViewListItems.isGone = it.isEmpty()
-            bindingOnDemand.emptyViewList.isGone = it.isNotEmpty()
-            adapter.submitList(it)
+        viewLifecycleOwner.lifecycleScope.launch {
+            // This is a page in a RecyclerView-based ViewPager2, so use STARTED to work with the
+            // pager prefetching next/previous pages.
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                model.items.collectLatest {
+                    val bindingOnDemand = this@SgListFragment.binding ?: return@collectLatest
+                    bindingOnDemand.recyclerViewListItems.isGone = it.isEmpty()
+                    bindingOnDemand.emptyViewList.isGone = it.isNotEmpty()
+                    adapter.submitList(it)
+                }
+            }
         }
     }
 
@@ -111,39 +123,51 @@ class SgListFragment : Fragment() {
 
     private val itemClickListener: SgListItemViewHolder.ItemClickListener =
         object : SgListItemViewHolder.ItemClickListener {
-            override fun onItemClick(anchor: View, item: SgListItemWithDetails) {
-                requireActivity().startActivityWithAnimation(
-                    OverviewActivity.intentShow(requireActivity(), item.showId),
-                    anchor
-                )
+            override fun onItemClick(anchor: View, item: UiListItem) {
+                val intent = if (item.movieTmdbId != null) {
+                    MovieDetailsActivity.intentMovie(requireContext(), item.movieTmdbId)
+                } else if (item.showId != null) {
+                    OverviewActivity.intentShow(requireActivity(), item.showId)
+                } else {
+                    Timber.e("Item click not supported for type %s", item.type)
+                    return
+                }
+                requireActivity().startActivityWithAnimation(intent, anchor)
             }
 
-            override fun onMoreOptionsClick(anchor: View, item: SgListItemWithDetails) {
+            override fun onMoreOptionsClick(anchor: View, item: UiListItem) {
                 val popupMenu = PopupMenu(anchor.context, anchor)
                 popupMenu.inflate(R.menu.lists_popup_menu)
-                val menu = popupMenu.menu
-                // Hide some options that only make sense for shows (for legacy non-show items)
-                val isShow =
-                    item.type == ListItemTypes.TMDB_SHOW || item.type == ListItemTypes.TVDB_SHOW
-                menu.findItem(R.id.menu_action_lists_watched_next).isVisible = isShow
-                menu.findItem(R.id.menu_action_lists_favorites_add).isVisible =
-                    isShow && !item.favorite
-                menu.findItem(R.id.menu_action_lists_favorites_remove).isVisible =
-                    isShow && item.favorite
+                // If not a show item (movies and legacy season and episode items),
+                // remove not applicable options.
+                val isShow = item.isShow
+                if (!isShow) {
+                    popupMenu.menu.removeItem(R.id.menu_action_lists_watched_next)
+                    popupMenu.menu.removeItem(R.id.menu_action_lists_update)
+                }
+                if (!isShow || item.isFavorite) {
+                    popupMenu.menu.removeItem(R.id.menu_action_lists_favorites_add)
+                }
+                if (!isShow || !item.isFavorite) {
+                    popupMenu.menu.removeItem(R.id.menu_action_lists_favorites_remove)
+                }
+                // Hide manage lists option for legacy show, season and episode items
+                // (only allow removing those).
+                if (item.type != ListItemTypes.TMDB_MOVIE && item.type != ListItemTypes.TMDB_SHOW) {
+                    popupMenu.menu.removeItem(R.id.menu_action_lists_manage)
+                }
                 popupMenu.setOnMenuItemClickListener(
                     PopupMenuItemClickListener(
                         requireContext(), parentFragmentManager,
-                        item.listItemId, item.showId, item.nextEpisodeId
+                        item.listItemId,
+                        item.titleText,
+                        item.movieTmdbId, item.showId, item.nextEpisodeId
                     )
                 )
-                // Hide manage lists option for legacy show items, only allow removal.
-                if (item.type != ListItemTypes.TMDB_SHOW) {
-                    popupMenu.menu.removeItem(R.id.menu_action_lists_manage)
-                }
                 popupMenu.show()
             }
 
-            override fun onSetWatchedClick(item: SgListItemWithDetails) {
+            override fun onSetWatchedClick(item: UiListItem) {
                 EpisodeTools.episodeWatchedIfNotZero(requireContext(), item.nextEpisodeId)
             }
         }
@@ -152,8 +176,10 @@ class SgListFragment : Fragment() {
         private val context: Context,
         private val fragmentManager: FragmentManager,
         private val itemId: String,
-        private val showId: Long,
-        private val nextEpisodeId: Long
+        private val itemTitle: String,
+        private val movieTmdbId: Int?,
+        private val showId: Long?,
+        private val nextEpisodeId: Long?
     ) : PopupMenu.OnMenuItemClickListener {
 
         private val showTools = SgApp.getServicesComponent(context).showTools()
@@ -161,27 +187,35 @@ class SgListFragment : Fragment() {
         override fun onMenuItemClick(item: MenuItem): Boolean {
             when (item.itemId) {
                 R.id.menu_action_lists_watched_next -> {
-                    EpisodeTools.episodeWatchedIfNotZero(context, nextEpisodeId)
+                    nextEpisodeId?.let { EpisodeTools.episodeWatchedIfNotZero(context, it) }
                     return true
                 }
 
                 R.id.menu_action_lists_favorites_add -> {
-                    showTools.storeIsFavorite(showId, true)
+                    showId?.let { showTools.storeIsFavorite(it, true) }
                     return true
                 }
 
                 R.id.menu_action_lists_favorites_remove -> {
-                    showTools.storeIsFavorite(showId, false)
+                    showId?.let { showTools.storeIsFavorite(it, false) }
                     return true
                 }
 
                 R.id.menu_action_lists_manage -> {
-                    ManageListsDialogFragment.show(fragmentManager, showId)
+                    if (movieTmdbId != null) {
+                        ManageListsDialogFragment.showForMovie(
+                            fragmentManager,
+                            movieTmdbId,
+                            itemTitle
+                        )
+                    } else if (showId != null) {
+                        ManageListsDialogFragment.showForShow(fragmentManager, showId)
+                    }
                     return true
                 }
 
                 R.id.menu_action_lists_update -> {
-                    ShowSync.triggerDeltaSync(context, showId)
+                    showId?.let { ShowSync.triggerDeltaSync(context, it) }
                     return true
                 }
 

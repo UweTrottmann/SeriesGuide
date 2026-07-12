@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 <!-- Copyright 2011-2024 Uwe Trottmann -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -78,13 +78,25 @@
                     android:layout_width="48dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@null"
+                    app:layout_constraintEnd_toStartOf="@id/buttonOverviewManageLists"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/ic_star_black_24dp"
+                    tools:tint="?attr/sgColorIcon" />
+
+                <ImageButton
+                    android:id="@+id/buttonOverviewManageLists"
+                    style="?attr/borderlessButtonStyle"
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
                     android:layout_marginEnd="8dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="@null"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@drawable/ic_star_black_24dp"
-                    tools:tint="?attr/sgColorIcon" />
+                    app:srcCompat="@drawable/ic_list_white_24dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -223,7 +235,7 @@
                                 android:padding="@dimen/large_padding"
                                 android:text="@string/no_spoilers"
                                 android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Dim"
-                                app:drawableTopCompat="@drawable/ic_visibility_off_black_24dp"
+                                app:drawableTopCompat="@drawable/ic_visibility_off_control_24dp"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintRight_toRightOf="parent"
