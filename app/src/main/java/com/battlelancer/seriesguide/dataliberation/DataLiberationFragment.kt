@@ -3,7 +3,6 @@
 
 package com.battlelancer.seriesguide.dataliberation
 
-import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,13 +13,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.databinding.FragmentDataLiberationBinding
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools.CreateExportFileContract
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools.SelectImportFileContract
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Export
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask.OnTaskProgressListener
-import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools.openUriOnClick
 import com.battlelancer.seriesguide.util.tryLaunch
@@ -34,7 +30,7 @@ import org.greenrobot.eventbus.ThreadMode
  * One button export or import of shows, lists and movies to or from a JSON file.
  * Uses Storage Access Framework so no permissions are required.
  */
-class DataLiberationFragment : Fragment(), OnTaskProgressListener {
+class DataLiberationFragment : Fragment() {
 
     private var binding: FragmentDataLiberationBinding? = null
     private val model: DataLiberationViewModel by viewModels()
@@ -109,9 +105,26 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
             model.updateImportFileNames()
         }
 
-        // restore UI state
-        if (model.isDataLibTaskNotCompleted) {
-            setProgressLock(true)
+        viewLifecycleOwner.lifecycleScope.launch {
+            model.importSummaryState.collect { state ->
+                state.applyTo(
+                    model,
+                    binding.textViewDataLibImportSummary,
+                    binding.scrollViewDataLiberation
+                )
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            model.isInProgress.collect {
+                setProgressLock(it)
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            model.exportProgressState.collect {
+                updateProgressBar(it.total, it.completed)
+            }
         }
     }
 
@@ -137,13 +150,14 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
         binding = null
     }
 
-    override fun onProgressUpdate(total: Int, completed: Int) {
+    private fun updateProgressBar(total: Int, completed: Int) {
         val binding = binding ?: return
         binding.progressBarDataLib.isIndeterminate = total == completed
         binding.progressBarDataLib.max = total
         binding.progressBarDataLib.progress = completed
     }
 
+    // This is currently only posted by the export task
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(event: LiberationResultEvent) {
         event.handle(view)
@@ -153,7 +167,7 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
         }
         // Note: export may remove an export file URI which may be used as a default import file
         model.updateImportFileNames()
-        setProgressLock(false)
+        model.setInProgress(false)
     }
 
     private fun setProgressLock(isLocked: Boolean) {
@@ -178,14 +192,11 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
 
     private fun doDataImport() {
         val binding = binding ?: return
-        setProgressLock(true)
-
-        val dataLibTask = JsonImportTask(
-            requireContext(),
-            binding.checkBoxDataLibShows.isChecked, binding.checkBoxDataLibLists.isChecked,
-            binding.checkBoxDataLibMovies.isChecked
+        model.runImportTask(
+            importShows = binding.checkBoxDataLibShows.isChecked,
+            importLists = binding.checkBoxDataLibLists.isChecked,
+            importMovies = binding.checkBoxDataLibMovies.isChecked
         )
-        model.dataLibJob = SgApp.coroutineScope.launch { dataLibTask.run() }
     }
 
     private fun doDataExport(export: Export, uri: Uri?) {
@@ -196,14 +207,8 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
         model.updateImportFileNames()
 
         val binding = binding ?: return
-        setProgressLock(true)
 
-        val exportTask = JsonExportTask(
-            requireContext(),
-            this@DataLiberationFragment,
-            binding.checkBoxDataLibFullDump.isChecked
-        )
-        model.dataLibJob = exportTask.launch(export)
+        model.runExportTask(export, binding.checkBoxDataLibFullDump.isChecked)
     }
 
     private val createShowExportFileResult =
@@ -265,12 +270,10 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
         }
 
         constructor(
-            context: Context,
             message: String?,
-            errorCause: String?,
             showIndefinite: Boolean
         ) {
-            this.message = TextTools.dotSeparate(context, message, errorCause)
+            this.message = message
             this.showIndefinite = showIndefinite
         }
 

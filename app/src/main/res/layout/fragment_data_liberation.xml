@@ -260,6 +260,18 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textViewDataLibImportCloudWarningDetails" />
 
+            <TextView
+                android:id="@+id/textViewDataLibImportSummary"
+                style="@style/TextAppearance.SeriesGuide.Body2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/buttonDataLibImport"
+                tools:text="Successful\n\nShows\n10\nx 3\n\nMovies\n10\nx 2" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>

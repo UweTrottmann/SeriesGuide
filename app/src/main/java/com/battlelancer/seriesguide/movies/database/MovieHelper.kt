@@ -69,6 +69,9 @@ interface MovieHelper {
     )
     fun getTmdbIdsOfMoviesNotOnAnyList(): List<Int>
 
+    @Query("SELECT movies_tmdbid FROM movies WHERE movies_imdbid=:imdbId")
+    fun getTmdbIdByImdbId(imdbId: String): Int?
+
     @Query("SELECT movies_tmdbid, movies_incollection, movies_inwatchlist, movies_watched, movies_plays FROM movies")
     fun getMovieFlags(): List<SgMovieFlags>
 
@@ -117,6 +120,9 @@ interface MovieHelper {
             deleteMovie(tmdbId)
         }
     }
+
+    @Query("DELETE FROM movies")
+    fun deleteAllMovies()
 
     /**
      * For testing.

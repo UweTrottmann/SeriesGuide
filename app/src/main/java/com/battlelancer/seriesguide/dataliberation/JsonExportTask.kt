@@ -140,7 +140,8 @@ open class JsonExportTask(
         EventBus.getDefault()
             .post(
                 LiberationResultEvent(
-                    context, message, errorCause, showIndefinite
+                    TextTools.dotSeparate(context, message, errorCause),
+                    showIndefinite
                 )
             )
     }
@@ -156,19 +157,13 @@ open class JsonExportTask(
                     BackupSettings.getExportFileUri(context, export, isAutoBackup = false)
                         ?: return ERROR_FILE_ACCESS
 
-                pfd = context.contentResolver.openFileDescriptor(exportFileUri, "w")
+                pfd = context.contentResolver.openFileDescriptor(exportFileUri, FILE_MODE)
                     ?: return ERROR_FILE_ACCESS
 
                 FileOutputStream(pfd.fileDescriptor)
             } else {
                 FileOutputStream(testExportFile)
             }
-
-            // Even though using streams and FileOutputStream does not append by
-            // default, using Storage Access Framework just overwrites existing
-            // bytes, potentially leaving old bytes hanging over:
-            // so truncate the file first to clear any existing bytes.
-            out.channel.truncate(0)
 
             when (export) {
                 Export.Shows -> writeJsonStreamShows(coroutineScope, out)
@@ -433,6 +428,20 @@ open class JsonExportTask(
         const val SUCCESS = 1
         private const val ERROR_FILE_ACCESS = 0
         private const val ERROR = -1
+
+        /**
+         * Use write + truncate ("wt") mode as some storage providers, like the Android local
+         * storage provider, may not truncate files when just using write mode.
+         *
+         * An alternative would be to open the file in read + write ("rw") or write ("w") mode
+         * and manually truncate it. But at least DAVx5 WebDAV-backed providers do not support
+         * opening in read + write ("rw") mode or truncating in write mode ("Illegal seek" error).
+         *
+         * Also, truncating requires accessing the streams FileChannel, which is a seekable channel,
+         * so does, according to API docs, require read + write mode. (Though at least the Android
+         * local storage provider supports truncating in write mode.)
+         */
+        const val FILE_MODE = "wt"
     }
 
     interface OnTaskProgressListener {
@@ -465,6 +474,12 @@ open class JsonExportTask(
         const val TMDB_SHOW = "tmdb-show"
         const val SEASON = "season"
         const val EPISODE = "episode"
+
+        /**
+         * Special type only supported when importing and movie with that IMDB ID is in the
+         * database already.
+         */
+        const val IMDB_MOVIE = "imdb-movie"
     }
 
 }

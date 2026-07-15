@@ -19,13 +19,13 @@ import com.battlelancer.seriesguide.dataliberation.model.List
 import com.battlelancer.seriesguide.dataliberation.model.ListItem
 import com.battlelancer.seriesguide.dataliberation.model.Season
 import com.battlelancer.seriesguide.dataliberation.model.Show
+import com.battlelancer.seriesguide.lists.ListsTools
 import com.battlelancer.seriesguide.lists.database.SgList
 import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.movies.database.toSgMovieForInsert
 import com.battlelancer.seriesguide.movies.details.MovieDetails
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.util.tasks.AddListTask
@@ -57,7 +57,7 @@ class DefaultValuesTest {
             tvdb_id = 123456
         }
         private const val TEST_LIST_NAME = "Test List"
-        private val TEST_LIST_ID = Lists.generateListId(TEST_LIST_NAME)
+        private val TEST_LIST_ID = ListsTools.generateListId(TEST_LIST_NAME)!!
         private val LIST = List().apply {
             name = TEST_LIST_NAME
             list_id = TEST_LIST_ID

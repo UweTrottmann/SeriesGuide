@@ -4,22 +4,21 @@
 package com.battlelancer.seriesguide.dataliberation
 
 import android.app.Application
+import android.content.Context
 import android.text.format.DateUtils
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools.getFileNameFromUriOrLastPathSegment
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Export
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 /**
  * View model that checks for available backup files.
  */
-class AutoBackupViewModel(application: Application) : AndroidViewModel(application) {
+class AutoBackupViewModel(application: Application) : BaseDataLiberationViewModel(application) {
 
     data class CopiesFiles(
         val fileNameShows: String?,
@@ -30,17 +29,6 @@ class AutoBackupViewModel(application: Application) : AndroidViewModel(applicati
     )
 
     val copiesFiles = MutableStateFlow(CopiesFiles("", "", "", "", visible = false))
-
-    /**
-     * Try to keep the import task around on config changes
-     * so it does not have to be finished.
-     */
-    var importTask: Job? = null
-    val isImportTaskNotCompleted: Boolean
-        get() {
-            val importTask = importTask
-            return importTask != null && !importTask.isCompleted
-        }
 
     /** Time string of the available backup, or null if no backup is available. */
     val availableBackupLiveData = MutableLiveData<String?>()
@@ -115,11 +103,9 @@ class AutoBackupViewModel(application: Application) : AndroidViewModel(applicati
         }
     }
 
-    override fun onCleared() {
-        if (isImportTaskNotCompleted) {
-            importTask?.cancel(null)
-        }
-        importTask = null
+    fun runImportTask() {
+        val context: Context = getApplication()
+        runImportTask { JsonImportTask(context) }
     }
 
 }

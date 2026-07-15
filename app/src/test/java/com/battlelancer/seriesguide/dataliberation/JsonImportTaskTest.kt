@@ -10,13 +10,18 @@ import com.battlelancer.seriesguide.lists.database.SgList
 import com.battlelancer.seriesguide.lists.database.SgListHelper
 import com.battlelancer.seriesguide.movies.database.MovieHelper
 import com.battlelancer.seriesguide.movies.database.SgMovie
+import com.battlelancer.seriesguide.provider.SeriesGuideContract
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper
 import com.battlelancer.seriesguide.shows.database.SgSeason2
 import com.battlelancer.seriesguide.shows.database.SgSeason2Helper
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.database.SgShow2Helper
+import com.battlelancer.seriesguide.tmdbapi.TmdbFindTools
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools4.TmdbNonNullResponse.Success
 import com.google.common.truth.Truth.assertThat
+import com.uwetrottmann.tmdb2.entities.BaseMovie
 import kotlinx.coroutines.test.runTest
 import org.intellij.lang.annotations.Language
 import org.junit.After
@@ -27,8 +32,11 @@ import org.mockito.Mockito
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
+import org.mockito.kotlin.eq
+import org.mockito.kotlin.whenever
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
+import java.io.File
 import java.nio.file.Files
 import kotlin.io.path.writeText
 
@@ -57,6 +65,17 @@ class JsonImportTaskTest {
      */
     private fun <T> anyNotNull(type: Class<T>): T = Mockito.any(type)
 
+    private fun createTempJsonFile(name: String, contents: String): File =
+        Files.createTempFile(name, null)
+            .also { it.writeText(contents) }
+            .toFile()
+
+    private suspend fun JsonImportTask.runAndAssertSuccess() {
+        val result = run()
+        assertThat(errorCause).isNull()
+        assertThat(result.isError).isFalse()
+    }
+
     @Test
     fun importShow_modelAsExpected() = runTest {
         val sgShow2Helper = mock(SgShow2Helper::class.java)
@@ -68,18 +87,22 @@ class JsonImportTaskTest {
             importShows = true,
             importLists = false,
             importMovies = false,
-            mock(SgRoomDatabase::class.java),
+            testDb,
             sgShow2Helper,
             sgSeason2Helper,
             sgEpisode2Helper,
             mock(SgListHelper::class.java),
-            mock(MovieHelper::class.java)
-        )
-
-        // Test data from export task test: single show, two seasons, each with two episodes.
-        val testBackupFile = Files.createTempFile("seriesguide-shows-json", null)
-        testBackupFile.writeText(JsonExportTaskTest.expectedJsonShows)
-        importTask.testBackupFile = testBackupFile.toFile()
+            mock(MovieHelper::class.java),
+            mock()
+        ).apply {
+            // Test data from export task test: single show, two seasons, each with two episodes.
+            setTestBackupFiles(
+                fileShows = createTempJsonFile(
+                    "seriesguide-shows-json",
+                    JsonExportTaskTest.expectedJsonShows
+                )
+            )
+        }
 
         // Return row ids like it would be an insert on an empty database, so start at 1.
         `when`(sgShow2Helper.insertShow(anyNotNull(SgShow2::class.java))).thenReturn(1)
@@ -89,9 +112,7 @@ class JsonImportTaskTest {
             return@then seasonRowId
         }
 
-        val result = importTask.run()
-        assertThat(importTask.errorCause).isNull()
-        assertThat(result).isEqualTo(JsonImportTask.SUCCESS)
+        importTask.runAndAssertSuccess()
 
         val expectedShow = JsonExportTaskTest.listOfTestShows[0].copy(
             id = 0, // insert
@@ -139,27 +160,27 @@ class JsonImportTaskTest {
     fun importList_modelAsExpected() = runTest {
         val sgListHelper = mock(SgListHelper::class.java)
 
-        val importTask = JsonImportTask(
+        JsonImportTask(
             context,
             importShows = false,
             importLists = true,
             importMovies = false,
-            mock(SgRoomDatabase::class.java),
+            testDb,
             mock(SgShow2Helper::class.java),
             mock(SgSeason2Helper::class.java),
             mock(SgEpisode2Helper::class.java),
             sgListHelper,
-            mock(MovieHelper::class.java)
-        )
-
-        // Test data from export task test: two lists, the first with one item of each type.
-        val testBackupFile = Files.createTempFile("seriesguide-lists-json", null)
-        testBackupFile.writeText(JsonExportTaskTest.expectedJsonLists)
-        importTask.testBackupFile = testBackupFile.toFile()
-
-        val result = importTask.run()
-        assertThat(importTask.errorCause).isNull()
-        assertThat(result).isEqualTo(JsonImportTask.SUCCESS)
+            mock(MovieHelper::class.java),
+            mock()
+        ).apply {
+            // Test data from export task test: two lists, the first with one item of each type.
+            setTestBackupFiles(
+                fileLists = createTempJsonFile(
+                    "seriesguide-lists-json",
+                    JsonExportTaskTest.expectedJsonLists
+                )
+            )
+        }.runAndAssertSuccess()
 
         // List 1 with items
         verify(sgListHelper).insertList(
@@ -174,27 +195,92 @@ class JsonImportTaskTest {
         )
     }
 
-    private suspend fun importMovies(json: String) {
-        val importTask = JsonImportTask(
+    @Language("json")
+    val jsonListMovieImdbId =
+        """
+            [
+            {"name":"Movie with IMDB ID","items":[{"externalId":"test-imdbid","type":"imdb-movie"}]}
+            ]
+            """.trimIndent()
+
+    @Test
+    fun importList_movieWithKnownImdbId_mappedToTmdbId() = runTest {
+        @Language("json")
+        val moviesJson =
+            """
+            [
+            {"tmdb_id":42,"imdb_id":"test-imdbid","title":"First Movie"}
+            ]
+            """.trimIndent()
+
+        JsonImportTask(
             context,
             importShows = false,
-            importLists = false,
+            importLists = true,
             importMovies = true
-        )
+        ).apply {
+            setTestBackupFiles(
+                fileMovies = createTempJsonFile(
+                    "seriesguide-movies-json",
+                    moviesJson
+                ),
+                fileLists = createTempJsonFile(
+                    "seriesguide-lists-json",
+                    jsonListMovieImdbId
+                )
+            )
+        }.runAndAssertSuccess()
 
-        @Suppress("BlockingMethodInNonBlockingContext")
-        val testBackupFile = Files.createTempFile("seriesguide-movies-json", null)
-        testBackupFile.writeText(json)
-        importTask.testBackupFile = testBackupFile.toFile()
+        // The movie should be inserted (first)
+        assertThat(testDb.movieHelper().getAllMovies()).hasSize(1)
 
-        val result = importTask.run()
-        assertThat(importTask.errorCause).isNull()
-        assertThat(result).isEqualTo(JsonImportTask.SUCCESS)
+        // The movie list item should be imported and use the TMDB ID of the movie
+        val lists = testDb.sgListHelper().getListsForExport()
+        assertThat(lists).hasSize(1)
+        val listItems = testDb.sgListHelper().getListItemsForExport(lists[0].listId)
+        assertThat(listItems).hasSize(1)
+        assertThat(listItems[0].itemRefId).isEqualTo("42")
+        assertThat(listItems[0].type).isEqualTo(ListItemTypes.TMDB_MOVIE)
+    }
+
+    @Test
+    fun importList_movieWithUnknownImdbId_skipped() = runTest {
+        JsonImportTask(
+            context,
+            importShows = false,
+            importLists = true,
+            importMovies = false
+        ).apply {
+            setTestBackupFiles(
+                fileLists = createTempJsonFile(
+                    "seriesguide-lists-json",
+                    jsonListMovieImdbId
+                )
+            )
+        }.runAndAssertSuccess()
+
+        // The list should be imported, but not the item
+        val lists = testDb.sgListHelper().getListsForExport()
+        assertThat(lists).hasSize(1)
+        val listItems = testDb.sgListHelper().getListItemsForExport(lists[0].listId)
+        assertThat(listItems).hasSize(0)
     }
 
     @Test
     fun importMovie_modelAsExpected() = runTest {
-        importMovies(JsonExportTaskTest.expectedJsonMovies)
+        JsonImportTask(
+            context,
+            importShows = false,
+            importLists = false,
+            importMovies = true
+        ).apply {
+            setTestBackupFiles(
+                fileMovies = createTempJsonFile(
+                    "seriesguide-movies-json",
+                    JsonExportTaskTest.expectedJsonMovies
+                )
+            )
+        }.runAndAssertSuccess()
 
         // Two movies, second one with only TMDB ID and title
         val insertedMovies = testDb.movieHelper().getAllMovies()
@@ -230,16 +316,68 @@ class JsonImportTaskTest {
     }
 
     @Test
-    fun importMovie_missingRequired_notImported() = runTest {
+    fun importMovie_imdbId_mappedToTmdbId() = runTest {
+        val testImdbId = "test-imdbid"
+
         @Language("json")
-        val jsonMovieMissingRequiredValues =
+        val jsonToImport =
             """
             [
-            {"imdb_id":"imdbidvalue","title":"First Movie"}
+            {"imdb_id":"test-imdbid","title":"First Movie"}
             ]
             """.trimIndent()
 
-        importMovies(jsonMovieMissingRequiredValues)
+        val tmdbTools: TmdbFindTools = mock()
+        val resolvedTmdbId = 42
+        whenever {
+            tmdbTools.findMovieByImdbId(eq(testImdbId))
+        }.thenReturn(Success(BaseMovie().apply { id = resolvedTmdbId }))
+
+        val movieHelper = testDb.movieHelper()
+
+        JsonImportTask(
+            context,
+            importShows = false,
+            importLists = false,
+            importMovies = true,
+            testDb,
+            mock(),
+            mock(),
+            mock(),
+            mock(),
+            movieHelper,
+            tmdbTools
+        ).apply {
+            setTestBackupFiles(
+                fileMovies = createTempJsonFile("seriesguide-movies-json", jsonToImport)
+            )
+        }.runAndAssertSuccess()
+
+        val importedMovies = movieHelper.getAllMovies()
+        assertThat(importedMovies).hasSize(1)
+        assertThat(importedMovies[0].tmdbId).isEqualTo(resolvedTmdbId)
+    }
+
+    @Test
+    fun importMovie_missingRequired_notImported() = runTest {
+        @Language("json")
+        val jsonToImport =
+            """
+            [
+            {"title":"First Movie"}
+            ]
+            """.trimIndent()
+
+        JsonImportTask(
+            context,
+            importShows = false,
+            importLists = false,
+            importMovies = true
+        ).apply {
+            setTestBackupFiles(
+                fileMovies = createTempJsonFile("seriesguide-movies-json", jsonToImport)
+            )
+        }.runAndAssertSuccess()
 
         // Nothing is imported
         assertThat(testDb.movieHelper().getAllMovies()).hasSize(0)
