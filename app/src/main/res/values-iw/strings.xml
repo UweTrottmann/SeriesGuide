@@ -81,7 +81,6 @@
     <plurals name="replies_plural">
         <item quantity="one">תגובה אחת</item>
         <item quantity="two">%d תגובות</item>
-        <item quantity="many">%d תגובות</item>
         <item quantity="other">%d תגובות</item>
     </plurals>
     <!-- Metadata -->
@@ -201,37 +200,31 @@
     <plurals name="other_episodes_plural">
         <item quantity="one">עוד פרק אחד</item>
         <item quantity="two">עוד שני פרקים</item>
-        <item quantity="many">עוד %d פרקים</item>
         <item quantity="other">עוד %d פרקים</item>
     </plurals>
     <plurals name="not_released_episodes_plural">
         <item quantity="one">פרק אחד צפוי להשתחרר</item>
         <item quantity="two">שני פרקים צפויים להשתחרר</item>
-        <item quantity="many">%d פרקים צפויים להשתחרר</item>
         <item quantity="other">%d פרקים צפויים להשתחרר</item>
     </plurals>
     <plurals name="remaining_episodes_plural">
         <item quantity="one">אחד נותר</item>
         <item quantity="two">שניים נותרו</item>
-        <item quantity="many">%d נותרו</item>
         <item quantity="other">%d נותרו</item>
     </plurals>
     <plurals name="remaining_of_total_episodes_plural">
         <item quantity="one">נותר %1$d מתוך %2$d</item>
         <item quantity="two">נותרו %1$d מתוך %2$d</item>
-        <item quantity="many">נותרו %1$d מתוך %2$d</item>
         <item quantity="other">נותרו %1$d מתוך %2$d</item>
     </plurals>
     <plurals name="skipped_episodes_plural">
         <item quantity="one">%d דולג</item>
         <item quantity="two">%d דולגו</item>
-        <item quantity="many">%d דולגו</item>
         <item quantity="other">%d דולגו</item>
     </plurals>
     <plurals name="collected_episodes_plural">
         <item quantity="one">%d באוסף</item>
         <item quantity="two">%d באוסף</item>
-        <item quantity="many">%d באוסף</item>
         <item quantity="other">%d באוסף</item>
     </plurals>
     <!-- Add show -->
@@ -313,19 +306,16 @@
     <plurals name="days_plural">
         <item quantity="one">יום %d</item>
         <item quantity="two">%d ימים</item>
-        <item quantity="many">%d ימים</item>
         <item quantity="other">%d ימים</item>
     </plurals>
     <plurals name="hours_plural">
         <item quantity="one">שעה %d</item>
         <item quantity="two">%d שעות</item>
-        <item quantity="many">%d שעות</item>
         <item quantity="other">%d שעות</item>
     </plurals>
     <plurals name="minutes_plural">
         <item quantity="one">%d דקה</item>
         <item quantity="two">%d דקות</item>
-        <item quantity="many">%d דקות</item>
         <item quantity="other">%d דקות</item>
     </plurals>
     <!-- Features -->
@@ -394,7 +384,6 @@
     <plurals name="votes">
         <item quantity="one">הצבעה אחת</item>
         <item quantity="two">%d הצבעות</item>
-        <item quantity="many">%d הצבעות</item>
         <item quantity="other">%d הצבעות</item>
     </plurals>
     <!-- Check Ins -->
@@ -425,19 +414,16 @@
     <plurals name="days_before_plural">
         <item quantity="one">יום לפני</item>
         <item quantity="two">יומיים לפני</item>
-        <item quantity="many">%d ימים לפני</item>
         <item quantity="other">%d ימים לפני</item>
     </plurals>
     <plurals name="hours_before_plural">
         <item quantity="one">שעה לפני</item>
         <item quantity="two">שעתיים לפני</item>
-        <item quantity="many">%d שעות לפני</item>
         <item quantity="other">%d שעות לפני</item>
     </plurals>
     <plurals name="minutes_before_plural">
         <item quantity="one">דקה לפני</item>
         <item quantity="two">%d דקות לפני</item>
-        <item quantity="many">%d דקות לפני</item>
         <item quantity="other">%d דקות לפני</item>
     </plurals>
     <!-- About screen -->
