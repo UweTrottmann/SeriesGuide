@@ -8,6 +8,8 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
 
+### Next release
+
 ## Version 2026.3
 
 * 🔧 Import: support importing movies by IMDB IDs (linked as external ID on TMDB), such as from the TV Time to SeriesGuide transformer.
