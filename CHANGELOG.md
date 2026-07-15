@@ -10,9 +10,11 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2026.3
 
-### 2026.3.0 - 2026-07-10 🧪
+* 🔧 Import: support importing movies by IMDB IDs (linked as external ID on TMDB), such as from the TV Time to SeriesGuide transformer.
 
-* 🔧 Import: support importing movies with only IMDB IDs.
+### 2026.3.0 - 2026-07-10
+
+* 🔧 Import: support importing movies with only IMDB IDs, if it is linked as an external ID on the movie's TMDB entry.
 * 🔧 Import: support new "imdb-movie" list item type, maps to added movie using "externalId" as IMDB ID on import, otherwise skips.
 * 🔧 Import: display a simple summary of imported and skipped items.
 * 🔧 Import: restore original data on failure.
