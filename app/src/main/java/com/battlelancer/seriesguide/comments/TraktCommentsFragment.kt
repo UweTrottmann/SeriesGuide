@@ -71,7 +71,6 @@ class TraktCommentsFragment : Fragment() {
 
         if (resources.getBoolean(R.bool.isWideCommentsLayout)) {
             ThemeUtils.applyBottomPaddingForNavigationBar(binding.recyclerViewComments)
-            ThemeUtils.applyBottomMarginForNavigationBar(binding.textViewPoweredByComments)
         } else {
             ThemeUtils.applyBottomPaddingForNavigationBar(binding.containerComments)
         }

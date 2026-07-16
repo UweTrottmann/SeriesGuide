@@ -49,19 +49,6 @@ include 7" and 10" devices in landscape (~960dp and ~1280dp respectively). -->
                 android:paddingBottom="40dp"
                 tools:listitem="@layout/item_comment" />
 
-            <TextView
-                android:id="@+id/textViewPoweredByComments"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|right"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="4dp"
-                android:background="@drawable/background_protection_round"
-                android:padding="@dimen/default_padding"
-                android:text="@string/powered_by_trakt"
-                android:textAppearance="@style/TextAppearance.SeriesGuide.Caption.Narrow"
-                android:textColor="@color/black_11" />
-
         </FrameLayout>
 
     </com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout>
@@ -73,11 +60,22 @@ include 7" and 10" devices in landscape (~960dp and ~1280dp respectively). -->
         android:layout_marginEnd="@dimen/large_padding"
         android:layout_marginBottom="@dimen/default_padding">
 
+        <TextView
+            android:id="@+id/textViewCommentsProviderLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/inline_padding"
+            android:gravity="center_horizontal"
+            android:text="@string/comments_provided_by"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Caption" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textFieldComments"
             style="?attr/textInputFilledStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/textViewCommentsProviderLabel"
+            android:layout_marginTop="@dimen/inline_padding"
             android:layout_marginBottom="4dp"
             android:hint="@string/shout_hint"
             android:nextFocusUp="@+id/listViewShouts"
