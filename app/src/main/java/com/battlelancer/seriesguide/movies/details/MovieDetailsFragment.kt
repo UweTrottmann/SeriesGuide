@@ -46,7 +46,6 @@ import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.traktapi.MovieCheckInDialogFragment
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment
-import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity
 import com.battlelancer.seriesguide.util.ImageTools
@@ -182,14 +181,9 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
 
         // ratings
-        val preventExternalLinks = requireActivity().getSgAppContainer().preventExternalLinks
         binding.containerRatings.apply {
             root.isGone = true // to animate in later
             initialize { rateMovie() }
-            if (!preventExternalLinks) {
-                ratingViewTmdb.setLink(requireContext(), TmdbTools.buildMovieUrl(tmdbId))
-                ratingViewTrakt.setLink(requireContext(), TraktTools.buildMovieUrl(tmdbId))
-            }
         }
 
         // language button
@@ -202,7 +196,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             MovieLocalizationDialogFragment.show(parentFragmentManager)
         }
 
-        if (preventExternalLinks) {
+        if (requireActivity().getSgAppContainer().preventExternalLinks) {
             binding.containerMovieBottom.root.isGone = true
         }
 
@@ -508,9 +502,24 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         binding.textViewMovieGenresLabel.isGone = false
         binding.textViewMovieGenres.text = movieDetails.genres
 
-        // links
+        val preventExternalLinks = requireActivity().getSgAppContainer().preventExternalLinks
+
+        // TMDB links
+        if (!preventExternalLinks) {
+            binding.containerRatings.ratingViewTmdb.setLink(requireContext(), movieDetails.tmdbUrl)
+        }
         binding.containerMovieBottom.buttonMovieTmdb.openUriOnClick(movieDetails.tmdbUrl)
-        binding.containerMovieBottom.buttonMovieTrakt.openUriOnClick(movieDetails.traktUrl)
+
+        // Trakt links
+        movieDetails.traktUrl
+            ?.let {
+                if (!preventExternalLinks) {
+                    binding.containerRatings.ratingViewTrakt.setLink(requireContext(), it)
+                }
+                binding.containerMovieBottom.buttonMovieTrakt.openUriOnClick(it)
+            }
+
+        // IMDb link
         binding.containerMovieBottom.buttonMovieImdb.apply {
             val imdbId = movieDetails.imdbId
             isGone = imdbId.isNullOrEmpty()

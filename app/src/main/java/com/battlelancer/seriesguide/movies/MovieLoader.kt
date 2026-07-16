@@ -172,6 +172,10 @@ class MovieLoader(
             posterOriginalSizeImageUrl = null
         }
 
+        val traktIds = movieDetails?.traktIds
+        val traktUrl: String? = if (traktIds is MovieDetails.TraktIds.Success) {
+            traktIds.traktSlug?.let { TraktTools.buildMovieUrl(it) }
+        } else null
         val traktRatings = movieDetails?.traktRatings
 
         return UiMovieDetails(
@@ -215,7 +219,7 @@ class MovieLoader(
             userRatingText = TraktTools.buildUserRatingString(context, dbMovie?.ratingUser),
             genres = genresOrUnknown,
             tmdbUrl = TmdbTools.buildMovieUrl(tmdbId),
-            traktUrl = TraktTools.buildMovieUrl(tmdbId),
+            traktUrl = traktUrl,
             posterSmallSizeImageUrl = posterSmallSizeImageUrl,
             posterOriginalSizeImageUrl = posterOriginalSizeImageUrl
         )

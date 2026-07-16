@@ -40,7 +40,7 @@ data class UiMovieDetails(
     val userRatingText: String,
     val genres: String,
     val tmdbUrl: String,
-    val traktUrl: String,
+    val traktUrl: String?,
     val posterSmallSizeImageUrl: String?,
     val posterOriginalSizeImageUrl: String?
 )
