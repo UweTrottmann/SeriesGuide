@@ -76,6 +76,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
+import kotlin.time.Duration.Companion.milliseconds
 
 /**
  * Displays details about one movie including plot, ratings, trailers and a poster.
@@ -702,7 +703,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         // Simple de-bounce: cancel any waiting job.
         loadActionsJob?.cancel()
         loadActionsJob = lifecycleScope.launch {
-            delay(MovieActionsContract.ACTION_LOADER_DELAY_MILLIS.toLong())
+            delay(MovieActionsContract.ACTION_LOADER_DELAY_MILLIS.milliseconds)
             loadMovieActions()
         }
     }
