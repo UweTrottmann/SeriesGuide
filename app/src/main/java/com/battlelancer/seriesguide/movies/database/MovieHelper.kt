@@ -17,6 +17,7 @@ import com.battlelancer.seriesguide.movies.tools.MovieDetails
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.util.TextTools
+import com.uwetrottmann.trakt5.entities.Ratings
 
 /**
  * Data Access Object for the movies table.
@@ -130,6 +131,9 @@ interface MovieHelper {
     @Query("UPDATE movies SET movies_trailer = :trailer WHERE movies_tmdbid=:tmdbId")
     fun updateMovieTrailer(tmdbId: Int, trailer: String)
 
+    @Query("UPDATE movies SET movies_traktid = :traktId, movies_slug = :slug WHERE _id=:rowId")
+    fun updateTraktIdAndSlug(rowId: Int, traktId: Int?, slug: String?)
+
     @Query("DELETE FROM movies WHERE movies_tmdbid=:tmdbId")
     fun deleteMovie(tmdbId: Int): Int
 
@@ -163,7 +167,8 @@ data class MovieStats(
 )
 
 /**
- * Extracts properties from [tmdbMovie] and if not null [traktRatings].
+ * Extracts properties from [tmdbMovie] and if successfully loaded from [traktIds] and
+ * [traktRatings].
  *
  * Sets [SgMovie.lastUpdated] to the current time.
  */
@@ -176,6 +181,17 @@ fun MovieDetails.toSgMovieForInsert(
 ): SgMovie {
     val tmdbUpdate = toSgMovieTmdbUpdate(0)
 
+    val traktId: Int?
+    val traktSlug: String?
+    val traktIds = traktIds
+    if (traktIds is MovieDetails.TraktIds.Success) {
+        traktId = traktIds.traktId
+        traktSlug = traktIds.traktSlug
+    } else {
+        traktId = null
+        traktSlug = null
+    }
+
     return SgMovie(
         tmdbId = tmdbId,
         inCollection = inCollection,
@@ -184,6 +200,8 @@ fun MovieDetails.toSgMovieForInsert(
         watched = isWatched,
 
         imdbId = tmdbUpdate.imdbId,
+        traktId = traktId,
+        slug = traktSlug,
         title = tmdbUpdate.title,
         titleNoArticle = tmdbUpdate.titleNoArticle,
         poster = tmdbUpdate.poster,
@@ -195,12 +213,12 @@ fun MovieDetails.toSgMovieForInsert(
         ratingVotesTmdb = tmdbUpdate.ratingVotesTmdb,
         lastUpdated = tmdbUpdate.lastUpdated,
     ).let {
-        val traktRatings = toSgMovieTraktUpdate(0)
+        val ratingsUpdate = traktRatings?.toSgMovieTraktUpdate(0)
             ?: return@let it // Keep default values
 
         it.copy(
-            ratingTrakt = traktRatings.ratingTrakt,
-            ratingVotesTrakt = traktRatings.ratingVotesTrakt
+            ratingTrakt = ratingsUpdate.ratingTrakt,
+            ratingVotesTrakt = ratingsUpdate.ratingVotesTrakt
         )
     }
 }
@@ -259,7 +277,7 @@ data class SgMovieTraktUpdate(
     val id: Int,
 
     @ColumnInfo(name = Movies.RATING_TRAKT)
-    val ratingTrakt: Int?,
+    val ratingTrakt: Double?,
     @ColumnInfo(name = Movies.RATING_VOTES_TRAKT)
     val ratingVotesTrakt: Int?,
 )
@@ -267,12 +285,10 @@ data class SgMovieTraktUpdate(
 /**
  * Note: this does not update [SgMovie.lastUpdated] as it is reserved for TMDB data updates.
  */
-fun MovieDetails.toSgMovieTraktUpdate(movieId: Int): SgMovieTraktUpdate? {
-    val traktRatings = traktRatings ?: return null
-
+fun Ratings.toSgMovieTraktUpdate(movieId: Int): SgMovieTraktUpdate {
     return SgMovieTraktUpdate(
         id = movieId,
-        ratingTrakt = traktRatings.rating?.toInt() ?: 0,
-        ratingVotesTrakt = traktRatings.votes ?: 0
+        ratingTrakt = rating ?: 0.0,
+        ratingVotesTrakt = votes ?: 0
     )
 }

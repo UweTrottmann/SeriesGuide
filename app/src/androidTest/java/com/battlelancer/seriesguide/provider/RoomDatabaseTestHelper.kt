@@ -259,7 +259,8 @@ object RoomDatabaseTestHelper {
     }
 
     /**
-     * Modeled after [SgMovie] table as it exists since the oldest supported database version.
+     * Modeled after [SgMovie] table as it existed since the oldest supported database version
+     * until [SgRoomDatabase.VERSION_55_MOVIE_SLUG_DOUBLE_RATING].
      */
     data class TestMovie(
         val tmdbId: Int,
@@ -269,6 +270,9 @@ object RoomDatabaseTestHelper {
     ) {
 
         // Use different values to spot if columns get mixed up during migration
+
+        constructor(tmdbId: Int) : this(tmdbId, true, 16)
+
         val imdbId = "test-imdbId"
         val title = "Test Movie"
         val titleNoArticle = TextTools.trimLeadingArticle(title)

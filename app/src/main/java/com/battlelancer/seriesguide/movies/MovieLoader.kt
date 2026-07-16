@@ -73,7 +73,7 @@ class MovieLoader(
         // Try loading details over the network, this might return a cached response
         val detailsResult =
             movieTools.downloader
-                .getMovieDetailsWithDefaults(tmdbId, true)
+                .getMovieDetailsWithDefaults(tmdbId, getTraktIdsAndRating = true)
 
         val details: MovieDetails? = when (detailsResult) {
             is MovieDetailsResult.Success -> detailsResult.movieDetails
@@ -205,7 +205,7 @@ class MovieLoader(
                 tmdbMovie?.vote_count ?: dbMovie?.ratingVotesTmdb
             ),
             traktRating = RatingsTools.buildRatingString(
-                traktRatings?.rating ?: dbMovie?.ratingTrakt?.toDouble()
+                traktRatings?.rating ?: dbMovie?.ratingTrakt
             ),
             traktVotes = RatingsTools.buildRatingVotesString(
                 context,

@@ -372,6 +372,7 @@ public class SeriesGuideDatabase {
 
             + ");";
 
+    @SuppressWarnings("deprecation") // Used to test database migration
     @VisibleForTesting
     public static final String CREATE_MOVIES_TABLE = "CREATE TABLE " + Tables.MOVIES
             + " ("

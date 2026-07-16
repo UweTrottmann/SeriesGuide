@@ -150,7 +150,14 @@ abstract class SgRoomDatabase : RoomDatabase() {
          */
         const val VERSION_54_SHOW_NOTES = 54
 
-        const val VERSION = VERSION_54_SHOW_NOTES
+        /**
+         * - Add [SgMovie.slug].
+         * - Change [SgMovie.ratingTrakt] from Int to Double.
+         * - Remove unused movie certification column.
+         */
+        const val VERSION_55_MOVIE_SLUG_DOUBLE_RATING = 55
+
+        const val VERSION = VERSION_55_MOVIE_SLUG_DOUBLE_RATING
 
         @Volatile
         private var instance: SgRoomDatabase? = null
@@ -174,6 +181,7 @@ abstract class SgRoomDatabase : RoomDatabase() {
                             SgRoomDatabase::class.java,
                             SeriesGuideDatabase.DATABASE_NAME
                         ).addMigrations(
+                            MIGRATION_54_55,
                             MIGRATION_49_50,
                             MIGRATION_48_49,
                             MIGRATION_47_48,
@@ -220,6 +228,104 @@ abstract class SgRoomDatabase : RoomDatabase() {
             val showId: Int,
             val seasonTvdbId: Int
         )
+
+        @JvmField
+        val MIGRATION_54_55: Migration =
+            object : Migration(VERSION_54_SHOW_NOTES, VERSION_55_MOVIE_SLUG_DOUBLE_RATING) {
+                override fun migrate(db: SupportSQLiteDatabase) {
+                    Timber.d("Migrating database from 54 to 55")
+
+                    // Create new table (copied from Room-generated schema)
+                    db.execSQL(
+                        "CREATE TABLE `movies_new` (" +
+                                "`_id` INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                                "`movies_tmdbid` INTEGER NOT NULL, " +
+                                "`movies_imdbid` TEXT, " +
+                                "`movies_traktid` INTEGER, " +
+                                "`movies_slug` TEXT, " +
+                                "`movies_title` TEXT, " +
+                                "`movies_title_noarticle` TEXT, " +
+                                "`movies_poster` TEXT, " +
+                                "`movies_genres` TEXT, " +
+                                "`movies_overview` TEXT, " +
+                                "`movies_released` INTEGER, " +
+                                "`movies_runtime` INTEGER, " +
+                                "`movies_trailer` TEXT, " +
+                                "`movies_incollection` INTEGER, " +
+                                "`movies_inwatchlist` INTEGER, " +
+                                "`movies_plays` INTEGER, " +
+                                "`movies_watched` INTEGER, " +
+                                "`movies_rating_tmdb` REAL, " +
+                                "`movies_rating_votes_tmdb` INTEGER, " +
+                                "`movies_rating_trakt` REAL, " +
+                                "`movies_rating_votes_trakt` INTEGER, " +
+                                "`movies_rating_user` INTEGER, " +
+                                "`movies_last_updated` INTEGER)"
+                    )
+
+                    // Copy from existing table
+                    // - use NULL for new movies_traktid and movies_slug columns
+                    // - movies_rating_trakt integers as-is as SQLite internally stores them as
+                    //   INTEGER anyhow as they don't have a fractional component,
+                    //   see https://www.sqlite.org/datatype3.html#type_affinity.
+                    // - without movies_certification which was deleted
+                    db.execSQL(
+                        "INSERT INTO movies_new (" +
+                                "movies_tmdbid, " +
+                                "movies_imdbid, " +
+                                "movies_traktid, " +
+                                "movies_slug, " +
+                                "movies_title, " +
+                                "movies_title_noarticle, " +
+                                "movies_poster, " +
+                                "movies_genres, " +
+                                "movies_overview, " +
+                                "movies_released, " +
+                                "movies_runtime, " +
+                                "movies_trailer, " +
+                                "movies_incollection, " +
+                                "movies_inwatchlist, " +
+                                "movies_plays, " +
+                                "movies_watched, " +
+                                "movies_rating_tmdb, " +
+                                "movies_rating_votes_tmdb, " +
+                                "movies_rating_trakt, " +
+                                "movies_rating_votes_trakt, " +
+                                "movies_rating_user, " +
+                                "movies_last_updated" +
+                                ") SELECT " +
+                                "movies_tmdbid, " +
+                                "movies_imdbid, " +
+                                "NULL, " +
+                                "NULL, " +
+                                "movies_title, " +
+                                "movies_title_noarticle, " +
+                                "movies_poster, " +
+                                "movies_genres, " +
+                                "movies_overview, " +
+                                "movies_released, " +
+                                "movies_runtime, " +
+                                "movies_trailer, " +
+                                "movies_incollection, " +
+                                "movies_inwatchlist, " +
+                                "movies_plays, " +
+                                "movies_watched, " +
+                                "movies_rating_tmdb, " +
+                                "movies_rating_votes_tmdb, " +
+                                "movies_rating_trakt, " +
+                                "movies_rating_votes_trakt, " +
+                                "movies_rating_user, " +
+                                "movies_last_updated " +
+                                "FROM movies"
+                    )
+
+                    // Drop existing table and rename new table
+                    db.execSQL("DROP TABLE movies")
+                    db.execSQL("ALTER TABLE movies_new RENAME TO movies")
+                    // Restore index
+                    db.execSQL("CREATE UNIQUE INDEX index_movies_movies_tmdbid ON movies(movies_tmdbid)")
+                }
+            }
 
         @JvmField
         val MIGRATION_49_50: Migration = object :

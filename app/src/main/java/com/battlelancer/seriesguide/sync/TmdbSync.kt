@@ -116,13 +116,14 @@ class TmdbSync internal constructor(
                 continue // skip invalid id
             }
 
-            // try loading details from tmdb
+            // Update details from TMDB, but avoid extra network requests to get details from Trakt
+            // as they are only needed when viewing details of a movie.
             val detailsResult = runBlocking {
                 movieTools.downloader.getMovieDetails(
                     languageCode,
                     regionCode,
                     movie.tmdbId,
-                    false
+                    getTraktIdsAndRating = false
                 )
             }
             when (detailsResult) {

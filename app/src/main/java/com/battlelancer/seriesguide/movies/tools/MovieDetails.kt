@@ -13,6 +13,23 @@ class MovieDetails(
     val tmdbMovie: Movie
 ) {
 
+    sealed interface TraktIds {
+        data class Success(
+            /**
+             * May be `null` if movie not found on Trakt.
+             */
+            val traktId: Int?,
+            /**
+             * May be `null` if movie not found on Trakt.
+             */
+            val traktSlug: String?
+        ) : TraktIds
+
+        object Error : TraktIds
+    }
+
+    var traktIds: TraktIds? = null
+
     /**
      * This might be null if not loaded or if the API call failed.
      */

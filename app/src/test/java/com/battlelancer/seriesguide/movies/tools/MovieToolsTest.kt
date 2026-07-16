@@ -469,7 +469,9 @@ class MovieToolsTest {
     companion object {
         private const val TEST_MOVIE_TMDBID = 12345
         private val TEST_MOVIE = SgMovie(
-            tmdbId = TEST_MOVIE_TMDBID
+            tmdbId = TEST_MOVIE_TMDBID,
+            traktId = null,
+            slug = null
         )
         private val TEST_LIST_ID = "test-list"
         private val TEST_LIST = SgList(

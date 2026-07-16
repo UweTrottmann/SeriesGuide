@@ -970,6 +970,11 @@ public class SeriesGuideContract {
         String TMDB_ID = "movies_tmdbid";
 
         /**
+         * See {@link SgMovie#getTraktId()}.
+         */
+        String TRAKT_ID = "movies_traktid";
+
+        /**
          * See {@link SgMovie#getPoster()}.
          */
         String POSTER = "movies_poster";
@@ -984,12 +989,20 @@ public class SeriesGuideContract {
         String RELEASED_UTC_MS = "movies_released";
 
         /**
+         * See {@link SgMovie#getSlug()}.
+         */
+        String SLUG = "movies_slug";
+
+        /**
          * See {@link SgMovie#getRuntimeMin()}.
          */
         String RUNTIME_MIN = "movies_runtime";
 
         String TRAILER = "movies_trailer";
 
+        /**
+         * @deprecated Removed in {@link SgRoomDatabase#VERSION_55_MOVIE_SLUG_DOUBLE_RATING}.
+         */
         String CERTIFICATION = "movies_certification";
 
         /**

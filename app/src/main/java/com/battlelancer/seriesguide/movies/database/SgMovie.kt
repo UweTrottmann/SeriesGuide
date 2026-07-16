@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2018-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2018 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.movies.database
 
@@ -10,8 +10,11 @@ import androidx.room.PrimaryKey
 import com.battlelancer.seriesguide.movies.database.SgMovie.Companion.RELEASED_MS_UNKNOWN
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 
 /**
+ * The movies table in [SgRoomDatabase].
+ *
  * Note: ensure to use CONFLICT_REPLACE when inserting to mimic SQLite UNIQUE x ON CONFLICT REPLACE.
  */
 @Entity(
@@ -28,6 +31,22 @@ data class SgMovie(
 
     @ColumnInfo(name = Movies.IMDB_ID)
     val imdbId: String? = null,
+
+    /**
+     * The Trakt ID for this movie. May be null.
+     *
+     * Added in [SgRoomDatabase.VERSION_55_MOVIE_SLUG_DOUBLE_RATING].
+     */
+    @ColumnInfo(name = Movies.TRAKT_ID)
+    val traktId: Int?,
+
+    /**
+     * The Trakt slug for this movie to build URLs. May be null or empty.
+     *
+     * Added in [SgRoomDatabase.VERSION_55_MOVIE_SLUG_DOUBLE_RATING].
+     */
+    @ColumnInfo(name = Movies.SLUG)
+    val slug: String?,
 
     @ColumnInfo(name = Movies.TITLE)
     val title: String? = null,
@@ -70,9 +89,6 @@ data class SgMovie(
     @ColumnInfo(name = Movies.TRAILER)
     val trailer: String? = null,
 
-    @ColumnInfo(name = Movies.CERTIFICATION)
-    val certification: String? = null,
-
     @ColumnInfo(name = Movies.IN_COLLECTION)
     val inCollection: Boolean? = false,
 
@@ -99,9 +115,6 @@ data class SgMovie(
     val ratingVotesTmdb: Int? = 0,
 
     /**
-     * **Note**: Due to an oversight, the current database type is INTEGER and not REAL (Int? below
-     * instead of Double?).
-     *
      * Trakt rating. Encoded as double.
      * ```
      * Range:   0.0-10.0
@@ -109,7 +122,7 @@ data class SgMovie(
      * ```
      */
     @ColumnInfo(name = Movies.RATING_TRAKT)
-    val ratingTrakt: Int? = 0,
+    val ratingTrakt: Double? = 0.0,
 
     @ColumnInfo(name = Movies.RATING_VOTES_TRAKT)
     val ratingVotesTrakt: Int? = 0,
