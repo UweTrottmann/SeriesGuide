@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2013-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2013 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.movies.details
 
@@ -56,7 +56,6 @@ class MovieDetailsActivity : BaseMessageActivity() {
     companion object {
         // loader ids for this activity (mostly used by fragments)
         var LOADER_ID_MOVIE = 100
-        var LOADER_ID_MOVIE_TRAILERS = 101
 
         fun intentMovie(context: Context, movieTmdbId: Int): Intent {
             return Intent(context, MovieDetailsActivity::class.java)

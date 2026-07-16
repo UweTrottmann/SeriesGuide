@@ -183,7 +183,7 @@ class TmdbTools2 {
     }
 
     /**
-     * Loads a YouTube movie trailer from TMDb. Tries to get a local trailer, if not falls back to
+     * Loads a YouTube movie trailer from TMDB. Tries to get a local trailer, if not falls back to
      * English.
      */
     fun getMovieTrailerYoutubeId(

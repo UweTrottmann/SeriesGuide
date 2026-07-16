@@ -44,7 +44,6 @@ import com.battlelancer.seriesguide.movies.similar.SimilarMoviesActivity
 import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.people.Credits
 import com.battlelancer.seriesguide.people.PeopleListHelper
-import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.traktapi.MovieCheckInDialogFragment
@@ -88,7 +87,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
     private var tmdbId: Int = 0
     private var movieDetails: UiMovieDetails? = null
-    private var trailerYoutubeId: String? = null
     private val model: MovieDetailsModel by viewModels {
         MovieDetailsModelFactory(tmdbId, requireActivity().application)
     }
@@ -134,7 +132,8 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             // trailer button
             buttonMovieTrailer.apply {
                 setOnClickListener {
-                    trailerYoutubeId?.let { ServiceUtils.openYoutube(it, requireContext()) }
+                    model.trailerVideoId.value
+                        ?.let { ServiceUtils.openYoutube(it, requireContext()) }
                 }
                 isEnabled = false
             }
@@ -226,17 +225,28 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
 
+        // Movie details
         val args = Bundle()
         args.putInt(ARG_TMDB_ID, tmdbId)
         LoaderManager.getInstance(this).apply {
             initLoader(MovieDetailsActivity.LOADER_ID_MOVIE, args, movieLoaderCallbacks)
-            initLoader(
-                MovieDetailsActivity.LOADER_ID_MOVIE_TRAILERS, args, trailerLoaderCallbacks
-            )
         }
+
+        // Trailer
+        viewLifecycleOwner.lifecycleScope.launch {
+            model.trailerVideoId.collect { videoId ->
+                if (videoId != null) {
+                    binding.containerMovieButtons.buttonMovieTrailer.isEnabled = true
+                }
+            }
+        }
+
+        // Credits
         model.credits.observe(viewLifecycleOwner) {
             populateMovieCreditsViews(it)
         }
+
+        // Watch providers
         model.watchProvider.observe(viewLifecycleOwner) { watchInfo ->
             StreamingSearch.configureButton(
                 binding.containerMovieButtons.buttonMovieStreamingSearch,
@@ -632,7 +642,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         // re-query to update movie details
         restartMovieLoader()
         // re-run trailer loader to cache to database if movie was added to database
-        restartTrailerLoader()
+        model.loadTrailerVideoId()
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -656,9 +666,9 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun handleLanguageEvent(@Suppress("UNUSED_PARAMETER") event: MovieLocalizationDialogFragment.LocalizationChangedEvent) {
-        // reload movie details and trailers (but not cast/crew info which is not language dependent)
+        // reload movie details and trailers (but not cast/crew info which is not language-dependent)
         restartMovieLoader()
-        restartTrailerLoader()
+        model.loadTrailerVideoId()
     }
 
     override fun loadMovieActions() {
@@ -723,15 +733,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             .restartLoader(MovieDetailsActivity.LOADER_ID_MOVIE, args, movieLoaderCallbacks)
     }
 
-    private fun restartTrailerLoader() {
-        val args = Bundle().apply {
-            putInt(ARG_TMDB_ID, tmdbId)
-        }
-        LoaderManager.getInstance(this).restartLoader(
-            MovieDetailsActivity.LOADER_ID_MOVIE_TRAILERS, args, trailerLoaderCallbacks
-        )
-    }
-
     private val movieLoaderCallbacks = object : LoaderManager.LoaderCallbacks<MovieLoader.Result> {
         override fun onCreateLoader(loaderId: Int, args: Bundle?): Loader<MovieLoader.Result> {
             binding.progressBar.isGone = false
@@ -765,30 +766,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         override fun onLoaderReset(movieLoader: Loader<MovieLoader.Result>) {
             // nothing to do
-        }
-    }
-
-    private val trailerLoaderCallbacks = object : LoaderManager.LoaderCallbacks<String?> {
-        override fun onCreateLoader(loaderId: Int, args: Bundle?): Loader<String?> {
-            return MovieTrailersLoader(
-                args!!.getInt(ARG_TMDB_ID),
-                requireContext(),
-                SgRoomDatabase.getInstance(requireContext()).movieHelper()
-            )
-        }
-
-        override fun onLoadFinished(
-            trailersLoader: Loader<String?>,
-            videoId: String?
-        ) {
-            if (videoId != null) {
-                this@MovieDetailsFragment.trailerYoutubeId = videoId
-                binding.containerMovieButtons.buttonMovieTrailer.isEnabled = true
-            }
-        }
-
-        override fun onLoaderReset(trailersLoader: Loader<String?>) {
-            // do nothing
         }
     }
 
