@@ -10,7 +10,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ### Next release
 
-* 🔧 Movies: cache genres and trailer to database.
+* 🔧 Movies: cache genres and trailer to database, display cached data immediately before potentially slow network requests.
 
 ## Version 2026.3
 

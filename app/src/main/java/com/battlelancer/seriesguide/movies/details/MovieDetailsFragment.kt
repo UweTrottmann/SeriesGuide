@@ -239,19 +239,27 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
                 binding.progressBar.isGone = result != null
 
-                if (result is MovieLoader.Result.Success) {
-                    movieDetails = result.details
-                    populateMovieViews(result.details)
-                    loadMovieActionsDelayed()
-                    requireActivity().invalidateOptionsMenu()
-                } else if (result == MovieLoader.Result.Error) {
-                    // if there is no local data and loading from network failed
-                    binding.textViewMovieDescription.text =
-                        if (AndroidUtils.isNetworkConnected(requireContext())) {
-                            getString(R.string.api_error_generic, getString(R.string.tmdb))
-                        } else {
-                            getString(R.string.offline)
-                        }
+                when (result) {
+                    is MovieLoader.Result.Success -> {
+                        movieDetails = result.details
+                        populateMovieViews(result.details)
+                        loadMovieActionsDelayed()
+                        requireActivity().invalidateOptionsMenu()
+                        binding.progressBar.isGone = result.finishedNetworkRequests
+                    }
+
+                    MovieLoader.Result.Error -> {
+                        // if there is no local data and loading from network failed
+                        binding.textViewMovieDescription.text =
+                            if (AndroidUtils.isNetworkConnected(requireContext())) {
+                                getString(R.string.api_error_generic, getString(R.string.tmdb))
+                            } else {
+                                getString(R.string.offline)
+                            }
+                        binding.progressBar.isGone = true
+                    }
+
+                    null -> binding.progressBar.isVisible = true
                 }
             }
         }

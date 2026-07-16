@@ -12,7 +12,7 @@ import com.battlelancer.seriesguide.movies.details.UiMovieDetails
 import com.battlelancer.seriesguide.movies.tools.MovieDetails
 import com.battlelancer.seriesguide.movies.tools.MovieDownloader.MovieDetailsResult
 import com.battlelancer.seriesguide.movies.tools.MovieTools
-import com.battlelancer.seriesguide.provider.SgRoomDatabase.Companion.getInstance
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktTools
@@ -21,6 +21,7 @@ import com.battlelancer.seriesguide.util.RatingsTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.withContext
 import org.threeten.bp.Instant
 import org.threeten.bp.ZonedDateTime
@@ -31,22 +32,45 @@ import org.threeten.bp.ZonedDateTime
  */
 class MovieLoader(
     private val context: Context,
-    private val tmdbId: Int
+    private val tmdbId: Int,
+    private val movieDetailsResult: MutableStateFlow<Result?>
 ) {
 
     sealed interface Result {
-        data class Success(val details: UiMovieDetails) : Result
+        data class Success(
+            val details: UiMovieDetails,
+            val finishedNetworkRequests: Boolean
+        ) : Result
+
         object Error : Result
     }
 
-    suspend fun loadInBackground(): Result = withContext(Dispatchers.Default) {
-        load()
-    }
+    suspend fun loadInBackground() =
+        withContext(Dispatchers.Default) {
+            load()
+        }
 
-    private suspend fun load(): Result {
+    private suspend fun load() {
+        // Emit data cached in the database first before doing potentially slow network requests
+        val dbMovieOrNull = SgRoomDatabase.getInstance(context)
+            .movieHelper()
+            .getMovie(tmdbId)
+
+        if (dbMovieOrNull != null) {
+            movieDetailsResult.value = Result.Success(
+                mapToUiMovieDetails(
+                    tmdbId,
+                    movieDetails = null,
+                    dbMovieOrNull,
+                    context
+                ),
+                finishedNetworkRequests = false
+            )
+        }
+
         val movieTools = getServicesComponent(context).movieTools()
 
-        // try loading from trakt and tmdb, this might return a cached response
+        // Try loading details over the network, this might return a cached response
         val detailsResult =
             movieTools.downloader
                 .getMovieDetailsWithDefaults(tmdbId, true)
@@ -61,27 +85,30 @@ class MovieLoader(
             movieTools.updateMovieWithTmdbId(tmdbId, details)
         }
 
-        // Fill in or use cached details from local database
-        val dbMovieOrNull = getInstance(context)
-            .movieHelper()
-            .getMovie(tmdbId)
-
-        // Need at least details from either TMDB or the database
-        if (details == null && dbMovieOrNull == null) {
-            return Result.Error
-        }
-
-        return Result.Success(
-            mapToUiMovieDetails(
-                tmdbId,
-                details,
-                dbMovieOrNull,
-                context
-            )
-        )
+        movieDetailsResult.value =
+            if (details == null && dbMovieOrNull == null) {
+                // Need at least details from either TMDB or the database
+                Result.Error
+            } else {
+                // Note: there is no need to re-fetch the movie from the database, as TMDB data is
+                // preferred over the database data.
+                Result.Success(
+                    mapToUiMovieDetails(
+                        tmdbId,
+                        details,
+                        dbMovieOrNull,
+                        context
+                    ),
+                    finishedNetworkRequests = true
+                )
+            }
     }
 
     /**
+     * Builds movie details from [movieDetails] and [dbMovie].
+     *
+     * Note that for collection info a [MovieDetails.tmdbMovie] is required.
+     *
      * Assumes at least one of [movieDetails] or [dbMovie] is not null.
      */
     fun mapToUiMovieDetails(

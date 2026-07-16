@@ -55,7 +55,7 @@ class MovieDetailsModel(
 
     fun loadMovieDetails() {
         viewModelScope.launch(Dispatchers.Default) {
-            movieDetailsResult.value = MovieLoader(getApplication(), movieTmdbId)
+            MovieLoader(getApplication(), movieTmdbId, movieDetailsResult)
                 .loadInBackground()
         }
     }
