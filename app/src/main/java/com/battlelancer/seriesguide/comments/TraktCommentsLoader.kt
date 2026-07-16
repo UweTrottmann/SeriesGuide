@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2013-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2013 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.comments
 
@@ -10,7 +10,6 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.traktapi.SgTrakt
-import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.androidutils.GenericSimpleLoader
@@ -38,31 +37,25 @@ class TraktCommentsLoader(context: Context, private val args: Bundle) :
         val cacheControl = if (args.getBoolean(ARG_REFRESH)) "no-cache" else null
 
         // movie comments?
-        val movieTmdbId = args.getInt(TraktCommentsFragment.InitBundle.MOVIE_TMDB_ID)
-        if (movieTmdbId != 0) {
-            val movieTraktId = TraktTools.lookupMovieTraktId(trakt, movieTmdbId)
-            if (movieTraktId != null) {
-                if (movieTraktId == -1) {
-                    return buildResultFailure(R.string.trakt_error_not_exists)
+        val movieTraktId = args.getInt(TraktCommentsFragment.InitBundle.MOVIE_TRAKT_ID)
+        if (movieTraktId != 0) {
+            try {
+                val response = trakt.movies()
+                    .comments(
+                        movieTraktId.toString(),
+                        1,
+                        PAGE_SIZE,
+                        Extended.FULL,
+                        cacheControl
+                    )
+                    .execute()
+                if (response.isSuccessful) {
+                    return buildResultSuccess(response.body()!!)
+                } else {
+                    Errors.logAndReport("get movie comments", response)
                 }
-                try {
-                    val response = trakt.movies()
-                        .comments(
-                            movieTraktId.toString(),
-                            1,
-                            PAGE_SIZE,
-                            Extended.FULL,
-                            cacheControl
-                        )
-                        .execute()
-                    if (response.isSuccessful) {
-                        return buildResultSuccess(response.body()!!)
-                    } else {
-                        Errors.logAndReport("get movie comments", response)
-                    }
-                } catch (e: Exception) {
-                    Errors.logAndReport("get movie comments", e)
-                }
+            } catch (e: Exception) {
+                Errors.logAndReport("get movie comments", e)
             }
             return buildResultFailureWithOfflineCheck()
         }

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2012-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2012 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.comments
 
@@ -79,10 +79,10 @@ class TraktCommentsActivity : BaseActivity() {
         /**
          * Display comments of a movie.
          */
-        fun intentMovie(context: Context, title: String?, movieTmdbId: Int): Intent {
-            check(movieTmdbId > 0)
+        fun intentMovie(context: Context, title: String?, movieTraktId: Int): Intent {
+            check(movieTraktId > 0)
             return Intent(context, TraktCommentsActivity::class.java)
-                .putExtra(TraktCommentsFragment.InitBundle.MOVIE_TMDB_ID, movieTmdbId)
+                .putExtra(TraktCommentsFragment.InitBundle.MOVIE_TRAKT_ID, movieTraktId)
                 .putExtra(EXTRA_TITLE, title)
         }
     }

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2012-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2012 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.comments
 
@@ -48,7 +48,7 @@ class TraktCommentsFragment : Fragment() {
 
     interface InitBundle {
         companion object {
-            const val MOVIE_TMDB_ID = "movie"
+            const val MOVIE_TRAKT_ID = "movie"
             const val SHOW_ID = "show"
             const val EPISODE_ID = "episode"
         }
@@ -176,9 +176,9 @@ class TraktCommentsFragment : Fragment() {
             }
 
             // comment for a movie?
-            val movieTmdbId = args.getInt(InitBundle.MOVIE_TMDB_ID)
-            if (movieTmdbId != 0) {
-                model.postMovieComment(movieTmdbId, comment, isSpoiler)
+            val movieTraktId = args.getInt(InitBundle.MOVIE_TRAKT_ID)
+            if (movieTraktId != 0) {
+                model.postMovieComment(movieTraktId, comment, isSpoiler)
                 return
             }
 

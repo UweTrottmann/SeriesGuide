@@ -172,14 +172,16 @@ class MovieLoader(
             posterOriginalSizeImageUrl = null
         }
 
-        val traktIds = movieDetails?.traktIds
-        val traktUrl: String? = if (traktIds is MovieDetails.TraktIds.Success) {
-            traktIds.traktSlug?.let { TraktTools.buildMovieUrl(it) }
-        } else null
+        val traktIds = movieDetails?.traktIds as? MovieDetails.TraktIds.Success
+        val traktId = (traktIds?.traktId ?: dbMovie?.traktId)
+            ?.let { if (it > 0) it else null }
+        val traktUrl: String? = (traktIds?.traktSlug ?: dbMovie?.slug)
+            ?.let { TraktTools.buildMovieUrl(it) }
         val traktRatings = movieDetails?.traktRatings
 
         return UiMovieDetails(
             imdbId = tmdbMovie?.imdb_id ?: dbMovie?.imdbId,
+            traktId = traktId,
             title = title,
             titleForMetacritic = titleForMetacritic,
             // No need to set no translation available message if empty, movie downloader does

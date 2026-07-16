@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2024 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.traktapi
 
@@ -52,11 +52,11 @@ class TraktComments(
         )
     }
 
-    suspend fun postMovieComment(movieTmdbId: Int, comment: String, isSpoiler: Boolean) {
+    suspend fun postMovieComment(movieTraktId: Int, comment: String, isSpoiler: Boolean) {
         postComment(
             buildComment(comment, isSpoiler)
                 .also {
-                    it.movie = Movie().apply { ids = MovieIds.tmdb(movieTmdbId) }
+                    it.movie = Movie().apply { ids = MovieIds.trakt(movieTraktId) }
                 }
         )
     }

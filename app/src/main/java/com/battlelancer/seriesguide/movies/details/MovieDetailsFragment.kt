@@ -431,13 +431,15 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // Comments
         binding.containerMovieButtons.buttonMovieComments.apply {
-            setOnClickListener { v ->
-                val tmdbId = tmdbId
-                if (tmdbId > 0) {
-                    val i = TraktCommentsActivity.intentMovie(requireContext(), movieTitle, tmdbId)
-                    requireActivity().startActivityWithAnimation(i, v)
+            val traktId = movieDetails.traktId
+            if (traktId != null) {
+                setOnClickListener { v ->
+                    movieDetails.traktId
+                        .let { TraktCommentsActivity.intentMovie(requireContext(), movieTitle, it) }
+                        .let { requireActivity().startActivityWithAnimation(it, v) }
                 }
             }
+            isEnabled = traktId != null
         }
 
         // Metacritic search

@@ -10,6 +10,7 @@ import java.util.Date
  */
 data class UiMovieDetails(
     val imdbId: String?,
+    val traktId: Int?,
     val title: String?,
     val titleForMetacritic: String?,
     val overview: String?,
