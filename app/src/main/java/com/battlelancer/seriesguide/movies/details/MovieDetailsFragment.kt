@@ -223,7 +223,17 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupViews()
+
+        // Views
+        // show toolbar title and background when scrolling
+        val defaultPaddingPx = resources.getDimensionPixelSize(R.dimen.large_padding)
+        val scrollChangeListener = ToolbarScrollChangeListener(defaultPaddingPx)
+            .also { scrollChangeListener = it }
+        binding.contentContainerMovie.setOnScrollChangeListener(scrollChangeListener)
+        binding.contentContainerMovieRight?.setOnScrollChangeListener(scrollChangeListener)
+
+        ThemeUtils.applyBottomPaddingForNavigationBar(binding.contentContainerMovie)
+        binding.contentContainerMovieRight?.let { ThemeUtils.applyBottomPaddingForNavigationBar(it) }
 
         // Movie details
         val args = Bundle()
@@ -254,18 +264,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                 requireActivity().getSgAppContainer().preventExternalLinks
             )
         }
-    }
-
-    private fun setupViews() {
-        // show toolbar title and background when scrolling
-        val defaultPaddingPx = resources.getDimensionPixelSize(R.dimen.large_padding)
-        val scrollChangeListener = ToolbarScrollChangeListener(defaultPaddingPx)
-            .also { scrollChangeListener = it }
-        binding.contentContainerMovie.setOnScrollChangeListener(scrollChangeListener)
-        binding.contentContainerMovieRight?.setOnScrollChangeListener(scrollChangeListener)
-
-        ThemeUtils.applyBottomPaddingForNavigationBar(binding.contentContainerMovie)
-        binding.contentContainerMovieRight?.let { ThemeUtils.applyBottomPaddingForNavigationBar(it) }
     }
 
     override fun onStart() {
