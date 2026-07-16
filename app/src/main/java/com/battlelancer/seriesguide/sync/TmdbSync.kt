@@ -8,6 +8,7 @@ import android.text.format.DateUtils
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.movies.MoviesSettings
+import com.battlelancer.seriesguide.movies.tools.MovieDownloader.MovieDetailsResult
 import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.TmdbSettings
@@ -124,26 +125,29 @@ class TmdbSync internal constructor(
                     false
                 )
             }
-            val details = detailsResult.movieDetails
-            if (details.tmdbMovie() != null) {
-                // update local database
-                movieTools.updateMovie(details, movie.tmdbId)
-            } else {
-                // Treat as failure if updating at least one fails.
-                result = false
+            when (detailsResult) {
+                is MovieDetailsResult.Success -> {
+                    // update local database
+                    movieTools.updateMovieWithRowId(movie.id, detailsResult.movieDetails)
+                }
 
-                if (detailsResult.isNotFoundOnTmdb) {
-                    val movieTitle = SgRoomDatabase.getInstance(context)
-                        .movieHelper()
-                        .getMovieTitle(movie.tmdbId)
-                    val notFoundMessage = context.getString(R.string.error_movie_not_found)
-                    // To be replaced with a properly localized message. Currently looks out of
-                    // place for RTL languages, but want to avoid giving translators a string with
-                    // placeholders.
-                    val message = "'${movieTitle}' (TMDB ID ${movie.tmdbId}) - $notFoundMessage"
+                is MovieDetailsResult.Error -> {
+                    // Treat as failure if updating at least one fails.
+                    result = false
 
-                    progress.setImportantErrorIfNone(message)
-                    Timber.e(message)
+                    if (detailsResult.isNotFoundOnTmdb) {
+                        val movieTitle = SgRoomDatabase.getInstance(context)
+                            .movieHelper()
+                            .getMovieTitle(movie.tmdbId)
+                        val notFoundMessage = context.getString(R.string.error_movie_not_found)
+                        // To be replaced with a properly localized message. Currently looks out of
+                        // place for RTL languages, but want to avoid giving translators a string with
+                        // placeholders.
+                        val message = "'${movieTitle}' (TMDB ID ${movie.tmdbId}) - $notFoundMessage"
+
+                        progress.setImportantErrorIfNone(message)
+                        Timber.e(message)
+                    }
                 }
             }
         }

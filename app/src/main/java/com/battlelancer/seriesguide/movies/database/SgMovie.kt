@@ -41,6 +41,11 @@ data class SgMovie(
     @ColumnInfo(name = Movies.POSTER)
     val poster: String? = null,
 
+    /**
+     * A localized, comma-separated list of genres.
+     *
+     * Example: "Action, Science Fiction"
+     */
     @ColumnInfo(name = Movies.GENRES)
     val genres: String? = null,
 
@@ -59,6 +64,9 @@ data class SgMovie(
     @ColumnInfo(name = Movies.RUNTIME_MIN)
     val runtimeMin: Int? = 0,
 
+    /**
+     * A localized (defaults to English) YouTube video ID.
+     */
     @ColumnInfo(name = Movies.TRAILER)
     val trailer: String? = null,
 

@@ -15,7 +15,9 @@ import com.battlelancer.seriesguide.movies.database.MovieHelper
 import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.movies.database.SgMovieFlags
 import com.battlelancer.seriesguide.movies.database.toSgMovieForInsert
-import com.battlelancer.seriesguide.movies.details.MovieDetails
+import com.battlelancer.seriesguide.movies.database.toSgMovieTmdbUpdate
+import com.battlelancer.seriesguide.movies.database.toSgMovieTraktUpdate
+import com.battlelancer.seriesguide.movies.tools.MovieDownloader.MovieDetailsResult
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
@@ -195,21 +197,21 @@ class MovieTools(
 
     private suspend fun addMovie(movieTmdbId: Int, listToAddTo: Lists?): Boolean {
         // get movie info
-        val details = downloader.getMovieDetailsWithDefaults(movieTmdbId, false).movieDetails
-        if (details.tmdbMovie() == null) {
-            // abort if minimal data failed to load
-            return false
+        val detailsResult = downloader.getMovieDetailsWithDefaults(movieTmdbId, false)
+        val details = when (detailsResult) {
+            is MovieDetailsResult.Error -> return false // abort if minimal data failed to load
+            is MovieDetailsResult.Success -> detailsResult.movieDetails
         }
 
-        // build values
-        details.isInCollection = listToAddTo == Lists.COLLECTION
-        details.isInWatchlist = listToAddTo == Lists.WATCHLIST
-        val isWatched = listToAddTo == Lists.WATCHED
-        details.isWatched = isWatched
-        details.plays = if (isWatched) 1 else 0
-
         // add to database
-        val sgMovie = details.toSgMovieForInsert(movieTmdbId)
+        val isWatched = listToAddTo == Lists.WATCHED
+        val sgMovie = details.toSgMovieForInsert(
+            movieTmdbId,
+            inCollection = listToAddTo == Lists.COLLECTION,
+            inWatchlist = listToAddTo == Lists.WATCHLIST,
+            isWatched = isWatched,
+            plays = if (isWatched) 1 else 0
+        )
         databaseHelper.insertMovie(sgMovie)
 
         // ensure ratings for new movie are downloaded on next sync
@@ -219,17 +221,25 @@ class MovieTools(
     }
 
     /**
-     * Updates existing movie. If movie does not exist in database, will do nothing.
+     * Calls [updateMovieWithRowId] if a movie with the given [tmdbId] is in the database.
      */
-    fun updateMovie(details: MovieDetails, tmdbId: Int) {
-        val values = details.toContentValuesUpdate()
-        if (values.size() == 0) {
-            return  // nothing to update, downloading probably failed :(
+    fun updateMovieWithTmdbId(tmdbId: Int, details: MovieDetails) {
+        val rowId = databaseHelper.getMovieId(tmdbId)
+            ?: return // Not in database
+        updateMovieWithRowId(rowId, details)
+    }
+
+    /**
+     * Updates existing movie with [details] from TMDB and, if they are not null, Trakt.
+     */
+    fun updateMovieWithRowId(rowId: Int, details: MovieDetails) {
+        val movieTmdbUpdate = details.toSgMovieTmdbUpdate(rowId)
+        databaseHelper.update(movieTmdbUpdate)
+
+        val movieTraktUpdate = details.toSgMovieTraktUpdate(rowId)
+        if (movieTraktUpdate != null) {
+            databaseHelper.update(movieTraktUpdate)
         }
-
-        values.put(Movies.LAST_UPDATED, System.currentTimeMillis())
-
-        context.contentResolver.update(Movies.buildMovieUri(tmdbId), values, null, null)
     }
 
     /**
@@ -272,28 +282,36 @@ class MovieTools(
 
             // download movie data
             val result = downloader.getMovieDetails(languageCode, regionCode, tmdbId, false)
-            if (result.isNotFoundOnTmdb) {
-                Timber.w("addMovies: movie with TMDB ID %s not found, skipping", tmdbId)
-                continue
-            }
-            val movieDetails = result.movieDetails
-            if (movieDetails.tmdbMovie() == null) {
-                Timber.e(
-                    "addMovies: failed to load details for movie with TMDB ID %s, stopping",
-                    tmdbId
-                )
-                return false
+            val movieDetails = when (result) {
+                is MovieDetailsResult.Error -> {
+                    if (result.isNotFoundOnTmdb) {
+                        Timber.w("addMovies: movie with TMDB ID %s not found, skipping", tmdbId)
+                        continue
+                    } else {
+                        Timber.e(
+                            "addMovies: failed to load details for movie with TMDB ID %s, stopping",
+                            tmdbId
+                        )
+                        return false
+                    }
+                }
+
+                is MovieDetailsResult.Success -> result.movieDetails
             }
 
-            // set flags
-            movieDetails.isInCollection = newCollectionMovies.contains(tmdbId)
-            movieDetails.isInWatchlist = newWatchlistMovies.contains(tmdbId)
+            // Determine watched state based on plays
             val plays = newWatchedMoviesToPlays[tmdbId]
             val isWatched = plays != null
-            movieDetails.isWatched = isWatched
-            movieDetails.plays = (if (isWatched) plays else 0)
 
-            moviesToInsert.add(movieDetails.toSgMovieForInsert(tmdbId))
+            moviesToInsert.add(
+                movieDetails.toSgMovieForInsert(
+                    tmdbId,
+                    inCollection = newCollectionMovies.contains(tmdbId),
+                    inWatchlist = newWatchlistMovies.contains(tmdbId),
+                    isWatched = isWatched,
+                    plays = (if (isWatched) plays else 0)
+                )
+            )
 
             // Already add to the database if we have 10 movies so UI can already update.
             if (moviesToInsert.size == 10) {

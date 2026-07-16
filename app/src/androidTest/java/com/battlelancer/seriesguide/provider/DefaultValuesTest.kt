@@ -23,13 +23,14 @@ import com.battlelancer.seriesguide.lists.ListsTools
 import com.battlelancer.seriesguide.lists.database.SgList
 import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.movies.database.toSgMovieForInsert
-import com.battlelancer.seriesguide.movies.details.MovieDetails
+import com.battlelancer.seriesguide.movies.tools.MovieDetails
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.util.tasks.AddListTask
 import com.google.common.truth.Truth.assertThat
+import com.uwetrottmann.tmdb2.entities.Movie
 import org.junit.After
 import org.junit.Assert.fail
 import org.junit.Before
@@ -73,7 +74,7 @@ class DefaultValuesTest {
             type = ListItemTypesExport.TMDB_SHOW
         }
         private const val TEST_MOVIE_TMDB_ID = 12
-        private val MOVIE = MovieDetails()
+        private val MOVIE = MovieDetails(Movie())
         private val MOVIE_I = com.battlelancer.seriesguide.dataliberation.model.Movie()
     }
 
@@ -261,7 +262,13 @@ class DefaultValuesTest {
     fun movieDefaultValues() {
         val movieHelper = testDb.movieHelper()
 
-        val sgMovie = MOVIE.toSgMovieForInsert(TEST_MOVIE_TMDB_ID)
+        val sgMovie = MOVIE.toSgMovieForInsert(
+            TEST_MOVIE_TMDB_ID,
+            inCollection = false,
+            inWatchlist = false,
+            isWatched = false,
+            plays = 0
+        )
 
         movieHelper.insertMovie(sgMovie)
 

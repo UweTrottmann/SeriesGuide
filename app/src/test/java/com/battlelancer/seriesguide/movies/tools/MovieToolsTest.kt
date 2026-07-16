@@ -11,7 +11,6 @@ import com.battlelancer.seriesguide.lists.database.SgListHelper
 import com.battlelancer.seriesguide.lists.database.SgListItem
 import com.battlelancer.seriesguide.movies.database.MovieHelper
 import com.battlelancer.seriesguide.movies.database.SgMovie
-import com.battlelancer.seriesguide.movies.details.MovieDetails
 import com.battlelancer.seriesguide.movies.tools.MovieTools.Lists
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
@@ -73,11 +72,8 @@ class MovieToolsTest {
         suspend fun downloaderReturnsTestMovie() {
             `when`(downloader.getMovieDetailsWithDefaults(TEST_MOVIE_TMDBID, false))
                 .thenReturn(
-                    MovieDownloader.MovieDetailsResult(
-                        MovieDetails().apply {
-                            tmdbMovie(Movie())
-                        },
-                        isNotFoundOnTmdb = false
+                    MovieDownloader.MovieDetailsResult.Success(
+                        MovieDetails(Movie())
                     )
                 )
         }
