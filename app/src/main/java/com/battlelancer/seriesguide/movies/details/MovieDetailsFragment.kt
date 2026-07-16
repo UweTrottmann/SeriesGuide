@@ -24,8 +24,6 @@ import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.loader.app.LoaderManager
-import androidx.loader.content.Loader
 import androidx.palette.graphics.Palette
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.billing.BillingTools
@@ -111,7 +109,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         _binding = FragmentMovieBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        binding.progressBar.isGone = true
         binding.textViewMovieGenresLabel.isGone = true
         binding.labelMovieLastUpdated.isGone = true
 
@@ -237,10 +234,26 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         binding.contentContainerMovieRight?.let { ThemeUtils.applyBottomPaddingForNavigationBar(it) }
 
         // Movie details
-        val args = Bundle()
-        args.putInt(ARG_TMDB_ID, tmdbId)
-        LoaderManager.getInstance(this).apply {
-            initLoader(MovieDetailsActivity.LOADER_ID_MOVIE, args, movieLoaderCallbacks)
+        viewLifecycleOwner.lifecycleScope.launch {
+            model.movieDetailsResult.collect { result ->
+
+                binding.progressBar.isGone = result != null
+
+                if (result is MovieLoader.Result.Success) {
+                    movieDetails = result.details
+                    populateMovieViews(result.details)
+                    loadMovieActionsDelayed()
+                    requireActivity().invalidateOptionsMenu()
+                } else if (result == MovieLoader.Result.Error) {
+                    // if there is no local data and loading from network failed
+                    binding.textViewMovieDescription.text =
+                        if (AndroidUtils.isNetworkConnected(requireContext())) {
+                            getString(R.string.api_error_generic, getString(R.string.tmdb))
+                        } else {
+                            getString(R.string.offline)
+                        }
+                }
+            }
         }
 
         // Trailer
@@ -639,7 +652,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             return
         }
         // re-query to update movie details
-        restartMovieLoader()
+        model.loadMovieDetails()
         // re-run trailer loader to cache to database if movie was added to database
         model.loadTrailerVideoId()
     }
@@ -666,7 +679,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun handleLanguageEvent(@Suppress("UNUSED_PARAMETER") event: MovieLocalizationDialogFragment.LocalizationChangedEvent) {
         // reload movie details and trailers (but not cast/crew info which is not language-dependent)
-        restartMovieLoader()
+        model.loadMovieDetails()
         model.loadTrailerVideoId()
     }
 
@@ -723,49 +736,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     private fun setCastVisibility(visible: Boolean) {
         binding.moviePeople.labelCast.isGone = !visible
         binding.moviePeople.containerCast.isGone = !visible
-    }
-
-    private fun restartMovieLoader() {
-        val args = Bundle()
-        args.putInt(ARG_TMDB_ID, tmdbId)
-        LoaderManager.getInstance(this)
-            .restartLoader(MovieDetailsActivity.LOADER_ID_MOVIE, args, movieLoaderCallbacks)
-    }
-
-    private val movieLoaderCallbacks = object : LoaderManager.LoaderCallbacks<MovieLoader.Result> {
-        override fun onCreateLoader(loaderId: Int, args: Bundle?): Loader<MovieLoader.Result> {
-            binding.progressBar.isGone = false
-            return MovieLoader(requireContext(), args!!.getInt(ARG_TMDB_ID))
-        }
-
-        override fun onLoadFinished(
-            movieLoader: Loader<MovieLoader.Result>,
-            result: MovieLoader.Result
-        ) {
-            if (!isAdded) {
-                return
-            }
-            binding.progressBar.isGone = true
-
-            if (result is MovieLoader.Result.Success) {
-                this@MovieDetailsFragment.movieDetails = result.details
-                populateMovieViews(result.details)
-                loadMovieActions()
-                activity!!.invalidateOptionsMenu()
-            } else {
-                // if there is no local data and loading from network failed
-                binding.textViewMovieDescription.text =
-                    if (AndroidUtils.isNetworkConnected(requireContext())) {
-                        getString(R.string.api_error_generic, getString(R.string.tmdb))
-                    } else {
-                        getString(R.string.offline)
-                    }
-            }
-        }
-
-        override fun onLoaderReset(movieLoader: Loader<MovieLoader.Result>) {
-            // nothing to do
-        }
     }
 
     private val sgAppBarLayout

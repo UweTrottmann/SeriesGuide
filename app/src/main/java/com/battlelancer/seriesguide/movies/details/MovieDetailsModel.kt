@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import com.battlelancer.seriesguide.movies.MovieLoader
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
@@ -21,6 +22,8 @@ class MovieDetailsModel(
     private val movieTmdbId: Int,
     application: Application
 ) : AndroidViewModel(application) {
+
+    val movieDetailsResult: MutableStateFlow<MovieLoader.Result?> = MutableStateFlow(null)
 
     val trailerVideoId: MutableStateFlow<String?> = MutableStateFlow(null)
 
@@ -46,7 +49,15 @@ class MovieDetailsModel(
         // Set original value for region.
         StreamingSearch.initRegionLiveData(application)
 
+        loadMovieDetails()
         loadTrailerVideoId()
+    }
+
+    fun loadMovieDetails() {
+        viewModelScope.launch(Dispatchers.Default) {
+            movieDetailsResult.value = MovieLoader(getApplication(), movieTmdbId)
+                .loadInBackground()
+        }
     }
 
     fun loadTrailerVideoId() {

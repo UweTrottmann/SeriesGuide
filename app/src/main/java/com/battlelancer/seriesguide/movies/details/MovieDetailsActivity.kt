@@ -54,9 +54,6 @@ class MovieDetailsActivity : BaseMessageActivity() {
     }
 
     companion object {
-        // loader ids for this activity (mostly used by fragments)
-        var LOADER_ID_MOVIE = 100
-
         fun intentMovie(context: Context, movieTmdbId: Int): Intent {
             return Intent(context, MovieDetailsActivity::class.java)
                 .putExtra(MovieDetailsFragment.ARG_TMDB_ID, movieTmdbId)

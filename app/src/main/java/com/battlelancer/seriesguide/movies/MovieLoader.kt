@@ -20,33 +20,36 @@ import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.RatingsTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
-import com.uwetrottmann.androidutils.GenericSimpleLoader
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.threeten.bp.Instant
 import org.threeten.bp.ZonedDateTime
 
 /**
- * Tries to load current movie details from trakt and TMDb, if failing tries to fall back to local
+ * Tries to load current movie details from Trakt and TMDB, on failure tries to fall back to a local
  * database copy.
  */
-internal class MovieLoader(
-    context: Context,
+class MovieLoader(
+    private val context: Context,
     private val tmdbId: Int
-) : GenericSimpleLoader<MovieLoader.Result>(context) {
+) {
 
     sealed interface Result {
         data class Success(val details: UiMovieDetails) : Result
         object Error : Result
     }
 
-    override fun loadInBackground(): Result {
-        // try loading from trakt and tmdb, this might return a cached response
+    suspend fun loadInBackground(): Result = withContext(Dispatchers.Default) {
+        load()
+    }
+
+    private suspend fun load(): Result {
         val movieTools = getServicesComponent(context).movieTools()
-        // No need to handle InterruptedException as ModernAsyncTask does (see its constructor)
-        val detailsResult = runBlocking {
+
+        // try loading from trakt and tmdb, this might return a cached response
+        val detailsResult =
             movieTools.downloader
                 .getMovieDetailsWithDefaults(tmdbId, true)
-        }
 
         val details: MovieDetails? = when (detailsResult) {
             is MovieDetailsResult.Success -> detailsResult.movieDetails
