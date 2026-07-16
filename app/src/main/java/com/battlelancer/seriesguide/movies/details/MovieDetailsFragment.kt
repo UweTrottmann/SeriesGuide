@@ -511,13 +511,14 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         binding.containerMovieBottom.buttonMovieTmdb.openUriOnClick(movieDetails.tmdbUrl)
 
         // Trakt links
-        movieDetails.traktUrl
-            ?.let {
-                if (!preventExternalLinks) {
-                    binding.containerRatings.ratingViewTrakt.setLink(requireContext(), it)
-                }
-                binding.containerMovieBottom.buttonMovieTrakt.openUriOnClick(it)
-            }
+        val traktUrl = movieDetails.traktUrl
+        if (traktUrl != null && !preventExternalLinks) {
+            binding.containerRatings.ratingViewTrakt.setLink(requireContext(), traktUrl)
+        }
+        binding.containerMovieBottom.buttonMovieTrakt.apply {
+            openUriOnClick(traktUrl)
+            isEnabled = traktUrl != null
+        }
 
         // IMDb link
         binding.containerMovieBottom.buttonMovieImdb.apply {
