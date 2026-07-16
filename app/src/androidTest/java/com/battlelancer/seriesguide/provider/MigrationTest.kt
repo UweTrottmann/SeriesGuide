@@ -6,6 +6,10 @@ package com.battlelancer.seriesguide.provider
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteConstraintException
+import androidx.core.database.getDoubleOrNull
+import androidx.core.database.getIntOrNull
+import androidx.core.database.getLongOrNull
+import androidx.core.database.getStringOrNull
 import androidx.room.testing.MigrationTestHelper
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.test.core.app.ApplicationProvider
@@ -420,56 +424,59 @@ class MigrationTest {
 
         val db = getMigratedDatabase(SgRoomDatabase.VERSION_55_MOVIE_SLUG_DOUBLE_RATING)
 
-        // movies has new column for slug and rating survived migration to Double
         queryAndAssert(
             db,
-            "SELECT " +
-                    "movies_traktid," + // 0
-                    "movies_slug," +
-                    "movies_tmdbid," +
-                    "movies_imdbid," +
-                    "movies_title," +
-                    "movies_title_noarticle," + // 5
-                    "movies_poster," +
-                    "movies_overview," +
-                    "movies_released," +
-                    "movies_runtime," +
-                    "movies_incollection," + // 10
-                    "movies_inwatchlist," +
-                    "movies_plays," +
-                    "movies_watched," +
-                    "movies_rating_tmdb," +
-                    "movies_rating_votes_tmdb," + // 15
-                    "movies_rating_trakt," +
-                    "movies_rating_votes_trakt," +
-                    "movies_rating_user," +
-                    "movies_last_updated " + // 19
-                    "FROM movies WHERE movies_tmdbid=${testMovie.tmdbId}"
+            "SELECT * FROM movies WHERE movies_tmdbid=${testMovie.tmdbId}"
         ) { movie ->
-            var index = 0
-            assertThat(movie.isNull(index++)).isTrue()
-            assertThat(movie.isNull(index++)).isTrue()
-            assertThat(movie.getInt(index++)).isEqualTo(testMovie.tmdbId)
-            assertThat(movie.getString(index++)).isEqualTo(testMovie.imdbId)
-            assertThat(movie.getString(index++)).isEqualTo(testMovie.title)
-            assertThat(movie.getString(index++)).isEqualTo(testMovie.titleNoArticle)
-            assertThat(movie.getString(index++)).isEqualTo(testMovie.poster)
-            assertThat(movie.getString(index++)).isEqualTo(testMovie.overview)
-            assertThat(movie.getLong(index++)).isEqualTo(testMovie.releasedMs)
-            assertThat(movie.getInt(index++)).isEqualTo(testMovie.runtimeMin)
-            assertThat(movie.getInt(index++) == 1).isEqualTo(testMovie.inCollection)
-            assertThat(movie.getInt(index++) == 1).isEqualTo(testMovie.inWatchlist)
-            assertThat(movie.getInt(index++)).isEqualTo(testMovie.plays)
-            assertThat(movie.getInt(index++) == 1).isEqualTo(testMovie.watched)
-            assertThat(movie.getDouble(index++)).isEqualTo(testMovie.ratingTmdb)
-            assertThat(movie.getInt(index++)).isEqualTo(testMovie.ratingVotesTmdb)
-            assertThat(movie.getDouble(index++))
+            // New columns initialized with NULL
+            assertThat(movie.isNull(movie.getColumnIndexOrThrow("movies_traktid")))
+                .isTrue()
+            assertThat(movie.isNull(movie.getColumnIndexOrThrow("movies_slug")))
+                .isTrue()
+
+            // Rating value is kept
+            assertThat(movie.getDouble("movies_rating_trakt"))
                 .isEqualTo(testMovie.ratingTrakt.toDouble())
-            assertThat(movie.getInt(index++)).isEqualTo(testMovie.ratingVotesTrakt)
-            assertThat(movie.getInt(index++)).isEqualTo(testMovie.ratingUser)
-            assertThat(movie.getLong(index)).isEqualTo(testMovie.lastUpdated)
+
+            // Certification column was removed
+            assertThat(movie.getColumnIndex("movies_certification"))
+                .isEqualTo(-1)
+
+            // Other values are kept
+            assertThat(movie.getInt("movies_tmdbid")).isEqualTo(testMovie.tmdbId)
+            assertThat(movie.getString("movies_imdbid")).isEqualTo(testMovie.imdbId)
+            assertThat(movie.getString("movies_title")).isEqualTo(testMovie.title)
+            assertThat(movie.getString("movies_title_noarticle")).isEqualTo(testMovie.titleNoArticle)
+            assertThat(movie.getString("movies_poster")).isEqualTo(testMovie.poster)
+            assertThat(movie.getString("movies_overview")).isEqualTo(testMovie.overview)
+            assertThat(movie.getLong("movies_released")).isEqualTo(testMovie.releasedMs)
+            assertThat(movie.getInt("movies_runtime")).isEqualTo(testMovie.runtimeMin)
+            assertThat(movie.getBoolean("movies_incollection")).isEqualTo(testMovie.inCollection)
+            assertThat(movie.getBoolean("movies_inwatchlist")).isEqualTo(testMovie.inWatchlist)
+            assertThat(movie.getInt("movies_plays")).isEqualTo(testMovie.plays)
+            assertThat(movie.getBoolean("movies_watched")).isEqualTo(testMovie.watched)
+            assertThat(movie.getDouble("movies_rating_tmdb")).isEqualTo(testMovie.ratingTmdb)
+            assertThat(movie.getInt("movies_rating_votes_tmdb")).isEqualTo(testMovie.ratingVotesTmdb)
+            assertThat(movie.getInt("movies_rating_votes_trakt")).isEqualTo(testMovie.ratingVotesTrakt)
+            assertThat(movie.getInt("movies_rating_user")).isEqualTo(testMovie.ratingUser)
+            assertThat(movie.getLong("movies_last_updated")).isEqualTo(testMovie.lastUpdated)
         }
     }
+
+    private fun Cursor.getInt(columnName: String): Int? =
+        getIntOrNull(getColumnIndexOrThrow(columnName))
+
+    private fun Cursor.getBoolean(columnName: String): Boolean? =
+        getInt(columnName)?.let { it != 0 }
+
+    private fun Cursor.getLong(columnName: String): Long? =
+        getLongOrNull(getColumnIndexOrThrow(columnName))
+
+    private fun Cursor.getDouble(columnName: String): Double? =
+        getDoubleOrNull(getColumnIndexOrThrow(columnName))
+
+    private fun Cursor.getString(columnName: String): String? =
+        getStringOrNull(getColumnIndexOrThrow(columnName))
 
     /**
      * Validate test data for version [SgRoomDatabase.VERSION_49_AUTO_ID_MIGRATION] or higher.

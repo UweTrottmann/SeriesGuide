@@ -89,12 +89,6 @@ data class SgMovie(
     @ColumnInfo(name = Movies.TRAILER)
     val trailer: String? = null,
 
-    /**
-     * Currently unused as certifications vary by region.
-     */
-    @ColumnInfo(name = Movies.CERTIFICATION)
-    val certification: String? = null,
-
     @ColumnInfo(name = Movies.IN_COLLECTION)
     val inCollection: Boolean? = false,
 

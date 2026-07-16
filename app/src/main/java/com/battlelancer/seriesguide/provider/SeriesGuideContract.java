@@ -1000,6 +1000,9 @@ public class SeriesGuideContract {
 
         String TRAILER = "movies_trailer";
 
+        /**
+         * @deprecated Removed in {@link SgRoomDatabase#VERSION_55_MOVIE_SLUG_DOUBLE_RATING}.
+         */
         String CERTIFICATION = "movies_certification";
 
         /**

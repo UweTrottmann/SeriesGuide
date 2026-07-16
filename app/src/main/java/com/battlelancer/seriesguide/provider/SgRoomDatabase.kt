@@ -153,6 +153,7 @@ abstract class SgRoomDatabase : RoomDatabase() {
         /**
          * - Add [SgMovie.slug].
          * - Change [SgMovie.ratingTrakt] from Int to Double.
+         * - Remove unused movie certification column.
          */
         const val VERSION_55_MOVIE_SLUG_DOUBLE_RATING = 55
 
@@ -250,7 +251,6 @@ abstract class SgRoomDatabase : RoomDatabase() {
                                 "`movies_released` INTEGER, " +
                                 "`movies_runtime` INTEGER, " +
                                 "`movies_trailer` TEXT, " +
-                                "`movies_certification` TEXT, " +
                                 "`movies_incollection` INTEGER, " +
                                 "`movies_inwatchlist` INTEGER, " +
                                 "`movies_plays` INTEGER, " +
@@ -268,6 +268,7 @@ abstract class SgRoomDatabase : RoomDatabase() {
                     // - movies_rating_trakt integers as-is as SQLite internally stores them as
                     //   INTEGER anyhow as they don't have a fractional component,
                     //   see https://www.sqlite.org/datatype3.html#type_affinity.
+                    // - without movies_certification which was deleted
                     db.execSQL(
                         "INSERT INTO movies_new (" +
                                 "movies_tmdbid, " +
@@ -282,7 +283,6 @@ abstract class SgRoomDatabase : RoomDatabase() {
                                 "movies_released, " +
                                 "movies_runtime, " +
                                 "movies_trailer, " +
-                                "movies_certification, " +
                                 "movies_incollection, " +
                                 "movies_inwatchlist, " +
                                 "movies_plays, " +
@@ -306,7 +306,6 @@ abstract class SgRoomDatabase : RoomDatabase() {
                                 "movies_released, " +
                                 "movies_runtime, " +
                                 "movies_trailer, " +
-                                "movies_certification, " +
                                 "movies_incollection, " +
                                 "movies_inwatchlist, " +
                                 "movies_plays, " +
