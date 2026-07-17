@@ -13,6 +13,7 @@ import androidx.annotation.RestrictTo
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Provider
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.signOutFromGoogle
+import com.battlelancer.seriesguide.backend.auth.util.SignInPreferenceManager
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
@@ -248,7 +249,8 @@ class FirebaseAuthUI private constructor(
      * }
      * ```
      *
-     * @param context For [signOutFromGoogle] to create [androidx.credentials.CredentialManager]
+     * @param context For [signOutFromGoogle] to create [androidx.credentials.CredentialManager] and
+     * to clear last sign-in preference
      * @throws AuthException.AuthCancelledException if the operation is cancelled
      * @throws AuthException.NetworkException if a network error occurs
      * @throws AuthException.UnknownException for other errors
@@ -258,6 +260,10 @@ class FirebaseAuthUI private constructor(
         try {
             // Update state to loading
             updateAuthState(AuthState.Loading("Signing out..."))
+
+            // Clear data for "Continue with" feature if explicitly signing out, for example, to not
+            // leak an email address on a shared device.
+            SignInPreferenceManager.clearLastSignIn(context)
 
             // Sign out from Firebase Auth
             auth.signOut()
@@ -312,6 +318,7 @@ class FirebaseAuthUI private constructor(
      * }
      * ```
      *
+     * @param context The Android [Context] to clear last sign-in preference
      * @throws AuthException.InvalidCredentialsException if reauthentication is required
      * @throws AuthException.AuthCancelledException if the operation is cancelled
      * @throws AuthException.NetworkException if a network error occurs
@@ -319,7 +326,7 @@ class FirebaseAuthUI private constructor(
      * @throws AuthException.UnknownException for other errors
      * @since 10.0.0
      */
-    suspend fun delete() {
+    suspend fun delete(context: Context) {
         try {
             val currentUser = auth.currentUser
                 ?: throw AuthException.UnknownException(
@@ -328,6 +335,10 @@ class FirebaseAuthUI private constructor(
 
             // Update state to loading
             updateAuthState(AuthState.Loading("Deleting account..."))
+
+            // Clear data for "Continue with" feature if deleting account, for example, to not
+            // leak an email address on a shared device.
+            SignInPreferenceManager.clearLastSignIn(context)
 
             // Delete the user account
             currentUser.delete().await()

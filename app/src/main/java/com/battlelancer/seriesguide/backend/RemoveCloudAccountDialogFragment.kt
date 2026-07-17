@@ -56,6 +56,7 @@ class RemoveCloudAccountDialogFragment : AppCompatDialogFragment() {
 
     class RemoveHexagonAccountTask(context: Context) {
 
+        private val context: Context = context.applicationContext
         private val hexagonTools: HexagonTools = getServicesComponent(context).hexagonTools()
 
         suspend fun run() {
@@ -80,7 +81,7 @@ class RemoveCloudAccountDialogFragment : AppCompatDialogFragment() {
 
             // Delete Firebase account so other clients are signed out as well
             try {
-                FirebaseAuthUI.getInstance().delete()
+                FirebaseAuthUI.getInstance().delete(context)
             } catch (e: AuthException) {
                 Timber.e(e, "Failed to delete Firebase account")
                 Errors.reportHexagonAuthError(ACTION_REMOVE_ACCOUNT, e)
