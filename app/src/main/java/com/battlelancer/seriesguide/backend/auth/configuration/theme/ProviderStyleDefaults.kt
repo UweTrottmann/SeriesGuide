@@ -30,7 +30,7 @@ object ProviderStyleDefaults {
 
     val Email = AuthUITheme.ProviderStyle(
         icon = R.drawable.ic_email_white_24dp,
-        backgroundColor = Color(0xFFD0021B),
+        backgroundColor = Color(0xFF6545A0),
         contentColor = Color.White
     )
 
