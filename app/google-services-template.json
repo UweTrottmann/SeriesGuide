@@ -1,0 +1,93 @@
+{
+  "project_info": {
+    "project_number": "123456789012",
+    "firebase_url": "https://project-id-placeholder.firebaseio.com",
+    "project_id": "project-id-placeholder",
+    "storage_bucket": "project-id-placeholder.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "app-id-placeholder",
+        "android_client_info": {
+          "package_name": "com.battlelancer.seriesguide"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "client-id-placeholder",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.battlelancer.seriesguide",
+            "certificate_hash": "certificate-hash-placeholder"
+          }
+        },
+        {
+          "client_id": "client-id-placeholder",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.battlelancer.seriesguide",
+            "certificate_hash": "certificate-hash-placeholder"
+          }
+        },
+        {
+          "client_id": "client-id-placeholder",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "api-key-placeholder"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "client-id-placeholder",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "app-id-placeholder",
+        "android_client_info": {
+          "package_name": "com.uwetrottmann.seriesguide.amzn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "client-id-placeholder",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.uwetrottmann.seriesguide.amzn",
+            "certificate_hash": "certificate-hash-placeholder"
+          }
+        },
+        {
+          "client_id": "client-id-placeholder",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "api-key-placeholder"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "client-id-placeholder",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -21,4 +21,11 @@
     </issue>
     <!-- Avoid spamming lint output, there is no need to use these, it's just convenience -->
     <issue id="UseKtx" severity="ignore" />
+    <!--
+    AndroidX Credential Manager: lint errors that an asset_statements must be added, but according
+    to documentation it's only required for passkeys. It also requires providing a
+    .well-known/assetlinks.json from the sign-in domain, but currently not offering a web interface.
+    https://developer.android.com/identity/credential-manager/prerequisites#configure-digital-asset-links
+    -->
+    <issue id="CredManMissingDal" severity="ignore" />
 </lint>

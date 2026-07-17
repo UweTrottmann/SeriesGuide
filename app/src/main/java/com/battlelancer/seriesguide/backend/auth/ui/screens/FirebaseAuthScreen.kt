@@ -1,0 +1,534 @@
+// SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
+
+// Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
+// https://github.com/firebase/FirebaseUI-Android
+
+package com.battlelancer.seriesguide.backend.auth.ui.screens
+
+import androidx.activity.compose.LocalActivity
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.battlelancer.seriesguide.backend.auth.AuthException
+import com.battlelancer.seriesguide.backend.auth.AuthState
+import com.battlelancer.seriesguide.backend.auth.FirebaseAuthUI
+import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
+import com.battlelancer.seriesguide.backend.auth.configuration.MfaConfiguration
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.rememberGoogleSignInHandler
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.rememberOAuthSignInHandler
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.signInWithEmailLink
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.AuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.DefaultAuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.ui.components.ErrorRecoveryDialog
+import com.battlelancer.seriesguide.backend.auth.ui.components.LoadingDialog
+import com.battlelancer.seriesguide.backend.auth.ui.method_picker.AuthMethodPicker
+import com.battlelancer.seriesguide.backend.auth.ui.screens.email.EmailAuthMode
+import com.battlelancer.seriesguide.backend.auth.ui.screens.email.EmailAuthScreen
+import com.battlelancer.seriesguide.backend.auth.util.EmailLinkPersistenceManager
+import com.battlelancer.seriesguide.backend.auth.util.SignInPreferenceManager
+import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.MultiFactorResolver
+import kotlinx.coroutines.launch
+import timber.log.Timber
+
+/**
+ * High-level authentication screen that wires together provider selection, individual provider
+ * flows, error handling, and multi-factor enrollment/challenge flows. Back navigation is driven by
+ * the Jetpack Navigation stack so presses behave like native Android navigation.
+ *
+ * [onSignInSuccess] is called on successful sign-in and if the user is different from before.
+ *
+ * [onSignInFailure] is called when
+ * - a selected provider is not supported by this screen
+ * - email auth has failed
+ * - signing out (from the success screen) has failed
+ * - MFA enrollment failed
+ * - MFA challenge failed
+ *
+ * [onSignInCancelled] is called if state reaches [AuthState.Cancelled].
+ *
+ * If [emailLink] is given and there is a matching email address stored, upon launch tries to sign
+ * in using the email link.
+ *
+ * Supply [mfaConfiguration] to customize settings for [MfaEnrollmentScreen].
+ */
+@Composable
+fun FirebaseAuthScreen(
+    configuration: AuthUIConfiguration,
+    onSignInSuccess: () -> Unit,
+    onSignInFailure: (AuthException) -> Unit,
+    onSignInCancelled: () -> Unit,
+    authUI: FirebaseAuthUI = FirebaseAuthUI.getInstance(),
+    emailLink: String? = null,
+    mfaConfiguration: MfaConfiguration = MfaConfiguration()
+) {
+    val activity = LocalActivity.current
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+    val stringProvider: AuthUIStringProvider = DefaultAuthUIStringProvider(context)
+    val navController = rememberNavController()
+
+    val authState by authUI.authStateFlow().collectAsState(AuthState.Idle)
+    val isErrorDialogVisible = remember { mutableStateOf(false) }
+    val lastSuccessfulUserId = remember { mutableStateOf<String?>(null) }
+    val pendingLinkingCredential = remember { mutableStateOf<AuthCredential?>(null) }
+    val pendingResolver = remember { mutableStateOf<MultiFactorResolver?>(null) }
+    // The email screen mode state is remembered here instead of inside EmailAuthScreen as error
+    // recovery might have to change it.
+    val emailScreenMode = rememberSaveable { mutableStateOf<EmailAuthMode?>(null) }
+    val emailLinkFromDifferentDevice = remember { mutableStateOf<String?>(null) }
+    val lastSignInPreference =
+        remember { mutableStateOf<SignInPreferenceManager.SignInPreference?>(null) }
+    val signInPreference =
+        remember { mutableStateOf<SignInPreferenceManager.SignInPreference?>(null) }
+
+    // Load last sign-in preference on launch
+    LaunchedEffect(authState) {
+        lastSignInPreference.value = SignInPreferenceManager.getLastSignIn(context)
+    }
+
+    val googleProvider =
+        configuration.providers.filterIsInstance<AuthProvider.Google>().firstOrNull()
+    val emailProvider = configuration.providers.filterIsInstance<AuthProvider.Email>().firstOrNull()
+    val genericOAuthProviders =
+        configuration.providers.filterIsInstance<AuthProvider.GenericOAuth>()
+
+    val logoAsset = configuration.logo
+
+    val onSignInWithGoogle = googleProvider?.let {
+        authUI.rememberGoogleSignInHandler(
+            context = context,
+            provider = it
+        )
+    }
+
+    val genericOAuthHandlers = genericOAuthProviders.associateWith {
+        authUI.rememberOAuthSignInHandler(
+            context = context,
+            activity = activity,
+            config = configuration,
+            provider = it
+        )
+    }
+
+    CompositionLocalProvider(
+        LocalAuthUIStringProvider provides configuration.stringProvider
+    ) {
+        Surface(
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
+            NavHost(
+                navController = navController,
+                startDestination = AuthRoute.MethodPicker.route,
+                enterTransition = configuration.transitions?.enterTransition ?: {
+                    fadeIn(animationSpec = tween(700))
+                },
+                exitTransition = configuration.transitions?.exitTransition ?: {
+                    fadeOut(animationSpec = tween(700))
+                },
+                popEnterTransition = configuration.transitions?.popEnterTransition ?: {
+                    fadeIn(animationSpec = tween(700))
+                },
+                popExitTransition = configuration.transitions?.popExitTransition ?: {
+                    fadeOut(animationSpec = tween(700))
+                }
+            ) {
+                composable(AuthRoute.MethodPicker.route) {
+                    AuthMethodPicker(
+                        providers = configuration.providers,
+                        logo = logoAsset,
+                        privacyPolicyUrl = configuration.privacyPolicyUrl,
+                        lastSignInPreference = lastSignInPreference.value,
+                        onNavigateBack = {
+                            authUI.updateAuthState(AuthState.Cancelled)
+                        },
+                        onProviderSelected = { provider, signInPref ->
+                            when (provider) {
+                                is AuthProvider.Email -> {
+                                    signInPreference.value = signInPref
+                                    // Reset the mode, in case the user leaves the email screen
+                                    // and then returns to it again
+                                    emailScreenMode.value = EmailAuthMode.SignIn
+                                    navController.navigate(AuthRoute.Email.route)
+                                }
+
+                                is AuthProvider.Google -> onSignInWithGoogle?.invoke()
+
+                                is AuthProvider.GenericOAuth -> genericOAuthHandlers[provider]?.invoke()
+
+                                else -> {
+                                    onSignInFailure(
+                                        AuthException.UnknownException(
+                                            message = "Provider ${provider.providerId} is not supported in FirebaseAuthScreen",
+                                            cause = IllegalArgumentException(
+                                                "Provider ${provider.providerId} is not supported in FirebaseAuthScreen"
+                                            )
+                                        )
+                                    )
+                                }
+                            }
+                        }
+                    )
+                }
+
+                composable(AuthRoute.Email.route) {
+                    EmailAuthScreen(
+                        context = context,
+                        configuration = configuration,
+                        authUI = authUI,
+                        mode = emailScreenMode.value,
+                        changeMode = { mode ->
+                            emailScreenMode.value = mode
+                        },
+                        signInPreference = signInPreference.value,
+                        credentialForLinking = pendingLinkingCredential.value,
+                        emailLinkFromDifferentDevice = emailLinkFromDifferentDevice.value,
+                        onSuccess = {
+                            pendingLinkingCredential.value = null
+                        },
+                        onError = { exception ->
+                            onSignInFailure(exception)
+                        },
+                        onCancel = {
+                            pendingLinkingCredential.value = null
+                            if (!navController.popBackStack()) {
+                                navController.navigate(AuthRoute.MethodPicker.route) {
+                                    popUpTo(AuthRoute.MethodPicker.route) { inclusive = true }
+                                    launchSingleTop = true
+                                }
+                            }
+                        }
+                    )
+                }
+
+                composable(AuthRoute.Success.route) {
+                    val uiContext = remember(authState, stringProvider) {
+                        AuthSuccessUiContext(
+                            authUI = authUI,
+                            stringProvider = stringProvider,
+                            configuration = configuration,
+                            onSignOut = {
+                                coroutineScope.launch {
+                                    try {
+                                        authUI.signOut(context)
+                                        // Keep sign-in preference for "Continue as..." on next launch
+                                    } catch (e: Exception) {
+                                        onSignInFailure(AuthException.from(e))
+                                    } finally {
+                                        pendingLinkingCredential.value = null
+                                        pendingResolver.value = null
+                                    }
+                                }
+                            },
+                            onManageMfa = {
+                                if (configuration.isMfaEnabled) {
+                                    navController.navigate(AuthRoute.MfaEnrollment.route)
+                                } else {
+                                    val exception = AuthException.AuthCancelledException(
+                                        message = "Multi-factor authentication is disabled in the configuration. " +
+                                                "Enable MFA in AuthUIConfiguration to use this feature."
+                                    )
+                                    authUI.updateAuthState(AuthState.Error(exception))
+                                }
+                            },
+                            onSendVerification = {
+                                authUI.getCurrentUser()?.sendEmailVerification()
+                            },
+                            onReloadUser = {
+                                coroutineScope.launch {
+                                    try {
+                                        // Reload user to get fresh data from server
+                                        authUI.getCurrentUser()?.reload()
+                                        authUI.getCurrentUser()?.getIdToken(true)
+
+                                        // Check the user's email verification status after reload
+                                        val user = authUI.getCurrentUser()
+                                        if (user != null) {
+                                            // If email is now verified, transition to Success state
+                                            val email = user.email
+                                            if (user.isEmailVerified) {
+                                                authUI.updateAuthState(
+                                                    AuthState.Success(user = user)
+                                                )
+                                            } else if (email != null) {
+                                                // Email still not verified, keep showing verification screen
+                                                authUI.updateAuthState(
+                                                    AuthState.RequiresEmailVerification(
+                                                        user = user,
+                                                        email = email
+                                                    )
+                                                )
+                                            }
+                                            // Otherwise, if the email was removed from the user for
+                                            // whatever reason stay on the verification screen
+                                            // (== do not update auth state) to at least allow to
+                                            // sign out.
+                                        }
+                                    } catch (e: Exception) {
+                                        Timber.e(e, "Failed to refresh user")
+                                    }
+                                }
+                            },
+                            onNavigate = { route ->
+                                navController.navigate(route.route)
+                            }
+                        )
+                    }
+
+                    SuccessDestination(
+                        authState = authState,
+                        uiContext = uiContext
+                    )
+                }
+
+                composable(AuthRoute.MfaEnrollment.route) {
+                    val user = authUI.getCurrentUser()
+                    if (user != null) {
+                        MfaEnrollmentScreen(
+                            user = user,
+                            auth = authUI.auth,
+                            configuration = mfaConfiguration,
+                            onComplete = { navController.popBackStack() },
+                            onSkip = { navController.popBackStack() },
+                            onError = { exception ->
+                                onSignInFailure(AuthException.from(exception))
+                            }
+                        )
+                    } else {
+                        navController.popBackStack()
+                    }
+                }
+
+                composable(AuthRoute.MfaChallenge.route) {
+                    val resolver = pendingResolver.value
+                    if (resolver != null) {
+                        MfaChallengeScreen(
+                            resolver = resolver,
+                            auth = authUI.auth,
+                            onSuccess = {
+                                pendingResolver.value = null
+                                // Reset auth state to Idle so the firebaseAuthFlow Success state takes over
+                                authUI.updateAuthState(AuthState.Idle)
+                            },
+                            onCancel = {
+                                pendingResolver.value = null
+                                authUI.updateAuthState(AuthState.Cancelled)
+                                navController.popBackStack()
+                            },
+                            onError = { exception ->
+                                onSignInFailure(AuthException.from(exception))
+                            }
+                        )
+                    } else {
+                        navController.popBackStack()
+                    }
+                }
+            }
+
+            // Handle email link sign-in (deep links)
+            LaunchedEffect(emailLink) {
+                if (emailLink != null && emailProvider != null) {
+                    try {
+                        // Try to retrieve saved email from DataStore (same-device flow)
+                        val savedEmail =
+                            EmailLinkPersistenceManager.default.retrieveSessionRecord(context)?.email
+
+                        if (savedEmail != null) {
+                            // Same device - we have the email, sign in automatically
+                            authUI.signInWithEmailLink(
+                                context = context,
+                                provider = emailProvider,
+                                email = savedEmail,
+                                emailLink = emailLink
+                            )
+                        } else {
+                            // Different device - no saved email
+                            // Call signInWithEmailLink with empty email to trigger validation
+                            // This will throw EmailLinkPromptForEmailException or EmailLinkWrongDeviceException
+                            authUI.signInWithEmailLink(
+                                context = context,
+                                provider = emailProvider,
+                                email = "", // Empty email triggers cross-device detection
+                                emailLink = emailLink
+                            )
+                        }
+                    } catch (e: Exception) {
+                        Timber.e(e, "Failed to complete email link sign-in")
+                    }
+                }
+            }
+
+            // Synchronise auth state changes with navigation stack.
+            LaunchedEffect(authState) {
+                val state = authState
+                val currentRoute = navController.currentBackStackEntry?.destination?.route
+                when (state) {
+                    is AuthState.Success -> {
+                        pendingResolver.value = null
+                        pendingLinkingCredential.value = null
+
+                        if (state.user.uid != lastSuccessfulUserId.value) {
+                            // Set before callback in case callback changes state
+                            lastSuccessfulUserId.value = state.user.uid
+                            onSignInSuccess()
+
+                            // Reload sign-in preference (may have been updated by provider)
+                            coroutineScope.launch {
+                                lastSignInPreference.value =
+                                    SignInPreferenceManager.getLastSignIn(context)
+                            }
+                        }
+
+                        if (currentRoute != AuthRoute.Success.route) {
+                            navController.navigate(AuthRoute.Success.route) {
+                                popUpTo(AuthRoute.MethodPicker.route) { inclusive = true }
+                                launchSingleTop = true
+                            }
+                        }
+                    }
+
+                    is AuthState.RequiresEmailVerification -> {
+                        pendingResolver.value = null
+                        pendingLinkingCredential.value = null
+                        // Navigate to success screen (handles email verification)
+                        if (currentRoute != AuthRoute.Success.route) {
+                            navController.navigate(AuthRoute.Success.route) {
+                                popUpTo(AuthRoute.MethodPicker.route) { inclusive = true }
+                                launchSingleTop = true
+                            }
+                        }
+                    }
+
+                    is AuthState.RequiresMfa -> {
+                        pendingResolver.value = state.resolver
+                        if (currentRoute != AuthRoute.MfaChallenge.route) {
+                            navController.navigate(AuthRoute.MfaChallenge.route) {
+                                launchSingleTop = true
+                            }
+                        }
+                    }
+
+                    is AuthState.Cancelled -> {
+                        // Clear any state from operations
+                        pendingResolver.value = null
+                        pendingLinkingCredential.value = null
+                        lastSuccessfulUserId.value = null
+                        // If not already shown, navigate to method picker
+                        if (currentRoute != AuthRoute.MethodPicker.route) {
+                            navController.navigate(AuthRoute.MethodPicker.route) {
+                                popUpTo(AuthRoute.MethodPicker.route) { inclusive = true }
+                                launchSingleTop = true
+                            }
+                        }
+                        onSignInCancelled()
+                    }
+
+                    else -> Unit
+                }
+            }
+
+            // Handle errors
+            val errorState = authState as? AuthState.Error
+            if (errorState != null) {
+                val exception = when (val throwable = errorState.exception) {
+                    is AuthException -> throwable
+                    else -> AuthException.from(throwable)
+                }
+
+                // The launch state is only run again if the error changes (or if auth state changed
+                // to a non-error state before, and on config changes).
+                LaunchedEffect(errorState) {
+                    // Don't show error dialog if the user has canceled an operation (like a
+                    // credentials manager popup).
+                    if (exception !is AuthException.AuthCancelledException) {
+                        isErrorDialogVisible.value = true
+                    }
+                }
+
+                // Error dialog
+                if (isErrorDialogVisible.value) {
+                    ErrorRecoveryDialog(
+                        error = exception,
+                        stringProvider = stringProvider,
+                        onRecover = { exception ->
+                            isErrorDialogVisible.value = false
+                            // Clear error
+                            authUI.updateAuthState(AuthState.Idle)
+                            // If applicable, do recovery action
+                            when (exception) {
+                                is AuthException.EmailAlreadyInUseException -> {
+                                    // Switch email screen to sign-in mode
+                                    emailScreenMode.value = EmailAuthMode.SignIn
+                                }
+
+                                is AuthException.AccountLinkingRequiredException -> {
+                                    pendingLinkingCredential.value = exception.credential
+                                    navController.navigate(AuthRoute.Email.route) {
+                                        launchSingleTop = true
+                                    }
+                                }
+
+                                is AuthException.EmailLinkPromptForEmailException -> {
+                                    // Cross-device flow: User needs to enter their email
+                                    emailLinkFromDifferentDevice.value = exception.emailLink
+                                    navController.navigate(AuthRoute.Email.route) {
+                                        launchSingleTop = true
+                                    }
+                                }
+
+                                is AuthException.EmailLinkCrossDeviceLinkingException -> {
+                                    // Cross-device linking flow: User needs to enter email to link provider
+                                    emailLinkFromDifferentDevice.value = exception.emailLink
+                                    navController.navigate(AuthRoute.Email.route) {
+                                        launchSingleTop = true
+                                    }
+                                }
+
+                                else -> Unit
+                            }
+                        },
+                        onDismiss = {
+                            isErrorDialogVisible.value = false
+                            // Clear error
+                            authUI.updateAuthState(AuthState.Idle)
+                        }
+                    )
+                }
+            }
+
+            val loadingState = authState as? AuthState.Loading
+            if (loadingState != null) {
+                LoadingDialog()
+            }
+        }
+    }
+}
+
+sealed class AuthRoute(val route: String) {
+    object MethodPicker : AuthRoute("auth_method_picker")
+    object Email : AuthRoute("auth_email")
+    object Success : AuthRoute("auth_success")
+    object MfaEnrollment : AuthRoute("auth_mfa_enrollment")
+    object MfaChallenge : AuthRoute("auth_mfa_challenge")
+}

@@ -1,0 +1,283 @@
+// SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
+
+// Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
+// https://github.com/firebase/FirebaseUI-Android
+
+package com.battlelancer.seriesguide.backend.auth.ui.screens.email
+
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.PlainTooltip
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TooltipAnchorPosition
+import androidx.compose.material3.TooltipBox
+import androidx.compose.material3.TooltipDefaults
+import androidx.compose.material3.rememberTooltipState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
+import com.battlelancer.seriesguide.backend.auth.configuration.authUIConfiguration
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.DefaultAuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUITheme
+import com.battlelancer.seriesguide.backend.auth.configuration.validators.EmailValidator
+import com.battlelancer.seriesguide.backend.auth.configuration.validators.PasswordValidator
+import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCredentialCancelledException
+import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCredentialException
+import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCredentialHandler
+import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCredentialNotFoundException
+import com.battlelancer.seriesguide.backend.auth.ui.components.AuthEmailTextField
+import com.battlelancer.seriesguide.backend.auth.ui.components.AuthHorizontalDivider
+import com.battlelancer.seriesguide.backend.auth.ui.components.AuthPasswordTextField
+import com.battlelancer.seriesguide.backend.auth.ui.components.AuthShowPasswordToggle
+import com.battlelancer.seriesguide.backend.auth.ui.components.AuthTopAppBar
+import com.battlelancer.seriesguide.backend.auth.ui.components.BoxWithCenteredColumn
+import com.google.firebase.auth.actionCodeSettings
+import timber.log.Timber
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SignInUI(
+    modifier: Modifier = Modifier,
+    configuration: AuthUIConfiguration,
+    isLoading: Boolean,
+    email: String,
+    password: String,
+    onEmailChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
+    onRetrievedCredential: (Pair<String, String>) -> Unit,
+    onSignInClick: () -> Unit,
+    onGoToSignUp: () -> Unit,
+    onGoToResetPassword: () -> Unit,
+    onGoToEmailLinkSignIn: () -> Unit,
+    onNavigateBack: (() -> Unit)? = null,
+) {
+    val context = LocalContext.current
+    val provider = configuration.providers.filterIsInstance<AuthProvider.Email>().first()
+    val stringProvider = LocalAuthUIStringProvider.current
+    val emailValidator = remember { EmailValidator(stringProvider) }
+    val passwordValidator = remember {
+        PasswordValidator(stringProvider = stringProvider, rules = emptyList())
+    }
+    val showPassword = rememberSaveable { mutableStateOf(false) }
+
+    val isFormValid = remember(email, password) {
+        derivedStateOf {
+            listOf(
+                emailValidator.validate(email),
+                passwordValidator.validate(password)
+            ).all { it }
+        }
+    }
+
+    // Retrieve saved credentials when in SignIn mode
+    val credentialRetrievalAttempted = remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        if (configuration.isCredentialManagerEnabled &&
+            !credentialRetrievalAttempted.value &&
+            PasswordCredentialHandler.hasSavedCredentials(context)) {
+            credentialRetrievalAttempted.value = true
+
+            try {
+                val credentialHandler = PasswordCredentialHandler(context)
+                val credential = credentialHandler.getPassword()
+
+                Timber.d("Retrieved credential for: %s", credential.username)
+
+                // Auto-fill the email and password fields
+                onEmailChange(credential.username)
+                onPasswordChange(credential.password)
+
+                emailValidator.validate(credential.username)
+                passwordValidator.validate(credential.password)
+
+                // Store retrieved credential to compare later
+                onRetrievedCredential(Pair(credential.username, credential.password))
+
+                // Just fill, let user confirm filled credentials and manually trigger sign in
+            } catch (_: PasswordCredentialNotFoundException) {
+                Timber.d("No saved credentials found")
+                // No credentials saved - user will enter manually
+            } catch (_: PasswordCredentialCancelledException) {
+                Timber.d("User cancelled credential selection")
+                // User cancelled - let them enter manually
+            } catch (e: PasswordCredentialException) {
+                Timber.w(e, "Failed to retrieve credentials")
+                // Failed to retrieve - let them enter manually
+            }
+        }
+    }
+
+    Scaffold(
+        modifier = modifier,
+        topBar = {
+            AuthTopAppBar(
+                title = stringProvider.signInDefault,
+                onNavigateBack = onNavigateBack
+            )
+        },
+    ) { innerPadding ->
+        BoxWithCenteredColumn(
+            insetPadding = innerPadding
+        ) {
+            AuthEmailTextField(
+                value = email,
+                validator = emailValidator,
+                enabled = !isLoading,
+                onValueChange = { text ->
+                    onEmailChange(text)
+                }
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            AuthPasswordTextField(
+                value = password,
+                validator = passwordValidator,
+                enabled = !isLoading,
+                textVisible = showPassword.value,
+                onValueChange = { text ->
+                    onPasswordChange(text)
+                }
+            )
+            AuthShowPasswordToggle(
+                value = showPassword.value,
+                onValueChange = { newValue ->
+                    showPassword.value = newValue
+                }
+            )
+            TextButton(
+                modifier = Modifier
+                    .align(Alignment.Start),
+                onClick = {
+                    onGoToResetPassword()
+                },
+                enabled = !isLoading,
+                contentPadding = PaddingValues.Zero
+            ) {
+                Text(stringProvider.resetPasswordAction)
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            Row(
+                modifier = Modifier
+                    .align(Alignment.End),
+            ) {
+                TooltipBox(
+                    positionProvider = TooltipDefaults.rememberTooltipPositionProvider(
+                        TooltipAnchorPosition.Above
+                    ),
+                    tooltip = {
+                        PlainTooltip {
+                            Text(stringProvider.newAccountsDisabled)
+                        }
+                    },
+                    state = rememberTooltipState(
+                        initialIsVisible = !provider.isNewAccountsAllowed
+                    )
+                ) {
+                    TextButton(
+                        onClick = {
+                            onGoToSignUp()
+                        },
+                        enabled = provider.isNewAccountsAllowed && !isLoading,
+                    ) {
+                        Text(stringProvider.signupPageTitle)
+                    }
+                }
+                Spacer(modifier = Modifier.width(16.dp))
+                Button(
+                    onClick = {
+                        onSignInClick()
+                    },
+                    enabled = !isLoading && isFormValid.value,
+                ) {
+                    if (isLoading) {
+                        CircularProgressIndicator(
+                            modifier = Modifier
+                                .size(16.dp)
+                        )
+                    } else {
+                        Text(stringProvider.signInDefault)
+                    }
+                }
+            }
+
+            // Show toggle to email link sign-in
+            if (provider.isEmailLinkSignInEnabled) {
+                AuthHorizontalDivider()
+                Button(
+                    onClick = {
+                        onGoToEmailLinkSignIn()
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    enabled = !isLoading
+                ) {
+                    Text(stringProvider.signInWithEmailLink)
+                }
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun PreviewSignInUI() {
+    val applicationContext = LocalContext.current
+    val provider = AuthProvider.Email(
+        isDisplayNameRequired = true,
+        isEmailLinkSignInEnabled = true,
+        isEmailLinkForceSameDeviceEnabled = true,
+        emailLinkActionCodeSettings = actionCodeSettings {
+            url = ""
+            handleCodeInApp = true
+        },
+        isNewAccountsAllowed = false
+    )
+    val stringProvider = DefaultAuthUIStringProvider(applicationContext)
+
+    AuthUITheme {
+        CompositionLocalProvider(
+            LocalAuthUIStringProvider provides stringProvider
+        ) {
+            SignInUI(
+                configuration = authUIConfiguration {
+                    context = applicationContext
+                    providers { provider(provider) }
+                    privacyPolicyUrl = ""
+                },
+                email = "",
+                password = "",
+                isLoading = false,
+                onEmailChange = { _ -> },
+                onPasswordChange = { _ -> },
+                onRetrievedCredential = { _ -> },
+                onSignInClick = {},
+                onGoToSignUp = {},
+                onGoToResetPassword = {},
+                onGoToEmailLinkSignIn = {},
+            )
+        }
+    }
+}
