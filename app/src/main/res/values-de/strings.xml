@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Main Menu -->
     <string name="shows">Serien</string>
     <string name="lists">Listen</string>
@@ -67,6 +67,7 @@
     <string name="addtocalendar">Termin erstellen</string>
     <string name="addtocalendar_failed">Kalender-Termin kann nicht erstellt werden</string>
     <!-- Comments -->
+    <string name="comments_provided_by">Kommentare von Trakt</string>
     <string name="comments">Kommentare</string>
     <string name="shout_hint">Schreiben Sie einen Kommentar (Englisch, 5+ Wörter)</string>
     <string name="shout_invalid">Ihr Kommentar hält sich nicht an die Regeln!</string>
@@ -573,4 +574,37 @@
     <string name="title_stream_with_ads">Mit Werbung</string>
     <string name="title_stream_buy">Kauf</string>
     <string name="title_stream_rent">Verleih</string>
+    <!-- Cloud Authentication -->
+    <!-- Common -->
+    <string name="auth_action_back" comment="Action to go back">Zurück</string>
+    <string name="auth_message_privacy_policy" comment="Privacy policy message, the placeholder will use the label for privacy_policy">Wenn Sie diese Funktion nutzen, werden zusätzliche Daten wie in der <xliff:g comment="Privacy policy label">%1$s</xliff:g> beschrieben, verarbeitet.</string>
+    <string name="auth_message_new_accounts_disabled" comment="Message shown when creating new accounts is not allowed">Das Erstellen neuer Konten ist derzeit nicht erlaubt</string>
+    <!-- Auth method picker -->
+    <string name="auth_action_sign_in_with_google" comment="Action to sign in with a Google account">Mit Google anmelden</string>
+    <string name="auth_action_sign_in_with_email" comment="Action to sign in with an email address">Mit E-Mail anmelden</string>
+    <string name="auth_action_continue_with_google" comment="Action to continue signing in with a suggested Google account">Mit Google fortfahren</string>
+    <string name="auth_action_continue_with_email" comment="Action to continue signing in with a suggested email address">Mit E-Mail fortfahren</string>
+    <!-- Email auth -->
+    <string name="auth_hint_name" comment="Hint for name input field">Ihr Name</string>
+    <string name="auth_hint_email" comment="Hint for email input field">E-Mail</string>
+    <string name="auth_hint_password" comment="Hint for password input field">Passwort</string>
+    <string name="auth_hint_confirm_password" comment="Hint for confirm password input field">Passwort bestätigen</string>
+    <string name="auth_hint_confirm_password_does_not_match" comment="Hint when password entered in confirm password field does not match">Passwörter stimmen nicht überein</string>
+    <string name="auth_hint_required" comment="Hint that the value of an input field is required">Erforderlich</string>
+    <string name="auth_hint_email_required" comment="Hint that a valid email address is required in an input field">Gültige E-Mail-Adresse erforderlich</string>
+    <string name="auth_action_sign_up" comment="Action to create an account">Ein Konto erstellen</string>
+    <string name="auth_error_email_alreay_in_use" comment="Error message when signing up with a used email address">Diese E-Mail-Adresse wird bereits von einem bestehenden Konto verwendet. Melden Sie sich stattdessen mit dieser E-Mail-Adresse an.</string>
+    <string name="auth_action_show_password" comment="Action to show the password in a text field">Passwort anzeigen</string>
+    <!-- Password validation messages -->
+    <string name="auth_error_weak_password" comment="Error message when password does not meet requirements">Passwort nicht stark genug</string>
+    <string name="auth_error_password_too_short" comment="Error message when password is too short">Mindestens %1$d Zeichen verwenden</string>
+    <!-- Password recovery -->
+    <string name="auth_action_reset_password" comment="Action to reset password">Passwort zurücksetzen</string>
+    <string name="auth_title_reset_password_instructions" comment="Title of reset password instructions">Prüfen Sie Ihre E-Mails</string>
+    <string name="auth_message_reset_password_instructions" comment="Reset password instructions">Wenn ein Konto für diese E-Mail-Adresse existiert, wurde eine E-Mail mit Anweisungen zum Zurücksetzen Ihres Passworts an diese versendet.</string>
+    <!-- Error Recovery Dialog -->
+    <string name="auth_error_account_linking_required" comment="Error message when account exists, but created with different sign-in method">Für diese E-Mail-Adresse wurde bereits ein Konto mit einer anderen Anmeldemethode erstellt. Melden Sie sich mit der ursprünglichen Methode an, um diese neue hinzuzufügen.</string>
+    <string name="auth_error_no_google_account_available" comment="Error message when trying to sign in with Google but no Google accounts are available on the device">Auf diesem Gerät ist kein Google-Konto verfügbar. Melden Sie sich mit E-Mail an oder fügen Sie diesem Gerät ein Google-Konto hinzu.</string>
+    <string name="auth_error_unknown" comment="General error messages for an unknown failure.">Ein unbekannter Fehler ist aufgetreten</string>
+    <string name="auth_error_invalid_password" comment="Error message for when signing in fails.">Dieses Passwort ist falsch, dieses Konto unterstützt keine Anmeldung mit einem Passwort oder es gibt kein Konto mit dieser E-Mail-Adresse. Setzen Sie eventuell Ihr Passwort zurück.</string>
 </resources>
