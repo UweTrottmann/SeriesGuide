@@ -7,16 +7,23 @@
 
 package com.battlelancer.seriesguide.backend.auth.ui.components
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.window.DialogProperties
 import com.battlelancer.seriesguide.backend.auth.AuthException
+import com.battlelancer.seriesguide.backend.auth.configuration.PasswordRule
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.AuthUIStringProvider
+import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.DefaultAuthUIStringProvider
+import com.battlelancer.seriesguide.ui.theme.SeriesGuideTheme
 
 /**
  * A composable dialog for displaying authentication errors with recovery options.
@@ -183,5 +190,37 @@ private fun isRecoverable(error: AuthException): Boolean {
             -> true
 
         else -> false
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ErrorRecoveryDialogPreview() {
+    val stringProvider = DefaultAuthUIStringProvider(LocalContext.current)
+
+    @Suppress("KotlinConstantConditions")
+    val error = when (1) {
+        1 -> AuthException.InvalidCredentialsException("")
+        2 -> AuthException.WeakPasswordException(
+            message = "Unused",
+            reason = PasswordRule.MinimumLength(15).getErrorMessage(stringProvider)
+        )
+
+        3 -> AuthException.EmailAlreadyInUseException("")
+        else -> AuthException.UnknownException("")
+    }
+
+    SeriesGuideTheme {
+        Surface(
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
+            ErrorRecoveryDialog(
+                error = error,
+                stringProvider = stringProvider,
+                onDismiss = {},
+                onRecover = {}
+            )
+        }
     }
 }
