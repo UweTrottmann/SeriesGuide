@@ -156,7 +156,7 @@ so they work (tinting) and do not crash (gradients) on all supported releases:
 - **Not** for app widget layouts as the system initializes them
 
 When using `Picasso`, make sure to not pass a drawable resource ID but a drawable loaded using
-`AppCompatResources.getDrawable()` instead. Otherwise the drawable will not be tinted correctly.
+`AppCompatResources.getDrawable()` instead. Otherwise, the drawable will not be tinted correctly.
 
 ### Dialogs
 
