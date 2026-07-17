@@ -26,10 +26,11 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.anyBoolean
 import org.mockito.ArgumentMatchers.anyInt
+import org.mockito.ArgumentMatchers.eq
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.never
 import org.mockito.Mockito.verify
-import org.mockito.Mockito.`when`
+import org.mockito.kotlin.whenever
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import java.util.Date
@@ -70,7 +71,7 @@ class MovieToolsTest {
         }
 
         suspend fun downloaderReturnsTestMovie() {
-            `when`(downloader.getMovieDetailsWithDefaults(TEST_MOVIE_TMDBID, false))
+            whenever(downloader.getMovieDetailsWithDefaults(eq(TEST_MOVIE_TMDBID), anyBoolean()))
                 .thenReturn(
                     MovieDownloader.MovieDetailsResult.Success(
                         MovieDetails(Movie())
@@ -473,7 +474,7 @@ class MovieToolsTest {
             traktId = null,
             slug = null
         )
-        private val TEST_LIST_ID = "test-list"
+        private const val TEST_LIST_ID = "test-list"
         private val TEST_LIST = SgList(
             listId = TEST_LIST_ID,
             name = "Test List"
