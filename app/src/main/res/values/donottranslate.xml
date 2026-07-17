@@ -67,6 +67,9 @@
 
     <!-- Cloud Authentication -->
     <!-- Temporarily add not user visible strings to avoid uploading them for translation -->
+    <!-- Common -->
+    <string name="auth_action_continue" comment="Action to continue">Continue</string>
+
     <!-- Provider -->
     <string name="auth_idp_name_email">Email</string>
 

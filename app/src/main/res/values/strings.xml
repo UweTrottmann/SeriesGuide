@@ -629,7 +629,6 @@
 
     <!-- Cloud Authentication -->
     <!-- Common -->
-    <string name="auth_action_continue" comment="Action to continue">Continue</string>
     <string name="auth_action_back" comment="Action to go back">Back</string>
     <string name="auth_message_privacy_policy" comment="Privacy policy message, the placeholder will use the label for privacy_policy">When you use this feature, additional data is processed as described in the <xliff:g comment="Privacy policy label">%1$s</xliff:g>.</string>
     <string name="auth_message_new_accounts_disabled" comment="Message shown when creating new accounts is not allowed">Creating new accounts is currently not allowed</string>
