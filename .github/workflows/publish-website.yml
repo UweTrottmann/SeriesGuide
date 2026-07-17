@@ -31,9 +31,8 @@ jobs:
       - name: Set up Ruby # https://github.com/ruby/setup-ruby/releases
         uses: ruby/setup-ruby@d45b1a4e94b71acab930e56e79c6aa188764e7f9 # v1.316.0
         with:
-          ruby-version: '3.2.3' # Not needed with a .ruby-version file
+          # ruby-version: '4.0.1' # Not needed with a .ruby-version file
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-          cache-version: 0 # Increment this number if you need to re-download cached gems
       - name: Set up Pages # https://github.com/actions/configure-pages/releases
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
       - name: Build with Jekyll

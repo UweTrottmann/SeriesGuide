@@ -4,17 +4,38 @@ This is a website built with [Jekyll](https://jekyllrb.com/) on [GitHub Actions]
 
 Note the [special instructions from Jekyll for GitHub Pages](https://jekyllrb.com/docs/github-pages/).
 
-https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-jekyll
-
 [Liquid syntax](https://shopify.github.io/liquid/basics/introduction/)
 
 [Collections](https://jekyllrb.com/docs/collections/) (used for help pages)
 
-```bash
-# update gems
-bundle update
+## Development
 
-# look for outdated gems (notably github-pages)
+Dependencies are managed with Ruby [bundler](https://bundler.io/), see [Gemfile](Gemfile) and [Gemfile.lock](Gemfile.lock).
+
+The local Ruby version should match the [CI config](.github/workflows/publish-website.yml).
+
+Using [rbenv](https://github.com/rbenv/rbenv):
+
+```bash
+sudo apt install rbenv
+rbenv init
+rbenv install 4.0.1
+bundle install
+```
+
+Other useful commands:
+
+```bash
+# change .ruby-version
+rbenv local 4.0.1
+
+# update gems
+bundle update --all
+
+# update bundler
+bundle update --bundler
+
+# look for outdated gems
 gem outdated
 
 # test locally
