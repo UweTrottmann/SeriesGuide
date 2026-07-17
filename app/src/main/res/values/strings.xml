@@ -75,7 +75,7 @@
     <string name="addtocalendar_failed">Can not create a calendar event</string>
 
     <!-- Comments -->
-    <string name="comments_provided_by">Comments provided by Trakt</string>
+    <string name="comments_provided_by">Comments from Trakt</string>
     <string name="comments">Comments</string>
     <string name="shout_hint">Type a comment (English, 5+ words)</string>
     <string name="shout_invalid">Your comment does not follow the rules!</string>
