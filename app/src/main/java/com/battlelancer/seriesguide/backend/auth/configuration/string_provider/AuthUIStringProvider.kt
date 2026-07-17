@@ -220,8 +220,6 @@ interface AuthUIStringProvider {
     val setupAuthenticatorDescription: String
 
     // Error Recovery Dialog Strings
-    /** Error dialog title */
-    val errorDialogTitle: String
 
     /** Retry action button text */
     val retryAction: String

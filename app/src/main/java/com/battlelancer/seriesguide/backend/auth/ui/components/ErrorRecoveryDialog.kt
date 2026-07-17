@@ -44,12 +44,6 @@ fun ErrorRecoveryDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = {
-            Text(
-                text = stringProvider.errorDialogTitle,
-                style = MaterialTheme.typography.headlineSmall
-            )
-        },
         text = {
             Text(
                 text = getRecoveryMessage(error, stringProvider),

@@ -210,8 +210,6 @@ class DefaultAuthUIStringProvider(
     /**
      * Error Recovery Dialog Strings
      */
-    override val errorDialogTitle: String
-        get() = context.getString(R.string.auth_error_dialog_title)
     override val retryAction: String
         get() = context.getString(R.string.action_try_again)
     override val dismissAction: String

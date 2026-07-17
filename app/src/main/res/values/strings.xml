@@ -649,7 +649,7 @@
     <string name="auth_hint_required" comment="Hint that the value of an input field is required">Required</string>
     <string name="auth_hint_email_required" comment="Hint that a valid email address is required in an input field">Valid email address required</string>
     <string name="auth_action_sign_up" comment="Action to create an account">Create an account</string>
-    <string name="auth_error_email_alreay_in_use" comment="Error message when signing up with a used email address">This email address is already in use by an existing account. Please sign in with your existing account.</string>
+    <string name="auth_error_email_alreay_in_use" comment="Error message when signing up with a used email address">This email address is already in use by an existing account. Sign in with this email address instead.</string>
     <string name="auth_action_show_password" comment="Action to show the password in a text field">Show password</string>
 
     <!-- Password validation messages -->
@@ -662,7 +662,6 @@
     <string name="auth_message_reset_password_instructions" comment="Reset password instructions">If an account for this email address exists, an email with instructions to reset your password was sent to it.</string>
 
     <!-- Error Recovery Dialog -->
-    <string name="auth_error_dialog_title" comment="Title for error recovery dialog">Authentication Error</string>
     <string name="auth_error_account_linking_required" comment="Error message when account exists, but created with different sign-in method">An account was already created for this email address using a different sign-in method. Sign in using the original method to add this one.</string>
     <string name="auth_error_no_google_account_available" comment="Error message when trying to sign in with Google but no Google accounts are available on the device">No Google account is available on this device. Sign in using email or add a Google account to this device.</string>
     <string name="auth_error_unknown" comment="General error messages for an unknown failure.">An unknown error occurred</string>
