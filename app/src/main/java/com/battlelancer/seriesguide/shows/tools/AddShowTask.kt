@@ -80,14 +80,6 @@ class AddShowTask(
                 )
             }
 
-            fun failed(context: Context, showTmdbId: Int, showTitle: String?): OnShowAddedEvent {
-                return OnShowAddedEvent(
-                    showTmdbId,
-                    context.getString(R.string.add_error, showTitle),
-                    false
-                )
-            }
-
             fun failedDetails(
                 context: Context,
                 showTmdbId: Int,
@@ -212,7 +204,6 @@ class AddShowTask(
                         ShowResult.TMDB_ERROR -> PROGRESS_ERROR_TMDB
                         ShowResult.HEXAGON_ERROR -> PROGRESS_ERROR_HEXAGON
                         ShowResult.DATABASE_ERROR -> PROGRESS_ERROR_DATA
-                        else -> PROGRESS_ERROR
                     }
                 }
             }
@@ -256,8 +247,6 @@ class AddShowTask(
                 OnShowAddedEvent.successful(showTmdbId)
 
             PROGRESS_EXISTS -> OnShowAddedEvent.exists(context, showTmdbId, showTitle)
-
-            PROGRESS_ERROR -> OnShowAddedEvent.failed(context, showTmdbId, showTitle)
 
             PROGRESS_ERROR_TMDB -> OnShowAddedEvent.failedDetails(
                 context, showTmdbId, showTitle,
@@ -332,7 +321,6 @@ class AddShowTask(
     companion object {
         private const val PROGRESS_EXISTS = 0
         private const val PROGRESS_SUCCESS = 1
-        private const val PROGRESS_ERROR = 2
         private const val PROGRESS_ERROR_TMDB = 3
         private const val PROGRESS_ERROR_DOES_NOT_EXIST = 4
         private const val PROGRESS_ERROR_HEXAGON = 6

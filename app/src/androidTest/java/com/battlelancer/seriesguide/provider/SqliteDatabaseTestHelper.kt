@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2021 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.provider
 
@@ -45,7 +45,7 @@ object SqliteDatabaseTestHelper {
             seasonTvdbId,
             showTvdbId,
             seasonNumber,
-            SgEpisode2.EPISODE_UNKNOWN_RELEASE.toLong()
+            SgEpisode2.EPISODE_UNKNOWN_RELEASE
         )
         db.insertWithOnConflict(
             SeriesGuideDatabase.Tables.EPISODES, null, values,
