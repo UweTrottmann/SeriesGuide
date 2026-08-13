@@ -7,16 +7,15 @@ plugins {
 group = "com.uwetrottmann.seriesguide"
 version = "2.2.2-SNAPSHOT"
 
-val sgCompileSdk: Int by rootProject.extra
-val sgMinSdk: Int by rootProject.extra
-val sgTargetSdk: Int by rootProject.extra
+val sgCompileSdk = rootProject.extra["sgCompileSdk"] as Int
+val sgMinSdk = rootProject.extra["sgMinSdk"] as Int
+val sgTargetSdk = rootProject.extra["sgTargetSdk"] as Int
 
 android {
     namespace = "com.battlelancer.seriesguide.api"
     compileSdk = sgCompileSdk
     defaultConfig {
         minSdk = sgMinSdk
-        targetSdk = sgTargetSdk
     }
 
     compileOptions {
@@ -26,9 +25,14 @@ android {
     }
 
     lint {
-        // for CI server (reports are not public)
-        textReport = true
+        targetSdk = sgTargetSdk
+        // For CI: print reports to standard output (report files are not public)
+        printTextReport = true
         // Note: do not use textOutput = file("stdout"), just set no file.
+    }
+
+    testOptions {
+        targetSdk = sgTargetSdk
     }
 
     publishing {

@@ -26,12 +26,12 @@ plugins {
     alias(libs.plugins.firebase.crashlytics)
 }
 
-val sgCompileSdk: Int by rootProject.extra
-val sgMinSdk: Int by rootProject.extra
-val sgTargetSdk: Int by rootProject.extra
+val sgCompileSdk = rootProject.extra["sgCompileSdk"] as Int
+val sgMinSdk = rootProject.extra["sgMinSdk"] as Int
+val sgTargetSdk = rootProject.extra["sgTargetSdk"] as Int
 
-val sgVersionCode: Int by rootProject.extra
-val sgVersionName: String by rootProject.extra
+val sgVersionCode = rootProject.extra["sgVersionCode"] as Int
+val sgVersionName = rootProject.extra["sgVersionName"] as String
 
 kotlin {
     compilerOptions {
@@ -96,7 +96,7 @@ android {
 
     sourceSets {
         getByName("androidTest") {
-            assets.srcDir("$projectDir/schemas")
+            assets.directories.add("$projectDir/schemas")
         }
     }
 
@@ -107,10 +107,10 @@ android {
     }
 
     lint {
-        // for CI server: only check this module with dependencies instead of each module separately
+        // For CI: only check this module with dependencies instead of each module separately
         checkDependencies = true
-        // for CI server: log reports (report files are not public)
-        textReport = true
+        // For CI: print reports to standard output (report files are not public)
+        printTextReport = true
         // Note: do not use textOutput = file("stdout"), just set no file.
     }
 
@@ -163,7 +163,7 @@ android {
         getByName("release") {
             multiDexEnabled = false
             isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
 
             if (hasKeystoreConfig) {
                 signingConfig = signingConfigs.getByName("release")

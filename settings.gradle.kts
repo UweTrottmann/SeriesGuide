@@ -27,6 +27,11 @@ dependencyResolutionManagement {
     }
 }
 
+plugins {
+    // https://github.com/ben-manes/gradle-versions-plugin/releases
+    id("io.github.ben-manes.versions.settings") version "0.61.0"
+}
+
 include(":api")
 include(":backend")
 include(":widgets")

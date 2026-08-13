@@ -6,8 +6,8 @@ plugins {
 //    id("com.google.cloud.tools.endpoints-framework-client")
 }
 
-val sgCompileSdk: Int by rootProject.extra
-val sgMinSdk: Int by rootProject.extra
+val sgCompileSdk = rootProject.extra["sgCompileSdk"] as Int
+val sgMinSdk = rootProject.extra["sgMinSdk"] as Int
 
 kotlin {
     compilerOptions {
