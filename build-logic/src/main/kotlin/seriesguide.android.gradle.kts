@@ -21,7 +21,7 @@ fun CommonExtension.configureAndroid() {
 
 extensions.findByType<ApplicationExtension>()?.apply {
     configureAndroid()
-    defaultConfig.targetSdk = 35 // Android 15 (VANILLA_ICE_CREAM)
+    defaultConfig.targetSdk = 36 // Android 16 (BAKLAVA)
 }
 
 extensions.findByType<LibraryExtension>()?.apply {
