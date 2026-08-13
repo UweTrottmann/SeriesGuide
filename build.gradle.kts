@@ -18,11 +18,9 @@ buildscript {
     // YYYY.<release-of-year>.<build> - like 2024.1.0
     // - allows to more easily judge how old a release is
     // - allows multiple releases per month (though currently unlikely)
-    val sgVersionName by extra("2026.3.0")
+    extra.set("sgVersionName", "2026.3.0")
     // version 23yyrrbb -> min SDK 23, year yy, release rr, build bb
-    val sgVersionCode by extra(23260300)
-
-    val isCiBuild by extra { System.getenv("CI") == "true" }
+    extra.set("sgVersionCode", 23260300)
 
     // load some properties that should not be part of version control
     if (file("secret.properties").exists()) {
