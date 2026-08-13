@@ -163,12 +163,9 @@ androidx-test-runner = "androidx.test:runner:1.7.0"
 # Also look for compatible Gradle and Android Plugin versions:
 # https://kotlinlang.org/docs/gradle-configure-project.html#apply-the-plugin
 # Also coroutines version must be compatible.
-# 2.2.21 is compatible with Gradle 7.6.3–8.14 and AGP 7.3.1–8.11.1
-# Can't update to 2.3 as Room 2.8.4 requires 2.2 metadata for processing with kapt (and can't switch
-# to KSP because it's broken if Gradle user directory and project directory are on different drives:
-# https://github.com/UweTrottmann/SeriesGuide/pull/1137, https://github.com/google/ksp/issues/1079).
-kotlin = { id = "org.jetbrains.kotlin.android", version = "2.2.21" }
-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version = "2.2.21" }
+# 2.4.10 is compatible with Gradle 7.6.3–9.5.0 and AGP 8.5.2–9.1.0
+kotlin = { id = "org.jetbrains.kotlin.android", version = "2.4.10" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version = "2.4.10" }
 # https://developer.android.com/build/releases/gradle-plugin
 android = { id = "com.android.application", version = "9.3.1" }
 # https://github.com/gradle-nexus/publish-plugin/releases
