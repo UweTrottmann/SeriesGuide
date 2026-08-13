@@ -1000,6 +1000,8 @@ public class SeriesGuideContract {
         /**
          * @deprecated Removed in {@link SgRoomDatabase#VERSION_55_MOVIE_SLUG_DOUBLE_RATING}.
          */
+        @SuppressWarnings("DeprecatedIsStillUsed")
+        @Deprecated
         String CERTIFICATION = "movies_certification";
 
         /**
