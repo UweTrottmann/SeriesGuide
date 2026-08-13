@@ -27,6 +27,7 @@ dependencyResolutionManagement {
     }
 }
 
+rootProject.name = "seriesguide"
 include(":api")
 include(":backend")
 include(":widgets")
