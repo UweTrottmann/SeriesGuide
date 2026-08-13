@@ -141,7 +141,7 @@ class TraktMovieSync(
                         builder.withValue(Movies.WATCHED, true)
                         builder.withValue(
                             Movies.PLAYS,
-                            if (playsOnTrakt!! >= 1) playsOnTrakt else 1
+                            if (playsOnTrakt >= 1) playsOnTrakt else 1
                         )
                         changed = true
                     }
@@ -155,7 +155,7 @@ class TraktMovieSync(
                 if (inCollection != inCollectionOnTrakt
                     || inWatchlist != inWatchlistOnTrakt
                     || watched != isWatchedOnTrakt
-                    || (isWatchedOnTrakt && playsOnTrakt!! >= 1 && plays != playsOnTrakt)) {
+                    || (isWatchedOnTrakt && playsOnTrakt >= 1 && plays != playsOnTrakt)) {
                     // Mirror Trakt collection, watchlist, watched flag and plays.
                     // Note: unneeded (not watched or in any list) movies
                     // are removed in a later sync step.
@@ -165,7 +165,7 @@ class TraktMovieSync(
                         .withValue(Movies.IN_WATCHLIST, inWatchlistOnTrakt)
                         .withValue(Movies.WATCHED, isWatchedOnTrakt)
                     val playsValue: Int = if (isWatchedOnTrakt) {
-                        if (playsOnTrakt!! >= 1) playsOnTrakt else 1
+                        if (playsOnTrakt >= 1) playsOnTrakt else 1
                     } else 0
                     op.withValue(Movies.PLAYS, playsValue)
                     batch.add(op.build())
