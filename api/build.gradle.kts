@@ -7,9 +7,9 @@ plugins {
 group = "com.uwetrottmann.seriesguide"
 version = "2.2.2-SNAPSHOT"
 
-val sgCompileSdk: Int by rootProject.extra
-val sgMinSdk: Int by rootProject.extra
-val sgTargetSdk: Int by rootProject.extra
+val sgCompileSdk = rootProject.extra["sgCompileSdk"] as Int
+val sgMinSdk = rootProject.extra["sgMinSdk"] as Int
+val sgTargetSdk = rootProject.extra["sgTargetSdk"] as Int
 
 android {
     namespace = "com.battlelancer.seriesguide.api"
