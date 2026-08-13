@@ -158,8 +158,6 @@ androidx-test-rules = "androidx.test:rules:1.7.0"
 androidx-test-runner = "androidx.test:runner:1.7.0"
 
 [plugins]
-# https://github.com/ben-manes/gradle-versions-plugin/releases
-versions = { id = "com.github.ben-manes.versions", version = "0.53.0" }
 # https://kotlinlang.org/docs/releases.html#release-details
 # When updating, must also update compose plugin.
 # Also look for compatible Gradle and Android Plugin versions:
