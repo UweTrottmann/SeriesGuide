@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2021-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2021 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.lists
 
@@ -36,14 +36,14 @@ class ListsPagerAdapter(
 
     override fun getItemId(position: Int): Long {
         return if (position < items.size) {
-            items[position].id!!.toLong()
+            items[position].id!!
         } else {
             RecyclerView.NO_ID
         }
     }
 
     override fun containsItem(itemId: Long): Boolean {
-        return items.find { it.id!!.toLong() == itemId } != null
+        return items.find { it.id!! == itemId } != null
     }
 
     override fun getItemCount(): Int {

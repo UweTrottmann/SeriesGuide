@@ -278,7 +278,7 @@ class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
                     val hasLanguage = it.originalLanguage != null
                     isChipIconVisible = hasLanguage
                     text = if (hasLanguage) {
-                        LanguageTools.buildLanguageDisplayName(it.originalLanguage!!)
+                        LanguageTools.buildLanguageDisplayName(it.originalLanguage)
                     } else {
                         getString(R.string.filter_language)
                     }
