@@ -1,12 +1,10 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    id("com.android.library")
+    alias(libs.plugins.android.library)
+    id("seriesguide.android")
     kotlin("android")
 }
-
-val sgCompileSdk = rootProject.extra["sgCompileSdk"] as Int
-val sgMinSdk = rootProject.extra["sgMinSdk"] as Int
 
 kotlin {
     compilerOptions {
@@ -16,18 +14,11 @@ kotlin {
 
 android {
     namespace = "com.uwetrottmann.seriesguide.widgets"
-    compileSdk = sgCompileSdk
 
     defaultConfig {
-        minSdk = sgMinSdk
+        // Note: common settings configured by "seriesguide.android" plugin
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    compileOptions {
-        encoding = "UTF-8"
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
     }
 
 }

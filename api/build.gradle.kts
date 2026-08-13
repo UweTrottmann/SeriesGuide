@@ -1,5 +1,6 @@
 plugins {
-    id("com.android.library")
+    alias(libs.plugins.android.library)
+    id("seriesguide.android")
     id("maven-publish")
     id("signing")
 }
@@ -7,33 +8,8 @@ plugins {
 group = "com.uwetrottmann.seriesguide"
 version = "2.2.2-SNAPSHOT"
 
-val sgCompileSdk = rootProject.extra["sgCompileSdk"] as Int
-val sgMinSdk = rootProject.extra["sgMinSdk"] as Int
-val sgTargetSdk = rootProject.extra["sgTargetSdk"] as Int
-
 android {
     namespace = "com.battlelancer.seriesguide.api"
-    compileSdk = sgCompileSdk
-    defaultConfig {
-        minSdk = sgMinSdk
-    }
-
-    compileOptions {
-        encoding = "UTF-8"
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-
-    lint {
-        targetSdk = sgTargetSdk
-        // For CI: print reports to standard output (report files are not public)
-        printTextReport = true
-        // Note: do not use textOutput = file("stdout"), just set no file.
-    }
-
-    testOptions {
-        targetSdk = sgTargetSdk
-    }
 
     publishing {
         singleVariant("release") {

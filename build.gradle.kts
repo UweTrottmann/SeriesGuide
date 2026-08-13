@@ -1,7 +1,8 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     // app, libraries
-    alias(libs.plugins.android) apply false
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
     alias(libs.plugins.kotlin) apply false
     alias(libs.plugins.compose.compiler) apply false
     // Firebase Authentication, Crashlytics
@@ -14,10 +15,6 @@ plugins {
 }
 
 buildscript {
-    val sgCompileSdk by extra(36) // Android 16 (BAKLAVA)
-    val sgMinSdk by extra(23) // Android 6 (M)
-    val sgTargetSdk by extra(35) // Android 15 (VANILLA_ICE_CREAM)
-
     // YYYY.<release-of-year>.<build> - like 2024.1.0
     // - allows to more easily judge how old a release is
     // - allows multiple releases per month (though currently unlikely)

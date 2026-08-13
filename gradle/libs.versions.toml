@@ -1,6 +1,18 @@
 # https://docs.gradle.org/current/userguide/version_catalogs.html#sec:version-catalog-declaration
 
 [versions]
+# https://kotlinlang.org/docs/releases.html#release-details
+# When updating, must also update compose plugin.
+# Also look for compatible Gradle and Android Plugin versions:
+# https://kotlinlang.org/docs/gradle-configure-project.html#apply-the-plugin
+# Also coroutines version must be compatible.
+# 2.2.21 is compatible with Gradle 7.6.3–8.14 and AGP 7.3.1–8.11.1
+# Can't update to 2.3 as Room 2.8.4 requires 2.2 metadata for processing with kapt (and can't switch
+# to KSP because it's broken if Gradle user directory and project directory are on different drives:
+# https://github.com/UweTrottmann/SeriesGuide/pull/1137, https://github.com/google/ksp/issues/1079).
+kotlin = "2.2.21"
+# https://developer.android.com/build/releases/gradle-plugin
+agp = "9.3.1"
 
 [libraries]
 # Kotlin
@@ -157,20 +169,14 @@ androidx-test-ext-truth = "androidx.test.ext:truth:1.7.0"
 androidx-test-rules = "androidx.test:rules:1.7.0"
 androidx-test-runner = "androidx.test:runner:1.7.0"
 
+# build-logic
+android-gradle-api = { module = "com.android.tools.build:gradle-api", version.ref = "agp" }
+
 [plugins]
-# https://kotlinlang.org/docs/releases.html#release-details
-# When updating, must also update compose plugin.
-# Also look for compatible Gradle and Android Plugin versions:
-# https://kotlinlang.org/docs/gradle-configure-project.html#apply-the-plugin
-# Also coroutines version must be compatible.
-# 2.2.21 is compatible with Gradle 7.6.3–8.14 and AGP 7.3.1–8.11.1
-# Can't update to 2.3 as Room 2.8.4 requires 2.2 metadata for processing with kapt (and can't switch
-# to KSP because it's broken if Gradle user directory and project directory are on different drives:
-# https://github.com/UweTrottmann/SeriesGuide/pull/1137, https://github.com/google/ksp/issues/1079).
-kotlin = { id = "org.jetbrains.kotlin.android", version = "2.2.21" }
-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version = "2.2.21" }
-# https://developer.android.com/build/releases/gradle-plugin
-android = { id = "com.android.application", version = "9.3.1" }
+kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
 # https://github.com/gradle-nexus/publish-plugin/releases
 publish = { id = "io.github.gradle-nexus.publish-plugin", version = "2.0.0" }
 # https://firebase.google.com/support/release-notes/android

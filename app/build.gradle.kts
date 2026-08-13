@@ -17,7 +17,8 @@ if (googleServicesJsonFile.readText().contains("placeholder")) {
 }
 
 plugins {
-    id("com.android.application")
+    alias(libs.plugins.android.application)
+    id("seriesguide.android")
     kotlin("android")
     kotlin("kapt")
     alias(libs.plugins.compose.compiler)
@@ -25,10 +26,6 @@ plugins {
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
 }
-
-val sgCompileSdk = rootProject.extra["sgCompileSdk"] as Int
-val sgMinSdk = rootProject.extra["sgMinSdk"] as Int
-val sgTargetSdk = rootProject.extra["sgTargetSdk"] as Int
 
 val sgVersionCode = rootProject.extra["sgVersionCode"] as Int
 val sgVersionName = rootProject.extra["sgVersionName"] as String
@@ -56,7 +53,6 @@ kapt {
 
 android {
     namespace = "com.battlelancer.seriesguide"
-    compileSdk = sgCompileSdk
 
     useLibrary("android.test.base")
 
@@ -69,8 +65,7 @@ android {
     }
 
     defaultConfig {
-        minSdk = sgMinSdk
-        targetSdk = sgTargetSdk
+        // Note: common settings configured by "seriesguide.android" plugin
 
         // Prevent plugin from generating PNGs, use compat loading instead https://developer.android.com/studio/write/vector-asset-studio#sloption
         vectorDrawables.useSupportLibrary = true
@@ -100,18 +95,10 @@ android {
         }
     }
 
-    compileOptions {
-        encoding = "UTF-8"
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-
     lint {
+        // Note: common settings configured by "seriesguide.android" plugin
         // For CI: only check this module with dependencies instead of each module separately
         checkDependencies = true
-        // For CI: print reports to standard output (report files are not public)
-        printTextReport = true
-        // Note: do not use textOutput = file("stdout"), just set no file.
     }
 
     testOptions {
