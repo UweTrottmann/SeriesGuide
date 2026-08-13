@@ -158,10 +158,8 @@ androidx-test-rules = "androidx.test:rules:1.7.0"
 androidx-test-runner = "androidx.test:runner:1.7.0"
 
 [plugins]
-# https://developer.android.com/build/releases/gradle-plugin
-# Update to 8.12.0 to receive extended MANIFEST.MF exclusion rules (for okhttp 5) https://issuetracker.google.com/issues/379732901
-# Update to 8.13.1 to get latest bug fixes.
-android = { id = "com.android.application", version = "8.13.1" }
+# https://github.com/ben-manes/gradle-versions-plugin/releases
+versions = { id = "com.github.ben-manes.versions", version = "0.53.0" }
 # https://kotlinlang.org/docs/releases.html#release-details
 # When updating, must also update compose plugin.
 # Also look for compatible Gradle and Android Plugin versions:
@@ -170,8 +168,10 @@ android = { id = "com.android.application", version = "8.13.1" }
 # 2.2.21 is compatible with Gradle 7.6.3–8.14 and AGP 7.3.1–8.11.1
 kotlin = { id = "org.jetbrains.kotlin.android", version = "2.2.21" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version = "2.2.21" }
-# https://github.com/ben-manes/gradle-versions-plugin/releases
-versions = { id = "com.github.ben-manes.versions", version = "0.53.0" }
+# https://developer.android.com/build/releases/gradle-plugin
+# Update to 8.12.0 to receive extended MANIFEST.MF exclusion rules (for okhttp 5) https://issuetracker.google.com/issues/379732901
+# Update to 8.13.1 to get latest bug fixes.
+android = { id = "com.android.application", version = "8.13.1" }
 # https://github.com/gradle-nexus/publish-plugin/releases
 publish = { id = "io.github.gradle-nexus.publish-plugin", version = "2.0.0" }
 # https://firebase.google.com/support/release-notes/android
