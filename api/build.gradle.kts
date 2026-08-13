@@ -16,7 +16,6 @@ android {
     compileSdk = sgCompileSdk
     defaultConfig {
         minSdk = sgMinSdk
-        targetSdk = sgTargetSdk
     }
 
     compileOptions {
@@ -26,9 +25,14 @@ android {
     }
 
     lint {
-        // for CI server (reports are not public)
-        textReport = true
+        targetSdk = sgTargetSdk
+        // For CI: print reports to standard output (report files are not public)
+        printTextReport = true
         // Note: do not use textOutput = file("stdout"), just set no file.
+    }
+
+    testOptions {
+        targetSdk = sgTargetSdk
     }
 
     publishing {

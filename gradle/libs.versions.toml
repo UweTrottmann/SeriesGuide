@@ -170,9 +170,7 @@ androidx-test-runner = "androidx.test:runner:1.7.0"
 kotlin = { id = "org.jetbrains.kotlin.android", version = "2.2.21" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version = "2.2.21" }
 # https://developer.android.com/build/releases/gradle-plugin
-# Update to 8.12.0 to receive extended MANIFEST.MF exclusion rules (for okhttp 5) https://issuetracker.google.com/issues/379732901
-# Update to 8.13.1 to get latest bug fixes.
-android = { id = "com.android.application", version = "8.13.1" }
+android = { id = "com.android.application", version = "9.3.1" }
 # https://github.com/gradle-nexus/publish-plugin/releases
 publish = { id = "io.github.gradle-nexus.publish-plugin", version = "2.0.0" }
 # https://firebase.google.com/support/release-notes/android
