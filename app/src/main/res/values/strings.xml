@@ -449,7 +449,7 @@
     <string name="licence_themoviedb">This product uses the TMDB API but is not endorsed or certified by TMDB.</string>
     <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide is built using open source software.</string>
-    <string name="licences_and_credits">Licences and credits</string>
+    <string name="licences_and_credits">Licenses and credits</string>
 
     <!-- Sort -->
     <string name="sort">Sort by</string>
