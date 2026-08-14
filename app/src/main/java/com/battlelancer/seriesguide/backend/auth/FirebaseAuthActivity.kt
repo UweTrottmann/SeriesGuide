@@ -23,6 +23,7 @@ import com.battlelancer.seriesguide.backend.auth.configuration.theme.AuthUITheme
 import com.battlelancer.seriesguide.backend.auth.ui.screens.FirebaseAuthScreen
 import com.battlelancer.seriesguide.backend.auth.util.EmailLinkConstants
 import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.ui.BaseThemeActivity
 import com.battlelancer.seriesguide.ui.theme.SeriesGuideTheme
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -77,11 +78,10 @@ import timber.log.Timber
  *
  * @see FirebaseAuthScreen
  */
-class FirebaseAuthActivity : ComponentActivity() {
+class FirebaseAuthActivity : BaseThemeActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
 
         val authUI = FirebaseAuthUI.getInstance()
         if (savedInstanceState == null) {

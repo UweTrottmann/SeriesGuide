@@ -15,6 +15,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 * 🔧 Cloud: new future-proof sign-in screens.
 * 🔨 Cloud: after deleting an account, signing in no longer re-uses the deleted account.
 * 🔧 Comments: note they are provided by Trakt, correctly color user avatar placeholder symbol.
+* 🔨 About: use correct theme color on devices running older versions of Android.
 * 📝 Import latest user interface translations.
 
 ## Version 2026.3

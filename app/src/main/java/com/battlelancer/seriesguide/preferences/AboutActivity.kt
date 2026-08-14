@@ -5,7 +5,6 @@ package com.battlelancer.seriesguide.preferences
 
 import android.content.res.Configuration
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -36,20 +35,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.ui.BaseThemeActivity
 import com.battlelancer.seriesguide.ui.theme.SeriesGuideTheme
 import com.battlelancer.seriesguide.util.PackageTools
-import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ThemeUtils.plus
 import com.battlelancer.seriesguide.util.WebTools
 
 /**
  * Displays details about the app version, links to credits and terms.
  */
-class AboutActivity : ComponentActivity() {
+class AboutActivity : BaseThemeActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ThemeUtils.configureEdgeToEdge(window)
 
         setContent {
             SeriesGuideTheme(useDynamicColor = DisplaySettings.isDynamicColorsEnabled(this)) {
