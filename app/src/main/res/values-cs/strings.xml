@@ -19,7 +19,7 @@
     <string name="season_number">Série %d</string>
     <string name="specialseason">Bonusové Epizody</string>
     <string name="ratings">Hodnocení</string>
-    <string name="more_information">More information</string>
+    <string name="more_information">Více informací</string>
     <!-- Descriptions -->
     <string name="navigate_up">O úroveň výš</string>
     <string name="description_overview">Přehled</string>
@@ -38,16 +38,16 @@
     <string name="sync_and_download_all">Synchronizuj &amp; Stáhni vše</string>
     <string name="action_select_region">Vyberte region</string>
     <string name="action_reset">Obnovit</string>
-    <string name="action_save">Save</string>
-    <string name="action_turn_on">Turn on</string>
-    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
+    <string name="action_save">Uložit</string>
+    <string name="action_turn_on">Zapnout</string>
+    <string name="action_check" comment="Action when an error is displayed the user should check upon.">Zkontrolovat</string>
     <!-- Search -->
     <string name="clear_search_history">Vymazat historii vyhledávání</string>
     <string name="search_hint">Hledat epizody</string>
     <string name="empty_no_results">Nenalezeno</string>
     <!-- Status messages -->
     <string name="updated">Aktualizováno na nejnovější verzi.</string>
-    <string name="updated_what_is_new">What\'s new</string>
+    <string name="updated_what_is_new">Co je nového?</string>
     <string name="norating">n/a</string>
     <string name="unknown">neznámé</string>
     <string name="offline">Připojte se k síti a zkuste to znovu.</string>
@@ -58,7 +58,7 @@
     <string name="api_failed">Chyba: %s</string>
     <string name="copy_to_clipboard">Zkopírováno do schránky</string>
     <string name="not_migrated">Seriál není migrovaný na TMDB. Některé akce včetně Trakt a Cloud synchronizace nemusí fungovat. Vyhledejte případně náhradu a odstraňte tento seriál. Klepnutím zobrazíte podrobnosti.</string>
-    <string name="status_turned_on">Turned on</string>
+    <string name="status_turned_on">Zapnuto</string>
     <!-- Sharing -->
     <string name="share">Sdílet</string>
     <string name="share_show">Sdílet seriál</string>
@@ -67,7 +67,7 @@
     <string name="addtocalendar">Přidat do kalendáře</string>
     <string name="addtocalendar_failed">V kalendáři nelze založit událost.</string>
     <!-- Comments -->
-    <string name="comments_provided_by">Comments from Trakt</string>
+    <string name="comments_provided_by">Komentáře z Traktu</string>
     <string name="comments">Komentáře</string>
     <string name="shout_hint">Napište komentář (anglicky, alespoň 5 slov)</string>
     <string name="shout_invalid">Váš komentář porušuje pravidla!</string>
@@ -103,7 +103,7 @@
     <string name="show_status_in_production">V produkci</string>
     <string name="show_status_pilot">Pilot</string>
     <string name="show_status_canceled">Zrušeno</string>
-    <string name="no_translation">No details in %1$s available, consider adding them at %2$s. Or try to change the language.</string>
+    <string name="no_translation">V %1$s nejsou k dispozici žádné podrobnosti, zkuste je přidat na %2$s. Nebo zkuste změnit jazyk.</string>
     <string name="no_spoilers">Některé detaily jsou skryty, aby se zabránilo spoilerům. Toto můžete vypnout v nastavení.</string>
     <string name="format_source">Zdroj: %s</string>
     <string name="last_updated">Poslední aktualizace</string>
@@ -151,8 +151,8 @@
     <string name="hidden">Skrytý seriál</string>
     <string name="unhidden">Obnovený seriál</string>
     <string name="action_shows_add">Přidat seriál</string>
-    <string name="action_filter_and_sort">Filter and sort</string>
-    <string name="title_filter_general">General</string>
+    <string name="action_filter_and_sort">Filtrovat a řadit</string>
+    <string name="title_filter_general">Obecné</string>
     <string name="empty_filter">Zrušit všechny filtry</string>
     <string name="action_shows_filter_favorites">Oblíbené</string>
     <string name="action_shows_filter_unwatched">Nezhlédnuté</string>
@@ -174,8 +174,8 @@
     <string name="context_marknext">Následujicí epizoda zhlédnuta</string>
     <string name="action_episodes_switch_view">Přepnout zobrazení</string>
     <string name="next_to_watch">Další ke zhlédnutí</string>
-    <string name="title_notes">Notes</string>
-    <string name="action_edit_note">Edit note</string>
+    <string name="title_notes">Poznámky</string>
+    <string name="action_edit_note">Upravit poznámku</string>
     <!-- History -->
     <string name="user_stream">Historie</string>
     <string name="recently_watched">Nedávno zhlédnuto</string>
@@ -192,7 +192,7 @@
     <string name="only_favorites">Pouze oblíbené seriály</string>
     <string name="calendar_only_collected">Pouze epizody ve sbírce</string>
     <string name="calendar_only_premieres">Pouze premiéry</string>
-    <string name="pref_infinite_scrolling">Unlimited days</string>
+    <string name="pref_infinite_scrolling">Neomezený počet dní</string>
     <!-- Updating -->
     <string name="update_scheduled">Probíhá aktualizace&#8230;</string>
     <string name="update_no_connection">Pro aktualizaci se připojte k internetu.</string>
@@ -221,7 +221,7 @@
         <item quantity="one">%1$d z %2$d zbývá</item>
         <item quantity="few">%1$d z %2$d zbývají</item>
         <item quantity="many">%1$d z %2$d zbývá</item>
-        <item quantity="other">%1$d of %2$d remaining</item>
+        <item quantity="other">%1$d z %2$d zbývá</item>
     </plurals>
     <plurals name="skipped_episodes_plural">
         <item quantity="one">%d přeskočeno</item>
@@ -249,7 +249,7 @@
     <string name="title_new_episodes">Nové epizody</string>
     <string name="watched_shows">Zhlédnuto</string>
     <string name="shows_collection">Sbírka</string>
-    <string name="title_library">Library</string>
+    <string name="title_library">Knihovna</string>
     <string name="watchlist">Chci vidět</string>
     <!-- Similar shows -->
     <string name="action_similar">Podobné</string>
@@ -257,7 +257,7 @@
     <!-- Discover -->
     <string name="title_discover">Objevujte</string>
     <string name="title_popular">Populární</string>
-    <string name="action_filter">Filter</string>
+    <string name="action_filter">Filtr</string>
     <string name="filter_year">Rok</string>
     <string name="filter_year_current">Tento rok</string>
     <string name="filter_language">Jazyk</string>
@@ -274,12 +274,12 @@
     <string name="ack_list_item_manage">Seznamy aktualizovány</string>
     <string name="list_item_remove">Odebrat ze seznamu</string>
     <string name="ack_list_item_removed">Odstraněno ze seznamu</string>
-    <string name="list_empty">You can add shows or movies to this list</string>
+    <string name="list_empty">Do tohoto seznamu můžete přidávat seriály nebo filmy</string>
     <string name="action_lists_reorder">Uspořádat seznamy</string>
     <string name="ack_lists_reordered">Řazení seznamů změněno</string>
     <string name="error_name_already_exists">Seznam s tímto názvem již existuje</string>
-    <string name="action_lists_sort_latest_release_date">Latest release date</string>
-    <string name="action_lists_sort_oldest_release_date">Oldest release date</string>
+    <string name="action_lists_sort_latest_release_date">Datum vydání nejnovější verze</string>
+    <string name="action_lists_sort_oldest_release_date">Datum vydání nejstarší verze</string>
     <!-- Movies -->
     <string name="title_digital_releases">Digitální vydání</string>
     <string name="title_disc_releases">Vydání na discích</string>
@@ -300,8 +300,8 @@
     <string name="action_movies_sort_title">Název</string>
     <string name="action_movies_sort_release">Datum vysílání</string>
     <string name="title_similar_movies">Podobné filmy</string>
-    <string name="title_release_dates">Release dates</string>
-    <string name="error_movie_not_found">Movie removed from TMDB. Remove it from lists, set it not watched. Using Trakt? On their website, search for its TMDB ID and remove it from history and lists.</string>
+    <string name="title_release_dates">Data vydání</string>
+    <string name="error_movie_not_found">Film byl odstraněn z TMDB. Odstraňte ho ze seznamů a označte jako „nezhlédnutý“. Používáte Trakt? Na jejich webových stránkách vyhledejte jeho TMDB ID a odstraňte ho z historie a seznamů.</string>
     <!-- Statistics -->
     <string name="statistics_failed">Nelze přepočítat statistiky.</string>
     <string name="shows_finished">%s dokončených zhlédnutí</string>
@@ -338,7 +338,7 @@
     <string name="feature_sync">Synchronizace</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud pomáhá zálohovat a synchronizovat vaše seriály, seznamy a filmy.</string>
-    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud, some Trakt features are disabled and changes are only sent to your Trakt account, not retrieved.</string>
+    <string name="hexagon_warning_trakt">Pokud jste přihlášeni do služby SeriesGuide Cloud, jsou některé funkce Traktu deaktivovány a změny se pouze odesílají do vašeho Trakt účtu. Nejsou z něj ale načítány.</string>
     <string name="hexagon_signin">Přihlásit se</string>
     <string name="hexagon_signout">Odhlásit se</string>
     <string name="hexagon_setup_incomplete">Nastavení SeriesGuide cloudu nebylo dokončeno</string>
@@ -361,8 +361,8 @@
     <string name="trakt_error_credentials">Nastala chyba. Zkontrolujte vaše přihlašovací údaje pro Trakt a zkuste to znovu.</string>
     <string name="trakt_error_not_exists">Na Traktu není (zatím) k dispozici. Zkuste to později.</string>
     <string name="trakt_notice_not_exists">Nelze (zatím) synchronizovat s traktem.</string>
-    <string name="trakt_error_limit_exceeded_add">Can\'t add, Trakt account limit reached.</string>
-    <string name="trakt_error_limit_exceeded_upload">Can\'t upload, Trakt account limit reached.</string>
+    <string name="trakt_error_limit_exceeded_add">Nelze přidat, byl dosažen limit účtu Trakt.</string>
+    <string name="trakt_error_limit_exceeded_upload">Nelze nahrát, byl dosažen limit účtu Trakt.</string>
     <!-- Connect trakt -->
     <string name="trakt_required">Chcete-li toto použít, připojte se k Trakt</string>
     <string name="connect_trakt">Připojit trakt.tv</string>
@@ -373,8 +373,8 @@
     <string name="disconnect">Odpojit</string>
     <string name="show_library">Přidat seriály z Trakt</string>
     <string name="about_trakt">Trakt pomáhá uchovávat záznamy o televizních seriálech a filmech, které sledujete.</string>
-    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
-    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
+    <string name="trakt_note_collection">To, co Trakt nazývá „knihovnou“, se v SeriesGuide nazývá „sbírka“.</string>
+    <string name="trakt_note_add_shows">Jakmile se připojíte, přidejte pořady ze svého účtu Trakt pomocí položek Trakt na záložce „Objevit“.</string>
     <!-- trakt ratings -->
     <string name="action_rate">Ohodnotit</string>
     <string name="ack_rated">Hodnocení odesláno</string>
@@ -475,7 +475,7 @@
     <string name="theme_app_dark">Tmavý</string>
     <string name="theme_app_light">Světlý</string>
     <!-- Other advanced settings -->
-    <string name="pref_category_diagnostics">Diagnostics</string>
+    <string name="pref_category_diagnostics">Diagnostika</string>
     <string name="pref_autoupdatesummary">Automaticky synchronizovat a aktualizovat obsah</string>
     <string name="pref_number">Formát číslování</string>
     <string name="pref_offset">Ruční časový posun</string>
@@ -483,30 +483,30 @@
     <string name="clear_cache">Vymazat mezipaměť</string>
     <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Přejděte do nastavení úložiště pro odstranění obrázků z mezipaměti a síťových odpovědí</string>
     <!-- Export and Import -->
-    <string name="title_export_import">Export and import</string>
+    <string name="title_export_import">Export a import</string>
     <string name="title_export">Export</string>
     <string name="title_import">Import</string>
-    <string name="action_export">Export to file</string>
+    <string name="action_export">Exportovat do souboru</string>
     <string name="backup_full_dump">Zahrnout popisy, detaily, hodnocení</string>
-    <string name="status_successful">Successful</string>
-    <string name="status_failure">Failed</string>
-    <string name="status_failed_file_access">Can not find or access file</string>
+    <string name="status_successful">Úspěšné</string>
+    <string name="status_failure">Neúspěšné</string>
+    <string name="status_failed_file_access">Nelze najít soubor nebo k němu získat přístup</string>
     <string name="import_button">Obnovit</string>
-    <string name="action_view_import_documentation">View expected format</string>
+    <string name="action_view_import_documentation">Zobrazit očekávaný formát</string>
     <string name="import_warning">Vaše aktuální seriály, seznamy nebo filmy budou nahrazeny zálohou</string>
-    <string name="import_cloud_warning">Not recommended when using SeriesGuide Cloud or Trakt</string>
-    <string name="import_cloud_warning_details">Syncing with Cloud or Trakt may overwrite imported data. With SeriesGuide Cloud, you can delete your account before importing data, then re-create it afterwards to only upload the imported data.</string>
+    <string name="import_cloud_warning">Nedoporučuje se při používání SeriesGuide Cloud nebo Trakt</string>
+    <string name="import_cloud_warning_details">Synchronizace s Cloudem nebo Traktem může přepsat importovaná data. V případě SeriesGuide Cloud můžete před importem dat svůj účet smazat a poté jej znovu vytvořit, aby se nahrála pouze importovaná data.</string>
     <string name="no_file_selected">Nebyl vybrán žádný soubor</string>
     <string name="action_select_file">Vybrat soubor</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatická záloha</string>
     <string name="pref_autobackupsummary">Týdenní zálohování seriálů, seznamů a filmů do úložiště zařízení.</string>
-    <string name="autobackup_details">These backups are deleted if the app is uninstalled. You can choose to create copies in another location below that can be restored using the import tool.</string>
+    <string name="autobackup_details">Tyto zálohy se smažou, pokud dojde k odinstalování aplikace. Níže si můžete zvolit, zda chcete vytvořit kopie na jiném místě, které lze obnovit pomocí nástroje pro import.</string>
     <string name="backup_button">Zálohovat</string>
     <string name="last_auto_backup">Poslední automatická záloha: %s</string>
     <string name="restore_auto_backup">Obnovení automatické zálohy</string>
     <string name="autobackup_failed" comment="Brief error message shown for auto backup">Poslední automatická záloha selhala</string>
-    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">A file to store the copy of an auto-backup is missing</string>
+    <string name="autobackup_files_missing" comment="Brief error message shown for auto backup">Chybí soubor pro uložení kopie automatické zálohy</string>
     <string name="autobackup_create_user_copy">Vytvořit kopii po každé záloze</string>
     <string name="autobackup_restore_available">Automatická záloha může být k dispozici pro obnovení.</string>
     <!-- Welcome dialog -->
@@ -518,7 +518,7 @@
     <string name="pref_notifications">Upozornění</string>
     <string name="pref_notificationssummary">Upozorňovat na nové epizody</string>
     <string name="pref_notifications_settings">Nastavení oznámení</string>
-    <string name="pref_notifications_settings_summary">Configure if and how notifications appear</string>
+    <string name="pref_notifications_settings_summary">Nastavte, zda a jak se mají zobrazovat oznámení</string>
     <string name="pref_ringtone">Zvuk</string>
     <string name="pref_vibrate">Vibrace</string>
     <string name="pref_vibratesummary">Při upozornění také vibrovat</string>
@@ -542,7 +542,7 @@
     <string name="pref_widget_type">Typ widgetu</string>
     <string name="pref_large_font">Použít velké písmo</string>
     <string name="pref_hide_watch_button">Skrýt tlačítko \"Zhlédnout\"</string>
-    <string name="description_widget_limited_items">Note that the number of items is always limited to save resources</string>
+    <string name="description_widget_limited_items">Upozorňujeme, že počet položek je vždy omezen z důvodu úspory zdrojů</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Průhledné</string>
     <string name="widget_background_25">25%</string>
@@ -559,9 +559,9 @@
     <string name="billing_sub_description">Vyzkoušejte na 30 dní zdarma, kdykoliv můžete zrušit.</string>
     <string name="upgrade_description">Každé předplatné odemyká všechny funkce a podporuje budoucí aktualizace. Ale k používání této aplikace není zapotřebí mít předplatné.</string>
     <string name="upgrade_success">Díky za podpoření SeriesGuide! Nyní máte přístup ke všem funkcím.</string>
-    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">All Access Pass detected. You may still subscribe to support future updates.</string>
+    <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">Bylo zjištěno předplatné All Access Pass. Stále se můžete přihlásit k odběru, abyste podpořili budoucí aktualizace.</string>
     <string name="billing_learn_more">Další informace / pomoc</string>
-    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">Access to all features expired</string>
+    <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">Přístup ke všem funkcím vypršel</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Přihlaste se ke svému účtu Amazon</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">Odběr momentálně není k dispozici.</string>
@@ -589,50 +589,50 @@
     <string name="feedback_action_nothanks">Ne, děkuji</string>
     <!-- Support the dev -->
     <string name="support_the_dev">Podpoříte vývojáře?</string>
-    <string name="support_the_dev_other_ways">Other ways to support</string>
+    <string name="support_the_dev_other_ways">Jiné způsoby podpory</string>
     <!-- Diagnostics -->
-    <string name="title_debug_log">Debug log</string>
-    <string name="status_saving_file_success">File saved</string>
-    <string name="status_saving_file_failed">Failed to save file</string>
+    <string name="title_debug_log">Protokol ladění</string>
+    <string name="status_saving_file_success">Soubor uložen</string>
+    <string name="status_saving_file_failed">Soubor se nepodařilo uložit</string>
     <!-- Streaming info -->
     <string name="action_stream">Streamování nebo nákup</string>
-    <string name="action_stream_settings">Stream or purchase settings</string>
-    <string name="title_stream_subscription">Subscription</string>
-    <string name="title_stream_free">Free</string>
-    <string name="title_stream_with_ads">With ads</string>
-    <string name="title_stream_buy">Purchase</string>
-    <string name="title_stream_rent">Rental</string>
+    <string name="action_stream_settings">Nastavení streamu nebo nákupu</string>
+    <string name="title_stream_subscription">Předplatné</string>
+    <string name="title_stream_free">Zdarma</string>
+    <string name="title_stream_with_ads">S reklamami</string>
+    <string name="title_stream_buy">Zakoupit</string>
+    <string name="title_stream_rent">Půjčovna</string>
     <!-- Cloud Authentication -->
     <!-- Common -->
-    <string name="auth_action_back" comment="Action to go back">Back</string>
-    <string name="auth_message_privacy_policy" comment="Privacy policy message, the placeholder will use the label for privacy_policy">When you use this feature, additional data is processed as described in the <xliff:g comment="Privacy policy label">%1$s</xliff:g>.</string>
-    <string name="auth_message_new_accounts_disabled" comment="Message shown when creating new accounts is not allowed">Creating new accounts is currently not allowed</string>
+    <string name="auth_action_back" comment="Action to go back">Zpět</string>
+    <string name="auth_message_privacy_policy" comment="Privacy policy message, the placeholder will use the label for privacy_policy">Při používání této funkce dochází ke zpracování dalších údajů, jak je popsáno v <xliff:g comment="Privacy policy label">%1$s</xliff:g>.</string>
+    <string name="auth_message_new_accounts_disabled" comment="Message shown when creating new accounts is not allowed">Vytváření nových účtů není v současné době povoleno</string>
     <!-- Auth method picker -->
-    <string name="auth_action_sign_in_with_google" comment="Action to sign in with a Google account">Sign in with Google</string>
-    <string name="auth_action_sign_in_with_email" comment="Action to sign in with an email address">Sign in with email</string>
-    <string name="auth_action_continue_with_google" comment="Action to continue signing in with a suggested Google account">Continue with Google</string>
-    <string name="auth_action_continue_with_email" comment="Action to continue signing in with a suggested email address">Continue with email</string>
+    <string name="auth_action_sign_in_with_google" comment="Action to sign in with a Google account">Registrovat se přes Google</string>
+    <string name="auth_action_sign_in_with_email" comment="Action to sign in with an email address">Přihlásit se e-mailem</string>
+    <string name="auth_action_continue_with_google" comment="Action to continue signing in with a suggested Google account">Pokračovat přes Google</string>
+    <string name="auth_action_continue_with_email" comment="Action to continue signing in with a suggested email address">Pokračovat přes e-mail</string>
     <!-- Email auth -->
-    <string name="auth_hint_name" comment="Hint for name input field">Your name</string>
+    <string name="auth_hint_name" comment="Hint for name input field">Vaše jméno</string>
     <string name="auth_hint_email" comment="Hint for email input field">Email</string>
-    <string name="auth_hint_password" comment="Hint for password input field">Password</string>
-    <string name="auth_hint_confirm_password" comment="Hint for confirm password input field">Confirm Password</string>
-    <string name="auth_hint_confirm_password_does_not_match" comment="Hint when password entered in confirm password field does not match">Passwords do not match</string>
-    <string name="auth_hint_required" comment="Hint that the value of an input field is required">Required</string>
-    <string name="auth_hint_email_required" comment="Hint that a valid email address is required in an input field">Valid email address required</string>
-    <string name="auth_action_sign_up" comment="Action to create an account">Create an account</string>
-    <string name="auth_error_email_alreay_in_use" comment="Error message when signing up with a used email address">This email address is already in use by an existing account. Sign in with this email address instead.</string>
-    <string name="auth_action_show_password" comment="Action to show the password in a text field">Show password</string>
+    <string name="auth_hint_password" comment="Hint for password input field">Heslo</string>
+    <string name="auth_hint_confirm_password" comment="Hint for confirm password input field">Potvrdit heslo</string>
+    <string name="auth_hint_confirm_password_does_not_match" comment="Hint when password entered in confirm password field does not match">Hesla se neshodují</string>
+    <string name="auth_hint_required" comment="Hint that the value of an input field is required">Povinné</string>
+    <string name="auth_hint_email_required" comment="Hint that a valid email address is required in an input field">Je vyžadována platná e-mailová adresa</string>
+    <string name="auth_action_sign_up" comment="Action to create an account">Vytvořit účet</string>
+    <string name="auth_error_email_alreay_in_use" comment="Error message when signing up with a used email address">Tato e-mailová adresa je již přiřazena k existujícímu účtu. Přihlaste se místo toho pomocí této e-mailové adresy.</string>
+    <string name="auth_action_show_password" comment="Action to show the password in a text field">Zobrazit heslo</string>
     <!-- Password validation messages -->
-    <string name="auth_error_weak_password" comment="Error message when password does not meet requirements">Password not strong enough</string>
-    <string name="auth_error_password_too_short" comment="Error message when password is too short">Use at least %1$d characters</string>
+    <string name="auth_error_weak_password" comment="Error message when password does not meet requirements">Heslo není dostatečně silné</string>
+    <string name="auth_error_password_too_short" comment="Error message when password is too short">Použijte alespoň %1$d znaků</string>
     <!-- Password recovery -->
-    <string name="auth_action_reset_password" comment="Action to reset password">Reset password</string>
-    <string name="auth_title_reset_password_instructions" comment="Title of reset password instructions">Check your email</string>
-    <string name="auth_message_reset_password_instructions" comment="Reset password instructions">If an account for this email address exists, an email with instructions to reset your password was sent to it.</string>
+    <string name="auth_action_reset_password" comment="Action to reset password">Resetovat heslo</string>
+    <string name="auth_title_reset_password_instructions" comment="Title of reset password instructions">Zkontrolujte svůj e-mail</string>
+    <string name="auth_message_reset_password_instructions" comment="Reset password instructions">Pokud existuje účet s touto e-mailovou adresou, byl na něj odeslán e-mail s pokyny k resetování hesla.</string>
     <!-- Error Recovery Dialog -->
-    <string name="auth_error_account_linking_required" comment="Error message when account exists, but created with different sign-in method">An account was already created for this email address using a different sign-in method. Sign in using the original method to add this one.</string>
-    <string name="auth_error_no_google_account_available" comment="Error message when trying to sign in with Google but no Google accounts are available on the device">No Google account is available on this device. Sign in using email or add a Google account to this device.</string>
-    <string name="auth_error_unknown" comment="General error messages for an unknown failure.">An unknown error occurred</string>
-    <string name="auth_error_invalid_password" comment="Error message for when signing in fails.">This password is incorrect, this account does not support signing in with a password or there is no account with this email address. Maybe reset your password.</string>
+    <string name="auth_error_account_linking_required" comment="Error message when account exists, but created with different sign-in method">Pro tuto e-mailovou adresu již byl vytvořen účet s jiným způsobem přihlášení. Přihlaste se pomocí původního způsobu, abyste mohli přidat tento účet.</string>
+    <string name="auth_error_no_google_account_available" comment="Error message when trying to sign in with Google but no Google accounts are available on the device">Na tomto zařízení není k dispozici žádný účet Google. Přihlaste se pomocí e-mailové adresy nebo k tomuto zařízení přidejte účet Google.</string>
+    <string name="auth_error_unknown" comment="General error messages for an unknown failure.">Došlo k neznámé chybě</string>
+    <string name="auth_error_invalid_password" comment="Error message for when signing in fails.">Toto heslo je špatné nebo tento účet nepodporuje přihlášení pomocí hesla nebo neexistuje žádný účet s touto e-mailovou adresou. Zkuste si heslo resetovat.</string>
 </resources>

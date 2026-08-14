@@ -67,7 +67,7 @@
     <string name="addtocalendar">Lisää kalenteriin</string>
     <string name="addtocalendar_failed">Kalenteritapahtumaa ei voi luoda</string>
     <!-- Comments -->
-    <string name="comments_provided_by">Comments from Trakt</string>
+    <string name="comments_provided_by">Traktin kommentit</string>
     <string name="comments">Kommentit</string>
     <string name="shout_hint">Kirjoita kommentti (englanniksi, 5+ sanaa)</string>
     <string name="shout_invalid">Kommenttisi ei noudata sääntöjä!</string>
@@ -260,12 +260,12 @@
     <string name="ack_list_item_manage">Listat päivitettiin</string>
     <string name="list_item_remove">Poista listalta</string>
     <string name="ack_list_item_removed">Poistettiin listasta</string>
-    <string name="list_empty">You can add shows or movies to this list</string>
+    <string name="list_empty">Voit lisätä ohjelmia tai elokuvia tähän listaan</string>
     <string name="action_lists_reorder">Järjestä listat uudelleen</string>
     <string name="ack_lists_reordered">Listat uudelleenjärjestettiin</string>
     <string name="error_name_already_exists">Samanniminen lista on jo olemassa</string>
-    <string name="action_lists_sort_latest_release_date">Latest release date</string>
-    <string name="action_lists_sort_oldest_release_date">Oldest release date</string>
+    <string name="action_lists_sort_latest_release_date">Uusin julkistuspäivä</string>
+    <string name="action_lists_sort_oldest_release_date">Vanhin julkaisupäivä</string>
     <!-- Movies -->
     <string name="title_digital_releases">Digitaaliset julkaisut</string>
     <string name="title_disc_releases">Levyjulkaisut</string>
@@ -576,35 +576,35 @@
     <string name="title_stream_rent">Vuokraus</string>
     <!-- Cloud Authentication -->
     <!-- Common -->
-    <string name="auth_action_back" comment="Action to go back">Back</string>
-    <string name="auth_message_privacy_policy" comment="Privacy policy message, the placeholder will use the label for privacy_policy">When you use this feature, additional data is processed as described in the <xliff:g comment="Privacy policy label">%1$s</xliff:g>.</string>
-    <string name="auth_message_new_accounts_disabled" comment="Message shown when creating new accounts is not allowed">Creating new accounts is currently not allowed</string>
+    <string name="auth_action_back" comment="Action to go back">Takaisin</string>
+    <string name="auth_message_privacy_policy" comment="Privacy policy message, the placeholder will use the label for privacy_policy">Tätä ominaisuutta käytettäessä käsitellään lisätietoja siten kuin kohdassa <xliff:g comment="Privacy policy label">%1$s</xliff:g> on kuvattu.</string>
+    <string name="auth_message_new_accounts_disabled" comment="Message shown when creating new accounts is not allowed">Uusien tilien luominen ei ole tällä hetkellä sallittua</string>
     <!-- Auth method picker -->
-    <string name="auth_action_sign_in_with_google" comment="Action to sign in with a Google account">Sign in with Google</string>
-    <string name="auth_action_sign_in_with_email" comment="Action to sign in with an email address">Sign in with email</string>
-    <string name="auth_action_continue_with_google" comment="Action to continue signing in with a suggested Google account">Continue with Google</string>
-    <string name="auth_action_continue_with_email" comment="Action to continue signing in with a suggested email address">Continue with email</string>
+    <string name="auth_action_sign_in_with_google" comment="Action to sign in with a Google account">Kirjaudu Google-tilillä</string>
+    <string name="auth_action_sign_in_with_email" comment="Action to sign in with an email address">Kirjaudu sähköpostiosoitteella</string>
+    <string name="auth_action_continue_with_google" comment="Action to continue signing in with a suggested Google account">Jatka Google-tilillä</string>
+    <string name="auth_action_continue_with_email" comment="Action to continue signing in with a suggested email address">Jatka sähköpostiosoitteella</string>
     <!-- Email auth -->
-    <string name="auth_hint_name" comment="Hint for name input field">Your name</string>
-    <string name="auth_hint_email" comment="Hint for email input field">Email</string>
-    <string name="auth_hint_password" comment="Hint for password input field">Password</string>
-    <string name="auth_hint_confirm_password" comment="Hint for confirm password input field">Confirm Password</string>
-    <string name="auth_hint_confirm_password_does_not_match" comment="Hint when password entered in confirm password field does not match">Passwords do not match</string>
-    <string name="auth_hint_required" comment="Hint that the value of an input field is required">Required</string>
-    <string name="auth_hint_email_required" comment="Hint that a valid email address is required in an input field">Valid email address required</string>
-    <string name="auth_action_sign_up" comment="Action to create an account">Create an account</string>
-    <string name="auth_error_email_alreay_in_use" comment="Error message when signing up with a used email address">This email address is already in use by an existing account. Sign in with this email address instead.</string>
-    <string name="auth_action_show_password" comment="Action to show the password in a text field">Show password</string>
+    <string name="auth_hint_name" comment="Hint for name input field">Nimesi</string>
+    <string name="auth_hint_email" comment="Hint for email input field">Sähköpostiosoite</string>
+    <string name="auth_hint_password" comment="Hint for password input field">Salasana</string>
+    <string name="auth_hint_confirm_password" comment="Hint for confirm password input field">Vahvista salasana</string>
+    <string name="auth_hint_confirm_password_does_not_match" comment="Hint when password entered in confirm password field does not match">Salasanat eivät täsmää</string>
+    <string name="auth_hint_required" comment="Hint that the value of an input field is required">Vaaditaan</string>
+    <string name="auth_hint_email_required" comment="Hint that a valid email address is required in an input field">Voimassa oleva sähköpostiosoite vaaditaan</string>
+    <string name="auth_action_sign_up" comment="Action to create an account">Tilin luominen</string>
+    <string name="auth_error_email_alreay_in_use" comment="Error message when signing up with a used email address">Tämä sähköpostiosoite on jo käytössä toisella tilillä. Kirjaudu sen sijaan sisään kyseisellä sähköpostiosoitteella.</string>
+    <string name="auth_action_show_password" comment="Action to show the password in a text field">Näytä salasana</string>
     <!-- Password validation messages -->
-    <string name="auth_error_weak_password" comment="Error message when password does not meet requirements">Password not strong enough</string>
-    <string name="auth_error_password_too_short" comment="Error message when password is too short">Use at least %1$d characters</string>
+    <string name="auth_error_weak_password" comment="Error message when password does not meet requirements">Salasana ei ole tarpeeksi vahva</string>
+    <string name="auth_error_password_too_short" comment="Error message when password is too short">Käytä vähintään %1$d merkkiä</string>
     <!-- Password recovery -->
-    <string name="auth_action_reset_password" comment="Action to reset password">Reset password</string>
-    <string name="auth_title_reset_password_instructions" comment="Title of reset password instructions">Check your email</string>
-    <string name="auth_message_reset_password_instructions" comment="Reset password instructions">If an account for this email address exists, an email with instructions to reset your password was sent to it.</string>
+    <string name="auth_action_reset_password" comment="Action to reset password">Nollaa salasana</string>
+    <string name="auth_title_reset_password_instructions" comment="Title of reset password instructions">Tarkista sähköpostisi</string>
+    <string name="auth_message_reset_password_instructions" comment="Reset password instructions">Jos tällä sähköpostiosoitteella on olemassa tili, siihen on lähetetty ohjeet salasanan palauttamiseksi.</string>
     <!-- Error Recovery Dialog -->
-    <string name="auth_error_account_linking_required" comment="Error message when account exists, but created with different sign-in method">An account was already created for this email address using a different sign-in method. Sign in using the original method to add this one.</string>
-    <string name="auth_error_no_google_account_available" comment="Error message when trying to sign in with Google but no Google accounts are available on the device">No Google account is available on this device. Sign in using email or add a Google account to this device.</string>
-    <string name="auth_error_unknown" comment="General error messages for an unknown failure.">An unknown error occurred</string>
-    <string name="auth_error_invalid_password" comment="Error message for when signing in fails.">This password is incorrect, this account does not support signing in with a password or there is no account with this email address. Maybe reset your password.</string>
+    <string name="auth_error_account_linking_required" comment="Error message when account exists, but created with different sign-in method">Tälle sähköpostiosoitteelle on jo luotu tili toisella kirjautumistavalla. Kirjaudu sisään alkuperäisellä tavalla lisätäksesi tämän.</string>
+    <string name="auth_error_no_google_account_available" comment="Error message when trying to sign in with Google but no Google accounts are available on the device">Tällä laitteella ei ole käytettävissä Google-tiliä. Kirjaudu sisään sähköpostiosoitteella tai lisää Google-tili tälle laitteelle.</string>
+    <string name="auth_error_unknown" comment="General error messages for an unknown failure.">Tapahtui tuntematon virhe</string>
+    <string name="auth_error_invalid_password" comment="Error message for when signing in fails.">Salasana on virheellinen, tämä tili ei tue salasanalla kirjautumista tai tällä sähköpostiosoitteella ei ole tiliä. Voit halutessasi palauttaa salasanasi.</string>
 </resources>
