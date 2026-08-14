@@ -1,28 +1,29 @@
-﻿# Credits
+﻿I express my thanks to the following people and projects.
 
-I express my thanks to the following people and projects.
+Chris and Craig for testing the early version of the app. Craig for always pushing and supporting with all his heart and mind. Jake Wharton for his general wisdom and support.
 
-Chris and Craig for testing the thing out. Craig for always pushing and
-supporting with all his heart and mind. Jake Wharton for his general
-wisdom and support.
+The folks at and the countless contributors to TheTVDB, which originally provided data to the app.
 
-The folks at and the countless contributors to TheTVDB.
+The minds behind Trakt, especially Justin.
 
-The minds behind trakt, especially Justin.
+Travis Bell and its contributors for keeping TMDB in shape, which provides most data to the app.
 
-Travis Bell for keeping TMDb in shape.
-
-The creators of the Google I/O app for lots of useful code patterns.
+The creators of the Google I/O app for lots of useful code patterns back in the day.
 - https://github.com/google/iosched
 
-Matthew Altman for creating javatvdbapi which was originally used to
-access TheTVDB.
+Matthew Altman for creating javatvdbapi which was originally used to access TheTVDB.
 
-Roman Nurik for his great DashClock and Muzei apps.
+Roman Nurik for his great DashClock and Muzei apps that inspired the extensions API.
 - https://github.com/romannurik/muzei
 
-The translators on Crowdin.
+The translators on Crowdin that provide translations of the user interface.
 - https://crowdin.com/project/seriesguide-translations
+
+This program by Uwe Trottmann is licensed under the GPL 3.0 or later.
+
+Some parts, including the SeriesGuide API library, are licensed under the Apache License 2.0.
+
+You can obtain a copy of these licenses in the source code repository.
 
 SeriesGuide uses the following libraries or projects:
 
