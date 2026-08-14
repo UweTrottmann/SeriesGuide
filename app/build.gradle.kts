@@ -179,6 +179,16 @@ android {
     }
 }
 
+tasks.register<Copy>("copyCredits") {
+    description = "Copy credits file from root directory to assets"
+    from(rootProject.file("CREDITS.txt"))
+    into(project.file("src/main/assets"))
+}
+
+tasks.named("preBuild") {
+    dependsOn("copyCredits")
+}
+
 dependencies {
     constraints {
         // androidx.room:room-paging-android pulls in a paging-common 3.3 version (but does not
