@@ -8,7 +8,9 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
 
-### Next release
+## Version 2026.4
+
+### 2026.4.0 - 2026-08-14 🧪
 
 * 🔨 Trakt: links to more information and ratings go to their new web app.
 * 🔧 Movies: cache genres and trailer to database, display cached data immediately before potentially slow network requests.
