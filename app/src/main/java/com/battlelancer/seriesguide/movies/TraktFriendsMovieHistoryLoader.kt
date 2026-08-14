@@ -30,7 +30,7 @@ internal class TraktFriendsMovieHistoryLoader(context: Context) :
         val traktUsers = SgApp.getServicesComponent(context).traktUsers()!!
         val friends = SgTrakt.executeAuthenticatedCall(
             context,
-            traktUsers.friends(UserSlug.ME, Extended.FULL), "get friends"
+            traktUsers.following(UserSlug.ME, Extended.FULL), "get following"
         ) ?: return null
 
         val size = friends.size
