@@ -100,7 +100,7 @@ class TraktCommentsFragment : Fragment() {
 
         // disable comment button by default, enable if comment entered
         binding.buttonShouts.isEnabled = false
-        binding.textFieldComments.editText!!.addTextChangedListener(object : TextWatcher {
+        binding.textFieldLayoutComments.editText!!.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 binding.buttonShouts.isEnabled = !TextUtils.isEmpty(s)
@@ -147,7 +147,7 @@ class TraktCommentsFragment : Fragment() {
         val binding = binding ?: return
 
         // prevent empty comments
-        val comment = binding.textFieldComments.editText!!.text.toString()
+        val comment = binding.textFieldLayoutComments.editText!!.text.toString()
         if (TextUtils.isEmpty(comment)) {
             return
         }
@@ -231,7 +231,7 @@ class TraktCommentsFragment : Fragment() {
 
             override fun onEdit(commentId: Int, comment: String, isSpoiler: Boolean) {
                 model.commentIdToEdit.value = commentId
-                binding?.textFieldComments?.editText?.setText(comment)
+                binding?.textFieldLayoutComments?.editText?.setText(comment)
                 binding?.checkBoxShouts?.isChecked = isSpoiler
             }
 
@@ -315,7 +315,7 @@ class TraktCommentsFragment : Fragment() {
             // Reset state
             model.commentIdToEdit.value = null
             // clear the text field and refresh comments
-            binding.textFieldComments.editText!!.setText("")
+            binding.textFieldLayoutComments.editText!!.setText("")
             refreshCommentsWithNetworkCheck()
         }
     }

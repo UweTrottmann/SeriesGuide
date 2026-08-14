@@ -24,6 +24,7 @@
         <!-- This can grow up to the height of the TextInputLayout by default and will push the
          counter out of bounds. As TextInputLayout is a LinearLayout, set layout_weight="1"
          to resolve. -->
+        <!-- Not setting a view ID as state is preserved in code. -->
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

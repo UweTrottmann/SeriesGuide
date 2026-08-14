@@ -10,6 +10,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ### Next release
 
+* 🔨 Once again, keep entered text when rotating the screen or changing the app size in comments screen, list add, list edit and check-in dialog.
+
 ## Version 2026.4
 
 ### 2026.4.0 - 2026-08-14 🧪

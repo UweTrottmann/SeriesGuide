@@ -71,7 +71,7 @@
             android:textAppearance="@style/TextAppearance.SeriesGuide.Caption" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textFieldComments"
+            android:id="@+id/textFieldLayoutComments"
             style="?attr/textInputFilledStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -83,6 +83,7 @@
             app:endIconMode="clear_text">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textFieldTextComments"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="top"
@@ -97,7 +98,7 @@
             android:id="@+id/buttonShouts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textFieldComments"
+            android:layout_below="@id/textFieldLayoutComments"
             android:layout_alignParentRight="true"
             android:text="@string/action_post" />
 
@@ -105,7 +106,7 @@
             android:id="@+id/checkBoxShouts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textFieldComments"
+            android:layout_below="@id/textFieldLayoutComments"
             android:text="@string/isspoiler" />
 
     </RelativeLayout>
