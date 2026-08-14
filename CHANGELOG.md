@@ -12,7 +12,9 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 * 🔨 Trakt: links to more information and ratings go to their new web app.
 * 🔧 Movies: cache genres and trailer to database, display cached data immediately before potentially slow network requests.
+* 🔧 Cloud: new future-proof sign-in screens.
 * 🔨 Cloud: after deleting an account, signing in no longer re-uses the deleted account.
+* 🔧 Comments: note they are provided by Trakt, correctly color user avatar placeholder symbol.
 * 📝 Import latest user interface translations.
 
 ## Version 2026.3
