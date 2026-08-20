@@ -15,9 +15,6 @@ import com.battlelancer.seriesguide.backend.auth.AuthState
 import com.battlelancer.seriesguide.backend.auth.FirebaseAuthUI
 import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfiguration
 import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.AuthProvider.Companion.mergeProfile
-import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCredentialCancelledException
-import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCredentialException
-import com.battlelancer.seriesguide.backend.auth.credentialmanager.PasswordCredentialHandler
 import com.battlelancer.seriesguide.backend.auth.util.EmailLinkParser
 import com.battlelancer.seriesguide.backend.auth.util.EmailLinkPersistenceManager
 import com.battlelancer.seriesguide.backend.auth.util.PersistenceManager
@@ -32,7 +29,6 @@ import com.google.firebase.auth.FirebaseAuthMultiFactorException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.tasks.await
-import timber.log.Timber
 
 private const val LOG_TAG = "EmailAuthProvider"
 
@@ -97,9 +93,7 @@ internal suspend fun FirebaseAuthUI.createUserWithEmailAndPassword(
             }
 
         result?.let {
-            saveCredentialAndSignInPreference(
-                context, config, provider.providerId, email, password
-            )
+            saveSignInPreference(context, provider.providerId, email)
         }
 
         updateAuthState(AuthState.Idle)
@@ -135,7 +129,6 @@ internal suspend fun FirebaseAuthUI.createUserWithEmailAndPassword(
  *
  * **Flow:**
  * - Sign in with email/password
- * - Save credentials, unless [config] disables it or [skipCredentialSave] is set
  * - If [credentialForLinking] provided: link it and merge profile
  *
  * @param context Android [Context] for saving credentials
@@ -149,12 +142,10 @@ internal suspend fun FirebaseAuthUI.createUserWithEmailAndPassword(
  */
 internal suspend fun FirebaseAuthUI.signInWithEmailAndPassword(
     context: Context,
-    config: AuthUIConfiguration,
     provider: AuthProvider,
     email: String,
     password: String,
     credentialForLinking: AuthCredential? = null,
-    skipCredentialSave: Boolean = false,
 ): AuthResult? {
     try {
         updateAuthState(AuthState.Loading("Signing in..."))
@@ -183,9 +174,7 @@ internal suspend fun FirebaseAuthUI.signInWithEmailAndPassword(
             }
             .also { result ->
                 result?.let {
-                    saveCredentialAndSignInPreference(
-                        context, config, provider.providerId, email, password, skipCredentialSave
-                    )
+                    saveSignInPreference(context, provider.providerId, email)
                 }
 
                 updateAuthState(AuthState.Idle)
@@ -214,34 +203,21 @@ internal suspend fun FirebaseAuthUI.signInWithEmailAndPassword(
 }
 
 /**
- * Saves the password credential to Credential Manager and records the sign-in preference.
+ * Saves the sign-in preference for the "Continue as..." feature.
+ *
  * As this isn't necessary to complete sign-in, failures are only logged.
  */
-private suspend fun saveCredentialAndSignInPreference(
+private suspend fun saveSignInPreference(
     context: Context,
-    config: AuthUIConfiguration,
     providerId: String,
-    email: String,
-    password: String,
-    skipCredentialSave: Boolean = false,
+    email: String
 ) {
-    // Save credentials to Credential Manager if enabled
-    // Skip if user signed in with a retrieved credential (already saved)
-    if (config.isCredentialManagerEnabled && !skipCredentialSave) {
-        try {
-            val credentialHandler = PasswordCredentialHandler(context)
-            credentialHandler.savePassword(email, password)
-            Timber.d("Password credential saved successfully for: %s", email)
-        } catch (_: PasswordCredentialCancelledException) {
-            // User cancelled - this is fine, don't break the auth flow
-            Timber.d("User cancelled credential save for: %s", email)
-        } catch (e: PasswordCredentialException) {
-            // Failed to save - log but don't break the auth flow
-            Timber.w(e, "Failed to save password credential for: %s", email)
-        }
-    }
+    // Note: don't manually trigger saving credentials with Credential Manager:
+    // - Only some big password managers appear to support saving with it (unlike
+    //   retrieving existing credentials).
+    // - The user might have already stored them as part of autofill.
+    // - Password managers will ask to save credentials anyhow on the next screen.
 
-    // Save sign-in preference for "Continue as..." feature
     SignInPreferenceManager.tryToSaveLastSignIn(
         context = context,
         providerId = providerId,

@@ -85,7 +85,6 @@ class EmailAuthContentState(
     val onConfirmPasswordChange: (String) -> Unit,
     val displayName: String,
     val onDisplayNameChange: (String) -> Unit,
-    val onRetrievedCredential: (Pair<String, String>) -> Unit,
     val onSignInClick: () -> Unit,
     val onSignInEmailLinkClick: () -> Unit,
     val onSignUpClick: () -> Unit,
@@ -151,9 +150,6 @@ fun EmailAuthScreen(
     val resetLinkSent = authState is AuthState.PasswordResetLinkSent
     val emailSignInLinkSent = authState is AuthState.EmailSignInLinkSent
 
-    // Track if credentials were retrieved from Credential Manager
-    val retrievedCredential = remember { mutableStateOf<Pair<String, String>?>(null) }
-
     LaunchedEffect(authState) {
         // Timber.d("Current state: $authState")
         when (val state = authState) {
@@ -196,26 +192,15 @@ fun EmailAuthScreen(
         onDisplayNameChange = { displayName ->
             displayNameValue.value = displayName
         },
-        onRetrievedCredential = { credential ->
-            retrievedCredential.value = credential
-        },
         onSignInClick = {
             coroutineScope.launch {
                 try {
-                    // Check if user is signing in with retrieved credentials
-                    val isUsingRetrievedCredential =
-                        retrievedCredential.value?.let { (email, password) ->
-                            email == emailTextValue.value && password == passwordTextValue.value
-                        } ?: false
-
                     authUI.signInWithEmailAndPassword(
                         context = context,
-                        config = configuration,
                         provider = provider,
                         email = emailTextValue.value,
                         password = passwordTextValue.value,
-                        credentialForLinking = authCredentialForLinking,
-                        skipCredentialSave = isUsingRetrievedCredential
+                        credentialForLinking = authCredentialForLinking
                     )
                 } catch (e: Exception) {
                     onError(AuthException.from(e))
@@ -320,7 +305,6 @@ private fun DefaultEmailAuthContent(
                 password = state.password,
                 onEmailChange = state.onEmailChange,
                 onPasswordChange = state.onPasswordChange,
-                onRetrievedCredential = state.onRetrievedCredential,
                 onSignInClick = state.onSignInClick,
                 onGoToSignUp = state.onGoToSignUp,
                 onGoToResetPassword = state.onGoToResetPassword,

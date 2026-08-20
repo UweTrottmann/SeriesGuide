@@ -8,12 +8,9 @@
 package com.battlelancer.seriesguide.backend.auth.credentialmanager
 
 import android.content.Context
-import androidx.credentials.CreatePasswordRequest
 import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.GetPasswordOption
-import androidx.credentials.exceptions.CreateCredentialCancellationException
-import androidx.credentials.exceptions.CreateCredentialException
 import androidx.credentials.exceptions.GetCredentialCancellationException
 import androidx.credentials.exceptions.GetCredentialException
 import androidx.credentials.exceptions.NoCredentialException
@@ -69,38 +66,6 @@ class PasswordCredentialHandler(
         provider?.getCredentialManager(context)
             ?: testCredentialManagerProvider?.getCredentialManager(context)
             ?: CredentialManager.create(context)
-
-    /**
-     * Saves a password credential to the system credential manager.
-     *
-     * This method displays a system prompt to the user asking if they want to save
-     * the credential. The operation is performed asynchronously using Kotlin coroutines.
-     *
-     * @param username The username/identifier for the credential
-     * @param password The password to save
-     * @throws CreateCredentialException if the credential cannot be saved
-     * @throws CreateCredentialCancellationException if the user cancels the save operation
-     * @throws IllegalArgumentException if username or password is blank
-     */
-    suspend fun savePassword(username: String, password: String) {
-        require(username.isNotBlank()) { "Username cannot be blank" }
-        require(password.isNotBlank()) { "Password cannot be blank" }
-
-        val request = CreatePasswordRequest(
-            id = username,
-            password = password
-        )
-
-        try {
-            credentialManager.createCredential(context, request)
-        } catch (e: CreateCredentialCancellationException) {
-            // User cancelled the save operation
-            throw PasswordCredentialCancelledException("User cancelled password save operation", e)
-        } catch (e: CreateCredentialException) {
-            // Other credential creation errors
-            throw PasswordCredentialException("Failed to save password credential", e)
-        }
-    }
 
     /**
      * Retrieves a password credential from the system credential manager.

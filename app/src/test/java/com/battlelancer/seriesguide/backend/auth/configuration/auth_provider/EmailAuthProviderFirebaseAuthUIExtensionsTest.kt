@@ -374,20 +374,12 @@ class EmailAuthProviderFirebaseAuthUIExtensionsTest {
         val emailProvider = AuthProvider.Email(
             emailLinkActionCodeSettings = null
         )
-        val config = authUIConfiguration {
-            context = applicationContext
-            providers {
-                provider(emailProvider)
-            }
-        }
         return instance.signInWithEmailAndPassword(
             context = applicationContext,
-            config = config,
             provider = emailProvider,
             email = TEST_EMAIL,
             password = TEST_PASSWORD,
-            credentialForLinking = credentialForLinking,
-            skipCredentialSave = true // Credential manager not set up for unit tests
+            credentialForLinking = credentialForLinking
         )
     }
 
