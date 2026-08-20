@@ -28,9 +28,6 @@ import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.PackageTools
 import com.battlelancer.seriesguide.util.SgPicassoRequestHandler
 import com.battlelancer.seriesguide.util.ThemeUtils
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException
-import com.google.android.gms.common.GooglePlayServicesRepairableException
-import com.google.android.gms.security.ProviderInstaller
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
@@ -150,8 +147,15 @@ class SgApp : Application() {
         // Load the current theme into a global variable
         ThemeUtils.updateTheme(DisplaySettings.getThemeIndex(this))
 
-        // Update security provider before building HTTP client (for Picasso and in HttpClientModule).
-        initializeSecurityProvider()
+        // Note: not updating security provider using Google Play Service's ProviderInstaller API
+        // (https://developer.android.com/privacy-and-security/security-gms-provider):
+        // - Android 6 and above have switched from OpenSSL to BoringSSL
+        //   https://developer.android.com/about/versions/marshmallow/android-6.0-changes#boringSSL
+        // - most Android 10 devices should have an updated Conscrypt provider due to Project
+        //   Mainline https://source.android.com/docs/core/ota/modular-system
+        // - ANRs reported, especially on modern Android versions (though could be solved by async
+        //   installing)
+        // - proprietary, intransparent API makes it unclear what exactly is changed
         initializePicasso()
 
         // Initialize unlock state
@@ -166,25 +170,6 @@ class SgApp : Application() {
                 // Note: keeping the connection alive for the lifetime of the app process.
                 appContainer.billingRepository.startAndConnectToBillingService()
             }
-        }
-    }
-
-    /**
-     * Tell Google Play Services to update the security provider.
-     * This enables older devices to keep connecting to APIs and image servers
-     * by use modern encryption.
-     */
-    private fun initializeSecurityProvider() {
-        // TODO Figure out how to do this async
-        //  (either Picasso and HttpClientModule need to wait, or replace them on success?).
-//        ProviderInstaller.installIfNeededAsync(applicationContext, providerInstallListener)
-        try {
-            ProviderInstaller.installIfNeeded(applicationContext)
-            Timber.v("Successfully installed GMS security provider")
-        } catch (e: GooglePlayServicesRepairableException) {
-            Timber.e("Failed to install GMS security provider ${e.connectionStatusCode}")
-        } catch (e: GooglePlayServicesNotAvailableException) {
-            Timber.e("Failed to install GMS security provider ${e.errorCode}")
         }
     }
 
