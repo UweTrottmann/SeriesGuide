@@ -1,5 +1,6 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
 
 // Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
 // https://github.com/firebase/FirebaseUI-Android
@@ -11,13 +12,12 @@ import androidx.credentials.CreatePasswordRequest
 import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.GetPasswordOption
-import androidx.credentials.PasswordCredential as AndroidPasswordCredential
 import androidx.credentials.exceptions.CreateCredentialCancellationException
 import androidx.credentials.exceptions.CreateCredentialException
 import androidx.credentials.exceptions.GetCredentialCancellationException
 import androidx.credentials.exceptions.GetCredentialException
 import androidx.credentials.exceptions.NoCredentialException
-import com.battlelancer.seriesguide.backend.auth.util.CredentialPersistenceManager
+import androidx.credentials.PasswordCredential as AndroidPasswordCredential
 
 /**
  * Provider interface for obtaining CredentialManager instances.
@@ -42,8 +42,8 @@ class DefaultCredentialManagerProvider : CredentialManagerProvider {
  * This class provides methods to save and retrieve password credentials through
  * the system credential manager, which displays native UI prompts to the user.
  *
- * @property context The Android context used for credential operations
- * @property provider Optional provider for testing purposes
+ * @param context The Android context used for credential operations
+ * @param provider Optional provider for testing purposes
  */
 class PasswordCredentialHandler(
     private val context: Context,
@@ -63,27 +63,6 @@ class PasswordCredentialHandler(
          */
         @Volatile
         var testCredentialManagerProvider: CredentialManagerProvider? = null
-
-        /**
-         * Checks if credentials have been saved at least once.
-         * This prevents unnecessary credential retrieval attempts.
-         *
-         * @param context The Android context
-         * @return true if credentials have been saved, false otherwise
-         */
-        suspend fun hasSavedCredentials(context: Context): Boolean {
-            return CredentialPersistenceManager.hasSavedCredentials(context)
-        }
-
-        /**
-         * Clears the saved credentials flag.
-         * Useful for testing or when user signs out permanently.
-         *
-         * @param context The Android context
-         */
-        suspend fun clearSavedCredentialsFlag(context: Context) {
-            CredentialPersistenceManager.clearSavedCredentialsFlag(context)
-        }
     }
 
     private val credentialManager: CredentialManager =
@@ -114,8 +93,6 @@ class PasswordCredentialHandler(
 
         try {
             credentialManager.createCredential(context, request)
-            // Mark that credentials have been saved successfully
-            CredentialPersistenceManager.setCredentialsSaved(context)
         } catch (e: CreateCredentialCancellationException) {
             // User cancelled the save operation
             throw PasswordCredentialCancelledException("User cancelled password save operation", e)

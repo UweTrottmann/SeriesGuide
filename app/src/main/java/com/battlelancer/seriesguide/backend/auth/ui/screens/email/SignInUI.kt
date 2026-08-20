@@ -97,9 +97,7 @@ fun SignInUI(
     val credentialRetrievalAttempted = remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        if (configuration.isCredentialManagerEnabled &&
-            !credentialRetrievalAttempted.value &&
-            PasswordCredentialHandler.hasSavedCredentials(context)) {
+        if (configuration.isCredentialManagerEnabled && !credentialRetrievalAttempted.value) {
             credentialRetrievalAttempted.value = true
 
             try {
