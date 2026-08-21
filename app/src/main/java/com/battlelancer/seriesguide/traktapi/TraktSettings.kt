@@ -49,6 +49,9 @@ object TraktSettings {
     private const val KEY_LAST_NOTES_UPDATED_AT
             : String = "trakt.last_activity.notes.updated"
 
+    private const val KEY_LAST_LISTS_UPDATED_AT
+            : String = "trakt.last_activity.lists.updated"
+
     /**
      * Unused, but kept for reference.
      *
@@ -71,6 +74,9 @@ object TraktSettings {
 
     private const val KEY_HAS_MERGED_SHOW_NOTES
             : String = "trakt.notes.shows.merged"
+
+    private const val KEY_HAS_MERGED_LISTS
+            : String = "trakt.lists.merged"
 
     /**
      * Used in settings_basic.xml.
@@ -153,6 +159,20 @@ object TraktSettings {
     fun storeLastNotesUpdatedAt(context: Context, updatedAt: OffsetDateTime) {
         PreferenceManager.getDefaultSharedPreferences(context).edit {
             putLong(KEY_LAST_NOTES_UPDATED_AT, updatedAt.toInstant().toEpochMilli())
+        }
+    }
+
+    /**
+     * The last time lists were updated or 0 if no value exists.
+     */
+    fun getLastListsUpdatedAt(context: Context): Long {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+            .getLong(KEY_LAST_LISTS_UPDATED_AT, 0)
+    }
+
+    fun storeLastListsUpdatedAt(context: Context, updatedAt: OffsetDateTime) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit {
+            putLong(KEY_LAST_LISTS_UPDATED_AT, updatedAt.toInstant().toEpochMilli())
         }
     }
 
@@ -261,12 +281,27 @@ object TraktSettings {
         }
     }
 
+    /**
+     * Returns if lists have not been synced with the current Trakt account.
+     */
+    fun isInitialSyncLists(context: Context): Boolean {
+        return !PreferenceManager.getDefaultSharedPreferences(context)
+            .getBoolean(KEY_HAS_MERGED_LISTS, false)
+    }
+
+    fun setInitialSyncListsCompleted(context: Context) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit {
+            putBoolean(KEY_HAS_MERGED_LISTS, true)
+        }
+    }
+
 
     fun resetToInitialSync(context: Context) {
         PreferenceManager.getDefaultSharedPreferences(context).edit {
             putBoolean(KEY_HAS_MERGED_EPISODES, false)
             putBoolean(KEY_HAS_MERGED_MOVIES, false)
             putBoolean(KEY_HAS_MERGED_SHOW_NOTES, false)
+            putBoolean(KEY_HAS_MERGED_LISTS, false)
             // Not actually necessary, but also reset timestamps for episodes and movies
             putLong(KEY_LAST_EPISODES_WATCHED_AT, 0)
             putLong(KEY_LAST_EPISODES_COLLECTED_AT, 0)

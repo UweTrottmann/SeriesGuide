@@ -149,6 +149,16 @@ class TraktSync(
             return SgSyncAdapter.UpdateResult.INCOMPLETE
         }
 
+        // LISTS
+        if (!onlyRatings) {
+            progress.publish(SyncProgress.Step.TRAKT_LISTS)
+            if (noConnection()) return SgSyncAdapter.UpdateResult.INCOMPLETE
+            if (!TraktListsSync(this).sync(lastActivity.listsLastUpdatedAt)) {
+                progress.recordError()
+                return SgSyncAdapter.UpdateResult.INCOMPLETE
+            }
+        }
+
         return SgSyncAdapter.UpdateResult.SUCCESS
     }
 

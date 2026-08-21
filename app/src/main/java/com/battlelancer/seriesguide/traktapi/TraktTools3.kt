@@ -88,7 +88,8 @@ object TraktTools3 {
         val moviesLastWatchlistedAt: OffsetDateTime?,
         val moviesLastWatchedAt: OffsetDateTime?,
         val moviesLastRatedAt: OffsetDateTime?,
-        val notesLastUpdatedAt: OffsetDateTime?
+        val notesLastUpdatedAt: OffsetDateTime?,
+        val listsLastUpdatedAt: OffsetDateTime?
     )
 
     fun getLastActivity(context: Context): Result<LastActivities, TraktError> {
@@ -107,11 +108,13 @@ object TraktTools3 {
                 val shows = lastActivities?.shows
                 val movies = lastActivities?.movies
                 val notes = lastActivities?.notes
+                val lists = lastActivities?.lists
                 if (
                     episodes != null
                     && shows != null
                     && movies != null
                     && notes != null
+                    && lists != null
                 ) {
                     return@andThen Ok(
                         LastActivities(
@@ -123,7 +126,8 @@ object TraktTools3 {
                             moviesLastWatchlistedAt = movies.watchlisted_at,
                             moviesLastWatchedAt = movies.watched_at,
                             moviesLastRatedAt = movies.rated_at,
-                            notesLastUpdatedAt = notes.updated_at
+                            notesLastUpdatedAt = notes.updated_at,
+                            listsLastUpdatedAt = lists.updated_at
                         )
                     )
                 } else {
