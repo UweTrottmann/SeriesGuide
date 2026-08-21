@@ -58,18 +58,21 @@ import java.util.concurrent.ConcurrentHashMap
  *
  * @property app The [FirebaseApp] instance used for authentication
  * @property auth The [FirebaseAuth] instance used for authentication operations
+ * @param googleCredentialManagerFactory Optional, in preparation to pass a mock instance
  *
  * @since 10.0.0
  */
 class FirebaseAuthUI private constructor(
     val app: FirebaseApp,
     val auth: FirebaseAuth,
+    googleCredentialManagerFactory: () -> AuthProvider.Google.CredentialManager =
+        { AuthProvider.Google.DefaultCredentialManager() }
 ) {
 
     private val _authStateFlow = MutableStateFlow<AuthState>(AuthState.Idle)
 
-    @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
-    var testCredentialManagerProvider: AuthProvider.Google.CredentialManagerProvider? = null
+    val googleCredentialManager: AuthProvider.Google.CredentialManager
+            by lazy(googleCredentialManagerFactory)
 
     /**
      * Checks whether a user is currently signed in.

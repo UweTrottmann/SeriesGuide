@@ -89,7 +89,6 @@ internal fun FirebaseAuthUI.rememberGoogleSignInHandler(
  *
  * @param context Android context for Credential Manager
  * @param provider Google provider configuration
- * @param credentialManagerProvider Provider for Credential Manager flow (for testing)
  *
  * @throws AuthException.AuthCancelledException if user cancels, no accounts found or other error
  * related to Google sign-in
@@ -101,8 +100,7 @@ internal fun FirebaseAuthUI.rememberGoogleSignInHandler(
  */
 internal suspend fun FirebaseAuthUI.signInWithGoogle(
     context: Context,
-    provider: AuthProvider.Google,
-    credentialManagerProvider: AuthProvider.Google.CredentialManagerProvider = AuthProvider.Google.DefaultCredentialManagerProvider(),
+    provider: AuthProvider.Google
 ) {
     updateAuthState(AuthState.Loading("Signing in with Google..."))
 
@@ -113,7 +111,6 @@ internal suspend fun FirebaseAuthUI.signInWithGoogle(
                 getGoogleCredential(
                     context = context,
                     provider = provider,
-                    credentialManagerProvider = credentialManagerProvider,
                     filterByAuthorizedAccounts = provider.filterByAuthorizedAccounts
                 )
             } catch (e: NoCredentialException) {
@@ -124,7 +121,6 @@ internal suspend fun FirebaseAuthUI.signInWithGoogle(
                     getGoogleCredential(
                         context = context,
                         provider = provider,
-                        credentialManagerProvider = credentialManagerProvider,
                         filterByAuthorizedAccounts = false
                     )
                 } else {
@@ -188,17 +184,15 @@ internal suspend fun FirebaseAuthUI.signInWithGoogle(
 private suspend fun FirebaseAuthUI.getGoogleCredential(
     context: Context,
     provider: AuthProvider.Google,
-    credentialManagerProvider: AuthProvider.Google.CredentialManagerProvider,
     filterByAuthorizedAccounts: Boolean
 ): AuthProvider.Google.GoogleSignInResult {
-    return (testCredentialManagerProvider ?: credentialManagerProvider)
-        .getGoogleCredential(
-            context = context,
-            credentialManager = CredentialManager.create(context),
-            serverClientId = provider.serverClientId,
-            filterByAuthorizedAccounts = filterByAuthorizedAccounts,
-            autoSelectEnabled = provider.autoSelectEnabled
-        )
+    return googleCredentialManager.getGoogleCredential(
+        context = context,
+        credentialManager = CredentialManager.create(context),
+        serverClientId = provider.serverClientId,
+        filterByAuthorizedAccounts = filterByAuthorizedAccounts,
+        autoSelectEnabled = provider.autoSelectEnabled
+    )
 }
 
 /**
@@ -218,13 +212,10 @@ private suspend fun FirebaseAuthUI.getGoogleCredential(
  *
  * @param context Android context for Credential Manager
  */
-internal suspend fun FirebaseAuthUI.signOutFromGoogle(
-    context: Context,
-    credentialManagerProvider: AuthProvider.Google.CredentialManagerProvider = AuthProvider.Google.DefaultCredentialManagerProvider(),
-) {
+internal suspend fun FirebaseAuthUI.signOutFromGoogle(context: Context) {
     try {
         if (Provider.fromId(getCurrentUser()?.providerId) != Provider.GOOGLE) return
-        (testCredentialManagerProvider ?: credentialManagerProvider).clearCredentialState(
+        googleCredentialManager.clearCredentialState(
             credentialManager = CredentialManager.create(context)
         )
     } catch (e: Exception) {
