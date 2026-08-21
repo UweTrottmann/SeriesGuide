@@ -17,55 +17,18 @@ import androidx.credentials.exceptions.NoCredentialException
 import androidx.credentials.PasswordCredential as AndroidPasswordCredential
 
 /**
- * Provider interface for obtaining CredentialManager instances.
- * This allows test code to inject mock CredentialManager instances.
- */
-interface CredentialManagerProvider {
-    fun getCredentialManager(context: Context): CredentialManager
-}
-
-/**
- * Default implementation that creates a real CredentialManager instance.
- */
-class DefaultCredentialManagerProvider : CredentialManagerProvider {
-    override fun getCredentialManager(context: Context): CredentialManager {
-        return CredentialManager.create(context)
-    }
-}
-
-/**
  * Handler for password credential operations using Android's Credential Manager.
  *
  * This class provides methods to save and retrieve password credentials through
  * the system credential manager, which displays native UI prompts to the user.
  *
- * @param context The Android context used for credential operations
- * @param provider Optional provider for testing purposes
+ * @param context The Android context used for credential operations.
+ * @param credentialManager Optional, to mock CredentialManager for testing purposes.
  */
 class PasswordCredentialHandler(
     private val context: Context,
-    provider: CredentialManagerProvider? = null
+    private val credentialManager: CredentialManager = CredentialManager.create(context)
 ) {
-    companion object {
-        /**
-         * Test-only provider for injecting mock CredentialManager instances.
-         * Set this in your test setup to override the default CredentialManager.
-         *
-         * Example:
-         * ```
-         * PasswordCredentialHandler.testCredentialManagerProvider = object : CredentialManagerProvider {
-         *     override fun getCredentialManager(context: Context) = mockCredentialManager
-         * }
-         * ```
-         */
-        @Volatile
-        var testCredentialManagerProvider: CredentialManagerProvider? = null
-    }
-
-    private val credentialManager: CredentialManager =
-        provider?.getCredentialManager(context)
-            ?: testCredentialManagerProvider?.getCredentialManager(context)
-            ?: CredentialManager.create(context)
 
     /**
      * Retrieves a password credential from the system credential manager.
