@@ -1,11 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2025 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.traktapi
 
 import android.content.Context
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.traktapi.TraktTools3.TraktError
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.isRetryError
 import com.github.michaelbull.result.Err
@@ -14,13 +13,11 @@ import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.andThen
 import com.github.michaelbull.result.mapError
 import com.github.michaelbull.result.runCatching
-import com.uwetrottmann.trakt5.entities.LastActivity
-import com.uwetrottmann.trakt5.entities.LastActivityMore
-import com.uwetrottmann.trakt5.entities.LastActivityUpdated
 import com.uwetrottmann.trakt5.entities.Show
 import com.uwetrottmann.trakt5.enums.Extended
 import com.uwetrottmann.trakt5.enums.IdType
 import com.uwetrottmann.trakt5.enums.Type
+import org.threeten.bp.OffsetDateTime
 
 /**
  * Uses third-party [Result] API for result handling. Errors are [TraktError].
@@ -83,17 +80,22 @@ object TraktTools3 {
     }
 
     data class LastActivities(
-        val episodes: LastActivityMore,
-        val shows: LastActivity,
-        val movies: LastActivityMore,
-        val notes: LastActivityUpdated,
+        val episodesLastWatchedAt: OffsetDateTime?,
+        val episodesLastCollectedAt: OffsetDateTime?,
+        val episodesLastRatedAt: OffsetDateTime?,
+        val showsLastRatedAt: OffsetDateTime?,
+        val moviesLastCollectedAt: OffsetDateTime?,
+        val moviesLastWatchlistedAt: OffsetDateTime?,
+        val moviesLastWatchedAt: OffsetDateTime?,
+        val moviesLastRatedAt: OffsetDateTime?,
+        val notesLastUpdatedAt: OffsetDateTime?
     )
 
     fun getLastActivity(context: Context): Result<LastActivities, TraktError> {
         val action = "get last activity"
         return runCatching {
             SgApp.getServicesComponent(context).trakt().sync()
-                .lastActivities()
+                .lastActivities2()
                 .execute()
         }.mapError {
             Errors.logAndReport(action, it)
@@ -105,13 +107,23 @@ object TraktTools3 {
                 val shows = lastActivities?.shows
                 val movies = lastActivities?.movies
                 val notes = lastActivities?.notes
-                if (episodes != null && shows != null && movies != null && notes != null) {
+                if (
+                    episodes != null
+                    && shows != null
+                    && movies != null
+                    && notes != null
+                ) {
                     return@andThen Ok(
                         LastActivities(
-                            episodes = episodes,
-                            shows = shows,
-                            movies = movies,
-                            notes = notes
+                            episodesLastWatchedAt = episodes.watched_at,
+                            episodesLastCollectedAt = episodes.collected_at,
+                            episodesLastRatedAt = episodes.rated_at,
+                            showsLastRatedAt = shows.rated_at,
+                            moviesLastCollectedAt = movies.collected_at,
+                            moviesLastWatchlistedAt = movies.watchlisted_at,
+                            moviesLastWatchedAt = movies.watched_at,
+                            moviesLastRatedAt = movies.rated_at,
+                            notesLastUpdatedAt = notes.updated_at
                         )
                     )
                 } else {

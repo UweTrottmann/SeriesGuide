@@ -14,13 +14,13 @@ import com.battlelancer.seriesguide.traktapi.TraktTools4
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse.Success
 import com.battlelancer.seriesguide.util.DBUtils
 import com.battlelancer.seriesguide.util.Errors
-import com.uwetrottmann.trakt5.entities.LastActivityMore
 import com.uwetrottmann.trakt5.entities.MovieIds
 import com.uwetrottmann.trakt5.entities.SyncItems
 import com.uwetrottmann.trakt5.entities.SyncMovie
 import com.uwetrottmann.trakt5.entities.SyncResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import org.threeten.bp.OffsetDateTime
 import retrofit2.Response
 import timber.log.Timber
 
@@ -49,18 +49,19 @@ class TraktMovieSync(
      * [InterruptedException].
      */
     @Throws(InterruptedException::class)
-    fun syncLists(activity: LastActivityMore): Boolean {
-        val collectedAt = activity.collected_at
+    fun syncLists(
+        collectedAt: OffsetDateTime?,
+        watchlistedAt: OffsetDateTime?,
+        watchedAt: OffsetDateTime?,
+    ): Boolean {
         if (collectedAt == null) {
             Timber.e("syncLists: null collected_at")
             return false
         }
-        val watchlistedAt = activity.watchlisted_at
         if (watchlistedAt == null) {
             Timber.e("syncLists: null watchlisted_at")
             return false
         }
-        val watchedAt = activity.watched_at
         if (watchedAt == null) {
             Timber.e("syncLists: null watched_at")
             return false
