@@ -17,13 +17,13 @@ import androidx.core.text.buildSpannedString
 import androidx.core.text.inSpans
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.SgAppContainer
 import com.battlelancer.seriesguide.movies.MoviesSettings
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.ShowsSettings
@@ -45,6 +45,7 @@ import kotlin.coroutines.CoroutineContext
 object StreamingSearch {
 
     val regionLiveData = MutableLiveData<String?>()
+
     // Use a shared instead of a state flow to avoid having to set an initial value
     private val _regionCode = MutableSharedFlow<String>(
         replay = 1,
@@ -242,13 +243,14 @@ object StreamingSearch {
     }
 
     /**
-     * Set [hideExternalLink] to not display a link to TMDB with direct links to providers.
+     * The [appContainer] is used to determine whether to display an external link to a website
+     * linking to providers.
      */
     @SuppressLint("SetTextI18n")
     fun configureButton(
         button: Button,
         watchInfo: TmdbTools2.WatchInfo,
-        hideExternalLink: Boolean
+        appContainer: SgAppContainer
     ) {
         val topProviderOrNull = watchInfo.topProvider
         return if (topProviderOrNull != null) {
@@ -259,7 +261,11 @@ object StreamingSearch {
             val providerText = topProviderOrNull + moreText
             button.text = providerText
             button.setOnClickListener {
-                showWatchProviderInfoDialog(context, watchInfo, hideExternalLink)
+                showWatchProviderInfoDialog(
+                    context,
+                    watchInfo,
+                    appContainer.preventLinksToPurchase
+                )
             }
             button.isEnabled = true
         } else {

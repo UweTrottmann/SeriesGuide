@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2019-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2019 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.shows.search.discover
 
@@ -158,7 +158,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
                     StreamingSearch.configureButton(
                         it,
                         watchInfo,
-                        requireActivity().getSgAppContainer().preventExternalLinks
+                        requireActivity().getSgAppContainer()
                     )
                 }
             }

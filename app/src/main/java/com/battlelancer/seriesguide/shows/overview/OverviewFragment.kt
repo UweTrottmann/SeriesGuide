@@ -262,7 +262,7 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
                         StreamingSearch.configureButton(
                             it.includeButtons.buttonEpisodeStreamingSearch,
                             seasonWatchInfo,
-                            requireActivity().getSgAppContainer().preventExternalLinks
+                            requireActivity().getSgAppContainer()
                         )
                     }
                 }

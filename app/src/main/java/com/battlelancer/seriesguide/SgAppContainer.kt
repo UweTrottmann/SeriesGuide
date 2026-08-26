@@ -50,6 +50,22 @@ class SgAppContainer(context: Context, coroutineScope: CoroutineScope) {
 //            .let { if (BuildConfig.DEBUG) true else it }
     }
 
+    /**
+     * If true, should not display links leading to a purchase.
+     */
+    val preventLinksToPurchase by lazy {
+        val installedByPlay = PackageTools.wasInstalledByPlayStore(context)
+        (installedByPlay)
+            .also {
+                Timber.i(
+                    "preventLinksToPurchase=%s installedByPlay=%s",
+                    it,
+                    installedByPlay
+                )
+            }
+//            .let { if (BuildConfig.DEBUG) true else it }
+    }
+
     val billingRepository by lazy {
         BillingRepository(context, coroutineScope)
     }
