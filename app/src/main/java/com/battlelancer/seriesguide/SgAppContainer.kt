@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2025 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide
 
@@ -40,8 +40,8 @@ class SgAppContainer(context: Context, coroutineScope: CoroutineScope) {
             .also {
                 Timber.i(
                     "preventExternalLinks=%s installedByPlay=%s region=%s isEEA=%s isUS=%s",
-                    installedByPlay,
                     it,
+                    installedByPlay,
                     region.code,
                     isEEA,
                     isUS
