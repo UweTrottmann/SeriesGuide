@@ -154,7 +154,8 @@ fun SignInUI(
                 textVisible = showPassword.value,
                 onValueChange = { text ->
                     onPasswordChange(text)
-                }
+                },
+                isDoneAction = true
             )
             AuthShowPasswordToggle(
                 value = showPassword.value,
