@@ -122,7 +122,8 @@ fun SignInEmailLinkUI(
                 enabled = !isLoading,
                 onValueChange = { text ->
                     onEmailChange(text)
-                }
+                },
+                isDoneAction = true
             )
             Spacer(modifier = Modifier.height(16.dp))
             TextButton(

@@ -109,7 +109,8 @@ fun ResetPasswordUI(
                 enabled = !isLoading,
                 onValueChange = { text ->
                     onEmailChange(text)
-                }
+                },
+                isDoneAction = true
             )
             Spacer(modifier = Modifier.height(8.dp))
             Row(

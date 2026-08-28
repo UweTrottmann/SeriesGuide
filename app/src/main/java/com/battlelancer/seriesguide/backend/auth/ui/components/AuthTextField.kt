@@ -22,7 +22,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -36,7 +35,6 @@ import androidx.compose.ui.unit.dp
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.DefaultAuthUIStringProvider
 import com.battlelancer.seriesguide.backend.auth.configuration.string_provider.LocalAuthUIStringProvider
-import com.battlelancer.seriesguide.backend.auth.configuration.validators.EmailValidator
 import com.battlelancer.seriesguide.backend.auth.configuration.validators.FieldValidator
 
 /**
@@ -59,24 +57,6 @@ fun AuthTextField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
     @DrawableRes leadingIcon: Int? = null
 ) {
-    // Automatically set the correct keyboard type based on validator or field type
-    val resolvedKeyboardOptions = remember(validator, isSecureTextField, keyboardOptions) {
-        when {
-            keyboardOptions != KeyboardOptions.Default -> keyboardOptions
-            validator is EmailValidator -> KeyboardOptions(
-                keyboardType = KeyboardType.Email,
-                imeAction = ImeAction.Next
-            )
-
-            isSecureTextField -> KeyboardOptions(
-                keyboardType = KeyboardType.Password,
-                imeAction = ImeAction.Done
-            )
-
-            else -> keyboardOptions
-        }
-    }
-
     TextField(
         modifier = modifier
             .fillMaxWidth(),
@@ -94,7 +74,7 @@ fun AuthTextField(
                 Text(text = errorMessage ?: validator.errorMessage)
             }
         },
-        keyboardOptions = resolvedKeyboardOptions,
+        keyboardOptions = keyboardOptions,
         keyboardActions = keyboardActions,
         visualTransformation = if (isSecureTextField && !textVisible)
             PasswordVisualTransformation() else visualTransformation,
@@ -109,12 +89,18 @@ fun AuthTextField(
     )
 }
 
+/**
+ * Variant of [AuthTextField] for email addresses.
+ *
+ * @param isDoneAction Whether instead of [ImeAction.Next], set the keyboard action as [ImeAction.Done].
+ */
 @Composable
 fun AuthEmailTextField(
     value: String,
     onValueChange: (String) -> Unit,
     enabled: Boolean = true,
-    validator: FieldValidator? = null
+    validator: FieldValidator? = null,
+    isDoneAction: Boolean = false
 ) {
     val stringProvider = LocalAuthUIStringProvider.current
     AuthTextField(
@@ -125,10 +111,19 @@ fun AuthEmailTextField(
         },
         enabled = enabled,
         validator = validator,
-        leadingIcon = R.drawable.ic_email_control_24dp
+        leadingIcon = R.drawable.ic_email_control_24dp,
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Email,
+            imeAction = if (isDoneAction) ImeAction.Done else ImeAction.Next
+        )
     )
 }
 
+/**
+ * Variant of [AuthPasswordTextField] for passwords.
+ *
+ * @param isDoneAction Whether instead of [ImeAction.Next], set the keyboard action as [ImeAction.Done].
+ */
 @Composable
 fun AuthPasswordTextField(
     value: String,
@@ -136,7 +131,8 @@ fun AuthPasswordTextField(
     label: @Composable (() -> Unit)? = null,
     enabled: Boolean = true,
     textVisible: Boolean,
-    validator: FieldValidator? = null
+    validator: FieldValidator? = null,
+    isDoneAction: Boolean = false
 ) {
     val stringProvider = LocalAuthUIStringProvider.current
     AuthTextField(
@@ -147,6 +143,10 @@ fun AuthPasswordTextField(
         },
         enabled = enabled,
         validator = validator,
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Password,
+            imeAction = if (isDoneAction) ImeAction.Done else ImeAction.Next
+        ),
         isSecureTextField = true,
         textVisible = textVisible,
         leadingIcon = R.drawable.ic_rounded_password_control_24dp
