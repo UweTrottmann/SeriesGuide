@@ -27,7 +27,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.autofill.ContentType
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.contentType
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -112,6 +115,7 @@ fun SignUpUI(
         ) {
             if (provider.isDisplayNameRequired) {
                 AuthTextField(
+                    modifier = Modifier.semantics { contentType = ContentType.PersonFirstName },
                     value = displayName,
                     validator = displayNameValidator,
                     enabled = !isLoading,
@@ -142,6 +146,7 @@ fun SignUpUI(
                 validator = passwordValidator,
                 enabled = !isLoading,
                 textVisible = showPassword.value,
+                isNewPassword = true,
                 onValueChange = { text ->
                     onPasswordChange(text)
                 }

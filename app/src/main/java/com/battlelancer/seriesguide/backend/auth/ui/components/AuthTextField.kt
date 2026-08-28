@@ -24,8 +24,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.autofill.ContentType
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentType
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -104,6 +107,10 @@ fun AuthEmailTextField(
 ) {
     val stringProvider = LocalAuthUIStringProvider.current
     AuthTextField(
+        modifier = Modifier.semantics {
+            // Adding or using (New)Username appears to not suggest anything, so just use:
+            contentType = ContentType.EmailAddress
+        },
         value = value,
         onValueChange = onValueChange,
         label = {
@@ -122,6 +129,7 @@ fun AuthEmailTextField(
 /**
  * Variant of [AuthPasswordTextField] for passwords.
  *
+ * @param isNewPassword If set, will use [ContentType.NewPassword] instead of [ContentType.Password].
  * @param isDoneAction Whether instead of [ImeAction.Next], set the keyboard action as [ImeAction.Done].
  */
 @Composable
@@ -132,10 +140,14 @@ fun AuthPasswordTextField(
     enabled: Boolean = true,
     textVisible: Boolean,
     validator: FieldValidator? = null,
+    isNewPassword: Boolean = false,
     isDoneAction: Boolean = false
 ) {
     val stringProvider = LocalAuthUIStringProvider.current
     AuthTextField(
+        modifier = Modifier.semantics {
+            contentType = if (isNewPassword) ContentType.NewPassword else ContentType.Password
+        },
         value = value,
         onValueChange = onValueChange,
         label = label ?: {
