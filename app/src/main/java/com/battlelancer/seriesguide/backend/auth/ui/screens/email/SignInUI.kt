@@ -68,7 +68,6 @@ fun SignInUI(
     password: String,
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
-    onRetrievedCredential: (Pair<String, String>) -> Unit,
     onSignInClick: () -> Unit,
     onGoToSignUp: () -> Unit,
     onGoToResetPassword: () -> Unit,
@@ -97,9 +96,7 @@ fun SignInUI(
     val credentialRetrievalAttempted = remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        if (configuration.isCredentialManagerEnabled &&
-            !credentialRetrievalAttempted.value &&
-            PasswordCredentialHandler.hasSavedCredentials(context)) {
+        if (configuration.isCredentialManagerEnabled && !credentialRetrievalAttempted.value) {
             credentialRetrievalAttempted.value = true
 
             try {
@@ -114,9 +111,6 @@ fun SignInUI(
 
                 emailValidator.validate(credential.username)
                 passwordValidator.validate(credential.password)
-
-                // Store retrieved credential to compare later
-                onRetrievedCredential(Pair(credential.username, credential.password))
 
                 // Just fill, let user confirm filled credentials and manually trigger sign in
             } catch (_: PasswordCredentialNotFoundException) {
@@ -272,7 +266,6 @@ fun PreviewSignInUI() {
                 isLoading = false,
                 onEmailChange = { _ -> },
                 onPasswordChange = { _ -> },
-                onRetrievedCredential = { _ -> },
                 onSignInClick = {},
                 onGoToSignUp = {},
                 onGoToResetPassword = {},

@@ -13,7 +13,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.RestrictTo
 import androidx.compose.ui.graphics.Color
 import androidx.credentials.ClearCredentialStateRequest
-import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.exceptions.GetCredentialException
 import com.battlelancer.seriesguide.backend.auth.configuration.AuthUIConfigurationDsl
@@ -30,6 +29,7 @@ import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.actionCodeSettings
 import kotlinx.coroutines.tasks.await
 import timber.log.Timber
+import androidx.credentials.CredentialManager as AndroidCredentialManager
 
 @AuthUIConfigurationDsl
 class AuthProvidersBuilder {
@@ -264,37 +264,35 @@ abstract class AuthProvider(open val providerId: String, open val providerName: 
 
         /**
          * An interface to wrap the Credential Manager flow for Google Sign-In.
-         * @suppress
          */
         @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
-        interface CredentialManagerProvider {
+        interface CredentialManager {
 
             /**
              * @throws GetCredentialException
              * @throws com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
-             * @see CredentialManager.getCredential
+             * @see AndroidCredentialManager.getCredential
              */
             suspend fun getGoogleCredential(
                 context: Context,
-                credentialManager: CredentialManager,
+                credentialManager: AndroidCredentialManager,
                 serverClientId: String,
                 filterByAuthorizedAccounts: Boolean,
                 autoSelectEnabled: Boolean,
             ): GoogleSignInResult
 
-            suspend fun clearCredentialState(credentialManager: CredentialManager)
+            suspend fun clearCredentialState(credentialManager: AndroidCredentialManager)
         }
 
         /**
-         * The default implementation of [CredentialManagerProvider].
-         * @suppress
+         * The default implementation of [CredentialManager].
          */
         @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
-        class DefaultCredentialManagerProvider : CredentialManagerProvider {
+        class DefaultCredentialManager : Google.CredentialManager {
 
             override suspend fun getGoogleCredential(
                 context: Context,
-                credentialManager: CredentialManager,
+                credentialManager: AndroidCredentialManager,
                 serverClientId: String,
                 filterByAuthorizedAccounts: Boolean,
                 autoSelectEnabled: Boolean,
@@ -328,7 +326,7 @@ abstract class AuthProvider(open val providerId: String, open val providerName: 
                 )
             }
 
-            override suspend fun clearCredentialState(credentialManager: CredentialManager) {
+            override suspend fun clearCredentialState(credentialManager: AndroidCredentialManager) {
                 credentialManager.clearCredentialState(ClearCredentialStateRequest())
             }
         }
