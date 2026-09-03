@@ -248,7 +248,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             StreamingSearch.configureButton(
                 binding.containerMovieButtons.buttonMovieStreamingSearch,
                 watchInfo,
-                requireActivity().getSgAppContainer().preventExternalLinks
+                requireActivity().getSgAppContainer()
             )
         }
     }

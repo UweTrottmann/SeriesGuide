@@ -12,6 +12,10 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 * 🔧 Import: support importing movies by IMDB IDs (linked as external ID on TMDB), such as from the TV Time to SeriesGuide transformer.
 
+### 2026.3.1 - 2026-08-26
+
+* 🔧 Stream and purchase info: hide link to more information if installed via Play Store.
+
 ### 2026.3.0 - 2026-07-10
 
 * 🔧 Import: support importing movies with only IMDB IDs, if it is linked as an external ID on the movie's TMDB entry.
