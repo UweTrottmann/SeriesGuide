@@ -13,6 +13,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 * 🔨 Once again, keep entered text when rotating the screen or changing the app size in comments screen, list add, list edit and check-in dialog.
 * 🔧 Cloud: always ask to choose saved password when signing in.
 * 🔨 Cloud: correctly show next or done keyboard buttons, add autofill hints.
+* 🔧 Network connections: drop no longer needed Play services security provider that when launching the app caused not responding issues on some devices.
+* 🔧 Stream and purchase info: hide link to more information if installed via Play Store in all regions again to comply with Payments policy.
 * 📝 Import latest user interface translations.
 
 ## Version 2026.4
