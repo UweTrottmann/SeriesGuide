@@ -8,7 +8,9 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
 
-### Next release
+## Version 2026.4
+
+### 2026.4.1 - 2026-09-03 🧪
 
 * 🔨 Once again, keep entered text when rotating the screen or changing the app size in comments screen, list add, list edit and check-in dialog.
 * 🔧 Cloud: always ask to choose saved password when signing in.
@@ -16,8 +18,6 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 * 🔧 Network connections: drop no longer needed Play services security provider that when launching the app caused not responding issues on some devices.
 * 🔧 Stream and purchase info: hide link to more information if installed via Play Store in all regions again to comply with Payments policy.
 * 📝 Import latest user interface translations.
-
-## Version 2026.4
 
 ### 2026.4.0 - 2026-08-14 🧪
 
