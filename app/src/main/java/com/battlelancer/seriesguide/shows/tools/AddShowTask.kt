@@ -32,12 +32,15 @@ import java.util.LinkedList
  *
  * Set [isMergingShows] to set [HexagonSettings.setHasMergedShows] if all shows were added
  * successfully.
+ *
+ * Set [uploadToHexagon] if added shows should be uploaded to Cloud.
  */
 class AddShowTask(
     context: Context,
     shows: List<Show>,
     private val isSilentMode: Boolean,
-    private val isMergingShows: Boolean
+    private val isMergingShows: Boolean,
+    private val uploadToHexagon: Boolean
 ) {
 
     /**
@@ -182,7 +185,8 @@ class AddShowTask(
                 currentShowTmdbId,
                 currentShowLanguageCode,
                 traktCollection, traktWatched,
-                hexagonEpisodeSync
+                hexagonEpisodeSync,
+                uploadToHexagon
             )
             when (addResult) {
                 ShowResult.SUCCESS -> {

@@ -106,7 +106,8 @@ class AddUpdateShowTools(
         languageCode: String,
         traktCollection: Map<Int, BaseShow>?,
         traktWatched: Map<Int, BaseShow>?,
-        hexagonEpisodeSync: HexagonEpisodeSync
+        hexagonEpisodeSync: HexagonEpisodeSync,
+        uploadToHexagon: Boolean
     ): ShowResult {
         // Do nothing if TMDB ID already in database.
         if (showTools.get().getShowId(showTmdbId, null) != null) {
@@ -217,18 +218,20 @@ class AddUpdateShowTools(
                 database.sgShow2Helper().setHexagonMergeNotCompleted(showId)
             }
 
-            // Adds the show on Hexagon. Or if it does already exist, clears the isRemoved flag and
-            // updates the language, so the show will be auto-added on other connected devices.
-            val cloudShow = SgCloudShow()
-            cloudShow.tmdbId = showTmdbId
-            cloudShow.language = languageCode
-            cloudShow.isRemoved = false
-            // Prevent losing restored properties from a legacy Cloud show (see
-            // hexagonTools.get().getShow used above) by always sending them.
-            cloudShow.isFavorite = show.favorite
-            cloudShow.isHidden = show.hidden
-            cloudShow.notify = show.notify
-            uploadShowsToCloud(listOf(cloudShow))
+            if (uploadToHexagon) {
+                // Adds the show on Hexagon. Or if it does already exist, clears the isRemoved flag and
+                // updates the language, so the show will be auto-added on other connected devices.
+                val cloudShow = SgCloudShow()
+                cloudShow.tmdbId = showTmdbId
+                cloudShow.language = languageCode
+                cloudShow.isRemoved = false
+                // Prevent losing restored properties from a legacy Cloud show (see
+                // hexagonTools.get().getShow used above) by always sending them.
+                cloudShow.isFavorite = show.favorite
+                cloudShow.isHidden = show.hidden
+                cloudShow.notify = show.notify
+                uploadShowsToCloud(listOf(cloudShow))
+            }
         } else {
             // ...from Trakt
             val traktEpisodeSync = TraktEpisodeSync(context, null)

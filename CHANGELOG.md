@@ -10,6 +10,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ### Next release
 
+* 🔧 Cloud: when sync adds a show, skip uploading it.
+
 ## Version 2026.4
 
 ### 2026.4.1 - 2026-09-03 🧪

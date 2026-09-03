@@ -56,6 +56,8 @@ object TaskManager {
      *
      * Set [isMergingShows] to set [HexagonSettings.setHasMergedShows] if all shows were added
      * successfully.
+     *
+     * Set [uploadToHexagon] to `false` to not upload the show to Cloud.
      */
     @JvmStatic
     @MainThread
@@ -64,7 +66,8 @@ object TaskManager {
         context: Context,
         shows: List<AddShowTask.Show>,
         isSilentMode: Boolean,
-        isMergingShows: Boolean
+        isMergingShows: Boolean,
+        uploadToHexagon: Boolean = true
     ) {
         if (!isSilentMode) {
             // notify user here already
@@ -84,7 +87,13 @@ object TaskManager {
         // Queue another add task
         SgApp.coroutineScope.launch(Dispatchers.IO) {
             addShowOrBackupSemaphore.withPermit {
-                AddShowTask(context, shows, isSilentMode, isMergingShows).run()
+                AddShowTask(
+                    context = context,
+                    shows = shows,
+                    isSilentMode = isSilentMode,
+                    isMergingShows = isMergingShows,
+                    uploadToHexagon = uploadToHexagon
+                ).run()
             }
         }
     }

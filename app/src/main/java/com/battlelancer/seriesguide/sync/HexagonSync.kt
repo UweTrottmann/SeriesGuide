@@ -141,7 +141,14 @@ class HexagonSync(
         val addNewShows = newShows.isNotEmpty()
         if (addNewShows) {
             val newShowsList = LinkedList(newShows.values)
-            TaskManager.performAddTask(context, newShowsList, true, !hasMergedShows)
+            TaskManager.performAddTask(
+                context = context,
+                shows = newShowsList,
+                isSilentMode = true,
+                isMergingShows = !hasMergedShows,
+                // Don't upload any shows that are being added from Cloud.
+                uploadToHexagon = false
+            )
         } else if (!hasMergedShows) {
             // set shows as merged
             HexagonSettings.setHasMergedShows(context)
