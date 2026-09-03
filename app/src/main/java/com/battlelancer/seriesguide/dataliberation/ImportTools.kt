@@ -163,6 +163,9 @@ object ImportTools {
         return SgMovie(
             tmdbId = tmdb_id,
             imdbId = imdb_id,
+            // Currently Trakt ID and slug are not exported
+            traktId = null,
+            slug = null,
             title = title,
             titleNoArticle = TextTools.trimLeadingArticle(title),
             releasedMs = released_utc_ms,

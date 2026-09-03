@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Main Menu -->
     <string name="shows">TV 프로그램</string>
     <string name="lists">목록</string>
@@ -67,6 +67,7 @@
     <string name="addtocalendar">캘린더에 추가</string>
     <string name="addtocalendar_failed">캘린더 이벤트를 만들 수 없습니다.</string>
     <!-- Comments -->
+    <string name="comments_provided_by">Comments from Trakt</string>
     <string name="comments">댓글</string>
     <string name="shout_hint">코멘트를 입력 (영어, 5글자 이상)</string>
     <string name="shout_invalid">규칙에 어긋납니다!</string>
@@ -226,7 +227,8 @@
     <string name="add_already_exists">%s는 이미 목록에 있습니다.</string>
     <string name="title_new_episodes">새로운 에피소드</string>
     <string name="watched_shows">시청한 목록</string>
-    <string name="shows_collection">컬렉션</string>
+    <!-- Keep shows_collection for potential later use. -->
+    <string name="shows_collection" tools:ignore="UnusedResources">컬렉션</string>
     <string name="title_library">보관함</string>
     <string name="watchlist">관심목록</string>
     <!-- Similar shows -->
@@ -318,8 +320,6 @@
     <string name="hexagon_remove_account_confirmation">계정을 삭제하면 SeriesGuide Cloud에서 모든 프로그램과 영화가 제거됩니다.</string>
     <string name="hexagon_api_queued">SeriesGuide Cloud로 전송합니다.</string>
     <string name="hexagon_signed_out">SeriesGuide Cloud에서 로그아웃함</string>
-    <string name="hexagon_signin_fail_format">로그인 오류(%s)</string>
-    <string name="hexagon_signin_google_only">이메일 주소는 Google 로그인이 필요합니다</string>
     <string name="hexagon_signin_choose">Google 로그인을 지원하지 않는 다른 기기에서 SeriesGuide를 사용하는 경우, 로그인할 이메일을 선택하세요.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">trakt에 전송하고 있습니다.</string>
@@ -438,7 +438,8 @@
     <string name="pref_autoupdatesummary">자동으로 콘텐츠 동기화 및 업데이트</string>
     <string name="pref_number">에피소드 표시 형식</string>
     <string name="pref_offset">시차 수동 설정</string>
-    <string name="pref_offsetsummary">방영 시간을 %d시간 시차 변경하여 나타냅니다</string>
+    <!-- The offset feature was replaced by per-show release times, but is kept to not break existing users. -->
+    <string name="pref_offsetsummary" tools:ignore="PluralsCandidate">방영 시간을 %d시간 시차 변경하여 나타냅니다</string>
     <string name="clear_cache">이미지 캐쉬 삭제</string>
     <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">디바이스에 있는 모든 캐쉬된 이미지를 제거합니다</string>
     <!-- Export and Import -->
@@ -561,4 +562,39 @@
     <string name="title_stream_with_ads">광고가 포함된</string>
     <string name="title_stream_buy">구매</string>
     <string name="title_stream_rent">대여</string>
+    <!-- Cloud Authentication -->
+    <!-- Common -->
+    <string name="auth_action_back" comment="Action to go back">Back</string>
+    <string name="auth_message_privacy_policy" comment="Privacy policy message, the placeholder will use the label for privacy_policy">When you use this feature, additional data is processed as described in the <xliff:g comment="Privacy policy label">%1$s</xliff:g>.</string>
+    <string name="auth_message_new_accounts_disabled" comment="Message shown when creating new accounts is not allowed">Creating new accounts is currently not allowed</string>
+    <!-- Auth method picker -->
+    <string name="auth_action_sign_in_with_google" comment="Action to sign in with a Google account">Sign in with Google</string>
+    <string name="auth_action_sign_in_with_email" comment="Action to sign in with an email address">Sign in with email</string>
+    <string name="auth_action_continue_with_google" comment="Action to continue signing in with a suggested Google account">Continue with Google</string>
+    <string name="auth_action_continue_with_email" comment="Action to continue signing in with a suggested email address">Continue with email</string>
+    <!-- Email auth -->
+    <string name="auth_hint_name" comment="Hint for name input field">Your name</string>
+    <string name="auth_hint_email" comment="Hint for email input field">Email</string>
+    <string name="auth_hint_password" comment="Hint for password input field">Password</string>
+    <string name="auth_hint_confirm_password" comment="Hint for confirm password input field">Confirm Password</string>
+    <string name="auth_hint_confirm_password_does_not_match" comment="Hint when password entered in confirm password field does not match">Passwords do not match</string>
+    <string name="auth_hint_required" comment="Hint that the value of an input field is required">Required</string>
+    <string name="auth_hint_email_required" comment="Hint that a valid email address is required in an input field">Valid email address required</string>
+    <string name="auth_action_sign_up" comment="Action to create an account">Create an account</string>
+    <string name="auth_error_email_alreay_in_use" comment="Error message when signing up with a used email address">This email address is already in use by an existing account. Sign in with this email address instead.</string>
+    <string name="auth_action_show_password" comment="Action to show the password in a text field">Show password</string>
+    <!-- Password validation messages -->
+    <string name="auth_error_weak_password" comment="Error message when password does not meet requirements">Password not strong enough</string>
+    <plurals name="auth_error_password_too_short" comment="Error message when password is too short">
+        <item quantity="other">Use at least %1$d characters</item>
+    </plurals>
+    <!-- Password recovery -->
+    <string name="auth_action_reset_password" comment="Action to reset password">Reset password</string>
+    <string name="auth_title_reset_password_instructions" comment="Title of reset password instructions">Check your email</string>
+    <string name="auth_message_reset_password_instructions" comment="Reset password instructions">If an account for this email address exists, an email with instructions to reset your password was sent to it.</string>
+    <!-- Error Recovery Dialog -->
+    <string name="auth_error_account_linking_required" comment="Error message when account exists, but created with different sign-in method">An account was already created for this email address using a different sign-in method. Sign in using the original method to add this one.</string>
+    <string name="auth_error_no_google_account_available" comment="Error message when trying to sign in with Google but no Google accounts are available on the device">No Google account is available on this device. Sign in using email or add a Google account to this device.</string>
+    <string name="auth_error_unknown" comment="General error messages for an unknown failure.">An unknown error occurred</string>
+    <string name="auth_error_invalid_password" comment="Error message for when signing in fails.">This password is incorrect, this account does not support signing in with a password or there is no account with this email address. Maybe reset your password.</string>
 </resources>

@@ -1,4 +1,5 @@
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         gradlePluginPortal()
         google()
@@ -25,6 +26,11 @@ dependencyResolutionManagement {
         // (might also want to set isChanging = true to update snapshot versions)
 //        mavenLocal()
     }
+}
+
+plugins {
+    // https://github.com/ben-manes/gradle-versions-plugin/releases
+    id("io.github.ben-manes.versions.settings") version "0.61.0"
 }
 
 rootProject.name = "seriesguide"

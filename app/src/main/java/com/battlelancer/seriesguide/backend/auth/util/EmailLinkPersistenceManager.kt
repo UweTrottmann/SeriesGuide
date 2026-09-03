@@ -1,0 +1,136 @@
+// SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
+
+// Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
+// https://github.com/firebase/FirebaseUI-Android
+
+package com.battlelancer.seriesguide.backend.auth.util
+
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
+import com.battlelancer.seriesguide.backend.auth.configuration.auth_provider.Provider
+import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.GoogleAuthProvider
+import kotlinx.coroutines.flow.first
+import timber.log.Timber
+
+private val Context.emailLinkDataStore: DataStore<Preferences> by preferencesDataStore(
+    name = "seriesguide.auth.emaillink",
+    corruptionHandler = ReplaceFileCorruptionHandler { corruptionException ->
+        Timber.e(corruptionException, "Reading email link preferences failed, clearing file")
+        emptyPreferences()
+    }
+)
+
+/**
+ * Manages saving/retrieving from DataStore for email link sign in.
+ *
+ * This class provides persistence for email link authentication sessions, including:
+ * - Email address
+ * - Session ID for same-device validation
+ * - Social provider credentials for linking flows
+ *
+ * @since 10.0.0
+ */
+object EmailLinkPersistenceManager {
+
+    val KEY_EMAIL = stringPreferencesKey("email")
+    val KEY_PROVIDER = stringPreferencesKey("provider")
+    val KEY_SESSION_ID = stringPreferencesKey("sid")
+    val KEY_IDP_TOKEN = stringPreferencesKey("idpToken")
+    val KEY_IDP_SECRET = stringPreferencesKey("idpSecret")
+
+    /**
+     * Default instance.
+     */
+    internal val default: PersistenceManager = DefaultPersistenceManager()
+
+    /**
+     * The default implementation of [PersistenceManager] that uses DataStore.
+     */
+    private class DefaultPersistenceManager : PersistenceManager {
+        override suspend fun saveEmail(
+            context: Context,
+            email: String,
+            sessionId: String
+        ) {
+            context.emailLinkDataStore.edit { prefs ->
+                prefs[KEY_EMAIL] = email
+                prefs[KEY_SESSION_ID] = sessionId
+            }
+        }
+
+        override suspend fun saveCredentialForLinking(
+            context: Context,
+            providerType: String,
+            idToken: String?,
+            accessToken: String?
+        ) {
+            context.emailLinkDataStore.edit { prefs ->
+                prefs[KEY_PROVIDER] = providerType
+                prefs[KEY_IDP_TOKEN] = idToken ?: ""
+                prefs[KEY_IDP_SECRET] = accessToken ?: ""
+            }
+        }
+
+        override suspend fun retrieveSessionRecord(context: Context): SessionRecord? {
+            val prefs = context.emailLinkDataStore.data.first()
+            val email = prefs[KEY_EMAIL]
+            val sessionId = prefs[KEY_SESSION_ID]
+
+            if (email == null || sessionId == null) {
+                return null
+            }
+
+            val providerType = Provider.fromId(prefs[KEY_PROVIDER])
+            val idToken = prefs[KEY_IDP_TOKEN]
+            val accessToken = prefs[KEY_IDP_SECRET]
+
+            // Rebuild credential if we have provider data
+            val credentialForLinking = if (providerType != null && idToken != null) {
+                when (providerType) {
+                    Provider.GOOGLE -> GoogleAuthProvider.getCredential(idToken, accessToken)
+                    else -> null
+                }
+            } else {
+                null
+            }
+
+            return SessionRecord(
+                sessionId = sessionId,
+                email = email,
+                credentialForLinking = credentialForLinking
+            )
+        }
+
+        override suspend fun clear(context: Context) {
+            context.emailLinkDataStore.edit { prefs ->
+                prefs.remove(KEY_SESSION_ID)
+                prefs.remove(KEY_EMAIL)
+                prefs.remove(KEY_PROVIDER)
+                prefs.remove(KEY_IDP_TOKEN)
+                prefs.remove(KEY_IDP_SECRET)
+            }
+        }
+    }
+
+    /**
+     * Holds the necessary information to complete the email link sign in flow.
+     *
+     * @property sessionId Unique session identifier for same-device validation
+     * @property email Email address for sign-in
+     * @property credentialForLinking Optional social provider credential to link after sign-in
+     */
+    data class SessionRecord(
+        val sessionId: String,
+        val email: String,
+        val credentialForLinking: AuthCredential?
+    )
+}

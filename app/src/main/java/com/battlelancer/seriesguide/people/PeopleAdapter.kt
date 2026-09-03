@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2014-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2014 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.people
 
@@ -24,6 +24,8 @@ import com.squareup.picasso.Transformation
 internal class PeopleAdapter(context: Context) : ArrayAdapter<Person>(context, LAYOUT) {
 
     private val personImageTransform = CircleTransformation()
+
+    // Preload placeholder drawable to ensure it's tinted
     private val placeholderDrawable =
         AppCompatResources.getDrawable(context, R.drawable.ic_account_circle_control_24dp)!!
 

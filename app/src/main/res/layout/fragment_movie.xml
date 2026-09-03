@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
-<!-- Copyright 2013-2025 Uwe Trottmann -->
+<!-- SPDX-FileCopyrightText: Copyright © 2013 Uwe Trottmann <uwe@uwetrottmann.com> -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,13 +10,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".movies.details.MovieDetailsActivity">
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/contentContainerMovie"
@@ -215,5 +208,12 @@
         </RelativeLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true" />
 
 </FrameLayout>

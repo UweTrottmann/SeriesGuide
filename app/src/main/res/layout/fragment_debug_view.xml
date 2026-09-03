@@ -80,6 +80,17 @@
             app:layout_constraintTop_toBottomOf="@id/buttonDebugViewTriggerJobProcessing" />
 
         <Button
+            android:id="@+id/buttonDebugViewCloudSetDisabled"
+            style="@style/Widget.SeriesGuide.Button.Outlined"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_padding"
+            android:text="Set Cloud disabled"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonDebugViewDemoMode" />
+
+        <Button
             android:id="@+id/buttonDebugViewTraktClearRefreshToken"
             style="@style/Widget.SeriesGuide.Button.Outlined"
             android:layout_width="0dp"
@@ -88,7 +99,7 @@
             android:text="Clear Trakt refresh token"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/buttonDebugViewDemoMode" />
+            app:layout_constraintTop_toBottomOf="@id/buttonDebugViewCloudSetDisabled" />
 
         <Button
             android:id="@+id/buttonDebugViewTraktInvalidateAccessToken"

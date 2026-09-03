@@ -28,8 +28,8 @@ if [ ! -f "$TARGET_FILE" ]; then
 fi
 
 # Extract sgVersionName
-# Looking for pattern: val sgVersionName by extra("X.Y.Z")
-VERSION=$(grep -oP 'val sgVersionName by extra\("\K[^"]+' "$BUILD_GRADLE_FILE")
+# Looking for pattern: extra.set("sgVersionName", "X.Y.Z")
+VERSION=$(grep -oP 'extra.set\("sgVersionName", "\K[^"]+' "$BUILD_GRADLE_FILE")
 
 if [ -z "$VERSION" ]; then
     echo "Error: Could not extract sgVersionName from $BUILD_GRADLE_FILE"
@@ -37,8 +37,8 @@ if [ -z "$VERSION" ]; then
 fi
 
 # Extract sgVersionCode
-# Looking for pattern: val sgVersionCode by extra(12345678)
-VERSION_CODE=$(grep -oP 'val sgVersionCode by extra\(\K[0-9]+' "$BUILD_GRADLE_FILE")
+# Looking for pattern: extra.set("sgVersionCode", 12345678)
+VERSION_CODE=$(grep -oP 'extra.set\("sgVersionCode", \K[0-9]+' "$BUILD_GRADLE_FILE")
 
 if [ -z "$VERSION_CODE" ]; then
     echo "Error: Could not extract sgVersionCode from $BUILD_GRADLE_FILE"

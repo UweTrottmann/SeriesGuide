@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2012-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2012 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.comments
 
@@ -48,7 +48,7 @@ class TraktCommentsFragment : Fragment() {
 
     interface InitBundle {
         companion object {
-            const val MOVIE_TMDB_ID = "movie"
+            const val MOVIE_TRAKT_ID = "movie"
             const val SHOW_ID = "show"
             const val EPISODE_ID = "episode"
         }
@@ -71,7 +71,6 @@ class TraktCommentsFragment : Fragment() {
 
         if (resources.getBoolean(R.bool.isWideCommentsLayout)) {
             ThemeUtils.applyBottomPaddingForNavigationBar(binding.recyclerViewComments)
-            ThemeUtils.applyBottomMarginForNavigationBar(binding.textViewPoweredByComments)
         } else {
             ThemeUtils.applyBottomPaddingForNavigationBar(binding.containerComments)
         }
@@ -101,7 +100,7 @@ class TraktCommentsFragment : Fragment() {
 
         // disable comment button by default, enable if comment entered
         binding.buttonShouts.isEnabled = false
-        binding.textFieldComments.editText!!.addTextChangedListener(object : TextWatcher {
+        binding.textFieldLayoutComments.editText!!.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 binding.buttonShouts.isEnabled = !TextUtils.isEmpty(s)
@@ -148,7 +147,7 @@ class TraktCommentsFragment : Fragment() {
         val binding = binding ?: return
 
         // prevent empty comments
-        val comment = binding.textFieldComments.editText!!.text.toString()
+        val comment = binding.textFieldLayoutComments.editText!!.text.toString()
         if (TextUtils.isEmpty(comment)) {
             return
         }
@@ -176,9 +175,9 @@ class TraktCommentsFragment : Fragment() {
             }
 
             // comment for a movie?
-            val movieTmdbId = args.getInt(InitBundle.MOVIE_TMDB_ID)
-            if (movieTmdbId != 0) {
-                model.postMovieComment(movieTmdbId, comment, isSpoiler)
+            val movieTraktId = args.getInt(InitBundle.MOVIE_TRAKT_ID)
+            if (movieTraktId != 0) {
+                model.postMovieComment(movieTraktId, comment, isSpoiler)
                 return
             }
 
@@ -232,7 +231,7 @@ class TraktCommentsFragment : Fragment() {
 
             override fun onEdit(commentId: Int, comment: String, isSpoiler: Boolean) {
                 model.commentIdToEdit.value = commentId
-                binding?.textFieldComments?.editText?.setText(comment)
+                binding?.textFieldLayoutComments?.editText?.setText(comment)
                 binding?.checkBoxShouts?.isChecked = isSpoiler
             }
 
@@ -316,7 +315,7 @@ class TraktCommentsFragment : Fragment() {
             // Reset state
             model.commentIdToEdit.value = null
             // clear the text field and refresh comments
-            binding.textFieldComments.editText!!.setText("")
+            binding.textFieldLayoutComments.editText!!.setText("")
             refreshCommentsWithNetworkCheck()
         }
     }

@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.billing.BillingRepository
 import com.battlelancer.seriesguide.billing.BillingTools
 import com.battlelancer.seriesguide.billing.localdb.LocalBillingDb
@@ -26,6 +27,7 @@ import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktOAuthSettings
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -48,6 +50,18 @@ class DebugViewFragment : AppCompatDialogFragment() {
 
         binding.buttonDebugViewTestNotification3.setOnClickListener {
             showTestNotification(3)
+        }
+
+        binding.buttonDebugViewCloudSetDisabled.setOnClickListener {
+            // Setting to disabled will allow to open auth screen. Also upon signing in again won't
+            // reset sync state as stored account email address wasn't cleared and matches.
+            // Note that if sync runs in the meantime, the sign-in check will remove the stored
+            // account email address (so sync state will be reset on signing in).
+            // Recommended to change to test:
+            // - In CloudSetupFragment comment out SgSyncAdapter.requestSyncFullImmediate
+            // - Turn off automatic syncing
+            HexagonSettings.setDisabled(requireContext())
+            FirebaseAuth.getInstance().signOut()
         }
 
         binding.buttonDebugViewTraktClearRefreshToken.setOnClickListener {

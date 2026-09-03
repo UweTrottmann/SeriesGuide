@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Main Menu -->
     <string name="shows">Сериалы</string>
     <string name="lists">Списки</string>
@@ -67,6 +67,7 @@
     <string name="addtocalendar">Добавить в календарь</string>
     <string name="addtocalendar_failed">Не удалось создать событие календаря.</string>
     <!-- Comments -->
+    <string name="comments_provided_by">Комментарии из Trakt</string>
     <string name="comments">Комментарии</string>
     <string name="shout_hint">Введите комментарий (На английском, более 5 слов)</string>
     <string name="shout_invalid">Ваш комментарий не соответствует правилам! </string>
@@ -247,7 +248,8 @@
     <string name="add_already_exists">%s уже есть в вашем списке.</string>
     <string name="title_new_episodes">Новые эпизоды</string>
     <string name="watched_shows">Просмотрено</string>
-    <string name="shows_collection">Коллекция</string>
+    <!-- Keep shows_collection for potential later use. -->
+    <string name="shows_collection" tools:ignore="UnusedResources">Коллекция</string>
     <string name="title_library">Библиотека</string>
     <string name="watchlist">Список просмотра</string>
     <!-- Similar shows -->
@@ -277,8 +279,8 @@
     <string name="action_lists_reorder">Сортировка списков</string>
     <string name="ack_lists_reordered">Списки переупорядочены</string>
     <string name="error_name_already_exists">Список с таким именем уже существует</string>
-    <string name="action_lists_sort_latest_release_date">Latest release date</string>
-    <string name="action_lists_sort_oldest_release_date">Oldest release date</string>
+    <string name="action_lists_sort_latest_release_date">Сначала новые релизы</string>
+    <string name="action_lists_sort_oldest_release_date">Сначала старые релизы</string>
     <!-- Movies -->
     <string name="title_digital_releases">Цифровые версии</string>
     <string name="title_disc_releases">Диски</string>
@@ -348,8 +350,6 @@
     <string name="hexagon_remove_account_confirmation">При удалении аккаунта будут удалены все сериалы и фильмы из SeriesGuide Cloud. Также убедитесь в том, что он удалён на других подключенных устройствах.</string>
     <string name="hexagon_api_queued">Отправка в облако SeriesGuide.</string>
     <string name="hexagon_signed_out">Вышли из SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Ошибка входа в систему (%s)</string>
-    <string name="hexagon_signin_google_only">Адрес электронной почты требует авторизации Google</string>
     <string name="hexagon_signin_choose">Введите электронную почту для входа, если вы используете SeriesGuide на других устройствах, которые не поддерживают вход в систему Google.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Отправка в trakt.</string>
@@ -480,7 +480,8 @@
     <string name="pref_autoupdatesummary">Автоматически синхронизировать и обновлять данные SeriesGuide</string>
     <string name="pref_number">Числовой формат серий</string>
     <string name="pref_offset">Ручное смещение времени</string>
-    <string name="pref_offsetsummary">Смещение времени эфира на %d часов</string>
+    <!-- The offset feature was replaced by per-show release times, but is kept to not break existing users. -->
+    <string name="pref_offsetsummary" tools:ignore="PluralsCandidate">Смещение времени эфира на %d часов</string>
     <string name="clear_cache">Очистить кэш изображений</string>
     <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Удалить все кэшированные изображения с Вашего устройства</string>
     <!-- Export and Import -->
@@ -603,4 +604,42 @@
     <string name="title_stream_with_ads">С рекламой</string>
     <string name="title_stream_buy">Покупка</string>
     <string name="title_stream_rent">Прокат</string>
+    <!-- Cloud Authentication -->
+    <!-- Common -->
+    <string name="auth_action_back" comment="Action to go back">Назад </string>
+    <string name="auth_message_privacy_policy" comment="Privacy policy message, the placeholder will use the label for privacy_policy">При использовании этой функции обрабатываются дополнительные данные, как описано в <xliff:g comment="Privacy policy label">%1$s</xliff:g>.</string>
+    <string name="auth_message_new_accounts_disabled" comment="Message shown when creating new accounts is not allowed">Создание новых учетных записей в настоящее время запрещено</string>
+    <!-- Auth method picker -->
+    <string name="auth_action_sign_in_with_google" comment="Action to sign in with a Google account">Войти при помощи Google</string>
+    <string name="auth_action_sign_in_with_email" comment="Action to sign in with an email address">Войти с помощью Email</string>
+    <string name="auth_action_continue_with_google" comment="Action to continue signing in with a suggested Google account">Продолжить с Google</string>
+    <string name="auth_action_continue_with_email" comment="Action to continue signing in with a suggested email address">Продолжить с Email</string>
+    <!-- Email auth -->
+    <string name="auth_hint_name" comment="Hint for name input field">Ваше имя</string>
+    <string name="auth_hint_email" comment="Hint for email input field">Email</string>
+    <string name="auth_hint_password" comment="Hint for password input field">Пароль</string>
+    <string name="auth_hint_confirm_password" comment="Hint for confirm password input field">Подтвердите пароль</string>
+    <string name="auth_hint_confirm_password_does_not_match" comment="Hint when password entered in confirm password field does not match">Пароли не совпадают</string>
+    <string name="auth_hint_required" comment="Hint that the value of an input field is required">Обязательно</string>
+    <string name="auth_hint_email_required" comment="Hint that a valid email address is required in an input field">Требуется корректный адрес электронной почты</string>
+    <string name="auth_action_sign_up" comment="Action to create an account">Создать учётную запись</string>
+    <string name="auth_error_email_alreay_in_use" comment="Error message when signing up with a used email address">Этот адрес электронной почты уже используется существующей учетной записью. Войдите с помощью этого адреса электронной почты.</string>
+    <string name="auth_action_show_password" comment="Action to show the password in a text field">Показать пароль</string>
+    <!-- Password validation messages -->
+    <string name="auth_error_weak_password" comment="Error message when password does not meet requirements">Пароль недостаточно сложный</string>
+    <plurals name="auth_error_password_too_short" comment="Error message when password is too short">
+        <item quantity="one">Use at least %1$d character</item>
+        <item quantity="few">Use at least %1$d characters</item>
+        <item quantity="many">Use at least %1$d characters</item>
+        <item quantity="other">Use at least %1$d characters</item>
+    </plurals>
+    <!-- Password recovery -->
+    <string name="auth_action_reset_password" comment="Action to reset password">Сбросить пароль</string>
+    <string name="auth_title_reset_password_instructions" comment="Title of reset password instructions">Проверьте свою почту</string>
+    <string name="auth_message_reset_password_instructions" comment="Reset password instructions">Если учетная запись для этого адреса электронной почты существует, на него было отправлено письмо с инструкциями по сбросу пароля.</string>
+    <!-- Error Recovery Dialog -->
+    <string name="auth_error_account_linking_required" comment="Error message when account exists, but created with different sign-in method">Для этого email уже создан аккаунт с использованием другого способа входа. Войдите первоначальным способом, чтобы добавить этот.</string>
+    <string name="auth_error_no_google_account_available" comment="Error message when trying to sign in with Google but no Google accounts are available on the device">На этом устройстве нет аккаунтов Google. Войдите с помощью email или добавьте аккаунт Google на устройство.</string>
+    <string name="auth_error_unknown" comment="General error messages for an unknown failure.">Произошла неизвестная ошибка</string>
+    <string name="auth_error_invalid_password" comment="Error message for when signing in fails.">Неверный пароль, этот аккаунт не поддерживает вход по паролю или аккаунта с таким email не существует. Возможно, стоит сбросить пароль.</string>
 </resources>

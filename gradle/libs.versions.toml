@@ -1,13 +1,25 @@
 # https://docs.gradle.org/current/userguide/version_catalogs.html#sec:version-catalog-declaration
 
 [versions]
+# https://kotlinlang.org/docs/releases.html#release-details
+# When updating, must also update compose plugin.
+# Also look for compatible Gradle and Android Plugin versions:
+# https://kotlinlang.org/docs/gradle-configure-project.html#apply-the-plugin
+# Also coroutines version must be compatible.
+# 2.2.21 is compatible with Gradle 7.6.3–8.14 and AGP 7.3.1–8.11.1
+# Can't update to 2.3 as Room 2.8.4 requires 2.2 metadata for processing with kapt (and can't switch
+# to KSP because it's broken if Gradle user directory and project directory are on different drives:
+# https://github.com/UweTrottmann/SeriesGuide/pull/1137, https://github.com/google/ksp/issues/1079).
+kotlin = "2.2.21"
+# https://developer.android.com/build/releases/gradle-plugin
+agp = "9.3.1"
 
 [libraries]
 # Kotlin
 # https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
-kotlinx-coroutines-android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2"
-kotlinx-coroutines-core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2"
-kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2"
+kotlinx-coroutines-android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0"
+kotlinx-coroutines-core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0"
+kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.11.0"
 # https://github.com/michaelbull/kotlin-result/releases
 kotlinx-result = "com.michael-bull.kotlin-result:kotlin-result:1.1.20"
 
@@ -81,12 +93,16 @@ compose = "androidx.compose:compose-bom:2026.02.00"
 compose-material3 = { module = "androidx.compose.material3:material3" }
 compose-tooling = { module = "androidx.compose.ui:ui-tooling" }
 compose-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+# https://developer.android.com/jetpack/androidx/releases/navigation
+androidx-navigation = "androidx.navigation:navigation-compose:2.8.9"
 
 # https://developer.android.com/jetpack/androidx/releases/browser
 androidx-browser = "androidx.browser:browser:1.9.0"
 androidx-palette = "androidx.palette:palette-ktx:1.0.0"
 # https://developer.android.com/jetpack/androidx/releases/preference
 androidx-preference = "androidx.preference:preference-ktx:1.2.1"
+# https://developer.android.com/jetpack/androidx/releases/datastore
+androidx-datastore = "androidx.datastore:datastore-preferences:1.1.7"
 
 # Room
 # https://developer.android.com/jetpack/androidx/releases/room
@@ -100,15 +116,17 @@ androidx-room-testing = "androidx.room:room-testing:2.8.4"
 androidutils = "com.uwetrottmann.androidutils:androidutils:4.0.0"
 photoview = "com.github.chrisbanes:PhotoView:2.3.0"
 
-# https://developers.google.com/android/guides/releases
-# 21.0.0 removes Credentials API used by firebase-ui-auth
-play-services-auth = "com.google.android.gms:play-services-auth:20.7.0"
+# https://developer.android.com/jetpack/androidx/releases/credentials
+androidx-credentials = "androidx.credentials:credentials:1.5.0"
+androidx-credentials-play = "androidx.credentials:credentials-play-services-auth:1.5.0"
+# https://developers.google.com/identity/android-credential-manager/releases
+googleid = "com.google.android.libraries.identity.googleid:googleid:1.1.1"
 # https://firebase.google.com/support/release-notes/android
 firebase-crashlytics = "com.google.firebase:firebase-crashlytics:20.0.3"
-# 23.0.0 requires min SDK 23
-firebase-auth = "com.google.firebase:firebase-auth:22.3.1"
-# https://github.com/firebase/FirebaseUI-Android/releases
-firebase-ui-auth = "com.firebaseui:firebase-ui-auth:8.0.2"
+firebase-auth = "com.google.firebase:firebase-auth:24.0.1"
+# Note: ZXing is no longer actively developed
+# https://github.com/zxing/zxing/releases
+zxing = "com.google.zxing:core:3.5.3"
 # https://github.com/googleapis/google-api-java-client/releases
 google-api-client = "com.google.api-client:google-api-client:2.6.0"
 google-api-client-android = "com.google.api-client:google-api-client-android:2.6.0"
@@ -151,21 +169,14 @@ androidx-test-ext-truth = "androidx.test.ext:truth:1.7.0"
 androidx-test-rules = "androidx.test:rules:1.7.0"
 androidx-test-runner = "androidx.test:runner:1.7.0"
 
+# build-logic
+android-gradle-api = { module = "com.android.tools.build:gradle-api", version.ref = "agp" }
+
 [plugins]
-# https://developer.android.com/build/releases/gradle-plugin
-# Update to 8.12.0 to receive extended MANIFEST.MF exclusion rules (for okhttp 5) https://issuetracker.google.com/issues/379732901
-# Update to 8.13.1 to get latest bug fixes.
-android = { id = "com.android.application", version = "8.13.1" }
-# https://kotlinlang.org/docs/releases.html#release-details
-# When updating, must also update compose plugin.
-# Also look for compatible Gradle and Android Plugin versions:
-# https://kotlinlang.org/docs/gradle-configure-project.html#apply-the-plugin
-# Also coroutines version must be compatible.
-# 2.2.21 is compatible with Gradle 7.6.3–8.14 and AGP 7.3.1–8.11.1
-kotlin = { id = "org.jetbrains.kotlin.android", version = "2.2.21" }
-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version = "2.2.21" }
-# https://github.com/ben-manes/gradle-versions-plugin/releases
-versions = { id = "com.github.ben-manes.versions", version = "0.53.0" }
+kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
 # https://github.com/gradle-nexus/publish-plugin/releases
 publish = { id = "io.github.gradle-nexus.publish-plugin", version = "2.0.0" }
 # https://firebase.google.com/support/release-notes/android

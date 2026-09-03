@@ -1,19 +1,23 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2018 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.provider
 
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteConstraintException
+import androidx.core.database.getDoubleOrNull
+import androidx.core.database.getIntOrNull
+import androidx.core.database.getLongOrNull
+import androidx.core.database.getStringOrNull
 import androidx.room.testing.MigrationTestHelper
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.battlelancer.seriesguide.movies.details.MovieDetails
 import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestEpisode
 import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestEpisode49
+import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestMovie
 import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestSeason
 import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestSeason49
 import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestShow
@@ -21,7 +25,6 @@ import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestShow49
 import com.battlelancer.seriesguide.shows.history.ActivityType
 import com.battlelancer.seriesguide.util.ImageTools
 import com.google.common.truth.Truth.assertThat
-import com.uwetrottmann.tmdb2.entities.Movie
 import org.junit.After
 import org.junit.Assert.assertThrows
 import org.junit.Before
@@ -198,13 +201,10 @@ class MigrationTest {
             false
         )
 
-        var testMovieDetails = getTestMovieDetails(12)
-        testMovieDetails.isWatched = true
-        RoomDatabaseTestHelper.insertMovie(db, testMovieDetails)
-
-        testMovieDetails = getTestMovieDetails(13)
-        testMovieDetails.isWatched = false
-        RoomDatabaseTestHelper.insertMovie(db, testMovieDetails)
+        val testMovieTmdbIdWatched = 12
+        val testMovieTmdbIdNotWatched = 13
+        TestMovie(testMovieTmdbIdWatched, true, null).insertInto(db)
+        TestMovie(testMovieTmdbIdNotWatched, false, null).insertInto(db)
 
         db.close()
 
@@ -220,10 +220,16 @@ class MigrationTest {
         }
 
         // Watched movie should have 1 play.
-        queryAndAssert(db, "SELECT movies_plays FROM movies WHERE movies_tmdbid=12") {
+        queryAndAssert(
+            db,
+            "SELECT movies_plays FROM movies WHERE movies_tmdbid=$testMovieTmdbIdWatched"
+        ) {
             assertThat(it.getInt(0)).isEqualTo(1)
         }
-        queryAndAssert(db, "SELECT movies_plays FROM movies WHERE movies_tmdbid=13") {
+        queryAndAssert(
+            db,
+            "SELECT movies_plays FROM movies WHERE movies_tmdbid=$testMovieTmdbIdNotWatched"
+        ) {
             assertThat(it.getInt(0)).isEqualTo(0)
         }
     }
@@ -406,6 +412,72 @@ class MigrationTest {
         }
     }
 
+    @Test
+    fun migrationFrom54To55_containsCorrectData() {
+        val dbOld = migrationTestHelper
+            .createDatabase(TEST_DB_NAME, SgRoomDatabase.VERSION_54_SHOW_NOTES)
+
+        // Insert a movie with values for all columns to verify everything is copied to new table
+        val testMovie = TestMovie(tmdbId = 12)
+        testMovie.insertInto(dbOld)
+        dbOld.close()
+
+        val db = getMigratedDatabase(SgRoomDatabase.VERSION_55_MOVIE_SLUG_DOUBLE_RATING)
+
+        queryAndAssert(
+            db,
+            "SELECT * FROM movies WHERE movies_tmdbid=${testMovie.tmdbId}"
+        ) { movie ->
+            // New columns initialized with NULL
+            assertThat(movie.isNull(movie.getColumnIndexOrThrow("movies_traktid")))
+                .isTrue()
+            assertThat(movie.isNull(movie.getColumnIndexOrThrow("movies_slug")))
+                .isTrue()
+
+            // Rating value is kept
+            assertThat(movie.getDouble("movies_rating_trakt"))
+                .isEqualTo(testMovie.ratingTrakt.toDouble())
+
+            // Certification column was removed
+            assertThat(movie.getColumnIndex("movies_certification"))
+                .isEqualTo(-1)
+
+            // Other values are kept
+            assertThat(movie.getInt("movies_tmdbid")).isEqualTo(testMovie.tmdbId)
+            assertThat(movie.getString("movies_imdbid")).isEqualTo(testMovie.imdbId)
+            assertThat(movie.getString("movies_title")).isEqualTo(testMovie.title)
+            assertThat(movie.getString("movies_title_noarticle")).isEqualTo(testMovie.titleNoArticle)
+            assertThat(movie.getString("movies_poster")).isEqualTo(testMovie.poster)
+            assertThat(movie.getString("movies_overview")).isEqualTo(testMovie.overview)
+            assertThat(movie.getLong("movies_released")).isEqualTo(testMovie.releasedMs)
+            assertThat(movie.getInt("movies_runtime")).isEqualTo(testMovie.runtimeMin)
+            assertThat(movie.getBoolean("movies_incollection")).isEqualTo(testMovie.inCollection)
+            assertThat(movie.getBoolean("movies_inwatchlist")).isEqualTo(testMovie.inWatchlist)
+            assertThat(movie.getInt("movies_plays")).isEqualTo(testMovie.plays)
+            assertThat(movie.getBoolean("movies_watched")).isEqualTo(testMovie.watched)
+            assertThat(movie.getDouble("movies_rating_tmdb")).isEqualTo(testMovie.ratingTmdb)
+            assertThat(movie.getInt("movies_rating_votes_tmdb")).isEqualTo(testMovie.ratingVotesTmdb)
+            assertThat(movie.getInt("movies_rating_votes_trakt")).isEqualTo(testMovie.ratingVotesTrakt)
+            assertThat(movie.getInt("movies_rating_user")).isEqualTo(testMovie.ratingUser)
+            assertThat(movie.getLong("movies_last_updated")).isEqualTo(testMovie.lastUpdated)
+        }
+    }
+
+    private fun Cursor.getInt(columnName: String): Int? =
+        getIntOrNull(getColumnIndexOrThrow(columnName))
+
+    private fun Cursor.getBoolean(columnName: String): Boolean? =
+        getInt(columnName)?.let { it != 0 }
+
+    private fun Cursor.getLong(columnName: String): Long? =
+        getLongOrNull(getColumnIndexOrThrow(columnName))
+
+    private fun Cursor.getDouble(columnName: String): Double? =
+        getDoubleOrNull(getColumnIndexOrThrow(columnName))
+
+    private fun Cursor.getString(columnName: String): String? =
+        getStringOrNull(getColumnIndexOrThrow(columnName))
+
     /**
      * Validate test data for version [SgRoomDatabase.VERSION_49_AUTO_ID_MIGRATION] or higher.
      *
@@ -459,7 +531,8 @@ class MigrationTest {
             SgRoomDatabase.MIGRATION_46_47,
             SgRoomDatabase.MIGRATION_47_48,
             SgRoomDatabase.MIGRATION_48_49,
-            SgRoomDatabase.MIGRATION_49_50 // not tested, just adds a new table
+            SgRoomDatabase.MIGRATION_49_50, // not tested, just adds a new table
+            SgRoomDatabase.MIGRATION_54_55
         )
     }
 
@@ -515,18 +588,6 @@ class MigrationTest {
                 "Episode Title",
                 1
             )
-        }
-
-        private fun getTestMovieDetails(tmdbId: Int?): MovieDetails {
-            val movieDetails = MovieDetails()
-            val tmdbMovie = Movie()
-            if (tmdbId != null) {
-                tmdbMovie.id = tmdbId
-            } else {
-                tmdbMovie.id = 12
-            }
-            movieDetails.tmdbMovie(tmdbMovie)
-            return movieDetails
         }
     }
 }

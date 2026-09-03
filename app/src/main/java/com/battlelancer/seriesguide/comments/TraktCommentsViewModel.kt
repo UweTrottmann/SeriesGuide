@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2024 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.comments
 
@@ -39,10 +39,10 @@ class TraktCommentsViewModel(application: Application) : AndroidViewModel(applic
         }
     }
 
-    fun postMovieComment(movieTmdbId: Int, comment: String, isSpoiler: Boolean) {
+    fun postMovieComment(movieTraktId: Int, comment: String, isSpoiler: Boolean) {
         SgApp.coroutineScope.launch {
             SgApp.getServicesComponent(getApplication()).trakt().sgComments()
-                .postMovieComment(movieTmdbId, comment, isSpoiler)
+                .postMovieComment(movieTraktId, comment, isSpoiler)
         }
     }
 

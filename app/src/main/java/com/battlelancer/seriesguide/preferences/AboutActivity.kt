@@ -5,7 +5,7 @@ package com.battlelancer.seriesguide.preferences
 
 import android.content.res.Configuration
 import android.os.Bundle
-import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -25,9 +25,15 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -36,33 +42,39 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.ui.BaseThemeActivity
 import com.battlelancer.seriesguide.ui.theme.SeriesGuideTheme
 import com.battlelancer.seriesguide.util.PackageTools
-import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ThemeUtils.plus
 import com.battlelancer.seriesguide.util.WebTools
+import timber.log.Timber
+import java.io.IOException
 
 /**
  * Displays details about the app version, links to credits and terms.
  */
-class AboutActivity : ComponentActivity() {
+class AboutActivity : BaseThemeActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ThemeUtils.configureEdgeToEdge(window)
 
         setContent {
+            var showCredits by rememberSaveable { mutableStateOf(false) }
             SeriesGuideTheme(useDynamicColor = DisplaySettings.isDynamicColorsEnabled(this)) {
-                About(
-                    versionString = PackageTools.getVersionString(this),
-                    onBackPressed = { onBackPressedDispatcher.onBackPressed() },
-                    onOpenWebsite = { viewUrl(R.string.url_website) },
-                    onOpenPrivacyPolicy = { viewUrl(R.string.url_privacy) },
-                    onOpenCredits = { viewUrl(R.string.url_credits) },
-                    onOpenTmdbTerms = { viewUrl(R.string.url_terms_tmdb) },
-                    onOpenTmdbApiTerms = { viewUrl(R.string.url_terms_tmdb_api) },
-                    onOpenTraktTerms = { viewUrl(R.string.url_terms_trakt) }
-                )
+                if (showCredits) {
+                    Credits(onBackPressed = { showCredits = false })
+                } else {
+                    About(
+                        versionString = PackageTools.getVersionString(this),
+                        onBackPressed = { onBackPressedDispatcher.onBackPressed() },
+                        onOpenWebsite = { viewUrl(R.string.url_website) },
+                        onOpenPrivacyPolicy = { viewUrl(R.string.url_privacy) },
+                        onOpenCredits = { showCredits = true },
+                        onOpenTmdbTerms = { viewUrl(R.string.url_terms_tmdb) },
+                        onOpenTmdbApiTerms = { viewUrl(R.string.url_terms_tmdb_api) },
+                        onOpenTraktTerms = { viewUrl(R.string.url_terms_trakt) }
+                    )
+                }
             }
         }
     }
@@ -186,6 +198,54 @@ class AboutActivity : ComponentActivity() {
         }
     }
 
+    @Composable
+    fun Credits(onBackPressed: () -> Unit) {
+        BackHandler(onBack = onBackPressed)
+        val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
+        Scaffold(
+            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+            topBar = {
+                SgTopAppBar(R.string.licences_and_credits, onBackPressed, scrollBehavior)
+            }
+        ) { scaffoldPadding ->
+            val context = LocalContext.current
+            val creditsText = remember {
+                // It's a very small text file, so load it synchronously
+                try {
+                    context.assets.open("CREDITS.txt")
+                        .bufferedReader()
+                        .use { it.readText() }
+                } catch (e: IOException) {
+                    Timber.e(e, "Failed to load credits file")
+                    "¯\\_(ツ)_/¯"
+                }
+            }
+
+            BoxWithConstraints(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                // If wider than 600 dp center align
+                LazyColumn(
+                    modifier = if (maxWidth > 600.dp) {
+                        Modifier
+                            .width(600.dp)
+                            .align(Alignment.Center)
+                    } else {
+                        Modifier
+                    },
+                    contentPadding = scaffoldPadding + PaddingValues(16.dp)
+                ) {
+                    item {
+                        Text(
+                            text = creditsText,
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                    }
+                }
+            }
+        }
+    }
+
     @Preview
     @Preview(device = Devices.TABLET)
     @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
@@ -200,6 +260,18 @@ class AboutActivity : ComponentActivity() {
                 {},
                 {},
                 {},
+                {}
+            )
+        }
+    }
+
+    @Preview
+    @Preview(device = Devices.TABLET)
+    @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+    @Composable
+    fun CreditsPreview() {
+        SeriesGuideTheme {
+            Credits(
                 {}
             )
         }

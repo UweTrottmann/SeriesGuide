@@ -11,7 +11,6 @@ import com.battlelancer.seriesguide.lists.database.SgListHelper
 import com.battlelancer.seriesguide.lists.database.SgListItem
 import com.battlelancer.seriesguide.movies.database.MovieHelper
 import com.battlelancer.seriesguide.movies.database.SgMovie
-import com.battlelancer.seriesguide.movies.details.MovieDetails
 import com.battlelancer.seriesguide.movies.tools.MovieTools.Lists
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
@@ -27,10 +26,11 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.anyBoolean
 import org.mockito.ArgumentMatchers.anyInt
+import org.mockito.ArgumentMatchers.eq
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.never
 import org.mockito.Mockito.verify
-import org.mockito.Mockito.`when`
+import org.mockito.kotlin.whenever
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import java.util.Date
@@ -71,13 +71,10 @@ class MovieToolsTest {
         }
 
         suspend fun downloaderReturnsTestMovie() {
-            `when`(downloader.getMovieDetailsWithDefaults(TEST_MOVIE_TMDBID, false))
+            whenever(downloader.getMovieDetailsWithDefaults(eq(TEST_MOVIE_TMDBID), anyBoolean()))
                 .thenReturn(
-                    MovieDownloader.MovieDetailsResult(
-                        MovieDetails().apply {
-                            tmdbMovie(Movie())
-                        },
-                        isNotFoundOnTmdb = false
+                    MovieDownloader.MovieDetailsResult.Success(
+                        MovieDetails(Movie())
                     )
                 )
         }
@@ -473,9 +470,11 @@ class MovieToolsTest {
     companion object {
         private const val TEST_MOVIE_TMDBID = 12345
         private val TEST_MOVIE = SgMovie(
-            tmdbId = TEST_MOVIE_TMDBID
+            tmdbId = TEST_MOVIE_TMDBID,
+            traktId = null,
+            slug = null
         )
-        private val TEST_LIST_ID = "test-list"
+        private const val TEST_LIST_ID = "test-list"
         private val TEST_LIST = SgList(
             listId = TEST_LIST_ID,
             name = "Test List"

@@ -1,13 +1,15 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2013-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2013 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.comments
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.isGone
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.DiffUtil
@@ -33,6 +35,10 @@ class TraktCommentsAdapter(
      */
     private var traktUserName: String? = null
 
+    // Preload placeholder drawable to ensure it's tinted
+    private val placeholderDrawable =
+        AppCompatResources.getDrawable(context, R.drawable.ic_account_circle_control_24dp)!!
+
     interface OnItemClickListener {
         fun onOpenWebsite(commentId: Int)
         fun onEdit(commentId: Int, comment: String, isSpoiler: Boolean)
@@ -40,7 +46,7 @@ class TraktCommentsAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentViewHolder {
-        return CommentViewHolder.create(parent, onItemClickListener)
+        return CommentViewHolder.create(parent, onItemClickListener, placeholderDrawable)
     }
 
     override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
@@ -55,7 +61,8 @@ class TraktCommentsAdapter(
 
 class CommentViewHolder(
     private val binding: ItemCommentBinding,
-    onItemClickListener: TraktCommentsAdapter.OnItemClickListener
+    onItemClickListener: TraktCommentsAdapter.OnItemClickListener,
+    private val placeholderDrawable: Drawable
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private var comment: Comment? = null
@@ -107,8 +114,8 @@ class CommentViewHolder(
 
         ImageTools.loadWithPicasso(context, user?.images?.avatar?.full)
             .transform(avatarTransform)
-            .placeholder(R.drawable.ic_account_circle_control_24dp)
-            .error(R.drawable.ic_account_circle_control_24dp)
+            .placeholder(placeholderDrawable)
+            .error(placeholderDrawable)
             .into(binding.imageViewCommentAvatar)
 
         if (comment.spoiler == true) {
@@ -150,11 +157,13 @@ class CommentViewHolder(
 
         fun create(
             parent: ViewGroup,
-            onItemClickListener: TraktCommentsAdapter.OnItemClickListener
+            onItemClickListener: TraktCommentsAdapter.OnItemClickListener,
+            placeholderDrawable: Drawable
         ): CommentViewHolder {
             return CommentViewHolder(
                 ItemCommentBinding.inflate(LayoutInflater.from(parent.context), parent, false),
-                onItemClickListener
+                onItemClickListener,
+                placeholderDrawable
             )
         }
     }

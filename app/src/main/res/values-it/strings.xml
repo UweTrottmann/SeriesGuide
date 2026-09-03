@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Main Menu -->
     <string name="shows">Serie TV</string>
     <string name="lists">Liste</string>
@@ -67,6 +67,7 @@
     <string name="addtocalendar">Aggiungi al calendario</string>
     <string name="addtocalendar_failed">Impossibile creare un evento nel calendario.</string>
     <!-- Comments -->
+    <string name="comments_provided_by">Commenti da Trakt</string>
     <string name="comments">Commenti</string>
     <string name="shout_hint">Scrivi un commento (in inglese, almeno 5 parole)</string>
     <string name="shout_invalid">Il tuo commento non rispetta le regole!</string>
@@ -233,7 +234,8 @@
     <string name="add_already_exists">%s è già nella lista delle tue serie.</string>
     <string name="title_new_episodes">Nuovi episodi</string>
     <string name="watched_shows">Visti</string>
-    <string name="shows_collection">Collezione</string>
+    <!-- Keep shows_collection for potential later use. -->
+    <string name="shows_collection" tools:ignore="UnusedResources">Collezione</string>
     <string name="title_library">Libreria</string>
     <string name="watchlist">Da vedere</string>
     <!-- Similar shows -->
@@ -328,8 +330,6 @@
     <string name="hexagon_remove_account_confirmation">Rimuovendo il tuo account verranno eliminati tutti i film e le serie TV dalla SeriesGuide Cloud. Assicurati di rimuoverlo anche su tutti gli altri dispositivi connessi.</string>
     <string name="hexagon_api_queued">Invio a SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Disconnesso da SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Errore di accesso (%s)</string>
-    <string name="hexagon_signin_google_only">L\' indirizzo e-mail richiede l\'accesso a Google</string>
     <string name="hexagon_signin_choose">Scegli l\'email per accedere se stai usando SeriesGuide su altri dispositivi che non supportano l\'autenticazione Google.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Invio a trakt.</string>
@@ -452,7 +452,8 @@
     <string name="pref_autoupdatesummary">Sincronizza e aggiorna automaticamente i dati di SeriesGuide</string>
     <string name="pref_number">Formato numerico</string>
     <string name="pref_offset">Fuso orario manuale</string>
-    <string name="pref_offsetsummary">Compensazione della messa onda di %d ore</string>
+    <!-- The offset feature was replaced by per-show release times, but is kept to not break existing users. -->
+    <string name="pref_offsetsummary" tools:ignore="PluralsCandidate">Compensazione della messa onda di %d ore</string>
     <string name="clear_cache">Rimuovi le immagini nella cache</string>
     <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Rimuovi tutte le immagini memorizzate nella cache dal tuo dispositivo</string>
     <!-- Export and Import -->
@@ -575,4 +576,40 @@
     <string name="title_stream_with_ads">Con annunci</string>
     <string name="title_stream_buy">Acquista</string>
     <string name="title_stream_rent">Noleggia</string>
+    <!-- Cloud Authentication -->
+    <!-- Common -->
+    <string name="auth_action_back" comment="Action to go back">Indietro</string>
+    <string name="auth_message_privacy_policy" comment="Privacy policy message, the placeholder will use the label for privacy_policy">Quando usi questa funzione, i dati aggiuntivi vengono elaborati come descritto nella <xliff:g comment="Privacy policy label">%1$s</xliff:g>.</string>
+    <string name="auth_message_new_accounts_disabled" comment="Message shown when creating new accounts is not allowed">La creazione di nuovi account non è attualmente consentita</string>
+    <!-- Auth method picker -->
+    <string name="auth_action_sign_in_with_google" comment="Action to sign in with a Google account">Accedi con Google</string>
+    <string name="auth_action_sign_in_with_email" comment="Action to sign in with an email address">Accedi con l\'e-mail</string>
+    <string name="auth_action_continue_with_google" comment="Action to continue signing in with a suggested Google account">Continua con Google</string>
+    <string name="auth_action_continue_with_email" comment="Action to continue signing in with a suggested email address">Continua con l’e-mail</string>
+    <!-- Email auth -->
+    <string name="auth_hint_name" comment="Hint for name input field">Nome</string>
+    <string name="auth_hint_email" comment="Hint for email input field">E-mail</string>
+    <string name="auth_hint_password" comment="Hint for password input field">Password</string>
+    <string name="auth_hint_confirm_password" comment="Hint for confirm password input field">Conferma password</string>
+    <string name="auth_hint_confirm_password_does_not_match" comment="Hint when password entered in confirm password field does not match">Le password non corrispondono</string>
+    <string name="auth_hint_required" comment="Hint that the value of an input field is required">Richiesto</string>
+    <string name="auth_hint_email_required" comment="Hint that a valid email address is required in an input field">È richiesto un indirizzo e-mail valido</string>
+    <string name="auth_action_sign_up" comment="Action to create an account">Crea un account</string>
+    <string name="auth_error_email_alreay_in_use" comment="Error message when signing up with a used email address">Questo indirizzo e-mail è già associato ad un account esistente. Accedi utilizzando questo indirizzo e-mail.</string>
+    <string name="auth_action_show_password" comment="Action to show the password in a text field">Mostra password</string>
+    <!-- Password validation messages -->
+    <string name="auth_error_weak_password" comment="Error message when password does not meet requirements">Password non abbastanza sicura</string>
+    <plurals name="auth_error_password_too_short" comment="Error message when password is too short">
+        <item quantity="one">Use at least %1$d character</item>
+        <item quantity="other">Use at least %1$d characters</item>
+    </plurals>
+    <!-- Password recovery -->
+    <string name="auth_action_reset_password" comment="Action to reset password">Reimposta password</string>
+    <string name="auth_title_reset_password_instructions" comment="Title of reset password instructions">Controlla la tua e-mail</string>
+    <string name="auth_message_reset_password_instructions" comment="Reset password instructions">Se esiste un account associato a questo indirizzo e-mail, è stata inviata una e-mail con le istruzioni per reimpostare la password.</string>
+    <!-- Error Recovery Dialog -->
+    <string name="auth_error_account_linking_required" comment="Error message when account exists, but created with different sign-in method">È già stato creato un account con questo indirizzo e-mail utilizzando un metodo di accesso diverso. Accedi utilizzando il metodo originale per aggiungere questo account.</string>
+    <string name="auth_error_no_google_account_available" comment="Error message when trying to sign in with Google but no Google accounts are available on the device">Su questo dispositivo non è presente alcun account Google. Accedi tramite e-mail oppure aggiungi un account Google a questo dispositivo.</string>
+    <string name="auth_error_unknown" comment="General error messages for an unknown failure.">Si è verificato un errore sconosciuto</string>
+    <string name="auth_error_invalid_password" comment="Error message for when signing in fails.">Questa password non è corretta, questo account non supporta l\'accesso tramite password oppure non esiste alcun account con questo indirizzo e-mail. Prova a reimpostare la password.</string>
 </resources>

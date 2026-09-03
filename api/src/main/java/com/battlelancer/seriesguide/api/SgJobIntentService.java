@@ -6,6 +6,7 @@
 
 package com.battlelancer.seriesguide.api;
 
+import android.annotation.SuppressLint;
 import android.app.Service;
 import android.app.job.JobInfo;
 import android.app.job.JobParameters;
@@ -367,6 +368,8 @@ public abstract class SgJobIntentService extends Service {
     /**
      * This is a task to dequeue and process work in the background.
      */
+    @SuppressWarnings("deprecation") // AsyncTask
+    @SuppressLint("StaticFieldLeak") // AsyncTask
     final class CommandProcessor extends android.os.AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... params) {

@@ -8,8 +8,7 @@ under [its conditions](https://choosealicense.com/licenses/gpl-3.0/).
 
 **Would you like to contribute code?**
 
-ℹ️ If you want to contribute larger changes, please talk to me first (comment on a related issue
-or create one). Otherwise, it is likely I won't accept your merge request.
+ℹ️ If you want to contribute larger changes, please propose them on the [community forum](https://discuss.seriesgui.de/).
 
 1. [Fork SeriesGuide](https://github.com/UweTrottmann/SeriesGuide/fork) and clone your fork.
 2. See the notes about [building](#building) the app below. Take the [guidelines of this project](/docs/guidelines.md) into account.
@@ -21,8 +20,8 @@ or create one). Otherwise, it is likely I won't accept your merge request.
 **No code!**
 
 - You can [discuss or submit bug reports](https://github.com/UweTrottmann/SeriesGuide/issues).
-- You can [suggest features](https://discuss.seriesgui.de).
 - You can [translate the app](https://crowdin.com/project/seriesguide-translations).
+- You can [share and discuss ideas](https://discuss.seriesgui.de).
 
 ## Building
 

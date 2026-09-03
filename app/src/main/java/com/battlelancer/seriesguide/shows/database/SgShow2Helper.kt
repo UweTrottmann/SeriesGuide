@@ -363,6 +363,7 @@ data class SgShow2Update(
     @ColumnInfo(name = SgShow2Columns._ID) var id: Long = 0,
     @ColumnInfo(name = SgShow2Columns.TVDB_ID) val tvdbId: Int?,
     @ColumnInfo(name = SgShow2Columns.TRAKT_ID) val traktId: Int?,
+    @ColumnInfo(name = SgShow2Columns.SLUG) val slug: String?,
     @ColumnInfo(name = SgShow2Columns.TITLE) val title: String,
     @ColumnInfo(name = SgShow2Columns.TITLE_NOARTICLE) val titleNoArticle: String?,
     @ColumnInfo(name = SgShow2Columns.OVERVIEW) val overview: String?,

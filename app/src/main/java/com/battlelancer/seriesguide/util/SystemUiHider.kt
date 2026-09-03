@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2013-2019, 2022, 2023 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2013 Uwe Trottmann <uwe@uwetrottmann.com>
 
 @file:Suppress("DEPRECATION")
 // Not using WindowInsetsControllerCompat due to bugs, see note in FullscreenImageActivity
@@ -136,28 +136,25 @@ class SystemUiHider private constructor(
     }
 
     private val systemUiVisibilityChangeListener: OnSystemUiVisibilityChangeListener =
-        object : OnSystemUiVisibilityChangeListener {
-            @Deprecated("Deprecated in Java")
-            override fun onSystemUiVisibilityChange(vis: Int) {
-                // Test against testFlags to see if the system UI is visible.
-                val supportActionBar = activity.supportActionBar
-                if (vis and testFlags != 0) {
-                    // As we use the appcompat toolbar as an action bar, we must manually hide it
-                    supportActionBar?.hide()
+        OnSystemUiVisibilityChangeListener { visibility ->
+            // Test against testFlags to see if the system UI is visible.
+            val supportActionBar = activity.supportActionBar
+            if (visibility and testFlags != 0) {
+                // As we use the appcompat toolbar as an action bar, we must manually hide it
+                supportActionBar?.hide()
 
-                    // Trigger the registered listener and cache the visibility state.
-                    onVisibilityChangeListener?.onVisibilityChange(false)
-                    isVisible = false
-                } else {
-                    anchorView.systemUiVisibility = showFlags
+                // Trigger the registered listener and cache the visibility state.
+                onVisibilityChangeListener?.onVisibilityChange(false)
+                isVisible = false
+            } else {
+                anchorView.systemUiVisibility = showFlags
 
-                    // As we use the appcompat toolbar as an action bar, we must manually show it
-                    supportActionBar?.show()
+                // As we use the appcompat toolbar as an action bar, we must manually show it
+                supportActionBar?.show()
 
-                    // Trigger the registered listener and cache the visibility state.
-                    onVisibilityChangeListener?.onVisibilityChange(true)
-                    isVisible = true
-                }
+                // Trigger the registered listener and cache the visibility state.
+                onVisibilityChangeListener?.onVisibilityChange(true)
+                isVisible = true
             }
         }
 

@@ -73,6 +73,9 @@ data class SgShow2(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = _ID) val id: Long = 0,
     @ColumnInfo(name = TMDB_ID) val tmdbId: Int?,
     @ColumnInfo(name = TVDB_ID) val tvdbId: Int?,
+    /**
+     * The Trakt slug for this show to build URLs. May be null or empty.
+     */
     @ColumnInfo(name = SLUG) val slug: String? = "",
     @ColumnInfo(name = TRAKT_ID) val traktId: Int? = 0,
     /**

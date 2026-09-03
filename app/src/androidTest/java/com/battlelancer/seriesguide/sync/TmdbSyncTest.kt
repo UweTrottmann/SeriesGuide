@@ -16,7 +16,7 @@ import com.battlelancer.seriesguide.modules.TestTraktModule
 import com.battlelancer.seriesguide.movies.database.MovieHelper
 import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.movies.database.toSgMovieForInsert
-import com.battlelancer.seriesguide.movies.details.MovieDetails
+import com.battlelancer.seriesguide.movies.tools.MovieDetails
 import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.google.common.truth.Truth.assertThat
@@ -92,7 +92,6 @@ class TmdbSyncTest {
         // only the recently released outdated and the older very outdated movie should have been updated
         val movies = movieHelper.getAllMovies()
         assertThat(findMovieWithId(movies, 10).lastUpdated).isEqualTo(currentTime)
-        // FIXME Movie 11 is not updated, only movie 14
         assertThat(lastUpdatedOutdated < findMovieWithId(movies, 11).lastUpdatedOrDefault)
             .isTrue()
 
@@ -131,13 +130,14 @@ class TmdbSyncTest {
             release_date = Date(releaseDateMs)
         }
 
-        val details = MovieDetails().apply {
-            isInCollection = true
-            isInWatchlist = true
-            tmdbMovie(movie)
-        }
-
-        details.toSgMovieForInsert(tmdbId)
+        MovieDetails(movie)
+            .toSgMovieForInsert(
+                tmdbId,
+                inCollection = true,
+                inWatchlist = true,
+                isWatched = false,
+                plays = 0
+            )
             .let {
                 // Replace the default lastUpdated value with the one needed for this test
                 if (lastUpdatedMs == null) {

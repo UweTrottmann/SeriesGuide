@@ -9,13 +9,17 @@ import com.uwetrottmann.trakt5.TraktV2
 import com.uwetrottmann.trakt5.entities.AddNoteRequest
 import com.uwetrottmann.trakt5.entities.BaseMovie
 import com.uwetrottmann.trakt5.entities.BaseShow
+import com.uwetrottmann.trakt5.entities.MovieIds
 import com.uwetrottmann.trakt5.entities.Note
 import com.uwetrottmann.trakt5.entities.Show
 import com.uwetrottmann.trakt5.entities.ShowIds
 import com.uwetrottmann.trakt5.enums.Extended
 import com.uwetrottmann.trakt5.enums.ExtendedShowsWatched
+import com.uwetrottmann.trakt5.enums.IdType
 import com.uwetrottmann.trakt5.enums.Specials
+import com.uwetrottmann.trakt5.enums.Type
 import com.uwetrottmann.trakt5.services.Notes
+import com.uwetrottmann.trakt5.services.Search
 import com.uwetrottmann.trakt5.services.Sync
 import retrofit2.Call
 import retrofit2.awaitResponse
@@ -61,6 +65,23 @@ object TraktTools4 {
         class IsUnauthorized<T> : TraktResponse<T>, TraktNonNullResponse<T>
         class IsAccountLimitExceeded<T> : TraktResponse<T>, TraktNonNullResponse<T>
         class Other<T> : TraktResponse<T>, TraktNonNullResponse<T>
+    }
+
+    /**
+     * May return `null` data, for example if the movie wasn't found.
+     */
+    suspend fun getMovieIds(
+        traktSearch: Search,
+        movieTmdbId: Int
+    ): TraktNonNullResponse<MovieIds?> {
+        val response = awaitTraktCallNonNull(
+            traktSearch.idLookup(IdType.TMDB, movieTmdbId.toString(), Type.MOVIE, null, 1, 1),
+            "movie trakt ids lookup",
+            reportIsNotVip = true // Should work even if not VIP
+        )
+        return mapResponseData(response) {
+            it.firstOrNull()?.movie?.ids
+        }
     }
 
     /**

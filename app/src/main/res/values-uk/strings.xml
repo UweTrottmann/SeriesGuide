@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Main Menu -->
     <string name="shows">Серіали</string>
     <string name="lists">Списки</string>
@@ -67,6 +67,7 @@
     <string name="addtocalendar">Додати до календаря</string>
     <string name="addtocalendar_failed">Не можливо створити календарну подію.</string>
     <!-- Comments -->
+    <string name="comments_provided_by">Коментарі з Trakt</string>
     <string name="comments">Коментарі</string>
     <string name="shout_hint">Введіть свій коментар (англійською, більше 5 слів)</string>
     <string name="shout_invalid">Ваш коментар не відповідає вимогам!</string>
@@ -247,7 +248,8 @@
     <string name="add_already_exists">%s вже є у вашому списку серіалів</string>
     <string name="title_new_episodes">Нові серії</string>
     <string name="watched_shows">Переглянуто</string>
-    <string name="shows_collection">Колекція</string>
+    <!-- Keep shows_collection for potential later use. -->
+    <string name="shows_collection" tools:ignore="UnusedResources">Колекція</string>
     <string name="title_library">Бібліотека</string>
     <string name="watchlist">Список перегляду</string>
     <!-- Similar shows -->
@@ -348,8 +350,6 @@
     <string name="hexagon_remove_account_confirmation">Видалення облікового запису призведе до видалення всіх серіалів та фільмів з хмари SeriesGuide. Переконайтесь що видалили його і на інших підключених пристроях.</string>
     <string name="hexagon_api_queued">Надсилання до хмари SeriesGuide.</string>
     <string name="hexagon_signed_out">Вихід з SeriesGuide хмари.</string>
-    <string name="hexagon_signin_fail_format">Помилка входу (%s)</string>
-    <string name="hexagon_signin_google_only">Адреса електронної скриньки вимагає авторизації Google</string>
     <string name="hexagon_signin_choose">Виберіть адресу електронної скриньки для входу, якщо ви використовуєте SeriesGuide на інших пристроях, які не підтримують вхід через обліковий запис Google.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Надсилання до trakt.</string>
@@ -480,7 +480,8 @@
     <string name="pref_autoupdatesummary">Автоматично синхронізування та оновлення даних SeriesGuide</string>
     <string name="pref_number">Формат цифр</string>
     <string name="pref_offset">Зсув часу вручну</string>
-    <string name="pref_offsetsummary">Зсув ефірного часу на %d годин</string>
+    <!-- The offset feature was replaced by per-show release times, but is kept to not break existing users. -->
+    <string name="pref_offsetsummary" tools:ignore="PluralsCandidate">Зсув ефірного часу на %d годин</string>
     <string name="clear_cache">Очистити кеш зображень</string>
     <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Видалити всі кешовані зображення з пристрою</string>
     <!-- Export and Import -->
@@ -603,4 +604,42 @@
     <string name="title_stream_with_ads">З рекламою</string>
     <string name="title_stream_buy">Придбано</string>
     <string name="title_stream_rent">Прокат</string>
+    <!-- Cloud Authentication -->
+    <!-- Common -->
+    <string name="auth_action_back" comment="Action to go back">Назад</string>
+    <string name="auth_message_privacy_policy" comment="Privacy policy message, the placeholder will use the label for privacy_policy">Коли ви використовуєте цю функцію, обробляються додаткові дані, як описано в <xliff:g comment="Privacy policy label">%1$s</xliff:g></string>
+    <string name="auth_message_new_accounts_disabled" comment="Message shown when creating new accounts is not allowed">Створення нових облікових записів наразі заборонено</string>
+    <!-- Auth method picker -->
+    <string name="auth_action_sign_in_with_google" comment="Action to sign in with a Google account">Увійти за допомогою Google</string>
+    <string name="auth_action_sign_in_with_email" comment="Action to sign in with an email address">Увійти за допомогою адреси електронної скриньки</string>
+    <string name="auth_action_continue_with_google" comment="Action to continue signing in with a suggested Google account">Продовжити через Google</string>
+    <string name="auth_action_continue_with_email" comment="Action to continue signing in with a suggested email address">Продовжити з електронною поштою</string>
+    <!-- Email auth -->
+    <string name="auth_hint_name" comment="Hint for name input field">Ваше ім\'я</string>
+    <string name="auth_hint_email" comment="Hint for email input field">Адреса електронної скриньки</string>
+    <string name="auth_hint_password" comment="Hint for password input field">Пароль</string>
+    <string name="auth_hint_confirm_password" comment="Hint for confirm password input field">Підтвердьте пароль</string>
+    <string name="auth_hint_confirm_password_does_not_match" comment="Hint when password entered in confirm password field does not match">Паролі не збігаються</string>
+    <string name="auth_hint_required" comment="Hint that the value of an input field is required">Обов’язково</string>
+    <string name="auth_hint_email_required" comment="Hint that a valid email address is required in an input field">Потрібна дійсна адреса електронної скриньки</string>
+    <string name="auth_action_sign_up" comment="Action to create an account">Створення облікового запису</string>
+    <string name="auth_error_email_alreay_in_use" comment="Error message when signing up with a used email address">Ця адреса електронної скриньки вже використовується. Натомість увійти за допомогою цієї пошти.</string>
+    <string name="auth_action_show_password" comment="Action to show the password in a text field">Показувати пароль</string>
+    <!-- Password validation messages -->
+    <string name="auth_error_weak_password" comment="Error message when password does not meet requirements">Пароль недостатньо надійний</string>
+    <plurals name="auth_error_password_too_short" comment="Error message when password is too short">
+        <item quantity="one">Use at least %1$d character</item>
+        <item quantity="few">Use at least %1$d characters</item>
+        <item quantity="many">Use at least %1$d characters</item>
+        <item quantity="other">Use at least %1$d characters</item>
+    </plurals>
+    <!-- Password recovery -->
+    <string name="auth_action_reset_password" comment="Action to reset password">Скинути пароль</string>
+    <string name="auth_title_reset_password_instructions" comment="Title of reset password instructions">Перевірте вашу електронну пошту</string>
+    <string name="auth_message_reset_password_instructions" comment="Reset password instructions">Якщо існує обліковий запис з цією адресою електронної пошти, то на неї було надіслано лист з інструкцією з відновлення пароля.</string>
+    <!-- Error Recovery Dialog -->
+    <string name="auth_error_account_linking_required" comment="Error message when account exists, but created with different sign-in method">Для цієї адреси електронної пошти вже було створено обліковий запис із відмінним методом входу. Спершу ввійдіть за його допомогою, аби додати цей.</string>
+    <string name="auth_error_no_google_account_available" comment="Error message when trying to sign in with Google but no Google accounts are available on the device">На цьому пристрої жоден обліковий запис Google не доступний. Натомість увійдіть, користаючись адресою електронної пошти або спершу додайте обліковий запис Google.</string>
+    <string name="auth_error_unknown" comment="General error messages for an unknown failure.">Сталася невідома помилка</string>
+    <string name="auth_error_invalid_password" comment="Error message for when signing in fails.">Або пароль неправильний, або цей обліковий запис не підтримує вхід за допомогою пароля, або не існує облікового запису із цією адресою електронної скриньки. Спробуйте скинути пароль.</string>
 </resources>

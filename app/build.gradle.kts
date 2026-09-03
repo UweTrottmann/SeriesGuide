@@ -2,26 +2,33 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.io.FileInputStream
 import java.util.Properties
 
+// For CI (and so debug builds just work), use a placeholder file for google-services plugin
+val googleServicesJsonFile = project.file("google-services.json")
+val placeholderWarningMessage =
+    "WARNING: Using google-services.json with placeholder values, do not release this!"
+if (!googleServicesJsonFile.exists()) {
+    val templateFile = project.file("google-services-template.json")
+    templateFile.copyTo(googleServicesJsonFile)
+    // Also write warning message to template file so it shows up in git
+    templateFile.writeText(placeholderWarningMessage)
+}
+if (googleServicesJsonFile.readText().contains("placeholder")) {
+    println(placeholderWarningMessage)
+}
+
 plugins {
-    id("com.android.application")
+    alias(libs.plugins.android.application)
+    id("seriesguide.android")
     kotlin("android")
     kotlin("kapt")
     alias(libs.plugins.compose.compiler)
+    // Firebase Authentication, Crashlytics
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.crashlytics)
 }
 
-if (project.file("google-services.json").exists()) {
-    apply(plugin = "com.google.gms.google-services")
-}
-// Note: need to apply Crashlytics after Google services plugin,
-// above conditional apply doesn't work inside plugins block.
-apply(plugin = "com.google.firebase.crashlytics")
-
-val sgCompileSdk: Int by rootProject.extra
-val sgMinSdk: Int by rootProject.extra
-val sgTargetSdk: Int by rootProject.extra
-
-val sgVersionCode: Int by rootProject.extra
-val sgVersionName: String by rootProject.extra
+val sgVersionCode = rootProject.extra["sgVersionCode"] as Int
+val sgVersionName = rootProject.extra["sgVersionName"] as String
 
 kotlin {
     compilerOptions {
@@ -46,7 +53,6 @@ kapt {
 
 android {
     namespace = "com.battlelancer.seriesguide"
-    compileSdk = sgCompileSdk
 
     useLibrary("android.test.base")
 
@@ -59,8 +65,7 @@ android {
     }
 
     defaultConfig {
-        minSdk = sgMinSdk
-        targetSdk = sgTargetSdk
+        // Note: common settings configured by "seriesguide.android" plugin
 
         // Prevent plugin from generating PNGs, use compat loading instead https://developer.android.com/studio/write/vector-asset-studio#sloption
         vectorDrawables.useSupportLibrary = true
@@ -86,22 +91,14 @@ android {
 
     sourceSets {
         getByName("androidTest") {
-            assets.srcDir("$projectDir/schemas")
+            assets.directories.add("$projectDir/schemas")
         }
     }
 
-    compileOptions {
-        encoding = "UTF-8"
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-
     lint {
-        // for CI server: only check this module with dependencies instead of each module separately
+        // Note: common settings configured by "seriesguide.android" plugin
+        // For CI: only check this module with dependencies instead of each module separately
         checkDependencies = true
-        // for CI server: log reports (report files are not public)
-        textReport = true
-        // Note: do not use textOutput = file("stdout"), just set no file.
     }
 
     testOptions {
@@ -153,7 +150,8 @@ android {
         getByName("release") {
             multiDexEnabled = false
             isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
 
             if (hasKeystoreConfig) {
                 signingConfig = signingConfigs.getByName("release")
@@ -180,6 +178,16 @@ android {
             excludes += "DebugProbesKt.bin"
         }
     }
+}
+
+tasks.register<Copy>("copyCredits") {
+    description = "Copy credits file from root directory to assets"
+    from(rootProject.file("CREDITS.txt"))
+    into(project.file("src/main/assets"))
+}
+
+tasks.named("preBuild") {
+    dependsOn("copyCredits")
 }
 
 dependencies {
@@ -213,6 +221,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.coordinatorlayout)
     implementation(libs.androidx.preference)
+    implementation(libs.androidx.datastore)
     implementation(libs.androidx.swiperefreshlayout)
 
     // Compose
@@ -226,6 +235,7 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     // Optional - Integration with ViewModels
     implementation(libs.androidx.lifecycle.compose)
+    implementation(libs.androidx.navigation)
 
     // ViewModel and LiveData
     implementation(libs.androidx.lifecycle.livedata)
@@ -273,14 +283,16 @@ dependencies {
         exclude(group = "org.threeten", module = "threetenbp") // using ThreeTenABP instead
     }
 
+    // Firebase Authentication
+    implementation(libs.firebase.auth)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play)
+    implementation(libs.googleid)
+    implementation(libs.zxing)
+
     // Note: can not use Firebase BOM as firebase-ui-auth has not updated in a while
     // Crashlytics
     implementation(libs.firebase.crashlytics)
-    // Firebase Sign-In
-    implementation(libs.firebase.ui.auth)
-    // Use compatible later versions of firebase-ui-auth dependencies to get latest fixes.
-    implementation(libs.firebase.auth)
-    implementation(libs.play.services.auth)
 
     // Amazon Billing
     // Note: requires to add AppstoreAuthenticationKey.pem into amazon/assets.
