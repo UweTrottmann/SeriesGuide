@@ -50,7 +50,11 @@ class DefaultAuthUIStringProvider(
     override val weakPasswordRecoveryMessage: String
         get() = context.getString(R.string.auth_error_weak_password)
     override fun passwordTooShort(minimumLength: Int): String =
-        context.getString(R.string.auth_error_password_too_short, minimumLength)
+        context.resources.getQuantityString(
+            R.plurals.auth_error_password_too_short,
+            minimumLength,
+            minimumLength
+        )
     override val passwordMissingUppercase: String
         get() = context.getString(R.string.auth_error_password_missing_uppercase)
     override val passwordMissingLowercase: String

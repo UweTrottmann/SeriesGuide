@@ -627,7 +627,12 @@
     <string name="auth_action_show_password" comment="Action to show the password in a text field">Показувати пароль</string>
     <!-- Password validation messages -->
     <string name="auth_error_weak_password" comment="Error message when password does not meet requirements">Пароль недостатньо надійний</string>
-    <string name="auth_error_password_too_short" comment="Error message when password is too short">Використайте щонайменше %1$d символів</string>
+    <plurals name="auth_error_password_too_short" comment="Error message when password is too short">
+        <item quantity="one">Use at least %1$d character</item>
+        <item quantity="few">Use at least %1$d characters</item>
+        <item quantity="many">Use at least %1$d characters</item>
+        <item quantity="other">Use at least %1$d characters</item>
+    </plurals>
     <!-- Password recovery -->
     <string name="auth_action_reset_password" comment="Action to reset password">Скинути пароль</string>
     <string name="auth_title_reset_password_instructions" comment="Title of reset password instructions">Перевірте вашу електронну пошту</string>
