@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2025 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide
 
@@ -40,11 +40,27 @@ class SgAppContainer(context: Context, coroutineScope: CoroutineScope) {
             .also {
                 Timber.i(
                     "preventExternalLinks=%s installedByPlay=%s region=%s isEEA=%s isUS=%s",
-                    installedByPlay,
                     it,
+                    installedByPlay,
                     region.code,
                     isEEA,
                     isUS
+                )
+            }
+//            .let { if (BuildConfig.DEBUG) true else it }
+    }
+
+    /**
+     * If true, should not display links leading to a purchase.
+     */
+    val preventLinksToPurchase by lazy {
+        val installedByPlay = PackageTools.wasInstalledByPlayStore(context)
+        (installedByPlay)
+            .also {
+                Timber.i(
+                    "preventLinksToPurchase=%s installedByPlay=%s",
+                    it,
+                    installedByPlay
                 )
             }
 //            .let { if (BuildConfig.DEBUG) true else it }
