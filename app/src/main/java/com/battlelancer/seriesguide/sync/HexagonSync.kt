@@ -94,7 +94,7 @@ class HexagonSync(
 
             // TMDB ID is required, legacy shows with TVDB only data will no longer be synced.
             val showTmdbId = show.tmdbId ?: continue
-            if (showTmdbId == 0) continue;
+            if (showTmdbId == 0) continue
 
             var success = episodeSync.downloadFlags(show.id, showTmdbId, show.tvdbId)
             if (!success) {
