@@ -234,7 +234,8 @@
     <string name="add_already_exists">%s staat al in uw serielijst</string>
     <string name="title_new_episodes">Nieuwe afleveringen</string>
     <string name="watched_shows">Bekeken</string>
-    <string name="shows_collection">Collectie</string>
+    <!-- Keep shows_collection for potential later use. -->
+    <string name="shows_collection" tools:ignore="UnusedResources">Collectie</string>
     <string name="title_library">Bibliotheek</string>
     <string name="watchlist">Watchlist</string>
     <!-- Similar shows -->
@@ -451,7 +452,8 @@
     <string name="pref_autoupdatesummary">Automatisch data synchroniseren en bijwerken</string>
     <string name="pref_number">Nummer opmaak</string>
     <string name="pref_offset">Handmatige aanpassing tijdzone</string>
-    <string name="pref_offsetsummary">Pas uitzendtijd aan met %d uren</string>
+    <!-- The offset feature was replaced by per-show release times, but is kept to not break existing users. -->
+    <string name="pref_offsetsummary" tools:ignore="PluralsCandidate">Pas uitzendtijd aan met %d uren</string>
     <string name="clear_cache">Afbeeldingenbuffer wissen</string>
     <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Alle gebufferde afbeeldingen van het apparaat verwijderen</string>
     <!-- Export and Import -->

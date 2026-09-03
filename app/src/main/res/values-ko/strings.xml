@@ -227,7 +227,8 @@
     <string name="add_already_exists">%s는 이미 목록에 있습니다.</string>
     <string name="title_new_episodes">새로운 에피소드</string>
     <string name="watched_shows">시청한 목록</string>
-    <string name="shows_collection">컬렉션</string>
+    <!-- Keep shows_collection for potential later use. -->
+    <string name="shows_collection" tools:ignore="UnusedResources">컬렉션</string>
     <string name="title_library">보관함</string>
     <string name="watchlist">관심목록</string>
     <!-- Similar shows -->
@@ -437,7 +438,8 @@
     <string name="pref_autoupdatesummary">자동으로 콘텐츠 동기화 및 업데이트</string>
     <string name="pref_number">에피소드 표시 형식</string>
     <string name="pref_offset">시차 수동 설정</string>
-    <string name="pref_offsetsummary">방영 시간을 %d시간 시차 변경하여 나타냅니다</string>
+    <!-- The offset feature was replaced by per-show release times, but is kept to not break existing users. -->
+    <string name="pref_offsetsummary" tools:ignore="PluralsCandidate">방영 시간을 %d시간 시차 변경하여 나타냅니다</string>
     <string name="clear_cache">이미지 캐쉬 삭제</string>
     <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">디바이스에 있는 모든 캐쉬된 이미지를 제거합니다</string>
     <!-- Export and Import -->

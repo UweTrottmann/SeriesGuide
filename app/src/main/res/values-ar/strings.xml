@@ -262,7 +262,8 @@
     <string name="add_already_exists">%s موجود فعلًا في قائمة مسلسلاتك.</string>
     <string name="title_new_episodes">حلَقات جديدة</string>
     <string name="watched_shows">تمت مشاهدتها</string>
-    <string name="shows_collection">مجموعة</string>
+    <!-- Keep shows_collection for potential later use. -->
+    <string name="shows_collection" tools:ignore="UnusedResources">مجموعة</string>
     <string name="title_library">Library</string>
     <string name="watchlist">قائمة المشاهدة</string>
     <!-- Similar shows -->
@@ -507,7 +508,8 @@
     <string name="pref_autoupdatesummary">مزامنة وتحديث بيانات SeriesGuide تلقائيا</string>
     <string name="pref_number">تنسيق الأرقام</string>
     <string name="pref_offset">تغيير وقت العرض بشكل يدوي</string>
-    <string name="pref_offsetsummary">بدء وقت العرض قبل %d ساعات</string>
+    <!-- The offset feature was replaced by per-show release times, but is kept to not break existing users. -->
+    <string name="pref_offsetsummary" tools:ignore="PluralsCandidate">بدء وقت العرض قبل %d ساعات</string>
     <string name="clear_cache">تنظيف ذاكرة التخزين المؤقتة للصور</string>
     <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">إزالة جميع الصور المخزنة مؤقتاً من الجهاز</string>
     <!-- Export and Import -->

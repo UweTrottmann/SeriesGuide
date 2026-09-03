@@ -234,7 +234,8 @@
     <string name="add_already_exists">%s βρίσκετε ήδη στην λίστα με τις σειρές σου.</string>
     <string name="title_new_episodes">Νέα επεισόδια</string>
     <string name="watched_shows">Είδατε</string>
-    <string name="shows_collection">Συλλογή</string>
+    <!-- Keep shows_collection for potential later use. -->
+    <string name="shows_collection" tools:ignore="UnusedResources">Συλλογή</string>
     <string name="title_library">Βιβλιοθήκη</string>
     <string name="watchlist">Λίστα προς παρακολούθηση</string>
     <!-- Similar shows -->
@@ -451,7 +452,8 @@
     <string name="pref_autoupdatesummary">Αυτόματος συγχρονισμός και ενημέρωση περιεχομένου</string>
     <string name="pref_number">Μορφή των αριθμών</string>
     <string name="pref_offset">Χειροκίνητη χρονική μετατόπιση</string>
-    <string name="pref_offsetsummary">Μετατόπιση ωρών προβολής κατα %d ώρες</string>
+    <!-- The offset feature was replaced by per-show release times, but is kept to not break existing users. -->
+    <string name="pref_offsetsummary" tools:ignore="PluralsCandidate">Μετατόπιση ωρών προβολής κατα %d ώρες</string>
     <string name="clear_cache">Καθαρισμός προσωρινής μνήμης εικόνων</string>
     <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Αφαιρέστε όλες τις προσωρινά αποθηκευμένες εικόνες από τη συσκευή σας</string>
     <!-- Export and Import -->

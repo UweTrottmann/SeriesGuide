@@ -234,7 +234,8 @@
     <string name="add_already_exists">%s er allerede på din serieliste.</string>
     <string name="title_new_episodes">Nye episoder</string>
     <string name="watched_shows">Set</string>
-    <string name="shows_collection">Samling</string>
+    <!-- Keep shows_collection for potential later use. -->
+    <string name="shows_collection" tools:ignore="UnusedResources">Samling</string>
     <string name="title_library">Bibliotek</string>
     <string name="watchlist">Overvågningsliste</string>
     <!-- Similar shows -->
@@ -451,7 +452,8 @@
     <string name="pref_autoupdatesummary">Synkronisér og opdatér SeriesGuide-data automatisk</string>
     <string name="pref_number">Talformat</string>
     <string name="pref_offset">Manuel tidsforskydning</string>
-    <string name="pref_offsetsummary">Forskyd sendetidspunkter med %d timer</string>
+    <!-- The offset feature was replaced by per-show release times, but is kept to not break existing users. -->
+    <string name="pref_offsetsummary" tools:ignore="PluralsCandidate">Forskyd sendetidspunkter med %d timer</string>
     <string name="clear_cache">Ryd billed-cache</string>
     <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Gå til Lagringsindstillinger for at fjerne cachelagrede billeder og netværkssvar</string>
     <!-- Export and Import -->

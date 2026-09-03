@@ -234,7 +234,8 @@
     <string name="add_already_exists">%s è già nella lista delle tue serie.</string>
     <string name="title_new_episodes">Nuovi episodi</string>
     <string name="watched_shows">Visti</string>
-    <string name="shows_collection">Collezione</string>
+    <!-- Keep shows_collection for potential later use. -->
+    <string name="shows_collection" tools:ignore="UnusedResources">Collezione</string>
     <string name="title_library">Libreria</string>
     <string name="watchlist">Da vedere</string>
     <!-- Similar shows -->
@@ -451,7 +452,8 @@
     <string name="pref_autoupdatesummary">Sincronizza e aggiorna automaticamente i dati di SeriesGuide</string>
     <string name="pref_number">Formato numerico</string>
     <string name="pref_offset">Fuso orario manuale</string>
-    <string name="pref_offsetsummary">Compensazione della messa onda di %d ore</string>
+    <!-- The offset feature was replaced by per-show release times, but is kept to not break existing users. -->
+    <string name="pref_offsetsummary" tools:ignore="PluralsCandidate">Compensazione della messa onda di %d ore</string>
     <string name="clear_cache">Rimuovi le immagini nella cache</string>
     <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Rimuovi tutte le immagini memorizzate nella cache dal tuo dispositivo</string>
     <!-- Export and Import -->

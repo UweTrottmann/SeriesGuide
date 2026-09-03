@@ -241,7 +241,8 @@
     <string name="add_already_exists">%s je već u vašoj listi serija.</string>
     <string name="title_new_episodes">Nove epizode</string>
     <string name="watched_shows">Pogledano</string>
-    <string name="shows_collection">Zbirka</string>
+    <!-- Keep shows_collection for potential later use. -->
+    <string name="shows_collection" tools:ignore="UnusedResources">Zbirka</string>
     <string name="title_library">Library</string>
     <string name="watchlist">Popis gledanja</string>
     <!-- Similar shows -->
@@ -465,7 +466,8 @@
     <string name="pref_autoupdatesummary">Automatski sinkronizirajte i ažurirajte SeriesGuide podatke</string>
     <string name="pref_number">Format broja</string>
     <string name="pref_offset">Ručno podešavanje vremenske razlike</string>
-    <string name="pref_offsetsummary">Razlika u emitiranju %d sati</string>
+    <!-- The offset feature was replaced by per-show release times, but is kept to not break existing users. -->
+    <string name="pref_offsetsummary" tools:ignore="PluralsCandidate">Razlika u emitiranju %d sati</string>
     <string name="clear_cache">Očisti predmemoriju slika</string>
     <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Uklonite sve slike iz predmemorije vašeg uređaja</string>
     <!-- Export and Import -->

@@ -262,7 +262,8 @@
     <string name="add_already_exists">Mae %s eisoes yn eich rhestr sioeau</string>
     <string name="title_new_episodes">Penodau newydd</string>
     <string name="watched_shows">Gwylio</string>
-    <string name="shows_collection">Casgliad</string>
+    <!-- Keep shows_collection for potential later use. -->
+    <string name="shows_collection" tools:ignore="UnusedResources">Casgliad</string>
     <string name="title_library">Library</string>
     <string name="watchlist">Rhestr wylio</string>
     <!-- Similar shows -->
@@ -507,7 +508,8 @@
     <string name="pref_autoupdatesummary">Cysoni a diweddaru cynnwys yn awtomatig</string>
     <string name="pref_number">Fformat rhif</string>
     <string name="pref_offset">Gwrthbwyso amser â llaw</string>
-    <string name="pref_offsetsummary">Gwrthbwyso amseroedd aer %d awr</string>
+    <!-- The offset feature was replaced by per-show release times, but is kept to not break existing users. -->
+    <string name="pref_offsetsummary" tools:ignore="PluralsCandidate">Gwrthbwyso amseroedd aer %d awr</string>
     <string name="clear_cache">Cache clir</string>
     <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Ewch i leoliadau storio i gael gwared ar ddelweddau wedi\'u storio ac ymatebion rhwydwaith</string>
     <!-- Export and Import -->

@@ -234,7 +234,8 @@
     <string name="add_already_exists">%s ja és a la vostra llista de sèries.</string>
     <string name="title_new_episodes">Nous episodis</string>
     <string name="watched_shows">Vist</string>
-    <string name="shows_collection">Coŀlecció</string>
+    <!-- Keep shows_collection for potential later use. -->
+    <string name="shows_collection" tools:ignore="UnusedResources">Coŀlecció</string>
     <string name="title_library">Biblioteca</string>
     <string name="watchlist">Llista de seguiment</string>
     <!-- Similar shows -->
@@ -451,7 +452,8 @@
     <string name="pref_autoupdatesummary">Sincronitzar i actualitzar les dades de SeriesGuide automàticament</string>
     <string name="pref_number">Format del número</string>
     <string name="pref_offset">Compensació horària manual</string>
-    <string name="pref_offsetsummary">Les hores d\'estrena tenen un desfasament de %d hores</string>
+    <!-- The offset feature was replaced by per-show release times, but is kept to not break existing users. -->
+    <string name="pref_offsetsummary" tools:ignore="PluralsCandidate">Les hores d\'estrena tenen un desfasament de %d hores</string>
     <string name="clear_cache">Buida la memòria cau d\'imatges</string>
     <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Elimina totes les imatges que SeriesGuide hagi baixat i que encara siguin al dispositiu</string>
     <!-- Export and Import -->

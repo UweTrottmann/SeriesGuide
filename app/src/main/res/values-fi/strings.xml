@@ -234,7 +234,8 @@
     <string name="add_already_exists">%s on jo ohjelmalistallasi.</string>
     <string name="title_new_episodes">Uusia jaksoja</string>
     <string name="watched_shows">Katsotut</string>
-    <string name="shows_collection">Kokoelma</string>
+    <!-- Keep shows_collection for potential later use. -->
+    <string name="shows_collection" tools:ignore="UnusedResources">Kokoelma</string>
     <string name="title_library">Kirjasto</string>
     <string name="watchlist">Seurantalista</string>
     <!-- Similar shows -->
@@ -451,7 +452,8 @@
     <string name="pref_autoupdatesummary">Synkronoi ja päivitä sisältö automaattisesti</string>
     <string name="pref_number">Lukumuoto</string>
     <string name="pref_offset">Manuaalinen ajansiirto</string>
-    <string name="pref_offsetsummary">Siirrä lähetysaikoja %d tunnilla</string>
+    <!-- The offset feature was replaced by per-show release times, but is kept to not break existing users. -->
+    <string name="pref_offsetsummary" tools:ignore="PluralsCandidate">Siirrä lähetysaikoja %d tunnilla</string>
     <string name="clear_cache">Tyhjennä välimuisti</string>
     <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Poista välimuistissa olevat kuvat ja verkkovastaukset menemällä tallennustilan asetuksiin</string>
     <!-- Export and Import -->

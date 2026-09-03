@@ -241,7 +241,8 @@
     <string name="add_already_exists">%s כבר נמצא ברשימה שלך.</string>
     <string name="title_new_episodes">פרקים חדשים</string>
     <string name="watched_shows">נצפה</string>
-    <string name="shows_collection">אוסף</string>
+    <!-- Keep shows_collection for potential later use. -->
+    <string name="shows_collection" tools:ignore="UnusedResources">אוסף</string>
     <string name="title_library">ספרייה</string>
     <string name="watchlist">רשימת צפייה</string>
     <!-- Similar shows -->
@@ -465,7 +466,8 @@
     <string name="pref_autoupdatesummary">בצע סנכרון אוטומטי ועדכן נתונים של SeriesGuide</string>
     <string name="pref_number">תבנית מספרים</string>
     <string name="pref_offset">סטיית שעה ידנית</string>
-    <string name="pref_offsetsummary">הסט זמני שידור ב- %d שעות</string>
+    <!-- The offset feature was replaced by per-show release times, but is kept to not break existing users. -->
+    <string name="pref_offsetsummary" tools:ignore="PluralsCandidate">הסט זמני שידור ב- %d שעות</string>
     <string name="clear_cache">נקה מטמוני תמונות</string>
     <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">הסר את כל מטמוני התמונות ממכשירך</string>
     <!-- Export and Import -->

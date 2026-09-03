@@ -234,7 +234,8 @@
     <string name="add_already_exists">%s веќе се наоѓа во вачата листа од серии.</string>
     <string name="title_new_episodes">Нови епизоди</string>
     <string name="watched_shows">Гледано</string>
-    <string name="shows_collection">Колекција</string>
+    <!-- Keep shows_collection for potential later use. -->
+    <string name="shows_collection" tools:ignore="UnusedResources">Колекција</string>
     <string name="title_library">Library</string>
     <string name="watchlist">Листа за гледање</string>
     <!-- Similar shows -->
@@ -451,7 +452,8 @@
     <string name="pref_autoupdatesummary">Автоматиско синхронизирање и абдејтирање опции</string>
     <string name="pref_number">Формат бројки</string>
     <string name="pref_offset">Рачен временски опсег</string>
-    <string name="pref_offsetsummary">Опсег на временски %d саати</string>
+    <!-- The offset feature was replaced by per-show release times, but is kept to not break existing users. -->
+    <string name="pref_offsetsummary" tools:ignore="PluralsCandidate">Опсег на временски %d саати</string>
     <string name="clear_cache">Избриши кеширани слики</string>
     <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Избриши ги сите кеширани слики од вашиот уред</string>
     <!-- Export and Import -->

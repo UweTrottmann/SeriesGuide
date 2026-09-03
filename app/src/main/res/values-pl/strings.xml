@@ -248,7 +248,8 @@
     <string name="add_already_exists">%s jest już na liście seriali.</string>
     <string name="title_new_episodes">Nowe odcinki</string>
     <string name="watched_shows">Obejrzane</string>
-    <string name="shows_collection">Kolekcja</string>
+    <!-- Keep shows_collection for potential later use. -->
+    <string name="shows_collection" tools:ignore="UnusedResources">Kolekcja</string>
     <string name="title_library">Biblioteka</string>
     <string name="watchlist">Do obejrzenia</string>
     <!-- Similar shows -->
@@ -479,7 +480,8 @@
     <string name="pref_autoupdatesummary">Automatycznie synchronizuje i aktualizuje dane SeriesGuide</string>
     <string name="pref_number">Format numeracji</string>
     <string name="pref_offset">Ręczne przesunięcie czasu</string>
-    <string name="pref_offsetsummary">Przesuń czas emisji o %d godzin</string>
+    <!-- The offset feature was replaced by per-show release times, but is kept to not break existing users. -->
+    <string name="pref_offsetsummary" tools:ignore="PluralsCandidate">Przesuń czas emisji o %d godzin</string>
     <string name="clear_cache">Usuń bufor obrazów</string>
     <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Usuwa wszystkie buforowane obrazy z urządzenia</string>
     <!-- Export and Import -->

@@ -248,7 +248,8 @@
     <string name="add_already_exists">%s вже є у вашому списку серіалів</string>
     <string name="title_new_episodes">Нові серії</string>
     <string name="watched_shows">Переглянуто</string>
-    <string name="shows_collection">Колекція</string>
+    <!-- Keep shows_collection for potential later use. -->
+    <string name="shows_collection" tools:ignore="UnusedResources">Колекція</string>
     <string name="title_library">Бібліотека</string>
     <string name="watchlist">Список перегляду</string>
     <!-- Similar shows -->
@@ -479,7 +480,8 @@
     <string name="pref_autoupdatesummary">Автоматично синхронізування та оновлення даних SeriesGuide</string>
     <string name="pref_number">Формат цифр</string>
     <string name="pref_offset">Зсув часу вручну</string>
-    <string name="pref_offsetsummary">Зсув ефірного часу на %d годин</string>
+    <!-- The offset feature was replaced by per-show release times, but is kept to not break existing users. -->
+    <string name="pref_offsetsummary" tools:ignore="PluralsCandidate">Зсув ефірного часу на %d годин</string>
     <string name="clear_cache">Очистити кеш зображень</string>
     <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Видалити всі кешовані зображення з пристрою</string>
     <!-- Export and Import -->

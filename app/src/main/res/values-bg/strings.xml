@@ -234,7 +234,8 @@
     <string name="add_already_exists">%s вече е в списъка със сериали.</string>
     <string name="title_new_episodes">Нови епизоди</string>
     <string name="watched_shows">Гледано</string>
-    <string name="shows_collection">Колекция</string>
+    <!-- Keep shows_collection for potential later use. -->
+    <string name="shows_collection" tools:ignore="UnusedResources">Колекция</string>
     <string name="title_library">Library</string>
     <string name="watchlist">Списък за гледане</string>
     <!-- Similar shows -->
@@ -451,7 +452,8 @@
     <string name="pref_autoupdatesummary">Автоматично синхронизиране и актуализиране данните на SeriesGuide</string>
     <string name="pref_number">Формат на числата</string>
     <string name="pref_offset">Ръчна смяна време</string>
-    <string name="pref_offsetsummary">Преместване на часовете за излъчване с %d часа</string>
+    <!-- The offset feature was replaced by per-show release times, but is kept to not break existing users. -->
+    <string name="pref_offsetsummary" tools:ignore="PluralsCandidate">Преместване на часовете за излъчване с %d часа</string>
     <string name="clear_cache">Изчисти кеша на изображенията</string>
     <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Премахнете всички кеширани снимки от вашето устройство</string>
     <!-- Export and Import -->

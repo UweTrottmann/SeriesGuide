@@ -234,7 +234,8 @@
     <string name="add_already_exists">A(z) %s már a listádon van.</string>
     <string name="title_new_episodes">Új epizódok</string>
     <string name="watched_shows">Megnézve</string>
-    <string name="shows_collection">Gyűjtemény</string>
+    <!-- Keep shows_collection for potential later use. -->
+    <string name="shows_collection" tools:ignore="UnusedResources">Gyűjtemény</string>
     <string name="title_library">Library</string>
     <string name="watchlist">Figyelőlista</string>
     <!-- Similar shows -->
@@ -451,7 +452,8 @@
     <string name="pref_autoupdatesummary">SeriesGuide adatok automatikus szinkronizálása és frissítése</string>
     <string name="pref_number">Számozás formátuma</string>
     <string name="pref_offset">Időeltolás</string>
-    <string name="pref_offsetsummary">Vetítési időhöz képest időeltolás %d órával</string>
+    <!-- The offset feature was replaced by per-show release times, but is kept to not break existing users. -->
+    <string name="pref_offsetsummary" tools:ignore="PluralsCandidate">Vetítési időhöz képest időeltolás %d órával</string>
     <string name="clear_cache">Képtároló törlése</string>
     <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Az összes tárolt kép törlése az eszközről</string>
     <!-- Export and Import -->

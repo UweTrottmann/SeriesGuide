@@ -227,7 +227,8 @@
     <string name="add_already_exists">《%s》已在你的節目清單中了</string>
     <string name="title_new_episodes">新的節目</string>
     <string name="watched_shows">已看過</string>
-    <string name="shows_collection">收藏</string>
+    <!-- Keep shows_collection for potential later use. -->
+    <string name="shows_collection" tools:ignore="UnusedResources">收藏</string>
     <string name="title_library">Library</string>
     <string name="watchlist">待看清單</string>
     <!-- Similar shows -->
@@ -437,7 +438,8 @@
     <string name="pref_autoupdatesummary">自動同步和更新 SeriesGuide 資料</string>
     <string name="pref_number">數字格式</string>
     <string name="pref_offset">手動時間換算</string>
-    <string name="pref_offsetsummary">%d 小時的時差</string>
+    <!-- The offset feature was replaced by per-show release times, but is kept to not break existing users. -->
+    <string name="pref_offsetsummary" tools:ignore="PluralsCandidate">%d 小時的時差</string>
     <string name="clear_cache">清除圖片暫存檔</string>
     <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">從您的設備中刪除所有暫存的圖片</string>
     <!-- Export and Import -->

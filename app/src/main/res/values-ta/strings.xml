@@ -234,7 +234,8 @@
     <string name="add_already_exists">%s உங்கள் காட்சி பட்டியலில் ஏற்கனவே உள்ளது.</string>
     <string name="title_new_episodes">New episodes</string>
     <string name="watched_shows">பார்த்த</string>
-    <string name="shows_collection">தொகுப்பு</string>
+    <!-- Keep shows_collection for potential later use. -->
+    <string name="shows_collection" tools:ignore="UnusedResources">தொகுப்பு</string>
     <string name="title_library">Library</string>
     <string name="watchlist">Watchlist</string>
     <!-- Similar shows -->
@@ -451,7 +452,8 @@
     <string name="pref_autoupdatesummary">Automatically sync and update content</string>
     <string name="pref_number">எண் வடிவமைப்பு</string>
     <string name="pref_offset">கைமுறை நேரம் ஆப்செட்</string>
-    <string name="pref_offsetsummary">%d மணிநேரத்தில் ஏர் முறை சரியீடு</string>
+    <!-- The offset feature was replaced by per-show release times, but is kept to not break existing users. -->
+    <string name="pref_offsetsummary" tools:ignore="PluralsCandidate">%d மணிநேரத்தில் ஏர் முறை சரியீடு</string>
     <string name="clear_cache">தெளிவான உருவம் இடைமாற்றுகள்</string>
     <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">உங்கள் சாதனத்தில் இருந்து அனைத்து தேக்கக படிமங்களை அகற்று</string>
     <!-- Export and Import -->

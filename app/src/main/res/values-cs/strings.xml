@@ -248,7 +248,8 @@
     <string name="add_already_exists">%s už je ve Vašem seznamu pořadů.</string>
     <string name="title_new_episodes">Nové epizody</string>
     <string name="watched_shows">Zhlédnuto</string>
-    <string name="shows_collection">Sbírka</string>
+    <!-- Keep shows_collection for potential later use. -->
+    <string name="shows_collection" tools:ignore="UnusedResources">Sbírka</string>
     <string name="title_library">Knihovna</string>
     <string name="watchlist">Chci vidět</string>
     <!-- Similar shows -->
@@ -479,7 +480,8 @@
     <string name="pref_autoupdatesummary">Automaticky synchronizovat a aktualizovat obsah</string>
     <string name="pref_number">Formát číslování</string>
     <string name="pref_offset">Ruční časový posun</string>
-    <string name="pref_offsetsummary">Posunout vysílací čas o %d hodin</string>
+    <!-- The offset feature was replaced by per-show release times, but is kept to not break existing users. -->
+    <string name="pref_offsetsummary" tools:ignore="PluralsCandidate">Posunout vysílací čas o %d hodin</string>
     <string name="clear_cache">Vymazat mezipaměť</string>
     <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Přejděte do nastavení úložiště pro odstranění obrázků z mezipaměti a síťových odpovědí</string>
     <!-- Export and Import -->
