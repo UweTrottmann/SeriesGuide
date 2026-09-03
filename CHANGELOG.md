@@ -13,6 +13,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 * 🔨 Once again, keep entered text when rotating the screen or changing the app size in comments screen, list add, list edit and check-in dialog.
 * 🔧 Cloud: always ask to choose saved password when signing in.
 * 🔨 Cloud: correctly show next or done keyboard buttons, add autofill hints.
+* 📝 Import latest user interface translations.
 
 ## Version 2026.4
 
