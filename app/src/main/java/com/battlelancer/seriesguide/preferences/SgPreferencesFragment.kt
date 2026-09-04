@@ -172,7 +172,7 @@ class SgPreferencesFragment : BasePreferencesFragment(),
                 if (appLocales.isEmpty) {
                     setSummary(R.string.theme_app_follow_system)
                 } else {
-                    summary = appLocales.get(0)?.displayLanguage ?: ""
+                    summary = appLocales.get(0)?.displayName
                 }
             }
         }
