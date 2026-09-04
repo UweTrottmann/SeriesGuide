@@ -34,7 +34,7 @@ class TraktRatingsSync(
     private val context = traktSync.context
 
     /**
-     * Downloads trakt show ratings and applies the latest ones to the database.
+     * Downloads Trakt show ratings and applies the latest ones to the database.
      *
      * To apply all ratings, set [TraktSettings.KEY_LAST_SHOWS_RATED_AT] to 0.
      *
@@ -68,11 +68,11 @@ class TraktRatingsSync(
             return true
         }
 
-        // trakt last activity rated_at timestamp is set after the rating timestamp
+        // Trakt last activity rated_at timestamp is set after the rating timestamp
         // so include ratings that are a little older
         val ratedAtThreshold = lastRatedAt - 5 * DateUtils.MINUTE_IN_MILLIS
 
-        // go through ratings, latest first (trakt sends in that order)
+        // go through ratings, latest first (Trakt sends in that order)
         val tmdbIdsToRatings: MutableMap<Int, Int> = HashMap()
         for (show in ratedShows) {
             val rating = show.rating ?: continue
@@ -104,7 +104,7 @@ class TraktRatingsSync(
     }
 
     /**
-     * Downloads trakt episode ratings and applies the latest ones to the database.
+     * Downloads Trakt episode ratings and applies the latest ones to the database.
      *
      * To apply all ratings, set [TraktSettings.KEY_LAST_EPISODES_RATED_AT] to 0.
      */
@@ -149,7 +149,7 @@ class TraktRatingsSync(
             return true
         }
 
-        // trakt last activity rated_at timestamp is set after the rating timestamp
+        // Trakt last activity rated_at timestamp is set after the rating timestamp
         // so include ratings that are a little older
         val ratedAtThreshold = lastRatedAt - 5 * DateUtils.MINUTE_IN_MILLIS
 
@@ -184,7 +184,7 @@ class TraktRatingsSync(
     }
 
     /**
-     * Downloads trakt movie ratings and applies the latest ones to the database.
+     * Downloads Trakt movie ratings and applies the latest ones to the database.
      *
      * To apply all ratings, set [TraktSettings.KEY_LAST_MOVIES_RATED_AT] to 0.
      */
@@ -229,11 +229,11 @@ class TraktRatingsSync(
             return true
         }
 
-        // trakt last activity rated_at timestamp is set after the rating timestamp
+        // Trakt last activity rated_at timestamp is set after the rating timestamp
         // so include ratings that are a little older
         val ratedAtThreshold = lastRatedAt - 5 * DateUtils.MINUTE_IN_MILLIS
 
-        // go through ratings, latest first (trakt sends in that order)
+        // go through ratings, latest first (Trakt sends in that order)
         val batch = ArrayList<ContentProviderOperation>()
         for (movie in ratedMovies) {
             val rating = movie.rating ?: continue
