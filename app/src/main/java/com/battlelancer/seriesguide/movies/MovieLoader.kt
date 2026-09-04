@@ -17,6 +17,7 @@ import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.util.ImageTools
+import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.RatingsTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
@@ -131,6 +132,9 @@ class MovieLoader(
         val plays = dbMovie?.playsOrDefault ?: 0
 
         // Release date and running time
+        val region = MoviesSettings.getMoviesRegion(context)
+        
+
         val runningTime = tmdbMovie?.runtime ?: dbMovie?.runtimeMinOrDefault
         val releaseDate = tmdbMovie?.release_date
             ?: dbMovie
@@ -138,6 +142,14 @@ class MovieLoader(
         val releaseDateAndRunningTime = TextTools.dotSeparate(
             releaseDate?.let { TimeTools.formatToLocalDate(context, it) },
             runningTime?.let { TimeTools.formatToHoursAndMinutes(context.resources, it) }
+        )
+
+
+
+        val languageString = LanguageTools.getMovieLanguageStringFor(
+            context,
+            null,
+            MoviesSettings.getMoviesLanguage(context)
         )
 
         val lastUpdatedMillis = dbMovie?.lastUpdated ?: 0
@@ -193,6 +205,7 @@ class MovieLoader(
             plays = plays,
             releaseDate = releaseDate,
             releaseDateAndRunningTime = releaseDateAndRunningTime,
+            languageString = languageString,
             lastUpdatedText = TimeTools.formatToLocalDateAndTime(context, lastUpdatedMillis),
             isShareButtonEnabled = title != null,
             // Hide create event button if release date is yesterday or older

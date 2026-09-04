@@ -23,6 +23,7 @@ data class UiMovieDetails(
      * Release date and runtime: "July 17, 2009 · 1 h 5 min"
      */
     val releaseDateAndRunningTime: String,
+    val languageString: String,
     /**
      * When this movie was last updated by this app.
      */

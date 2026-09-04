@@ -357,43 +357,46 @@ class MovieTools(
             return if (releaseDateMs == SgMovie.RELEASED_MS_UNKNOWN) null else Date(releaseDateMs)
         }
 
+        // FIXME Changing this also means that the original date and not the regional date will be
+        //   stored when adding the movie to the database.
         /**
-         * Replaces the release date of the movie with one of the given region, if available.
+         * Returns a release date in the given region, if available.
          * Picks the theatrical release or if not available the first date for that region.
-         * This is not always the best approach, e.g. when viewing disc or digital releases this might
-         * not display the correct date. But this is the best possible right now.
+         * This is not always the best approach, e.g. when viewing disc or digital releases this
+         * might not display the correct date. But this is the best possible right now.
          */
-        fun updateReleaseDateForRegion(
-            movie: Movie,
+        fun getReleaseDateForRegion(
             results: ReleaseDatesResults?,
             regionCode: String
-        ) {
-            results?.results?.find {
-                it.iso_3166_1 == regionCode
-            }?.let { region ->
-                val releaseDates = region.release_dates ?: return // No release dates.
-
-                // Only one date? Pick it.
-                if (releaseDates.size == 1) {
-                    releaseDates[0].release_date?.let { date ->
-                        movie.release_date = date
-                    }
-                    return
+        ): Date? {
+            results?.results
+                ?.find {
+                    it.iso_3166_1 == regionCode
                 }
+                ?.let { region ->
+                    val releaseDates = region.release_dates ?: return null // No release dates.
 
-                // Pick the oldest theatrical release, if available.
-                val theatricalRelease = releaseDates
-                    .filter { it.type == ReleaseDate.TYPE_THEATRICAL }
-                    .minOfOrNull { it.release_date }
-                if (theatricalRelease != null) {
-                    movie.release_date = theatricalRelease
-                } else {
-                    // Otherwise just get the first one, if available.
-                    releaseDates[0]?.release_date?.let { date ->
-                        movie.release_date = date
+                    // Only one date? Pick it.
+                    if (releaseDates.size == 1) {
+                        releaseDates[0].release_date?.let { date ->
+                            return date
+                        }
+                    }
+
+                    // Pick the oldest theatrical release, if available.
+                    val theatricalRelease = releaseDates
+                        .filter { it.type == ReleaseDate.TYPE_THEATRICAL }
+                        .minOfOrNull { it.release_date }
+                    if (theatricalRelease != null) {
+                        return theatricalRelease
+                    } else {
+                        // Otherwise just get the first one, if available.
+                        releaseDates[0]?.release_date?.let { date ->
+                            return date
+                        }
                     }
                 }
-            }
+            return null
         }
 
         fun addToCollection(context: Context, movieTmdbId: Int) {

@@ -6,7 +6,7 @@ package com.battlelancer.seriesguide.movies.tools
 import android.content.Context
 import com.battlelancer.seriesguide.movies.MoviesSettings
 import com.battlelancer.seriesguide.movies.tools.MovieDetails.TraktIds
-import com.battlelancer.seriesguide.movies.tools.MovieTools.Companion.updateReleaseDateForRegion
+import com.battlelancer.seriesguide.movies.tools.MovieTools.Companion.getReleaseDateForRegion
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools4
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools4.TmdbErrorResponse
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools4.TmdbErrorResponse.IsNotFound
@@ -18,6 +18,7 @@ import com.battlelancer.seriesguide.util.TextTools
 import com.uwetrottmann.tmdb2.entities.Movie
 import com.uwetrottmann.tmdb2.services.MoviesService
 import com.uwetrottmann.trakt5.entities.Ratings
+import java.util.Date
 
 /**
  * Helps download movie details.
@@ -55,7 +56,11 @@ class MovieDownloader(
             }
 
             is EnhancedTmdbMovieResult.Success -> {
-                MovieDetails(tmdbResult.movie)
+                tmdbResult.movie
+                    .let {
+                        MovieDetails(it.tmdbMovie)
+                            .apply { releaseDateForRegion = it.releaseDateForRegion }
+                    }
             }
         }
 
@@ -107,13 +112,18 @@ class MovieDownloader(
         return null
     }
 
+    data class EnhancedTmdbMovie(
+        val tmdbMovie: Movie,
+        val releaseDateForRegion: Date?
+    )
+
     sealed interface EnhancedTmdbMovieResult {
-        data class Success(val movie: Movie) : EnhancedTmdbMovieResult
+        data class Success(val movie: EnhancedTmdbMovie) : EnhancedTmdbMovieResult
         data class Error(val isNotFoundOnTmdb: Boolean) : EnhancedTmdbMovieResult
     }
 
     /**
-     * Loads movie from TMDB and calls [updateReleaseDateForRegion] using [regionCode] on it.
+     * Loads movie from TMDB and calls [getReleaseDateForRegion] using [regionCode] on it.
      *
      * If there is no description for the given [languageCode], fetches the default description.
      * In this case and also if there is no description in the default language, adds a note that
@@ -135,7 +145,7 @@ class MovieDownloader(
         when (movieResult) {
             is Success -> {
                 val movie = movieResult.data
-                updateReleaseDateForRegion(movie, movie.release_dates, regionCode)
+                val releaseDateForRegion = getReleaseDateForRegion(movie.release_dates, regionCode)
 
                 // The title will never be empty, TMDB returns the title in the default language if
                 // there is no translation. However, the overview might be empty if not translated.
@@ -144,7 +154,12 @@ class MovieDownloader(
                     movie.overview = getMovieDefaultOverviewFromTmdb(languageCode, movieTmdbId)
                 }
 
-                return EnhancedTmdbMovieResult.Success(movie)
+                return EnhancedTmdbMovieResult.Success(
+                    EnhancedTmdbMovie(
+                        movie,
+                        releaseDateForRegion
+                    )
+                )
             }
 
             is IsNotFound -> {

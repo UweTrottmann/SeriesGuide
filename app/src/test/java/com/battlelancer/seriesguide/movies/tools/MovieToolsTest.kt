@@ -424,7 +424,7 @@ class MovieToolsTest {
         val movie = Movie()
             .apply { release_date = Date(1) }
 
-        MovieTools.updateReleaseDateForRegion(movie, null, "DE")
+        MovieTools.getReleaseDateForRegion(movie, null, "DE")
         assertThat(movie.release_date).isEqualTo(Date(1)) // not updated.
 
         val releaseDates = ReleaseDatesResults().apply {
@@ -458,11 +458,11 @@ class MovieToolsTest {
             )
         }
 
-        MovieTools.updateReleaseDateForRegion(movie, releaseDates, "DE")
+        MovieTools.getReleaseDateForRegion(movie, releaseDates, "DE")
         // Picks oldest DE theatrical release date.
         assertThat(movie.release_date).isEqualTo(Date(1234))
 
-        MovieTools.updateReleaseDateForRegion(movie, releaseDates, "US")
+        MovieTools.getReleaseDateForRegion(movie, releaseDates, "US")
         // Picks single US date.
         assertThat(movie.release_date).isEqualTo(Date(123456))
     }

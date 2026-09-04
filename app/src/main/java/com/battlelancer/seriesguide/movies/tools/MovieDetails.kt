@@ -5,6 +5,7 @@ package com.battlelancer.seriesguide.movies.tools
 
 import com.uwetrottmann.tmdb2.entities.Movie
 import com.uwetrottmann.trakt5.entities.Ratings
+import java.util.Date
 
 /**
  * Holder object for Trakt and TMDb entities related to a movie.
@@ -12,6 +13,8 @@ import com.uwetrottmann.trakt5.entities.Ratings
 class MovieDetails(
     val tmdbMovie: Movie
 ) {
+
+    var releaseDateForRegion: Date? = null
 
     sealed interface TraktIds {
         data class Success(
