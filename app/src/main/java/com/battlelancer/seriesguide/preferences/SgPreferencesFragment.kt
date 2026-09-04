@@ -16,6 +16,7 @@ import android.provider.Settings
 import android.text.TextUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.edit
 import androidx.core.content.getSystemService
@@ -92,6 +93,20 @@ class SgPreferencesFragment : BasePreferencesFragment(),
     }
 
     private fun setupRootSettings() {
+        // Link to system app language setting on Android 13+
+        findPreference<Preference>(getString(R.string.pref_key_app_language))!!.apply {
+            if (AndroidUtils.isAtLeastTiramisu) {
+                setOnPreferenceClickListener {
+                    val intent = Intent(Settings.ACTION_APP_LOCALE_SETTINGS)
+                        .apply { data = getPackageNameUri() }
+                    requireActivity().tryStartActivity(intent, true)
+                    true
+                }
+            } else {
+                isVisible = false
+            }
+        }
+
         // Clear image cache
         findPreference<Preference>(KEY_LINK_CLEAR_CACHE)!!.setOnPreferenceClickListener {
             openSystemAppSettings()
@@ -148,6 +163,18 @@ class SgPreferencesFragment : BasePreferencesFragment(),
                 true
             }
             setListPreferenceSummary(this)
+        }
+
+        // App language setting
+        if (AndroidUtils.isAtLeastTiramisu) {
+            findPreference<Preference>(getString(R.string.pref_key_app_language))!!.apply {
+                val appLocales = AppCompatDelegate.getApplicationLocales()
+                if (appLocales.isEmpty) {
+                    setSummary(R.string.theme_app_follow_system)
+                } else {
+                    summary = appLocales.get(0)?.displayLanguage ?: ""
+                }
+            }
         }
 
         // show currently set values for list prefs

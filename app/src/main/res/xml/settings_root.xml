@@ -45,6 +45,11 @@
             app:key="com.uwetrottmann.seriesguide.dynamiccolor"
             app:title="@string/pref_dynamic_colors" />
 
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_app_language"
+            app:title="@string/title_app_language" />
+
         <ListPreference
             app:defaultValue="default"
             app:entries="@array/numbers"
