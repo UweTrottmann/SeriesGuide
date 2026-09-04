@@ -74,18 +74,27 @@ class SgPreferencesFragment : BasePreferencesFragment(),
         }
     }
 
+    private fun getPackageNameUri() = Uri.fromParts("package", requireContext().packageName, null)
+
+    /**
+     * Tries to open system app settings where users can configure battery and storage settings for
+     * this app. If not possible, tries to open the manage all apps screen.
+     */
+    private fun openSystemAppSettings() {
+        // try to open app info where user can clear app cache folders
+        val detailsIntent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+            .apply { data = getPackageNameUri() }
+        if (!requireActivity().tryStartActivity(detailsIntent, false)) {
+            // try to open all apps view if detail view not available
+            val allIntent = Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS)
+            requireActivity().tryStartActivity(allIntent, true)
+        }
+    }
+
     private fun setupRootSettings() {
         // Clear image cache
         findPreference<Preference>(KEY_LINK_CLEAR_CACHE)!!.setOnPreferenceClickListener {
-            // try to open app info where user can clear app cache folders
-            var intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-            intent.data = Uri.parse("package:" + requireActivity().packageName)
-            if (!requireActivity().tryStartActivity(intent, false)) {
-                // try to open all apps view if detail view not available
-                intent = Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS)
-                requireActivity().tryStartActivity(intent, true)
-            }
-
+            openSystemAppSettings()
             true
         }
 
@@ -151,14 +160,7 @@ class SgPreferencesFragment : BasePreferencesFragment(),
 
     private fun setupNotificationSettings() {
         findPreference<Preference>(KEY_LINK_BATTERY_SETTINGS)?.setOnPreferenceClickListener {
-            // Try to open app info where user can configure battery settings.
-            var intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                .setData(Uri.parse("package:" + requireActivity().packageName))
-            if (!requireActivity().tryStartActivity(intent, false)) {
-                // Open all apps view if detail view not available.
-                intent = Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS)
-                requireActivity().tryStartActivity(intent, true)
-            }
+            openSystemAppSettings()
             true
         }
         findPreference<Preference>(KEY_LINK_PRECISE_NOTIFICATION_SETTINGS)?.setOnPreferenceClickListener {
