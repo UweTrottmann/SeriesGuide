@@ -128,6 +128,13 @@ interface MovieHelper {
     @Query("UPDATE movies SET movies_rating_user = :userRating WHERE movies_tmdbid=:tmdbId")
     fun updateUserRating(tmdbId: Int, userRating: Int): Int
 
+    @Transaction
+    fun updateUserRatings(tmdbIdsToRating: Map<Int, Int>) {
+        tmdbIdsToRating.forEach {
+            updateUserRating(tmdbId = it.key, userRating = it.value)
+        }
+    }
+
     @Query("UPDATE movies SET movies_trailer = :trailer WHERE movies_tmdbid=:tmdbId")
     fun updateMovieTrailer(tmdbId: Int, trailer: String)
 

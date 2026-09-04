@@ -11,11 +11,15 @@ import com.uwetrottmann.trakt5.entities.BaseMovie
 import com.uwetrottmann.trakt5.entities.BaseShow
 import com.uwetrottmann.trakt5.entities.MovieIds
 import com.uwetrottmann.trakt5.entities.Note
+import com.uwetrottmann.trakt5.entities.RatedEpisode
+import com.uwetrottmann.trakt5.entities.RatedMovie
+import com.uwetrottmann.trakt5.entities.RatedShow
 import com.uwetrottmann.trakt5.entities.Show
 import com.uwetrottmann.trakt5.entities.ShowIds
 import com.uwetrottmann.trakt5.enums.Extended
 import com.uwetrottmann.trakt5.enums.ExtendedShowsWatched
 import com.uwetrottmann.trakt5.enums.IdType
+import com.uwetrottmann.trakt5.enums.RatingsFilter
 import com.uwetrottmann.trakt5.enums.Specials
 import com.uwetrottmann.trakt5.enums.Type
 import com.uwetrottmann.trakt5.services.Notes
@@ -210,6 +214,28 @@ object TraktTools4 {
         }
     }
 
+    suspend fun getRatingsOfShows(
+        traktSync: Sync
+    ): TraktNonNullResponse<List<RatedShow>> {
+        return fetchAllPages(
+            action = "get show ratings",
+            reportIsNotVip = true // Should work even if not VIP
+        ) { page ->
+            traktSync.ratingsShows(RatingsFilter.ALL, null, page, MAX_LIMIT)
+        }
+    }
+
+    suspend fun getRatingsOfEpisodes(
+        traktSync: Sync
+    ): TraktNonNullResponse<List<RatedEpisode>> {
+        return fetchAllPages(
+            action = "get episode ratings",
+            reportIsNotVip = true // Should work even if not VIP
+        ) { page ->
+            traktSync.ratingsEpisodes(RatingsFilter.ALL, null, page, MAX_LIMIT)
+        }
+    }
+
     suspend fun getWatchedMoviesByTmdbId(
         traktSync: Sync
     ): TraktNonNullResponse<MutableMap<Int, Int>> {
@@ -264,6 +290,17 @@ object TraktTools4 {
             tmdbIdSet.add(tmdbId)
         }
         return tmdbIdSet
+    }
+
+    suspend fun getRatingsOfMovies(
+        traktSync: Sync
+    ): TraktNonNullResponse<List<RatedMovie>> {
+        return fetchAllPages(
+            action = "get movie ratings",
+            reportIsNotVip = true // Should work even if not VIP
+        ) { page ->
+            traktSync.ratingsMovies(RatingsFilter.ALL, null, page, MAX_LIMIT)
+        }
     }
 
     /**
