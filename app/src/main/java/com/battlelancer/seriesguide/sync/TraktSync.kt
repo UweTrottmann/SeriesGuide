@@ -54,8 +54,8 @@ class TraktSync(
      * To not conflict with Hexagon sync, can turn on [onlyRatings] so only
      * ratings are synced.
      *
-     * Note: this calls [syncEpisodes] and [TraktNotesSync.syncForShows] which may throw
-     * [InterruptedException].
+     * Note: this calls [syncEpisodes], [TraktNotesSync.syncForShows] and
+     * [TraktRatingsSync.downloadForShows] which may throw [InterruptedException].
      */
     @Throws(InterruptedException::class)
     fun sync(onlyRatings: Boolean): SgSyncAdapter.UpdateResult {

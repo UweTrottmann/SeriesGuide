@@ -11,11 +11,13 @@ import com.uwetrottmann.trakt5.entities.BaseMovie
 import com.uwetrottmann.trakt5.entities.BaseShow
 import com.uwetrottmann.trakt5.entities.MovieIds
 import com.uwetrottmann.trakt5.entities.Note
+import com.uwetrottmann.trakt5.entities.RatedShow
 import com.uwetrottmann.trakt5.entities.Show
 import com.uwetrottmann.trakt5.entities.ShowIds
 import com.uwetrottmann.trakt5.enums.Extended
 import com.uwetrottmann.trakt5.enums.ExtendedShowsWatched
 import com.uwetrottmann.trakt5.enums.IdType
+import com.uwetrottmann.trakt5.enums.RatingsFilter
 import com.uwetrottmann.trakt5.enums.Specials
 import com.uwetrottmann.trakt5.enums.Type
 import com.uwetrottmann.trakt5.services.Notes
@@ -207,6 +209,17 @@ object TraktTools4 {
         ) { page ->
             // Use Extended.FULL to get show metadata
             traktSync.watchlistShows(page, MAX_LIMIT, Extended.FULL)
+        }
+    }
+
+    suspend fun getRatingsOfShows(
+        traktSync: Sync
+    ): TraktNonNullResponse<List<RatedShow>> {
+        return fetchAllPages(
+            action = "get show ratings",
+            reportIsNotVip = true // Should work even if not VIP
+        ) { page ->
+            traktSync.ratingsShows(RatingsFilter.ALL, null, page, MAX_LIMIT)
         }
     }
 
