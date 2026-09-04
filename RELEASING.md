@@ -58,7 +58,7 @@
 
 - Promote to beta channel
 - [Create GitHub preview release](https://github.com/UweTrottmann/SeriesGuide/releases/new)
-  - title like `SeriesGuide 2026.4.0`
+  - title like `2026.4.0`
   - get release notes from [`CHANGELOG.md`](/CHANGELOG.md)
   - attach APK
 - Create or update preview release post on forum
@@ -69,7 +69,7 @@
 - Merge release pull request to `main`
 - Download universal APK from Play Store
 - [Create GitHub release](https://github.com/UweTrottmann/SeriesGuide/releases/new)
-  - title like `SeriesGuide 2026.4.0`
+  - title like `2026.4.0`
   - get release notes from [`CHANGELOG.md`](/CHANGELOG.md)
   - attach APK
 - Prepare release post on forum
