@@ -9,17 +9,14 @@ import android.text.format.DateUtils
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktSettings
 import com.battlelancer.seriesguide.traktapi.TraktTools4
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse.Success
 import com.battlelancer.seriesguide.util.DBUtils
-import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.TimeTools
 import com.uwetrottmann.trakt5.entities.RatedEpisode
 import com.uwetrottmann.trakt5.entities.RatedMovie
 import com.uwetrottmann.trakt5.entities.RatedShow
-import com.uwetrottmann.trakt5.enums.RatingsFilter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import org.threeten.bp.OffsetDateTime
@@ -107,7 +104,11 @@ class TraktRatingsSync(
      * Downloads Trakt episode ratings and applies the latest ones to the database.
      *
      * To apply all ratings, set [TraktSettings.KEY_LAST_EPISODES_RATED_AT] to 0.
+     *
+     * Note: this uses [runBlocking], so if the calling thread is interrupted this will throw
+     * [InterruptedException].
      */
+    @Throws(InterruptedException::class)
     fun downloadForEpisodes(ratedAt: OffsetDateTime?): Boolean {
         if (ratedAt == null) {
             Timber.e("downloadForEpisodes: null rated_at")
@@ -122,28 +123,13 @@ class TraktRatingsSync(
         }
 
         // download rated episodes
-        val ratedEpisodes: List<RatedEpisode>?
-        try {
-            val response = traktSync.sync
-                .ratingsEpisodes(RatingsFilter.ALL, null, null, null)
-                .execute()
-            if (response.isSuccessful) {
-                ratedEpisodes = response.body()
-            } else {
-                if (SgTrakt.isUnauthorized(context, response)) {
-                    return false
-                }
-                Errors.logAndReport("get episode ratings", response)
-                return false
+        val ratedEpisodes: List<RatedEpisode> = runBlocking(Dispatchers.Default) {
+            when (val response = TraktTools4.getRatingsOfEpisodes(traktSync.sync)) {
+                is Success -> response.data
+                else -> null
             }
-        } catch (e: Exception) {
-            Errors.logAndReport("get episode ratings", e)
-            return false
-        }
-        if (ratedEpisodes == null) {
-            Timber.e("downloadForEpisodes: null response")
-            return false
-        }
+        } ?: return false
+
         if (ratedEpisodes.isEmpty()) {
             Timber.d("downloadForEpisodes: no ratings on trakt")
             return true
@@ -187,7 +173,11 @@ class TraktRatingsSync(
      * Downloads Trakt movie ratings and applies the latest ones to the database.
      *
      * To apply all ratings, set [TraktSettings.KEY_LAST_MOVIES_RATED_AT] to 0.
+     *
+     * Note: this uses [runBlocking], so if the calling thread is interrupted this will throw
+     * [InterruptedException].
      */
+    @Throws(InterruptedException::class)
     fun downloadForMovies(ratedAt: OffsetDateTime?): Boolean {
         if (ratedAt == null) {
             Timber.e("downloadForMovies: null rated_at")
@@ -202,28 +192,13 @@ class TraktRatingsSync(
         }
 
         // download rated shows
-        val ratedMovies: List<RatedMovie>?
-        try {
-            val response = traktSync.sync
-                .ratingsMovies(RatingsFilter.ALL, null, null, null)
-                .execute()
-            if (response.isSuccessful) {
-                ratedMovies = response.body()
-            } else {
-                if (SgTrakt.isUnauthorized(context, response)) {
-                    return false
-                }
-                Errors.logAndReport("get movie ratings", response)
-                return false
+        val ratedMovies: List<RatedMovie> = runBlocking(Dispatchers.Default) {
+            when (val response = TraktTools4.getRatingsOfMovies(traktSync.sync)) {
+                is Success -> response.data
+                else -> null
             }
-        } catch (e: Exception) {
-            Errors.logAndReport("get movie ratings", e)
-            return false
-        }
-        if (ratedMovies == null) {
-            Timber.e("downloadForMovies: null response")
-            return false
-        }
+        } ?: return false
+
         if (ratedMovies.isEmpty()) {
             Timber.d("downloadForMovies: no ratings on trakt")
             return true
