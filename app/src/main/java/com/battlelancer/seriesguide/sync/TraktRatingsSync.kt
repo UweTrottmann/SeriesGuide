@@ -3,16 +3,12 @@
 
 package com.battlelancer.seriesguide.sync
 
-import android.content.ContentProviderOperation
-import android.content.OperationApplicationException
 import android.text.format.DateUtils
 import androidx.preference.PreferenceManager
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.traktapi.TraktSettings
 import com.battlelancer.seriesguide.traktapi.TraktTools4
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse.Success
-import com.battlelancer.seriesguide.util.DBUtils
 import com.battlelancer.seriesguide.util.TimeTools
 import com.uwetrottmann.trakt5.entities.RatedEpisode
 import com.uwetrottmann.trakt5.entities.RatedMovie
@@ -209,7 +205,7 @@ class TraktRatingsSync(
         val ratedAtThreshold = lastRatedAt - 5 * DateUtils.MINUTE_IN_MILLIS
 
         // go through ratings, latest first (Trakt sends in that order)
-        val batch = ArrayList<ContentProviderOperation>()
+        val tmdbIdsToRatings: MutableMap<Int, Int> = HashMap()
         for (movie in ratedMovies) {
             val rating = movie.rating ?: continue
             val tmdbId = movie.movie?.ids?.tmdb ?: continue
@@ -221,19 +217,11 @@ class TraktRatingsSync(
             }
 
             // if a movie does not exist, this update will do nothing
-            val op = ContentProviderOperation.newUpdate(Movies.buildMovieUri(tmdbId))
-                .withValue(Movies.RATING_USER, rating.value)
-                .build()
-            batch.add(op)
+            tmdbIdsToRatings[tmdbId] = rating.value
         }
 
         // apply database updates
-        try {
-            DBUtils.applyInSmallBatches(context, batch)
-        } catch (e: OperationApplicationException) {
-            Timber.e(e, "downloadForMovies: database update failed")
-            return false
-        }
+        SgRoomDatabase.getInstance(context).movieHelper().updateUserRatings(tmdbIdsToRatings)
 
         // save last rated instant
         val ratedAtTime = ratedAt.toInstant().toEpochMilli()
