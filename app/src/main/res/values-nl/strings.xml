@@ -600,8 +600,8 @@
     <!-- Password validation messages -->
     <string name="auth_error_weak_password" comment="Error message when password does not meet requirements">Wachtwoord niet sterk genoeg</string>
     <plurals name="auth_error_password_too_short" comment="Error message when password is too short">
-        <item quantity="one">Use at least %1$d character</item>
-        <item quantity="other">Use at least %1$d characters</item>
+        <item quantity="one">Gebruik tenminste %1$d teken</item>
+        <item quantity="other">Gebruik tenminste %1$d tekens</item>
     </plurals>
     <!-- Password recovery -->
     <string name="auth_action_reset_password" comment="Action to reset password">Wachtwoord opnieuw instellen</string>

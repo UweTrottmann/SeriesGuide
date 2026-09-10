@@ -628,10 +628,10 @@
     <!-- Password validation messages -->
     <string name="auth_error_weak_password" comment="Error message when password does not meet requirements">Heslo není dostatečně silné</string>
     <plurals name="auth_error_password_too_short" comment="Error message when password is too short">
-        <item quantity="one">Use at least %1$d character</item>
-        <item quantity="few">Use at least %1$d characters</item>
-        <item quantity="many">Use at least %1$d characters</item>
-        <item quantity="other">Use at least %1$d characters</item>
+        <item quantity="one">Použijte alespoň %1$d znak</item>
+        <item quantity="few">Použijte alespoň %1$d znaky</item>
+        <item quantity="many">Použijte alespoň %1$d znaků</item>
+        <item quantity="other">Použijte alespoň %1$d znaků</item>
     </plurals>
     <!-- Password recovery -->
     <string name="auth_action_reset_password" comment="Action to reset password">Resetovat heslo</string>

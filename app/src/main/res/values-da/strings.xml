@@ -600,8 +600,8 @@
     <!-- Password validation messages -->
     <string name="auth_error_weak_password" comment="Error message when password does not meet requirements">Adgangskoden er ikke stærk nok</string>
     <plurals name="auth_error_password_too_short" comment="Error message when password is too short">
-        <item quantity="one">Use at least %1$d character</item>
-        <item quantity="other">Use at least %1$d characters</item>
+        <item quantity="one">Brug mindst %1$d tegn</item>
+        <item quantity="other">Brug mindst %1$d tegn</item>
     </plurals>
     <!-- Password recovery -->
     <string name="auth_action_reset_password" comment="Action to reset password">Nulstil adgangskode</string>

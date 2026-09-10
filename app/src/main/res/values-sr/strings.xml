@@ -614,9 +614,9 @@
     <!-- Password validation messages -->
     <string name="auth_error_weak_password" comment="Error message when password does not meet requirements">Лозинка није довољно јака</string>
     <plurals name="auth_error_password_too_short" comment="Error message when password is too short">
-        <item quantity="one">Use at least %1$d character</item>
-        <item quantity="few">Use at least %1$d characters</item>
-        <item quantity="other">Use at least %1$d characters</item>
+        <item quantity="one">Користите најмање %1$d знакова</item>
+        <item quantity="few">Користите најмање %1$d знакова</item>
+        <item quantity="other">Користите најмање %1$d знакова</item>
     </plurals>
     <!-- Password recovery -->
     <string name="auth_action_reset_password" comment="Action to reset password">Ресетуј лозинку</string>

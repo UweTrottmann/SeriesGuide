@@ -628,10 +628,10 @@
     <!-- Password validation messages -->
     <string name="auth_error_weak_password" comment="Error message when password does not meet requirements">Hasło nie spełnia wymogów</string>
     <plurals name="auth_error_password_too_short" comment="Error message when password is too short">
-        <item quantity="one">Use at least %1$d character</item>
-        <item quantity="few">Use at least %1$d characters</item>
-        <item quantity="many">Use at least %1$d characters</item>
-        <item quantity="other">Use at least %1$d characters</item>
+        <item quantity="one">Użyj co najmniej %1$d znak</item>
+        <item quantity="few">Użyj co najmniej %1$d znaki</item>
+        <item quantity="many">Użyj co najmniej %1$d znaków</item>
+        <item quantity="other">Użyj co najmniej %1$d znaków</item>
     </plurals>
     <!-- Password recovery -->
     <string name="auth_action_reset_password" comment="Action to reset password">Resetuj hasło</string>

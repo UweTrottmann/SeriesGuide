@@ -600,8 +600,8 @@
     <!-- Password validation messages -->
     <string name="auth_error_weak_password" comment="Error message when password does not meet requirements">Password non abbastanza sicura</string>
     <plurals name="auth_error_password_too_short" comment="Error message when password is too short">
-        <item quantity="one">Use at least %1$d character</item>
-        <item quantity="other">Use at least %1$d characters</item>
+        <item quantity="one">Usa almeno %1$d carattere</item>
+        <item quantity="other">Usa almeno %1$d caratteri</item>
     </plurals>
     <!-- Password recovery -->
     <string name="auth_action_reset_password" comment="Action to reset password">Reimposta password</string>
