@@ -9,6 +9,7 @@ import com.uwetrottmann.trakt5.TraktV2
 import com.uwetrottmann.trakt5.entities.AddNoteRequest
 import com.uwetrottmann.trakt5.entities.BaseMovie
 import com.uwetrottmann.trakt5.entities.BaseShow
+import com.uwetrottmann.trakt5.entities.ListEntry
 import com.uwetrottmann.trakt5.entities.MovieIds
 import com.uwetrottmann.trakt5.entities.Note
 import com.uwetrottmann.trakt5.entities.RatedEpisode
@@ -16,6 +17,8 @@ import com.uwetrottmann.trakt5.entities.RatedMovie
 import com.uwetrottmann.trakt5.entities.RatedShow
 import com.uwetrottmann.trakt5.entities.Show
 import com.uwetrottmann.trakt5.entities.ShowIds
+import com.uwetrottmann.trakt5.entities.TraktList
+import com.uwetrottmann.trakt5.entities.UserSlug
 import com.uwetrottmann.trakt5.enums.Extended
 import com.uwetrottmann.trakt5.enums.ExtendedShowsWatched
 import com.uwetrottmann.trakt5.enums.IdType
@@ -25,6 +28,7 @@ import com.uwetrottmann.trakt5.enums.Type
 import com.uwetrottmann.trakt5.services.Notes
 import com.uwetrottmann.trakt5.services.Search
 import com.uwetrottmann.trakt5.services.Sync
+import com.uwetrottmann.trakt5.services.Users
 import retrofit2.Call
 import retrofit2.awaitResponse
 import timber.log.Timber
@@ -340,6 +344,39 @@ object TraktTools4 {
             "delete note",
             reportIsNotVip = true // Should work even if not VIP
         )
+    }
+
+    suspend fun getLists(
+        traktUsers: Users
+    ): TraktNonNullResponse<List<TraktList>> {
+        return fetchAllPages(
+            action = "get lists",
+            reportIsNotVip = true // Should work even if not VIP
+        ) { page ->
+            traktUsers.lists(UserSlug.ME, page, MAX_LIMIT, null)
+        }
+    }
+
+    /**
+     * Only gets movie and show type items.
+     */
+    suspend fun getListItems(
+        traktUsers: Users,
+        listId: Int
+    ): TraktNonNullResponse<List<ListEntry>> {
+        return fetchAllPages(
+            action = "get list items",
+            reportIsNotVip = true // Should work even if not VIP
+        ) { page ->
+            traktUsers.listItems(
+                UserSlug.ME,
+                listId.toString(),
+                "movie,show",
+                page,
+                MAX_LIMIT,
+                null
+            )
+        }
     }
 
     /**
