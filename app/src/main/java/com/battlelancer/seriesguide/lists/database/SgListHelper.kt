@@ -41,6 +41,9 @@ interface SgListHelper {
     @Query("SELECT * FROM lists ORDER BY ${Lists.SORT_ORDER_THEN_NAME}")
     fun getListsForExport(): List<SgList>
 
+    @Query("SELECT list_id FROM lists WHERE trakt_id = :traktId")
+    suspend fun getListIdForTraktId(traktId: Int): String?
+
     /**
      * Is 0 on error.
      */
@@ -90,6 +93,21 @@ interface SgListHelper {
         listItemIds.forEach {
             deleteListItem(it)
         }
+    }
+
+    @Query("DELETE FROM listitems WHERE list_id = :listId")
+    fun deleteItemsOfList(listId: String)
+
+    @Query("DELETE FROM lists WHERE list_id = :listId")
+    fun deleteList(listId: String)
+
+    /**
+     * Deletes items first to avoid violating foreign key constraints.
+     */
+    @Transaction
+    fun deleteListAndItems(listId: String) {
+        deleteItemsOfList(listId)
+        deleteList(listId)
     }
 
     @Query("DELETE FROM lists")
