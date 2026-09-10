@@ -9,6 +9,7 @@ import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.lists.database.SgList;
 import com.battlelancer.seriesguide.movies.database.SgMovie;
 import com.battlelancer.seriesguide.shows.database.SgEpisode2;
 import com.battlelancer.seriesguide.shows.database.SgShow2;
@@ -911,6 +912,11 @@ public class SeriesGuideContract {
          * </pre>
          */
         String ORDER = "list_order";
+
+        /**
+         * See {@link SgList#getTraktId()}
+         */
+        String TRAKT_ID = "trakt_id";
     }
 
     interface ListItemsColumns {

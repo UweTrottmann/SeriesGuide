@@ -10,7 +10,6 @@ import com.battlelancer.seriesguide.lists.database.SgList
 import com.battlelancer.seriesguide.lists.database.SgListHelper
 import com.battlelancer.seriesguide.movies.database.MovieHelper
 import com.battlelancer.seriesguide.movies.database.SgMovie
-import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper
@@ -184,14 +183,14 @@ class JsonImportTaskTest {
 
         // List 1 with items
         verify(sgListHelper).insertList(
-            SgList(listId = "list-1", name = "First List", order = 0)
+            SgList(listId = "list-1", name = "First List", order = 0, traktId = 5)
         )
         val expectedListItems = JsonExportTaskTest.listOfTestListItems
         verify(sgListHelper).insertListItems(expectedListItems)
 
         // List 2 has no items
         verify(sgListHelper).insertList(
-            SgList(listId = "list-2", name = "Empty List", order = 1)
+            SgList(listId = "list-2", name = "Empty List", order = 1, traktId = null)
         )
     }
 
