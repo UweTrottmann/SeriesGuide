@@ -396,6 +396,7 @@
     <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Translate this app</string>
+    <string name="title_app_language">App language</string>
     <string name="prefs_category_advanced">Avansate</string>
     <string name="prefs_category_about">Despre</string>
     <string name="pref_onlyfuture">Nici un episod difuzat</string>

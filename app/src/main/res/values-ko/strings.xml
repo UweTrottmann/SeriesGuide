@@ -374,6 +374,7 @@
     <string name="feedback">이메일 보내기</string>
     <!-- Settings -->
     <string name="action_translate">앱 번역 참여</string>
+    <string name="title_app_language">App language</string>
     <string name="prefs_category_advanced">고급</string>
     <string name="prefs_category_about">정보</string>
     <string name="pref_onlyfuture">방영된 에피소드 보이지 않기</string>

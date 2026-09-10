@@ -385,6 +385,7 @@
     <string name="feedback">Skicka e-post</string>
     <!-- Settings -->
     <string name="action_translate">Översätt appen</string>
+    <string name="title_app_language">App language</string>
     <string name="prefs_category_advanced">Avancerat</string>
     <string name="prefs_category_about">Om</string>
     <string name="pref_onlyfuture">Inga sända avsnitt</string>

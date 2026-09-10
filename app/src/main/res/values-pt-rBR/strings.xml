@@ -385,6 +385,7 @@
     <string name="feedback">Enviar e-mail</string>
     <!-- Settings -->
     <string name="action_translate">Traduza este aplicativo</string>
+    <string name="title_app_language">App language</string>
     <string name="prefs_category_advanced">Avançado</string>
     <string name="prefs_category_about">Sobre</string>
     <string name="pref_onlyfuture">Ocultar episódios exibidos</string>

@@ -385,6 +385,7 @@
     <string name="feedback">E-mail verzenden</string>
     <!-- Settings -->
     <string name="action_translate">Deze app vertalen</string>
+    <string name="title_app_language">App language</string>
     <string name="prefs_category_advanced">Geavanceerd</string>
     <string name="prefs_category_about">Over</string>
     <string name="pref_onlyfuture">Geen uitgezonden afleveringen</string>
