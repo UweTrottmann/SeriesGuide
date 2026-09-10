@@ -463,6 +463,24 @@ class MigrationTest {
         }
     }
 
+    @Test
+    fun migrationFrom55To56_traktIdIsNull() {
+        val dbOld = migrationTestHelper
+            .createDatabase(TEST_DB_NAME, SgRoomDatabase.VERSION_55_MOVIE_SLUG_DOUBLE_RATING)
+        dbOld.execSQL(
+            "INSERT INTO lists (list_id, list_name, list_order) " +
+                    "VALUES ('test-list', 'Test List', 0)"
+        )
+        dbOld.close()
+
+        val db = migrationTestHelper.runMigrationsAndValidate(
+            TEST_DB_NAME, SgRoomDatabase.VERSION_56_LIST_TRAKT_ID, false
+        )
+        queryAndAssert(db, "SELECT trakt_id FROM lists") {
+            assertThat(it.isNull(0)).isTrue()
+        }
+    }
+
     private fun Cursor.getInt(columnName: String): Int? =
         getIntOrNull(getColumnIndexOrThrow(columnName))
 

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2018-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2018 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.lists.database
 
@@ -41,7 +41,15 @@ data class SgList(
      * </pre>
      */
     @ColumnInfo(name = Lists.ORDER)
-    var order: Int? = 0
+    var order: Int? = 0,
+
+    /**
+     * Optional Trakt list ID. Set if this list is synced with Trakt.
+     *
+     * This ID is specific to a Trakt profile.
+     */
+    @ColumnInfo(name = Lists.TRAKT_ID)
+    var traktId: Int?
 ) {
     val orderOrDefault: Int
         get() = order ?: 0

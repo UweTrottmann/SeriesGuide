@@ -344,6 +344,7 @@ open class JsonExportTask(
             list.list_id = sgList.listId
             list.name = sgList.name
             list.order = sgList.orderOrDefault
+            list.trakt_id = sgList.traktId
             addListItems(list)
             list
         }

@@ -113,7 +113,8 @@ object ImportTools {
         return SgList(
             listId = list_id,
             name = name,
-            order = order
+            order = order,
+            traktId = trakt_id
         )
     }
 
