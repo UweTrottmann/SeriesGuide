@@ -911,6 +911,11 @@ public class SeriesGuideContract {
          * </pre>
          */
         String ORDER = "list_order";
+
+        /**
+         * See {@link com.battlelancer.seriesguide.lists.database.SgList#}
+         */
+        String TRAKT_ID = "trakt_id";
     }
 
     interface ListItemsColumns {
