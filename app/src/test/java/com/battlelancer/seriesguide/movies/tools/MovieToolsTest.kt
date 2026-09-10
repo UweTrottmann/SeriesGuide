@@ -477,7 +477,8 @@ class MovieToolsTest {
         private const val TEST_LIST_ID = "test-list"
         private val TEST_LIST = SgList(
             listId = TEST_LIST_ID,
-            name = "Test List"
+            name = "Test List",
+            traktId = null
         )
         private val TEST_LIST_ITEM = SgListItem(
             itemRefId = TEST_MOVIE_TMDBID,

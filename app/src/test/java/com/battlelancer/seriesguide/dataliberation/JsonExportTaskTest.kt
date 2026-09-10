@@ -269,12 +269,14 @@ class JsonExportTaskTest {
             SgList(
                 listId = TEST_LIST_1,
                 name = "First List",
-                order = 0
+                order = 0,
+                traktId = 5
             ),
             SgList(
                 listId = "list-2",
                 name = "Empty List",
-                order = 1
+                order = 1,
+                traktId = null
             )
         )
 
@@ -297,7 +299,7 @@ class JsonExportTaskTest {
         val expectedJsonLists =
             """
             [
-            {"list_id":"list-1","name":"First List","order":0,"items":[{"list_item_id":"item-ref-1-4-list-1","externalId":"item-ref-1","type":"tmdb-show"},{"list_item_id":"item-ref-2-1-list-1","externalId":"item-ref-2","type":"show"},{"list_item_id":"item-ref-3-2-list-1","externalId":"item-ref-3","type":"season"},{"list_item_id":"item-ref-4-3-list-1","externalId":"item-ref-4","type":"episode"},{"list_item_id":"item-ref-5-5-list-1","externalId":"item-ref-5","type":"movie"}]}
+            {"list_id":"list-1","name":"First List","order":0,"trakt_id":5,"items":[{"list_item_id":"item-ref-1-4-list-1","externalId":"item-ref-1","type":"tmdb-show"},{"list_item_id":"item-ref-2-1-list-1","externalId":"item-ref-2","type":"show"},{"list_item_id":"item-ref-3-2-list-1","externalId":"item-ref-3","type":"season"},{"list_item_id":"item-ref-4-3-list-1","externalId":"item-ref-4","type":"episode"},{"list_item_id":"item-ref-5-5-list-1","externalId":"item-ref-5","type":"movie"}]}
             ,{"list_id":"list-2","name":"Empty List","order":1,"items":[]}
             ]
             """.trimIndent()

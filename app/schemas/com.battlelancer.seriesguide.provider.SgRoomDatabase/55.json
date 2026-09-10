@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 55,
-    "identityHash": "48695c467539c2fa148700d929189cea",
+    "identityHash": "ddcf8997d84882bcd423301099a041e2",
     "entities": [
       {
         "tableName": "series",
@@ -1020,7 +1020,7 @@
       },
       {
         "tableName": "lists",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT, `list_id` TEXT NOT NULL, `list_name` TEXT NOT NULL, `list_order` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT, `list_id` TEXT NOT NULL, `list_name` TEXT NOT NULL, `list_order` INTEGER, `trakt_id` INTEGER)",
         "fields": [
           {
             "fieldPath": "id",
@@ -1042,6 +1042,11 @@
           {
             "fieldPath": "order",
             "columnName": "list_order",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "traktId",
+            "columnName": "trakt_id",
             "affinity": "INTEGER"
           }
         ],
@@ -1508,7 +1513,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '48695c467539c2fa148700d929189cea')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ddcf8997d84882bcd423301099a041e2')"
     ]
   }
 }
