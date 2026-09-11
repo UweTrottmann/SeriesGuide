@@ -92,11 +92,35 @@ interface SgListHelper {
         }
     }
 
+    @Query("DELETE FROM listitems WHERE list_id = :listId")
+    fun deleteItemsOfList(listId: String)
+
+    @Query("DELETE FROM lists WHERE list_id = :listId")
+    fun deleteList(listId: String)
+
+    /**
+     * Deletes items first to avoid violating foreign key constraints.
+     */
+    @Transaction
+    fun deleteListAndItems(listId: String) {
+        deleteItemsOfList(listId)
+        deleteList(listId)
+    }
+
     @Query("DELETE FROM lists")
     fun deleteAllLists()
 
     @Query("DELETE FROM listitems")
     fun deleteAllListItems()
+
+    /**
+     * Deletes items first to avoid violating foreign key constraints.
+     */
+    @Transaction
+    fun deleteAllListsAndItems() {
+        deleteAllListItems()
+        deleteAllLists()
+    }
 }
 
 /**
