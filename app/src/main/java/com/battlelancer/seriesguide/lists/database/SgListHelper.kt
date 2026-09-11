@@ -115,6 +115,15 @@ interface SgListHelper {
 
     @Query("DELETE FROM listitems")
     fun deleteAllListItems()
+
+    /**
+     * Deletes items first to avoid violating foreign key constraints.
+     */
+    @Transaction
+    fun deleteAllListsAndItems() {
+        deleteAllListItems()
+        deleteAllLists()
+    }
 }
 
 /**
