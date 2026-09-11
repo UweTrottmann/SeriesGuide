@@ -17,6 +17,11 @@ import com.battlelancer.seriesguide.traktapi.TraktSettings
 import com.battlelancer.seriesguide.traktapi.TraktTools4
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse.Success
 import com.battlelancer.seriesguide.util.TimeTools
+import com.uwetrottmann.trakt5.entities.MovieIds
+import com.uwetrottmann.trakt5.entities.ShowIds
+import com.uwetrottmann.trakt5.entities.SyncItems
+import com.uwetrottmann.trakt5.entities.SyncMovie
+import com.uwetrottmann.trakt5.entities.SyncShow
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import org.threeten.bp.OffsetDateTime
@@ -37,6 +42,11 @@ class TraktListsSync(
 
     private val context = traktSync.context
 
+    enum class InitialSync {
+        EXISTING_LISTS_DELETE,
+        EXISTING_LISTS_UPLOAD
+    }
+
     /**
      * Note: this uses [runBlocking], so if the calling thread is interrupted this will throw
      * [InterruptedException].
@@ -54,6 +64,33 @@ class TraktListsSync(
         if (!isInitialSync && !TimeTools.isAfterMillis(updatedAt, lastUpdatedAt)) {
             Timber.d("sync: no changes since %tF %tT", lastUpdatedAt, lastUpdatedAt)
             return true
+        }
+
+        if (isInitialSync) {
+            // TODO Depending on user preference, delete existing lists or upload them
+            val initialSyncPreference: InitialSync = InitialSync.EXISTING_LISTS_DELETE
+            when (initialSyncPreference) {
+                InitialSync.EXISTING_LISTS_DELETE -> {
+                    Timber.d("initial sync: use chose to delete existing lists")
+                    runBlocking(Dispatchers.IO) {
+                        database.useWriterConnection {
+                            it.immediateTransaction {
+                                listHelper.deleteAllListsAndItems()
+                            }
+                        }
+                    }
+                }
+
+                InitialSync.EXISTING_LISTS_UPLOAD -> {
+                    Timber.d("initial sync: use chose to upload existing lists")
+                    val success = runBlocking(Dispatchers.Default) {
+                        uploadAllLists()
+                    }
+                    if (!success) {
+                        return false
+                    }
+                }
+            }
         }
 
         // Match local lists with what's on Trakt (not items)
@@ -140,6 +177,77 @@ class TraktListsSync(
             TraktSettings.setInitialSyncListsCompleted(context)
         }
         TraktSettings.storeLastListsUpdatedAt(context, updatedAt)
+
+        return true
+    }
+
+    /**
+     * Creates a list on Trakt for each local list and adds all items to the list. Sets the Trakt ID
+     * if successful.
+     */
+    private suspend fun uploadAllLists(): Boolean {
+        listHelper.getListsForExport().forEach { list: SgList ->
+            if (list.traktId != null) {
+                // List was already uploaded, skip it
+                return@forEach
+            }
+
+            val traktList =
+                when (val response = TraktTools4.createList(traktSync.users, list.name)) {
+                    is Success -> response.data
+                    else -> null
+                } ?: return false
+
+            val listTraktId = traktList.ids?.trakt
+            if (listTraktId == null) {
+                Timber.e(
+                    "Created Trakt list doesn't have an ID (name=%s)",
+                    list.name
+                )
+                return false
+            }
+
+            // Upload list items
+            val listItems = listHelper.getListItemsForExport(list.listId)
+            val shows = listItems
+                .filter { it.type == ListItemTypes.TMDB_SHOW }
+                .map { SyncShow().id(ShowIds.tmdb(it.itemRefId.toInt())) }
+            val movies = listItems
+                .filter { it.type == ListItemTypes.TMDB_MOVIE }
+                .map { SyncMovie().id(MovieIds.tmdb(it.itemRefId.toInt())) }
+            val syncItems = SyncItems()
+                .shows(shows)
+                .movies(movies)
+
+            val syncResponse =
+                when (val response =
+                    TraktTools4.addItemsToList(traktSync.users, listTraktId, syncItems)) {
+                    is Success -> response.data
+                    else -> null
+                } ?: return false
+            val notFoundMovies = syncResponse.not_found?.movies
+            val notFoundShows = syncResponse.not_found?.shows
+            if (!notFoundMovies.isNullOrEmpty() || !notFoundShows.isNullOrEmpty()) {
+                notFoundMovies?.forEach {
+                    Timber.e(
+                        "Failed to add movie to list, not found at Trakt (list name: %s, movie TMDB ID: %s)",
+                        list.name,
+                        it.ids?.tmdb
+                    )
+                }
+                notFoundShows?.forEach {
+                    Timber.e(
+                        "Failed to add show to list, not found at Trakt (list name: %s, show TMDB ID: %s)",
+                        list.name,
+                        it.ids?.tmdb
+                    )
+                }
+                return false
+            }
+
+            // Set Trakt ID to signal this list was uploaded
+            listHelper.updateListTraktId(list.listId, listTraktId)
+        }
 
         return true
     }

@@ -85,6 +85,9 @@ interface SgListHelper {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertListItems(listItems: List<SgListItem>)
 
+    @Query("UPDATE lists SET trakt_id = :traktId WHERE list_id = :listId")
+    fun updateListTraktId(listId: String, traktId: Int)
+
     @Query("DELETE FROM listitems WHERE list_item_id = :listItemId")
     fun deleteListItem(listItemId: String)
 

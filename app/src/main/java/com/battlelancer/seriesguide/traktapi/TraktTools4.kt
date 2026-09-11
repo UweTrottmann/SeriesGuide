@@ -17,6 +17,8 @@ import com.uwetrottmann.trakt5.entities.RatedMovie
 import com.uwetrottmann.trakt5.entities.RatedShow
 import com.uwetrottmann.trakt5.entities.Show
 import com.uwetrottmann.trakt5.entities.ShowIds
+import com.uwetrottmann.trakt5.entities.SyncItems
+import com.uwetrottmann.trakt5.entities.SyncResponse
 import com.uwetrottmann.trakt5.entities.TraktList
 import com.uwetrottmann.trakt5.entities.UserSlug
 import com.uwetrottmann.trakt5.enums.Extended
@@ -343,6 +345,41 @@ object TraktTools4 {
             traktNotes.deleteNote(noteId),
             "delete note",
             reportIsNotVip = true // Should work even if not VIP
+        )
+    }
+
+    /**
+     * Creates a new list.
+     *
+     * See [awaitTraktCall] for details.
+     */
+    suspend fun createList(
+        traktUsers: Users,
+        listName: String
+    ): TraktNonNullResponse<TraktList> {
+        return awaitTraktCallNonNull(
+            traktUsers.createList(UserSlug.ME, TraktList().name(listName)),
+            "create list",
+            // Should work even if not VIP (fails with IsAccountLimitExceeded if limit is reached)
+            reportIsNotVip = true
+        )
+    }
+
+    /**
+     * Adds items to a list.
+     *
+     * See [awaitTraktCall] for details.
+     */
+    suspend fun addItemsToList(
+        traktUsers: Users,
+        listId: Int,
+        items: SyncItems
+    ): TraktNonNullResponse<SyncResponse> {
+        return awaitTraktCallNonNull(
+            traktUsers.addListItems(UserSlug.ME, listId.toString(), items),
+            "add list items",
+            // Should work even if not VIP (fails with IsAccountLimitExceeded if limit is reached)
+            reportIsNotVip = true
         )
     }
 
