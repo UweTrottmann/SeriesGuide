@@ -439,9 +439,7 @@ class JsonImportTask(
             }
 
             Export.Lists -> {
-                // Delete list items before lists to prevent violating foreign key constraints
-                sgListHelper.deleteAllListItems()
-                sgListHelper.deleteAllLists()
+                sgListHelper.deleteAllListsAndItems()
             }
 
             Export.Movies -> {
