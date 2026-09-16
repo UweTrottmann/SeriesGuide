@@ -600,7 +600,7 @@ interface SgEpisode2Helper {
     }
 
     @Query("DELETE FROM sg_episode WHERE series_id = :showId")
-    suspend fun deleteEpisodesOfShow(showId: Long): Int
+    suspend fun deleteEpisodesOfShow(showId: Long)
 
     /**
      * Returns at most 500 episodes matching the [searchTermOrNull].

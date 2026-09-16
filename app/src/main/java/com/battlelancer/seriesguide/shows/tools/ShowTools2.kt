@@ -153,18 +153,13 @@ class ShowTools2 @Inject constructor(
         if (isCloudFailed) return SgResult.ERROR
 
         return withContext(Dispatchers.IO) {
-            // Remove database entries in stages, so if an earlier stage fails,
-            // user can try again. Also saves memory by using smaller database transactions.
             val database = SgRoomDatabase.getInstance(context)
 
-            var rowsUpdated = database.sgEpisode2Helper().deleteEpisodesOfShow(showId)
-            if (rowsUpdated == -1) return@withContext SgResult.ERROR
-
-            rowsUpdated = database.sgSeason2Helper().deleteSeasonsOfShow(showId)
-            if (rowsUpdated == -1) return@withContext SgResult.ERROR
-
-            rowsUpdated = database.sgShow2Helper().deleteShow(showId)
-            if (rowsUpdated == -1) return@withContext SgResult.ERROR
+            database.sgShow2Helper().deleteShowWithSeasonsAndEpisodes(
+                showId,
+                database.sgSeason2Helper(),
+                database.sgEpisode2Helper()
+            )
 
             database.sgWatchProviderHelper().deleteShowMappings(showId)
 
