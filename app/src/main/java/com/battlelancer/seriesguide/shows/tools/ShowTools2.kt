@@ -21,11 +21,13 @@ import com.battlelancer.seriesguide.traktapi.TraktTools4
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktErrorResponse
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktResponse
+import com.battlelancer.seriesguide.util.TaskManager
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow
 import dagger.Lazy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
@@ -153,18 +155,20 @@ class ShowTools2 @Inject constructor(
         if (isCloudFailed) return SgResult.ERROR
 
         return withContext(Dispatchers.IO) {
-            val database = SgRoomDatabase.getInstance(context)
+            TaskManager.modifyOrExportShowsSemaphore.withPermit {
+                val database = SgRoomDatabase.getInstance(context)
 
-            database.sgShow2Helper().deleteShowWithSeasonsAndEpisodes(
-                showId,
-                database.sgSeason2Helper(),
-                database.sgEpisode2Helper()
-            )
+                database.sgShow2Helper().deleteShowWithSeasonsAndEpisodes(
+                    showId,
+                    database.sgSeason2Helper(),
+                    database.sgEpisode2Helper()
+                )
 
-            database.sgWatchProviderHelper().deleteShowMappings(showId)
+                database.sgWatchProviderHelper().deleteShowMappings(showId)
 
-            SeriesGuideDatabase.rebuildFtsTable(context)
-            SgResult.SUCCESS
+                SeriesGuideDatabase.rebuildFtsTable(context)
+                SgResult.SUCCESS
+            }
         }
     }
 

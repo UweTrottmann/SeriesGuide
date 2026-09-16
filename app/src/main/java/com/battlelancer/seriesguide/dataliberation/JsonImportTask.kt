@@ -145,7 +145,7 @@ class JsonImportTask(
                 ERROR_LARGE_DB_OP
             } else {
                 // Do not import until an add or backup task are finished
-                TaskManager.addShowOrBackupSemaphore.withPermit {
+                TaskManager.modifyOrExportShowsSemaphore.withPermit {
                     doInBackground(this)
                 }
             }

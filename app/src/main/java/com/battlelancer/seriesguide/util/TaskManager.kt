@@ -30,13 +30,15 @@ object TaskManager {
     /**
      * Ensures that only one task that
      * - adds shows,
-     * - runs a backup
+     * - updates a show,
+     * - deletes a show,
+     * - runs a backup,
      * - runs an import
      * runs at a time.
      *
-     * Note: this currently does not cover all tasks that modify shows, like updating and removing.
+     * Note: this currently does not cover all tasks that modify shows, seasons or episodes.
      */
-    val addShowOrBackupSemaphore = Semaphore(1)
+    val modifyOrExportShowsSemaphore = Semaphore(1)
     private var hasBackupTask: Boolean = false
     private var nextEpisodeUpdateTask: LatestEpisodeUpdateTask? = null
 
@@ -86,7 +88,7 @@ object TaskManager {
 
         // Queue another add task
         SgApp.coroutineScope.launch(Dispatchers.IO) {
-            addShowOrBackupSemaphore.withPermit {
+            modifyOrExportShowsSemaphore.withPermit {
                 AddShowTask(
                     context = context,
                     shows = shows,
@@ -112,7 +114,7 @@ object TaskManager {
 
         // Queue backup task
         SgApp.coroutineScope.launch(Dispatchers.IO) {
-            addShowOrBackupSemaphore.withPermit {
+            modifyOrExportShowsSemaphore.withPermit {
                 try {
                     AutoBackupTask(context).runAutoBackup()
                 } finally {

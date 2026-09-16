@@ -12,6 +12,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 * 🔧 Cloud: when sync adds a show, skip uploading it.
 * 🔧 Settings: add link to app language setting on Android 13 and newer.
+* 🔨 Shows: no longer crash when trying to update a show that was just removed.
 
 ## Version 2026.4
 
