@@ -7,3 +7,12 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
+    # Wait before suggesting a new version to reduce risk of bugs or supply-chain attacks
+    cooldown:
+      default-days: 7
+    # Group all GitHub Actions updates into a single merge request to simplify merging
+    groups:
+      github-actions:
+        applies-to: "version-updates"
+        patterns:
+          - "*"
