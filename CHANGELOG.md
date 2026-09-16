@@ -8,14 +8,14 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
 
-### Next release
+## Version 2026.4
+
+### 2026.4.2 - 2026-09-16 🧪
 
 * 🔧 Cloud: when sync adds a show, skip uploading it.
 * 🔧 Settings: add link to app language setting on Android 13 and newer.
 * 🔨 Shows: no longer crash when trying to update a show that was just removed.
 * 📝 Import latest user interface translations.
-
-## Version 2026.4
 
 ### 2026.4.1 - 2026-09-03 🧪
 
