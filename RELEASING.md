@@ -12,11 +12,6 @@
   ```
 
 - Optional: [update translations](/translations/README.md)
-
-  ```bash
-  git commit --all --message "Import latest translations"
-  ```
-
 - Change version code and name in [`build.gradle.kts`](/build.gradle.kts)
 - Update [`CHANGELOG.md`](/CHANGELOG.md)
 
