@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Main Menu -->
     <string name="shows">Seriale</string>
     <string name="lists">Listy</string>
@@ -41,6 +41,7 @@
     <string name="action_save">Zapisz</string>
     <string name="action_turn_on">Włącz</string>
     <string name="action_check" comment="Action when an error is displayed the user should check upon.">Sprawdź</string>
+    <string name="refresh">Odśwież</string>
     <!-- Search -->
     <string name="clear_search_history">Wyczyść historię wyszukiwania</string>
     <string name="search_hint">Szukaj odcinków</string>
@@ -66,18 +67,18 @@
     <string name="share_movie">Udostępnij film</string>
     <string name="addtocalendar">Dodaj do kalendarza</string>
     <string name="addtocalendar_failed">Nie można utworzyć zdarzenia kalendarza.</string>
-    <!-- Comments -->
-    <string name="comments">Komentarze</string>
-    <string name="shout_hint">Wpisz komentarz (j. angielski, >5 słów)</string>
-    <string name="shout_invalid">Twój komentarz nie jest zgodny z zasadami!</string>
+    <!-- Reviews -->
+    <string name="reviews_title">Reviews</string>
+    <string name="reviews_label_provided_by">Reviews from Trakt</string>
+    <string name="reviews_hint_empty">Be the first to write a review!</string>
+    <string name="reviews_hint_write_review">Write a review (English, 5+ words)</string>
+    <string name="reviews_error_violates_rules">Your review does not follow the rules!</string>
     <string name="action_post">Wyślij</string>
     <string name="action_edit_comment">Edytuj</string>
     <string name="action_delete_comment">Usuń</string>
-    <string name="confirmation_delete_comment">Usunąć ten komentarz?</string>
-    <string name="error_delete_comment">Komentarz nie został usunięty, jest zbyt stary lub zawiera odpowiedzi</string>
+    <string name="reviews_title_confirm_delete">Delete this review?</string>
+    <string name="reviews_error_delete">Review not deleted, it is too old or has replies</string>
     <string name="isspoiler">Ostrzeżenie o spoilerach!</string>
-    <string name="no_shouts">Krzycz jako pierwszy!</string>
-    <string name="refresh">Odśwież</string>
     <plurals name="replies_plural">
         <item quantity="one">%d odpowiedź</item>
         <item quantity="few">%d odpowiedzi</item>
@@ -247,7 +248,8 @@
     <string name="add_already_exists">%s jest już na liście seriali.</string>
     <string name="title_new_episodes">Nowe odcinki</string>
     <string name="watched_shows">Obejrzane</string>
-    <string name="shows_collection">Kolekcja</string>
+    <!-- Keep shows_collection for potential later use. -->
+    <string name="shows_collection" tools:ignore="UnusedResources">Kolekcja</string>
     <string name="title_library">Biblioteka</string>
     <string name="watchlist">Do obejrzenia</string>
     <!-- Similar shows -->
@@ -333,7 +335,7 @@
     <string name="feature_not_supported">Nie obsługiwane</string>
     <string name="feature_disabled">Wyłączony</string>
     <string name="feature_history">Historia osobista i przyjaciół</string>
-    <string name="feature_comments">Dodaj komentarz</string>
+    <string name="feature_comments">Write reviews</string>
     <string name="feature_sync">Synchronizacja</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud pomaga w synchronizacji i tworzeniu kopii bezpieczeństwa seriali, list i filmów.</string>
@@ -348,8 +350,6 @@
     <string name="hexagon_remove_account_confirmation">Usunięcie konta spowoduje usunięcie wszystkich seriali i filmów z chmury SeriesGuide. Upewnij się, że dane te zostały usunięte także z pozostałych podłączonych urządzeń.</string>
     <string name="hexagon_api_queued">Wysłanie do chmury SeriesGuide.</string>
     <string name="hexagon_signed_out">Wylogowano z SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Błąd podczas logowania (%s)</string>
-    <string name="hexagon_signin_google_only">Adres e-mail wymaga logowania Google</string>
     <string name="hexagon_signin_choose">Wybierz adres e-mail do zalogowania, jeśli używasz SeriesGuide na innych urządzeniach, które nie obsługują logowania Google.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Wysyłanie do trakt.</string>
@@ -407,6 +407,7 @@
     <string name="feedback">Wyślij e-mail</string>
     <!-- Settings -->
     <string name="action_translate">Przetłumacz aplikację</string>
+    <string name="title_app_language">Język aplikacji</string>
     <string name="prefs_category_advanced">Zaawansowane</string>
     <string name="prefs_category_about">O programie</string>
     <string name="pref_onlyfuture">Bez wyemitowanych</string>
@@ -480,7 +481,8 @@
     <string name="pref_autoupdatesummary">Automatycznie synchronizuje i aktualizuje dane SeriesGuide</string>
     <string name="pref_number">Format numeracji</string>
     <string name="pref_offset">Ręczne przesunięcie czasu</string>
-    <string name="pref_offsetsummary">Przesuń czas emisji o %d godzin</string>
+    <!-- The offset feature was replaced by per-show release times, but is kept to not break existing users. -->
+    <string name="pref_offsetsummary" tools:ignore="PluralsCandidate">Przesuń czas emisji o %d godzin</string>
     <string name="clear_cache">Usuń bufor obrazów</string>
     <string name="clear_cache_summary" comment="Description of a link to Android system settings for the app that explains how to clear the cache of the app">Usuwa wszystkie buforowane obrazy z urządzenia</string>
     <!-- Export and Import -->
@@ -603,4 +605,42 @@
     <string name="title_stream_with_ads">Z reklamami</string>
     <string name="title_stream_buy">Kupno</string>
     <string name="title_stream_rent">Wynajem</string>
+    <!-- Cloud Authentication -->
+    <!-- Common -->
+    <string name="auth_action_back" comment="Action to go back">Wstecz</string>
+    <string name="auth_message_privacy_policy" comment="Privacy policy message, the placeholder will use the label for privacy_policy">Kiedy korzystasz z tej funkcji, dodatkowe dane są przetwarzane zgodnie z opisem w <xliff:g comment="Privacy policy label">%1$s</xliff:g>.</string>
+    <string name="auth_message_new_accounts_disabled" comment="Message shown when creating new accounts is not allowed">Tworzenie nowych kont nie jest obecnie dozwolone</string>
+    <!-- Auth method picker -->
+    <string name="auth_action_sign_in_with_google" comment="Action to sign in with a Google account">Zaloguj się przez konto Google</string>
+    <string name="auth_action_sign_in_with_email" comment="Action to sign in with an email address">Zaloguj się z adresem e-mail</string>
+    <string name="auth_action_continue_with_google" comment="Action to continue signing in with a suggested Google account">Kontynuuj z Google</string>
+    <string name="auth_action_continue_with_email" comment="Action to continue signing in with a suggested email address">Kontynuuj z adresem e-mail</string>
+    <!-- Email auth -->
+    <string name="auth_hint_name" comment="Hint for name input field">Twoje imię</string>
+    <string name="auth_hint_email" comment="Hint for email input field">E-mail</string>
+    <string name="auth_hint_password" comment="Hint for password input field">Hasło</string>
+    <string name="auth_hint_confirm_password" comment="Hint for confirm password input field">Potwierdź hasło</string>
+    <string name="auth_hint_confirm_password_does_not_match" comment="Hint when password entered in confirm password field does not match">Hasła nie są zgodne</string>
+    <string name="auth_hint_required" comment="Hint that the value of an input field is required">Wymagane</string>
+    <string name="auth_hint_email_required" comment="Hint that a valid email address is required in an input field">Wymagany jest prawidłowy adres e-mail</string>
+    <string name="auth_action_sign_up" comment="Action to create an account">Utwórz konto</string>
+    <string name="auth_error_email_alreay_in_use" comment="Error message when signing up with a used email address">Ten adres jest już używany przez aktywne konto. Zaloguj się za pomocę tego adresu e-mail.</string>
+    <string name="auth_action_show_password" comment="Action to show the password in a text field">Pokaż hasło</string>
+    <!-- Password validation messages -->
+    <string name="auth_error_weak_password" comment="Error message when password does not meet requirements">Hasło nie spełnia wymogów</string>
+    <plurals name="auth_error_password_too_short" comment="Error message when password is too short">
+        <item quantity="one">Użyj co najmniej %1$d znak</item>
+        <item quantity="few">Użyj co najmniej %1$d znaki</item>
+        <item quantity="many">Użyj co najmniej %1$d znaków</item>
+        <item quantity="other">Użyj co najmniej %1$d znaków</item>
+    </plurals>
+    <!-- Password recovery -->
+    <string name="auth_action_reset_password" comment="Action to reset password">Resetuj hasło</string>
+    <string name="auth_title_reset_password_instructions" comment="Title of reset password instructions">Sprawdź swoją skrzynkę e-mail</string>
+    <string name="auth_message_reset_password_instructions" comment="Reset password instructions">Jeśli konto dla tego adresu e-mail istnieje, wysłano do niego e-mail z instrukcjami resetowania hasła.</string>
+    <!-- Error Recovery Dialog -->
+    <string name="auth_error_account_linking_required" comment="Error message when account exists, but created with different sign-in method">Konto zostało już utworzone dla tego adresu e-mail przy użyciu innej metody logowania. Zaloguj się za pomocą oryginalnej metody, aby dodać tę metodę.</string>
+    <string name="auth_error_no_google_account_available" comment="Error message when trying to sign in with Google but no Google accounts are available on the device">Żadne konto Google nie jest dostępne na tym urządzeniu. Zaloguj się za pomocą adresu e-mail lub dodaj konto Google do tego urządzenia.</string>
+    <string name="auth_error_unknown" comment="General error messages for an unknown failure.">Wystąpił nieznany błąd</string>
+    <string name="auth_error_invalid_password" comment="Error message for when signing in fails.">To hasło jest nieprawidłowe, to konto nie obsługuje logowania przy użyciu hasła, albo nie ma konta z tym adresem e-mail. Może należy zresetować hasło.</string>
 </resources>

@@ -7,6 +7,8 @@
 # For more details, see
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
+# Optimizing has minimal gains, rather speed up build by not running it
+-dontoptimize
 # Currently no need to obfuscate anything
 -dontobfuscate
 # Output unused code so it can be optimized

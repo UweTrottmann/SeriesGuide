@@ -4,19 +4,14 @@
 
   ```bash
   # If it does not exist, create a release branch
-  git checkout -b releases/2026.3
+  git checkout -b releases/2026.4
   
   # If it exists, merge latest changes
-  git checkout releases/2026.3
+  git checkout releases/2026.4
   git merge dev
   ```
 
 - Optional: [update translations](/translations/README.md)
-
-  ```bash
-  git commit --all --message "Import latest translations"
-  ```
-
 - Change version code and name in [`build.gradle.kts`](/build.gradle.kts)
 - Update [`CHANGELOG.md`](/CHANGELOG.md)
 
@@ -27,8 +22,8 @@
 - Commit with the suggested message and push
 
   ```shell
-  git commit --all --message "Prepare version 2026.3.0 (23260101)"
-  git push --set-upstream origin releases/2026.3
+  git commit --all --message "Prepare version 2026.4.0 (23260101)"
+  git push --set-upstream origin releases/2026.4
   ```
 
 - If it does not exist, [create a merge request](https://github.com/UweTrottmann/SeriesGuide/compare/main...) against `main`
@@ -49,16 +44,16 @@
 - Tag release commit
   
   ```shell
-  git tag v2026.3.0
-  git push origin v2026.3.0
+  git tag v2026.4.0
+  git push origin v2026.4.0
   git checkout dev
-  git merge releases/2026.3
+  git merge releases/2026.4
   git push origin dev
   ```
 
 - Promote to beta channel
 - [Create GitHub preview release](https://github.com/UweTrottmann/SeriesGuide/releases/new)
-  - title like `SeriesGuide 2026.3.0`
+  - title like `2026.4.0`
   - get release notes from [`CHANGELOG.md`](/CHANGELOG.md)
   - attach APK
 - Create or update preview release post on forum
@@ -69,7 +64,7 @@
 - Merge release pull request to `main`
 - Download universal APK from Play Store
 - [Create GitHub release](https://github.com/UweTrottmann/SeriesGuide/releases/new)
-  - title like `SeriesGuide 2026.3.0`
+  - title like `2026.4.0`
   - get release notes from [`CHANGELOG.md`](/CHANGELOG.md)
   - attach APK
 - Prepare release post on forum
@@ -81,5 +76,5 @@
 
   ```shell
   git checkout dev
-  git merge --no-ff releases/2026.3
+  git merge --no-ff releases/2026.4
   ```

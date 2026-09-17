@@ -84,7 +84,7 @@ interface SgSeason2Helper {
     fun countSeasons(): Long
 
     @Query("DELETE FROM sg_season WHERE series_id = :showId")
-    suspend fun deleteSeasonsOfShow(showId: Long): Int
+    suspend fun deleteSeasonsOfShow(showId: Long)
 }
 
 data class SgSeason2Numbers(

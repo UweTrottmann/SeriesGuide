@@ -19,7 +19,7 @@ class DeleteCommentDialogFragment : AppCompatDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.confirmation_delete_comment)
+            .setTitle(R.string.reviews_title_confirm_delete)
             .setPositiveButton(R.string.action_delete_comment) { _, _ ->
                 model.deleteComment()
             }

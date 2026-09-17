@@ -477,7 +477,10 @@ class ShowFragment() : Fragment() {
                 val tmdbUrl = TmdbTools.buildShowUrl(it)
                 binding.ratingContainer.ratingViewTmdb.setLink(requireContext(), tmdbUrl)
                 binding.buttonTmdb.openUrlOnClickAndCopyOnLongPress(tmdbUrl)
+            }
 
+            val showTraktSlugOrId: String? = show.slug ?: show.traktId?.toString()
+            showTraktSlugOrId?.also {
                 // Trakt buttons
                 val traktUrl = TraktTools.buildShowUrl(it)
                 binding.ratingContainer.ratingViewTrakt.setLink(requireContext(), traktUrl)

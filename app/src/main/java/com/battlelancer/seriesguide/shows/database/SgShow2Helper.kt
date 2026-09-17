@@ -179,7 +179,18 @@ interface SgShow2Helper {
     fun deleteAllShows()
 
     @Query("DELETE FROM sg_show WHERE _id = :showId")
-    suspend fun deleteShow(showId: Long): Int
+    suspend fun deleteShow(showId: Long)
+
+    @Transaction
+    suspend fun deleteShowWithSeasonsAndEpisodes(
+        showId: Long,
+        seasonHelper: SgSeason2Helper,
+        episodeHelper: SgEpisode2Helper
+    ) {
+        episodeHelper.deleteEpisodesOfShow(showId)
+        seasonHelper.deleteSeasonsOfShow(showId)
+        deleteShow(showId)
+    }
 
     @Query("SELECT _id, series_tmdb_id, series_tvdb_id FROM sg_show WHERE series_syncenabled = 0")
     fun getHexagonMergeNotCompleted(): List<SgShow2Ids>
@@ -363,6 +374,7 @@ data class SgShow2Update(
     @ColumnInfo(name = SgShow2Columns._ID) var id: Long = 0,
     @ColumnInfo(name = SgShow2Columns.TVDB_ID) val tvdbId: Int?,
     @ColumnInfo(name = SgShow2Columns.TRAKT_ID) val traktId: Int?,
+    @ColumnInfo(name = SgShow2Columns.SLUG) val slug: String?,
     @ColumnInfo(name = SgShow2Columns.TITLE) val title: String,
     @ColumnInfo(name = SgShow2Columns.TITLE_NOARTICLE) val titleNoArticle: String?,
     @ColumnInfo(name = SgShow2Columns.OVERVIEW) val overview: String?,

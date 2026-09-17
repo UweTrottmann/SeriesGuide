@@ -18,11 +18,14 @@ import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.sync.SgSyncAdapter.UpdateResult
 import com.battlelancer.seriesguide.sync.SyncOptions.SyncType
 import com.battlelancer.seriesguide.sync.SyncProgress
+import com.battlelancer.seriesguide.util.TaskManager
 import com.uwetrottmann.androidutils.AndroidUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.sync.withPermit
 import timber.log.Timber
 import kotlin.math.pow
 import kotlin.random.Random
@@ -51,6 +54,7 @@ class ShowSync(
      *
      * Note: this calls
      *
+     * - [runBlocking]
      * - [AddUpdateShowTools.updateShow]
      * - [Thread.sleep]
      *
@@ -90,7 +94,11 @@ class ShowSync(
                 // - show does no longer exist => ignore and continue
                 // - database error => abort, report and try again later
                 // Note: reporting is done where the exception occurs.
-                result = showTools.updateShow(showId)
+                result = runBlocking {
+                    TaskManager.modifyOrExportShowsSemaphore.withPermit {
+                        showTools.updateShow(showId)
+                    }
+                }
 
                 if (result is ApiErrorRetry) {
                     networkErrors++

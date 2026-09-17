@@ -30,13 +30,15 @@ object TaskManager {
     /**
      * Ensures that only one task that
      * - adds shows,
-     * - runs a backup
+     * - updates a show,
+     * - deletes a show,
+     * - runs a backup,
      * - runs an import
      * runs at a time.
      *
-     * Note: this currently does not cover all tasks that modify shows, like updating and removing.
+     * Note: this currently does not cover all tasks that modify shows, seasons or episodes.
      */
-    val addShowOrBackupSemaphore = Semaphore(1)
+    val modifyOrExportShowsSemaphore = Semaphore(1)
     private var hasBackupTask: Boolean = false
     private var nextEpisodeUpdateTask: LatestEpisodeUpdateTask? = null
 
@@ -56,6 +58,8 @@ object TaskManager {
      *
      * Set [isMergingShows] to set [HexagonSettings.setHasMergedShows] if all shows were added
      * successfully.
+     *
+     * Set [uploadToHexagon] to `false` to not upload the show to Cloud.
      */
     @JvmStatic
     @MainThread
@@ -64,7 +68,8 @@ object TaskManager {
         context: Context,
         shows: List<AddShowTask.Show>,
         isSilentMode: Boolean,
-        isMergingShows: Boolean
+        isMergingShows: Boolean,
+        uploadToHexagon: Boolean = true
     ) {
         if (!isSilentMode) {
             // notify user here already
@@ -83,8 +88,14 @@ object TaskManager {
 
         // Queue another add task
         SgApp.coroutineScope.launch(Dispatchers.IO) {
-            addShowOrBackupSemaphore.withPermit {
-                AddShowTask(context, shows, isSilentMode, isMergingShows).run()
+            modifyOrExportShowsSemaphore.withPermit {
+                AddShowTask(
+                    context = context,
+                    shows = shows,
+                    isSilentMode = isSilentMode,
+                    isMergingShows = isMergingShows,
+                    uploadToHexagon = uploadToHexagon
+                ).run()
             }
         }
     }
@@ -103,7 +114,7 @@ object TaskManager {
 
         // Queue backup task
         SgApp.coroutineScope.launch(Dispatchers.IO) {
-            addShowOrBackupSemaphore.withPermit {
+            modifyOrExportShowsSemaphore.withPermit {
                 try {
                     AutoBackupTask(context).runAutoBackup()
                 } finally {

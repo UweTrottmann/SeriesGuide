@@ -133,14 +133,13 @@ class Errors {
             getReporter()?.recordException(throwable)
         }
 
-        fun logAndReportHexagonAuthError(throwable: HexagonAuthError) {
-            Timber.e(throwable, throwable.action)
+        fun reportHexagonAuthError(action: String, throwable: Throwable) {
+            val hexagonAuthException = HexagonAuthError.build(action, throwable)
 
-            bendCauseStackTrace(throwable)
+            bendCauseStackTrace(hexagonAuthException)
 
-            getReporter()?.setCustomKey("action", throwable.action)
-            throwable.statusCode?.let { getReporter()?.setCustomKey("code", it) }
-            getReporter()?.recordException(throwable)
+            getReporter()?.setCustomKey("action", hexagonAuthException.action)
+            getReporter()?.recordException(hexagonAuthException)
         }
 
         /**

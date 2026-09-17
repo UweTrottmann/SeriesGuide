@@ -105,6 +105,7 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
 
     private val handler = Handler(Looper.getMainLooper())
     private var ratingFetchJob: Job? = null
+
     // Cache the ViewModel in the activity (use activityViewModels instead of viewModels) as
     // OverviewActivityImpl may destroy fragments when switching layouts.
     private val model: OverviewViewModel by activityViewModels {
@@ -610,8 +611,13 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
             }
 
             // Trakt buttons
-            if (episode.tmdbId != null) {
-                val traktUrl = TraktTools.buildEpisodeUrl(episode.tmdbId)
+            val showTraktSlugOrId: String? = show.slug ?: show.traktId?.toString()
+            if (showTraktSlugOrId != null) {
+                val traktUrl = TraktTools.buildEpisodeUrl(
+                    showTraktSlugOrId,
+                    episode.season,
+                    episode.number
+                )
                 binding.includeRatings.ratingViewTrakt.setLink(requireContext(), traktUrl)
                 binding.includeServices.includeMore.buttonEpisodeTrakt.openUrlOnClickAndCopyOnLongPress(
                     traktUrl

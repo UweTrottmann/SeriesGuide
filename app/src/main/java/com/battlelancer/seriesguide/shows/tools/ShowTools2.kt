@@ -21,11 +21,13 @@ import com.battlelancer.seriesguide.traktapi.TraktTools4
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktErrorResponse
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktResponse
+import com.battlelancer.seriesguide.util.TaskManager
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow
 import dagger.Lazy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
@@ -153,23 +155,20 @@ class ShowTools2 @Inject constructor(
         if (isCloudFailed) return SgResult.ERROR
 
         return withContext(Dispatchers.IO) {
-            // Remove database entries in stages, so if an earlier stage fails,
-            // user can try again. Also saves memory by using smaller database transactions.
-            val database = SgRoomDatabase.getInstance(context)
+            TaskManager.modifyOrExportShowsSemaphore.withPermit {
+                val database = SgRoomDatabase.getInstance(context)
 
-            var rowsUpdated = database.sgEpisode2Helper().deleteEpisodesOfShow(showId)
-            if (rowsUpdated == -1) return@withContext SgResult.ERROR
+                database.sgShow2Helper().deleteShowWithSeasonsAndEpisodes(
+                    showId,
+                    database.sgSeason2Helper(),
+                    database.sgEpisode2Helper()
+                )
 
-            rowsUpdated = database.sgSeason2Helper().deleteSeasonsOfShow(showId)
-            if (rowsUpdated == -1) return@withContext SgResult.ERROR
+                database.sgWatchProviderHelper().deleteShowMappings(showId)
 
-            rowsUpdated = database.sgShow2Helper().deleteShow(showId)
-            if (rowsUpdated == -1) return@withContext SgResult.ERROR
-
-            database.sgWatchProviderHelper().deleteShowMappings(showId)
-
-            SeriesGuideDatabase.rebuildFtsTable(context)
-            SgResult.SUCCESS
+                SeriesGuideDatabase.rebuildFtsTable(context)
+                SgResult.SUCCESS
+            }
         }
     }
 
