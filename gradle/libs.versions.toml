@@ -1,25 +1,24 @@
 # https://docs.gradle.org/current/userguide/version_catalogs.html#sec:version-catalog-declaration
 
 [versions]
-# https://developer.android.com/build/releases/gradle-plugin
 # https://kotlinlang.org/docs/releases.html#release-details
 # When updating, must also update compose plugin.
 # Also, coroutines version must be compatible.
-# Also, look for compatible Gradle versions:
+# Also, look for compatible Gradle and Android Plugin versions:
 # https://kotlinlang.org/docs/gradle-configure-project.html#apply-the-plugin
+# 2.4.20 is compatible with Gradle 7.6.3–9.7.0 and Android Plugin 8.5.2–9.3.1
+kotlin = "2.4.20"
+# https://developer.android.com/build/releases/gradle-plugin
 # 9.3.1 includes Kotlin 2.2.10
 agp = "9.3.1"
-# Must match the Kotlin version included by the Android plugin.
-# 2.2.10 is compatible with Gradle 7.6.3–8.14
-kotlin = "2.2.10"
 
 [libraries]
 # Kotlin
 # https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
-# 1.10.2 requires Kotlin 2.1.0
-kotlinx-coroutines-android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2"
-kotlinx-coroutines-core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2"
-kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2"
+# 1.11.0 requires Kotlin 2.2.20
+kotlinx-coroutines-android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0"
+kotlinx-coroutines-core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0"
+kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.11.0"
 # https://github.com/michaelbull/kotlin-result/releases
 kotlinx-result = "com.michael-bull.kotlin-result:kotlin-result:1.1.20"
 
@@ -173,6 +172,7 @@ androidx-test-runner = "androidx.test:runner:1.7.0"
 android-gradle-api = { module = "com.android.tools.build:gradle-api", version.ref = "agp" }
 
 [plugins]
+kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 # https://github.com/google/ksp/releases
 ksp = { id = "com.google.devtools.ksp", version = "2.3.11" }
