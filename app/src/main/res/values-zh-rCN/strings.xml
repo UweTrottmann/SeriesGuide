@@ -67,17 +67,17 @@
     <string name="addtocalendar">添加到日历</string>
     <string name="addtocalendar_failed">无法创建日历事件</string>
     <!-- Comments -->
-    <string name="comments_provided_by">Comments from Trakt</string>
-    <string name="comments">评论</string>
-    <string name="shout_hint">输入一段评论（仅英语，至少五个单词）</string>
-    <string name="shout_invalid">无法提交评论：评论未遵守用户规章。</string>
+    <string name="reviews_label_provided_by">Comments from Trakt</string>
+    <string name="reviews_title">评论</string>
+    <string name="reviews_hint_write_review">输入一段评论（仅英语，至少五个单词）</string>
+    <string name="reviews_error_violates_rules">无法提交评论：评论未遵守用户规章。</string>
     <string name="action_post">发布</string>
     <string name="action_edit_comment">编辑</string>
     <string name="action_delete_comment">删除</string>
-    <string name="confirmation_delete_comment">删除该评论？</string>
-    <string name="error_delete_comment">评论未删除，过旧或已有回复</string>
+    <string name="reviews_title_confirm_delete">删除该评论？</string>
+    <string name="reviews_error_delete">评论未删除，过旧或已有回复</string>
     <string name="isspoiler">!!!! 剧透警告 !!!!</string>
-    <string name="no_shouts">抢沙发！</string>
+    <string name="reviews_hint_empty">抢沙发！</string>
     <string name="refresh">刷新</string>
     <plurals name="replies_plural">
         <item quantity="other">%d 条回复</item>

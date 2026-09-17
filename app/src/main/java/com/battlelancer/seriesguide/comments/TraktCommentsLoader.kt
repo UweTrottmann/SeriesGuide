@@ -125,7 +125,7 @@ class TraktCommentsLoader(context: Context, private val args: Bundle) :
     }
 
     private fun buildResultSuccess(results: List<Comment>): Result {
-        return Result(results, context.getString(R.string.no_shouts))
+        return Result(results, context.getString(R.string.reviews_hint_empty))
     }
 
     private fun buildResultFailure(@StringRes emptyTextResId: Int): Result {

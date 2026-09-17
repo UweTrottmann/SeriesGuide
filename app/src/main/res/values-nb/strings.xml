@@ -67,17 +67,17 @@
     <string name="addtocalendar">Legg til i kalender</string>
     <string name="addtocalendar_failed">Kan ikke opprette en kalenderhendelse.</string>
     <!-- Comments -->
-    <string name="comments_provided_by">Comments from Trakt</string>
-    <string name="comments">Kommentarer</string>
-    <string name="shout_hint">Skriv en kommentar på engelsk. (Minst 5 ord)</string>
-    <string name="shout_invalid">Kommentaren din ble avslått, grunnet regelbrudd.</string>
+    <string name="reviews_label_provided_by">Comments from Trakt</string>
+    <string name="reviews_title">Kommentarer</string>
+    <string name="reviews_hint_write_review">Skriv en kommentar på engelsk. (Minst 5 ord)</string>
+    <string name="reviews_error_violates_rules">Kommentaren din ble avslått, grunnet regelbrudd.</string>
     <string name="action_post">Innlegg</string>
     <string name="action_edit_comment">Edit</string>
     <string name="action_delete_comment">Fjern</string>
-    <string name="confirmation_delete_comment">Delete this comment?</string>
-    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
+    <string name="reviews_title_confirm_delete">Delete this comment?</string>
+    <string name="reviews_error_delete">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">Spoileradvarsel!</string>
-    <string name="no_shouts">Vær den første til å rope!</string>
+    <string name="reviews_hint_empty">Vær den første til å rope!</string>
     <string name="refresh">Oppdater</string>
     <plurals name="replies_plural">
         <item quantity="one">%d svar</item>

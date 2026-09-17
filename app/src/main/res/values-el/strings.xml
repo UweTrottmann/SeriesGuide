@@ -67,17 +67,17 @@
     <string name="addtocalendar">Προσθήκη στο ημερολόγιο</string>
     <string name="addtocalendar_failed">Δεν είναι δυνατόν να δημιουργηθεί γεγονός ημερολογίου.</string>
     <!-- Comments -->
-    <string name="comments_provided_by">Comments from Trakt</string>
-    <string name="comments">Σχόλια</string>
-    <string name="shout_hint">Πληκτρολογίστε ένα σχόλιο (Αγγλικά, 5+ λέξεις)</string>
-    <string name="shout_invalid">Το σχόλιο σας δεν πληροί της προϋποθέσεις!</string>
+    <string name="reviews_label_provided_by">Comments from Trakt</string>
+    <string name="reviews_title">Σχόλια</string>
+    <string name="reviews_hint_write_review">Πληκτρολογίστε ένα σχόλιο (Αγγλικά, 5+ λέξεις)</string>
+    <string name="reviews_error_violates_rules">Το σχόλιο σας δεν πληροί της προϋποθέσεις!</string>
     <string name="action_post">Ανάρτηση</string>
     <string name="action_edit_comment">Επεξεργασία</string>
     <string name="action_delete_comment">Διαγραφή</string>
-    <string name="confirmation_delete_comment">Διαγραφή σχολίου;</string>
-    <string name="error_delete_comment">Το σχόλιο δεν διαγράφηκε, είναι πολύ παλιό ή έχει απαντήσεις</string>
+    <string name="reviews_title_confirm_delete">Διαγραφή σχολίου;</string>
+    <string name="reviews_error_delete">Το σχόλιο δεν διαγράφηκε, είναι πολύ παλιό ή έχει απαντήσεις</string>
     <string name="isspoiler">Προειδοποίηση spoiler!</string>
-    <string name="no_shouts">Be the first to shout!</string>
+    <string name="reviews_hint_empty">Be the first to shout!</string>
     <string name="refresh">Ανανέωση</string>
     <plurals name="replies_plural">
         <item quantity="one">%d απάντηση</item>

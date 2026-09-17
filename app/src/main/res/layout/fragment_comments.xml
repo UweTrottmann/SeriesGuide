@@ -29,7 +29,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:padding="@dimen/large_padding"
-                    android:text="@string/no_shouts"
+                    android:text="@string/reviews_hint_empty"
                     android:textAppearance="@style/TextAppearance.SeriesGuide.EmptyState" />
 
             </ScrollView>
@@ -67,7 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="@string/comments_provided_by"
+            android:text="@string/reviews_label_provided_by"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Caption" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -78,7 +78,7 @@
             android:layout_below="@id/textViewCommentsProviderLabel"
             android:layout_marginTop="@dimen/inline_padding"
             android:layout_marginBottom="8dp"
-            android:hint="@string/shout_hint"
+            android:hint="@string/reviews_hint_write_review"
             android:nextFocusUp="@+id/listViewShouts"
             app:endIconMode="clear_text">
 

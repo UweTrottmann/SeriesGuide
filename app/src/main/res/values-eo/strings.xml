@@ -67,17 +67,17 @@
     <string name="addtocalendar">Aldoni al kalendaro</string>
     <string name="addtocalendar_failed">Ne povas krei kalendaran eventon</string>
     <!-- Comments -->
-    <string name="comments_provided_by">Comments from Trakt</string>
-    <string name="comments">Komentoj</string>
-    <string name="shout_hint">Tajpu komenton (la Angla, 5+ vortoj)</string>
-    <string name="shout_invalid">Via komento ne sekvas la regulojn!</string>
+    <string name="reviews_label_provided_by">Comments from Trakt</string>
+    <string name="reviews_title">Komentoj</string>
+    <string name="reviews_hint_write_review">Tajpu komenton (la Angla, 5+ vortoj)</string>
+    <string name="reviews_error_violates_rules">Via komento ne sekvas la regulojn!</string>
     <string name="action_post">Sendi</string>
     <string name="action_edit_comment">Edit</string>
     <string name="action_delete_comment">Forigi</string>
-    <string name="confirmation_delete_comment">Delete this comment?</string>
-    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
+    <string name="reviews_title_confirm_delete">Delete this comment?</string>
+    <string name="reviews_error_delete">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">Averto pri malkaŝo de intrigo!</string>
-    <string name="no_shouts">Estu la unuan kiu komentos!</string>
+    <string name="reviews_hint_empty">Estu la unuan kiu komentos!</string>
     <string name="refresh">Aktualigi</string>
     <plurals name="replies_plural">
         <item quantity="one">%d respondo</item>

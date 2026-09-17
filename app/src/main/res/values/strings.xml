@@ -45,6 +45,7 @@
     <string name="action_save">Save</string>
     <string name="action_turn_on">Turn on</string>
     <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
+    <string name="refresh">Refresh</string>
 
     <!-- Search -->
     <string name="clear_search_history">Clear search history</string>
@@ -74,19 +75,18 @@
     <string name="addtocalendar">Create event</string>
     <string name="addtocalendar_failed">Can not create a calendar event</string>
 
-    <!-- Comments -->
-    <string name="comments_provided_by">Comments from Trakt</string>
-    <string name="comments">Comments</string>
-    <string name="shout_hint">Type a comment (English, 5+ words)</string>
-    <string name="shout_invalid">Your comment does not follow the rules!</string>
+    <!-- Reviews -->
+    <string name="reviews_title">Reviews</string>
+    <string name="reviews_label_provided_by">Reviews from Trakt</string>
+    <string name="reviews_hint_empty">Be the first to write a review!</string>
+    <string name="reviews_hint_write_review">Write a review (English, 5+ words)</string>
+    <string name="reviews_error_violates_rules">Your review does not follow the rules!</string>
     <string name="action_post">Post</string>
     <string name="action_edit_comment">Edit</string>
     <string name="action_delete_comment">Delete</string>
-    <string name="confirmation_delete_comment">Delete this comment?</string>
-    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
+    <string name="reviews_title_confirm_delete">Delete this review?</string>
+    <string name="reviews_error_delete">Review not deleted, it is too old or has replies</string>
     <string name="isspoiler">Spoiler alert!</string>
-    <string name="no_shouts">Be the first to comment!</string>
-    <string name="refresh">Refresh</string>
     <plurals name="replies_plural">
         <item quantity="one">%d reply</item>
         <item quantity="other">%d replies</item>
@@ -339,7 +339,7 @@
     <string name="feature_not_supported">Not supported</string>
     <string name="feature_disabled">Disabled</string>
     <string name="feature_history">Personal and friend history</string>
-    <string name="feature_comments">Post comments</string>
+    <string name="feature_comments">Write reviews</string>
     <string name="feature_sync">Sync</string>
 
     <!-- Hexagon -->

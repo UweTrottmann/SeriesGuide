@@ -103,10 +103,10 @@ class TraktComments(
             } else {
                 // https://trakt.docs.apiary.io/#reference/comments
                 if (response.code() == 422) {
-                    errorMessageOrNull = context.getString(R.string.shout_invalid)
+                    errorMessageOrNull = context.getString(R.string.reviews_error_violates_rules)
                 } else if (response.code() == 409) {
                     // Only when deleting is not allowed (too old or has replies)
-                    errorMessageOrNull = context.getString(R.string.error_delete_comment)
+                    errorMessageOrNull = context.getString(R.string.reviews_error_delete)
                 } else if (response.code() == 404) {
                     errorMessageOrNull = context.getString(R.string.trakt_error_not_exists)
                 } else if (TraktV2.isUnauthorized(response)) {

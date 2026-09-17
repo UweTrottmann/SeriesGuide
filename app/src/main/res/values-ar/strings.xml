@@ -67,17 +67,17 @@
     <string name="addtocalendar">إضافة إلى التقويم</string>
     <string name="addtocalendar_failed">.لا يمكن إنشاء حدث تقويم</string>
     <!-- Comments -->
-    <string name="comments_provided_by">Comments from Trakt</string>
-    <string name="comments">التعليقات</string>
-    <string name="shout_hint">اكتب تعليق (الإنجليزية، 5 كلمات أو أكثر)</string>
-    <string name="shout_invalid">إن تعليقك مخالف للقواعد!</string>
+    <string name="reviews_label_provided_by">Comments from Trakt</string>
+    <string name="reviews_title">التعليقات</string>
+    <string name="reviews_hint_write_review">اكتب تعليق (الإنجليزية، 5 كلمات أو أكثر)</string>
+    <string name="reviews_error_violates_rules">إن تعليقك مخالف للقواعد!</string>
     <string name="action_post">انشر</string>
     <string name="action_edit_comment">Edit</string>
     <string name="action_delete_comment">إزالة</string>
-    <string name="confirmation_delete_comment">Delete this comment?</string>
-    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
+    <string name="reviews_title_confirm_delete">Delete this comment?</string>
+    <string name="reviews_error_delete">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">تنبيه حرق!</string>
-    <string name="no_shouts">كن أول من يعلّق!</string>
+    <string name="reviews_hint_empty">كن أول من يعلّق!</string>
     <string name="refresh">تحديث</string>
     <plurals name="replies_plural">
         <item quantity="zero">رد %d</item>

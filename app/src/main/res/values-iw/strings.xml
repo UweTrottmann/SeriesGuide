@@ -67,17 +67,17 @@
     <string name="addtocalendar">צור אירוע בלוח השנה</string>
     <string name="addtocalendar_failed">אין אפשרות ליצור אירוע בלוח השנה</string>
     <!-- Comments -->
-    <string name="comments_provided_by">Comments from Trakt</string>
-    <string name="comments">תגובות</string>
-    <string name="shout_hint">הקלד תגובה (באנגלית, 5+ מילות)</string>
-    <string name="shout_invalid">התגובה שלך לא עומדת בתקנון!</string>
+    <string name="reviews_label_provided_by">Comments from Trakt</string>
+    <string name="reviews_title">תגובות</string>
+    <string name="reviews_hint_write_review">הקלד תגובה (באנגלית, 5+ מילות)</string>
+    <string name="reviews_error_violates_rules">התגובה שלך לא עומדת בתקנון!</string>
     <string name="action_post">פרסם</string>
     <string name="action_edit_comment">עריכה</string>
     <string name="action_delete_comment">מחיקה</string>
-    <string name="confirmation_delete_comment">למחוק תגובה זו?</string>
-    <string name="error_delete_comment">התגובה לא נמחקה, היא ישנה מדי או שיש לה תגובות</string>
+    <string name="reviews_title_confirm_delete">למחוק תגובה זו?</string>
+    <string name="reviews_error_delete">התגובה לא נמחקה, היא ישנה מדי או שיש לה תגובות</string>
     <string name="isspoiler">אזהרת ספוילר!</string>
-    <string name="no_shouts">תהיה הראשון להגיב!</string>
+    <string name="reviews_hint_empty">תהיה הראשון להגיב!</string>
     <string name="refresh">רענן</string>
     <plurals name="replies_plural">
         <item quantity="one">תגובה אחת</item>

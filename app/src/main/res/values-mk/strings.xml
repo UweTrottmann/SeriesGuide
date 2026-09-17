@@ -67,17 +67,17 @@
     <string name="addtocalendar">Додај во календар</string>
     <string name="addtocalendar_failed">Не може да се креира настан во календарот.</string>
     <!-- Comments -->
-    <string name="comments_provided_by">Comments from Trakt</string>
-    <string name="comments">Коментари</string>
-    <string name="shout_hint">Напиши коментар (Англиски, 5+ зборови)</string>
-    <string name="shout_invalid">Вашиот коментар не е по правилата!</string>
+    <string name="reviews_label_provided_by">Comments from Trakt</string>
+    <string name="reviews_title">Коментари</string>
+    <string name="reviews_hint_write_review">Напиши коментар (Англиски, 5+ зборови)</string>
+    <string name="reviews_error_violates_rules">Вашиот коментар не е по правилата!</string>
     <string name="action_post">Објава</string>
     <string name="action_edit_comment">Edit</string>
     <string name="action_delete_comment">Избриши</string>
-    <string name="confirmation_delete_comment">Delete this comment?</string>
-    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
+    <string name="reviews_title_confirm_delete">Delete this comment?</string>
+    <string name="reviews_error_delete">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">Предупредување спојлер!</string>
-    <string name="no_shouts">Биди прв кој ќе коментира!</string>
+    <string name="reviews_hint_empty">Биди прв кој ќе коментира!</string>
     <string name="refresh">Освежи</string>
     <plurals name="replies_plural">
         <item quantity="one">%d oдгoвoри</item>

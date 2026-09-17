@@ -67,17 +67,17 @@
     <string name="addtocalendar">Додај у календар</string>
     <string name="addtocalendar_failed">Креирање овог догађаја у календару није успело.</string>
     <!-- Comments -->
-    <string name="comments_provided_by">Коментари са Trakt-а</string>
-    <string name="comments">Коментари</string>
-    <string name="shout_hint">Упишите коментар (на енглеском са више од 5 речи)</string>
-    <string name="shout_invalid">Ваш коментар није по правилима!</string>
+    <string name="reviews_label_provided_by">Коментари са Trakt-а</string>
+    <string name="reviews_title">Коментари</string>
+    <string name="reviews_hint_write_review">Упишите коментар (на енглеском са више од 5 речи)</string>
+    <string name="reviews_error_violates_rules">Ваш коментар није по правилима!</string>
     <string name="action_post">Објава</string>
     <string name="action_edit_comment">Уреди</string>
     <string name="action_delete_comment">Обриши</string>
-    <string name="confirmation_delete_comment">Обриши овај коментар?</string>
-    <string name="error_delete_comment">Коментар није избрисан, престар је или има одговоре</string>
+    <string name="reviews_title_confirm_delete">Обриши овај коментар?</string>
+    <string name="reviews_error_delete">Коментар није избрисан, престар је или има одговоре</string>
     <string name="isspoiler">Пажња, Спојлер!</string>
-    <string name="no_shouts">Буди први који ће коментарисати!</string>
+    <string name="reviews_hint_empty">Буди први који ће коментарисати!</string>
     <string name="refresh">Освежи</string>
     <plurals name="replies_plural">
         <item quantity="one">%d одговор</item>

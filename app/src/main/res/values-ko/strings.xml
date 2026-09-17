@@ -67,17 +67,17 @@
     <string name="addtocalendar">캘린더에 추가</string>
     <string name="addtocalendar_failed">캘린더 이벤트를 만들 수 없습니다.</string>
     <!-- Comments -->
-    <string name="comments_provided_by">Comments from Trakt</string>
-    <string name="comments">댓글</string>
-    <string name="shout_hint">코멘트를 입력 (영어, 5글자 이상)</string>
-    <string name="shout_invalid">규칙에 어긋납니다!</string>
+    <string name="reviews_label_provided_by">Comments from Trakt</string>
+    <string name="reviews_title">댓글</string>
+    <string name="reviews_hint_write_review">코멘트를 입력 (영어, 5글자 이상)</string>
+    <string name="reviews_error_violates_rules">규칙에 어긋납니다!</string>
     <string name="action_post">게시</string>
     <string name="action_edit_comment">편집</string>
     <string name="action_delete_comment">삭제</string>
-    <string name="confirmation_delete_comment">댓글 삭제</string>
-    <string name="error_delete_comment">댓글을 삭제할 수 없습니다. 너무 오래되었거나 답글이 달려 있습니다.</string>
+    <string name="reviews_title_confirm_delete">댓글 삭제</string>
+    <string name="reviews_error_delete">댓글을 삭제할 수 없습니다. 너무 오래되었거나 답글이 달려 있습니다.</string>
     <string name="isspoiler">스포일러 경고!</string>
-    <string name="no_shouts">첫 댓글의 주인공이 되세요!</string>
+    <string name="reviews_hint_empty">첫 댓글의 주인공이 되세요!</string>
     <string name="refresh">새로 고침</string>
     <plurals name="replies_plural">
         <item quantity="other">답글 %d개</item>

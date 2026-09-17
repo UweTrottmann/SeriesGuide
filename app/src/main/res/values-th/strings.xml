@@ -67,17 +67,17 @@
     <string name="addtocalendar">เพิ่มในปฏิทิน</string>
     <string name="addtocalendar_failed">ไม่สามารถสร้างกิจกรรมบนปฏิทิน</string>
     <!-- Comments -->
-    <string name="comments_provided_by">Comments from Trakt</string>
-    <string name="comments">ความคิดเห็น</string>
-    <string name="shout_hint">พิมพ์ความคิดเห็น (ภาษาอังกฤษ, 5+ คำ)</string>
-    <string name="shout_invalid">ความคิดเห็นของคุณไม่ได้ทำตามกฏ!</string>
+    <string name="reviews_label_provided_by">Comments from Trakt</string>
+    <string name="reviews_title">ความคิดเห็น</string>
+    <string name="reviews_hint_write_review">พิมพ์ความคิดเห็น (ภาษาอังกฤษ, 5+ คำ)</string>
+    <string name="reviews_error_violates_rules">ความคิดเห็นของคุณไม่ได้ทำตามกฏ!</string>
     <string name="action_post">โพสต์</string>
     <string name="action_edit_comment">Edit</string>
     <string name="action_delete_comment">ลบ</string>
-    <string name="confirmation_delete_comment">Delete this comment?</string>
-    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
+    <string name="reviews_title_confirm_delete">Delete this comment?</string>
+    <string name="reviews_error_delete">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">ระวังสปอยล์!</string>
-    <string name="no_shouts">แสดงความคิดเห็นเป็นคนแรก!</string>
+    <string name="reviews_hint_empty">แสดงความคิดเห็นเป็นคนแรก!</string>
     <string name="refresh">โหลดใหม่</string>
     <plurals name="replies_plural">
         <item quantity="other">%d ตอบกลับ</item>

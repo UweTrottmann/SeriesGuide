@@ -67,17 +67,17 @@
     <string name="addtocalendar">Engadir ao calendario</string>
     <string name="addtocalendar_failed">Non é posíbel crear un evento de calendario</string>
     <!-- Comments -->
-    <string name="comments_provided_by">Comments from Trakt</string>
-    <string name="comments">Comentarios</string>
-    <string name="shout_hint">Comenta (Inglés, 5+ palabras)</string>
-    <string name="shout_invalid">O teu comentario non segue as regras!</string>
+    <string name="reviews_label_provided_by">Comments from Trakt</string>
+    <string name="reviews_title">Comentarios</string>
+    <string name="reviews_hint_write_review">Comenta (Inglés, 5+ palabras)</string>
+    <string name="reviews_error_violates_rules">O teu comentario non segue as regras!</string>
     <string name="action_post">Publicar</string>
     <string name="action_edit_comment">Edit</string>
     <string name="action_delete_comment">Eliminar</string>
-    <string name="confirmation_delete_comment">Delete this comment?</string>
-    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
+    <string name="reviews_title_confirm_delete">Delete this comment?</string>
+    <string name="reviews_error_delete">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">Alerta de spoiler!</string>
-    <string name="no_shouts">Sé o primeiro en comentar!</string>
+    <string name="reviews_hint_empty">Sé o primeiro en comentar!</string>
     <string name="refresh">Atualizar</string>
     <plurals name="replies_plural">
         <item quantity="one">%d resposta</item>

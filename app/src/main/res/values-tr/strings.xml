@@ -67,17 +67,17 @@
     <string name="addtocalendar">Takvime ekle</string>
     <string name="addtocalendar_failed">Takvim etkinliği oluşturulamıyor.</string>
     <!-- Comments -->
-    <string name="comments_provided_by">Comments from Trakt</string>
-    <string name="comments">Yorumlar</string>
-    <string name="shout_hint">Bir yorum yaz (Ingilizce, 5+ kelime)</string>
-    <string name="shout_invalid">Yorumun kurallara uygun değil!</string>
+    <string name="reviews_label_provided_by">Comments from Trakt</string>
+    <string name="reviews_title">Yorumlar</string>
+    <string name="reviews_hint_write_review">Bir yorum yaz (Ingilizce, 5+ kelime)</string>
+    <string name="reviews_error_violates_rules">Yorumun kurallara uygun değil!</string>
     <string name="action_post">Gönder</string>
     <string name="action_edit_comment">Düzenle</string>
     <string name="action_delete_comment">Sil</string>
-    <string name="confirmation_delete_comment">Bu yorumu sil?</string>
-    <string name="error_delete_comment">Yorum silinmedi, çok eski veya yanıtları var</string>
+    <string name="reviews_title_confirm_delete">Bu yorumu sil?</string>
+    <string name="reviews_error_delete">Yorum silinmedi, çok eski veya yanıtları var</string>
     <string name="isspoiler">Spoiler Uyarısı!</string>
-    <string name="no_shouts">İlk yorumu sen yap!</string>
+    <string name="reviews_hint_empty">İlk yorumu sen yap!</string>
     <string name="refresh">Yenile</string>
     <plurals name="replies_plural">
         <item quantity="one">%d yorum</item>

@@ -67,17 +67,17 @@
     <string name="addtocalendar">Hozzáadás naptárhoz</string>
     <string name="addtocalendar_failed">Nem sikerült az esemény létrehozása.</string>
     <!-- Comments -->
-    <string name="comments_provided_by">Comments from Trakt</string>
-    <string name="comments">Hozzászólások</string>
-    <string name="shout_hint">Írj megjegyzést (angolul, 5+ szóval)</string>
-    <string name="shout_invalid">A megjegyzésed nem szabályszerű!</string>
+    <string name="reviews_label_provided_by">Comments from Trakt</string>
+    <string name="reviews_title">Hozzászólások</string>
+    <string name="reviews_hint_write_review">Írj megjegyzést (angolul, 5+ szóval)</string>
+    <string name="reviews_error_violates_rules">A megjegyzésed nem szabályszerű!</string>
     <string name="action_post">Hozzászólás</string>
     <string name="action_edit_comment">Edit</string>
     <string name="action_delete_comment">Törlés</string>
-    <string name="confirmation_delete_comment">Delete this comment?</string>
-    <string name="error_delete_comment">Comment not deleted, it is too old or has replies</string>
+    <string name="reviews_title_confirm_delete">Delete this comment?</string>
+    <string name="reviews_error_delete">Comment not deleted, it is too old or has replies</string>
     <string name="isspoiler">Spoiler veszély!</string>
-    <string name="no_shouts">Szólj hozzá elsőként!</string>
+    <string name="reviews_hint_empty">Szólj hozzá elsőként!</string>
     <string name="refresh">Frissítés</string>
     <plurals name="replies_plural">
         <item quantity="one">%d válasz</item>

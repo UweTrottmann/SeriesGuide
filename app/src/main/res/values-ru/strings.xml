@@ -67,17 +67,17 @@
     <string name="addtocalendar">Добавить в календарь</string>
     <string name="addtocalendar_failed">Не удалось создать событие календаря.</string>
     <!-- Comments -->
-    <string name="comments_provided_by">Комментарии из Trakt</string>
-    <string name="comments">Комментарии</string>
-    <string name="shout_hint">Введите комментарий (На английском, более 5 слов)</string>
-    <string name="shout_invalid">Ваш комментарий не соответствует правилам! </string>
+    <string name="reviews_label_provided_by">Комментарии из Trakt</string>
+    <string name="reviews_title">Комментарии</string>
+    <string name="reviews_hint_write_review">Введите комментарий (На английском, более 5 слов)</string>
+    <string name="reviews_error_violates_rules">Ваш комментарий не соответствует правилам! </string>
     <string name="action_post">Опубликовать</string>
     <string name="action_edit_comment">Редактировать</string>
     <string name="action_delete_comment">Удалить</string>
-    <string name="confirmation_delete_comment">Удалить этот комментарий?</string>
-    <string name="error_delete_comment">Комментарий не удалён, он слишком старый или имеет ответы</string>
+    <string name="reviews_title_confirm_delete">Удалить этот комментарий?</string>
+    <string name="reviews_error_delete">Комментарий не удалён, он слишком старый или имеет ответы</string>
     <string name="isspoiler">Спойлеры</string>
-    <string name="no_shouts">Оставьте отзыв первым!</string>
+    <string name="reviews_hint_empty">Оставьте отзыв первым!</string>
     <string name="refresh">Обновить</string>
     <plurals name="replies_plural">
         <item quantity="one">%d ответ</item>

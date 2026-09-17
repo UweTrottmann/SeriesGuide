@@ -67,17 +67,17 @@
     <string name="addtocalendar">Lisää kalenteriin</string>
     <string name="addtocalendar_failed">Kalenteritapahtumaa ei voi luoda</string>
     <!-- Comments -->
-    <string name="comments_provided_by">Traktin kommentit</string>
-    <string name="comments">Kommentit</string>
-    <string name="shout_hint">Kirjoita kommentti (englanniksi, 5+ sanaa)</string>
-    <string name="shout_invalid">Kommenttisi ei noudata sääntöjä!</string>
+    <string name="reviews_label_provided_by">Traktin kommentit</string>
+    <string name="reviews_title">Kommentit</string>
+    <string name="reviews_hint_write_review">Kirjoita kommentti (englanniksi, 5+ sanaa)</string>
+    <string name="reviews_error_violates_rules">Kommenttisi ei noudata sääntöjä!</string>
     <string name="action_post">Lähetä</string>
     <string name="action_edit_comment">Muokkaa</string>
     <string name="action_delete_comment">Poista</string>
-    <string name="confirmation_delete_comment">Poistetaanko tämä kommentti?</string>
-    <string name="error_delete_comment">Kommenttia ei poistettu, se on liian vanha tai sillä on vastauksia</string>
+    <string name="reviews_title_confirm_delete">Poistetaanko tämä kommentti?</string>
+    <string name="reviews_error_delete">Kommenttia ei poistettu, se on liian vanha tai sillä on vastauksia</string>
     <string name="isspoiler">Juonipaljastus!</string>
-    <string name="no_shouts">Ole ensimmäinen kommentoija!</string>
+    <string name="reviews_hint_empty">Ole ensimmäinen kommentoija!</string>
     <string name="refresh">Päivitä</string>
     <plurals name="replies_plural">
         <item quantity="one">%d vastaus</item>
