@@ -41,6 +41,7 @@
     <string name="action_save">저장</string>
     <string name="action_turn_on">꺼짐</string>
     <string name="action_check" comment="Action when an error is displayed the user should check upon.">확인</string>
+    <string name="refresh">새로 고침</string>
     <!-- Search -->
     <string name="clear_search_history">검색 기록 삭제</string>
     <string name="search_hint">에피소드 검색</string>
@@ -66,19 +67,18 @@
     <string name="share_movie">영화 공유하기</string>
     <string name="addtocalendar">캘린더에 추가</string>
     <string name="addtocalendar_failed">캘린더 이벤트를 만들 수 없습니다.</string>
-    <!-- Comments -->
-    <string name="reviews_label_provided_by">Comments from Trakt</string>
-    <string name="reviews_title">댓글</string>
-    <string name="reviews_hint_write_review">코멘트를 입력 (영어, 5글자 이상)</string>
-    <string name="reviews_error_violates_rules">규칙에 어긋납니다!</string>
+    <!-- Reviews -->
+    <string name="reviews_title">Reviews</string>
+    <string name="reviews_label_provided_by">Reviews from Trakt</string>
+    <string name="reviews_hint_empty">Be the first to write a review!</string>
+    <string name="reviews_hint_write_review">Write a review (English, 5+ words)</string>
+    <string name="reviews_error_violates_rules">Your review does not follow the rules!</string>
     <string name="action_post">게시</string>
     <string name="action_edit_comment">편집</string>
     <string name="action_delete_comment">삭제</string>
-    <string name="reviews_title_confirm_delete">댓글 삭제</string>
-    <string name="reviews_error_delete">댓글을 삭제할 수 없습니다. 너무 오래되었거나 답글이 달려 있습니다.</string>
+    <string name="reviews_title_confirm_delete">Delete this review?</string>
+    <string name="reviews_error_delete">Review not deleted, it is too old or has replies</string>
     <string name="isspoiler">스포일러 경고!</string>
-    <string name="reviews_hint_empty">첫 댓글의 주인공이 되세요!</string>
-    <string name="refresh">새로 고침</string>
     <plurals name="replies_plural">
         <item quantity="other">답글 %d개</item>
     </plurals>
@@ -305,7 +305,7 @@
     <string name="feature_not_supported">지원하지 않는 기능</string>
     <string name="feature_disabled">비활성화</string>
     <string name="feature_history">본인 및 친구의 시청 기록</string>
-    <string name="feature_comments">댓글 작성</string>
+    <string name="feature_comments">Write reviews</string>
     <string name="feature_sync">동기화</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud를 사용하면 TV 프로그램, 목록, 영화를 백업하고 동기화할 수 있습니다.</string>

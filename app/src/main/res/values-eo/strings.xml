@@ -41,6 +41,7 @@
     <string name="action_save">Save</string>
     <string name="action_turn_on">Turn on</string>
     <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
+    <string name="refresh">Aktualigi</string>
     <!-- Search -->
     <string name="clear_search_history">Viŝi serĉhistorion</string>
     <string name="search_hint">Serĉi epizodojn</string>
@@ -66,19 +67,18 @@
     <string name="share_movie">Konigi filmon</string>
     <string name="addtocalendar">Aldoni al kalendaro</string>
     <string name="addtocalendar_failed">Ne povas krei kalendaran eventon</string>
-    <!-- Comments -->
-    <string name="reviews_label_provided_by">Comments from Trakt</string>
-    <string name="reviews_title">Komentoj</string>
-    <string name="reviews_hint_write_review">Tajpu komenton (la Angla, 5+ vortoj)</string>
-    <string name="reviews_error_violates_rules">Via komento ne sekvas la regulojn!</string>
+    <!-- Reviews -->
+    <string name="reviews_title">Reviews</string>
+    <string name="reviews_label_provided_by">Reviews from Trakt</string>
+    <string name="reviews_hint_empty">Be the first to write a review!</string>
+    <string name="reviews_hint_write_review">Write a review (English, 5+ words)</string>
+    <string name="reviews_error_violates_rules">Your review does not follow the rules!</string>
     <string name="action_post">Sendi</string>
     <string name="action_edit_comment">Edit</string>
     <string name="action_delete_comment">Forigi</string>
-    <string name="reviews_title_confirm_delete">Delete this comment?</string>
-    <string name="reviews_error_delete">Comment not deleted, it is too old or has replies</string>
+    <string name="reviews_title_confirm_delete">Delete this review?</string>
+    <string name="reviews_error_delete">Review not deleted, it is too old or has replies</string>
     <string name="isspoiler">Averto pri malkaŝo de intrigo!</string>
-    <string name="reviews_hint_empty">Estu la unuan kiu komentos!</string>
-    <string name="refresh">Aktualigi</string>
     <plurals name="replies_plural">
         <item quantity="one">%d respondo</item>
         <item quantity="other">%d respondoj</item>
@@ -315,7 +315,7 @@
     <string name="feature_not_supported">Nesubtenata</string>
     <string name="feature_disabled">Disabled</string>
     <string name="feature_history">Historio de mi kaj miaj amikoj</string>
-    <string name="feature_comments">Sendi komentoj</string>
+    <string name="feature_comments">Write reviews</string>
     <string name="feature_sync">Sinkronigi</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud helps to back up and sync your shows, lists and movies</string>

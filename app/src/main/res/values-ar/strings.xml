@@ -41,6 +41,7 @@
     <string name="action_save">Save</string>
     <string name="action_turn_on">Turn on</string>
     <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
+    <string name="refresh">تحديث</string>
     <!-- Search -->
     <string name="clear_search_history">إزالة تاريخ البحث</string>
     <string name="search_hint">البحث عن الحلقات</string>
@@ -66,19 +67,18 @@
     <string name="share_movie">مشاركة فيلم</string>
     <string name="addtocalendar">إضافة إلى التقويم</string>
     <string name="addtocalendar_failed">.لا يمكن إنشاء حدث تقويم</string>
-    <!-- Comments -->
-    <string name="reviews_label_provided_by">Comments from Trakt</string>
-    <string name="reviews_title">التعليقات</string>
-    <string name="reviews_hint_write_review">اكتب تعليق (الإنجليزية، 5 كلمات أو أكثر)</string>
-    <string name="reviews_error_violates_rules">إن تعليقك مخالف للقواعد!</string>
+    <!-- Reviews -->
+    <string name="reviews_title">Reviews</string>
+    <string name="reviews_label_provided_by">Reviews from Trakt</string>
+    <string name="reviews_hint_empty">Be the first to write a review!</string>
+    <string name="reviews_hint_write_review">Write a review (English, 5+ words)</string>
+    <string name="reviews_error_violates_rules">Your review does not follow the rules!</string>
     <string name="action_post">انشر</string>
     <string name="action_edit_comment">Edit</string>
     <string name="action_delete_comment">إزالة</string>
-    <string name="reviews_title_confirm_delete">Delete this comment?</string>
-    <string name="reviews_error_delete">Comment not deleted, it is too old or has replies</string>
+    <string name="reviews_title_confirm_delete">Delete this review?</string>
+    <string name="reviews_error_delete">Review not deleted, it is too old or has replies</string>
     <string name="isspoiler">تنبيه حرق!</string>
-    <string name="reviews_hint_empty">كن أول من يعلّق!</string>
-    <string name="refresh">تحديث</string>
     <plurals name="replies_plural">
         <item quantity="zero">رد %d</item>
         <item quantity="one">رد %d</item>
@@ -355,7 +355,7 @@
     <string name="feature_not_supported">غير مدعوم</string>
     <string name="feature_disabled">معطَّل</string>
     <string name="feature_history">التاريخ الشخصى و تاريخ الأصدقاء</string>
-    <string name="feature_comments">أضف تعليق</string>
+    <string name="feature_comments">Write reviews</string>
     <string name="feature_sync">نقل بيانات</string>
     <!-- Hexagon -->
     <string name="hexagon_description">يساعد سيرايس جايد كلاود على حفظ مسلسلاتك و افلامك على حسابك الخاص اونلاين.</string>

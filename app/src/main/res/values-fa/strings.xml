@@ -41,6 +41,7 @@
     <string name="action_save">ذخیره</string>
     <string name="action_turn_on">روشن کردن</string>
     <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
+    <string name="refresh">تازه سازی</string>
     <!-- Search -->
     <string name="clear_search_history">پاک‌سازی تاریخچهٔ جست‌وجو</string>
     <string name="search_hint">جست‌وجوی قسمت‌ها</string>
@@ -66,19 +67,18 @@
     <string name="share_movie">هم‌رسانی فیلم</string>
     <string name="addtocalendar">افزودن به تقویم</string>
     <string name="addtocalendar_failed">ناتوانی در ایجاد یک رویداد تقویم.</string>
-    <!-- Comments -->
-    <string name="reviews_label_provided_by">Comments from Trakt</string>
-    <string name="reviews_title">نظرها</string>
-    <string name="reviews_hint_write_review">نظری بنویسید (انگلیسی، بالای ۵ واژه)</string>
-    <string name="reviews_error_violates_rules">نظرتان تابع قوانین نیست!</string>
+    <!-- Reviews -->
+    <string name="reviews_title">Reviews</string>
+    <string name="reviews_label_provided_by">Reviews from Trakt</string>
+    <string name="reviews_hint_empty">Be the first to write a review!</string>
+    <string name="reviews_hint_write_review">Write a review (English, 5+ words)</string>
+    <string name="reviews_error_violates_rules">Your review does not follow the rules!</string>
     <string name="action_post">ارسال</string>
     <string name="action_edit_comment">ویرایش</string>
     <string name="action_delete_comment">حذف</string>
-    <string name="reviews_title_confirm_delete">حذف این دیدگاه؟</string>
-    <string name="reviews_error_delete">دیدگاه حذف نشد. خیلی قدیمی بوده یا پاسخ‌دارد</string>
+    <string name="reviews_title_confirm_delete">Delete this review?</string>
+    <string name="reviews_error_delete">Review not deleted, it is too old or has replies</string>
     <string name="isspoiler">هشدار لو رفتن!</string>
-    <string name="reviews_hint_empty">نخستین کسی باشید که نظر می‌دهد!</string>
-    <string name="refresh">تازه سازی</string>
     <plurals name="replies_plural">
         <item quantity="one">%Id پاسخ</item>
         <item quantity="other">%Id پاسخ</item>
@@ -315,7 +315,7 @@
     <string name="feature_not_supported">پشتیبانی نمی‎شود</string>
     <string name="feature_disabled">از کار افتاده</string>
     <string name="feature_history">تاریخچه‌ی شخصی و دوستان</string>
-    <string name="feature_comments">ارسال نظرات</string>
+    <string name="feature_comments">Write reviews</string>
     <string name="feature_sync">همگام‌‌سازی</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud به همگام‌سازی و پشتیبان‌گیری برنامه‌ها، لیست‌ها و فیلم‌های شما کمک می‌کند</string>

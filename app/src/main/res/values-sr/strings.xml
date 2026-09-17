@@ -41,6 +41,7 @@
     <string name="action_save">Сачувај</string>
     <string name="action_turn_on">Укључи</string>
     <string name="action_check" comment="Action when an error is displayed the user should check upon.">Провери</string>
+    <string name="refresh">Освежи</string>
     <!-- Search -->
     <string name="clear_search_history">Обриши историју претраге</string>
     <string name="search_hint">Тражи епизоде</string>
@@ -66,19 +67,18 @@
     <string name="share_movie">Подели филм</string>
     <string name="addtocalendar">Додај у календар</string>
     <string name="addtocalendar_failed">Креирање овог догађаја у календару није успело.</string>
-    <!-- Comments -->
-    <string name="reviews_label_provided_by">Коментари са Trakt-а</string>
-    <string name="reviews_title">Коментари</string>
-    <string name="reviews_hint_write_review">Упишите коментар (на енглеском са више од 5 речи)</string>
-    <string name="reviews_error_violates_rules">Ваш коментар није по правилима!</string>
+    <!-- Reviews -->
+    <string name="reviews_title">Reviews</string>
+    <string name="reviews_label_provided_by">Reviews from Trakt</string>
+    <string name="reviews_hint_empty">Be the first to write a review!</string>
+    <string name="reviews_hint_write_review">Write a review (English, 5+ words)</string>
+    <string name="reviews_error_violates_rules">Your review does not follow the rules!</string>
     <string name="action_post">Објава</string>
     <string name="action_edit_comment">Уреди</string>
     <string name="action_delete_comment">Обриши</string>
-    <string name="reviews_title_confirm_delete">Обриши овај коментар?</string>
-    <string name="reviews_error_delete">Коментар није избрисан, престар је или има одговоре</string>
+    <string name="reviews_title_confirm_delete">Delete this review?</string>
+    <string name="reviews_error_delete">Review not deleted, it is too old or has replies</string>
     <string name="isspoiler">Пажња, Спојлер!</string>
-    <string name="reviews_hint_empty">Буди први који ће коментарисати!</string>
-    <string name="refresh">Освежи</string>
     <plurals name="replies_plural">
         <item quantity="one">%d одговор</item>
         <item quantity="few">%d одговора</item>
@@ -325,7 +325,7 @@
     <string name="feature_not_supported">Није подржано</string>
     <string name="feature_disabled">Онемогућено</string>
     <string name="feature_history">Лична и историја пријатеља</string>
-    <string name="feature_comments">Постујте коментаре</string>
+    <string name="feature_comments">Write reviews</string>
     <string name="feature_sync">Синхронизација</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriusGuide Cloud вам помаже да направите резервну копију и синхронизујете ваше емисије, листе и филмове</string>

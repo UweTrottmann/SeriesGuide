@@ -41,6 +41,7 @@
     <string name="action_save">Save</string>
     <string name="action_turn_on">Turn on</string>
     <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
+    <string name="refresh">புதுப்பி</string>
     <!-- Search -->
     <string name="clear_search_history">தேடல் வரலாற்றை நீக்கு</string>
     <string name="search_hint">தேடல் episodes</string>
@@ -66,19 +67,18 @@
     <string name="share_movie">பங்கு திரைப்படம்</string>
     <string name="addtocalendar">நாட்காட்டியில் சேர்</string>
     <string name="addtocalendar_failed">ஒரு காலண்டர் நிகழ்வு உருவாக்க முடியும்.</string>
-    <!-- Comments -->
-    <string name="reviews_label_provided_by">Comments from Trakt</string>
-    <string name="reviews_title">கருத்துகள்</string>
-    <string name="reviews_hint_write_review">ஒரு கருத்து (ஆங்கிலம், 5 + சொற்கள்) தட்டச்சு செய்யவும்</string>
-    <string name="reviews_error_violates_rules">உங்கள் கருத்துரை விதிகளை பின்பற்றவில்லை!</string>
+    <!-- Reviews -->
+    <string name="reviews_title">Reviews</string>
+    <string name="reviews_label_provided_by">Reviews from Trakt</string>
+    <string name="reviews_hint_empty">Be the first to write a review!</string>
+    <string name="reviews_hint_write_review">Write a review (English, 5+ words)</string>
+    <string name="reviews_error_violates_rules">Your review does not follow the rules!</string>
     <string name="action_post">பதிவு</string>
     <string name="action_edit_comment">Edit</string>
     <string name="action_delete_comment">நீக்கு</string>
-    <string name="reviews_title_confirm_delete">Delete this comment?</string>
-    <string name="reviews_error_delete">Comment not deleted, it is too old or has replies</string>
+    <string name="reviews_title_confirm_delete">Delete this review?</string>
+    <string name="reviews_error_delete">Review not deleted, it is too old or has replies</string>
     <string name="isspoiler">Spoiler எச்சரிக்கை!</string>
-    <string name="reviews_hint_empty">கருத்து முதல் இருக்க!</string>
-    <string name="refresh">புதுப்பி</string>
     <plurals name="replies_plural">
         <item quantity="one">%d பதில்</item>
         <item quantity="other">%d பதில்கள்</item>
@@ -315,7 +315,7 @@
     <string name="feature_not_supported">Not supported</string>
     <string name="feature_disabled">Disabled</string>
     <string name="feature_history">Personal and friend history</string>
-    <string name="feature_comments">Post comments</string>
+    <string name="feature_comments">Write reviews</string>
     <string name="feature_sync">Sync</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud helps to back up and sync your shows, lists and movies</string>

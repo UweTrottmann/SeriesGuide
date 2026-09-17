@@ -41,6 +41,7 @@
     <string name="action_save">Uložiť</string>
     <string name="action_turn_on">Zapnúť</string>
     <string name="action_check" comment="Action when an error is displayed the user should check upon.">Skontrolovať</string>
+    <string name="refresh">Obnoviť</string>
     <!-- Search -->
     <string name="clear_search_history">Vymazať históriu vyhľadávania</string>
     <string name="search_hint">Hľadať epizódy</string>
@@ -66,19 +67,18 @@
     <string name="share_movie">Zdieľať film</string>
     <string name="addtocalendar">Pridať do kalendára</string>
     <string name="addtocalendar_failed">V kalendári nie je možné vytvoriť udalosť.</string>
-    <!-- Comments -->
-    <string name="reviews_label_provided_by">Comments from Trakt</string>
-    <string name="reviews_title">Komentáre</string>
-    <string name="reviews_hint_write_review">Napíšte komentár (po anglicky, aspoň 5 slov)</string>
-    <string name="reviews_error_violates_rules">Váš komentár nezodpovedá pravidlám!</string>
+    <!-- Reviews -->
+    <string name="reviews_title">Reviews</string>
+    <string name="reviews_label_provided_by">Reviews from Trakt</string>
+    <string name="reviews_hint_empty">Be the first to write a review!</string>
+    <string name="reviews_hint_write_review">Write a review (English, 5+ words)</string>
+    <string name="reviews_error_violates_rules">Your review does not follow the rules!</string>
     <string name="action_post">Odoslať</string>
     <string name="action_edit_comment">Upraviť</string>
     <string name="action_delete_comment">Vymazať</string>
-    <string name="reviews_title_confirm_delete">Vymazať tento komentár?</string>
-    <string name="reviews_error_delete">Komentár nebol odstránený, je príliš starý alebo obsahuje odpovede</string>
+    <string name="reviews_title_confirm_delete">Delete this review?</string>
+    <string name="reviews_error_delete">Review not deleted, it is too old or has replies</string>
     <string name="isspoiler">Prezradenie deja!</string>
-    <string name="reviews_hint_empty">Pridajte prvý komentár!</string>
-    <string name="refresh">Obnoviť</string>
     <plurals name="replies_plural">
         <item quantity="one">%d odpoveď</item>
         <item quantity="few">%d odpovede</item>
@@ -335,7 +335,7 @@
     <string name="feature_not_supported">Nepodporované</string>
     <string name="feature_disabled">Vypnuté</string>
     <string name="feature_history">Osobná história a história vašich priateľov</string>
-    <string name="feature_comments">Odosielať komentáre</string>
+    <string name="feature_comments">Write reviews</string>
     <string name="feature_sync">Synchronizácia</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud pomáha zálohovať a synchronizovať vaše seriály, zoznamy a filmy.</string>

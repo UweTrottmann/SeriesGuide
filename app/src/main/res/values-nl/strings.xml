@@ -41,6 +41,7 @@
     <string name="action_save">Opslaan</string>
     <string name="action_turn_on">Inschakelen</string>
     <string name="action_check" comment="Action when an error is displayed the user should check upon.">Controleren</string>
+    <string name="refresh">Vernieuwen</string>
     <!-- Search -->
     <string name="clear_search_history">Verwijder zoekgeschiedenis</string>
     <string name="search_hint">Afleveringen zoeken</string>
@@ -66,19 +67,18 @@
     <string name="share_movie">Film delen</string>
     <string name="addtocalendar">Aan agenda toevoegen</string>
     <string name="addtocalendar_failed">Kan geen agendagebeurtenis aanmaken.</string>
-    <!-- Comments -->
-    <string name="reviews_label_provided_by">Reacties aangeboden door Trakt</string>
-    <string name="reviews_title">Reacties</string>
-    <string name="reviews_hint_write_review">Voer een opmerking in (in het Engels, meer dan 5 woorden)</string>
-    <string name="reviews_error_violates_rules">Uw reactie volgt de regels niet!</string>
+    <!-- Reviews -->
+    <string name="reviews_title">Beoordelingen</string>
+    <string name="reviews_label_provided_by">Beoordelingen van Trakt</string>
+    <string name="reviews_hint_empty">Wees de eerste om een beoordeling te schrijven!</string>
+    <string name="reviews_hint_write_review">Schrijf een beoordeling (Engels, 5+ woorden)</string>
+    <string name="reviews_error_violates_rules">Uw beoordeling volgt de regels niet!</string>
     <string name="action_post">Verzenden</string>
     <string name="action_edit_comment">Bewerken</string>
     <string name="action_delete_comment">Verwijderen</string>
-    <string name="reviews_title_confirm_delete">Deze reactie verwijderen?</string>
-    <string name="reviews_error_delete">Reactie niet verwijderd, het is te oud of heeft antwoorden</string>
+    <string name="reviews_title_confirm_delete">Deze beoordeling verwijderen?</string>
+    <string name="reviews_error_delete">Beoordeling niet verwijderd, deze is te oud of heeft reacties</string>
     <string name="isspoiler">Spoiler waarschuwing!</string>
-    <string name="reviews_hint_empty">Wees de eerste die shout!</string>
-    <string name="refresh">Vernieuwen</string>
     <plurals name="replies_plural">
         <item quantity="one">%d reactie</item>
         <item quantity="other">%d reacties</item>
@@ -315,7 +315,7 @@
     <string name="feature_not_supported">Niet ondersteund</string>
     <string name="feature_disabled">Uitgeschakeld</string>
     <string name="feature_history">Persoonlijke en vriendengeschiedenis</string>
-    <string name="feature_comments">Reacties plaatsen</string>
+    <string name="feature_comments">Beoordeling schrijven</string>
     <string name="feature_sync">Synchronisatie</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud helpt uw series, lijsten en films te synchroniseren en te back-uppen</string>

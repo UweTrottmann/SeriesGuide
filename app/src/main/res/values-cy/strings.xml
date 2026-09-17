@@ -41,6 +41,7 @@
     <string name="action_save">Save</string>
     <string name="action_turn_on">Turn on</string>
     <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
+    <string name="refresh">Adnewyddu</string>
     <!-- Search -->
     <string name="clear_search_history">Hanes chwilio clir</string>
     <string name="search_hint">Chwilio penodau</string>
@@ -66,19 +67,18 @@
     <string name="share_movie">Rhannu ffilm</string>
     <string name="addtocalendar">Ychwanegu at y calendr</string>
     <string name="addtocalendar_failed">Methu creu digwyddiad calendr</string>
-    <!-- Comments -->
-    <string name="reviews_label_provided_by">Comments from Trakt</string>
-    <string name="reviews_title">Sylwadau</string>
-    <string name="reviews_hint_write_review">Teipiwch sylw (Saesneg, 5+ gair)</string>
-    <string name="reviews_error_violates_rules">Nid yw eich sylw yn dilyn y rheolau!</string>
+    <!-- Reviews -->
+    <string name="reviews_title">Reviews</string>
+    <string name="reviews_label_provided_by">Reviews from Trakt</string>
+    <string name="reviews_hint_empty">Be the first to write a review!</string>
+    <string name="reviews_hint_write_review">Write a review (English, 5+ words)</string>
+    <string name="reviews_error_violates_rules">Your review does not follow the rules!</string>
     <string name="action_post">Post</string>
     <string name="action_edit_comment">Edit</string>
     <string name="action_delete_comment">Tynnu</string>
-    <string name="reviews_title_confirm_delete">Delete this comment?</string>
-    <string name="reviews_error_delete">Comment not deleted, it is too old or has replies</string>
+    <string name="reviews_title_confirm_delete">Delete this review?</string>
+    <string name="reviews_error_delete">Review not deleted, it is too old or has replies</string>
     <string name="isspoiler">Rhybuddiwr difetha!</string>
-    <string name="reviews_hint_empty">Byddwch y cyntaf i wneud sylw!</string>
-    <string name="refresh">Adnewyddu</string>
     <plurals name="replies_plural">
         <item quantity="zero">%d ateb</item>
         <item quantity="one">%d ateb</item>
@@ -355,7 +355,7 @@
     <string name="feature_not_supported">Heb gefnogaeth</string>
     <string name="feature_disabled">Anweithredol</string>
     <string name="feature_history">Hanes personol a ffrind</string>
-    <string name="feature_comments">Postiwch sylwadau</string>
+    <string name="feature_comments">Write reviews</string>
     <string name="feature_sync">Cydamseru</string>
     <!-- Hexagon -->
     <string name="hexagon_description">Mae SeriesGuide Cloud yn helpu i wneud copi wrth gefn a sync eich sioeau, rhestrau a ffilmiau</string>

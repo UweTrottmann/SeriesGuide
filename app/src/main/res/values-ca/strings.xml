@@ -41,6 +41,7 @@
     <string name="action_save">Desar</string>
     <string name="action_turn_on">Activar</string>
     <string name="action_check" comment="Action when an error is displayed the user should check upon.">Comprovar</string>
+    <string name="refresh">Refresca</string>
     <!-- Search -->
     <string name="clear_search_history">Esborra l\'historial</string>
     <string name="search_hint">Cerca episodis</string>
@@ -66,19 +67,18 @@
     <string name="share_movie">Comparteix la pel·lícula</string>
     <string name="addtocalendar">Afegeix al calendari</string>
     <string name="addtocalendar_failed">No es pot crear l\'esdeveniment.</string>
-    <!-- Comments -->
-    <string name="reviews_label_provided_by">Comentaris des de Trakt</string>
-    <string name="reviews_title">Comentaris</string>
-    <string name="reviews_hint_write_review">Escriu un comentari (anglès, 5+ paraules)</string>
-    <string name="reviews_error_violates_rules">El teu comentari no compleix les normes!</string>
+    <!-- Reviews -->
+    <string name="reviews_title">Reviews</string>
+    <string name="reviews_label_provided_by">Reviews from Trakt</string>
+    <string name="reviews_hint_empty">Be the first to write a review!</string>
+    <string name="reviews_hint_write_review">Write a review (English, 5+ words)</string>
+    <string name="reviews_error_violates_rules">Your review does not follow the rules!</string>
     <string name="action_post">Publica</string>
     <string name="action_edit_comment">Editar</string>
     <string name="action_delete_comment">Esborrar</string>
-    <string name="reviews_title_confirm_delete">Esborrar aquest comentari?</string>
-    <string name="reviews_error_delete">Comentari no esborrat, és massa antic o té respostes</string>
+    <string name="reviews_title_confirm_delete">Delete this review?</string>
+    <string name="reviews_error_delete">Review not deleted, it is too old or has replies</string>
     <string name="isspoiler">Revela parts de la trama!</string>
-    <string name="reviews_hint_empty">Sigueu el primer a escriure!</string>
-    <string name="refresh">Refresca</string>
     <plurals name="replies_plural">
         <item quantity="one">%d resposta</item>
         <item quantity="other">%d respostes</item>
@@ -315,7 +315,7 @@
     <string name="feature_not_supported">No suportat</string>
     <string name="feature_disabled">Deshabilitat</string>
     <string name="feature_history">Historial personal i dels amics</string>
-    <string name="feature_comments">Publicar comentaris</string>
+    <string name="feature_comments">Write reviews</string>
     <string name="feature_sync">Sincronització</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud ajuda a fer còpia de seguretat i sincronitzar les teves sèries, llistes i pel·lícules.</string>

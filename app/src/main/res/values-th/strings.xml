@@ -41,6 +41,7 @@
     <string name="action_save">Save</string>
     <string name="action_turn_on">Turn on</string>
     <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
+    <string name="refresh">โหลดใหม่</string>
     <!-- Search -->
     <string name="clear_search_history">ล้างประวัติการค้นหา</string>
     <string name="search_hint">ค้นหาตอน</string>
@@ -66,19 +67,18 @@
     <string name="share_movie">แบ่งปันภาพยนตร์</string>
     <string name="addtocalendar">เพิ่มในปฏิทิน</string>
     <string name="addtocalendar_failed">ไม่สามารถสร้างกิจกรรมบนปฏิทิน</string>
-    <!-- Comments -->
-    <string name="reviews_label_provided_by">Comments from Trakt</string>
-    <string name="reviews_title">ความคิดเห็น</string>
-    <string name="reviews_hint_write_review">พิมพ์ความคิดเห็น (ภาษาอังกฤษ, 5+ คำ)</string>
-    <string name="reviews_error_violates_rules">ความคิดเห็นของคุณไม่ได้ทำตามกฏ!</string>
+    <!-- Reviews -->
+    <string name="reviews_title">Reviews</string>
+    <string name="reviews_label_provided_by">Reviews from Trakt</string>
+    <string name="reviews_hint_empty">Be the first to write a review!</string>
+    <string name="reviews_hint_write_review">Write a review (English, 5+ words)</string>
+    <string name="reviews_error_violates_rules">Your review does not follow the rules!</string>
     <string name="action_post">โพสต์</string>
     <string name="action_edit_comment">Edit</string>
     <string name="action_delete_comment">ลบ</string>
-    <string name="reviews_title_confirm_delete">Delete this comment?</string>
-    <string name="reviews_error_delete">Comment not deleted, it is too old or has replies</string>
+    <string name="reviews_title_confirm_delete">Delete this review?</string>
+    <string name="reviews_error_delete">Review not deleted, it is too old or has replies</string>
     <string name="isspoiler">ระวังสปอยล์!</string>
-    <string name="reviews_hint_empty">แสดงความคิดเห็นเป็นคนแรก!</string>
-    <string name="refresh">โหลดใหม่</string>
     <plurals name="replies_plural">
         <item quantity="other">%d ตอบกลับ</item>
     </plurals>
@@ -305,7 +305,7 @@
     <string name="feature_not_supported">ไม่รองรับ</string>
     <string name="feature_disabled">ปิดใช้งาน</string>
     <string name="feature_history">ประวัติส่วนตัวและของเพื่อน</string>
-    <string name="feature_comments">แสดงความคิดเห็น</string>
+    <string name="feature_comments">Write reviews</string>
     <string name="feature_sync">ซิงค์</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud ช่วยสำรองข้อมูลและซิงค์ซีรีส์, รายการ และภาพยนตร์ของคุณ</string>

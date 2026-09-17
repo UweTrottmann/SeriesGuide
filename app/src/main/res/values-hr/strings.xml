@@ -41,6 +41,7 @@
     <string name="action_save">Save</string>
     <string name="action_turn_on">Turn on</string>
     <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
+    <string name="refresh">Osvježi</string>
     <!-- Search -->
     <string name="clear_search_history">Očisti povijest pretraživanja</string>
     <string name="search_hint">Pretraži epizode</string>
@@ -66,19 +67,18 @@
     <string name="share_movie">Podijelite film</string>
     <string name="addtocalendar">Dodaj u kalendar</string>
     <string name="addtocalendar_failed">Ne mogu stvoriti događaj u kalendaru.</string>
-    <!-- Comments -->
-    <string name="reviews_label_provided_by">Comments from Trakt</string>
-    <string name="reviews_title">Komentari</string>
-    <string name="reviews_hint_write_review">Upišite komentar (engleski, 5 + riječi)</string>
-    <string name="reviews_error_violates_rules">Vaš komentar ne slijedi pravila!</string>
+    <!-- Reviews -->
+    <string name="reviews_title">Reviews</string>
+    <string name="reviews_label_provided_by">Reviews from Trakt</string>
+    <string name="reviews_hint_empty">Be the first to write a review!</string>
+    <string name="reviews_hint_write_review">Write a review (English, 5+ words)</string>
+    <string name="reviews_error_violates_rules">Your review does not follow the rules!</string>
     <string name="action_post">Objava</string>
     <string name="action_edit_comment">Edit</string>
     <string name="action_delete_comment">Izbriši</string>
-    <string name="reviews_title_confirm_delete">Delete this comment?</string>
-    <string name="reviews_error_delete">Comment not deleted, it is too old or has replies</string>
+    <string name="reviews_title_confirm_delete">Delete this review?</string>
+    <string name="reviews_error_delete">Review not deleted, it is too old or has replies</string>
     <string name="isspoiler">Pažnja! Spojler!</string>
-    <string name="reviews_hint_empty">Budi prvi koji će povikati!</string>
-    <string name="refresh">Osvježi</string>
     <plurals name="replies_plural">
         <item quantity="one">%d odgovor</item>
         <item quantity="few">%d odgovora</item>
@@ -325,7 +325,7 @@
     <string name="feature_not_supported">Nije podržano</string>
     <string name="feature_disabled">Disabled</string>
     <string name="feature_history">Osobna povijest i povijest prijatelja</string>
-    <string name="feature_comments">Komentari objava</string>
+    <string name="feature_comments">Write reviews</string>
     <string name="feature_sync">Sinkronizacija</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Oblak vam pomaže sigurnosno kopirati i sinkronizirati vaše serije, popise i filmove.</string>

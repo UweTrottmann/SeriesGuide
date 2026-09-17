@@ -41,6 +41,7 @@
     <string name="action_save">Kaydet</string>
     <string name="action_turn_on">Turn on</string>
     <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
+    <string name="refresh">Yenile</string>
     <!-- Search -->
     <string name="clear_search_history">Arama geçmişini temizle</string>
     <string name="search_hint">Bölüm ara</string>
@@ -66,19 +67,18 @@
     <string name="share_movie">Filmi paylaş</string>
     <string name="addtocalendar">Takvime ekle</string>
     <string name="addtocalendar_failed">Takvim etkinliği oluşturulamıyor.</string>
-    <!-- Comments -->
-    <string name="reviews_label_provided_by">Comments from Trakt</string>
-    <string name="reviews_title">Yorumlar</string>
-    <string name="reviews_hint_write_review">Bir yorum yaz (Ingilizce, 5+ kelime)</string>
-    <string name="reviews_error_violates_rules">Yorumun kurallara uygun değil!</string>
+    <!-- Reviews -->
+    <string name="reviews_title">Reviews</string>
+    <string name="reviews_label_provided_by">Reviews from Trakt</string>
+    <string name="reviews_hint_empty">Be the first to write a review!</string>
+    <string name="reviews_hint_write_review">Write a review (English, 5+ words)</string>
+    <string name="reviews_error_violates_rules">Your review does not follow the rules!</string>
     <string name="action_post">Gönder</string>
     <string name="action_edit_comment">Düzenle</string>
     <string name="action_delete_comment">Sil</string>
-    <string name="reviews_title_confirm_delete">Bu yorumu sil?</string>
-    <string name="reviews_error_delete">Yorum silinmedi, çok eski veya yanıtları var</string>
+    <string name="reviews_title_confirm_delete">Delete this review?</string>
+    <string name="reviews_error_delete">Review not deleted, it is too old or has replies</string>
     <string name="isspoiler">Spoiler Uyarısı!</string>
-    <string name="reviews_hint_empty">İlk yorumu sen yap!</string>
-    <string name="refresh">Yenile</string>
     <plurals name="replies_plural">
         <item quantity="one">%d yorum</item>
         <item quantity="other">%d yorum</item>
@@ -315,7 +315,7 @@
     <string name="feature_not_supported">Desteklenmiyor</string>
     <string name="feature_disabled">Devre dışı</string>
     <string name="feature_history">Kişisel ve arkadaş geçmişi</string>
-    <string name="feature_comments">Gönderi yorumları</string>
+    <string name="feature_comments">Write reviews</string>
     <string name="feature_sync">Senkronizasyon</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud, dizilerinizi, listelerinizi ve filmlerinizi yedeklemenizi ve senkronize etmenizi sağlar.</string>

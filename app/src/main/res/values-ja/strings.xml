@@ -41,6 +41,7 @@
     <string name="action_save">Save</string>
     <string name="action_turn_on">Turn on</string>
     <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
+    <string name="refresh">更新</string>
     <!-- Search -->
     <string name="clear_search_history">検索履歴を削除</string>
     <string name="search_hint">エピソードを検索</string>
@@ -66,19 +67,18 @@
     <string name="share_movie">映画を共有</string>
     <string name="addtocalendar">カレンダーに追加</string>
     <string name="addtocalendar_failed">カレンダーイベントを作成できません</string>
-    <!-- Comments -->
-    <string name="reviews_label_provided_by">Comments from Trakt</string>
-    <string name="reviews_title">コメント</string>
-    <string name="reviews_hint_write_review">コメントを入力（英語で5語以上）</string>
-    <string name="reviews_error_violates_rules">ルールに従ってコメントしてください！</string>
+    <!-- Reviews -->
+    <string name="reviews_title">Reviews</string>
+    <string name="reviews_label_provided_by">Reviews from Trakt</string>
+    <string name="reviews_hint_empty">Be the first to write a review!</string>
+    <string name="reviews_hint_write_review">Write a review (English, 5+ words)</string>
+    <string name="reviews_error_violates_rules">Your review does not follow the rules!</string>
     <string name="action_post">投稿</string>
     <string name="action_edit_comment">Edit</string>
     <string name="action_delete_comment">削除</string>
-    <string name="reviews_title_confirm_delete">Delete this comment?</string>
-    <string name="reviews_error_delete">Comment not deleted, it is too old or has replies</string>
+    <string name="reviews_title_confirm_delete">Delete this review?</string>
+    <string name="reviews_error_delete">Review not deleted, it is too old or has replies</string>
     <string name="isspoiler">ネタバレ注意！</string>
-    <string name="reviews_hint_empty">最初にコメントしよう！</string>
-    <string name="refresh">更新</string>
     <plurals name="replies_plural">
         <item quantity="other">%d 件の返信</item>
     </plurals>
@@ -305,7 +305,7 @@
     <string name="feature_not_supported">サポートされていません</string>
     <string name="feature_disabled">Disabled</string>
     <string name="feature_history">自分と友だちの履歴</string>
-    <string name="feature_comments">コメントを投稿</string>
+    <string name="feature_comments">Write reviews</string>
     <string name="feature_sync">同期</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud は番組、リスト、映画をバックアップおよび同期するのに役立ちます</string>

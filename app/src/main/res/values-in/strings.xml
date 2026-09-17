@@ -41,6 +41,7 @@
     <string name="action_save">Save</string>
     <string name="action_turn_on">Turn on</string>
     <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
+    <string name="refresh">Segarkan</string>
     <!-- Search -->
     <string name="clear_search_history">Bersihkan riwayat pencarian</string>
     <string name="search_hint">Cari episode</string>
@@ -66,19 +67,18 @@
     <string name="share_movie">Bagikan film</string>
     <string name="addtocalendar">Tambah ke kalender</string>
     <string name="addtocalendar_failed">Tidak dapat membuat acara kalender.</string>
-    <!-- Comments -->
-    <string name="reviews_label_provided_by">Comments from Trakt</string>
-    <string name="reviews_title">Komentar</string>
-    <string name="reviews_hint_write_review">Ketik sebuah komentar (Bahasa Inggris, 5+ kata)</string>
-    <string name="reviews_error_violates_rules">Komentarmu tidak mematuhi peraturan!</string>
+    <!-- Reviews -->
+    <string name="reviews_title">Reviews</string>
+    <string name="reviews_label_provided_by">Reviews from Trakt</string>
+    <string name="reviews_hint_empty">Be the first to write a review!</string>
+    <string name="reviews_hint_write_review">Write a review (English, 5+ words)</string>
+    <string name="reviews_error_violates_rules">Your review does not follow the rules!</string>
     <string name="action_post">Posting</string>
     <string name="action_edit_comment">Edit</string>
     <string name="action_delete_comment">Hapus</string>
-    <string name="reviews_title_confirm_delete">Delete this comment?</string>
-    <string name="reviews_error_delete">Comment not deleted, it is too old or has replies</string>
+    <string name="reviews_title_confirm_delete">Delete this review?</string>
+    <string name="reviews_error_delete">Review not deleted, it is too old or has replies</string>
     <string name="isspoiler">Awas Bocoran!</string>
-    <string name="reviews_hint_empty">Jadilah yang pertama berkomentar!</string>
-    <string name="refresh">Segarkan</string>
     <plurals name="replies_plural">
         <item quantity="other">%d balasan</item>
     </plurals>
@@ -305,7 +305,7 @@
     <string name="feature_not_supported">Tidak Didukung</string>
     <string name="feature_disabled">Disabled</string>
     <string name="feature_history">Riwayat pribadi dan teman</string>
-    <string name="feature_comments">Kirim komentar</string>
+    <string name="feature_comments">Write reviews</string>
     <string name="feature_sync">Sync</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud membantumu untuk mencadangkan dan menyelaraskan acara, daftar, dan film anda.</string>

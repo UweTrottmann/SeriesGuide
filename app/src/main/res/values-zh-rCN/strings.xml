@@ -41,6 +41,7 @@
     <string name="action_save">Save</string>
     <string name="action_turn_on">Turn on</string>
     <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
+    <string name="refresh">刷新</string>
     <!-- Search -->
     <string name="clear_search_history">清除搜索记录</string>
     <string name="search_hint">搜索剧集</string>
@@ -66,19 +67,18 @@
     <string name="share_movie">分享电影</string>
     <string name="addtocalendar">添加到日历</string>
     <string name="addtocalendar_failed">无法创建日历事件</string>
-    <!-- Comments -->
-    <string name="reviews_label_provided_by">Comments from Trakt</string>
-    <string name="reviews_title">评论</string>
-    <string name="reviews_hint_write_review">输入一段评论（仅英语，至少五个单词）</string>
-    <string name="reviews_error_violates_rules">无法提交评论：评论未遵守用户规章。</string>
+    <!-- Reviews -->
+    <string name="reviews_title">Reviews</string>
+    <string name="reviews_label_provided_by">Reviews from Trakt</string>
+    <string name="reviews_hint_empty">Be the first to write a review!</string>
+    <string name="reviews_hint_write_review">Write a review (English, 5+ words)</string>
+    <string name="reviews_error_violates_rules">Your review does not follow the rules!</string>
     <string name="action_post">发布</string>
     <string name="action_edit_comment">编辑</string>
     <string name="action_delete_comment">删除</string>
-    <string name="reviews_title_confirm_delete">删除该评论？</string>
-    <string name="reviews_error_delete">评论未删除，过旧或已有回复</string>
+    <string name="reviews_title_confirm_delete">Delete this review?</string>
+    <string name="reviews_error_delete">Review not deleted, it is too old or has replies</string>
     <string name="isspoiler">!!!! 剧透警告 !!!!</string>
-    <string name="reviews_hint_empty">抢沙发！</string>
-    <string name="refresh">刷新</string>
     <plurals name="replies_plural">
         <item quantity="other">%d 条回复</item>
     </plurals>
@@ -305,7 +305,7 @@
     <string name="feature_not_supported">不支持</string>
     <string name="feature_disabled">已禁用</string>
     <string name="feature_history">我和朋友的历史记录</string>
-    <string name="feature_comments">发布评论</string>
+    <string name="feature_comments">Write reviews</string>
     <string name="feature_sync">同步</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud 可帮您备份并同步您的节目、列表和电影</string>

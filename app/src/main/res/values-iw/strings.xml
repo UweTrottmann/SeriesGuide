@@ -41,6 +41,7 @@
     <string name="action_save">שמירה</string>
     <string name="action_turn_on">הפעל</string>
     <string name="action_check" comment="Action when an error is displayed the user should check upon.">בדוק</string>
+    <string name="refresh">רענן</string>
     <!-- Search -->
     <string name="clear_search_history">נקה את היסטוריית החיפוש</string>
     <string name="search_hint">חפש פרקים</string>
@@ -66,19 +67,18 @@
     <string name="share_movie">שתף סרט</string>
     <string name="addtocalendar">צור אירוע בלוח השנה</string>
     <string name="addtocalendar_failed">אין אפשרות ליצור אירוע בלוח השנה</string>
-    <!-- Comments -->
-    <string name="reviews_label_provided_by">Comments from Trakt</string>
-    <string name="reviews_title">תגובות</string>
-    <string name="reviews_hint_write_review">הקלד תגובה (באנגלית, 5+ מילות)</string>
-    <string name="reviews_error_violates_rules">התגובה שלך לא עומדת בתקנון!</string>
+    <!-- Reviews -->
+    <string name="reviews_title">Reviews</string>
+    <string name="reviews_label_provided_by">Reviews from Trakt</string>
+    <string name="reviews_hint_empty">Be the first to write a review!</string>
+    <string name="reviews_hint_write_review">Write a review (English, 5+ words)</string>
+    <string name="reviews_error_violates_rules">Your review does not follow the rules!</string>
     <string name="action_post">פרסם</string>
     <string name="action_edit_comment">עריכה</string>
     <string name="action_delete_comment">מחיקה</string>
-    <string name="reviews_title_confirm_delete">למחוק תגובה זו?</string>
-    <string name="reviews_error_delete">התגובה לא נמחקה, היא ישנה מדי או שיש לה תגובות</string>
+    <string name="reviews_title_confirm_delete">Delete this review?</string>
+    <string name="reviews_error_delete">Review not deleted, it is too old or has replies</string>
     <string name="isspoiler">אזהרת ספוילר!</string>
-    <string name="reviews_hint_empty">תהיה הראשון להגיב!</string>
-    <string name="refresh">רענן</string>
     <plurals name="replies_plural">
         <item quantity="one">תגובה אחת</item>
         <item quantity="two">%d תגובות</item>
@@ -325,7 +325,7 @@
     <string name="feature_not_supported">לא נתמך</string>
     <string name="feature_disabled">לא מופעל</string>
     <string name="feature_history">היסטוריה שלי ושל חברים</string>
-    <string name="feature_comments">פרסם תגובות</string>
+    <string name="feature_comments">Write reviews</string>
     <string name="feature_sync">סנכרן</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud עוזר לגבות ולסנכרון את התוכניות, הרשימות והסרטים שלך.</string>

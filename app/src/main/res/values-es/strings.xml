@@ -41,6 +41,7 @@
     <string name="action_save">Guardar</string>
     <string name="action_turn_on">Activar</string>
     <string name="action_check" comment="Action when an error is displayed the user should check upon.">Verificar</string>
+    <string name="refresh">Actualizar</string>
     <!-- Search -->
     <string name="clear_search_history">Limpiar historial de búsqueda</string>
     <string name="search_hint">Buscar episodios</string>
@@ -66,19 +67,18 @@
     <string name="share_movie">Compartir película</string>
     <string name="addtocalendar">Añadir al calendario</string>
     <string name="addtocalendar_failed">No se puede crear un evento de calendario.</string>
-    <!-- Comments -->
-    <string name="reviews_label_provided_by">Comentarios de Trakt</string>
-    <string name="reviews_title">Comentarios</string>
-    <string name="reviews_hint_write_review">Escribe un comentario (Inglés, +5 palabras)</string>
-    <string name="reviews_error_violates_rules">Su comentario no sigue las reglas!</string>
+    <!-- Reviews -->
+    <string name="reviews_title">Reviews</string>
+    <string name="reviews_label_provided_by">Reviews from Trakt</string>
+    <string name="reviews_hint_empty">Be the first to write a review!</string>
+    <string name="reviews_hint_write_review">Write a review (English, 5+ words)</string>
+    <string name="reviews_error_violates_rules">Your review does not follow the rules!</string>
     <string name="action_post">Publicar</string>
     <string name="action_edit_comment">Editar</string>
     <string name="action_delete_comment">Eliminar</string>
-    <string name="reviews_title_confirm_delete">¿Eliminar este comentario?</string>
-    <string name="reviews_error_delete">Comentario no eliminado, es demasiado antiguo o tiene respuestas</string>
+    <string name="reviews_title_confirm_delete">Delete this review?</string>
+    <string name="reviews_error_delete">Review not deleted, it is too old or has replies</string>
     <string name="isspoiler">¡Alerta de spoiler!</string>
-    <string name="reviews_hint_empty">¡Sé el primero en gritar!</string>
-    <string name="refresh">Actualizar</string>
     <plurals name="replies_plural">
         <item quantity="one">%d respuesta</item>
         <item quantity="other">%d respuestas</item>
@@ -315,7 +315,7 @@
     <string name="feature_not_supported">No soportado</string>
     <string name="feature_disabled">Desactivado</string>
     <string name="feature_history">Historial personal y de amigos</string>
-    <string name="feature_comments">Publicar comentarios</string>
+    <string name="feature_comments">Write reviews</string>
     <string name="feature_sync">Sincronizar</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud te permite realizar una copia de seguridad en la nube, y sincronizar tus series, listas y películas.</string>

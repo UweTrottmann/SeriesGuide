@@ -41,6 +41,7 @@
     <string name="action_save">Запис</string>
     <string name="action_turn_on">Turn on</string>
     <string name="action_check" comment="Action when an error is displayed the user should check upon.">Check</string>
+    <string name="refresh">Опресни</string>
     <!-- Search -->
     <string name="clear_search_history">Изчисти историята на търсене</string>
     <string name="search_hint">Търсене на епизоди</string>
@@ -66,19 +67,18 @@
     <string name="share_movie">Сподели филм</string>
     <string name="addtocalendar">Добавяне в календара</string>
     <string name="addtocalendar_failed">Не може да създаде календарно събитие.</string>
-    <!-- Comments -->
-    <string name="reviews_label_provided_by">Comments from Trakt</string>
-    <string name="reviews_title">Коментари</string>
-    <string name="reviews_hint_write_review">Въведете коментар (английски, 5 + думи)</string>
-    <string name="reviews_error_violates_rules">Вашият коментар не е по правилата!</string>
+    <!-- Reviews -->
+    <string name="reviews_title">Reviews</string>
+    <string name="reviews_label_provided_by">Reviews from Trakt</string>
+    <string name="reviews_hint_empty">Be the first to write a review!</string>
+    <string name="reviews_hint_write_review">Write a review (English, 5+ words)</string>
+    <string name="reviews_error_violates_rules">Your review does not follow the rules!</string>
     <string name="action_post">Публикувай</string>
     <string name="action_edit_comment">Редактирай</string>
     <string name="action_delete_comment">Изтрий</string>
-    <string name="reviews_title_confirm_delete">Изтриване на коментара</string>
-    <string name="reviews_error_delete">Коментарът е твърде стар или има отговори</string>
+    <string name="reviews_title_confirm_delete">Delete this review?</string>
+    <string name="reviews_error_delete">Review not deleted, it is too old or has replies</string>
     <string name="isspoiler">Предупреждение за издаване!</string>
-    <string name="reviews_hint_empty">Напишете мнение пръв!</string>
-    <string name="refresh">Опресни</string>
     <plurals name="replies_plural">
         <item quantity="one">%d коментар</item>
         <item quantity="other">%d коментара</item>
@@ -315,7 +315,7 @@
     <string name="feature_not_supported">Не се поддържат</string>
     <string name="feature_disabled">Изключено</string>
     <string name="feature_history">Лична и приятелска история</string>
-    <string name="feature_comments">Публикувай коментар</string>
+    <string name="feature_comments">Write reviews</string>
     <string name="feature_sync">Синхронизирай</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud ти помага да създадеш копие на твоите сериали, списъци и филми и да ги синхронизираш</string>

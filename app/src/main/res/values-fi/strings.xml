@@ -41,6 +41,7 @@
     <string name="action_save">Tallenna</string>
     <string name="action_turn_on">Ota käyttöön</string>
     <string name="action_check" comment="Action when an error is displayed the user should check upon.">Tarkista</string>
+    <string name="refresh">Päivitä</string>
     <!-- Search -->
     <string name="clear_search_history">Tyhjennä hakuhistoria</string>
     <string name="search_hint">Hae jaksoja</string>
@@ -66,19 +67,18 @@
     <string name="share_movie">Jaa elokuva</string>
     <string name="addtocalendar">Lisää kalenteriin</string>
     <string name="addtocalendar_failed">Kalenteritapahtumaa ei voi luoda</string>
-    <!-- Comments -->
-    <string name="reviews_label_provided_by">Traktin kommentit</string>
-    <string name="reviews_title">Kommentit</string>
-    <string name="reviews_hint_write_review">Kirjoita kommentti (englanniksi, 5+ sanaa)</string>
-    <string name="reviews_error_violates_rules">Kommenttisi ei noudata sääntöjä!</string>
+    <!-- Reviews -->
+    <string name="reviews_title">Reviews</string>
+    <string name="reviews_label_provided_by">Reviews from Trakt</string>
+    <string name="reviews_hint_empty">Be the first to write a review!</string>
+    <string name="reviews_hint_write_review">Write a review (English, 5+ words)</string>
+    <string name="reviews_error_violates_rules">Your review does not follow the rules!</string>
     <string name="action_post">Lähetä</string>
     <string name="action_edit_comment">Muokkaa</string>
     <string name="action_delete_comment">Poista</string>
-    <string name="reviews_title_confirm_delete">Poistetaanko tämä kommentti?</string>
-    <string name="reviews_error_delete">Kommenttia ei poistettu, se on liian vanha tai sillä on vastauksia</string>
+    <string name="reviews_title_confirm_delete">Delete this review?</string>
+    <string name="reviews_error_delete">Review not deleted, it is too old or has replies</string>
     <string name="isspoiler">Juonipaljastus!</string>
-    <string name="reviews_hint_empty">Ole ensimmäinen kommentoija!</string>
-    <string name="refresh">Päivitä</string>
     <plurals name="replies_plural">
         <item quantity="one">%d vastaus</item>
         <item quantity="other">%d vastausta</item>
@@ -315,7 +315,7 @@
     <string name="feature_not_supported">Ei tuettu</string>
     <string name="feature_disabled">Poistettu käytöstä</string>
     <string name="feature_history">Henkilökohtainen ja ystävien historia</string>
-    <string name="feature_comments">Lähetä kommentteja</string>
+    <string name="feature_comments">Write reviews</string>
     <string name="feature_sync">Synkronointi</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud auttaa varmuuskopioimaan ja synkronoimaan ohjelmasi, listasi ja elokuvasi.</string>
