@@ -3,14 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.android.library)
     id("seriesguide.android")
-    id("org.jetbrains.kotlin.android")
 //    id("com.google.cloud.tools.endpoints-framework-client")
-}
-
-kotlin {
-    compilerOptions {
-        jvmTarget = JvmTarget.JVM_11
-    }
 }
 
 android {

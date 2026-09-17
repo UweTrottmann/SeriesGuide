@@ -19,8 +19,7 @@ if (googleServicesJsonFile.readText().contains("placeholder")) {
 plugins {
     alias(libs.plugins.android.application)
     id("seriesguide.android")
-    kotlin("android")
-    kotlin("kapt")
+    alias(libs.plugins.android.kapt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.compose.compiler)
     // Firebase Authentication, Crashlytics
@@ -33,7 +32,6 @@ val sgVersionName = rootProject.extra["sgVersionName"] as String
 
 kotlin {
     compilerOptions {
-        jvmTarget = JvmTarget.JVM_11
         // Using experimental flatMapLatest for Paging 3
         // Using experimental Material 3 compose APIs
         freeCompilerArgs.add("-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi,androidx.compose.material3.ExperimentalMaterial3Api")

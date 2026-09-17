@@ -1,25 +1,25 @@
 # https://docs.gradle.org/current/userguide/version_catalogs.html#sec:version-catalog-declaration
 
 [versions]
+# https://developer.android.com/build/releases/gradle-plugin
 # https://kotlinlang.org/docs/releases.html#release-details
 # When updating, must also update compose plugin.
-# Also look for compatible Gradle and Android Plugin versions:
+# Also, coroutines version must be compatible.
+# Also, look for compatible Gradle versions:
 # https://kotlinlang.org/docs/gradle-configure-project.html#apply-the-plugin
-# Also coroutines version must be compatible.
-# 2.2.21 is compatible with Gradle 7.6.3–8.14 and AGP 7.3.1–8.11.1
-# Can't update to 2.3 as Room 2.8.4 requires 2.2 metadata for processing with kapt (and can't switch
-# to KSP because it's broken if Gradle user directory and project directory are on different drives:
-# https://github.com/UweTrottmann/SeriesGuide/pull/1137, https://github.com/google/ksp/issues/1079).
-kotlin = "2.2.21"
-# https://developer.android.com/build/releases/gradle-plugin
+# 9.3.1 includes Kotlin 2.2.10
 agp = "9.3.1"
+# Must match the Kotlin version included by the Android plugin.
+# 2.2.10 is compatible with Gradle 7.6.3–8.14
+kotlin = "2.2.10"
 
 [libraries]
 # Kotlin
 # https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
-kotlinx-coroutines-android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0"
-kotlinx-coroutines-core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0"
-kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.11.0"
+# 1.10.2 requires Kotlin 2.1.0
+kotlinx-coroutines-android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2"
+kotlinx-coroutines-core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2"
+kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2"
 # https://github.com/michaelbull/kotlin-result/releases
 kotlinx-result = "com.michael-bull.kotlin-result:kotlin-result:1.1.20"
 
@@ -173,12 +173,12 @@ androidx-test-runner = "androidx.test:runner:1.7.0"
 android-gradle-api = { module = "com.android.tools.build:gradle-api", version.ref = "agp" }
 
 [plugins]
-kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 # https://github.com/google/ksp/releases
 ksp = { id = "com.google.devtools.ksp", version = "2.3.11" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
+android-kapt = { id = "com.android.legacy-kapt", version.ref = "agp" }
 # https://github.com/gradle-nexus/publish-plugin/releases
 publish = { id = "io.github.gradle-nexus.publish-plugin", version = "2.0.0" }
 # https://firebase.google.com/support/release-notes/android

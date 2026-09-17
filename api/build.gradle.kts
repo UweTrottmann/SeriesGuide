@@ -9,6 +9,8 @@ group = "com.uwetrottmann.seriesguide"
 version = "2.2.2-SNAPSHOT"
 
 android {
+    enableKotlin = false
+
     namespace = "com.battlelancer.seriesguide.api"
 
     publishing {
