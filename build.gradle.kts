@@ -20,7 +20,7 @@ buildscript {
     // - allows multiple releases per month (though currently unlikely)
     extra.set("sgVersionName", "2026.4.2")
     // version 23yyrrbb -> min SDK 23, year yy, release rr, build bb
-    extra.set("sgVersionCode", 23260402)
+    extra.set("sgVersionCode", 23260403)
 
     // load some properties that should not be part of version control
     if (file("secret.properties").exists()) {
