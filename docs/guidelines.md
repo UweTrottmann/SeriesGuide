@@ -122,6 +122,24 @@ Some relevant documentation:
   [support per-app language preferences](https://developer.android.com/guide/topics/resources/app-languages#sample-config).
   See the link for supported language codes. They differ from the resource directory name!
 
+### String resources
+
+String IDs must be unique across the project. Add prefixes if only used for a specific feature and
+what type of string it is to give a hint about the acceptable length:
+
+```
+# Feature-specific strings
+reviews_action_
+reviews_error_
+reviews_title_
+# Generic strings
+action_
+error_
+title_
+label_
+description_
+```
+
 ### Layout resources
 
 View IDs should be unique across the project to support refactoring using Android Studio.
