@@ -1,36 +1,27 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2016 Uwe Trottmann <uwe@uwetrottmann.com>
 
-package com.battlelancer.seriesguide.util.tasks;
+package com.battlelancer.seriesguide.util.tasks
 
-import android.content.Context;
-import androidx.annotation.NonNull;
-import com.battlelancer.seriesguide.R;
-import com.uwetrottmann.trakt5.entities.SyncItems;
-import com.uwetrottmann.trakt5.entities.SyncResponse;
-import com.uwetrottmann.trakt5.services.Sync;
-import retrofit2.Call;
+import android.content.Context
+import com.battlelancer.seriesguide.R
+import com.uwetrottmann.trakt5.entities.SyncItems
+import com.uwetrottmann.trakt5.entities.SyncResponse
+import com.uwetrottmann.trakt5.services.Sync
+import retrofit2.Call
 
-public class AddShowToWatchlistTask extends BaseShowActionTask {
+class AddShowToWatchlistTask(
+    context: Context,
+    showTmdbId: Int
+) : BaseShowActionTask(context, showTmdbId) {
 
-    public AddShowToWatchlistTask(Context context, int showTmdbId) {
-        super(context, showTmdbId);
+    override val traktAction: String
+        get() = "add show to watchlist"
+
+    override fun buildTraktCall(traktSync: Sync, items: SyncItems): Call<SyncResponse> {
+        return traktSync.addItemsToWatchlist(items)
     }
 
-    @NonNull
-    @Override
-    protected String getTraktAction() {
-        return "add show to watchlist";
-    }
-
-    @NonNull
-    @Override
-    protected Call<SyncResponse> buildTraktCall(Sync traktSync, SyncItems items) {
-        return traktSync.addItemsToWatchlist(items);
-    }
-
-    @Override
-    protected int getSuccessTextResId() {
-        return R.string.watchlist_added;
-    }
+    override val successTextResId: Int
+        get() = R.string.watchlist_added
 }
