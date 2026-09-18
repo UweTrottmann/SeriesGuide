@@ -1,84 +1,77 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2016 Uwe Trottmann <uwe@uwetrottmann.com>
 
-package com.battlelancer.seriesguide.util.tasks;
+package com.battlelancer.seriesguide.util.tasks
 
-import android.content.Context;
-import androidx.annotation.NonNull;
-import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.traktapi.TraktCredentials;
-import com.uwetrottmann.trakt5.TraktV2;
-import com.uwetrottmann.trakt5.entities.ShowIds;
-import com.uwetrottmann.trakt5.entities.SyncItems;
-import com.uwetrottmann.trakt5.entities.SyncResponse;
-import com.uwetrottmann.trakt5.entities.SyncShow;
-import com.uwetrottmann.trakt5.services.Sync;
-import org.greenrobot.eventbus.EventBus;
-import retrofit2.Call;
+import android.content.Context
+import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.traktapi.TraktCredentials
+import com.uwetrottmann.trakt5.entities.ShowIds
+import com.uwetrottmann.trakt5.entities.SyncItems
+import com.uwetrottmann.trakt5.entities.SyncResponse
+import com.uwetrottmann.trakt5.entities.SyncShow
+import com.uwetrottmann.trakt5.services.Sync
+import org.greenrobot.eventbus.EventBus
+import retrofit2.Call
 
-public abstract class BaseShowActionTask extends BaseActionTask {
+abstract class BaseShowActionTask(
+    context: Context,
+    private val showTmdbId: Int
+) : BaseActionTask(context) {
 
-    public static class ShowChangedEvent {
-    }
+    class ShowChangedEvent
 
-    private final int showTmdbId;
+    override val isSendingToHexagon: Boolean
+        get() = false
 
-    public BaseShowActionTask(Context context, int showTmdbId) {
-        super(context);
-        this.showTmdbId = showTmdbId;
-    }
-
-    @Override
-    protected boolean isSendingToHexagon() {
-        return false;
-    }
-
-    @Override
-    protected int doBackgroundAction(Void... params) {
-        if (isSendingToTrakt()) {
-            if (!TraktCredentials.get(getContext()).hasCredentials()) {
-                return ERROR_TRAKT_AUTH;
+    override fun doBackgroundAction(vararg params: Void?): Int {
+        if (isSendingToTrakt) {
+            if (!TraktCredentials.get(context).hasCredentials()) {
+                return ERROR_TRAKT_AUTH
             }
 
-            SyncItems items = new SyncItems().shows(new SyncShow().id(ShowIds.tmdb(showTmdbId)));
-            TraktV2 trakt = SgApp.getServicesComponent(getContext()).trakt();
-            Sync traktSync = trakt.sync();
+            val items = SyncItems().shows(SyncShow().id(ShowIds.tmdb(showTmdbId)))
+            val trakt = SgApp.getServicesComponent(context).trakt()
+            val traktSync = trakt.sync()
 
-            int result = executeTraktCall(buildTraktCall(traktSync, items), trakt, getTraktAction(),
-                    body -> {
-                        if (isShowNotFound(body)) {
-                            return ERROR_TRAKT_API_NOT_FOUND;
+            val result = executeTraktCall(
+                buildTraktCall(traktSync, items),
+                trakt,
+                traktAction,
+                object : ResponseCallback<SyncResponse> {
+                    override fun handleSuccessfulResponse(body: SyncResponse): Int {
+                        return if (isShowNotFound(body)) {
+                            ERROR_TRAKT_API_NOT_FOUND
                         } else {
-                            return SUCCESS;
+                            SUCCESS
                         }
-                    });
-            //noinspection RedundantIfStatement
+                    }
+                })
             if (result != SUCCESS) {
-                return result;
+                return result
             }
         }
 
-        return SUCCESS;
+        return SUCCESS
     }
 
-    private static boolean isShowNotFound(SyncResponse response) {
+    private fun isShowNotFound(response: SyncResponse): Boolean {
         // if show was not found on trakt
-        return response.not_found != null && response.not_found.shows != null
-                && response.not_found.shows.size() != 0;
+        return response.not_found?.shows?.isNotEmpty()
+                ?: false
     }
 
-    @Override
-    protected void onPostExecute(Integer result) {
-        super.onPostExecute(result);
+    @Deprecated("Deprecated in Java")
+    override fun onPostExecute(result: Int?) {
+        super.onPostExecute(result)
 
         if (result == SUCCESS) {
-            EventBus.getDefault().post(new ShowChangedEvent());
+            EventBus.getDefault().post(ShowChangedEvent())
         }
     }
 
-    @NonNull
-    protected abstract String getTraktAction();
+    protected abstract val traktAction: String
 
-    @NonNull
-    protected abstract Call<SyncResponse> buildTraktCall(Sync traktSync, SyncItems items);
+    protected abstract fun buildTraktCall(traktSync: Sync, items: SyncItems): Call<SyncResponse>
+
 }

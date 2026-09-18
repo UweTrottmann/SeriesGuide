@@ -1,36 +1,27 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2016 Uwe Trottmann <uwe@uwetrottmann.com>
 
-package com.battlelancer.seriesguide.util.tasks;
+package com.battlelancer.seriesguide.util.tasks
 
-import android.content.Context;
-import androidx.annotation.NonNull;
-import com.battlelancer.seriesguide.R;
-import com.uwetrottmann.trakt5.entities.SyncItems;
-import com.uwetrottmann.trakt5.entities.SyncResponse;
-import com.uwetrottmann.trakt5.services.Sync;
-import retrofit2.Call;
+import android.content.Context
+import com.battlelancer.seriesguide.R
+import com.uwetrottmann.trakt5.entities.SyncItems
+import com.uwetrottmann.trakt5.entities.SyncResponse
+import com.uwetrottmann.trakt5.services.Sync
+import retrofit2.Call
 
-public class RemoveShowFromWatchlistTask extends BaseShowActionTask {
+class RemoveShowFromWatchlistTask(
+    context: Context,
+    showTmdbId: Int
+) : BaseShowActionTask(context, showTmdbId) {
 
-    public RemoveShowFromWatchlistTask(Context app, int showTmdbId) {
-        super(app, showTmdbId);
+    override val traktAction: String
+        get() = "remove show from watchlist"
+
+    override fun buildTraktCall(traktSync: Sync, items: SyncItems): Call<SyncResponse> {
+        return traktSync.deleteItemsFromWatchlist(items)
     }
 
-    @NonNull
-    @Override
-    protected String getTraktAction() {
-        return "remove show from watchlist";
-    }
-
-    @NonNull
-    @Override
-    protected Call<SyncResponse> buildTraktCall(Sync traktSync, SyncItems items) {
-        return traktSync.deleteItemsFromWatchlist(items);
-    }
-
-    @Override
-    protected int getSuccessTextResId() {
-        return R.string.watchlist_removed;
-    }
+    override val successTextResId: Int
+        get() = R.string.watchlist_removed
 }
