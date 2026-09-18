@@ -351,20 +351,21 @@ object TraktTools4 {
     }
 
     /**
-     * Creates a new list.
+     * Creates a new list and returns its Trakt ID.
      *
      * See [awaitTraktCall] for details.
      */
     suspend fun createList(
         traktUsers: Users,
         listName: String
-    ): TraktNonNullResponse<TraktList> {
-        return awaitTraktCallNonNull(
+    ): TraktNonNullResponse<Int?> {
+        val response = awaitTraktCallNonNull(
             traktUsers.createList(UserSlug.ME, TraktList().name(listName)),
             "create list",
             // Should work even if not VIP (fails with IsAccountLimitExceeded if limit is reached)
             reportIsNotVip = true
         )
+        return mapResponseData(response) { it.ids?.trakt }
     }
 
     /**

@@ -192,13 +192,11 @@ class TraktListsSync(
                 return@forEach
             }
 
-            val traktList =
+            val listTraktId =
                 when (val response = TraktTools4.createList(traktSync.users, list.name)) {
                     is Success -> response.data
                     else -> null
-                } ?: return false
-
-            val listTraktId = traktList.ids?.trakt
+                }
             if (listTraktId == null) {
                 Timber.e(
                     "Created Trakt list doesn't have an ID (name=%s)",
