@@ -561,6 +561,7 @@ class ShowTools2 @Inject constructor(
                         // chance to retry immediately. Regardless, the next Cloud sync will delete
                         // the note.
                         is TraktErrorResponse.IsAccountLimitExceeded,
+                        is TraktErrorResponse.IsAccountLocked,
                         is TraktErrorResponse.IsNotVip,
                         is TraktErrorResponse.IsUnauthorized,
                         is TraktErrorResponse.Other -> {
@@ -588,16 +589,21 @@ class ShowTools2 @Inject constructor(
                             StoreUserNoteResult(storedText, response.data.id, null)
                         }
 
-                        is TraktErrorResponse.IsAccountLimitExceeded -> {
+                        is TraktErrorResponse.IsAccountLimitExceeded,
+                        is TraktErrorResponse.IsAccountLocked -> {
                             // If Cloud is also connected (Trakt sync is off, only sending actions
                             // to Trakt), store to database, to not prevent using it only if Trakt
                             // account limit is hit. Users can re-save the note to try uploading to
                             // Trakt again.
                             saveToDatabase = isCloudEnabled
+                            val errorMessage =
+                                if (response is TraktErrorResponse.IsAccountLimitExceeded) {
+                                    R.string.trakt_error_limit_exceeded_upload
+                                } else R.string.trakt_error_account_locked
                             StoreUserNoteResult(
                                 noteText,
                                 noteTraktId,
-                                context.getString(R.string.trakt_error_limit_exceeded_upload)
+                                context.getString(errorMessage)
                             )
                         }
 

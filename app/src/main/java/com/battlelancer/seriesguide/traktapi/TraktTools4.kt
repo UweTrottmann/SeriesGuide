@@ -68,6 +68,7 @@ object TraktTools4 {
         class IsNotVip<T> : TraktResponse<T>, TraktNonNullResponse<T>
         class IsUnauthorized<T> : TraktResponse<T>, TraktNonNullResponse<T>
         class IsAccountLimitExceeded<T> : TraktResponse<T>, TraktNonNullResponse<T>
+        class IsAccountLocked<T> : TraktResponse<T>, TraktNonNullResponse<T>
         class Other<T> : TraktResponse<T>, TraktNonNullResponse<T>
     }
 
@@ -183,6 +184,7 @@ object TraktTools4 {
                 is TraktErrorResponse.IsNotVip -> return TraktErrorResponse.IsNotVip()
                 is TraktErrorResponse.IsUnauthorized -> return TraktErrorResponse.IsUnauthorized()
                 is TraktErrorResponse.IsAccountLimitExceeded -> return TraktErrorResponse.IsAccountLimitExceeded()
+                is TraktErrorResponse.IsAccountLocked -> return TraktErrorResponse.IsAccountLocked()
                 is TraktErrorResponse.Other -> return TraktErrorResponse.Other()
             }
         } while (totalPageCount != null && currentPage <= totalPageCount)
@@ -371,6 +373,11 @@ object TraktTools4 {
                     TraktErrorResponse.IsAccountLimitExceeded()
                 }
 
+                TraktV2.isAccountLocked(response) -> {
+                    Errors.logAndReport(action, response)
+                    TraktErrorResponse.IsAccountLocked()
+                }
+
                 TraktV2.isNotVip(response) -> {
                     if (reportIsNotVip) Errors.logAndReport(action, response)
                     TraktErrorResponse.IsNotVip()
@@ -409,6 +416,7 @@ object TraktTools4 {
             awaitTraktCall(call, action, reportIsNotVip, logErrorOnNullBody = true)) {
             is TraktErrorResponse.Other -> response
             is TraktErrorResponse.IsAccountLimitExceeded -> response
+            is TraktErrorResponse.IsAccountLocked -> response
             is TraktErrorResponse.IsNotVip -> response
             is TraktErrorResponse.IsUnauthorized -> response
             is TraktResponse.Success -> {
@@ -435,6 +443,7 @@ object TraktTools4 {
             is TraktErrorResponse.IsNotVip -> TraktErrorResponse.IsNotVip()
             is TraktErrorResponse.IsUnauthorized -> TraktErrorResponse.IsUnauthorized()
             is TraktErrorResponse.IsAccountLimitExceeded -> TraktErrorResponse.IsAccountLimitExceeded()
+            is TraktErrorResponse.IsAccountLocked -> TraktErrorResponse.IsAccountLocked()
             is TraktErrorResponse.Other -> TraktErrorResponse.Other()
         }
     }
