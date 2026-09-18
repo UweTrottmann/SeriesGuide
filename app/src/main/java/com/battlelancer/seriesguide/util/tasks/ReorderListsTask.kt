@@ -1,113 +1,94 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2016-2019, 2021, 2023 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2016 Uwe Trottmann <uwe@uwetrottmann.com>
 
-package com.battlelancer.seriesguide.util.tasks;
+package com.battlelancer.seriesguide.util.tasks
 
-import android.content.ContentProviderOperation;
-import android.content.Context;
-import android.content.OperationApplicationException;
-import androidx.annotation.NonNull;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.backend.HexagonTools;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.Errors;
-import com.uwetrottmann.seriesguide.backend.lists.Lists;
-import com.uwetrottmann.seriesguide.backend.lists.model.SgList;
-import com.uwetrottmann.seriesguide.backend.lists.model.SgListList;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import timber.log.Timber;
+import android.content.ContentProviderOperation
+import android.content.Context
+import android.content.OperationApplicationException
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.provider.SeriesGuideContract
+import com.battlelancer.seriesguide.util.DBUtils
+import com.battlelancer.seriesguide.util.Errors
+import com.uwetrottmann.seriesguide.backend.lists.model.SgList
+import com.uwetrottmann.seriesguide.backend.lists.model.SgListList
+import timber.log.Timber
+import java.io.IOException
 
 /**
  * Task to reorder all lists.
+ *
+ * The given lists order number will be changed to their position in the given list.
  */
-public class ReorderListsTask extends BaseActionTask {
+class ReorderListsTask(
+    context: Context,
+    private val listIdsInOrder: List<String>
+) : BaseActionTask(context) {
 
-    @NonNull private final List<String> listIdsInOrder;
+    override val isSendingToTrakt: Boolean
+        get() = false
 
-    /**
-     * The given lists order number will be changed to their position in the given list.
-     */
-    public ReorderListsTask(@NonNull Context context, @NonNull List<String> listIdsInOrder) {
-        super(context);
-        this.listIdsInOrder = listIdsInOrder;
-    }
-
-    @Override
-    protected boolean isSendingToTrakt() {
-        return false;
-    }
-
-    @Override
-    protected int doBackgroundAction(Void... params) {
-        if (isSendingToHexagon()) {
-            HexagonTools hexagonTools = SgApp.getServicesComponent(getContext()).hexagonTools();
-            Lists listsService = hexagonTools.getListsService();
-            if (listsService == null) {
-                return ERROR_HEXAGON_API; // no longer signed in
-            }
+    override fun doBackgroundAction(vararg params: Void?): Int {
+        if (isSendingToHexagon) {
+            val hexagonTools = SgApp.getServicesComponent(context).hexagonTools()
+            val listsService = hexagonTools.listsService
+                ?: return ERROR_HEXAGON_API // no longer signed in
 
             // send lists with updated order to hexagon
-            SgListList wrapper = new SgListList();
-            List<SgList> lists = buildListsList(listIdsInOrder);
-            wrapper.setLists(lists);
+            val wrapper = SgListList()
+            val lists = buildListsList(listIdsInOrder)
+            wrapper.lists = lists
             try {
-                listsService.save(wrapper).execute();
-            } catch (IOException e) {
-                Errors.logAndReportHexagon("reorder lists", e);
-                return ERROR_HEXAGON_API;
+                listsService.save(wrapper).execute()
+            } catch (e: IOException) {
+                Errors.logAndReportHexagon("reorder lists", e)
+                return ERROR_HEXAGON_API
             }
         }
 
         // update local state
         if (!doDatabaseUpdate()) {
-            return ERROR_DATABASE;
+            return ERROR_DATABASE
         }
 
-        return SUCCESS;
+        return SUCCESS
     }
 
-    @NonNull
-    private List<SgList> buildListsList(List<String> listsToChange) {
-        List<SgList> lists = new ArrayList<>(listsToChange.size());
-        for (int position = 0; position < listsToChange.size(); position++) {
-            String listId = listsToChange.get(position);
-            SgList list = new SgList();
-            list.setListId(listId);
-            list.setOrder(position);
-            lists.add(list);
+    private fun buildListsList(listsToChange: List<String>): List<SgList> {
+        val lists: MutableList<SgList> = ArrayList(listsToChange.size)
+        for (position in listsToChange.indices) {
+            val listId = listsToChange[position]
+            val list = SgList()
+            list.listId = listId
+            list.order = position
+            lists.add(list)
         }
-        return lists;
+        return lists
     }
 
-    private boolean doDatabaseUpdate() {
-        ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-        for (int position = 0; position < listIdsInOrder.size(); position++) {
-            String listId = listIdsInOrder.get(position);
-            batch.add(ContentProviderOperation.newUpdate(
-                    SeriesGuideContract.Lists.buildListUri(listId))
+    private fun doDatabaseUpdate(): Boolean {
+        val batch = ArrayList<ContentProviderOperation>()
+        for (position in listIdsInOrder.indices) {
+            val listId = listIdsInOrder[position]
+            batch.add(
+                ContentProviderOperation.newUpdate(
+                    SeriesGuideContract.Lists.buildListUri(listId)
+                )
                     .withValue(SeriesGuideContract.Lists.ORDER, position)
-                    .build());
+                    .build()
+            )
         }
 
         try {
-            DBUtils.applyInSmallBatches(getContext(), batch);
-        } catch (OperationApplicationException e) {
-            Timber.e(e, "doDatabaseUpdate: failed to save reordered lists.");
-            return false;
+            DBUtils.applyInSmallBatches(context, batch)
+        } catch (e: OperationApplicationException) {
+            Timber.e(e, "doDatabaseUpdate: failed to save reordered lists.")
+            return false
         }
-        return true;
+        return true
     }
 
-    @Override
-    protected int getSuccessTextResId() {
-        if (isSendingToHexagon()) {
-            return R.string.ack_lists_reordered;
-        } else {
-            return 0;
-        }
-    }
+    override val successTextResId: Int
+        get() = if (isSendingToHexagon) R.string.ack_lists_reordered else 0
 }
