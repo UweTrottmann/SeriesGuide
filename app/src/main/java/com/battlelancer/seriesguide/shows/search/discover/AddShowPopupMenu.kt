@@ -1,12 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright 2024-2025 Uwe Trottmann
 
-@file:Suppress("DEPRECATION") // Ignore warning that AsyncTask should not be used for new code
-
 package com.battlelancer.seriesguide.shows.search.discover
 
 import android.content.Context
-import android.os.AsyncTask
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
@@ -49,16 +46,12 @@ class AddShowPopupMenu(
             }
 
             R.id.menu_action_add_show_watchlist_add -> {
-                @Suppress("DEPRECATION") // AsyncTask
-                AddShowToWatchlistTask(context, show.tmdbId)
-                    .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+                AddShowToWatchlistTask(context, show.tmdbId).run()
                 true
             }
 
             R.id.menu_action_add_show_watchlist_remove -> {
-                @Suppress("DEPRECATION") // AsyncTask
-                RemoveShowFromWatchlistTask(context, show.tmdbId)
-                    .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+                RemoveShowFromWatchlistTask(context, show.tmdbId).run()
                 true
             }
 
