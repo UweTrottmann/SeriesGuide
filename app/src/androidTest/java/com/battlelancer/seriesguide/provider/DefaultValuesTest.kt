@@ -209,7 +209,7 @@ class DefaultValuesTest {
     @Test
     fun listDefaultValues() {
         val addListTask = AddListTask(ApplicationProvider.getApplicationContext(), LIST.name)
-        addListTask.doDatabaseUpdate(resolver, addListTask.listId)
+        addListTask.doDatabaseUpdate(resolver, addListTask.listId!!)
 
         val lists = testDb.sgListHelper().getListsForExport()
         // Initial data + new list from above; initial data asserted with RoomInitialDataTest.

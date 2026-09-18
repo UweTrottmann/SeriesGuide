@@ -1,110 +1,86 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2016 Uwe Trottmann <uwe@uwetrottmann.com>
 
-package com.battlelancer.seriesguide.util.tasks;
+package com.battlelancer.seriesguide.util.tasks
 
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.backend.HexagonTools;
-import com.battlelancer.seriesguide.lists.ListsTools;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.util.Errors;
-import com.uwetrottmann.seriesguide.backend.lists.Lists;
-import com.uwetrottmann.seriesguide.backend.lists.model.SgList;
-import com.uwetrottmann.seriesguide.backend.lists.model.SgListList;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import android.content.ContentResolver
+import android.content.ContentValues
+import android.content.Context
+import androidx.annotation.VisibleForTesting
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.lists.ListsTools
+import com.battlelancer.seriesguide.provider.SeriesGuideContract
+import com.battlelancer.seriesguide.util.Errors
+import com.uwetrottmann.seriesguide.backend.lists.model.SgList
+import com.uwetrottmann.seriesguide.backend.lists.model.SgListList
+import java.io.IOException
 
 /**
  * Task to add a new list.
  */
-public class AddListTask extends BaseActionTask {
+open class AddListTask(
+    context: Context,
+    protected val listName: String
+) : BaseActionTask(context) {
 
-    @NonNull protected final String listName;
+    override val isSendingToTrakt: Boolean = false
 
-    public AddListTask(@NonNull Context context, @NonNull String listName) {
-        super(context);
-        this.listName = listName;
-    }
+    override fun doBackgroundAction(vararg params: Void?): Int {
+        // The user interface should protect against passing an empty name, but check regardless
+        val listId = listId
+            ?: return ERROR_DATABASE
 
-    @Override
-    protected boolean isSendingToTrakt() {
-        return false;
-    }
-
-    @Override
-    protected int doBackgroundAction(Void... params) {
-        String listId = getListId();
-        // The user interface should protect against passing an empty name but check regardless
-        if (listId == null) {
-            return ERROR_DATABASE;
-        }
-
-        if (isSendingToHexagon()) {
-            HexagonTools hexagonTools = SgApp.getServicesComponent(getContext()).hexagonTools();
-            Lists listsService = hexagonTools.getListsService();
-            if (listsService == null) {
-                return ERROR_HEXAGON_API; // no longer signed in
-            }
+        if (isSendingToHexagon) {
+            val hexagonTools = SgApp.getServicesComponent(context).hexagonTools()
+            val listsService = hexagonTools.listsService
+                ?: return ERROR_HEXAGON_API // no longer signed in
 
             // send list to be added to hexagon
-            SgListList wrapper = new SgListList();
-            List<SgList> lists = buildList(listId, listName);
-            wrapper.setLists(lists);
+            val wrapper = SgListList()
+            val lists = buildList(listId, listName)
+            wrapper.setLists(lists)
             try {
-                listsService.save(wrapper).execute();
-            } catch (IOException e) {
-                Errors.logAndReportHexagon("add list", e);
-                return ERROR_HEXAGON_API;
+                listsService.save(wrapper).execute()
+            } catch (e: IOException) {
+                Errors.logAndReportHexagon("add list", e)
+                return ERROR_HEXAGON_API
             }
         }
 
         // update local state
-        if (!doDatabaseUpdate(getContext().getContentResolver(), listId)) {
-            return ERROR_DATABASE;
+        if (!doDatabaseUpdate(context.contentResolver, listId)) {
+            return ERROR_DATABASE
         }
 
-        return SUCCESS;
+        return SUCCESS
+    }
+
+    @get:VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    open val listId: String?
+        get() = ListsTools.generateListId(listName)
+
+    private fun buildList(listId: String, listName: String): List<SgList> {
+        val lists = ArrayList<SgList>(1)
+        val list = SgList()
+        list.setListId(listId)
+        list.setName(listName)
+        lists.add(list)
+        return lists
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    public String getListId() {
-        return ListsTools.generateListId(listName);
-    }
-
-    @NonNull
-    private static List<SgList> buildList(@NonNull String listId, @NonNull String listName) {
-        List<SgList> lists = new ArrayList<>(1);
-        SgList list = new SgList();
-        list.setListId(listId);
-        list.setName(listName);
-        lists.add(list);
-        return lists;
-    }
-
-    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    public boolean doDatabaseUpdate(ContentResolver contentResolver, String listId) {
-        ContentValues values = new ContentValues();
-        values.put(SeriesGuideContract.Lists.LIST_ID, listId);
-        values.put(SeriesGuideContract.Lists.NAME, listName);
+    open fun doDatabaseUpdate(contentResolver: ContentResolver, listId: String): Boolean {
+        val values = ContentValues()
+        values.put(SeriesGuideContract.Lists.LIST_ID, listId)
+        values.put(SeriesGuideContract.Lists.NAME, listName)
         // default value
-        values.put(SeriesGuideContract.Lists.ORDER, 0);
-        contentResolver.insert(SeriesGuideContract.Lists.CONTENT_URI, values);
-        return true;
+        values.put(SeriesGuideContract.Lists.ORDER, 0)
+        contentResolver.insert(SeriesGuideContract.Lists.CONTENT_URI, values)
+        return true
     }
 
-    @Override
-    protected int getSuccessTextResId() {
-        if (isSendingToHexagon()) {
-            return R.string.ack_list_added;
-        } else {
-            return 0;
-        }
-    }
+    override val successTextResId: Int
+        get() = if (isSendingToHexagon) R.string.ack_list_added else 0
+
 }
