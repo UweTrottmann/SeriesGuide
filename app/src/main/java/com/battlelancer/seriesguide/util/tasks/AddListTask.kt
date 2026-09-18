@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.lists.ListsTools
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
+import com.battlelancer.seriesguide.traktapi.TraktTools4
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.seriesguide.backend.lists.model.SgList
 import com.uwetrottmann.seriesguide.backend.lists.model.SgListList
@@ -24,12 +25,15 @@ open class AddListTask(
     protected val listName: String
 ) : BaseActionTask(context) {
 
-    override val isSendingToTrakt: Boolean = false
-
     override fun doBackgroundAction(vararg params: Void?): Int {
         // The user interface should protect against passing an empty name, but check regardless
         val listId = listId
             ?: return ERROR_DATABASE
+
+        if (isSendingToTrakt) {
+            val traktListId = TraktTools4.createList(traktSync.users, listName)
+                ?: return ERROR_TRAKT_API
+        }
 
         if (isSendingToHexagon) {
             val hexagonTools = SgApp.getServicesComponent(context).hexagonTools()
