@@ -29,7 +29,7 @@ class ReorderListsTask(
     override val isSendingToTrakt: Boolean
         get() = false
 
-    override fun doBackgroundAction(vararg params: Void?): Int {
+    override suspend fun doBackgroundAction(): Int {
         if (isSendingToHexagon) {
             val hexagonTools = SgApp.getServicesComponent(context).hexagonTools()
             val listsService = hexagonTools.listsService

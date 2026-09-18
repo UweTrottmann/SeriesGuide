@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2015-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2015 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.util.tasks
 
@@ -34,9 +34,7 @@ class RateMovieTask(
         return rowsUpdated > 0
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onPostExecute(result: Int?) {
-        @Suppress("DEPRECATION")
+    override fun onPostExecute(result: Int) {
         super.onPostExecute(result)
 
         // post event so movie UI reloads (it is not listening to database changes)

@@ -24,7 +24,7 @@ abstract class BaseShowActionTask(
     override val isSendingToHexagon: Boolean
         get() = false
 
-    override fun doBackgroundAction(vararg params: Void?): Int {
+    override suspend fun doBackgroundAction(): Int {
         if (isSendingToTrakt) {
             if (!TraktCredentials.get(context).hasCredentials()) {
                 return ERROR_TRAKT_AUTH
@@ -61,8 +61,7 @@ abstract class BaseShowActionTask(
                 ?: false
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onPostExecute(result: Int?) {
+    override fun onPostExecute(result: Int) {
         super.onPostExecute(result)
 
         if (result == SUCCESS) {
