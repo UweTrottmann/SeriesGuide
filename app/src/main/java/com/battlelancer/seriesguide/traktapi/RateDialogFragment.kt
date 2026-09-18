@@ -1,16 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2012 Uwe Trottmann <uwe@uwetrottmann.com>
 
-@file:Suppress("DEPRECATION") // Ignore warning that AsyncTask should not be used for new code
-
 package com.battlelancer.seriesguide.traktapi
 
 import android.app.Dialog
 import android.content.Context
-import android.os.AsyncTask
 import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.core.os.bundleOf
 import androidx.core.view.isGone
@@ -126,8 +122,7 @@ class RateDialogFragment : AppCompatDialogFragment() {
 
             else -> throw IllegalArgumentException("Unknown item type $itemType")
         }
-        @Suppress("DEPRECATION") // Just a warning that AsyncTask should not be used for new code
-        task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        task.run()
 
         // guard against onClick being called after onSaveInstanceState by allowing state loss
         dismissAllowingStateLoss()
