@@ -1,6 +1,6 @@
 <component name="CopyrightManager">
   <copyright>
-    <option name="notice" value="SPDX-License-Identifier: GPL-3.0-or-later&#10;SPDX-FileCopyrightText: Copyright © &amp;#36;today.year Uwe Trottmann &lt;uwe@uwetrottmann.com&gt;" />
+    <option name="notice" value="#set(&amp;#36;year = &amp;#36;originalComment.match(&quot;Copyright (\d{4})&quot;))&#10;#if(&amp;#36;year == &quot;&quot;)&#10;#set(&amp;#36;year = &amp;#36;today.year)&#10;#end&#10;SPDX-License-Identifier: GPL-3.0-or-later&#10;SPDX-FileCopyrightText: Copyright © &amp;#36;{year} Uwe Trottmann &lt;uwe@uwetrottmann.com&gt;" />
     <option name="myName" value="Uwe GPL-3.0-or-later" />
   </copyright>
 </component>

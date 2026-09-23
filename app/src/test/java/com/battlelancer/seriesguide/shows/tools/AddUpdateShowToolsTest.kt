@@ -99,11 +99,12 @@ class AddUpdateShowToolsTest {
         )
 
         val result = addUpdateShowTools.addShow(
-            testTmdbId,
-            testLanguage,
-            null,
-            null,
-            mock()
+            showTmdbId = testTmdbId,
+            languageCode = testLanguage,
+            traktCollection = null,
+            traktWatched = null,
+            hexagonEpisodeSync = mock(),
+            uploadToHexagon = false
         )
 
         assertThat(result).isEqualTo(AddUpdateShowTools.ShowResult.TMDB_ERROR)

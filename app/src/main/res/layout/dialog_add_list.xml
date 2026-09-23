@@ -13,13 +13,14 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayoutListManageListName"
+            android:id="@+id/textFieldLayoutListManageListName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <!-- Set inputType as it does not default to (single-line) text like EditText. -->
             <!-- Set minWidth on EditText so FrameLayout sizes correctly. -->
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textFieldTextListManageListName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/list_title_hint"

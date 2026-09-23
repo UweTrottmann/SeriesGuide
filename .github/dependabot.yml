@@ -1,5 +1,5 @@
 # Please see the documentation for all configuration options:
-# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+# https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference
 
 version: 2
 updates:
@@ -7,3 +7,12 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
+    # Wait before suggesting a new version to reduce risk of bugs or supply-chain attacks
+    cooldown:
+      default-days: 7
+    # Group all GitHub Actions updates into a single merge request to simplify merging
+    groups:
+      github-actions:
+        applies-to: "version-updates"
+        patterns:
+          - "*"

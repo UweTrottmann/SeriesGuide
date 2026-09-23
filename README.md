@@ -2,10 +2,11 @@
 
 Android app to help you keep track of your favorite TV shows and movies.
 
-[Download](https://www.seriesgui.de) 
+[Download](https://www.seriesgui.de)
+• [Help](https://www.seriesgui.de/help)
 • [Support the dev](https://www.seriesgui.de/whypay) 
 • [Contribute](CONTRIBUTING.md) 
-• [Announcements & Help](https://discuss.seriesgui.de/) 
+• [Announcements & Discussion](https://discuss.seriesgui.de/) 
 • [Release notes](https://github.com/UweTrottmann/SeriesGuide/blob/main/CHANGELOG.md#release-notes)
 
 <img src="screenshots/phone.png" alt="Screenshot of the SeriesGuide app and above it the text &quot;Track shows and movies. Open Source.&quot;" height="375"/>

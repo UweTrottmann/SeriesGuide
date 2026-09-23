@@ -106,8 +106,9 @@ class TraktNotesSync(
                 "syncForShows: remove notes no longer on Trakt for %s shows",
                 showIdsWithNotesToUploadOrRemove.size
             )
-            showHelper.updateUserNotes(showIdsWithNotesToUploadOrRemove
-                .associateWith { SgShow2Helper.NoteUpdate("", null) })
+            showHelper.updateUserNotes(
+                showIdsWithNotesToUploadOrRemove
+                    .associateWith { SgShow2Helper.NoteUpdate("", null) })
         }
 
         if (isInitialSync) {
@@ -193,6 +194,13 @@ class TraktNotesSync(
                         is TraktErrorResponse.IsAccountLimitExceeded -> {
                             traktSync.progress.setImportantErrorIfNone(
                                 context.getString(R.string.trakt_error_limit_exceeded_upload)
+                            )
+                            null
+                        }
+
+                        is TraktErrorResponse.IsAccountLocked -> {
+                            traktSync.progress.setImportantErrorIfNone(
+                                context.getString(R.string.trakt_error_account_locked)
                             )
                             null
                         }

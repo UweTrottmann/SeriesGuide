@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2017-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2017 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.movies.search
 
@@ -187,7 +187,7 @@ class MoviesSearchActivity : BaseMessageActivity() {
                     val hasLanguage = it.originalLanguage != null
                     isChipIconVisible = hasLanguage
                     text = if (hasLanguage) {
-                        LanguageTools.buildLanguageDisplayName(it.originalLanguage!!)
+                        LanguageTools.buildLanguageDisplayName(it.originalLanguage)
                     } else {
                         getString(R.string.filter_language)
                     }

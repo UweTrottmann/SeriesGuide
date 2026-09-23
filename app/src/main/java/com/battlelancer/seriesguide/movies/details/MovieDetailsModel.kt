@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2021 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.movies.details
 
@@ -10,19 +10,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import com.battlelancer.seriesguide.movies.MovieLoader
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 
 class MovieDetailsModel(
-    movieTmdbId: Int,
+    private val movieTmdbId: Int,
     application: Application
 ) : AndroidViewModel(application) {
 
-    init {
-        // Set original value for region.
-        StreamingSearch.initRegionLiveData(application)
-    }
+    val movieDetailsResult: MutableStateFlow<MovieLoader.Result?> = MutableStateFlow(null)
+
+    val trailerVideoId: MutableStateFlow<String?> = MutableStateFlow(null)
 
     private val watchInfoMediator = MediatorLiveData<StreamingSearch.WatchInfo>().apply {
         addSource(StreamingSearch.regionLiveData) {
@@ -40,6 +43,36 @@ class MovieDetailsModel(
 
     val credits = liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
         emit(TmdbTools2().getCreditsForMovie(application, movieTmdbId))
+    }
+
+    init {
+        // Set original value for region.
+        StreamingSearch.initRegionLiveData(application)
+
+        loadMovieDetails()
+        loadTrailerVideoId()
+    }
+
+    fun loadMovieDetails() {
+        viewModelScope.launch(Dispatchers.Default) {
+            MovieLoader(getApplication(), movieTmdbId, movieDetailsResult)
+                .loadInBackground()
+        }
+    }
+
+    fun loadTrailerVideoId() {
+        viewModelScope.launch(Dispatchers.Default) {
+            // Try to get cached value from database before doing a network request
+            val movieDbHelper = SgRoomDatabase.getInstance(getApplication()).movieHelper()
+            movieDbHelper.getMovieTrailer(movieTmdbId)
+                ?.also { trailerVideoId.value = it }
+
+            TmdbTools2().getMovieTrailerYoutubeId(getApplication(), movieTmdbId)
+                ?.also {
+                    movieDbHelper.updateMovieTrailer(movieTmdbId, it)
+                    trailerVideoId.value = it
+                }
+        }
     }
 
 }

@@ -8,6 +8,47 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
 
+## Version 2026.4
+
+* 🔨 Trakt: links to more information and ratings go to their new web app.
+* 🔧 Trakt: comments renamed to reviews.
+* 🔧 Movies: cache genres and trailer to database, display cached data immediately before potentially slow network requests.
+* 🔧 Cloud: new future-proof sign-in screens.
+* 🔨 Once again, keep entered text when rotating the screen or changing the app size in comments screen, list add, list edit and check-in dialog.
+
+### 2026.4.3 - 2026-09-23
+
+* 🔧 Trakt: fail with specific error message if account is locked and trying to edit or delete note.
+* 📝 Import latest user interface translations.
+
+### 2026.4.2 - 2026-09-16 🧪
+
+* 🔧 Trakt: comments renamed to reviews.
+* 🔧 Cloud: when sync adds a show, skip uploading it.
+* 🔧 Settings: add link to app language setting on Android 13 and newer.
+* 🔨 Shows: no longer crash when trying to update a show that was just removed.
+* 📝 Import latest user interface translations.
+
+### 2026.4.1 - 2026-09-03 🧪
+
+* 🔨 Once again, keep entered text when rotating the screen or changing the app size in comments screen, list add, list edit and check-in dialog.
+* 🔧 Cloud: always ask to choose saved password when signing in.
+* 🔨 Cloud: correctly show next or done keyboard buttons, add autofill hints.
+* 🔧 Network connections: drop no longer needed Play services security provider that when launching the app caused not responding issues on some devices.
+* 🔧 Stream and purchase info: hide link to more information if installed via Play Store in all regions again to comply with Payments policy.
+* 📝 Import latest user interface translations.
+
+### 2026.4.0 - 2026-08-14 🧪
+
+* 🔨 Trakt: links to more information and ratings go to their new web app.
+* 🔧 Movies: cache genres and trailer to database, display cached data immediately before potentially slow network requests.
+* 🔧 Cloud: new future-proof sign-in screens.
+* 🔨 Cloud: after deleting an account, signing in no longer re-uses the deleted account.
+* 🔧 Comments: note they are provided by Trakt, correctly color user avatar placeholder symbol.
+* 🔨 About: use correct theme color on devices running older versions of Android.
+* 🔧 About: display licenses and credits inside the app.
+* 📝 Import latest user interface translations.
+
 ## Version 2026.3
 
 * 🔧 Import: support importing movies by IMDB IDs (linked as external ID on TMDB), such as from the TV Time to SeriesGuide transformer.

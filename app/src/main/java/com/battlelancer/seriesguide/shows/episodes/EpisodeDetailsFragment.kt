@@ -628,8 +628,13 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
         if (requireActivity().getSgAppContainer().preventExternalLinks) return
 
         // Trakt buttons
-        if (episode.tmdbId != null) {
-            val traktUrl = TraktTools.buildEpisodeUrl(episode.tmdbId)
+        val showTraktSlugOrId: String? = show.slug ?: show.traktId?.toString()
+        if (showTraktSlugOrId != null) {
+            val traktUrl = TraktTools.buildEpisodeUrl(
+                showTraktSlugOrId,
+                episode.season,
+                episode.number
+            )
             bindingRatings.ratingViewTrakt.setLink(requireContext(), traktUrl)
             bindingBottom.buttonEpisodeTrakt.openUrlOnClickAndCopyOnLongPress(traktUrl)
         }

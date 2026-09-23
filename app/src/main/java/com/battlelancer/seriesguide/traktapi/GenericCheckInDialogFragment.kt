@@ -35,7 +35,7 @@ abstract class GenericCheckInDialogFragment : AppCompatDialogFragment() {
 
         // Paste episode button
         val itemTitle = requireArguments().getString(ARG_ITEM_TITLE)
-        val editTextMessage = binding.textInputLayoutCheckIn.editText
+        val editTextMessage = binding.textFieldLayoutCheckIn.editText
         if (!itemTitle.isNullOrEmpty()) {
             binding.buttonCheckInPasteTitle.setOnClickListener {
                 if (editTextMessage == null) {
@@ -138,7 +138,7 @@ abstract class GenericCheckInDialogFragment : AppCompatDialogFragment() {
         }
 
         // try to check in
-        val editText = binding?.textInputLayoutCheckIn?.editText
+        val editText = binding?.textFieldLayoutCheckIn?.editText
         if (editText != null) {
             checkInTrakt(editText.text.toString())
         }
@@ -155,7 +155,7 @@ abstract class GenericCheckInDialogFragment : AppCompatDialogFragment() {
     private fun setProgressLock(lock: Boolean) {
         val binding = binding ?: return
         binding.progressBarCheckIn.visibility = if (lock) View.VISIBLE else View.GONE
-        binding.textInputLayoutCheckIn.isEnabled = !lock
+        binding.textFieldLayoutCheckIn.isEnabled = !lock
         binding.buttonCheckInPasteTitle.isEnabled = !lock
         binding.buttonCheckInClear.isEnabled = !lock
         binding.buttonCheckIn.isEnabled = !lock

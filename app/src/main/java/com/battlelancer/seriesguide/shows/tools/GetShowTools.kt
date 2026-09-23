@@ -68,6 +68,7 @@ class GetShowTools @Inject constructor(
                 }
                 Ok(TraktDetails(
                     traktIdOrNull = traktShow?.ids?.trakt,
+                    traktSlugOrNull = traktShow?.ids?.slug,
                     releaseTime = TimeTools.parseShowReleaseTime(traktShow?.airs?.time),
                     releaseWeekDay = TimeTools.parseShowReleaseWeekDay(traktShow?.airs?.day),
                     releaseCountry = traktShow?.country,
@@ -83,6 +84,7 @@ class GetShowTools @Inject constructor(
                     // episode release times are recalculated.
                     TraktDetails(
                         traktIdOrNull = null,
+                        traktSlugOrNull = null,
                         releaseTime = TimeTools.parseShowReleaseTime(null),
                         releaseWeekDay = TimeTools.parseShowReleaseWeekDay(null),
                         releaseCountry = null,
@@ -95,6 +97,7 @@ class GetShowTools @Inject constructor(
                     // Use previously loaded details instead of failing.
                     TraktDetails(
                         traktIdOrNull = existingShow.traktId,
+                        traktSlugOrNull = existingShow.slug,
                         releaseTime = existingShow.releaseTimeOrDefault,
                         releaseWeekDay = existingShow.releaseWeekDayOrDefault,
                         releaseCountry = existingShow.releaseCountry,
@@ -148,6 +151,7 @@ class GetShowTools @Inject constructor(
                 showUpdate = SgShow2Update(
                     tvdbId = tvdbIdOrNull,
                     traktId = traktDetails.traktIdOrNull,
+                    slug = traktDetails.traktSlugOrNull,
                     title = title,
                     titleNoArticle = titleNoArticle,
                     overview = overview,
@@ -178,6 +182,7 @@ class GetShowTools @Inject constructor(
                     tmdbId = tmdbShow.id,
                     tvdbId = tvdbIdOrNull,
                     traktId = traktDetails.traktIdOrNull,
+                    slug = traktDetails.traktSlugOrNull,
                     title = title,
                     titleNoArticle = titleNoArticle,
                     overview = overview,
@@ -221,6 +226,7 @@ class GetShowTools @Inject constructor(
 
     data class TraktDetails(
         val traktIdOrNull: Int?,
+        val traktSlugOrNull: String?,
         val releaseTime: Int,
         val releaseWeekDay: Int,
         val releaseCountry: String?,

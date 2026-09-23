@@ -53,7 +53,7 @@ class ListManageDialogFragment : AppCompatDialogFragment() {
             setText(R.string.action_save)
             setOnClickListener {
                 val editText =
-                    this@ListManageDialogFragment.binding?.textInputLayoutListManageListName?.editText
+                    this@ListManageDialogFragment.binding?.textFieldLayoutListManageListName?.editText
                         ?: return@setOnClickListener
 
                 // update title
@@ -94,7 +94,7 @@ class ListManageDialogFragment : AppCompatDialogFragment() {
             return
         }
 
-        val textInputLayoutName = binding.textInputLayoutListManageListName
+        val textInputLayoutName = binding.textFieldLayoutListManageListName
         val editTextName = textInputLayoutName.editText!!
         editTextName.setText(listName)
         editTextName.addTextChangedListener(

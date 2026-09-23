@@ -10,6 +10,12 @@ in "Download as ZIP" choose to "Build & Download".
 2. Place the `zip` file into this directory and run 
    [the update script](update-translations.sh).
 
+3. Commit changes:   
+ 
+```bash
+git commit --all --message "Import latest translations"
+```
+
 By default, it strips the region specifier of the values directory so translations are used by
 Android for any language variants.
 

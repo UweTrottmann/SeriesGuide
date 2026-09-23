@@ -122,6 +122,24 @@ Some relevant documentation:
   [support per-app language preferences](https://developer.android.com/guide/topics/resources/app-languages#sample-config).
   See the link for supported language codes. They differ from the resource directory name!
 
+### String resources
+
+String IDs must be unique across the project. Add prefixes if only used for a specific feature and
+what type of string it is to give a hint about the acceptable length:
+
+```
+# Feature-specific strings
+reviews_action_
+reviews_error_
+reviews_title_
+# Generic strings
+action_
+error_
+title_
+label_
+description_
+```
+
 ### Layout resources
 
 View IDs should be unique across the project to support refactoring using Android Studio.
@@ -156,7 +174,7 @@ so they work (tinting) and do not crash (gradients) on all supported releases:
 - **Not** for app widget layouts as the system initializes them
 
 When using `Picasso`, make sure to not pass a drawable resource ID but a drawable loaded using
-`AppCompatResources.getDrawable()` instead. Otherwise the drawable will not be tinted correctly.
+`AppCompatResources.getDrawable()` instead. Otherwise, the drawable will not be tinted correctly.
 
 ### Dialogs
 
@@ -203,7 +221,7 @@ As it is a `LinearLayout`, [until this is fixed](https://github.com/material-com
 
 ```xml
 <com.google.android.material.textfield.TextInputLayout
-    android:id="@+id/textFieldEditNote"
+    android:id="@+id/textFieldLayoutEditNote"
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_weight="1"
@@ -214,11 +232,31 @@ As it is a `LinearLayout`, [until this is fixed](https://github.com/material-com
         counter out of bounds. As TextInputLayout is a LinearLayout, set layout_weight="1"
         to resolve. -->
     <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/textFieldTextEditNote"    
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
 </com.google.android.material.textfield.TextInputLayout>
+```
+
+Also, make sure to set a view ID on the `TextInputEditText` child so it preserves state across config changes. 
+
+## Jetpack Compose
+
+### Scrollable modifier clip to padding
+
+https://developer.android.com/develop/ui/compose/touch-input/scroll/scroll-modifiers
+
+To achieve something similar to `android:clipToPadding="false"` make sure the scrollable modifier is
+added before padding modifiers, such as:
+
+```kotlin
+Modifier
+  .fillMaxSize()
+  .verticalScroll(rememberScrollState())
+  .padding(innerPadding)
+  .padding(16.dp)
 ```
 
 ## Dependencies

@@ -464,10 +464,7 @@ public class SeriesGuideContract {
         String TVDB_ID = "series_tvdb_id";
 
         /**
-         * Slug for this show to build URLs. Always a string, but may be a number string if
-         * no slug is set (still safe to build URL with). May be null or empty.
-         * <p>
-         * Currently not used.
+         * See {@link SgShow2#getSlug()}.
          */
         String SLUG = "series_slug";
 
@@ -970,6 +967,11 @@ public class SeriesGuideContract {
         String TMDB_ID = "movies_tmdbid";
 
         /**
+         * See {@link SgMovie#getTraktId()}.
+         */
+        String TRAKT_ID = "movies_traktid";
+
+        /**
          * See {@link SgMovie#getPoster()}.
          */
         String POSTER = "movies_poster";
@@ -984,12 +986,22 @@ public class SeriesGuideContract {
         String RELEASED_UTC_MS = "movies_released";
 
         /**
+         * See {@link SgMovie#getSlug()}.
+         */
+        String SLUG = "movies_slug";
+
+        /**
          * See {@link SgMovie#getRuntimeMin()}.
          */
         String RUNTIME_MIN = "movies_runtime";
 
         String TRAILER = "movies_trailer";
 
+        /**
+         * @deprecated Removed in {@link SgRoomDatabase#VERSION_55_MOVIE_SLUG_DOUBLE_RATING}.
+         */
+        @SuppressWarnings("DeprecatedIsStillUsed")
+        @Deprecated
         String CERTIFICATION = "movies_certification";
 
         /**

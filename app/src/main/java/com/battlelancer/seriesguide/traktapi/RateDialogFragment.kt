@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2012-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2012 Uwe Trottmann <uwe@uwetrottmann.com>
 
 @file:Suppress("DEPRECATION") // Ignore warning that AsyncTask should not be used for new code
 
@@ -37,7 +37,7 @@ class RateDialogFragment : AppCompatDialogFragment() {
     private var binding: DialogTraktRateBinding? = null
 
     /**
-     * Checks and asks for missing Trakt credentials. Otherwise if they are valid shows the dialog.
+     * Checks and asks for missing Trakt credentials. Otherwise, if they are valid shows the dialog.
      */
     fun safeShow(context: Context, fragmentManager: FragmentManager): Boolean {
         if (!TraktCredentials.ensureCredentials(context)) {
@@ -47,9 +47,7 @@ class RateDialogFragment : AppCompatDialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder: AlertDialog.Builder
-
-        val binding = DialogTraktRateBinding.inflate(LayoutInflater.from(context))
+        val binding = DialogTraktRateBinding.inflate(LayoutInflater.from(requireContext()))
             .also { this.binding = it }
 
         val ratingButtons: MutableList<MaterialButton> = ArrayList()
@@ -66,7 +64,7 @@ class RateDialogFragment : AppCompatDialogFragment() {
 
         for (i in ratingButtons.indices) {
             val ratingButton = ratingButtons[i]
-            ratingButton.text = TraktTools.buildUserRatingString(context, i + 1)
+            ratingButton.text = TraktTools.buildUserRatingString(requireContext(), i + 1)
         }
 
         // rating buttons from 1 (worst) to 10 (best)
@@ -101,7 +99,7 @@ class RateDialogFragment : AppCompatDialogFragment() {
             binding.ratingDelete.isGone = true
         }
 
-        builder = MaterialAlertDialogBuilder(requireContext())
+        val builder = MaterialAlertDialogBuilder(requireContext())
         builder.setView(binding.root)
 
         return builder.create()

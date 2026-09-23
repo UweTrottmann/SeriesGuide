@@ -21,11 +21,13 @@ import com.battlelancer.seriesguide.traktapi.TraktTools4
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktErrorResponse
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktResponse
+import com.battlelancer.seriesguide.util.TaskManager
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow
 import dagger.Lazy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
@@ -153,23 +155,20 @@ class ShowTools2 @Inject constructor(
         if (isCloudFailed) return SgResult.ERROR
 
         return withContext(Dispatchers.IO) {
-            // Remove database entries in stages, so if an earlier stage fails,
-            // user can try again. Also saves memory by using smaller database transactions.
-            val database = SgRoomDatabase.getInstance(context)
+            TaskManager.modifyOrExportShowsSemaphore.withPermit {
+                val database = SgRoomDatabase.getInstance(context)
 
-            var rowsUpdated = database.sgEpisode2Helper().deleteEpisodesOfShow(showId)
-            if (rowsUpdated == -1) return@withContext SgResult.ERROR
+                database.sgShow2Helper().deleteShowWithSeasonsAndEpisodes(
+                    showId,
+                    database.sgSeason2Helper(),
+                    database.sgEpisode2Helper()
+                )
 
-            rowsUpdated = database.sgSeason2Helper().deleteSeasonsOfShow(showId)
-            if (rowsUpdated == -1) return@withContext SgResult.ERROR
+                database.sgWatchProviderHelper().deleteShowMappings(showId)
 
-            rowsUpdated = database.sgShow2Helper().deleteShow(showId)
-            if (rowsUpdated == -1) return@withContext SgResult.ERROR
-
-            database.sgWatchProviderHelper().deleteShowMappings(showId)
-
-            SeriesGuideDatabase.rebuildFtsTable(context)
-            SgResult.SUCCESS
+                SeriesGuideDatabase.rebuildFtsTable(context)
+                SgResult.SUCCESS
+            }
         }
     }
 
@@ -562,6 +561,7 @@ class ShowTools2 @Inject constructor(
                         // chance to retry immediately. Regardless, the next Cloud sync will delete
                         // the note.
                         is TraktErrorResponse.IsAccountLimitExceeded,
+                        is TraktErrorResponse.IsAccountLocked,
                         is TraktErrorResponse.IsNotVip,
                         is TraktErrorResponse.IsUnauthorized,
                         is TraktErrorResponse.Other -> {
@@ -589,16 +589,21 @@ class ShowTools2 @Inject constructor(
                             StoreUserNoteResult(storedText, response.data.id, null)
                         }
 
-                        is TraktErrorResponse.IsAccountLimitExceeded -> {
+                        is TraktErrorResponse.IsAccountLimitExceeded,
+                        is TraktErrorResponse.IsAccountLocked -> {
                             // If Cloud is also connected (Trakt sync is off, only sending actions
                             // to Trakt), store to database, to not prevent using it only if Trakt
                             // account limit is hit. Users can re-save the note to try uploading to
                             // Trakt again.
                             saveToDatabase = isCloudEnabled
+                            val errorMessage =
+                                if (response is TraktErrorResponse.IsAccountLimitExceeded) {
+                                    R.string.trakt_error_limit_exceeded_upload
+                                } else R.string.trakt_error_account_locked
                             StoreUserNoteResult(
                                 noteText,
                                 noteTraktId,
-                                context.getString(R.string.trakt_error_limit_exceeded_upload)
+                                context.getString(errorMessage)
                             )
                         }
 

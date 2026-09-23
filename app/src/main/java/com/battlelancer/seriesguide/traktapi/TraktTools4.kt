@@ -9,13 +9,21 @@ import com.uwetrottmann.trakt5.TraktV2
 import com.uwetrottmann.trakt5.entities.AddNoteRequest
 import com.uwetrottmann.trakt5.entities.BaseMovie
 import com.uwetrottmann.trakt5.entities.BaseShow
+import com.uwetrottmann.trakt5.entities.MovieIds
 import com.uwetrottmann.trakt5.entities.Note
+import com.uwetrottmann.trakt5.entities.RatedEpisode
+import com.uwetrottmann.trakt5.entities.RatedMovie
+import com.uwetrottmann.trakt5.entities.RatedShow
 import com.uwetrottmann.trakt5.entities.Show
 import com.uwetrottmann.trakt5.entities.ShowIds
 import com.uwetrottmann.trakt5.enums.Extended
 import com.uwetrottmann.trakt5.enums.ExtendedShowsWatched
+import com.uwetrottmann.trakt5.enums.IdType
+import com.uwetrottmann.trakt5.enums.RatingsFilter
 import com.uwetrottmann.trakt5.enums.Specials
+import com.uwetrottmann.trakt5.enums.Type
 import com.uwetrottmann.trakt5.services.Notes
+import com.uwetrottmann.trakt5.services.Search
 import com.uwetrottmann.trakt5.services.Sync
 import retrofit2.Call
 import retrofit2.awaitResponse
@@ -60,7 +68,25 @@ object TraktTools4 {
         class IsNotVip<T> : TraktResponse<T>, TraktNonNullResponse<T>
         class IsUnauthorized<T> : TraktResponse<T>, TraktNonNullResponse<T>
         class IsAccountLimitExceeded<T> : TraktResponse<T>, TraktNonNullResponse<T>
+        class IsAccountLocked<T> : TraktResponse<T>, TraktNonNullResponse<T>
         class Other<T> : TraktResponse<T>, TraktNonNullResponse<T>
+    }
+
+    /**
+     * May return `null` data, for example if the movie wasn't found.
+     */
+    suspend fun getMovieIds(
+        traktSearch: Search,
+        movieTmdbId: Int
+    ): TraktNonNullResponse<MovieIds?> {
+        val response = awaitTraktCallNonNull(
+            traktSearch.idLookup(IdType.TMDB, movieTmdbId.toString(), Type.MOVIE, null, 1, 1),
+            "movie trakt ids lookup",
+            reportIsNotVip = true // Should work even if not VIP
+        )
+        return mapResponseData(response) {
+            it.firstOrNull()?.movie?.ids
+        }
     }
 
     /**
@@ -158,6 +184,7 @@ object TraktTools4 {
                 is TraktErrorResponse.IsNotVip -> return TraktErrorResponse.IsNotVip()
                 is TraktErrorResponse.IsUnauthorized -> return TraktErrorResponse.IsUnauthorized()
                 is TraktErrorResponse.IsAccountLimitExceeded -> return TraktErrorResponse.IsAccountLimitExceeded()
+                is TraktErrorResponse.IsAccountLocked -> return TraktErrorResponse.IsAccountLocked()
                 is TraktErrorResponse.Other -> return TraktErrorResponse.Other()
             }
         } while (totalPageCount != null && currentPage <= totalPageCount)
@@ -186,6 +213,28 @@ object TraktTools4 {
         ) { page ->
             // Use Extended.FULL to get show metadata
             traktSync.watchlistShows(page, MAX_LIMIT, Extended.FULL)
+        }
+    }
+
+    suspend fun getRatingsOfShows(
+        traktSync: Sync
+    ): TraktNonNullResponse<List<RatedShow>> {
+        return fetchAllPages(
+            action = "get show ratings",
+            reportIsNotVip = true // Should work even if not VIP
+        ) { page ->
+            traktSync.ratingsShows(RatingsFilter.ALL, null, page, MAX_LIMIT)
+        }
+    }
+
+    suspend fun getRatingsOfEpisodes(
+        traktSync: Sync
+    ): TraktNonNullResponse<List<RatedEpisode>> {
+        return fetchAllPages(
+            action = "get episode ratings",
+            reportIsNotVip = true // Should work even if not VIP
+        ) { page ->
+            traktSync.ratingsEpisodes(RatingsFilter.ALL, null, page, MAX_LIMIT)
         }
     }
 
@@ -243,6 +292,17 @@ object TraktTools4 {
             tmdbIdSet.add(tmdbId)
         }
         return tmdbIdSet
+    }
+
+    suspend fun getRatingsOfMovies(
+        traktSync: Sync
+    ): TraktNonNullResponse<List<RatedMovie>> {
+        return fetchAllPages(
+            action = "get movie ratings",
+            reportIsNotVip = true // Should work even if not VIP
+        ) { page ->
+            traktSync.ratingsMovies(RatingsFilter.ALL, null, page, MAX_LIMIT)
+        }
     }
 
     /**
@@ -313,6 +373,11 @@ object TraktTools4 {
                     TraktErrorResponse.IsAccountLimitExceeded()
                 }
 
+                TraktV2.isAccountLocked(response) -> {
+                    Errors.logAndReport(action, response)
+                    TraktErrorResponse.IsAccountLocked()
+                }
+
                 TraktV2.isNotVip(response) -> {
                     if (reportIsNotVip) Errors.logAndReport(action, response)
                     TraktErrorResponse.IsNotVip()
@@ -351,6 +416,7 @@ object TraktTools4 {
             awaitTraktCall(call, action, reportIsNotVip, logErrorOnNullBody = true)) {
             is TraktErrorResponse.Other -> response
             is TraktErrorResponse.IsAccountLimitExceeded -> response
+            is TraktErrorResponse.IsAccountLocked -> response
             is TraktErrorResponse.IsNotVip -> response
             is TraktErrorResponse.IsUnauthorized -> response
             is TraktResponse.Success -> {
@@ -377,6 +443,7 @@ object TraktTools4 {
             is TraktErrorResponse.IsNotVip -> TraktErrorResponse.IsNotVip()
             is TraktErrorResponse.IsUnauthorized -> TraktErrorResponse.IsUnauthorized()
             is TraktErrorResponse.IsAccountLimitExceeded -> TraktErrorResponse.IsAccountLimitExceeded()
+            is TraktErrorResponse.IsAccountLocked -> TraktErrorResponse.IsAccountLocked()
             is TraktErrorResponse.Other -> TraktErrorResponse.Other()
         }
     }

@@ -1,0 +1,89 @@
+// SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2025 Google Inc. All Rights Reserved.
+// SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
+
+// Original file by Google Inc. licensed under Apache-2.0 copied from FirebaseUI-Android
+// https://github.com/firebase/FirebaseUI-Android
+
+package com.battlelancer.seriesguide.backend.auth.util
+
+import android.net.Uri
+import androidx.annotation.RestrictTo
+import androidx.core.net.toUri
+
+/**
+ * Parser for email link sign-in URLs.
+ * Extracts session information and parameters from Firebase email authentication links.
+ */
+@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+class EmailLinkParser(link: String) {
+
+    private val params: Map<String, String>
+
+    init {
+        require(link.isNotBlank()) { "Link cannot be empty" }
+        params = parseUri(link.toUri())
+        require(params.isNotEmpty()) { "Invalid link: no parameters found" }
+    }
+
+    /**
+     * The out-of-band code (OOB code) from the email link.
+     * This is a required field for email link authentication.
+     * @throws IllegalArgumentException if the OOB code is missing from the link
+     */
+    val oobCode: String
+        get() = requireNotNull(params[OOB_CODE]) {
+            "Invalid email link: missing required OOB code"
+        }
+
+    val sessionId: String?
+        get() = params[LinkParameters.SESSION_IDENTIFIER]
+
+    val forceSameDeviceBit: Boolean
+        get() {
+            val bit = params[LinkParameters.FORCE_SAME_DEVICE_IDENTIFIER]
+            // Default value is false when no bit is set
+            return bit == "1"
+        }
+
+    val providerId: String?
+        get() = params[LinkParameters.PROVIDER_ID_IDENTIFIER]
+
+    private fun parseUri(uri: Uri): Map<String, String> {
+        val map = mutableMapOf<String, String>()
+        try {
+            val queryParameters = uri.queryParameterNames
+            for (param in queryParameters) {
+                if (param.equals(LINK, ignoreCase = true) ||
+                    param.equals(CONTINUE_URL, ignoreCase = true)) {
+                    val innerUriString = uri.getQueryParameter(param)
+                    if (innerUriString != null) {
+                        val innerUri = innerUriString.toUri()
+                        val innerValues = parseUri(innerUri)
+                        map.putAll(innerValues)
+                    }
+                } else {
+                    val value = uri.getQueryParameter(param)
+                    if (value != null) {
+                        map[param] = value
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            // Do nothing - return what we have
+        }
+        return map
+    }
+
+    object LinkParameters {
+        const val SESSION_IDENTIFIER = "ui_sid"
+        const val FORCE_SAME_DEVICE_IDENTIFIER = "ui_sd"
+        const val PROVIDER_ID_IDENTIFIER = "ui_pid"
+    }
+
+    companion object {
+        private const val LINK = "link"
+        private const val OOB_CODE = "oobCode"
+        private const val CONTINUE_URL = "continueUrl"
+    }
+}
