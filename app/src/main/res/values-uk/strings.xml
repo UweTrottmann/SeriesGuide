@@ -68,16 +68,16 @@
     <string name="addtocalendar">Додати до календаря</string>
     <string name="addtocalendar_failed">Не можливо створити календарну подію.</string>
     <!-- Reviews -->
-    <string name="reviews_title">Reviews</string>
-    <string name="reviews_label_provided_by">Reviews from Trakt</string>
-    <string name="reviews_hint_empty">Be the first to write a review!</string>
-    <string name="reviews_hint_write_review">Write a review (English, 5+ words)</string>
-    <string name="reviews_error_violates_rules">Your review does not follow the rules!</string>
+    <string name="reviews_title">Відгуки</string>
+    <string name="reviews_label_provided_by">Відгуки з Trakt</string>
+    <string name="reviews_hint_empty">Будьте серед перших, хто залишить відгук!</string>
+    <string name="reviews_hint_write_review">Напишіть відгук (англійською мовою, щонайменше 5 слів)</string>
+    <string name="reviews_error_violates_rules">Ваш відгук не відповідає вимогам!</string>
     <string name="action_post">Опублікувати</string>
     <string name="action_edit_comment">Змінити</string>
     <string name="action_delete_comment">Видалити</string>
-    <string name="reviews_title_confirm_delete">Delete this review?</string>
-    <string name="reviews_error_delete">Review not deleted, it is too old or has replies</string>
+    <string name="reviews_title_confirm_delete">Видалити цей відгук?</string>
+    <string name="reviews_error_delete">Відгук не видалено, оскільки він давній або отримав відповіді</string>
     <string name="isspoiler">Увага спойлер!</string>
     <plurals name="replies_plural">
         <item quantity="one">%d відповідь</item>
@@ -335,7 +335,7 @@
     <string name="feature_not_supported">Не підтримується</string>
     <string name="feature_disabled">Вимкнено</string>
     <string name="feature_history">Історія Особистих Рейтингів</string>
-    <string name="feature_comments">Write reviews</string>
+    <string name="feature_comments">Написати відгук</string>
     <string name="feature_sync">Синхронізувати</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud допомагає резервно копіювати і синхронізувати серіали, списки та фільми.</string>

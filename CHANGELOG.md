@@ -11,6 +11,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 ### Next release
 
 * 🔧 Trakt: fail with specific error message if account is locked and trying to edit or delete note.
+* 📝 Import latest user interface translations.
 
 ## Version 2026.4
 

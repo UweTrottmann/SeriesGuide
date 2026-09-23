@@ -68,16 +68,16 @@
     <string name="addtocalendar">Добавить в календарь</string>
     <string name="addtocalendar_failed">Не удалось создать событие календаря.</string>
     <!-- Reviews -->
-    <string name="reviews_title">Reviews</string>
-    <string name="reviews_label_provided_by">Reviews from Trakt</string>
-    <string name="reviews_hint_empty">Be the first to write a review!</string>
-    <string name="reviews_hint_write_review">Write a review (English, 5+ words)</string>
-    <string name="reviews_error_violates_rules">Your review does not follow the rules!</string>
+    <string name="reviews_title">Отзывы</string>
+    <string name="reviews_label_provided_by">Отзывы от Trakt</string>
+    <string name="reviews_hint_empty">Напишите отзыв первым!</string>
+    <string name="reviews_hint_write_review">Написать отзыв (английский, более 5+ слов)</string>
+    <string name="reviews_error_violates_rules">Ваш отзыв не соответствует правилам!</string>
     <string name="action_post">Опубликовать</string>
     <string name="action_edit_comment">Редактировать</string>
     <string name="action_delete_comment">Удалить</string>
-    <string name="reviews_title_confirm_delete">Delete this review?</string>
-    <string name="reviews_error_delete">Review not deleted, it is too old or has replies</string>
+    <string name="reviews_title_confirm_delete">Удалить этот отзыв?</string>
+    <string name="reviews_error_delete">Не удалось удалить отзыв, он слишком старый или на него есть ответы.</string>
     <string name="isspoiler">Спойлеры</string>
     <plurals name="replies_plural">
         <item quantity="one">%d ответ</item>
@@ -335,7 +335,7 @@
     <string name="feature_not_supported">Не поддерживается</string>
     <string name="feature_disabled">Отключено</string>
     <string name="feature_history">История личная и друзей</string>
-    <string name="feature_comments">Write reviews</string>
+    <string name="feature_comments">Написать отзывы</string>
     <string name="feature_sync">Синхронизация</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud позволяет создавать резервную копию и синхронизировать ваши сериалы, списки и фильмы.</string>

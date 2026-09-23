@@ -68,16 +68,16 @@
     <string name="addtocalendar">Opret begivenhed</string>
     <string name="addtocalendar_failed">Kan ikke oprette en kalenderbegivenhed.</string>
     <!-- Reviews -->
-    <string name="reviews_title">Reviews</string>
-    <string name="reviews_label_provided_by">Reviews from Trakt</string>
-    <string name="reviews_hint_empty">Be the first to write a review!</string>
-    <string name="reviews_hint_write_review">Write a review (English, 5+ words)</string>
-    <string name="reviews_error_violates_rules">Your review does not follow the rules!</string>
+    <string name="reviews_title">Anmeldelser</string>
+    <string name="reviews_label_provided_by">Anmeldelser fra Trakt</string>
+    <string name="reviews_hint_empty">Bliv den første til at skrive en anmeldelse!</string>
+    <string name="reviews_hint_write_review">Skriv en anmeldelse (engelsk, 5+ ord)</string>
+    <string name="reviews_error_violates_rules">Din anmeldelse overholder ikke reglerne!</string>
     <string name="action_post">Post</string>
     <string name="action_edit_comment">Redigér</string>
     <string name="action_delete_comment">Slet</string>
-    <string name="reviews_title_confirm_delete">Delete this review?</string>
-    <string name="reviews_error_delete">Review not deleted, it is too old or has replies</string>
+    <string name="reviews_title_confirm_delete">Slet denne anmeldelse?</string>
+    <string name="reviews_error_delete">Anmeldelse ikke slettet, den er for gammel eller har svar</string>
     <string name="isspoiler">Spoiler alert!</string>
     <plurals name="replies_plural">
         <item quantity="one">%d svar</item>
@@ -315,7 +315,7 @@
     <string name="feature_not_supported">Ikke understøttet</string>
     <string name="feature_disabled">Slået fra</string>
     <string name="feature_history">Personlig historik og vennehistorik</string>
-    <string name="feature_comments">Write reviews</string>
+    <string name="feature_comments">Skriv anmeldelser</string>
     <string name="feature_sync">Synkroniser</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud hjælper med at sikkerhedskopiere dine serier, lister og film</string>

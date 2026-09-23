@@ -68,16 +68,16 @@
     <string name="addtocalendar">Додај у календар</string>
     <string name="addtocalendar_failed">Креирање овог догађаја у календару није успело.</string>
     <!-- Reviews -->
-    <string name="reviews_title">Reviews</string>
-    <string name="reviews_label_provided_by">Reviews from Trakt</string>
-    <string name="reviews_hint_empty">Be the first to write a review!</string>
-    <string name="reviews_hint_write_review">Write a review (English, 5+ words)</string>
-    <string name="reviews_error_violates_rules">Your review does not follow the rules!</string>
+    <string name="reviews_title">Рецензије</string>
+    <string name="reviews_label_provided_by">Рецензије са сајта Trakt</string>
+    <string name="reviews_hint_empty">Будите први који ће написати рецензију!</string>
+    <string name="reviews_hint_write_review">Напишите рецензију (енглески језик, 5 или више речи)</string>
+    <string name="reviews_error_violates_rules">Ваша рецензија не поштује правила!</string>
     <string name="action_post">Објава</string>
     <string name="action_edit_comment">Уреди</string>
     <string name="action_delete_comment">Обриши</string>
-    <string name="reviews_title_confirm_delete">Delete this review?</string>
-    <string name="reviews_error_delete">Review not deleted, it is too old or has replies</string>
+    <string name="reviews_title_confirm_delete">Обрисати ову рецензију?</string>
+    <string name="reviews_error_delete">Рецензија није обрисана; превише је стара или има одговоре.</string>
     <string name="isspoiler">Пажња, Спојлер!</string>
     <plurals name="replies_plural">
         <item quantity="one">%d одговор</item>
@@ -325,7 +325,7 @@
     <string name="feature_not_supported">Није подржано</string>
     <string name="feature_disabled">Онемогућено</string>
     <string name="feature_history">Лична и историја пријатеља</string>
-    <string name="feature_comments">Write reviews</string>
+    <string name="feature_comments">Пишите рецензије</string>
     <string name="feature_sync">Синхронизација</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriusGuide Cloud вам помаже да направите резервну копију и синхронизујете ваше емисије, листе и филмове</string>

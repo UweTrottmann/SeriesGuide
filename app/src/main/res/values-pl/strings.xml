@@ -68,16 +68,16 @@
     <string name="addtocalendar">Dodaj do kalendarza</string>
     <string name="addtocalendar_failed">Nie można utworzyć zdarzenia kalendarza.</string>
     <!-- Reviews -->
-    <string name="reviews_title">Reviews</string>
-    <string name="reviews_label_provided_by">Reviews from Trakt</string>
-    <string name="reviews_hint_empty">Be the first to write a review!</string>
-    <string name="reviews_hint_write_review">Write a review (English, 5+ words)</string>
-    <string name="reviews_error_violates_rules">Your review does not follow the rules!</string>
+    <string name="reviews_title">Recenzje</string>
+    <string name="reviews_label_provided_by">Recenzje z Trakt</string>
+    <string name="reviews_hint_empty">Bądź pierwszym, który napisał recenzję!</string>
+    <string name="reviews_hint_write_review">Napisz recenzję (angielski, co najmniej 5 słów)</string>
+    <string name="reviews_error_violates_rules">Twoja recenzja nie spełnia warunków!</string>
     <string name="action_post">Wyślij</string>
     <string name="action_edit_comment">Edytuj</string>
     <string name="action_delete_comment">Usuń</string>
-    <string name="reviews_title_confirm_delete">Delete this review?</string>
-    <string name="reviews_error_delete">Review not deleted, it is too old or has replies</string>
+    <string name="reviews_title_confirm_delete">Usunąć tę recenzję?</string>
+    <string name="reviews_error_delete">Recenzja nie została usunięta, jest zbyt stara, albo ma odpowiedzi</string>
     <string name="isspoiler">Ostrzeżenie o spoilerach!</string>
     <plurals name="replies_plural">
         <item quantity="one">%d odpowiedź</item>
@@ -335,7 +335,7 @@
     <string name="feature_not_supported">Nie obsługiwane</string>
     <string name="feature_disabled">Wyłączony</string>
     <string name="feature_history">Historia osobista i przyjaciół</string>
-    <string name="feature_comments">Write reviews</string>
+    <string name="feature_comments">Pisz recenzje</string>
     <string name="feature_sync">Synchronizacja</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud pomaga w synchronizacji i tworzeniu kopii bezpieczeństwa seriali, list i filmów.</string>
