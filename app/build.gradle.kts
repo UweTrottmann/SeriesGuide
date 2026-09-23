@@ -141,6 +141,8 @@ android {
                 storePassword = props["storePassword"] as String
                 keyAlias = props["keyAlias"] as String
                 keyPassword = props["keyPassword"] as String
+            } else {
+                println("WARNING: No keystore config file found, not signing release builds.")
             }
         }
     }
