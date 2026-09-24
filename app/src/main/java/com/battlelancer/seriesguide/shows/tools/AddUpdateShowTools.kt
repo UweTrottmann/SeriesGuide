@@ -388,8 +388,8 @@ class AddUpdateShowTools(
     /**
      * Download and store watch provider mappings if a streaming search region is configured.
      *
-     * Note: this uses [runBlocking], so if the calling thread is interrupted this will throw
-     * [InterruptedException].
+     * Note: this uses [runBlocking], so if the calling thread is interrupted this will keep the
+     * current providers and throw [InterruptedException].
      */
     @Throws(InterruptedException::class)
     private fun updateWatchProviderMappings(showId: Long, showTmdbId: Int) {
@@ -405,10 +405,11 @@ class AddUpdateShowTools(
                     .also {
                         val providerHelper =
                             SgRoomDatabase.getInstance(context).sgWatchProviderHelper()
-                        providerHelper.deleteShowMappings(showId)
                         // If providers are added that don't exist in the providers table,
                         // not an issue as they just won't be displayed (join will fail).
-                        if (it.isNotEmpty()) providerHelper.addShowMappings(it)
+                        // Run delete + add in a transaction so if runBlocking is interrupted the
+                        // current providers are kept.
+                        providerHelper.updateShowMappings(showId, it)
                     }
             }
         }
