@@ -110,7 +110,7 @@ class AddUpdateShowToolsTest {
         assertThat(result).isEqualTo(AddUpdateShowTools.ShowResult.TMDB_ERROR)
         // Inserted show and season should not be persisted
         assertThat(testDb.sgShow2Helper().getShowsForExport()).isEmpty()
-        assertThat(testDb.sgSeason2Helper().countSeasons()).isEqualTo(0);
+        assertThat(testDb.sgSeason2Helper().countSeasons()).isEqualTo(0)
     }
 
     companion object {

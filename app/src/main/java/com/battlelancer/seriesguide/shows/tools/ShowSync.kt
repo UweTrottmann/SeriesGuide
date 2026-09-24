@@ -55,7 +55,6 @@ class ShowSync(
      * Note: this calls
      *
      * - [runBlocking]
-     * - [AddUpdateShowTools.updateShow]
      * - [Thread.sleep]
      *
      * which may throw [InterruptedException].

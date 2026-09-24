@@ -98,9 +98,10 @@ class AddUpdateShowTools(
      * If Hexagon is not enabled and [traktCollection] and [traktWatched] are given, uses
      * [TraktEpisodeSync.storeEpisodeFlags].
      *
-     * Note: this calls [updateWatchProviderMappings] which may throw [InterruptedException].
+     * Note: this assumes the calling thread isn't interrupted. Should this change,
+     * [HexagonEpisodeSync.downloadFlags] and [runBlocking] calls need to be updated to handle
+     * [InterruptedException].
      */
-    @Throws(InterruptedException::class)
     fun addShow(
         showTmdbId: Int,
         languageCode: String,
@@ -211,6 +212,7 @@ class AddUpdateShowTools(
         // restore episode flags...
         if (hexagonEnabled) {
             // ...from Hexagon
+            // This isn't interrupted, so no need to handle InterruptedException
             val success = hexagonEpisodeSync.downloadFlags(showId, showTmdbId, show.tvdbId)
             if (!success) {
                 // failed to download episode flags
@@ -253,7 +255,10 @@ class AddUpdateShowTools(
             }
         }
 
-        updateWatchProviderMappings(showId, showTmdbId)
+        // This isn't interrupted, so no need to handle InterruptedException
+        runBlocking {
+            updateWatchProviderMappings(showId, showTmdbId)
+        }
 
         // Calculate next episode
         NextEpisodeUpdater(context).updateForShows(showId)
@@ -284,10 +289,10 @@ class AddUpdateShowTools(
     /**
      * Updates a show. Adds new, updates changed and removes orphaned episodes.
      *
-     * Note: this calls [updateWatchProviderMappings] which may throw [InterruptedException].
+     * If this is canceled, this might keep existing watch provider mappings and not update the
+     * show.
      */
-    @Throws(InterruptedException::class)
-    fun updateShow(showId: Long): UpdateResult {
+    suspend fun updateShow(showId: Long): UpdateResult {
         val helper = SgRoomDatabase.getInstance(context).sgShow2Helper()
         val show = helper.getShow(showId)
             ?: return UpdateResult.DatabaseError
@@ -374,6 +379,7 @@ class AddUpdateShowTools(
 //        episodeHelper.deleteEpisodesWithoutTmdbId(showId)
 //        database.sgSeason2Helper().deleteSeasonsWithoutTmdbId(showId)
 
+        // If canceled, it's fine to not store the show so it's updated again right away
         updateWatchProviderMappings(showId, showTmdbId)
 
         // At last store shows update (sets last updated timestamp).
@@ -388,30 +394,26 @@ class AddUpdateShowTools(
     /**
      * Download and store watch provider mappings if a streaming search region is configured.
      *
-     * Note: this uses [runBlocking], so if the calling thread is interrupted this will keep the
-     * current providers and throw [InterruptedException].
+     * If this is canceled, this will keep the current providers.
      */
-    @Throws(InterruptedException::class)
-    private fun updateWatchProviderMappings(showId: Long, showTmdbId: Int) {
+    private suspend fun updateWatchProviderMappings(showId: Long, showTmdbId: Int) {
         val region = StreamingSearch.getCurrentRegionOrNull(context) ?: return
-        runBlocking {
-            val providers = TmdbTools2().getWatchProvidersForShow(showTmdbId, region, context)
-            if (providers != null) {
-                // Just take all possible options
-                (providers.flatrate + providers.free + providers.ads + providers.buy)
-                    .mapNotNull { it.provider_id }
-                    .distinct()
-                    .map { SgWatchProviderShowMapping(it, showId) }
-                    .also {
-                        val providerHelper =
-                            SgRoomDatabase.getInstance(context).sgWatchProviderHelper()
-                        // If providers are added that don't exist in the providers table,
-                        // not an issue as they just won't be displayed (join will fail).
-                        // Run delete + add in a transaction so if runBlocking is interrupted the
-                        // current providers are kept.
-                        providerHelper.updateShowMappings(showId, it)
-                    }
-            }
+        val providers = TmdbTools2().getWatchProvidersForShow(showTmdbId, region, context)
+        if (providers != null) {
+            // Just take all possible options
+            (providers.flatrate + providers.free + providers.ads + providers.buy)
+                .mapNotNull { it.provider_id }
+                .distinct()
+                .map { SgWatchProviderShowMapping(it, showId) }
+                .also {
+                    val providerHelper =
+                        SgRoomDatabase.getInstance(context).sgWatchProviderHelper()
+                    // If providers are added that don't exist in the providers table,
+                    // not an issue as they just won't be displayed (join will fail).
+                    // Run delete + add in a transaction so if this is canceled the current
+                    // providers are kept.
+                    providerHelper.updateShowMappings(showId, it)
+                }
         }
     }
 
