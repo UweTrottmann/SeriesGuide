@@ -10,6 +10,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ### Next release
 
+* 🔧 Sync: also stop quickly if interrupted if Cloud is connected.
+
 ## Version 2026.4
 
 * 🔨 Trakt: links to more information and ratings go to their new web app.

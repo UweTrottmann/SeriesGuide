@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2019-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2019 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.sync
 
@@ -84,7 +84,7 @@ internal class HexagonMovieSync(
                     request.cursor = cursor
                 }
 
-                val response = request.execute()
+                val response = request.executeRestoringInterrupt()
                 if (response == null) {
                     // nothing more to do
                     Timber.d("download: response was null, done here")
@@ -229,7 +229,7 @@ internal class HexagonMovieSync(
             try {
                 // get service each time to check if auth was removed
                 val moviesService = hexagonTools.moviesService ?: return false
-                moviesService.save(wrapper).execute()
+                moviesService.save(wrapper).executeRestoringInterrupt()
             } catch (e: IOException) {
                 Errors.logAndReportHexagon("save movies", e)
                 return false
