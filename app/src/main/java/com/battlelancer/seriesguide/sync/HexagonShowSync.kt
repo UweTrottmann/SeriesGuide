@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2017-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2017 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.sync
 
@@ -108,7 +108,7 @@ class HexagonShowSync @Inject constructor(
                 if (!cursor.isNullOrEmpty()) {
                     request.cursor = cursor
                 }
-                val response = request.execute()
+                val response = request.executeRestoringInterrupt()
                 if (response == null) {
                     // If empty API sends status 200 and empty list, so no body is a failure.
                     Timber.e("download: response was null")
@@ -174,7 +174,7 @@ class HexagonShowSync @Inject constructor(
                 if (!cursor.isNullOrEmpty()) {
                     request.cursor = cursor
                 }
-                val response = request.execute()
+                val response = request.executeRestoringInterrupt()
                 if (response == null) {
                     // If empty API sends status 200 and empty list, so no body is a failure.
                     Timber.e("download: response was null")
@@ -426,7 +426,7 @@ class HexagonShowSync @Inject constructor(
             try {
                 // get service each time to check if auth was removed
                 val showsService = hexagonTools.showsService ?: return false
-                showsService.saveSgShows(wrapper).execute()
+                showsService.saveSgShows(wrapper).executeRestoringInterrupt()
             } catch (e: IOException) {
                 logAndReportHexagon("save shows", e)
                 return false

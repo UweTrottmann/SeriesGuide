@@ -67,7 +67,7 @@ class HexagonListsSync(
                     request.cursor = cursor
                 }
 
-                val response = request.execute()
+                val response = request.executeRestoringInterrupt()
                 if (response == null) {
                     Timber.d("download: failed, response is null.")
                     break
@@ -223,7 +223,7 @@ class HexagonListsSync(
                     request.cursor = cursor
                 }
 
-                val response = request.execute()
+                val response = request.executeRestoringInterrupt()
                 if (response == null) {
                     Timber.d("pruneRemovedLists: failed, response is null.")
                     return false
@@ -343,7 +343,7 @@ class HexagonListsSync(
         val listsService = hexagonTools.listsService
             ?: return false // no longer signed in
         return try {
-            listsService.save(listsWrapper).execute()
+            listsService.save(listsWrapper).executeRestoringInterrupt()
             true
         } catch (e: IOException) {
             Errors.logAndReportHexagon("save lists", e)

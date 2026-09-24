@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2021 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.backend
 
@@ -17,6 +17,11 @@ import java.util.concurrent.ExecutionException
  * Adds authorization header using Firebase JWT token to each request for current Firebase user.
  * Fetches token once and caches it between requests.
  * If a request fails with HTTP 401 tries once to fetch token again.
+ *
+ * Note that if the thread that executes a request using this is interrupted, this may clear the
+ * interrupted flag (in [getJwtToken] the [Tasks.await] call does). To restore it, calling code can
+ * handle the [CloudAuthInterruptedIOException] (the request client expects this to only throw
+ * [IOException], so this must wrap [InterruptedException]).
  */
 class FirebaseHttpRequestInitializer : HttpRequestInitializer {
 
@@ -68,9 +73,9 @@ private class FirebaseHttpExecuteInterceptor(
             val token = firebaseHttpRequestInitializer.getJwtToken()
             request?.headers?.authorization = "Bearer $token"
         } catch (e: ExecutionException) {
-            throw FirebaseAuthIOException(e.cause ?: e)
+            throw CloudAuthIOException(e.cause ?: e)
         } catch (e: InterruptedException) {
-            throw FirebaseAuthIOException(e)
+            throw CloudAuthInterruptedIOException(e)
         }
     }
 
@@ -92,4 +97,5 @@ private class FirebaseHttpExecuteInterceptor(
 
 }
 
-class FirebaseAuthIOException(cause: Throwable) : IOException(cause)
+class CloudAuthIOException(cause: Throwable) : IOException(cause)
+class CloudAuthInterruptedIOException(cause: Throwable) : IOException(cause)
