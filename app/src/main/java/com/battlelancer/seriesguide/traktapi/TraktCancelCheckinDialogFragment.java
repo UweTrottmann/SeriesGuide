@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2012 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.traktapi;
 
@@ -97,7 +97,7 @@ public class TraktCancelCheckinDialogFragment extends AppCompatDialogFragment {
                     Errors.logAndReport("delete check-in", response);
                 }
             } catch (Exception e) {
-                Errors.logAndReport("delete check-in", e);
+                Errors.logAndReport("delete check-in", e, false);
             }
 
             return context.getString(R.string.api_error_generic,

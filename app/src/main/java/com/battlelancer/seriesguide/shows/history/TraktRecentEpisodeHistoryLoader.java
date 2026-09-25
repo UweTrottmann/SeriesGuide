@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2015-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2015 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.shows.history;
 
@@ -76,7 +76,7 @@ public class TraktRecentEpisodeHistoryLoader
                 Errors.logAndReport(getAction(), response);
             }
         } catch (Exception e) {
-            Errors.logAndReport(getAction(), e);
+            Errors.logAndReport(getAction(), e, false);
             return AndroidUtils.isNetworkConnected(getContext())
                     ? buildResultFailure() : buildResultFailure(R.string.offline);
         }

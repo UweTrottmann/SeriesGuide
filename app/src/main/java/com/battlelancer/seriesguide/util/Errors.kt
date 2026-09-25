@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2019 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.util
 
@@ -62,14 +62,23 @@ class Errors {
          * bottom-most exception to the call site of this method. Adds action as key to report.
          * If [throwable] is a [CancellationException] re-throws it so a coroutine
          * is cancelled properly.
+         *
+         * If [noInterruptReport] is true, does not report the exception if it is an
+         * [InterruptedException]. This is useful for when it is expected that the calling thread
+         * is interrupted.
          */
         @JvmStatic
-        fun logAndReport(action: String, throwable: Throwable) {
+        fun logAndReport(
+            action: String,
+            throwable: Throwable,
+            noInterruptReport: Boolean = false
+        ) {
             if (throwable is CancellationException) throw throwable
 
             Timber.e(throwable, action)
 
             if (!throwable.shouldReport()) return
+            if (noInterruptReport && throwable is InterruptedException) return
 
             bendCauseStackTrace(throwable)
 
@@ -108,7 +117,7 @@ class Errors {
         fun logAndReportHexagon(action: String, e: Throwable) {
             var statusCode: Int? = null
             val throwable = if (e is HttpResponseException) {
-                statusCode  = e.statusCode
+                statusCode = e.statusCode
                 val requestError = when {
                     e.isClientError() -> ClientError(action, e)
                     e.isServerError() -> ServerError(action, e)
@@ -152,16 +161,19 @@ class Errors {
                     message != null -> ClientError(action, response, message)
                     else -> ClientError(action, response)
                 }
+
                 response.isServerError() -> when {
                     message != null -> ServerError(action, response, message)
                     else -> ServerError(action, response)
                 }
+
                 else -> when {
                     message != null -> RequestError(
                         action,
                         response.code,
                         "${response.message} $message"
                     )
+
                     else -> RequestError(action, response.code, response.message)
                 }
             }
@@ -258,6 +270,7 @@ private fun Throwable.shouldReport(): Boolean {
             message?.contains("Connection reset by peer") == false
                     && message?.contains("Software caused connection abort") == false
         }
+
         else -> true
     }
 }

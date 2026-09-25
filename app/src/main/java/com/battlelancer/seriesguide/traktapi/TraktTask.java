@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2023-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2012 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.traktapi;
 
@@ -281,7 +281,7 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
                 }
             }
         } catch (Exception e) {
-            Errors.logAndReport("check-in", e);
+            Errors.logAndReport("check-in", e, false);
         }
 
         // return generic failure message
