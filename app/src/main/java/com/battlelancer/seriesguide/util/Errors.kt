@@ -6,6 +6,7 @@ package com.battlelancer.seriesguide.util
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.annotation.VisibleForTesting
+import com.battlelancer.seriesguide.backend.CloudAuthInterruptedIOException
 import com.battlelancer.seriesguide.backend.HexagonAuthError
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.google.api.client.http.HttpResponseException
@@ -122,9 +123,7 @@ class Errors {
 
             Timber.e(throwable, action)
 
-            // Also do not report IOException: Error on service connection
-            // caused by InterruptedException from GoogleAuthUtil.getToken.
-            if (!throwable.shouldReport() || throwable.getUltimateCause() is InterruptedException) {
+            if (!throwable.shouldReport()) {
                 return
             }
 
@@ -244,13 +243,16 @@ private fun HttpResponseException.isServerError(): Boolean {
 /**
  * Returns true if the exception is not one of the following:
  * - ConnectException - network issues (e.g. "Failed to connect to x").
- * - InterruptedIOException - network request time outs.
+ * - InterruptedIOException - network requests (OkHttp/Okio) failing due to time-outs or thread
+ *   interrupt.
+ * - CloudAuthInterruptedIOException - get token request failing due to thread interrupt.
  * - UnknownHostException - network issues.
  */
 private fun Throwable.shouldReport(): Boolean {
     return when (this) {
         is ConnectException -> false
         is InterruptedIOException -> false
+        is CloudAuthInterruptedIOException -> false
         is UnknownHostException -> false
         is SSLException -> {
             message?.contains("Connection reset by peer") == false
@@ -268,10 +270,10 @@ fun Throwable.isRetryError(): Boolean {
     return when (this) {
         is ConnectException -> true
         is UnknownHostException -> true
-        // Not super type InterruptedIOException as possibly not caused by network issues?
         is SocketTimeoutException -> true
+        // Network request (OkHttp/Okio) time-outs or interrupted by system.
+        is InterruptedIOException -> true
         // Not SSLException as likely not temporary or a network issue.
-        is InterruptedIOException -> true // Network request time outs or interrupted by system.
         else -> false
     }
 }
