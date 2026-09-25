@@ -110,7 +110,7 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
         val progress = SyncProgress()
         try {
             sync(showSync, currentTime, progress)
-        } catch (_: InterruptedException) {
+        } catch (e: InterruptedException) {
             // This can happen if the system has decided to interrupt the sync
             // thread (see AbstractThreadedSyncAdapter class documentation),
             // just try again later.
@@ -119,7 +119,8 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
             // interrupted.
             // For Cloud network requests, the interrupt state is cleared, but restored. See
             // HexagonSync.executeRestoringInterrupt.
-            Timber.d("Sync interrupted by system, trying again later.")
+            // Log the exception class to see where the interrupt caused it.
+            Timber.d(e, "Sync interrupted by system, trying again later.")
             progress.recordError()
             progress.setImportantErrorIfNone("Interrupted by system, trying again later.")
         }
