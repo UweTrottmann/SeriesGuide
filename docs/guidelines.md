@@ -4,6 +4,16 @@ Collecting design decisions. New and updated code and resources should follow th
 
 ## Coding patterns
 
+### Concurrency
+
+`java.net.HttpURLConnection` may use OkHttp internally, which throws 
+`java.io.InterruptedIOException` on interrupts (in 
+`com.android.okhttp.okio.Timeout.throwIfReached`). It's also used by 
+`com.google.api.client.http.javanet.NetHttpTransport` used for Cloud.
+
+Non-suspending Room database operations clear the interrupted flag (in the internal
+`runBlockingUninterruptible`).
+
 ### Kotlin
 
 For function calls, specify names of function parameters when the name of the passed value does not
