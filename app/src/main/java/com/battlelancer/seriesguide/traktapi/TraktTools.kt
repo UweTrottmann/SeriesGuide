@@ -114,7 +114,8 @@ object TraktTools {
                 Errors.logAndReport("movie trakt id lookup", response)
             }
         } catch (e: Exception) {
-            Errors.logAndReport("movie trakt id lookup", e)
+            // Used via SgSyncAdapter where interrupts are expected, so don't report them
+            Errors.logAndReport("movie trakt id lookup", e, noInterruptReport = true)
         }
         return null
     }

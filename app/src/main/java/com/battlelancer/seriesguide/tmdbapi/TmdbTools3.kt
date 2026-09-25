@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2025 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.tmdbapi
 
@@ -53,7 +53,8 @@ object TmdbTools3 {
                 .find(showTvdbId, ExternalSource.TVDB_ID, null)
                 .execute()
         }.mapError {
-            Errors.logAndReport(action, it)
+            // Also used via SgSyncAdapter where interrupts are expected, so don't report them
+            Errors.logAndReport(action, it, noInterruptReport = true)
             if (it.isRetryError()) TmdbRetry else TmdbStop
         }.andThen {
             if (it.isSuccessful) {
@@ -94,7 +95,8 @@ object TmdbTools3 {
                 .tv(showTmdbId, language, AppendToResponse(AppendToResponseItem.EXTERNAL_IDS))
                 .execute()
         }.mapError {
-            Errors.logAndReport(action, it)
+            // Also used via SgSyncAdapter where interrupts are expected, so don't report them
+            Errors.logAndReport(action, it, noInterruptReport = true)
             if (it.isRetryError()) TmdbRetry else TmdbStop
         }.andThen {
             if (it.isSuccessful) {
@@ -155,7 +157,8 @@ object TmdbTools3 {
                 .season(showTmdbId, seasonNumber, language)
                 .execute()
         }.mapError {
-            Errors.logAndReport(action, it)
+            // Also used via SgSyncAdapter where interrupts are expected, so don't report them
+            Errors.logAndReport(action, it, noInterruptReport = true)
             if (it.isRetryError()) TmdbRetry else TmdbStop
         }.andThen {
             if (it.isSuccessful) {

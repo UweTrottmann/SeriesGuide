@@ -256,7 +256,8 @@ class TraktCredentials private constructor(context: Context) {
                 }
             }
         } catch (e: Exception) {
-            Errors.logAndReport("refresh access token", e)
+            // Also used via SgSyncAdapter where interrupts are expected, so don't report them
+            Errors.logAndReport("refresh access token", e, noInterruptReport = true)
         }
 
         // Is the returned data valid?

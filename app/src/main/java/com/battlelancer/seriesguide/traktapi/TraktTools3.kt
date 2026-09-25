@@ -1,11 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2025 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.traktapi
 
 import android.content.Context
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.traktapi.TraktTools3.TraktError
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.isRetryError
 import com.github.michaelbull.result.Err
@@ -61,7 +60,8 @@ object TraktTools3 {
                     /* limit = */ 1
                 ).execute()
         }.mapError {
-            Errors.logAndReport(action, it)
+            // Also used via SgSyncAdapter where interrupts are expected, so don't report them
+            Errors.logAndReport(action, it, noInterruptReport = true)
             if (it.isRetryError()) TraktRetry else TraktStop
         }.andThen {
             if (it.isSuccessful) {
@@ -96,7 +96,8 @@ object TraktTools3 {
                 .lastActivities()
                 .execute()
         }.mapError {
-            Errors.logAndReport(action, it)
+            // Used via SgSyncAdapter where interrupts are expected, so don't report them
+            Errors.logAndReport(action, it, noInterruptReport = true)
             if (it.isRetryError()) TraktRetry else TraktStop
         }.andThen { response ->
             if (response.isSuccessful) {
