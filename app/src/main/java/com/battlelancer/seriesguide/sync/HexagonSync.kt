@@ -16,6 +16,7 @@ import com.google.api.client.googleapis.services.json.AbstractGoogleJsonClientRe
 import com.uwetrottmann.androidutils.AndroidUtils
 import kotlinx.coroutines.runBlocking
 import java.io.IOException
+import java.io.InterruptedIOException
 import java.util.LinkedList
 
 class HexagonSync(
@@ -255,18 +256,27 @@ class HexagonSync(
 }
 
 /**
- * Helper method to execute requests that restores the interrupted state if it was cleared by the
- * [com.battlelancer.seriesguide.backend.FirebaseHttpRequestInitializer] interceptor.
+ * Helper method to execute requests that restores the interrupted state if it was cleared by
+ *
+ * - the HTTP request interceptor that adds the auth token,
+ * - the internal OkHttp client used by the HTTP transport used by Cloud.
  *
  * The [SgSyncAdapter] thread may be interrupted and relies on checking the interrupted state to
- * stop quickly.
+ * stop quickly. Note that despite this, any non-suspending Room operation still clears the
+ * interrupted state (see its internal `runBlockingUninterruptible`).
  */
 @Throws(IOException::class)
 fun <T> AbstractGoogleJsonClientRequest<T>.executeRestoringInterrupt(): T {
     try {
         return execute()
-    } catch (e: CloudAuthInterruptedIOException) {
-        Thread.currentThread().interrupt()
+    } catch (e: Exception) {
+        // FirebaseHttpRequestInitializer returns a CloudAuthInterruptedIOException.
+        // com.google.api.client.http.javanet.NetHttpTransport uses java.net.HttpURLConnection
+        // which on modern Android versions uses OkHttp where
+        // com.android.okhttp.okio.Timeout.throwIfReached returns InterruptedIOException.
+        if (e is CloudAuthInterruptedIOException || e is InterruptedIOException) {
+            Thread.currentThread().interrupt()
+        }
         throw e
     }
 }
