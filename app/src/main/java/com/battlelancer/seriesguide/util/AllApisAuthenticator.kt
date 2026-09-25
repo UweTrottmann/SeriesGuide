@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2016-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2016 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.util
 
@@ -68,8 +68,10 @@ class AllApisAuthenticator @Inject constructor(
                 runBlocking {
                     credentials.refreshAccessTokenAsync(trakt.get())
                 }
-            } catch (e: InterruptedException) {
-                false // This thread may get interrupted, causing the coroutine to throw
+            } catch (_: InterruptedException) {
+                // Also used by SgSyncAdapter, so this thread may get interrupted, causing
+                // runBlocking to throw.
+                false
             }
 
             if (successful) {

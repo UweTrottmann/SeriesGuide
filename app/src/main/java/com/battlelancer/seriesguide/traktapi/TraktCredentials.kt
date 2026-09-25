@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2014-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2014 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.traktapi
 
@@ -29,7 +29,6 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import timber.log.Timber
-import java.io.IOException
 
 /**
  * Manages the user's Trakt credentials.
@@ -47,6 +46,7 @@ class TraktCredentials private constructor(context: Context) {
 
     // Mutex to synchronize refreshAccessToken calls
     private val refreshAccessTokenMutex = Mutex()
+
     // Volatile as multiple coroutines running in parallel on different threads my try to refresh
     @Volatile
     private var refreshAccessTokenResult: Deferred<Boolean>? = null
@@ -255,7 +255,7 @@ class TraktCredentials private constructor(context: Context) {
                     Errors.logAndReport("refresh access token", response)
                 }
             }
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             Errors.logAndReport("refresh access token", e)
         }
 
