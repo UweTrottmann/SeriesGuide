@@ -535,7 +535,8 @@ class TraktEpisodeSync(
                 false
             }
         } catch (e: Exception) {
-            Errors.logAndReport(action, e)
+            // Used via SgSyncAdapter where interrupts are expected, so don't report them
+            Errors.logAndReport(action, e, noInterruptReport = true)
             return false
         }
     }

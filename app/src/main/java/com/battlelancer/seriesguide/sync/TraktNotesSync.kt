@@ -93,7 +93,8 @@ class TraktNotesSync(
                 pageCount = TraktV2.getPageCount(response) ?: 1
                 page++
             } catch (e: Exception) {
-                Errors.logAndReport(action, e)
+                // Used via SgSyncAdapter where interrupts are expected, so don't report them
+                Errors.logAndReport(action, e, noInterruptReport = true)
                 return false
             }
         } while (page <= pageCount)

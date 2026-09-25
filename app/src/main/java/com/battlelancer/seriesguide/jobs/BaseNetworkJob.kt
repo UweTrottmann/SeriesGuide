@@ -105,7 +105,8 @@ abstract class BaseNetworkJob(
         return runCatching {
             call.execute()
         }.mapError {
-            Errors.logAndReport(action, it)
+            // Used via SgSyncAdapter where interrupts are expected, so don't report them
+            Errors.logAndReport(action, it, noInterruptReport = true)
             ERROR_CONNECTION
         }.andThen { response ->
             if (response.isSuccessful) {

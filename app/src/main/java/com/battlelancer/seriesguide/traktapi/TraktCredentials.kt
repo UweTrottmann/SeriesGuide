@@ -29,7 +29,6 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import timber.log.Timber
-import java.io.IOException
 
 /**
  * Manages the user's Trakt credentials.
@@ -255,8 +254,9 @@ class TraktCredentials private constructor(context: Context) {
                     Errors.logAndReport("refresh access token", response)
                 }
             }
-        } catch (e: IOException) {
-            Errors.logAndReport("refresh access token", e)
+        } catch (e: Exception) {
+            // Also used via SgSyncAdapter where interrupts are expected, so don't report them
+            Errors.logAndReport("refresh access token", e, noInterruptReport = true)
         }
 
         // Is the returned data valid?

@@ -60,7 +60,8 @@ object TraktTools3 {
                     /* limit = */ 1
                 ).execute()
         }.mapError {
-            Errors.logAndReport(action, it)
+            // Also used via SgSyncAdapter where interrupts are expected, so don't report them
+            Errors.logAndReport(action, it, noInterruptReport = true)
             if (it.isRetryError()) TraktRetry else TraktStop
         }.andThen {
             if (it.isSuccessful) {
@@ -95,7 +96,8 @@ object TraktTools3 {
                 .lastActivities()
                 .execute()
         }.mapError {
-            Errors.logAndReport(action, it)
+            // Used via SgSyncAdapter where interrupts are expected, so don't report them
+            Errors.logAndReport(action, it, noInterruptReport = true)
             if (it.isRetryError()) TraktRetry else TraktStop
         }.andThen { response ->
             if (response.isSuccessful) {
