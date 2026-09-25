@@ -6,6 +6,9 @@ Collecting design decisions. New and updated code and resources should follow th
 
 ### Concurrency
 
+If the calling thread is interrupted while in `runBlocking`, it will only cancel the job and 
+eventually throw `InterruptedException` once a coroutine suspends.
+
 `java.net.HttpURLConnection` may use OkHttp internally, which throws 
 `java.io.InterruptedIOException` on interrupts (in 
 `com.android.okhttp.okio.Timeout.throwIfReached`). It's also used by 
