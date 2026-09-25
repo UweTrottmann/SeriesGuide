@@ -6,6 +6,17 @@ Collecting design decisions. New and updated code and resources should follow th
 
 ### Concurrency
 
+If the calling thread is interrupted while in `runBlocking`, it only notices once its event loop
+has nothing to run (all coroutines are suspended). It then clears the interrupted flag, cancels
+the job, waits for it to complete and throws `InterruptedException`.
+
+If not interrupted, `runBlocking` throws `CancellationException` if its job gets cancelled for
+another reason, for example if its block awaits a `Deferred` that was cancelled by another job (like
+due to an interrupt).
+
+`Errors.logAndReport` re-throws `CancellationException`, so it must be caught explicitly if blocking
+code must not throw.
+
 `java.net.HttpURLConnection` may use OkHttp internally, which throws 
 `java.io.InterruptedIOException` on interrupts (in 
 `com.android.okhttp.okio.Timeout.throwIfReached`). It's also used by 
