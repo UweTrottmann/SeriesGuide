@@ -39,12 +39,11 @@ class HexagonSync(
      *
      * If a step fails, other steps are still attempted unless the sync was canceled.
      *
-     * Throws [SyncCanceledException] if the sync was canceled. [syncMovies] may throw
-     * [InterruptedException] if the calling thread is interrupted.
+     * Throws [SyncCanceledException] if the sync was canceled.
      *
      * If steps fail, they [SyncProgress.recordError].
      */
-    @Throws(SyncCanceledException::class, InterruptedException::class)
+    @Throws(SyncCanceledException::class)
     fun sync(): HexagonResult {
         val tmdbIdsToShowIds = SgApp.getServicesComponent(context).showTools()
             .getTmdbIdsToShowIds()
@@ -179,11 +178,6 @@ class HexagonSync(
         return HexagonResult(addNewShows, true)
     }
 
-    /**
-     * Note: this uses [runBlocking], so if the calling thread is interrupted this will throw
-     * [InterruptedException].
-     */
-    @Throws(InterruptedException::class)
     private fun syncMovies(): Boolean {
         val hasMergedMovies = HexagonSettings.hasMergedMovies(context)
 

@@ -72,17 +72,24 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
     }
 
     /**
-     * Set by [onSyncCanceled], which is called from another thread than the sync thread.
-     * Unlike the interrupted state of the sync thread this can not be cleared by other code.
+     * Set by [onSyncCanceled], which is called from another thread than the sync thread. The sync
+     * thread is not interrupted, so sync code must check this (see [SyncProgress.throwIfCanceled]).
      */
     @Volatile
     private var isCanceled = false
 
     override fun onSyncCanceled() {
+        // Don't call super (subclasses may do so, see the [AbstractThreadedSyncAdapter] docs), it
+        // would interrupt the sync thread. Using a thread interrupt to handle sync cancellation
+        // is complicated, for example:
+        // - non-suspending Room API calls just clear the interrupt state and continue,
+        // - (OkHttp) network requests clear the interrupt state and throw InterruptedException or
+        //   InterruptedIOException depending on in which part of call processing they are,
+        // - runBlocking clears the state and throws InterruptedException,
+        // - any other APIs, like Tasks.await, that use concurrent APIs may throw
+        //   InterruptedException.
+        // So instead use a flag and cancel in between steps when feasible.
         isCanceled = true
-        // Super interrupts the sync thread. This only serves to wake up blocking calls (network
-        // I/O, sleep, runBlocking) so they return early. Code should check isCanceled instead.
-        super.onSyncCanceled()
     }
 
     override fun onPerformSync(
@@ -128,43 +135,23 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
         try {
             sync(showSync, currentTime, progress)
         } catch (e: SyncCanceledException) {
-            handleSyncCanceled(e, progress)
-        } catch (e: InterruptedException) {
-            // The thread interrupt only wakes up blocking calls, so runBlocking or Thread.sleep
-            // may still throw this.
-            handleSyncCanceled(e, progress)
+            // The system has decided to cancel the sync (see onSyncCanceled), just try again later.
+            // Log the exception to see where the cancel was noticed.
+            Timber.d(e, "Sync canceled by system, trying again later.")
+            progress.recordError()
+            progress.setImportantErrorIfNone("Interrupted by system, trying again later.")
         }
         progress.publishFinished()
     }
 
     /**
-     * This can happen if the system has decided to cancel the sync (see [onSyncCanceled] and the
-     * [AbstractThreadedSyncAdapter] class documentation), just try again later.
-     */
-    private fun handleSyncCanceled(e: Exception, progress: SyncProgress) {
-        // Log the exception class to see where the cancel was noticed.
-        Timber.d(e, "Sync canceled by system, trying again later.")
-        progress.recordError()
-        progress.setImportantErrorIfNone("Interrupted by system, trying again later.")
-    }
-
-    /**
-     * Note: this calls
-     *
-     * - [TmdbSync.updateConfigurationAndWatchProviders]
-     * - [ShowSync.sync]
-     * - [TmdbSync.updateMovies]
-     * - [HexagonSync.sync]
-     * - [TraktSync.sync]
-     *
-     * which may throw [InterruptedException].
-     *
      * Throws [SyncCanceledException] if [SyncProgress.throwIfCanceled] notices the sync was
      * canceled.
      */
-    @Throws(SyncCanceledException::class, InterruptedException::class)
+    @Throws(SyncCanceledException::class)
     private fun sync(showSync: ShowSync, currentTime: Long, progress: SyncProgress) {
         progress.publish(SyncProgress.Step.TMDB)
+        progress.throwIfCanceled()
 
         // Get latest TMDb configuration.
         val tmdbSync = TmdbSync(context, tmdbConfigService.get(), movieTools.get())
@@ -262,12 +249,12 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
                 // should not have any consequences as movies not in any list aren't displayed in
                 // the UI (they would still get exported).
                 // This is also done before updating movies to avoid updating a to be deleted movie.
-                // Note: this uses runBlocking, so if the calling thread is interrupted this will
-                // throw InterruptedException.
                 runBlocking {
                     movieTools.get().updateDatabaseAfterCustomListChange()
                 }
                 Timber.d("Syncing: updating movie database...DONE")
+
+                progress.throwIfCanceled()
 
                 // Update data of to be released movies
                 // It is OK to do this after movies are synced with Cloud or Trakt as all required
@@ -282,7 +269,7 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
 
             Timber.i("Syncing: %s", resultCode.toString())
         } finally {
-            // Finish some things even if interrupted
+            // Finish some things even if canceled or failed
 
             // Renew search table if shows were updated and it will not be renewed by add task,
             // but as this is a little costly only do it when doing the less frequent multiple

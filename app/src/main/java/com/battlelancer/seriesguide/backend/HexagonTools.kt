@@ -60,9 +60,6 @@ class HexagonTools @Inject constructor(
      * Returns the instance for this hexagon service or null if not signed in.
      *
      * Warning: checks sign-in state, make sure to guard with [HexagonSettings.isEnabled].
-     *
-     * Warning: the request initializer may clear the interrupted state of the calling thread. See
-     * [FirebaseHttpRequestInitializer] for details on how to restore it, if needed.
      */
     @get:Synchronized
     var showsService: Shows? = null
@@ -81,9 +78,6 @@ class HexagonTools @Inject constructor(
      * Returns the instance for this hexagon service or null if not signed in.
      *
      * Warning: checks sign-in state, make sure to guard with [HexagonSettings.isEnabled].
-     *
-     * Warning: the request initializer may clear the interrupted state of the calling thread. See
-     * [FirebaseHttpRequestInitializer] for details on how to restore it, if needed.
      */
     @get:Synchronized
     var episodesService: Episodes? = null
@@ -102,9 +96,6 @@ class HexagonTools @Inject constructor(
      * Returns the instance for this hexagon service or null if not signed in.
      *
      * Warning: checks sign-in state, make sure to guard with [HexagonSettings.isEnabled].
-     *
-     * Warning: the request initializer may clear the interrupted state of the calling thread. See
-     * [FirebaseHttpRequestInitializer] for details on how to restore it, if needed.
      */
     @get:Synchronized
     var moviesService: Movies? = null
@@ -121,9 +112,6 @@ class HexagonTools @Inject constructor(
 
     /**
      * Returns the instance for this hexagon service or null if not signed in.
-     *
-     * Warning: the request initializer may clear the interrupted state of the calling thread. See
-     * [FirebaseHttpRequestInitializer] for details on how to restore it, if needed.
      */
     @get:Synchronized
     var listsService: Lists? = null
@@ -142,9 +130,6 @@ class HexagonTools @Inject constructor(
      * Creates and returns a new instance for this hexagon service or null if not signed in.
      *
      * Warning: checks sign-in state, make sure to guard with [HexagonSettings.isEnabled].
-     *
-     * Warning: the request initializer may clear the interrupted state of the calling thread. See
-     * [FirebaseHttpRequestInitializer] for details on how to restore it, if needed.
      */
     @Synchronized
     fun buildAccountService(): Account? {

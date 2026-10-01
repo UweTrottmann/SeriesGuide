@@ -44,11 +44,7 @@ class TraktMovieSync(
      *
      * Performs **synchronous network access**, make sure to run this on a background
      * thread.
-     *
-     * Note: this uses [runBlocking], so if the calling thread is interrupted this will throw
-     * [InterruptedException].
      */
-    @Throws(InterruptedException::class)
     fun syncLists(activity: LastActivityMore): Boolean {
         val collectedAt = activity.collected_at
         if (collectedAt == null) {

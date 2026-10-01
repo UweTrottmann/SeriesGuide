@@ -53,17 +53,10 @@ class ShowSync(
      * Considers shows that no longer exist at the source to be updated.
      * On network errors retries a few times to update a show before failing.
      *
-     * Note: this calls
-     *
-     * - [runBlocking]
-     * - [Thread.sleep]
-     *
-     * which may throw [InterruptedException].
-     *
      * Throws [SyncCanceledException] if the sync was canceled.
      */
     @SuppressLint("TimberExceptionLogging")
-    @Throws(SyncCanceledException::class, InterruptedException::class)
+    @Throws(SyncCanceledException::class)
     fun sync(
         context: Context,
         currentTime: Long,
