@@ -1,20 +1,21 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2017 Uwe Trottmann <uwe@uwetrottmann.com>
 
-package com.battlelancer.seriesguide.sync;
+package com.battlelancer.seriesguide.sync
 
-import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.battlelancer.seriesguide.R;
-import java.util.LinkedList;
-import java.util.List;
-import org.greenrobot.eventbus.EventBus;
-import timber.log.Timber;
+import android.content.Context
+import androidx.annotation.StringRes
+import com.battlelancer.seriesguide.R
+import org.greenrobot.eventbus.EventBus
+import timber.log.Timber
+import java.util.LinkedList
 
-public class SyncProgress {
+class SyncProgress {
 
-    public enum Step {
+    enum class Step(
+        @param:StringRes val serviceRes: Int,
+        @param:StringRes val typeRes: Int
+    ) {
         TMDB(R.string.tmdb, 0),
         HEXAGON_EPISODES(R.string.hexagon, R.string.episodes),
         HEXAGON_SHOWS(R.string.hexagon, R.string.shows),
@@ -24,108 +25,79 @@ public class SyncProgress {
         TRAKT_EPISODES(R.string.trakt, R.string.episodes),
         TRAKT_RATINGS(R.string.trakt, R.string.ratings),
         TRAKT_NOTES(R.string.trakt, R.string.title_notes),
-        TRAKT_MOVIES(R.string.trakt, R.string.movies);
-
-        public final int serviceRes;
-        public final int typeRes;
-
-        Step(int serviceRes, int typeRes) {
-            this.serviceRes = serviceRes;
-            this.typeRes = typeRes;
-        }
+        TRAKT_MOVIES(R.string.trakt, R.string.movies)
     }
 
-    public static class SyncEvent {
-        @Nullable private final Step step;
-        @NonNull private final List<Step> stepsWithError;
-        @Nullable private final String importantErrorOrNull;
+    class SyncEvent internal constructor(
+        private val step: Step?,
+        private val stepsWithError: List<Step>,
+        private val importantErrorOrNull: String?
+    ) {
+        val isSyncing: Boolean
+            get() = step != null
 
-        SyncEvent(
-                @Nullable Step step,
-                @NonNull List<Step> stepsWithError,
-                @Nullable String importantErrorOrNull
-        ) {
-            this.step = step;
-            this.stepsWithError = stepsWithError;
-            this.importantErrorOrNull = importantErrorOrNull;
-        }
+        val isFinishedWithError: Boolean
+            get() = stepsWithError.isNotEmpty()
 
-        public boolean isSyncing() {
-            return step != null;
-        }
+        fun getDescription(context: Context): String {
+            val statusText = StringBuilder(context.getString(R.string.sync_and_update))
 
-        public boolean isFinishedWithError() {
-            return !stepsWithError.isEmpty();
-        }
-
-        public String getDescription(Context context) {
-            StringBuilder statusText = new StringBuilder(
-                    context.getString(R.string.sync_and_update));
-
-            Step stepToDisplay = getStepToDisplay();
+            val stepToDisplay = getStepToDisplay()
             if (stepToDisplay != null) {
-                statusText.append(" - ");
-                statusText.append(context.getString(stepToDisplay.serviceRes));
+                statusText.append(" - ")
+                statusText.append(context.getString(stepToDisplay.serviceRes))
                 if (stepToDisplay.typeRes != 0) {
-                    statusText.append(" - ");
-                    statusText.append(context.getString(stepToDisplay.typeRes));
+                    statusText.append(" - ")
+                    statusText.append(context.getString(stepToDisplay.typeRes))
                 }
             }
 
             if (importantErrorOrNull != null) {
-                statusText.append(" - ").append(importantErrorOrNull);
+                statusText.append(" - ").append(importantErrorOrNull)
             }
 
-            return statusText.toString();
+            return statusText.toString()
         }
 
-        @Nullable
-        private Step getStepToDisplay() {
-            if (step != null) {
-                return step;
-            } else if (stepsWithError.size() > 0) {
-                // display first step that had error
-                return stepsWithError.get(0);
-            } else {
-                return null;
-            }
+        private fun getStepToDisplay(): Step? {
+            return step
+            // display first step that had error
+                ?: stepsWithError.firstOrNull()
         }
     }
 
-    @NonNull private final List<Step> stepsWithError = new LinkedList<>();
-    @Nullable private Step currentStep;
-    @Nullable private String importantErrorOrNull;
+    private val stepsWithError: MutableList<Step> = LinkedList()
+    private var currentStep: Step? = null
+    private var importantErrorOrNull: String? = null
 
-    void publish(Step step) {
-        currentStep = step;
-        EventBus.getDefault().postSticky(
-                new SyncEvent(step, stepsWithError, importantErrorOrNull));
-        Timber.d("Syncing: %s...", step.name());
+    internal fun publish(step: Step) {
+        currentStep = step
+        EventBus.getDefault().postSticky(SyncEvent(step, stepsWithError, importantErrorOrNull))
+        Timber.d("Syncing: %s...", step.name)
     }
 
     /**
      * Record an error for the last published step.
      */
-    void recordError() {
-        if (currentStep != null) {
-            stepsWithError.add(currentStep);
-            Timber.d("Syncing: %s...FAILED", currentStep.name());
+    internal fun recordError() {
+        currentStep?.let {
+            stepsWithError.add(it)
+            Timber.d("Syncing: %s...FAILED", it.name)
         }
     }
 
     /**
      * Set message to be appended to the step description once
-     * {@link #publish} or {@link #publishFinished} is called.
+     * [publish] or [publishFinished] is called.
      * Does nothing if this was already called.
      */
-    public void setImportantErrorIfNone(@NonNull String message) {
+    fun setImportantErrorIfNone(message: String) {
         if (importantErrorOrNull == null) {
-            importantErrorOrNull = message;
+            importantErrorOrNull = message
         }
     }
 
-    void publishFinished() {
-        EventBus.getDefault().postSticky(
-                new SyncEvent(null, stepsWithError, importantErrorOrNull));
+    internal fun publishFinished() {
+        EventBus.getDefault().postSticky(SyncEvent(null, stepsWithError, importantErrorOrNull))
     }
 }
