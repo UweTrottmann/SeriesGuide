@@ -71,6 +71,20 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
         SgApp.getServicesComponent(context).inject(this)
     }
 
+    /**
+     * Set by [onSyncCanceled], which is called from another thread than the sync thread.
+     * Unlike the interrupted state of the sync thread this can not be cleared by other code.
+     */
+    @Volatile
+    private var isCanceled = false
+
+    override fun onSyncCanceled() {
+        isCanceled = true
+        // Super interrupts the sync thread. This only serves to wake up blocking calls (network
+        // I/O, sleep, runBlocking) so they return early. Code should check isCanceled instead.
+        super.onSyncCanceled()
+    }
+
     override fun onPerformSync(
         account: Account,
         extras: Bundle,
@@ -78,7 +92,10 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
         provider: ContentProviderClient,
         syncResult: SyncResult
     ) {
-        // determine type of sync
+        // Safe to reset here as only one sync runs at a time (allowParallelSyncs is false).
+        isCanceled = false
+
+        // Determine type of sync
         val options = SyncOptions(extras)
         Timber.i(
             "Syncing: %s%s",
@@ -96,7 +113,7 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
         }
 
         // SYNC
-        // should we sync?
+        // Unless a sync was forced, don't run for multiple shows if one completed recently.
         val showSync = ShowSync(options.syncType, options.singleShowId)
         val currentTime = System.currentTimeMillis()
         if (!options.syncImmediately && showSync.isSyncMultiple) {
@@ -106,28 +123,29 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
             }
         }
 
-        // from here on we need more sophisticated abort handling, so keep track of errors
-        val progress = SyncProgress()
+        // From here on more sophisticated abort handling is needed, so keep track of errors.
+        val progress = SyncProgress { isCanceled }
         try {
             sync(showSync, currentTime, progress)
+        } catch (e: SyncCanceledException) {
+            handleSyncCanceled(e, progress)
         } catch (e: InterruptedException) {
-            // This can happen if the system has decided to interrupt the sync
-            // thread (see AbstractThreadedSyncAdapter class documentation),
-            // just try again later.
-            // Note that currently
-            // - non-suspending Room operations (see its internal `runBlockingUninterruptible`
-            //   calling Thread.interrupt()),
-            // - OkHttp network requests to TMDB, Trakt and Hexagon
-            //   (its `com.google.api.client.http.javanet.NetHttpTransport` uses
-            //   `java.net.HttpURLConnection`, which on modern Android versions uses OkHttp)
-            //   due to Okio's Timeout.throwIfReached throwing InterruptedIOException
-            // clear the interrupt state so sync might continue despite getting interrupted.
-            // Log the exception class to see where the interrupt caused it.
-            Timber.d(e, "Sync interrupted by system, trying again later.")
-            progress.recordError()
-            progress.setImportantErrorIfNone("Interrupted by system, trying again later.")
+            // The thread interrupt only wakes up blocking calls, so runBlocking or Thread.sleep
+            // may still throw this.
+            handleSyncCanceled(e, progress)
         }
         progress.publishFinished()
+    }
+
+    /**
+     * This can happen if the system has decided to cancel the sync (see [onSyncCanceled] and the
+     * [AbstractThreadedSyncAdapter] class documentation), just try again later.
+     */
+    private fun handleSyncCanceled(e: Exception, progress: SyncProgress) {
+        // Log the exception class to see where the cancel was noticed.
+        Timber.d(e, "Sync canceled by system, trying again later.")
+        progress.recordError()
+        progress.setImportantErrorIfNone("Interrupted by system, trying again later.")
     }
 
     /**
@@ -140,8 +158,11 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
      * - [TraktSync.sync]
      *
      * which may throw [InterruptedException].
+     *
+     * Throws [SyncCanceledException] if [SyncProgress.throwIfCanceled] notices the sync was
+     * canceled.
      */
-    @Throws(InterruptedException::class)
+    @Throws(SyncCanceledException::class, InterruptedException::class)
     private fun sync(showSync: ShowSync, currentTime: Long, progress: SyncProgress) {
         progress.publish(SyncProgress.Step.TMDB)
 
@@ -149,7 +170,7 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
         val tmdbSync = TmdbSync(context, tmdbConfigService.get(), movieTools.get())
         tmdbSync.updateConfigurationAndWatchProviders(progress)
 
-        if (Thread.interrupted()) throw InterruptedException()
+        progress.throwIfCanceled()
 
         // Update show and movie data.
         // If failed for at least one show, do not proceed with other sync steps to avoid
@@ -173,7 +194,7 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
 
             // do some more things if this is not a quick update
             if (showSync.isSyncMultiple) {
-                if (Thread.interrupted()) throw InterruptedException()
+                progress.throwIfCanceled()
 
                 // sync with hexagon
                 val isHexagonEnabled = HexagonSettings.isEnabled(context)
@@ -196,13 +217,13 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
                     Timber.d("Syncing: Hexagon...SKIP")
                 }
 
-                if (Thread.interrupted()) throw InterruptedException()
+                progress.throwIfCanceled()
 
                 // Migrate legacy list items
                 // Note: might send to Hexagon, so make sure to sync lists with Hexagon before
                 ListsTools.migrateTvdbShowListItemsToTmdbIds(context)
 
-                if (Thread.interrupted()) throw InterruptedException()
+                progress.throwIfCanceled()
 
                 // sync with trakt (only ratings if hexagon is enabled)
                 if (TraktCredentials.get(context).hasCredentials()) {
@@ -222,7 +243,7 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
                     Timber.d("Syncing: trakt...SKIP")
                 }
 
-                if (Thread.interrupted()) throw InterruptedException()
+                progress.throwIfCanceled()
 
                 // update next episodes for all shows
                 TaskManager.tryNextEpisodeUpdateTask(context)

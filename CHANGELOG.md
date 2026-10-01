@@ -10,7 +10,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ### Next release
 
-* 🔧 Sync: also stop quickly if interrupted if Cloud is connected.
+* 🔨 Sync: if interrupted, never mark as successful so next sync happens sooner.
 * 🔨 Sync: don't crash when refreshing Trakt credentials is interrupted.
 
 ## Version 2026.4

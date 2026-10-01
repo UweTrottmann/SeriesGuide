@@ -40,12 +40,14 @@ class HexagonSync(
      * Merges shows, episodes and movies after a sign-in. Consecutive syncs will only download
      * changes to shows, episodes and movies.
      *
-     * If a step fails, other steps are still attempted unless the calling thread is interrupted.
-     * In which case [syncMovies] may throw [InterruptedException].
+     * If a step fails, other steps are still attempted unless the sync was canceled.
+     *
+     * Throws [SyncCanceledException] if the sync was canceled. [syncMovies] may throw
+     * [InterruptedException] if the calling thread is interrupted.
      *
      * If steps fail, they [SyncProgress.recordError].
      */
-    @Throws(InterruptedException::class)
+    @Throws(SyncCanceledException::class, InterruptedException::class)
     fun sync(): HexagonResult {
         val tmdbIdsToShowIds = SgApp.getServicesComponent(context).showTools()
             .getTmdbIdsToShowIds()
@@ -57,7 +59,7 @@ class HexagonSync(
             progress.recordError()
         }
 
-        if (Thread.currentThread().isInterrupted) return HexagonResult.FAILED
+        progress.throwIfCanceled()
 
         //// SHOWS
         progress.publish(SyncProgress.Step.HEXAGON_SHOWS)
@@ -66,9 +68,7 @@ class HexagonSync(
             progress.recordError()
         }
 
-        // Don't set hasAddedShows to avoid rebuilding search table as if interrupted this should
-        // finish quickly.
-        if (Thread.currentThread().isInterrupted) return HexagonResult.FAILED
+        progress.throwIfCanceled()
 
         //// MOVIES
         progress.publish(SyncProgress.Step.HEXAGON_MOVIES)
@@ -77,7 +77,7 @@ class HexagonSync(
             progress.recordError()
         }
 
-        if (Thread.currentThread().isInterrupted) return HexagonResult.FAILED
+        progress.throwIfCanceled()
 
         //// LISTS
         progress.publish(SyncProgress.Step.HEXAGON_LISTS)
@@ -95,8 +95,9 @@ class HexagonSync(
     }
 
     /**
-     * If an operation fails, network connectivity is lost or the calling thread is interrupted this
-     * may only partially complete.
+     * If an operation fails or network connectivity is lost this may only partially complete.
+     *
+     * Throws [SyncCanceledException] if the sync was canceled.
      *
      * @return If everything completed successfully.
      */
@@ -111,10 +112,10 @@ class HexagonSync(
         val dbEpisodeHelper = database.sgEpisode2Helper()
         val episodeSync = HexagonEpisodeSync(context, hexagonTools, dbEpisodeHelper, dbShowHelper)
         for (show in showsToMerge) {
-            // Do network and interrupted checks here as well, as otherwise this just continues onto
+            // Do network and cancel checks here as well, as otherwise this just continues onto
             // the next show.
             if (!AndroidUtils.isNetworkConnected(context)) return false
-            if (Thread.currentThread().isInterrupted) return false
+            progress.throwIfCanceled()
 
             // TMDB ID is required, legacy shows with TVDB only data will no longer be synced.
             val showTmdbId = show.tmdbId ?: continue

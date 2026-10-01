@@ -73,9 +73,8 @@ class AllApisAuthenticator @Inject constructor(
             }
 
             // Refresh the access token or wait on a running refresh.
-            // Run the token refresh on its own thread, so if this thread is interrupted (as may be
-            // done by SgSyncAdapter using this), this still waits for the result so a successful
-            // refresh is not lost.
+            // Run the token refresh on its own thread, so if this thread is interrupted, this still
+            // waits for the result so a successful refresh is not lost.
             val successful = try {
                 traktTokenRefresh.runOrAwait()
             } catch (e: ExecutionException) {

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2022-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2022 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.shows.tools
 
@@ -16,6 +16,7 @@ import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.UpdateResult.
 import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.UpdateResult.Success
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.sync.SgSyncAdapter.UpdateResult
+import com.battlelancer.seriesguide.sync.SyncCanceledException
 import com.battlelancer.seriesguide.sync.SyncOptions.SyncType
 import com.battlelancer.seriesguide.sync.SyncProgress
 import com.battlelancer.seriesguide.util.TaskManager
@@ -58,9 +59,11 @@ class ShowSync(
      * - [Thread.sleep]
      *
      * which may throw [InterruptedException].
+     *
+     * Throws [SyncCanceledException] if the sync was canceled.
      */
     @SuppressLint("TimberExceptionLogging")
-    @Throws(InterruptedException::class)
+    @Throws(SyncCanceledException::class, InterruptedException::class)
     fun sync(
         context: Context,
         currentTime: Long,
@@ -85,7 +88,7 @@ class ShowSync(
                     return UpdateResult.INCOMPLETE
                 }
 
-                if (Thread.interrupted()) throw InterruptedException()
+                progress.throwIfCanceled()
 
                 // This can fail due to
                 // - network error (not connected, unknown host, time out) => abort and try again
