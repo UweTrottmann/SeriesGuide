@@ -5,17 +5,14 @@ package com.battlelancer.seriesguide.sync
 
 import android.content.Context
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.backend.CloudAuthInterruptedIOException
 import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.tools.AddShowTask
 import com.battlelancer.seriesguide.util.TaskManager
-import com.google.api.client.googleapis.services.json.AbstractGoogleJsonClientRequest
 import com.uwetrottmann.androidutils.AndroidUtils
 import kotlinx.coroutines.runBlocking
-import java.io.IOException
 import java.util.LinkedList
 
 class HexagonSync(
@@ -252,23 +249,5 @@ class HexagonSync(
         }
 
         return true
-    }
-}
-
-/**
- * Helper method to execute requests that restores the interrupted state if it was cleared by the
- * [com.battlelancer.seriesguide.backend.FirebaseHttpRequestInitializer] interceptor.
- *
- * The [SgSyncAdapter] thread may be interrupted and relies on checking the interrupted state to
- * stop quickly. Note that despite this, other operations may still clear the interrupted state (see
- * the notes in [SgSyncAdapter]).
- */
-@Throws(IOException::class)
-fun <T> AbstractGoogleJsonClientRequest<T>.executeRestoringInterrupt(): T {
-    try {
-        return execute()
-    } catch (e: CloudAuthInterruptedIOException) {
-        Thread.currentThread().interrupt()
-        throw e
     }
 }

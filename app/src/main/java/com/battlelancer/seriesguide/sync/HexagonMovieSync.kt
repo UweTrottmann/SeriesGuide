@@ -84,7 +84,7 @@ internal class HexagonMovieSync(
                     request.cursor = cursor
                 }
 
-                val response = request.executeRestoringInterrupt()
+                val response = request.execute()
                 if (response == null) {
                     // nothing more to do
                     Timber.d("download: response was null, done here")
@@ -229,7 +229,7 @@ internal class HexagonMovieSync(
             try {
                 // get service each time to check if auth was removed
                 val moviesService = hexagonTools.moviesService ?: return false
-                moviesService.save(wrapper).executeRestoringInterrupt()
+                moviesService.save(wrapper).execute()
             } catch (e: IOException) {
                 Errors.logAndReportHexagon("save movies", e)
                 return false

@@ -20,10 +20,10 @@ import java.util.concurrent.TimeoutException
  * Fetches token once and caches it between requests.
  * If a request fails with HTTP 401 tries once to fetch token again.
  *
- * Note that if the thread that executes a request using this is interrupted, this may clear the
- * interrupted flag (in [getJwtToken] the [Tasks.await] call does). To restore it, calling code can
- * handle the [CloudAuthInterruptedIOException] (the request client expects this to only throw
- * [IOException], so this must wrap [InterruptedException]).
+ * Note that if the thread that executes a request using this is interrupted, the token request
+ * fails with a [FirebaseAuthIOException] (the request client expects this to only throw
+ * [IOException], so this wraps [InterruptedException]). This clears the interrupted flag as
+ * [Tasks.await] does.
  */
 class FirebaseHttpRequestInitializer : HttpRequestInitializer {
 
@@ -77,11 +77,9 @@ private class FirebaseHttpExecuteInterceptor(
             val token = firebaseHttpRequestInitializer.getJwtToken()
             request?.headers?.authorization = "Bearer $token"
         } catch (e: ExecutionException) {
-            throw CloudAuthIOException(e.cause ?: e)
-        } catch (e: InterruptedException) {
-            throw CloudAuthInterruptedIOException(e)
+            throw FirebaseAuthIOException(e.cause ?: e)
         } catch (e: Exception) {
-            throw CloudAuthIOException(e)
+            throw FirebaseAuthIOException(e)
         }
     }
 
@@ -103,5 +101,4 @@ private class FirebaseHttpExecuteInterceptor(
 
 }
 
-class CloudAuthIOException(cause: Throwable) : IOException(cause)
-class CloudAuthInterruptedIOException(cause: Throwable) : IOException(cause)
+class FirebaseAuthIOException(cause: Throwable) : IOException(cause)

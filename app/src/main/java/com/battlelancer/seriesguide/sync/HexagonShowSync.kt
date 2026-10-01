@@ -108,7 +108,7 @@ class HexagonShowSync @Inject constructor(
                 if (!cursor.isNullOrEmpty()) {
                     request.cursor = cursor
                 }
-                val response = request.executeRestoringInterrupt()
+                val response = request.execute()
                 if (response == null) {
                     // If empty API sends status 200 and empty list, so no body is a failure.
                     Timber.e("download: response was null")
@@ -174,7 +174,7 @@ class HexagonShowSync @Inject constructor(
                 if (!cursor.isNullOrEmpty()) {
                     request.cursor = cursor
                 }
-                val response = request.executeRestoringInterrupt()
+                val response = request.execute()
                 if (response == null) {
                     // If empty API sends status 200 and empty list, so no body is a failure.
                     Timber.e("download: response was null")
@@ -426,7 +426,7 @@ class HexagonShowSync @Inject constructor(
             try {
                 // get service each time to check if auth was removed
                 val showsService = hexagonTools.showsService ?: return false
-                showsService.saveSgShows(wrapper).executeRestoringInterrupt()
+                showsService.saveSgShows(wrapper).execute()
             } catch (e: IOException) {
                 logAndReportHexagon("save shows", e)
                 return false

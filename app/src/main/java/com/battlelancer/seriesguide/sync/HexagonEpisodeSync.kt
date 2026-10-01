@@ -53,7 +53,7 @@ class HexagonEpisodeSync(
                     request.setCursor(cursor)
                 }
 
-                val response = request.executeRestoringInterrupt()
+                val response = request.execute()
                 if (response == null) {
                     Timber.d("downloadChangedFlags: response was null, nothing more to do")
                     break
@@ -195,7 +195,7 @@ class HexagonEpisodeSync(
 
                 // execute request
                 // If empty server should send status 200 and empty list, so no body is a failure
-                val response = request.executeRestoringInterrupt()
+                val response = request.execute()
                     ?: return DownloadFlagsResult.FAILED
 
                 episodes = response.episodes
@@ -262,7 +262,7 @@ class HexagonEpisodeSync(
 
                 // execute request
                 // If empty server should send status 200 and empty list, so no body is a failure
-                val response = request.executeRestoringInterrupt()
+                val response = request.execute()
                     ?: return DownloadFlagsResult.FAILED
 
                 legacyEpisodes = response.episodes
@@ -479,7 +479,7 @@ class HexagonEpisodeSync(
                     // get service each time to check if auth was removed
                     val episodesService = hexagonTools.episodesService
                         ?: return false
-                    episodesService.saveSgEpisodes(episodeList).executeRestoringInterrupt()
+                    episodesService.saveSgEpisodes(episodeList).execute()
                 } catch (e: IOException) {
                     // abort
                     logAndReportHexagon("save episodes of show", e)

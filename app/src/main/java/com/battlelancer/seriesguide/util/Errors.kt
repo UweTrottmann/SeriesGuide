@@ -6,7 +6,7 @@ package com.battlelancer.seriesguide.util
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.annotation.VisibleForTesting
-import com.battlelancer.seriesguide.backend.CloudAuthInterruptedIOException
+import com.battlelancer.seriesguide.backend.CloudAuthIOException
 import com.battlelancer.seriesguide.backend.HexagonAuthError
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.google.api.client.http.HttpResponseException
@@ -257,14 +257,15 @@ private fun HttpResponseException.isServerError(): Boolean {
  * - ConnectException - network issues (e.g. "Failed to connect to x").
  * - InterruptedIOException - network requests (OkHttp/Okio) failing due to time-outs
  *   (including SocketTimeoutException) or thread interrupt.
- * - CloudAuthInterruptedIOException - get token request failing due to thread interrupt.
+ * - CloudAuthIOException caused by InterruptedException - get token request failing due to thread
+ *   interrupt.
  * - UnknownHostException - network issues.
  */
 private fun Throwable.shouldReport(): Boolean {
     return when (this) {
         is ConnectException -> false
         is InterruptedIOException -> false
-        is CloudAuthInterruptedIOException -> false
+        is CloudAuthIOException -> cause !is InterruptedException
         is UnknownHostException -> false
         is SSLException -> {
             message?.contains("Connection reset by peer") == false
