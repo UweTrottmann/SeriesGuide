@@ -74,8 +74,7 @@ class TmdbSync internal constructor(
                 Errors.logAndReport("get config", response)
             }
         } catch (e: Exception) {
-            // Used via SgSyncAdapter where interrupts are expected, so don't report them
-            Errors.logAndReport("get config", e, noInterruptReport = true)
+            Errors.logAndReport("get config", e)
         }
 
         return false

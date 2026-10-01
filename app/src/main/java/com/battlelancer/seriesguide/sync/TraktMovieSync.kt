@@ -84,8 +84,7 @@ class TraktMovieSync(
         val localMovies: List<SgMovieFlags> = try {
             SgRoomDatabase.getInstance(context).movieHelper().getMovieFlags()
         } catch (e: Exception) {
-            // Used via SgSyncAdapter where interrupts are expected, so don't report them
-            Errors.logAndReport("syncLists: query local movies", e, noInterruptReport = true)
+            Errors.logAndReport("syncLists: query local movies", e)
             return false
         }
 
@@ -281,8 +280,7 @@ class TraktMovieSync(
                 }
             }
         } catch (e: Exception) {
-            // Used via SgSyncAdapter where interrupts are expected, so don't report them
-            Errors.logAndReport(action, e, noInterruptReport = true)
+            Errors.logAndReport(action, e)
             return false
         }
         if (response != null && !response.isSuccessful) {

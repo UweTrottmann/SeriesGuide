@@ -238,8 +238,7 @@ class TmdbTools2 {
                 .tv(language, watchRegion)
                 .results
         } catch (e: Exception) {
-            // Also used via SgSyncAdapter where interrupts are expected, so don't report them
-            Errors.logAndReport("get show watch providers", e, noInterruptReport = true)
+            Errors.logAndReport("get show watch providers", e)
             null
         }
     }

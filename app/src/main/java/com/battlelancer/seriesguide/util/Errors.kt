@@ -60,24 +60,14 @@ class Errors {
          * bottom-most exception to the call site of this method. Adds action as key to report.
          * If [throwable] is a [CancellationException] re-throws it so a coroutine
          * is cancelled properly.
-         *
-         * If [noInterruptReport] is true, does not report the exception if it is an
-         * [InterruptedException]. This is useful for when it is expected that the calling thread
-         * is interrupted.
          */
         @JvmStatic
-        @JvmOverloads
-        fun logAndReport(
-            action: String,
-            throwable: Throwable,
-            noInterruptReport: Boolean = false
-        ) {
+        fun logAndReport(action: String, throwable: Throwable) {
             if (throwable is CancellationException) throw throwable
 
             Timber.e(throwable, action)
 
             if (!throwable.shouldReport()) return
-            if (noInterruptReport && throwable is InterruptedException) return
 
             bendCauseStackTrace(throwable)
 

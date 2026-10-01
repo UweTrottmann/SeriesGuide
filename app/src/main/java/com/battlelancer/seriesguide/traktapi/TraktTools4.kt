@@ -362,8 +362,7 @@ object TraktTools4 {
         val response = try {
             call.awaitResponse()
         } catch (e: Exception) {
-            // Also used via SgSyncAdapter where interrupts are expected, so don't report them
-            Errors.logAndReport(action, e, noInterruptReport = true)
+            Errors.logAndReport(action, e)
             return TraktErrorResponse.Other()
         }
 

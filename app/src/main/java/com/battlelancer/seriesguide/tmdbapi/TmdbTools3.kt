@@ -52,8 +52,7 @@ object TmdbTools3 {
                 .find(showTvdbId, ExternalSource.TVDB_ID, null)
                 .execute()
         }.mapError {
-            // Also used via SgSyncAdapter where interrupts are expected, so don't report them
-            Errors.logAndReport(action, it, noInterruptReport = true)
+            Errors.logAndReport(action, it)
             if (it.isRetryError()) TmdbRetry else TmdbStop
         }.andThen {
             if (it.isSuccessful) {
@@ -94,8 +93,7 @@ object TmdbTools3 {
                 .tv(showTmdbId, language, AppendToResponse(AppendToResponseItem.EXTERNAL_IDS))
                 .execute()
         }.mapError {
-            // Also used via SgSyncAdapter where interrupts are expected, so don't report them
-            Errors.logAndReport(action, it, noInterruptReport = true)
+            Errors.logAndReport(action, it)
             if (it.isRetryError()) TmdbRetry else TmdbStop
         }.andThen {
             if (it.isSuccessful) {
@@ -156,8 +154,7 @@ object TmdbTools3 {
                 .season(showTmdbId, seasonNumber, language)
                 .execute()
         }.mapError {
-            // Also used via SgSyncAdapter where interrupts are expected, so don't report them
-            Errors.logAndReport(action, it, noInterruptReport = true)
+            Errors.logAndReport(action, it)
             if (it.isRetryError()) TmdbRetry else TmdbStop
         }.andThen {
             if (it.isSuccessful) {
