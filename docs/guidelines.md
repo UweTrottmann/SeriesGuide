@@ -2,28 +2,15 @@
 
 Collecting design decisions. New and updated code and resources should follow them.
 
+## General notes
+
+- Write new code in Kotlin. When modifying existing Java code, consider converting it to Kotlin 
+  first.
+- Build new screens with Jetpack Compose. When editing an existing screen, keep its current UI
+  toolkit.
+- Where practical, add or update unit tests for logic changes. UI tests are not required.
+
 ## Coding patterns
-
-### Concurrency
-
-If the calling thread is interrupted while in `runBlocking`, it only notices once its event loop
-has nothing to run (all coroutines are suspended). It then clears the interrupted flag, cancels
-the job, waits for it to complete and throws `InterruptedException`.
-
-If not interrupted, `runBlocking` throws `CancellationException` if its job gets cancelled for
-another reason, for example if its block awaits a `Deferred` that was cancelled by another job (like
-due to an interrupt).
-
-`Errors.logAndReport` re-throws `CancellationException`, so it must be caught explicitly if blocking
-code must not throw.
-
-`java.net.HttpURLConnection` may use OkHttp internally, which throws 
-`java.io.InterruptedIOException` on interrupts (in 
-`com.android.okhttp.okio.Timeout.throwIfReached`). It's also used by 
-`com.google.api.client.http.javanet.NetHttpTransport` used for Cloud.
-
-Non-suspending Room database operations clear the interrupted flag (in the internal
-`runBlockingUninterruptible`).
 
 ### Kotlin
 
@@ -38,12 +25,47 @@ doSomething(avoidWork = true)
 doSomething(true)
 ```
 
+### Converting Java to Kotlin
+
+When converting a Java file, use two commits so git keeps the file history:
+
+1. `Rename .java to .kt` – Android Studio or IntelliJ IDEA add this commit automatically.
+2. `Kotlin: convert <ClassName>` – the actual conversion.
+
+### Concurrency
+
+If the calling thread is interrupted while in `runBlocking`, it only notices once its event loop
+has nothing to run (all coroutines are suspended). It then clears the interrupted flag, cancels
+the job, waits for it to complete and throws `InterruptedException`.
+
+If not interrupted, `runBlocking` throws `CancellationException` if its job gets cancelled for
+another reason, for example if its block awaits a `Deferred` that was cancelled by another job (like
+due to an interrupt).
+
+`Errors.logAndReport` re-throws `CancellationException`, so it must be caught explicitly if blocking
+code must not throw.
+
+`java.net.HttpURLConnection` may use OkHttp internally, which throws
+`java.io.InterruptedIOException` on interrupts (in
+`com.android.okhttp.okio.Timeout.throwIfReached`). It's also used by
+`com.google.api.client.http.javanet.NetHttpTransport` used for Cloud.
+
+Non-suspending Room database operations clear the interrupted flag (in the internal
+`runBlockingUninterruptible`).
+
 ### Application dependency injection
 
 Existing code is using Dagger and a [ServicesComponent](/app/src/main/java/com/battlelancer/seriesguide/modules/ServicesComponent.kt).
 
 New code should avoid relying on Dagger (and its annotation processor) and use the 
 [SgAppContainer](/app/src/main/java/com/battlelancer/seriesguide/SgAppContainer.kt) instead.
+
+### Event handling
+
+Existing code is using EventBus.
+
+New code should avoid relying on EventBus (and its annotation processor) and use alternatives
+instead (like Kotlin Flow).
 
 ### Room database
 
