@@ -12,6 +12,8 @@ import com.google.api.client.http.HttpUnsuccessfulResponseHandler
 import com.google.firebase.auth.FirebaseUser
 import java.io.IOException
 import java.util.concurrent.ExecutionException
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeoutException
 
 /**
  * Adds authorization header using Firebase JWT token to each request for current Firebase user.
@@ -37,7 +39,8 @@ class FirebaseHttpRequestInitializer : HttpRequestInitializer {
     @Synchronized
     @Throws(
         ExecutionException::class, // Tasks.await wraps task exceptions
-        InterruptedException::class // Tasks.await
+        InterruptedException::class, // Tasks.await interrupted
+        TimeoutException::class // Tasks.await timed out
     )
     fun getJwtToken(): String? {
         val firebaseUser = firebaseUser ?: return null
@@ -50,7 +53,8 @@ class FirebaseHttpRequestInitializer : HttpRequestInitializer {
         // https://firebase.google.com/docs/auth/admin/verify-id-tokens
         val task = firebaseUser.getIdToken(true)
 
-        return Tasks.await(task).token.also {
+        // https://developers.google.com/android/guides/tasks
+        return Tasks.await(task, 20, TimeUnit.SECONDS).token.also {
             token = it
         }
     }
@@ -76,6 +80,8 @@ private class FirebaseHttpExecuteInterceptor(
             throw CloudAuthIOException(e.cause ?: e)
         } catch (e: InterruptedException) {
             throw CloudAuthInterruptedIOException(e)
+        } catch (e: Exception) {
+            throw CloudAuthIOException(e)
         }
     }
 
