@@ -84,6 +84,14 @@ class DebugViewFragment : AppCompatDialogFragment() {
             SgSyncAdapter.requestSyncJobsImmediate(requireContext())
         }
 
+        binding.buttonDebugViewRequestSyncDelta.setOnClickListener {
+            SgSyncAdapter.requestSyncDeltaImmediate(requireContext(), showStatusToast = true)
+        }
+
+        binding.buttonDebugViewCancelSync.setOnClickListener {
+            SgSyncAdapter.cancelSync(requireContext())
+        }
+
         binding.buttonDebugViewDemoMode.setOnClickListener {
             toggleDemoMode()
         }

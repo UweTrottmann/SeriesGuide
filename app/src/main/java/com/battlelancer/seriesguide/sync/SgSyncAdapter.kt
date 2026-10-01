@@ -494,6 +494,14 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
         }
 
         /**
+         * For debugging.
+         */
+        fun cancelSync(context: Context) {
+            val account = AccountUtils.getAccount(context) ?: return
+            ContentResolver.cancelSync(account, SgApp.CONTENT_AUTHORITY)
+        }
+
+        /**
          * Returns true if there is currently a sync operation for the given account or authority in the
          * pending list, or actively being processed.
          */
