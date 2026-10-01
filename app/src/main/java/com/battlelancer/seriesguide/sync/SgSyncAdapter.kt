@@ -114,11 +114,14 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
             // This can happen if the system has decided to interrupt the sync
             // thread (see AbstractThreadedSyncAdapter class documentation),
             // just try again later.
-            // Note that currently non-suspending Room operations clear the interrupt state (see its
-            // internal `runBlockingUninterruptible`), so sync might continue despite getting
-            // interrupted.
-            // For Cloud network requests, the interrupt state is cleared, but restored. See
-            // HexagonSync.executeRestoringInterrupt.
+            // Note that currently
+            // - non-suspending Room operations (see its internal `runBlockingUninterruptible`
+            //   calling Thread.interrupt()),
+            // - OkHttp network requests to TMDB, Trakt and Hexagon
+            //   (its `com.google.api.client.http.javanet.NetHttpTransport` uses
+            //   `java.net.HttpURLConnection`, which on modern Android versions uses OkHttp)
+            //   due to Okio's Timeout.throwIfReached throwing InterruptedIOException
+            // clear the interrupt state so sync might continue despite getting interrupted.
             // Log the exception class to see where the interrupt caused it.
             Timber.d(e, "Sync interrupted by system, trying again later.")
             progress.recordError()
