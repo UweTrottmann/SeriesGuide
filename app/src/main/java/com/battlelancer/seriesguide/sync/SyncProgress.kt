@@ -10,7 +10,9 @@ import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
 import java.util.LinkedList
 
-class SyncProgress {
+class SyncProgress(
+    private val cancellation: SyncCancellation = SyncCancellation.NEVER
+) {
 
     enum class Step(
         @param:StringRes val serviceRes: Int,
@@ -69,6 +71,15 @@ class SyncProgress {
     private val stepsWithError: MutableList<Step> = LinkedList()
     private var currentStep: Step? = null
     private var importantErrorOrNull: String? = null
+
+    /**
+     * Throws [SyncCanceledException] if the sync was canceled and should stop as soon as
+     * possible.
+     */
+    @Throws(SyncCanceledException::class)
+    fun throwIfCanceled() {
+        cancellation.throwIfCanceled()
+    }
 
     internal fun publish(step: Step) {
         currentStep = step

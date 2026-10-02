@@ -10,6 +10,9 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ### Next release
 
+* 🔨 Sync: if interrupted, never mark as successful so next sync happens sooner.
+* 🔨 Sync: don't crash when refreshing Trakt credentials is interrupted.
+
 ## Version 2026.4
 
 * 🔨 Trakt: links to more information and ratings go to their new web app.

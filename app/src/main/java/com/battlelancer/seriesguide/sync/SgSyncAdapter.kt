@@ -71,6 +71,27 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
         SgApp.getServicesComponent(context).inject(this)
     }
 
+    /**
+     * Set by [onSyncCanceled], which is called from another thread than the sync thread. The sync
+     * thread is not interrupted, so sync code must check this (see [SyncProgress.throwIfCanceled]).
+     */
+    @Volatile
+    private var isCanceled = false
+
+    override fun onSyncCanceled() {
+        // Don't call super (subclasses may do so, see the [AbstractThreadedSyncAdapter] docs), it
+        // would interrupt the sync thread. Using a thread interrupt to handle sync cancellation
+        // is complicated, for example:
+        // - non-suspending Room API calls just clear the interrupt state and continue,
+        // - (OkHttp) network requests clear the interrupt state and throw InterruptedException or
+        //   InterruptedIOException depending on in which part of call processing they are,
+        // - runBlocking clears the state and throws InterruptedException,
+        // - any other APIs, like Tasks.await, that use concurrent APIs may throw
+        //   InterruptedException.
+        // So instead use a flag and cancel in between steps when feasible.
+        isCanceled = true
+    }
+
     override fun onPerformSync(
         account: Account,
         extras: Bundle,
@@ -78,7 +99,10 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
         provider: ContentProviderClient,
         syncResult: SyncResult
     ) {
-        // determine type of sync
+        // Safe to reset here as only one sync runs at a time (allowParallelSyncs is false).
+        isCanceled = false
+
+        // Determine type of sync
         val options = SyncOptions(extras)
         Timber.i(
             "Syncing: %s%s",
@@ -96,7 +120,7 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
         }
 
         // SYNC
-        // should we sync?
+        // Unless a sync was forced, don't run for multiple shows if one completed recently.
         val showSync = ShowSync(options.syncType, options.singleShowId)
         val currentTime = System.currentTimeMillis()
         if (!options.syncImmediately && showSync.isSyncMultiple) {
@@ -106,15 +130,14 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
             }
         }
 
-        // from here on we need more sophisticated abort handling, so keep track of errors
-        val progress = SyncProgress()
+        // From here on more sophisticated abort handling is needed, so keep track of errors.
+        val progress = SyncProgress { isCanceled }
         try {
             sync(showSync, currentTime, progress)
-        } catch (e: InterruptedException) {
-            // This can happen if the system has decided to interrupt the sync
-            // thread (see AbstractThreadedSyncAdapter class documentation),
-            // just try again later.
-            Timber.d("Sync interrupted by system, trying again later.")
+        } catch (e: SyncCanceledException) {
+            // The system has decided to cancel the sync (see onSyncCanceled), just try again later.
+            // Log the exception to see where the cancel was noticed.
+            Timber.d(e, "Sync canceled by system, trying again later.")
             progress.recordError()
             progress.setImportantErrorIfNone("Interrupted by system, trying again later.")
         }
@@ -122,25 +145,19 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
     }
 
     /**
-     * Note: this calls
-     *
-     * - [TmdbSync.updateConfigurationAndWatchProviders]
-     * - [ShowSync.sync]
-     * - [TmdbSync.updateMovies]
-     * - [HexagonSync.sync]
-     * - [TraktSync.sync]
-     *
-     * which may throw [InterruptedException].
+     * Throws [SyncCanceledException] if [SyncProgress.throwIfCanceled] notices the sync was
+     * canceled.
      */
-    @Throws(InterruptedException::class)
+    @Throws(SyncCanceledException::class)
     private fun sync(showSync: ShowSync, currentTime: Long, progress: SyncProgress) {
         progress.publish(SyncProgress.Step.TMDB)
+        progress.throwIfCanceled()
 
         // Get latest TMDb configuration.
         val tmdbSync = TmdbSync(context, tmdbConfigService.get(), movieTools.get())
         tmdbSync.updateConfigurationAndWatchProviders(progress)
 
-        if (Thread.interrupted()) throw InterruptedException()
+        progress.throwIfCanceled()
 
         // Update show and movie data.
         // If failed for at least one show, do not proceed with other sync steps to avoid
@@ -164,7 +181,7 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
 
             // do some more things if this is not a quick update
             if (showSync.isSyncMultiple) {
-                if (Thread.interrupted()) throw InterruptedException()
+                progress.throwIfCanceled()
 
                 // sync with hexagon
                 val isHexagonEnabled = HexagonSettings.isEnabled(context)
@@ -187,13 +204,13 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
                     Timber.d("Syncing: Hexagon...SKIP")
                 }
 
-                if (Thread.interrupted()) throw InterruptedException()
+                progress.throwIfCanceled()
 
                 // Migrate legacy list items
                 // Note: might send to Hexagon, so make sure to sync lists with Hexagon before
                 ListsTools.migrateTvdbShowListItemsToTmdbIds(context)
 
-                if (Thread.interrupted()) throw InterruptedException()
+                progress.throwIfCanceled()
 
                 // sync with trakt (only ratings if hexagon is enabled)
                 if (TraktCredentials.get(context).hasCredentials()) {
@@ -213,7 +230,7 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
                     Timber.d("Syncing: trakt...SKIP")
                 }
 
-                if (Thread.interrupted()) throw InterruptedException()
+                progress.throwIfCanceled()
 
                 // update next episodes for all shows
                 TaskManager.tryNextEpisodeUpdateTask(context)
@@ -232,12 +249,12 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
                 // should not have any consequences as movies not in any list aren't displayed in
                 // the UI (they would still get exported).
                 // This is also done before updating movies to avoid updating a to be deleted movie.
-                // Note: this uses runBlocking, so if the calling thread is interrupted this will
-                // throw InterruptedException.
                 runBlocking {
                     movieTools.get().updateDatabaseAfterCustomListChange()
                 }
                 Timber.d("Syncing: updating movie database...DONE")
+
+                progress.throwIfCanceled()
 
                 // Update data of to be released movies
                 // It is OK to do this after movies are synced with Cloud or Trakt as all required
@@ -252,7 +269,7 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
 
             Timber.i("Syncing: %s", resultCode.toString())
         } finally {
-            // Finish some things even if interrupted
+            // Finish some things even if canceled or failed
 
             // Renew search table if shows were updated and it will not be renewed by add task,
             // but as this is a little costly only do it when doing the less frequent multiple
@@ -474,6 +491,14 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
             val account = AccountUtils.getAccount(context) ?: return
             Timber.d("Requesting sync: queueing request!")
             ContentResolver.requestSync(account, SgApp.CONTENT_AUTHORITY, args)
+        }
+
+        /**
+         * For debugging.
+         */
+        fun cancelSync(context: Context) {
+            val account = AccountUtils.getAccount(context) ?: return
+            ContentResolver.cancelSync(account, SgApp.CONTENT_AUTHORITY)
         }
 
         /**

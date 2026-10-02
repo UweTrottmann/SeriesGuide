@@ -26,11 +26,6 @@ class TmdbSync internal constructor(
     private val movieTools: MovieTools
 ) {
 
-    /**
-     * Note: this uses [runBlocking], so if the calling thread is interrupted this will throw
-     * [InterruptedException].
-     */
-    @Throws(InterruptedException::class)
     fun updateConfigurationAndWatchProviders(progress: SyncProgress) {
         if (TmdbSettings.isConfigurationUpToDate(context)) {
             return
@@ -88,11 +83,7 @@ class TmdbSync internal constructor(
     /**
      * Regularly updates current and future movies (or those without a release date) with data from
      * themoviedb.org. All other movies are updated rarely.
-     *
-     * Note: this uses [runBlocking], so if the calling thread is interrupted this will throw
-     * [InterruptedException].
      */
-    @Throws(InterruptedException::class)
     fun updateMovies(progress: SyncProgress): Boolean {
         val currentTimeMillis = System.currentTimeMillis()
         // update movies released 6 months ago or newer, should cover most edits

@@ -30,11 +30,7 @@ class TraktRatingsSync(
      * Downloads Trakt show ratings and applies the latest ones to the database.
      *
      * To apply all ratings, set [TraktSettings.KEY_LAST_SHOWS_RATED_AT] to 0.
-     *
-     * Note: this uses [runBlocking], so if the calling thread is interrupted this will throw
-     * [InterruptedException].
      */
-    @Throws(InterruptedException::class)
     fun downloadForShows(ratedAt: OffsetDateTime?): Boolean {
         if (ratedAt == null) {
             Timber.e("downloadForShows: null rated_at")
@@ -100,11 +96,7 @@ class TraktRatingsSync(
      * Downloads Trakt episode ratings and applies the latest ones to the database.
      *
      * To apply all ratings, set [TraktSettings.KEY_LAST_EPISODES_RATED_AT] to 0.
-     *
-     * Note: this uses [runBlocking], so if the calling thread is interrupted this will throw
-     * [InterruptedException].
      */
-    @Throws(InterruptedException::class)
     fun downloadForEpisodes(ratedAt: OffsetDateTime?): Boolean {
         if (ratedAt == null) {
             Timber.e("downloadForEpisodes: null rated_at")
@@ -169,11 +161,7 @@ class TraktRatingsSync(
      * Downloads Trakt movie ratings and applies the latest ones to the database.
      *
      * To apply all ratings, set [TraktSettings.KEY_LAST_MOVIES_RATED_AT] to 0.
-     *
-     * Note: this uses [runBlocking], so if the calling thread is interrupted this will throw
-     * [InterruptedException].
      */
-    @Throws(InterruptedException::class)
     fun downloadForMovies(ratedAt: OffsetDateTime?): Boolean {
         if (ratedAt == null) {
             Timber.e("downloadForMovies: null rated_at")
