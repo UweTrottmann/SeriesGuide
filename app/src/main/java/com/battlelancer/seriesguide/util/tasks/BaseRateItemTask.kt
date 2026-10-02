@@ -6,10 +6,11 @@ package com.battlelancer.seriesguide.util.tasks
 import android.content.Context
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.traktapi.TraktCredentials
-import com.uwetrottmann.trakt5.entities.SyncItems
+import com.battlelancer.seriesguide.traktapi.TraktTools4
+import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse
 import com.uwetrottmann.trakt5.entities.SyncResponse
 import com.uwetrottmann.trakt5.enums.Rating
+import com.uwetrottmann.trakt5.services.Sync
 
 /**
  * Stores the [rating] in the database and sends it to Trakt.
@@ -26,41 +27,17 @@ abstract class BaseRateItemTask(
 
     override suspend fun doBackgroundAction(): Int {
         if (isSendingToTrakt) {
-            if (!TraktCredentials.get(context).hasCredentials()) {
-                return ERROR_TRAKT_AUTH
-            }
-
-            val ratedItems = buildTraktSyncItems() ?: return ERROR_DATABASE
+            if (!loadTraktIds()) return ERROR_DATABASE
 
             val trakt = SgApp.getServicesComponent(context).trakt()
             val traktSync = trakt.sync()
-            val call = if (rating != null) {
-                traktSync.addRatings(ratedItems)
-            } else {
-                traktSync.deleteRatings(ratedItems)
+
+            val result = trakt.awaitAndHandleAuthErrorNonNull {
+                sendToTrakt(traktSync)
+            }.toActionResult {
+                // If movie, show or episode was not found on Trakt
+                if (TraktTools4.isNotFound(it)) ERROR_TRAKT_API_NOT_FOUND else SUCCESS
             }
-            val result =
-                executeTraktCall<SyncResponse>(
-                    call,
-                    trakt,
-                    traktAction,
-                    object : ResponseCallback<SyncResponse> {
-                        override fun handleSuccessfulResponse(body: SyncResponse): Int {
-                            val notFound = body.not_found
-                            if (notFound != null) {
-                                val movies = notFound.movies
-                                val shows = notFound.shows
-                                val episodes = notFound.episodes
-                                if ((movies != null && movies.size != 0)
-                                    || (shows != null && shows.size != 0)
-                                    || (episodes != null && episodes.size != 0)) {
-                                    // movie, show or episode not found on trakt
-                                    return ERROR_TRAKT_API_NOT_FOUND
-                                }
-                            }
-                            return SUCCESS
-                        }
-                    })
             if (result != SUCCESS) {
                 return result
             }
@@ -76,12 +53,16 @@ abstract class BaseRateItemTask(
     override val successTextResId: Int
         get() = R.string.ack_rated
 
-    protected abstract val traktAction: String
+    /**
+     * Loads the IDs required to identify the item on Trakt. Returns `false` on database error (if
+     * required data is missing).
+     */
+    protected abstract fun loadTraktIds(): Boolean
 
     /**
-     * May return null on database error.
+     * Sends the [rating] to Trakt. Only called if [loadTraktIds] was successful.
      */
-    protected abstract fun buildTraktSyncItems(): SyncItems?
+    protected abstract suspend fun sendToTrakt(traktSync: Sync): TraktNonNullResponse<SyncResponse>
 
     protected abstract fun doDatabaseUpdate(): Boolean
 }

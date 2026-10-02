@@ -8,20 +8,18 @@ import androidx.annotation.CallSuper
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
-import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
+import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktErrorResponse
+import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse
 import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceActiveEvent
 import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceCompletedEvent
-import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.TaskManager
 import com.uwetrottmann.androidutils.AndroidUtils
-import com.uwetrottmann.trakt5.TraktV2
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
-import retrofit2.Call
 
 abstract class BaseActionTask(context: Context) {
 
@@ -93,44 +91,18 @@ abstract class BaseActionTask(context: Context) {
 
     protected abstract suspend fun doBackgroundAction(): Int
 
-    interface ResponseCallback<T> {
-        fun handleSuccessfulResponse(body: T): Int
-    }
-
-    fun <T> executeTraktCall(
-        call: Call<T>,
-        trakt: TraktV2,
-        action: String,
-        callbackOnSuccess: ResponseCallback<T>
-    ): Int {
-        try {
-            val response = call.execute()
-            if (response.isSuccessful) {
-                val body = response.body() ?: return ERROR_TRAKT_API_CLIENT
-                return callbackOnSuccess.handleSuccessfulResponse(body)
-            } else {
-                if (SgTrakt.isUnauthorized(context, response)) {
-                    return ERROR_TRAKT_AUTH
-                }
-                Errors.logAndReport(
-                    action, response,
-                    SgTrakt.checkForTraktError(trakt, response)
-                )
-                return if (TraktV2.isRateLimitExceeded(response) || TraktV2.isServerError(response)) {
-                    ERROR_TRAKT_API_SERVER
-                } else if (TraktV2.isAccountLimitExceeded(response)) {
-                    ERROR_TRAKT_ACCOUNT_LIMIT_EXCEEDED
-                } else if (TraktV2.isAccountLocked(response)) {
-                    ERROR_TRAKT_ACCOUNT_LOCKED
-                } else {
-                    ERROR_TRAKT_API_CLIENT
-                }
-            }
-        } catch (e: Exception) {
-            Errors.logAndReport(action, e)
-            return ERROR_NETWORK
+    /**
+     * Maps a Trakt response to a result of [doBackgroundAction]. On success, returns the result of
+     * [onSuccess].
+     */
+    protected fun <T> TraktNonNullResponse<T>.toActionResult(onSuccess: (T) -> Int): Int =
+        when (this) {
+            is TraktNonNullResponse.Success -> onSuccess(data)
+            is TraktErrorResponse.IsUnauthorized -> ERROR_TRAKT_AUTH
+            is TraktErrorResponse.IsAccountLimitExceeded -> ERROR_TRAKT_ACCOUNT_LIMIT_EXCEEDED
+            is TraktErrorResponse.IsAccountLocked -> ERROR_TRAKT_ACCOUNT_LOCKED
+            is TraktErrorResponse.IsNotVip, is TraktErrorResponse.Other -> ERROR_TRAKT_API_CLIENT
         }
-    }
 
     @CallSuper
     protected open fun onPostExecute(result: Int) {
@@ -150,7 +122,7 @@ abstract class BaseActionTask(context: Context) {
                 ERROR_NETWORK -> context.getString(R.string.offline)
                 ERROR_DATABASE -> context.getString(R.string.database_error)
                 ERROR_TRAKT_AUTH -> context.getString(R.string.trakt_error_credentials)
-                ERROR_TRAKT_API_CLIENT, ERROR_TRAKT_API_SERVER -> context.getString(
+                ERROR_TRAKT_API_CLIENT -> context.getString(
                     R.string.api_error_generic,
                     context.getString(R.string.trakt)
                 )
@@ -179,7 +151,6 @@ abstract class BaseActionTask(context: Context) {
         private const val ERROR_TRAKT_API_CLIENT = -4
         const val ERROR_TRAKT_API_NOT_FOUND: Int = -5
         const val ERROR_HEXAGON_API: Int = -6
-        private const val ERROR_TRAKT_API_SERVER = -7
 
         /**
          * Account limit exceeded (list count, item count, ...). Should currently only occur when
