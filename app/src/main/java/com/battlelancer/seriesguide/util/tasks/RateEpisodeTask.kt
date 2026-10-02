@@ -1,16 +1,15 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2015-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2015 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.util.tasks
 
 import android.content.Context
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.uwetrottmann.trakt5.entities.ShowIds
-import com.uwetrottmann.trakt5.entities.SyncEpisode
-import com.uwetrottmann.trakt5.entities.SyncItems
-import com.uwetrottmann.trakt5.entities.SyncSeason
-import com.uwetrottmann.trakt5.entities.SyncShow
+import com.battlelancer.seriesguide.traktapi.TraktTools4
+import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse
+import com.uwetrottmann.trakt5.entities.SyncResponse
 import com.uwetrottmann.trakt5.enums.Rating
+import com.uwetrottmann.trakt5.services.Sync
 
 /**
  * See [BaseRateItemTask]
@@ -21,10 +20,7 @@ class RateEpisodeTask(
     private val episodeId: Long
 ) : BaseRateItemTask(context, rating) {
 
-    override val traktAction: String
-        get() = "rate episode"
-
-    override fun buildTraktSyncItems(): SyncItems? {
+    override suspend fun sendToTrakt(traktSync: Sync): TraktNonNullResponse<SyncResponse>? {
         val database = SgRoomDatabase.getInstance(context)
 
         val episode = database.sgEpisode2Helper().getEpisodeNumbers(episodeId) ?: return null
@@ -32,17 +28,13 @@ class RateEpisodeTask(
         val showTmdbId = database.sgShow2Helper().getShowTmdbId(episode.showId)
         if (showTmdbId == 0) return null
 
-        return SyncItems()
-            .shows(
-                SyncShow().id(ShowIds.tmdb(showTmdbId))
-                    .seasons(
-                        SyncSeason().number(episode.season)
-                            .episodes(
-                                SyncEpisode().number(episode.episodenumber)
-                                    .rating(rating)
-                            )
-                    )
-            )
+        return TraktTools4.rateEpisode(
+            traktSync,
+            showTmdbId,
+            episode.season,
+            episode.episodenumber,
+            rating
+        )
     }
 
     override fun doDatabaseUpdate(): Boolean {
