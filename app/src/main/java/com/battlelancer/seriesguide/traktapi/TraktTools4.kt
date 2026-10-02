@@ -16,9 +16,16 @@ import com.uwetrottmann.trakt5.entities.RatedMovie
 import com.uwetrottmann.trakt5.entities.RatedShow
 import com.uwetrottmann.trakt5.entities.Show
 import com.uwetrottmann.trakt5.entities.ShowIds
+import com.uwetrottmann.trakt5.entities.SyncEpisode
+import com.uwetrottmann.trakt5.entities.SyncItems
+import com.uwetrottmann.trakt5.entities.SyncMovie
+import com.uwetrottmann.trakt5.entities.SyncResponse
+import com.uwetrottmann.trakt5.entities.SyncSeason
+import com.uwetrottmann.trakt5.entities.SyncShow
 import com.uwetrottmann.trakt5.enums.Extended
 import com.uwetrottmann.trakt5.enums.ExtendedShowsWatched
 import com.uwetrottmann.trakt5.enums.IdType
+import com.uwetrottmann.trakt5.enums.Rating
 import com.uwetrottmann.trakt5.enums.RatingsFilter
 import com.uwetrottmann.trakt5.enums.Specials
 import com.uwetrottmann.trakt5.enums.Type
@@ -328,6 +335,126 @@ object TraktTools4 {
             "update note",
             reportIsNotVip = true // Should work even if not VIP
         )
+    }
+
+    /**
+     * Adds the show to the watchlist.
+     *
+     * Check the response with [isNotFound]. See [awaitTraktCall] for details.
+     */
+    suspend fun addShowToWatchlist(
+        traktSync: Sync,
+        showTmdbId: Int
+    ): TraktNonNullResponse<SyncResponse> {
+        return awaitTraktCallNonNull(
+            traktSync.addItemsToWatchlist(buildWatchlistItems(showTmdbId)),
+            "add show to watchlist",
+            reportIsNotVip = true // Should work even if not VIP
+        )
+    }
+
+    /**
+     * Removes the show from the watchlist.
+     *
+     * Check the response with [isNotFound]. See [awaitTraktCall] for details.
+     */
+    suspend fun removeShowFromWatchlist(
+        traktSync: Sync,
+        showTmdbId: Int
+    ): TraktNonNullResponse<SyncResponse> {
+        return awaitTraktCallNonNull(
+            traktSync.deleteItemsFromWatchlist(buildWatchlistItems(showTmdbId)),
+            "remove show from watchlist",
+            reportIsNotVip = true // Should work even if not VIP
+        )
+    }
+
+    private fun buildWatchlistItems(showTmdbId: Int): SyncItems {
+        return SyncItems().shows(SyncShow().id(ShowIds.tmdb(showTmdbId)))
+    }
+
+    /**
+     * Adds the [rating] to the show. If [rating] is null, removes the rating.
+     *
+     * Check the response with [isNotFound]. See [awaitTraktCall] for details.
+     */
+    suspend fun rateShow(
+        traktSync: Sync,
+        showTmdbId: Int,
+        rating: Rating?
+    ): TraktNonNullResponse<SyncResponse> {
+        val items = SyncItems()
+            .shows(SyncShow().id(ShowIds.tmdb(showTmdbId)).rating(rating))
+        return sendRatings(traktSync, items, rating, "rate show")
+    }
+
+    /**
+     * Like [rateShow], but for a movie.
+     */
+    suspend fun rateMovie(
+        traktSync: Sync,
+        movieTmdbId: Int,
+        rating: Rating?
+    ): TraktNonNullResponse<SyncResponse> {
+        val items = SyncItems()
+            .movies(SyncMovie().id(MovieIds.tmdb(movieTmdbId)).rating(rating))
+        return sendRatings(traktSync, items, rating, "rate movie")
+    }
+
+    /**
+     * Like [rateShow], but for an episode.
+     */
+    suspend fun rateEpisode(
+        traktSync: Sync,
+        showTmdbId: Int,
+        season: Int,
+        episode: Int,
+        rating: Rating?
+    ): TraktNonNullResponse<SyncResponse> {
+        val items = SyncItems()
+            .shows(
+                SyncShow().id(ShowIds.tmdb(showTmdbId))
+                    .seasons(
+                        SyncSeason().number(season)
+                            .episodes(
+                                SyncEpisode().number(episode)
+                                    .rating(rating)
+                            )
+                    )
+            )
+        return sendRatings(traktSync, items, rating, "rate episode")
+    }
+
+    /**
+     * Adds the ratings, or removes them if [rating] is null.
+     */
+    private suspend fun sendRatings(
+        traktSync: Sync,
+        items: SyncItems,
+        rating: Rating?,
+        action: String
+    ): TraktNonNullResponse<SyncResponse> {
+        val call = if (rating != null) {
+            traktSync.addRatings(items)
+        } else {
+            traktSync.deleteRatings(items)
+        }
+        return awaitTraktCallNonNull(
+            call,
+            action,
+            reportIsNotVip = true // Should work even if not VIP
+        )
+    }
+
+    /**
+     * Returns `true` if Trakt could not find any of the movies, shows or episodes of a sync
+     * request.
+     */
+    fun isNotFound(response: SyncResponse): Boolean {
+        val notFound = response.not_found ?: return false
+        return !notFound.movies.isNullOrEmpty()
+                || !notFound.shows.isNullOrEmpty()
+                || !notFound.episodes.isNullOrEmpty()
     }
 
     /**
