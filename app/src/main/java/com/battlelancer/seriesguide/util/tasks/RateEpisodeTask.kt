@@ -18,9 +18,15 @@ class RateEpisodeTask(
     context: Context,
     rating: Rating?,
     private val episodeId: Long
-) : BaseRateItemTask(context, rating) {
+) : BaseRateItemTask<RateEpisodeTask.EpisodeTraktIds>(context, rating) {
 
-    override suspend fun sendToTrakt(traktSync: Sync): TraktNonNullResponse<SyncResponse>? {
+    data class EpisodeTraktIds(
+        val showTmdbId: Int,
+        val season: Int,
+        val episode: Int
+    )
+
+    override fun loadTraktIds(): EpisodeTraktIds? {
         val database = SgRoomDatabase.getInstance(context)
 
         val episode = database.sgEpisode2Helper().getEpisodeNumbers(episodeId) ?: return null
@@ -28,11 +34,18 @@ class RateEpisodeTask(
         val showTmdbId = database.sgShow2Helper().getShowTmdbId(episode.showId)
         if (showTmdbId == 0) return null
 
+        return EpisodeTraktIds(showTmdbId, episode.season, episode.episodenumber)
+    }
+
+    override suspend fun sendToTrakt(
+        traktSync: Sync,
+        traktIds: EpisodeTraktIds
+    ): TraktNonNullResponse<SyncResponse> {
         return TraktTools4.rateEpisode(
             traktSync,
-            showTmdbId,
-            episode.season,
-            episode.episodenumber,
+            traktIds.showTmdbId,
+            traktIds.season,
+            traktIds.episode,
             rating
         )
     }

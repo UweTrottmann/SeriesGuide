@@ -20,10 +20,18 @@ class RateMovieTask(
     context: Context,
     rating: Rating?,
     private val movieTmdbId: Int
-) : BaseRateItemTask(context, rating) {
+) : BaseRateItemTask<Int>(context, rating) {
 
-    override suspend fun sendToTrakt(traktSync: Sync): TraktNonNullResponse<SyncResponse> {
-        return TraktTools4.rateMovie(traktSync, movieTmdbId, rating)
+    /**
+     * Returns the movie TMDB ID.
+     */
+    override fun loadTraktIds(): Int = movieTmdbId
+
+    override suspend fun sendToTrakt(
+        traktSync: Sync,
+        traktIds: Int
+    ): TraktNonNullResponse<SyncResponse> {
+        return TraktTools4.rateMovie(traktSync, traktIds, rating)
     }
 
     override fun doDatabaseUpdate(): Boolean {

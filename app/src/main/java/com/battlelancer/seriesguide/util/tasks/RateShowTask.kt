@@ -18,13 +18,22 @@ class RateShowTask(
     context: Context,
     rating: Rating?,
     private val showId: Long
-) : BaseRateItemTask(context, rating) {
+) : BaseRateItemTask<Int>(context, rating) {
 
-    override suspend fun sendToTrakt(traktSync: Sync): TraktNonNullResponse<SyncResponse>? {
+    /**
+     * Returns the show TMDB ID.
+     */
+    override fun loadTraktIds(): Int? {
         val showTmdbIdOrZero = SgRoomDatabase.getInstance(context).sgShow2Helper()
             .getShowTmdbId(showId)
-        if (showTmdbIdOrZero == 0) return null
-        return TraktTools4.rateShow(traktSync, showTmdbIdOrZero, rating)
+        return if (showTmdbIdOrZero == 0) null else showTmdbIdOrZero
+    }
+
+    override suspend fun sendToTrakt(
+        traktSync: Sync,
+        traktIds: Int
+    ): TraktNonNullResponse<SyncResponse> {
+        return TraktTools4.rateShow(traktSync, traktIds, rating)
     }
 
     override fun doDatabaseUpdate(): Boolean {

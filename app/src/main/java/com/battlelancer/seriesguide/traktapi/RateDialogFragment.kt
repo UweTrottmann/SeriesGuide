@@ -107,7 +107,7 @@ class RateDialogFragment : AppCompatDialogFragment() {
         val itemType = args.getString(ITEM_TYPE)
             ?: return
         val itemId = args.getLong(ITEM_ID)
-        val task: BaseRateItemTask = when (itemType) {
+        val task: BaseRateItemTask<*> = when (itemType) {
             ITEM_MOVIE -> {
                 RateMovieTask(requireContext(), rating, itemId.toInt())
             }
