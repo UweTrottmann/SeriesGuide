@@ -1,0 +1,30 @@
+Ole aina kartalla suosikki-tv-ohjelmistasi ja -elokuvistasi.
+
+SeriesGuide on ilmainen sovellus, jonka avulla voit löytää uusia TV-ohjelmia ja elokuvia, seurata katseluhistoriaasi ja saada ilmoituksia tulevista jaksoista.
+
+<b>Löydä uusia tv-sarjoja ja elokuvia</b>: selvitä, mitä on tarjolla suoratoistopalveluissasi, uutta, suosittua tai vastaavaa kuin mitä katsot juuri nyt.
+
+<b>Opastaa viihteen maailmassa</b>: suosittelee seuraavia ohjelmia ja elokuvia sekä kertoo, mistä voit katsoa niitä eri suoratoistopalveluista tai ostaa.
+
+<b>Kuittaa ja seuraa edistymistä</b>: pidä kirjaa katsotuista jaksoista ja elokuvista ja seuraa edistymistäsi. Ole ajan tasalla uusista jaksoista.
+
+<b>Säilytä viihdetietosi pilvessä</b>: synkronoi SeriesGuide Cloudia käyttäen ja katsele suosikkien edistymistä missä tahansa.
+
+<b>Yhdistä Traktiin</b>: synkronoi katselu- ja kokoelmahistoriasi, pääse käsiksi katseluhistoriaasi ja katso, mitä muut katselevat. Jaa arvosteluja ja kommentteja
+
+<b>Tiliä ei tarvita</b>: varmuuskopioi ja palauta kirjastosi ilman tiliä JSON-tiedostojen avulla.
+
+<b>Avoin lähdekoodi ja riippumaton</b>: SeriesGuide on riippumaton ja avoimen lähdekoodin sovellus, jonka kehitystä rahoittavat sen käyttäjät.
+
+Tarvitsetko apua? Onko kysyttävää? Lisätietoja löydät osoitteesta https://www.seriesgui.de/help
+
+Haluatko nähdä konepellin alle vai kiinnostaako koodaaminen? SeriesGuiden lähdekoodi löytyy osoitteesta https://github.com/UweTrottmann/SeriesGuide
+
+Täysi pääsy -tilaus
+Avaa kaikki ominaisuudet, mukaan lukien pilvivarmuuskopiointi.
+
+Tukija-tilaus
+Tue tulevien päivitysten kehittämistä. Sisältää Täysi pääsy -tilauksen.
+
+Sponsori-tilaus
+Suuri panos tulevien päivitysten varmistamiseksi. Sisältää Täysi pääsy -tilauksen.
