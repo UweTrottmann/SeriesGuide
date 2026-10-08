@@ -78,7 +78,7 @@ class TraktEpisodeSync(
         val lastWatchedAt = TraktSettings.getLastEpisodesWatchedAt(context)
         if (isInitialSync || TimeTools.isAfterMillis(watchedAt, lastWatchedAt)) {
             val watchedShowsTrakt = runBlocking(Dispatchers.Default) {
-                when (val response = TraktTools4.getWatchedShowsByTmdbId(traktSync!!.sync)) {
+                when (val response = TraktTools4.getWatchedShowsByTmdbId(traktSync!!.trakt)) {
                     is Success -> response.data
                     else -> null
                 }
@@ -130,7 +130,7 @@ class TraktEpisodeSync(
         if (isInitialSync || TimeTools.isAfterMillis(collectedAt, lastCollectedAt)) {
 
             val collectedShowsTrakt = runBlocking(Dispatchers.Default) {
-                when (val response = TraktTools4.getCollectedShowsByTmdbId(traktSync!!.sync)) {
+                when (val response = TraktTools4.getCollectedShowsByTmdbId(traktSync!!.trakt)) {
                     is Success -> response.data
                     else -> null
                 }

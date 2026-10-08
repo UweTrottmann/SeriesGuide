@@ -8,9 +8,9 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.traktapi.TraktTools4
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse
+import com.uwetrottmann.trakt5.TraktV2
 import com.uwetrottmann.trakt5.entities.SyncResponse
 import com.uwetrottmann.trakt5.enums.Rating
-import com.uwetrottmann.trakt5.services.Sync
 
 /**
  * Stores the [rating] in the database and sends it to Trakt.
@@ -30,10 +30,9 @@ abstract class BaseRateItemTask(
             if (!loadTraktIds()) return ERROR_DATABASE
 
             val trakt = SgApp.getServicesComponent(context).trakt()
-            val traktSync = trakt.sync()
 
             val result = trakt.awaitAndHandleAuthErrorNonNull {
-                sendToTrakt(traktSync)
+                sendToTrakt(trakt)
             }.toActionResult {
                 // If movie, show or episode was not found on Trakt
                 if (TraktTools4.isNotFound(it)) ERROR_TRAKT_API_NOT_FOUND else SUCCESS
@@ -62,7 +61,7 @@ abstract class BaseRateItemTask(
     /**
      * Sends the [rating] to Trakt. Only called if [loadTraktIds] was successful.
      */
-    protected abstract suspend fun sendToTrakt(traktSync: Sync): TraktNonNullResponse<SyncResponse>
+    protected abstract suspend fun sendToTrakt(trakt: TraktV2): TraktNonNullResponse<SyncResponse>
 
     protected abstract fun doDatabaseUpdate(): Boolean
 }

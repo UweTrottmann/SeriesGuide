@@ -7,9 +7,9 @@ import android.content.Context
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.traktapi.TraktTools4
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse
+import com.uwetrottmann.trakt5.TraktV2
 import com.uwetrottmann.trakt5.entities.SyncResponse
 import com.uwetrottmann.trakt5.enums.Rating
-import com.uwetrottmann.trakt5.services.Sync
 
 /**
  * See [BaseRateItemTask]
@@ -28,8 +28,8 @@ class RateShowTask(
         return showTmdbId != 0
     }
 
-    override suspend fun sendToTrakt(traktSync: Sync): TraktNonNullResponse<SyncResponse> {
-        return TraktTools4.rateShow(traktSync, showTmdbId, rating)
+    override suspend fun sendToTrakt(trakt: TraktV2): TraktNonNullResponse<SyncResponse> {
+        return TraktTools4.rateShow(trakt, showTmdbId, rating)
     }
 
     override fun doDatabaseUpdate(): Boolean {

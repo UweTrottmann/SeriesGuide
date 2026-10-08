@@ -29,9 +29,6 @@ import com.uwetrottmann.trakt5.enums.Rating
 import com.uwetrottmann.trakt5.enums.RatingsFilter
 import com.uwetrottmann.trakt5.enums.Specials
 import com.uwetrottmann.trakt5.enums.Type
-import com.uwetrottmann.trakt5.services.Notes
-import com.uwetrottmann.trakt5.services.Search
-import com.uwetrottmann.trakt5.services.Sync
 import retrofit2.Call
 import retrofit2.awaitResponse
 import timber.log.Timber
@@ -39,8 +36,8 @@ import timber.log.Timber
 /**
  * Uses response classes inheriting from a Kotlin sealed interface.
  *
- * Removes any Android specific classes and no longer relies on a third-party library to handle
- * results.
+ * Functions don't require a [android.content.Context] and no longer rely on a third-party library
+ * to handle results.
  */
 object TraktTools4 {
 
@@ -83,11 +80,12 @@ object TraktTools4 {
      * May return `null` data, for example if the movie wasn't found.
      */
     suspend fun getMovieIds(
-        traktSearch: Search,
+        trakt: TraktV2,
         movieTmdbId: Int
     ): TraktNonNullResponse<MovieIds?> {
         val response = awaitTraktCallNonNull(
-            traktSearch.idLookup(IdType.TMDB, movieTmdbId.toString(), Type.MOVIE, null, 1, 1),
+            trakt,
+            trakt.search().idLookup(IdType.TMDB, movieTmdbId.toString(), Type.MOVIE, null, 1, 1),
             "movie trakt ids lookup",
             reportIsNotVip = true // Should work even if not VIP
         )
@@ -104,14 +102,15 @@ object TraktTools4 {
      * discussion about details and updates.
      */
     suspend fun getWatchedShows(
-        traktSync: Sync,
+        trakt: TraktV2,
         noSeasons: Boolean
     ): TraktNonNullResponse<List<BaseShow>> {
         return fetchAllPages(
+            trakt,
             action = "get watched shows",
             reportIsNotVip = true // Should work even if not VIP
         ) { page ->
-            traktSync.watchedShows(
+            trakt.sync().watchedShows(
                 page,
                 MAX_LIMIT,
                 if (noSeasons) {
@@ -130,39 +129,42 @@ object TraktTools4 {
     }
 
     suspend fun getWatchedShowsByTmdbId(
-        traktSync: Sync
+        trakt: TraktV2
     ): TraktNonNullResponse<Map<Int, BaseShow>> {
-        val response = getWatchedShows(traktSync, noSeasons = false)
+        val response = getWatchedShows(trakt, noSeasons = false)
         return mapResponseData(response) { mapByTmdbId(it) }
     }
 
     suspend fun getCollectedShows(
-        traktSync: Sync
+        trakt: TraktV2
     ): TraktNonNullResponse<List<BaseShow>> {
         return fetchAllPages(
+            trakt,
             action = "get collected shows",
             reportIsNotVip = true // Should work even if not VIP
         ) { page ->
-            traktSync.collectionShows(page, MAX_LIMIT, null)
+            trakt.sync().collectionShows(page, MAX_LIMIT, null)
         }
     }
 
     suspend fun getCollectedShowsByTmdbId(
-        traktSync: Sync
+        trakt: TraktV2
     ): TraktNonNullResponse<Map<Int, BaseShow>> {
-        val response = getCollectedShows(traktSync)
+        val response = getCollectedShows(trakt)
         return mapResponseData(response) { mapByTmdbId(it) }
     }
 
     /**
      * Fetches all pages from a paginated Trakt API endpoint.
      *
+     * @param trakt Used to parse the Trakt error message for error reports
      * @param action Description of the action for error logging
      * @param reportIsNotVip Whether to report "not VIP" errors
      * @param callProvider Function that creates a Call for a given page number
      * @return All items from all pages combined, or an error response
      */
     private suspend fun <T> fetchAllPages(
+        trakt: TraktV2,
         action: String,
         reportIsNotVip: Boolean = false,
         callProvider: (page: Int) -> Call<List<T>>
@@ -173,6 +175,7 @@ object TraktTools4 {
 
         do {
             val response = awaitTraktCallNonNull(
+                trakt,
                 callProvider(currentPage),
                 action,
                 reportIsNotVip = reportIsNotVip
@@ -212,14 +215,15 @@ object TraktTools4 {
     }
 
     suspend fun getShowsOnWatchlist(
-        traktSync: Sync
+        trakt: TraktV2
     ): TraktNonNullResponse<List<BaseShow>> {
         return fetchAllPages(
+            trakt,
             action = "get shows on watchlist",
             reportIsNotVip = true // Should work even if not VIP
         ) { page ->
             // Use Extended.FULL to get show metadata
-            traktSync.watchlistShows(page, MAX_LIMIT, Extended.FULL)
+            trakt.sync().watchlistShows(page, MAX_LIMIT, Extended.FULL)
         }
     }
 
@@ -229,11 +233,12 @@ object TraktTools4 {
      * Check the response with [isNotFound]. See [awaitTraktCall] for details.
      */
     suspend fun addShowToWatchlist(
-        traktSync: Sync,
+        trakt: TraktV2,
         showTmdbId: Int
     ): TraktNonNullResponse<SyncResponse> {
         return awaitTraktCallNonNull(
-            traktSync.addItemsToWatchlist(buildWatchlistItems(showTmdbId)),
+            trakt,
+            trakt.sync().addItemsToWatchlist(buildWatchlistItems(showTmdbId)),
             "add show to watchlist",
             reportIsNotVip = true // Should work even if not VIP
         )
@@ -245,11 +250,12 @@ object TraktTools4 {
      * Check the response with [isNotFound]. See [awaitTraktCall] for details.
      */
     suspend fun removeShowFromWatchlist(
-        traktSync: Sync,
+        trakt: TraktV2,
         showTmdbId: Int
     ): TraktNonNullResponse<SyncResponse> {
         return awaitTraktCallNonNull(
-            traktSync.deleteItemsFromWatchlist(buildWatchlistItems(showTmdbId)),
+            trakt,
+            trakt.sync().deleteItemsFromWatchlist(buildWatchlistItems(showTmdbId)),
             "remove show from watchlist",
             reportIsNotVip = true // Should work even if not VIP
         )
@@ -260,24 +266,26 @@ object TraktTools4 {
     }
 
     suspend fun getRatingsOfShows(
-        traktSync: Sync
+        trakt: TraktV2
     ): TraktNonNullResponse<List<RatedShow>> {
         return fetchAllPages(
+            trakt,
             action = "get show ratings",
             reportIsNotVip = true // Should work even if not VIP
         ) { page ->
-            traktSync.ratingsShows(RatingsFilter.ALL, null, page, MAX_LIMIT)
+            trakt.sync().ratingsShows(RatingsFilter.ALL, null, page, MAX_LIMIT)
         }
     }
 
     suspend fun getRatingsOfEpisodes(
-        traktSync: Sync
+        trakt: TraktV2
     ): TraktNonNullResponse<List<RatedEpisode>> {
         return fetchAllPages(
+            trakt,
             action = "get episode ratings",
             reportIsNotVip = true // Should work even if not VIP
         ) { page ->
-            traktSync.ratingsEpisodes(RatingsFilter.ALL, null, page, MAX_LIMIT)
+            trakt.sync().ratingsEpisodes(RatingsFilter.ALL, null, page, MAX_LIMIT)
         }
     }
 
@@ -287,20 +295,20 @@ object TraktTools4 {
      * Check the response with [isNotFound]. See [awaitTraktCall] for details.
      */
     suspend fun rateShow(
-        traktSync: Sync,
+        trakt: TraktV2,
         showTmdbId: Int,
         rating: Rating?
     ): TraktNonNullResponse<SyncResponse> {
         val items = SyncItems()
             .shows(SyncShow().id(ShowIds.tmdb(showTmdbId)).rating(rating))
-        return sendRatings(traktSync, items, rating, "rate show")
+        return sendRatings(trakt, items, rating, "rate show")
     }
 
     /**
      * Like [rateShow], but for an episode.
      */
     suspend fun rateEpisode(
-        traktSync: Sync,
+        trakt: TraktV2,
         showTmdbId: Int,
         season: Int,
         episode: Int,
@@ -317,24 +325,25 @@ object TraktTools4 {
                             )
                     )
             )
-        return sendRatings(traktSync, items, rating, "rate episode")
+        return sendRatings(trakt, items, rating, "rate episode")
     }
 
     /**
      * Adds the ratings, or removes them if [rating] is null.
      */
     private suspend fun sendRatings(
-        traktSync: Sync,
+        trakt: TraktV2,
         items: SyncItems,
         rating: Rating?,
         action: String
     ): TraktNonNullResponse<SyncResponse> {
         val call = if (rating != null) {
-            traktSync.addRatings(items)
+            trakt.sync().addRatings(items)
         } else {
-            traktSync.deleteRatings(items)
+            trakt.sync().deleteRatings(items)
         }
         return awaitTraktCallNonNull(
+            trakt,
             call,
             action,
             reportIsNotVip = true // Should work even if not VIP
@@ -342,13 +351,14 @@ object TraktTools4 {
     }
 
     suspend fun getWatchedMoviesByTmdbId(
-        traktSync: Sync
+        trakt: TraktV2
     ): TraktNonNullResponse<MutableMap<Int, Int>> {
         val response = fetchAllPages(
+            trakt,
             action = "get watched movies",
             reportIsNotVip = true // Should work even if not VIP
         ) { page ->
-            traktSync.watchedMovies(page, MAX_LIMIT, null)
+            trakt.sync().watchedMovies(page, MAX_LIMIT, null)
         }
         return mapResponseData(response) { mapMoviesToTmdbIdWithPlays(it) }
     }
@@ -364,25 +374,27 @@ object TraktTools4 {
     }
 
     suspend fun getCollectedMoviesByTmdbId(
-        traktSync: Sync
+        trakt: TraktV2
     ): TraktNonNullResponse<MutableSet<Int>> {
         val response = fetchAllPages(
+            trakt,
             action = "get collected movies",
             reportIsNotVip = true // Should work even if not VIP
         ) { page ->
-            traktSync.collectionMovies(page, MAX_LIMIT, null)
+            trakt.sync().collectionMovies(page, MAX_LIMIT, null)
         }
         return mapResponseData(response) { mapMoviesToTmdbIdSet(it) }
     }
 
     suspend fun getMoviesOnWatchlistByTmdbId(
-        traktSync: Sync
+        trakt: TraktV2
     ): TraktNonNullResponse<MutableSet<Int>> {
         val response = fetchAllPages(
+            trakt,
             action = "get movie watchlist",
             reportIsNotVip = true // Should work even if not VIP
         ) { page ->
-            traktSync.watchlistMovies(page, MAX_LIMIT, null)
+            trakt.sync().watchlistMovies(page, MAX_LIMIT, null)
         }
         return mapResponseData(response) { mapMoviesToTmdbIdSet(it) }
     }
@@ -398,13 +410,14 @@ object TraktTools4 {
     }
 
     suspend fun getRatingsOfMovies(
-        traktSync: Sync
+        trakt: TraktV2
     ): TraktNonNullResponse<List<RatedMovie>> {
         return fetchAllPages(
+            trakt,
             action = "get movie ratings",
             reportIsNotVip = true // Should work even if not VIP
         ) { page ->
-            traktSync.ratingsMovies(RatingsFilter.ALL, null, page, MAX_LIMIT)
+            trakt.sync().ratingsMovies(RatingsFilter.ALL, null, page, MAX_LIMIT)
         }
     }
 
@@ -412,13 +425,13 @@ object TraktTools4 {
      * Like [rateShow], but for a movie.
      */
     suspend fun rateMovie(
-        traktSync: Sync,
+        trakt: TraktV2,
         movieTmdbId: Int,
         rating: Rating?
     ): TraktNonNullResponse<SyncResponse> {
         val items = SyncItems()
             .movies(SyncMovie().id(MovieIds.tmdb(movieTmdbId)).rating(rating))
-        return sendRatings(traktSync, items, rating, "rate movie")
+        return sendRatings(trakt, items, rating, "rate movie")
     }
 
     /**
@@ -427,13 +440,14 @@ object TraktTools4 {
      * See [awaitTraktCall] for details.
      */
     suspend fun saveNoteForShow(
-        traktNotes: Notes,
+        trakt: TraktV2,
         showTmdbId: Int,
         noteText: String
     ): TraktNonNullResponse<Note> {
         // Note: calling the add endpoint for an existing note will update it
         return awaitTraktCallNonNull(
-            traktNotes.addNote(
+            trakt,
+            trakt.notes().addNote(
                 AddNoteRequest(
                     Show().apply {
                         ids = ShowIds.tmdb(showTmdbId)
@@ -450,11 +464,12 @@ object TraktTools4 {
      * See [awaitTraktCall] for details.
      */
     suspend fun deleteNote(
-        traktNotes: Notes,
+        trakt: TraktV2,
         noteId: Long
     ): TraktResponse<Void> {
         return awaitTraktCall(
-            traktNotes.deleteNote(noteId),
+            trakt,
+            trakt.notes().deleteNote(noteId),
             "delete note",
             reportIsNotVip = true // Should work even if not VIP
         )
@@ -481,6 +496,7 @@ object TraktTools4 {
      * Use [reportIsNotVip] to report this error if it is unexpected.
      */
     private suspend fun <T> awaitTraktCall(
+        trakt: TraktV2,
         call: Call<T>,
         action: String,
         reportIsNotVip: Boolean = false,
@@ -494,25 +510,32 @@ object TraktTools4 {
         }
 
         if (!response.isSuccessful) {
+            // The error body can only be read once, so only parse it when reporting
+            fun report() = Errors.logAndReport(
+                action,
+                response,
+                SgTrakt.checkForTraktError(trakt, response)
+            )
+
             return when {
                 TraktV2.isAccountLimitExceeded(response) -> {
-                    Errors.logAndReport(action, response)
+                    report()
                     TraktErrorResponse.IsAccountLimitExceeded()
                 }
 
                 TraktV2.isAccountLocked(response) -> {
-                    Errors.logAndReport(action, response)
+                    report()
                     TraktErrorResponse.IsAccountLocked()
                 }
 
                 TraktV2.isNotVip(response) -> {
-                    if (reportIsNotVip) Errors.logAndReport(action, response)
+                    if (reportIsNotVip) report()
                     TraktErrorResponse.IsNotVip()
                 }
 
                 TraktV2.isUnauthorized(response) -> TraktErrorResponse.IsUnauthorized()
                 else -> {
-                    Errors.logAndReport(action, response)
+                    report()
                     TraktErrorResponse.Other()
                 }
             }
@@ -535,12 +558,13 @@ object TraktTools4 {
      * Like [awaitTraktCall], but ensures the response data is not null.
      */
     private suspend fun <T> awaitTraktCallNonNull(
+        trakt: TraktV2,
         call: Call<T>,
         action: String,
         reportIsNotVip: Boolean = false
     ): TraktNonNullResponse<T> {
         return when (val response =
-            awaitTraktCall(call, action, reportIsNotVip, logErrorOnNullBody = true)) {
+            awaitTraktCall(trakt, call, action, reportIsNotVip, logErrorOnNullBody = true)) {
             is TraktErrorResponse.Other -> response
             is TraktErrorResponse.IsAccountLimitExceeded -> response
             is TraktErrorResponse.IsAccountLocked -> response

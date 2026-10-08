@@ -48,11 +48,10 @@ class TraktAddLoader(
 
     override fun loadInBackground(): Result {
         val response = runBlocking(Dispatchers.Default) {
-            val traktSync = trakt.sync()
             when (type) {
-                Type.WATCHED -> TraktTools4.getWatchedShows(traktSync, noSeasons = true)
-                Type.COLLECTION -> TraktTools4.getCollectedShows(traktSync)
-                Type.WATCHLIST -> TraktTools4.getShowsOnWatchlist(traktSync)
+                Type.WATCHED -> TraktTools4.getWatchedShows(trakt, noSeasons = true)
+                Type.COLLECTION -> TraktTools4.getCollectedShows(trakt)
+                Type.WATCHLIST -> TraktTools4.getShowsOnWatchlist(trakt)
             }
         }
 

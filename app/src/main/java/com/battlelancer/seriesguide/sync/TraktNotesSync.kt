@@ -163,8 +163,6 @@ class TraktNotesSync(
         Timber.d("uploadNotesForShows: uploading for %s shows", showIdsWithNotesToUpload.size)
 
         val trakt = traktSync.trakt
-        // Cache service
-        val traktNotes = trakt.notes()
 
         val noteUpdates = mutableMapOf<Long, SgShow2Helper.NoteUpdate>()
         try {
@@ -179,7 +177,7 @@ class TraktNotesSync(
 
                 val storedNote = runBlocking(Dispatchers.Default) {
                     val response = trakt.awaitAndHandleAuthErrorNonNull {
-                        TraktTools4.saveNoteForShow(traktNotes, showTmdbId, noteText)
+                        TraktTools4.saveNoteForShow(trakt, showTmdbId, noteText)
                     }
                     when (response) {
                         is TraktNonNullResponse.Success -> response.data

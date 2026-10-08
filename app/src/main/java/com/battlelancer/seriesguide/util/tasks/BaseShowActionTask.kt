@@ -7,8 +7,8 @@ import android.content.Context
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.traktapi.TraktTools4
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse
+import com.uwetrottmann.trakt5.TraktV2
 import com.uwetrottmann.trakt5.entities.SyncResponse
-import com.uwetrottmann.trakt5.services.Sync
 import org.greenrobot.eventbus.EventBus
 
 abstract class BaseShowActionTask(
@@ -24,10 +24,9 @@ abstract class BaseShowActionTask(
     override suspend fun doBackgroundAction(): Int {
         if (isSendingToTrakt) {
             val trakt = SgApp.getServicesComponent(context).trakt()
-            val traktSync = trakt.sync()
 
             val result = trakt.awaitAndHandleAuthErrorNonNull {
-                sendToTrakt(traktSync)
+                sendToTrakt(trakt)
             }.toActionResult {
                 // If show was not found on Trakt
                 if (TraktTools4.isNotFound(it)) ERROR_TRAKT_API_NOT_FOUND else SUCCESS
@@ -48,6 +47,6 @@ abstract class BaseShowActionTask(
         }
     }
 
-    protected abstract suspend fun sendToTrakt(traktSync: Sync): TraktNonNullResponse<SyncResponse>
+    protected abstract suspend fun sendToTrakt(trakt: TraktV2): TraktNonNullResponse<SyncResponse>
 
 }

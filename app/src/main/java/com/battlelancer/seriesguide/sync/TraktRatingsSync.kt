@@ -46,7 +46,7 @@ class TraktRatingsSync(
 
         // download rated shows
         val ratedShows: List<RatedShow> = runBlocking(Dispatchers.Default) {
-            when (val response = TraktTools4.getRatingsOfShows(traktSync.sync)) {
+            when (val response = TraktTools4.getRatingsOfShows(traktSync.trakt)) {
                 is Success -> response.data
                 else -> null
             }
@@ -112,7 +112,7 @@ class TraktRatingsSync(
 
         // download rated episodes
         val ratedEpisodes: List<RatedEpisode> = runBlocking(Dispatchers.Default) {
-            when (val response = TraktTools4.getRatingsOfEpisodes(traktSync.sync)) {
+            when (val response = TraktTools4.getRatingsOfEpisodes(traktSync.trakt)) {
                 is Success -> response.data
                 else -> null
             }
@@ -177,7 +177,7 @@ class TraktRatingsSync(
 
         // download rated shows
         val ratedMovies: List<RatedMovie> = runBlocking(Dispatchers.Default) {
-            when (val response = TraktTools4.getRatingsOfMovies(traktSync.sync)) {
+            when (val response = TraktTools4.getRatingsOfMovies(traktSync.trakt)) {
                 is Success -> response.data
                 else -> null
             }
