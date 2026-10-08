@@ -1,11 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2025 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.tmdbapi
 
 import android.content.Context
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.tmdbapi.TmdbTools3.TmdbError
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.isRetryError
 import com.github.michaelbull.result.Err

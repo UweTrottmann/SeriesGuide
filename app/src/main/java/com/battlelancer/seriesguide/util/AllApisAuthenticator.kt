@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2016-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2016 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.util
 
@@ -9,21 +9,30 @@ import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.uwetrottmann.trakt5.TraktV2
 import dagger.Lazy
-import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.Route
 import timber.log.Timber
+import java.util.concurrent.ExecutionException
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
- * An [Authenticator] that can handle auth for all APIs used with the shared [com.battlelancer.seriesguide.modules.HttpClientModule].
+ * An [Authenticator] that can handle auth for all APIs used with the shared
+ * [com.battlelancer.seriesguide.modules.HttpClientModule].
+ *
+ * This must be a singleton so only one [traktTokenRefresh] task can run at a time.
  */
+@Singleton
 class AllApisAuthenticator @Inject constructor(
     @ApplicationContext private val context: Context,
     private val trakt: Lazy<SgTrakt>
 ) : Authenticator {
+
+    private val traktTokenRefresh = SharedBlockingTask("TraktTokenRefresh") {
+        TraktCredentials.get(context).refreshAccessToken(trakt.get())
+    }
 
     override fun authenticate(route: Route?, response: Response): Request? {
         val host = response.request.url.host
@@ -63,13 +72,14 @@ class AllApisAuthenticator @Inject constructor(
                 return response.request.buildNewWithTraktAuthHeader(expectedAuthHeader)
             }
 
-            // Refresh the access token or wait on a running refresh
+            // Refresh the access token or wait on a running refresh.
+            // Run the token refresh on its own thread, so if this thread is interrupted, this still
+            // waits for the result so a successful refresh is not lost.
             val successful = try {
-                runBlocking {
-                    credentials.refreshAccessTokenAsync(trakt.get())
-                }
-            } catch (e: InterruptedException) {
-                false // This thread may get interrupted, causing the coroutine to throw
+                traktTokenRefresh.runOrAwait()
+            } catch (e: ExecutionException) {
+                Errors.logAndReport("refresh access token", e.cause ?: e)
+                false
             }
 
             if (successful) {

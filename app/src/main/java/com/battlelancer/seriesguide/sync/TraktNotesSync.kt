@@ -8,7 +8,6 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgShow2Helper
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktSettings
-import com.battlelancer.seriesguide.traktapi.TraktTools4
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktErrorResponse
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse
 import com.battlelancer.seriesguide.util.Errors
@@ -38,10 +37,7 @@ class TraktNotesSync(
      * So if the local show has a note, it is overwritten (server is source of truth).
      * When a note is removed (or rather does not exist) at Trakt, will either on the initial sync
      * upload the note or for consecutive syncs remove the note on the local show.
-     *
-     * Note: this calls [uploadNotesForShows] which may throw [InterruptedException].
      */
-    @Throws(InterruptedException::class)
     fun syncForShows(updatedAt: OffsetDateTime?): Boolean {
         if (updatedAt == null) {
             Timber.e("syncForShows: null updatedAt")
@@ -161,11 +157,7 @@ class TraktNotesSync(
      * and note ID.
      *
      * Returns whether all notes were successfully uploaded.
-     *
-     * Note: this uses [runBlocking], so if the calling thread is interrupted this will throw
-     * [InterruptedException].
      */
-    @Throws(InterruptedException::class)
     private fun uploadNotesForShows(showIdsWithNotesToUpload: MutableList<Long>): Boolean {
         Timber.d("uploadNotesForShows: uploading for %s shows", showIdsWithNotesToUpload.size)
 
@@ -186,20 +178,24 @@ class TraktNotesSync(
 
                 val storedNote = runBlocking(Dispatchers.Default) {
                     val response = trakt.awaitAndHandleAuthErrorNonNull {
-                        TraktTools4.saveNoteForShow(traktNotes, showTmdbId, noteText)
+                        traktSync.traktTools.saveNoteForShow(
+                            showTmdbId,
+                            noteText,
+                            traktNotes = traktNotes
+                        )
                     }
                     when (response) {
                         is TraktNonNullResponse.Success -> response.data
 
                         is TraktErrorResponse.IsAccountLimitExceeded -> {
-                            traktSync.progress.setImportantErrorIfNone(
+                            traktSync.progress.setImportantMessageIfNone(
                                 context.getString(R.string.trakt_error_limit_exceeded_upload)
                             )
                             null
                         }
 
                         is TraktErrorResponse.IsAccountLocked -> {
-                            traktSync.progress.setImportantErrorIfNone(
+                            traktSync.progress.setImportantMessageIfNone(
                                 context.getString(R.string.trakt_error_account_locked)
                             )
                             null

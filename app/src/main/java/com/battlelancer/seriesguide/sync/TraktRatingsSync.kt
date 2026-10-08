@@ -7,7 +7,6 @@ import android.text.format.DateUtils
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.traktapi.TraktSettings
-import com.battlelancer.seriesguide.traktapi.TraktTools4
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse.Success
 import com.battlelancer.seriesguide.util.TimeTools
 import com.uwetrottmann.trakt5.entities.RatedEpisode
@@ -30,11 +29,7 @@ class TraktRatingsSync(
      * Downloads Trakt show ratings and applies the latest ones to the database.
      *
      * To apply all ratings, set [TraktSettings.KEY_LAST_SHOWS_RATED_AT] to 0.
-     *
-     * Note: this uses [runBlocking], so if the calling thread is interrupted this will throw
-     * [InterruptedException].
      */
-    @Throws(InterruptedException::class)
     fun downloadForShows(ratedAt: OffsetDateTime?): Boolean {
         if (ratedAt == null) {
             Timber.e("downloadForShows: null rated_at")
@@ -50,7 +45,8 @@ class TraktRatingsSync(
 
         // download rated shows
         val ratedShows: List<RatedShow> = runBlocking(Dispatchers.Default) {
-            when (val response = TraktTools4.getRatingsOfShows(traktSync.sync)) {
+            when (val response =
+                traktSync.traktTools.getRatingsOfShows(traktSync = traktSync.sync)) {
                 is Success -> response.data
                 else -> null
             }
@@ -100,11 +96,7 @@ class TraktRatingsSync(
      * Downloads Trakt episode ratings and applies the latest ones to the database.
      *
      * To apply all ratings, set [TraktSettings.KEY_LAST_EPISODES_RATED_AT] to 0.
-     *
-     * Note: this uses [runBlocking], so if the calling thread is interrupted this will throw
-     * [InterruptedException].
      */
-    @Throws(InterruptedException::class)
     fun downloadForEpisodes(ratedAt: OffsetDateTime?): Boolean {
         if (ratedAt == null) {
             Timber.e("downloadForEpisodes: null rated_at")
@@ -120,7 +112,8 @@ class TraktRatingsSync(
 
         // download rated episodes
         val ratedEpisodes: List<RatedEpisode> = runBlocking(Dispatchers.Default) {
-            when (val response = TraktTools4.getRatingsOfEpisodes(traktSync.sync)) {
+            when (val response =
+                traktSync.traktTools.getRatingsOfEpisodes(traktSync = traktSync.sync)) {
                 is Success -> response.data
                 else -> null
             }
@@ -169,11 +162,7 @@ class TraktRatingsSync(
      * Downloads Trakt movie ratings and applies the latest ones to the database.
      *
      * To apply all ratings, set [TraktSettings.KEY_LAST_MOVIES_RATED_AT] to 0.
-     *
-     * Note: this uses [runBlocking], so if the calling thread is interrupted this will throw
-     * [InterruptedException].
      */
-    @Throws(InterruptedException::class)
     fun downloadForMovies(ratedAt: OffsetDateTime?): Boolean {
         if (ratedAt == null) {
             Timber.e("downloadForMovies: null rated_at")
@@ -189,7 +178,8 @@ class TraktRatingsSync(
 
         // download rated shows
         val ratedMovies: List<RatedMovie> = runBlocking(Dispatchers.Default) {
-            when (val response = TraktTools4.getRatingsOfMovies(traktSync.sync)) {
+            when (val response =
+                traktSync.traktTools.getRatingsOfMovies(traktSync = traktSync.sync)) {
                 is Success -> response.data
                 else -> null
             }

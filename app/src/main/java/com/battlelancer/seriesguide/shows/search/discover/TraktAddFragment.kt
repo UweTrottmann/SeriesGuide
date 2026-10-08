@@ -21,10 +21,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.databinding.FragmentAddshowTraktBinding
 import com.battlelancer.seriesguide.enums.NetworkResult
 import com.battlelancer.seriesguide.shows.tools.AddShowTask
 import com.battlelancer.seriesguide.shows.tools.ShowTools2
+import com.battlelancer.seriesguide.traktapi.TraktTools4
 import com.battlelancer.seriesguide.ui.widgets.EmptyView
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ThemeUtils
@@ -252,7 +254,11 @@ class TraktAddFragment : Fragment() {
     private val traktAddCallbacks: LoaderManager.LoaderCallbacks<TraktAddLoader.Result> =
         object : LoaderManager.LoaderCallbacks<TraktAddLoader.Result> {
             override fun onCreateLoader(id: Int, args: Bundle?): Loader<TraktAddLoader.Result> {
-                return TraktAddLoader(requireContext(), listType)
+                return TraktAddLoader(
+                    requireContext(),
+                    listType,
+                    TraktTools4(SgApp.getServicesComponent(requireContext()).trakt())
+                )
             }
 
             override fun onLoadFinished(

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2017-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2017 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.sync
 
@@ -136,7 +136,7 @@ class HexagonEpisodeSync(
         )
 
         var result = downloadFlagsByTmdbId(showId, showTmdbId)
-        if (result.noData && showTvdbId != null) {
+        if (result.noData && showTvdbId != null && showTvdbId > 0) {
             // If no data by TMDB ID, try to get legacy data by TVDB ID.
             Timber.d("downloadFlags: no data by TMDB ID, trying by TVDB ID")
             result = downloadFlagsByTvdbId(showId, showTvdbId)

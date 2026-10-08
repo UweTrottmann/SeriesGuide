@@ -125,7 +125,8 @@ class GetShowTools @Inject constructor(
             tmdbShow.overview
         }
 
-        val tvdbIdOrNull = tmdbShow.external_ids?.tvdb_id
+        // TMDB doesn't restrict TVDB IDs to Int, so it can overflow, so only use if positive
+        val tvdbIdOrNull = tmdbShow.external_ids?.tvdb_id?.takeIf { it > 0 }
         val titleNoArticle = TextTools.trimLeadingArticle(tmdbShow.name)
         val genres =
             TextTools.buildPipeSeparatedString(tmdbShow.genres?.map { genre -> genre.name })
