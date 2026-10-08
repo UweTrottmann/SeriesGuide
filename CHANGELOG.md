@@ -13,6 +13,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 * 🔨 Sync: if interrupted, never mark as successful so next sync happens sooner.
 * 🔨 Sync: don't crash when refreshing Trakt credentials is interrupted.
 * 🔨 Sync: prevent breaking updating if TMDB returns invalid TVDB ID for a show. 
+* 🔧 Sync: keep showing last status, including if show failed to update.
 
 ## Version 2026.4
 
