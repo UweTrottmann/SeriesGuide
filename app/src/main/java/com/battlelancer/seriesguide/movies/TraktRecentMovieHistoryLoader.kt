@@ -1,74 +1,70 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2016-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2016 Uwe Trottmann <uwe@uwetrottmann.com>
 
-package com.battlelancer.seriesguide.movies;
+package com.battlelancer.seriesguide.movies
 
-import android.app.Activity;
-import android.text.format.DateUtils;
-import androidx.annotation.NonNull;
-import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.shows.history.ShowsHistoryAdapter;
-import com.battlelancer.seriesguide.shows.history.TraktRecentEpisodeHistoryLoader;
-import com.battlelancer.seriesguide.util.TimeTools;
-import com.uwetrottmann.trakt5.entities.HistoryEntry;
-import com.uwetrottmann.trakt5.entities.UserSlug;
-import com.uwetrottmann.trakt5.enums.HistoryType;
-import com.uwetrottmann.trakt5.services.Users;
-import java.util.List;
-import retrofit2.Call;
+import android.content.Context
+import android.text.format.DateUtils
+import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.shows.history.ShowsHistoryAdapter
+import com.battlelancer.seriesguide.shows.history.TraktRecentEpisodeHistoryLoader
+import com.battlelancer.seriesguide.util.TimeTools
+import com.uwetrottmann.trakt5.entities.HistoryEntry
+import com.uwetrottmann.trakt5.entities.UserSlug
+import com.uwetrottmann.trakt5.enums.HistoryType
+import com.uwetrottmann.trakt5.services.Users
+import retrofit2.Call
 
 /**
  * Loads last 72 hours of trakt watched movies, or at least one older watched movie.
  */
-public class TraktRecentMovieHistoryLoader extends TraktRecentEpisodeHistoryLoader {
+class TraktRecentMovieHistoryLoader(context: Context) :
+    TraktRecentEpisodeHistoryLoader(context) {
 
-    TraktRecentMovieHistoryLoader(Activity activity) {
-        super(activity);
-    }
-
-    @Override
-    protected void addItems(List<ShowsHistoryAdapter.Item> items, List<HistoryEntry> history) {
+    override fun addItems(
+        items: MutableList<ShowsHistoryAdapter.Item>,
+        history: List<HistoryEntry>
+    ) {
         // add movies
-        long threeDaysAgo = System.currentTimeMillis() - 3 * DateUtils.DAY_IN_MILLIS;
-        for (int i = 0, size = history.size(); i < size; i++) {
-            HistoryEntry entry = history.get(i);
-
-            if (entry.movie == null || entry.movie.ids == null || entry.movie.ids.tmdb == null
-                    || entry.watched_at == null) {
+        val threeDaysAgo = System.currentTimeMillis() - 3 * DateUtils.DAY_IN_MILLIS
+        for (entry in history) {
+            val movie = entry.movie
+            val movieTmdbId = movie?.ids?.tmdb
+            val watchedAt = entry.watched_at
+            if (movie == null || movieTmdbId == null || watchedAt == null) {
                 // missing required values
-                continue;
+                continue
             }
 
             // only include movies watched in the last 72 hours
             // however, include at least one older one if there are none
-            if (TimeTools.isBeforeMillis(entry.watched_at, threeDaysAgo) && items.size() > 1) {
-                break;
+            if (TimeTools.isBeforeMillis(watchedAt, threeDaysAgo) && items.size > 1) {
+                break
             }
 
             // Poster resolved on demand, see view holder binding.
-            items.add(new ShowsHistoryAdapter.Item()
+            items.add(
+                ShowsHistoryAdapter.Item()
                     .displayData(
-                            entry.watched_at.toInstant().toEpochMilli(),
-                            entry.movie.title,
-                            null,
-                            null
+                        watchedAt.toInstant().toEpochMilli(),
+                        movie.title,
+                        null,
+                        null
                     )
-                    .tmdbId(entry.movie.ids.tmdb)
+                    .tmdbId(movieTmdbId)
                     .recentlyWatchedTrakt(entry.action)
-            );
+            )
         }
     }
 
-    @NonNull
-    @Override
-    protected String getAction() {
-        return "get user movie history";
-    }
+    override val action: String
+        get() = "get user movie history"
 
-    @Override
-    protected Call<List<HistoryEntry>> buildCall() {
-        Users traktUsers = SgApp.getServicesComponent(getContext()).traktUsers();
-        return traktUsers.history(UserSlug.ME, HistoryType.MOVIES, 1, MAX_HISTORY_SIZE,
-                null, null, null);
+    override fun buildCall(): Call<List<HistoryEntry>> {
+        val traktUsers: Users = SgApp.getServicesComponent(context).traktUsers()!!
+        return traktUsers.history(
+            UserSlug.ME, HistoryType.MOVIES, 1, MAX_HISTORY_SIZE,
+            null, null, null
+        )
     }
 }

@@ -1,175 +1,173 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2015 Uwe Trottmann <uwe@uwetrottmann.com>
 
-package com.battlelancer.seriesguide.shows.history;
+package com.battlelancer.seriesguide.shows.history
 
-import android.app.Activity;
-import android.text.format.DateUtils;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.collection.SparseArrayCompat;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.provider.SgRoomDatabase;
-import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper;
-import com.battlelancer.seriesguide.traktapi.SgTrakt;
-import com.battlelancer.seriesguide.traktapi.TraktCredentials;
-import com.battlelancer.seriesguide.util.Errors;
-import com.battlelancer.seriesguide.util.ImageTools;
-import com.battlelancer.seriesguide.util.LanguageTools;
-import com.battlelancer.seriesguide.util.TextTools;
-import com.battlelancer.seriesguide.util.TimeTools;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import com.uwetrottmann.trakt5.entities.HistoryEntry;
-import com.uwetrottmann.trakt5.entities.UserSlug;
-import com.uwetrottmann.trakt5.enums.HistoryType;
-import com.uwetrottmann.trakt5.services.Users;
-import java.util.ArrayList;
-import java.util.List;
-import retrofit2.Call;
-import retrofit2.Response;
+import android.content.Context
+import android.text.format.DateUtils
+import androidx.annotation.StringRes
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.traktapi.SgTrakt
+import com.battlelancer.seriesguide.traktapi.TraktCredentials
+import com.battlelancer.seriesguide.util.Errors
+import com.battlelancer.seriesguide.util.ImageTools
+import com.battlelancer.seriesguide.util.LanguageTools
+import com.battlelancer.seriesguide.util.TextTools
+import com.battlelancer.seriesguide.util.TimeTools
+import com.uwetrottmann.androidutils.AndroidUtils
+import com.uwetrottmann.androidutils.GenericSimpleLoader
+import com.uwetrottmann.trakt5.entities.HistoryEntry
+import com.uwetrottmann.trakt5.entities.UserSlug
+import com.uwetrottmann.trakt5.enums.HistoryType
+import com.uwetrottmann.trakt5.services.Users
+import retrofit2.Call
 
 /**
  * Loads last 24 hours of trakt watched episodes, or at least one older episode.
  */
-public class TraktRecentEpisodeHistoryLoader
-        extends GenericSimpleLoader<TraktRecentEpisodeHistoryLoader.Result> {
+open class TraktRecentEpisodeHistoryLoader(context: Context) :
+    GenericSimpleLoader<TraktRecentEpisodeHistoryLoader.Result>(context) {
 
-    protected static final int MAX_HISTORY_SIZE = 10;
+    class Result(
+        val items: List<ShowsHistoryAdapter.Item>?,
+        val errorText: String? = null
+    )
 
-    public static class Result {
-        public List<ShowsHistoryAdapter.Item> items;
-        @Nullable public String errorText;
-
-        public Result(List<ShowsHistoryAdapter.Item> items) {
-            this(items, null);
+    override fun loadInBackground(): Result {
+        if (!TraktCredentials.get(context).hasCredentials()) {
+            return buildResultFailure(R.string.trakt_error_credentials)
         }
 
-        public Result(List<ShowsHistoryAdapter.Item> items, @Nullable String errorText) {
-            this.items = items;
-            this.errorText = errorText;
-        }
-    }
-
-    public TraktRecentEpisodeHistoryLoader(Activity activity) {
-        super(activity);
-    }
-
-    @Override
-    @NonNull
-    public Result loadInBackground() {
-        if (!TraktCredentials.get(getContext()).hasCredentials()) {
-            return buildResultFailure(R.string.trakt_error_credentials);
-        }
-
-        List<HistoryEntry> history = null;
+        var history: List<HistoryEntry>? = null
         try {
-            Response<List<HistoryEntry>> response = buildCall().execute();
-            if (response.isSuccessful()) {
-                history = response.body();
+            val response = buildCall().execute()
+            if (response.isSuccessful) {
+                history = response.body()
             } else {
-                if (SgTrakt.isUnauthorized(getContext(), response)) {
-                    return buildResultFailure(R.string.trakt_error_credentials);
+                if (SgTrakt.isUnauthorized(context, response)) {
+                    return buildResultFailure(R.string.trakt_error_credentials)
                 }
-                Errors.logAndReport(getAction(), response);
+                Errors.logAndReport(action, response)
             }
-        } catch (Exception e) {
-            Errors.logAndReport(getAction(), e);
-            return AndroidUtils.isNetworkConnected(getContext())
-                    ? buildResultFailure() : buildResultFailure(R.string.offline);
+        } catch (e: Exception) {
+            Errors.logAndReport(action, e)
+            return if (AndroidUtils.isNetworkConnected(context)) {
+                buildResultFailure()
+            } else {
+                buildResultFailure(R.string.offline)
+            }
         }
 
         if (history == null) {
-            return buildResultFailure();
+            return buildResultFailure()
         } else if (history.isEmpty()) {
-            return new Result(null); // no history available (yet)
+            return Result(null) // no history available (yet)
         }
 
+        val items = mutableListOf<ShowsHistoryAdapter.Item>()
         // add header
-        List<ShowsHistoryAdapter.Item> items = new ArrayList<>();
-        items.add(new ShowsHistoryAdapter.Item().header(
-                getContext().getString(R.string.recently_watched), true));
+        items.add(
+            ShowsHistoryAdapter.Item()
+                .header(context.getString(R.string.recently_watched), true)
+        )
         // add items
-        addItems(items, history);
+        addItems(items, history)
         // add link to more history
-        items.add(new ShowsHistoryAdapter.Item().moreLink(getContext().getString(R.string.user_stream)));
+        items.add(ShowsHistoryAdapter.Item().moreLink(context.getString(R.string.user_stream)))
 
-        return new Result(items);
+        return Result(items)
     }
 
-    protected void addItems(List<ShowsHistoryAdapter.Item> items, List<HistoryEntry> history) {
-        SparseArrayCompat<String> tmdbIdsToPoster = SgApp.getServicesComponent(getContext())
-                .showTools().getTmdbIdsToPoster();
-        SgEpisode2Helper episodeHelper = SgRoomDatabase.getInstance(getContext())
-                .sgEpisode2Helper();
-        long timeDayAgo = System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS;
+    protected open fun addItems(
+        items: MutableList<ShowsHistoryAdapter.Item>,
+        history: List<HistoryEntry>
+    ) {
+        val tmdbIdsToPoster = SgApp.getServicesComponent(context).showTools().getTmdbIdsToPoster()
+        val episodeHelper = SgRoomDatabase.getInstance(context).sgEpisode2Helper()
+        val timeDayAgo = System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS
 
-        for (int i = 0, size = history.size(); i < size; i++) {
-            HistoryEntry entry = history.get(i);
-
-            if (entry.episode == null || entry.show == null || entry.watched_at == null) {
+        for (entry in history) {
+            val episode = entry.episode
+            val show = entry.show
+            val watchedAt = entry.watched_at
+            if (episode == null || show == null || watchedAt == null) {
                 // missing required values
-                continue;
+                continue
             }
 
             // only include episodes watched in the last 24 hours
             // however, include at least one older episode if there are none, yet
-            if (TimeTools.isBeforeMillis(entry.watched_at, timeDayAgo) && items.size() > 1) {
-                break;
+            if (TimeTools.isBeforeMillis(watchedAt, timeDayAgo) && items.size > 1) {
+                break
             }
 
             // look for a poster
-            String posterUrl;
-            Integer showTmdbId = entry.show.ids == null ? null : entry.show.ids.tmdb;
-            if (showTmdbId != null) {
+            val showTmdbId = show.ids?.tmdb
+            val posterUrl = if (showTmdbId != null) {
                 // prefer poster of already added show, fall back to first uploaded poster
-                posterUrl = ImageTools.posterUrlOrResolve(tmdbIdsToPoster.get(showTmdbId),
-                        showTmdbId, LanguageTools.LANGUAGE_EN, getContext());
+                ImageTools.posterUrlOrResolve(
+                    tmdbIdsToPoster.get(showTmdbId),
+                    showTmdbId,
+                    LanguageTools.LANGUAGE_EN,
+                    context
+                )
             } else {
-                posterUrl = null;
+                null
             }
 
-            String description = (entry.episode.season == null || entry.episode.number == null)
-                    ? entry.episode.title
-                    : TextTools.getNextEpisodeString(getContext(), entry.episode.season,
-                            entry.episode.number, entry.episode.title);
+            val season = episode.season
+            val number = episode.number
+            val description = if (season == null || number == null) {
+                episode.title
+            } else {
+                TextTools.getNextEpisodeString(context, season, number, episode.title)
+            }
 
-            Integer episodeTmdbIdOrNull = entry.episode.ids != null ? entry.episode.ids.tmdb : null;
-            long localEpisodeIdOrZero = episodeTmdbIdOrNull != null
-                    ? episodeHelper.getEpisodeIdByTmdbId(episodeTmdbIdOrNull) : 0;
+            val episodeTmdbIdOrNull = episode.ids?.tmdb
+            val localEpisodeIdOrZero = if (episodeTmdbIdOrNull != null) {
+                episodeHelper.getEpisodeIdByTmdbId(episodeTmdbIdOrNull)
+            } else {
+                0
+            }
 
-            ShowsHistoryAdapter.Item item = new ShowsHistoryAdapter.Item()
-                    .displayData(
-                            entry.watched_at.toInstant().toEpochMilli(),
-                            entry.show.title,
-                            description,
-                            posterUrl
-                    )
-                    .episodeIds(localEpisodeIdOrZero, showTmdbId != null ? showTmdbId : 0)
-                    .recentlyWatchedTrakt(entry.action);
-            items.add(item);
+            val item = ShowsHistoryAdapter.Item()
+                .displayData(
+                    watchedAt.toInstant().toEpochMilli(),
+                    show.title,
+                    description,
+                    posterUrl
+                )
+                .episodeIds(localEpisodeIdOrZero, showTmdbId ?: 0)
+                .recentlyWatchedTrakt(entry.action)
+            items.add(item)
         }
     }
 
-    @NonNull
-    protected String getAction() {
-        return "get user episode history";
+    protected open val action: String
+        get() = "get user episode history"
+
+    protected open fun buildCall(): Call<List<HistoryEntry>> {
+        val traktUsers: Users = SgApp.getServicesComponent(context).traktUsers()!!
+        return traktUsers.history(
+            UserSlug.ME, HistoryType.EPISODES, 1, MAX_HISTORY_SIZE,
+            null, null, null
+        )
     }
 
-    protected Call<List<HistoryEntry>> buildCall() {
-        Users traktUsers = SgApp.getServicesComponent(getContext()).traktUsers();
-        return traktUsers.history(UserSlug.ME, HistoryType.EPISODES, 1, MAX_HISTORY_SIZE,
-                null, null, null);
+    private fun buildResultFailure(): Result {
+        return Result(
+            null,
+            context.getString(R.string.api_error_generic, context.getString(R.string.trakt))
+        )
     }
 
-    private Result buildResultFailure() {
-        return new Result(null, getContext().getString(R.string.api_error_generic,
-                getContext().getString(R.string.trakt)));
+    private fun buildResultFailure(@StringRes emptyTextResId: Int): Result {
+        return Result(null, context.getString(emptyTextResId))
     }
 
-    private Result buildResultFailure(@StringRes int emptyTextResId) {
-        return new Result(null, getContext().getString(emptyTextResId));
+    companion object {
+        const val MAX_HISTORY_SIZE = 10
     }
 }
