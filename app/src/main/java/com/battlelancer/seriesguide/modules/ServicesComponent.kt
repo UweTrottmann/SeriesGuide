@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2017-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2017 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.modules
 
@@ -17,8 +17,6 @@ import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.uwetrottmann.tmdb2.Tmdb
 import com.uwetrottmann.tmdb2.services.MoviesService
 import com.uwetrottmann.tmdb2.services.PeopleService
-import com.uwetrottmann.trakt5.services.Sync
-import com.uwetrottmann.trakt5.services.Users
 import dagger.Component
 import javax.inject.Singleton
 
@@ -46,8 +44,6 @@ interface ServicesComponent {
     fun getShowTools(): GetShowTools
     fun tmdb(): Tmdb
     fun trakt(): SgTrakt
-    fun traktSync(): Sync?
-    fun traktUsers(): Users?
 
     fun inject(addShowTask: AddShowTask)
     fun inject(sgSyncAdapter: SgSyncAdapter)

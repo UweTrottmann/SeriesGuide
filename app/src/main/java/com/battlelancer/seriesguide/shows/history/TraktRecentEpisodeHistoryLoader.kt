@@ -21,7 +21,6 @@ import com.uwetrottmann.androidutils.GenericSimpleLoader
 import com.uwetrottmann.trakt5.entities.HistoryEntry
 import com.uwetrottmann.trakt5.entities.UserSlug
 import com.uwetrottmann.trakt5.enums.HistoryType
-import com.uwetrottmann.trakt5.services.Users
 import retrofit2.Call
 
 /**
@@ -149,8 +148,7 @@ open class TraktRecentEpisodeHistoryLoader(context: Context) :
         get() = "get user episode history"
 
     protected open fun buildCall(): Call<List<HistoryEntry>> {
-        val traktUsers: Users = SgApp.getServicesComponent(context).traktUsers()!!
-        return traktUsers.history(
+        return SgApp.getServicesComponent(context).trakt().users().history(
             UserSlug.ME, HistoryType.EPISODES, 1, MAX_HISTORY_SIZE,
             null, null, null
         )

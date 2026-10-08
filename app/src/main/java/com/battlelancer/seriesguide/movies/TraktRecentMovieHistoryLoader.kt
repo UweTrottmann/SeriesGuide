@@ -12,7 +12,6 @@ import com.battlelancer.seriesguide.util.TimeTools
 import com.uwetrottmann.trakt5.entities.HistoryEntry
 import com.uwetrottmann.trakt5.entities.UserSlug
 import com.uwetrottmann.trakt5.enums.HistoryType
-import com.uwetrottmann.trakt5.services.Users
 import retrofit2.Call
 
 /**
@@ -61,8 +60,7 @@ class TraktRecentMovieHistoryLoader(context: Context) :
         get() = "get user movie history"
 
     override fun buildCall(): Call<List<HistoryEntry>> {
-        val traktUsers: Users = SgApp.getServicesComponent(context).traktUsers()!!
-        return traktUsers.history(
+        return SgApp.getServicesComponent(context).trakt().users().history(
             UserSlug.ME, HistoryType.MOVIES, 1, MAX_HISTORY_SIZE,
             null, null, null
         )
