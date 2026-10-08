@@ -7,7 +7,6 @@ import android.content.Context
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.traktapi.TraktTools4
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse
-import com.uwetrottmann.trakt5.TraktV2
 import com.uwetrottmann.trakt5.entities.SyncResponse
 
 class AddShowToWatchlistTask(
@@ -15,8 +14,8 @@ class AddShowToWatchlistTask(
     showTmdbId: Int
 ) : BaseShowActionTask(context, showTmdbId) {
 
-    override suspend fun sendToTrakt(trakt: TraktV2): TraktNonNullResponse<SyncResponse> {
-        return TraktTools4.addShowToWatchlist(trakt, showTmdbId)
+    override suspend fun sendToTrakt(traktTools: TraktTools4): TraktNonNullResponse<SyncResponse> {
+        return traktTools.addShowToWatchlist(showTmdbId)
     }
 
     override val successTextResId: Int

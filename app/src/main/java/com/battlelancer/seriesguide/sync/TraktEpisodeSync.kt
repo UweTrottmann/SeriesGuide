@@ -14,7 +14,6 @@ import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.traktapi.TraktSettings
 import com.battlelancer.seriesguide.traktapi.TraktTools
-import com.battlelancer.seriesguide.traktapi.TraktTools4
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse.Success
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.TimeTools
@@ -78,7 +77,9 @@ class TraktEpisodeSync(
         val lastWatchedAt = TraktSettings.getLastEpisodesWatchedAt(context)
         if (isInitialSync || TimeTools.isAfterMillis(watchedAt, lastWatchedAt)) {
             val watchedShowsTrakt = runBlocking(Dispatchers.Default) {
-                when (val response = TraktTools4.getWatchedShowsByTmdbId(traktSync!!.trakt)) {
+                when (val response = traktSync!!.traktTools.getWatchedShowsByTmdbId(
+                    traktSync = traktSync.sync
+                )) {
                     is Success -> response.data
                     else -> null
                 }
@@ -130,7 +131,9 @@ class TraktEpisodeSync(
         if (isInitialSync || TimeTools.isAfterMillis(collectedAt, lastCollectedAt)) {
 
             val collectedShowsTrakt = runBlocking(Dispatchers.Default) {
-                when (val response = TraktTools4.getCollectedShowsByTmdbId(traktSync!!.trakt)) {
+                when (val response = traktSync!!.traktTools.getCollectedShowsByTmdbId(
+                    traktSync = traktSync.sync
+                )) {
                     is Success -> response.data
                     else -> null
                 }

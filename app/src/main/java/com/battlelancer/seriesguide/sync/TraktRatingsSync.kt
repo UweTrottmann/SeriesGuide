@@ -7,7 +7,6 @@ import android.text.format.DateUtils
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.traktapi.TraktSettings
-import com.battlelancer.seriesguide.traktapi.TraktTools4
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse.Success
 import com.battlelancer.seriesguide.util.TimeTools
 import com.uwetrottmann.trakt5.entities.RatedEpisode
@@ -46,7 +45,8 @@ class TraktRatingsSync(
 
         // download rated shows
         val ratedShows: List<RatedShow> = runBlocking(Dispatchers.Default) {
-            when (val response = TraktTools4.getRatingsOfShows(traktSync.trakt)) {
+            when (val response =
+                traktSync.traktTools.getRatingsOfShows(traktSync = traktSync.sync)) {
                 is Success -> response.data
                 else -> null
             }
@@ -112,7 +112,8 @@ class TraktRatingsSync(
 
         // download rated episodes
         val ratedEpisodes: List<RatedEpisode> = runBlocking(Dispatchers.Default) {
-            when (val response = TraktTools4.getRatingsOfEpisodes(traktSync.trakt)) {
+            when (val response =
+                traktSync.traktTools.getRatingsOfEpisodes(traktSync = traktSync.sync)) {
                 is Success -> response.data
                 else -> null
             }
@@ -177,7 +178,8 @@ class TraktRatingsSync(
 
         // download rated shows
         val ratedMovies: List<RatedMovie> = runBlocking(Dispatchers.Default) {
-            when (val response = TraktTools4.getRatingsOfMovies(traktSync.trakt)) {
+            when (val response =
+                traktSync.traktTools.getRatingsOfMovies(traktSync = traktSync.sync)) {
                 is Success -> response.data
                 else -> null
             }

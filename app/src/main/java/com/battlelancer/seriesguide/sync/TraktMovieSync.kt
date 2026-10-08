@@ -10,7 +10,6 @@ import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.traktapi.TraktSettings
-import com.battlelancer.seriesguide.traktapi.TraktTools4
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse.Success
 import com.battlelancer.seriesguide.util.DBUtils
 import com.battlelancer.seriesguide.util.Errors
@@ -217,21 +216,21 @@ class TraktMovieSync(
     }
 
     private suspend fun downloadCollection(): MutableSet<Int>? {
-        return when (val response = TraktTools4.getCollectedMoviesByTmdbId(traktSync.trakt)) {
+        return when (val response = traktSync.traktTools.getCollectedMoviesByTmdbId(traktSync = traktSync.sync)) {
             is Success -> response.data
             else -> null
         }
     }
 
     private suspend fun downloadWatchlist(): MutableSet<Int>? {
-        return when (val response = TraktTools4.getMoviesOnWatchlistByTmdbId(traktSync.trakt)) {
+        return when (val response = traktSync.traktTools.getMoviesOnWatchlistByTmdbId(traktSync = traktSync.sync)) {
             is Success -> response.data
             else -> null
         }
     }
 
     private suspend fun downloadWatched(): MutableMap<Int, Int>? {
-        return when (val response = TraktTools4.getWatchedMoviesByTmdbId(traktSync.trakt)) {
+        return when (val response = traktSync.traktTools.getWatchedMoviesByTmdbId(traktSync = traktSync.sync)) {
             is Success -> response.data
             else -> null
         }

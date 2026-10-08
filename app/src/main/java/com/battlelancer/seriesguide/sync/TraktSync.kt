@@ -11,11 +11,14 @@ import com.battlelancer.seriesguide.shows.tools.ShowTools2
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktSettings
 import com.battlelancer.seriesguide.traktapi.TraktTools3
+import com.battlelancer.seriesguide.traktapi.TraktTools4
 import com.battlelancer.seriesguide.util.Errors
 import com.github.michaelbull.result.getOrElse
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.trakt5.TraktV2
 import com.uwetrottmann.trakt5.entities.LastActivityMore
+import com.uwetrottmann.trakt5.services.Sync
+import com.uwetrottmann.trakt5.services.Users
 import retrofit2.Response
 import timber.log.Timber
 
@@ -31,9 +34,11 @@ class TraktSync(
     val progress: SyncProgress
 ) {
 
+    val traktTools = TraktTools4(trakt)
+
     // Cache services
-    val sync = trakt.sync()
-    val users = trakt.users()
+    val sync: Sync = trakt.sync()
+    val users: Users = trakt.users()
 
     private fun noConnection(): Boolean {
         return if (AndroidUtils.isNetworkConnected(context)) {

@@ -8,7 +8,6 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgShow2Helper
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktSettings
-import com.battlelancer.seriesguide.traktapi.TraktTools4
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktErrorResponse
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse
 import com.battlelancer.seriesguide.util.Errors
@@ -163,6 +162,8 @@ class TraktNotesSync(
         Timber.d("uploadNotesForShows: uploading for %s shows", showIdsWithNotesToUpload.size)
 
         val trakt = traktSync.trakt
+        // Cache service
+        val traktNotes = trakt.notes()
 
         val noteUpdates = mutableMapOf<Long, SgShow2Helper.NoteUpdate>()
         try {
@@ -177,7 +178,11 @@ class TraktNotesSync(
 
                 val storedNote = runBlocking(Dispatchers.Default) {
                     val response = trakt.awaitAndHandleAuthErrorNonNull {
-                        TraktTools4.saveNoteForShow(trakt, showTmdbId, noteText)
+                        traktSync.traktTools.saveNoteForShow(
+                            showTmdbId,
+                            noteText,
+                            traktNotes = traktNotes
+                        )
                     }
                     when (response) {
                         is TraktNonNullResponse.Success -> response.data

@@ -6,13 +6,11 @@ package com.battlelancer.seriesguide.shows.search.discover
 import android.content.Context
 import androidx.annotation.StringRes
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.traktapi.TraktTools4
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse.Success
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.androidutils.GenericSimpleLoader
-import com.uwetrottmann.trakt5.TraktV2
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import java.util.LinkedList
@@ -22,7 +20,8 @@ import java.util.LinkedList
  */
 class TraktAddLoader(
     context: Context,
-    private val type: Type
+    private val type: Type,
+    private val traktTools: TraktTools4
 ) : GenericSimpleLoader<TraktAddLoader.Result>(context) {
 
     enum class Type {
@@ -44,14 +43,12 @@ class TraktAddLoader(
         }
     }
 
-    private val trakt: TraktV2 = SgApp.getServicesComponent(context).trakt()
-
     override fun loadInBackground(): Result {
         val response = runBlocking(Dispatchers.Default) {
             when (type) {
-                Type.WATCHED -> TraktTools4.getWatchedShows(trakt, noSeasons = true)
-                Type.COLLECTION -> TraktTools4.getCollectedShows(trakt)
-                Type.WATCHLIST -> TraktTools4.getShowsOnWatchlist(trakt)
+                Type.WATCHED -> traktTools.getWatchedShows(noSeasons = true)
+                Type.COLLECTION -> traktTools.getCollectedShows()
+                Type.WATCHLIST -> traktTools.getShowsOnWatchlist()
             }
         }
 

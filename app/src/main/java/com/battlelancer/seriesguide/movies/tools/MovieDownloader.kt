@@ -27,8 +27,14 @@ import com.uwetrottmann.trakt5.entities.Ratings
 class MovieDownloader(
     private val context: Context,
     private val tmdbMovies: MoviesService,
-    private val trakt: SgTrakt,
+    trakt: SgTrakt
 ) {
+
+    private val traktTools = TraktTools4(trakt)
+
+    // Cache services
+    private val traktSearch = trakt.search()
+    private val traktMovies = trakt.movies()
 
     sealed interface MovieDetailsResult {
         data class Success(val movieDetails: MovieDetails) : MovieDetailsResult
@@ -61,7 +67,7 @@ class MovieDownloader(
 
         // Optionally, get ID, slug and ratings from Trakt
         if (getTraktIdsAndRating) {
-            val traktMovieIdsResult = TraktTools4.getMovieIds(trakt, movieTmdbId)
+            val traktMovieIdsResult = traktTools.getMovieIds(movieTmdbId, traktSearch = traktSearch)
             if (traktMovieIdsResult is TraktTools4.TraktNonNullResponse.Success) {
                 val traktMovieId = traktMovieIdsResult.data?.trakt
                 details.traktIds = TraktIds.Success(
@@ -94,7 +100,7 @@ class MovieDownloader(
 
     private fun loadRatingsFromTrakt(movieTraktId: Int): Ratings? {
         try {
-            val response = trakt.movies()
+            val response = traktMovies
                 .ratings(movieTraktId.toString())
                 .execute()
             if (response.isSuccessful) {
