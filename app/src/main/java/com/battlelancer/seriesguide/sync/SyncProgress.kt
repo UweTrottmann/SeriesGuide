@@ -30,7 +30,7 @@ class SyncProgress(
         TRAKT_MOVIES(R.string.trakt, R.string.movies)
     }
 
-    class SyncEvent internal constructor(
+    data class SyncEvent internal constructor(
         private val step: Step?,
         private val stepsWithError: List<Step>,
         private val importantMessageOrNull: String?
@@ -86,7 +86,7 @@ class SyncProgress(
 
     internal fun publish(step: Step) {
         currentStep = step
-        EventBus.getDefault().postSticky(SyncEvent(step, stepsWithError, importantMessageOrNull))
+        EventBus.getDefault().postSticky(SyncEvent(step, stepsWithError.toList(), importantMessageOrNull))
         Timber.d("Syncing: %s...", step.name)
     }
 
@@ -112,6 +112,6 @@ class SyncProgress(
     }
 
     internal fun publishFinished() {
-        EventBus.getDefault().postSticky(SyncEvent(null, stepsWithError, importantMessageOrNull))
+        EventBus.getDefault().postSticky(SyncEvent(null, stepsWithError.toList(), importantMessageOrNull))
     }
 }
