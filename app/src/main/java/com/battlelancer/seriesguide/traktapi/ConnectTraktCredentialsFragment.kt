@@ -38,6 +38,11 @@ class ConnectTraktCredentialsFragment : Fragment() {
     ): View {
         val binding = FragmentConnectTraktCredentialsBinding.inflate(inflater, container, false)
             .also { binding = it }
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val binding = binding ?: return
 
         ThemeUtils.applyBottomPaddingForNavigationBar(binding.scrollViewTraktCredentials)
 
@@ -57,17 +62,11 @@ class ConnectTraktCredentialsFragment : Fragment() {
         }
         binding.buttonTraktDeleteAccount.openUriOnClick(getString(R.string.url_trakt_delete_account))
 
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
         viewLifecycleOwner.lifecycleScope.launch {
             // Only update while views are shown.
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 SyncProgress.latestEventReadOnly.collect {
-                    binding?.syncStatusTrakt?.setProgress(it)
+                    binding.syncStatusTrakt.setProgress(it)
                 }
             }
         }
