@@ -11,7 +11,7 @@ import com.battlelancer.seriesguide.modules.AppModule
 import com.battlelancer.seriesguide.modules.DaggerTestServicesComponent
 import com.battlelancer.seriesguide.modules.TestHttpClientModule
 import com.battlelancer.seriesguide.modules.TestServicesComponent
-import com.battlelancer.seriesguide.modules.TestTmdbModule
+import com.battlelancer.seriesguide.modules.TmdbModule
 import com.battlelancer.seriesguide.modules.TraktModule
 import com.battlelancer.seriesguide.movies.database.MovieHelper
 import com.battlelancer.seriesguide.movies.database.SgMovie
@@ -58,7 +58,7 @@ class TmdbSyncTest {
             .appModule(AppModule(context))
             .httpClientModule(TestHttpClientModule())
             .traktModule(TraktModule())
-            .tmdbModule(TestTmdbModule())
+            .tmdbModule(TmdbModule())
             .build()
         component.inject(this)
     }
