@@ -8,7 +8,9 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
 
-### Next release
+## Version 2026.5
+
+### 2026.5.0 - 2026-10-08 🧪
 
 * 🔨 Sync: if interrupted, never mark as successful so next sync happens sooner.
 * 🔨 Sync: don't crash when refreshing Trakt credentials is interrupted.
