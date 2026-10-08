@@ -22,7 +22,7 @@ import com.uwetrottmann.trakt5.entities.Ratings
 /**
  * Helps download movie details.
  *
- * See also [MoviePosterDownloader].
+ * See also [com.battlelancer.seriesguide.util.PosterUrlDownloader].
  */
 class MovieDownloader(
     private val context: Context,

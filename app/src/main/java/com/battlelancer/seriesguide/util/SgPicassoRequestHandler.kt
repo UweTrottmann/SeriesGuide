@@ -11,9 +11,6 @@ import android.content.Context
 import android.net.Uri
 import androidx.core.net.toUri
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.movies.tools.MoviePosterDownloader
-import com.battlelancer.seriesguide.tmdbapi.TmdbTools
-import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.squareup.picasso.Downloader
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso.LoadedFrom.DISK
@@ -26,7 +23,7 @@ import java.io.IOException
 
 /**
  * This is mostly a copy of [com.squareup.picasso.NetworkRequestHandler] that is not visible.
- * Extended to fetch the image url from a given show TVDB id or movie TMDB id.
+ * Extended to fetch the image url from a given show TMDB id or movie TMDB id.
  */
 class SgPicassoRequestHandler(
     private val downloader: Downloader,
@@ -34,6 +31,11 @@ class SgPicassoRequestHandler(
 ) : RequestHandler() {
 
     private val context: Context = context.applicationContext
+
+    private val posterUrlDownloader by lazy {
+        val tmdb = SgApp.getServicesComponent(this.context).tmdb()
+        PosterUrlDownloader(this.context, tmdb.tvService(), tmdb.moviesService())
+    }
 
     override fun canHandleRequest(data: Request): Boolean {
         val scheme = data.uri.scheme
@@ -46,44 +48,37 @@ class SgPicassoRequestHandler(
         val host = request.uri.host
             ?: return null
 
-        if (SCHEME_SHOW_TMDB == scheme) {
-            val showTmdbId = host.toInt()
-            var language = request.uri.getQueryParameter(QUERY_LANGUAGE)
+        val url: String? = when (scheme) {
+            SCHEME_SHOW_TMDB -> {
+                val showTmdbId = host.toInt()
+                val language = request.uri.getQueryParameter(QUERY_LANGUAGE)
+                    .let { if (it.isNullOrEmpty()) LanguageTools.LANGUAGE_EN else it }
 
-            if (language.isNullOrEmpty()) {
-                language = LanguageTools.LANGUAGE_EN
-            }
-
-            val showDetails = TmdbTools2().getShowDetails(showTmdbId, language, context)
-            if (showDetails != null) {
-                val url = ImageTools.tmdbOrTvdbPosterUrl(showDetails.poster_path, context, false)
-                if (url != null) {
-                    return loadFromNetwork(url.toUri())
+                try {
+                    runBlocking { posterUrlDownloader.getShowPosterUrl(showTmdbId, language) }
+                } catch (_: InterruptedException) {
+                    null // Do nothing
                 }
             }
+
+            SCHEME_MOVIE_TMDB -> {
+                val movieTmdbId = host.toInt()
+
+                try {
+                    runBlocking { posterUrlDownloader.getMoviePosterUrl(movieTmdbId) }
+                } catch (_: InterruptedException) {
+                    null // Do nothing
+                }
+            }
+
+            else -> null
         }
 
-        if (SCHEME_MOVIE_TMDB == scheme) {
-            val movieTmdbId = host.toInt()
-
-            val posterPath: String? = try {
-                runBlocking {
-                    val tmdbMovies = SgApp.getServicesComponent(context).moviesService()
-                    MoviePosterDownloader(context, tmdbMovies).getMoviePosterPath(movieTmdbId)
-                }
-            } catch (e: InterruptedException) {
-                null // Do nothing
-            }
-            if (posterPath != null) {
-                val imageUrl = TmdbTools.buildLargePosterUrl(context, posterPath)
-                    .let { ImageTools.buildImageCacheUrl(it) }
-                if (imageUrl != null) {
-                    return loadFromNetwork(imageUrl.toUri())
-                }
-            }
+        return if (url != null) {
+            loadFromNetwork(url.toUri())
+        } else {
+            null
         }
-
-        return null
     }
 
     @Throws(IOException::class)
