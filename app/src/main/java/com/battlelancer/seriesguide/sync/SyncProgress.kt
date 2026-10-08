@@ -6,7 +6,8 @@ package com.battlelancer.seriesguide.sync
 import android.content.Context
 import androidx.annotation.StringRes
 import com.battlelancer.seriesguide.R
-import org.greenrobot.eventbus.EventBus
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import timber.log.Timber
 import java.util.LinkedList
 
@@ -30,16 +31,19 @@ class SyncProgress(
         TRAKT_MOVIES(R.string.trakt, R.string.movies)
     }
 
-    class SyncEvent internal constructor(
+    data class SyncEvent(
         private val step: Step?,
         private val stepsWithError: List<Step>,
-        private val importantErrorOrNull: String?
+        private val importantMessageOrNull: String?
     ) {
         val isSyncing: Boolean
             get() = step != null
 
         val isFinishedWithError: Boolean
             get() = stepsWithError.isNotEmpty()
+
+        val hasImportantMessage: Boolean
+            get() = importantMessageOrNull != null
 
         fun getDescription(context: Context): String {
             val statusText = StringBuilder(context.getString(R.string.sync_and_update))
@@ -54,8 +58,8 @@ class SyncProgress(
                 }
             }
 
-            if (importantErrorOrNull != null) {
-                statusText.append(" - ").append(importantErrorOrNull)
+            if (importantMessageOrNull != null) {
+                statusText.append(" - ").append(importantMessageOrNull)
             }
 
             return statusText.toString()
@@ -70,7 +74,7 @@ class SyncProgress(
 
     private val stepsWithError: MutableList<Step> = LinkedList()
     private var currentStep: Step? = null
-    private var importantErrorOrNull: String? = null
+    private var importantMessageOrNull: String? = null
 
     /**
      * Throws [SyncCanceledException] if the sync was canceled and should stop as soon as
@@ -83,7 +87,7 @@ class SyncProgress(
 
     internal fun publish(step: Step) {
         currentStep = step
-        EventBus.getDefault().postSticky(SyncEvent(step, stepsWithError, importantErrorOrNull))
+        latestEvent.value = SyncEvent(step, stepsWithError.toList(), importantMessageOrNull)
         Timber.d("Syncing: %s...", step.name)
     }
 
@@ -102,13 +106,22 @@ class SyncProgress(
      * [publish] or [publishFinished] is called.
      * Does nothing if this was already called.
      */
-    fun setImportantErrorIfNone(message: String) {
-        if (importantErrorOrNull == null) {
-            importantErrorOrNull = message
+    fun setImportantMessageIfNone(message: String) {
+        if (importantMessageOrNull == null) {
+            importantMessageOrNull = message
         }
     }
 
     internal fun publishFinished() {
-        EventBus.getDefault().postSticky(SyncEvent(null, stepsWithError, importantErrorOrNull))
+        latestEvent.value = SyncEvent(null, stepsWithError.toList(), importantMessageOrNull)
+    }
+
+    companion object {
+        private val latestEvent = MutableStateFlow<SyncEvent?>(null)
+
+        /**
+         * The latest published event, or null if no sync has published since the process started.
+         */
+        val latestEventReadOnly = latestEvent.asStateFlow()
     }
 }

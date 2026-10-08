@@ -139,7 +139,7 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
             // Log the exception to see where the cancel was noticed.
             Timber.d(e, "Sync canceled by system, trying again later.")
             progress.recordError()
-            progress.setImportantErrorIfNone("Interrupted by system, trying again later.")
+            progress.setImportantMessageIfNone("Interrupted by system, trying again later.")
         }
         progress.publishFinished()
     }

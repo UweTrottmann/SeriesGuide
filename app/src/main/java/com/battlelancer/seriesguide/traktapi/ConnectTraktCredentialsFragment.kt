@@ -10,19 +10,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.databinding.FragmentConnectTraktCredentialsBinding
 import com.battlelancer.seriesguide.shows.ShowsActivityImpl
-import com.battlelancer.seriesguide.sync.SyncProgress.SyncEvent
+import com.battlelancer.seriesguide.sync.SyncProgress
 import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.ui.widgets.FeatureStatusView.FeatureState
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools.openUriOnClick
 import com.uwetrottmann.androidutils.AndroidUtils
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
+import kotlinx.coroutines.launch
 
 /**
  * Interface connect or disconnect Trakt, also shows features not supported while Cloud is signed in.
@@ -37,6 +38,11 @@ class ConnectTraktCredentialsFragment : Fragment() {
     ): View {
         val binding = FragmentConnectTraktCredentialsBinding.inflate(inflater, container, false)
             .also { binding = it }
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val binding = binding ?: return
 
         ThemeUtils.applyBottomPaddingForNavigationBar(binding.scrollViewTraktCredentials)
 
@@ -56,30 +62,24 @@ class ConnectTraktCredentialsFragment : Fragment() {
         }
         binding.buttonTraktDeleteAccount.openUriOnClick(getString(R.string.url_trakt_delete_account))
 
-        binding.syncStatusTrakt.visibility = View.GONE
-
-        return binding.root
+        viewLifecycleOwner.lifecycleScope.launch {
+            // Only update while views are shown.
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                SyncProgress.latestEventReadOnly.collect {
+                    binding.syncStatusTrakt.setProgress(it)
+                }
+            }
+        }
     }
 
     override fun onStart() {
         super.onStart()
         updateViews()
-        EventBus.getDefault().register(this)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        EventBus.getDefault().unregister(this)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    fun onEvent(event: SyncEvent) {
-        binding?.syncStatusTrakt?.setProgress(event)
     }
 
     private fun updateViews() {

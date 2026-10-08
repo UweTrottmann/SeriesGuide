@@ -137,7 +137,7 @@ class TmdbSync internal constructor(
                         // placeholders.
                         val message = "'${movieTitle}' (TMDB ID ${movie.tmdbId}) - $notFoundMessage"
 
-                        progress.setImportantErrorIfNone(message)
+                        progress.setImportantMessageIfNone(message)
                         Timber.e(message)
                     }
                 }

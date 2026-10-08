@@ -102,7 +102,7 @@ class ShowSync(
                         // (for timeouts around 3 * 15/20 seconds)
                         val service = context.getString(result.service.nameResId)
                         Timber.e("Too many network errors, last one with $service, trying again later.")
-                        progress.setImportantErrorIfNone("Failed to talk to $service, trying again later.")
+                        progress.setImportantMessageIfNone("Failed to talk to $service, trying again later.")
                         return UpdateResult.INCOMPLETE
                     } else {
                         // Back off, then try again.
@@ -178,7 +178,7 @@ class ShowSync(
             messageTemplate,
             showTitle, showTmdbId
         )
-        progress.setImportantErrorIfNone(message)
+        progress.setImportantMessageIfNone(message)
         Timber.e(message)
     }
 
