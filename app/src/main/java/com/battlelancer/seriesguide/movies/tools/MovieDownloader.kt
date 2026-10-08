@@ -61,7 +61,7 @@ class MovieDownloader(
 
         // Optionally, get ID, slug and ratings from Trakt
         if (getTraktIdsAndRating) {
-            val traktMovieIdsResult = TraktTools4.getMovieIds(trakt.search(), movieTmdbId)
+            val traktMovieIdsResult = TraktTools4.getMovieIds(trakt, movieTmdbId)
             if (traktMovieIdsResult is TraktTools4.TraktNonNullResponse.Success) {
                 val traktMovieId = traktMovieIdsResult.data?.trakt
                 details.traktIds = TraktIds.Success(

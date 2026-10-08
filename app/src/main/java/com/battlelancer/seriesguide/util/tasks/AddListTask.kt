@@ -26,7 +26,7 @@ open class AddListTask(
 
     override val isSendingToTrakt: Boolean = false
 
-    override fun doBackgroundAction(vararg params: Void?): Int {
+    override suspend fun doBackgroundAction(): Int {
         // The user interface should protect against passing an empty name, but check regardless
         val listId = listId
             ?: return ERROR_DATABASE

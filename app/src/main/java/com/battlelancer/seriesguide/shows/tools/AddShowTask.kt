@@ -293,13 +293,13 @@ class AddShowTask(
     }
 
     private suspend fun getTraktShows(isCollectionNotWatched: Boolean): Map<Int, BaseShow>? {
-        val traktSync = SgApp.getServicesComponent(context).traktSync()!!
+        val trakt = SgApp.getServicesComponent(context).trakt()
 
         val response =
             if (isCollectionNotWatched) {
-                TraktTools4.getCollectedShowsByTmdbId(traktSync)
+                TraktTools4.getCollectedShowsByTmdbId(trakt)
             } else {
-                TraktTools4.getWatchedShowsByTmdbId(traktSync)
+                TraktTools4.getWatchedShowsByTmdbId(trakt)
             }
 
         when (response) {

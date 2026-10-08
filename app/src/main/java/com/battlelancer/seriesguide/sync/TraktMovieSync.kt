@@ -217,21 +217,21 @@ class TraktMovieSync(
     }
 
     private suspend fun downloadCollection(): MutableSet<Int>? {
-        return when (val response = TraktTools4.getCollectedMoviesByTmdbId(traktSync.sync)) {
+        return when (val response = TraktTools4.getCollectedMoviesByTmdbId(traktSync.trakt)) {
             is Success -> response.data
             else -> null
         }
     }
 
     private suspend fun downloadWatchlist(): MutableSet<Int>? {
-        return when (val response = TraktTools4.getMoviesOnWatchlistByTmdbId(traktSync.sync)) {
+        return when (val response = TraktTools4.getMoviesOnWatchlistByTmdbId(traktSync.trakt)) {
             is Success -> response.data
             else -> null
         }
     }
 
     private suspend fun downloadWatched(): MutableMap<Int, Int>? {
-        return when (val response = TraktTools4.getWatchedMoviesByTmdbId(traktSync.sync)) {
+        return when (val response = TraktTools4.getWatchedMoviesByTmdbId(traktSync.trakt)) {
             is Success -> response.data
             else -> null
         }

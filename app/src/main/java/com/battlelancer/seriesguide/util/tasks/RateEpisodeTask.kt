@@ -1,15 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2015-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2015 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.util.tasks
 
 import android.content.Context
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.uwetrottmann.trakt5.entities.ShowIds
-import com.uwetrottmann.trakt5.entities.SyncEpisode
-import com.uwetrottmann.trakt5.entities.SyncItems
-import com.uwetrottmann.trakt5.entities.SyncSeason
-import com.uwetrottmann.trakt5.entities.SyncShow
+import com.battlelancer.seriesguide.traktapi.TraktTools4
+import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse
+import com.uwetrottmann.trakt5.TraktV2
+import com.uwetrottmann.trakt5.entities.SyncResponse
 import com.uwetrottmann.trakt5.enums.Rating
 
 /**
@@ -21,28 +20,31 @@ class RateEpisodeTask(
     private val episodeId: Long
 ) : BaseRateItemTask(context, rating) {
 
-    override val traktAction: String
-        get() = "rate episode"
+    private var showTmdbId = 0
+    private var seasonNumber = 0
+    private var episodeNumber = 0
 
-    override fun buildTraktSyncItems(): SyncItems? {
+    override fun loadTraktIds(): Boolean {
         val database = SgRoomDatabase.getInstance(context)
 
-        val episode = database.sgEpisode2Helper().getEpisodeNumbers(episodeId) ?: return null
+        val episode = database.sgEpisode2Helper().getEpisodeNumbers(episodeId) ?: return false
 
-        val showTmdbId = database.sgShow2Helper().getShowTmdbId(episode.showId)
-        if (showTmdbId == 0) return null
+        showTmdbId = database.sgShow2Helper().getShowTmdbId(episode.showId)
+        if (showTmdbId == 0) return false
 
-        return SyncItems()
-            .shows(
-                SyncShow().id(ShowIds.tmdb(showTmdbId))
-                    .seasons(
-                        SyncSeason().number(episode.season)
-                            .episodes(
-                                SyncEpisode().number(episode.episodenumber)
-                                    .rating(rating)
-                            )
-                    )
-            )
+        seasonNumber = episode.season
+        episodeNumber = episode.episodenumber
+        return true
+    }
+
+    override suspend fun sendToTrakt(trakt: TraktV2): TraktNonNullResponse<SyncResponse> {
+        return TraktTools4.rateEpisode(
+            trakt,
+            showTmdbId,
+            seasonNumber,
+            episodeNumber,
+            rating
+        )
     }
 
     override fun doDatabaseUpdate(): Boolean {

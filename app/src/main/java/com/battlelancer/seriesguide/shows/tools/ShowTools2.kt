@@ -538,7 +538,6 @@ class ShowTools2 @Inject constructor(
         if (sendToTrakt) {
             result = withContext(Dispatchers.Default) {
                 val trakt = SgApp.getServicesComponent(context).trakt()
-                val traktNotes = trakt.notes()
                 if (noteText.isEmpty()) {
                     // Delete note
                     if (noteTraktId == null) {
@@ -549,7 +548,7 @@ class ShowTools2 @Inject constructor(
                         return@withContext StoreUserNoteResult(noteText, null, "")
                     }
                     val response = trakt.awaitAndHandleAuthError {
-                        TraktTools4.deleteNote(traktNotes, noteTraktId)
+                        TraktTools4.deleteNote(trakt, noteTraktId)
                     }
                     return@withContext when (response) {
                         is TraktResponse.Success -> {
@@ -579,7 +578,7 @@ class ShowTools2 @Inject constructor(
                 } else {
                     // Add or update note
                     val response = trakt.awaitAndHandleAuthErrorNonNull {
-                        TraktTools4.saveNoteForShow(traktNotes, showTmdbId, noteText)
+                        TraktTools4.saveNoteForShow(trakt, showTmdbId, noteText)
                     }
                     return@withContext when (response) {
                         is TraktNonNullResponse.Success -> {

@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2015-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2015 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.util.tasks
 
 import android.content.Context
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.uwetrottmann.trakt5.entities.ShowIds
-import com.uwetrottmann.trakt5.entities.SyncItems
-import com.uwetrottmann.trakt5.entities.SyncShow
+import com.battlelancer.seriesguide.traktapi.TraktTools4
+import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse
+import com.uwetrottmann.trakt5.TraktV2
+import com.uwetrottmann.trakt5.entities.SyncResponse
 import com.uwetrottmann.trakt5.enums.Rating
 
 /**
@@ -19,15 +20,16 @@ class RateShowTask(
     private val showId: Long
 ) : BaseRateItemTask(context, rating) {
 
-    override val traktAction: String
-        get() = "rate show"
+    private var showTmdbId = 0
 
-    override fun buildTraktSyncItems(): SyncItems? {
-        val showTmdbIdOrZero = SgRoomDatabase.getInstance(context).sgShow2Helper()
+    override fun loadTraktIds(): Boolean {
+        showTmdbId = SgRoomDatabase.getInstance(context).sgShow2Helper()
             .getShowTmdbId(showId)
-        if (showTmdbIdOrZero == 0) return null
-        return SyncItems()
-            .shows(SyncShow().id(ShowIds.tmdb(showTmdbIdOrZero)).rating(rating))
+        return showTmdbId != 0
+    }
+
+    override suspend fun sendToTrakt(trakt: TraktV2): TraktNonNullResponse<SyncResponse> {
+        return TraktTools4.rateShow(trakt, showTmdbId, rating)
     }
 
     override fun doDatabaseUpdate(): Boolean {
