@@ -78,7 +78,7 @@ class ConnectTraktCredentialsFragment : Fragment() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    fun onEvent(event: SyncEvent?) {
+    fun onEvent(event: SyncEvent) {
         binding?.syncStatusTrakt?.setProgress(event)
     }
 

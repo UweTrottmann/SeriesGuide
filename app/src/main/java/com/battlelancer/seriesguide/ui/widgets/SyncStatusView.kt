@@ -1,60 +1,56 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2017 Uwe Trottmann <uwe@uwetrottmann.com>
 
-package com.battlelancer.seriesguide.ui.widgets;
+package com.battlelancer.seriesguide.ui.widgets
 
-import android.content.Context;
-import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.LinearLayout;
-import com.battlelancer.seriesguide.databinding.ViewSyncStatusBinding;
-import com.battlelancer.seriesguide.sync.SyncProgress;
+import android.content.Context
+import android.util.AttributeSet
+import android.view.LayoutInflater
+import android.widget.LinearLayout
+import com.battlelancer.seriesguide.databinding.ViewSyncStatusBinding
+import com.battlelancer.seriesguide.sync.SyncProgress.SyncEvent
 
-public class SyncStatusView extends LinearLayout {
+class SyncStatusView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null
+) : LinearLayout(context, attrs) {
 
-    private ViewSyncStatusBinding binding;
+    private val binding: ViewSyncStatusBinding
 
-    public SyncStatusView(Context context) {
-        this(context, null);
+    init {
+        orientation = HORIZONTAL
+
+        binding = ViewSyncStatusBinding.inflate(LayoutInflater.from(context), this)
     }
 
-    public SyncStatusView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        setOrientation(HORIZONTAL);
-
-        binding = ViewSyncStatusBinding.inflate(LayoutInflater.from(context), this);
-    }
-
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-        binding.imageViewSyncStatus.setVisibility(GONE);
+    override fun onFinishInflate() {
+        super.onFinishInflate()
+        binding.imageViewSyncStatus.setVisibility(GONE)
     }
 
     /**
      * If there is progress or a failure result, displays it.
-     * Otherwise sets the view {@link View#GONE}.
+     * Otherwise sets the view [android.view.View.GONE].
      */
-    public void setProgress(SyncProgress.SyncEvent event) {
-        if (event.isSyncing()) {
-            binding.progressBarSyncStatus.setVisibility(View.VISIBLE);
-            binding.imageViewSyncStatus.setVisibility(GONE);
-            setVisibility(VISIBLE);
+    fun setProgress(event: SyncEvent) {
+        if (event.isSyncing) {
+            binding.progressBarSyncStatus.visibility = VISIBLE
+            binding.imageViewSyncStatus.setVisibility(GONE)
+            visibility = VISIBLE
         } else {
             // Finished.
-            binding.progressBarSyncStatus.setVisibility(View.GONE);
+            binding.progressBarSyncStatus.visibility = GONE
 
-            if (event.isFinishedWithError()) {
-                binding.imageViewSyncStatus.setVisibility(VISIBLE);
-                setVisibility(VISIBLE);
+            if (event.isFinishedWithError) {
+                binding.imageViewSyncStatus.setVisibility(VISIBLE)
+                visibility = VISIBLE
             } else {
                 // Successful.
-                binding.imageViewSyncStatus.setVisibility(GONE);
-                setVisibility(GONE);
-                return; // No need to update status text.
+                binding.imageViewSyncStatus.setVisibility(GONE)
+                visibility = GONE
+                return  // No need to update status text.
             }
         }
-        binding.textViewSyncStatus.setText(event.getDescription(getContext()));
+        binding.textViewSyncStatus.text = event.getDescription(context)
     }
 }
