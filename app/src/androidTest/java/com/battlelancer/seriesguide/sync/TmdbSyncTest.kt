@@ -21,8 +21,8 @@ import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.google.common.truth.Truth.assertThat
 import com.google.common.truth.Truth.assertWithMessage
+import com.uwetrottmann.tmdb2.Tmdb
 import com.uwetrottmann.tmdb2.entities.Movie
-import com.uwetrottmann.tmdb2.services.ConfigurationService
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -38,7 +38,7 @@ import javax.inject.Inject
 class TmdbSyncTest {
 
     @Inject
-    lateinit var tmdbConfigService: ConfigurationService
+    lateinit var tmdb: Tmdb
 
     @Inject
     lateinit var movieTools: MovieTools
@@ -154,7 +154,7 @@ class TmdbSyncTest {
     private fun doUpdateAndAssertSuccess() {
         val tmdbSync = TmdbSync(
             ApplicationProvider.getApplicationContext(),
-            tmdbConfigService,
+            tmdb.configurationService(),
             movieTools
         )
         val successful = tmdbSync.updateMovies(SyncProgress())

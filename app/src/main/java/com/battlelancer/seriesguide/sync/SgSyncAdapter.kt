@@ -33,7 +33,7 @@ import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.util.TaskManager
 import com.uwetrottmann.androidutils.AndroidUtils
-import com.uwetrottmann.tmdb2.services.ConfigurationService
+import com.uwetrottmann.tmdb2.Tmdb
 import dagger.Lazy
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
@@ -55,6 +55,9 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
     lateinit var hexagonTools: Lazy<HexagonTools>
 
     @Inject
+    lateinit var tmdb: Lazy<Tmdb>
+
+    @Inject
     lateinit var trakt: Lazy<SgTrakt>
 
     @Inject
@@ -62,9 +65,6 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
 
     @Inject
     lateinit var movieTools: Lazy<MovieTools>
-
-    @Inject
-    lateinit var tmdbConfigService: Lazy<ConfigurationService>
 
     init {
         Timber.d("Creating sync adapter")
@@ -154,7 +154,7 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
         progress.throwIfCanceled()
 
         // Get latest TMDb configuration.
-        val tmdbSync = TmdbSync(context, tmdbConfigService.get(), movieTools.get())
+        val tmdbSync = TmdbSync(context, tmdb.get().configurationService(), movieTools.get())
         tmdbSync.updateConfigurationAndWatchProviders(progress)
 
         progress.throwIfCanceled()

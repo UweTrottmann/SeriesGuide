@@ -6,7 +6,6 @@ package com.battlelancer.seriesguide.modules
 import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb
 import com.uwetrottmann.tmdb2.Tmdb
-import com.uwetrottmann.tmdb2.services.ConfigurationService
 import com.uwetrottmann.tmdb2.services.MoviesService
 import dagger.Module
 import dagger.Provides
@@ -15,11 +14,6 @@ import javax.inject.Singleton
 
 @Module
 open class TmdbModule {
-    @Singleton
-    @Provides
-    fun provideConfigurationService(tmdb: Tmdb): ConfigurationService {
-        return tmdb.configurationService()
-    }
 
     @Singleton
     @Provides
