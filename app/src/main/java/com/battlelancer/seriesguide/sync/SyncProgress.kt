@@ -6,7 +6,8 @@ package com.battlelancer.seriesguide.sync
 import android.content.Context
 import androidx.annotation.StringRes
 import com.battlelancer.seriesguide.R
-import org.greenrobot.eventbus.EventBus
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import timber.log.Timber
 import java.util.LinkedList
 
@@ -30,7 +31,7 @@ class SyncProgress(
         TRAKT_MOVIES(R.string.trakt, R.string.movies)
     }
 
-    data class SyncEvent internal constructor(
+    data class SyncEvent(
         private val step: Step?,
         private val stepsWithError: List<Step>,
         private val importantMessageOrNull: String?
@@ -86,7 +87,7 @@ class SyncProgress(
 
     internal fun publish(step: Step) {
         currentStep = step
-        EventBus.getDefault().postSticky(SyncEvent(step, stepsWithError.toList(), importantMessageOrNull))
+        latestEvent.value = SyncEvent(step, stepsWithError.toList(), importantMessageOrNull)
         Timber.d("Syncing: %s...", step.name)
     }
 
@@ -112,6 +113,15 @@ class SyncProgress(
     }
 
     internal fun publishFinished() {
-        EventBus.getDefault().postSticky(SyncEvent(null, stepsWithError.toList(), importantMessageOrNull))
+        latestEvent.value = SyncEvent(null, stepsWithError.toList(), importantMessageOrNull)
+    }
+
+    companion object {
+        private val latestEvent = MutableStateFlow<SyncEvent?>(null)
+
+        /**
+         * The latest published event, or null if no sync has published since the process started.
+         */
+        val latestEventReadOnly = latestEvent.asStateFlow()
     }
 }

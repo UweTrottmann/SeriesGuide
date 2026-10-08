@@ -13,7 +13,9 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.auth.AuthException
@@ -94,7 +96,15 @@ class CloudSetupFragment : Fragment() {
             }
 
             setProgressVisible(false)
-            syncStatusCloud.visibility = View.GONE
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            // Only update while views are shown.
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                SyncProgress.latestEventReadOnly.collect {
+                    binding?.syncStatusCloud?.setProgress(it)
+                }
+            }
         }
     }
 
@@ -116,11 +126,6 @@ class CloudSetupFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    fun onEvent(event: SyncProgress.SyncEvent) {
-        binding?.syncStatusCloud?.setProgress(event)
     }
 
     private fun signInOrStartSetupOrAdvertiseSubscription() {

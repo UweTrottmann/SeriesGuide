@@ -31,11 +31,17 @@ class SyncStatusView(
     }
 
     /**
-     * Makes this visible and if syncing, displays a progress bar. Otherwise, depending on if there
-     * was an error or an important message, a status message with a success, warning or failure
-     * indicator.
+     * If [event] is null, sets this [GONE].
+     *
+     * Otherwise, makes this visible and if syncing, displays a progress bar. Otherwise, depending
+     * on if there was an error or an important message, a status message with a success, warning
+     * or failure indicator.
      */
-    fun setProgress(event: SyncEvent) {
+    fun setProgress(event: SyncEvent?) {
+        if (event == null) {
+            visibility = GONE
+            return
+        }
         visibility = VISIBLE
         if (event.isSyncing) {
             binding.progressBarSyncStatus.visibility = VISIBLE
