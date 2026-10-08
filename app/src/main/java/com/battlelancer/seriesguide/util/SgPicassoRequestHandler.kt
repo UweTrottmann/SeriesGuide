@@ -35,6 +35,10 @@ class SgPicassoRequestHandler(
 
     private val context: Context = context.applicationContext
 
+    private val tmdbMovies by lazy {
+        SgApp.getServicesComponent(this.context).tmdb().moviesService()
+    }
+
     override fun canHandleRequest(data: Request): Boolean {
         val scheme = data.uri.scheme
         return SCHEME_SHOW_TMDB == scheme || SCHEME_MOVIE_TMDB == scheme
@@ -68,10 +72,9 @@ class SgPicassoRequestHandler(
 
             val posterPath: String? = try {
                 runBlocking {
-                    val tmdbMovies = SgApp.getServicesComponent(context).moviesService()
                     MoviePosterDownloader(context, tmdbMovies).getMoviePosterPath(movieTmdbId)
                 }
-            } catch (e: InterruptedException) {
+            } catch (_: InterruptedException) {
                 null // Do nothing
             }
             if (posterPath != null) {

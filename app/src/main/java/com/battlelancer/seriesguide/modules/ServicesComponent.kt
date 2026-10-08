@@ -15,7 +15,6 @@ import com.battlelancer.seriesguide.sync.HexagonShowSync
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.uwetrottmann.tmdb2.Tmdb
-import com.uwetrottmann.tmdb2.services.MoviesService
 import dagger.Component
 import javax.inject.Singleton
 
@@ -35,7 +34,6 @@ interface ServicesComponent {
 
     fun hexagonTools(): HexagonTools
     fun hexagonShowSync(): HexagonShowSync
-    fun moviesService(): MoviesService
     fun movieTools(): MovieTools
     fun showTools(): ShowTools2
     fun addUpdateShowTools(): AddUpdateShowTools

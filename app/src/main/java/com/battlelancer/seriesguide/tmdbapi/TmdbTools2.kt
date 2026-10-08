@@ -214,7 +214,7 @@ class TmdbTools2 {
         languageCode: String?,
         action: String
     ): String? {
-        val moviesService = SgApp.getServicesComponent(context).moviesService()
+        val moviesService = SgApp.getServicesComponent(context).tmdb().moviesService()
         try {
             val response = moviesService.videos(movieTmdbId, languageCode).execute()
             if (response.isSuccessful) {
@@ -320,7 +320,7 @@ class TmdbTools2 {
     }
 
     suspend fun getCreditsForMovie(context: Context, tmdbId: Int): Credits? {
-        return SgApp.getServicesComponent(context)
+        return SgApp.getServicesComponent(context).tmdb()
             .moviesService()
             .credits(tmdbId)
             .awaitResponse("get movie credits")
