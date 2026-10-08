@@ -185,14 +185,14 @@ class TraktNotesSync(
                         is TraktNonNullResponse.Success -> response.data
 
                         is TraktErrorResponse.IsAccountLimitExceeded -> {
-                            traktSync.progress.setImportantErrorIfNone(
+                            traktSync.progress.setImportantMessageIfNone(
                                 context.getString(R.string.trakt_error_limit_exceeded_upload)
                             )
                             null
                         }
 
                         is TraktErrorResponse.IsAccountLocked -> {
-                            traktSync.progress.setImportantErrorIfNone(
+                            traktSync.progress.setImportantMessageIfNone(
                                 context.getString(R.string.trakt_error_account_locked)
                             )
                             null

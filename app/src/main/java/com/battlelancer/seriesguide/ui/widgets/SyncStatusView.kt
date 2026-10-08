@@ -32,7 +32,8 @@ class SyncStatusView(
 
     /**
      * Makes this visible and if syncing, displays a progress bar. Otherwise, depending on if there
-     * was an error, a status message with a success or failure indicator.
+     * was an error or an important message, a status message with a success, warning or failure
+     * indicator.
      */
     fun setProgress(event: SyncEvent) {
         visibility = VISIBLE
@@ -42,10 +43,11 @@ class SyncStatusView(
         } else {
             // Not syncing: hide progress bar, show final status
             binding.progressBarSyncStatus.visibility = GONE
-            val iconRes: Int = if (event.isFinishedWithError) {
-                R.drawable.ic_cancel_red_24dp
-            } else {
-                R.drawable.ic_check_circle_green_24dp
+            val iconRes: Int = when {
+                event.isFinishedWithError -> R.drawable.ic_cancel_red_24dp
+                // Successful, but there is a message, like a show that can no longer be updated
+                event.hasImportantMessage -> R.drawable.ic_warning_control_24dp
+                else -> R.drawable.ic_check_circle_green_24dp
             }
             val drawable = VectorDrawableCompat.create(context.resources, iconRes, context.theme)
             binding.imageViewSyncStatus.setImageDrawable(drawable)

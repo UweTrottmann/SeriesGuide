@@ -33,13 +33,16 @@ class SyncProgress(
     class SyncEvent internal constructor(
         private val step: Step?,
         private val stepsWithError: List<Step>,
-        private val importantErrorOrNull: String?
+        private val importantMessageOrNull: String?
     ) {
         val isSyncing: Boolean
             get() = step != null
 
         val isFinishedWithError: Boolean
             get() = stepsWithError.isNotEmpty()
+
+        val hasImportantMessage: Boolean
+            get() = importantMessageOrNull != null
 
         fun getDescription(context: Context): String {
             val statusText = StringBuilder(context.getString(R.string.sync_and_update))
@@ -54,8 +57,8 @@ class SyncProgress(
                 }
             }
 
-            if (importantErrorOrNull != null) {
-                statusText.append(" - ").append(importantErrorOrNull)
+            if (importantMessageOrNull != null) {
+                statusText.append(" - ").append(importantMessageOrNull)
             }
 
             return statusText.toString()
@@ -70,7 +73,7 @@ class SyncProgress(
 
     private val stepsWithError: MutableList<Step> = LinkedList()
     private var currentStep: Step? = null
-    private var importantErrorOrNull: String? = null
+    private var importantMessageOrNull: String? = null
 
     /**
      * Throws [SyncCanceledException] if the sync was canceled and should stop as soon as
@@ -83,7 +86,7 @@ class SyncProgress(
 
     internal fun publish(step: Step) {
         currentStep = step
-        EventBus.getDefault().postSticky(SyncEvent(step, stepsWithError, importantErrorOrNull))
+        EventBus.getDefault().postSticky(SyncEvent(step, stepsWithError, importantMessageOrNull))
         Timber.d("Syncing: %s...", step.name)
     }
 
@@ -102,13 +105,13 @@ class SyncProgress(
      * [publish] or [publishFinished] is called.
      * Does nothing if this was already called.
      */
-    fun setImportantErrorIfNone(message: String) {
-        if (importantErrorOrNull == null) {
-            importantErrorOrNull = message
+    fun setImportantMessageIfNone(message: String) {
+        if (importantMessageOrNull == null) {
+            importantMessageOrNull = message
         }
     }
 
     internal fun publishFinished() {
-        EventBus.getDefault().postSticky(SyncEvent(null, stepsWithError, importantErrorOrNull))
+        EventBus.getDefault().postSticky(SyncEvent(null, stepsWithError, importantMessageOrNull))
     }
 }

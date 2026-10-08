@@ -184,11 +184,11 @@ class TraktSync(
         } else if (TraktV2.isAccountLimitExceeded(response)) {
             // Currently should only occur on initial sync when uploading items to watchlist or
             // collection (notes upload has its own error handling).
-            progress.setImportantErrorIfNone(context.getString(R.string.trakt_error_limit_exceeded_upload))
+            progress.setImportantMessageIfNone(context.getString(R.string.trakt_error_limit_exceeded_upload))
         } else if (TraktV2.isAccountLocked(response)) {
             // Note: Even though uploading typically happens after signing in, which should
             // detect locked accounts, it's possible an account becomes locked afterwards.
-            progress.setImportantErrorIfNone(context.getString(R.string.trakt_error_account_locked))
+            progress.setImportantMessageIfNone(context.getString(R.string.trakt_error_account_locked))
         }
         Errors.logAndReport(action, response)
     }
