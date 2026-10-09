@@ -265,7 +265,10 @@ class BillingRepository(
                 val billingResult = playStoreBillingClient.acknowledgePurchase(params)
                 when (billingResult.responseCode) {
                     BillingResponseCode.OK -> {
-                        Timber.i("Acknowledged purchase %s", purchase)
+                        Timber.i(
+                            "Acknowledged purchase %s",
+                            if (BuildConfig.DEBUG) purchase else purchase.products.firstOrNull()
+                        )
                         ackedPurchases.add(purchase)
                     }
 
@@ -338,7 +341,12 @@ class BillingRepository(
      * what can be purchased.
      */
     private suspend fun unlockWith(purchase: Purchase, product: String, isSub: Boolean) {
-        Timber.i("Unlocking (isSub=%s, product=%s, purchase=%s)", isSub, product, purchase)
+        if (BuildConfig.DEBUG) {
+            // Don't log purchase details in production builds
+            Timber.i("Unlocking (isSub=%s, product=%s, purchase=%s)", isSub, product, purchase)
+        } else {
+            Timber.i("Unlocking (isSub=%s, product=%s)", isSub, product)
+        }
         val unlockState = PlayUnlockState.withLastUpdatedNow(
             true,
             isSub,
