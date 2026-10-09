@@ -3,27 +3,32 @@
 
 package com.battlelancer.seriesguide.util.tasks
 
+import android.app.Application
 import android.content.Context
 import androidx.annotation.CallSuper
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
+import com.battlelancer.seriesguide.getSgAppContainer
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktErrorResponse
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse
-import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceActiveEvent
-import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceCompletedEvent
+import com.battlelancer.seriesguide.ui.ServiceActive
+import com.battlelancer.seriesguide.ui.ServiceCompleted
+import com.battlelancer.seriesguide.ui.ServiceTaskStatus
 import com.battlelancer.seriesguide.util.TaskManager
 import com.uwetrottmann.androidutils.AndroidUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.withContext
-import org.greenrobot.eventbus.EventBus
 
 abstract class BaseActionTask(context: Context) {
 
     protected val context: Context = context.applicationContext
+
+    private val serviceTaskStatus: ServiceTaskStatus
+        get() = (context as Application).getSgAppContainer().serviceTaskStatus
 
     private var _isSendingToHexagon: Boolean = false
 
@@ -53,8 +58,8 @@ abstract class BaseActionTask(context: Context) {
      * Runs the task. Network and database work is done using [SgApp.coroutineScope], but only with
      * permit from [TaskManager.modifyOrExportShowsSemaphore].
      *
-     * A [ServiceActiveEvent] sticky event is posted while running the task.
-     * A [ServiceCompletedEvent] is posted once the task completes.
+     * [ServiceTaskStatus.active] is set while running the task.
+     * [ServiceTaskStatus.completed] emits once the task completes.
      */
     fun run() {
         SgApp.coroutineScope.launch {
@@ -62,8 +67,8 @@ abstract class BaseActionTask(context: Context) {
             _isSendingToTrakt = TraktCredentials.get(context).hasCredentials()
 
             // Show message to which service this sends
-            EventBus.getDefault().postSticky(
-                ServiceActiveEvent(isSendingToHexagon, isSendingToTrakt)
+            serviceTaskStatus.setActive(
+                ServiceActive(isSendingToHexagon, isSendingToTrakt)
             )
 
             // Run this task only when other tasks are not modifying the database. Also don't use
@@ -106,8 +111,6 @@ abstract class BaseActionTask(context: Context) {
 
     @CallSuper
     protected open fun onPostExecute(result: Int) {
-        EventBus.getDefault().removeStickyEvent(ServiceActiveEvent::class.java)
-
         val displaySuccess: Boolean
         val confirmationText: String?
         if (result == SUCCESS) {
@@ -138,8 +141,8 @@ abstract class BaseActionTask(context: Context) {
                 else -> null
             }
         }
-        EventBus.getDefault().post(
-            ServiceCompletedEvent(confirmationText, displaySuccess, null)
+        serviceTaskStatus.setCompleted(
+            ServiceCompleted(confirmationText, displaySuccess, flagJob = null)
         )
     }
 

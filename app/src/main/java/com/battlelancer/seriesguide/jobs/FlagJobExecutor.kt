@@ -3,18 +3,20 @@
 
 package com.battlelancer.seriesguide.jobs
 
+import android.app.Application
 import android.content.Context
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
+import com.battlelancer.seriesguide.getSgAppContainer
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
-import com.battlelancer.seriesguide.ui.BaseMessageActivity
+import com.battlelancer.seriesguide.ui.ServiceActive
+import com.battlelancer.seriesguide.ui.ServiceCompleted
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
-import org.greenrobot.eventbus.EventBus
 
 object FlagJobExecutor {
 
@@ -38,22 +40,20 @@ object FlagJobExecutor {
                 val requiresNetworkJob = shouldSendToHexagon || shouldSendToTrakt
 
                 // set send flags to false to avoid showing 'Sending to...' message
-                EventBus.getDefault().postSticky(
-                    BaseMessageActivity.ServiceActiveEvent(false, false)
+                val serviceTaskStatus = (appContext as Application).getSgAppContainer()
+                    .serviceTaskStatus
+                serviceTaskStatus.setActive(
+                    ServiceActive(shouldSendToHexagon = false, shouldSendToTrakt = false)
                 )
 
                 // update local database and possibly prepare network job
                 val isSuccessful = job.applyLocalChanges(appContext, requiresNetworkJob)
 
-                EventBus.getDefault().removeStickyEvent(
-                    BaseMessageActivity.ServiceActiveEvent::class.java
-                )
-
                 // all actions execute immediately, no need to acknowledge them, so only show errors
                 val errorMessageOrNull =
                     if (!isSuccessful) appContext.getString(R.string.database_error) else null
-                EventBus.getDefault().post(
-                    BaseMessageActivity.ServiceCompletedEvent(errorMessageOrNull, isSuccessful, job)
+                serviceTaskStatus.setCompleted(
+                    ServiceCompleted(errorMessageOrNull, isSuccessful, job)
                 )
 
                 if (requiresNetworkJob) {

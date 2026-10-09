@@ -52,8 +52,6 @@ import com.battlelancer.seriesguide.traktapi.RateDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktRatingsFetcher
 import com.battlelancer.seriesguide.traktapi.TraktTools
-import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceActiveEvent
-import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceCompletedEvent
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity.Companion.intent
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.LanguageTools
@@ -217,13 +215,18 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
                 }
             }
         }
+        // Disable buttons while a service task is running
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                requireActivity().getSgAppContainer().serviceTaskStatus.active.collect {
+                    setEpisodeButtonsEnabled(it == null)
+                }
+            }
+        }
     }
 
     override fun onResume() {
         super.onResume()
-
-        val event = EventBus.getDefault().getStickyEvent(ServiceActiveEvent::class.java)
-        setEpisodeButtonsEnabled(event == null)
 
         EventBus.getDefault().register(this)
         loadEpisodeActionsDelayed()
@@ -326,16 +329,6 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
                 loadEpisodeActionsDelayed()
             }
         }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventEpisodeTask(@Suppress("UNUSED_PARAMETER") event: ServiceActiveEvent?) {
-        setEpisodeButtonsEnabled(false)
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventEpisodeTask(@Suppress("UNUSED_PARAMETER") event: ServiceCompletedEvent?) {
-        setEpisodeButtonsEnabled(true)
     }
 
     private fun setEpisodeButtonsEnabled(enabled: Boolean) {

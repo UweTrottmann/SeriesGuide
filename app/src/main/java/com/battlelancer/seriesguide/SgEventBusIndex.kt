@@ -31,11 +31,8 @@ import com.battlelancer.seriesguide.people.PersonFragment
 import com.battlelancer.seriesguide.preferences.PreferencesActivityImpl.UpdateSummariesEvent
 import com.battlelancer.seriesguide.preferences.SgPreferencesFragment
 import com.battlelancer.seriesguide.shows.episodes.EpisodeDetailsFragment
-import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
-import com.battlelancer.seriesguide.shows.history.ShowsHistoryFragment
 import com.battlelancer.seriesguide.shows.overview.OverviewActivityImpl
 import com.battlelancer.seriesguide.shows.overview.OverviewFragment
-import com.battlelancer.seriesguide.shows.overview.SeasonsFragment
 import com.battlelancer.seriesguide.shows.overview.ShowFragment
 import com.battlelancer.seriesguide.shows.search.EpisodeSearchFragment
 import com.battlelancer.seriesguide.shows.search.SearchActivityImpl.SearchQueryEvent
@@ -55,9 +52,6 @@ import com.battlelancer.seriesguide.traktapi.QuickCheckInActivity
 import com.battlelancer.seriesguide.traktapi.TraktTask.TraktActionCompleteEvent
 import com.battlelancer.seriesguide.traktapi.TraktTask.TraktCheckInBlockedEvent
 import com.battlelancer.seriesguide.ui.BaseActivity
-import com.battlelancer.seriesguide.ui.BaseMessageActivity
-import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceActiveEvent
-import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceCompletedEvent
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment.LanguageChangedEvent
 import com.battlelancer.seriesguide.util.DBUtils.DatabaseErrorEvent
 import com.battlelancer.seriesguide.util.TabClickEvent
@@ -131,16 +125,6 @@ class SgEventBusIndex : SubscriberInfoIndex {
                             ThreadMode.MAIN
                         ),
                         SubscriberMethodInfo(
-                            "onEventEpisodeTask",
-                            ServiceActiveEvent::class.java,
-                            ThreadMode.MAIN
-                        ),
-                        SubscriberMethodInfo(
-                            "onEventEpisodeTask",
-                            ServiceCompletedEvent::class.java,
-                            ThreadMode.MAIN
-                        ),
-                        SubscriberMethodInfo(
                             "handleLanguageEvent",
                             LocalizationChangedEvent::class.java,
                             ThreadMode.MAIN
@@ -189,16 +173,6 @@ class SgEventBusIndex : SubscriberInfoIndex {
                             EpisodeActionReceivedEvent::class.java,
                             ThreadMode.MAIN
                         ),
-                        SubscriberMethodInfo(
-                            "onEventEpisodeTask",
-                            ServiceActiveEvent::class.java,
-                            ThreadMode.MAIN
-                        ),
-                        SubscriberMethodInfo(
-                            "onEventEpisodeTask",
-                            ServiceCompletedEvent::class.java,
-                            ThreadMode.MAIN
-                        ),
                     )
                 )
             )
@@ -210,19 +184,6 @@ class SgEventBusIndex : SubscriberInfoIndex {
                         SubscriberMethodInfo(
                             "onEventMainThread",
                             LanguageChangedEvent::class.java,
-                            ThreadMode.MAIN
-                        ),
-                    )
-                )
-            )
-
-            putIndex(
-                SimpleSubscriberInfo(
-                    SeasonsFragment::class.java, true,
-                    arrayOf(
-                        SubscriberMethodInfo(
-                            "onEvent",
-                            ServiceCompletedEvent::class.java,
                             ThreadMode.MAIN
                         ),
                     )
@@ -298,40 +259,11 @@ class SgEventBusIndex : SubscriberInfoIndex {
 
             putIndex(
                 SimpleSubscriberInfo(
-                    BaseMessageActivity::class.java,
-                    true,
-                    arrayOf(
-                        SubscriberMethodInfo(
-                            "onServiceActiveEvent",
-                            ServiceActiveEvent::class.java,
-                            ThreadMode.MAIN
-                        ),
-                        SubscriberMethodInfo(
-                            "onServiceCompletedEvent",
-                            ServiceCompletedEvent::class.java,
-                            ThreadMode.MAIN
-                        ),
-                    )
-                )
-            )
-
-            putIndex(
-                SimpleSubscriberInfo(
                     EpisodeDetailsFragment::class.java,
                     true, arrayOf(
                         SubscriberMethodInfo(
                             "onEventMainThread",
                             EpisodeActionReceivedEvent::class.java,
-                            ThreadMode.MAIN
-                        ),
-                        SubscriberMethodInfo(
-                            "onEventEpisodeTask",
-                            ServiceActiveEvent::class.java,
-                            ThreadMode.MAIN
-                        ),
-                        SubscriberMethodInfo(
-                            "onEventEpisodeTask",
-                            ServiceCompletedEvent::class.java,
                             ThreadMode.MAIN
                         ),
                     )
@@ -409,19 +341,6 @@ class SgEventBusIndex : SubscriberInfoIndex {
 
             putIndex(
                 SimpleSubscriberInfo(
-                    ShowsHistoryFragment::class.java, true,
-                    arrayOf(
-                        SubscriberMethodInfo(
-                            "onEventEpisodeTask",
-                            ServiceCompletedEvent::class.java,
-                            ThreadMode.MAIN
-                        ),
-                    )
-                )
-            )
-
-            putIndex(
-                SimpleSubscriberInfo(
                     EpisodeSearchFragment::class.java, true,
                     arrayOf(
                         SubscriberMethodInfo(
@@ -455,19 +374,6 @@ class SgEventBusIndex : SubscriberInfoIndex {
                         SubscriberMethodInfo(
                             "onEventMainThread",
                             DatabaseErrorEvent::class.java,
-                            ThreadMode.MAIN
-                        ),
-                    )
-                )
-            )
-
-            putIndex(
-                SimpleSubscriberInfo(
-                    EpisodesActivity::class.java, true,
-                    arrayOf(
-                        SubscriberMethodInfo(
-                            "onEvent",
-                            ServiceCompletedEvent::class.java,
                             ThreadMode.MAIN
                         ),
                     )

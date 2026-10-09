@@ -23,7 +23,9 @@ import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.palette.graphics.Palette
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.billing.BillingTools
@@ -46,7 +48,6 @@ import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.traktapi.MovieCheckInDialogFragment
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment
-import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.LanguageTools
@@ -280,14 +281,19 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                 requireActivity().getSgAppContainer()
             )
         }
+
+        // Disable buttons while a service task is running
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                requireActivity().getSgAppContainer().serviceTaskStatus.active.collect {
+                    setMovieButtonsEnabled(it == null)
+                }
+            }
+        }
     }
 
     override fun onStart() {
         super.onStart()
-
-        val event = EventBus.getDefault()
-            .getStickyEvent(BaseMessageActivity.ServiceActiveEvent::class.java)
-        setMovieButtonsEnabled(event == null)
 
         EventBus.getDefault().register(this)
     }
@@ -675,16 +681,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         model.loadMovieDetails()
         // re-run trailer loader to cache to database if movie was added to database
         model.loadTrailerVideoId()
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventEpisodeTask(@Suppress("UNUSED_PARAMETER") event: BaseMessageActivity.ServiceActiveEvent) {
-        setMovieButtonsEnabled(false)
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventEpisodeTask(@Suppress("UNUSED_PARAMETER") event: BaseMessageActivity.ServiceCompletedEvent) {
-        setMovieButtonsEnabled(true)
     }
 
     private fun setMovieButtonsEnabled(enabled: Boolean) {
