@@ -8,6 +8,8 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
 
+### Next release
+
 ## Version 2026.5
 
 ### 2026.5.0 - 2026-10-08 🧪
@@ -16,6 +18,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 * 🔨 Sync: don't crash when refreshing Trakt credentials is interrupted.
 * 🔨 Sync: prevent breaking updating if TMDB returns invalid TVDB ID for a show. 
 * 🔧 Sync: keep showing last status, including if show failed to update.
+* 📝 Import latest user interface translations.
 
 ## Version 2026.4
 
