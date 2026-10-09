@@ -19,23 +19,22 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentSeasonsBinding
+import com.battlelancer.seriesguide.getSgAppContainer
 import com.battlelancer.seriesguide.jobs.episodes.SeasonWatchedJob
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
-import com.battlelancer.seriesguide.ui.BaseMessageActivity
+import com.battlelancer.seriesguide.ui.ServiceCompleted
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.startActivityWithAnimation
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Displays a list of seasons of one show.
@@ -116,6 +115,14 @@ class SeasonsFragment() : Fragment() {
             viewLifecycleOwner,
             Lifecycle.State.RESUMED
         )
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                requireActivity().getSgAppContainer().serviceTaskStatus.completed.collect {
+                    handleServiceCompleted(it)
+                }
+            }
+        }
     }
 
     override fun onStart() {
@@ -123,13 +130,6 @@ class SeasonsFragment() : Fragment() {
 
         updateUnwatchedCounts()
         model.remainingCountData.load(showId)
-
-        EventBus.getDefault().register(this)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        EventBus.getDefault().unregister(this)
     }
 
     override fun onDestroyView() {
@@ -211,18 +211,14 @@ class SeasonsFragment() : Fragment() {
     /**
      * Updates the total remaining episodes counter, updates season counters after episode actions.
      */
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEvent(event: BaseMessageActivity.ServiceCompletedEvent) {
-        if (event.flagJob == null || !event.isSuccessful) {
+    private fun handleServiceCompleted(completed: ServiceCompleted) {
+        if (completed.flagJob == null || !completed.isSuccessful) {
             return  // no changes applied
         }
-        if (!isAdded) {
-            return  // no longer added to activity
-        }
         model.remainingCountData.load(showId)
-        if (event.flagJob is SeasonWatchedJob) {
+        if (completed.flagJob is SeasonWatchedJob) {
             // If we can narrow it down to just one season...
-            model.updateSeasonStats(event.flagJob.seasonId)
+            model.updateSeasonStats(completed.flagJob.seasonId)
         } else {
             updateUnwatchedCounts()
         }

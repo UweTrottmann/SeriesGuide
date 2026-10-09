@@ -17,12 +17,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentHistoryBinding
+import com.battlelancer.seriesguide.getSgAppContainer
 import com.battlelancer.seriesguide.history.HistoryActivity
 import com.battlelancer.seriesguide.jobs.episodes.EpisodeWatchedJob
 import com.battlelancer.seriesguide.shows.ShowsActivityImpl
@@ -31,15 +33,12 @@ import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.shows.history.ShowsHistoryAdapter.Item
 import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
-import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceCompletedEvent
+import com.battlelancer.seriesguide.ui.ServiceCompleted
 import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.startActivityWithAnimation
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Displays recently watched episodes. If connected to Trakt, replaced with recently watched
@@ -153,11 +152,18 @@ class ShowsHistoryFragment : Fragment() {
             viewLifecycleOwner,
             Lifecycle.State.RESUMED
         )
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                requireActivity().getSgAppContainer().serviceTaskStatus.completed.collect {
+                    handleServiceCompleted(it)
+                }
+            }
+        }
     }
 
     override fun onStart() {
         super.onStart()
-        EventBus.getDefault().register(this)
 
         /*
         Init recently watched loader here the earliest.
@@ -182,11 +188,6 @@ class ShowsHistoryFragment : Fragment() {
         if (isLoaderExists) {
             loaderManager.restartLoader(loaderId, null, recentlyLocalCallbacks)
         }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        EventBus.getDefault().unregister(this)
     }
 
     override fun onDestroyView() {
@@ -311,16 +312,12 @@ class ShowsHistoryFragment : Fragment() {
             if (isEmpty) View.VISIBLE else View.GONE
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventEpisodeTask(event: ServiceCompletedEvent) {
-        if (event.flagJob == null || !event.isSuccessful) {
+    private fun handleServiceCompleted(completed: ServiceCompleted) {
+        if (completed.flagJob == null || !completed.isSuccessful) {
             return  // no changes applied
         }
-        if (!isAdded) {
-            return  // no longer added to activity
-        }
         // reload recently watched if user set or unset an episode watched
-        if (event.flagJob is EpisodeWatchedJob) {
+        if (completed.flagJob is EpisodeWatchedJob) {
             viewLifecycleOwner.lifecycleScope.launch {
                 // If connected to Trakt the request needs some time to be sent and processed,
                 // so delay refreshing a while.

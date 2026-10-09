@@ -7,6 +7,7 @@ import android.content.Context
 import com.battlelancer.seriesguide.billing.BillingRepository
 import com.battlelancer.seriesguide.diagnostics.DebugLogBuffer
 import com.battlelancer.seriesguide.diagnostics.DebugLogDatabase
+import com.battlelancer.seriesguide.ui.ServiceTaskStatus
 import com.battlelancer.seriesguide.util.PackageTools
 import com.battlelancer.seriesguide.util.PackageTools.isEuropeanEconomicArea
 import com.battlelancer.seriesguide.util.PackageTools.isUnitedStates
@@ -68,5 +69,9 @@ class SgAppContainer(context: Context, coroutineScope: CoroutineScope) {
 
     val billingRepository by lazy {
         BillingRepository(context, coroutineScope)
+    }
+
+    val serviceTaskStatus by lazy {
+        ServiceTaskStatus()
     }
 }

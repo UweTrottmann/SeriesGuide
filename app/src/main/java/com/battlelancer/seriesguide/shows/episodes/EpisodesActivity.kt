@@ -17,23 +17,25 @@ import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.preference.PreferenceManager
 import androidx.viewpager2.widget.ViewPager2
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ActivityEpisodesBinding
+import com.battlelancer.seriesguide.getSgAppContainer
 import com.battlelancer.seriesguide.jobs.episodes.BaseEpisodesJob
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.shows.overview.SeasonTools
 import com.battlelancer.seriesguide.shows.tools.ShowSync
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
+import com.battlelancer.seriesguide.ui.ServiceCompleted
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ThemeUtils.setDefaultStyle
 import com.battlelancer.seriesguide.util.commitReorderingAllowed
 import com.google.android.material.shape.MaterialShapeDrawable
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
+import kotlinx.coroutines.launch
 
 /**
  * Hosts a fragment which displays episodes of a season in a list and in a view pager.
@@ -86,6 +88,14 @@ class EpisodesActivity : BaseMessageActivity() {
         setContentView(binding.root)
         ThemeUtils.configureForEdgeToEdge(binding.root as ViewGroup)
         setupActionBar()
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                getSgAppContainer().serviceTaskStatus.completed.collect {
+                    handleServiceCompleted(it)
+                }
+            }
+        }
 
         // if coming from a notification, set last cleared time
         NotificationService.handleDeleteIntent(this, intent)
@@ -355,9 +365,8 @@ class EpisodesActivity : BaseMessageActivity() {
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEvent(event: ServiceCompletedEvent) {
-        if (event.isSuccessful && event.flagJob is BaseEpisodesJob) {
+    private fun handleServiceCompleted(completed: ServiceCompleted) {
+        if (completed.isSuccessful && completed.flagJob is BaseEpisodesJob) {
             // order can only change if sorted by unwatched first
             val sortOrder = EpisodesSettings.getEpisodeSortOrder(this)
             if (sortOrder == EpisodesSettings.EpisodeSorting.UNWATCHED_FIRST) {
