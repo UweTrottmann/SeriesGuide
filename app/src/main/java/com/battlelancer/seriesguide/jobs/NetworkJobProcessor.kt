@@ -12,35 +12,37 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.getSystemService
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.backend.HexagonTools
-import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.jobs.episodes.JobAction
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Jobs
 import com.battlelancer.seriesguide.settings.NotificationSettings
-import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.util.DBUtils
 import com.uwetrottmann.androidutils.AndroidUtils
 import timber.log.Timber
 import java.nio.ByteBuffer
 
 /**
- * Gets jobs from the [Jobs] table, executes them one by one starting with the oldest.
- * Based on the job result shows an error notification and maybe removes the job.
- * If the job isn't removed, will stop processing further jobs. The job will be tried
- * again the next time jobs are processed.
+ * Obtém jobs da tabela [Jobs], executando-os um a um a partir do mais antigo.
+ * Com base no resultado do job, exibe uma notificação de erro e opcionalmente remove o job.
+ * Se o job não puder ser removido, interrompe o processamento para tentar novamente na próxima sincronização.
+ *
+ * Utiliza o padrão Factory Method / Abstract Factory através de [NetworkJobFactory]
+ * para desacoplar a criação e execução dos jobs de serviços de rede específicos.
  */
-class NetworkJobProcessor(private val context: Context) {
-
-    private val shouldSendToHexagon = HexagonSettings.isEnabled(context)
-    private val shouldSendToTrakt = TraktCredentials.get(context).hasCredentials()
+class NetworkJobProcessor(
+    private val context: Context,
+    private val jobFactories: List<NetworkJobFactory> = listOf(
+        HexagonJobFactory(),
+        TraktJobFactory()
+    )
+) {
 
     fun process() {
-        // query for jobs
+        // consulta os jobs
         val query = context.contentResolver
             .query(Jobs.CONTENT_URI, Jobs.PROJECTION, null, null, Jobs.SORT_OLDEST)
-            ?: return  // query failed
+            ?: return  // consulta falhou
 
-        // process jobs, starting with oldest
+        // processa jobs, começando pelo mais antigo
         val jobsToRemove: MutableList<Long> = ArrayList()
         while (query.moveToNext()) {
             val jobId = query.getLong(0)
@@ -60,7 +62,7 @@ class NetworkJobProcessor(private val context: Context) {
                         "Job %d failed, will retry with next sync, stop processing jobs",
                         jobId
                     )
-                    break // abort to avoid ordering issues
+                    break // aborta para evitar problemas de ordenação
                 }
                 Timber.d("Job %d completed or failed and can't retry, will remove", jobId)
             }
@@ -68,14 +70,15 @@ class NetworkJobProcessor(private val context: Context) {
         }
         query.close()
 
-        // remove completed jobs
+        // remove jobs concluídos
         if (jobsToRemove.isNotEmpty()) {
             removeJobs(jobsToRemove)
         }
     }
 
     /**
-     * Returns true if the job can be removed, false if it should be retried later.
+     * Retorna true se o job puder ser removido, false se precisar ser tentado novamente mais tarde.
+     * Itera polimorficamente pelas fábricas de jobs ativas.
      */
     private fun doNetworkJob(
         jobId: Long,
@@ -83,91 +86,30 @@ class NetworkJobProcessor(private val context: Context) {
         createdAt: Long,
         jobInfo: SgJobInfo
     ): Boolean {
-        // upload to hexagon
-        if (shouldSendToHexagon) {
-            if (!AndroidUtils.isNetworkConnected(context)) {
-                return false
-            }
-            val hexagonTools = SgApp.getServicesComponent(context).hexagonTools()
-            val hexagonJob = getHexagonJobForAction(hexagonTools, action, jobInfo)
-            if (hexagonJob != null) {
-                val result = hexagonJob.execute(context)
-                if (!result.successful) {
-                    showNotification(jobId, createdAt, result)
-                    return result.jobRemovable
+        for (factory in jobFactories) {
+            if (factory.isEnabled(context)) {
+                if (!AndroidUtils.isNetworkConnected(context)) {
+                    return false
                 }
-            }
-        }
-
-        // upload to trakt
-        if (shouldSendToTrakt) {
-            if (!AndroidUtils.isNetworkConnected(context)) {
-                return false
-            }
-            val traktJob = getTraktJobForAction(action, jobInfo, createdAt)
-            if (traktJob != null) {
-                val result = traktJob.execute(context)
-                // may need to show notification if successful (for not found error)
-                showNotification(jobId, createdAt, result)
-                if (!result.successful) {
-                    return result.jobRemovable
+                val job = factory.createJob(context, action, jobInfo, createdAt)
+                if (job != null) {
+                    val result = job.execute(context)
+                    // Notifica sobre falhas ou erros (ex.: aviso de item não encontrado no Trakt)
+                    if (!result.successful || result.error != null) {
+                        showNotification(jobId, createdAt, result)
+                    }
+                    if (!result.successful) {
+                        return result.jobRemovable
+                    }
                 }
             }
         }
         return true
     }
 
-    private fun getHexagonJobForAction(
-        hexagonTools: HexagonTools, action: JobAction,
-        jobInfo: SgJobInfo
-    ): NetworkJob? {
-        return when (action) {
-            JobAction.EPISODE_COLLECTION,
-            JobAction.EPISODE_WATCHED_FLAG -> {
-                HexagonEpisodeJob(hexagonTools, action, jobInfo)
-            }
-
-            JobAction.MOVIE_COLLECTION_ADD,
-            JobAction.MOVIE_COLLECTION_REMOVE,
-            JobAction.MOVIE_WATCHLIST_ADD,
-            JobAction.MOVIE_WATCHLIST_REMOVE,
-            JobAction.MOVIE_WATCHED_SET,
-            JobAction.MOVIE_WATCHED_REMOVE -> {
-                HexagonMovieJob(hexagonTools, action, jobInfo)
-            }
-
-            else -> {
-                null // Action not supported by hexagon.
-            }
-        }
-    }
-
-    private fun getTraktJobForAction(
-        action: JobAction,
-        jobInfo: SgJobInfo,
-        createdAt: Long
-    ): NetworkJob? {
-        return when (action) {
-            JobAction.EPISODE_COLLECTION,
-            JobAction.EPISODE_WATCHED_FLAG -> {
-                TraktEpisodeJob(action, jobInfo, createdAt)
-            }
-
-            JobAction.MOVIE_COLLECTION_ADD,
-            JobAction.MOVIE_COLLECTION_REMOVE, JobAction.MOVIE_WATCHLIST_ADD, JobAction.MOVIE_WATCHLIST_REMOVE, JobAction.MOVIE_WATCHED_SET, JobAction.MOVIE_WATCHED_REMOVE -> // action not supported by trakt
-            {
-                TraktMovieJob(action, jobInfo, createdAt)
-            }
-
-            else -> {
-                null // Action not supported by Trakt.
-            }
-        }
-    }
-
     private fun showNotification(jobId: Long, jobCreatedAt: Long, result: NetworkJobResult) {
         if (result.action == null || result.error == null || result.item == null) {
-            return // missing required values
+            return // valores obrigatórios ausentes
         }
         Timber.e(
             "Job %d failed, notifying: error = %s, item = %s, action = %s",
@@ -181,7 +123,7 @@ class NetworkJobProcessor(private val context: Context) {
         NotificationSettings.setDefaultsForChannelErrors(context, nb)
 
         nb.setSmallIcon(R.drawable.ic_notification)
-        // like: 'Failed: Remove from collection · BoJack Horseman'
+        // ex: 'Failed: Remove from collection · BoJack Horseman'
         nb.setContentTitle(
             context.getString(R.string.api_failed, "${result.action} · ${result.item}")
         )
@@ -194,7 +136,7 @@ class NetworkJobProcessor(private val context: Context) {
         nb.setContentIntent(result.contentIntent)
         nb.setAutoCancel(true)
 
-        // notification for each failed job
+        // notificação para cada job com falha
         val nm = context.getSystemService<NotificationManager>()
         nm?.notify(jobId.toString(), SgApp.NOTIFICATION_JOB_ID, nb.build())
     }
@@ -204,12 +146,12 @@ class NetworkJobProcessor(private val context: Context) {
         action: String, jobCreatedAt: Long
     ): String {
         val builder = StringBuilder()
-        // build message like:
+        // constrói mensagem como:
         // 'Could not talk to server.
         // BoJack Horseman · Set watched · 5 sec ago'
         builder.append(error).append("\n").append(item).append(" · ").append(action)
 
-        // append time if job is executed a while after it was created
+        // anexa tempo se o job foi executado um tempo após ter sido criado
         val currentTimeMillis = System.currentTimeMillis()
         if (currentTimeMillis - jobCreatedAt > 3 * DateUtils.SECOND_IN_MILLIS) {
             builder.append(" · ")
@@ -240,11 +182,18 @@ class NetworkJobProcessor(private val context: Context) {
     }
 
     /**
-     * If neither Trakt or Cloud are connected, clears all remaining jobs.
+     * Se nenhum serviço remoto (Trakt ou Cloud) estiver conectado, limpa todos os jobs restantes.
      */
     fun removeObsoleteJobs(ignoreHexagonState: Boolean) {
-        if (!ignoreHexagonState && shouldSendToHexagon || shouldSendToTrakt) {
-            return // Still signed in to either service, do not clear jobs.
+        val anyServiceConnected = jobFactories.any { factory ->
+            if (ignoreHexagonState && factory.serviceName == "Hexagon") {
+                false
+            } else {
+                factory.isEnabled(context)
+            }
+        }
+        if (anyServiceConnected) {
+            return // Ainda conectado a pelo menos um serviço, não limpa os jobs.
         }
         context.contentResolver.delete(Jobs.CONTENT_URI, null, null)
     }
