@@ -268,7 +268,7 @@ public abstract class ExtensionActionProvider(
 
     @Suppress("DEPRECATION") // Typed variant requires API 33
     private fun getSubscriberComponent(intent: Intent): ComponentName? {
-        return if (Build.VERSION.SDK_INT >= 33) {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra(
                 IncomingConstants.EXTRA_SUBSCRIBER_COMPONENT,
                 ComponentName::class.java
@@ -379,7 +379,7 @@ public abstract class ExtensionActionProvider(
             // Check if the subscriber still exists
             try {
                 context.packageManager.getReceiverInfo(subscriber, 0)
-            } catch (e: PackageManager.NameNotFoundException) {
+            } catch (_: PackageManager.NameNotFoundException) {
                 defunct.add(subscriber)
                 continue
             }
