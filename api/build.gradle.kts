@@ -8,8 +8,13 @@ plugins {
 group = "com.uwetrottmann.seriesguide"
 version = "2.2.2-SNAPSHOT"
 
+kotlin {
+    // The API is public, so require explicit visibility and return types.
+    explicitApi()
+}
+
 android {
-    enableKotlin = false
+    enableKotlin = true
 
     namespace = "com.battlelancer.seriesguide.api"
 
