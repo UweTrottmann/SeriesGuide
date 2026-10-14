@@ -25,7 +25,7 @@ import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
 import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.api.SeriesGuideExtension
+import com.battlelancer.seriesguide.api.ExtensionActionProvider
 import com.battlelancer.seriesguide.databinding.FragmentExtensionsConfigurationBinding
 import com.battlelancer.seriesguide.util.PackageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
@@ -227,7 +227,7 @@ class ExtensionsConfigurationFragment : Fragment() {
                 requireContext().tryStartActivity(
                     Intent()
                         .setComponent(settingsActivity)
-                        .putExtra(SeriesGuideExtension.EXTRA_FROM_SERIESGUIDE_SETTINGS, true),
+                        .putExtra(ExtensionActionProvider.EXTRA_FROM_SERIESGUIDE_SETTINGS, true),
                     true
                 )
                 ExtensionManager.get(context).clearActionsCache()

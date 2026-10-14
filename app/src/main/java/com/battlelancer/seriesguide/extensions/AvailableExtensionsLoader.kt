@@ -7,7 +7,7 @@ import android.content.Context
 import com.uwetrottmann.androidutils.GenericSimpleLoader
 
 /**
- * Queries for any installed [com.battlelancer.seriesguide.api.SeriesGuideExtension]
+ * Queries for any installed [com.battlelancer.seriesguide.api.ExtensionActionProvider]
  * extensions.
  */
 class AvailableExtensionsLoader(context: Context) :

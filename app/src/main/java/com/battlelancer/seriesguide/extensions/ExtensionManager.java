@@ -23,8 +23,8 @@ import androidx.annotation.Nullable;
 import androidx.collection.LruCache;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.api.Episode;
+import com.battlelancer.seriesguide.api.ExtensionActionProvider;
 import com.battlelancer.seriesguide.api.Movie;
-import com.battlelancer.seriesguide.api.SeriesGuideExtensionReceiver;
 import com.battlelancer.seriesguide.api.constants.IncomingConstants;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -104,12 +104,12 @@ public class ExtensionManager {
 
     /**
      * Queries the {@link android.content.pm.PackageManager} for any installed {@link
-     * com.battlelancer.seriesguide.api.SeriesGuideExtension} extensions. Their info is extracted
+     * com.battlelancer.seriesguide.api.ExtensionActionProvider} extensions. Their info is extracted
      * into {@link Extension} objects.
      */
     @NonNull
     public List<Extension> queryAllAvailableExtensions(Context context) {
-        Intent queryIntent = new Intent(SeriesGuideExtensionReceiver.ACTION_SERIESGUIDE_EXTENSION);
+        Intent queryIntent = new Intent(ExtensionActionProvider.ACTION_SERIESGUIDE_EXTENSION);
         PackageManager pm = context.getPackageManager();
         List<ResolveInfo> resolveInfos = pm.queryBroadcastReceivers(queryIntent,
                 PackageManager.GET_META_DATA);
