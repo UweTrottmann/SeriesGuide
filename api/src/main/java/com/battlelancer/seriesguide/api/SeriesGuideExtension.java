@@ -39,7 +39,10 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 /**
- * Base class for a SeriesGuide extension. Extensions are a way for other apps to
+ * <b>Deprecated:</b> Use {@link ExtensionActionProvider} instead. It publishes actions directly from
+ * the receiver, which avoids delays if the app is in a restricted standby bucket.
+ *
+ * <p> Base class for a SeriesGuide extension. Extensions are a way for other apps to
  * feed actions (represented through {@linkplain Action actions}) for episodes and movies to
  * SeriesGuide. Actions may for example launch other apps or display interesting information related
  * to an episode or movie.
@@ -171,7 +174,14 @@ import org.json.JSONTokener;
  *
  * <p> Based on code from <a href="https://github.com/romannurik/muzei">Muzei</a>, an awesome Live
  * Wallpaper by Roman Nurik.
+ *
+ * @deprecated Use {@link ExtensionActionProvider} instead. Job scheduling can delay publishing
+ * actions for apps in a restricted standby bucket. To migrate, extend
+ * {@link ExtensionActionProvider} using the same name as passed to the constructor of this class
+ * to keep existing subscriptions, return actions instead of calling {@link #publishAction(Action)},
+ * and remove the {@code <service>} from the manifest.
  */
+@Deprecated
 public abstract class SeriesGuideExtension extends SgJobIntentService {
 
     private static final String TAG = "SeriesGuideExtension";

@@ -10,7 +10,11 @@ import android.content.Intent;
 /**
  * Base class to expose a {@link SeriesGuideExtension} service. See the documentation of {@link
  * SeriesGuideExtension} for how to create an extension.
+ *
+ * @deprecated Use {@link ExtensionActionProvider} instead, which is itself the receiver and
+ * publishes actions directly, avoiding delays if the app is in a restricted standby bucket.
  */
+@Deprecated
 public abstract class SeriesGuideExtensionReceiver extends BroadcastReceiver {
 
     /**
