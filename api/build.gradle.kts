@@ -14,8 +14,6 @@ kotlin {
 }
 
 android {
-    enableKotlin = true
-
     namespace = "com.battlelancer.seriesguide.api"
 
     publishing {
