@@ -113,7 +113,7 @@ import java.util.concurrent.Executors
  * ```
  *
  * Finally, below is a simple example [ExtensionActionProvider] subclass that publishes actions for
- * episodes performing a simple Google search. In Kotlin:
+ * episodes performing a simple web search:
  *
  * ```
  * class ExampleExtension : ExtensionActionProvider("ExampleExtension") {
@@ -123,30 +123,12 @@ import java.util.concurrent.Executors
  *         episode: Episode
  *     ): Action? {
  *         val title = episode.title ?: return null
- *         return Action.Builder("Google search", episodeIdentifier)
+ *         return Action.Builder("Web search", episodeIdentifier)
  *             .viewIntent(
- *                 Intent(Intent.ACTION_VIEW)
- *                     .setData(Uri.parse("https://www.google.com/#q=$title"))
+ *                 Intent(Intent.ACTION_WEB_SEARCH)
+ *                     .putExtra(SearchManager.QUERY, title)
  *             )
  *             .build()
- *     }
- * }
- * ```
- *
- * Or in Java:
- *
- * ```
- * public class ExampleExtension extends ExtensionActionProvider {
- *     public ExampleExtension() {
- *         super("ExampleExtension");
- *     }
- *
- *     // Annotate with Override and Nullable.
- *     public Action onEpisodeRequest(Context context, int episodeIdentifier, Episode episode) {
- *         return new Action.Builder("Google search", episodeIdentifier)
- *                 .viewIntent(new Intent(Intent.ACTION_VIEW)
- *                         .setData(Uri.parse("https://www.google.com/#q=" + episode.getTitle())))
- *                 .build();
  *     }
  * }
  * ```
