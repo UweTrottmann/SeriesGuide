@@ -1,5 +1,12 @@
 # SeriesGuide API change log
 
+## Unreleased
+- Added `ExtensionActionProvider`, a broadcast receiver that publishes actions directly instead of through a `JobIntentService`. This avoids actions being delayed or not published if the app of the extension is in a restricted standby bucket.
+- `ExtensionActionProvider` only supports the current protocol (version 2). Requests of older versions of SeriesGuide (version 1) are ignored.
+- `onEpisodeRequest` and `onMovieRequest` return the `Action` to publish (or `null`) instead of calling `publishAction()`. They run on a background thread and must return within about 10 seconds.
+- Deprecated `SeriesGuideExtension` and `SeriesGuideExtensionReceiver`. To migrate, make the `SeriesGuideExtensionReceiver` subclass an `ExtensionActionProvider` subclass, using the same name as passed to the `SeriesGuideExtension` constructor to keep existing subscriptions. Remove the `<service>` in the manifest (with `BIND_JOB_SERVICE`).
+- The API library now includes Kotlin code (and the Kotlin standard library).
+
 ## 2.2.1 (2021-02-26, supported as of SeriesGuide 58-beta1)
 - View intents now expect number and season for episode instead of TMDB ID.
 
