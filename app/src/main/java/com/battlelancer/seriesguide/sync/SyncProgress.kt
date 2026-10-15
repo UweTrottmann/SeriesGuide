@@ -28,7 +28,8 @@ class SyncProgress(
         TRAKT_EPISODES(R.string.trakt, R.string.episodes),
         TRAKT_RATINGS(R.string.trakt, R.string.ratings),
         TRAKT_NOTES(R.string.trakt, R.string.title_notes),
-        TRAKT_MOVIES(R.string.trakt, R.string.movies)
+        TRAKT_MOVIES(R.string.trakt, R.string.movies),
+        TRAKT_LISTS(R.string.trakt, R.string.lists)
     }
 
     data class SyncEvent(
