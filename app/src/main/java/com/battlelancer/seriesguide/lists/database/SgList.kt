@@ -49,7 +49,7 @@ data class SgList(
      * This ID is globally unique on Trakt.
      */
     @ColumnInfo(name = Lists.TRAKT_ID)
-    var traktId: Int?
+    var traktId: Long?
 ) {
     val orderOrDefault: Int
         get() = order ?: 0

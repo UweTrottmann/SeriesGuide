@@ -12,7 +12,7 @@ public class List {
     /**
      * Optional Trakt list ID. Set if this list was synced with Trakt.
      */
-    public Integer trakt_id;
+    public Long trakt_id;
 
     public java.util.List<ListItem> items;
 
