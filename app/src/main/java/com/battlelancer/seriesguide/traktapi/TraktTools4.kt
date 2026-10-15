@@ -469,7 +469,7 @@ class TraktTools4(private val trakt: TraktV2) {
     suspend fun createList(
         traktUsers: Users,
         listName: String
-    ): TraktNonNullResponse<Int?> {
+    ): TraktNonNullResponse<Long?> {
         val response = awaitTraktCallNonNull(
             traktUsers.createList(UserSlug.ME, TraktList().name(listName)),
             "create list",
@@ -486,7 +486,7 @@ class TraktTools4(private val trakt: TraktV2) {
      */
     suspend fun addItemsToList(
         traktUsers: Users,
-        listId: Int,
+        listId: Long,
         items: SyncItems
     ): TraktNonNullResponse<SyncResponse> {
         return awaitTraktCallNonNull(
@@ -513,7 +513,7 @@ class TraktTools4(private val trakt: TraktV2) {
      */
     suspend fun getListItems(
         traktUsers: Users,
-        listId: Int
+        listId: Long
     ): TraktNonNullResponse<List<ListEntry>> {
         return fetchAllPages(
             action = "get list items",
