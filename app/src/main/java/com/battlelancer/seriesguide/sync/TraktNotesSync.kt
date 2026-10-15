@@ -3,13 +3,10 @@
 
 package com.battlelancer.seriesguide.sync
 
-import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgShow2Helper
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktSettings
-import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktErrorResponse
-import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.TimeTools
 import com.uwetrottmann.trakt5.TraktV2
@@ -177,34 +174,12 @@ class TraktNotesSync(
                     ?: continue // Note got removed in the meantime
 
                 val storedNote = runBlocking(Dispatchers.Default) {
-                    val response = trakt.awaitAndHandleAuthErrorNonNull {
+                    traktSync.awaitAndHandleUploadError {
                         traktSync.traktTools.saveNoteForShow(
                             showTmdbId,
                             noteText,
                             traktNotes = traktNotes
                         )
-                    }
-                    when (response) {
-                        is TraktNonNullResponse.Success -> response.data
-
-                        is TraktErrorResponse.IsAccountLimitExceeded -> {
-                            traktSync.progress.setImportantMessageIfNone(
-                                context.getString(R.string.trakt_error_limit_exceeded_upload)
-                            )
-                            null
-                        }
-
-                        is TraktErrorResponse.IsAccountLocked -> {
-                            traktSync.progress.setImportantMessageIfNone(
-                                context.getString(R.string.trakt_error_account_locked)
-                            )
-                            null
-                        }
-
-                        // For other errors just fail to display generic error
-                        is TraktErrorResponse.IsNotVip,
-                        is TraktErrorResponse.IsUnauthorized,
-                        is TraktErrorResponse.Other -> null
                     }
                 }
 
