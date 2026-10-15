@@ -12,6 +12,8 @@ import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktSettings
 import com.battlelancer.seriesguide.traktapi.TraktTools3
 import com.battlelancer.seriesguide.traktapi.TraktTools4
+import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktErrorResponse
+import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse
 import com.battlelancer.seriesguide.util.Errors
 import com.github.michaelbull.result.getOrElse
 import com.uwetrottmann.androidutils.AndroidUtils
@@ -188,6 +190,38 @@ class TraktSync(
             TraktSettings.setInitialSyncEpisodesCompleted(context)
         }
         return true
+    }
+
+    /**
+     * Runs [call] and handles auth errors. Returns the data of a successful response to an upload
+     * call. For account limit and locked errors sets an important progress message. Returns null
+     * for any error.
+     */
+    suspend fun <T> awaitAndHandleUploadError(
+        call: suspend () -> TraktNonNullResponse<T>
+    ): T? {
+        return when (val response = trakt.awaitAndHandleAuthErrorNonNull(call)) {
+            is TraktNonNullResponse.Success -> response.data
+
+            is TraktErrorResponse.IsAccountLimitExceeded -> {
+                progress.setImportantMessageIfNone(
+                    context.getString(R.string.trakt_error_limit_exceeded_upload)
+                )
+                null
+            }
+
+            is TraktErrorResponse.IsAccountLocked -> {
+                progress.setImportantMessageIfNone(
+                    context.getString(R.string.trakt_error_account_locked)
+                )
+                null
+            }
+
+            // For other errors just fail to display generic error
+            is TraktErrorResponse.IsNotVip,
+            is TraktErrorResponse.IsUnauthorized,
+            is TraktErrorResponse.Other -> null
+        }
     }
 
     fun <T> handleUnsuccessfulResponse(response: Response<T>, action: String) {
