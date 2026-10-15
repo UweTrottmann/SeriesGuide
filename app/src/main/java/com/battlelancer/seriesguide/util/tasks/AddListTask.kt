@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.lists.ListsTools
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.traktapi.TraktTools4
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.seriesguide.backend.lists.model.SgList
@@ -61,9 +62,14 @@ open class AddListTask(
         return SUCCESS
     }
 
-    @get:VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    open val listId: String?
-        get() = ListsTools.generateListId(listName)
+    protected open val listId: String?
+        get() {
+            // List IDs aren't changed if a list is renamed, so check make sure the new ID doesn't
+            // collide with an existing one.
+            val usedListIds = SgRoomDatabase.getInstance(context).sgListHelper()
+                .getListIds().toSet()
+            return ListsTools.generateUniqueListId(listName, usedListIds)
+        }
 
     private fun buildList(listId: String, listName: String): List<SgList> {
         val lists = ArrayList<SgList>(1)

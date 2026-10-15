@@ -12,6 +12,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 * 🔧 Billing: when upgrading a subscription, ask for payment right away (and use remaining time to move next billing date into the future).
 * 🔧 Turn on app code optimization to meet future requirements of Play store. Despite testing, this may still unexpectedly break features or lead to crashes. Please send in your debug log in that case.
+* 🔨 Lists: don't overwrite an existing list when trying to add a new list and the name matches the previous name of the existing list.
 
 ## Version 2026.5
 

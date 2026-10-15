@@ -45,6 +45,9 @@ interface SgListHelper {
     @Query("SELECT list_id FROM lists WHERE trakt_id = :traktId")
     suspend fun getListIdForTraktId(traktId: Long): String?
 
+    @Query("SELECT list_id FROM lists")
+    fun getListIds(): List<String>
+
     /**
      * Is 0 on error.
      */
