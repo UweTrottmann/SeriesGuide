@@ -461,6 +461,42 @@ class TraktTools4(private val trakt: TraktV2) {
         )
     }
 
+    /**
+     * Creates a new list and returns its Trakt ID.
+     *
+     * See [awaitTraktCall] for details.
+     */
+    suspend fun createList(
+        traktUsers: Users,
+        listName: String
+    ): TraktNonNullResponse<Int?> {
+        val response = awaitTraktCallNonNull(
+            traktUsers.createList(UserSlug.ME, TraktList().name(listName)),
+            "create list",
+            // Should work even if not VIP (fails with IsAccountLimitExceeded if limit is reached)
+            reportIsNotVip = true
+        )
+        return mapResponseData(response) { it.ids?.trakt }
+    }
+
+    /**
+     * Adds items to a list.
+     *
+     * See [awaitTraktCall] for details.
+     */
+    suspend fun addItemsToList(
+        traktUsers: Users,
+        listId: Int,
+        items: SyncItems
+    ): TraktNonNullResponse<SyncResponse> {
+        return awaitTraktCallNonNull(
+            traktUsers.addListItems(UserSlug.ME, listId.toString(), items),
+            "add list items",
+            // Should work even if not VIP (fails with IsAccountLimitExceeded if limit is reached)
+            reportIsNotVip = true
+        )
+    }
+
     suspend fun getLists(
         traktUsers: Users
     ): TraktNonNullResponse<List<TraktList>> {
