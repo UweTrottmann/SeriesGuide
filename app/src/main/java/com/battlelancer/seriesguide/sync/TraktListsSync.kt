@@ -100,6 +100,12 @@ class TraktListsSync(
 
                     val databaseLists = listHelper.getListsForExport()
 
+                    // List IDs are generated from names, but Trakt lists may have the same name
+                    // and list IDs don't change when a list is renamed. So make sure to not re-use
+                    // an existing ID.
+                    val usedListIds = databaseLists.mapTo(mutableSetOf()) { it.listId }
+                    val traktListIds = traktLists.mapNotNullTo(mutableSetOf()) { it.ids?.trakt }
+
                     val databaseListIdsToKeep = mutableSetOf<String>()
 
                     traktLists.forEach { list ->
@@ -115,15 +121,21 @@ class TraktListsSync(
                             throw IOException()
                         }
 
-                        // FIXME Handle multiple Trakt lists with the same name
-                        val databaseList = databaseLists.find {
-                            // For an initial sync, also try to find a list with the same name.
-                            it.traktId == traktId || (isInitialSync && it.name == traktName)
-                        }
+                        val databaseList = databaseLists.find { it.traktId == traktId }
+                            ?: if (isInitialSync) {
+                                // For an initial sync, also try to find a list with the same name.
+                                // Skip lists already matched to another Trakt list or that will
+                                // be matched by Trakt ID.
+                                databaseLists.find {
+                                    it.name == traktName
+                                            && it.listId !in databaseListIdsToKeep
+                                            && it.traktId.let { id -> id == null || id !in traktListIds }
+                                }
+                            } else null
                         val databaseId = if (databaseList == null) {
                             // Add new list to database
-                            // FIXME Handle collision with existing list
-                            val generatedId = ListsTools.generateListId(traktName)
+                            val generatedId =
+                                ListsTools.generateUniqueListId(traktName, usedListIds)
                             if (generatedId == null) {
                                 Timber.e(
                                     "Generated list ID is null for list (id=%s, name=%s)",
@@ -139,6 +151,7 @@ class TraktListsSync(
                                     traktId = traktId
                                 )
                             )
+                            usedListIds.add(generatedId)
                             generatedId
                         } else {
                             // Update existing list in database (the list ID can remain the same,
