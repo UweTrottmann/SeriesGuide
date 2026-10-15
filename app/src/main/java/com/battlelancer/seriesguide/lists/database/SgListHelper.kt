@@ -11,6 +11,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.RawQuery
 import androidx.room.Transaction
+import androidx.room.Update
 import androidx.sqlite.db.SupportSQLiteQuery
 import com.battlelancer.seriesguide.lists.database.SgListItemWithDetails.Companion.LIST_ITEMS_WITH_DETAILS
 import com.battlelancer.seriesguide.movies.database.SgMovie
@@ -84,6 +85,12 @@ interface SgListHelper {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertListItems(listItems: List<SgListItem>)
+
+    @Update
+    fun updateList(list: SgList)
+
+    @Query("UPDATE lists SET trakt_id = :traktId WHERE list_id = :listId")
+    fun updateListTraktId(listId: String, traktId: Long)
 
     @Query("DELETE FROM listitems WHERE list_item_id = :listItemId")
     fun deleteListItem(listItemId: String)
