@@ -631,6 +631,7 @@ class JsonImportTask(
         }
 
         // Insert the list
+        // FIXME Prevent importing two lists with the same Trakt ID
         val sgList = list.toSgListForImport()
         sgListHelper.insertList(sgList)
 
