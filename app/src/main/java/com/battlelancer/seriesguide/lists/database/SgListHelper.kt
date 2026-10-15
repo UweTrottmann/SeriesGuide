@@ -41,6 +41,9 @@ interface SgListHelper {
     @Query("SELECT * FROM lists ORDER BY ${Lists.SORT_ORDER_THEN_NAME}")
     fun getListsForExport(): List<SgList>
 
+    @Query("SELECT list_id FROM lists WHERE trakt_id = :traktId")
+    suspend fun getListIdForTraktId(traktId: Long): String?
+
     /**
      * Is 0 on error.
      */
