@@ -43,7 +43,8 @@ class TraktListsSync(
 
     enum class InitialSync {
         EXISTING_LISTS_DELETE,
-        EXISTING_LISTS_UPLOAD
+        EXISTING_LISTS_UPLOAD,
+        NO_SYNC
     }
 
     fun sync(updatedAt: OffsetDateTime?): Boolean {
@@ -84,6 +85,13 @@ class TraktListsSync(
                     if (!success) {
                         return false
                     }
+                }
+
+                InitialSync.NO_SYNC -> {
+                    Timber.d("initial sync: user chose not to sync lists")
+                    // Leave in initial sync not completed state if the user later decides to turn
+                    // on list sync.
+                    return true
                 }
             }
         }
