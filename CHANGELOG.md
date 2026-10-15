@@ -10,6 +10,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ### Next release
 
+* 🔨 Lists: don't overwrite an existing list when trying to add a new list and the name matches the previous name of the existing list.
+
 ## Version 2026.5
 
 ### 2026.5.0 - 2026-10-08 🧪

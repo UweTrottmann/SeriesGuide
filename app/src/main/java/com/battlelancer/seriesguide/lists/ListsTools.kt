@@ -58,6 +58,18 @@ object ListsTools {
     fun generateListId(name: String): String? =
         Uri.encode(name)?.ifBlank { null }
 
+    /**
+     * Returns an ID based on [name] that is not in [usedListIds], adding a numeric suffix if
+     * needed. Returns `null` if no ID can be generated from [name].
+     */
+    fun generateUniqueListId(name: String, usedListIds: Set<String>): String? {
+        val defaultListId = generateListId(name) ?: return null
+        if (defaultListId !in usedListIds) return defaultListId
+        var suffix = 2
+        while ("$defaultListId-$suffix" in usedListIds) suffix++
+        return "$defaultListId-$suffix"
+    }
+
     fun addList(context: Context, listName: String) {
         AddListTask(context, listName).run()
     }
