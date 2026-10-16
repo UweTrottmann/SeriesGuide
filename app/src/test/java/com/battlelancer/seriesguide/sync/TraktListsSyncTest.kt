@@ -8,12 +8,18 @@ import androidx.test.core.app.ApplicationProvider
 import com.battlelancer.seriesguide.EmptyTestApplication
 import com.battlelancer.seriesguide.lists.database.SgList
 import com.battlelancer.seriesguide.lists.database.SgListHelper
+import com.battlelancer.seriesguide.lists.database.SgListItem
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.traktapi.TraktSettings
 import com.battlelancer.seriesguide.traktapi.TraktSettings.InitialSync
 import com.google.common.truth.Truth.assertThat
 import com.uwetrottmann.trakt5.entities.ListEntry
 import com.uwetrottmann.trakt5.entities.ListIds
+import com.uwetrottmann.trakt5.entities.Movie
+import com.uwetrottmann.trakt5.entities.MovieIds
+import com.uwetrottmann.trakt5.entities.Show
+import com.uwetrottmann.trakt5.entities.ShowIds
 import com.uwetrottmann.trakt5.entities.SyncItems
 import com.uwetrottmann.trakt5.entities.SyncResponse
 import com.uwetrottmann.trakt5.entities.TraktList
@@ -130,6 +136,46 @@ class TraktListsSyncTest {
     }
 
     @Test
+    fun initialSyncDelete_replacesLocalLists() {
+        setInitialSync(InitialSync.EXISTING_LISTS_DELETE)
+        insertLocalList()
+        insertLocalListItem(TEST_LIST_NAME_AND_ID, 30, ListItemTypes.TMDB_SHOW)
+        val listIdB = "B"
+        val listIdC = "C"
+        val traktIdB = 1L
+        val traktIdC = 2L
+        val traktListB = traktList(traktIdB, listIdB)
+        val traktListC = traktList(traktIdC, listIdC)
+        fakeApi.lists = listOf(traktListB, traktListC)
+        fakeApi.listItems = mapOf(
+            traktIdB to listOf(showEntry(10), movieEntry(20)),
+            traktIdC to listOf(movieEntry(21))
+        )
+
+        assertThat(createSync().sync(time)).isTrue()
+
+        assertThat(
+            listHelper.getListsForExport().map { Triple(it.listId, it.name, it.traktId) }
+        ).containsExactly(
+            Triple(listIdB, listIdB, traktIdB),
+            Triple(listIdC, listIdC, traktIdC)
+        )
+        assertThat(listItemKeys(TEST_LIST_NAME_AND_ID)).isEmpty()
+        assertThat(listItemKeys(listIdB)).containsExactly(
+            ListItemTypes.TMDB_SHOW to "10",
+            ListItemTypes.TMDB_MOVIE to "20"
+        )
+        assertThat(listItemKeys(listIdC)).containsExactly(
+            ListItemTypes.TMDB_MOVIE to "21"
+        )
+        // Nothing uploaded: lists from Trakt have a Trakt ID and no items yet when uploading
+        assertThat(fakeApi.calls)
+            .containsExactly("getLists", "getListItems $traktIdB", "getListItems $traktIdC")
+            .inOrder()
+        assertThat(TraktSettings.isInitialSyncLists(context)).isFalse()
+    }
+
+    @Test
     fun initialSync_success_completesAndStoresTime() {
         setInitialSync(InitialSync.EXISTING_LISTS_DELETE)
 
@@ -166,6 +212,19 @@ class TraktListsSyncTest {
         assertThat(lists[0].traktId).isEqualTo(traktId)
     }
 
+    private fun insertLocalListItem(listId: String, tmdbId: Int, type: Int) {
+        listHelper.insertListItems(listOf(SgListItem(tmdbId, type, listId)))
+    }
+
+    private fun listItemKeys(listId: String) =
+        listHelper.getListItemsForExport(listId).map { it.type to it.itemRefId }
+
+    private fun showEntry(tmdbId: Int) =
+        ListEntry().also { it.show = Show().also { show -> show.ids = ShowIds.tmdb(tmdbId) } }
+
+    private fun movieEntry(tmdbId: Int) =
+        ListEntry().also { it.movie = Movie().also { movie -> movie.ids = MovieIds.tmdb(tmdbId) } }
+
     private fun millis(time: OffsetDateTime) = time.toInstant().toEpochMilli()
 
     private fun traktList(id: Long?, name: String?): TraktList {
@@ -187,12 +246,16 @@ class TraktListsSyncTest {
     private class FakeTraktListsApi : TraktListsApi {
         /** Returned by getLists, null simulates an error. */
         var lists: List<TraktList>? = emptyList()
+
+        /** Returned by getListItems by Trakt list ID, empty if not set. */
+        var listItems: Map<Long, List<ListEntry>> = emptyMap()
+
         val calls = mutableListOf<String>()
 
         override suspend fun getLists() = lists.also { calls.add("getLists") }
 
-        override suspend fun getListItems(traktListId: Long) =
-            emptyList<ListEntry>().also { calls.add("getListItems $traktListId") }
+        override suspend fun getListItems(traktListId: Long): List<ListEntry>? =
+            (listItems[traktListId] ?: emptyList()).also { calls.add("getListItems $traktListId") }
 
         override suspend fun createList(name: String): Long? =
             null.also { calls.add("createList $name") }
