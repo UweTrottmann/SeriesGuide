@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.lists.database.SgListItem
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.traktapi.TraktSettings
+import com.battlelancer.seriesguide.traktapi.TraktSettings.InitialSync
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktErrorResponse
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktErrorResponse.IsAccountLimitExceeded
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktErrorResponse.IsAccountLocked
@@ -42,12 +43,6 @@ class TraktListsSync(
 
     private val context = traktSync.context
 
-    enum class InitialSync {
-        EXISTING_LISTS_DELETE,
-        EXISTING_LISTS_MERGE,
-        NO_SYNC
-    }
-
     fun sync(updatedAt: OffsetDateTime?): Boolean {
         if (updatedAt == null) {
             Timber.e("sync: null updatedAt")
@@ -63,8 +58,7 @@ class TraktListsSync(
             return true
         }
 
-        // TODO Depending on user preference, delete existing lists or don't sync at all
-        val initialSyncPreference: InitialSync = InitialSync.EXISTING_LISTS_DELETE
+        val initialSyncPreference = TraktSettings.getInitialSyncListsPreference(context)
         if (isInitialSync) {
             if (initialSyncPreference == InitialSync.NO_SYNC) {
                 Timber.d("initial sync: user chose not to sync lists")
