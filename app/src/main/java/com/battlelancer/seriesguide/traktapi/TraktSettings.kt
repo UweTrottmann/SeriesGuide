@@ -78,11 +78,20 @@ object TraktSettings {
     private const val KEY_HAS_MERGED_LISTS
             : String = "trakt.lists.merged"
 
+    private const val KEY_INITIAL_SYNC_LISTS
+            : String = "trakt.lists.initial_sync"
+
     /**
      * Used in settings_basic.xml.
      */
     private const val KEY_QUICK_CHECKIN
             : String = "com.battlelancer.seriesguide.trakt.quickcheckin"
+
+    enum class InitialSync {
+        EXISTING_LISTS_DELETE,
+        EXISTING_LISTS_MERGE,
+        NO_SYNC
+    }
 
     /**
      * The last time show ratings have changed or 0 if no value exists.
@@ -295,6 +304,31 @@ object TraktSettings {
         }
     }
 
+    /**
+     * Returns how to handle existing lists on the initial lists sync with the current account.
+     *
+     * Defaults to [InitialSync.NO_SYNC].
+     */
+    fun getInitialSyncListsPreference(context: Context): InitialSync {
+        val name = PreferenceManager.getDefaultSharedPreferences(context)
+            .getString(KEY_INITIAL_SYNC_LISTS, null)
+        return InitialSync.entries.find { it.name == name }
+            ?: InitialSync.NO_SYNC
+    }
+
+    /**
+     * Returns if the user has set an initial sync lists preference.
+     */
+    fun hasInitialSyncListsPreference(context: Context): Boolean {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+            .getString(KEY_INITIAL_SYNC_LISTS, null) != null
+    }
+
+    fun setInitialSyncListsPreference(context: Context, value: InitialSync) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit {
+            putString(KEY_INITIAL_SYNC_LISTS, value.name)
+        }
+    }
 
     fun resetToInitialSync(context: Context) {
         PreferenceManager.getDefaultSharedPreferences(context).edit {
@@ -302,6 +336,8 @@ object TraktSettings {
             putBoolean(KEY_HAS_MERGED_MOVIES, false)
             putBoolean(KEY_HAS_MERGED_SHOW_NOTES, false)
             putBoolean(KEY_HAS_MERGED_LISTS, false)
+            // Remove initial list sync preference so user must decide again
+            remove(KEY_INITIAL_SYNC_LISTS)
             // Not actually necessary, but also reset timestamps for episodes and movies
             putLong(KEY_LAST_EPISODES_WATCHED_AT, 0)
             putLong(KEY_LAST_EPISODES_COLLECTED_AT, 0)
