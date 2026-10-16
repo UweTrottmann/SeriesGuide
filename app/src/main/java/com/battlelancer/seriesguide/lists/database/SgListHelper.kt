@@ -95,6 +95,9 @@ interface SgListHelper {
     @Query("UPDATE lists SET trakt_id = :traktId WHERE list_id = :listId")
     fun updateListTraktId(listId: String, traktId: Long)
 
+    @Query("UPDATE lists SET trakt_id = NULL WHERE list_id = :listId")
+    fun removeListTraktId(listId: String)
+
     @Query("DELETE FROM listitems WHERE list_item_id = :listItemId")
     fun deleteListItem(listItemId: String)
 

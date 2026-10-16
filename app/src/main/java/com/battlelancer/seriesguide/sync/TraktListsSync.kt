@@ -158,14 +158,18 @@ class TraktListsSync(
                         databaseListIdsToKeep.add(databaseId)
                     }
 
+                    val databaseListsNotMatched = databaseLists
+                        .filter { it.listId !in databaseListIdsToKeep }
                     if (!isInitialSync) {
                         // Delete lists not on Trakt
-                        val databaseListIdsToDelete = databaseLists
-                            .filter { it.listId !in databaseListIdsToKeep }
-                            .map { it.listId }
-                        databaseListIdsToDelete.forEach { listId ->
-                            listHelper.deleteListAndItems(listId)
-                        }
+                        databaseListsNotMatched.forEach { listHelper.deleteListAndItems(it.listId) }
+                    } else if (initialSyncPreference == InitialSync.EXISTING_LISTS_MERGE) {
+                        // Remove the Trakt ID from lists not on Trakt (for example if from another
+                        // Trakt account, restored from a backup or deleted on Trakt), so they are
+                        // uploaded as new lists.
+                        databaseListsNotMatched
+                            .filter { it.traktId != null }
+                            .forEach { listHelper.removeListTraktId(it.listId) }
                     }
                 }
             }
@@ -229,7 +233,7 @@ class TraktListsSync(
                 listHelper.updateListTraktId(list.listId, listTraktId)
                 listTraktId
             } else {
-                // FIXME Handle lists that were deleted at Trakt (uploading items will fail)
+                // Lists not on Trakt had their Trakt ID removed during matching
                 listTraktIdOrNull
             }
 
