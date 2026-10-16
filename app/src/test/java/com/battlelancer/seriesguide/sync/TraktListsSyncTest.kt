@@ -136,7 +136,7 @@ class TraktListsSyncTest {
     }
 
     @Test
-    fun initialSyncDelete_replacesLocalLists() {
+    fun initialSync_delete_replacesLocalLists() {
         setInitialSync(InitialSync.EXISTING_LISTS_DELETE)
         insertLocalList()
         insertLocalListItem(TEST_LIST_NAME_AND_ID, 30, ListItemTypes.TMDB_SHOW)
@@ -172,6 +172,56 @@ class TraktListsSyncTest {
         assertThat(fakeApi.calls)
             .containsExactly("getLists", "getListItems $traktIdB", "getListItems $traktIdC")
             .inOrder()
+        assertThat(TraktSettings.isInitialSyncLists(context)).isFalse()
+    }
+
+    @Test
+    fun initialSync_merge_sameName_mergesFirstAndAddsOthers() {
+        setInitialSync(InitialSync.EXISTING_LISTS_MERGE)
+        insertLocalList()
+        insertLocalListItem(TEST_LIST_NAME_AND_ID, 30, ListItemTypes.TMDB_SHOW)
+        val traktIdFirst = 1L
+        val traktIdSecond = 2L
+        fakeApi.lists = listOf(
+            traktList(traktIdFirst, TEST_LIST_NAME_AND_ID),
+            traktList(traktIdSecond, TEST_LIST_NAME_AND_ID)
+        )
+        fakeApi.listItems = mapOf(
+            // Contains the created local show item plus a movie item
+            traktIdFirst to listOf(showEntry(30), movieEntry(20)),
+            traktIdSecond to listOf(movieEntry(21))
+        )
+
+        assertThat(createSync().sync(time)).isTrue()
+
+        // The first Trakt list is merged with the local list (matched by name),
+        // the second is added with a non-colliding list ID.
+        val listIdSecond = "$TEST_LIST_NAME_AND_ID-2"
+        assertThat(
+            listHelper.getListsForExport().map { Triple(it.listId, it.name, it.traktId) }
+        ).containsExactly(
+            Triple(TEST_LIST_NAME_AND_ID, TEST_LIST_NAME_AND_ID, traktIdFirst),
+            Triple(listIdSecond, TEST_LIST_NAME_AND_ID, traktIdSecond)
+        )
+        assertThat(listItemKeys(TEST_LIST_NAME_AND_ID)).containsExactly(
+            ListItemTypes.TMDB_SHOW to "30",
+            ListItemTypes.TMDB_MOVIE to "20"
+        )
+        assertThat(listItemKeys(listIdSecond)).containsExactly(
+            ListItemTypes.TMDB_MOVIE to "21"
+        )
+        // Only the local item was uploaded, only to the first list, no list was created
+        assertThat(fakeApi.calls).containsExactly(
+            "getLists",
+            "addItemsToList $traktIdFirst",
+            "getListItems $traktIdFirst",
+            "getListItems $traktIdSecond"
+        ).inOrder()
+        val addedItems = fakeApi.addedItems.getValue(traktIdFirst)
+        assertThat(addedItems.shows!!.map { it.ids!!.tmdb }).containsExactly(30)
+        assertThat(addedItems.movies).isEmpty()
+
+        // Finally, initial sync was marked completed
         assertThat(TraktSettings.isInitialSyncLists(context)).isFalse()
     }
 
@@ -260,8 +310,14 @@ class TraktListsSyncTest {
         override suspend fun createList(name: String): Long? =
             null.also { calls.add("createList $name") }
 
-        override suspend fun addItemsToList(traktListId: Long, items: SyncItems): SyncResponse? =
-            null.also { calls.add("addItemsToList $traktListId") }
+        /** Items passed to addItemsToList by Trakt list ID. */
+        val addedItems = mutableMapOf<Long, SyncItems>()
+
+        override suspend fun addItemsToList(traktListId: Long, items: SyncItems): SyncResponse? {
+            calls.add("addItemsToList $traktListId")
+            addedItems[traktListId] = items
+            return SyncResponse()
+        }
     }
 
     companion object {
