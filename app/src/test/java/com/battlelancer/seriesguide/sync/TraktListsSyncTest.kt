@@ -59,24 +59,26 @@ class TraktListsSyncTest {
 
     @Test
     fun nullUpdatedAt_fails() {
-        setRegularSync(time)
-
         assertThat(createSync().sync(null)).isFalse()
         assertThat(fakeApi.calls).isEmpty()
     }
 
     @Test
-    fun regularSync_notChanged_skips() {
+    fun regularSync_notChanged_doesNothing() {
         setRegularSync(time)
+        insertLocalList()
 
         val sync = createSync()
         assertThat(sync.sync(time)).isTrue()
         assertThat(sync.sync(time.minusMinutes(1))).isTrue()
+
         assertThat(fakeApi.calls).isEmpty()
+        assertLocalListUnchanged()
     }
 
     @Test
     fun initialSync_notChanged_stillSyncs() {
+        // Change to merge mode, as default is "no sync" mode
         setInitialSync(InitialSync.EXISTING_LISTS_MERGE)
         TraktSettings.storeLastListsUpdatedAt(context, time)
 
@@ -85,50 +87,45 @@ class TraktListsSyncTest {
     }
 
     @Test
-    fun regularSync_getListsFails_noChanges() {
+    fun initialSync_noSync_doesNothing() {
+        insertLocalList()
+
+        // Default is to not sync
+        assertThat(createSync().sync(time)).isTrue()
+
+        assertThat(fakeApi.calls).isEmpty()
+        assertLocalListUnchanged()
+        // Initial sync setting remains unchanged, no last updated time set
+        assertThat(TraktSettings.isInitialSyncLists(context)).isTrue()
+        assertThat(TraktSettings.getLastListsUpdatedAt(context)).isEqualTo(0)
+    }
+
+    @Test
+    fun sync_getLists_fails_noChanges() {
         setRegularSync(time)
-        insertLocalList("A", "A", traktId = 1)
+        insertLocalList(traktId = 1)
         fakeApi.lists = null
 
         assertThat(createSync().sync(timeLater)).isFalse()
 
-        assertLocalListUnchanged("A", "A", traktId = 1)
+        assertLocalListUnchanged(traktId = 1)
         assertThat(TraktSettings.getLastListsUpdatedAt(context)).isEqualTo(millis(time))
     }
 
     @Test
-    fun initialSyncDelete_getListsFails_keepsLists() {
+    fun sync_missingTraktId_blankName_rollsBackChanges() {
         setInitialSync(InitialSync.EXISTING_LISTS_DELETE)
-        insertLocalList("A", "A")
-        fakeApi.lists = null
+        insertLocalList()
 
-        assertThat(createSync().sync(time)).isFalse()
-
-        assertLocalListUnchanged("A", "A")
-        assertThat(TraktSettings.isInitialSyncLists(context)).isTrue()
-    }
-
-    @Test
-    fun initialSyncDelete_missingTraktId_rollsBack() {
-        setInitialSync(InitialSync.EXISTING_LISTS_DELETE)
-        insertLocalList("A", "A")
+        // Missing Trakt ID
         fakeApi.lists = listOf(traktList(1, "B"), traktList(null, "C"))
-
         assertThat(createSync().sync(time)).isFalse()
 
-        assertLocalListUnchanged("A", "A")
-        assertThat(TraktSettings.isInitialSyncLists(context)).isTrue()
-    }
-
-    @Test
-    fun initialSyncDelete_blankName_rollsBack() {
-        setInitialSync(InitialSync.EXISTING_LISTS_DELETE)
-        insertLocalList("A", "A")
+        // Blank list name
         fakeApi.lists = listOf(traktList(1, "B"), traktList(2, " "))
-
         assertThat(createSync().sync(time)).isFalse()
 
-        assertLocalListUnchanged("A", "A")
+        assertLocalListUnchanged()
         assertThat(TraktSettings.isInitialSyncLists(context)).isTrue()
     }
 
@@ -151,37 +148,21 @@ class TraktListsSyncTest {
         assertThat(TraktSettings.getLastListsUpdatedAt(context)).isEqualTo(millis(timeLater))
     }
 
-    @Test
-    fun initialSync_noSyncPreference_doesNothing() {
-        setInitialSync(InitialSync.NO_SYNC)
-        insertLocalList("A", "A")
-
-        assertThat(createSync().sync(time)).isTrue()
-
-        assertNothingDone()
+    private fun insertLocalList(traktId: Long? = null) {
+        listHelper.insertList(
+            SgList(
+                listId = TEST_LIST_NAME_AND_ID,
+                name = TEST_LIST_NAME_AND_ID,
+                traktId = traktId
+            )
+        )
     }
 
-    @Test
-    fun initialSync_noPreference_defaultsToNoSync() {
-        insertLocalList("A", "A")
-
-        assertThat(createSync().sync(time)).isTrue()
-
-        assertNothingDone()
-    }
-
-    private fun assertNothingDone() {
-        assertThat(fakeApi.calls).isEmpty()
-        assertLocalListUnchanged("A", "A")
-        assertThat(TraktSettings.isInitialSyncLists(context)).isTrue()
-        assertThat(TraktSettings.getLastListsUpdatedAt(context)).isEqualTo(0)
-    }
-
-    private fun assertLocalListUnchanged(listId: String, name: String, traktId: Long? = null) {
+    private fun assertLocalListUnchanged(traktId: Long? = null) {
         val lists = listHelper.getListsForExport()
         assertThat(lists).hasSize(1)
-        assertThat(lists[0].listId).isEqualTo(listId)
-        assertThat(lists[0].name).isEqualTo(name)
+        assertThat(lists[0].listId).isEqualTo(TEST_LIST_NAME_AND_ID)
+        assertThat(lists[0].name).isEqualTo(TEST_LIST_NAME_AND_ID)
         assertThat(lists[0].traktId).isEqualTo(traktId)
     }
 
@@ -192,10 +173,6 @@ class TraktListsSyncTest {
         list.ids = ListIds().also { it.trakt = id }
         list.name = name
         return list
-    }
-
-    private fun insertLocalList(listId: String, name: String, traktId: Long? = null) {
-        listHelper.insertList(SgList(listId = listId, name = name, traktId = traktId))
     }
 
     private fun setRegularSync(lastUpdatedAt: OffsetDateTime) {
@@ -224,4 +201,7 @@ class TraktListsSyncTest {
             null.also { calls.add("addItemsToList $traktListId") }
     }
 
+    companion object {
+        private const val TEST_LIST_NAME_AND_ID = "A"
+    }
 }
