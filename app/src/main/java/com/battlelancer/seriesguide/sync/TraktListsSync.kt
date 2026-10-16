@@ -3,6 +3,7 @@
 
 package com.battlelancer.seriesguide.sync
 
+import android.content.Context
 import androidx.room.withTransaction
 import com.battlelancer.seriesguide.lists.ListsTools
 import com.battlelancer.seriesguide.lists.database.SgList
@@ -12,10 +13,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.traktapi.TraktSettings
 import com.battlelancer.seriesguide.traktapi.TraktSettings.InitialSync
-import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktErrorResponse
-import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktErrorResponse.IsAccountLimitExceeded
-import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktErrorResponse.IsAccountLocked
-import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse.Success
 import com.battlelancer.seriesguide.util.TimeTools
 import com.uwetrottmann.trakt5.entities.MovieIds
 import com.uwetrottmann.trakt5.entities.ShowIds
@@ -36,12 +33,13 @@ import java.io.IOException
  * [TraktMovieSync].
  */
 class TraktListsSync(
-    private val traktSync: TraktSync,
-    private val database: SgRoomDatabase = SgRoomDatabase.getInstance(traktSync.context),
+    private val context: Context,
+    private val api: TraktListsApi,
+    private val database: SgRoomDatabase = SgRoomDatabase.getInstance(context),
     private val listHelper: SgListHelper = database.sgListHelper()
 ) {
 
-    private val context = traktSync.context
+    constructor(traktSync: TraktSync) : this(traktSync.context, TraktSyncListsApi(traktSync))
 
     fun sync(updatedAt: OffsetDateTime?): Boolean {
         if (updatedAt == null) {
@@ -69,16 +67,8 @@ class TraktListsSync(
         }
 
         // Match local lists with what's on Trakt (not items)
-        val traktLists = runBlocking(Dispatchers.Default) {
-            when (val response = traktSync.traktTools.getLists(traktSync.users)) {
-                is Success -> response.data
-                is IsAccountLocked,
-                is IsAccountLimitExceeded,
-                is TraktErrorResponse.IsNotVip,
-                is TraktErrorResponse.IsUnauthorized,
-                is TraktErrorResponse.Other -> null
-            }
-        } ?: return false
+        val traktLists = runBlocking(Dispatchers.Default) { api.getLists() }
+            ?: return false
 
         try {
             runBlocking(Dispatchers.Default) {
@@ -220,9 +210,7 @@ class TraktListsSync(
             val listTraktIdOrNull = list.traktId
             val listTraktId: Long = if (listTraktIdOrNull == null) {
                 // Create list on Trakt if needed
-                val listTraktId = traktSync.awaitAndHandleUploadError {
-                    traktSync.traktTools.createList(traktSync.users, list.name)
-                }
+                val listTraktId = api.createList(list.name)
                 if (listTraktId == null) {
                     Timber.e(
                         "Failed to create Trakt list (name=%s)",
@@ -252,9 +240,8 @@ class TraktListsSync(
                 .shows(shows)
                 .movies(movies)
 
-            val syncResponse = traktSync.awaitAndHandleUploadError {
-                traktSync.traktTools.addItemsToList(traktSync.users, listTraktId, syncItems)
-            } ?: return false
+            val syncResponse = api.addItemsToList(listTraktId, syncItems)
+                ?: return false
 
             val notFoundMovies = syncResponse.not_found?.movies
             val notFoundShows = syncResponse.not_found?.shows
@@ -288,15 +275,7 @@ class TraktListsSync(
      */
     private suspend fun syncListItems(traktListId: Long): Boolean {
         // Do API call outside database transaction so it can complete quickly
-        val traktListItems =
-            when (val response = traktSync.traktTools.getListItems(traktSync.users, traktListId)) {
-                is Success -> response.data
-                is IsAccountLocked,
-                is IsAccountLimitExceeded,
-                is TraktErrorResponse.IsNotVip,
-                is TraktErrorResponse.IsUnauthorized,
-                is TraktErrorResponse.Other -> null
-            } ?: return false
+        val traktListItems = api.getListItems(traktListId) ?: return false
 
         try {
             database.withTransaction {
