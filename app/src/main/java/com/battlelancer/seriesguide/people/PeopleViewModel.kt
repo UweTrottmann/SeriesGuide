@@ -20,6 +20,7 @@ class PeopleViewModel(
     private val peopleType: PeopleActivity.PeopleType
 ) : AndroidViewModel(application) {
 
+    private var originalCredits = emptyList<Person>()
     val credits = MutableLiveData<List<Person>>()
 
     init {
@@ -40,10 +41,26 @@ class PeopleViewModel(
                 newCredits?.crew
             }
 
-            credits.postValue(castOrCrewOrNull ?: emptyList())
+            originalCredits = castOrCrewOrNull ?: emptyList()
+            credits.postValue(originalCredits)
         }
     }
 
+    fun filter(query: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val filterResult = originalCredits.filter { person ->
+                if (person.description != null) {
+                    person.name.contains(query, ignoreCase = true) ||
+                            person.description.contains(query, ignoreCase = true)
+                } else {
+                    person.name.contains(query, ignoreCase = true)
+                }
+            }
+            credits.postValue(filterResult)
+        }
+    }
+
+    fun isSearchOngoing() = credits.value?.size != originalCredits.size
 }
 
 class PeopleViewModelFactory(
