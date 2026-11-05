@@ -14,6 +14,7 @@ import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.androidutils.GenericSimpleLoader
 import com.uwetrottmann.trakt5.entities.Comment
+import com.uwetrottmann.trakt5.enums.CommentsSortBy
 import com.uwetrottmann.trakt5.enums.Extended
 import timber.log.Timber
 import javax.inject.Inject
@@ -34,6 +35,7 @@ class TraktCommentsLoader(context: Context, private val args: Bundle) :
     }
 
     override fun loadInBackground(): Result {
+        val languageCode = CommentsSettings.getCommentsLanguage(context)
         val cacheControl = if (args.getBoolean(ARG_REFRESH)) "no-cache" else null
 
         // movie comments?
@@ -43,8 +45,10 @@ class TraktCommentsLoader(context: Context, private val args: Bundle) :
                 val response = trakt.movies()
                     .comments(
                         movieTraktId.toString(),
+                        CommentsSortBy.NEWEST,
                         1,
                         PAGE_SIZE,
+                        languageCode,
                         Extended.FULL,
                         cacheControl
                     )
@@ -84,7 +88,10 @@ class TraktCommentsLoader(context: Context, private val args: Bundle) :
                         showTraktId.toString(),
                         episode.season,
                         episode.episodenumber,
-                        1, PAGE_SIZE, Extended.FULL,
+                        CommentsSortBy.NEWEST,
+                        1, PAGE_SIZE,
+                        languageCode,
+                        Extended.FULL,
                         cacheControl
                     ).execute()
                 if (response.isSuccessful) {
@@ -107,8 +114,10 @@ class TraktCommentsLoader(context: Context, private val args: Bundle) :
             val response = trakt.shows()
                 .comments(
                     showTraktId.toString(),
+                    CommentsSortBy.NEWEST,
                     1,
                     PAGE_SIZE,
+                    languageCode,
                     Extended.FULL,
                     cacheControl
                 )

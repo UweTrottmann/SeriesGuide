@@ -478,6 +478,35 @@
         <item>zu</item> <!-- Zulu -->
     </string-array>
 
+    <!-- For filtering reviews/comments Trakt uses two-letter language codes.
+    Taken from website language picker on 2026-11-05. -->
+    <string-array name="filter_languages_comments">
+        <item>ar</item> <!-- Arabic -->
+        <item>bg</item> <!-- Bulgarian -->
+        <item>ca</item> <!-- Catalan -->
+        <item>da</item> <!-- Danish -->
+        <item>de</item> <!-- German -->
+        <item>el</item> <!-- Greek -->
+        <item>en</item> <!-- English -->
+        <item>es</item> <!-- Spanish -->
+        <item>fa</item> <!-- Persian -->
+        <item>fr</item> <!-- French -->
+        <item>hu</item> <!-- Hungarian -->
+        <item>id</item> <!-- Indonesian -->
+        <item>it</item> <!-- Italian -->
+        <item>ja</item> <!-- Japanese -->
+        <item>nb</item> <!-- Norwegian Bokmål -->
+        <item>nl</item> <!-- Dutch -->
+        <item>pl</item> <!-- Polish -->
+        <item>pt</item> <!-- Portuguese -->
+        <item>ro</item> <!-- Romanian -->
+        <item>ru</item> <!-- Russian -->
+        <item>sv</item> <!-- Swedish -->
+        <item>tr</item> <!-- Turkish -->
+        <item>uk</item> <!-- Ukrainian -->
+        <item>zh</item> <!-- Chinese -->
+    </string-array>
+
     <!-- Used in legacy versions. -->
     <string name="language_code_any">xx</string>
 

@@ -29,10 +29,12 @@ import com.battlelancer.seriesguide.databinding.FragmentCommentsBinding
 import com.battlelancer.seriesguide.traktapi.TraktAction
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktTask.TraktActionCompleteEvent
+import com.battlelancer.seriesguide.ui.dialogs.LanguagePickerDialogFragment
 import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.WebTools
+import com.battlelancer.seriesguide.util.findDialog
 import com.battlelancer.seriesguide.util.safeShow
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.trakt5.TraktLink
@@ -128,6 +130,10 @@ class TraktCommentsFragment : Fragment() {
             }
         }
 
+        // Re-attach listener to language picker if it is showing
+        findDialog<LanguagePickerDialogFragment>(parentFragmentManager, TAG_LANGUAGE_PICKER)
+            ?.onPickedListener = onLanguagePickedListener
+
         // load data
         LoaderManager.getInstance(this)
             .initLoader(
@@ -218,8 +224,25 @@ class TraktCommentsFragment : Fragment() {
             if (itemId == R.id.menu_action_comments_refresh) {
                 refreshCommentsWithNetworkCheck()
                 return true
+            } else if (itemId == R.id.menu_action_comments_language) {
+                showLanguagePicker()
+                return true
             }
             return false
+        }
+    }
+
+    private fun showLanguagePicker() {
+        LanguagePickerDialogFragment
+            .createForComments(CommentsSettings.getCommentsLanguage(requireContext()))
+            .apply { onPickedListener = onLanguagePickedListener }
+            .safeShow(parentFragmentManager, TAG_LANGUAGE_PICKER)
+    }
+
+    private val onLanguagePickedListener = object : LanguagePickerDialogFragment.OnPickedListener {
+        override fun onPicked(languageCode: String?) {
+            CommentsSettings.saveCommentsLanguage(requireContext(), languageCode)
+            refreshCommentsWithNetworkCheck()
         }
     }
 
@@ -321,6 +344,8 @@ class TraktCommentsFragment : Fragment() {
     }
 
     companion object {
+        private const val TAG_LANGUAGE_PICKER = "languagePicker"
+
         val liftOnScrollTargetViewId = R.id.listViewShouts
     }
 }

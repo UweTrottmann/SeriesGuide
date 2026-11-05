@@ -4,6 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/menu_action_comments_language"
+        android:icon="@drawable/ic_language_white_24dp"
+        android:title="@string/filter_language"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/menu_action_comments_refresh"
         android:icon="@drawable/ic_refresh_white_24dp"
         android:title="@string/refresh"
