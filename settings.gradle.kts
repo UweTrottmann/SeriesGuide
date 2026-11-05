@@ -24,7 +24,7 @@ dependencyResolutionManagement {
         maven { url = uri("https://jitpack.io") }
         // For testing local snapshots
         // (might also want to set isChanging = true to update snapshot versions)
-//        mavenLocal()
+        mavenLocal()
     }
 }
 

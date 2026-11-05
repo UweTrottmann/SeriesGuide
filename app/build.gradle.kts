@@ -191,6 +191,10 @@ tasks.named("preBuild") {
     dependsOn("copyCredits")
 }
 
+configurations.configureEach {
+    resolutionStrategy.cacheChangingModulesFor(0, "minutes")
+}
+
 dependencies {
     constraints {
         // androidx.room:room-paging-android pulls in a paging-common 3.3 version (but does not
