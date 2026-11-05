@@ -71,7 +71,7 @@ class TraktComments(
      * Assumes the user connected to Trakt is the user of this comment.
      * Otherwise, the user is signed out.
      */
-    suspend fun editComment(commentId: Int, comment: String, isSpoiler: Boolean) {
+    suspend fun editComment(commentId: Long, comment: String, isSpoiler: Boolean) {
         val traktComment = buildComment(comment, isSpoiler).also {
             it.id = commentId
         }
@@ -86,7 +86,7 @@ class TraktComments(
      *
      * This may fail if the comment is too old or has replies.
      */
-    suspend fun deleteComment(commentId: Int) {
+    suspend fun deleteComment(commentId: Long) {
         withContext(Dispatchers.IO) {
             executeCommentCall(trakt.comments().delete(commentId), "delete comment")
         }
@@ -137,7 +137,7 @@ class TraktComments(
             ?: context.getString(R.string.api_error_generic, context.getString(R.string.trakt))
         // In all other cases fail with error message
         EventBus.getDefault()
-            .post(TraktTask.TraktActionCompleteEvent(TraktAction.COMMENT, false, errorMessage));
+            .post(TraktTask.TraktActionCompleteEvent(TraktAction.COMMENT, false, errorMessage))
     }
 
 }

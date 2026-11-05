@@ -225,17 +225,17 @@ class TraktCommentsFragment : Fragment() {
 
     private val onItemClickListener =
         object : TraktCommentsAdapter.OnItemClickListener {
-            override fun onOpenWebsite(commentId: Int) {
+            override fun onOpenWebsite(commentId: Long) {
                 WebTools.openInApp(requireContext(), TraktLink.comment(commentId))
             }
 
-            override fun onEdit(commentId: Int, comment: String, isSpoiler: Boolean) {
+            override fun onEdit(commentId: Long, comment: String, isSpoiler: Boolean) {
                 model.commentIdToEdit.value = commentId
                 binding?.textFieldLayoutComments?.editText?.setText(comment)
                 binding?.checkBoxShouts?.isChecked = isSpoiler
             }
 
-            override fun onDelete(commentId: Int) {
+            override fun onDelete(commentId: Long) {
                 model.commentIdToDelete.value = commentId
                 DeleteCommentDialogFragment().safeShow(parentFragmentManager, "delete-comment")
             }

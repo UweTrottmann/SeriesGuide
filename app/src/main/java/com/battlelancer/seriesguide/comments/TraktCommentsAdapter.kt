@@ -40,9 +40,9 @@ class TraktCommentsAdapter(
         AppCompatResources.getDrawable(context, R.drawable.ic_account_circle_control_24dp)!!
 
     interface OnItemClickListener {
-        fun onOpenWebsite(commentId: Int)
-        fun onEdit(commentId: Int, comment: String, isSpoiler: Boolean)
-        fun onDelete(commentId: Int)
+        fun onOpenWebsite(commentId: Long)
+        fun onEdit(commentId: Long, comment: String, isSpoiler: Boolean)
+        fun onDelete(commentId: Long)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentViewHolder {
