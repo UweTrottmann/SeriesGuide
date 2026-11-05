@@ -10,6 +10,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ### Next release
 
+* 🔧 Trakt: use new auth subdomain to connect.
+
 ## Version 2026.5
 
 ### 2026.5.0 - 2026-10-08 🧪
