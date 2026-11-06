@@ -584,38 +584,38 @@
     <string name="title_stream_rent">Location</string>
     <!-- Cloud Authentication -->
     <!-- Common -->
-    <string name="auth_action_back" comment="Action to go back">Back</string>
-    <string name="auth_message_privacy_policy" comment="Privacy policy message, the placeholder will use the label for privacy_policy">When you use this feature, additional data is processed as described in the <xliff:g comment="Privacy policy label">%1$s</xliff:g>.</string>
-    <string name="auth_message_new_accounts_disabled" comment="Message shown when creating new accounts is not allowed">Creating new accounts is currently not allowed</string>
+    <string name="auth_action_back" comment="Action to go back">Retour</string>
+    <string name="auth_message_privacy_policy" comment="Privacy policy message, the placeholder will use the label for privacy_policy">Lorsque vous utilisez cette fonctionnalité, des données supplémentaires sont traitées comme décrit dans les <xliff:g comment="Privacy policy label">%1$s</xliff:g>.</string>
+    <string name="auth_message_new_accounts_disabled" comment="Message shown when creating new accounts is not allowed">La création de nouveaux comptes n\'est actuellement pas autorisée</string>
     <!-- Auth method picker -->
-    <string name="auth_action_sign_in_with_google" comment="Action to sign in with a Google account">Sign in with Google</string>
-    <string name="auth_action_sign_in_with_email" comment="Action to sign in with an email address">Sign in with email</string>
-    <string name="auth_action_continue_with_google" comment="Action to continue signing in with a suggested Google account">Continue with Google</string>
-    <string name="auth_action_continue_with_email" comment="Action to continue signing in with a suggested email address">Continue with email</string>
+    <string name="auth_action_sign_in_with_google" comment="Action to sign in with a Google account">Se connecter avec Google</string>
+    <string name="auth_action_sign_in_with_email" comment="Action to sign in with an email address">Se connecter avec une adresse e-mail</string>
+    <string name="auth_action_continue_with_google" comment="Action to continue signing in with a suggested Google account">Continuer avec Google</string>
+    <string name="auth_action_continue_with_email" comment="Action to continue signing in with a suggested email address">Continuer avec une adresse e-mail</string>
     <!-- Email auth -->
-    <string name="auth_hint_name" comment="Hint for name input field">Your name</string>
-    <string name="auth_hint_email" comment="Hint for email input field">Email</string>
-    <string name="auth_hint_password" comment="Hint for password input field">Password</string>
-    <string name="auth_hint_confirm_password" comment="Hint for confirm password input field">Confirm Password</string>
-    <string name="auth_hint_confirm_password_does_not_match" comment="Hint when password entered in confirm password field does not match">Passwords do not match</string>
-    <string name="auth_hint_required" comment="Hint that the value of an input field is required">Required</string>
-    <string name="auth_hint_email_required" comment="Hint that a valid email address is required in an input field">Valid email address required</string>
-    <string name="auth_action_sign_up" comment="Action to create an account">Create an account</string>
-    <string name="auth_error_email_alreay_in_use" comment="Error message when signing up with a used email address">This email address is already in use by an existing account. Sign in with this email address instead.</string>
-    <string name="auth_action_show_password" comment="Action to show the password in a text field">Show password</string>
+    <string name="auth_hint_name" comment="Hint for name input field">Votre nom</string>
+    <string name="auth_hint_email" comment="Hint for email input field">E-mail</string>
+    <string name="auth_hint_password" comment="Hint for password input field">Mot de passe</string>
+    <string name="auth_hint_confirm_password" comment="Hint for confirm password input field">Confirmer le mot de passe</string>
+    <string name="auth_hint_confirm_password_does_not_match" comment="Hint when password entered in confirm password field does not match">Les mots de passe ne correspondent pas</string>
+    <string name="auth_hint_required" comment="Hint that the value of an input field is required">Obligatoire</string>
+    <string name="auth_hint_email_required" comment="Hint that a valid email address is required in an input field">Adresse e-mail valide requise</string>
+    <string name="auth_action_sign_up" comment="Action to create an account">Créer un compte</string>
+    <string name="auth_error_email_alreay_in_use" comment="Error message when signing up with a used email address">Cette adresse e-mail est déjà utilisée par un compte existant. Connectez-vous plutôt avec cette adresse e-mail.</string>
+    <string name="auth_action_show_password" comment="Action to show the password in a text field">Afficher le mot de passe</string>
     <!-- Password validation messages -->
-    <string name="auth_error_weak_password" comment="Error message when password does not meet requirements">Password not strong enough</string>
+    <string name="auth_error_weak_password" comment="Error message when password does not meet requirements">Mot de passe trop faible</string>
     <plurals name="auth_error_password_too_short" comment="Error message when password is too short">
-        <item quantity="one">Use at least %1$d character</item>
-        <item quantity="other">Use at least %1$d characters</item>
+        <item quantity="one">Utilisez au moins %1$d caractère</item>
+        <item quantity="other">Utilisez au moins %1$d caractères</item>
     </plurals>
     <!-- Password recovery -->
-    <string name="auth_action_reset_password" comment="Action to reset password">Reset password</string>
-    <string name="auth_title_reset_password_instructions" comment="Title of reset password instructions">Check your email</string>
-    <string name="auth_message_reset_password_instructions" comment="Reset password instructions">If an account for this email address exists, an email with instructions to reset your password was sent to it.</string>
+    <string name="auth_action_reset_password" comment="Action to reset password">Réinitialiser le mot de passe</string>
+    <string name="auth_title_reset_password_instructions" comment="Title of reset password instructions">Vérifiez vos e-mails</string>
+    <string name="auth_message_reset_password_instructions" comment="Reset password instructions">Si un compte existe pour cette adresse e-mail, un e-mail contenant les instructions pour réinitialiser votre mot de passe y a été envoyé.</string>
     <!-- Error Recovery Dialog -->
-    <string name="auth_error_account_linking_required" comment="Error message when account exists, but created with different sign-in method">An account was already created for this email address using a different sign-in method. Sign in using the original method to add this one.</string>
-    <string name="auth_error_no_google_account_available" comment="Error message when trying to sign in with Google but no Google accounts are available on the device">No Google account is available on this device. Sign in using email or add a Google account to this device.</string>
-    <string name="auth_error_unknown" comment="General error messages for an unknown failure.">An unknown error occurred</string>
-    <string name="auth_error_invalid_password" comment="Error message for when signing in fails.">This password is incorrect, this account does not support signing in with a password or there is no account with this email address. Maybe reset your password.</string>
+    <string name="auth_error_account_linking_required" comment="Error message when account exists, but created with different sign-in method">Un compte a déjà été créé pour cette adresse e-mail avec une autre méthode de connexion. Connectez-vous avec la méthode d\'origine pour ajouter celle-ci.</string>
+    <string name="auth_error_no_google_account_available" comment="Error message when trying to sign in with Google but no Google accounts are available on the device">Aucun compte Google n\'est disponible sur cet appareil. Connectez-vous avec une adresse e-mail ou ajoutez un compte Google à cet appareil.</string>
+    <string name="auth_error_unknown" comment="General error messages for an unknown failure.">Une erreur inconnue s\'est produite</string>
+    <string name="auth_error_invalid_password" comment="Error message for when signing in fails.">Ce mot de passe est incorrect, ce compte ne prend pas en charge la connexion par mot de passe ou aucun compte n\'existe avec cette adresse e-mail. Essayez de réinitialiser votre mot de passe.</string>
 </resources>
