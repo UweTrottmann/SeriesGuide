@@ -8,12 +8,12 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
 
-### Next release
-
-* 🔧 Reviews: add language filter and option to sort by popularity, display reaction count.
-* 🔧 Trakt: use new auth subdomain to connect.
-
 ## Version 2026.5
+
+### 2026.5.1 - 2026-11-06 🧪
+
+* 🔧 Reviews: add language filter and option to sort by reactions, display reaction count.
+* 🔧 Trakt: use new auth subdomain to connect.
 
 ### 2026.5.0 - 2026-10-08 🧪
 
