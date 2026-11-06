@@ -123,10 +123,18 @@ class TraktCommentsFragment : Fragment() {
         binding.recyclerViewComments.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewComments.adapter = adapter
 
+        // Change post button label if editing
         viewLifecycleOwner.lifecycleScope.launch {
             model.commentIdToEdit.collect {
                 binding.buttonShouts
                     .setText(if (it != null) R.string.action_edit_comment else R.string.action_post)
+            }
+        }
+
+        // Sort order
+        viewLifecycleOwner.lifecycleScope.launch {
+            CommentsSettings.sortOrderChanges(requireContext()).collect {
+                refreshCommentsWithNetworkCheck()
             }
         }
 
@@ -221,14 +229,24 @@ class TraktCommentsFragment : Fragment() {
 
         override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
             val itemId = menuItem.itemId
-            if (itemId == R.id.menu_action_comments_refresh) {
-                refreshCommentsWithNetworkCheck()
-                return true
-            } else if (itemId == R.id.menu_action_comments_language) {
-                showLanguagePicker()
-                return true
+            when (itemId) {
+                R.id.menu_action_comments_refresh -> {
+                    refreshCommentsWithNetworkCheck()
+                    return true
+                }
+
+                R.id.menu_action_comments_language -> {
+                    showLanguagePicker()
+                    return true
+                }
+
+                R.id.menu_action_comments_sort -> {
+                    CommentsSettings.showSortOrderDialog(requireContext(), parentFragmentManager)
+                    return true
+                }
+
+                else -> return false
             }
-            return false
         }
     }
 

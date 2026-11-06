@@ -465,6 +465,7 @@
     <string name="sort_order_top_rated_first">Top rated</string>
     <string name="sort_order_latest_first_dvd">Latest first (DVD)</string>
     <string name="sort_order_oldest_first_dvd">Oldest first (DVD)</string>
+    <string name="sort_order_reactions">Reactions</string>
 
     <!-- Upcoming thresholds -->
     <string name="pref_upcominglimit">Upcoming range</string>

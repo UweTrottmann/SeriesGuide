@@ -169,6 +169,16 @@
         <item>dvdoldestfirst</item>
     </string-array>
 
+    <!-- Comments sort orders -->
+    <string-array name="comments_sorting">
+        <item>@string/sort_order_latest_first</item>
+        <item>@string/sort_order_reactions</item>
+    </string-array>
+    <string-array name="comments_sorting_data">
+        <item>newest</item>
+        <item>likes</item>
+    </string-array>
+
     <!-- Content languages -->
     <!-- These are the primary languages of TMDB
     https://developer.themoviedb.org/reference/configuration-primary-translations

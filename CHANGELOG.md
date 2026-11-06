@@ -10,7 +10,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ### Next release
 
-* 🔧 Reviews: add language filter.
+* 🔧 Reviews: add language filter and option to sort by popularity.
 * 🔧 Trakt: use new auth subdomain to connect.
 
 ## Version 2026.5
