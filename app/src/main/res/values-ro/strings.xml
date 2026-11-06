@@ -84,6 +84,11 @@
         <item quantity="few">%d răspunsuri</item>
         <item quantity="other">%d răspunsuri</item>
     </plurals>
+    <plurals name="reactions_plural">
+        <item quantity="one">%d reaction</item>
+        <item quantity="few">%d reactions</item>
+        <item quantity="other">%d reactions</item>
+    </plurals>
     <!-- Metadata -->
     <string name="episode_number_disk">DVD</string>
     <string name="episode_firstaired">Data de lansare</string>
@@ -444,6 +449,7 @@
     <string name="sort_order_top_rated_first">Cele mai votate</string>
     <string name="sort_order_latest_first_dvd">Cele mai noi primele (DVD)</string>
     <string name="sort_order_oldest_first_dvd">Cele mai vechi primele (DVD)</string>
+    <string name="sort_order_reactions">Reactions</string>
     <!-- Upcoming thresholds -->
     <string name="pref_upcominglimit">Interval pentru Urmează</string>
     <string name="upcoming_upto_now">acum</string>

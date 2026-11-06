@@ -27,7 +27,8 @@ public class SgTraktInterceptor implements Interceptor {
     @NonNull
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
+        // User agent is set globally, see HttpClientModule
         return TraktV2Interceptor.handleIntercept(chain, trakt.get().apiKey(),
-                trakt.get().accessToken());
+                trakt.get().accessToken(), null);
     }
 }

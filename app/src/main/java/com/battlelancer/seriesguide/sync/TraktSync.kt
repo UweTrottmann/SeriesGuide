@@ -16,9 +16,9 @@ import com.battlelancer.seriesguide.util.Errors
 import com.github.michaelbull.result.getOrElse
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.trakt5.TraktV2
-import com.uwetrottmann.trakt5.entities.LastActivityMore
 import com.uwetrottmann.trakt5.services.Sync
 import com.uwetrottmann.trakt5.services.Users
+import org.threeten.bp.OffsetDateTime
 import retrofit2.Response
 import timber.log.Timber
 
@@ -90,7 +90,11 @@ class TraktSync(
                 progress.publish(SyncProgress.Step.TRAKT_EPISODES)
                 progress.throwIfCanceled()
                 if (noConnection()) return SgSyncAdapter.UpdateResult.INCOMPLETE
-                if (!syncEpisodes(tmdbIdsToShowIds, lastActivity.episodes)) {
+                if (!syncEpisodes(
+                        tmdbIdsToShowIds,
+                        lastWatchedAt = lastActivity.episodesLastWatchedAt,
+                        lastCollectedAt = lastActivity.episodesLastCollectedAt
+                    )) {
                     progress.recordError()
                     return SgSyncAdapter.UpdateResult.INCOMPLETE
                 }
@@ -99,7 +103,7 @@ class TraktSync(
             progress.publish(SyncProgress.Step.TRAKT_RATINGS)
             progress.throwIfCanceled()
             if (noConnection()) return SgSyncAdapter.UpdateResult.INCOMPLETE
-            if (!ratingsSync.downloadForEpisodes(lastActivity.episodes.rated_at)) {
+            if (!ratingsSync.downloadForEpisodes(lastActivity.episodesLastRatedAt)) {
                 progress.recordError()
                 return SgSyncAdapter.UpdateResult.INCOMPLETE
             }
@@ -108,7 +112,7 @@ class TraktSync(
             // Download show ratings.
             progress.throwIfCanceled()
             if (noConnection()) return SgSyncAdapter.UpdateResult.INCOMPLETE
-            if (!ratingsSync.downloadForShows(lastActivity.shows.rated_at)) {
+            if (!ratingsSync.downloadForShows(lastActivity.showsLastRatedAt)) {
                 progress.recordError()
                 return SgSyncAdapter.UpdateResult.INCOMPLETE
             }
@@ -117,7 +121,7 @@ class TraktSync(
                 progress.publish(SyncProgress.Step.TRAKT_NOTES)
                 progress.throwIfCanceled()
                 if (noConnection()) return SgSyncAdapter.UpdateResult.INCOMPLETE
-                if (!TraktNotesSync(this).syncForShows(lastActivity.notes.updated_at)) {
+                if (!TraktNotesSync(this).syncForShows(lastActivity.notesLastUpdatedAt)) {
                     progress.recordError()
                     return SgSyncAdapter.UpdateResult.INCOMPLETE
                 }
@@ -130,7 +134,11 @@ class TraktSync(
         if (!onlyRatings) {
             progress.throwIfCanceled()
             if (noConnection()) return SgSyncAdapter.UpdateResult.INCOMPLETE
-            if (!TraktMovieSync(this).syncLists(lastActivity.movies)) {
+            if (!TraktMovieSync(this).syncLists(
+                    collectedAt = lastActivity.moviesLastCollectedAt,
+                    watchlistedAt = lastActivity.moviesLastWatchlistedAt,
+                    watchedAt = lastActivity.moviesLastWatchedAt
+                )) {
                 progress.recordError()
                 return SgSyncAdapter.UpdateResult.INCOMPLETE
             }
@@ -141,7 +149,7 @@ class TraktSync(
         progress.publish(SyncProgress.Step.TRAKT_RATINGS)
         progress.throwIfCanceled()
         if (noConnection()) return SgSyncAdapter.UpdateResult.INCOMPLETE
-        if (!ratingsSync.downloadForMovies(lastActivity.movies.rated_at)) {
+        if (!ratingsSync.downloadForMovies(lastActivity.moviesLastRatedAt)) {
             progress.recordError()
             return SgSyncAdapter.UpdateResult.INCOMPLETE
         }
@@ -156,7 +164,8 @@ class TraktSync(
      */
     private fun syncEpisodes(
         tmdbIdsToShowIds: Map<Int, Long>,
-        lastActivity: LastActivityMore
+        lastWatchedAt: OffsetDateTime?,
+        lastCollectedAt: OffsetDateTime?
     ): Boolean {
         // Download flags.
         // If initial sync, upload any flags missing on Trakt
@@ -165,14 +174,12 @@ class TraktSync(
 
         // Watched episodes.
         val episodeSync = TraktEpisodeSync(this)
-        if (!episodeSync
-                .syncWatched(tmdbIdsToShowIds, lastActivity.watched_at, isInitialSync)) {
+        if (!episodeSync.syncWatched(tmdbIdsToShowIds, lastWatchedAt, isInitialSync)) {
             return false // failed, give up.
         }
 
         // Collected episodes.
-        if (!episodeSync
-                .syncCollected(tmdbIdsToShowIds, lastActivity.collected_at, isInitialSync)) {
+        if (!episodeSync.syncCollected(tmdbIdsToShowIds, lastCollectedAt, isInitialSync)) {
             return false
         }
 

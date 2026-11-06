@@ -13,8 +13,8 @@ import kotlinx.coroutines.launch
 
 class TraktCommentsViewModel(application: Application) : AndroidViewModel(application) {
 
-    val commentIdToEdit = MutableStateFlow<Int?>(null)
-    val commentIdToDelete = MutableStateFlow<Int?>(null)
+    val commentIdToEdit = MutableStateFlow<Long?>(null)
+    val commentIdToDelete = MutableStateFlow<Long?>(null)
 
     fun postShowComment(showId: Long, comment: String, isSpoiler: Boolean) {
         SgApp.coroutineScope.launch(Dispatchers.IO) {
@@ -46,7 +46,7 @@ class TraktCommentsViewModel(application: Application) : AndroidViewModel(applic
         }
     }
 
-    fun editComment(commentId: Int, comment: String, isSpoiler: Boolean) {
+    fun editComment(commentId: Long, comment: String, isSpoiler: Boolean) {
         SgApp.coroutineScope.launch {
             SgApp.getServicesComponent(getApplication()).trakt().sgComments()
                 .editComment(commentId, comment, isSpoiler)

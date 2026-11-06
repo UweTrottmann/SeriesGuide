@@ -82,6 +82,9 @@
     <plurals name="replies_plural">
         <item quantity="other">답글 %d개</item>
     </plurals>
+    <plurals name="reactions_plural">
+        <item quantity="other">%d reactions</item>
+    </plurals>
     <!-- Metadata -->
     <string name="episode_number_disk">DVD</string>
     <string name="episode_firstaired">방영일</string>
@@ -416,6 +419,7 @@
     <string name="sort_order_top_rated_first">최고 점수</string>
     <string name="sort_order_latest_first_dvd">내림차순 (DVD)</string>
     <string name="sort_order_oldest_first_dvd">오름차순 (DVD)</string>
+    <string name="sort_order_reactions">Reactions</string>
     <!-- Upcoming thresholds -->
     <string name="pref_upcominglimit">방영예정 날짜</string>
     <string name="upcoming_upto_now">지금</string>
