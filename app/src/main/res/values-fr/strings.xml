@@ -68,24 +68,24 @@
     <string name="addtocalendar">Ajouter à l\'agenda</string>
     <string name="addtocalendar_failed">Impossible de créer un évènement sur l\'agenda.</string>
     <!-- Reviews -->
-    <string name="reviews_title">Reviews</string>
-    <string name="reviews_label_provided_by">Reviews from Trakt</string>
-    <string name="reviews_hint_empty">Be the first to write a review!</string>
-    <string name="reviews_hint_write_review">Write a review (English, 5+ words)</string>
-    <string name="reviews_error_violates_rules">Your review does not follow the rules!</string>
+    <string name="reviews_title">Critiques</string>
+    <string name="reviews_label_provided_by">Critiques de Trakt</string>
+    <string name="reviews_hint_empty">Écrivez la première critique !</string>
+    <string name="reviews_hint_write_review">Écrire une critique (en anglais, 5 mots ou plus)</string>
+    <string name="reviews_error_violates_rules">Votre critique ne respecte pas les règles !</string>
     <string name="action_post">Publier</string>
     <string name="action_edit_comment">Modifier</string>
     <string name="action_delete_comment">Supprimer</string>
-    <string name="reviews_title_confirm_delete">Delete this review?</string>
-    <string name="reviews_error_delete">Review not deleted, it is too old or has replies</string>
+    <string name="reviews_title_confirm_delete">Supprimer cette critique ?</string>
+    <string name="reviews_error_delete">Critique non supprimée, elle est trop ancienne ou a des réponses</string>
     <string name="isspoiler">Alerte au spoiler !</string>
     <plurals name="replies_plural">
         <item quantity="one">%d réponse</item>
         <item quantity="other">%d réponses</item>
     </plurals>
     <plurals name="reactions_plural">
-        <item quantity="one">%d reaction</item>
-        <item quantity="other">%d reactions</item>
+        <item quantity="one">%d réaction</item>
+        <item quantity="other">%d réactions</item>
     </plurals>
     <!-- Metadata -->
     <string name="episode_number_disk">DVD</string>
@@ -240,7 +240,7 @@
     <string name="watched_shows">Vu</string>
     <!-- Keep shows_collection for potential later use. -->
     <string name="shows_collection" tools:ignore="UnusedResources">Collection</string>
-    <string name="title_library">Library</string>
+    <string name="title_library">Bibliothèque</string>
     <string name="watchlist">Liste à voir</string>
     <!-- Similar shows -->
     <string name="action_similar">Similaires</string>
@@ -265,12 +265,12 @@
     <string name="ack_list_item_manage">Listes mises à jour</string>
     <string name="list_item_remove">Retirer de la liste</string>
     <string name="ack_list_item_removed">Retiré de la liste</string>
-    <string name="list_empty">You can add shows or movies to this list</string>
+    <string name="list_empty">Vous pouvez ajouter des séries ou des films à cette liste</string>
     <string name="action_lists_reorder">Réorganiser les listes</string>
     <string name="ack_lists_reordered">Listes réordonnées</string>
     <string name="error_name_already_exists">Une liste portant ce nom existe déjà</string>
-    <string name="action_lists_sort_latest_release_date">Latest release date</string>
-    <string name="action_lists_sort_oldest_release_date">Oldest release date</string>
+    <string name="action_lists_sort_latest_release_date">Date de sortie la plus récente</string>
+    <string name="action_lists_sort_oldest_release_date">Date de sortie la plus ancienne</string>
     <!-- Movies -->
     <string name="title_digital_releases">Versions numériques</string>
     <string name="title_disc_releases">Sorties DVD</string>
@@ -319,11 +319,11 @@
     <string name="feature_not_supported">Non pris en charge</string>
     <string name="feature_disabled">Désactivé</string>
     <string name="feature_history">Historique personnel et des amis</string>
-    <string name="feature_comments">Write reviews</string>
+    <string name="feature_comments">Écrire des critiques</string>
     <string name="feature_sync">Synchronisation</string>
     <!-- Hexagon -->
     <string name="hexagon_description">Le cloud SeriesGuide permet de sauvegarder et de synchroniser vos listes, émissions et films.</string>
-    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud, some Trakt features are disabled and changes are only sent to your Trakt account, not retrieved.</string>
+    <string name="hexagon_warning_trakt">Lorsque vous êtes connecté à SeriesGuide Cloud, certaines fonctionnalités de Trakt sont désactivées et les modifications sont uniquement envoyées à votre compte Trakt, sans être récupérées.</string>
     <string name="hexagon_signin">Connexion</string>
     <string name="hexagon_signout">Déconnexion</string>
     <string name="hexagon_setup_incomplete">La configuration du cloud SeriesGuide n\'était pas terminée.</string>
@@ -358,8 +358,8 @@
     <string name="disconnect">Se déconnecter</string>
     <string name="show_library">Ajouter des séries de Trakt</string>
     <string name="about_trakt">Trakt vous permet de garder une trace des séries et films que vous regardez.</string>
-    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
-    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
+    <string name="trakt_note_collection">Ce que Trakt appelle bibliothèque s\'appelle collection dans SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Une fois connecté, ajoutez des séries de votre compte Trakt à l\'aide des éléments Trakt de l\'onglet « A découvrir ».</string>
     <!-- trakt ratings -->
     <string name="action_rate">Noter</string>
     <string name="ack_rated">Note envoyée</string>
@@ -389,7 +389,7 @@
     <string name="feedback">Envoyer un e-mail</string>
     <!-- Settings -->
     <string name="action_translate">Traduisez cette application</string>
-    <string name="title_app_language">App language</string>
+    <string name="title_app_language">Langue de l\'application</string>
     <string name="prefs_category_advanced">Avancé</string>
     <string name="prefs_category_about">A propos</string>
     <string name="pref_onlyfuture">Pas d\'épisodes diffusés</string>
@@ -434,7 +434,7 @@
     <string name="sort_order_top_rated_first">Les mieux notés</string>
     <string name="sort_order_latest_first_dvd">Plus récents en premier (DVD)</string>
     <string name="sort_order_oldest_first_dvd">Plus ancien en premier (DVD)</string>
-    <string name="sort_order_reactions">Reactions</string>
+    <string name="sort_order_reactions">Réactions</string>
     <!-- Upcoming thresholds -->
     <string name="pref_upcominglimit">Période pour l\'affichage \"à venir\"</string>
     <string name="upcoming_upto_now">maintenant</string>
