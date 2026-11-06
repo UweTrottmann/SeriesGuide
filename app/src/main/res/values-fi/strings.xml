@@ -601,7 +601,7 @@
     <!-- Password validation messages -->
     <string name="auth_error_weak_password" comment="Error message when password does not meet requirements">Salasana ei ole tarpeeksi vahva</string>
     <plurals name="auth_error_password_too_short" comment="Error message when password is too short">
-        <item quantity="one">Use at least %1$d character</item>
+        <item quantity="one">Käytä vähintään %1$d merkkiä</item>
         <item quantity="other">Käytä vähintään %1$d merkkiä</item>
     </plurals>
     <!-- Password recovery -->
