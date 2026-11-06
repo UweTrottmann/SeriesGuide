@@ -386,7 +386,7 @@ class ShowsHistoryFragment : Fragment() {
                 id: Int,
                 args: Bundle?
             ): Loader<TraktRecentEpisodeHistoryLoader.Result> {
-                return TraktRecentEpisodeHistoryLoader(activity)
+                return TraktRecentEpisodeHistoryLoader(requireContext())
             }
 
             override fun onLoadFinished(

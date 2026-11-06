@@ -27,7 +27,7 @@ internal class TraktFriendsMovieHistoryLoader(context: Context) :
         }
 
         // get all trakt friends
-        val traktUsers = SgApp.getServicesComponent(context).traktUsers()!!
+        val traktUsers = SgApp.getServicesComponent(context).trakt().users()
         val friends = SgTrakt.executeAuthenticatedCall(
             context,
             traktUsers.friends(UserSlug.ME, Extended.FULL), "get friends"

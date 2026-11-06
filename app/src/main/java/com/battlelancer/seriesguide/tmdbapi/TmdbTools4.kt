@@ -6,8 +6,10 @@ package com.battlelancer.seriesguide.tmdbapi
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.tmdb2.entities.AppendToResponse
 import com.uwetrottmann.tmdb2.entities.Movie
+import com.uwetrottmann.tmdb2.entities.TvShow
 import com.uwetrottmann.tmdb2.enumerations.AppendToResponseItem
 import com.uwetrottmann.tmdb2.services.MoviesService
+import com.uwetrottmann.tmdb2.services.TvService
 import retrofit2.Call
 import retrofit2.awaitResponse
 
@@ -52,6 +54,22 @@ open class TmdbTools4 {
                     null
             ),
             action
+        )
+    }
+
+    /**
+     * Get show [TvService.tv] details from TMDB.
+     *
+     * Pass a `null` [language] to get the default language (English).
+     */
+    suspend fun getShowDetails(
+        tmdbTv: TvService,
+        showTmdbId: Int,
+        language: String?
+    ): TmdbNonNullResponse<TvShow> {
+        return awaitTmdbCall(
+            tmdbTv.tv(showTmdbId, language),
+            "show details showTmdbId = $showTmdbId language = $language"
         )
     }
 

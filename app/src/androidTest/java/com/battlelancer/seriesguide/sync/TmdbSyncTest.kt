@@ -11,8 +11,8 @@ import com.battlelancer.seriesguide.modules.AppModule
 import com.battlelancer.seriesguide.modules.DaggerTestServicesComponent
 import com.battlelancer.seriesguide.modules.TestHttpClientModule
 import com.battlelancer.seriesguide.modules.TestServicesComponent
-import com.battlelancer.seriesguide.modules.TestTmdbModule
-import com.battlelancer.seriesguide.modules.TestTraktModule
+import com.battlelancer.seriesguide.modules.TmdbModule
+import com.battlelancer.seriesguide.modules.TraktModule
 import com.battlelancer.seriesguide.movies.database.MovieHelper
 import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.movies.database.toSgMovieForInsert
@@ -21,8 +21,8 @@ import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.google.common.truth.Truth.assertThat
 import com.google.common.truth.Truth.assertWithMessage
+import com.uwetrottmann.tmdb2.Tmdb
 import com.uwetrottmann.tmdb2.entities.Movie
-import com.uwetrottmann.tmdb2.services.ConfigurationService
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -38,7 +38,7 @@ import javax.inject.Inject
 class TmdbSyncTest {
 
     @Inject
-    lateinit var tmdbConfigService: ConfigurationService
+    lateinit var tmdb: Tmdb
 
     @Inject
     lateinit var movieTools: MovieTools
@@ -57,8 +57,8 @@ class TmdbSyncTest {
         val component: TestServicesComponent = DaggerTestServicesComponent.builder()
             .appModule(AppModule(context))
             .httpClientModule(TestHttpClientModule())
-            .traktModule(TestTraktModule())
-            .tmdbModule(TestTmdbModule())
+            .traktModule(TraktModule())
+            .tmdbModule(TmdbModule())
             .build()
         component.inject(this)
     }
@@ -154,7 +154,7 @@ class TmdbSyncTest {
     private fun doUpdateAndAssertSuccess() {
         val tmdbSync = TmdbSync(
             ApplicationProvider.getApplicationContext(),
-            tmdbConfigService,
+            tmdb.configurationService(),
             movieTools
         )
         val successful = tmdbSync.updateMovies(SyncProgress())

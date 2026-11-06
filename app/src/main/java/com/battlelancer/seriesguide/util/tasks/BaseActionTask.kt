@@ -1,30 +1,28 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2015 Uwe Trottmann <uwe@uwetrottmann.com>
 
-@file:Suppress("DEPRECATION") // Ignore warning that AsyncTask should not be used for new code
-
 package com.battlelancer.seriesguide.util.tasks
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.os.AsyncTask
 import androidx.annotation.CallSuper
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
-import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
+import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktErrorResponse
+import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse
 import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceActiveEvent
 import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceCompletedEvent
-import com.battlelancer.seriesguide.util.Errors
+import com.battlelancer.seriesguide.util.TaskManager
 import com.uwetrottmann.androidutils.AndroidUtils
-import com.uwetrottmann.trakt5.TraktV2
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.withPermit
+import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
-import retrofit2.Call
 
-@Suppress("DEPRECATION") // Ignore warning that AsyncTask should not be used for new code
-abstract class BaseActionTask(context: Context) : AsyncTask<Void?, Void?, Int?>() {
+abstract class BaseActionTask(context: Context) {
 
-    @SuppressLint("StaticFieldLeak") // using application context
     protected val context: Context = context.applicationContext
 
     private var _isSendingToHexagon: Boolean = false
@@ -51,77 +49,63 @@ abstract class BaseActionTask(context: Context) : AsyncTask<Void?, Void?, Int?>(
      */
     protected abstract val successTextResId: Int
 
-    @Deprecated("Deprecated in Java")
-    override fun onPreExecute() {
-        _isSendingToHexagon = HexagonSettings.isEnabled(context)
-        _isSendingToTrakt = TraktCredentials.get(context).hasCredentials()
+    /**
+     * Runs the task. Network and database work is done using [SgApp.coroutineScope], but only with
+     * permit from [TaskManager.modifyOrExportShowsSemaphore].
+     *
+     * A [ServiceActiveEvent] sticky event is posted while running the task.
+     * A [ServiceCompletedEvent] is posted once the task completes.
+     */
+    fun run() {
+        SgApp.coroutineScope.launch {
+            _isSendingToHexagon = HexagonSettings.isEnabled(context)
+            _isSendingToTrakt = TraktCredentials.get(context).hasCredentials()
 
-        // show message to which service we send
-        EventBus.getDefault().postSticky(
-            ServiceActiveEvent(isSendingToHexagon, isSendingToTrakt)
-        )
-    }
+            // Show message to which service this sends
+            EventBus.getDefault().postSticky(
+                ServiceActiveEvent(isSendingToHexagon, isSendingToTrakt)
+            )
 
-    @Deprecated("Deprecated in Java")
-    override fun doInBackground(vararg params: Void?): Int? {
-        if (isCancelled) {
-            return null
-        }
+            // Run this task only when other tasks are not modifying the database. Also don't use
+            // SgApp.SINGLE, as if it suspends, other tasks might do breaking database changes.
+            // The semaphore also guarantees tasks are executed in FIFO order, preventing issues
+            // such as a rename getting scheduled before a deletion.
+            TaskManager.modifyOrExportShowsSemaphore.withPermit {
+                val result = withContext(Dispatchers.IO) {
+                    // If sending to service, check for connection
+                    if (isSendingToHexagon || isSendingToTrakt) {
+                        if (!AndroidUtils.isNetworkConnected(context)) {
+                            return@withContext ERROR_NETWORK
+                        }
+                    }
 
-        // if sending to service, check for connection
-        if (isSendingToHexagon || isSendingToTrakt) {
-            if (!AndroidUtils.isNetworkConnected(context)) {
-                return ERROR_NETWORK
-            }
-        }
-
-        return doBackgroundAction(*params)
-    }
-
-    protected abstract fun doBackgroundAction(vararg params: Void?): Int
-
-    interface ResponseCallback<T> {
-        fun handleSuccessfulResponse(body: T): Int
-    }
-
-    fun <T> executeTraktCall(
-        call: Call<T>,
-        trakt: TraktV2,
-        action: String,
-        callbackOnSuccess: ResponseCallback<T>
-    ): Int {
-        try {
-            val response = call.execute()
-            if (response.isSuccessful) {
-                val body = response.body() ?: return ERROR_TRAKT_API_CLIENT
-                return callbackOnSuccess.handleSuccessfulResponse(body)
-            } else {
-                if (SgTrakt.isUnauthorized(context, response)) {
-                    return ERROR_TRAKT_AUTH
+                    doBackgroundAction()
                 }
-                Errors.logAndReport(
-                    action, response,
-                    SgTrakt.checkForTraktError(trakt, response)
-                )
-                return if (TraktV2.isRateLimitExceeded(response) || TraktV2.isServerError(response)) {
-                    ERROR_TRAKT_API_SERVER
-                } else if (TraktV2.isAccountLimitExceeded(response)) {
-                    ERROR_TRAKT_ACCOUNT_LIMIT_EXCEEDED
-                } else if (TraktV2.isAccountLocked(response)) {
-                    ERROR_TRAKT_ACCOUNT_LOCKED
-                } else {
-                    ERROR_TRAKT_API_CLIENT
+
+                withContext(Dispatchers.Main) {
+                    onPostExecute(result)
                 }
             }
-        } catch (e: Exception) {
-            Errors.logAndReport(action, e)
-            return ERROR_NETWORK
         }
     }
 
-    @Deprecated("Deprecated in Java")
+    protected abstract suspend fun doBackgroundAction(): Int
+
+    /**
+     * Maps a Trakt response to a result of [doBackgroundAction]. On success, returns the result of
+     * [onSuccess].
+     */
+    protected fun <T> TraktNonNullResponse<T>.toActionResult(onSuccess: (T) -> Int): Int =
+        when (this) {
+            is TraktNonNullResponse.Success -> onSuccess(data)
+            is TraktErrorResponse.IsUnauthorized -> ERROR_TRAKT_AUTH
+            is TraktErrorResponse.IsAccountLimitExceeded -> ERROR_TRAKT_ACCOUNT_LIMIT_EXCEEDED
+            is TraktErrorResponse.IsAccountLocked -> ERROR_TRAKT_ACCOUNT_LOCKED
+            is TraktErrorResponse.IsNotVip, is TraktErrorResponse.Other -> ERROR_TRAKT_API_CLIENT
+        }
+
     @CallSuper
-    override fun onPostExecute(result: Int?) {
+    protected open fun onPostExecute(result: Int) {
         EventBus.getDefault().removeStickyEvent(ServiceActiveEvent::class.java)
 
         val displaySuccess: Boolean
@@ -138,7 +122,7 @@ abstract class BaseActionTask(context: Context) : AsyncTask<Void?, Void?, Int?>(
                 ERROR_NETWORK -> context.getString(R.string.offline)
                 ERROR_DATABASE -> context.getString(R.string.database_error)
                 ERROR_TRAKT_AUTH -> context.getString(R.string.trakt_error_credentials)
-                ERROR_TRAKT_API_CLIENT, ERROR_TRAKT_API_SERVER -> context.getString(
+                ERROR_TRAKT_API_CLIENT -> context.getString(
                     R.string.api_error_generic,
                     context.getString(R.string.trakt)
                 )
@@ -167,7 +151,6 @@ abstract class BaseActionTask(context: Context) : AsyncTask<Void?, Void?, Int?>(
         private const val ERROR_TRAKT_API_CLIENT = -4
         const val ERROR_TRAKT_API_NOT_FOUND: Int = -5
         const val ERROR_HEXAGON_API: Int = -6
-        private const val ERROR_TRAKT_API_SERVER = -7
 
         /**
          * Account limit exceeded (list count, item count, ...). Should currently only occur when

@@ -169,6 +169,16 @@
         <item>dvdoldestfirst</item>
     </string-array>
 
+    <!-- Comments sort orders -->
+    <string-array name="comments_sorting">
+        <item>@string/sort_order_latest_first</item>
+        <item>@string/sort_order_reactions</item>
+    </string-array>
+    <string-array name="comments_sorting_data">
+        <item>newest</item>
+        <item>likes</item>
+    </string-array>
+
     <!-- Content languages -->
     <!-- These are the primary languages of TMDB
     https://developer.themoviedb.org/reference/configuration-primary-translations
@@ -476,6 +486,35 @@
         <item>za</item> <!-- Zhuang; Chuang -->
         <item>zh</item> <!-- Chinese -->
         <item>zu</item> <!-- Zulu -->
+    </string-array>
+
+    <!-- For filtering reviews/comments Trakt uses two-letter language codes.
+    Taken from website language picker on 2026-11-05. -->
+    <string-array name="filter_languages_comments">
+        <item>ar</item> <!-- Arabic -->
+        <item>bg</item> <!-- Bulgarian -->
+        <item>ca</item> <!-- Catalan -->
+        <item>da</item> <!-- Danish -->
+        <item>de</item> <!-- German -->
+        <item>el</item> <!-- Greek -->
+        <item>en</item> <!-- English -->
+        <item>es</item> <!-- Spanish -->
+        <item>fa</item> <!-- Persian -->
+        <item>fr</item> <!-- French -->
+        <item>hu</item> <!-- Hungarian -->
+        <item>id</item> <!-- Indonesian -->
+        <item>it</item> <!-- Italian -->
+        <item>ja</item> <!-- Japanese -->
+        <item>nb</item> <!-- Norwegian Bokmål -->
+        <item>nl</item> <!-- Dutch -->
+        <item>pl</item> <!-- Polish -->
+        <item>pt</item> <!-- Portuguese -->
+        <item>ro</item> <!-- Romanian -->
+        <item>ru</item> <!-- Russian -->
+        <item>sv</item> <!-- Swedish -->
+        <item>tr</item> <!-- Turkish -->
+        <item>uk</item> <!-- Ukrainian -->
+        <item>zh</item> <!-- Chinese -->
     </string-array>
 
     <!-- Used in legacy versions. -->

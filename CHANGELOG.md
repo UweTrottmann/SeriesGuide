@@ -8,6 +8,21 @@
 Releases marked with 🧪 (or previously with the "beta" suffix) were released on
 [the preview program](https://www.seriesgui.de/help/how-to/basics/preview) only.
 
+## Version 2026.5
+
+### 2026.5.1 - 2026-11-06 🧪
+
+* 🔧 Reviews: add language filter and option to sort by reactions, display reaction count.
+* 🔧 Trakt: use new auth subdomain to connect.
+
+### 2026.5.0 - 2026-10-08 🧪
+
+* 🔨 Sync: if interrupted, never mark as successful so next sync happens sooner.
+* 🔨 Sync: don't crash when refreshing Trakt credentials is interrupted.
+* 🔨 Sync: prevent breaking updating if TMDB returns invalid TVDB ID for a show. 
+* 🔧 Sync: keep showing last status, including if show failed to update.
+* 📝 Import latest user interface translations.
+
 ## Version 2026.4
 
 * 🔨 Trakt: links to more information and ratings go to their new web app.

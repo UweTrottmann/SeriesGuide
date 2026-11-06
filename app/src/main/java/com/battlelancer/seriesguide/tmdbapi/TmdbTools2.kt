@@ -17,7 +17,6 @@ import com.uwetrottmann.tmdb2.entities.DiscoverFilter
 import com.uwetrottmann.tmdb2.entities.DiscoverFilter.Separator.OR
 import com.uwetrottmann.tmdb2.entities.Person
 import com.uwetrottmann.tmdb2.entities.TmdbDate
-import com.uwetrottmann.tmdb2.entities.TvShow
 import com.uwetrottmann.tmdb2.entities.TvShowResultsPage
 import com.uwetrottmann.tmdb2.entities.Videos
 import com.uwetrottmann.tmdb2.entities.WatchProviders
@@ -36,25 +35,6 @@ import java.util.Date
 import com.battlelancer.seriesguide.people.Person as SgPerson
 
 class TmdbTools2 {
-
-    fun getShowDetails(showTmdbId: Int, language: String, context: Context): TvShow? {
-        val action = "show details showTmdbId = $showTmdbId language = $language"
-        val tmdb = SgApp.getServicesComponent(context.applicationContext).tmdb()
-        try {
-            val response = tmdb.tvService()
-                .tv(showTmdbId, language)
-                .execute()
-            if (response.isSuccessful) {
-                val results = response.body()
-                if (results != null) return results
-            } else {
-                Errors.logAndReport(action, response)
-            }
-        } catch (e: Exception) {
-            Errors.logAndReport(action, e)
-        }
-        return null
-    }
 
     /**
      * Returns null if network call fails.
@@ -214,7 +194,7 @@ class TmdbTools2 {
         languageCode: String?,
         action: String
     ): String? {
-        val moviesService = SgApp.getServicesComponent(context).moviesService()
+        val moviesService = SgApp.getServicesComponent(context).tmdb().moviesService()
         try {
             val response = moviesService.videos(movieTmdbId, languageCode).execute()
             if (response.isSuccessful) {
@@ -320,7 +300,7 @@ class TmdbTools2 {
     }
 
     suspend fun getCreditsForMovie(context: Context, tmdbId: Int): Credits? {
-        return SgApp.getServicesComponent(context)
+        return SgApp.getServicesComponent(context).tmdb()
             .moviesService()
             .credits(tmdbId)
             .awaitResponse("get movie credits")

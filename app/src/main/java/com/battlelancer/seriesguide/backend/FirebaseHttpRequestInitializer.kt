@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2021 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.backend
 
@@ -12,11 +12,18 @@ import com.google.api.client.http.HttpUnsuccessfulResponseHandler
 import com.google.firebase.auth.FirebaseUser
 import java.io.IOException
 import java.util.concurrent.ExecutionException
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeoutException
 
 /**
  * Adds authorization header using Firebase JWT token to each request for current Firebase user.
  * Fetches token once and caches it between requests.
  * If a request fails with HTTP 401 tries once to fetch token again.
+ *
+ * Note that if the thread that executes a request using this is interrupted, the token request
+ * fails with a [FirebaseAuthIOException] (the request client expects this to only throw
+ * [IOException], so this wraps [InterruptedException]). This clears the interrupted flag as
+ * [Tasks.await] does.
  */
 class FirebaseHttpRequestInitializer : HttpRequestInitializer {
 
@@ -32,7 +39,8 @@ class FirebaseHttpRequestInitializer : HttpRequestInitializer {
     @Synchronized
     @Throws(
         ExecutionException::class, // Tasks.await wraps task exceptions
-        InterruptedException::class // Tasks.await
+        InterruptedException::class, // Tasks.await interrupted
+        TimeoutException::class // Tasks.await timed out
     )
     fun getJwtToken(): String? {
         val firebaseUser = firebaseUser ?: return null
@@ -45,7 +53,8 @@ class FirebaseHttpRequestInitializer : HttpRequestInitializer {
         // https://firebase.google.com/docs/auth/admin/verify-id-tokens
         val task = firebaseUser.getIdToken(true)
 
-        return Tasks.await(task).token.also {
+        // https://developers.google.com/android/guides/tasks
+        return Tasks.await(task, 20, TimeUnit.SECONDS).token.also {
             token = it
         }
     }
@@ -69,7 +78,7 @@ private class FirebaseHttpExecuteInterceptor(
             request?.headers?.authorization = "Bearer $token"
         } catch (e: ExecutionException) {
             throw FirebaseAuthIOException(e.cause ?: e)
-        } catch (e: InterruptedException) {
+        } catch (e: Exception) {
             throw FirebaseAuthIOException(e)
         }
     }

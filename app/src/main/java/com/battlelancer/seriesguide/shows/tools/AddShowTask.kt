@@ -124,20 +124,22 @@ class AddShowTask(
             return
         }
 
+        val services = SgApp.getServicesComponent(context)
+
         // If not connected to Hexagon, get episodes from Trakt
         var traktCollection: Map<Int, BaseShow>? = null
         var traktWatched: Map<Int, BaseShow>? = null
         if (!HexagonSettings.isEnabled(context) && TraktCredentials.get(context).hasCredentials()) {
             Timber.d("Getting watched and collected episodes from trakt.")
+            val traktTools = TraktTools4(services.trakt())
             // get collection
-            traktCollection = getTraktShows(true)
+            traktCollection = traktTools.getTraktShows(true)
                 ?: return // can not get collected state, give up
             // get watched
-            traktWatched = getTraktShows(false)
+            traktWatched = traktTools.getTraktShows(false)
                 ?: return // can not get watched state, give up
         }
 
-        val services = SgApp.getServicesComponent(context)
         val database = SgRoomDatabase.getInstance(context)
         val hexagonEpisodeSync = HexagonEpisodeSync(
             context,
@@ -292,14 +294,12 @@ class AddShowTask(
         publishProgress(result, 0, "")
     }
 
-    private suspend fun getTraktShows(isCollectionNotWatched: Boolean): Map<Int, BaseShow>? {
-        val traktSync = SgApp.getServicesComponent(context).traktSync()!!
-
+    private suspend fun TraktTools4.getTraktShows(isCollectionNotWatched: Boolean): Map<Int, BaseShow>? {
         val response =
             if (isCollectionNotWatched) {
-                TraktTools4.getCollectedShowsByTmdbId(traktSync)
+                getCollectedShowsByTmdbId()
             } else {
-                TraktTools4.getWatchedShowsByTmdbId(traktSync)
+                getWatchedShowsByTmdbId()
             }
 
         when (response) {

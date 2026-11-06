@@ -1,13 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright © 2016 Uwe Trottmann <uwe@uwetrottmann.com>
 
-@file:Suppress("DEPRECATION") // Ignore warning that AsyncTask should not be used for new code
-
 package com.battlelancer.seriesguide.lists
 
 import android.content.Context
 import android.net.Uri
-import android.os.AsyncTask
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.lists.database.SgListItem
@@ -62,19 +59,19 @@ object ListsTools {
         Uri.encode(name)?.ifBlank { null }
 
     fun addList(context: Context, listName: String) {
-        AddListTask(context, listName).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        AddListTask(context, listName).run()
     }
 
     fun renameList(context: Context, listId: String, listName: String) {
-        RenameListTask(context, listId, listName).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        RenameListTask(context, listId, listName).run()
     }
 
     fun deleteList(context: Context, listId: String) {
-        DeleteListTask(context, listId).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        DeleteListTask(context, listId).run()
     }
 
     fun reorderLists(context: Context, listIdsInOrder: List<String>) {
-        ReorderListsTask(context, listIdsInOrder).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        ReorderListsTask(context, listIdsInOrder).run()
     }
 
     fun changeListsOfItem(
@@ -90,11 +87,11 @@ object ListsTools {
             itemType,
             addToTheseLists,
             removeFromTheseLists
-        ).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        ).run()
     }
 
     fun removeListItem(context: Context, listItemId: String) {
-        RemoveListItemTask(context, listItemId).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        RemoveListItemTask(context, listItemId).run()
     }
 
     /**

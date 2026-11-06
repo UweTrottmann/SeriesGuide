@@ -265,7 +265,7 @@ class MoviesHistoryFragment : Fragment() {
                 id: Int,
                 args: Bundle?
             ): Loader<TraktRecentEpisodeHistoryLoader.Result> {
-                return TraktRecentMovieHistoryLoader(activity)
+                return TraktRecentMovieHistoryLoader(requireContext())
             }
 
             override fun onLoadFinished(

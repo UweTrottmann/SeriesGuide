@@ -15,8 +15,8 @@ import java.text.Collator
 /**
  * A dialog displaying a list of languages or none to choose from.
  *
- * The first 5 are most used languages, the remaining are sorted alhpabetically
- * by localized display name.
+ * The first languages of the list may be most used languages that keep their order (see the
+ * factory methods), the remaining are sorted alphabetically by localized display name.
  */
 class LanguagePickerDialogFragment : AppCompatDialogFragment() {
 
@@ -35,15 +35,17 @@ class LanguagePickerDialogFragment : AppCompatDialogFragment() {
             LocalizationItem(it, LanguageTools.getDisplayNameForLanguageCode(it))
         }
 
-        // Take the first top 5, sort the remaining by display name
+        // Keep order of the most used languages, sort the remaining by display name
         val collator = Collator.getInstance()
-        val top5 = localizationItems.take(5)
-        val remaining = localizationItems.takeLast(localizationItems.size - 5).toMutableList()
+        val topCount = requireArguments().getInt(ARG_TOP_COUNT)
+            .coerceIn(0, localizationItems.size)
+        val top = localizationItems.take(topCount)
+        val remaining = localizationItems.drop(topCount).toMutableList()
         remaining.sortWith { left: LocalizationItem, right: LocalizationItem ->
             collator.compare(left.displayText, right.displayText)
         }
 
-        val combined = top5 + remaining
+        val combined = top + remaining
         this.languageCodes = combined.mapToArray { it.code }
         val languageNames = combined.mapToArray { it.displayText }
 
@@ -87,24 +89,39 @@ class LanguagePickerDialogFragment : AppCompatDialogFragment() {
         private const val ARG_SELECTED_LANGUAGE_CODE = "selectedLanguageCode"
         private const val ARG_RES_ID_LANGUAGE_CODES = "resIdLanguageCodes"
         private const val ARG_RES_ID_TITLE = "resIdTitle"
-
-        fun createForShows(selectedLanguageCode: String?): LanguagePickerDialogFragment =
-            create(selectedLanguageCode, R.array.filter_languages_shows)
-
-        fun createForMovies(selectedLanguageCode: String?): LanguagePickerDialogFragment =
-            create(selectedLanguageCode, R.array.filter_languages_movies)
+        private const val ARG_TOP_COUNT = "topCount"
 
         /**
-         * @param selectedLanguageCode two letter ISO 639-1 language code. If null selects none.
+         * The first 5 languages of the shows and movies lists are the most used ones.
+         */
+        private const val TOP_COUNT_TMDB = 5
+
+        fun createForShows(selectedLanguageCode: String?): LanguagePickerDialogFragment =
+            create(selectedLanguageCode, R.array.filter_languages_shows, TOP_COUNT_TMDB)
+
+        fun createForMovies(selectedLanguageCode: String?): LanguagePickerDialogFragment =
+            create(selectedLanguageCode, R.array.filter_languages_movies, TOP_COUNT_TMDB)
+
+        /**
+         * All languages are sorted by display name.
+         */
+        fun createForComments(selectedLanguageCode: String?): LanguagePickerDialogFragment =
+            create(selectedLanguageCode, R.array.filter_languages_comments, 0)
+
+        /**
+         * @param selectedLanguageCode two-letter ISO 639-1 language code. If null selects none.
+         * @param topCount number of languages at the start of the list that keep their order.
          */
         private fun create(
             selectedLanguageCode: String?,
-            @ArrayRes languageCodesRes: Int
+            @ArrayRes languageCodesRes: Int,
+            topCount: Int
         ): LanguagePickerDialogFragment {
             return LanguagePickerDialogFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_SELECTED_LANGUAGE_CODE, selectedLanguageCode)
                     putInt(ARG_RES_ID_LANGUAGE_CODES, languageCodesRes)
+                    putInt(ARG_TOP_COUNT, topCount)
                     putInt(ARG_RES_ID_TITLE, R.string.filter_language)
                 }
             }

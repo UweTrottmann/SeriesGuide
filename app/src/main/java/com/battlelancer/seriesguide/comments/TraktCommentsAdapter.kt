@@ -7,10 +7,10 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.text.format.DateUtils
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -40,9 +40,9 @@ class TraktCommentsAdapter(
         AppCompatResources.getDrawable(context, R.drawable.ic_account_circle_control_24dp)!!
 
     interface OnItemClickListener {
-        fun onOpenWebsite(commentId: Int)
-        fun onEdit(commentId: Int, comment: String, isSpoiler: Boolean)
-        fun onDelete(commentId: Int)
+        fun onOpenWebsite(commentId: Long)
+        fun onEdit(commentId: Long, comment: String, isSpoiler: Boolean)
+        fun onDelete(commentId: Long)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentViewHolder {
@@ -99,6 +99,7 @@ class CommentViewHolder(
             binding.imageViewCommentAvatar.setImageDrawable(null)
             binding.textViewComment.text = null
             binding.textViewCommentTimestamp.text = null
+            binding.textViewCommentReactions.text = null
             binding.textViewCommentReplies.text = null
             return
         }
@@ -141,12 +142,22 @@ class CommentViewHolder(
             } ?: context.getString(R.string.unknown)
         binding.textViewCommentTimestamp.text = timestamp
 
+        val likes = comment.likes
+        if (likes == null || likes <= 0) {
+            // no reactions
+            binding.textViewCommentReactions.isGone = true
+        } else {
+            binding.textViewCommentReactions.isVisible = true
+            binding.textViewCommentReactions.text = context.resources
+                .getQuantityString(R.plurals.reactions_plural, likes, likes)
+        }
+
         val replies = comment.replies
         if (replies == null || replies <= 0) {
             // no replies
-            binding.textViewCommentReplies.visibility = View.GONE
+            binding.textViewCommentReplies.isGone = true
         } else {
-            binding.textViewCommentReplies.visibility = View.VISIBLE
+            binding.textViewCommentReplies.isVisible = true
             binding.textViewCommentReplies.text = context.resources
                 .getQuantityString(R.plurals.replies_plural, replies, replies)
         }
@@ -176,6 +187,8 @@ class CommentDiffCallback : DiffUtil.ItemCallback<Comment>() {
     override fun areContentsTheSame(oldItem: Comment, newItem: Comment): Boolean =
         oldItem.comment == newItem.comment
                 && oldItem.spoiler == newItem.spoiler
+                && oldItem.likes == newItem.likes
+                && oldItem.replies == newItem.replies
 }
 
 

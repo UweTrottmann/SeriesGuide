@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
-<!-- Copyright 2012-2024 Uwe Trottmann -->
+<!-- Copyright 2012 Uwe Trottmann -->
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -79,6 +79,17 @@
                 tools:text="Some comment describing how the user felt or not felt about the watched media item..." />
 
             <TextView
+                android:id="@+id/textViewCommentReactions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewComment"
+                tools:text="5 reactions" />
+
+            <TextView
                 android:id="@+id/textViewCommentReplies"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -87,7 +98,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textViewComment"
+                app:layout_constraintTop_toBottomOf="@id/textViewCommentReactions"
                 tools:text="3 replies" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

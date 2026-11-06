@@ -91,6 +91,10 @@
         <item quantity="one">%d reply</item>
         <item quantity="other">%d replies</item>
     </plurals>
+    <plurals name="reactions_plural">
+        <item quantity="one">%d reaction</item>
+        <item quantity="other">%d reactions</item>
+    </plurals>
 
     <!-- Metadata -->
     <string name="episode_number_disk">DVD</string>
@@ -465,6 +469,7 @@
     <string name="sort_order_top_rated_first">Top rated</string>
     <string name="sort_order_latest_first_dvd">Latest first (DVD)</string>
     <string name="sort_order_oldest_first_dvd">Oldest first (DVD)</string>
+    <string name="sort_order_reactions">Reactions</string>
 
     <!-- Upcoming thresholds -->
     <string name="pref_upcominglimit">Upcoming range</string>

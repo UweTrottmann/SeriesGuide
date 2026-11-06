@@ -83,6 +83,10 @@
         <item quantity="one">%d коментар</item>
         <item quantity="other">%d коментара</item>
     </plurals>
+    <plurals name="reactions_plural">
+        <item quantity="one">%d reaction</item>
+        <item quantity="other">%d reactions</item>
+    </plurals>
     <!-- Metadata -->
     <string name="episode_number_disk">DVD</string>
     <string name="episode_firstaired">Дата на издаване</string>
@@ -430,6 +434,7 @@
     <string name="sort_order_top_rated_first">Най-високо оценени</string>
     <string name="sort_order_latest_first_dvd">Най-новите отгоре (DVD)</string>
     <string name="sort_order_oldest_first_dvd">Най-старите отгоре (DVD)</string>
+    <string name="sort_order_reactions">Reactions</string>
     <!-- Upcoming thresholds -->
     <string name="pref_upcominglimit">Диапазон на Предстоящи</string>
     <string name="upcoming_upto_now">сега</string>

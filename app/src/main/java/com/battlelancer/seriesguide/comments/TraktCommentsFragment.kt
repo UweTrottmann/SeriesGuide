@@ -29,10 +29,12 @@ import com.battlelancer.seriesguide.databinding.FragmentCommentsBinding
 import com.battlelancer.seriesguide.traktapi.TraktAction
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktTask.TraktActionCompleteEvent
+import com.battlelancer.seriesguide.ui.dialogs.LanguagePickerDialogFragment
 import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.WebTools
+import com.battlelancer.seriesguide.util.findDialog
 import com.battlelancer.seriesguide.util.safeShow
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.trakt5.TraktLink
@@ -121,12 +123,24 @@ class TraktCommentsFragment : Fragment() {
         binding.recyclerViewComments.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewComments.adapter = adapter
 
+        // Change post button label if editing
         viewLifecycleOwner.lifecycleScope.launch {
             model.commentIdToEdit.collect {
                 binding.buttonShouts
                     .setText(if (it != null) R.string.action_edit_comment else R.string.action_post)
             }
         }
+
+        // Sort order
+        viewLifecycleOwner.lifecycleScope.launch {
+            CommentsSettings.sortOrderChanges(requireContext()).collect {
+                refreshCommentsWithNetworkCheck()
+            }
+        }
+
+        // Re-attach listener to language picker if it is showing
+        findDialog<LanguagePickerDialogFragment>(parentFragmentManager, TAG_LANGUAGE_PICKER)
+            ?.onPickedListener = onLanguagePickedListener
 
         // load data
         LoaderManager.getInstance(this)
@@ -215,27 +229,54 @@ class TraktCommentsFragment : Fragment() {
 
         override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
             val itemId = menuItem.itemId
-            if (itemId == R.id.menu_action_comments_refresh) {
-                refreshCommentsWithNetworkCheck()
-                return true
+            when (itemId) {
+                R.id.menu_action_comments_refresh -> {
+                    refreshCommentsWithNetworkCheck()
+                    return true
+                }
+
+                R.id.menu_action_comments_language -> {
+                    showLanguagePicker()
+                    return true
+                }
+
+                R.id.menu_action_comments_sort -> {
+                    CommentsSettings.showSortOrderDialog(requireContext(), parentFragmentManager)
+                    return true
+                }
+
+                else -> return false
             }
-            return false
+        }
+    }
+
+    private fun showLanguagePicker() {
+        LanguagePickerDialogFragment
+            .createForComments(CommentsSettings.getCommentsLanguage(requireContext()))
+            .apply { onPickedListener = onLanguagePickedListener }
+            .safeShow(parentFragmentManager, TAG_LANGUAGE_PICKER)
+    }
+
+    private val onLanguagePickedListener = object : LanguagePickerDialogFragment.OnPickedListener {
+        override fun onPicked(languageCode: String?) {
+            CommentsSettings.saveCommentsLanguage(requireContext(), languageCode)
+            refreshCommentsWithNetworkCheck()
         }
     }
 
     private val onItemClickListener =
         object : TraktCommentsAdapter.OnItemClickListener {
-            override fun onOpenWebsite(commentId: Int) {
+            override fun onOpenWebsite(commentId: Long) {
                 WebTools.openInApp(requireContext(), TraktLink.comment(commentId))
             }
 
-            override fun onEdit(commentId: Int, comment: String, isSpoiler: Boolean) {
+            override fun onEdit(commentId: Long, comment: String, isSpoiler: Boolean) {
                 model.commentIdToEdit.value = commentId
                 binding?.textFieldLayoutComments?.editText?.setText(comment)
                 binding?.checkBoxShouts?.isChecked = isSpoiler
             }
 
-            override fun onDelete(commentId: Int) {
+            override fun onDelete(commentId: Long) {
                 model.commentIdToDelete.value = commentId
                 DeleteCommentDialogFragment().safeShow(parentFragmentManager, "delete-comment")
             }
@@ -321,6 +362,8 @@ class TraktCommentsFragment : Fragment() {
     }
 
     companion object {
+        private const val TAG_LANGUAGE_PICKER = "languagePicker"
+
         val liftOnScrollTargetViewId = R.id.listViewShouts
     }
 }

@@ -75,7 +75,7 @@ class TraktMovieJob(
         val call: Call<SyncResponse>
         val component = SgApp.getServicesComponent(context)
         val trakt = component.trakt()
-        val traktSync = component.traktSync()!!
+        val traktSync = trakt.sync()
         when (action) {
             JobAction.MOVIE_COLLECTION_ADD -> {
                 errorLabel = "add movie to collection"

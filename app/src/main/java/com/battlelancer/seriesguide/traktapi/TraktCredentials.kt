@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2014-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2014 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.traktapi
 
@@ -22,14 +22,7 @@ import com.battlelancer.seriesguide.sync.AccountUtils
 import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.trakt5.TraktV2
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import timber.log.Timber
-import java.io.IOException
 
 /**
  * Manages the user's Trakt credentials.
@@ -44,12 +37,6 @@ class TraktCredentials private constructor(context: Context) {
      */
     var username: String?
         private set
-
-    // Mutex to synchronize refreshAccessToken calls
-    private val refreshAccessTokenMutex = Mutex()
-    // Volatile as multiple coroutines running in parallel on different threads my try to refresh
-    @Volatile
-    private var refreshAccessTokenResult: Deferred<Boolean>? = null
 
     init {
         username = PreferenceManager.getDefaultSharedPreferences(this.context)
@@ -191,46 +178,13 @@ class TraktCredentials private constructor(context: Context) {
     /**
      * Tries to refresh the current access token. Returns `false` on failure.
      *
-     * If a refresh job is running, calling this will await its result instead of launching a new
-     * job.
+     * Blocks until the request completes.
      *
-     * This is safe to call from coroutines running in parallel on different threads.
+     * Note: calls to this must be synchronized, currently
+     * [com.battlelancer.seriesguide.util.AllApisAuthenticator] makes sure only one refresh runs
+     * at a time.
      */
-    suspend fun refreshAccessTokenAsync(trakt: TraktV2): Boolean {
-        // Fast path: if a refresh is already running, wait for it
-        refreshAccessTokenResult?.let {
-            Timber.d("Trakt access token already getting refreshed, wait")
-            return it.await()
-        }
-
-        return coroutineScope {
-            refreshAccessTokenMutex.withLock {
-                // Double-check after acquiring the lock
-                refreshAccessTokenResult?.let {
-                    Timber.d("Trakt access token already getting refreshed, wait")
-                    return@withLock it.await()
-                }
-
-                val result = async(Dispatchers.IO) {
-                    refreshAccessToken(trakt)
-                }
-                refreshAccessTokenResult = result
-                try {
-                    result.await()
-                } finally {
-                    refreshAccessTokenResult = null
-                }
-            }
-        }
-    }
-
-    /**
-     * Note: calls to this should be synchronized.
-     *
-     * Currently [refreshAccessTokenMutex] guarantees synchronization if this is called through
-     * [refreshAccessTokenAsync].
-     */
-    private fun refreshAccessToken(trakt: TraktV2): Boolean {
+    fun refreshAccessToken(trakt: TraktV2): Boolean {
         // Is there a refresh token?
         val oldRefreshToken = TraktOAuthSettings.getRefreshToken(context)
         if (oldRefreshToken.isNullOrEmpty()) {
@@ -255,7 +209,7 @@ class TraktCredentials private constructor(context: Context) {
                     Errors.logAndReport("refresh access token", response)
                 }
             }
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             Errors.logAndReport("refresh access token", e)
         }
 

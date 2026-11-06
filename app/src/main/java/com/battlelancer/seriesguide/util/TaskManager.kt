@@ -32,6 +32,9 @@ object TaskManager {
      * - adds shows,
      * - updates a show,
      * - deletes a show,
+     * - rates a show, episode or movie,
+     * - modifies lists,
+     * - adds to or removes a show from the watchlist,
      * - runs a backup,
      * - runs an import
      * runs at a time.
