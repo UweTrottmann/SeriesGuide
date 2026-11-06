@@ -89,13 +89,13 @@
     </plurals>
     <!-- Metadata -->
     <string name="episode_number_disk">DVD</string>
-    <string name="episode_firstaired">Date de parution</string>
-    <string name="episode_firstaired_unknown">Date de parution inconnue</string>
+    <string name="episode_firstaired">Date de sortie</string>
+    <string name="episode_firstaired_unknown">Date de sortie inconnue</string>
     <string name="episode_dvdnumber">Episode DVD</string>
-    <string name="original_release">Paru en</string>
+    <string name="original_release">Sortie originale</string>
     <string name="show_genres">Genres</string>
     <string name="show_contentrating">Classification</string>
-    <string name="show_release_times">Heures de parution</string>
+    <string name="show_release_times">Heures de sortie</string>
     <string name="episode_directors">Réalisateurs</string>
     <string name="episode_gueststars">Invités exceptionnels</string>
     <string name="episode_writers">Scénaristes</string>
@@ -289,7 +289,7 @@
     <string name="movie_cast">Casting</string>
     <string name="movie_crew">Équipe technique</string>
     <string name="action_movies_sort_title">Titre</string>
-    <string name="action_movies_sort_release">Date de parution</string>
+    <string name="action_movies_sort_release">Date de sortie</string>
     <string name="title_similar_movies">Films similaires</string>
     <string name="title_release_dates">Dates de sortie</string>
     <string name="error_movie_not_found">Film retiré de la TMDB. Supprimez-le des listes, marquez le comme non regardé. Vous utilisez Trakt ? Sur leur site web, recherchez son identifiant TMDB et supprimez-le de l\'historique et des listes.</string>
