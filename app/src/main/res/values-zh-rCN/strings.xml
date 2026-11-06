@@ -82,6 +82,9 @@
     <plurals name="replies_plural">
         <item quantity="other">%d 条回复</item>
     </plurals>
+    <plurals name="reactions_plural">
+        <item quantity="other">%d reactions</item>
+    </plurals>
     <!-- Metadata -->
     <string name="episode_number_disk">DVD</string>
     <string name="episode_firstaired">首播日期</string>
@@ -416,6 +419,7 @@
     <string name="sort_order_top_rated_first">高评分的在最前面</string>
     <string name="sort_order_latest_first_dvd">最新的在最前面（DVD）</string>
     <string name="sort_order_oldest_first_dvd">最旧的在最前面（DVD）</string>
+    <string name="sort_order_reactions">Reactions</string>
     <!-- Upcoming thresholds -->
     <string name="pref_upcominglimit">即将播出的时间范围</string>
     <string name="upcoming_upto_now">现在</string>

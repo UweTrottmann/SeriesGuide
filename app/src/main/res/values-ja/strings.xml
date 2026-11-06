@@ -82,6 +82,9 @@
     <plurals name="replies_plural">
         <item quantity="other">%d 件の返信</item>
     </plurals>
+    <plurals name="reactions_plural">
+        <item quantity="other">%d reactions</item>
+    </plurals>
     <!-- Metadata -->
     <string name="episode_number_disk">DVD</string>
     <string name="episode_firstaired">発売日</string>
@@ -416,6 +419,7 @@
     <string name="sort_order_top_rated_first">評価の高いものから</string>
     <string name="sort_order_latest_first_dvd">最新のものから (DVD)</string>
     <string name="sort_order_oldest_first_dvd">古いものから (DVD)</string>
+    <string name="sort_order_reactions">Reactions</string>
     <!-- Upcoming thresholds -->
     <string name="pref_upcominglimit">今後の範囲</string>
     <string name="upcoming_upto_now">今</string>

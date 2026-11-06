@@ -84,6 +84,11 @@
         <item quantity="few">%d odgovora</item>
         <item quantity="other">%d odgovora</item>
     </plurals>
+    <plurals name="reactions_plural">
+        <item quantity="one">%d reaction</item>
+        <item quantity="few">%d reactions</item>
+        <item quantity="other">%d reactions</item>
+    </plurals>
     <!-- Metadata -->
     <string name="episode_number_disk">DVD</string>
     <string name="episode_firstaired">Datum emitiranja</string>
@@ -444,6 +449,7 @@
     <string name="sort_order_top_rated_first">Najbolje ocijenjene</string>
     <string name="sort_order_latest_first_dvd">Prvo zadnje (DVD)</string>
     <string name="sort_order_oldest_first_dvd">Prvo najstarije (DVD)</string>
+    <string name="sort_order_reactions">Reactions</string>
     <!-- Upcoming thresholds -->
     <string name="pref_upcominglimit">Nadolazeći raspon</string>
     <string name="upcoming_upto_now">sada</string>

@@ -84,6 +84,11 @@
         <item quantity="two">%d תגובות</item>
         <item quantity="other">%d תגובות</item>
     </plurals>
+    <plurals name="reactions_plural">
+        <item quantity="one">%d reaction</item>
+        <item quantity="two">%d reactions</item>
+        <item quantity="other">%d reactions</item>
+    </plurals>
     <!-- Metadata -->
     <string name="episode_number_disk">DVD</string>
     <string name="episode_firstaired">תאריך הפצה</string>
@@ -444,6 +449,7 @@
     <string name="sort_order_top_rated_first">פופולרים</string>
     <string name="sort_order_latest_first_dvd">אחרון קודם (DVD)</string>
     <string name="sort_order_oldest_first_dvd">ראשון קודם (DVD)</string>
+    <string name="sort_order_reactions">Reactions</string>
     <!-- Upcoming thresholds -->
     <string name="pref_upcominglimit">בטווח הקרוב</string>
     <string name="upcoming_upto_now">עכשיו</string>

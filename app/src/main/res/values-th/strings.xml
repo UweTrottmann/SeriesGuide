@@ -82,6 +82,9 @@
     <plurals name="replies_plural">
         <item quantity="other">%d ตอบกลับ</item>
     </plurals>
+    <plurals name="reactions_plural">
+        <item quantity="other">%d reactions</item>
+    </plurals>
     <!-- Metadata -->
     <string name="episode_number_disk">DVD</string>
     <string name="episode_firstaired">วันที่ออกฉาย</string>
@@ -416,6 +419,7 @@
     <string name="sort_order_top_rated_first">คะแนนสูงสุด</string>
     <string name="sort_order_latest_first_dvd">ล่าสุดก่อน (DVD)</string>
     <string name="sort_order_oldest_first_dvd">เก่าสุดก่อน (DVD)</string>
+    <string name="sort_order_reactions">Reactions</string>
     <!-- Upcoming thresholds -->
     <string name="pref_upcominglimit">เร็วๆ นี้</string>
     <string name="upcoming_upto_now">ขณะนี้</string>
