@@ -91,6 +91,10 @@
         <item quantity="one">%d reply</item>
         <item quantity="other">%d replies</item>
     </plurals>
+    <plurals name="reactions_plural">
+        <item quantity="one">%d reaction</item>
+        <item quantity="other">%d reactions</item>
+    </plurals>
 
     <!-- Metadata -->
     <string name="episode_number_disk">DVD</string>
