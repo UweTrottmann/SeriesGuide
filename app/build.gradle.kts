@@ -38,12 +38,6 @@ kotlin {
     }
 }
 
-kapt {
-    arguments {
-        arg("eventBusIndex", "com.battlelancer.seriesguide.SgEventBusIndex")
-    }
-}
-
 ksp {
     // Export schema for testing and in case the database ever needs to be built manually
     // (like when migrating away from Room).
@@ -256,7 +250,6 @@ dependencies {
     implementation(libs.dagger)
     ksp(libs.dagger.compiler)
     implementation(libs.greenrobot.eventbus)
-    kapt(libs.greenrobot.eventbus.processor)
 
     implementation(libs.flatbuffers)
     implementation(libs.gson)
