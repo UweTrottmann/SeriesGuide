@@ -19,7 +19,6 @@ if (googleServicesJsonFile.readText().contains("placeholder")) {
 plugins {
     alias(libs.plugins.android.application)
     id("seriesguide.android")
-    alias(libs.plugins.android.kapt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.compose.compiler)
     // Firebase Authentication, Crashlytics

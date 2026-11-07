@@ -18,9 +18,6 @@ import com.uwetrottmann.tmdb2.Tmdb
 import dagger.Component
 import javax.inject.Singleton
 
-/**
- * WARNING: for Dagger2 to work with kapt, this interface has to be in Kotlin.
- */
 @Singleton
 @Component(
     modules = [
