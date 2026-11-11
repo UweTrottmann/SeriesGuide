@@ -86,10 +86,10 @@
         <item quantity="other">%d ответов</item>
     </plurals>
     <plurals name="reactions_plural">
-        <item quantity="one">%d reaction</item>
-        <item quantity="few">%d reactions</item>
-        <item quantity="many">%d reactions</item>
-        <item quantity="other">%d reactions</item>
+        <item quantity="one">%d реакция</item>
+        <item quantity="few">%d реакции</item>
+        <item quantity="many">%d реакций</item>
+        <item quantity="other">%d реакции</item>
     </plurals>
     <!-- Metadata -->
     <string name="episode_number_disk">DVD</string>
@@ -464,7 +464,7 @@
     <string name="sort_order_top_rated_first">Высокий рейтинг</string>
     <string name="sort_order_latest_first_dvd">Сначала последние (DVD)</string>
     <string name="sort_order_oldest_first_dvd">Сначала старые (DVD)</string>
-    <string name="sort_order_reactions">Reactions</string>
+    <string name="sort_order_reactions">Реакции</string>
     <!-- Upcoming thresholds -->
     <string name="pref_upcominglimit">Диапазон предстоящих</string>
     <string name="upcoming_upto_now">сейчас</string>

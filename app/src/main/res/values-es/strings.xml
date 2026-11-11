@@ -68,24 +68,24 @@
     <string name="addtocalendar">Añadir al calendario</string>
     <string name="addtocalendar_failed">No se puede crear un evento de calendario.</string>
     <!-- Reviews -->
-    <string name="reviews_title">Reviews</string>
-    <string name="reviews_label_provided_by">Reviews from Trakt</string>
-    <string name="reviews_hint_empty">Be the first to write a review!</string>
-    <string name="reviews_hint_write_review">Write a review (English, 5+ words)</string>
-    <string name="reviews_error_violates_rules">Your review does not follow the rules!</string>
+    <string name="reviews_title">Reseñas</string>
+    <string name="reviews_label_provided_by">Reseñas de Trakt</string>
+    <string name="reviews_hint_empty">¡Sé el primero en escribir una reseña!</string>
+    <string name="reviews_hint_write_review">Escribe una reseña (Inglés, más de 5 palabras)</string>
+    <string name="reviews_error_violates_rules">¡Su reseña no sigue las reglas!</string>
     <string name="action_post">Publicar</string>
     <string name="action_edit_comment">Editar</string>
     <string name="action_delete_comment">Eliminar</string>
-    <string name="reviews_title_confirm_delete">Delete this review?</string>
-    <string name="reviews_error_delete">Review not deleted, it is too old or has replies</string>
+    <string name="reviews_title_confirm_delete">¿Eliminar esta reseña?</string>
+    <string name="reviews_error_delete">Reseña no eliminada, es demasiado antigua o tiene respuestas</string>
     <string name="isspoiler">¡Alerta de spoiler!</string>
     <plurals name="replies_plural">
         <item quantity="one">%d respuesta</item>
         <item quantity="other">%d respuestas</item>
     </plurals>
     <plurals name="reactions_plural">
-        <item quantity="one">%d reaction</item>
-        <item quantity="other">%d reactions</item>
+        <item quantity="one">%d reacción</item>
+        <item quantity="other">%d reacciones</item>
     </plurals>
     <!-- Metadata -->
     <string name="episode_number_disk">DVD</string>
@@ -319,7 +319,7 @@
     <string name="feature_not_supported">No soportado</string>
     <string name="feature_disabled">Desactivado</string>
     <string name="feature_history">Historial personal y de amigos</string>
-    <string name="feature_comments">Write reviews</string>
+    <string name="feature_comments">Escribe una reseña</string>
     <string name="feature_sync">Sincronizar</string>
     <!-- Hexagon -->
     <string name="hexagon_description">SeriesGuide Cloud te permite realizar una copia de seguridad en la nube, y sincronizar tus series, listas y películas.</string>
@@ -390,7 +390,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="feedback">Enviar email</string>
     <!-- Settings -->
     <string name="action_translate">Traducir esta aplicación</string>
-    <string name="title_app_language">App language</string>
+    <string name="title_app_language">Idioma de la aplicación</string>
     <string name="prefs_category_advanced">Avanzado</string>
     <string name="prefs_category_about">Acerca de</string>
     <string name="pref_onlyfuture">No hay episodios emitidos</string>
@@ -435,7 +435,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="sort_order_top_rated_first">Mas valorado</string>
     <string name="sort_order_latest_first_dvd">Primero los más rencientes (DVD)</string>
     <string name="sort_order_oldest_first_dvd">Primero más antiguos (DVD)</string>
-    <string name="sort_order_reactions">Reactions</string>
+    <string name="sort_order_reactions">Reacciones</string>
     <!-- Upcoming thresholds -->
     <string name="pref_upcominglimit">Próximo rango</string>
     <string name="upcoming_upto_now">ahora</string>

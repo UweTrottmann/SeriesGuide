@@ -84,8 +84,8 @@
         <item quantity="other">%d respostes</item>
     </plurals>
     <plurals name="reactions_plural">
-        <item quantity="one">%d reaction</item>
-        <item quantity="other">%d reactions</item>
+        <item quantity="one">%d reacció</item>
+        <item quantity="other">%d reaccions</item>
     </plurals>
     <!-- Metadata -->
     <string name="episode_number_disk">DVD</string>

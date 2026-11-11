@@ -10,6 +10,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ### Next release
 
+* 📝 Import latest user interface translations.
+
 ## Version 2026.5
 
 ### 2026.5.1 - 2026-11-06 🧪

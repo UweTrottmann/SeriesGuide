@@ -84,8 +84,8 @@
         <item quantity="other">%d risposte</item>
     </plurals>
     <plurals name="reactions_plural">
-        <item quantity="one">%d reaction</item>
-        <item quantity="other">%d reactions</item>
+        <item quantity="one">%d reazione</item>
+        <item quantity="other">%d reazioni</item>
     </plurals>
     <!-- Metadata -->
     <string name="episode_number_disk">DVD</string>
@@ -434,7 +434,7 @@
     <string name="sort_order_top_rated_first">Le più votate</string>
     <string name="sort_order_latest_first_dvd">Prima i più recenti (DVD)</string>
     <string name="sort_order_oldest_first_dvd">Prima i più vecchi (DVD)</string>
-    <string name="sort_order_reactions">Reactions</string>
+    <string name="sort_order_reactions">Reazioni</string>
     <!-- Upcoming thresholds -->
     <string name="pref_upcominglimit">Configura Prossimi</string>
     <string name="upcoming_upto_now">adesso</string>
