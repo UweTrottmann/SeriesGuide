@@ -8,7 +8,6 @@ import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatDialogFragment
-import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.fragment.app.FragmentManager
 import com.battlelancer.seriesguide.R
@@ -146,12 +145,12 @@ class RateDialogFragment : AppCompatDialogFragment() {
             itemId: Long,
             currentRating: Int?
         ): RateDialogFragment {
-            val args = bundleOf(
-                ITEM_TYPE to itemType,
-                ITEM_ID to itemId
-            )
-            if (currentRating != null) {
-                args.putInt(ARG_CURRENT_RATING, currentRating)
+            val args = Bundle().apply {
+                putString(ITEM_TYPE, itemType)
+                putLong(ITEM_ID, itemId)
+                if (currentRating != null) {
+                    putInt(ARG_CURRENT_RATING, currentRating)
+                }
             }
             return RateDialogFragment().apply { arguments = args }
         }

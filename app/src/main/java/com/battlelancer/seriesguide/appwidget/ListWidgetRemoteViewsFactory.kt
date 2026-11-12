@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2020-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2020 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.appwidget
 
@@ -8,11 +8,11 @@ import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.os.Bundle
 import android.text.format.DateUtils
 import android.view.View
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
-import androidx.core.os.bundleOf
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
@@ -224,9 +224,9 @@ class ListWidgetRemoteViewsFactory(
         // Set the fill-in intents for the collection item.
         if (episodeId != null) {
             // Display details
-            bundleOf(
-                ListWidgetProvider.EXTRA_EPISODE_ID to episodeId
-            ).let {
+            Bundle().apply {
+                putLong(ListWidgetProvider.EXTRA_EPISODE_ID, episodeId)
+            }.let {
                 Intent().putExtras(it)
             }.let {
                 rv.setOnClickFillInIntent(R.id.appwidget_row, it)
@@ -238,10 +238,10 @@ class ListWidgetRemoteViewsFactory(
             } else {
                 EpisodeFlags.WATCHED
             }
-            bundleOf(
-                ListWidgetProvider.EXTRA_EPISODE_ID to episodeId,
-                ListWidgetProvider.EXTRA_EPISODE_FLAG to newEpisodeFlag
-            ).let {
+            Bundle().apply {
+                putLong(ListWidgetProvider.EXTRA_EPISODE_ID, episodeId)
+                putInt(ListWidgetProvider.EXTRA_EPISODE_FLAG, newEpisodeFlag)
+            }.let {
                 Intent().putExtras(it)
             }.let {
                 rv.setOnClickFillInIntent(R.id.widgetWatchedButton, it)

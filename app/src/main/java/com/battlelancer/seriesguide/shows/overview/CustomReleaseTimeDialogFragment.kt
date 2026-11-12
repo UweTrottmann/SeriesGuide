@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2023 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.shows.overview
 
@@ -7,7 +7,6 @@ import android.app.Dialog
 import android.os.Bundle
 import android.text.format.DateFormat.is24HourFormat
 import androidx.appcompat.app.AppCompatDialogFragment
-import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -28,9 +27,9 @@ import kotlinx.coroutines.launch
 class CustomReleaseTimeDialogFragment() : AppCompatDialogFragment() {
 
     constructor(showId: Long) : this() {
-        arguments = bundleOf(
-            ARG_SHOW_ID to showId
-        )
+        arguments = Bundle().apply {
+            putLong(ARG_SHOW_ID, showId)
+        }
     }
 
     private val model: CustomReleaseTimeDialogModel by viewModels(

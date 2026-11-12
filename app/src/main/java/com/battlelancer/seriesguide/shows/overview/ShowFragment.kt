@@ -15,7 +15,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.TooltipCompat
-import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
@@ -620,7 +619,9 @@ class ShowFragment() : Fragment() {
 
         @JvmStatic
         fun buildArgs(showRowId: Long): Bundle {
-            return bundleOf(ARG_SHOW_ROWID to showRowId)
+            return Bundle().apply {
+                putLong(ARG_SHOW_ROWID, showRowId)
+            }
         }
     }
 }

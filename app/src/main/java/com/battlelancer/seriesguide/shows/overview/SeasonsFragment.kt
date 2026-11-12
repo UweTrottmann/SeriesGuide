@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2018-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2018 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.shows.overview
 
@@ -13,7 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.TooltipCompat
-import androidx.core.os.bundleOf
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -48,6 +47,7 @@ class SeasonsFragment() : Fragment() {
 
     private var binding: FragmentSeasonsBinding? = null
     private lateinit var adapter: SeasonsAdapter
+
     // Cache the ViewModel in the activity (use activityViewModels instead of viewModels) as
     // OverviewActivityImpl may destroy fragments when switching layouts.
     private val model by activityViewModels<SeasonsViewModel> {
@@ -403,7 +403,9 @@ class SeasonsFragment() : Fragment() {
 
         @JvmStatic
         fun buildArgs(showId: Long): Bundle {
-            return bundleOf(ARG_LONG_SHOW_ROW_ID to showId)
+            return Bundle().apply {
+                putLong(ARG_LONG_SHOW_ROW_ID, showId)
+            }
         }
     }
 }
