@@ -64,15 +64,24 @@ class DebugLogActivity : BaseThemeActivity() {
     private fun initViews(binding: ActivityDebugLogBinding) {
         ThemeUtils.applyBottomPaddingForNavigationBar(binding.recyclerViewDebugLog)
 
+        val recyclerView = binding.recyclerViewDebugLog
         val adapter = DebugLogAdapter()
-        binding.recyclerViewDebugLog.adapter = adapter
-        binding.recyclerViewDebugLog.layoutManager = LinearLayoutManager(this)
-        SgFastScroller(this, binding.recyclerViewDebugLog)
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        SgFastScroller(this, recyclerView)
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 model.logEntries.collect {
-                    adapter.setData(it)
+                    // Like a terminal, keep showing the latest entries at the bottom, but only if
+                    // the list is already scrolled to the bottom (or is empty, so on first load).
+                    val isAtBottom = !recyclerView.canScrollVertically(1)
+                    adapter.submitList(it) {
+                        val itemCount = adapter.itemCount
+                        if (isAtBottom && itemCount > 0) {
+                            recyclerView.scrollToPosition(itemCount - 1)
+                        }
+                    }
                 }
             }
         }
@@ -85,9 +94,6 @@ class DebugLogActivity : BaseThemeActivity() {
                         Toast.makeText(this@DebugLogActivity, it.userMessage, Toast.LENGTH_SHORT)
                             .show()
                         model.userMessageShown()
-                        // In case saving the file failed, the debug log may contain the error
-                        // information, so refresh the display
-                        model.updateDebugLogEntries()
                     }
                 }
             }
@@ -144,11 +150,6 @@ class DebugLogActivity : BaseThemeActivity() {
                 model.saveDebugLogToFile(uri)
             }
         }
-
-    override fun onResume() {
-        super.onResume()
-        model.updateDebugLogEntries()
-    }
 
     companion object {
         fun intent(context: Context) = Intent(context, DebugLogActivity::class.java)

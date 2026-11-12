@@ -13,6 +13,7 @@ import androidx.room.PrimaryKey
 import androidx.room.Query
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import kotlinx.coroutines.flow.Flow
 
 @Database(
     entities = [DbDebugLogEntry::class],
@@ -53,6 +54,9 @@ interface DebugLogHelper {
 
     @Query("SELECT * FROM debug_log")
     suspend fun getAll(): List<DbDebugLogEntry>
+
+    @Query("SELECT * FROM debug_log")
+    fun getAllFlow(): Flow<List<DbDebugLogEntry>>
 
     @Query("DELETE FROM debug_log WHERE created_at < :timeInMs")
     suspend fun deleteOlderThan(timeInMs: Long)

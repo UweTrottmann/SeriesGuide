@@ -83,6 +83,10 @@
         <item quantity="one">%d svar</item>
         <item quantity="other">%d svar</item>
     </plurals>
+    <plurals name="reactions_plural">
+        <item quantity="one">%d reaktion</item>
+        <item quantity="other">%d reaktioner</item>
+    </plurals>
     <!-- Metadata -->
     <string name="episode_number_disk">DVD</string>
     <string name="episode_firstaired">Udgivelsesdato</string>
@@ -430,6 +434,7 @@
     <string name="sort_order_top_rated_first">Bedst bedømte</string>
     <string name="sort_order_latest_first_dvd">Nyeste først (DVD)</string>
     <string name="sort_order_oldest_first_dvd">Ældste først (DVD)</string>
+    <string name="sort_order_reactions">Reaktioner</string>
     <!-- Upcoming thresholds -->
     <string name="pref_upcominglimit">Forestående periode</string>
     <string name="upcoming_upto_now">nu</string>

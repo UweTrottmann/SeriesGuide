@@ -11,6 +11,9 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isGone
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.CloudSetupActivity
@@ -30,8 +33,7 @@ import com.battlelancer.seriesguide.util.ViewTools.openUriOnClick
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnClick
 import com.battlelancer.seriesguide.util.safeShow
 import com.uwetrottmann.androidutils.AndroidUtils
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
+import kotlinx.coroutines.launch
 import java.util.Locale
 
 
@@ -52,6 +54,15 @@ class MoreOptionsActivity : BaseTopActivity() {
         setupBottomNavigation(R.id.navigation_item_more)
 
         configureViews()
+
+        lifecycleScope.launch {
+            // Only update while views are shown.
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                SyncProgress.latestEventReadOnly.collect {
+                    binding.syncStatus.setProgress(it)
+                }
+            }
+        }
     }
 
     @SuppressLint("ObsoleteSdkInt")
@@ -59,8 +70,6 @@ class MoreOptionsActivity : BaseTopActivity() {
         // Shows a no updates info text if the device is running a version of Android
         // that will not be supported by a future version of this app.
         binding.textViewNoMoreUpdates.isGone = AndroidUtils.isMarshmallowOrHigher
-
-        binding.syncStatus.isGone = true
 
         // Accounts and auto backup
         binding.containerCloud.setOnClickListener {
@@ -134,11 +143,6 @@ class MoreOptionsActivity : BaseTopActivity() {
 
     override val snackbarParentView: View
         get() = binding.coordinatorLayoutMoreOptions
-
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    fun onEvent(event: SyncProgress.SyncEvent) {
-        binding.syncStatus.setProgress(event)
-    }
 
     companion object {
         private const val SUPPORT_MAIL = "support@seriesgui.de"

@@ -69,6 +69,26 @@
             app:layout_constraintTop_toBottomOf="@id/buttonDebugViewTestNotification3" />
 
         <Button
+            android:id="@+id/buttonDebugViewRequestSyncDelta"
+            style="@style/Widget.SeriesGuide.Button.Outlined"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Request delta sync"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonDebugViewTriggerJobProcessing" />
+
+        <Button
+            android:id="@+id/buttonDebugViewCancelSync"
+            style="@style/Widget.SeriesGuide.Button.Outlined"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Cancel sync"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonDebugViewRequestSyncDelta" />
+
+        <Button
             android:id="@+id/buttonDebugViewDemoMode"
             style="@style/Widget.SeriesGuide.Button.Outlined"
             android:layout_width="0dp"
@@ -77,7 +97,7 @@
             android:text="Toggle demo mode"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/buttonDebugViewTriggerJobProcessing" />
+            app:layout_constraintTop_toBottomOf="@id/buttonDebugViewCancelSync" />
 
         <Button
             android:id="@+id/buttonDebugViewCloudSetDisabled"

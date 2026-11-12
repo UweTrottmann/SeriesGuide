@@ -33,24 +33,10 @@ class HexagonEpisodeJob(
         uploadWrapper.showTmdbId = showTmdbIdOrZero
 
         // upload in small batches
-        var smallBatch: MutableList<SgCloudEpisode> = ArrayList()
-        val episodes = getEpisodesForHexagon()
-        while (episodes.isNotEmpty()) {
-            // batch small enough?
-            if (episodes.size <= HexagonEpisodeSync.MAX_BATCH_SIZE) {
-                smallBatch = episodes
-            } else {
-                // build smaller batch
-                for (count in 0 until HexagonEpisodeSync.MAX_BATCH_SIZE) {
-                    if (episodes.isEmpty()) {
-                        break
-                    }
-                    smallBatch.add(episodes.removeAt(0))
-                }
-            }
-
-            // upload
-            uploadWrapper.episodes = smallBatch
+        val batches = getEpisodesForHexagon()
+            .chunked(HexagonEpisodeSync.MAX_BATCH_SIZE)
+        for (batch in batches) {
+            uploadWrapper.episodes = batch
 
             try {
                 val episodesService = hexagonTools.episodesService
@@ -72,9 +58,6 @@ class HexagonEpisodeJob(
                 Errors.logAndReportHexagon("save episodes", e)
                 return buildResult(context, ERROR_CONNECTION)
             }
-
-            // prepare for next batch
-            smallBatch.clear()
         }
         return buildResult(context, SUCCESS)
     }
@@ -83,7 +66,7 @@ class HexagonEpisodeJob(
      * Builds a list of episodes ready to upload to hexagon. However, the show id is not set.
      * It should be set in the wrapping entity.
      */
-    private fun getEpisodesForHexagon(): MutableList<SgCloudEpisode> {
+    private fun getEpisodesForHexagon(): List<SgCloudEpisode> {
         val isWatchedNotCollected = when (action) {
             JobAction.EPISODE_WATCHED_FLAG -> true
             JobAction.EPISODE_COLLECTION -> false

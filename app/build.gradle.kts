@@ -19,7 +19,6 @@ if (googleServicesJsonFile.readText().contains("placeholder")) {
 plugins {
     alias(libs.plugins.android.application)
     id("seriesguide.android")
-    alias(libs.plugins.android.kapt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.compose.compiler)
     // Firebase Authentication, Crashlytics
@@ -35,12 +34,6 @@ kotlin {
         // Using experimental flatMapLatest for Paging 3
         // Using experimental Material 3 compose APIs
         freeCompilerArgs.add("-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi,androidx.compose.material3.ExperimentalMaterial3Api")
-    }
-}
-
-kapt {
-    arguments {
-        arg("eventBusIndex", "com.battlelancer.seriesguide.SgEventBusIndex")
     }
 }
 
@@ -256,7 +249,6 @@ dependencies {
     implementation(libs.dagger)
     ksp(libs.dagger.compiler)
     implementation(libs.greenrobot.eventbus)
-    kapt(libs.greenrobot.eventbus.processor)
 
     implementation(libs.flatbuffers)
     implementation(libs.gson)

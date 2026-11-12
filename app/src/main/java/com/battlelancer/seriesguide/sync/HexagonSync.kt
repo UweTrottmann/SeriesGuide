@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2017-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2017 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.sync
 
@@ -25,7 +25,11 @@ class HexagonSync(
     data class HexagonResult(
         val hasAddedShows: Boolean,
         val success: Boolean
-    )
+    ) {
+        companion object {
+            val FAILED = HexagonResult(hasAddedShows = false, success = false)
+        }
+    }
 
     /**
      * Syncs episodes, shows and movies with Hexagon.
@@ -33,9 +37,13 @@ class HexagonSync(
      * Merges shows, episodes and movies after a sign-in. Consecutive syncs will only download
      * changes to shows, episodes and movies.
      *
-     * Note: this calls [syncMovies] which may throw [InterruptedException].
+     * If a step fails, other steps are still attempted unless the sync was canceled.
+     *
+     * Throws [SyncCanceledException] if the sync was canceled.
+     *
+     * If steps fail, they [SyncProgress.recordError].
      */
-    @Throws(InterruptedException::class)
+    @Throws(SyncCanceledException::class)
     fun sync(): HexagonResult {
         val tmdbIdsToShowIds = SgApp.getServicesComponent(context).showTools()
             .getTmdbIdsToShowIds()
@@ -47,6 +55,8 @@ class HexagonSync(
             progress.recordError()
         }
 
+        progress.throwIfCanceled()
+
         //// SHOWS
         progress.publish(SyncProgress.Step.HEXAGON_SHOWS)
         val syncShowsResult = syncShows(tmdbIdsToShowIds)
@@ -54,12 +64,16 @@ class HexagonSync(
             progress.recordError()
         }
 
+        progress.throwIfCanceled()
+
         //// MOVIES
         progress.publish(SyncProgress.Step.HEXAGON_MOVIES)
         val syncMoviesSuccessful = syncMovies()
         if (!syncMoviesSuccessful) {
             progress.recordError()
         }
+
+        progress.throwIfCanceled()
 
         //// LISTS
         progress.publish(SyncProgress.Step.HEXAGON_LISTS)
@@ -76,6 +90,13 @@ class HexagonSync(
         return HexagonResult(syncShowsResult.hasAddedShows, success)
     }
 
+    /**
+     * If an operation fails or network connectivity is lost this may only partially complete.
+     *
+     * Throws [SyncCanceledException] if the sync was canceled.
+     *
+     * @return If everything completed successfully.
+     */
     private fun syncEpisodes(tmdbIdsToShowIds: Map<Int, Long>): Boolean {
         val database = SgRoomDatabase.getInstance(context)
         val dbShowHelper = database.sgShow2Helper()
@@ -87,10 +108,10 @@ class HexagonSync(
         val dbEpisodeHelper = database.sgEpisode2Helper()
         val episodeSync = HexagonEpisodeSync(context, hexagonTools, dbEpisodeHelper, dbShowHelper)
         for (show in showsToMerge) {
-            // abort if connection is lost
-            if (!AndroidUtils.isNetworkConnected(context)) {
-                return false
-            }
+            // Do network and cancel checks here as well, as otherwise this just continues onto
+            // the next show.
+            if (!AndroidUtils.isNetworkConnected(context)) return false
+            progress.throwIfCanceled()
 
             // TMDB ID is required, legacy shows with TVDB only data will no longer be synced.
             val showTmdbId = show.tmdbId ?: continue
@@ -126,14 +147,14 @@ class HexagonSync(
         val newShows = HashMap<Int, AddShowTask.Show>()
         val downloadSuccessful = showSync.download(tmdbIdsToShowIds, newShows, hasMergedShows)
         if (!downloadSuccessful) {
-            return HexagonResult(false, false)
+            return HexagonResult.FAILED
         }
 
         // if merge required, upload all shows to Hexagon
         if (!hasMergedShows) {
             val uploadSuccessful = showSync.uploadAll()
             if (!uploadSuccessful) {
-                return HexagonResult(false, false)
+                return HexagonResult.FAILED
             }
         }
 
@@ -157,11 +178,6 @@ class HexagonSync(
         return HexagonResult(addNewShows, true)
     }
 
-    /**
-     * Note: this uses [runBlocking], so if the calling thread is interrupted this will throw
-     * [InterruptedException].
-     */
-    @Throws(InterruptedException::class)
     private fun syncMovies(): Boolean {
         val hasMergedMovies = HexagonSettings.hasMergedMovies(context)
 

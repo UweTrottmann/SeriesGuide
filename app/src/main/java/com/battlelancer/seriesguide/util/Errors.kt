@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2019 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.util
 
@@ -15,7 +15,6 @@ import retrofit2.Response
 import timber.log.Timber
 import java.io.InterruptedIOException
 import java.net.ConnectException
-import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import javax.net.ssl.SSLException
 
@@ -107,7 +106,7 @@ class Errors {
         fun logAndReportHexagon(action: String, e: Throwable) {
             var statusCode: Int? = null
             val throwable = if (e is HttpResponseException) {
-                statusCode  = e.statusCode
+                statusCode = e.statusCode
                 val requestError = when {
                     e.isClientError() -> ClientError(action, e)
                     e.isServerError() -> ServerError(action, e)
@@ -122,9 +121,7 @@ class Errors {
 
             Timber.e(throwable, action)
 
-            // Also do not report IOException: Error on service connection
-            // caused by InterruptedException from GoogleAuthUtil.getToken.
-            if (!throwable.shouldReport() || throwable.getUltimateCause() is InterruptedException) {
+            if (!throwable.shouldReport()) {
                 return
             }
 
@@ -153,16 +150,19 @@ class Errors {
                     message != null -> ClientError(action, response, message)
                     else -> ClientError(action, response)
                 }
+
                 response.isServerError() -> when {
                     message != null -> ServerError(action, response, message)
                     else -> ServerError(action, response)
                 }
+
                 else -> when {
                     message != null -> RequestError(
                         action,
                         response.code,
                         "${response.message} $message"
                     )
+
                     else -> RequestError(action, response.code, response.message)
                 }
             }
@@ -244,7 +244,8 @@ private fun HttpResponseException.isServerError(): Boolean {
 /**
  * Returns true if the exception is not one of the following:
  * - ConnectException - network issues (e.g. "Failed to connect to x").
- * - InterruptedIOException - network request time outs.
+ * - InterruptedIOException - network requests (OkHttp/Okio) failing due to time-outs
+ *   (including SocketTimeoutException) or thread interrupt.
  * - UnknownHostException - network issues.
  */
 private fun Throwable.shouldReport(): Boolean {
@@ -256,6 +257,7 @@ private fun Throwable.shouldReport(): Boolean {
             message?.contains("Connection reset by peer") == false
                     && message?.contains("Software caused connection abort") == false
         }
+
         else -> true
     }
 }
@@ -268,10 +270,11 @@ fun Throwable.isRetryError(): Boolean {
     return when (this) {
         is ConnectException -> true
         is UnknownHostException -> true
-        // Not super type InterruptedIOException as possibly not caused by network issues?
-        is SocketTimeoutException -> true
+        // Network request time-outs, but also if thread interrupted (Okio Timeout throws it on
+        // interrupt).
+        // This covers SocketTimeoutException which is an InterruptedIOException.
+        is InterruptedIOException -> true
         // Not SSLException as likely not temporary or a network issue.
-        is InterruptedIOException -> true // Network request time outs or interrupted by system.
         else -> false
     }
 }

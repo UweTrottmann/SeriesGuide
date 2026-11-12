@@ -3,7 +3,6 @@
 
 package com.battlelancer.seriesguide.traktapi
 
-import com.battlelancer.seriesguide.traktapi.TraktTools4.awaitTraktCall
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.trakt5.TraktV2
 import com.uwetrottmann.trakt5.entities.AddNoteRequest
@@ -16,9 +15,16 @@ import com.uwetrottmann.trakt5.entities.RatedMovie
 import com.uwetrottmann.trakt5.entities.RatedShow
 import com.uwetrottmann.trakt5.entities.Show
 import com.uwetrottmann.trakt5.entities.ShowIds
+import com.uwetrottmann.trakt5.entities.SyncEpisode
+import com.uwetrottmann.trakt5.entities.SyncItems
+import com.uwetrottmann.trakt5.entities.SyncMovie
+import com.uwetrottmann.trakt5.entities.SyncResponse
+import com.uwetrottmann.trakt5.entities.SyncSeason
+import com.uwetrottmann.trakt5.entities.SyncShow
 import com.uwetrottmann.trakt5.enums.Extended
 import com.uwetrottmann.trakt5.enums.ExtendedShowsWatched
 import com.uwetrottmann.trakt5.enums.IdType
+import com.uwetrottmann.trakt5.enums.Rating
 import com.uwetrottmann.trakt5.enums.RatingsFilter
 import com.uwetrottmann.trakt5.enums.Specials
 import com.uwetrottmann.trakt5.enums.Type
@@ -32,14 +38,12 @@ import timber.log.Timber
 /**
  * Uses response classes inheriting from a Kotlin sealed interface.
  *
- * Removes any Android specific classes and no longer relies on a third-party library to handle
- * results.
+ * Functions don't require a [android.content.Context] and no longer rely on a third-party library
+ * to handle results.
+ *
+ * For more efficiency, can pass a cached service instance to methods.
  */
-object TraktTools4 {
-
-    // 250 is the maximum limit according to the Trakt [Upcoming API Changes: Pagination & Sorting Updates](https://github.com/trakt/trakt-api/discussions/681)
-    // discussion.
-    private const val MAX_LIMIT = 250
+class TraktTools4(private val trakt: TraktV2) {
 
     sealed interface TraktResponse<T> {
         data class Success<T>(
@@ -76,8 +80,8 @@ object TraktTools4 {
      * May return `null` data, for example if the movie wasn't found.
      */
     suspend fun getMovieIds(
-        traktSearch: Search,
-        movieTmdbId: Int
+        movieTmdbId: Int,
+        traktSearch: Search = trakt.search()
     ): TraktNonNullResponse<MovieIds?> {
         val response = awaitTraktCallNonNull(
             traktSearch.idLookup(IdType.TMDB, movieTmdbId.toString(), Type.MOVIE, null, 1, 1),
@@ -97,8 +101,8 @@ object TraktTools4 {
      * discussion about details and updates.
      */
     suspend fun getWatchedShows(
-        traktSync: Sync,
-        noSeasons: Boolean
+        noSeasons: Boolean,
+        traktSync: Sync = trakt.sync()
     ): TraktNonNullResponse<List<BaseShow>> {
         return fetchAllPages(
             action = "get watched shows",
@@ -123,14 +127,14 @@ object TraktTools4 {
     }
 
     suspend fun getWatchedShowsByTmdbId(
-        traktSync: Sync
+        traktSync: Sync = trakt.sync()
     ): TraktNonNullResponse<Map<Int, BaseShow>> {
-        val response = getWatchedShows(traktSync, noSeasons = false)
+        val response = getWatchedShows(noSeasons = false, traktSync = traktSync)
         return mapResponseData(response) { mapByTmdbId(it) }
     }
 
     suspend fun getCollectedShows(
-        traktSync: Sync
+        traktSync: Sync = trakt.sync()
     ): TraktNonNullResponse<List<BaseShow>> {
         return fetchAllPages(
             action = "get collected shows",
@@ -141,9 +145,9 @@ object TraktTools4 {
     }
 
     suspend fun getCollectedShowsByTmdbId(
-        traktSync: Sync
+        traktSync: Sync = trakt.sync()
     ): TraktNonNullResponse<Map<Int, BaseShow>> {
-        val response = getCollectedShows(traktSync)
+        val response = getCollectedShows(traktSync = traktSync)
         return mapResponseData(response) { mapByTmdbId(it) }
     }
 
@@ -205,7 +209,7 @@ object TraktTools4 {
     }
 
     suspend fun getShowsOnWatchlist(
-        traktSync: Sync
+        traktSync: Sync = trakt.sync()
     ): TraktNonNullResponse<List<BaseShow>> {
         return fetchAllPages(
             action = "get shows on watchlist",
@@ -216,8 +220,44 @@ object TraktTools4 {
         }
     }
 
+    /**
+     * Adds the show to the watchlist.
+     *
+     * Check the response with [isNotFound]. See [awaitTraktCall] for details.
+     */
+    suspend fun addShowToWatchlist(
+        showTmdbId: Int,
+        traktSync: Sync = trakt.sync()
+    ): TraktNonNullResponse<SyncResponse> {
+        return awaitTraktCallNonNull(
+            traktSync.addItemsToWatchlist(buildWatchlistItems(showTmdbId)),
+            "add show to watchlist",
+            reportIsNotVip = true // Should work even if not VIP
+        )
+    }
+
+    /**
+     * Removes the show from the watchlist.
+     *
+     * Check the response with [isNotFound]. See [awaitTraktCall] for details.
+     */
+    suspend fun removeShowFromWatchlist(
+        showTmdbId: Int,
+        traktSync: Sync = trakt.sync()
+    ): TraktNonNullResponse<SyncResponse> {
+        return awaitTraktCallNonNull(
+            traktSync.deleteItemsFromWatchlist(buildWatchlistItems(showTmdbId)),
+            "remove show from watchlist",
+            reportIsNotVip = true // Should work even if not VIP
+        )
+    }
+
+    private fun buildWatchlistItems(showTmdbId: Int): SyncItems {
+        return SyncItems().shows(SyncShow().id(ShowIds.tmdb(showTmdbId)))
+    }
+
     suspend fun getRatingsOfShows(
-        traktSync: Sync
+        traktSync: Sync = trakt.sync()
     ): TraktNonNullResponse<List<RatedShow>> {
         return fetchAllPages(
             action = "get show ratings",
@@ -228,7 +268,7 @@ object TraktTools4 {
     }
 
     suspend fun getRatingsOfEpisodes(
-        traktSync: Sync
+        traktSync: Sync = trakt.sync()
     ): TraktNonNullResponse<List<RatedEpisode>> {
         return fetchAllPages(
             action = "get episode ratings",
@@ -238,8 +278,68 @@ object TraktTools4 {
         }
     }
 
+    /**
+     * Adds the [rating] to the show. If [rating] is null, removes the rating.
+     *
+     * Check the response with [isNotFound]. See [awaitTraktCall] for details.
+     */
+    suspend fun rateShow(
+        showTmdbId: Int,
+        rating: Rating?,
+        traktSync: Sync = trakt.sync()
+    ): TraktNonNullResponse<SyncResponse> {
+        val items = SyncItems()
+            .shows(SyncShow().id(ShowIds.tmdb(showTmdbId)).rating(rating))
+        return sendRatings(traktSync, items, rating, "rate show")
+    }
+
+    /**
+     * Like [rateShow], but for an episode.
+     */
+    suspend fun rateEpisode(
+        showTmdbId: Int,
+        season: Int,
+        episode: Int,
+        rating: Rating?,
+        traktSync: Sync = trakt.sync()
+    ): TraktNonNullResponse<SyncResponse> {
+        val items = SyncItems()
+            .shows(
+                SyncShow().id(ShowIds.tmdb(showTmdbId))
+                    .seasons(
+                        SyncSeason().number(season)
+                            .episodes(
+                                SyncEpisode().number(episode)
+                                    .rating(rating)
+                            )
+                    )
+            )
+        return sendRatings(traktSync, items, rating, "rate episode")
+    }
+
+    /**
+     * Adds the ratings, or removes them if [rating] is null.
+     */
+    private suspend fun sendRatings(
+        traktSync: Sync,
+        items: SyncItems,
+        rating: Rating?,
+        action: String
+    ): TraktNonNullResponse<SyncResponse> {
+        val call = if (rating != null) {
+            traktSync.addRatings(items)
+        } else {
+            traktSync.deleteRatings(items)
+        }
+        return awaitTraktCallNonNull(
+            call,
+            action,
+            reportIsNotVip = true // Should work even if not VIP
+        )
+    }
+
     suspend fun getWatchedMoviesByTmdbId(
-        traktSync: Sync
+        traktSync: Sync = trakt.sync()
     ): TraktNonNullResponse<MutableMap<Int, Int>> {
         val response = fetchAllPages(
             action = "get watched movies",
@@ -261,7 +361,7 @@ object TraktTools4 {
     }
 
     suspend fun getCollectedMoviesByTmdbId(
-        traktSync: Sync
+        traktSync: Sync = trakt.sync()
     ): TraktNonNullResponse<MutableSet<Int>> {
         val response = fetchAllPages(
             action = "get collected movies",
@@ -273,7 +373,7 @@ object TraktTools4 {
     }
 
     suspend fun getMoviesOnWatchlistByTmdbId(
-        traktSync: Sync
+        traktSync: Sync = trakt.sync()
     ): TraktNonNullResponse<MutableSet<Int>> {
         val response = fetchAllPages(
             action = "get movie watchlist",
@@ -295,7 +395,7 @@ object TraktTools4 {
     }
 
     suspend fun getRatingsOfMovies(
-        traktSync: Sync
+        traktSync: Sync = trakt.sync()
     ): TraktNonNullResponse<List<RatedMovie>> {
         return fetchAllPages(
             action = "get movie ratings",
@@ -306,14 +406,27 @@ object TraktTools4 {
     }
 
     /**
+     * Like [rateShow], but for a movie.
+     */
+    suspend fun rateMovie(
+        movieTmdbId: Int,
+        rating: Rating?,
+        traktSync: Sync = trakt.sync()
+    ): TraktNonNullResponse<SyncResponse> {
+        val items = SyncItems()
+            .movies(SyncMovie().id(MovieIds.tmdb(movieTmdbId)).rating(rating))
+        return sendRatings(traktSync, items, rating, "rate movie")
+    }
+
+    /**
      * Adds or updates the note for the given show.
      *
      * See [awaitTraktCall] for details.
      */
     suspend fun saveNoteForShow(
-        traktNotes: Notes,
         showTmdbId: Int,
-        noteText: String
+        noteText: String,
+        traktNotes: Notes = trakt.notes()
     ): TraktNonNullResponse<Note> {
         // Note: calling the add endpoint for an existing note will update it
         return awaitTraktCallNonNull(
@@ -334,8 +447,8 @@ object TraktTools4 {
      * See [awaitTraktCall] for details.
      */
     suspend fun deleteNote(
-        traktNotes: Notes,
-        noteId: Long
+        noteId: Long,
+        traktNotes: Notes = trakt.notes()
     ): TraktResponse<Void> {
         return awaitTraktCall(
             traktNotes.deleteNote(noteId),
@@ -367,25 +480,32 @@ object TraktTools4 {
         }
 
         if (!response.isSuccessful) {
+            // The error body can only be read once, so only parse it when reporting
+            fun report() = Errors.logAndReport(
+                action,
+                response,
+                SgTrakt.checkForTraktError(trakt, response)
+            )
+
             return when {
                 TraktV2.isAccountLimitExceeded(response) -> {
-                    Errors.logAndReport(action, response)
+                    report()
                     TraktErrorResponse.IsAccountLimitExceeded()
                 }
 
                 TraktV2.isAccountLocked(response) -> {
-                    Errors.logAndReport(action, response)
+                    report()
                     TraktErrorResponse.IsAccountLocked()
                 }
 
                 TraktV2.isNotVip(response) -> {
-                    if (reportIsNotVip) Errors.logAndReport(action, response)
+                    if (reportIsNotVip) report()
                     TraktErrorResponse.IsNotVip()
                 }
 
                 TraktV2.isUnauthorized(response) -> TraktErrorResponse.IsUnauthorized()
                 else -> {
-                    Errors.logAndReport(action, response)
+                    report()
                     TraktErrorResponse.Other()
                 }
             }
@@ -445,6 +565,24 @@ object TraktTools4 {
             is TraktErrorResponse.IsAccountLimitExceeded -> TraktErrorResponse.IsAccountLimitExceeded()
             is TraktErrorResponse.IsAccountLocked -> TraktErrorResponse.IsAccountLocked()
             is TraktErrorResponse.Other -> TraktErrorResponse.Other()
+        }
+    }
+
+    companion object {
+
+        // 250 is the maximum limit according to the Trakt [Upcoming API Changes: Pagination & Sorting Updates](https://github.com/trakt/trakt-api/discussions/681)
+        // discussion.
+        private const val MAX_LIMIT = 250
+
+        /**
+         * Returns `true` if Trakt could not find any of the movies, shows or episodes of a sync
+         * request.
+         */
+        fun isNotFound(response: SyncResponse): Boolean {
+            val notFound = response.not_found ?: return false
+            return !notFound.movies.isNullOrEmpty()
+                    || !notFound.shows.isNullOrEmpty()
+                    || !notFound.episodes.isNullOrEmpty()
         }
     }
 

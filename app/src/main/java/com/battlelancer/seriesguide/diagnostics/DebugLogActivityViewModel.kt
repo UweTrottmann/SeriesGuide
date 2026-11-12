@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2025 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.diagnostics
 
@@ -11,8 +11,13 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.seconds
 
 class DebugLogActivityViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -22,15 +27,16 @@ class DebugLogActivityViewModel(application: Application) : AndroidViewModel(app
     )
 
     val uiState = MutableStateFlow(DebugLogUiState())
-    val logEntries = MutableStateFlow(emptyList<DebugLogEntry>())
 
     private val debugLogBuffer = getApplication<SgApp>().appContainer.debugLogBuffer
 
-    fun updateDebugLogEntries() {
-        viewModelScope.launch(Dispatchers.Default) {
-            logEntries.value = debugLogBuffer.logBufferSnapshot()
-        }
-    }
+    val logEntries: StateFlow<List<DebugLogEntry>> = debugLogBuffer.logEntriesFlow()
+        .flowOn(Dispatchers.Default)
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5.seconds.inWholeMilliseconds),
+            emptyList()
+        )
 
     fun userMessageShown() {
         uiState.update {

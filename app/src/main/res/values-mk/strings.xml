@@ -83,6 +83,10 @@
         <item quantity="one">%d oдгoвoри</item>
         <item quantity="other">%d oдгoвoри</item>
     </plurals>
+    <plurals name="reactions_plural">
+        <item quantity="one">%d reaction</item>
+        <item quantity="other">%d reactions</item>
+    </plurals>
     <!-- Metadata -->
     <string name="episode_number_disk">DVD</string>
     <string name="episode_firstaired">Датум на емитување</string>
@@ -430,6 +434,7 @@
     <string name="sort_order_top_rated_first">Најдобри оцени</string>
     <string name="sort_order_latest_first_dvd">Прво најнови (DVD)</string>
     <string name="sort_order_oldest_first_dvd">Прво најстари (DVD)</string>
+    <string name="sort_order_reactions">Reactions</string>
     <!-- Upcoming thresholds -->
     <string name="pref_upcominglimit">Oпсег нa нoви серии</string>
     <string name="upcoming_upto_now">сега</string>

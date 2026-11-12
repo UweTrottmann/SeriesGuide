@@ -14,7 +14,6 @@ import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.traktapi.TraktSettings
 import com.battlelancer.seriesguide.traktapi.TraktTools
-import com.battlelancer.seriesguide.traktapi.TraktTools4
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse.Success
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.TimeTools
@@ -65,11 +64,7 @@ class TraktEpisodeSync(
      * Trakt. If an episode has multiple plays, uploads it multiple times.
      * If false, sets episodes that are not watched on Trakt but watched locally
      * (and only those, e.g. no skipped episodes) as not watched.
-     *
-     * Note: this uses [runBlocking], so if the calling thread is interrupted this will throw
-     * [InterruptedException].
      */
-    @Throws(InterruptedException::class)
     fun syncWatched(
         tmdbIdsToShowIds: Map<Int, Long>,
         watchedAt: OffsetDateTime?,
@@ -82,7 +77,9 @@ class TraktEpisodeSync(
         val lastWatchedAt = TraktSettings.getLastEpisodesWatchedAt(context)
         if (isInitialSync || TimeTools.isAfterMillis(watchedAt, lastWatchedAt)) {
             val watchedShowsTrakt = runBlocking(Dispatchers.Default) {
-                when (val response = TraktTools4.getWatchedShowsByTmdbId(traktSync!!.sync)) {
+                when (val response = traktSync!!.traktTools.getWatchedShowsByTmdbId(
+                    traktSync = traktSync.sync
+                )) {
                     is Success -> response.data
                     else -> null
                 }
@@ -120,11 +117,7 @@ class TraktEpisodeSync(
      * Trakt.
      * If false, sets episodes that are not collected on Trakt but collected locally
      * as not collected.
-     *
-     * Note: this uses [runBlocking], so if the calling thread is interrupted this will throw
-     * [InterruptedException].
      */
-    @Throws(InterruptedException::class)
     fun syncCollected(
         tmdbIdsToShowIds: Map<Int, Long>,
         collectedAt: OffsetDateTime?,
@@ -138,7 +131,9 @@ class TraktEpisodeSync(
         if (isInitialSync || TimeTools.isAfterMillis(collectedAt, lastCollectedAt)) {
 
             val collectedShowsTrakt = runBlocking(Dispatchers.Default) {
-                when (val response = TraktTools4.getCollectedShowsByTmdbId(traktSync!!.sync)) {
+                when (val response = traktSync!!.traktTools.getCollectedShowsByTmdbId(
+                    traktSync = traktSync.sync
+                )) {
                     is Success -> response.data
                     else -> null
                 }

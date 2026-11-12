@@ -34,6 +34,8 @@ class TraktCommentsLoader(context: Context, private val args: Bundle) :
     }
 
     override fun loadInBackground(): Result {
+        val languageCode = CommentsSettings.getCommentsLanguage(context)
+        val sortBy = CommentsSettings.getCommentsSortOrder(context).sortBy
         val cacheControl = if (args.getBoolean(ARG_REFRESH)) "no-cache" else null
 
         // movie comments?
@@ -43,8 +45,10 @@ class TraktCommentsLoader(context: Context, private val args: Bundle) :
                 val response = trakt.movies()
                     .comments(
                         movieTraktId.toString(),
+                        sortBy,
                         1,
                         PAGE_SIZE,
+                        languageCode,
                         Extended.FULL,
                         cacheControl
                     )
@@ -84,7 +88,10 @@ class TraktCommentsLoader(context: Context, private val args: Bundle) :
                         showTraktId.toString(),
                         episode.season,
                         episode.episodenumber,
-                        1, PAGE_SIZE, Extended.FULL,
+                        sortBy,
+                        1, PAGE_SIZE,
+                        languageCode,
+                        Extended.FULL,
                         cacheControl
                     ).execute()
                 if (response.isSuccessful) {
@@ -107,8 +114,10 @@ class TraktCommentsLoader(context: Context, private val args: Bundle) :
             val response = trakt.shows()
                 .comments(
                     showTraktId.toString(),
+                    sortBy,
                     1,
                     PAGE_SIZE,
+                    languageCode,
                     Extended.FULL,
                     cacheControl
                 )

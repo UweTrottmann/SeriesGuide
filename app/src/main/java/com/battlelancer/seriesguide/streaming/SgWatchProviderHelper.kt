@@ -78,6 +78,14 @@ interface SgWatchProviderHelper {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addShowMappings(mappings: List<SgWatchProviderShowMapping>)
 
+    @Transaction
+    suspend fun updateShowMappings(showId: Long, mappings: List<SgWatchProviderShowMapping>) {
+        deleteShowMappings(showId)
+        if (mappings.isNotEmpty()) {
+            addShowMappings(mappings)
+        }
+    }
+
     @Query("DELETE FROM sg_watch_provider_show_mappings WHERE show_id=:showId")
     suspend fun deleteShowMappings(showId: Long)
 }

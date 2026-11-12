@@ -1,11 +1,15 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2025 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.diagnostics
 
 import android.util.Log
 
-class DebugLogEntry(
+data class DebugLogEntry(
+    /**
+     * A unique ID. Currently, the row ID of the entry in the [DebugLogDatabase].
+     */
+    val id: Int,
     val level: Int,
     val tag: String?,
     val message: String,

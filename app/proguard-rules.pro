@@ -16,6 +16,8 @@
 
 # Amazon Appstore SDK (3.0.5 release no longer includes ProGuard rules)
 # https://developer.amazon.com/docs/in-app-purchasing/iap-obfuscate-the-code.html
+# Note: the "Expected stack map table for method with non-linear control flow." warning is caused by
+# classes in the amazon-appstore-sdk JAR not containing StackMapTable attributes.
 -dontwarn com.amazon.**
 -keep class com.amazon.** {*;}
 -keepattributes *Annotation*

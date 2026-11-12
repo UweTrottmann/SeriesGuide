@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright © 2021 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.people
 
@@ -23,7 +23,7 @@ class PersonViewModel(
     val languageCode = MutableLiveData<String>()
     val personLiveData = languageCode.switchMap {
         liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
-            val peopleService = SgApp.getServicesComponent(getApplication()).peopleService()!!
+            val peopleService = SgApp.getServicesComponent(getApplication()).tmdb().personService()
             val personOrNull = TmdbTools2().getPerson(peopleService, personTmdbId, it)
             emit(personOrNull)
         }

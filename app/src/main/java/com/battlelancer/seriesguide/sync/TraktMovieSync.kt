@@ -10,17 +10,16 @@ import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.traktapi.TraktSettings
-import com.battlelancer.seriesguide.traktapi.TraktTools4
 import com.battlelancer.seriesguide.traktapi.TraktTools4.TraktNonNullResponse.Success
 import com.battlelancer.seriesguide.util.DBUtils
 import com.battlelancer.seriesguide.util.Errors
-import com.uwetrottmann.trakt5.entities.LastActivityMore
 import com.uwetrottmann.trakt5.entities.MovieIds
 import com.uwetrottmann.trakt5.entities.SyncItems
 import com.uwetrottmann.trakt5.entities.SyncMovie
 import com.uwetrottmann.trakt5.entities.SyncResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import org.threeten.bp.OffsetDateTime
 import retrofit2.Response
 import timber.log.Timber
 
@@ -44,23 +43,20 @@ class TraktMovieSync(
      *
      * Performs **synchronous network access**, make sure to run this on a background
      * thread.
-     *
-     * Note: this uses [runBlocking], so if the calling thread is interrupted this will throw
-     * [InterruptedException].
      */
-    @Throws(InterruptedException::class)
-    fun syncLists(activity: LastActivityMore): Boolean {
-        val collectedAt = activity.collected_at
+    fun syncLists(
+        collectedAt: OffsetDateTime?,
+        watchlistedAt: OffsetDateTime?,
+        watchedAt: OffsetDateTime?,
+    ): Boolean {
         if (collectedAt == null) {
             Timber.e("syncLists: null collected_at")
             return false
         }
-        val watchlistedAt = activity.watchlisted_at
         if (watchlistedAt == null) {
             Timber.e("syncLists: null watchlisted_at")
             return false
         }
-        val watchedAt = activity.watched_at
         if (watchedAt == null) {
             Timber.e("syncLists: null watched_at")
             return false
@@ -221,21 +217,21 @@ class TraktMovieSync(
     }
 
     private suspend fun downloadCollection(): MutableSet<Int>? {
-        return when (val response = TraktTools4.getCollectedMoviesByTmdbId(traktSync.sync)) {
+        return when (val response = traktSync.traktTools.getCollectedMoviesByTmdbId(traktSync = traktSync.sync)) {
             is Success -> response.data
             else -> null
         }
     }
 
     private suspend fun downloadWatchlist(): MutableSet<Int>? {
-        return when (val response = TraktTools4.getMoviesOnWatchlistByTmdbId(traktSync.sync)) {
+        return when (val response = traktSync.traktTools.getMoviesOnWatchlistByTmdbId(traktSync = traktSync.sync)) {
             is Success -> response.data
             else -> null
         }
     }
 
     private suspend fun downloadWatched(): MutableMap<Int, Int>? {
-        return when (val response = TraktTools4.getWatchedMoviesByTmdbId(traktSync.sync)) {
+        return when (val response = traktSync.traktTools.getWatchedMoviesByTmdbId(traktSync = traktSync.sync)) {
             is Success -> response.data
             else -> null
         }

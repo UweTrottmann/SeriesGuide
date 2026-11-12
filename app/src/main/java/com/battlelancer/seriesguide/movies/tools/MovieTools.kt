@@ -25,10 +25,10 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktSettings
 import com.uwetrottmann.androidutils.AndroidUtils
+import com.uwetrottmann.tmdb2.Tmdb
 import com.uwetrottmann.tmdb2.entities.Movie
 import com.uwetrottmann.tmdb2.entities.ReleaseDate
 import com.uwetrottmann.tmdb2.entities.ReleaseDatesResults
-import com.uwetrottmann.tmdb2.services.MoviesService
 import timber.log.Timber
 import java.text.DateFormat
 import java.util.Date
@@ -47,13 +47,13 @@ class MovieTools(
     @Inject
     constructor(
         @ApplicationContext context: Context,
-        tmdbMovies: MoviesService,
+        tmdb: Tmdb,
         trakt: SgTrakt
     ) : this(
         context,
         SgRoomDatabase.getInstance(context).movieHelper(),
         SgRoomDatabase.getInstance(context).sgListHelper(),
-        MovieDownloader(context, tmdbMovies, trakt)
+        MovieDownloader(context, tmdb.moviesService(), trakt)
     )
 
     enum class Lists {

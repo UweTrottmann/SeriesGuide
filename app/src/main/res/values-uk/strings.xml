@@ -85,6 +85,12 @@
         <item quantity="many">%d відповіді</item>
         <item quantity="other">%d відповідей</item>
     </plurals>
+    <plurals name="reactions_plural">
+        <item quantity="one">%d реакція</item>
+        <item quantity="few">%d реакції</item>
+        <item quantity="many">%d реакцій</item>
+        <item quantity="other">%d реакції</item>
+    </plurals>
     <!-- Metadata -->
     <string name="episode_number_disk">DVD</string>
     <string name="episode_firstaired">Дата виходу</string>
@@ -458,6 +464,7 @@
     <string name="sort_order_top_rated_first">Топ кращих</string>
     <string name="sort_order_latest_first_dvd">Новіші спочатку (DVD)</string>
     <string name="sort_order_oldest_first_dvd">Давніші спочатку (DVD)</string>
+    <string name="sort_order_reactions">Реакції</string>
     <!-- Upcoming thresholds -->
     <string name="pref_upcominglimit">Незабаром в діапазоні</string>
     <string name="upcoming_upto_now">Сьогодні</string>

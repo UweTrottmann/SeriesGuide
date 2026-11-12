@@ -3,11 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Null content description as the status text carries the meaning. -->
     <ImageView
         android:id="@+id/imageViewSyncStatus"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:contentDescription="@string/feature_supported"
+        android:contentDescription="@null"
         app:srcCompat="@drawable/ic_cancel_red_24dp" />
 
     <ProgressBar

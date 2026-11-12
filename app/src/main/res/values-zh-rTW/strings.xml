@@ -82,6 +82,9 @@
     <plurals name="replies_plural">
         <item quantity="other">%d 則回覆</item>
     </plurals>
+    <plurals name="reactions_plural">
+        <item quantity="other">%d reactions</item>
+    </plurals>
     <!-- Metadata -->
     <string name="episode_number_disk">DVD</string>
     <string name="episode_firstaired">播出日期</string>
@@ -416,6 +419,7 @@
     <string name="sort_order_top_rated_first">最高評分</string>
     <string name="sort_order_latest_first_dvd">按最新的順序排序 (DVD)</string>
     <string name="sort_order_oldest_first_dvd">按最舊的順序排序 (DVD)</string>
+    <string name="sort_order_reactions">Reactions</string>
     <!-- Upcoming thresholds -->
     <string name="pref_upcominglimit">即將播出的時間範圍</string>
     <string name="upcoming_upto_now">目前</string>

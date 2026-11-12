@@ -68,30 +68,34 @@
     <string name="addtocalendar">Ajouter à l\'agenda</string>
     <string name="addtocalendar_failed">Impossible de créer un évènement sur l\'agenda.</string>
     <!-- Reviews -->
-    <string name="reviews_title">Reviews</string>
-    <string name="reviews_label_provided_by">Reviews from Trakt</string>
-    <string name="reviews_hint_empty">Be the first to write a review!</string>
-    <string name="reviews_hint_write_review">Write a review (English, 5+ words)</string>
-    <string name="reviews_error_violates_rules">Your review does not follow the rules!</string>
+    <string name="reviews_title">Critiques</string>
+    <string name="reviews_label_provided_by">Critiques de Trakt</string>
+    <string name="reviews_hint_empty">Écrivez la première critique !</string>
+    <string name="reviews_hint_write_review">Écrire une critique (en anglais, 5 mots ou plus)</string>
+    <string name="reviews_error_violates_rules">Votre critique ne respecte pas les règles !</string>
     <string name="action_post">Publier</string>
     <string name="action_edit_comment">Modifier</string>
     <string name="action_delete_comment">Supprimer</string>
-    <string name="reviews_title_confirm_delete">Delete this review?</string>
-    <string name="reviews_error_delete">Review not deleted, it is too old or has replies</string>
+    <string name="reviews_title_confirm_delete">Supprimer cette critique ?</string>
+    <string name="reviews_error_delete">Critique non supprimée, elle est trop ancienne ou a des réponses</string>
     <string name="isspoiler">Alerte au spoiler !</string>
     <plurals name="replies_plural">
         <item quantity="one">%d réponse</item>
         <item quantity="other">%d réponses</item>
     </plurals>
+    <plurals name="reactions_plural">
+        <item quantity="one">%d réaction</item>
+        <item quantity="other">%d réactions</item>
+    </plurals>
     <!-- Metadata -->
     <string name="episode_number_disk">DVD</string>
-    <string name="episode_firstaired">Date de parution</string>
-    <string name="episode_firstaired_unknown">Date de parution inconnue</string>
+    <string name="episode_firstaired">Date de sortie</string>
+    <string name="episode_firstaired_unknown">Date de sortie inconnue</string>
     <string name="episode_dvdnumber">Episode DVD</string>
-    <string name="original_release">Paru en</string>
+    <string name="original_release">Sortie originale</string>
     <string name="show_genres">Genres</string>
     <string name="show_contentrating">Classification</string>
-    <string name="show_release_times">Heures de parution</string>
+    <string name="show_release_times">Heures de sortie</string>
     <string name="episode_directors">Réalisateurs</string>
     <string name="episode_gueststars">Invités exceptionnels</string>
     <string name="episode_writers">Scénaristes</string>
@@ -236,7 +240,7 @@
     <string name="watched_shows">Vu</string>
     <!-- Keep shows_collection for potential later use. -->
     <string name="shows_collection" tools:ignore="UnusedResources">Collection</string>
-    <string name="title_library">Library</string>
+    <string name="title_library">Bibliothèque</string>
     <string name="watchlist">Liste à voir</string>
     <!-- Similar shows -->
     <string name="action_similar">Similaires</string>
@@ -261,12 +265,12 @@
     <string name="ack_list_item_manage">Listes mises à jour</string>
     <string name="list_item_remove">Retirer de la liste</string>
     <string name="ack_list_item_removed">Retiré de la liste</string>
-    <string name="list_empty">You can add shows or movies to this list</string>
+    <string name="list_empty">Vous pouvez ajouter des séries ou des films à cette liste</string>
     <string name="action_lists_reorder">Réorganiser les listes</string>
     <string name="ack_lists_reordered">Listes réordonnées</string>
     <string name="error_name_already_exists">Une liste portant ce nom existe déjà</string>
-    <string name="action_lists_sort_latest_release_date">Latest release date</string>
-    <string name="action_lists_sort_oldest_release_date">Oldest release date</string>
+    <string name="action_lists_sort_latest_release_date">Date de sortie la plus récente</string>
+    <string name="action_lists_sort_oldest_release_date">Date de sortie la plus ancienne</string>
     <!-- Movies -->
     <string name="title_digital_releases">Versions numériques</string>
     <string name="title_disc_releases">Sorties DVD</string>
@@ -285,7 +289,7 @@
     <string name="movie_cast">Casting</string>
     <string name="movie_crew">Équipe technique</string>
     <string name="action_movies_sort_title">Titre</string>
-    <string name="action_movies_sort_release">Date de parution</string>
+    <string name="action_movies_sort_release">Date de sortie</string>
     <string name="title_similar_movies">Films similaires</string>
     <string name="title_release_dates">Dates de sortie</string>
     <string name="error_movie_not_found">Film retiré de la TMDB. Supprimez-le des listes, marquez le comme non regardé. Vous utilisez Trakt ? Sur leur site web, recherchez son identifiant TMDB et supprimez-le de l\'historique et des listes.</string>
@@ -315,11 +319,11 @@
     <string name="feature_not_supported">Non pris en charge</string>
     <string name="feature_disabled">Désactivé</string>
     <string name="feature_history">Historique personnel et des amis</string>
-    <string name="feature_comments">Write reviews</string>
+    <string name="feature_comments">Écrire des critiques</string>
     <string name="feature_sync">Synchronisation</string>
     <!-- Hexagon -->
     <string name="hexagon_description">Le cloud SeriesGuide permet de sauvegarder et de synchroniser vos listes, émissions et films.</string>
-    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud, some Trakt features are disabled and changes are only sent to your Trakt account, not retrieved.</string>
+    <string name="hexagon_warning_trakt">Lorsque vous êtes connecté à SeriesGuide Cloud, certaines fonctionnalités de Trakt sont désactivées et les modifications sont uniquement envoyées à votre compte Trakt, sans être récupérées.</string>
     <string name="hexagon_signin">Connexion</string>
     <string name="hexagon_signout">Déconnexion</string>
     <string name="hexagon_setup_incomplete">La configuration du cloud SeriesGuide n\'était pas terminée.</string>
@@ -354,8 +358,8 @@
     <string name="disconnect">Se déconnecter</string>
     <string name="show_library">Ajouter des séries de Trakt</string>
     <string name="about_trakt">Trakt vous permet de garder une trace des séries et films que vous regardez.</string>
-    <string name="trakt_note_collection">What Trakt calls library is called collection in SeriesGuide.</string>
-    <string name="trakt_note_add_shows">Once connected, add shows from your Trakt account using the Trakt items on the Discover tab.</string>
+    <string name="trakt_note_collection">Ce que Trakt appelle bibliothèque s\'appelle collection dans SeriesGuide.</string>
+    <string name="trakt_note_add_shows">Une fois connecté, ajoutez des séries de votre compte Trakt à l\'aide des éléments Trakt de l\'onglet « A découvrir ».</string>
     <!-- trakt ratings -->
     <string name="action_rate">Noter</string>
     <string name="ack_rated">Note envoyée</string>
@@ -385,7 +389,7 @@
     <string name="feedback">Envoyer un e-mail</string>
     <!-- Settings -->
     <string name="action_translate">Traduisez cette application</string>
-    <string name="title_app_language">App language</string>
+    <string name="title_app_language">Langue de l\'application</string>
     <string name="prefs_category_advanced">Avancé</string>
     <string name="prefs_category_about">A propos</string>
     <string name="pref_onlyfuture">Pas d\'épisodes diffusés</string>
@@ -430,6 +434,7 @@
     <string name="sort_order_top_rated_first">Les mieux notés</string>
     <string name="sort_order_latest_first_dvd">Plus récents en premier (DVD)</string>
     <string name="sort_order_oldest_first_dvd">Plus ancien en premier (DVD)</string>
+    <string name="sort_order_reactions">Réactions</string>
     <!-- Upcoming thresholds -->
     <string name="pref_upcominglimit">Période pour l\'affichage \"à venir\"</string>
     <string name="upcoming_upto_now">maintenant</string>
@@ -579,38 +584,38 @@
     <string name="title_stream_rent">Location</string>
     <!-- Cloud Authentication -->
     <!-- Common -->
-    <string name="auth_action_back" comment="Action to go back">Back</string>
-    <string name="auth_message_privacy_policy" comment="Privacy policy message, the placeholder will use the label for privacy_policy">When you use this feature, additional data is processed as described in the <xliff:g comment="Privacy policy label">%1$s</xliff:g>.</string>
-    <string name="auth_message_new_accounts_disabled" comment="Message shown when creating new accounts is not allowed">Creating new accounts is currently not allowed</string>
+    <string name="auth_action_back" comment="Action to go back">Retour</string>
+    <string name="auth_message_privacy_policy" comment="Privacy policy message, the placeholder will use the label for privacy_policy">Lorsque vous utilisez cette fonctionnalité, des données supplémentaires sont traitées comme décrit dans les <xliff:g comment="Privacy policy label">%1$s</xliff:g>.</string>
+    <string name="auth_message_new_accounts_disabled" comment="Message shown when creating new accounts is not allowed">La création de nouveaux comptes n\'est actuellement pas autorisée</string>
     <!-- Auth method picker -->
-    <string name="auth_action_sign_in_with_google" comment="Action to sign in with a Google account">Sign in with Google</string>
-    <string name="auth_action_sign_in_with_email" comment="Action to sign in with an email address">Sign in with email</string>
-    <string name="auth_action_continue_with_google" comment="Action to continue signing in with a suggested Google account">Continue with Google</string>
-    <string name="auth_action_continue_with_email" comment="Action to continue signing in with a suggested email address">Continue with email</string>
+    <string name="auth_action_sign_in_with_google" comment="Action to sign in with a Google account">Se connecter avec Google</string>
+    <string name="auth_action_sign_in_with_email" comment="Action to sign in with an email address">Se connecter avec une adresse e-mail</string>
+    <string name="auth_action_continue_with_google" comment="Action to continue signing in with a suggested Google account">Continuer avec Google</string>
+    <string name="auth_action_continue_with_email" comment="Action to continue signing in with a suggested email address">Continuer avec une adresse e-mail</string>
     <!-- Email auth -->
-    <string name="auth_hint_name" comment="Hint for name input field">Your name</string>
-    <string name="auth_hint_email" comment="Hint for email input field">Email</string>
-    <string name="auth_hint_password" comment="Hint for password input field">Password</string>
-    <string name="auth_hint_confirm_password" comment="Hint for confirm password input field">Confirm Password</string>
-    <string name="auth_hint_confirm_password_does_not_match" comment="Hint when password entered in confirm password field does not match">Passwords do not match</string>
-    <string name="auth_hint_required" comment="Hint that the value of an input field is required">Required</string>
-    <string name="auth_hint_email_required" comment="Hint that a valid email address is required in an input field">Valid email address required</string>
-    <string name="auth_action_sign_up" comment="Action to create an account">Create an account</string>
-    <string name="auth_error_email_alreay_in_use" comment="Error message when signing up with a used email address">This email address is already in use by an existing account. Sign in with this email address instead.</string>
-    <string name="auth_action_show_password" comment="Action to show the password in a text field">Show password</string>
+    <string name="auth_hint_name" comment="Hint for name input field">Votre nom</string>
+    <string name="auth_hint_email" comment="Hint for email input field">E-mail</string>
+    <string name="auth_hint_password" comment="Hint for password input field">Mot de passe</string>
+    <string name="auth_hint_confirm_password" comment="Hint for confirm password input field">Confirmer le mot de passe</string>
+    <string name="auth_hint_confirm_password_does_not_match" comment="Hint when password entered in confirm password field does not match">Les mots de passe ne correspondent pas</string>
+    <string name="auth_hint_required" comment="Hint that the value of an input field is required">Obligatoire</string>
+    <string name="auth_hint_email_required" comment="Hint that a valid email address is required in an input field">Adresse e-mail valide requise</string>
+    <string name="auth_action_sign_up" comment="Action to create an account">Créer un compte</string>
+    <string name="auth_error_email_alreay_in_use" comment="Error message when signing up with a used email address">Cette adresse e-mail est déjà utilisée par un compte existant. Connectez-vous plutôt avec cette adresse e-mail.</string>
+    <string name="auth_action_show_password" comment="Action to show the password in a text field">Afficher le mot de passe</string>
     <!-- Password validation messages -->
-    <string name="auth_error_weak_password" comment="Error message when password does not meet requirements">Password not strong enough</string>
+    <string name="auth_error_weak_password" comment="Error message when password does not meet requirements">Mot de passe trop faible</string>
     <plurals name="auth_error_password_too_short" comment="Error message when password is too short">
-        <item quantity="one">Use at least %1$d character</item>
-        <item quantity="other">Use at least %1$d characters</item>
+        <item quantity="one">Utilisez au moins %1$d caractère</item>
+        <item quantity="other">Utilisez au moins %1$d caractères</item>
     </plurals>
     <!-- Password recovery -->
-    <string name="auth_action_reset_password" comment="Action to reset password">Reset password</string>
-    <string name="auth_title_reset_password_instructions" comment="Title of reset password instructions">Check your email</string>
-    <string name="auth_message_reset_password_instructions" comment="Reset password instructions">If an account for this email address exists, an email with instructions to reset your password was sent to it.</string>
+    <string name="auth_action_reset_password" comment="Action to reset password">Réinitialiser le mot de passe</string>
+    <string name="auth_title_reset_password_instructions" comment="Title of reset password instructions">Vérifiez vos e-mails</string>
+    <string name="auth_message_reset_password_instructions" comment="Reset password instructions">Si un compte existe pour cette adresse e-mail, un e-mail contenant les instructions pour réinitialiser votre mot de passe y a été envoyé.</string>
     <!-- Error Recovery Dialog -->
-    <string name="auth_error_account_linking_required" comment="Error message when account exists, but created with different sign-in method">An account was already created for this email address using a different sign-in method. Sign in using the original method to add this one.</string>
-    <string name="auth_error_no_google_account_available" comment="Error message when trying to sign in with Google but no Google accounts are available on the device">No Google account is available on this device. Sign in using email or add a Google account to this device.</string>
-    <string name="auth_error_unknown" comment="General error messages for an unknown failure.">An unknown error occurred</string>
-    <string name="auth_error_invalid_password" comment="Error message for when signing in fails.">This password is incorrect, this account does not support signing in with a password or there is no account with this email address. Maybe reset your password.</string>
+    <string name="auth_error_account_linking_required" comment="Error message when account exists, but created with different sign-in method">Un compte a déjà été créé pour cette adresse e-mail avec une autre méthode de connexion. Connectez-vous avec la méthode d\'origine pour ajouter celle-ci.</string>
+    <string name="auth_error_no_google_account_available" comment="Error message when trying to sign in with Google but no Google accounts are available on the device">Aucun compte Google n\'est disponible sur cet appareil. Connectez-vous avec une adresse e-mail ou ajoutez un compte Google à cet appareil.</string>
+    <string name="auth_error_unknown" comment="General error messages for an unknown failure.">Une erreur inconnue s\'est produite</string>
+    <string name="auth_error_invalid_password" comment="Error message for when signing in fails.">Ce mot de passe est incorrect, ce compte ne prend pas en charge la connexion par mot de passe ou aucun compte n\'existe avec cette adresse e-mail. Essayez de réinitialiser votre mot de passe.</string>
 </resources>

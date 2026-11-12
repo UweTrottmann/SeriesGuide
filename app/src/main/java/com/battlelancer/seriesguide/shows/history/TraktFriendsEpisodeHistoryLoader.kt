@@ -33,7 +33,7 @@ internal class TraktFriendsEpisodeHistoryLoader(context: Context) :
 
         // get all trakt friends
         val services = getServicesComponent(context)
-        val traktUsers = services.traktUsers()!!
+        val traktUsers = services.trakt().users()
         val friends = SgTrakt.executeAuthenticatedCall(
             context,
             traktUsers.friends(UserSlug.ME, Extended.FULL),

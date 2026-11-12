@@ -141,10 +141,10 @@ picasso = "com.squareup.picasso:picasso:2.8" # https://github.com/square/picasso
 retrofit2-gson = "com.squareup.retrofit2:converter-gson:3.0.0"
 retrofit2 = "com.squareup.retrofit2:retrofit:3.0.0"
 tmdb-java = "com.uwetrottmann.tmdb2:tmdb-java:2.13.0" # https://github.com/UweTrottmann/tmdb-java/blob/main/CHANGELOG.md
-trakt-java = "com.uwetrottmann.trakt5:trakt-java:6.20.1" # https://github.com/UweTrottmann/trakt-java/blob/main/CHANGELOG.md
+trakt-java = "com.uwetrottmann.trakt5:trakt-java:6.22.0" # https://github.com/UweTrottmann/trakt-java/blob/main/CHANGELOG.md
 
 # Billing
-amazon-appstore-sdk = "com.amazon.device:amazon-appstore-sdk:3.0.8" # https://developer.amazon.com/docs/in-app-purchasing/iap-whats-new.html
+amazon-appstore-sdk = "com.amazon.device:amazon-appstore-sdk:3.0.9" # https://developer.amazon.com/docs/in-app-purchasing/iap-whats-new.html
 # https://developer.android.com/google/play/billing/release-notes
 billing = "com.android.billingclient:billing-ktx:8.0.0"
 
@@ -178,7 +178,6 @@ compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "
 ksp = { id = "com.google.devtools.ksp", version = "2.3.11" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
-android-kapt = { id = "com.android.legacy-kapt", version.ref = "agp" }
 # https://github.com/gradle-nexus/publish-plugin/releases
 publish = { id = "io.github.gradle-nexus.publish-plugin", version = "2.0.0" }
 # https://firebase.google.com/support/release-notes/android

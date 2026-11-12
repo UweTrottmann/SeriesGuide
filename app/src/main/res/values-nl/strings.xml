@@ -80,6 +80,10 @@
     <string name="reviews_error_delete">Beoordeling niet verwijderd, deze is te oud of heeft reacties</string>
     <string name="isspoiler">Spoiler waarschuwing!</string>
     <plurals name="replies_plural">
+        <item quantity="one">%d antwoord</item>
+        <item quantity="other">%d antwoorden</item>
+    </plurals>
+    <plurals name="reactions_plural">
         <item quantity="one">%d reactie</item>
         <item quantity="other">%d reacties</item>
     </plurals>
@@ -430,6 +434,7 @@
     <string name="sort_order_top_rated_first">Hoogste waardering</string>
     <string name="sort_order_latest_first_dvd">Nieuwste eerst (DVD)</string>
     <string name="sort_order_oldest_first_dvd">Oudste eerst (DVD)</string>
+    <string name="sort_order_reactions">Reacties</string>
     <!-- Upcoming thresholds -->
     <string name="pref_upcominglimit">Bereik binnenkort</string>
     <string name="upcoming_upto_now">nu</string>
