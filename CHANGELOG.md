@@ -10,7 +10,12 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ## Version 2026.5
 
-### 2026.5.2 - 2026-11-12 🧪
+* 🔧 Reviews: add language filter and option to sort by reactions, display reaction count.
+* 🔧 Sync: various reliability improvements.
+* 🔧 Sync: keep showing last status, including if a show failed to update.
+* 🔧 Trakt: use new auth subdomain to connect (required by February 2027).
+
+### 2026.5.2 - 2026-11-12
 
 * 🔧 Debug log: scroll to bottom by default, update live and keep showing latest message if at the bottom.
 * 📝 Import latest user interface translations.
