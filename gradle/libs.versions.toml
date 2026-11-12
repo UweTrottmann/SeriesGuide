@@ -74,10 +74,8 @@ androidx-viewpager = "androidx.viewpager:viewpager:1.1.0"
 # https://developer.android.com/jetpack/androidx/releases/viewpager2
 androidx-viewpager2 = "androidx.viewpager2:viewpager2:1.1.0"
 # https://developer.android.com/jetpack/androidx/releases/paging
-# 3.3.6 may still crash when the data is refreshed while scrolling ("Inconsistency detected.")
-# https://issuetracker.google.com/issues/409809768
-androidx-paging = { module = "androidx.paging:paging-runtime", version.strictly = "3.2.1" }
-androidx-paging-common = { module = "androidx.paging:paging-common", version.strictly = "3.2.1" }
+androidx-paging = { module = "androidx.paging:paging-runtime", version.strictly = "3.5.3" }
+androidx-paging-common = { module = "androidx.paging:paging-common", version.strictly = "3.5.3" }
 
 # UI frameworks
 # https://github.com/material-components/material-components-android/releases
