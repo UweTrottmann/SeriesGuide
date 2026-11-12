@@ -72,7 +72,7 @@ class DebugLogActivity : BaseThemeActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 model.logEntries.collect {
-                    adapter.setData(it)
+                    adapter.submitList(it)
                 }
             }
         }
@@ -85,9 +85,6 @@ class DebugLogActivity : BaseThemeActivity() {
                         Toast.makeText(this@DebugLogActivity, it.userMessage, Toast.LENGTH_SHORT)
                             .show()
                         model.userMessageShown()
-                        // In case saving the file failed, the debug log may contain the error
-                        // information, so refresh the display
-                        model.updateDebugLogEntries()
                     }
                 }
             }
@@ -144,11 +141,6 @@ class DebugLogActivity : BaseThemeActivity() {
                 model.saveDebugLogToFile(uri)
             }
         }
-
-    override fun onResume() {
-        super.onResume()
-        model.updateDebugLogEntries()
-    }
 
     companion object {
         fun intent(context: Context) = Intent(context, DebugLogActivity::class.java)

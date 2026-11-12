@@ -10,6 +10,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ### Next release
 
+* 🔧 Debug log: display latest messages first, update live.
 * 📝 Import latest user interface translations.
 
 ## Version 2026.5

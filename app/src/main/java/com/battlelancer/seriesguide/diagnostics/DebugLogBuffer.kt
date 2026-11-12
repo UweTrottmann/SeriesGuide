@@ -12,6 +12,8 @@ import com.battlelancer.seriesguide.util.PackageTools
 import com.battlelancer.seriesguide.util.TimeTools
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.threeten.bp.Instant
 import org.threeten.bp.ZoneId
@@ -107,12 +109,21 @@ class DebugLogBuffer(
     }
 
     suspend fun logBufferSnapshot(): List<DebugLogEntry> {
+        return dbHelper.getAll().toDebugLogEntries()
+    }
+
+    fun logEntriesLatestFirst(): Flow<List<DebugLogEntry>> {
+        return dbHelper.getAllLatestFirst().map { it.toDebugLogEntries() }
+    }
+
+    private fun List<DbDebugLogEntry>.toDebugLogEntries(): List<DebugLogEntry> {
         val timeZone = safeSystemDefaultZoneId()
-        return dbHelper.getAll().mapNotNull { (_, priority, tag, message, createdAt) ->
+        return mapNotNull { (id, priority, tag, message, createdAt) ->
             if (priority == null || message == null || createdAt == null) {
                 return@mapNotNull null
             }
             DebugLogEntry(
+                id,
                 priority,
                 tag,
                 message,

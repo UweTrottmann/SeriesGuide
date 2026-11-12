@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2025 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.diagnostics
 
-import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.ColorRes
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemDebugLogBinding
@@ -15,26 +16,26 @@ import com.battlelancer.seriesguide.databinding.ItemDebugLogBinding
 /**
  * Displays a list of [DebugLogEntry].
  */
-class DebugLogAdapter : RecyclerView.Adapter<DebugLogViewHolder>() {
-
-    private val debugLogEntries = mutableListOf<DebugLogEntry>()
-
-    override fun getItemCount(): Int = debugLogEntries.size
+class DebugLogAdapter : ListAdapter<DebugLogEntry, DebugLogViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DebugLogViewHolder {
         return DebugLogViewHolder.inflate(parent)
     }
 
     override fun onBindViewHolder(holder: DebugLogViewHolder, position: Int) {
-        val item = debugLogEntries.getOrNull(position)
-        holder.bindTo(item)
+        holder.bindTo(getItem(position))
     }
 
-    @SuppressLint("NotifyDataSetChanged") // Don't care about individual item change tracking
-    fun setData(items: List<DebugLogEntry>) {
-        debugLogEntries.clear()
-        debugLogEntries.addAll(items)
-        notifyDataSetChanged()
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<DebugLogEntry>() {
+            override fun areItemsTheSame(oldItem: DebugLogEntry, newItem: DebugLogEntry): Boolean =
+                oldItem.id == newItem.id
+
+            override fun areContentsTheSame(
+                oldItem: DebugLogEntry,
+                newItem: DebugLogEntry
+            ): Boolean = oldItem == newItem
+        }
     }
 
 }
