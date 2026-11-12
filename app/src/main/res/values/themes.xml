@@ -11,7 +11,7 @@
 
     <style name="Theme.SeriesGuide.DayNight" parent="Theme.SeriesGuide.Light" />
 
-    <style name="Theme.BaseSeriesGuide.Dark" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="Theme.BaseSeriesGuide.Dark" parent="Theme.Material3Expressive.Dark.NoActionBar">
 
         <!-- All customizations that are SPECIFIC to API-level 23 go here. -->
 
@@ -95,7 +95,7 @@
 
     </style>
 
-    <style name="Theme.BaseSeriesGuide.Light" parent="Theme.Material3.Light.NoActionBar">
+    <style name="Theme.BaseSeriesGuide.Light" parent="Theme.Material3Expressive.Light.NoActionBar">
 
         <!-- All customizations that are SPECIFIC to API-level 23 go here. -->
 
@@ -196,16 +196,16 @@
     <!-- Theme overlays -->
     <!-- ####################################### -->
 
-    <style name="Theme.SeriesGuide.Dialog.Distillation" parent="ThemeOverlay.Material3.Dialog">
+    <style name="Theme.SeriesGuide.Dialog.Distillation" parent="ThemeOverlay.Material3Expressive.Dialog">
         <item name="android:windowBackground">@drawable/sg_distillation_dialog_background</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
-    <style name="Theme.SeriesGuide.Dialog.CheckIn" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+    <style name="Theme.SeriesGuide.Dialog.CheckIn" parent="ThemeOverlay.Material3Expressive.MaterialAlertDialog">
         <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
     </style>
 
-    <style name="ThemeOverlay.SeriesGuide.Dialog.PositiveButton.Warn" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+    <style name="ThemeOverlay.SeriesGuide.Dialog.PositiveButton.Warn" parent="ThemeOverlay.Material3Expressive.MaterialAlertDialog">
         <item name="buttonBarPositiveButtonStyle">@style/Widget.SeriesGuide.Button.Dialog.Error</item>
     </style>
 

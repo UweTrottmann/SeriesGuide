@@ -11,7 +11,7 @@
     -->
 
     <!-- BottomNavigationView -->
-    <style name="Widget.SeriesGuide.BaseBottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+    <style name="Widget.SeriesGuide.BaseBottomNavigationView" parent="Widget.Material3Expressive.BottomNavigationView">
         <!-- Display items horizontally for a more compact height -->
         <item name="itemGravity">center</item>
         <item name="itemIconGravity">start</item>
