@@ -27,6 +27,6 @@ extensions.findByType<ApplicationExtension>()?.apply {
 extensions.findByType<LibraryExtension>()?.apply {
     configureAndroid()
     // Should match with application configuration
-    lint.targetSdk = 35
-    testOptions.targetSdk = 35
+    lint.targetSdk = 36
+    testOptions.targetSdk = 36
 }
