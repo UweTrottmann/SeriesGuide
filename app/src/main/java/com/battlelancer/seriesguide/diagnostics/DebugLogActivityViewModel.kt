@@ -30,7 +30,7 @@ class DebugLogActivityViewModel(application: Application) : AndroidViewModel(app
 
     private val debugLogBuffer = getApplication<SgApp>().appContainer.debugLogBuffer
 
-    val logEntries: StateFlow<List<DebugLogEntry>> = debugLogBuffer.logEntriesLatestFirst()
+    val logEntries: StateFlow<List<DebugLogEntry>> = debugLogBuffer.logEntriesFlow()
         .flowOn(Dispatchers.Default)
         .stateIn(
             viewModelScope,

@@ -10,7 +10,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ### Next release
 
-* 🔧 Debug log: display latest messages first, update live.
+* 🔧 Debug log: scroll to bottom by default, update live and keep showing latest message if at the bottom.
 * 📝 Import latest user interface translations.
 
 ## Version 2026.5

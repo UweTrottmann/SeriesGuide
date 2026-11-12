@@ -55,9 +55,8 @@ interface DebugLogHelper {
     @Query("SELECT * FROM debug_log")
     suspend fun getAll(): List<DbDebugLogEntry>
 
-    // The milliseconds timestamp is not precise enough, so just use the row ID
-    @Query("SELECT * FROM debug_log ORDER BY id DESC")
-    fun getAllLatestFirst(): Flow<List<DbDebugLogEntry>>
+    @Query("SELECT * FROM debug_log")
+    fun getAllFlow(): Flow<List<DbDebugLogEntry>>
 
     @Query("DELETE FROM debug_log WHERE created_at < :timeInMs")
     suspend fun deleteOlderThan(timeInMs: Long)

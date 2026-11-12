@@ -112,8 +112,8 @@ class DebugLogBuffer(
         return dbHelper.getAll().toDebugLogEntries()
     }
 
-    fun logEntriesLatestFirst(): Flow<List<DebugLogEntry>> {
-        return dbHelper.getAllLatestFirst().map { it.toDebugLogEntries() }
+    fun logEntriesFlow(): Flow<List<DebugLogEntry>> {
+        return dbHelper.getAllFlow().map { it.toDebugLogEntries() }
     }
 
     private fun List<DbDebugLogEntry>.toDebugLogEntries(): List<DebugLogEntry> {
