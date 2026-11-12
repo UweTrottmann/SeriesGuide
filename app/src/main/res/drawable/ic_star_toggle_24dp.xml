@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<!-- SPDX-FileCopyrightText: Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com> -->
+
+<!-- For toggle icon buttons: filled star if checked, outlined star otherwise. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/ic_star_black_24dp" android:state_checked="true" />
+    <item android:drawable="@drawable/ic_star_border_black_24dp" />
+</selector>
