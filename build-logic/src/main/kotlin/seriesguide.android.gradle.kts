@@ -6,7 +6,7 @@ import com.android.build.api.dsl.LibraryExtension
 import com.android.build.api.dsl.CommonExtension
 
 fun CommonExtension.configureAndroid() {
-    compileSdk = 36 // Android 16 (BAKLAVA)
+    compileSdk = 37 // Android 17 (CINNAMON_BUN)
     defaultConfig.minSdk = 23 // Android 6 (M)
 
     compileOptions.apply {
