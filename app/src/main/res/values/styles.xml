@@ -115,33 +115,33 @@
     <style name="Widget.SeriesGuide" parent="Widget" />
 
     <!-- Buttons -->
-    <style name="Widget.SeriesGuide.Button" parent="Widget.Material3.Button" />
-    <style name="Widget.SeriesGuide.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton" />
+    <style name="Widget.SeriesGuide.Button" parent="Widget.Material3Expressive.Button" />
+    <style name="Widget.SeriesGuide.Button.Outlined" parent="Widget.Material3Expressive.Button.OutlinedButton" />
 
-    <!-- With less bright outline. -->
-    <style name="Widget.SeriesGuide.Button.Outlined.Icon" parent="Widget.Material3.Button.OutlinedButton.Icon">
-        <!-- Parent style decreases only left margin which looks off, so reduce both. -->
+    <!-- FIXME With less bright outline. -->
+    <style name="Widget.SeriesGuide.Button.Outlined.Icon" parent="Widget.Material3Expressive.Button.OutlinedButton">
+        <!-- FIXME Parent style decreases only left margin which looks off, so reduce both. -->
         <item name="android:paddingLeft">16dp</item>
         <item name="android:paddingRight">16dp</item>
-        <item name="materialThemeOverlay">@style/ThemeOverlay.SeriesGuide.Button.Outlined</item>
+<!--        <item name="materialThemeOverlay">@style/ThemeOverlay.SeriesGuide.Button.Outlined</item>-->
     </style>
 
-    <style name="Widget.SeriesGuide.Button.IconButton.Outlined" parent="Widget.Material3.Button.IconButton.Outlined">
+    <style name="Widget.SeriesGuide.Button.IconButton.Outlined" parent="Widget.Material3Expressive.Button.IconButton.Outlined">
         <!-- Pre API 23 does not support theme-dependent color in referenced style, so set iconTint directly. -->
         <item name="iconTint">?attr/colorOnSurfaceVariant</item>
         <item name="materialThemeOverlay">@style/ThemeOverlay.SeriesGuide.Button.Outlined</item>
     </style>
 
-    <style name="ThemeOverlay.SeriesGuide.Button.Outlined" parent="ThemeOverlay.Material3.Button.TextButton">
+    <style name="ThemeOverlay.SeriesGuide.Button.Outlined" parent="ThemeOverlay.Material3Expressive.Button.TextButton">
         <item name="colorOutline">?attr/sgColorOutlineLighter</item>
         <item name="colorOnContainer">?attr/colorOnSurfaceVariant</item>
     </style>
 
-    <style name="Widget.SeriesGuide.Button.Borderless" parent="Widget.Material3.Button.TextButton">
+    <style name="Widget.SeriesGuide.Button.Borderless" parent="Widget.Material3Expressive.Button.TextButton">
         <item name="android:maxLines">2</item>
     </style>
 
-    <style name="Widget.SeriesGuide.Button.Dialog.Primary" parent="Widget.Material3.Button.TextButton.Dialog">
+    <style name="Widget.SeriesGuide.Button.Dialog.Primary" parent="Widget.Material3Expressive.Button.TextButton.Dialog">
         <item name="materialThemeOverlay">@style/ThemeOverlay.SeriesGuide.Button.Dialog.Primary</item>
     </style>
     <style name="ThemeOverlay.SeriesGuide.Button.Dialog.Primary" parent="">
@@ -149,7 +149,7 @@
         <item name="colorContainer">?attr/colorPrimary</item>
     </style>
 
-    <style name="Widget.SeriesGuide.Button.Dialog.Error" parent="Widget.Material3.Button.TextButton.Dialog">
+    <style name="Widget.SeriesGuide.Button.Dialog.Error" parent="Widget.Material3Expressive.Button.TextButton.Dialog">
         <item name="materialThemeOverlay">@style/ThemeOverlay.SeriesGuide.Button.Dialog.Error</item>
     </style>
     <style name="ThemeOverlay.SeriesGuide.Button.Dialog.Error" parent="">
@@ -191,7 +191,7 @@
         <item name="materialThemeOverlay">@style/ThemeOverlay.SeriesGuide.Button.Error</item>
     </style>
 
-    <style name="ThemeOverlay.SeriesGuide.Button.Error" parent="ThemeOverlay.Material3.Button.TextButton">
+    <style name="ThemeOverlay.SeriesGuide.Button.Error" parent="ThemeOverlay.Material3Expressive.Button.TextButton">
         <item name="colorPrimary">?attr/colorError</item>
     </style>
 
@@ -261,7 +261,7 @@
 
     <!-- AppBar -->
     <!-- Transparent background, disable lift. -->
-    <style name="Widget.SeriesGuide.AppBarLayout.Transparent" parent="Widget.Material3.AppBarLayout">
+    <style name="Widget.SeriesGuide.AppBarLayout.Transparent" parent="Widget.Material3Expressive.AppBarLayout">
         <item name="liftOnScroll">false</item>
         <item name="android:background">@color/transparent</item>
         <item name="elevation">0dp</item>
@@ -269,17 +269,17 @@
 
     <!-- Toolbar -->
     <!-- Theme overlay for colored text and icons. -->
-    <style name="ThemeOverlay.SeriesGuide.Toolbar.Surface" parent="ThemeOverlay.Material3.Toolbar.Surface">
+    <style name="ThemeOverlay.SeriesGuide.Toolbar.Surface" parent="ThemeOverlay.Material3Expressive.Toolbar.Surface">
         <item name="colorOnSurface">?attr/colorPrimary</item>
         <item name="colorOnSurfaceVariant">?attr/colorPrimary</item>
     </style>
     <!-- Theme overlay to restore non-colored text and icons. -->
-    <style name="ThemeOverlay.SeriesGuide.Toolbar.Surface.NoColor" parent="ThemeOverlay.Material3.Toolbar.Surface">
+    <style name="ThemeOverlay.SeriesGuide.Toolbar.Surface.NoColor" parent="ThemeOverlay.Material3Expressive.Toolbar.Surface">
         <item name="colorOnSurface">@color/sg_color_background_dark</item>
         <item name="colorOnSurfaceVariant">@color/md_theme_light_onSurfaceVariant</item>
     </style>
     <!-- Using OnSurface as toolbar typically used within AppBar which handles the background color. -->
-    <style name="Widget.SeriesGuide.Toolbar" parent="Widget.Material3.Toolbar.OnSurface">
+    <style name="Widget.SeriesGuide.Toolbar" parent="Widget.Material3Expressive.Toolbar.OnSurface">
         <!-- Note: this theme overlay will only work if the style is applied directly to a Toolbar. -->
         <item name="android:theme">@style/ThemeOverlay.SeriesGuide.Toolbar.Surface</item>
     </style>
@@ -291,7 +291,7 @@
         <item name="android:theme">@style/ThemeOverlay.SeriesGuide.Toolbar.Gradient</item>
     </style>
 
-    <style name="ThemeOverlay.SeriesGuide.Toolbar.Gradient" parent="ThemeOverlay.Material3.Toolbar.Surface">
+    <style name="ThemeOverlay.SeriesGuide.Toolbar.Gradient" parent="ThemeOverlay.Material3Expressive.Toolbar.Surface">
         <item name="colorControlNormal">@color/sg_white</item>
         <item name="colorControlHighlight">@color/sg_ripple_material_dark</item>
         <item name="actionMenuTextColor">@color/sg_on_dark_emphasis_medium</item>
@@ -312,7 +312,7 @@
     </style>
 
     <!-- BottomNavigationView -->
-    <style name="Widget.SeriesGuide.BaseBottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+    <style name="Widget.SeriesGuide.BaseBottomNavigationView" parent="Widget.Material3Expressive.BottomNavigationView">
         <!-- Changed in w720dp/styles.xml -->
     </style>
 
