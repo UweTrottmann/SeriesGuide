@@ -105,11 +105,11 @@ androidx-datastore = "androidx.datastore:datastore-preferences:1.2.1"
 
 # Room
 # https://developer.android.com/jetpack/androidx/releases/room
-androidx-room-compiler = "androidx.room:room-compiler:2.8.4"
-androidx-room-ktx = "androidx.room:room-ktx:2.8.4"
-androidx-room-paging = "androidx.room:room-paging:2.8.4"
-androidx-room-runtime = "androidx.room:room-runtime:2.8.4"
-androidx-room-testing = "androidx.room:room-testing:2.8.4"
+androidx-room-compiler = "androidx.room:room-compiler:2.8.5"
+androidx-room-ktx = "androidx.room:room-ktx:2.8.5"
+androidx-room-paging = "androidx.room:room-paging:2.8.5"
+androidx-room-runtime = "androidx.room:room-runtime:2.8.5"
+androidx-room-testing = "androidx.room:room-testing:2.8.5"
 
 # https://github.com/UweTrottmann/AndroidUtils/releases
 androidutils = "com.uwetrottmann.androidutils:androidutils:4.0.0"
