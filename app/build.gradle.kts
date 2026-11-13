@@ -142,7 +142,6 @@ android {
 
     buildTypes {
         getByName("release") {
-            multiDexEnabled = false
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
@@ -152,7 +151,6 @@ android {
             }
         }
         getByName("debug") {
-            multiDexEnabled = true
             // disable shrinking to use incremental dex in builds
             isMinifyEnabled = false
             // en_XA (LTR) and ar_XB (RTL) to test UI adjusting to unusual glyphs and long strings
