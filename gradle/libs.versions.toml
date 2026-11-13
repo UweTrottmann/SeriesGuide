@@ -130,8 +130,8 @@ firebase-auth = "com.google.firebase:firebase-auth:24.2.0"
 # https://github.com/zxing/zxing/releases
 zxing = "com.google.zxing:core:3.5.3"
 # https://github.com/googleapis/google-api-java-client/releases
-google-api-client = "com.google.api-client:google-api-client:2.6.0"
-google-api-client-android = "com.google.api-client:google-api-client-android:2.6.0"
+google-api-client = "com.google.api-client:google-api-client:2.9.2"
+google-api-client-android = "com.google.api-client:google-api-client-android:2.9.2"
 google-http-client = "com.google.http-client:google-http-client-gson:1.44.2" # https://github.com/googleapis/google-http-java-client/releases
 # https://github.com/google/gson/releases
 gson = "com.google.code.gson:gson:2.15.0"
