@@ -24,8 +24,8 @@ kotlinx-result = "com.michael-bull.kotlin-result:kotlin-result:1.1.20"
 
 # Basics
 # https://github.com/google/dagger/releases
-dagger = "com.google.dagger:dagger:2.56.2"
-dagger-compiler = "com.google.dagger:dagger-compiler:2.56.2"
+dagger = "com.google.dagger:dagger:2.60.1"
+dagger-compiler = "com.google.dagger:dagger-compiler:2.60.1"
 findbugs-jsr305 = "com.google.code.findbugs:jsr305:3.0.2"
 flatbuffers = "com.google.flatbuffers:flatbuffers-java:1.12.0"
 greenrobot-eventbus = "org.greenrobot:eventbus:3.3.1"
