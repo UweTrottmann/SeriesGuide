@@ -117,8 +117,8 @@ androidutils = "com.uwetrottmann.androidutils:androidutils:4.0.0"
 photoview = "com.github.chrisbanes:PhotoView:2.3.0"
 
 # https://developer.android.com/jetpack/androidx/releases/credentials
-androidx-credentials = "androidx.credentials:credentials:1.5.0"
-androidx-credentials-play = "androidx.credentials:credentials-play-services-auth:1.5.0"
+androidx-credentials = "androidx.credentials:credentials:1.6.0"
+androidx-credentials-play = "androidx.credentials:credentials-play-services-auth:1.6.0"
 # https://developers.google.com/identity/android-credential-manager/releases
 googleid = "com.google.android.libraries.identity.googleid:googleid:1.1.1"
 # https://firebase.google.com/support/release-notes/android
