@@ -120,7 +120,7 @@ photoview = "com.github.chrisbanes:PhotoView:2.3.0"
 androidx-credentials = "androidx.credentials:credentials:1.6.0"
 androidx-credentials-play = "androidx.credentials:credentials-play-services-auth:1.6.0"
 # https://developers.google.com/identity/android-credential-manager/releases
-googleid = "com.google.android.libraries.identity.googleid:googleid:1.1.1"
+googleid = "com.google.android.libraries.identity.googleid:googleid:1.2.1"
 # https://firebase.google.com/support/release-notes/android
 # 21.0.0 requires minSdk 24
 firebase-crashlytics = "com.google.firebase:firebase-crashlytics:20.1.1"
