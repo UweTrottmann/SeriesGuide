@@ -124,7 +124,8 @@ googleid = "com.google.android.libraries.identity.googleid:googleid:1.1.1"
 # https://firebase.google.com/support/release-notes/android
 # 21.0.0 requires minSdk 24
 firebase-crashlytics = "com.google.firebase:firebase-crashlytics:20.1.1"
-firebase-auth = "com.google.firebase:firebase-auth:24.0.1"
+# 25.0.0 requires minSdk 24
+firebase-auth = "com.google.firebase:firebase-auth:24.2.0"
 # Note: ZXing is no longer actively developed
 # https://github.com/zxing/zxing/releases
 zxing = "com.google.zxing:core:3.5.3"
