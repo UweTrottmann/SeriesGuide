@@ -184,7 +184,8 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 # https://github.com/gradle-nexus/publish-plugin/releases
 publish = { id = "io.github.gradle-nexus.publish-plugin", version = "2.0.0" }
 # https://firebase.google.com/support/release-notes/android
+# No relevant changes up to 4.6.0
 google-services = { id = "com.google.gms.google-services", version = "4.4.4" }
-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version = "3.0.6" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version = "3.0.8" }
 # For endpoints plugin, version is actually set in settings.gradle.kts!
 endpoints = { id = "com.google.cloud.tools.endpoints-framework-gradle-plugin", version = "2.1.0" }
