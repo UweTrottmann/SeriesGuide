@@ -10,7 +10,6 @@ import android.text.SpannableStringBuilder
 import android.view.View
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.appcompat.widget.TooltipCompat
-import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
@@ -325,10 +324,10 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
 
         private fun newInstance(showTmdbId: Int, languageCode: String?): AddShowDialogFragment {
             return AddShowDialogFragment().apply {
-                arguments = bundleOf(
-                    ARG_INT_SHOW_TMDBID to showTmdbId,
-                    ARG_STRING_LANGUAGE_CODE to languageCode
-                )
+                arguments = Bundle().apply {
+                    putInt(ARG_INT_SHOW_TMDBID, showTmdbId)
+                    putString(ARG_STRING_LANGUAGE_CODE, languageCode)
+                }
             }
         }
 

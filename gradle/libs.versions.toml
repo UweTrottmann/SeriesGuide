@@ -24,8 +24,8 @@ kotlinx-result = "com.michael-bull.kotlin-result:kotlin-result:1.1.20"
 
 # Basics
 # https://github.com/google/dagger/releases
-dagger = "com.google.dagger:dagger:2.56.2"
-dagger-compiler = "com.google.dagger:dagger-compiler:2.56.2"
+dagger = "com.google.dagger:dagger:2.60.1"
+dagger-compiler = "com.google.dagger:dagger-compiler:2.60.1"
 findbugs-jsr305 = "com.google.code.findbugs:jsr305:3.0.2"
 flatbuffers = "com.google.flatbuffers:flatbuffers-java:1.12.0"
 greenrobot-eventbus = "org.greenrobot:eventbus:3.3.1"
@@ -35,22 +35,21 @@ timber = "com.jakewharton.timber:timber:5.0.1" # https://github.com/JakeWharton/
 
 # Android X Basics
 # https://developer.android.com/jetpack/androidx/releases/annotation
-androidx-annotation = "androidx.annotation:annotation:1.9.1"
+androidx-annotation = "androidx.annotation:annotation:1.11.0"
 # https://developer.android.com/jetpack/androidx/releases/collection
-androidx-collection = "androidx.collection:collection:1.5.0"
+androidx-collection = "androidx.collection:collection:1.7.0"
 # https://developer.android.com/jetpack/androidx/releases/core
-androidx-core = "androidx.core:core:1.17.0"
-androidx-core-ktx = "androidx.core:core-ktx:1.17.0"
+androidx-core-ktx = "androidx.core:core-ktx:1.19.1"
 # https://developer.android.com/jetpack/androidx/releases/lifecycle
-androidx-lifecycle-livedata = "androidx.lifecycle:lifecycle-livedata-ktx:2.10.0"
-androidx-lifecycle-runtime = "androidx.lifecycle:lifecycle-runtime-ktx:2.10.0"
-androidx-lifecycle-viewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0"
-androidx-lifecycle-compose = "androidx.lifecycle:lifecycle-viewmodel-compose:2.10.0"
+androidx-lifecycle-livedata = "androidx.lifecycle:lifecycle-livedata-ktx:2.11.0"
+androidx-lifecycle-runtime = "androidx.lifecycle:lifecycle-runtime-ktx:2.11.0"
+androidx-lifecycle-viewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.11.0"
+androidx-lifecycle-compose = "androidx.lifecycle:lifecycle-viewmodel-compose:2.11.0"
 # https://developer.android.com/jetpack/androidx/releases/activity
-androidx-activity = "androidx.activity:activity:1.12.1"
-androidx-activity-compose = "androidx.activity:activity-compose:1.12.1"
+androidx-activity = "androidx.activity:activity:1.13.0"
+androidx-activity-compose = "androidx.activity:activity-compose:1.13.0"
 # https://developer.android.com/jetpack/androidx/releases/fragment
-androidx-fragment = "androidx.fragment:fragment-ktx:1.8.9"
+androidx-fragment = "androidx.fragment:fragment-ktx:1.9.1"
 # androidx.fragment depends on androidx.lifecycle:lifecycle-viewmodel-savedstate-android which
 # has a compile dependency on org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.7.3. This
 # overrides the runtime time dependency of androidx.room:room-migration on 1.8.1 causing
@@ -59,11 +58,11 @@ androidx-fragment = "androidx.fragment:fragment-ktx:1.8.9"
 # on at least 1.8.1.
 kotlinx-serialization-core = "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.8.1"
 # https://developer.android.com/jetpack/androidx/releases/appcompat
-androidx-appcompat = "androidx.appcompat:appcompat:1.7.1"
+androidx-appcompat = "androidx.appcompat:appcompat:1.8.0"
 
 # Android X Views
 # https://developer.android.com/jetpack/androidx/releases/constraintlayout
-androidx-constraintlayout = "androidx.constraintlayout:constraintlayout:2.2.1"
+androidx-constraintlayout = "androidx.constraintlayout:constraintlayout:2.2.2"
 # https://developer.android.com/jetpack/androidx/releases/coordinatorlayout
 androidx-coordinatorlayout = "androidx.coordinatorlayout:coordinatorlayout:1.3.0"
 # https://developer.android.com/jetpack/androidx/releases/recyclerview
@@ -75,67 +74,72 @@ androidx-viewpager = "androidx.viewpager:viewpager:1.1.0"
 # https://developer.android.com/jetpack/androidx/releases/viewpager2
 androidx-viewpager2 = "androidx.viewpager2:viewpager2:1.1.0"
 # https://developer.android.com/jetpack/androidx/releases/paging
-# 3.3.6 may still crash when the data is refreshed while scrolling ("Inconsistency detected.")
-# https://issuetracker.google.com/issues/409809768
-androidx-paging = { module = "androidx.paging:paging-runtime", version.strictly = "3.2.1" }
-androidx-paging-common = { module = "androidx.paging:paging-common", version.strictly = "3.2.1" }
+androidx-paging = { module = "androidx.paging:paging-runtime", version.strictly = "3.5.3" }
+androidx-paging-common = { module = "androidx.paging:paging-common", version.strictly = "3.5.3" }
 
 # UI frameworks
 # https://github.com/material-components/material-components-android/releases
-material = "com.google.android.material:material:1.13.0"
+material = "com.google.android.material:material:1.14.0"
 # Jetpack Compose
 # https://developer.android.com/jetpack/compose/setup
 # https://developer.android.com/jetpack/compose/bom/bom-mapping
 # https://developer.android.com/jetpack/androidx/releases/compose
-compose = "androidx.compose:compose-bom:2026.02.00"
+compose = "androidx.compose:compose-bom:2026.09.00"
 # https://developer.android.com/jetpack/androidx/releases/compose-material3
 compose-material3 = { module = "androidx.compose.material3:material3" }
 compose-tooling = { module = "androidx.compose.ui:ui-tooling" }
 compose-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 # https://developer.android.com/jetpack/androidx/releases/navigation
-androidx-navigation = "androidx.navigation:navigation-compose:2.8.9"
+# 2.10 requires minSdk 24
+androidx-navigation = "androidx.navigation:navigation-compose:2.9.8"
 
 # https://developer.android.com/jetpack/androidx/releases/browser
-androidx-browser = "androidx.browser:browser:1.9.0"
+androidx-browser = "androidx.browser:browser:1.10.0"
+# https://developer.android.com/jetpack/androidx/releases/palette
+# 1.1.0 requires minSdk 24
 androidx-palette = "androidx.palette:palette-ktx:1.0.0"
 # https://developer.android.com/jetpack/androidx/releases/preference
 androidx-preference = "androidx.preference:preference-ktx:1.2.1"
 # https://developer.android.com/jetpack/androidx/releases/datastore
-androidx-datastore = "androidx.datastore:datastore-preferences:1.1.7"
+# 1.3.0 requires minSdk 24
+androidx-datastore = "androidx.datastore:datastore-preferences:1.2.1"
 
 # Room
 # https://developer.android.com/jetpack/androidx/releases/room
-androidx-room-compiler = "androidx.room:room-compiler:2.8.4"
-androidx-room-ktx = "androidx.room:room-ktx:2.8.4"
-androidx-room-paging = "androidx.room:room-paging:2.8.4"
-androidx-room-runtime = "androidx.room:room-runtime:2.8.4"
-androidx-room-testing = "androidx.room:room-testing:2.8.4"
+androidx-room-compiler = "androidx.room:room-compiler:2.8.5"
+androidx-room-ktx = "androidx.room:room-ktx:2.8.5"
+androidx-room-paging = "androidx.room:room-paging:2.8.5"
+androidx-room-runtime = "androidx.room:room-runtime:2.8.5"
+androidx-room-testing = "androidx.room:room-testing:2.8.5"
 
 # https://github.com/UweTrottmann/AndroidUtils/releases
 androidutils = "com.uwetrottmann.androidutils:androidutils:4.0.0"
 photoview = "com.github.chrisbanes:PhotoView:2.3.0"
 
 # https://developer.android.com/jetpack/androidx/releases/credentials
-androidx-credentials = "androidx.credentials:credentials:1.5.0"
-androidx-credentials-play = "androidx.credentials:credentials-play-services-auth:1.5.0"
+androidx-credentials = "androidx.credentials:credentials:1.6.0"
+androidx-credentials-play = "androidx.credentials:credentials-play-services-auth:1.6.0"
 # https://developers.google.com/identity/android-credential-manager/releases
-googleid = "com.google.android.libraries.identity.googleid:googleid:1.1.1"
+googleid = "com.google.android.libraries.identity.googleid:googleid:1.2.1"
 # https://firebase.google.com/support/release-notes/android
-firebase-crashlytics = "com.google.firebase:firebase-crashlytics:20.0.3"
-firebase-auth = "com.google.firebase:firebase-auth:24.0.1"
+# 21.0.0 requires minSdk 24
+firebase-crashlytics = "com.google.firebase:firebase-crashlytics:20.1.1"
+# 25.0.0 requires minSdk 24
+firebase-auth = "com.google.firebase:firebase-auth:24.2.0"
 # Note: ZXing is no longer actively developed
 # https://github.com/zxing/zxing/releases
 zxing = "com.google.zxing:core:3.5.3"
 # https://github.com/googleapis/google-api-java-client/releases
-google-api-client = "com.google.api-client:google-api-client:2.6.0"
-google-api-client-android = "com.google.api-client:google-api-client-android:2.6.0"
-google-http-client = "com.google.http-client:google-http-client-gson:1.44.2" # https://github.com/googleapis/google-http-java-client/releases
-# https://github.com/google/gson/blob/master/CHANGELOG.md
-gson = "com.google.code.gson:gson:2.13.2"
-# https://github.com/square/okhttp/blob/master/CHANGELOG.md
-okhttp = "com.squareup.okhttp3:okhttp:5.3.2"
+google-api-client = "com.google.api-client:google-api-client:2.9.2"
+google-api-client-android = "com.google.api-client:google-api-client-android:2.9.2"
+# https://github.com/googleapis/google-http-java-client/releases
+google-http-client = "com.google.http-client:google-http-client-gson:2.2.0"
+# https://github.com/google/gson/releases
+gson = "com.google.code.gson:gson:2.15.0"
+# https://lysine.dev/okhttp/changelogs/changelog/
+okhttp = "com.squareup.okhttp3:okhttp:5.5.1"
 #okhttp-logging = "com.squareup.okhttp3:logging-interceptor:5.3.2"
-okhttp-tls = "com.squareup.okhttp3:okhttp-tls:5.3.2"
+okhttp-tls = "com.squareup.okhttp3:okhttp-tls:5.5.1"
 picasso = "com.squareup.picasso:picasso:2.8" # https://github.com/square/picasso/releases
 # https://github.com/square/retrofit/blob/master/CHANGELOG.md
 retrofit2-gson = "com.squareup.retrofit2:converter-gson:3.0.0"
@@ -146,7 +150,7 @@ trakt-java = "com.uwetrottmann.trakt5:trakt-java:6.22.0" # https://github.com/Uw
 # Billing
 amazon-appstore-sdk = "com.amazon.device:amazon-appstore-sdk:3.0.9" # https://developer.amazon.com/docs/in-app-purchasing/iap-whats-new.html
 # https://developer.android.com/google/play/billing/release-notes
-billing = "com.android.billingclient:billing-ktx:8.0.0"
+billing = "com.android.billingclient:billing-ktx:9.1.0"
 
 # Testing
 junit = "junit:junit:4.13.2"
@@ -181,7 +185,8 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 # https://github.com/gradle-nexus/publish-plugin/releases
 publish = { id = "io.github.gradle-nexus.publish-plugin", version = "2.0.0" }
 # https://firebase.google.com/support/release-notes/android
+# No relevant changes up to 4.6.0
 google-services = { id = "com.google.gms.google-services", version = "4.4.4" }
-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version = "3.0.6" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version = "3.0.8" }
 # For endpoints plugin, version is actually set in settings.gradle.kts!
 endpoints = { id = "com.google.cloud.tools.endpoints-framework-gradle-plugin", version = "2.1.0" }

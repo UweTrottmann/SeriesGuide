@@ -1,12 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2021-2024 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2021 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.streaming
 
 import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDialogFragment
-import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -108,12 +107,20 @@ class WatchProviderFilterDialogFragment : AppCompatDialogFragment() {
 
         fun showForShows(fragmentManager: FragmentManager) =
             WatchProviderFilterDialogFragment()
-                .apply { arguments = bundleOf(ARG_TYPE to Type.SHOWS.id) }
+                .apply {
+                    arguments = Bundle().apply {
+                        putInt(ARG_TYPE, Type.SHOWS.id)
+                    }
+                }
                 .safeShow(fragmentManager, "shows-discover-filter")
 
         fun showForMovies(fragmentManager: FragmentManager) =
             WatchProviderFilterDialogFragment()
-                .apply { arguments = bundleOf(ARG_TYPE to Type.MOVIES.id) }
+                .apply {
+                    arguments = Bundle().apply {
+                        putInt(ARG_TYPE, Type.MOVIES.id)
+                    }
+                }
                 .safeShow(fragmentManager, "movies-discover-filter")
     }
 

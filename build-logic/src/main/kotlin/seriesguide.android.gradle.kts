@@ -6,7 +6,7 @@ import com.android.build.api.dsl.LibraryExtension
 import com.android.build.api.dsl.CommonExtension
 
 fun CommonExtension.configureAndroid() {
-    compileSdk = 36 // Android 16 (BAKLAVA)
+    compileSdk = 37 // Android 17 (CINNAMON_BUN)
     defaultConfig.minSdk = 23 // Android 6 (M)
 
     compileOptions.apply {
@@ -27,6 +27,6 @@ extensions.findByType<ApplicationExtension>()?.apply {
 extensions.findByType<LibraryExtension>()?.apply {
     configureAndroid()
     // Should match with application configuration
-    lint.targetSdk = 35
-    testOptions.targetSdk = 35
+    lint.targetSdk = 36
+    testOptions.targetSdk = 36
 }

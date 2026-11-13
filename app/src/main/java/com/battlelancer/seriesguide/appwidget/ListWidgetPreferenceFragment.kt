@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2013-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2013 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.appwidget
 
@@ -12,7 +12,6 @@ import android.view.View
 import androidx.annotation.ArrayRes
 import androidx.annotation.StringRes
 import androidx.core.content.edit
-import androidx.core.os.bundleOf
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.preference.CheckBoxPreference
@@ -212,6 +211,7 @@ class ListWidgetPreferenceFragment : BasePreferencesFragment() {
                     (activity as ListWidgetPreferenceActivity).updateWidget()
                     true
                 }
+
                 else -> false
             }
         }
@@ -282,9 +282,11 @@ class ListWidgetPreferenceFragment : BasePreferencesFragment() {
                 is PreferenceGroup -> {
                     savePreferences(pref, editor)
                 }
+
                 is CheckBoxPreference -> {
                     editor.putBoolean(key, pref.isChecked)
                 }
+
                 is ListPreference -> {
                     editor.putString(key, pref.value)
                 }
@@ -357,7 +359,9 @@ class ListWidgetPreferenceFragment : BasePreferencesFragment() {
 
         fun newInstance(appWidgetId: Int): ListWidgetPreferenceFragment {
             return ListWidgetPreferenceFragment().apply {
-                arguments = bundleOf(ARG_WIDGET_ID to appWidgetId)
+                arguments = Bundle().apply {
+                    putInt(ARG_WIDGET_ID, appWidgetId)
+                }
             }
         }
 

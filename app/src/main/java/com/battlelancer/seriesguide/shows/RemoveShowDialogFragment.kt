@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2021-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2021 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.shows
 
@@ -8,7 +8,6 @@ import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialogFragment
-import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
@@ -106,7 +105,9 @@ class RemoveShowDialogFragment : AppCompatDialogFragment() {
                 return false
             }
             return RemoveShowDialogFragment().apply {
-                arguments = bundleOf(ARG_LONG_SHOW_ID to showId)
+                arguments = Bundle().apply {
+                    putLong(ARG_LONG_SHOW_ID, showId)
+                }
             }.safeShow(fragmentManager, "remove-show-dialog")
         }
     }

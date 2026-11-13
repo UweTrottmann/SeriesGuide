@@ -14,7 +14,6 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.TooltipCompat
-import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
@@ -841,9 +840,9 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
         private const val ARG_LONG_SHOW_ROWID = "show_id"
         private const val ARG_EPISODE_ID = "episode_id"
 
-        fun buildArgs(showRowId: Long): Bundle = bundleOf(
-            ARG_LONG_SHOW_ROWID to showRowId
-        )
+        fun buildArgs(showRowId: Long): Bundle = Bundle().apply {
+            putLong(ARG_LONG_SHOW_ROWID, showRowId)
+        }
 
     }
 }

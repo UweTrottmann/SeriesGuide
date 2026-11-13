@@ -15,6 +15,9 @@ import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClient.BillingResponseCode
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
+import com.android.billingclient.api.BillingFlowParams.ProductDetailsParams
+import com.android.billingclient.api.BillingFlowParams.ProductDetailsParams.SubscriptionProductReplacementParams
+import com.android.billingclient.api.BillingFlowParams.SubscriptionUpdateParams
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.PendingPurchasesParams
 import com.android.billingclient.api.Purchase
@@ -42,6 +45,7 @@ import org.threeten.bp.Duration
 import org.threeten.bp.Instant
 import timber.log.Timber
 import kotlin.math.max
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * A singleton ([com.battlelancer.seriesguide.SgAppContainer.billingRepository]) to manage billing.
@@ -515,14 +519,10 @@ class BillingRepository(
         val oldPurchaseToken = unlockStateOrNull?.purchaseToken
 
         val purchaseParams = BillingFlowParams.newBuilder().apply {
-            setProductDetailsParamsList(
-                listOf(
-                    BillingFlowParams.ProductDetailsParams.newBuilder()
-                        .setProductDetails(productDetails)
-                        .setOfferToken(cheapestOffer.offerToken)
-                        .build()
-                )
-            )
+            val productDetailsParams = ProductDetailsParams.newBuilder()
+                .setProductDetails(productDetails)
+                .setOfferToken(cheapestOffer.offerToken)
+
             if (oldSubProductId != null && oldPurchaseToken != null) {
                 val prorationMode = if (
                     oldSubProductId == SeriesGuideSku.X_SUB_SPONSOR
@@ -530,19 +530,33 @@ class BillingRepository(
                             && productId == SeriesGuideSku.X_SUB_ALL_ACCESS)
                 ) {
                     // Downgrade immediately, bill new price once renewed.
-                    BillingFlowParams.SubscriptionUpdateParams.ReplacementMode.WITHOUT_PRORATION
+                    // Users likely want to pay less, but still support on the regular billing
+                    // cycle.
+                    SubscriptionProductReplacementParams.ReplacementMode.WITHOUT_PRORATION
                 } else {
-                    // Upgrade immediately, credit existing purchase.
-                    BillingFlowParams.SubscriptionUpdateParams.ReplacementMode.WITH_TIME_PRORATION
+                    // Upgrade and charge full price immediately, prorate remaining time.
+                    // Users likely want to support and pay right away. Also, more transparent than
+                    // crediting remaining time and billing the higher price at a future date.
+                    SubscriptionProductReplacementParams.ReplacementMode.CHARGE_FULL_PRICE
                 }
+
+                productDetailsParams.setSubscriptionProductReplacementParams(
+                    SubscriptionProductReplacementParams.newBuilder()
+                        .setOldProductId(oldSubProductId)
+                        .setReplacementMode(prorationMode)
+                        .build()
+                )
+
                 setSubscriptionUpdateParams(
-                    BillingFlowParams.SubscriptionUpdateParams.newBuilder()
+                    SubscriptionUpdateParams.newBuilder()
                         .setOldPurchaseToken(oldPurchaseToken)
-                        .setSubscriptionReplacementMode(prorationMode)
                         .build()
                 )
             }
+
+            setProductDetailsParamsList(listOf(productDetailsParams.build()))
         }.build()
+
         playStoreBillingClient.launchBillingFlow(activity, purchaseParams)
     }
 
@@ -574,7 +588,7 @@ class BillingRepository(
         return succeeded
     }
 
-    private val purchasesUpdatedListener = PurchasesUpdatedListener { billingResult, purchases ->
+    private val purchasesUpdatedListener = PurchasesUpdatedListener { billingResult, _ ->
         /**
          * This method is called by the [playStoreBillingClient] when new purchases are detected.
          * The purchase list in this method is not the same as the one in
@@ -658,7 +672,7 @@ class BillingRepository(
             val backOffSeconds = max(reconnectBackOffSeconds * 2, RECONNECT_BACK_OFF_MAX_SECONDS)
                 .also { reconnectBackOffSeconds = it }
             coroutineScope.launch {
-                delay(backOffSeconds * 1000L)
+                delay(backOffSeconds.seconds)
                 // Fine to call multiple times, will do nothing if already connected.
                 connectToPlayBillingService()
             }

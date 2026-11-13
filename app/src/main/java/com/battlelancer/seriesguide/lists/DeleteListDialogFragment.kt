@@ -1,12 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2024-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2024 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.lists
 
 import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDialogFragment
-import androidx.core.os.bundleOf
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -54,7 +53,9 @@ class DeleteListDialogFragment : AppCompatDialogFragment() {
 
         fun create(listId: String): DeleteListDialogFragment {
             return DeleteListDialogFragment().apply {
-                arguments = bundleOf(ARG_LIST_ID to listId)
+                arguments = Bundle().apply {
+                    putString(ARG_LIST_ID, listId)
+                }
             }
         }
     }

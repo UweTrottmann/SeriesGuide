@@ -16,7 +16,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
-import androidx.core.os.bundleOf
 import androidx.core.view.MenuProvider
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -479,10 +478,10 @@ class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
         fun newInstance(link: DiscoverShowsLink?, query: String?) =
             ShowsDiscoverPagingFragment().apply {
                 val linkId = link?.id ?: DiscoverShowsLink.NO_LINK_ID
-                arguments = bundleOf(
-                    ARG_LINK to linkId,
-                    ARG_QUERY to query
-                )
+                arguments = Bundle().apply {
+                    putInt(ARG_LINK, linkId)
+                    putString(ARG_QUERY, query)
+                }
             }
     }
 

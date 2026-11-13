@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright 2024-2025 Uwe Trottmann
+// SPDX-FileCopyrightText: Copyright © 2024 Uwe Trottmann <uwe@uwetrottmann.com>
 
 package com.battlelancer.seriesguide.shows.overview
 
@@ -7,7 +7,6 @@ import android.app.Dialog
 import android.os.Bundle
 import android.text.Editable
 import androidx.appcompat.app.AppCompatDialogFragment
-import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -26,9 +25,9 @@ import timber.log.Timber
 class EditNoteDialog() : AppCompatDialogFragment() {
 
     constructor(showId: Long) : this() {
-        arguments = bundleOf(
-            ARG_SHOW_ID to showId
-        )
+        arguments = Bundle().apply {
+            putLong(ARG_SHOW_ID, showId)
+        }
     }
 
     private var binding: DialogEditNoteBinding? = null

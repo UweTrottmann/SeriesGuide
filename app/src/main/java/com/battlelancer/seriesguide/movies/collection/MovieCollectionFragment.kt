@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -116,9 +115,9 @@ class MovieCollectionFragment : Fragment() {
 
         private const val ARG_COLLECTION_ID = "COLLECTION_ID"
 
-        fun buildArgs(collectionId: Int): Bundle = bundleOf(
-            ARG_COLLECTION_ID to collectionId
-        )
+        fun buildArgs(collectionId: Int): Bundle = Bundle().apply {
+            putInt(ARG_COLLECTION_ID, collectionId)
+        }
     }
 
 }
