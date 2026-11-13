@@ -152,7 +152,11 @@ android {
         }
         getByName("debug") {
             // disable shrinking to use incremental dex in builds
-            isMinifyEnabled = false
+            // FIXME testing
+//            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             // en_XA (LTR) and ar_XB (RTL) to test UI adjusting to unusual glyphs and long strings
             // keep disabled unless needed, slows down build
             isPseudoLocalesEnabled = false
