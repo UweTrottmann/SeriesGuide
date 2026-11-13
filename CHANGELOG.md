@@ -10,6 +10,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ### Next release
 
+* 🔧 Billing: when upgrading a subscription, ask for payment right away (and use remaining time to move next billing date into the future).
+
 ## Version 2026.5
 
 * 🔧 Reviews: add language filter and option to sort by reactions, display reaction count.

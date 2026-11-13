@@ -530,10 +530,14 @@ class BillingRepository(
                             && productId == SeriesGuideSku.X_SUB_ALL_ACCESS)
                 ) {
                     // Downgrade immediately, bill new price once renewed.
+                    // Users likely want to pay less, but still support on the regular billing
+                    // cycle.
                     SubscriptionProductReplacementParams.ReplacementMode.WITHOUT_PRORATION
                 } else {
-                    // Upgrade immediately, credit existing purchase.
-                    SubscriptionProductReplacementParams.ReplacementMode.WITH_TIME_PRORATION
+                    // Upgrade and charge full price immediately, prorate remaining time.
+                    // Users likely want to support and pay right away. Also, more transparent than
+                    // crediting remaining time and billing the higher price at a future date.
+                    SubscriptionProductReplacementParams.ReplacementMode.CHARGE_FULL_PRICE
                 }
 
                 productDetailsParams.setSubscriptionProductReplacementParams(
