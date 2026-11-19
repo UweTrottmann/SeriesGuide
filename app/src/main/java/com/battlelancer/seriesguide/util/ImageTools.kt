@@ -12,9 +12,6 @@ import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.settings.UpdateSettings
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.util.ImageTools.buildTmdbOrTvdbImageCacheUrl
-import com.battlelancer.seriesguide.util.ImageTools.isAllowedLargeDataConnection
-import com.battlelancer.seriesguide.util.ImageTools.loadShowPosterResizeCrop
-import com.battlelancer.seriesguide.util.ImageTools.tmdbOrTvdbPosterUrl
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.RequestCreator
@@ -202,6 +199,7 @@ object ImageTools {
             val mac = sha256_hmac ?: Mac.getInstance("HmacSHA256").also {
                 val secretKey = SecretKeySpec(cacheKey.toByteArray(), "HmacSHA256")
                 it.init(secretKey)
+                sha256_hmac = it
             }
 
             Base64.encodeToString(

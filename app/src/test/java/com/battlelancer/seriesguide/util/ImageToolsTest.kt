@@ -5,9 +5,11 @@ package com.battlelancer.seriesguide.util
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
+import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.EmptyTestApplication
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.google.common.truth.Truth.assertThat
+import org.junit.Assume.assumeTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -78,6 +80,24 @@ class ImageToolsTest {
         println("TVDB legacy URL: $url")
         assertThat(url).isNotEmpty()
         assertThat(url).endsWith("https://www.thetvdb.com/banners/_cache/posters/example.jpg")
+    }
+
+    /**
+     * Also indirectly verifies caching the hash function works.
+     *
+     * Skipped if the image cache is not configured (SG_IMAGE_CACHE_URL),
+     * as then URLs are returned unsigned.
+     */
+    @Test
+    fun imageCacheUrl_signatureStableAcrossCalls() {
+        @Suppress("SENSELESS_COMPARISON")
+        assumeTrue("Image cache URL not set", BuildConfig.IMAGE_CACHE_URL != null)
+
+        val first = ImageTools.buildImageCacheUrl("https://example.com/a.jpg")
+        val second = ImageTools.buildImageCacheUrl("https://example.com/a.jpg")
+        val other = ImageTools.buildImageCacheUrl("https://example.com/b.jpg")
+        assertThat(second).isEqualTo(first)
+        assertThat(other).isNotEqualTo(first)
     }
 
     @Test
