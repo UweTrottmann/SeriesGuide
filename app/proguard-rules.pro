@@ -19,3 +19,6 @@
 -dontwarn com.amazon.**
 -keep class com.amazon.** {*;}
 -keepattributes *Annotation*
+
+# R8 full mode: keep Retrofit model classes
+-keep class com.battlelancer.seriesguide.tmdbapi.WatchProviderResults { *; }
