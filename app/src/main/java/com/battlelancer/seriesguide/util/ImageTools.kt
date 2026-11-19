@@ -6,6 +6,7 @@ package com.battlelancer.seriesguide.util
 import android.content.Context
 import android.util.Base64
 import android.widget.ImageView
+import androidx.annotation.VisibleForTesting
 import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.AppSettings
@@ -30,8 +31,16 @@ object ImageTools {
     private const val TVDB_LEGACY_MIRROR_BANNERS = "https://www.thetvdb.com/banners/"
 
     private var sha256_hmac: Mac? = null
-    private val cacheKey: String
-        get() = BuildConfig.IMAGE_CACHE_SECRET
+
+    @VisibleForTesting
+    internal var cacheUrl: String? = BuildConfig.IMAGE_CACHE_URL
+
+    @VisibleForTesting
+    internal var cacheKey: String = BuildConfig.IMAGE_CACHE_SECRET
+        @Synchronized set(value) {
+            field = value
+            sha256_hmac = null // re-init with new key
+        }
 
     /**
      * Returns false if there is an active, but metered connection and the user did not approve it
@@ -180,17 +189,9 @@ object ImageTools {
      * [imageUrl] must not be empty.
      */
     fun buildImageCacheUrl(imageUrl: String): String? {
-        @Suppress("SENSELESS_COMPARISON")
-        if (BuildConfig.IMAGE_CACHE_URL == null) {
-            return imageUrl // no cache
-        }
-
+        val cacheUrl = cacheUrl ?: return imageUrl // no cache
         val mac = encodeImageUrl(imageUrl)
-        return if (mac != null) {
-            String.format("%s/s%s/%s", BuildConfig.IMAGE_CACHE_URL, mac, imageUrl)
-        } else {
-            null
-        }
+        return if (mac != null) "$cacheUrl/s$mac/$imageUrl" else null
     }
 
     @Synchronized

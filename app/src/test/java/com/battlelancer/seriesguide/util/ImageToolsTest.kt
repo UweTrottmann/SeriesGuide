@@ -9,7 +9,7 @@ import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.EmptyTestApplication
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.google.common.truth.Truth.assertThat
-import org.junit.Assume.assumeTrue
+import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -82,22 +82,29 @@ class ImageToolsTest {
         assertThat(url).endsWith("https://www.thetvdb.com/banners/_cache/posters/example.jpg")
     }
 
+    @After
+    fun restoreImageCacheConfig() {
+        ImageTools.cacheUrl = BuildConfig.IMAGE_CACHE_URL
+        ImageTools.cacheKey = BuildConfig.IMAGE_CACHE_SECRET
+    }
+
     /**
-     * Also indirectly verifies caching the hash function works.
-     *
-     * Skipped if the image cache is not configured (SG_IMAGE_CACHE_URL),
-     * as then URLs are returned unsigned.
+     * Also verifies re-using the hash function works.
      */
     @Test
-    fun imageCacheUrl_signatureStableAcrossCalls() {
-        @Suppress("SENSELESS_COMPARISON")
-        assumeTrue("Image cache URL not set", BuildConfig.IMAGE_CACHE_URL != null)
+    fun imageCacheUrl_signature() {
+        ImageTools.cacheUrl = "https://cache.seriesguide.example"
+        ImageTools.cacheKey = "test-key"
 
-        val first = ImageTools.buildImageCacheUrl("https://example.com/a.jpg")
-        val second = ImageTools.buildImageCacheUrl("https://example.com/a.jpg")
-        val other = ImageTools.buildImageCacheUrl("https://example.com/b.jpg")
-        assertThat(second).isEqualTo(first)
-        assertThat(other).isNotEqualTo(first)
+        val imageUrl = "https://seriesguide.example/a.jpg"
+        val expected =
+            "https://cache.seriesguide.example/shtXMCaZab7e9quYUXT9JE2OucEbvUGqO01e9NhIH5PI=/$imageUrl"
+
+        // Second call uses the cached Mac
+        assertThat(ImageTools.buildImageCacheUrl(imageUrl)).isEqualTo(expected)
+        assertThat(ImageTools.buildImageCacheUrl(imageUrl)).isEqualTo(expected)
+        assertThat(ImageTools.buildImageCacheUrl("https://seriesguide.example/b.jpg"))
+            .isNotEqualTo(expected)
     }
 
     @Test
