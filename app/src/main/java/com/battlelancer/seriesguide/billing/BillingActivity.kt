@@ -33,7 +33,6 @@ class BillingActivity : BaseActivity() {
     private lateinit var contentContainer: View
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: SkuDetailsAdapter
-    private lateinit var buttonManageSubs: Button
     private lateinit var buttonOtherWaysToSupport: Button
     private lateinit var textViewHasUpgrade: View
     private lateinit var textViewBillingUnlockDetected: View
@@ -131,7 +130,7 @@ class BillingActivity : BaseActivity() {
         textViewBillingError = findViewById<TextView>(R.id.textViewBillingError).apply {
             isGone = true
         }
-        buttonManageSubs = findViewById<Button>(R.id.buttonBillingManageSubscription).also {
+        findViewById<Button>(R.id.buttonBillingManageSubscription).also {
             it.setOnClickListener { v ->
                 // URL may change depending on active sub, so get it on demand.
                 WebTools.openInApp(v.context, manageSubscriptionUrl)
