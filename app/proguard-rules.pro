@@ -21,6 +21,8 @@
 -keepattributes *Annotation*
 
 # R8 full mode
+# Import/Export model classes accessed via reflection via Gson
+-keep class com.battlelancer.seriesguide.dataliberation.model.** { *; }
 # Retrofit model classes created via reflection
 -keep class com.battlelancer.seriesguide.tmdbapi.WatchProviderResults { *; }
 
