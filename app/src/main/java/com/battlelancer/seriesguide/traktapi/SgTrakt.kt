@@ -30,9 +30,7 @@ class SgTrakt(
         return TraktCredentials.get(context).accessToken
     }
 
-    override fun refreshToken(): String? {
-        return TraktOAuthSettings.getRefreshToken(context)
-    }
+    // Using custom authenticator, so no need to provide refresh token
 
     @Synchronized
     override fun okHttpClient(): OkHttpClient {
