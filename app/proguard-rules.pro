@@ -20,5 +20,14 @@
 -keep class com.amazon.** {*;}
 -keepattributes *Annotation*
 
-# R8 full mode: keep Retrofit model classes
+# R8 full mode
+# Retrofit model classes created via reflection
 -keep class com.battlelancer.seriesguide.tmdbapi.WatchProviderResults { *; }
+
+# R8 obfuscation (currently disabled, but collecting rules in any case)
+# Prevent renaming of androidx package: EventBus otherwise doesn't stop walking
+# the class hierarchy at "androidx." classes (see SubscriberMethodFinder). This
+# prevents NoClassDefFoundError on older Android versions as it hits signatures
+# using new APIs (such as PictureInPictureUiState < API 31).
+#-keepnames class androidx.** extends android.app.Activity
+#-keepnames class androidx.** extends androidx.fragment.app.Fragment
