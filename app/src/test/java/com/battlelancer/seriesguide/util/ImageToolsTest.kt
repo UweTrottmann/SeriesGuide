@@ -5,9 +5,11 @@ package com.battlelancer.seriesguide.util
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
+import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.EmptyTestApplication
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.google.common.truth.Truth.assertThat
+import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -78,6 +80,31 @@ class ImageToolsTest {
         println("TVDB legacy URL: $url")
         assertThat(url).isNotEmpty()
         assertThat(url).endsWith("https://www.thetvdb.com/banners/_cache/posters/example.jpg")
+    }
+
+    @After
+    fun restoreImageCacheConfig() {
+        ImageTools.cacheUrl = BuildConfig.IMAGE_CACHE_URL
+        ImageTools.cacheKey = BuildConfig.IMAGE_CACHE_SECRET
+    }
+
+    /**
+     * Also verifies re-using the hash function works.
+     */
+    @Test
+    fun imageCacheUrl_signature() {
+        ImageTools.cacheUrl = "https://cache.seriesguide.example"
+        ImageTools.cacheKey = "test-key"
+
+        val imageUrl = "https://seriesguide.example/a.jpg"
+        val expected =
+            "https://cache.seriesguide.example/shtXMCaZab7e9quYUXT9JE2OucEbvUGqO01e9NhIH5PI=/$imageUrl"
+
+        // Second call uses the cached Mac
+        assertThat(ImageTools.buildImageCacheUrl(imageUrl)).isEqualTo(expected)
+        assertThat(ImageTools.buildImageCacheUrl(imageUrl)).isEqualTo(expected)
+        assertThat(ImageTools.buildImageCacheUrl("https://seriesguide.example/b.jpg"))
+            .isNotEqualTo(expected)
     }
 
     @Test

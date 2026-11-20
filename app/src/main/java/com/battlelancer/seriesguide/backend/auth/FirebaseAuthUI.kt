@@ -53,17 +53,13 @@ import java.util.concurrent.ConcurrentHashMap
  * val customAuth = Firebase.auth(customApp).apply {
  *     tenantId = "my-tenant-id"
  * }
- * val authUI = FirebaseAuthUI.create(customApp, customAuth)
+ * val authUI = FirebaseAuthUI.create(customAuth)
  * ```
  *
- * @property app The [FirebaseApp] instance used for authentication
  * @property auth The [FirebaseAuth] instance used for authentication operations
  * @param googleCredentialManagerFactory Optional, in preparation to pass a mock instance
- *
- * @since 10.0.0
  */
 class FirebaseAuthUI private constructor(
-    val app: FirebaseApp,
     val auth: FirebaseAuth,
     googleCredentialManagerFactory: () -> AuthProvider.Google.CredentialManager =
         { AuthProvider.Google.DefaultCredentialManager() }
@@ -395,7 +391,7 @@ class FirebaseAuthUI private constructor(
          */
         @JvmStatic
         fun getInstance(): FirebaseAuthUI {
-            val defaultApp = try {
+            try {
                 FirebaseApp.getInstance()
             } catch (e: IllegalStateException) {
                 throw IllegalStateException(
@@ -406,7 +402,7 @@ class FirebaseAuthUI private constructor(
             }
 
             return instanceCache.getOrPut(DEFAULT_APP_KEY) {
-                FirebaseAuthUI(defaultApp, Firebase.auth)
+                FirebaseAuthUI(Firebase.auth)
             }
         }
 
@@ -430,7 +426,7 @@ class FirebaseAuthUI private constructor(
         fun getInstance(app: FirebaseApp): FirebaseAuthUI {
             val cacheKey = app.name
             return instanceCache.getOrPut(cacheKey) {
-                FirebaseAuthUI(app, Firebase.auth(app))
+                FirebaseAuthUI(Firebase.auth(app))
             }
         }
 
@@ -447,16 +443,15 @@ class FirebaseAuthUI private constructor(
          * val auth = Firebase.auth(app).apply {
          *     tenantId = "customer-tenant-123"
          * }
-         * val authUI = FirebaseAuthUI.create(app, auth)
+         * val authUI = FirebaseAuthUI.create(auth)
          * ```
          *
-         * @param app The [FirebaseApp] instance to use
          * @param auth The [FirebaseAuth] instance with custom configuration
          * @return A new [FirebaseAuthUI] instance with the provided dependencies
          */
         @JvmStatic
-        fun create(app: FirebaseApp, auth: FirebaseAuth): FirebaseAuthUI {
-            return FirebaseAuthUI(app, auth)
+        fun create(auth: FirebaseAuth): FirebaseAuthUI {
+            return FirebaseAuthUI(auth)
         }
 
         /**

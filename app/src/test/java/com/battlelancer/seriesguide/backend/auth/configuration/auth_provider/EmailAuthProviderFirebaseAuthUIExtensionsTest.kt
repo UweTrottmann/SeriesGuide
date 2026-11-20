@@ -16,8 +16,6 @@ import com.battlelancer.seriesguide.backend.auth.configuration.PasswordRule
 import com.battlelancer.seriesguide.backend.auth.configuration.authUIConfiguration
 import com.google.android.gms.tasks.TaskCompletionSource
 import com.google.common.truth.Truth.assertThat
-import com.google.firebase.FirebaseApp
-import com.google.firebase.FirebaseOptions
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -30,19 +28,15 @@ import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
-import org.junit.After
 import org.junit.Assert.assertThrows
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.anyString
 import org.mockito.ArgumentMatchers.isNull
-import org.mockito.Mock
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.never
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
-import org.mockito.MockitoAnnotations
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
@@ -50,46 +44,8 @@ import org.robolectric.annotation.Config
 @Config(manifest = Config.NONE)
 class EmailAuthProviderFirebaseAuthUIExtensionsTest {
 
-    @Mock
-    private lateinit var mockFirebaseAuth: FirebaseAuth
-
-    private lateinit var firebaseApp: FirebaseApp
-    private lateinit var applicationContext: Context
-
-    @Before
-    fun setUp() {
-        MockitoAnnotations.openMocks(this)
-
-        // Tests create their own FirebaseAuthUI instance, but to be sure clear any cached instance
-        FirebaseAuthUI.clearInstanceCache()
-
-        applicationContext = ApplicationProvider.getApplicationContext()
-
-        FirebaseApp.getApps(applicationContext).forEach { app ->
-            app.delete()
-        }
-
-        firebaseApp = FirebaseApp.initializeApp(
-            applicationContext,
-            FirebaseOptions.Builder()
-                .setApiKey("fake-api-key")
-                .setApplicationId("fake-app-id")
-                .setProjectId("fake-project-id")
-                .build()
-        )
-    }
-
-    @After
-    fun tearDown() {
-        // Tests create their own FirebaseAuthUI instance, but to be sure clear any cached instance
-        FirebaseAuthUI.clearInstanceCache()
-
-        try {
-            firebaseApp.delete()
-        } catch (_: Exception) {
-            // Ignore if already deleted
-        }
-    }
+    private val mockFirebaseAuth: FirebaseAuth = mock(FirebaseAuth::class.java)
+    private val applicationContext: Context = ApplicationProvider.getApplicationContext()
 
     @Test
     fun `createUserWithEmailAndPassword - create user with email and password succeeds`() =
@@ -110,7 +66,7 @@ class EmailAuthProviderFirebaseAuthUIExtensionsTest {
 
     @Test
     fun `createUserWithEmailAndPassword - rejects password shorter than default min`() = runTest {
-        val instance = FirebaseAuthUI.create(firebaseApp, mockFirebaseAuth)
+        val instance = FirebaseAuthUI.create(mockFirebaseAuth)
 
         testCustomPasswordRule(
             instance = instance,
@@ -122,7 +78,7 @@ class EmailAuthProviderFirebaseAuthUIExtensionsTest {
 
     @Test
     fun `createUserWithEmailAndPassword - rejects password not meeting custom rule`() = runTest {
-        val instance = FirebaseAuthUI.create(firebaseApp, mockFirebaseAuth)
+        val instance = FirebaseAuthUI.create(mockFirebaseAuth)
 
         testCustomPasswordRule(
             instance = instance,
@@ -271,7 +227,7 @@ class EmailAuthProviderFirebaseAuthUIExtensionsTest {
     private suspend fun createTestUserWithEmailAndPassword(
         customEmailProvider: AuthProvider.Email? = null
     ): AuthResult? {
-        val instance = FirebaseAuthUI.create(firebaseApp, mockFirebaseAuth)
+        val instance = FirebaseAuthUI.create(mockFirebaseAuth)
         val emailProvider = customEmailProvider
             ?: AuthProvider.Email(
                 emailLinkActionCodeSettings = null
@@ -370,7 +326,7 @@ class EmailAuthProviderFirebaseAuthUIExtensionsTest {
     }
 
     private suspend fun signInWithTestEmailAndPassword(credentialForLinking: AuthCredential? = null): AuthResult? {
-        val instance = FirebaseAuthUI.create(firebaseApp, mockFirebaseAuth)
+        val instance = FirebaseAuthUI.create(mockFirebaseAuth)
         val emailProvider = AuthProvider.Email(
             emailLinkActionCodeSettings = null
         )
@@ -385,7 +341,7 @@ class EmailAuthProviderFirebaseAuthUIExtensionsTest {
 
     @Test
     fun `sendPasswordResetEmail - handles user not found as success`() = runTest {
-        val instance = FirebaseAuthUI.create(firebaseApp, mockFirebaseAuth)
+        val instance = FirebaseAuthUI.create(mockFirebaseAuth)
 
         // Fail API call with fake invalid user exception
         // Note: once email enumeration protection can be enabled (all clients use the new auth UI)
