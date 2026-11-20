@@ -175,12 +175,10 @@
         <Button
             android:id="@+id/buttonMovieStreamingSearchInfo"
             style="@style/Widget.SeriesGuide.Button.IconButton.Outlined"
-            android:layout_width="48dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="0dp"
             android:contentDescription="@string/action_stream_settings"
-            android:insetLeft="0dp"
-            android:insetRight="8dp"
             app:icon="@drawable/ic_settings_control_24dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

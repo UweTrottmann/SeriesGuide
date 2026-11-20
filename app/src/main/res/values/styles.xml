@@ -138,7 +138,9 @@
     <style name="Widget.SeriesGuide.Button.IconButton.Outlined" parent="Widget.Material3Expressive.Button.IconButton.Outlined">
         <!-- Pre API 23 does not support theme-dependent color in referenced style, so set iconTint directly. -->
         <item name="iconTint">?attr/colorOnSurfaceVariant</item>
-        <item name="materialThemeOverlay">@style/ThemeOverlay.SeriesGuide.Button.Outlined</item>
+        <!-- Regarding padding override see notes on Widget.SeriesGuide.Button.IconButton. -->
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
     </style>
 
     <style name="ThemeOverlay.SeriesGuide.Button.Outlined" parent="ThemeOverlay.Material3Expressive.Button.TextButton">
