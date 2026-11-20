@@ -61,7 +61,7 @@
 
                 <Button
                     android:id="@+id/buttonOverviewEditReleaseTime"
-                    style="?attr/materialIconButtonStyle"
+                    style="@style/Widget.SeriesGuide.Button.IconButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
@@ -73,24 +73,27 @@
                 <!-- Toggle icon button, checked state set in code. -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/buttonOverviewFavoriteShow"
-                    style="?attr/materialIconButtonStyle"
+                    style="@style/Widget.SeriesGuide.Button.IconButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:checkable="true"
                     android:contentDescription="@null"
-                    app:icon="@drawable/ic_star_toggle_24dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    app:icon="@drawable/ic_star_black_24dp"
                     app:layout_constraintEnd_toStartOf="@id/buttonOverviewManageLists"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
                     android:id="@+id/buttonOverviewManageLists"
-                    style="?attr/materialIconButtonStyle"
+                    style="@style/Widget.SeriesGuide.Button.IconButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:layout_marginEnd="8dp"
                     android:contentDescription="@null"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
                     app:icon="@drawable/ic_list_white_24dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

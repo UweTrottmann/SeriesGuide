@@ -126,6 +126,15 @@
 <!--        <item name="materialThemeOverlay">@style/ThemeOverlay.SeriesGuide.Button.Outlined</item>-->
     </style>
 
+    <!-- MaterialButton ignores the containerPadding... values set by any materialSizeOverlay and
+     mapped to android:padding... values by Widget.Material3Expressive.Button.
+     It appears the android:paddingLeft and android:paddingRight values from
+     Widget.Material3.Button are taken instead. Overriding them instead appears to work. -->
+    <style name="Widget.SeriesGuide.Button.IconButton" parent="Widget.Material3Expressive.Button.IconButton.Standard">
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+    </style>
+
     <style name="Widget.SeriesGuide.Button.IconButton.Outlined" parent="Widget.Material3Expressive.Button.IconButton.Outlined">
         <!-- Pre API 23 does not support theme-dependent color in referenced style, so set iconTint directly. -->
         <item name="iconTint">?attr/colorOnSurfaceVariant</item>

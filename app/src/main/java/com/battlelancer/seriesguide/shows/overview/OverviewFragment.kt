@@ -716,8 +716,9 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
         // favorite
         val isFavorite = show.favorite
         binding.buttonOverviewFavoriteShow.also {
-            // Clicking toggles the checked state, but only the database is the source of truth.
-            it.isChecked = isFavorite
+            it.setIconResource(
+                if (isFavorite) R.drawable.ic_star_black_24dp else R.drawable.ic_star_border_black_24dp
+            )
             it.contentDescription = getString(
                 if (isFavorite) R.string.context_unfavorite else R.string.context_favorite
             )
