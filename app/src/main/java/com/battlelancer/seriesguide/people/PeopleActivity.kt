@@ -5,7 +5,13 @@ package com.battlelancer.seriesguide.people
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ActivityPeopleBinding
 import com.battlelancer.seriesguide.people.PeopleFragment.OnShowPersonListener
@@ -15,7 +21,7 @@ import com.battlelancer.seriesguide.util.commitReorderingAllowed
 
 /**
  * Displays a list of people, and on wide enough screens person details.
- * Otherwise lets [PersonActivity] show details.
+ * Otherwise, lets [PersonActivity] show details.
  */
 class PeopleActivity : BaseActivity(), OnShowPersonListener {
 
@@ -49,6 +55,7 @@ class PeopleActivity : BaseActivity(), OnShowPersonListener {
         setContentView(binding.root)
         ThemeUtils.configureForEdgeToEdge(binding.root as ViewGroup)
         setupActionBar()
+        setupMenu()
         binding.sgAppBarLayout.sgAppBarLayout.liftOnScrollTargetViewId =
             PeopleFragment.liftOnScrollTargetViewId
 
@@ -105,6 +112,45 @@ class PeopleActivity : BaseActivity(), OnShowPersonListener {
         }
     }
 
+    private fun setupMenu() {
+        addMenuProvider(object : MenuProvider {
+
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.people_menu, menu)
+
+                val peopleType = PeopleType.valueOf(
+                    intent.getStringExtra(InitBundle.PEOPLE_TYPE)!!
+                )
+
+                val searchItem = menu.findItem(R.id.menu_search)
+                val searchView = searchItem.actionView as SearchView
+
+                searchView.queryHint = if (peopleType == PeopleType.CAST) {
+                    getString(R.string.people_search_cast_hint)
+                } else {
+                    getString(R.string.people_search_crew_hint)
+                }
+
+                searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String): Boolean {
+                        return true
+                    }
+
+                    override fun onQueryTextChange(newText: String): Boolean {
+                        val peopleFragment =
+                            supportFragmentManager.findFragmentById(R.id.containerPeople) as PeopleFragment?
+                        peopleFragment?.search(newText)
+                        return true
+                    }
+                })
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return false // BaseActivity (BaseThemeActivity) handles the home button
+            }
+        }, this, Lifecycle.State.RESUMED)
+    }
+
     override fun showPerson(tmdbId: Int) {
         if (isTwoPane) {
             // show inline
@@ -119,8 +165,4 @@ class PeopleActivity : BaseActivity(), OnShowPersonListener {
             startActivity(i)
         }
     }
-}
-
-interface PeopleActivityInterface {
-    val isTwoPane: Boolean
 }
