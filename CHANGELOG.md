@@ -10,6 +10,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ### Next release
 
+* 🔨 Don't crash when device is set to America/Coyhaique (Chile) time zone.
+
 ## Version 2026.5
 
 * 🔧 Reviews: add language filter and option to sort by reactions, display reaction count.

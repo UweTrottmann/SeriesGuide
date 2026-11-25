@@ -24,11 +24,11 @@ import com.battlelancer.seriesguide.modules.TraktModule
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.util.AndroidThreeTen
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.PackageTools
 import com.battlelancer.seriesguide.util.SgPicassoRequestHandler
 import com.battlelancer.seriesguide.util.ThemeUtils
-import com.jakewharton.threetenabp.AndroidThreeTen
 import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
 import com.uwetrottmann.androidutils.AndroidUtils
