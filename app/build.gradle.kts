@@ -250,7 +250,7 @@ dependencies {
 
     implementation(libs.flatbuffers)
     implementation(libs.gson)
-    implementation(libs.threetenabp)
+    implementation(variantOf(libs.threetenbp) { classifier("no-tzdb") })
     implementation(libs.timber)
 
     // Use latest OkHttp.
