@@ -167,6 +167,11 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
         } else {
             helper.countWatchedEpisodes()
         }
+        stats.episodesCollection = if (excludeSpecials) {
+            helper.countCollectedEpisodesWithoutSpecials()
+        } else {
+            helper.countCollectedEpisodes()
+        }
     }
 
     companion object {
@@ -183,6 +188,7 @@ data class Stats(
     var episodes: Int = 0,
     var episodesWatched: Int = 0,
     var episodesWatchedRuntime: Long = 0,
+    var episodesCollection: Int = 0,
     var movies: Int = 0,
     var moviesWatchlist: Int = 0,
     var moviesWatchlistRuntime: Long = 0,

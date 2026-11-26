@@ -10,6 +10,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ### Next release
 
+* 🌟 Statistics: show number of episodes in collection to help determine if below Trakt limits.
 * 🔨 Don't crash when device is set to America/Coyhaique (Chile) time zone.
 * 🔧 Sync: do not try to update shows or movies removed from TMDB on every sync.
 * 🔧 Sync: continue to update other movies even if one was removed from TMDB.

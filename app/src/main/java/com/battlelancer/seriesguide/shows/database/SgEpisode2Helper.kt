@@ -257,6 +257,12 @@ interface SgEpisode2Helper {
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE episode_watched == ${EpisodeFlags.WATCHED} AND episode_season_number != 0")
     fun countWatchedEpisodesWithoutSpecials(): Int
 
+    @Query("SELECT COUNT(_id) FROM sg_episode WHERE episode_collected = 1")
+    fun countCollectedEpisodes(): Int
+
+    @Query("SELECT COUNT(_id) FROM sg_episode WHERE episode_collected = 1 AND episode_season_number != 0")
+    fun countCollectedEpisodesWithoutSpecials(): Int
+
     /**
      * Count episodes of a show excluding specials, but including those without a release date.
      */
