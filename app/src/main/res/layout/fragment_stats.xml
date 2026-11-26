@@ -86,12 +86,11 @@
             app:layout_constraintTop_toBottomOf="@id/labelStatsShows"
             tools:text="42" />
 
-        <ProgressBar
+        <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/progressBarShowsWithNextEpisode"
-            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textViewShows"
@@ -102,6 +101,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:layout_marginTop="4dp"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold"
@@ -109,12 +109,11 @@
             app:layout_constraintTop_toBottomOf="@+id/progressBarShowsWithNextEpisode"
             tools:text="29 with next episodes" />
 
-        <ProgressBar
+        <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/progressBarShowsContinuing"
-            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewShowsWithNextEpisode"
@@ -125,6 +124,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:layout_marginTop="4dp"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold"
@@ -132,12 +132,11 @@
             app:layout_constraintTop_toBottomOf="@+id/progressBarShowsContinuing"
             tools:text="10 continuing" />
 
-        <ProgressBar
+        <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/progressBarShowsFinished"
-            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textViewShowsContinuing"
@@ -148,6 +147,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:layout_marginTop="4dp"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold"
@@ -178,12 +178,11 @@
             app:layout_constraintTop_toBottomOf="@+id/labelStatsEpisodes"
             tools:text="5260" />
 
-        <ProgressBar
+        <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/progressBarEpisodesWatched"
-            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewEpisodes"
@@ -194,6 +193,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:layout_marginTop="4dp"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold"
@@ -213,21 +213,22 @@
             app:layout_constraintTop_toBottomOf="@+id/textViewEpisodesWatched"
             tools:text="61 days 13 hours 29 minutes" />
 
-        <ProgressBar
+        <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/progressBarEpisodesRuntime"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/inline_padding"
+            android:indeterminate="true"
+            app:indicatorSize="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textViewEpisodesRuntime" />
 
-        <ProgressBar
+        <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/progressBarEpisodesCollection"
-            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/progressBarEpisodesRuntime"
@@ -238,6 +239,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:layout_marginTop="4dp"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold"
@@ -268,12 +270,11 @@
             app:layout_constraintTop_toBottomOf="@+id/labelMovies"
             tools:text="250" />
 
-        <ProgressBar
+        <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/progressBarMoviesWatched"
-            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewMovies"
@@ -284,6 +285,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:layout_marginTop="4dp"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold"
@@ -328,12 +330,11 @@
             app:layout_constraintTop_toBottomOf="@+id/textViewMoviesWatchlist"
             tools:text="61 days 13 hours 29 minutes" />
 
-        <ProgressBar
+        <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/progressBarMoviesCollection"
-            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewMoviesWatchlistRuntime"
@@ -344,6 +345,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:layout_marginTop="4dp"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold"

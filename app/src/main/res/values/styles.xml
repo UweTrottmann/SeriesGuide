@@ -333,6 +333,15 @@
         <item name="colorSecondaryContainer" tools:ignore="PrivateResource">?attr/colorPrimaryContainer</item>
     </style>
 
+    <style name="Widget.SeriesGuide.LinearProgressIndicator" parent="Widget.Material3.LinearProgressIndicator">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.SeriesGuide.LinearProgressIndicator</item>
+    </style>
+
+    <style name="ThemeOverlay.SeriesGuide.LinearProgressIndicator" parent="">
+        <!-- Change track color to a matching color. -->
+        <item name="colorSecondaryContainer" tools:ignore="PrivateResource">?attr/colorPrimaryContainer</item>
+    </style>
+
     <!-- Dialogs -->
     <style name="Animation.CheckinDialog" parent="android:Animation.Dialog">
         <item name="android:windowExitAnimation">@anim/checkin_dialog_exit</item>

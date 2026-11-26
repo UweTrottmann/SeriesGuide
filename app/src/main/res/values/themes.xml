@@ -90,6 +90,7 @@
         <item name="preferenceTheme">@style/ThemeOverlay.SeriesGuide.Preference</item>
 
         <item name="bottomNavigationStyle">@style/Widget.SeriesGuide.BottomNavigationView</item>
+        <item name="linearProgressIndicatorStyle">@style/Widget.SeriesGuide.LinearProgressIndicator</item>
 
         <item name="textAppearanceButton">@style/TextAppearance.SeriesGuide.Button</item>
 
@@ -175,6 +176,7 @@
         <item name="preferenceTheme">@style/ThemeOverlay.SeriesGuide.Preference</item>
 
         <item name="bottomNavigationStyle">@style/Widget.SeriesGuide.BottomNavigationView</item>
+        <item name="linearProgressIndicatorStyle">@style/Widget.SeriesGuide.LinearProgressIndicator</item>
 
         <item name="textAppearanceButton">@style/TextAppearance.SeriesGuide.Button</item>
 
