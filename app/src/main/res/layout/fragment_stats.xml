@@ -26,14 +26,52 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/labelStatsShows"
+            android:id="@+id/textViewWatched"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_padding"
+            android:background="?attr/selectableItemBackground"
+            android:focusable="true"
+            android:text="@string/norating"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/errorView"
+            tools:text="7803 watched" />
+
+        <TextView
+            android:id="@+id/textViewWatchedRuntime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:focusable="true"
+            android:text="@string/norating"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewWatched"
+            tools:text="123 days 19 hours 28 minutes" />
+
+        <TextView
+            android:id="@+id/textViewCollection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="?attr/selectableItemBackground"
+            android:focusable="true"
+            android:text="@string/norating"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewWatchedRuntime"
+            tools:text="2053 in collection" />
+
+        <TextView
+            android:id="@+id/labelStatsShows"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
             android:text="@string/shows"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Headline6"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/errorView" />
+            app:layout_constraintTop_toBottomOf="@id/textViewCollection" />
 
         <TextView
             android:id="@+id/textViewShows"

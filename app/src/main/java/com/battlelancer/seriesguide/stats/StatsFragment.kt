@@ -75,6 +75,9 @@ class StatsFragment : Fragment() {
         binding.textViewMoviesCollectionRuntime.visibility = View.INVISIBLE
 
         // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
+        binding.textViewWatched.copyTextToClipboardOnLongClick()
+        binding.textViewWatchedRuntime.copyTextToClipboardOnLongClick()
+        binding.textViewCollection.copyTextToClipboardOnLongClick()
         binding.textViewShows.copyTextToClipboardOnLongClick()
         binding.textViewShowsFinished.copyTextToClipboardOnLongClick()
         binding.textViewShowsWithNextEpisode.copyTextToClipboardOnLongClick()
@@ -293,6 +296,38 @@ class StatsFragment : Fragment() {
             text = TimeTools.formatToDaysHoursAndMinutes(resources, stats.moviesCollectionRuntime)
             visibility = View.VISIBLE
         }
+
+        // total watched episodes and movies
+        binding.textViewWatched.text = getTotalWatched(stats, format)
+
+        // total watched time of episodes and movies
+        binding.textViewWatchedRuntime.text = getTotalWatchedDuration(stats, hasFinalValues)
+
+        // all items in collection
+        binding.textViewCollection.text = getTotalCollection(stats)
+    }
+
+    private fun getTotalWatched(stats: Stats, format: NumberFormat): String {
+        return getString(
+            R.string.episodes_watched,
+            format.format(stats.episodesWatched.toLong() + stats.moviesWatched)
+        )
+    }
+
+    private fun getTotalWatchedDuration(stats: Stats, hasFinalValues: Boolean): String {
+        val watchedDuration = TimeTools.formatToDaysHoursAndMinutes(
+            resources,
+            stats.episodesWatchedRuntime + stats.moviesWatchedRuntime
+        )
+        // if not final, showing minimum
+        return if (hasFinalValues) watchedDuration else "> $watchedDuration"
+    }
+
+    private fun getTotalCollection(stats: Stats): String {
+        return getString(
+            R.string.stats_in_collection_format,
+            stats.episodesCollection + stats.moviesCollection
+        )
     }
 
     private fun shareStats() {
@@ -322,6 +357,9 @@ class StatsFragment : Fragment() {
 
         val showStats =
             "${getString(R.string.app_name)} ${getString(R.string.statistics)}\n\n" +
+                    "${getTotalWatched(currentStats, format)}\n" +
+                    "${getTotalWatchedDuration(currentStats, hasFinalValues)}\n" +
+                    "${getTotalCollection(currentStats)}\n\n" +
                     "${getString(R.string.shows)}\n" +
                     "$shows\n" +
                     "$showsWithNext\n" +
