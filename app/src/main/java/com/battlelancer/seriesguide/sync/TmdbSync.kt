@@ -91,8 +91,8 @@ class TmdbSync internal constructor(
         // exclude movies updated in the last 7 days
         val updatedBefore = currentTimeMillis - UPDATED_BEFORE_DAYS
         val updatedBeforeOther = currentTimeMillis - UPDATED_BEFORE_90_DAYS
-        val movies = SgRoomDatabase.getInstance(context).movieHelper()
-            .getMoviesToUpdate(releasedAfter, updatedBefore, updatedBeforeOther)
+        val movieHelper = SgRoomDatabase.getInstance(context).movieHelper()
+        val movies = movieHelper.getMoviesToUpdate(releasedAfter, updatedBefore, updatedBeforeOther)
         Timber.d("Updating %d movie(s)...", movies.size)
 
         val languageCode = MoviesSettings.getMoviesLanguage(context)
@@ -124,13 +124,14 @@ class TmdbSync internal constructor(
                 }
 
                 is MovieDetailsResult.Error -> {
-                    // Treat as failure if updating at least one fails.
-                    result = false
-
                     if (detailsResult.isNotFoundOnTmdb) {
-                        val movieTitle = SgRoomDatabase.getInstance(context)
-                            .movieHelper()
-                            .getMovieTitle(movie.tmdbId)
+                        // Movie was removed from TMDB, assume existing data is latest and
+                        // do not try to update it again until the regular update interval
+                        // passes to reduce load on TMDB.
+                        movieHelper.setLastUpdated(movie.id, System.currentTimeMillis())
+
+                        // Do not treat not found as failure, just inform the user.
+                        val movieTitle = movieHelper.getMovieTitle(movie.tmdbId)
                         val notFoundMessage = context.getString(R.string.error_movie_not_found)
                         // To be replaced with a properly localized message. Currently looks out of
                         // place for RTL languages, but want to avoid giving translators a string with
@@ -139,6 +140,9 @@ class TmdbSync internal constructor(
 
                         progress.setImportantMessageIfNone(message)
                         Timber.e(message)
+                    } else {
+                        // Treat as failure if updating at least one fails.
+                        result = false
                     }
                 }
             }

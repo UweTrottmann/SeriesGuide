@@ -11,7 +11,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 ### Next release
 
 * 🔨 Don't crash when device is set to America/Coyhaique (Chile) time zone.
-* 🔧 Sync: do not try to update shows removed from TMDB on every sync.
+* 🔧 Sync: do not try to update shows or movies removed from TMDB on every sync.
+* 🔧 Sync: continue to update other movies even if one was removed from TMDB.
 
 ## Version 2026.5
 
