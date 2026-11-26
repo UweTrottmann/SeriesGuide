@@ -125,6 +125,8 @@ class ShowSync(
                 Success -> hasUpdatedShows = true
                 DoesNotExist -> {
                     // Continue with other shows, assume existing data is latest.
+                    // The last updated time of the show is set, so it is not tried again until
+                    // the regular update interval has passed.
                     // TODO Add permanent hint to user the show can no longer be updated.
                     //  Currently, if multiple shows do not exist only the first to be tried
                     //  is displayed to the user.
