@@ -141,6 +141,9 @@ interface MovieHelper {
     @Query("UPDATE movies SET movies_traktid = :traktId, movies_slug = :slug WHERE _id=:rowId")
     fun updateTraktIdAndSlug(rowId: Int, traktId: Int?, slug: String?)
 
+    @Query("UPDATE movies SET movies_last_updated = :lastUpdatedMs WHERE _id=:rowId")
+    fun setLastUpdated(rowId: Int, lastUpdatedMs: Long)
+
     @Query("DELETE FROM movies WHERE movies_tmdbid=:tmdbId")
     fun deleteMovie(tmdbId: Int): Int
 
