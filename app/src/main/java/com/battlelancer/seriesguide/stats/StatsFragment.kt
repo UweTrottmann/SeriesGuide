@@ -60,6 +60,8 @@ class StatsFragment : Fragment() {
         binding.textViewEpisodesWatched.visibility = View.INVISIBLE
         binding.progressBarEpisodesWatched.visibility = View.INVISIBLE
         binding.textViewEpisodesRuntime.visibility = View.INVISIBLE
+        binding.progressBarEpisodesCollection.visibility = View.INVISIBLE
+        binding.textViewEpisodesCollection.visibility = View.INVISIBLE
 
         binding.textViewMoviesWatchlist.visibility = View.INVISIBLE
         binding.textViewMoviesWatchlistRuntime.visibility = View.INVISIBLE
@@ -80,6 +82,7 @@ class StatsFragment : Fragment() {
         binding.textViewEpisodes.copyTextToClipboardOnLongClick()
         binding.textViewEpisodesWatched.copyTextToClipboardOnLongClick()
         binding.textViewEpisodesRuntime.copyTextToClipboardOnLongClick()
+        binding.textViewEpisodesCollection.copyTextToClipboardOnLongClick()
         binding.textViewMovies.copyTextToClipboardOnLongClick()
         binding.textViewMoviesWatchlist.copyTextToClipboardOnLongClick()
         binding.textViewMoviesWatchlistRuntime.copyTextToClipboardOnLongClick()
@@ -231,6 +234,17 @@ class StatsFragment : Fragment() {
         else
             View.GONE
 
+        // episodes in collection
+        binding.progressBarEpisodesCollection.apply {
+            max = stats.episodes
+            progress = stats.episodesCollection
+            visibility = View.VISIBLE
+        }
+        binding.textViewEpisodesCollection.apply {
+            text = getString(R.string.stats_in_collection_format, stats.episodesCollection)
+            visibility = View.VISIBLE
+        }
+
         // movies
         binding.textViewMovies.text = format.format(stats.movies.toLong())
 
@@ -329,6 +343,11 @@ class StatsFragment : Fragment() {
             }
             statsString.append("$watchedDuration\n")
         }
+        val episodesCollection = getString(
+            R.string.stats_in_collection_format,
+            currentStats.episodesCollection
+        )
+        statsString.append("$episodesCollection\n")
 
         statsString.append("\n")
 
