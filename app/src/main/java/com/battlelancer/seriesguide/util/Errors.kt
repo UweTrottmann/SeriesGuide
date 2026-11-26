@@ -6,6 +6,7 @@ package com.battlelancer.seriesguide.util
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.annotation.VisibleForTesting
+import com.battlelancer.seriesguide.backend.FirebaseAuthIOException
 import com.battlelancer.seriesguide.backend.HexagonAuthError
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.google.api.client.http.HttpResponseException
@@ -16,6 +17,7 @@ import timber.log.Timber
 import java.io.InterruptedIOException
 import java.net.ConnectException
 import java.net.UnknownHostException
+import java.util.concurrent.TimeoutException
 import javax.net.ssl.SSLException
 
 
@@ -243,6 +245,9 @@ private fun HttpResponseException.isServerError(): Boolean {
 
 /**
  * Returns true if the exception is not one of the following:
+ * - FirebaseAuthIOException caused by TimeoutException - getting the Firebase ID token for Cloud
+ *   requests timed out, likely due to network issues. Explicitly keep reporting
+ *   InterruptedException as that should no longer occur.
  * - ConnectException - network issues (e.g. "Failed to connect to x").
  * - InterruptedIOException - network requests (OkHttp/Okio) failing due to time-outs
  *   (including SocketTimeoutException) or thread interrupt.
@@ -250,6 +255,7 @@ private fun HttpResponseException.isServerError(): Boolean {
  */
 private fun Throwable.shouldReport(): Boolean {
     return when (this) {
+        is FirebaseAuthIOException -> cause !is TimeoutException
         is ConnectException -> false
         is InterruptedIOException -> false
         is UnknownHostException -> false
