@@ -10,14 +10,8 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 
 ### Next release
 
-* 🌟 Statistics: show number of episodes and total number of items in collection to help determine if below Trakt limits.
-* 🌟 Statistics: show total number of watched items and watch time.
 * 🔧 Billing: when upgrading a subscription, ask for payment right away (and use remaining time to move next billing date into the future).
 * 🔧 Turn on app code optimization to meet future requirements of Play store. Despite testing, this may still unexpectedly break features or lead to crashes. Please send in your debug log in that case.
-* 🔨 Don't crash when device is set to America/Coyhaique (Chile) time zone.
-* 🔧 Sync: do not try to update shows or movies removed from TMDB on every sync.
-* 🔧 Sync: continue to update other movies even if one was removed from TMDB.
-* 📝 Import latest user interface translations.
 
 ## Version 2026.5
 
