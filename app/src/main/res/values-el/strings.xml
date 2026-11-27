@@ -9,7 +9,7 @@
     <string name="search">Αναζήτηση</string>
     <string name="preferences">Ρυθμίσεις</string>
     <string name="help">Βοήθεια</string>
-    <string name="no_more_updates">Το SeriesGuide δεν θα λάβει άλλες ενημερώσεις για αυτή την έκδοση Android.</string>
+    <string name="no_more_updates">Το SeriesGuide δεν θα λάβει άλλες ενημερώσεις για αυτήν την έκδοση Android.</string>
     <!-- Media items -->
     <string name="show_details">Λεπτομέρειες</string>
     <string name="episode">Επεισόδιο</string>
@@ -27,15 +27,15 @@
     <string name="description_image">Εικόνα επεισοδίου</string>
     <string name="description_menu_overflow">Περισσότερες επιλογές</string>
     <!-- Actions -->
-    <string name="clear">Καθαρισμός</string>
+    <string name="clear">Εκκαθάριση</string>
     <string name="discard">Απόρριψη</string>
     <string name="action_display_all">Εμφάνιση όλων</string>
     <string name="web_search">Αναζήτηση στον ιστό</string>
     <string name="add_to_homescreen">Προσθήκη στην Αρχική οθόνη</string>
     <string name="action_open">Άνοιγμα</string>
     <string name="sync_manually">Χειροκίνητος συγχρονισμός</string>
-    <string name="sync_and_update">Συγχρονισμός &amp; Ενημέρωση</string>
-    <string name="sync_and_download_all">Συγχρονισμός &amp; Λήψη όλων</string>
+    <string name="sync_and_update">Συγχρονισμός και ενημέρωση</string>
+    <string name="sync_and_download_all">Συγχρονισμός και λήψη όλων</string>
     <string name="action_select_region">Επιλογή περιοχής</string>
     <string name="action_reset">Επαναφορά</string>
     <string name="action_save">Αποθήκευση</string>
@@ -47,45 +47,45 @@
     <string name="search_hint">Αναζήτηση επεισοδίων</string>
     <string name="empty_no_results">Κανένα αποτέλεσμα</string>
     <!-- Status messages -->
-    <string name="updated">Ενημέρωση για την πιο πρόσφατη έκδοση.</string>
+    <string name="updated">Ενημερώθηκε στην πιο πρόσφατη έκδοση</string>
     <string name="updated_what_is_new">Τι νέο υπάρχει</string>
     <string name="norating">μη διαθέσιμο</string>
     <string name="unknown">άγνωστο</string>
-    <string name="offline">Συνδεθείτε σε ένα δίκτυο και, ξανά προσπαθήστε.</string>
-    <string name="app_not_available">Δεν υπάρχει διαθέσιμη εφαρμογή για να το χειριστεί</string>
+    <string name="offline">Συνδεθείτε στο διαδίκτυο και δοκιμάστε ξανά</string>
+    <string name="app_not_available">Δεν διατίθεται εφαρμογή για αυτήν την ενέργεια</string>
     <string name="database_error">Δεν ήταν δυνατή η τροποποίηση δεδομένων.</string>
-    <string name="reinstall_info">Προσπαθήστε να κρατήσετε αντίγραφο ασφαλείας στις Ρυθμίσεις, να εγκαταστήσετε ξανά την εφαρμογή και να κάνετε επαναφορά.</string>
-    <string name="api_error_generic">Δεν είναι δυνατή η επικοινωνία με το %s. Ξαναδοκιμάστε αργότερα.</string>
+    <string name="reinstall_info">Δοκιμάστε να εξαγάγετε τα δεδομένα σας, να εγκαταστήσετε εκ νέου την εφαρμογή και να τα επαναφέρετε.</string>
+    <string name="api_error_generic">Δεν είναι δυνατή η επικοινωνία με το %s. Δοκιμάστε ξανά αργότερα.</string>
     <string name="api_failed">Αποτυχία: %s</string>
     <string name="copy_to_clipboard">Αντιγράφηκε στο πρόχειρο</string>
     <string name="not_migrated">Η σειρά δεν έχει μεταφερθεί στα δεδομένα του TMDB. Ορισμένες ενέργειες, όπως ο συγχρονισμός με το Trakt και το cloud, ενδέχεται να μη λειτουργούν. Μπορείτε να αναζητήσετε μια αντικατάσταση και να αφαιρέσετε αυτήν τη σειρά. Πατήστε για να δείτε λεπτομέρειες.</string>
     <string name="status_turned_on">Ενεργό</string>
     <!-- Sharing -->
-    <string name="share">Μοίρασε</string>
+    <string name="share">Κοινοποίηση</string>
     <string name="share_show">Κοινοποίηση σειράς</string>
-    <string name="share_episode">Κοινή χρήση επεισοδίου</string>
+    <string name="share_episode">Κοινοποίηση επεισοδίου</string>
     <string name="share_movie">Κοινοποίηση ταινίας</string>
     <string name="addtocalendar">Προσθήκη στο ημερολόγιο</string>
     <string name="addtocalendar_failed">Δεν είναι δυνατόν να δημιουργηθεί γεγονός ημερολογίου.</string>
     <!-- Reviews -->
-    <string name="reviews_title">Reviews</string>
-    <string name="reviews_label_provided_by">Reviews from Trakt</string>
-    <string name="reviews_hint_empty">Be the first to write a review!</string>
-    <string name="reviews_hint_write_review">Write a review (English, 5+ words)</string>
-    <string name="reviews_error_violates_rules">Your review does not follow the rules!</string>
+    <string name="reviews_title">Κριτικές</string>
+    <string name="reviews_label_provided_by">Κριτικές από το Trakt</string>
+    <string name="reviews_hint_empty">Γράψτε πρώτοι μια κριτική!</string>
+    <string name="reviews_hint_write_review">Γράψτε μια κριτική (στα αγγλικά, 5+ λέξεις)</string>
+    <string name="reviews_error_violates_rules">Η κριτική σας δεν τηρεί τους κανόνες!</string>
     <string name="action_post">Ανάρτηση</string>
     <string name="action_edit_comment">Επεξεργασία</string>
     <string name="action_delete_comment">Διαγραφή</string>
-    <string name="reviews_title_confirm_delete">Delete this review?</string>
-    <string name="reviews_error_delete">Review not deleted, it is too old or has replies</string>
+    <string name="reviews_title_confirm_delete">Διαγραφή κριτικής;</string>
+    <string name="reviews_error_delete">Η κριτική δεν διαγράφηκε, είναι πολύ παλιά ή έχει απαντήσεις</string>
     <string name="isspoiler">Προειδοποίηση spoiler!</string>
     <plurals name="replies_plural">
         <item quantity="one">%d απάντηση</item>
         <item quantity="other">%d απαντήσεις</item>
     </plurals>
     <plurals name="reactions_plural">
-        <item quantity="one">%d reaction</item>
-        <item quantity="other">%d reactions</item>
+        <item quantity="one">%d αντίδραση</item>
+        <item quantity="other">%d αντιδράσεις</item>
     </plurals>
     <!-- Metadata -->
     <string name="episode_number_disk">DVD</string>
@@ -265,12 +265,12 @@
     <string name="ack_list_item_manage">Οι λίστες ενημερώθηκαν</string>
     <string name="list_item_remove">Κατάργηση από τη λίστα</string>
     <string name="ack_list_item_removed">Αφαιρέθηκε από τη λίστα</string>
-    <string name="list_empty">You can add shows or movies to this list</string>
+    <string name="list_empty">Μπορείτε να προσθέσετε σειρές ή ταινίες σε αυτήν τη λίστα</string>
     <string name="action_lists_reorder">Ταξινομημένες λίστες</string>
     <string name="ack_lists_reordered">Οι λίστες αναδιατάχθηκαν</string>
     <string name="error_name_already_exists">Υπάρχει ήδη μία λίστα με αυτό το όνομα</string>
-    <string name="action_lists_sort_latest_release_date">Latest release date</string>
-    <string name="action_lists_sort_oldest_release_date">Oldest release date</string>
+    <string name="action_lists_sort_latest_release_date">Νεότερη ημερομηνία κυκλοφορίας</string>
+    <string name="action_lists_sort_oldest_release_date">Παλαιότερη ημερομηνία κυκλοφορίας</string>
     <!-- Movies -->
     <string name="title_digital_releases">Ψηφιακές κυκλοφορίες</string>
     <string name="title_disc_releases">Κυκλοφορίες δίσκων</string>
@@ -319,7 +319,7 @@
     <string name="feature_not_supported">Δεν υποστηρίζεται</string>
     <string name="feature_disabled">Ανενεργό</string>
     <string name="feature_history">Ιστορικό Προσωπικο και Φίλων</string>
-    <string name="feature_comments">Write reviews</string>
+    <string name="feature_comments">Γράψτε κριτικές</string>
     <string name="feature_sync">Συγχρονισμός</string>
     <!-- Hexagon -->
     <string name="hexagon_description">Το SeriesGuide Cloud διατηρεί συγχρονισμένο αντίγραφο to backup των σειρών, ταινιών και λιστών σας</string>
@@ -389,7 +389,7 @@
     <string name="feedback">Αποστολή email</string>
     <!-- Settings -->
     <string name="action_translate">Μετάφραση αυτής της εφαρμογής</string>
-    <string name="title_app_language">App language</string>
+    <string name="title_app_language">Γλώσσα εφαρμογής</string>
     <string name="prefs_category_advanced">Για προχωρημένους</string>
     <string name="prefs_category_about">Σχετικά</string>
     <string name="pref_onlyfuture">Επεισόδια που δεν έχουν προβληθεί</string>
@@ -434,7 +434,7 @@
     <string name="sort_order_top_rated_first">Κορυφαία</string>
     <string name="sort_order_latest_first_dvd">Το πιο πρόσφατο, πρώτο (DVD)</string>
     <string name="sort_order_oldest_first_dvd">Το παλαιότερο πρώτα (DVD)</string>
-    <string name="sort_order_reactions">Reactions</string>
+    <string name="sort_order_reactions">Αντιδράσεις</string>
     <!-- Upcoming thresholds -->
     <string name="pref_upcominglimit">Επερχόμενο εύρος</string>
     <string name="upcoming_upto_now">τώρα</string>
@@ -499,27 +499,27 @@
     <string name="pref_notificationssummary">Ειδοποίηση για νέα επεισόδια</string>
     <string name="pref_notifications_settings">Ρυθμίσεις ειδοποιήσεων</string>
     <string name="pref_notifications_settings_summary">Ρυθμίστε εάν και πώς θα εμφανίζονται οι ειδοποιήσεις</string>
-    <string name="pref_ringtone">Ήχος κλήσης</string>
+    <string name="pref_ringtone">Ήχος</string>
     <string name="pref_vibrate">Δόνηση</string>
     <string name="pref_vibratesummary">Δόνηση και κατά την εμφάνιση ειδοποίησης</string>
     <string name="pref_notifications_treshold">Πότε να ειδοποιήστε</string>
     <string name="pref_notifications_select_shows">Επιλογή σειρών</string>
     <string name="pref_notifications_select_shows_summary">Σειρές που έχουν ενεργές ειδοποιήσεις (%d)</string>
     <string name="pref_notifications_hidden">Αγνόηση κρυφών σειρών</string>
-    <string name="pref_notifications_hidden_summary">Ακόμη και αν οι ειδοποιήσεις είναι ενεργές, μην ειδοποιείς για τις κρυφές σειρές</string>
+    <string name="pref_notifications_hidden_summary">Ακόμη κι αν οι ειδοποιήσεις είναι ενεργές, να μην ειδοποιούμαι για κρυμμένες σειρές</string>
     <string name="pref_notification_channel_errors">Σφάλματα</string>
     <string name="pref_notifications_next_episodes_only">Μόνο για επεισόδια που είναι επόμενα για να προβληθούν</string>
     <string name="pref_notifications_next_episodes_only_summary">Ειδοποίηση μόνο αν το νέο επιεσόδιο είναι το επόμενο για προβολή</string>
     <string name="pref_notifications_battery_settings">Ρυθμίσεις μπαταρίας</string>
-    <string name="pref_notifications_battery_settings_summary">Πηγαίνετε στις Ρυθμίσεις μπαταρίας για να απενεργοποιήσετε τις βελτιστοποιήσεις μπαταρίας για αξιόπιστες ειδοποιήσεις</string>
+    <string name="pref_notifications_battery_settings_summary">Μεταβείτε στις Ρυθμίσεις μπαταρίας για να απενεργοποιήσετε τις βελτιστοποιήσεις μπαταρίας για αξιόπιστες ειδοποιήσεις</string>
     <string name="notifications_allow">Αποδοχή ειδοποιήσεων</string>
     <string name="notifications_allow_reason">Για να λάβετε ειδοποιήσεις επεισοδίων και σφαλμάτων, μεταβείτε στις Ρυθμίσεις και επιτρέψετέ τις</string>
     <string name="precise_notifications_allow">Αποδοχή έγκαιρων ειδοποιήσεων</string>
     <string name="precise_notifications_allow_reason">Για να λαμβάνετε ειδοποιήσεις εγκαίρως, μεταβείτε στις Ρυθμίσεις και επιτρέψετε τον ορισμό υπενθυμίσεων</string>
     <!-- List Widget -->
     <string name="hide_watched">Απόκρυψη παρακολουθημένων επεισοδίων</string>
-    <string name="pref_widget_opacity">Φόντο widget</string>
-    <string name="pref_widget_type">τύπος Widget</string>
+    <string name="pref_widget_opacity">Φόντο γραφικού στοιχείου</string>
+    <string name="pref_widget_type">Τύπος γραφικού στοιχείου</string>
     <string name="pref_large_font">Χρήση μεγάλης γραμματοσειράς</string>
     <string name="pref_hide_watch_button">Απόκρυψη κουμπιού παρακολούθησης</string>
     <string name="description_widget_limited_items">Σημειώστε ότι ο αριθμός των στοιχείων είναι πάντα περιορισμένος για εξοικονόμηση πόρων</string>
@@ -531,25 +531,25 @@
     <string name="widget_background_opaque">Αδιαφανές</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">Μόνο για υποστηρικτές</string>
-    <string name="action_upgrade">Ξεκλειδώσετε όλα τα χαρακτηριστικά</string>
-    <string name="billing_action_subscribe">Παρακολούθηση</string>
+    <string name="action_upgrade">Ξεκλείδωμα όλων των λειτουργιών</string>
+    <string name="billing_action_subscribe">Συνδρομή</string>
     <string name="billing_action_manage_subscriptions">Διαχείριση συνδρομών</string>
     <string name="billing_duration_format">%1$s/έτος</string>
     <string name="billing_free_trial">Δωρεάν δοκιμή</string>
-    <string name="billing_sub_description">Δοκιμάστε δωρεάν για 30 ημέρες, ακυρώστε όποτε θέλετε. </string>
-    <string name="upgrade_description">Κάθε συνδρομή ξεκλειδώνει όλες τις δυνατότητες και υποστηρίζει μελλοντικές ενημερώσεις. Η συνδρομή δεν είναι απαραίτητη γιατη χρήση της εφαρμογής.</string>
-    <string name="upgrade_success">Ευχαριστούμε για την υποστήριξη του SeriesGuide! Έχετε πρόσβαση σε όλα τα χαρακτηριστικά.</string>
+    <string name="billing_sub_description">Δοκιμάστε δωρεάν για 30 ημέρες, ακυρώστε ανά πάσα στιγμή.</string>
+    <string name="upgrade_description">Κάθε συνδρομή ξεκλειδώνει όλες τις δυνατότητες και υποστηρίζει μελλοντικές ενημερώσεις. Δεν απαιτείται συνδρομή για τη χρήση της εφαρμογής.</string>
+    <string name="upgrade_success">Ευχαριστούμε που υποστηρίζετε το SeriesGuide! Έχετε πρόσβαση σε όλες τις λειτουργίες.</string>
     <string name="billing_unlock_detected" comment="Detailed message shown if all features are unlocked by the (legacy) in-app purchase or the unlock app.">Εντοπίστηκε All Access Pass. Μπορείτε ακόμη να εγγραφείτε για να υποστηρίξετε μελλοντικές ενημερώσεις.</string>
     <string name="billing_learn_more">Περισσότερες πληροφορίες και βοήθεια</string>
     <string name="subscription_expired_details" comment="Brief message shown if there is an issue with the subscription (e.g. it has expired) or the unlock app was uninstalled.">Η πρόσβαση σε όλες τις λειτουργίες έληξε</string>
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Συνδεθείτε στο λογαριασμό σας Amazon!</string>
-    <string name="subscription_unavailable" tools:ignore="UnusedResources">Η συνδρομή επί του παρόντος δεν είναι διαθέσιμη.</string>
-    <string name="subscription_failed" tools:ignore="UnusedResources">Η αγορά δεν έχει ολοκληρωθεί.</string>
-    <string name="pass_unavailable" tools:ignore="UnusedResources">Το X Pass δεν είναι προσωρινά διαθέσιμο.</string>
+    <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Συνδεθείτε στον λογαριασμό Amazon σας!</string>
+    <string name="subscription_unavailable" tools:ignore="UnusedResources">Η συνδρομή δεν είναι διαθέσιμη επί του παρόντος</string>
+    <string name="subscription_failed" tools:ignore="UnusedResources">Η αγορά δεν ολοκληρώθηκε</string>
+    <string name="pass_unavailable" tools:ignore="UnusedResources">Το X Pass δεν είναι διαθέσιμο επί του παρόντος</string>
     <!-- Extensions -->
-    <string name="action_extensions_configure">Προσαρμοσμένες επεκτάσεις</string>
-    <string name="action_extensions_add">Προσθήκη επέκταση</string>
+    <string name="action_extensions_configure">Προσαρμογή επεκτάσεων</string>
+    <string name="action_extensions_add">Προσθήκη επέκτασης</string>
     <string name="action_extensions_search">Λήψη περισσότερων επεκτάσεων</string>
     <string name="action_extensions_develop">Ανάπτυξη επέκτασης</string>
     <string name="action_extension_remove">Αφαίρεση</string>
@@ -575,7 +575,7 @@
     <string name="status_saving_file_success">Το αρχείο αποθηκεύτηκε</string>
     <string name="status_saving_file_failed">Αποτυχία αποθήκευσης αρχείου</string>
     <!-- Streaming info -->
-    <string name="action_stream">Stream ή αγορά</string>
+    <string name="action_stream">Προβολή ή αγορά</string>
     <string name="action_stream_settings">Ρυθμίσεις streaming ή αγορών</string>
     <string name="title_stream_subscription">Συνδρομή</string>
     <string name="title_stream_free">Δωρεάν</string>
@@ -584,38 +584,38 @@
     <string name="title_stream_rent">Ενοικίαση</string>
     <!-- Cloud Authentication -->
     <!-- Common -->
-    <string name="auth_action_back" comment="Action to go back">Back</string>
-    <string name="auth_message_privacy_policy" comment="Privacy policy message, the placeholder will use the label for privacy_policy">When you use this feature, additional data is processed as described in the <xliff:g comment="Privacy policy label">%1$s</xliff:g>.</string>
-    <string name="auth_message_new_accounts_disabled" comment="Message shown when creating new accounts is not allowed">Creating new accounts is currently not allowed</string>
+    <string name="auth_action_back" comment="Action to go back">Πίσω</string>
+    <string name="auth_message_privacy_policy" comment="Privacy policy message, the placeholder will use the label for privacy_policy">Όταν χρησιμοποιείτε αυτήν τη λειτουργία, υποβάλλονται σε επεξεργασία πρόσθετα δεδομένα όπως περιγράφεται στην <xliff:g comment="Privacy policy label">%1$s</xliff:g>.</string>
+    <string name="auth_message_new_accounts_disabled" comment="Message shown when creating new accounts is not allowed">Δεν επιτρέπεται η δημιουργία νέων λογαριασμών αυτήν τη στιγμή</string>
     <!-- Auth method picker -->
-    <string name="auth_action_sign_in_with_google" comment="Action to sign in with a Google account">Sign in with Google</string>
-    <string name="auth_action_sign_in_with_email" comment="Action to sign in with an email address">Sign in with email</string>
-    <string name="auth_action_continue_with_google" comment="Action to continue signing in with a suggested Google account">Continue with Google</string>
-    <string name="auth_action_continue_with_email" comment="Action to continue signing in with a suggested email address">Continue with email</string>
+    <string name="auth_action_sign_in_with_google" comment="Action to sign in with a Google account">Σύνδεση μέσω Google</string>
+    <string name="auth_action_sign_in_with_email" comment="Action to sign in with an email address">Σύνδεση με email</string>
+    <string name="auth_action_continue_with_google" comment="Action to continue signing in with a suggested Google account">Συνέχεια μέσω Google</string>
+    <string name="auth_action_continue_with_email" comment="Action to continue signing in with a suggested email address">Συνέχεια με email</string>
     <!-- Email auth -->
-    <string name="auth_hint_name" comment="Hint for name input field">Your name</string>
-    <string name="auth_hint_email" comment="Hint for email input field">Email</string>
-    <string name="auth_hint_password" comment="Hint for password input field">Password</string>
-    <string name="auth_hint_confirm_password" comment="Hint for confirm password input field">Confirm Password</string>
-    <string name="auth_hint_confirm_password_does_not_match" comment="Hint when password entered in confirm password field does not match">Passwords do not match</string>
-    <string name="auth_hint_required" comment="Hint that the value of an input field is required">Required</string>
-    <string name="auth_hint_email_required" comment="Hint that a valid email address is required in an input field">Valid email address required</string>
-    <string name="auth_action_sign_up" comment="Action to create an account">Create an account</string>
-    <string name="auth_error_email_alreay_in_use" comment="Error message when signing up with a used email address">This email address is already in use by an existing account. Sign in with this email address instead.</string>
-    <string name="auth_action_show_password" comment="Action to show the password in a text field">Show password</string>
+    <string name="auth_hint_name" comment="Hint for name input field">Το όνομά σας</string>
+    <string name="auth_hint_email" comment="Hint for email input field">Διεύθυνση email</string>
+    <string name="auth_hint_password" comment="Hint for password input field">Κωδικός πρόσβασης</string>
+    <string name="auth_hint_confirm_password" comment="Hint for confirm password input field">Επιβεβαίωση κωδικού πρόσβασης</string>
+    <string name="auth_hint_confirm_password_does_not_match" comment="Hint when password entered in confirm password field does not match">Οι κωδικοί πρόσβασης δεν ταιριάζουν</string>
+    <string name="auth_hint_required" comment="Hint that the value of an input field is required">Απαιτείται</string>
+    <string name="auth_hint_email_required" comment="Hint that a valid email address is required in an input field">Απαιτείται έγκυρη διεύθυνση email</string>
+    <string name="auth_action_sign_up" comment="Action to create an account">Δημιουργία λογαριασμού</string>
+    <string name="auth_error_email_alreay_in_use" comment="Error message when signing up with a used email address">Αυτή η διεύθυνση email χρησιμοποιείται ήδη από υφιστάμενο λογαριασμό. Συνδεθείτε με αυτήν τη διεύθυνση email.</string>
+    <string name="auth_action_show_password" comment="Action to show the password in a text field">Εμφάνιση κωδικού πρόσβασης</string>
     <!-- Password validation messages -->
-    <string name="auth_error_weak_password" comment="Error message when password does not meet requirements">Password not strong enough</string>
+    <string name="auth_error_weak_password" comment="Error message when password does not meet requirements">Ο κωδικός πρόσβασης δεν είναι αρκετά ισχυρός</string>
     <plurals name="auth_error_password_too_short" comment="Error message when password is too short">
-        <item quantity="one">Use at least %1$d character</item>
-        <item quantity="other">Use at least %1$d characters</item>
+        <item quantity="one">Χρησιμοποιήστε τουλάχιστον %1$d χαρακτήρα</item>
+        <item quantity="other">Χρησιμοποιήστε τουλάχιστον %1$d χαρακτήρες</item>
     </plurals>
     <!-- Password recovery -->
-    <string name="auth_action_reset_password" comment="Action to reset password">Reset password</string>
-    <string name="auth_title_reset_password_instructions" comment="Title of reset password instructions">Check your email</string>
-    <string name="auth_message_reset_password_instructions" comment="Reset password instructions">If an account for this email address exists, an email with instructions to reset your password was sent to it.</string>
+    <string name="auth_action_reset_password" comment="Action to reset password">Επαναφορά κωδικού πρόσβασης</string>
+    <string name="auth_title_reset_password_instructions" comment="Title of reset password instructions">Ελέγξτε τα email σας</string>
+    <string name="auth_message_reset_password_instructions" comment="Reset password instructions">Εάν υπάρχει λογαριασμός με αυτήν τη διεύθυνση email, τότε θα λάβετε ένα email με οδηγίες για να επαναφέρετε τον κωδικό πρόσβασής σας.</string>
     <!-- Error Recovery Dialog -->
-    <string name="auth_error_account_linking_required" comment="Error message when account exists, but created with different sign-in method">An account was already created for this email address using a different sign-in method. Sign in using the original method to add this one.</string>
-    <string name="auth_error_no_google_account_available" comment="Error message when trying to sign in with Google but no Google accounts are available on the device">No Google account is available on this device. Sign in using email or add a Google account to this device.</string>
-    <string name="auth_error_unknown" comment="General error messages for an unknown failure.">An unknown error occurred</string>
-    <string name="auth_error_invalid_password" comment="Error message for when signing in fails.">This password is incorrect, this account does not support signing in with a password or there is no account with this email address. Maybe reset your password.</string>
+    <string name="auth_error_account_linking_required" comment="Error message when account exists, but created with different sign-in method">Έχει ήδη δημιουργηθεί ένας λογαριασμός με αυτήν τη διεύθυνση email, χρησιμοποιώντας μια άλλη μέθοδο σύνδεσης. Συνδεθείτε με την αρχική μέθοδο για να προσθέσετε και αυτή.</string>
+    <string name="auth_error_no_google_account_available" comment="Error message when trying to sign in with Google but no Google accounts are available on the device">Δεν διατίθεται λογαριασμός Google σε αυτήν τη συσκευή. Συνδεθείτε με email ή προσθέστε έναν λογαριασμό Google σε αυτήν τη συσκευή.</string>
+    <string name="auth_error_unknown" comment="General error messages for an unknown failure.">Προέκυψε άγνωστο σφάλμα</string>
+    <string name="auth_error_invalid_password" comment="Error message for when signing in fails.">Αυτός ο κωδικός πρόσβασης είναι εσφαλμένος, ο συγκεκριμένος λογαριασμός δεν υποστηρίζει σύνδεση με κωδικό πρόσβασης ή δεν υπάρχει λογαριασμός με αυτήν τη διεύθυνση email. Δοκιμάστε ίσως να επαναφέρετε τον κωδικό πρόσβασής σας.</string>
 </resources>

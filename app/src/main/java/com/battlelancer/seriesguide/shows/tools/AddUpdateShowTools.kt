@@ -327,7 +327,15 @@ class AddUpdateShowTools(
         }
 
         val showDetails = getShowTools.getShowDetails(showTmdbId, language, show)
-            .getOrElse { return it.toUpdateResult() }
+            .getOrElse {
+                if (it == GetShowDoesNotExist) {
+                    // Show was removed from TMDB, assume existing data is latest and
+                    // do not try to update it again until the regular update interval passes to
+                    // reduce load on TMDB.
+                    helper.setLastUpdated(showId, System.currentTimeMillis())
+                }
+                return it.toUpdateResult()
+            }
         val updatedShow = showDetails.showUpdate!!
         updatedShow.id = showId
 

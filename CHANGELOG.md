@@ -15,6 +15,15 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 * 🔧 Sync: keep showing last status, including if a show failed to update.
 * 🔧 Trakt: use new auth subdomain to connect (required by February 2027).
 
+### 2026.5.3 - 2026-11-26
+
+* 🌟 Statistics: show number of episodes and total number of items in collection to help determine if below Trakt limits.
+* 🌟 Statistics: show total number of watched items and watch time.
+* 🔨 Don't crash when device is set to America/Coyhaique (Chile) time zone.
+* 🔧 Sync: do not try to update shows or movies removed from TMDB on every sync.
+* 🔧 Sync: continue to update other movies even if one was removed from TMDB.
+* 📝 Import latest user interface translations.
+
 ### 2026.5.2 - 2026-11-12
 
 * 🔧 Debug log: scroll to bottom by default, update live and keep showing latest message if at the bottom.

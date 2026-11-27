@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<!-- Copyright 2013 Uwe Trottmann -->
+
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -22,14 +26,52 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/labelStatsShows"
+            android:id="@+id/textViewWatched"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_padding"
-            android:text="@string/shows"
-            android:textAppearance="@style/TextAppearance.SeriesGuide.Headline6"
+            android:background="?attr/selectableItemBackground"
+            android:focusable="true"
+            android:text="@string/norating"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/errorView" />
+            app:layout_constraintTop_toBottomOf="@id/errorView"
+            tools:text="7803 watched" />
+
+        <TextView
+            android:id="@+id/textViewWatchedRuntime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:focusable="true"
+            android:text="@string/norating"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewWatched"
+            tools:text="123 days 19 hours 28 minutes" />
+
+        <TextView
+            android:id="@+id/textViewCollection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="?attr/selectableItemBackground"
+            android:focusable="true"
+            android:text="@string/norating"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewWatchedRuntime"
+            tools:text="2053 in collection" />
+
+        <TextView
+            android:id="@+id/labelStatsShows"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/shows"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Headline5.Emphasized"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewCollection" />
 
         <TextView
             android:id="@+id/textViewShows"
@@ -39,7 +81,7 @@
             android:focusable="true"
             android:gravity="center"
             android:text="@string/norating"
-            android:textAppearance="@style/TextAppearance.SeriesGuide.Headline4"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Headline5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/labelStatsShows"
             tools:text="42" />
@@ -62,7 +104,7 @@
             android:layout_alignParentStart="true"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
-            android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/progressBarShowsWithNextEpisode"
             tools:text="29 with next episodes" />
@@ -85,7 +127,7 @@
             android:layout_alignParentStart="true"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
-            android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/progressBarShowsContinuing"
             tools:text="10 continuing" />
@@ -108,7 +150,7 @@
             android:layout_alignParentStart="true"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
-            android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/progressBarShowsFinished"
             tools:text="3 finished watching" />
@@ -119,7 +161,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="@string/episodes"
-            android:textAppearance="@style/TextAppearance.SeriesGuide.Headline6"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Headline5.Emphasized"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewShowsFinished" />
 
@@ -131,7 +173,7 @@
             android:focusable="true"
             android:gravity="center"
             android:text="@string/norating"
-            android:textAppearance="@style/TextAppearance.SeriesGuide.Headline4"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Headline5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/labelStatsEpisodes"
             tools:text="5260" />
@@ -180,15 +222,38 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textViewEpisodesRuntime" />
 
+        <ProgressBar
+            android:id="@+id/progressBarEpisodesCollection"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progressBarEpisodesRuntime"
+            tools:progress="30" />
+
+        <TextView
+            android:id="@+id/textViewEpisodesCollection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:background="?attr/selectableItemBackground"
+            android:focusable="true"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progressBarEpisodesCollection"
+            tools:text="1803 in collection" />
+
         <TextView
             android:id="@+id/labelMovies"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="@string/movies"
-            android:textAppearance="@style/TextAppearance.SeriesGuide.Headline6"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Headline5.Emphasized"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewEpisodesRuntime" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewEpisodesCollection" />
 
         <TextView
             android:id="@+id/textViewMovies"
@@ -198,7 +263,7 @@
             android:focusable="true"
             android:gravity="center"
             android:text="@string/norating"
-            android:textAppearance="@style/TextAppearance.SeriesGuide.Headline4"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Headline5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/labelMovies"
             tools:text="250" />
