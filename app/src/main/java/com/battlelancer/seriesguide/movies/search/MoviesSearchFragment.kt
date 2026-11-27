@@ -26,7 +26,6 @@ import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import timber.log.Timber
 
 /**
  * Displays movies from [MoviesSearchViewModel], supports empty view and swipe to refresh,
@@ -86,7 +85,6 @@ class MoviesSearchFragment : Fragment() {
             adapter.loadStateFlow
                 .distinctUntilChangedBy { it.refresh }
                 .collectLatest { loadStates ->
-                    Timber.d("loadStates=$loadStates")
                     val refresh = loadStates.refresh
                     binding.swipeRefreshLayoutMoviesSearch.isRefreshing =
                         refresh is LoadState.Loading
