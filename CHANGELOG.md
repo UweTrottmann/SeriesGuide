@@ -20,7 +20,7 @@ Releases marked with 🧪 (or previously with the "beta" suffix) were released o
 * 🔧 Sync: keep showing last status, including if a show failed to update.
 * 🔧 Trakt: use new auth subdomain to connect (required by February 2027).
 
-### 2026.5.3 - 2026-11-26 🧪
+### 2026.5.3 - 2026-11-26
 
 * 🌟 Statistics: show number of episodes and total number of items in collection to help determine if below Trakt limits.
 * 🌟 Statistics: show total number of watched items and watch time.
