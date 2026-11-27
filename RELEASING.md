@@ -21,7 +21,7 @@
 
 - Commit with the suggested message and push
 
-  ```shell
+  ```bash
   git commit --all --message "Prepare version 2026.5.0 (23260101)"
   git push --set-upstream origin releases/2026.5
   ```
@@ -43,7 +43,7 @@
 
 - Tag release commit
   
-  ```shell
+  ```bash
   git tag v2026.5.0
   git push origin v2026.5.0
   git checkout dev
@@ -51,30 +51,34 @@
   git push origin dev
   ```
 
-- Promote to beta channel
+- Download universal APK from Play Store
 - [Create GitHub preview release](https://github.com/UweTrottmann/SeriesGuide/releases/new)
   - title like `2026.5.0`
   - get release notes from [`CHANGELOG.md`](/CHANGELOG.md)
   - attach APK
+- Promote to beta channel
 - Create or update preview release post on forum
 
 ### Production
 
+- Update [`CHANGELOG.md`](/CHANGELOG.md)
 - `bundleAmazonRelease`
 - Merge release pull request to `main`
-- Download universal APK from Play Store
-- [Create GitHub release](https://github.com/UweTrottmann/SeriesGuide/releases/new)
+- [Create or update GitHub release](https://github.com/UweTrottmann/SeriesGuide/releases/new)
   - title like `2026.5.0`
   - get release notes from [`CHANGELOG.md`](/CHANGELOG.md)
   - attach APK
-- Prepare release post on forum
 - Promote to production
 - Publish to Amazon App Store
 - Publish release post [on forum](https://discuss.seriesgui.de)
-- Post [on Mastodon](https://mastodon.social/@SeriesGuide)
 - Merge changes to dev branch
 
-  ```shell
+  ```bash
   git checkout dev
   git merge --no-ff releases/2026.5
+  ```
+- Update [`CHANGELOG.md`](/CHANGELOG.md) to add new `### Next release` heading
+
+  ```bash
+  git commit --all --message "Changelog: prepare for next release"
   ```
